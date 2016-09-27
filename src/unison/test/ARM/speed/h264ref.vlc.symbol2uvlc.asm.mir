@@ -1,0 +1,76 @@
+--- |
+  ; ModuleID = 'h264ref.vlc.symbol2uvlc.ll'
+  target datalayout = "e-m:e-p:32:32-i64:64-v128:64:128-a:0:32-n32-S64"
+  target triple = "armv6t2-pc-linux-eabi"
+  
+  %struct.syntaxelement.214 = type { i32, i32, i32, i32, i32, i32, i32, i32, void (i32, i32, i32*, i32*)*, void (%struct.syntaxelement.214*, %struct.EncodingEnvironment.221*)* }
+  %struct.EncodingEnvironment.221 = type { i32, i32, i32, i32, i32, i8*, i32*, i32, i32, i32, i32, i32, i8*, i32*, i32, i32, i32, i32, i32, i32 }
+  
+  ; Function Attrs: norecurse nounwind
+  define i32 @symbol2uvlc(%struct.syntaxelement.214* nocapture %sym) #0 {
+    %1 = getelementptr inbounds %struct.syntaxelement.214, %struct.syntaxelement.214* %sym, i32 0, i32 3
+    %2 = load i32, i32* %1, align 4
+    %3 = sdiv i32 %2, 2
+    %4 = shl i32 1, %3
+    %5 = getelementptr inbounds %struct.syntaxelement.214, %struct.syntaxelement.214* %sym, i32 0, i32 4
+    %6 = load i32, i32* %5, align 4
+    %7 = add nsw i32 %4, -1
+    %8 = and i32 %7, %6
+    %9 = or i32 %8, %4
+    %10 = getelementptr inbounds %struct.syntaxelement.214, %struct.syntaxelement.214* %sym, i32 0, i32 5
+    store i32 %9, i32* %10, align 4
+    ret i32 0
+  }
+  
+  attributes #0 = { norecurse nounwind "disable-tail-calls"="false" "less-precise-fpmad"="false" "no-frame-pointer-elim"="true" "no-frame-pointer-elim-non-leaf" "no-infs-fp-math"="false" "no-nans-fp-math"="false" "stack-protector-buffer-size"="8" "target-cpu"="arm1156t2f-s" "target-features"="+thumb-mode" "unsafe-fp-math"="false" "use-soft-float"="false" }
+  
+  !llvm.module.flags = !{!0, !1}
+  !llvm.ident = !{!2}
+  
+  !0 = !{i32 1, !"wchar_size", i32 4}
+  !1 = !{i32 1, !"min_enum_size", i32 4}
+  !2 = !{!"clang version 3.8.0 (http://llvm.org/git/clang.git 2d49f0a0ae8366964a93e3b7b26e29679bee7160) (http://llvm.org/git/llvm.git 60bc66b44837125843b58ed3e0fd2e6bb948d839)"}
+
+...
+---
+name:            symbol2uvlc
+alignment:       1
+exposesReturnsTwice: false
+hasInlineAsm:    false
+isSSA:           false
+tracksRegLiveness: false
+tracksSubRegLiveness: false
+liveins:         
+  - { reg: '%r0' }
+frameInfo:       
+  isFrameAddressTaken: false
+  isReturnAddressTaken: false
+  hasStackMap:     false
+  hasPatchPoint:   false
+  stackSize:       0
+  offsetAdjustment: 0
+  maxAlignment:    0
+  adjustsStack:    false
+  hasCalls:        false
+  maxCallFrameSize: 0
+  hasOpaqueSPAdjustment: false
+  hasVAStart:      false
+  hasMustTailInVarArgFunc: false
+body:             |
+  bb.0 (%ir-block.0, freq 8):
+    liveins: %r0
+    liveouts: %r0
+  
+    %r1, %r2 = t2LDRDi8 %r0, 12, 14, _
+    %r1 = t2ADDrs killed %r1, %r1, 251, 14, _, _
+    %r1, dead %cpsr = tASRri killed %r1, 1, 14, _
+    %r3, dead %cpsr = tMOVi8 1, 14, _
+    %r1 = t2LSLrr killed %r3, killed %r1, 14, _, _
+    %r3, dead %cpsr = tSUBi3 %r1, 1, 14, _
+    %r2, dead %cpsr = tAND killed %r2, killed %r3, 14, _
+    %r1, dead %cpsr = tORR killed %r1, killed %r2, 14, _
+    tSTRi killed %r1, killed %r0, 5, 14, _ :: (store 4 into %ir.10)
+    %r0, dead %cpsr = tMOVi8 0, 14, _
+    tBX_RET 14, _, implicit %r0
+
+...

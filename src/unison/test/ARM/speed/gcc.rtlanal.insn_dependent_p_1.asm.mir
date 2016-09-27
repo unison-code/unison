@@ -1,0 +1,127 @@
+--- |
+  ; ModuleID = 'gcc.rtlanal.insn_dependent_p_1.ll'
+  target datalayout = "e-m:e-p:32:32-i64:64-v128:64:128-a:0:32-n32-S64"
+  target triple = "armv6t2-pc-linux-eabi"
+  
+  %struct.rtx_def.150 = type { i32, [1 x %union.rtunion_def.151] }
+  %union.rtunion_def.151 = type { i32 }
+  
+  ; Function Attrs: nounwind
+  declare i32 @reg_mentioned_p(%struct.rtx_def.150*, %struct.rtx_def.150*) #0
+  
+  ; Function Attrs: nounwind
+  define hidden void @insn_dependent_p_1(%struct.rtx_def.150* %x, %struct.rtx_def.150* nocapture readnone %pat, i8* nocapture %data) #0 {
+    %1 = bitcast i8* %data to %struct.rtx_def.150**
+    %2 = load %struct.rtx_def.150*, %struct.rtx_def.150** %1, align 4
+    %3 = icmp eq %struct.rtx_def.150* %2, null
+    br i1 %3, label %9, label %4
+  
+  ; <label>:4                                       ; preds = %0
+    %5 = tail call i32 @reg_mentioned_p(%struct.rtx_def.150* %x, %struct.rtx_def.150* nonnull %2)
+    %6 = icmp eq i32 %5, 0
+    br i1 %6, label %9, label %7
+  
+  ; <label>:7                                       ; preds = %4
+    %8 = bitcast i8* %data to %struct.rtx_def.150**
+    store %struct.rtx_def.150* null, %struct.rtx_def.150** %8, align 4
+    br label %9
+  
+  ; <label>:9                                       ; preds = %7, %4, %0
+    ret void
+  }
+  
+  attributes #0 = { nounwind "disable-tail-calls"="false" "less-precise-fpmad"="false" "no-frame-pointer-elim"="true" "no-frame-pointer-elim-non-leaf" "no-infs-fp-math"="false" "no-nans-fp-math"="false" "stack-protector-buffer-size"="8" "target-cpu"="arm1156t2f-s" "target-features"="+thumb-mode" "unsafe-fp-math"="false" "use-soft-float"="false" }
+  
+  !llvm.module.flags = !{!0, !1}
+  !llvm.ident = !{!2}
+  
+  !0 = !{i32 1, !"wchar_size", i32 4}
+  !1 = !{i32 1, !"min_enum_size", i32 4}
+  !2 = !{!"clang version 3.8.0 (http://llvm.org/git/clang.git 2d49f0a0ae8366964a93e3b7b26e29679bee7160) (http://llvm.org/git/llvm.git 60bc66b44837125843b58ed3e0fd2e6bb948d839)"}
+
+...
+---
+name:            insn_dependent_p_1
+alignment:       1
+exposesReturnsTwice: false
+hasInlineAsm:    false
+isSSA:           false
+tracksRegLiveness: false
+tracksSubRegLiveness: false
+liveins:         
+  - { reg: '%r0' }
+  - { reg: '%r2' }
+calleeSavedRegisters: [ '%lr', '%d8', '%d9', '%d10', '%d11', '%d12', '%d13', 
+                        '%d14', '%d15', '%q4', '%q5', '%q6', '%q7', '%r4', 
+                        '%r5', '%r6', '%r7', '%r8', '%r9', '%r10', '%r11', 
+                        '%s16', '%s17', '%s18', '%s19', '%s20', '%s21', 
+                        '%s22', '%s23', '%s24', '%s25', '%s26', '%s27', 
+                        '%s28', '%s29', '%s30', '%s31', '%d8_d10', '%d9_d11', 
+                        '%d10_d12', '%d11_d13', '%d12_d14', '%d13_d15', 
+                        '%q4_q5', '%q5_q6', '%q6_q7', '%q4_q5_q6_q7', '%r4_r5', 
+                        '%r6_r7', '%r8_r9', '%r10_r11', '%d8_d9_d10', '%d9_d10_d11', 
+                        '%d10_d11_d12', '%d11_d12_d13', '%d12_d13_d14', 
+                        '%d13_d14_d15', '%d8_d10_d12', '%d9_d11_d13', '%d10_d12_d14', 
+                        '%d11_d13_d15', '%d8_d10_d12_d14', '%d9_d11_d13_d15', 
+                        '%d9_d10', '%d11_d12', '%d13_d14', '%d9_d10_d11_d12', 
+                        '%d11_d12_d13_d14' ]
+frameInfo:       
+  isFrameAddressTaken: false
+  isReturnAddressTaken: false
+  hasStackMap:     false
+  hasPatchPoint:   false
+  stackSize:       16
+  offsetAdjustment: -8
+  maxAlignment:    4
+  adjustsStack:    true
+  hasCalls:        true
+  maxCallFrameSize: 0
+  hasOpaqueSPAdjustment: false
+  hasVAStart:      false
+  hasMustTailInVarArgFunc: false
+stack:           
+  - { id: 0, type: spill-slot, offset: -4, size: 4, alignment: 4, callee-saved-register: '%lr' }
+  - { id: 1, type: spill-slot, offset: -8, size: 4, alignment: 4, callee-saved-register: '%r7' }
+  - { id: 2, type: spill-slot, offset: -12, size: 4, alignment: 4, callee-saved-register: '%r6' }
+  - { id: 3, type: spill-slot, offset: -16, size: 4, alignment: 4, callee-saved-register: '%r4' }
+body:             |
+  bb.0 (%ir-block.0, freq 20):
+    successors: %bb.3(37), %bb.1(62)
+    liveins: %r0, %r2, %r4, %r6, %r7, %lr
+  
+    frame-setup tPUSH 14, _, killed %r4, killed %r6, killed %r7, killed %lr, implicit-def %sp, implicit %sp
+    frame-setup CFI_INSTRUCTION .cfi_def_cfa_offset 16
+    frame-setup CFI_INSTRUCTION .cfi_offset %lr, -4
+    frame-setup CFI_INSTRUCTION .cfi_offset %r7, -8
+    frame-setup CFI_INSTRUCTION .cfi_offset %r6, -12
+    frame-setup CFI_INSTRUCTION .cfi_offset %r4, -16
+    %r7 = frame-setup tADDrSPi killed %sp, 2, 14, _
+    frame-setup CFI_INSTRUCTION .cfi_def_cfa %r7, 8
+    %r4 = tMOVr %r2, 14, _
+    %r1 = tLDRi %r4, 0, 14, _ :: (load 4 from %ir.1)
+    tCMPi8 %r1, 0, 14, _, implicit-def %cpsr
+    t2Bcc %bb.3, 0, killed %cpsr
+    t2B %bb.1, 14, _
+  
+  bb.1 (%ir-block.4, freq 12):
+    successors: %bb.3(37), %bb.2(62)
+    liveins: %r0, %r1, %r4
+  
+    tBL 14, _, @reg_mentioned_p, csr_aapcs, implicit-def dead %lr, implicit %sp, implicit %r0, implicit %r1, implicit-def %sp, implicit-def %r0
+    tCMPi8 killed %r0, 0, 14, _, implicit-def %cpsr
+    t2Bcc %bb.3, 0, killed %cpsr
+    t2B %bb.2, 14, _
+  
+  bb.2 (%ir-block.7, freq 8):
+    successors: %bb.3(100)
+    liveins: %r4
+  
+    %r0, dead %cpsr = tMOVi8 0, 14, _
+    tSTRi killed %r0, killed %r4, 0, 14, _ :: (store 4 into %ir.8)
+  
+  bb.3 (%ir-block.9, freq 20):
+    liveouts:
+  
+    tPOP_RET 14, _, def %r4, def %r6, def %r7, def %pc
+
+...

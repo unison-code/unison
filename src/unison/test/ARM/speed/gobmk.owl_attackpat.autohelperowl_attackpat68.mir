@@ -1,0 +1,117 @@
+--- |
+  ; ModuleID = 'gobmk.owl_attackpat.autohelperowl_attackpat68.ll'
+  target datalayout = "e-m:e-p:32:32-i64:64-v128:64:128-a:0:32-n32-S64"
+  target triple = "armv6t2-pc-linux-eabi"
+  
+  @transformation = external global [1369 x [8 x i32]], align 4
+  
+  ; Function Attrs: nounwind
+  define hidden i32 @autohelperowl_attackpat68(i32 %trans, i32 %move, i32 %color, i32 %action) #0 {
+    %1 = getelementptr inbounds [1369 x [8 x i32]], [1369 x [8 x i32]]* @transformation, i32 0, i32 683, i32 %trans
+    %2 = load i32, i32* %1, align 4
+    %3 = add nsw i32 %2, %move
+    %4 = getelementptr inbounds [1369 x [8 x i32]], [1369 x [8 x i32]]* @transformation, i32 0, i32 646, i32 %trans
+    %5 = load i32, i32* %4, align 4
+    %6 = add nsw i32 %5, %move
+    %7 = tail call i32 (i32, i32, i32, ...) @play_attack_defend2_n(i32 %color, i32 0, i32 2, i32 %move, i32 %3, i32 %move, i32 %6) #2
+    ret i32 %7
+  }
+  
+  declare i32 @play_attack_defend2_n(i32, i32, i32, ...) #1
+  
+  attributes #0 = { nounwind "disable-tail-calls"="false" "less-precise-fpmad"="false" "no-frame-pointer-elim"="true" "no-frame-pointer-elim-non-leaf" "no-infs-fp-math"="false" "no-nans-fp-math"="false" "stack-protector-buffer-size"="8" "target-cpu"="arm1156t2f-s" "target-features"="+thumb-mode" "unsafe-fp-math"="false" "use-soft-float"="false" }
+  attributes #1 = { "disable-tail-calls"="false" "less-precise-fpmad"="false" "no-frame-pointer-elim"="true" "no-frame-pointer-elim-non-leaf" "no-infs-fp-math"="false" "no-nans-fp-math"="false" "stack-protector-buffer-size"="8" "target-cpu"="arm1156t2f-s" "target-features"="+thumb-mode" "unsafe-fp-math"="false" "use-soft-float"="false" }
+  attributes #2 = { nounwind }
+  
+  !llvm.module.flags = !{!0, !1}
+  !llvm.ident = !{!2}
+  
+  !0 = !{i32 1, !"wchar_size", i32 4}
+  !1 = !{i32 1, !"min_enum_size", i32 4}
+  !2 = !{!"clang version 3.8.0 (http://llvm.org/git/clang.git 2d49f0a0ae8366964a93e3b7b26e29679bee7160) (http://llvm.org/git/llvm.git 60bc66b44837125843b58ed3e0fd2e6bb948d839)"}
+
+...
+---
+name:            autohelperowl_attackpat68
+alignment:       1
+exposesReturnsTwice: false
+hasInlineAsm:    false
+isSSA:           true
+tracksRegLiveness: true
+tracksSubRegLiveness: false
+registers:       
+  - { id: 0, class: rgpr }
+  - { id: 1, class: rgpr }
+  - { id: 2, class: gpr }
+  - { id: 3, class: gpr }
+  - { id: 4, class: rgpr }
+  - { id: 5, class: gprnopc }
+  - { id: 6, class: rgpr }
+  - { id: 7, class: gprnopc }
+  - { id: 8, class: rgpr }
+  - { id: 9, class: gprnopc }
+  - { id: 10, class: gpr }
+  - { id: 11, class: gprnopc }
+  - { id: 12, class: gprnopc }
+  - { id: 13, class: rgpr }
+  - { id: 14, class: rgpr }
+  - { id: 15, class: gpr }
+liveins:         
+  - { reg: '%r0', virtual-reg: '%0' }
+  - { reg: '%r1', virtual-reg: '%1' }
+  - { reg: '%r2', virtual-reg: '%2' }
+frameInfo:       
+  isFrameAddressTaken: false
+  isReturnAddressTaken: false
+  hasStackMap:     false
+  hasPatchPoint:   false
+  stackSize:       0
+  offsetAdjustment: 0
+  maxAlignment:    4
+  adjustsStack:    false
+  hasCalls:        true
+  maxCallFrameSize: 0
+  hasOpaqueSPAdjustment: false
+  hasVAStart:      false
+  hasMustTailInVarArgFunc: false
+body:             |
+  bb.0 (%ir-block.0, freq 8):
+    liveins: %r0, %r1, %r2
+    liveouts: %r0
+  
+    %2 = COPY %r2
+    %1 = COPY %r1
+    %0 = COPY %r0
+    %4 = t2MOVi32imm @transformation
+    %5 = t2ADDrs killed %4, %0, 18, 14, _, _
+    %6 = t2MOVi16 21856, 14, _
+    %7 = t2LDRs %5, killed %6, 0, 14, _, <0x1e668f0> = !{!"unison-memory-partition", i32 0} :: (load 4 from %ir.1)
+    %8 = t2MOVi16 20672, 14, _
+    %9 = t2LDRs %5, killed %8, 0, 14, _, <0x1e668f0> = !{!"unison-memory-partition", i32 0} :: (load 4 from %ir.4)
+    ADJCALLSTACKDOWN 12, 14, _, implicit-def dead %sp, implicit %sp
+    %10 = COPY %sp
+    %11 = t2ADDrr killed %9, %1, 14, _, _
+    %12 = t2ADDrr killed %7, %1, 14, _, _
+    t2STRi12 killed %12, %10, 0, 14, _, <0x1e668f0> = !{!"unison-memory-partition", i32 0} :: (store 4 into stack)
+    t2STRi12 %1, %10, 4, 14, _, <0x1e668f0> = !{!"unison-memory-partition", i32 0} :: (store 4 into stack + 4)
+    t2STRi12 killed %11, %10, 8, 14, _, <0x1e668f0> = !{!"unison-memory-partition", i32 0} :: (store 4 into stack + 8)
+    %13 = t2MOVi 0, 14, _, _
+    %14 = t2MOVi 2, 14, _, _
+    %r0 = COPY %2
+    %r1 = COPY %13
+    %r2 = COPY %14
+    %r3 = COPY %1
+    tBL 14, _, @play_attack_defend2_n, csr_aapcs, implicit-def dead %lr, implicit %sp, implicit %r0, implicit %r1, implicit %r2, implicit %r3, implicit-def %sp, implicit-def %r0
+    ADJCALLSTACKUP 12, 0, 14, _, implicit-def dead %sp, implicit %sp
+    %15 = COPY %r0
+    %r0 = COPY %15
+    tBX_RET 14, _, implicit %r0
+
+...
+---
+unison-test-target: ARM
+unison-test-goal: speed
+unison-test-expected-cost: 18
+unison-test-expected-proven: true
+unison-test-expected-has-solution: true
+...

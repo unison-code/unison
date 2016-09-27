@@ -1,0 +1,95 @@
+--- |
+  ; ModuleID = 'gobmk.owl_defendpat.autohelperowl_defendpat421.ll'
+  target datalayout = "E-m:m-p:32:32-i8:8:32-i16:16:32-i64:64-n32-S64"
+  target triple = "mips--linux-gnu"
+  
+  @transformation = external global [1369 x [8 x i32]], align 4
+  
+  ; Function Attrs: nounwind
+  define hidden i32 @autohelperowl_defendpat421(i32 signext %trans, i32 signext %move, i32 signext %color, i32 signext %action) #0 {
+    %1 = getelementptr inbounds [1369 x [8 x i32]], [1369 x [8 x i32]]* @transformation, i32 0, i32 573, i32 %trans
+    %2 = load i32, i32* %1, align 4
+    %3 = add nsw i32 %2, %move
+    %4 = sub nsw i32 3, %color
+    %5 = tail call i32 @safe_move(i32 signext %3, i32 signext %4) #2
+    %6 = icmp eq i32 %5, 0
+    %7 = zext i1 %6 to i32
+    ret i32 %7
+  }
+  
+  declare i32 @safe_move(i32 signext, i32 signext) #1
+  
+  attributes #0 = { nounwind "disable-tail-calls"="false" "less-precise-fpmad"="false" "no-frame-pointer-elim"="false" "no-infs-fp-math"="false" "no-nans-fp-math"="false" "stack-protector-buffer-size"="8" "target-cpu"="mips32" "target-features"="+mips32r2" "unsafe-fp-math"="false" "use-soft-float"="false" }
+  attributes #1 = { "disable-tail-calls"="false" "less-precise-fpmad"="false" "no-frame-pointer-elim"="false" "no-infs-fp-math"="false" "no-nans-fp-math"="false" "stack-protector-buffer-size"="8" "target-cpu"="mips32" "target-features"="+mips32r2" "unsafe-fp-math"="false" "use-soft-float"="false" }
+  attributes #2 = { nounwind }
+  
+  !llvm.ident = !{!0}
+  
+  !0 = !{!"clang version 3.8.0 (http://llvm.org/git/clang.git 2d49f0a0ae8366964a93e3b7b26e29679bee7160) (http://llvm.org/git/llvm.git 60bc66b44837125843b58ed3e0fd2e6bb948d839)"}
+
+...
+---
+name:            autohelperowl_defendpat421
+alignment:       2
+exposesReturnsTwice: false
+hasInlineAsm:    false
+isSSA:           false
+tracksRegLiveness: false
+tracksSubRegLiveness: false
+liveins:         
+  - { reg: '%a0' }
+  - { reg: '%a1' }
+  - { reg: '%a2' }
+  - { reg: '%t9' }
+  - { reg: '%v0' }
+calleeSavedRegisters: [ '%fp', '%ra', '%d10', '%d11', '%d12', '%d13', '%d14', 
+                        '%d15', '%f20', '%f21', '%f22', '%f23', '%f24', 
+                        '%f25', '%f26', '%f27', '%f28', '%f29', '%f30', 
+                        '%f31', '%s0', '%s1', '%s2', '%s3', '%s4', '%s5', 
+                        '%s6', '%s7' ]
+frameInfo:       
+  isFrameAddressTaken: false
+  isReturnAddressTaken: false
+  hasStackMap:     false
+  hasPatchPoint:   false
+  stackSize:       24
+  offsetAdjustment: 0
+  maxAlignment:    4
+  adjustsStack:    true
+  hasCalls:        true
+  maxCallFrameSize: 16
+  hasOpaqueSPAdjustment: false
+  hasVAStart:      false
+  hasMustTailInVarArgFunc: false
+stack:           
+  - { id: 0, type: spill-slot, offset: -4, size: 4, alignment: 4, callee-saved-register: '%ra' }
+body:             |
+  bb.0 (%ir-block.0, freq 8):
+    liveins: %a0, %a1, %a2, %t9, %ra
+    liveouts:
+  
+    %v0 = LUi target-flags(<unknown>) $_gp_disp
+    %v0 = ADDiu %v0, target-flags(<unknown>) $_gp_disp
+    %sp = ADDiu %sp, -24
+    CFI_INSTRUCTION .cfi_def_cfa_offset 24
+    SW killed %ra, %sp, 20 :: (store 4 into %stack.0)
+    CFI_INSTRUCTION .cfi_offset %ra_64, -4
+    %gp = ADDu %v0, %t9
+    %at = SLL killed %a0, 2
+    %v0 = LW %gp, target-flags(<unknown>) @transformation :: (load 4 from got)
+    %at = ADDu killed %v0, killed %at
+    %v0 = LW killed %at, 18336 :: (load 4 from %ir.1)
+    %at = ADDiu %zero, 3
+    %at = SUBu killed %at, killed %a2
+    %a0 = ADDu killed %v0, killed %a1
+    %t9 = LW %gp, target-flags(<unknown>) @safe_move :: (load 4 from call-entry @safe_move)
+    JALRPseudo %t9, csr_o32, implicit-def dead %ra, implicit %a0, implicit %a1, implicit %gp, implicit-def %sp, implicit-def %v0 {
+      %a1 = OR killed %at, %zero
+    }
+    %v0 = SLTiu killed %v0, 1
+    %ra = LW %sp, 20 :: (load 4 from %stack.0)
+    PseudoReturn %ra {
+      %sp = ADDiu %sp, 24
+    }
+
+...

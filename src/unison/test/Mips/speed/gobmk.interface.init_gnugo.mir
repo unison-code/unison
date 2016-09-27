@@ -1,0 +1,104 @@
+--- |
+  ; ModuleID = 'gobmk.interface.init_gnugo.ll'
+  target datalayout = "E-m:m-p:32:32-i8:8:32-i16:16:32-i64:64-n32-S64"
+  target triple = "mips--linux-gnu"
+  
+  ; Function Attrs: nounwind
+  define void @init_gnugo() #0 {
+    tail call void @reading_cache_init() #2
+    tail call void @clear_board() #2
+    tail call void @transformation_init() #2
+    tail call void @dfa_match_init() #2
+    ret void
+  }
+  
+  declare void @reading_cache_init() #1
+  
+  declare void @clear_board() #1
+  
+  declare void @transformation_init() #1
+  
+  declare void @dfa_match_init() #1
+  
+  attributes #0 = { nounwind "disable-tail-calls"="false" "less-precise-fpmad"="false" "no-frame-pointer-elim"="false" "no-infs-fp-math"="false" "no-nans-fp-math"="false" "stack-protector-buffer-size"="8" "target-cpu"="mips32" "target-features"="+mips32r2" "unsafe-fp-math"="false" "use-soft-float"="false" }
+  attributes #1 = { "disable-tail-calls"="false" "less-precise-fpmad"="false" "no-frame-pointer-elim"="false" "no-infs-fp-math"="false" "no-nans-fp-math"="false" "stack-protector-buffer-size"="8" "target-cpu"="mips32" "target-features"="+mips32r2" "unsafe-fp-math"="false" "use-soft-float"="false" }
+  attributes #2 = { nounwind }
+  
+  !llvm.ident = !{!0}
+  
+  !0 = !{!"clang version 3.8.0 (http://llvm.org/git/clang.git 2d49f0a0ae8366964a93e3b7b26e29679bee7160) (http://llvm.org/git/llvm.git 60bc66b44837125843b58ed3e0fd2e6bb948d839)"}
+
+...
+---
+name:            init_gnugo
+alignment:       2
+exposesReturnsTwice: false
+hasInlineAsm:    false
+isSSA:           true
+tracksRegLiveness: true
+tracksSubRegLiveness: false
+registers:       
+  - { id: 0, class: gpr32 }
+  - { id: 1, class: gpr32 }
+  - { id: 2, class: gpr32 }
+  - { id: 3, class: gpr32 }
+  - { id: 4, class: gpr32 }
+  - { id: 5, class: gpr32 }
+  - { id: 6, class: gpr32 }
+liveins:         
+  - { reg: '%t9' }
+  - { reg: '%v0' }
+frameInfo:       
+  isFrameAddressTaken: false
+  isReturnAddressTaken: false
+  hasStackMap:     false
+  hasPatchPoint:   false
+  stackSize:       0
+  offsetAdjustment: 0
+  maxAlignment:    1
+  adjustsStack:    false
+  hasCalls:        true
+  maxCallFrameSize: 0
+  hasOpaqueSPAdjustment: false
+  hasVAStart:      false
+  hasMustTailInVarArgFunc: false
+body:             |
+  bb.0 (%ir-block.0, freq 8):
+    liveins: %t9, %v0
+    liveouts:
+  
+    %0 = ADDu %v0, %t9
+    ADJCALLSTACKDOWN 16, implicit-def dead %sp, implicit %sp
+    %1 = LW %0, target-flags(<unknown>) @reading_cache_init, <0x3abc340> = !{!"unison-memory-partition", i32 0} :: (load 4 from call-entry @reading_cache_init)
+    %gp = COPY %0
+    %t9 = COPY %1
+    JALRPseudo killed %t9, csr_o32, implicit-def dead %ra, implicit %gp, implicit-def %sp
+    ADJCALLSTACKUP 16, 0, implicit-def dead %sp, implicit %sp
+    ADJCALLSTACKDOWN 16, implicit-def dead %sp, implicit %sp
+    %2 = LW %0, target-flags(<unknown>) @clear_board, <0x3ab8860> = !{!"unison-memory-partition", i32 1} :: (load 4 from call-entry @clear_board)
+    %gp = COPY %0
+    %t9 = COPY %2
+    JALRPseudo killed %t9, csr_o32, implicit-def dead %ra, implicit %gp, implicit-def %sp
+    ADJCALLSTACKUP 16, 0, implicit-def dead %sp, implicit %sp
+    ADJCALLSTACKDOWN 16, implicit-def dead %sp, implicit %sp
+    %3 = LW %0, target-flags(<unknown>) @transformation_init, <0x3ac32b0> = !{!"unison-memory-partition", i32 2} :: (load 4 from call-entry @transformation_init)
+    %gp = COPY %0
+    %t9 = COPY %3
+    JALRPseudo killed %t9, csr_o32, implicit-def dead %ra, implicit %gp, implicit-def %sp
+    ADJCALLSTACKUP 16, 0, implicit-def dead %sp, implicit %sp
+    ADJCALLSTACKDOWN 16, implicit-def dead %sp, implicit %sp
+    %4 = LW %0, target-flags(<unknown>) @dfa_match_init, <0x3ac33c0> = !{!"unison-memory-partition", i32 3} :: (load 4 from call-entry @dfa_match_init)
+    %gp = COPY %0
+    %t9 = COPY %4
+    JALRPseudo killed %t9, csr_o32, implicit-def dead %ra, implicit %gp, implicit-def %sp
+    ADJCALLSTACKUP 16, 0, implicit-def dead %sp, implicit %sp
+    RetRA
+
+...
+---
+unison-test-target: Mips
+unison-test-goal: speed
+unison-test-expected-cost: 11
+unison-test-expected-proven: true
+unison-test-expected-has-solution: true
+...

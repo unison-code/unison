@@ -1,0 +1,85 @@
+--- |
+  ; ModuleID = 'gcc.c-decl.pushdecl_top_level.ll'
+  target datalayout = "e-m:e-p:32:32:32-i64:64:64-i32:32:32-i16:16:16-i1:8:8-f64:64:64-f32:32:32-v64:64:64-v32:32:32-a:0-n16:32"
+  target triple = "hexagon"
+  
+  %struct.binding_level.2606 = type { %union.tree_node.2601*, %union.tree_node.2601*, %union.tree_node.2601*, %union.tree_node.2601*, %union.tree_node.2601*, %struct.binding_level.2606*, i8, i8, i8, i8, i8, i32, %union.tree_node.2601* }
+  %union.tree_node.2601 = type { %struct.tree_type.2602, [24 x i8] }
+  %struct.tree_type.2602 = type { %struct.tree_common.2603, %union.tree_node.2601*, %union.tree_node.2601*, %union.tree_node.2601*, %union.tree_node.2601*, i32, i32, i32, %union.tree_node.2601*, %union.tree_node.2601*, %union.anon.2.2604, %union.tree_node.2601*, %union.tree_node.2601*, %union.tree_node.2601*, %union.tree_node.2601*, %union.tree_node.2601*, %union.tree_node.2601*, %union.tree_node.2601*, i32, %struct.lang_type.2605* }
+  %struct.tree_common.2603 = type { %union.tree_node.2601*, %union.tree_node.2601*, i32 }
+  %union.anon.2.2604 = type { i32 }
+  %struct.lang_type.2605 = type { i32, [1 x %union.tree_node.2601*] }
+  
+  @current_binding_level = external hidden global %struct.binding_level.2606*, align 4
+  @global_binding_level = external hidden unnamed_addr global %struct.binding_level.2606*, align 4
+  
+  ; Function Attrs: nounwind
+  declare %union.tree_node.2601* @pushdecl(%union.tree_node.2601*) #0
+  
+  ; Function Attrs: nounwind
+  define %union.tree_node.2601* @pushdecl_top_level(%union.tree_node.2601* %x) #0 {
+    %1 = load i32, i32* bitcast (%struct.binding_level.2606** @current_binding_level to i32*), align 4
+    %2 = load i32, i32* bitcast (%struct.binding_level.2606** @global_binding_level to i32*), align 4
+    store i32 %2, i32* bitcast (%struct.binding_level.2606** @current_binding_level to i32*), align 4
+    %3 = tail call %union.tree_node.2601* @pushdecl(%union.tree_node.2601* %x)
+    store i32 %1, i32* bitcast (%struct.binding_level.2606** @current_binding_level to i32*), align 4
+    ret %union.tree_node.2601* %3
+  }
+  
+  attributes #0 = { nounwind "disable-tail-calls"="false" "less-precise-fpmad"="false" "no-frame-pointer-elim"="true" "no-frame-pointer-elim-non-leaf" "no-infs-fp-math"="false" "no-nans-fp-math"="false" "stack-protector-buffer-size"="8" "target-cpu"="hexagonv4" "target-features"="-hvx,-hvx-double" "unsafe-fp-math"="false" "use-soft-float"="false" }
+  
+  !llvm.ident = !{!0}
+  
+  !0 = !{!"clang version 3.8.0 (http://llvm.org/git/clang.git 2d49f0a0ae8366964a93e3b7b26e29679bee7160) (http://llvm.org/git/llvm.git 60bc66b44837125843b58ed3e0fd2e6bb948d839)"}
+
+...
+---
+name:            pushdecl_top_level
+alignment:       4
+exposesReturnsTwice: false
+hasInlineAsm:    false
+isSSA:           false
+tracksRegLiveness: true
+tracksSubRegLiveness: false
+liveins:         
+  - { reg: '%r0' }
+frameInfo:       
+  isFrameAddressTaken: false
+  isReturnAddressTaken: false
+  hasStackMap:     false
+  hasPatchPoint:   false
+  stackSize:       8
+  offsetAdjustment: 0
+  maxAlignment:    0
+  adjustsStack:    true
+  hasCalls:        true
+  maxCallFrameSize: 0
+  hasOpaqueSPAdjustment: false
+  hasVAStart:      false
+  hasMustTailInVarArgFunc: false
+fixedStack:      
+  - { id: 0, type: spill-slot, offset: -8, size: 8, alignment: 8, callee-saved-register: '%d8' }
+body:             |
+  bb.0 (%ir-block.0, freq 8):
+    liveins: %r0, %d8, %d8
+    liveouts: %r30, %r0
+  
+    BUNDLE implicit-def %r29, implicit-def %r30, implicit %r29, implicit %r31, implicit %r30, implicit killed %d8 {
+      S2_allocframe 8, implicit-def %r29, implicit-def %r30, implicit %r29, implicit %r31, implicit %r30 :: (store 4 into unknown)
+      S2_storerd_io internal %r29, -16, killed %d8 :: (store 8 into %fixed-stack.0)
+    }
+    BUNDLE implicit-def %r1, implicit-def %r16 {
+      %r1 = L4_loadri_abs @global_binding_level :: (load 4 from `i32* bitcast (%struct.binding_level.2606** @global_binding_level to i32*)`)
+      %r16 = L4_loadri_abs @current_binding_level :: (load 4 from `i32* bitcast (%struct.binding_level.2606** @current_binding_level to i32*)`)
+    }
+    BUNDLE implicit-def dead %d0, implicit-def dead %d1, implicit-def dead %d2, implicit-def dead %d3, implicit-def dead %d4, implicit-def dead %d5, implicit-def dead %d6, implicit-def dead %d7, implicit-def dead %r28, implicit-def dead %r31, implicit-def dead %p0, implicit-def dead %p1, implicit-def dead %p2, implicit-def dead %p3, implicit-def dead %m0, implicit-def dead %m1, implicit-def dead %lc0, implicit-def dead %lc1, implicit-def dead %sa0, implicit-def dead %sa1, implicit-def dead %usr, implicit-def %usr_ovf, implicit-def %r0, implicit killed %r1, implicit %r0 {
+      S2_storeriabs @current_binding_level, killed %r1 :: (store 4 into `i32* bitcast (%struct.binding_level.2606** @current_binding_level to i32*)`)
+      J2_call @pushdecl, implicit-def dead %d0, implicit-def dead %d1, implicit-def dead %d2, implicit-def dead %d3, implicit-def dead %d4, implicit-def dead %d5, implicit-def dead %d6, implicit-def dead %d7, implicit-def dead %r28, implicit-def dead %r31, implicit-def dead %p0, implicit-def dead %p1, implicit-def dead %p2, implicit-def dead %p3, implicit-def dead %m0, implicit-def dead %m1, implicit-def dead %lc0, implicit-def dead %lc1, implicit-def dead %sa0, implicit-def dead %sa1, implicit-def dead %usr, implicit-def %usr_ovf, implicit %r0, implicit-def %r0
+    }
+    BUNDLE implicit-def %d8, implicit-def %r16, implicit-def %r17, implicit killed %r16, implicit %r29 {
+      S2_storeriabs @current_binding_level, killed %r16 :: (store 4 into `i32* bitcast (%struct.binding_level.2606** @current_binding_level to i32*)`)
+      %d8 = L2_loadrd_io %r29, 0 :: (load 8 from %fixed-stack.0)
+    }
+    L4_return implicit-def %r29, implicit-def %r30, implicit-def %r31, implicit-def %pc, implicit %r30, implicit-def dead %pc, implicit %r0
+
+...

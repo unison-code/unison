@@ -1,0 +1,121 @@
+--- |
+  ; ModuleID = 'gcc.rtlanal.insn_dependent_p_1.ll'
+  target datalayout = "E-m:m-p:32:32-i8:8:32-i16:16:32-i64:64-n32-S64"
+  target triple = "mips--linux-gnu"
+  
+  %struct.rtx_def.150 = type { i32, [1 x %union.rtunion_def.151] }
+  %union.rtunion_def.151 = type { i32 }
+  
+  ; Function Attrs: nounwind
+  declare i32 @reg_mentioned_p(%struct.rtx_def.150*, %struct.rtx_def.150*) #0
+  
+  ; Function Attrs: nounwind
+  define hidden void @insn_dependent_p_1(%struct.rtx_def.150* %x, %struct.rtx_def.150* nocapture readnone %pat, i8* nocapture %data) #0 {
+    %1 = bitcast i8* %data to %struct.rtx_def.150**
+    %2 = load %struct.rtx_def.150*, %struct.rtx_def.150** %1, align 4
+    %3 = icmp eq %struct.rtx_def.150* %2, null
+    br i1 %3, label %9, label %4
+  
+  ; <label>:4                                       ; preds = %0
+    %5 = tail call i32 @reg_mentioned_p(%struct.rtx_def.150* %x, %struct.rtx_def.150* nonnull %2)
+    %6 = icmp eq i32 %5, 0
+    br i1 %6, label %9, label %7
+  
+  ; <label>:7                                       ; preds = %4
+    %8 = bitcast i8* %data to %struct.rtx_def.150**
+    store %struct.rtx_def.150* null, %struct.rtx_def.150** %8, align 4
+    br label %9
+  
+  ; <label>:9                                       ; preds = %7, %4, %0
+    ret void
+  }
+  
+  attributes #0 = { nounwind "disable-tail-calls"="false" "less-precise-fpmad"="false" "no-frame-pointer-elim"="false" "no-infs-fp-math"="false" "no-nans-fp-math"="false" "stack-protector-buffer-size"="8" "target-cpu"="mips32" "target-features"="+mips32r2" "unsafe-fp-math"="false" "use-soft-float"="false" }
+  
+  !llvm.ident = !{!0}
+  
+  !0 = !{!"clang version 3.8.0 (http://llvm.org/git/clang.git 2d49f0a0ae8366964a93e3b7b26e29679bee7160) (http://llvm.org/git/llvm.git 60bc66b44837125843b58ed3e0fd2e6bb948d839)"}
+
+...
+---
+name:            insn_dependent_p_1
+alignment:       2
+exposesReturnsTwice: false
+hasInlineAsm:    false
+isSSA:           true
+tracksRegLiveness: true
+tracksSubRegLiveness: false
+registers:       
+  - { id: 0, class: gpr32 }
+  - { id: 1, class: gpr32 }
+  - { id: 2, class: gpr32 }
+  - { id: 3, class: gpr32 }
+  - { id: 4, class: gpr32 }
+  - { id: 5, class: gpr32 }
+  - { id: 6, class: gpr32 }
+  - { id: 7, class: gpr32 }
+  - { id: 8, class: gpr32 }
+liveins:         
+  - { reg: '%a0', virtual-reg: '%1' }
+  - { reg: '%a2', virtual-reg: '%3' }
+  - { reg: '%t9' }
+  - { reg: '%v0' }
+frameInfo:       
+  isFrameAddressTaken: false
+  isReturnAddressTaken: false
+  hasStackMap:     false
+  hasPatchPoint:   false
+  stackSize:       0
+  offsetAdjustment: 0
+  maxAlignment:    1
+  adjustsStack:    false
+  hasCalls:        true
+  maxCallFrameSize: 0
+  hasOpaqueSPAdjustment: false
+  hasVAStart:      false
+  hasMustTailInVarArgFunc: false
+body:             |
+  bb.0 (%ir-block.0, freq 20):
+    successors: %bb.3(37), %bb.1(62)
+    liveins: %a0, %a2, %t9, %v0
+  
+    %4 = ADDu %v0, %t9
+    %3 = COPY %a2
+    %1 = COPY %a0
+    %0 = LW %3, 0, <0x1ef2290> = !{!"unison-memory-partition", i32 0} :: (load 4 from %ir.1)
+    BEQ %0, %zero, %bb.3, implicit-def dead %at
+    B %bb.1, implicit-def dead %at
+  
+  bb.1 (%ir-block.4, freq 12):
+    successors: %bb.3(37), %bb.2(62)
+  
+    ADJCALLSTACKDOWN 16, implicit-def dead %sp, implicit %sp
+    %5 = LW %4, target-flags(<unknown>) @reg_mentioned_p, <0x1ef2290> = !{!"unison-memory-partition", i32 0} :: (load 4 from call-entry @reg_mentioned_p)
+    %a0 = COPY %1
+    %a1 = COPY %0
+    %gp = COPY %4
+    %t9 = COPY %5
+    JALRPseudo killed %t9, csr_o32, implicit-def dead %ra, implicit %a0, implicit %a1, implicit %gp, implicit-def %sp, implicit-def %v0
+    ADJCALLSTACKUP 16, 0, implicit-def dead %sp, implicit %sp
+    %6 = COPY %v0
+    BEQ %6, %zero, %bb.3, implicit-def dead %at
+    B %bb.2, implicit-def dead %at
+  
+  bb.2 (%ir-block.7, freq 8):
+    successors: %bb.3(100)
+  
+    SW %zero, %3, 0, <0x1ef2290> = !{!"unison-memory-partition", i32 0} :: (store 4 into %ir.8)
+  
+  bb.3 (%ir-block.9, freq 20):
+    liveouts:
+  
+    RetRA
+
+...
+---
+unison-test-target: Mips
+unison-test-goal: size
+unison-test-expected-cost: 256
+unison-test-expected-proven: true
+unison-test-expected-has-solution: true
+...

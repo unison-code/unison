@@ -1,0 +1,81 @@
+--- |
+  ; ModuleID = 'sphinx3.profile.ptmr_init.ll'
+  target datalayout = "e-m:e-p:32:32-i64:64-v128:64:128-a:0:32-n32-S64"
+  target triple = "armv6t2-pc-linux-eabi"
+  
+  %struct.ptmr_t.43 = type { i8*, double, double, double, double, double, double }
+  
+  ; Function Attrs: norecurse nounwind
+  define void @ptmr_init(%struct.ptmr_t.43* nocapture %tm) #0 {
+    %1 = getelementptr inbounds %struct.ptmr_t.43, %struct.ptmr_t.43* %tm, i32 0, i32 1
+    %2 = bitcast double* %1 to i8*
+    tail call void @llvm.memset.p0i8.i64(i8* %2, i8 0, i64 32, i32 8, i1 false)
+    ret void
+  }
+  
+  ; Function Attrs: argmemonly nounwind
+  declare void @llvm.memset.p0i8.i64(i8* nocapture, i8, i64, i32, i1) #1
+  
+  attributes #0 = { norecurse nounwind "disable-tail-calls"="false" "less-precise-fpmad"="false" "no-frame-pointer-elim"="true" "no-frame-pointer-elim-non-leaf" "no-infs-fp-math"="false" "no-nans-fp-math"="false" "stack-protector-buffer-size"="8" "target-cpu"="arm1156t2f-s" "target-features"="+thumb-mode" "unsafe-fp-math"="false" "use-soft-float"="false" }
+  attributes #1 = { argmemonly nounwind "target-cpu"="arm1156t2f-s" "target-features"="+thumb-mode" }
+  
+  !llvm.module.flags = !{!0, !1}
+  !llvm.ident = !{!2}
+  
+  !0 = !{i32 1, !"wchar_size", i32 4}
+  !1 = !{i32 1, !"min_enum_size", i32 4}
+  !2 = !{!"clang version 3.8.0 (http://llvm.org/git/clang.git 2d49f0a0ae8366964a93e3b7b26e29679bee7160) (http://llvm.org/git/llvm.git 60bc66b44837125843b58ed3e0fd2e6bb948d839)"}
+
+...
+---
+name:            ptmr_init
+alignment:       1
+exposesReturnsTwice: false
+hasInlineAsm:    false
+isSSA:           true
+tracksRegLiveness: true
+tracksSubRegLiveness: false
+registers:       
+  - { id: 0, class: gpr }
+  - { id: 1, class: rgpr }
+liveins:         
+  - { reg: '%r0', virtual-reg: '%0' }
+frameInfo:       
+  isFrameAddressTaken: false
+  isReturnAddressTaken: false
+  hasStackMap:     false
+  hasPatchPoint:   false
+  stackSize:       0
+  offsetAdjustment: 0
+  maxAlignment:    0
+  adjustsStack:    false
+  hasCalls:        false
+  maxCallFrameSize: 0
+  hasOpaqueSPAdjustment: false
+  hasVAStart:      false
+  hasMustTailInVarArgFunc: false
+body:             |
+  bb.0 (%ir-block.0, freq 8):
+    liveins: %r0
+    liveouts:
+  
+    %0 = COPY %r0
+    %1 = t2MOVi 0, 14, _, _
+    t2STRi12 %1, %0, 8, 14, _, <0x2ce53d0> = !{!"unison-memory-partition", i32 0} :: (store 4 into %ir.2, align 8)
+    t2STRi12 %1, %0, 12, 14, _, <0x2ce53d0> = !{!"unison-memory-partition", i32 0} :: (store 4 into %ir.2 + 4, align 8)
+    t2STRi12 %1, %0, 16, 14, _, <0x2ce53d0> = !{!"unison-memory-partition", i32 0} :: (store 4 into %ir.2 + 8, align 8)
+    t2STRi12 %1, %0, 20, 14, _, <0x2ce53d0> = !{!"unison-memory-partition", i32 0} :: (store 4 into %ir.2 + 12, align 8)
+    t2STRi12 %1, %0, 24, 14, _, <0x2ce53d0> = !{!"unison-memory-partition", i32 0} :: (store 4 into %ir.2 + 16, align 8)
+    t2STRi12 %1, %0, 28, 14, _, <0x2ce53d0> = !{!"unison-memory-partition", i32 0} :: (store 4 into %ir.2 + 20, align 8)
+    t2STRi12 %1, %0, 32, 14, _, <0x2ce53d0> = !{!"unison-memory-partition", i32 0} :: (store 4 into %ir.2 + 24, align 8)
+    t2STRi12 %1, %0, 36, 14, _, <0x2ce53d0> = !{!"unison-memory-partition", i32 0} :: (store 4 into %ir.2 + 28, align 8)
+    tBX_RET 14, _
+
+...
+---
+unison-test-target: ARM
+unison-test-goal: speed
+unison-test-expected-cost: 6
+unison-test-expected-proven: true
+unison-test-expected-has-solution: false
+...

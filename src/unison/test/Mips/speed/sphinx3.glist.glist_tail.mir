@@ -1,0 +1,98 @@
+--- |
+  ; ModuleID = 'sphinx3.glist.glist_tail.ll'
+  target datalayout = "E-m:m-p:32:32-i8:8:32-i16:16:32-i64:64-n32-S64"
+  target triple = "mips--linux-gnu"
+  
+  %struct.gnode_s.40 = type { %union.anytype_s.41, %struct.gnode_s.40* }
+  %union.anytype_s.41 = type { double }
+  
+  ; Function Attrs: norecurse nounwind readonly
+  define %struct.gnode_s.40* @glist_tail(%struct.gnode_s.40* readonly %g) #0 {
+    %1 = icmp eq %struct.gnode_s.40* %g, null
+    br i1 %1, label %.loopexit, label %.preheader
+  
+  .preheader:                                       ; preds = %0, %.preheader
+    %gn.0 = phi %struct.gnode_s.40* [ %3, %.preheader ], [ %g, %0 ]
+    %2 = getelementptr inbounds %struct.gnode_s.40, %struct.gnode_s.40* %gn.0, i32 0, i32 1
+    %3 = load %struct.gnode_s.40*, %struct.gnode_s.40** %2, align 8
+    %4 = icmp eq %struct.gnode_s.40* %3, null
+    br i1 %4, label %.loopexit, label %.preheader
+  
+  .loopexit:                                        ; preds = %.preheader, %0
+    %.0 = phi %struct.gnode_s.40* [ null, %0 ], [ %gn.0, %.preheader ]
+    ret %struct.gnode_s.40* %.0
+  }
+  
+  attributes #0 = { norecurse nounwind readonly "disable-tail-calls"="false" "less-precise-fpmad"="false" "no-frame-pointer-elim"="false" "no-infs-fp-math"="false" "no-nans-fp-math"="false" "stack-protector-buffer-size"="8" "target-cpu"="mips32" "target-features"="+mips32r2" "unsafe-fp-math"="false" "use-soft-float"="false" }
+  
+  !llvm.ident = !{!0}
+  
+  !0 = !{!"clang version 3.8.0 (http://llvm.org/git/clang.git 2d49f0a0ae8366964a93e3b7b26e29679bee7160) (http://llvm.org/git/llvm.git 60bc66b44837125843b58ed3e0fd2e6bb948d839)"}
+
+...
+---
+name:            glist_tail
+alignment:       2
+exposesReturnsTwice: false
+hasInlineAsm:    false
+isSSA:           true
+tracksRegLiveness: true
+tracksSubRegLiveness: false
+registers:       
+  - { id: 0, class: gpr32 }
+  - { id: 1, class: gpr32 }
+  - { id: 2, class: gpr32 }
+  - { id: 3, class: gpr32 }
+  - { id: 4, class: gpr32 }
+liveins:         
+  - { reg: '%a0', virtual-reg: '%3' }
+frameInfo:       
+  isFrameAddressTaken: false
+  isReturnAddressTaken: false
+  hasStackMap:     false
+  hasPatchPoint:   false
+  stackSize:       0
+  offsetAdjustment: 0
+  maxAlignment:    1
+  adjustsStack:    false
+  hasCalls:        false
+  maxCallFrameSize: 0
+  hasOpaqueSPAdjustment: false
+  hasVAStart:      false
+  hasMustTailInVarArgFunc: false
+body:             |
+  bb.0 (%ir-block.0, freq 12):
+    successors: %bb.2..loopexit(37), %bb.3(62)
+    liveins: %a0
+  
+    %3 = COPY %a0
+    %4 = ADDiu %zero, 0
+    BEQ %3, %zero, %bb.2..loopexit, implicit-def %at
+  
+  bb.3 (freq 8):
+    successors: %bb.1..preheader(100)
+  
+  
+  bb.1..preheader (freq 255):
+    successors: %bb.2..loopexit(3), %bb.1..preheader(96)
+  
+    %0 = PHI %3, %bb.3, %1, %bb.1..preheader
+    %1 = LW %0, 8, <0x2a7b6f0> = !{!"unison-memory-partition", i32 0} :: (load 4 from %ir.2, align 8)
+    BNE %1, %zero, %bb.1..preheader, implicit-def dead %at
+    B %bb.2..loopexit, implicit-def dead %at
+  
+  bb.2..loopexit (freq 12):
+    liveouts: %v0
+  
+    %2 = PHI %4, %bb.0, %0, %bb.1..preheader
+    %v0 = COPY %2
+    RetRA implicit %v0
+
+...
+---
+unison-test-target: Mips
+unison-test-goal: speed
+unison-test-expected-cost: 116
+unison-test-expected-proven: true
+unison-test-expected-has-solution: false
+...

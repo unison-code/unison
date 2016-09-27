@@ -1,0 +1,145 @@
+--- |
+  ; ModuleID = 'gcc.rtlanal.parms_set.ll'
+  target datalayout = "e-m:e-p:32:32:32-i64:64:64-i32:32:32-i16:16:16-i1:8:8-f64:64:64-f32:32:32-v64:64:64-v32:32:32-a:0-n16:32"
+  target triple = "hexagon"
+  
+  %struct.rtx_def.365 = type { i32, [1 x %union.rtunion_def.366] }
+  %union.rtunion_def.366 = type { i32 }
+  
+  ; Function Attrs: norecurse nounwind
+  define hidden void @parms_set(%struct.rtx_def.365* nocapture readonly %x, %struct.rtx_def.365* nocapture readnone %pat, i8* nocapture %data) #0 {
+    %cgep6 = bitcast %struct.rtx_def.365* %x to %struct.rtx_def.365*
+    %cgep47 = bitcast %struct.rtx_def.365* %cgep6 to i32*
+    %1 = load i32, i32* %cgep47, align 4
+    %2 = and i32 %1, 255
+    %3 = icmp eq i32 %2, 61
+    br i1 %3, label %4, label %20
+  
+  ; <label>:4                                       ; preds = %0
+    %5 = bitcast %struct.rtx_def.365* %x to %struct.rtx_def.365*
+    %cgep5 = getelementptr %struct.rtx_def.365, %struct.rtx_def.365* %5, i32 0, i32 1, i32 0, i32 0
+    %6 = load i32, i32* %cgep5, align 4
+    %7 = icmp ult i32 %6, 53
+    br i1 %7, label %8, label %20
+  
+  ; <label>:8                                       ; preds = %4
+    %cgep1 = getelementptr i8, i8* %data, i32 4
+    %9 = bitcast i8* %cgep1 to i32*
+    %10 = load i32, i32* %9, align 4
+    %11 = shl i32 1, %6
+    %12 = and i32 %10, %11
+    %13 = icmp eq i32 %12, 0
+    br i1 %13, label %20, label %14
+  
+  ; <label>:14                                      ; preds = %8
+    %15 = xor i32 %11, -1
+    %16 = and i32 %10, %15
+    %sunkaddr = ptrtoint i8* %data to i32
+    %sunkaddr8 = add i32 %sunkaddr, 4
+    %sunkaddr9 = inttoptr i32 %sunkaddr8 to i32*
+    store i32 %16, i32* %sunkaddr9, align 4
+    %17 = bitcast i8* %data to i32*
+    %18 = load i32, i32* %17, align 4
+    %19 = add nsw i32 %18, -1
+    store i32 %19, i32* %17, align 4
+    br label %20
+  
+  ; <label>:20                                      ; preds = %14, %8, %4, %0
+    ret void
+  }
+  
+  attributes #0 = { norecurse nounwind "disable-tail-calls"="false" "less-precise-fpmad"="false" "no-frame-pointer-elim"="true" "no-frame-pointer-elim-non-leaf" "no-infs-fp-math"="false" "no-nans-fp-math"="false" "stack-protector-buffer-size"="8" "target-cpu"="hexagonv4" "target-features"="-hvx,-hvx-double" "unsafe-fp-math"="false" "use-soft-float"="false" }
+  
+  !llvm.ident = !{!0}
+  
+  !0 = !{!"clang version 3.8.0 (http://llvm.org/git/clang.git 2d49f0a0ae8366964a93e3b7b26e29679bee7160) (http://llvm.org/git/llvm.git 60bc66b44837125843b58ed3e0fd2e6bb948d839)"}
+
+...
+---
+name:            parms_set
+alignment:       4
+exposesReturnsTwice: false
+hasInlineAsm:    false
+isSSA:           true
+tracksRegLiveness: true
+tracksSubRegLiveness: false
+registers:       
+  - { id: 0, class: intregs }
+  - { id: 1, class: intregs }
+  - { id: 2, class: intregs }
+  - { id: 3, class: intregs }
+  - { id: 4, class: intregs }
+  - { id: 5, class: intregs }
+  - { id: 6, class: intregs }
+  - { id: 7, class: predregs }
+  - { id: 8, class: predregs }
+  - { id: 9, class: predregs }
+  - { id: 10, class: intregs }
+  - { id: 11, class: intregs }
+liveins:         
+  - { reg: '%r0', virtual-reg: '%3' }
+  - { reg: '%r2', virtual-reg: '%5' }
+frameInfo:       
+  isFrameAddressTaken: false
+  isReturnAddressTaken: false
+  hasStackMap:     false
+  hasPatchPoint:   false
+  stackSize:       0
+  offsetAdjustment: 0
+  maxAlignment:    0
+  adjustsStack:    false
+  hasCalls:        false
+  maxCallFrameSize: 0
+  hasOpaqueSPAdjustment: false
+  hasVAStart:      false
+  hasMustTailInVarArgFunc: false
+body:             |
+  bb.0 (%ir-block.0, freq 51):
+    successors: %bb.1(50), %bb.4(50)
+    liveins: %r0, %r2
+  
+    %5 = COPY %r2
+    %3 = COPY %r0
+    %6 = L2_loadrub_io %3, 0, <0x3b5bd90> = !{!"unison-memory-partition", i32 0} :: (load 1 from %ir.cgep47, align 4)
+    %7 = C2_cmpeqi killed %6, 61
+    J2_jumpf killed %7, %bb.4, implicit-def dead %pc
+    J2_jump %bb.1, implicit-def dead %pc
+  
+  bb.1 (%ir-block.4, freq 25):
+    successors: %bb.2(50), %bb.4(50)
+  
+    %0 = L2_loadri_io %3, 4, <0x3b5bd90> = !{!"unison-memory-partition", i32 0} :: (load 4 from %ir.cgep5)
+    %8 = C2_cmpgtui %0, 52
+    J2_jumpt killed %8, %bb.4, implicit-def dead %pc
+    J2_jump %bb.2, implicit-def dead %pc
+  
+  bb.2 (%ir-block.8, freq 12):
+    successors: %bb.4(37), %bb.3(62)
+  
+    %1 = L2_loadri_io %5, 4, <0x3b5bd90> = !{!"unison-memory-partition", i32 0} :: (load 4 from %ir.9)
+    %9 = S4_ntstbit_r %1, %0
+    J2_jumpt killed %9, %bb.4, implicit-def dead %pc
+    J2_jump %bb.3, implicit-def dead %pc
+  
+  bb.3 (%ir-block.14, freq 8):
+    successors: %bb.4(100)
+  
+    %2 = S4_lsli 1, %0
+    %10 = A2_tfrsi -1
+    %11 = M4_and_xor %1, %2, killed %10
+    S2_storeri_io %5, 4, killed %11, <0x3b5bd90> = !{!"unison-memory-partition", i32 0} :: (store 4 into %ir.sunkaddr9)
+    L4_isub_memopw_io %5, 0, 1, <0x3b5cfa0> = !{!"unison-memory-partition", i32 1} :: (store 4 into %ir.17), (load 4 from %ir.17)
+  
+  bb.4 (%ir-block.20, freq 51):
+    liveouts:
+  
+    JMPret %r31, implicit-def dead %pc
+
+...
+---
+unison-test-target: Hexagon
+unison-test-goal: speed
+unison-test-expected-cost: 167
+unison-test-expected-proven: true
+unison-test-expected-has-solution: true
+...

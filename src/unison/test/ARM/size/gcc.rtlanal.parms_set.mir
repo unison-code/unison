@@ -1,0 +1,148 @@
+--- |
+  ; ModuleID = 'gcc.rtlanal.parms_set.ll'
+  target datalayout = "e-m:e-p:32:32-i64:64-v128:64:128-a:0:32-n32-S64"
+  target triple = "armv6t2-pc-linux-eabi"
+  
+  %struct.rtx_def.365 = type { i32, [1 x %union.rtunion_def.366] }
+  %union.rtunion_def.366 = type { i32 }
+  
+  ; Function Attrs: norecurse nounwind
+  define hidden void @parms_set(%struct.rtx_def.365* nocapture readonly %x, %struct.rtx_def.365* nocapture readnone %pat, i8* nocapture %data) #0 {
+    %1 = bitcast %struct.rtx_def.365* %x to i32*
+    %2 = load i32, i32* %1, align 4
+    %3 = and i32 %2, 65535
+    %4 = icmp eq i32 %3, 61
+    br i1 %4, label %5, label %22
+  
+  ; <label>:5                                       ; preds = %0
+    %6 = getelementptr inbounds %struct.rtx_def.365, %struct.rtx_def.365* %x, i32 0, i32 1, i32 0, i32 0
+    %7 = load i32, i32* %6, align 4
+    %8 = icmp ult i32 %7, 53
+    br i1 %8, label %9, label %22
+  
+  ; <label>:9                                       ; preds = %5
+    %10 = getelementptr inbounds i8, i8* %data, i32 4
+    %11 = bitcast i8* %10 to i32*
+    %12 = load i32, i32* %11, align 4
+    %13 = shl i32 1, %7
+    %14 = and i32 %12, %13
+    %15 = icmp eq i32 %14, 0
+    br i1 %15, label %22, label %16
+  
+  ; <label>:16                                      ; preds = %9
+    %17 = xor i32 %13, -1
+    %18 = and i32 %12, %17
+    %sunkaddr = ptrtoint i8* %data to i32
+    %sunkaddr1 = add i32 %sunkaddr, 4
+    %sunkaddr2 = inttoptr i32 %sunkaddr1 to i32*
+    store i32 %18, i32* %sunkaddr2, align 4
+    %19 = bitcast i8* %data to i32*
+    %20 = load i32, i32* %19, align 4
+    %21 = add nsw i32 %20, -1
+    store i32 %21, i32* %19, align 4
+    br label %22
+  
+  ; <label>:22                                      ; preds = %16, %9, %5, %0
+    ret void
+  }
+  
+  attributes #0 = { norecurse nounwind "disable-tail-calls"="false" "less-precise-fpmad"="false" "no-frame-pointer-elim"="true" "no-frame-pointer-elim-non-leaf" "no-infs-fp-math"="false" "no-nans-fp-math"="false" "stack-protector-buffer-size"="8" "target-cpu"="arm1156t2f-s" "target-features"="+thumb-mode" "unsafe-fp-math"="false" "use-soft-float"="false" }
+  
+  !llvm.module.flags = !{!0, !1}
+  !llvm.ident = !{!2}
+  
+  !0 = !{i32 1, !"wchar_size", i32 4}
+  !1 = !{i32 1, !"min_enum_size", i32 4}
+  !2 = !{!"clang version 3.8.0 (http://llvm.org/git/clang.git 2d49f0a0ae8366964a93e3b7b26e29679bee7160) (http://llvm.org/git/llvm.git 60bc66b44837125843b58ed3e0fd2e6bb948d839)"}
+
+...
+---
+name:            parms_set
+alignment:       1
+exposesReturnsTwice: false
+hasInlineAsm:    false
+isSSA:           true
+tracksRegLiveness: true
+tracksSubRegLiveness: false
+registers:       
+  - { id: 0, class: rgpr }
+  - { id: 1, class: rgpr }
+  - { id: 2, class: rgpr }
+  - { id: 3, class: gpr }
+  - { id: 4, class: gpr }
+  - { id: 5, class: gpr }
+  - { id: 6, class: gprnopc }
+  - { id: 7, class: rgpr }
+  - { id: 8, class: rgpr }
+  - { id: 9, class: rgpr }
+  - { id: 10, class: gprnopc }
+  - { id: 11, class: gprnopc }
+liveins:         
+  - { reg: '%r0', virtual-reg: '%3' }
+  - { reg: '%r2', virtual-reg: '%5' }
+frameInfo:       
+  isFrameAddressTaken: false
+  isReturnAddressTaken: false
+  hasStackMap:     false
+  hasPatchPoint:   false
+  stackSize:       0
+  offsetAdjustment: 0
+  maxAlignment:    0
+  adjustsStack:    false
+  hasCalls:        false
+  maxCallFrameSize: 0
+  hasOpaqueSPAdjustment: false
+  hasVAStart:      false
+  hasMustTailInVarArgFunc: false
+body:             |
+  bb.0 (%ir-block.0, freq 51):
+    successors: %bb.1(50), %bb.4(50)
+    liveins: %r0, %r2
+  
+    %5 = COPY %r2
+    %3 = COPY %r0
+    %6 = t2LDRHi12 %3, 0, 14, _, <0x1ea18a0> = !{!"unison-memory-partition", i32 0} :: (load 2 from %ir.1, align 4)
+    t2CMPri killed %6, 61, 14, _, implicit-def %cpsr
+    t2Bcc %bb.4, 1, %cpsr
+    t2B %bb.1, 14, _
+  
+  bb.1 (%ir-block.5, freq 25):
+    successors: %bb.2(50), %bb.4(50)
+  
+    %0 = t2LDRi12 %3, 4, 14, _, <0x1ea18a0> = !{!"unison-memory-partition", i32 0} :: (load 4 from %ir.6)
+    t2CMPri %0, 52, 14, _, implicit-def %cpsr
+    t2Bcc %bb.4, 8, %cpsr
+    t2B %bb.2, 14, _
+  
+  bb.2 (%ir-block.9, freq 12):
+    successors: %bb.4(37), %bb.3(62)
+  
+    %7 = t2MOVi 1, 14, _, _
+    %8 = t2LSLrr killed %7, %0, 14, _, _
+    %1 = t2LDRi12 %5, 4, 14, _, <0x1ea18a0> = !{!"unison-memory-partition", i32 0} :: (load 4 from %ir.11)
+    t2TSTrr %1, %8, 14, _, implicit-def %cpsr
+    t2Bcc %bb.4, 0, %cpsr
+    t2B %bb.3, 14, _
+  
+  bb.3 (%ir-block.16, freq 8):
+    successors: %bb.4(100)
+  
+    %9 = t2BICrr %1, %8, 14, _, _
+    t2STRi12 killed %9, %5, 4, 14, _, <0x1ea18a0> = !{!"unison-memory-partition", i32 0} :: (store 4 into %ir.sunkaddr2)
+    %10 = t2LDRi12 %5, 0, 14, _, <0x1ea18a0> = !{!"unison-memory-partition", i32 0} :: (load 4 from %ir.19)
+    %11 = t2SUBri killed %10, 1, 14, _, _
+    t2STRi12 killed %11, %5, 0, 14, _, <0x1ea18a0> = !{!"unison-memory-partition", i32 0} :: (store 4 into %ir.19)
+  
+  bb.4 (%ir-block.22, freq 51):
+    liveouts:
+  
+    tBX_RET 14, _
+
+...
+---
+unison-test-target: ARM
+unison-test-goal: size
+unison-test-expected-cost: 40
+unison-test-expected-proven: true
+unison-test-expected-has-solution: true
+...

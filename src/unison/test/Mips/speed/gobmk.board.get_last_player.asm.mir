@@ -1,0 +1,96 @@
+--- |
+  ; ModuleID = 'gobmk.board.get_last_player.ll'
+  target datalayout = "E-m:m-p:32:32-i8:8:32-i16:16:32-i64:64-n32-S64"
+  target triple = "mips--linux-gnu"
+  
+  @move_history_pointer = external global i32, align 4
+  @move_history_color = external global [500 x i32], align 4
+  
+  ; Function Attrs: norecurse nounwind readonly
+  define i32 @get_last_player() #0 {
+    %1 = load i32, i32* @move_history_pointer, align 4
+    %2 = icmp eq i32 %1, 0
+    br i1 %2, label %7, label %3
+  
+  ; <label>:3                                       ; preds = %0
+    %4 = add nsw i32 %1, -1
+    %5 = getelementptr inbounds [500 x i32], [500 x i32]* @move_history_color, i32 0, i32 %4
+    %6 = load i32, i32* %5, align 4
+    br label %7
+  
+  ; <label>:7                                       ; preds = %3, %0
+    %.0 = phi i32 [ %6, %3 ], [ 0, %0 ]
+    ret i32 %.0
+  }
+  
+  attributes #0 = { norecurse nounwind readonly "disable-tail-calls"="false" "less-precise-fpmad"="false" "no-frame-pointer-elim"="false" "no-infs-fp-math"="false" "no-nans-fp-math"="false" "stack-protector-buffer-size"="8" "target-cpu"="mips32" "target-features"="+mips32r2" "unsafe-fp-math"="false" "use-soft-float"="false" }
+  
+  !llvm.ident = !{!0}
+  
+  !0 = !{!"clang version 3.8.0 (http://llvm.org/git/clang.git 2d49f0a0ae8366964a93e3b7b26e29679bee7160) (http://llvm.org/git/llvm.git 60bc66b44837125843b58ed3e0fd2e6bb948d839)"}
+
+...
+---
+name:            get_last_player
+alignment:       2
+exposesReturnsTwice: false
+hasInlineAsm:    false
+isSSA:           false
+tracksRegLiveness: false
+tracksSubRegLiveness: false
+liveins:         
+  - { reg: '%t9' }
+  - { reg: '%v0' }
+frameInfo:       
+  isFrameAddressTaken: false
+  isReturnAddressTaken: false
+  hasStackMap:     false
+  hasPatchPoint:   false
+  stackSize:       0
+  offsetAdjustment: 0
+  maxAlignment:    1
+  adjustsStack:    false
+  hasCalls:        false
+  maxCallFrameSize: 0
+  hasOpaqueSPAdjustment: false
+  hasVAStart:      false
+  hasMustTailInVarArgFunc: false
+body:             |
+  bb.0 (%ir-block.0, freq 16):
+    successors: %bb.1(50), %bb.3(50)
+    liveins: %t9
+  
+    %v0 = LUi target-flags(<unknown>) $_gp_disp
+    %v0 = ADDiu %v0, target-flags(<unknown>) $_gp_disp
+    %v1 = ADDu %v0, %t9
+    %at = LW %v1, target-flags(<unknown>) @move_history_pointer :: (load 4 from got)
+    %a0 = LW killed %at, 0 :: (load 4 from @move_history_pointer)
+    BEQ %a0, %zero, %bb.3, implicit-def dead %at {
+      %v0 = ADDiu %zero, 0
+    }
+  
+  bb.1 (%ir-block.0, freq 8):
+    successors: %bb.2(100)
+  
+    B %bb.2, implicit-def dead %at {
+      NOP
+    }
+  
+  bb.2 (%ir-block.3, freq 8):
+    successors: %bb.3(100)
+    liveins: %a0, %v1
+  
+    %at = SLL killed %a0, 2
+    %v0 = LW killed %v1, target-flags(<unknown>) @move_history_color :: (load 4 from got)
+    %at = ADDu killed %at, killed %v0
+    %v0 = LW killed %at, -4 :: (load 4 from %ir.5)
+  
+  bb.3 (%ir-block.7, freq 16):
+    liveins: %v0
+    liveouts:
+  
+    PseudoReturn %ra {
+      NOP
+    }
+
+...

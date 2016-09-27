@@ -1,0 +1,101 @@
+--- |
+  ; ModuleID = 'gobmk.interface.init_gnugo.ll'
+  target datalayout = "E-m:m-p:32:32-i8:8:32-i16:16:32-i64:64-n32-S64"
+  target triple = "mips--linux-gnu"
+  
+  ; Function Attrs: nounwind
+  define void @init_gnugo() #0 {
+    tail call void @reading_cache_init() #2
+    tail call void @clear_board() #2
+    tail call void @transformation_init() #2
+    tail call void @dfa_match_init() #2
+    ret void
+  }
+  
+  declare void @reading_cache_init() #1
+  
+  declare void @clear_board() #1
+  
+  declare void @transformation_init() #1
+  
+  declare void @dfa_match_init() #1
+  
+  attributes #0 = { nounwind "disable-tail-calls"="false" "less-precise-fpmad"="false" "no-frame-pointer-elim"="false" "no-infs-fp-math"="false" "no-nans-fp-math"="false" "stack-protector-buffer-size"="8" "target-cpu"="mips32" "target-features"="+mips32r2" "unsafe-fp-math"="false" "use-soft-float"="false" }
+  attributes #1 = { "disable-tail-calls"="false" "less-precise-fpmad"="false" "no-frame-pointer-elim"="false" "no-infs-fp-math"="false" "no-nans-fp-math"="false" "stack-protector-buffer-size"="8" "target-cpu"="mips32" "target-features"="+mips32r2" "unsafe-fp-math"="false" "use-soft-float"="false" }
+  attributes #2 = { nounwind }
+  
+  !llvm.ident = !{!0}
+  
+  !0 = !{!"clang version 3.8.0 (http://llvm.org/git/clang.git 2d49f0a0ae8366964a93e3b7b26e29679bee7160) (http://llvm.org/git/llvm.git 60bc66b44837125843b58ed3e0fd2e6bb948d839)"}
+
+...
+---
+name:            init_gnugo
+alignment:       2
+exposesReturnsTwice: false
+hasInlineAsm:    false
+isSSA:           false
+tracksRegLiveness: false
+tracksSubRegLiveness: false
+liveins:         
+  - { reg: '%t9' }
+  - { reg: '%v0' }
+calleeSavedRegisters: [ '%fp', '%ra', '%d10', '%d11', '%d12', '%d13', '%d14', 
+                        '%d15', '%f20', '%f21', '%f22', '%f23', '%f24', 
+                        '%f25', '%f26', '%f27', '%f28', '%f29', '%f30', 
+                        '%f31', '%s0', '%s1', '%s2', '%s3', '%s4', '%s5', 
+                        '%s6', '%s7' ]
+frameInfo:       
+  isFrameAddressTaken: false
+  isReturnAddressTaken: false
+  hasStackMap:     false
+  hasPatchPoint:   false
+  stackSize:       24
+  offsetAdjustment: 0
+  maxAlignment:    4
+  adjustsStack:    true
+  hasCalls:        true
+  maxCallFrameSize: 16
+  hasOpaqueSPAdjustment: false
+  hasVAStart:      false
+  hasMustTailInVarArgFunc: false
+stack:           
+  - { id: 0, type: spill-slot, offset: -4, size: 4, alignment: 4, callee-saved-register: '%ra' }
+  - { id: 1, type: spill-slot, offset: -8, size: 4, alignment: 4, callee-saved-register: '%s0' }
+body:             |
+  bb.0 (%ir-block.0, freq 8):
+    liveins: %t9, %ra, %s0
+    liveouts:
+  
+    %v0 = LUi target-flags(<unknown>) $_gp_disp
+    %v0 = ADDiu %v0, target-flags(<unknown>) $_gp_disp
+    %sp = ADDiu %sp, -24
+    CFI_INSTRUCTION .cfi_def_cfa_offset 24
+    SW killed %ra, %sp, 20 :: (store 4 into %stack.0)
+    SW killed %s0, %sp, 16 :: (store 4 into %stack.1)
+    CFI_INSTRUCTION .cfi_offset %ra_64, -4
+    CFI_INSTRUCTION .cfi_offset %s0_64, -8
+    %s0 = ADDu %v0, %t9
+    %t9 = LW %s0, target-flags(<unknown>) @reading_cache_init :: (load 4 from call-entry @reading_cache_init)
+    JALRPseudo %t9, csr_o32, implicit-def dead %ra, implicit killed %gp, implicit-def %sp {
+      %gp = OR %s0, %zero
+    }
+    %t9 = LW %s0, target-flags(<unknown>) @clear_board :: (load 4 from call-entry @clear_board)
+    JALRPseudo %t9, csr_o32, implicit-def dead %ra, implicit killed %gp, implicit-def %sp {
+      %gp = OR %s0, %zero
+    }
+    %t9 = LW %s0, target-flags(<unknown>) @transformation_init :: (load 4 from call-entry @transformation_init)
+    JALRPseudo %t9, csr_o32, implicit-def dead %ra, implicit killed %gp, implicit-def %sp {
+      %gp = OR %s0, %zero
+    }
+    %t9 = LW %s0, target-flags(<unknown>) @dfa_match_init :: (load 4 from call-entry @dfa_match_init)
+    JALRPseudo %t9, csr_o32, implicit-def dead %ra, implicit killed %gp, implicit-def %sp {
+      %gp = OR killed %s0, %zero
+    }
+    %s0 = LW %sp, 16 :: (load 4 from %stack.1)
+    %ra = LW %sp, 20 :: (load 4 from %stack.0)
+    PseudoReturn %ra {
+      %sp = ADDiu %sp, 24
+    }
+
+...

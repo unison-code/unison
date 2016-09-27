@@ -1,0 +1,104 @@
+--- |
+  ; ModuleID = 'gcc.c-decl.pushdecl_top_level.ll'
+  target datalayout = "E-m:m-p:32:32-i8:8:32-i16:16:32-i64:64-n32-S64"
+  target triple = "mips--linux-gnu"
+  
+  %struct.binding_level.2606 = type { %union.tree_node.2601*, %union.tree_node.2601*, %union.tree_node.2601*, %union.tree_node.2601*, %union.tree_node.2601*, %struct.binding_level.2606*, i8, i8, i8, i8, i8, i32, %union.tree_node.2601* }
+  %union.tree_node.2601 = type { %struct.tree_type.2602, [24 x i8] }
+  %struct.tree_type.2602 = type { %struct.tree_common.2603, %union.tree_node.2601*, %union.tree_node.2601*, %union.tree_node.2601*, %union.tree_node.2601*, i32, i32, i32, %union.tree_node.2601*, %union.tree_node.2601*, %union.anon.2.2604, %union.tree_node.2601*, %union.tree_node.2601*, %union.tree_node.2601*, %union.tree_node.2601*, %union.tree_node.2601*, %union.tree_node.2601*, %union.tree_node.2601*, i32, %struct.lang_type.2605* }
+  %struct.tree_common.2603 = type { %union.tree_node.2601*, %union.tree_node.2601*, i32 }
+  %union.anon.2.2604 = type { i32 }
+  %struct.lang_type.2605 = type { i32, [1 x %union.tree_node.2601*] }
+  
+  @current_binding_level = external hidden global %struct.binding_level.2606*, align 4
+  @global_binding_level = external hidden unnamed_addr global %struct.binding_level.2606*, align 4
+  
+  ; Function Attrs: nounwind
+  declare %union.tree_node.2601* @pushdecl(%union.tree_node.2601*) #0
+  
+  ; Function Attrs: nounwind
+  define %union.tree_node.2601* @pushdecl_top_level(%union.tree_node.2601* %x) #0 {
+    %1 = load i32, i32* bitcast (%struct.binding_level.2606** @current_binding_level to i32*), align 4
+    %2 = load i32, i32* bitcast (%struct.binding_level.2606** @global_binding_level to i32*), align 4
+    store i32 %2, i32* bitcast (%struct.binding_level.2606** @current_binding_level to i32*), align 4
+    %3 = tail call %union.tree_node.2601* @pushdecl(%union.tree_node.2601* %x)
+    store i32 %1, i32* bitcast (%struct.binding_level.2606** @current_binding_level to i32*), align 4
+    ret %union.tree_node.2601* %3
+  }
+  
+  attributes #0 = { nounwind "disable-tail-calls"="false" "less-precise-fpmad"="false" "no-frame-pointer-elim"="false" "no-infs-fp-math"="false" "no-nans-fp-math"="false" "stack-protector-buffer-size"="8" "target-cpu"="mips32" "target-features"="+mips32r2" "unsafe-fp-math"="false" "use-soft-float"="false" }
+  
+  !llvm.ident = !{!0}
+  
+  !0 = !{!"clang version 3.8.0 (http://llvm.org/git/clang.git 2d49f0a0ae8366964a93e3b7b26e29679bee7160) (http://llvm.org/git/llvm.git 60bc66b44837125843b58ed3e0fd2e6bb948d839)"}
+
+...
+---
+name:            pushdecl_top_level
+alignment:       2
+exposesReturnsTwice: false
+hasInlineAsm:    false
+isSSA:           true
+tracksRegLiveness: true
+tracksSubRegLiveness: false
+registers:       
+  - { id: 0, class: gpr32 }
+  - { id: 1, class: gpr32 }
+  - { id: 2, class: gpr32 }
+  - { id: 3, class: gpr32 }
+  - { id: 4, class: gpr32 }
+  - { id: 5, class: gpr32 }
+  - { id: 6, class: gpr32 }
+  - { id: 7, class: gpr32 }
+  - { id: 8, class: gpr32 }
+  - { id: 9, class: gpr32 }
+liveins:         
+  - { reg: '%a0', virtual-reg: '%0' }
+  - { reg: '%t9' }
+  - { reg: '%v0' }
+frameInfo:       
+  isFrameAddressTaken: false
+  isReturnAddressTaken: false
+  hasStackMap:     false
+  hasPatchPoint:   false
+  stackSize:       0
+  offsetAdjustment: 0
+  maxAlignment:    1
+  adjustsStack:    false
+  hasCalls:        true
+  maxCallFrameSize: 0
+  hasOpaqueSPAdjustment: false
+  hasVAStart:      false
+  hasMustTailInVarArgFunc: false
+body:             |
+  bb.0 (%ir-block.0, freq 8):
+    liveins: %a0, %t9, %v0
+    liveouts: %v0
+  
+    %1 = ADDu %v0, %t9
+    %0 = COPY %a0
+    %2 = LW %1, target-flags(<unknown>) @current_binding_level, <0x36186e0> = !{!"unison-memory-partition", i32 0} :: (load 4 from got)
+    %3 = LW %2, 0, <0x36186e0> = !{!"unison-memory-partition", i32 0} :: (load 4 from `i32* bitcast (%struct.binding_level.2606** @current_binding_level to i32*)`)
+    %4 = LW %1, target-flags(<unknown>) @global_binding_level, <0x36186e0> = !{!"unison-memory-partition", i32 0} :: (load 4 from got)
+    %5 = LW killed %4, 0, <0x3617cf0> = !{!"unison-memory-partition", i32 1} :: (load 4 from `i32* bitcast (%struct.binding_level.2606** @global_binding_level to i32*)`)
+    SW killed %5, %2, 0, <0x36186e0> = !{!"unison-memory-partition", i32 0} :: (store 4 into `i32* bitcast (%struct.binding_level.2606** @current_binding_level to i32*)`)
+    ADJCALLSTACKDOWN 16, implicit-def dead %sp, implicit %sp
+    %6 = LW %1, target-flags(<unknown>) @pushdecl, <0x36186e0> = !{!"unison-memory-partition", i32 0} :: (load 4 from call-entry @pushdecl)
+    %a0 = COPY %0
+    %gp = COPY %1
+    %t9 = COPY %6
+    JALRPseudo killed %t9, csr_o32, implicit-def dead %ra, implicit %a0, implicit %gp, implicit-def %sp, implicit-def %v0
+    ADJCALLSTACKUP 16, 0, implicit-def dead %sp, implicit %sp
+    %7 = COPY %v0
+    SW killed %3, %2, 0, <0x36186e0> = !{!"unison-memory-partition", i32 0} :: (store 4 into `i32* bitcast (%struct.binding_level.2606** @current_binding_level to i32*)`)
+    %v0 = COPY %7
+    RetRA implicit %v0
+
+...
+---
+unison-test-target: Mips
+unison-test-goal: speed
+unison-test-expected-cost: 10
+unison-test-expected-proven: true
+unison-test-expected-has-solution: true
+...

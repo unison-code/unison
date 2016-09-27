@@ -1,0 +1,76 @@
+--- |
+  ; ModuleID = 'sphinx3.profile.ptmr_init.ll'
+  target datalayout = "E-m:m-p:32:32-i8:8:32-i16:16:32-i64:64-n32-S64"
+  target triple = "mips--linux-gnu"
+  
+  %struct.ptmr_t.43 = type { i8*, double, double, double, double, double, double }
+  
+  ; Function Attrs: norecurse nounwind
+  define void @ptmr_init(%struct.ptmr_t.43* nocapture %tm) #0 {
+    %1 = getelementptr inbounds %struct.ptmr_t.43, %struct.ptmr_t.43* %tm, i32 0, i32 1
+    %2 = bitcast double* %1 to i8*
+    tail call void @llvm.memset.p0i8.i64(i8* %2, i8 0, i64 32, i32 8, i1 false)
+    ret void
+  }
+  
+  ; Function Attrs: argmemonly nounwind
+  declare void @llvm.memset.p0i8.i64(i8* nocapture, i8, i64, i32, i1) #1
+  
+  attributes #0 = { norecurse nounwind "disable-tail-calls"="false" "less-precise-fpmad"="false" "no-frame-pointer-elim"="false" "no-infs-fp-math"="false" "no-nans-fp-math"="false" "stack-protector-buffer-size"="8" "target-cpu"="mips32" "target-features"="+mips32r2" "unsafe-fp-math"="false" "use-soft-float"="false" }
+  attributes #1 = { argmemonly nounwind "target-cpu"="mips32" }
+  
+  !llvm.ident = !{!0}
+  
+  !0 = !{!"clang version 3.8.0 (http://llvm.org/git/clang.git 2d49f0a0ae8366964a93e3b7b26e29679bee7160) (http://llvm.org/git/llvm.git 60bc66b44837125843b58ed3e0fd2e6bb948d839)"}
+
+...
+---
+name:            ptmr_init
+alignment:       2
+exposesReturnsTwice: false
+hasInlineAsm:    false
+isSSA:           true
+tracksRegLiveness: true
+tracksSubRegLiveness: false
+registers:       
+  - { id: 0, class: gpr32 }
+liveins:         
+  - { reg: '%a0', virtual-reg: '%0' }
+frameInfo:       
+  isFrameAddressTaken: false
+  isReturnAddressTaken: false
+  hasStackMap:     false
+  hasPatchPoint:   false
+  stackSize:       0
+  offsetAdjustment: 0
+  maxAlignment:    1
+  adjustsStack:    false
+  hasCalls:        false
+  maxCallFrameSize: 0
+  hasOpaqueSPAdjustment: false
+  hasVAStart:      false
+  hasMustTailInVarArgFunc: false
+body:             |
+  bb.0 (%ir-block.0, freq 8):
+    liveins: %a0
+    liveouts:
+  
+    %0 = COPY %a0
+    SW %zero, %0, 36, <0x20a23e0> = !{!"unison-memory-partition", i32 0} :: (store 4 into %ir.2 + 28, align 8)
+    SW %zero, %0, 32, <0x20a23e0> = !{!"unison-memory-partition", i32 0} :: (store 4 into %ir.2 + 24, align 8)
+    SW %zero, %0, 28, <0x20a23e0> = !{!"unison-memory-partition", i32 0} :: (store 4 into %ir.2 + 20, align 8)
+    SW %zero, %0, 24, <0x20a23e0> = !{!"unison-memory-partition", i32 0} :: (store 4 into %ir.2 + 16, align 8)
+    SW %zero, %0, 20, <0x20a23e0> = !{!"unison-memory-partition", i32 0} :: (store 4 into %ir.2 + 12, align 8)
+    SW %zero, %0, 16, <0x20a23e0> = !{!"unison-memory-partition", i32 0} :: (store 4 into %ir.2 + 8, align 8)
+    SW %zero, %0, 12, <0x20a23e0> = !{!"unison-memory-partition", i32 0} :: (store 4 into %ir.2 + 4, align 8)
+    SW %zero, %0, 8, <0x20a23e0> = !{!"unison-memory-partition", i32 0} :: (store 4 into %ir.2, align 8)
+    RetRA
+
+...
+---
+unison-test-target: Mips
+unison-test-goal: speed
+unison-test-expected-cost: 9
+unison-test-expected-proven: true
+unison-test-expected-has-solution: false
+...

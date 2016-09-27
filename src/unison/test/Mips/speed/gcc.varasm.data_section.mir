@@ -1,0 +1,122 @@
+--- |
+  ; ModuleID = 'gcc.varasm.data_section.ll'
+  target datalayout = "E-m:m-p:32:32-i8:8:32-i16:16:32-i64:64-n32-S64"
+  target triple = "mips--linux-gnu"
+  
+  %struct._IO_FILE.171 = type { i32, i8*, i8*, i8*, i8*, i8*, i8*, i8*, i8*, i8*, i8*, i8*, %struct._IO_marker.172*, %struct._IO_FILE.171*, i32, i32, i32, i16, i8, [1 x i8], i8*, i64, i8*, i8*, i8*, i8*, i32, i32, [40 x i8] }
+  %struct._IO_marker.172 = type { %struct._IO_marker.172*, %struct._IO_FILE.171*, i32 }
+  
+  @in_section = external hidden unnamed_addr global i32, align 4
+  @asm_out_file = external global %struct._IO_FILE.171*, align 4
+  @.str = external hidden unnamed_addr constant [4 x i8], align 1
+  @.str.3 = external hidden unnamed_addr constant [7 x i8], align 1
+  
+  ; Function Attrs: nounwind
+  declare i32 @fprintf(%struct._IO_FILE.171* nocapture, i8* nocapture readonly, ...) #0
+  
+  ; Function Attrs: nounwind
+  define void @data_section() #0 {
+    %1 = load i32, i32* @in_section, align 4
+    %2 = icmp eq i32 %1, 2
+    br i1 %2, label %6, label %3
+  
+  ; <label>:3                                       ; preds = %0
+    %4 = load %struct._IO_FILE.171*, %struct._IO_FILE.171** @asm_out_file, align 4
+    %5 = tail call i32 (%struct._IO_FILE.171*, i8*, ...) @fprintf(%struct._IO_FILE.171* %4, i8* nonnull getelementptr inbounds ([4 x i8], [4 x i8]* @.str, i32 0, i32 0), i8* nonnull getelementptr inbounds ([7 x i8], [7 x i8]* @.str.3, i32 0, i32 0))
+    store i32 2, i32* @in_section, align 4
+    br label %6
+  
+  ; <label>:6                                       ; preds = %3, %0
+    ret void
+  }
+  
+  attributes #0 = { nounwind "disable-tail-calls"="false" "less-precise-fpmad"="false" "no-frame-pointer-elim"="false" "no-infs-fp-math"="false" "no-nans-fp-math"="false" "stack-protector-buffer-size"="8" "target-cpu"="mips32" "target-features"="+mips32r2" "unsafe-fp-math"="false" "use-soft-float"="false" }
+  
+  !llvm.ident = !{!0}
+  
+  !0 = !{!"clang version 3.8.0 (http://llvm.org/git/clang.git 2d49f0a0ae8366964a93e3b7b26e29679bee7160) (http://llvm.org/git/llvm.git 60bc66b44837125843b58ed3e0fd2e6bb948d839)"}
+
+...
+---
+name:            data_section
+alignment:       2
+exposesReturnsTwice: false
+hasInlineAsm:    false
+isSSA:           true
+tracksRegLiveness: true
+tracksSubRegLiveness: false
+registers:       
+  - { id: 0, class: gpr32 }
+  - { id: 1, class: gpr32 }
+  - { id: 2, class: gpr32 }
+  - { id: 3, class: gpr32 }
+  - { id: 4, class: gpr32 }
+  - { id: 5, class: gpr32 }
+  - { id: 6, class: gpr32 }
+  - { id: 7, class: gpr32 }
+  - { id: 8, class: gpr32 }
+  - { id: 9, class: gpr32 }
+  - { id: 10, class: gpr32 }
+  - { id: 11, class: gpr32 }
+  - { id: 12, class: gpr32 }
+  - { id: 13, class: gpr32 }
+liveins:         
+  - { reg: '%t9' }
+  - { reg: '%v0' }
+frameInfo:       
+  isFrameAddressTaken: false
+  isReturnAddressTaken: false
+  hasStackMap:     false
+  hasPatchPoint:   false
+  stackSize:       0
+  offsetAdjustment: 0
+  maxAlignment:    1
+  adjustsStack:    false
+  hasCalls:        true
+  maxCallFrameSize: 0
+  hasOpaqueSPAdjustment: false
+  hasVAStart:      false
+  hasMustTailInVarArgFunc: false
+body:             |
+  bb.0 (%ir-block.0, freq 16):
+    successors: %bb.2(50), %bb.1(50)
+    liveins: %t9, %v0
+  
+    %0 = ADDu %v0, %t9
+    %1 = LW %0, target-flags(<unknown>) @in_section, <0x1dd5290> = !{!"unison-memory-partition", i32 0} :: (load 4 from got)
+    %2 = LW %1, 0, <0x1dd78a0> = !{!"unison-memory-partition", i32 1} :: (load 4 from @in_section)
+    %3 = ADDiu %zero, 2
+    BEQ killed %2, %3, %bb.2, implicit-def dead %at
+    B %bb.1, implicit-def dead %at
+  
+  bb.1 (%ir-block.3, freq 8):
+    successors: %bb.2(100)
+  
+    %4 = LW %0, target-flags(<unknown>) @asm_out_file, <0x1dd78a0> = !{!"unison-memory-partition", i32 1} :: (load 4 from got)
+    %5 = LW killed %4, 0, <0x1dd5290> = !{!"unison-memory-partition", i32 0} :: (load 4 from @asm_out_file)
+    ADJCALLSTACKDOWN 16, implicit-def dead %sp, implicit %sp
+    %6 = LW %0, target-flags(<unknown>) @.str, <0x1dd78a0> = !{!"unison-memory-partition", i32 1} :: (load 4 from got)
+    %7 = LW %0, target-flags(<unknown>) @.str.3, <0x1dd78a0> = !{!"unison-memory-partition", i32 1} :: (load 4 from got)
+    %8 = LW %0, target-flags(<unknown>) @fprintf, <0x1dd78a0> = !{!"unison-memory-partition", i32 1} :: (load 4 from call-entry @fprintf)
+    %a0 = COPY %5
+    %a1 = COPY %6
+    %a2 = COPY %7
+    %gp = COPY %0
+    %t9 = COPY %8
+    JALRPseudo killed %t9, csr_o32, implicit-def dead %ra, implicit %a0, implicit %a1, implicit %a2, implicit %gp, implicit-def %sp, implicit-def %v0
+    ADJCALLSTACKUP 16, 0, implicit-def dead %sp, implicit %sp
+    SW %3, %1, 0, <0x1dd78a0> = !{!"unison-memory-partition", i32 1} :: (store 4 into @in_section)
+  
+  bb.2 (%ir-block.6, freq 16):
+    liveouts:
+  
+    RetRA
+
+...
+---
+unison-test-target: Mips
+unison-test-goal: speed
+unison-test-expected-cost: 19
+unison-test-expected-proven: true
+unison-test-expected-has-solution: true
+...

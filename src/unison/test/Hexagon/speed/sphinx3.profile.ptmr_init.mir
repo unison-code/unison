@@ -1,0 +1,76 @@
+--- |
+  ; ModuleID = 'sphinx3.profile.ptmr_init.ll'
+  target datalayout = "e-m:e-p:32:32:32-i64:64:64-i32:32:32-i16:16:16-i1:8:8-f64:64:64-f32:32:32-v64:64:64-v32:32:32-a:0-n16:32"
+  target triple = "hexagon"
+  
+  %struct.ptmr_t.43 = type { i8*, double, double, double, double, double, double }
+  
+  ; Function Attrs: norecurse nounwind
+  define void @ptmr_init(%struct.ptmr_t.43* nocapture %tm) #0 {
+    %cgep = getelementptr %struct.ptmr_t.43, %struct.ptmr_t.43* %tm, i32 0, i32 1
+    %1 = bitcast double* %cgep to i8*
+    tail call void @llvm.memset.p0i8.i64(i8* %1, i8 0, i64 32, i32 8, i1 false)
+    ret void
+  }
+  
+  ; Function Attrs: argmemonly nounwind
+  declare void @llvm.memset.p0i8.i64(i8* nocapture, i8, i64, i32, i1) #1
+  
+  attributes #0 = { norecurse nounwind "disable-tail-calls"="false" "less-precise-fpmad"="false" "no-frame-pointer-elim"="true" "no-frame-pointer-elim-non-leaf" "no-infs-fp-math"="false" "no-nans-fp-math"="false" "stack-protector-buffer-size"="8" "target-cpu"="hexagonv4" "target-features"="-hvx,-hvx-double" "unsafe-fp-math"="false" "use-soft-float"="false" }
+  attributes #1 = { argmemonly nounwind "target-cpu"="hexagonv4" }
+  
+  !llvm.ident = !{!0}
+  
+  !0 = !{!"clang version 3.8.0 (http://llvm.org/git/clang.git 2d49f0a0ae8366964a93e3b7b26e29679bee7160) (http://llvm.org/git/llvm.git 60bc66b44837125843b58ed3e0fd2e6bb948d839)"}
+
+...
+---
+name:            ptmr_init
+alignment:       4
+exposesReturnsTwice: false
+hasInlineAsm:    false
+isSSA:           true
+tracksRegLiveness: true
+tracksSubRegLiveness: false
+registers:       
+  - { id: 0, class: intregs }
+liveins:         
+  - { reg: '%r0', virtual-reg: '%0' }
+frameInfo:       
+  isFrameAddressTaken: false
+  isReturnAddressTaken: false
+  hasStackMap:     false
+  hasPatchPoint:   false
+  stackSize:       0
+  offsetAdjustment: 0
+  maxAlignment:    0
+  adjustsStack:    false
+  hasCalls:        false
+  maxCallFrameSize: 0
+  hasOpaqueSPAdjustment: false
+  hasVAStart:      false
+  hasMustTailInVarArgFunc: false
+body:             |
+  bb.0 (%ir-block.0, freq 8):
+    liveins: %r0
+    liveouts:
+  
+    %0 = COPY %r0
+    S4_storeiri_io %0, 36, 0, <0x25fbca0> = !{!"unison-memory-partition", i32 0} :: (store 4 into %ir.1 + 28, align 8)
+    S4_storeiri_io %0, 32, 0, <0x25fbd70> = !{!"unison-memory-partition", i32 1} :: (store 4 into %ir.1 + 24, align 8)
+    S4_storeiri_io %0, 28, 0, <0x25fbe80> = !{!"unison-memory-partition", i32 2} :: (store 4 into %ir.1 + 20, align 8)
+    S4_storeiri_io %0, 24, 0, <0x25fbf90> = !{!"unison-memory-partition", i32 3} :: (store 4 into %ir.1 + 16, align 8)
+    S4_storeiri_io %0, 20, 0, <0x25fc060> = !{!"unison-memory-partition", i32 4} :: (store 4 into %ir.1 + 12, align 8)
+    S4_storeiri_io %0, 16, 0, <0x25fc170> = !{!"unison-memory-partition", i32 5} :: (store 4 into %ir.1 + 8, align 8)
+    S4_storeiri_io %0, 12, 0, <0x25fc280> = !{!"unison-memory-partition", i32 6} :: (store 4 into %ir.1 + 4, align 8)
+    S4_storeiri_io %0, 8, 0, <0x25fc390> = !{!"unison-memory-partition", i32 7} :: (store 4 into %ir.1, align 8)
+    JMPret %r31, implicit-def dead %pc
+
+...
+---
+unison-test-target: Hexagon
+unison-test-goal: speed
+unison-test-expected-cost: 4
+unison-test-expected-proven: true
+unison-test-expected-has-solution: false
+...

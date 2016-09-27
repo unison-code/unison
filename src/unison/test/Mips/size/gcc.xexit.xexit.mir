@@ -1,0 +1,107 @@
+--- |
+  ; ModuleID = 'gcc.xexit.xexit.ll'
+  target datalayout = "E-m:m-p:32:32-i8:8:32-i16:16:32-i64:64-n32-S64"
+  target triple = "mips--linux-gnu"
+  
+  @_xexit_cleanup = external global void ()*, align 4
+  
+  ; Function Attrs: noreturn nounwind
+  define void @xexit(i32 signext %code) #0 {
+    %1 = load void ()*, void ()** @_xexit_cleanup, align 4
+    %2 = icmp eq void ()* %1, null
+    br i1 %2, label %4, label %3
+  
+  ; <label>:3                                       ; preds = %0
+    tail call void %1() #1
+    br label %4
+  
+  ; <label>:4                                       ; preds = %3, %0
+    tail call void @exit(i32 signext %code) #2
+    unreachable
+  }
+  
+  ; Function Attrs: noreturn nounwind
+  declare void @exit(i32 signext) #0
+  
+  attributes #0 = { noreturn nounwind "disable-tail-calls"="false" "less-precise-fpmad"="false" "no-frame-pointer-elim"="false" "no-infs-fp-math"="false" "no-nans-fp-math"="false" "stack-protector-buffer-size"="8" "target-cpu"="mips32" "target-features"="+mips32r2" "unsafe-fp-math"="false" "use-soft-float"="false" }
+  attributes #1 = { nounwind }
+  attributes #2 = { noreturn nounwind }
+  
+  !llvm.ident = !{!0}
+  
+  !0 = !{!"clang version 3.8.0 (http://llvm.org/git/clang.git 2d49f0a0ae8366964a93e3b7b26e29679bee7160) (http://llvm.org/git/llvm.git 60bc66b44837125843b58ed3e0fd2e6bb948d839)"}
+
+...
+---
+name:            xexit
+alignment:       2
+exposesReturnsTwice: false
+hasInlineAsm:    false
+isSSA:           true
+tracksRegLiveness: true
+tracksSubRegLiveness: false
+registers:       
+  - { id: 0, class: gpr32 }
+  - { id: 1, class: gpr32 }
+  - { id: 2, class: gpr32 }
+  - { id: 3, class: gpr32 }
+  - { id: 4, class: gpr32 }
+  - { id: 5, class: gpr32 }
+  - { id: 6, class: gpr32 }
+liveins:         
+  - { reg: '%a0', virtual-reg: '%1' }
+  - { reg: '%t9' }
+  - { reg: '%v0' }
+frameInfo:       
+  isFrameAddressTaken: false
+  isReturnAddressTaken: false
+  hasStackMap:     false
+  hasPatchPoint:   false
+  stackSize:       0
+  offsetAdjustment: 0
+  maxAlignment:    1
+  adjustsStack:    false
+  hasCalls:        true
+  maxCallFrameSize: 0
+  hasOpaqueSPAdjustment: false
+  hasVAStart:      false
+  hasMustTailInVarArgFunc: false
+body:             |
+  bb.0 (%ir-block.0, freq 16):
+    successors: %bb.2(50), %bb.1(50)
+    liveins: %a0, %t9, %v0
+  
+    %2 = ADDu %v0, %t9
+    %1 = COPY %a0
+    %3 = LW %2, target-flags(<unknown>) @_xexit_cleanup, <0x1f725e0> = !{!"unison-memory-partition", i32 0} :: (load 4 from got)
+    %0 = LW killed %3, 0, <0x1f72b30> = !{!"unison-memory-partition", i32 1} :: (load 4 from @_xexit_cleanup)
+    BEQ %0, %zero, %bb.2, implicit-def dead %at
+    B %bb.1, implicit-def dead %at
+  
+  bb.1 (%ir-block.3, freq 8):
+    successors: %bb.2(100)
+  
+    ADJCALLSTACKDOWN 16, implicit-def dead %sp, implicit %sp
+    %t9 = COPY %0
+    JALRPseudo %t9, csr_o32, implicit-def dead %ra, implicit-def %sp
+    ADJCALLSTACKUP 16, 0, implicit-def dead %sp, implicit %sp
+  
+  bb.2 (%ir-block.4, freq 16):
+    exit
+  
+    ADJCALLSTACKDOWN 16, implicit-def dead %sp, implicit %sp
+    %4 = LW %2, target-flags(<unknown>) @exit, <0x1f725e0> = !{!"unison-memory-partition", i32 0} :: (load 4 from call-entry @exit)
+    %a0 = COPY %1
+    %gp = COPY %2
+    %t9 = COPY %4
+    JALRPseudo killed %t9, csr_o32, implicit-def dead %ra, implicit %a0, implicit %gp, implicit-def %sp
+    ADJCALLSTACKUP 16, 0, implicit-def dead %sp, implicit %sp
+
+...
+---
+unison-test-target: Mips
+unison-test-goal: size
+unison-test-expected-cost: 224
+unison-test-expected-proven: true
+unison-test-expected-has-solution: true
+...

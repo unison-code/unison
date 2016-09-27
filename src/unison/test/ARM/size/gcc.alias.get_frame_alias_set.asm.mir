@@ -1,0 +1,119 @@
+--- |
+  ; ModuleID = 'gcc.alias.get_frame_alias_set.ll'
+  target datalayout = "e-m:e-p:32:32-i64:64-v128:64:128-a:0:32-n32-S64"
+  target triple = "armv6t2-pc-linux-eabi"
+  
+  @flag_strict_aliasing = external global i32, align 4
+  @new_alias_set.last_alias_set = external hidden unnamed_addr global i32, align 4
+  @get_frame_alias_set.set = external hidden unnamed_addr global i32, align 4
+  
+  ; Function Attrs: norecurse nounwind
+  define i32 @get_frame_alias_set() #0 {
+    %1 = load i32, i32* @get_frame_alias_set.set, align 4
+    %2 = icmp eq i32 %1, -1
+    br i1 %2, label %3, label %9
+  
+  ; <label>:3                                       ; preds = %0
+    %4 = load i32, i32* @flag_strict_aliasing, align 4
+    %5 = icmp eq i32 %4, 0
+    br i1 %5, label %new_alias_set.exit, label %6
+  
+  ; <label>:6                                       ; preds = %3
+    %7 = load i32, i32* @new_alias_set.last_alias_set, align 4
+    %8 = add nsw i32 %7, 1
+    store i32 %8, i32* @new_alias_set.last_alias_set, align 4
+    br label %new_alias_set.exit
+  
+  new_alias_set.exit:                               ; preds = %6, %3
+    %.0.i = phi i32 [ %8, %6 ], [ 0, %3 ]
+    store i32 %.0.i, i32* @get_frame_alias_set.set, align 4
+    br label %9
+  
+  ; <label>:9                                       ; preds = %new_alias_set.exit, %0
+    %10 = phi i32 [ %.0.i, %new_alias_set.exit ], [ %1, %0 ]
+    ret i32 %10
+  }
+  
+  attributes #0 = { norecurse nounwind "disable-tail-calls"="false" "less-precise-fpmad"="false" "no-frame-pointer-elim"="true" "no-frame-pointer-elim-non-leaf" "no-infs-fp-math"="false" "no-nans-fp-math"="false" "stack-protector-buffer-size"="8" "target-cpu"="arm1156t2f-s" "target-features"="+thumb-mode" "unsafe-fp-math"="false" "use-soft-float"="false" }
+  
+  !llvm.module.flags = !{!0, !1}
+  !llvm.ident = !{!2}
+  
+  !0 = !{i32 1, !"wchar_size", i32 4}
+  !1 = !{i32 1, !"min_enum_size", i32 4}
+  !2 = !{!"clang version 3.8.0 (http://llvm.org/git/clang.git 2d49f0a0ae8366964a93e3b7b26e29679bee7160) (http://llvm.org/git/llvm.git 60bc66b44837125843b58ed3e0fd2e6bb948d839)"}
+
+...
+---
+name:            get_frame_alias_set
+alignment:       1
+exposesReturnsTwice: false
+hasInlineAsm:    false
+isSSA:           false
+tracksRegLiveness: false
+tracksSubRegLiveness: false
+frameInfo:       
+  isFrameAddressTaken: false
+  isReturnAddressTaken: false
+  hasStackMap:     false
+  hasPatchPoint:   false
+  stackSize:       0
+  offsetAdjustment: 0
+  maxAlignment:    0
+  adjustsStack:    false
+  hasCalls:        false
+  maxCallFrameSize: 0
+  hasOpaqueSPAdjustment: false
+  hasVAStart:      false
+  hasMustTailInVarArgFunc: false
+body:             |
+  bb.0 (%ir-block.0, freq 56):
+    successors: %bb.1(37), %bb.5(62)
+  
+    %r1 = t2MOVi16 target-flags(<unknown>) @get_frame_alias_set.set, 14, _
+    %r1 = t2MOVTi16 %r1, target-flags(<unknown>) @get_frame_alias_set.set, 14, _
+    %r0 = tLDRi %r1, 0, 14, _ :: (load 4 from @get_frame_alias_set.set)
+    t2CMPri %r0, -1, 14, _, implicit-def %cpsr
+    t2Bcc %bb.5, 1, killed %cpsr
+    t2B %bb.1, 14, _
+  
+  bb.1 (%ir-block.3, freq 21):
+    successors: %bb.2(37), %bb.3(62)
+    liveins: %r1
+  
+    %r0 = t2MOVi16 target-flags(<unknown>) @flag_strict_aliasing, 14, _
+    %r0 = t2MOVTi16 %r0, target-flags(<unknown>) @flag_strict_aliasing, 14, _
+    %r0 = tLDRi killed %r0, 0, 14, _ :: (load 4 from @flag_strict_aliasing)
+    tCMPi8 killed %r0, 0, 14, _, implicit-def %cpsr
+    t2Bcc %bb.3, 1, killed %cpsr
+  
+  bb.2 (freq 8):
+    successors: %bb.4.new_alias_set.exit(100)
+    liveins: %r1
+  
+    %r0, dead %cpsr = tMOVi8 0, 14, _
+    t2B %bb.4.new_alias_set.exit, 14, _
+  
+  bb.3 (%ir-block.6, freq 13):
+    successors: %bb.4.new_alias_set.exit(100)
+    liveins: %r1
+  
+    %r2 = t2MOVi16 target-flags(<unknown>) @new_alias_set.last_alias_set, 14, _
+    %r2 = t2MOVTi16 %r2, target-flags(<unknown>) @new_alias_set.last_alias_set, 14, _
+    %r0 = tLDRi %r2, 0, 14, _ :: (load 4 from @new_alias_set.last_alias_set)
+    %r0, dead %cpsr = tADDi8 killed %r0, 1, 14, _
+    tSTRi %r0, killed %r2, 0, 14, _ :: (store 4 into @new_alias_set.last_alias_set)
+  
+  bb.4.new_alias_set.exit (freq 21):
+    successors: %bb.5(100)
+    liveins: %r0, %r1
+  
+    tSTRi %r0, killed %r1, 0, 14, _ :: (store 4 into @get_frame_alias_set.set)
+  
+  bb.5 (%ir-block.9, freq 56):
+    liveins: %r0
+    liveouts: %r0
+  
+    tBX_RET 14, _, implicit %r0
+
+...

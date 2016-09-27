@@ -1,0 +1,122 @@
+--- |
+  ; ModuleID = 'gobmk.owl_attackpat.autohelperowl_attackpat68.ll'
+  target datalayout = "E-m:m-p:32:32-i8:8:32-i16:16:32-i64:64-n32-S64"
+  target triple = "mips--linux-gnu"
+  
+  @transformation = external global [1369 x [8 x i32]], align 4
+  
+  ; Function Attrs: nounwind
+  define hidden i32 @autohelperowl_attackpat68(i32 signext %trans, i32 signext %move, i32 signext %color, i32 signext %action) #0 {
+    %1 = getelementptr inbounds [1369 x [8 x i32]], [1369 x [8 x i32]]* @transformation, i32 0, i32 683, i32 %trans
+    %2 = load i32, i32* %1, align 4
+    %3 = add nsw i32 %2, %move
+    %4 = getelementptr inbounds [1369 x [8 x i32]], [1369 x [8 x i32]]* @transformation, i32 0, i32 646, i32 %trans
+    %5 = load i32, i32* %4, align 4
+    %6 = add nsw i32 %5, %move
+    %7 = tail call i32 (i32, i32, i32, ...) @play_attack_defend2_n(i32 signext %color, i32 signext 0, i32 signext 2, i32 signext %move, i32 signext %3, i32 signext %move, i32 signext %6) #2
+    ret i32 %7
+  }
+  
+  declare i32 @play_attack_defend2_n(i32 signext, i32 signext, i32 signext, ...) #1
+  
+  attributes #0 = { nounwind "disable-tail-calls"="false" "less-precise-fpmad"="false" "no-frame-pointer-elim"="false" "no-infs-fp-math"="false" "no-nans-fp-math"="false" "stack-protector-buffer-size"="8" "target-cpu"="mips32" "target-features"="+mips32r2" "unsafe-fp-math"="false" "use-soft-float"="false" }
+  attributes #1 = { "disable-tail-calls"="false" "less-precise-fpmad"="false" "no-frame-pointer-elim"="false" "no-infs-fp-math"="false" "no-nans-fp-math"="false" "stack-protector-buffer-size"="8" "target-cpu"="mips32" "target-features"="+mips32r2" "unsafe-fp-math"="false" "use-soft-float"="false" }
+  attributes #2 = { nounwind }
+  
+  !llvm.ident = !{!0}
+  
+  !0 = !{!"clang version 3.8.0 (http://llvm.org/git/clang.git 2d49f0a0ae8366964a93e3b7b26e29679bee7160) (http://llvm.org/git/llvm.git 60bc66b44837125843b58ed3e0fd2e6bb948d839)"}
+
+...
+---
+name:            autohelperowl_attackpat68
+alignment:       2
+exposesReturnsTwice: false
+hasInlineAsm:    false
+isSSA:           true
+tracksRegLiveness: true
+tracksSubRegLiveness: false
+registers:       
+  - { id: 0, class: gpr32 }
+  - { id: 1, class: gpr32 }
+  - { id: 2, class: gpr32 }
+  - { id: 3, class: gpr32 }
+  - { id: 4, class: gpr32 }
+  - { id: 5, class: gpr32 }
+  - { id: 6, class: gpr32 }
+  - { id: 7, class: gpr32 }
+  - { id: 8, class: gpr32 }
+  - { id: 9, class: gpr32 }
+  - { id: 10, class: gpr32 }
+  - { id: 11, class: gpr32 }
+  - { id: 12, class: gpr32 }
+  - { id: 13, class: gpr32 }
+  - { id: 14, class: gpr32 }
+  - { id: 15, class: gpr32 }
+  - { id: 16, class: gpr32 }
+  - { id: 17, class: gpr32 }
+  - { id: 18, class: gpr32 }
+liveins:         
+  - { reg: '%a0', virtual-reg: '%0' }
+  - { reg: '%a1', virtual-reg: '%1' }
+  - { reg: '%a2', virtual-reg: '%2' }
+  - { reg: '%t9' }
+  - { reg: '%v0' }
+frameInfo:       
+  isFrameAddressTaken: false
+  isReturnAddressTaken: false
+  hasStackMap:     false
+  hasPatchPoint:   false
+  stackSize:       0
+  offsetAdjustment: 0
+  maxAlignment:    4
+  adjustsStack:    false
+  hasCalls:        true
+  maxCallFrameSize: 0
+  hasOpaqueSPAdjustment: false
+  hasVAStart:      false
+  hasMustTailInVarArgFunc: false
+body:             |
+  bb.0 (%ir-block.0, freq 8):
+    liveins: %a0, %a1, %a2, %t9, %v0
+    liveouts: %v0
+  
+    %4 = ADDu %v0, %t9
+    %2 = COPY %a2
+    %1 = COPY %a1
+    %0 = COPY %a0
+    %5 = SLL %0, 2
+    %6 = LW %4, target-flags(<unknown>) @transformation, <0x361bf80> = !{!"unison-memory-partition", i32 0} :: (load 4 from got)
+    %7 = ADDu killed %6, killed %5
+    %8 = LW %7, 21856, <0x361bf80> = !{!"unison-memory-partition", i32 0} :: (load 4 from %ir.1)
+    %9 = LW %7, 20672, <0x361bf80> = !{!"unison-memory-partition", i32 0} :: (load 4 from %ir.4)
+    ADJCALLSTACKDOWN 32, implicit-def dead %sp, implicit %sp
+    %10 = COPY %sp
+    SW %1, %10, 20, <0x361bf80> = !{!"unison-memory-partition", i32 0} :: (store 4 into unknown)
+    %11 = ADDiu %zero, 0
+    %12 = ADDiu %zero, 2
+    %13 = ADDu killed %9, %1
+    SW killed %13, %10, 24, <0x361bf80> = !{!"unison-memory-partition", i32 0} :: (store 4 into unknown)
+    %14 = ADDu killed %8, %1
+    SW killed %14, %10, 16, <0x361bf80> = !{!"unison-memory-partition", i32 0} :: (store 4 into unknown)
+    %15 = LW %4, target-flags(<unknown>) @play_attack_defend2_n, <0x361bf80> = !{!"unison-memory-partition", i32 0} :: (load 4 from call-entry @play_attack_defend2_n)
+    %a0 = COPY %2
+    %a1 = COPY %11
+    %a2 = COPY %12
+    %a3 = COPY %1
+    %gp = COPY %4
+    %t9 = COPY %15
+    JALRPseudo killed %t9, csr_o32, implicit-def dead %ra, implicit %a0, implicit %a1, implicit %a2, implicit %a3, implicit %gp, implicit-def %sp, implicit-def %v0
+    ADJCALLSTACKUP 32, 0, implicit-def dead %sp, implicit %sp
+    %16 = COPY %v0
+    %v0 = COPY %16
+    RetRA implicit %v0
+
+...
+---
+unison-test-target: Mips
+unison-test-goal: speed
+unison-test-expected-cost: 18
+unison-test-expected-proven: true
+unison-test-expected-has-solution: true
+...

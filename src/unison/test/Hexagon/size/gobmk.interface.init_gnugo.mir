@@ -1,0 +1,76 @@
+--- |
+  ; ModuleID = 'gobmk.interface.init_gnugo.ll'
+  target datalayout = "e-m:e-p:32:32:32-i64:64:64-i32:32:32-i16:16:16-i1:8:8-f64:64:64-f32:32:32-v64:64:64-v32:32:32-a:0-n16:32"
+  target triple = "hexagon"
+  
+  ; Function Attrs: nounwind
+  define void @init_gnugo() #0 {
+    tail call void @reading_cache_init() #2
+    tail call void @clear_board() #2
+    tail call void @transformation_init() #2
+    tail call void @dfa_match_init() #2
+    ret void
+  }
+  
+  declare void @reading_cache_init() #1
+  
+  declare void @clear_board() #1
+  
+  declare void @transformation_init() #1
+  
+  declare void @dfa_match_init() #1
+  
+  attributes #0 = { nounwind "disable-tail-calls"="false" "less-precise-fpmad"="false" "no-frame-pointer-elim"="true" "no-frame-pointer-elim-non-leaf" "no-infs-fp-math"="false" "no-nans-fp-math"="false" "stack-protector-buffer-size"="8" "target-cpu"="hexagonv4" "target-features"="-hvx,-hvx-double" "unsafe-fp-math"="false" "use-soft-float"="false" }
+  attributes #1 = { "disable-tail-calls"="false" "less-precise-fpmad"="false" "no-frame-pointer-elim"="true" "no-frame-pointer-elim-non-leaf" "no-infs-fp-math"="false" "no-nans-fp-math"="false" "stack-protector-buffer-size"="8" "target-cpu"="hexagonv4" "target-features"="-hvx,-hvx-double" "unsafe-fp-math"="false" "use-soft-float"="false" }
+  attributes #2 = { nounwind }
+  
+  !llvm.ident = !{!0}
+  
+  !0 = !{!"clang version 3.8.0 (http://llvm.org/git/clang.git 2d49f0a0ae8366964a93e3b7b26e29679bee7160) (http://llvm.org/git/llvm.git 60bc66b44837125843b58ed3e0fd2e6bb948d839)"}
+
+...
+---
+name:            init_gnugo
+alignment:       4
+exposesReturnsTwice: false
+hasInlineAsm:    false
+isSSA:           true
+tracksRegLiveness: true
+tracksSubRegLiveness: false
+frameInfo:       
+  isFrameAddressTaken: false
+  isReturnAddressTaken: false
+  hasStackMap:     false
+  hasPatchPoint:   false
+  stackSize:       0
+  offsetAdjustment: 0
+  maxAlignment:    0
+  adjustsStack:    false
+  hasCalls:        true
+  maxCallFrameSize: 0
+  hasOpaqueSPAdjustment: false
+  hasVAStart:      false
+  hasMustTailInVarArgFunc: false
+body:             |
+  bb.0 (%ir-block.0, freq 8):
+    liveouts:
+  
+    ADJCALLSTACKDOWN 0, implicit-def dead %r29, implicit-def dead %r30, implicit %r31, implicit %r30, implicit %r29
+    J2_call @reading_cache_init, implicit-def dead %d0, implicit-def dead %d1, implicit-def dead %d2, implicit-def dead %d3, implicit-def dead %d4, implicit-def dead %d5, implicit-def dead %d6, implicit-def dead %d7, implicit-def dead %r28, implicit-def dead %r31, implicit-def dead %p0, implicit-def dead %p1, implicit-def dead %p2, implicit-def dead %p3, implicit-def dead %m0, implicit-def dead %m1, implicit-def dead %lc0, implicit-def dead %lc1, implicit-def dead %sa0, implicit-def dead %sa1, implicit-def dead %usr, implicit-def dead %usr_ovf
+    ADJCALLSTACKUP 0, 0, implicit-def dead %r29, implicit-def dead %r30, implicit-def dead %r31, implicit %r29
+    ADJCALLSTACKDOWN 0, implicit-def dead %r29, implicit-def dead %r30, implicit %r31, implicit %r30, implicit %r29
+    J2_call @clear_board, implicit-def dead %d0, implicit-def dead %d1, implicit-def dead %d2, implicit-def dead %d3, implicit-def dead %d4, implicit-def dead %d5, implicit-def dead %d6, implicit-def dead %d7, implicit-def dead %r28, implicit-def dead %r31, implicit-def dead %p0, implicit-def dead %p1, implicit-def dead %p2, implicit-def dead %p3, implicit-def dead %m0, implicit-def dead %m1, implicit-def dead %lc0, implicit-def dead %lc1, implicit-def dead %sa0, implicit-def dead %sa1, implicit-def dead %usr, implicit-def dead %usr_ovf
+    ADJCALLSTACKUP 0, 0, implicit-def dead %r29, implicit-def dead %r30, implicit-def dead %r31, implicit %r29
+    ADJCALLSTACKDOWN 0, implicit-def dead %r29, implicit-def dead %r30, implicit %r31, implicit %r30, implicit %r29
+    J2_call @transformation_init, implicit-def dead %d0, implicit-def dead %d1, implicit-def dead %d2, implicit-def dead %d3, implicit-def dead %d4, implicit-def dead %d5, implicit-def dead %d6, implicit-def dead %d7, implicit-def dead %r28, implicit-def dead %r31, implicit-def dead %p0, implicit-def dead %p1, implicit-def dead %p2, implicit-def dead %p3, implicit-def dead %m0, implicit-def dead %m1, implicit-def dead %lc0, implicit-def dead %lc1, implicit-def dead %sa0, implicit-def dead %sa1, implicit-def dead %usr, implicit-def dead %usr_ovf
+    ADJCALLSTACKUP 0, 0, implicit-def dead %r29, implicit-def dead %r30, implicit-def dead %r31, implicit %r29
+    TCRETURNi @dfa_match_init
+
+...
+---
+unison-test-target: Hexagon
+unison-test-goal: size
+unison-test-expected-cost: 6
+unison-test-expected-proven: true
+unison-test-expected-has-solution: false
+...

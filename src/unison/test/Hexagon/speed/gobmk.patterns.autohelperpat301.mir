@@ -1,0 +1,108 @@
+--- |
+  ; ModuleID = 'gobmk.patterns.autohelperpat301.ll'
+  target datalayout = "e-m:e-p:32:32:32-i64:64:64-i32:32:32-i16:16:16-i1:8:8-f64:64:64-f32:32:32-v64:64:64-v32:32:32-a:0-n16:32"
+  target triple = "hexagon"
+  
+  %struct.influence_data.965 = type opaque
+  
+  @transformation = external global [1369 x [8 x i32]], align 8
+  @initial_white_influence = external global %struct.influence_data.965, align 1
+  @initial_black_influence = external global %struct.influence_data.965, align 1
+  
+  ; Function Attrs: nounwind
+  define hidden i32 @autohelperpat301(i32 %trans, i32 %move, i32 %color, i32 %action) #0 {
+    %cgep = getelementptr [1369 x [8 x i32]], [1369 x [8 x i32]]* @transformation, i32 0, i32 795, i32 %trans
+    %1 = load i32, i32* %cgep, align 4
+    %2 = add nsw i32 %1, %move
+    %3 = icmp eq i32 %color, 2
+    %4 = select i1 %3, %struct.influence_data.965* @initial_white_influence, %struct.influence_data.965* @initial_black_influence
+    %5 = tail call i32 @whose_moyo(%struct.influence_data.965* %4, i32 %2) #2
+    %6 = icmp eq i32 %5, %color
+    %7 = zext i1 %6 to i32
+    ret i32 %7
+  }
+  
+  declare i32 @whose_moyo(%struct.influence_data.965*, i32) #1
+  
+  attributes #0 = { nounwind "disable-tail-calls"="false" "less-precise-fpmad"="false" "no-frame-pointer-elim"="true" "no-frame-pointer-elim-non-leaf" "no-infs-fp-math"="false" "no-nans-fp-math"="false" "stack-protector-buffer-size"="8" "target-cpu"="hexagonv4" "target-features"="-hvx,-hvx-double" "unsafe-fp-math"="false" "use-soft-float"="false" }
+  attributes #1 = { "disable-tail-calls"="false" "less-precise-fpmad"="false" "no-frame-pointer-elim"="true" "no-frame-pointer-elim-non-leaf" "no-infs-fp-math"="false" "no-nans-fp-math"="false" "stack-protector-buffer-size"="8" "target-cpu"="hexagonv4" "target-features"="-hvx,-hvx-double" "unsafe-fp-math"="false" "use-soft-float"="false" }
+  attributes #2 = { nounwind }
+  
+  !llvm.ident = !{!0}
+  
+  !0 = !{!"clang version 3.8.0 (http://llvm.org/git/clang.git 2d49f0a0ae8366964a93e3b7b26e29679bee7160) (http://llvm.org/git/llvm.git 60bc66b44837125843b58ed3e0fd2e6bb948d839)"}
+
+...
+---
+name:            autohelperpat301
+alignment:       4
+exposesReturnsTwice: false
+hasInlineAsm:    false
+isSSA:           true
+tracksRegLiveness: true
+tracksSubRegLiveness: false
+registers:       
+  - { id: 0, class: intregs }
+  - { id: 1, class: intregs }
+  - { id: 2, class: intregs }
+  - { id: 3, class: intregs }
+  - { id: 4, class: intregs }
+  - { id: 5, class: intregs }
+  - { id: 6, class: intregs }
+  - { id: 7, class: predregs }
+  - { id: 8, class: intregs }
+  - { id: 9, class: intregs }
+  - { id: 10, class: intregs }
+  - { id: 11, class: intregs }
+  - { id: 12, class: intregs }
+liveins:         
+  - { reg: '%r0', virtual-reg: '%0' }
+  - { reg: '%r1', virtual-reg: '%1' }
+  - { reg: '%r2', virtual-reg: '%2' }
+frameInfo:       
+  isFrameAddressTaken: false
+  isReturnAddressTaken: false
+  hasStackMap:     false
+  hasPatchPoint:   false
+  stackSize:       0
+  offsetAdjustment: 0
+  maxAlignment:    0
+  adjustsStack:    false
+  hasCalls:        true
+  maxCallFrameSize: 0
+  hasOpaqueSPAdjustment: false
+  hasVAStart:      false
+  hasMustTailInVarArgFunc: false
+body:             |
+  bb.0 (%ir-block.0, freq 8):
+    liveins: %r0, %r1, %r2
+    liveouts: %r0
+  
+    %2 = COPY %r2
+    %1 = COPY %r1
+    %0 = COPY %r0
+    %4 = S4_addi_asl_ri @transformation, %0, 2, <0x38f6070> = !{!"unison-property", !"constant-extended"}
+    %5 = L2_loadri_io killed %4, 25440, <0x38f6070> = !{!"unison-property", !"constant-extended"}, <0x38f6190> = !{!"unison-memory-partition", i32 0} :: (load 4 from %ir.cgep)
+    %6 = A2_add killed %5, %1
+    %7 = C2_cmpeqi %2, 2
+    %8 = A2_tfrsi @initial_black_influence, <0x38f6070> = !{!"unison-property", !"constant-extended"}
+    %9 = A2_tfrsi @initial_white_influence, <0x38f6070> = !{!"unison-property", !"constant-extended"}
+    %10 = C2_mux killed %7, killed %9, killed %8
+    ADJCALLSTACKDOWN 0, implicit-def dead %r29, implicit-def dead %r30, implicit %r31, implicit %r30, implicit %r29
+    %r0 = COPY %10
+    %r1 = COPY %6
+    J2_call @whose_moyo, implicit-def %d0, implicit-def dead %d1, implicit-def dead %d2, implicit-def dead %d3, implicit-def dead %d4, implicit-def dead %d5, implicit-def dead %d6, implicit-def dead %d7, implicit-def dead %r28, implicit-def dead %r31, implicit-def dead %p0, implicit-def dead %p1, implicit-def dead %p2, implicit-def dead %p3, implicit-def dead %m0, implicit-def dead %m1, implicit-def dead %lc0, implicit-def dead %lc1, implicit-def dead %sa0, implicit-def dead %sa1, implicit-def dead %usr, implicit-def dead %usr_ovf, implicit %r0, implicit %r1
+    ADJCALLSTACKUP 0, 0, implicit-def dead %r29, implicit-def dead %r30, implicit-def dead %r31, implicit %r29
+    %11 = COPY %r0
+    %12 = A4_rcmpeq %11, %2
+    %r0 = COPY %12
+    JMPret %r31, implicit-def dead %pc, implicit %r0
+
+...
+---
+unison-test-target: Hexagon
+unison-test-goal: speed
+unison-test-expected-cost: 5
+unison-test-expected-proven: true
+unison-test-expected-has-solution: true
+...

@@ -1,0 +1,89 @@
+--- |
+  ; ModuleID = 'gobmk.board.get_last_player.ll'
+  target datalayout = "e-m:e-p:32:32-i64:64-v128:64:128-a:0:32-n32-S64"
+  target triple = "armv6t2-pc-linux-eabi"
+  
+  @move_history_pointer = external global i32, align 4
+  @move_history_color = external global [500 x i32], align 4
+  
+  ; Function Attrs: norecurse nounwind readonly
+  define i32 @get_last_player() #0 {
+    %1 = load i32, i32* @move_history_pointer, align 4
+    %2 = icmp eq i32 %1, 0
+    br i1 %2, label %7, label %3
+  
+  ; <label>:3                                       ; preds = %0
+    %4 = add nsw i32 %1, -1
+    %5 = getelementptr inbounds [500 x i32], [500 x i32]* @move_history_color, i32 0, i32 %4
+    %6 = load i32, i32* %5, align 4
+    br label %7
+  
+  ; <label>:7                                       ; preds = %3, %0
+    %.0 = phi i32 [ %6, %3 ], [ 0, %0 ]
+    ret i32 %.0
+  }
+  
+  attributes #0 = { norecurse nounwind readonly "disable-tail-calls"="false" "less-precise-fpmad"="false" "no-frame-pointer-elim"="true" "no-frame-pointer-elim-non-leaf" "no-infs-fp-math"="false" "no-nans-fp-math"="false" "stack-protector-buffer-size"="8" "target-cpu"="arm1156t2f-s" "target-features"="+thumb-mode" "unsafe-fp-math"="false" "use-soft-float"="false" }
+  
+  !llvm.module.flags = !{!0, !1}
+  !llvm.ident = !{!2}
+  
+  !0 = !{i32 1, !"wchar_size", i32 4}
+  !1 = !{i32 1, !"min_enum_size", i32 4}
+  !2 = !{!"clang version 3.8.0 (http://llvm.org/git/clang.git 2d49f0a0ae8366964a93e3b7b26e29679bee7160) (http://llvm.org/git/llvm.git 60bc66b44837125843b58ed3e0fd2e6bb948d839)"}
+
+...
+---
+name:            get_last_player
+alignment:       1
+exposesReturnsTwice: false
+hasInlineAsm:    false
+isSSA:           false
+tracksRegLiveness: false
+tracksSubRegLiveness: false
+frameInfo:       
+  isFrameAddressTaken: false
+  isReturnAddressTaken: false
+  hasStackMap:     false
+  hasPatchPoint:   false
+  stackSize:       0
+  offsetAdjustment: 0
+  maxAlignment:    0
+  adjustsStack:    false
+  hasCalls:        false
+  maxCallFrameSize: 0
+  hasOpaqueSPAdjustment: false
+  hasVAStart:      false
+  hasMustTailInVarArgFunc: false
+body:             |
+  bb.0 (%ir-block.0, freq 21):
+    successors: %bb.1(37), %bb.2(62)
+  
+    %r0 = t2MOVi16 target-flags(<unknown>) @move_history_pointer, 14, _
+    %r0 = t2MOVTi16 %r0, target-flags(<unknown>) @move_history_pointer, 14, _
+    %r0 = tLDRi killed %r0, 0, 14, _ :: (load 4 from @move_history_pointer)
+    tCMPi8 %r0, 0, 14, _, implicit-def %cpsr
+    t2Bcc %bb.2, 1, killed %cpsr
+  
+  bb.1 (freq 8):
+    successors: %bb.3(100)
+  
+    %r0, dead %cpsr = tMOVi8 0, 14, _
+    t2B %bb.3, 14, _
+  
+  bb.2 (%ir-block.3, freq 13):
+    successors: %bb.3(100)
+    liveins: %r0
+  
+    %r1 = t2MOVi16 target-flags(<unknown>) @move_history_color, 14, _
+    %r1 = t2MOVTi16 %r1, target-flags(<unknown>) @move_history_color, 14, _
+    %r0 = t2ADDrs killed %r1, killed %r0, 18, 14, _, _
+    %r0 = t2LDRi8 killed %r0, -4, 14, _ :: (load 4 from %ir.5)
+  
+  bb.3 (%ir-block.7, freq 21):
+    liveins: %r0
+    liveouts: %r0
+  
+    tBX_RET 14, _, implicit %r0
+
+...

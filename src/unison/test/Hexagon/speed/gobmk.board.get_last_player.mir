@@ -1,0 +1,92 @@
+--- |
+  ; ModuleID = 'gobmk.board.get_last_player.ll'
+  target datalayout = "e-m:e-p:32:32:32-i64:64:64-i32:32:32-i16:16:16-i1:8:8-f64:64:64-f32:32:32-v64:64:64-v32:32:32-a:0-n16:32"
+  target triple = "hexagon"
+  
+  @move_history_pointer = external global i32, align 4
+  @move_history_color = external global [500 x i32], align 8
+  
+  ; Function Attrs: norecurse nounwind readonly
+  define i32 @get_last_player() #0 {
+    %1 = load i32, i32* @move_history_pointer, align 4
+    %2 = icmp eq i32 %1, 0
+    br i1 %2, label %6, label %3
+  
+  ; <label>:3                                       ; preds = %0
+    %4 = add nsw i32 %1, -1
+    %cgep = getelementptr [500 x i32], [500 x i32]* @move_history_color, i32 0, i32 %4
+    %5 = load i32, i32* %cgep, align 4
+    br label %6
+  
+  ; <label>:6                                       ; preds = %3, %0
+    %.0 = phi i32 [ %5, %3 ], [ 0, %0 ]
+    ret i32 %.0
+  }
+  
+  attributes #0 = { norecurse nounwind readonly "disable-tail-calls"="false" "less-precise-fpmad"="false" "no-frame-pointer-elim"="true" "no-frame-pointer-elim-non-leaf" "no-infs-fp-math"="false" "no-nans-fp-math"="false" "stack-protector-buffer-size"="8" "target-cpu"="hexagonv4" "target-features"="-hvx,-hvx-double" "unsafe-fp-math"="false" "use-soft-float"="false" }
+  
+  !llvm.ident = !{!0}
+  
+  !0 = !{!"clang version 3.8.0 (http://llvm.org/git/clang.git 2d49f0a0ae8366964a93e3b7b26e29679bee7160) (http://llvm.org/git/llvm.git 60bc66b44837125843b58ed3e0fd2e6bb948d839)"}
+
+...
+---
+name:            get_last_player
+alignment:       4
+exposesReturnsTwice: false
+hasInlineAsm:    false
+isSSA:           true
+tracksRegLiveness: true
+tracksSubRegLiveness: false
+registers:       
+  - { id: 0, class: intregs }
+  - { id: 1, class: intregs }
+  - { id: 2, class: intregs }
+  - { id: 3, class: intregs }
+  - { id: 4, class: predregs }
+  - { id: 5, class: intregs }
+frameInfo:       
+  isFrameAddressTaken: false
+  isReturnAddressTaken: false
+  hasStackMap:     false
+  hasPatchPoint:   false
+  stackSize:       0
+  offsetAdjustment: 0
+  maxAlignment:    0
+  adjustsStack:    false
+  hasCalls:        false
+  maxCallFrameSize: 0
+  hasOpaqueSPAdjustment: false
+  hasVAStart:      false
+  hasMustTailInVarArgFunc: false
+body:             |
+  bb.0 (%ir-block.0, freq 12):
+    successors: %bb.2(37), %bb.1(62)
+  
+    %0 = L4_loadri_abs @move_history_pointer, <0x28c02f0> = !{!"unison-property", !"constant-extended"}, <0x28bdb20> = !{!"unison-memory-partition", i32 0} :: (load 4 from @move_history_pointer)
+    %4 = C2_cmpeqi %0, 0
+    %3 = A2_tfrsi 0
+    J2_jumpt killed %4, %bb.2, implicit-def dead %pc
+    J2_jump %bb.1, implicit-def dead %pc
+  
+  bb.1 (%ir-block.3, freq 8):
+    successors: %bb.2(100)
+  
+    %5 = S4_addi_asl_ri @move_history_color, %0, 2, <0x28c02f0> = !{!"unison-property", !"constant-extended"}
+    %1 = L2_loadri_io killed %5, -4, <0x28bdb20> = !{!"unison-memory-partition", i32 0} :: (load 4 from %ir.cgep)
+  
+  bb.2 (%ir-block.6, freq 12):
+    liveouts: %r0
+  
+    %2 = PHI %3, %bb.0, %1, %bb.1
+    %r0 = COPY %2
+    JMPret %r31, implicit-def dead %pc, implicit %r0
+
+...
+---
+unison-test-target: Hexagon
+unison-test-goal: speed
+unison-test-expected-cost: 10
+unison-test-expected-proven: true
+unison-test-expected-has-solution: false
+...

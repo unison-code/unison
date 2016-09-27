@@ -1,0 +1,142 @@
+--- |
+  ; ModuleID = 'gcc.insn-output.output_51.ll'
+  target datalayout = "E-m:m-p:32:32-i8:8:32-i16:16:32-i64:64-n32-S64"
+  target triple = "mips--linux-gnu"
+  
+  %struct.rtx_def.183 = type { i32, [1 x %union.rtunion_def.185] }
+  %union.rtunion_def.185 = type { i32 }
+  
+  @.str.75 = external hidden unnamed_addr constant [23 x i8], align 1
+  @.str.2014 = external hidden unnamed_addr constant [29 x i8], align 1
+  @.str.2015 = external hidden unnamed_addr constant [27 x i8], align 1
+  
+  ; Function Attrs: nounwind
+  define hidden i8* @output_51(%struct.rtx_def.183** nocapture readnone %operands, %struct.rtx_def.183* %insn) #0 {
+    %1 = tail call i32 @get_attr_type(%struct.rtx_def.183* %insn) #2
+    %cond = icmp eq i32 %1, 8
+    br i1 %cond, label %5, label %2
+  
+  ; <label>:2                                       ; preds = %0
+    %3 = tail call i32 @get_attr_mode(%struct.rtx_def.183* %insn) #2
+    %4 = icmp eq i32 %3, 4
+    %. = select i1 %4, i8* getelementptr inbounds ([27 x i8], [27 x i8]* @.str.2015, i32 0, i32 0), i8* getelementptr inbounds ([23 x i8], [23 x i8]* @.str.75, i32 0, i32 0)
+    br label %5
+  
+  ; <label>:5                                       ; preds = %2, %0
+    %.0 = phi i8* [ getelementptr inbounds ([29 x i8], [29 x i8]* @.str.2014, i32 0, i32 0), %0 ], [ %., %2 ]
+    ret i8* %.0
+  }
+  
+  declare i32 @get_attr_type(%struct.rtx_def.183*) #1
+  
+  declare i32 @get_attr_mode(%struct.rtx_def.183*) #1
+  
+  attributes #0 = { nounwind "disable-tail-calls"="false" "less-precise-fpmad"="false" "no-frame-pointer-elim"="false" "no-infs-fp-math"="false" "no-nans-fp-math"="false" "stack-protector-buffer-size"="8" "target-cpu"="mips32" "target-features"="+mips32r2" "unsafe-fp-math"="false" "use-soft-float"="false" }
+  attributes #1 = { "disable-tail-calls"="false" "less-precise-fpmad"="false" "no-frame-pointer-elim"="false" "no-infs-fp-math"="false" "no-nans-fp-math"="false" "stack-protector-buffer-size"="8" "target-cpu"="mips32" "target-features"="+mips32r2" "unsafe-fp-math"="false" "use-soft-float"="false" }
+  attributes #2 = { nounwind }
+  
+  !llvm.ident = !{!0}
+  
+  !0 = !{!"clang version 3.8.0 (http://llvm.org/git/clang.git 2d49f0a0ae8366964a93e3b7b26e29679bee7160) (http://llvm.org/git/llvm.git 60bc66b44837125843b58ed3e0fd2e6bb948d839)"}
+
+...
+---
+name:            output_51
+alignment:       2
+exposesReturnsTwice: false
+hasInlineAsm:    false
+isSSA:           true
+tracksRegLiveness: true
+tracksSubRegLiveness: false
+registers:       
+  - { id: 0, class: gpr32 }
+  - { id: 1, class: gpr32 }
+  - { id: 2, class: gpr32 }
+  - { id: 3, class: gpr32 }
+  - { id: 4, class: gpr32 }
+  - { id: 5, class: gpr32 }
+  - { id: 6, class: gpr32 }
+  - { id: 7, class: gpr32 }
+  - { id: 8, class: gpr32 }
+  - { id: 9, class: gpr32 }
+  - { id: 10, class: gpr32 }
+  - { id: 11, class: gpr32 }
+  - { id: 12, class: gpr32 }
+  - { id: 13, class: gpr32 }
+  - { id: 14, class: gpr32 }
+  - { id: 15, class: gpr32 }
+  - { id: 16, class: gpr32 }
+liveins:         
+  - { reg: '%a1', virtual-reg: '%3' }
+  - { reg: '%t9' }
+  - { reg: '%v0' }
+frameInfo:       
+  isFrameAddressTaken: false
+  isReturnAddressTaken: false
+  hasStackMap:     false
+  hasPatchPoint:   false
+  stackSize:       0
+  offsetAdjustment: 0
+  maxAlignment:    1
+  adjustsStack:    false
+  hasCalls:        true
+  maxCallFrameSize: 0
+  hasOpaqueSPAdjustment: false
+  hasVAStart:      false
+  hasMustTailInVarArgFunc: false
+body:             |
+  bb.0 (%ir-block.0, freq 16):
+    successors: %bb.3(50), %bb.1(50)
+    liveins: %a1, %t9, %v0
+  
+    %4 = ADDu %v0, %t9
+    %3 = COPY %a1
+    ADJCALLSTACKDOWN 16, implicit-def dead %sp, implicit %sp
+    %6 = LW %4, target-flags(<unknown>) @get_attr_type, <0x2d10cb0> = !{!"unison-memory-partition", i32 0} :: (load 4 from call-entry @get_attr_type)
+    %a0 = COPY %3
+    %gp = COPY %4
+    %t9 = COPY %6
+    JALRPseudo killed %t9, csr_o32, implicit-def dead %ra, implicit %a0, implicit %gp, implicit-def %sp, implicit-def %v0
+    ADJCALLSTACKUP 16, 0, implicit-def dead %sp, implicit %sp
+    %7 = COPY %v0
+    %8 = ADDiu %zero, 8
+    BNE %7, %8, %bb.1, implicit-def %at
+  
+  bb.3 (freq 8):
+    successors: %bb.2(100)
+  
+    %5 = LW %4, target-flags(<unknown>) @.str.2014, <0x2d10cb0> = !{!"unison-memory-partition", i32 0} :: (load 4 from got)
+    B %bb.2, implicit-def %at
+  
+  bb.1 (%ir-block.2, freq 8):
+    successors: %bb.2(100)
+  
+    ADJCALLSTACKDOWN 16, implicit-def dead %sp, implicit %sp
+    %9 = LW %4, target-flags(<unknown>) @get_attr_mode, <0x2d10cb0> = !{!"unison-memory-partition", i32 0} :: (load 4 from call-entry @get_attr_mode)
+    %a0 = COPY %3
+    %gp = COPY %4
+    %t9 = COPY %9
+    JALRPseudo killed %t9, csr_o32, implicit-def dead %ra, implicit %a0, implicit %gp, implicit-def %sp, implicit-def %v0
+    ADJCALLSTACKUP 16, 0, implicit-def dead %sp, implicit %sp
+    %10 = COPY %v0
+    %11 = XORi %10, 4
+    %12 = ADDiu %4, target-flags(<unknown>) @.str.75
+    %13 = ADDiu %4, target-flags(<unknown>) @.str.2015
+    %14 = MOVZ_I_I killed %13, killed %11, %12
+    %0 = LW killed %14, 0, <0x2d10df0> = !{!"unison-memory-partition", i32 1} :: (load 4 from unknown)
+  
+  bb.2 (%ir-block.5, freq 16):
+    liveouts: %v0
+  
+    %1 = PHI %5, %bb.3, %0, %bb.1
+    %v0 = COPY %1
+    RetRA implicit %v0
+
+...
+---
+unison-test-target: Mips
+unison-test-goal: speed
+unison-test-expected-cost: 27
+unison-test-expected-proven: false
+unison-test-expected-has-solution: true
+...

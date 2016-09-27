@@ -1,0 +1,94 @@
+--- |
+  ; ModuleID = 'gobmk.patterns.autohelperpat301.ll'
+  target datalayout = "e-m:e-p:32:32:32-i64:64:64-i32:32:32-i16:16:16-i1:8:8-f64:64:64-f32:32:32-v64:64:64-v32:32:32-a:0-n16:32"
+  target triple = "hexagon"
+  
+  %struct.influence_data.965 = type opaque
+  
+  @transformation = external global [1369 x [8 x i32]], align 8
+  @initial_white_influence = external global %struct.influence_data.965, align 1
+  @initial_black_influence = external global %struct.influence_data.965, align 1
+  
+  ; Function Attrs: nounwind
+  define hidden i32 @autohelperpat301(i32 %trans, i32 %move, i32 %color, i32 %action) #0 {
+    %cgep = getelementptr [1369 x [8 x i32]], [1369 x [8 x i32]]* @transformation, i32 0, i32 795, i32 %trans
+    %1 = load i32, i32* %cgep, align 4
+    %2 = add nsw i32 %1, %move
+    %3 = icmp eq i32 %color, 2
+    %4 = select i1 %3, %struct.influence_data.965* @initial_white_influence, %struct.influence_data.965* @initial_black_influence
+    %5 = tail call i32 @whose_moyo(%struct.influence_data.965* %4, i32 %2) #2
+    %6 = icmp eq i32 %5, %color
+    %7 = zext i1 %6 to i32
+    ret i32 %7
+  }
+  
+  declare i32 @whose_moyo(%struct.influence_data.965*, i32) #1
+  
+  attributes #0 = { nounwind "disable-tail-calls"="false" "less-precise-fpmad"="false" "no-frame-pointer-elim"="true" "no-frame-pointer-elim-non-leaf" "no-infs-fp-math"="false" "no-nans-fp-math"="false" "stack-protector-buffer-size"="8" "target-cpu"="hexagonv4" "target-features"="-hvx,-hvx-double" "unsafe-fp-math"="false" "use-soft-float"="false" }
+  attributes #1 = { "disable-tail-calls"="false" "less-precise-fpmad"="false" "no-frame-pointer-elim"="true" "no-frame-pointer-elim-non-leaf" "no-infs-fp-math"="false" "no-nans-fp-math"="false" "stack-protector-buffer-size"="8" "target-cpu"="hexagonv4" "target-features"="-hvx,-hvx-double" "unsafe-fp-math"="false" "use-soft-float"="false" }
+  attributes #2 = { nounwind }
+  
+  !llvm.ident = !{!0}
+  
+  !0 = !{!"clang version 3.8.0 (http://llvm.org/git/clang.git 2d49f0a0ae8366964a93e3b7b26e29679bee7160) (http://llvm.org/git/llvm.git 60bc66b44837125843b58ed3e0fd2e6bb948d839)"}
+
+...
+---
+name:            autohelperpat301
+alignment:       4
+exposesReturnsTwice: false
+hasInlineAsm:    false
+isSSA:           false
+tracksRegLiveness: true
+tracksSubRegLiveness: false
+liveins:         
+  - { reg: '%r0' }
+  - { reg: '%r1' }
+  - { reg: '%r2' }
+frameInfo:       
+  isFrameAddressTaken: false
+  isReturnAddressTaken: false
+  hasStackMap:     false
+  hasPatchPoint:   false
+  stackSize:       8
+  offsetAdjustment: 0
+  maxAlignment:    0
+  adjustsStack:    true
+  hasCalls:        true
+  maxCallFrameSize: 0
+  hasOpaqueSPAdjustment: false
+  hasVAStart:      false
+  hasMustTailInVarArgFunc: false
+fixedStack:      
+  - { id: 0, type: spill-slot, offset: -8, size: 8, alignment: 8, callee-saved-register: '%d8' }
+body:             |
+  bb.0 (%ir-block.0, freq 8):
+    liveins: %r0, %r1, %r2, %d8, %d8
+    liveouts: %r0, %r16, %r29, %r30
+  
+    BUNDLE implicit-def %r29, implicit-def %r30, implicit-def %r16, implicit %r29, implicit %r31, implicit %r30, implicit killed %d8, implicit %r2 {
+      S2_allocframe 8, implicit-def %r29, implicit-def %r30, implicit %r29, implicit %r31, implicit %r30 :: (store 4 into unknown)
+      S2_storerd_io internal %r29, -16, killed %d8 :: (store 8 into %fixed-stack.0)
+      %r16 = A2_tfr %r2
+    }
+    BUNDLE implicit-def %p0, implicit-def %r0, implicit %r16, implicit killed %r0 {
+      %p0 = C2_cmpeqi %r16, 2
+      %r0 = S4_addi_asl_ri @transformation, killed %r0, 2
+    }
+    BUNDLE implicit-def %r2, implicit-def %r3, implicit %p0, implicit killed %r0 {
+      %r2 = C2_cmoveit %p0, @initial_white_influence
+      %r3 = L2_loadri_io killed %r0, 25440 :: (load 4 from %ir.cgep)
+    }
+    %r2 = C2_cmoveif killed %p0, @initial_black_influence, implicit killed %r2
+    BUNDLE implicit-def %r0, implicit-def %r1, implicit-def dead %d0, implicit-def dead %d1, implicit-def dead %d2, implicit-def dead %d3, implicit-def dead %d4, implicit-def dead %d5, implicit-def dead %d6, implicit-def dead %d7, implicit-def dead %r28, implicit-def dead %r31, implicit-def dead %p0, implicit-def dead %p1, implicit-def dead %p2, implicit-def dead %p3, implicit-def dead %m0, implicit-def dead %m1, implicit-def dead %lc0, implicit-def dead %lc1, implicit-def dead %sa0, implicit-def dead %sa1, implicit-def dead %usr, implicit-def %usr_ovf, implicit %r2, implicit killed %r3, implicit killed %r1 {
+      %r0 = A2_tfr %r2
+      %r1 = A2_add killed %r3, killed %r1
+      J2_call @whose_moyo, implicit-def dead %d0, implicit-def dead %d1, implicit-def dead %d2, implicit-def dead %d3, implicit-def dead %d4, implicit-def dead %d5, implicit-def dead %d6, implicit-def dead %d7, implicit-def dead %r28, implicit-def dead %r31, implicit-def dead %p0, implicit-def dead %p1, implicit-def dead %p2, implicit-def dead %p3, implicit-def dead %m0, implicit-def dead %m1, implicit-def dead %lc0, implicit-def dead %lc1, implicit-def dead %sa0, implicit-def dead %sa1, implicit-def dead %usr, implicit-def %usr_ovf, implicit internal %r0, implicit internal %r1, implicit-def %r0
+    }
+    BUNDLE implicit-def %r0, implicit-def %d8, implicit-def %r16, implicit-def %r17, implicit-def %r29, implicit-def %r30, implicit-def %r31, implicit-def %pc, implicit killed %r0, implicit killed %r16, implicit %r29, implicit %r30 {
+      %r0 = A4_rcmpeq killed %r0, killed %r16
+      %d8 = L2_loadrd_io %r29, 0 :: (load 8 from %fixed-stack.0)
+      L4_return implicit-def %r29, implicit-def %r30, implicit-def %r31, implicit-def %pc, implicit %r30, implicit-def dead %pc, implicit internal %r0
+    }
+
+...

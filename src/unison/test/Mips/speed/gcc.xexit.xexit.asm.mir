@@ -1,0 +1,117 @@
+--- |
+  ; ModuleID = 'gcc.xexit.xexit.ll'
+  target datalayout = "E-m:m-p:32:32-i8:8:32-i16:16:32-i64:64-n32-S64"
+  target triple = "mips--linux-gnu"
+  
+  @_xexit_cleanup = external global void ()*, align 4
+  
+  ; Function Attrs: noreturn nounwind
+  define void @xexit(i32 signext %code) #0 {
+    %1 = load void ()*, void ()** @_xexit_cleanup, align 4
+    %2 = icmp eq void ()* %1, null
+    br i1 %2, label %4, label %3
+  
+  ; <label>:3                                       ; preds = %0
+    tail call void %1() #1
+    br label %4
+  
+  ; <label>:4                                       ; preds = %3, %0
+    tail call void @exit(i32 signext %code) #2
+    unreachable
+  }
+  
+  ; Function Attrs: noreturn nounwind
+  declare void @exit(i32 signext) #0
+  
+  attributes #0 = { noreturn nounwind "disable-tail-calls"="false" "less-precise-fpmad"="false" "no-frame-pointer-elim"="false" "no-infs-fp-math"="false" "no-nans-fp-math"="false" "stack-protector-buffer-size"="8" "target-cpu"="mips32" "target-features"="+mips32r2" "unsafe-fp-math"="false" "use-soft-float"="false" }
+  attributes #1 = { nounwind }
+  attributes #2 = { noreturn nounwind }
+  
+  !llvm.ident = !{!0}
+  
+  !0 = !{!"clang version 3.8.0 (http://llvm.org/git/clang.git 2d49f0a0ae8366964a93e3b7b26e29679bee7160) (http://llvm.org/git/llvm.git 60bc66b44837125843b58ed3e0fd2e6bb948d839)"}
+
+...
+---
+name:            xexit
+alignment:       2
+exposesReturnsTwice: false
+hasInlineAsm:    false
+isSSA:           false
+tracksRegLiveness: false
+tracksSubRegLiveness: false
+liveins:         
+  - { reg: '%a0' }
+  - { reg: '%t9' }
+  - { reg: '%v0' }
+calleeSavedRegisters: [ '%fp', '%ra', '%d10', '%d11', '%d12', '%d13', '%d14', 
+                        '%d15', '%f20', '%f21', '%f22', '%f23', '%f24', 
+                        '%f25', '%f26', '%f27', '%f28', '%f29', '%f30', 
+                        '%f31', '%s0', '%s1', '%s2', '%s3', '%s4', '%s5', 
+                        '%s6', '%s7' ]
+frameInfo:       
+  isFrameAddressTaken: false
+  isReturnAddressTaken: false
+  hasStackMap:     false
+  hasPatchPoint:   false
+  stackSize:       32
+  offsetAdjustment: 0
+  maxAlignment:    4
+  adjustsStack:    true
+  hasCalls:        true
+  maxCallFrameSize: 16
+  hasOpaqueSPAdjustment: false
+  hasVAStart:      false
+  hasMustTailInVarArgFunc: false
+stack:           
+  - { id: 0, type: spill-slot, offset: -4, size: 4, alignment: 4, callee-saved-register: '%ra' }
+  - { id: 1, type: spill-slot, offset: -8, size: 4, alignment: 4, callee-saved-register: '%s1' }
+  - { id: 2, type: spill-slot, offset: -12, size: 4, alignment: 4, callee-saved-register: '%s0' }
+body:             |
+  bb.0 (%ir-block.0, freq 16):
+    successors: %bb.1(50), %bb.3(50)
+    liveins: %a0, %t9, %ra, %s1, %s0
+  
+    %v0 = LUi target-flags(<unknown>) $_gp_disp
+    %v0 = ADDiu %v0, target-flags(<unknown>) $_gp_disp
+    %sp = ADDiu %sp, -32
+    CFI_INSTRUCTION .cfi_def_cfa_offset 32
+    SW killed %ra, %sp, 28 :: (store 4 into %stack.0)
+    SW killed %s1, %sp, 24 :: (store 4 into %stack.1)
+    SW killed %s0, %sp, 20 :: (store 4 into %stack.2)
+    CFI_INSTRUCTION .cfi_offset %ra_64, -4
+    CFI_INSTRUCTION .cfi_offset %s1_64, -8
+    CFI_INSTRUCTION .cfi_offset %s0_64, -12
+    %s0 = ADDu %v0, %t9
+    %at = LW %s0, target-flags(<unknown>) @_xexit_cleanup :: (load 4 from got)
+    %t9 = LW killed %at, 0 :: (load 4 from @_xexit_cleanup)
+    BEQ %t9, %zero, %bb.3, implicit-def dead %at {
+      %s1 = OR %a0, %zero
+    }
+  
+  bb.1 (%ir-block.0, freq 8):
+    successors: %bb.2(100)
+  
+    B %bb.2, implicit-def dead %at {
+      NOP
+    }
+  
+  bb.2 (%ir-block.3, freq 8):
+    successors: %bb.3(100)
+    liveins: %s0, %s1, %t9
+  
+    JALRPseudo %t9, csr_o32, implicit-def dead %ra, implicit-def %sp {
+      NOP
+    }
+  
+  bb.3 (%ir-block.4, freq 16):
+    liveins: %s0, %s1
+    exit
+  
+    %t9 = LW %s0, target-flags(<unknown>) @exit :: (load 4 from call-entry @exit)
+    %a0 = OR killed %s1, %zero
+    JALRPseudo %t9, csr_o32, implicit-def dead %ra, implicit %a0, implicit killed %gp, implicit-def %sp {
+      %gp = OR killed %s0, %zero
+    }
+
+...

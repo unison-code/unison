@@ -1,0 +1,87 @@
+--- |
+  ; ModuleID = 'gcc.expmed.ceil_log2.ll'
+  target datalayout = "E-m:m-p:32:32-i8:8:32-i16:16:32-i64:64-n32-S64"
+  target triple = "mips--linux-gnu"
+  
+  ; Function Attrs: nounwind
+  define i32 @ceil_log2(i32 signext %x) #0 {
+    %1 = add i32 %x, -1
+    %2 = tail call i32 @floor_log2_wide(i32 signext %1) #2
+    %3 = add nsw i32 %2, 1
+    ret i32 %3
+  }
+  
+  declare i32 @floor_log2_wide(i32 signext) #1
+  
+  attributes #0 = { nounwind "disable-tail-calls"="false" "less-precise-fpmad"="false" "no-frame-pointer-elim"="false" "no-infs-fp-math"="false" "no-nans-fp-math"="false" "stack-protector-buffer-size"="8" "target-cpu"="mips32" "target-features"="+mips32r2" "unsafe-fp-math"="false" "use-soft-float"="false" }
+  attributes #1 = { "disable-tail-calls"="false" "less-precise-fpmad"="false" "no-frame-pointer-elim"="false" "no-infs-fp-math"="false" "no-nans-fp-math"="false" "stack-protector-buffer-size"="8" "target-cpu"="mips32" "target-features"="+mips32r2" "unsafe-fp-math"="false" "use-soft-float"="false" }
+  attributes #2 = { nounwind }
+  
+  !llvm.ident = !{!0}
+  
+  !0 = !{!"clang version 3.8.0 (http://llvm.org/git/clang.git 2d49f0a0ae8366964a93e3b7b26e29679bee7160) (http://llvm.org/git/llvm.git 60bc66b44837125843b58ed3e0fd2e6bb948d839)"}
+
+...
+---
+name:            ceil_log2
+alignment:       2
+exposesReturnsTwice: false
+hasInlineAsm:    false
+isSSA:           true
+tracksRegLiveness: true
+tracksSubRegLiveness: false
+registers:       
+  - { id: 0, class: gpr32 }
+  - { id: 1, class: gpr32 }
+  - { id: 2, class: gpr32 }
+  - { id: 3, class: gpr32 }
+  - { id: 4, class: gpr32 }
+  - { id: 5, class: gpr32 }
+  - { id: 6, class: gpr32 }
+  - { id: 7, class: gpr32 }
+liveins:         
+  - { reg: '%a0', virtual-reg: '%0' }
+  - { reg: '%t9' }
+  - { reg: '%v0' }
+frameInfo:       
+  isFrameAddressTaken: false
+  isReturnAddressTaken: false
+  hasStackMap:     false
+  hasPatchPoint:   false
+  stackSize:       0
+  offsetAdjustment: 0
+  maxAlignment:    1
+  adjustsStack:    false
+  hasCalls:        true
+  maxCallFrameSize: 0
+  hasOpaqueSPAdjustment: false
+  hasVAStart:      false
+  hasMustTailInVarArgFunc: false
+body:             |
+  bb.0 (%ir-block.0, freq 8):
+    liveins: %a0, %t9, %v0
+    liveouts: %v0
+  
+    %1 = ADDu %v0, %t9
+    %0 = COPY %a0
+    ADJCALLSTACKDOWN 16, implicit-def dead %sp, implicit %sp
+    %2 = ADDiu %0, -1
+    %3 = LW %1, target-flags(<unknown>) @floor_log2_wide, <0x3541fd0> = !{!"unison-memory-partition", i32 0} :: (load 4 from call-entry @floor_log2_wide)
+    %a0 = COPY %2
+    %gp = COPY %1
+    %t9 = COPY %3
+    JALRPseudo killed %t9, csr_o32, implicit-def dead %ra, implicit %a0, implicit %gp, implicit-def %sp, implicit-def %v0
+    ADJCALLSTACKUP 16, 0, implicit-def dead %sp, implicit %sp
+    %4 = COPY %v0
+    %5 = ADDiu %4, 1
+    %v0 = COPY %5
+    RetRA implicit %v0
+
+...
+---
+unison-test-target: Mips
+unison-test-goal: speed
+unison-test-expected-cost: 6
+unison-test-expected-proven: true
+unison-test-expected-has-solution: true
+...

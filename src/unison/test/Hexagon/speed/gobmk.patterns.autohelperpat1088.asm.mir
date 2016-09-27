@@ -1,0 +1,93 @@
+--- |
+  ; ModuleID = 'gobmk.patterns.autohelperpat1088.ll'
+  target datalayout = "e-m:e-p:32:32:32-i64:64:64-i32:32:32-i16:16:16-i1:8:8-f64:64:64-f32:32:32-v64:64:64-v32:32:32-a:0-n16:32"
+  target triple = "hexagon"
+  
+  @transformation = external global [1369 x [8 x i32]], align 8
+  
+  ; Function Attrs: nounwind
+  define hidden i32 @autohelperpat1088(i32 %trans, i32 %move, i32 %color, i32 %action) #0 {
+    %cgep3 = bitcast [1369 x [8 x i32]]* @transformation to [1369 x [8 x i32]]*
+    %cgep1 = getelementptr [1369 x [8 x i32]], [1369 x [8 x i32]]* %cgep3, i32 0, i32 720, i32 %trans
+    %1 = load i32, i32* %cgep1, align 4
+    %2 = add nsw i32 %1, %move
+    %cgep2 = getelementptr [1369 x [8 x i32]], [1369 x [8 x i32]]* %cgep3, i32 0, i32 683, i32 %trans
+    %3 = load i32, i32* %cgep2, align 4
+    %4 = add nsw i32 %3, %move
+    %5 = tail call i32 (i32, i32, i32, ...) @play_attack_defend_n(i32 %color, i32 0, i32 1, i32 %2, i32 %4) #2
+    %6 = icmp eq i32 %5, 0
+    %7 = zext i1 %6 to i32
+    ret i32 %7
+  }
+  
+  declare i32 @play_attack_defend_n(i32, i32, i32, ...) #1
+  
+  attributes #0 = { nounwind "disable-tail-calls"="false" "less-precise-fpmad"="false" "no-frame-pointer-elim"="true" "no-frame-pointer-elim-non-leaf" "no-infs-fp-math"="false" "no-nans-fp-math"="false" "stack-protector-buffer-size"="8" "target-cpu"="hexagonv4" "target-features"="-hvx,-hvx-double" "unsafe-fp-math"="false" "use-soft-float"="false" }
+  attributes #1 = { "disable-tail-calls"="false" "less-precise-fpmad"="false" "no-frame-pointer-elim"="true" "no-frame-pointer-elim-non-leaf" "no-infs-fp-math"="false" "no-nans-fp-math"="false" "stack-protector-buffer-size"="8" "target-cpu"="hexagonv4" "target-features"="-hvx,-hvx-double" "unsafe-fp-math"="false" "use-soft-float"="false" }
+  attributes #2 = { nounwind }
+  
+  !llvm.ident = !{!0}
+  
+  !0 = !{!"clang version 3.8.0 (http://llvm.org/git/clang.git 2d49f0a0ae8366964a93e3b7b26e29679bee7160) (http://llvm.org/git/llvm.git 60bc66b44837125843b58ed3e0fd2e6bb948d839)"}
+
+...
+---
+name:            autohelperpat1088
+alignment:       4
+exposesReturnsTwice: false
+hasInlineAsm:    false
+isSSA:           false
+tracksRegLiveness: true
+tracksSubRegLiveness: false
+liveins:         
+  - { reg: '%r0' }
+  - { reg: '%r1' }
+  - { reg: '%r2' }
+frameInfo:       
+  isFrameAddressTaken: false
+  isReturnAddressTaken: false
+  hasStackMap:     false
+  hasPatchPoint:   false
+  stackSize:       8
+  offsetAdjustment: 0
+  maxAlignment:    4
+  adjustsStack:    true
+  hasCalls:        true
+  maxCallFrameSize: 8
+  hasOpaqueSPAdjustment: false
+  hasVAStart:      false
+  hasMustTailInVarArgFunc: false
+body:             |
+  bb.0 (%ir-block.0, freq 8):
+    liveins: %r0, %r1, %r2
+    liveouts: %r0, %r30
+  
+    BUNDLE implicit-def %r29, implicit-def %r30, implicit-def %r3, implicit-def %r4, implicit-def %d0, implicit-def %r0, implicit-def %r1, implicit %r29, implicit %r31, implicit %r30, implicit %r0, implicit %r1, implicit %r2 {
+      S2_allocframe 8, implicit-def %r29, implicit-def %r30, implicit %r29, implicit %r31, implicit %r30 :: (store 4 into unknown)
+      %r3 = A2_tfr %r0
+      %r4 = A2_tfr %r1
+      %d0 = A4_combineir 0, %r2
+    }
+    BUNDLE implicit-def %r3, implicit-def %r2, implicit killed %r3 {
+      %r3 = S4_addi_asl_ri @transformation, killed %r3, 2
+      %r2 = A2_tfrsi 1
+    }
+    BUNDLE implicit-def %r5, implicit-def %r3, implicit killed %r3 {
+      %r5 = L2_loadri_io %r3, 21856 :: (load 4 from %ir.cgep2)
+      %r3 = L2_loadri_io killed %r3, 23040 :: (load 4 from %ir.cgep1)
+    }
+    BUNDLE implicit-def dead %r5, implicit-def %r3, implicit killed %r5, implicit killed %r4, implicit killed %r3, implicit %r29 {
+      %r5 = A2_add killed %r5, %r4
+      %r3 = A2_add killed %r3, killed %r4
+      S2_storerinew_io %r29, 4, internal killed %r5 :: (store 4 into stack + 4)
+    }
+    BUNDLE implicit-def dead %d0, implicit-def dead %d1, implicit-def dead %d2, implicit-def dead %d3, implicit-def dead %d4, implicit-def dead %d5, implicit-def dead %d6, implicit-def dead %d7, implicit-def dead %r28, implicit-def dead %r31, implicit-def dead %p0, implicit-def dead %p1, implicit-def dead %p2, implicit-def dead %p3, implicit-def dead %m0, implicit-def dead %m1, implicit-def dead %lc0, implicit-def dead %lc1, implicit-def dead %sa0, implicit-def dead %sa1, implicit-def dead %usr, implicit-def %usr_ovf, implicit-def %r0, implicit %r29, implicit killed %r3, implicit %r0, implicit %r1, implicit %r2 {
+      S2_storeri_io %r29, 0, killed %r3 :: (store 4 into stack)
+      J2_call @play_attack_defend_n, implicit-def dead %d0, implicit-def dead %d1, implicit-def dead %d2, implicit-def dead %d3, implicit-def dead %d4, implicit-def dead %d5, implicit-def dead %d6, implicit-def dead %d7, implicit-def dead %r28, implicit-def dead %r31, implicit-def dead %p0, implicit-def dead %p1, implicit-def dead %p2, implicit-def dead %p3, implicit-def dead %m0, implicit-def dead %m1, implicit-def dead %lc0, implicit-def dead %lc1, implicit-def dead %sa0, implicit-def dead %sa1, implicit-def dead %usr, implicit-def %usr_ovf, implicit %r0, implicit %r1, implicit %r2, implicit-def %r0
+    }
+    BUNDLE implicit-def %r0, implicit-def %r29, implicit-def %r30, implicit-def %r31, implicit-def %pc, implicit killed %r0, implicit %r30 {
+      %r0 = A4_rcmpeqi killed %r0, 0
+      L4_return implicit-def %r29, implicit-def %r30, implicit-def %r31, implicit-def %pc, implicit %r30, implicit-def dead %pc, implicit internal %r0
+    }
+
+...

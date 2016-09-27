@@ -1,0 +1,113 @@
+--- |
+  ; ModuleID = 'gcc.jump.unsigned_condition.ll'
+  target datalayout = "e-m:e-p:32:32-i64:64-v128:64:128-a:0:32-n32-S64"
+  target triple = "armv6t2-pc-linux-eabi"
+  
+  @.str = external hidden unnamed_addr constant [7 x i8], align 1
+  @__FUNCTION__.unsigned_condition = external hidden unnamed_addr constant [19 x i8], align 1
+  @switch.table.4 = external hidden unnamed_addr constant [10 x i32]
+  
+  ; Function Attrs: noreturn
+  declare void @fancy_abort(i8*, i32, i8*) #0
+  
+  ; Function Attrs: nounwind
+  define i32 @unsigned_condition(i32 %code) #1 {
+    %switch.tableidx = add i32 %code, -102
+    %1 = icmp ult i32 %switch.tableidx, 10
+    br i1 %1, label %switch.lookup, label %2
+  
+  ; <label>:2                                       ; preds = %0
+    tail call void @fancy_abort(i8* nonnull getelementptr inbounds ([7 x i8], [7 x i8]* @.str, i32 0, i32 0), i32 951, i8* nonnull getelementptr inbounds ([19 x i8], [19 x i8]* @__FUNCTION__.unsigned_condition, i32 0, i32 0)) #2
+    unreachable
+  
+  switch.lookup:                                    ; preds = %0
+    %switch.gep = getelementptr inbounds [10 x i32], [10 x i32]* @switch.table.4, i32 0, i32 %switch.tableidx
+    %switch.load = load i32, i32* %switch.gep, align 4
+    ret i32 %switch.load
+  }
+  
+  attributes #0 = { noreturn "disable-tail-calls"="false" "less-precise-fpmad"="false" "no-frame-pointer-elim"="true" "no-frame-pointer-elim-non-leaf" "no-infs-fp-math"="false" "no-nans-fp-math"="false" "stack-protector-buffer-size"="8" "target-cpu"="arm1156t2f-s" "target-features"="+thumb-mode" "unsafe-fp-math"="false" "use-soft-float"="false" }
+  attributes #1 = { nounwind "disable-tail-calls"="false" "less-precise-fpmad"="false" "no-frame-pointer-elim"="true" "no-frame-pointer-elim-non-leaf" "no-infs-fp-math"="false" "no-nans-fp-math"="false" "stack-protector-buffer-size"="8" "target-cpu"="arm1156t2f-s" "target-features"="+thumb-mode" "unsafe-fp-math"="false" "use-soft-float"="false" }
+  attributes #2 = { noreturn nounwind }
+  
+  !llvm.module.flags = !{!0, !1}
+  !llvm.ident = !{!2}
+  
+  !0 = !{i32 1, !"wchar_size", i32 4}
+  !1 = !{i32 1, !"min_enum_size", i32 4}
+  !2 = !{!"clang version 3.8.0 (http://llvm.org/git/clang.git 2d49f0a0ae8366964a93e3b7b26e29679bee7160) (http://llvm.org/git/llvm.git 60bc66b44837125843b58ed3e0fd2e6bb948d839)"}
+
+...
+---
+name:            unsigned_condition
+alignment:       1
+exposesReturnsTwice: false
+hasInlineAsm:    false
+isSSA:           true
+tracksRegLiveness: true
+tracksSubRegLiveness: false
+registers:       
+  - { id: 0, class: rgpr }
+  - { id: 1, class: gprnopc }
+  - { id: 2, class: rgpr }
+  - { id: 3, class: rgpr }
+  - { id: 4, class: rgpr }
+  - { id: 5, class: rgpr }
+  - { id: 6, class: rgpr }
+  - { id: 7, class: gpr }
+liveins:         
+  - { reg: '%r0', virtual-reg: '%1' }
+frameInfo:       
+  isFrameAddressTaken: false
+  isReturnAddressTaken: false
+  hasStackMap:     false
+  hasPatchPoint:   false
+  stackSize:       0
+  offsetAdjustment: 0
+  maxAlignment:    0
+  adjustsStack:    false
+  hasCalls:        true
+  maxCallFrameSize: 0
+  hasOpaqueSPAdjustment: false
+  hasVAStart:      false
+  hasMustTailInVarArgFunc: false
+body:             |
+  bb.0 (%ir-block.0, freq 8388608):
+    successors: %bb.2.switch.lookup(99), %bb.1(0)
+    liveins: %r0
+  
+    %1 = COPY %r0
+    %2 = t2SUBri %1, 102, 14, _, _
+    t2CMPri %2, 10, 14, _, implicit-def %cpsr
+    t2Bcc %bb.2.switch.lookup, 3, %cpsr
+    t2B %bb.1, 14, _
+  
+  bb.1 (%ir-block.2, freq 8):
+    exit
+  
+    ADJCALLSTACKDOWN 0, 14, _, implicit-def dead %sp, implicit %sp
+    %3 = t2MOVi32imm @.str
+    %4 = t2MOVi32imm @__FUNCTION__.unsigned_condition
+    %5 = t2MOVi16 951, 14, _
+    %r0 = COPY %3
+    %r1 = COPY %5
+    %r2 = COPY %4
+    tBL 14, _, @fancy_abort, csr_aapcs, implicit-def dead %lr, implicit %sp, implicit %r0, implicit %r1, implicit %r2, implicit-def %sp
+    ADJCALLSTACKUP 0, 0, 14, _, implicit-def dead %sp, implicit %sp
+  
+  bb.2.switch.lookup (freq 8388600):
+    liveouts: %r0
+  
+    %6 = t2MOVi32imm @switch.table.4
+    %7 = t2LDRs killed %6, %2, 2, 14, _, <0x224f580> = !{!"unison-memory-partition", i32 0} :: (load 4 from %ir.switch.gep)
+    %r0 = COPY %7
+    tBX_RET 14, _, implicit %r0
+
+...
+---
+unison-test-target: ARM
+unison-test-goal: size
+unison-test-expected-cost: 46
+unison-test-expected-proven: true
+unison-test-expected-has-solution: true
+...

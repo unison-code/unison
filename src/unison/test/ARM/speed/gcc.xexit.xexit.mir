@@ -1,0 +1,100 @@
+--- |
+  ; ModuleID = 'gcc.xexit.xexit.ll'
+  target datalayout = "e-m:e-p:32:32-i64:64-v128:64:128-a:0:32-n32-S64"
+  target triple = "armv6t2-pc-linux-eabi"
+  
+  @_xexit_cleanup = external global void ()*, align 4
+  
+  ; Function Attrs: noreturn nounwind
+  define void @xexit(i32 %code) #0 {
+    %1 = load void ()*, void ()** @_xexit_cleanup, align 4
+    %2 = icmp eq void ()* %1, null
+    br i1 %2, label %4, label %3
+  
+  ; <label>:3                                       ; preds = %0
+    tail call void %1() #1
+    br label %4
+  
+  ; <label>:4                                       ; preds = %3, %0
+    tail call void @exit(i32 %code) #2
+    unreachable
+  }
+  
+  ; Function Attrs: noreturn nounwind
+  declare void @exit(i32) #0
+  
+  attributes #0 = { noreturn nounwind "disable-tail-calls"="false" "less-precise-fpmad"="false" "no-frame-pointer-elim"="true" "no-frame-pointer-elim-non-leaf" "no-infs-fp-math"="false" "no-nans-fp-math"="false" "stack-protector-buffer-size"="8" "target-cpu"="arm1156t2f-s" "target-features"="+thumb-mode" "unsafe-fp-math"="false" "use-soft-float"="false" }
+  attributes #1 = { nounwind }
+  attributes #2 = { noreturn nounwind }
+  
+  !llvm.module.flags = !{!0, !1}
+  !llvm.ident = !{!2}
+  
+  !0 = !{i32 1, !"wchar_size", i32 4}
+  !1 = !{i32 1, !"min_enum_size", i32 4}
+  !2 = !{!"clang version 3.8.0 (http://llvm.org/git/clang.git 2d49f0a0ae8366964a93e3b7b26e29679bee7160) (http://llvm.org/git/llvm.git 60bc66b44837125843b58ed3e0fd2e6bb948d839)"}
+
+...
+---
+name:            xexit
+alignment:       1
+exposesReturnsTwice: false
+hasInlineAsm:    false
+isSSA:           true
+tracksRegLiveness: true
+tracksSubRegLiveness: false
+registers:       
+  - { id: 0, class: gprnopc }
+  - { id: 1, class: gpr }
+  - { id: 2, class: rgpr }
+liveins:         
+  - { reg: '%r0', virtual-reg: '%1' }
+frameInfo:       
+  isFrameAddressTaken: false
+  isReturnAddressTaken: false
+  hasStackMap:     false
+  hasPatchPoint:   false
+  stackSize:       0
+  offsetAdjustment: 0
+  maxAlignment:    0
+  adjustsStack:    false
+  hasCalls:        true
+  maxCallFrameSize: 0
+  hasOpaqueSPAdjustment: false
+  hasVAStart:      false
+  hasMustTailInVarArgFunc: false
+body:             |
+  bb.0 (%ir-block.0, freq 16):
+    successors: %bb.2(50), %bb.1(50)
+    liveins: %r0
+  
+    %1 = COPY %r0
+    %2 = t2MOVi32imm @_xexit_cleanup
+    %0 = t2LDRi12 killed %2, 0, 14, _, <0x3a06790> = !{!"unison-memory-partition", i32 0} :: (load 4 from @_xexit_cleanup)
+    t2CMPri %0, 0, 14, _, implicit-def %cpsr
+    t2Bcc %bb.2, 0, %cpsr
+    t2B %bb.1, 14, _
+  
+  bb.1 (%ir-block.3, freq 8):
+    successors: %bb.2(100)
+  
+    ADJCALLSTACKDOWN 0, 14, _, implicit-def dead %sp, implicit %sp
+    tBLXr 14, _, %0, csr_aapcs, implicit-def dead %lr, implicit %sp, implicit-def %sp
+    ADJCALLSTACKUP 0, 0, 14, _, implicit-def dead %sp, implicit %sp
+  
+  bb.2 (%ir-block.4, freq 16):
+    exit
+  
+    ADJCALLSTACKDOWN 0, 14, _, implicit-def dead %sp, implicit %sp
+    %r0 = COPY %1
+    tBL 14, _, @exit, csr_aapcs, implicit-def dead %lr, implicit %sp, implicit %r0, implicit-def %sp
+    ADJCALLSTACKUP 0, 0, 14, _, implicit-def dead %sp, implicit %sp
+
+...
+---
+unison-test-target: ARM
+unison-test-goal: speed
+unison-test-expected-cost: 15
+unison-test-expected-proven: true
+unison-test-expected-has-solution: true
+...
