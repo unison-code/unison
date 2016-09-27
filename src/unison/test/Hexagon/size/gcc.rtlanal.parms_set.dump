@@ -1,0 +1,1981 @@
+# After Instruction Selection:
+# Machine code for function parms_set: SSA
+Function Live Ins: %R0 in %vreg3, %R2 in %vreg5
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R2
+	%vreg5<def> = COPY %R2; IntRegs:%vreg5
+	%vreg3<def> = COPY %R0; IntRegs:%vreg3
+	%vreg6<def> = L2_loadrub_io %vreg3, 0; mem:LD1[%cgep47](align=4) IntRegs:%vreg6,%vreg3
+	%vreg7<def> = C2_cmpeqi %vreg6<kill>, 61; PredRegs:%vreg7 IntRegs:%vreg6
+	J2_jumpf %vreg7<kill>, <BB#4>, %PC<imp-def,dead>; PredRegs:%vreg7
+	J2_jump <BB#1>, %PC<imp-def,dead>
+    Successors according to CFG: BB#1(0x40000000 / 0x80000000 = 50.00%) BB#4(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %4
+    Predecessors according to CFG: BB#0
+	%vreg0<def> = L2_loadri_io %vreg3, 4; mem:LD4[%cgep5] IntRegs:%vreg0,%vreg3
+	%vreg8<def> = C2_cmpgtui %vreg0, 52; PredRegs:%vreg8 IntRegs:%vreg0
+	J2_jumpt %vreg8<kill>, <BB#4>, %PC<imp-def,dead>; PredRegs:%vreg8
+	J2_jump <BB#2>, %PC<imp-def,dead>
+    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#4(0x40000000 / 0x80000000 = 50.00%)
+
+BB#2: derived from LLVM BB %8
+    Predecessors according to CFG: BB#1
+	%vreg1<def> = L2_loadri_io %vreg5, 4; mem:LD4[%9] IntRegs:%vreg1,%vreg5
+	%vreg2<def> = S4_lsli 1, %vreg0; IntRegs:%vreg2,%vreg0
+	%vreg9<def> = S4_ntstbit_r %vreg1, %vreg0; PredRegs:%vreg9 IntRegs:%vreg1,%vreg0
+	J2_jumpt %vreg9<kill>, <BB#4>, %PC<imp-def,dead>; PredRegs:%vreg9
+	J2_jump <BB#3>, %PC<imp-def,dead>
+    Successors according to CFG: BB#4(0x30000000 / 0x80000000 = 37.50%) BB#3(0x50000000 / 0x80000000 = 62.50%)
+
+BB#3: derived from LLVM BB %14
+    Predecessors according to CFG: BB#2
+	%vreg10<def> = A2_tfrsi -1; IntRegs:%vreg10
+	%vreg11<def,tied1> = M4_and_xor %vreg1<tied0>, %vreg2, %vreg10<kill>; IntRegs:%vreg11,%vreg1,%vreg2,%vreg10
+	S2_storeri_io %vreg5, 4, %vreg11<kill>; mem:ST4[%sunkaddr9] IntRegs:%vreg5,%vreg11
+	L4_isub_memopw_io %vreg5, 0, 1; mem:ST4[%17] LD4[%17] IntRegs:%vreg5
+    Successors according to CFG: BB#4(?%)
+
+BB#4: derived from LLVM BB %20
+    Predecessors according to CFG: BB#0 BB#1 BB#2 BB#3
+	JMPret %R31, %PC<imp-def,dead>
+
+# End machine code for function parms_set.
+
+# After Expand ISel Pseudo-instructions:
+# Machine code for function parms_set: SSA
+Function Live Ins: %R0 in %vreg3, %R2 in %vreg5
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R2
+	%vreg5<def> = COPY %R2; IntRegs:%vreg5
+	%vreg3<def> = COPY %R0; IntRegs:%vreg3
+	%vreg6<def> = L2_loadrub_io %vreg3, 0; mem:LD1[%cgep47](align=4) IntRegs:%vreg6,%vreg3
+	%vreg7<def> = C2_cmpeqi %vreg6<kill>, 61; PredRegs:%vreg7 IntRegs:%vreg6
+	J2_jumpf %vreg7<kill>, <BB#4>, %PC<imp-def,dead>; PredRegs:%vreg7
+	J2_jump <BB#1>, %PC<imp-def,dead>
+    Successors according to CFG: BB#1(0x40000000 / 0x80000000 = 50.00%) BB#4(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %4
+    Predecessors according to CFG: BB#0
+	%vreg0<def> = L2_loadri_io %vreg3, 4; mem:LD4[%cgep5] IntRegs:%vreg0,%vreg3
+	%vreg8<def> = C2_cmpgtui %vreg0, 52; PredRegs:%vreg8 IntRegs:%vreg0
+	J2_jumpt %vreg8<kill>, <BB#4>, %PC<imp-def,dead>; PredRegs:%vreg8
+	J2_jump <BB#2>, %PC<imp-def,dead>
+    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#4(0x40000000 / 0x80000000 = 50.00%)
+
+BB#2: derived from LLVM BB %8
+    Predecessors according to CFG: BB#1
+	%vreg1<def> = L2_loadri_io %vreg5, 4; mem:LD4[%9] IntRegs:%vreg1,%vreg5
+	%vreg2<def> = S4_lsli 1, %vreg0; IntRegs:%vreg2,%vreg0
+	%vreg9<def> = S4_ntstbit_r %vreg1, %vreg0; PredRegs:%vreg9 IntRegs:%vreg1,%vreg0
+	J2_jumpt %vreg9<kill>, <BB#4>, %PC<imp-def,dead>; PredRegs:%vreg9
+	J2_jump <BB#3>, %PC<imp-def,dead>
+    Successors according to CFG: BB#4(0x30000000 / 0x80000000 = 37.50%) BB#3(0x50000000 / 0x80000000 = 62.50%)
+
+BB#3: derived from LLVM BB %14
+    Predecessors according to CFG: BB#2
+	%vreg10<def> = A2_tfrsi -1; IntRegs:%vreg10
+	%vreg11<def,tied1> = M4_and_xor %vreg1<tied0>, %vreg2, %vreg10<kill>; IntRegs:%vreg11,%vreg1,%vreg2,%vreg10
+	S2_storeri_io %vreg5, 4, %vreg11<kill>; mem:ST4[%sunkaddr9] IntRegs:%vreg5,%vreg11
+	L4_isub_memopw_io %vreg5, 0, 1; mem:ST4[%17] LD4[%17] IntRegs:%vreg5
+    Successors according to CFG: BB#4(?%)
+
+BB#4: derived from LLVM BB %20
+    Predecessors according to CFG: BB#0 BB#1 BB#2 BB#3
+	JMPret %R31, %PC<imp-def,dead>
+
+# End machine code for function parms_set.
+
+# After Tail Duplication:
+# Machine code for function parms_set: SSA
+Function Live Ins: %R0 in %vreg3, %R2 in %vreg5
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R2
+	%vreg5<def> = COPY %R2; IntRegs:%vreg5
+	%vreg3<def> = COPY %R0; IntRegs:%vreg3
+	%vreg6<def> = L2_loadrub_io %vreg3, 0; mem:LD1[%cgep47](align=4) IntRegs:%vreg6,%vreg3
+	%vreg7<def> = C2_cmpeqi %vreg6<kill>, 61; PredRegs:%vreg7 IntRegs:%vreg6
+	J2_jumpf %vreg7<kill>, <BB#4>, %PC<imp-def,dead>; PredRegs:%vreg7
+	J2_jump <BB#1>, %PC<imp-def,dead>
+    Successors according to CFG: BB#1(0x40000000 / 0x80000000 = 50.00%) BB#4(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %4
+    Predecessors according to CFG: BB#0
+	%vreg0<def> = L2_loadri_io %vreg3, 4; mem:LD4[%cgep5] IntRegs:%vreg0,%vreg3
+	%vreg8<def> = C2_cmpgtui %vreg0, 52; PredRegs:%vreg8 IntRegs:%vreg0
+	J2_jumpt %vreg8<kill>, <BB#4>, %PC<imp-def,dead>; PredRegs:%vreg8
+	J2_jump <BB#2>, %PC<imp-def,dead>
+    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#4(0x40000000 / 0x80000000 = 50.00%)
+
+BB#2: derived from LLVM BB %8
+    Predecessors according to CFG: BB#1
+	%vreg1<def> = L2_loadri_io %vreg5, 4; mem:LD4[%9] IntRegs:%vreg1,%vreg5
+	%vreg2<def> = S4_lsli 1, %vreg0; IntRegs:%vreg2,%vreg0
+	%vreg9<def> = S4_ntstbit_r %vreg1, %vreg0; PredRegs:%vreg9 IntRegs:%vreg1,%vreg0
+	J2_jumpt %vreg9<kill>, <BB#4>, %PC<imp-def,dead>; PredRegs:%vreg9
+	J2_jump <BB#3>, %PC<imp-def,dead>
+    Successors according to CFG: BB#4(0x30000000 / 0x80000000 = 37.50%) BB#3(0x50000000 / 0x80000000 = 62.50%)
+
+BB#3: derived from LLVM BB %14
+    Predecessors according to CFG: BB#2
+	%vreg10<def> = A2_tfrsi -1; IntRegs:%vreg10
+	%vreg11<def,tied1> = M4_and_xor %vreg1<tied0>, %vreg2, %vreg10<kill>; IntRegs:%vreg11,%vreg1,%vreg2,%vreg10
+	S2_storeri_io %vreg5, 4, %vreg11<kill>; mem:ST4[%sunkaddr9] IntRegs:%vreg5,%vreg11
+	L4_isub_memopw_io %vreg5, 0, 1; mem:ST4[%17] LD4[%17] IntRegs:%vreg5
+    Successors according to CFG: BB#4(?%)
+
+BB#4: derived from LLVM BB %20
+    Predecessors according to CFG: BB#0 BB#1 BB#2 BB#3
+	JMPret %R31, %PC<imp-def,dead>
+
+# End machine code for function parms_set.
+
+# After Optimize machine instruction PHIs:
+# Machine code for function parms_set: SSA
+Function Live Ins: %R0 in %vreg3, %R2 in %vreg5
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R2
+	%vreg5<def> = COPY %R2; IntRegs:%vreg5
+	%vreg3<def> = COPY %R0; IntRegs:%vreg3
+	%vreg6<def> = L2_loadrub_io %vreg3, 0; mem:LD1[%cgep47](align=4) IntRegs:%vreg6,%vreg3
+	%vreg7<def> = C2_cmpeqi %vreg6<kill>, 61; PredRegs:%vreg7 IntRegs:%vreg6
+	J2_jumpf %vreg7<kill>, <BB#4>, %PC<imp-def,dead>; PredRegs:%vreg7
+	J2_jump <BB#1>, %PC<imp-def,dead>
+    Successors according to CFG: BB#1(0x40000000 / 0x80000000 = 50.00%) BB#4(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %4
+    Predecessors according to CFG: BB#0
+	%vreg0<def> = L2_loadri_io %vreg3, 4; mem:LD4[%cgep5] IntRegs:%vreg0,%vreg3
+	%vreg8<def> = C2_cmpgtui %vreg0, 52; PredRegs:%vreg8 IntRegs:%vreg0
+	J2_jumpt %vreg8<kill>, <BB#4>, %PC<imp-def,dead>; PredRegs:%vreg8
+	J2_jump <BB#2>, %PC<imp-def,dead>
+    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#4(0x40000000 / 0x80000000 = 50.00%)
+
+BB#2: derived from LLVM BB %8
+    Predecessors according to CFG: BB#1
+	%vreg1<def> = L2_loadri_io %vreg5, 4; mem:LD4[%9] IntRegs:%vreg1,%vreg5
+	%vreg2<def> = S4_lsli 1, %vreg0; IntRegs:%vreg2,%vreg0
+	%vreg9<def> = S4_ntstbit_r %vreg1, %vreg0; PredRegs:%vreg9 IntRegs:%vreg1,%vreg0
+	J2_jumpt %vreg9<kill>, <BB#4>, %PC<imp-def,dead>; PredRegs:%vreg9
+	J2_jump <BB#3>, %PC<imp-def,dead>
+    Successors according to CFG: BB#4(0x30000000 / 0x80000000 = 37.50%) BB#3(0x50000000 / 0x80000000 = 62.50%)
+
+BB#3: derived from LLVM BB %14
+    Predecessors according to CFG: BB#2
+	%vreg10<def> = A2_tfrsi -1; IntRegs:%vreg10
+	%vreg11<def,tied1> = M4_and_xor %vreg1<tied0>, %vreg2, %vreg10<kill>; IntRegs:%vreg11,%vreg1,%vreg2,%vreg10
+	S2_storeri_io %vreg5, 4, %vreg11<kill>; mem:ST4[%sunkaddr9] IntRegs:%vreg5,%vreg11
+	L4_isub_memopw_io %vreg5, 0, 1; mem:ST4[%17] LD4[%17] IntRegs:%vreg5
+    Successors according to CFG: BB#4(?%)
+
+BB#4: derived from LLVM BB %20
+    Predecessors according to CFG: BB#0 BB#1 BB#2 BB#3
+	JMPret %R31, %PC<imp-def,dead>
+
+# End machine code for function parms_set.
+
+# After Merge disjoint stack slots:
+# Machine code for function parms_set: SSA
+Function Live Ins: %R0 in %vreg3, %R2 in %vreg5
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R2
+	%vreg5<def> = COPY %R2; IntRegs:%vreg5
+	%vreg3<def> = COPY %R0; IntRegs:%vreg3
+	%vreg6<def> = L2_loadrub_io %vreg3, 0; mem:LD1[%cgep47](align=4) IntRegs:%vreg6,%vreg3
+	%vreg7<def> = C2_cmpeqi %vreg6<kill>, 61; PredRegs:%vreg7 IntRegs:%vreg6
+	J2_jumpf %vreg7<kill>, <BB#4>, %PC<imp-def,dead>; PredRegs:%vreg7
+	J2_jump <BB#1>, %PC<imp-def,dead>
+    Successors according to CFG: BB#1(0x40000000 / 0x80000000 = 50.00%) BB#4(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %4
+    Predecessors according to CFG: BB#0
+	%vreg0<def> = L2_loadri_io %vreg3, 4; mem:LD4[%cgep5] IntRegs:%vreg0,%vreg3
+	%vreg8<def> = C2_cmpgtui %vreg0, 52; PredRegs:%vreg8 IntRegs:%vreg0
+	J2_jumpt %vreg8<kill>, <BB#4>, %PC<imp-def,dead>; PredRegs:%vreg8
+	J2_jump <BB#2>, %PC<imp-def,dead>
+    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#4(0x40000000 / 0x80000000 = 50.00%)
+
+BB#2: derived from LLVM BB %8
+    Predecessors according to CFG: BB#1
+	%vreg1<def> = L2_loadri_io %vreg5, 4; mem:LD4[%9] IntRegs:%vreg1,%vreg5
+	%vreg2<def> = S4_lsli 1, %vreg0; IntRegs:%vreg2,%vreg0
+	%vreg9<def> = S4_ntstbit_r %vreg1, %vreg0; PredRegs:%vreg9 IntRegs:%vreg1,%vreg0
+	J2_jumpt %vreg9<kill>, <BB#4>, %PC<imp-def,dead>; PredRegs:%vreg9
+	J2_jump <BB#3>, %PC<imp-def,dead>
+    Successors according to CFG: BB#4(0x30000000 / 0x80000000 = 37.50%) BB#3(0x50000000 / 0x80000000 = 62.50%)
+
+BB#3: derived from LLVM BB %14
+    Predecessors according to CFG: BB#2
+	%vreg10<def> = A2_tfrsi -1; IntRegs:%vreg10
+	%vreg11<def,tied1> = M4_and_xor %vreg1<tied0>, %vreg2, %vreg10<kill>; IntRegs:%vreg11,%vreg1,%vreg2,%vreg10
+	S2_storeri_io %vreg5, 4, %vreg11<kill>; mem:ST4[%sunkaddr9] IntRegs:%vreg5,%vreg11
+	L4_isub_memopw_io %vreg5, 0, 1; mem:ST4[%17] LD4[%17] IntRegs:%vreg5
+    Successors according to CFG: BB#4(?%)
+
+BB#4: derived from LLVM BB %20
+    Predecessors according to CFG: BB#0 BB#1 BB#2 BB#3
+	JMPret %R31, %PC<imp-def,dead>
+
+# End machine code for function parms_set.
+
+# After Local Stack Slot Allocation:
+# Machine code for function parms_set: SSA
+Function Live Ins: %R0 in %vreg3, %R2 in %vreg5
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R2
+	%vreg5<def> = COPY %R2; IntRegs:%vreg5
+	%vreg3<def> = COPY %R0; IntRegs:%vreg3
+	%vreg6<def> = L2_loadrub_io %vreg3, 0; mem:LD1[%cgep47](align=4) IntRegs:%vreg6,%vreg3
+	%vreg7<def> = C2_cmpeqi %vreg6<kill>, 61; PredRegs:%vreg7 IntRegs:%vreg6
+	J2_jumpf %vreg7<kill>, <BB#4>, %PC<imp-def,dead>; PredRegs:%vreg7
+	J2_jump <BB#1>, %PC<imp-def,dead>
+    Successors according to CFG: BB#1(0x40000000 / 0x80000000 = 50.00%) BB#4(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %4
+    Predecessors according to CFG: BB#0
+	%vreg0<def> = L2_loadri_io %vreg3, 4; mem:LD4[%cgep5] IntRegs:%vreg0,%vreg3
+	%vreg8<def> = C2_cmpgtui %vreg0, 52; PredRegs:%vreg8 IntRegs:%vreg0
+	J2_jumpt %vreg8<kill>, <BB#4>, %PC<imp-def,dead>; PredRegs:%vreg8
+	J2_jump <BB#2>, %PC<imp-def,dead>
+    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#4(0x40000000 / 0x80000000 = 50.00%)
+
+BB#2: derived from LLVM BB %8
+    Predecessors according to CFG: BB#1
+	%vreg1<def> = L2_loadri_io %vreg5, 4; mem:LD4[%9] IntRegs:%vreg1,%vreg5
+	%vreg2<def> = S4_lsli 1, %vreg0; IntRegs:%vreg2,%vreg0
+	%vreg9<def> = S4_ntstbit_r %vreg1, %vreg0; PredRegs:%vreg9 IntRegs:%vreg1,%vreg0
+	J2_jumpt %vreg9<kill>, <BB#4>, %PC<imp-def,dead>; PredRegs:%vreg9
+	J2_jump <BB#3>, %PC<imp-def,dead>
+    Successors according to CFG: BB#4(0x30000000 / 0x80000000 = 37.50%) BB#3(0x50000000 / 0x80000000 = 62.50%)
+
+BB#3: derived from LLVM BB %14
+    Predecessors according to CFG: BB#2
+	%vreg10<def> = A2_tfrsi -1; IntRegs:%vreg10
+	%vreg11<def,tied1> = M4_and_xor %vreg1<tied0>, %vreg2, %vreg10<kill>; IntRegs:%vreg11,%vreg1,%vreg2,%vreg10
+	S2_storeri_io %vreg5, 4, %vreg11<kill>; mem:ST4[%sunkaddr9] IntRegs:%vreg5,%vreg11
+	L4_isub_memopw_io %vreg5, 0, 1; mem:ST4[%17] LD4[%17] IntRegs:%vreg5
+    Successors according to CFG: BB#4(?%)
+
+BB#4: derived from LLVM BB %20
+    Predecessors according to CFG: BB#0 BB#1 BB#2 BB#3
+	JMPret %R31, %PC<imp-def,dead>
+
+# End machine code for function parms_set.
+
+# After Remove dead machine instructions:
+# Machine code for function parms_set: SSA
+Function Live Ins: %R0 in %vreg3, %R2 in %vreg5
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R2
+	%vreg5<def> = COPY %R2; IntRegs:%vreg5
+	%vreg3<def> = COPY %R0; IntRegs:%vreg3
+	%vreg6<def> = L2_loadrub_io %vreg3, 0; mem:LD1[%cgep47](align=4) IntRegs:%vreg6,%vreg3
+	%vreg7<def> = C2_cmpeqi %vreg6<kill>, 61; PredRegs:%vreg7 IntRegs:%vreg6
+	J2_jumpf %vreg7<kill>, <BB#4>, %PC<imp-def,dead>; PredRegs:%vreg7
+	J2_jump <BB#1>, %PC<imp-def,dead>
+    Successors according to CFG: BB#1(0x40000000 / 0x80000000 = 50.00%) BB#4(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %4
+    Predecessors according to CFG: BB#0
+	%vreg0<def> = L2_loadri_io %vreg3, 4; mem:LD4[%cgep5] IntRegs:%vreg0,%vreg3
+	%vreg8<def> = C2_cmpgtui %vreg0, 52; PredRegs:%vreg8 IntRegs:%vreg0
+	J2_jumpt %vreg8<kill>, <BB#4>, %PC<imp-def,dead>; PredRegs:%vreg8
+	J2_jump <BB#2>, %PC<imp-def,dead>
+    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#4(0x40000000 / 0x80000000 = 50.00%)
+
+BB#2: derived from LLVM BB %8
+    Predecessors according to CFG: BB#1
+	%vreg1<def> = L2_loadri_io %vreg5, 4; mem:LD4[%9] IntRegs:%vreg1,%vreg5
+	%vreg2<def> = S4_lsli 1, %vreg0; IntRegs:%vreg2,%vreg0
+	%vreg9<def> = S4_ntstbit_r %vreg1, %vreg0; PredRegs:%vreg9 IntRegs:%vreg1,%vreg0
+	J2_jumpt %vreg9<kill>, <BB#4>, %PC<imp-def,dead>; PredRegs:%vreg9
+	J2_jump <BB#3>, %PC<imp-def,dead>
+    Successors according to CFG: BB#4(0x30000000 / 0x80000000 = 37.50%) BB#3(0x50000000 / 0x80000000 = 62.50%)
+
+BB#3: derived from LLVM BB %14
+    Predecessors according to CFG: BB#2
+	%vreg10<def> = A2_tfrsi -1; IntRegs:%vreg10
+	%vreg11<def,tied1> = M4_and_xor %vreg1<tied0>, %vreg2, %vreg10<kill>; IntRegs:%vreg11,%vreg1,%vreg2,%vreg10
+	S2_storeri_io %vreg5, 4, %vreg11<kill>; mem:ST4[%sunkaddr9] IntRegs:%vreg5,%vreg11
+	L4_isub_memopw_io %vreg5, 0, 1; mem:ST4[%17] LD4[%17] IntRegs:%vreg5
+    Successors according to CFG: BB#4(?%)
+
+BB#4: derived from LLVM BB %20
+    Predecessors according to CFG: BB#0 BB#1 BB#2 BB#3
+	JMPret %R31, %PC<imp-def,dead>
+
+# End machine code for function parms_set.
+
+# After Machine Loop Invariant Code Motion:
+# Machine code for function parms_set: SSA
+Function Live Ins: %R0 in %vreg3, %R2 in %vreg5
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R2
+	%vreg5<def> = COPY %R2; IntRegs:%vreg5
+	%vreg3<def> = COPY %R0; IntRegs:%vreg3
+	%vreg6<def> = L2_loadrub_io %vreg3, 0; mem:LD1[%cgep47](align=4) IntRegs:%vreg6,%vreg3
+	%vreg7<def> = C2_cmpeqi %vreg6<kill>, 61; PredRegs:%vreg7 IntRegs:%vreg6
+	J2_jumpf %vreg7<kill>, <BB#4>, %PC<imp-def,dead>; PredRegs:%vreg7
+	J2_jump <BB#1>, %PC<imp-def,dead>
+    Successors according to CFG: BB#1(0x40000000 / 0x80000000 = 50.00%) BB#4(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %4
+    Predecessors according to CFG: BB#0
+	%vreg0<def> = L2_loadri_io %vreg3, 4; mem:LD4[%cgep5] IntRegs:%vreg0,%vreg3
+	%vreg8<def> = C2_cmpgtui %vreg0, 52; PredRegs:%vreg8 IntRegs:%vreg0
+	J2_jumpt %vreg8<kill>, <BB#4>, %PC<imp-def,dead>; PredRegs:%vreg8
+	J2_jump <BB#2>, %PC<imp-def,dead>
+    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#4(0x40000000 / 0x80000000 = 50.00%)
+
+BB#2: derived from LLVM BB %8
+    Predecessors according to CFG: BB#1
+	%vreg1<def> = L2_loadri_io %vreg5, 4; mem:LD4[%9] IntRegs:%vreg1,%vreg5
+	%vreg2<def> = S4_lsli 1, %vreg0; IntRegs:%vreg2,%vreg0
+	%vreg9<def> = S4_ntstbit_r %vreg1, %vreg0; PredRegs:%vreg9 IntRegs:%vreg1,%vreg0
+	J2_jumpt %vreg9<kill>, <BB#4>, %PC<imp-def,dead>; PredRegs:%vreg9
+	J2_jump <BB#3>, %PC<imp-def,dead>
+    Successors according to CFG: BB#4(0x30000000 / 0x80000000 = 37.50%) BB#3(0x50000000 / 0x80000000 = 62.50%)
+
+BB#3: derived from LLVM BB %14
+    Predecessors according to CFG: BB#2
+	%vreg10<def> = A2_tfrsi -1; IntRegs:%vreg10
+	%vreg11<def,tied1> = M4_and_xor %vreg1<tied0>, %vreg2, %vreg10<kill>; IntRegs:%vreg11,%vreg1,%vreg2,%vreg10
+	S2_storeri_io %vreg5, 4, %vreg11<kill>; mem:ST4[%sunkaddr9] IntRegs:%vreg5,%vreg11
+	L4_isub_memopw_io %vreg5, 0, 1; mem:ST4[%17] LD4[%17] IntRegs:%vreg5
+    Successors according to CFG: BB#4(?%)
+
+BB#4: derived from LLVM BB %20
+    Predecessors according to CFG: BB#0 BB#1 BB#2 BB#3
+	JMPret %R31, %PC<imp-def,dead>
+
+# End machine code for function parms_set.
+
+# After Machine Common Subexpression Elimination:
+# Machine code for function parms_set: SSA
+Function Live Ins: %R0 in %vreg3, %R2 in %vreg5
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R2
+	%vreg5<def> = COPY %R2; IntRegs:%vreg5
+	%vreg3<def> = COPY %R0; IntRegs:%vreg3
+	%vreg6<def> = L2_loadrub_io %vreg3, 0; mem:LD1[%cgep47](align=4) IntRegs:%vreg6,%vreg3
+	%vreg7<def> = C2_cmpeqi %vreg6<kill>, 61; PredRegs:%vreg7 IntRegs:%vreg6
+	J2_jumpf %vreg7<kill>, <BB#4>, %PC<imp-def,dead>; PredRegs:%vreg7
+	J2_jump <BB#1>, %PC<imp-def,dead>
+    Successors according to CFG: BB#1(0x40000000 / 0x80000000 = 50.00%) BB#4(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %4
+    Predecessors according to CFG: BB#0
+	%vreg0<def> = L2_loadri_io %vreg3, 4; mem:LD4[%cgep5] IntRegs:%vreg0,%vreg3
+	%vreg8<def> = C2_cmpgtui %vreg0, 52; PredRegs:%vreg8 IntRegs:%vreg0
+	J2_jumpt %vreg8<kill>, <BB#4>, %PC<imp-def,dead>; PredRegs:%vreg8
+	J2_jump <BB#2>, %PC<imp-def,dead>
+    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#4(0x40000000 / 0x80000000 = 50.00%)
+
+BB#2: derived from LLVM BB %8
+    Predecessors according to CFG: BB#1
+	%vreg1<def> = L2_loadri_io %vreg5, 4; mem:LD4[%9] IntRegs:%vreg1,%vreg5
+	%vreg2<def> = S4_lsli 1, %vreg0; IntRegs:%vreg2,%vreg0
+	%vreg9<def> = S4_ntstbit_r %vreg1, %vreg0; PredRegs:%vreg9 IntRegs:%vreg1,%vreg0
+	J2_jumpt %vreg9<kill>, <BB#4>, %PC<imp-def,dead>; PredRegs:%vreg9
+	J2_jump <BB#3>, %PC<imp-def,dead>
+    Successors according to CFG: BB#4(0x30000000 / 0x80000000 = 37.50%) BB#3(0x50000000 / 0x80000000 = 62.50%)
+
+BB#3: derived from LLVM BB %14
+    Predecessors according to CFG: BB#2
+	%vreg10<def> = A2_tfrsi -1; IntRegs:%vreg10
+	%vreg11<def,tied1> = M4_and_xor %vreg1<tied0>, %vreg2, %vreg10<kill>; IntRegs:%vreg11,%vreg1,%vreg2,%vreg10
+	S2_storeri_io %vreg5, 4, %vreg11<kill>; mem:ST4[%sunkaddr9] IntRegs:%vreg5,%vreg11
+	L4_isub_memopw_io %vreg5, 0, 1; mem:ST4[%17] LD4[%17] IntRegs:%vreg5
+    Successors according to CFG: BB#4(?%)
+
+BB#4: derived from LLVM BB %20
+    Predecessors according to CFG: BB#0 BB#1 BB#2 BB#3
+	JMPret %R31, %PC<imp-def,dead>
+
+# End machine code for function parms_set.
+
+# After Machine code sinking:
+# Machine code for function parms_set: SSA
+Function Live Ins: %R0 in %vreg3, %R2 in %vreg5
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R2
+	%vreg5<def> = COPY %R2; IntRegs:%vreg5
+	%vreg3<def> = COPY %R0; IntRegs:%vreg3
+	%vreg6<def> = L2_loadrub_io %vreg3, 0; mem:LD1[%cgep47](align=4) IntRegs:%vreg6,%vreg3
+	%vreg7<def> = C2_cmpeqi %vreg6<kill>, 61; PredRegs:%vreg7 IntRegs:%vreg6
+	J2_jumpf %vreg7<kill>, <BB#4>, %PC<imp-def,dead>; PredRegs:%vreg7
+	J2_jump <BB#1>, %PC<imp-def,dead>
+    Successors according to CFG: BB#1(0x40000000 / 0x80000000 = 50.00%) BB#4(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %4
+    Predecessors according to CFG: BB#0
+	%vreg0<def> = L2_loadri_io %vreg3, 4; mem:LD4[%cgep5] IntRegs:%vreg0,%vreg3
+	%vreg8<def> = C2_cmpgtui %vreg0, 52; PredRegs:%vreg8 IntRegs:%vreg0
+	J2_jumpt %vreg8<kill>, <BB#4>, %PC<imp-def,dead>; PredRegs:%vreg8
+	J2_jump <BB#2>, %PC<imp-def,dead>
+    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#4(0x40000000 / 0x80000000 = 50.00%)
+
+BB#2: derived from LLVM BB %8
+    Predecessors according to CFG: BB#1
+	%vreg1<def> = L2_loadri_io %vreg5, 4; mem:LD4[%9] IntRegs:%vreg1,%vreg5
+	%vreg9<def> = S4_ntstbit_r %vreg1, %vreg0; PredRegs:%vreg9 IntRegs:%vreg1,%vreg0
+	J2_jumpt %vreg9<kill>, <BB#4>, %PC<imp-def,dead>; PredRegs:%vreg9
+	J2_jump <BB#3>, %PC<imp-def,dead>
+    Successors according to CFG: BB#4(0x30000000 / 0x80000000 = 37.50%) BB#3(0x50000000 / 0x80000000 = 62.50%)
+
+BB#3: derived from LLVM BB %14
+    Predecessors according to CFG: BB#2
+	%vreg2<def> = S4_lsli 1, %vreg0; IntRegs:%vreg2,%vreg0
+	%vreg10<def> = A2_tfrsi -1; IntRegs:%vreg10
+	%vreg11<def,tied1> = M4_and_xor %vreg1<tied0>, %vreg2, %vreg10<kill>; IntRegs:%vreg11,%vreg1,%vreg2,%vreg10
+	S2_storeri_io %vreg5, 4, %vreg11<kill>; mem:ST4[%sunkaddr9] IntRegs:%vreg5,%vreg11
+	L4_isub_memopw_io %vreg5, 0, 1; mem:ST4[%17] LD4[%17] IntRegs:%vreg5
+    Successors according to CFG: BB#4(?%)
+
+BB#4: derived from LLVM BB %20
+    Predecessors according to CFG: BB#0 BB#1 BB#2 BB#3
+	JMPret %R31, %PC<imp-def,dead>
+
+# End machine code for function parms_set.
+
+# After Peephole Optimizations:
+# Machine code for function parms_set: SSA
+Function Live Ins: %R0 in %vreg3, %R2 in %vreg5
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R2
+	%vreg5<def> = COPY %R2; IntRegs:%vreg5
+	%vreg3<def> = COPY %R0; IntRegs:%vreg3
+	%vreg6<def> = L2_loadrub_io %vreg3, 0; mem:LD1[%cgep47](align=4) IntRegs:%vreg6,%vreg3
+	%vreg7<def> = C2_cmpeqi %vreg6<kill>, 61; PredRegs:%vreg7 IntRegs:%vreg6
+	J2_jumpf %vreg7<kill>, <BB#4>, %PC<imp-def,dead>; PredRegs:%vreg7
+	J2_jump <BB#1>, %PC<imp-def,dead>
+    Successors according to CFG: BB#1(0x40000000 / 0x80000000 = 50.00%) BB#4(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %4
+    Predecessors according to CFG: BB#0
+	%vreg0<def> = L2_loadri_io %vreg3, 4; mem:LD4[%cgep5] IntRegs:%vreg0,%vreg3
+	%vreg8<def> = C2_cmpgtui %vreg0, 52; PredRegs:%vreg8 IntRegs:%vreg0
+	J2_jumpt %vreg8<kill>, <BB#4>, %PC<imp-def,dead>; PredRegs:%vreg8
+	J2_jump <BB#2>, %PC<imp-def,dead>
+    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#4(0x40000000 / 0x80000000 = 50.00%)
+
+BB#2: derived from LLVM BB %8
+    Predecessors according to CFG: BB#1
+	%vreg1<def> = L2_loadri_io %vreg5, 4; mem:LD4[%9] IntRegs:%vreg1,%vreg5
+	%vreg9<def> = S4_ntstbit_r %vreg1, %vreg0; PredRegs:%vreg9 IntRegs:%vreg1,%vreg0
+	J2_jumpt %vreg9<kill>, <BB#4>, %PC<imp-def,dead>; PredRegs:%vreg9
+	J2_jump <BB#3>, %PC<imp-def,dead>
+    Successors according to CFG: BB#4(0x30000000 / 0x80000000 = 37.50%) BB#3(0x50000000 / 0x80000000 = 62.50%)
+
+BB#3: derived from LLVM BB %14
+    Predecessors according to CFG: BB#2
+	%vreg2<def> = S4_lsli 1, %vreg0; IntRegs:%vreg2,%vreg0
+	%vreg10<def> = A2_tfrsi -1; IntRegs:%vreg10
+	%vreg11<def,tied1> = M4_and_xor %vreg1<tied0>, %vreg2, %vreg10<kill>; IntRegs:%vreg11,%vreg1,%vreg2,%vreg10
+	S2_storeri_io %vreg5, 4, %vreg11<kill>; mem:ST4[%sunkaddr9] IntRegs:%vreg5,%vreg11
+	L4_isub_memopw_io %vreg5, 0, 1; mem:ST4[%17] LD4[%17] IntRegs:%vreg5
+    Successors according to CFG: BB#4(?%)
+
+BB#4: derived from LLVM BB %20
+    Predecessors according to CFG: BB#0 BB#1 BB#2 BB#3
+	JMPret %R31, %PC<imp-def,dead>
+
+# End machine code for function parms_set.
+
+# After Remove dead machine instructions:
+# Machine code for function parms_set: SSA
+Function Live Ins: %R0 in %vreg3, %R2 in %vreg5
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R2
+	%vreg5<def> = COPY %R2; IntRegs:%vreg5
+	%vreg3<def> = COPY %R0; IntRegs:%vreg3
+	%vreg6<def> = L2_loadrub_io %vreg3, 0; mem:LD1[%cgep47](align=4) IntRegs:%vreg6,%vreg3
+	%vreg7<def> = C2_cmpeqi %vreg6<kill>, 61; PredRegs:%vreg7 IntRegs:%vreg6
+	J2_jumpf %vreg7<kill>, <BB#4>, %PC<imp-def,dead>; PredRegs:%vreg7
+	J2_jump <BB#1>, %PC<imp-def,dead>
+    Successors according to CFG: BB#1(0x40000000 / 0x80000000 = 50.00%) BB#4(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %4
+    Predecessors according to CFG: BB#0
+	%vreg0<def> = L2_loadri_io %vreg3, 4; mem:LD4[%cgep5] IntRegs:%vreg0,%vreg3
+	%vreg8<def> = C2_cmpgtui %vreg0, 52; PredRegs:%vreg8 IntRegs:%vreg0
+	J2_jumpt %vreg8<kill>, <BB#4>, %PC<imp-def,dead>; PredRegs:%vreg8
+	J2_jump <BB#2>, %PC<imp-def,dead>
+    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#4(0x40000000 / 0x80000000 = 50.00%)
+
+BB#2: derived from LLVM BB %8
+    Predecessors according to CFG: BB#1
+	%vreg1<def> = L2_loadri_io %vreg5, 4; mem:LD4[%9] IntRegs:%vreg1,%vreg5
+	%vreg9<def> = S4_ntstbit_r %vreg1, %vreg0; PredRegs:%vreg9 IntRegs:%vreg1,%vreg0
+	J2_jumpt %vreg9<kill>, <BB#4>, %PC<imp-def,dead>; PredRegs:%vreg9
+	J2_jump <BB#3>, %PC<imp-def,dead>
+    Successors according to CFG: BB#4(0x30000000 / 0x80000000 = 37.50%) BB#3(0x50000000 / 0x80000000 = 62.50%)
+
+BB#3: derived from LLVM BB %14
+    Predecessors according to CFG: BB#2
+	%vreg2<def> = S4_lsli 1, %vreg0; IntRegs:%vreg2,%vreg0
+	%vreg10<def> = A2_tfrsi -1; IntRegs:%vreg10
+	%vreg11<def,tied1> = M4_and_xor %vreg1<tied0>, %vreg2, %vreg10<kill>; IntRegs:%vreg11,%vreg1,%vreg2,%vreg10
+	S2_storeri_io %vreg5, 4, %vreg11<kill>; mem:ST4[%sunkaddr9] IntRegs:%vreg5,%vreg11
+	L4_isub_memopw_io %vreg5, 0, 1; mem:ST4[%17] LD4[%17] IntRegs:%vreg5
+    Successors according to CFG: BB#4(?%)
+
+BB#4: derived from LLVM BB %20
+    Predecessors according to CFG: BB#0 BB#1 BB#2 BB#3
+	JMPret %R31, %PC<imp-def,dead>
+
+# End machine code for function parms_set.
+
+# After Hexagon Store Widening:
+# Machine code for function parms_set: SSA
+Function Live Ins: %R0 in %vreg3, %R2 in %vreg5
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R2
+	%vreg5<def> = COPY %R2; IntRegs:%vreg5
+	%vreg3<def> = COPY %R0; IntRegs:%vreg3
+	%vreg6<def> = L2_loadrub_io %vreg3, 0; mem:LD1[%cgep47](align=4) IntRegs:%vreg6,%vreg3
+	%vreg7<def> = C2_cmpeqi %vreg6<kill>, 61; PredRegs:%vreg7 IntRegs:%vreg6
+	J2_jumpf %vreg7<kill>, <BB#4>, %PC<imp-def,dead>; PredRegs:%vreg7
+	J2_jump <BB#1>, %PC<imp-def,dead>
+    Successors according to CFG: BB#1(0x40000000 / 0x80000000 = 50.00%) BB#4(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %4
+    Predecessors according to CFG: BB#0
+	%vreg0<def> = L2_loadri_io %vreg3, 4; mem:LD4[%cgep5] IntRegs:%vreg0,%vreg3
+	%vreg8<def> = C2_cmpgtui %vreg0, 52; PredRegs:%vreg8 IntRegs:%vreg0
+	J2_jumpt %vreg8<kill>, <BB#4>, %PC<imp-def,dead>; PredRegs:%vreg8
+	J2_jump <BB#2>, %PC<imp-def,dead>
+    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#4(0x40000000 / 0x80000000 = 50.00%)
+
+BB#2: derived from LLVM BB %8
+    Predecessors according to CFG: BB#1
+	%vreg1<def> = L2_loadri_io %vreg5, 4; mem:LD4[%9] IntRegs:%vreg1,%vreg5
+	%vreg9<def> = S4_ntstbit_r %vreg1, %vreg0; PredRegs:%vreg9 IntRegs:%vreg1,%vreg0
+	J2_jumpt %vreg9<kill>, <BB#4>, %PC<imp-def,dead>; PredRegs:%vreg9
+	J2_jump <BB#3>, %PC<imp-def,dead>
+    Successors according to CFG: BB#4(0x30000000 / 0x80000000 = 37.50%) BB#3(0x50000000 / 0x80000000 = 62.50%)
+
+BB#3: derived from LLVM BB %14
+    Predecessors according to CFG: BB#2
+	%vreg2<def> = S4_lsli 1, %vreg0; IntRegs:%vreg2,%vreg0
+	%vreg10<def> = A2_tfrsi -1; IntRegs:%vreg10
+	%vreg11<def,tied1> = M4_and_xor %vreg1<tied0>, %vreg2, %vreg10<kill>; IntRegs:%vreg11,%vreg1,%vreg2,%vreg10
+	S2_storeri_io %vreg5, 4, %vreg11<kill>; mem:ST4[%sunkaddr9] IntRegs:%vreg5,%vreg11
+	L4_isub_memopw_io %vreg5, 0, 1; mem:ST4[%17] LD4[%17] IntRegs:%vreg5
+    Successors according to CFG: BB#4(?%)
+
+BB#4: derived from LLVM BB %20
+    Predecessors according to CFG: BB#0 BB#1 BB#2 BB#3
+	JMPret %R31, %PC<imp-def,dead>
+
+# End machine code for function parms_set.
+
+# After Hexagon Hardware Loops:
+# Machine code for function parms_set: SSA
+Function Live Ins: %R0 in %vreg3, %R2 in %vreg5
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R2
+	%vreg5<def> = COPY %R2; IntRegs:%vreg5
+	%vreg3<def> = COPY %R0; IntRegs:%vreg3
+	%vreg6<def> = L2_loadrub_io %vreg3, 0; mem:LD1[%cgep47](align=4) IntRegs:%vreg6,%vreg3
+	%vreg7<def> = C2_cmpeqi %vreg6<kill>, 61; PredRegs:%vreg7 IntRegs:%vreg6
+	J2_jumpf %vreg7<kill>, <BB#4>, %PC<imp-def,dead>; PredRegs:%vreg7
+	J2_jump <BB#1>, %PC<imp-def,dead>
+    Successors according to CFG: BB#1(0x40000000 / 0x80000000 = 50.00%) BB#4(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %4
+    Predecessors according to CFG: BB#0
+	%vreg0<def> = L2_loadri_io %vreg3, 4; mem:LD4[%cgep5] IntRegs:%vreg0,%vreg3
+	%vreg8<def> = C2_cmpgtui %vreg0, 52; PredRegs:%vreg8 IntRegs:%vreg0
+	J2_jumpt %vreg8<kill>, <BB#4>, %PC<imp-def,dead>; PredRegs:%vreg8
+	J2_jump <BB#2>, %PC<imp-def,dead>
+    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#4(0x40000000 / 0x80000000 = 50.00%)
+
+BB#2: derived from LLVM BB %8
+    Predecessors according to CFG: BB#1
+	%vreg1<def> = L2_loadri_io %vreg5, 4; mem:LD4[%9] IntRegs:%vreg1,%vreg5
+	%vreg9<def> = S4_ntstbit_r %vreg1, %vreg0; PredRegs:%vreg9 IntRegs:%vreg1,%vreg0
+	J2_jumpt %vreg9<kill>, <BB#4>, %PC<imp-def,dead>; PredRegs:%vreg9
+	J2_jump <BB#3>, %PC<imp-def,dead>
+    Successors according to CFG: BB#4(0x30000000 / 0x80000000 = 37.50%) BB#3(0x50000000 / 0x80000000 = 62.50%)
+
+BB#3: derived from LLVM BB %14
+    Predecessors according to CFG: BB#2
+	%vreg2<def> = S4_lsli 1, %vreg0; IntRegs:%vreg2,%vreg0
+	%vreg10<def> = A2_tfrsi -1; IntRegs:%vreg10
+	%vreg11<def,tied1> = M4_and_xor %vreg1<tied0>, %vreg2, %vreg10<kill>; IntRegs:%vreg11,%vreg1,%vreg2,%vreg10
+	S2_storeri_io %vreg5, 4, %vreg11<kill>; mem:ST4[%sunkaddr9] IntRegs:%vreg5,%vreg11
+	L4_isub_memopw_io %vreg5, 0, 1; mem:ST4[%17] LD4[%17] IntRegs:%vreg5
+    Successors according to CFG: BB#4(?%)
+
+BB#4: derived from LLVM BB %20
+    Predecessors according to CFG: BB#0 BB#1 BB#2 BB#3
+	JMPret %R31, %PC<imp-def,dead>
+
+# End machine code for function parms_set.
+
+# After Process Implicit Definitions:
+# Machine code for function parms_set: SSA
+Function Live Ins: %R0 in %vreg3, %R2 in %vreg5
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R2
+	%vreg5<def> = COPY %R2; IntRegs:%vreg5
+	%vreg3<def> = COPY %R0; IntRegs:%vreg3
+	%vreg6<def> = L2_loadrub_io %vreg3, 0; mem:LD1[%cgep47](align=4) IntRegs:%vreg6,%vreg3
+	%vreg7<def> = C2_cmpeqi %vreg6<kill>, 61; PredRegs:%vreg7 IntRegs:%vreg6
+	J2_jumpf %vreg7<kill>, <BB#4>, %PC<imp-def,dead>; PredRegs:%vreg7
+	J2_jump <BB#1>, %PC<imp-def,dead>
+    Successors according to CFG: BB#1(0x40000000 / 0x80000000 = 50.00%) BB#4(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %4
+    Predecessors according to CFG: BB#0
+	%vreg0<def> = L2_loadri_io %vreg3, 4; mem:LD4[%cgep5] IntRegs:%vreg0,%vreg3
+	%vreg8<def> = C2_cmpgtui %vreg0, 52; PredRegs:%vreg8 IntRegs:%vreg0
+	J2_jumpt %vreg8<kill>, <BB#4>, %PC<imp-def,dead>; PredRegs:%vreg8
+	J2_jump <BB#2>, %PC<imp-def,dead>
+    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#4(0x40000000 / 0x80000000 = 50.00%)
+
+BB#2: derived from LLVM BB %8
+    Predecessors according to CFG: BB#1
+	%vreg1<def> = L2_loadri_io %vreg5, 4; mem:LD4[%9] IntRegs:%vreg1,%vreg5
+	%vreg9<def> = S4_ntstbit_r %vreg1, %vreg0; PredRegs:%vreg9 IntRegs:%vreg1,%vreg0
+	J2_jumpt %vreg9<kill>, <BB#4>, %PC<imp-def,dead>; PredRegs:%vreg9
+	J2_jump <BB#3>, %PC<imp-def,dead>
+    Successors according to CFG: BB#4(0x30000000 / 0x80000000 = 37.50%) BB#3(0x50000000 / 0x80000000 = 62.50%)
+
+BB#3: derived from LLVM BB %14
+    Predecessors according to CFG: BB#2
+	%vreg2<def> = S4_lsli 1, %vreg0; IntRegs:%vreg2,%vreg0
+	%vreg10<def> = A2_tfrsi -1; IntRegs:%vreg10
+	%vreg11<def,tied1> = M4_and_xor %vreg1<tied0>, %vreg2, %vreg10<kill>; IntRegs:%vreg11,%vreg1,%vreg2,%vreg10
+	S2_storeri_io %vreg5, 4, %vreg11<kill>; mem:ST4[%sunkaddr9] IntRegs:%vreg5,%vreg11
+	L4_isub_memopw_io %vreg5, 0, 1; mem:ST4[%17] LD4[%17] IntRegs:%vreg5
+    Successors according to CFG: BB#4(?%)
+
+BB#4: derived from LLVM BB %20
+    Predecessors according to CFG: BB#0 BB#1 BB#2 BB#3
+	JMPret %R31, %PC<imp-def,dead>
+
+# End machine code for function parms_set.
+
+# After Live Variable Analysis:
+# Machine code for function parms_set: SSA
+Function Live Ins: %R0 in %vreg3, %R2 in %vreg5
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R2
+	%vreg5<def> = COPY %R2<kill>; IntRegs:%vreg5
+	%vreg3<def> = COPY %R0<kill>; IntRegs:%vreg3
+	%vreg6<def> = L2_loadrub_io %vreg3, 0; mem:LD1[%cgep47](align=4) IntRegs:%vreg6,%vreg3
+	%vreg7<def> = C2_cmpeqi %vreg6<kill>, 61; PredRegs:%vreg7 IntRegs:%vreg6
+	J2_jumpf %vreg7<kill>, <BB#4>, %PC<imp-def,dead>; PredRegs:%vreg7
+	J2_jump <BB#1>, %PC<imp-def,dead>
+    Successors according to CFG: BB#1(0x40000000 / 0x80000000 = 50.00%) BB#4(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %4
+    Predecessors according to CFG: BB#0
+	%vreg0<def> = L2_loadri_io %vreg3<kill>, 4; mem:LD4[%cgep5] IntRegs:%vreg0,%vreg3
+	%vreg8<def> = C2_cmpgtui %vreg0, 52; PredRegs:%vreg8 IntRegs:%vreg0
+	J2_jumpt %vreg8<kill>, <BB#4>, %PC<imp-def,dead>; PredRegs:%vreg8
+	J2_jump <BB#2>, %PC<imp-def,dead>
+    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#4(0x40000000 / 0x80000000 = 50.00%)
+
+BB#2: derived from LLVM BB %8
+    Predecessors according to CFG: BB#1
+	%vreg1<def> = L2_loadri_io %vreg5, 4; mem:LD4[%9] IntRegs:%vreg1,%vreg5
+	%vreg9<def> = S4_ntstbit_r %vreg1, %vreg0; PredRegs:%vreg9 IntRegs:%vreg1,%vreg0
+	J2_jumpt %vreg9<kill>, <BB#4>, %PC<imp-def,dead>; PredRegs:%vreg9
+	J2_jump <BB#3>, %PC<imp-def,dead>
+    Successors according to CFG: BB#4(0x30000000 / 0x80000000 = 37.50%) BB#3(0x50000000 / 0x80000000 = 62.50%)
+
+BB#3: derived from LLVM BB %14
+    Predecessors according to CFG: BB#2
+	%vreg2<def> = S4_lsli 1, %vreg0<kill>; IntRegs:%vreg2,%vreg0
+	%vreg10<def> = A2_tfrsi -1; IntRegs:%vreg10
+	%vreg11<def,tied1> = M4_and_xor %vreg1<kill,tied0>, %vreg2<kill>, %vreg10<kill>; IntRegs:%vreg11,%vreg1,%vreg2,%vreg10
+	S2_storeri_io %vreg5, 4, %vreg11<kill>; mem:ST4[%sunkaddr9] IntRegs:%vreg5,%vreg11
+	L4_isub_memopw_io %vreg5<kill>, 0, 1; mem:ST4[%17] LD4[%17] IntRegs:%vreg5
+    Successors according to CFG: BB#4(?%)
+
+BB#4: derived from LLVM BB %20
+    Predecessors according to CFG: BB#0 BB#1 BB#2 BB#3
+	JMPret %R31, %PC<imp-def,dead>
+
+# End machine code for function parms_set.
+
+# After Machine Natural Loop Construction:
+# Machine code for function parms_set: SSA
+Function Live Ins: %R0 in %vreg3, %R2 in %vreg5
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R2
+	%vreg5<def> = COPY %R2<kill>; IntRegs:%vreg5
+	%vreg3<def> = COPY %R0<kill>; IntRegs:%vreg3
+	%vreg6<def> = L2_loadrub_io %vreg3, 0; mem:LD1[%cgep47](align=4) IntRegs:%vreg6,%vreg3
+	%vreg7<def> = C2_cmpeqi %vreg6<kill>, 61; PredRegs:%vreg7 IntRegs:%vreg6
+	J2_jumpf %vreg7<kill>, <BB#4>, %PC<imp-def,dead>; PredRegs:%vreg7
+	J2_jump <BB#1>, %PC<imp-def,dead>
+    Successors according to CFG: BB#1(0x40000000 / 0x80000000 = 50.00%) BB#4(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %4
+    Predecessors according to CFG: BB#0
+	%vreg0<def> = L2_loadri_io %vreg3<kill>, 4; mem:LD4[%cgep5] IntRegs:%vreg0,%vreg3
+	%vreg8<def> = C2_cmpgtui %vreg0, 52; PredRegs:%vreg8 IntRegs:%vreg0
+	J2_jumpt %vreg8<kill>, <BB#4>, %PC<imp-def,dead>; PredRegs:%vreg8
+	J2_jump <BB#2>, %PC<imp-def,dead>
+    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#4(0x40000000 / 0x80000000 = 50.00%)
+
+BB#2: derived from LLVM BB %8
+    Predecessors according to CFG: BB#1
+	%vreg1<def> = L2_loadri_io %vreg5, 4; mem:LD4[%9] IntRegs:%vreg1,%vreg5
+	%vreg9<def> = S4_ntstbit_r %vreg1, %vreg0; PredRegs:%vreg9 IntRegs:%vreg1,%vreg0
+	J2_jumpt %vreg9<kill>, <BB#4>, %PC<imp-def,dead>; PredRegs:%vreg9
+	J2_jump <BB#3>, %PC<imp-def,dead>
+    Successors according to CFG: BB#4(0x30000000 / 0x80000000 = 37.50%) BB#3(0x50000000 / 0x80000000 = 62.50%)
+
+BB#3: derived from LLVM BB %14
+    Predecessors according to CFG: BB#2
+	%vreg2<def> = S4_lsli 1, %vreg0<kill>; IntRegs:%vreg2,%vreg0
+	%vreg10<def> = A2_tfrsi -1; IntRegs:%vreg10
+	%vreg11<def,tied1> = M4_and_xor %vreg1<kill,tied0>, %vreg2<kill>, %vreg10<kill>; IntRegs:%vreg11,%vreg1,%vreg2,%vreg10
+	S2_storeri_io %vreg5, 4, %vreg11<kill>; mem:ST4[%sunkaddr9] IntRegs:%vreg5,%vreg11
+	L4_isub_memopw_io %vreg5<kill>, 0, 1; mem:ST4[%17] LD4[%17] IntRegs:%vreg5
+    Successors according to CFG: BB#4(?%)
+
+BB#4: derived from LLVM BB %20
+    Predecessors according to CFG: BB#0 BB#1 BB#2 BB#3
+	JMPret %R31, %PC<imp-def,dead>
+
+# End machine code for function parms_set.
+
+# After Eliminate PHI nodes for register allocation:
+# Machine code for function parms_set: Post SSA
+Function Live Ins: %R0 in %vreg3, %R2 in %vreg5
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R2
+	%vreg5<def> = COPY %R2<kill>; IntRegs:%vreg5
+	%vreg3<def> = COPY %R0<kill>; IntRegs:%vreg3
+	%vreg6<def> = L2_loadrub_io %vreg3, 0; mem:LD1[%cgep47](align=4) IntRegs:%vreg6,%vreg3
+	%vreg7<def> = C2_cmpeqi %vreg6<kill>, 61; PredRegs:%vreg7 IntRegs:%vreg6
+	J2_jumpf %vreg7<kill>, <BB#4>, %PC<imp-def,dead>; PredRegs:%vreg7
+	J2_jump <BB#1>, %PC<imp-def,dead>
+    Successors according to CFG: BB#1(0x40000000 / 0x80000000 = 50.00%) BB#4(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %4
+    Predecessors according to CFG: BB#0
+	%vreg0<def> = L2_loadri_io %vreg3<kill>, 4; mem:LD4[%cgep5] IntRegs:%vreg0,%vreg3
+	%vreg8<def> = C2_cmpgtui %vreg0, 52; PredRegs:%vreg8 IntRegs:%vreg0
+	J2_jumpt %vreg8<kill>, <BB#4>, %PC<imp-def,dead>; PredRegs:%vreg8
+	J2_jump <BB#2>, %PC<imp-def,dead>
+    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#4(0x40000000 / 0x80000000 = 50.00%)
+
+BB#2: derived from LLVM BB %8
+    Predecessors according to CFG: BB#1
+	%vreg1<def> = L2_loadri_io %vreg5, 4; mem:LD4[%9] IntRegs:%vreg1,%vreg5
+	%vreg9<def> = S4_ntstbit_r %vreg1, %vreg0; PredRegs:%vreg9 IntRegs:%vreg1,%vreg0
+	J2_jumpt %vreg9<kill>, <BB#4>, %PC<imp-def,dead>; PredRegs:%vreg9
+	J2_jump <BB#3>, %PC<imp-def,dead>
+    Successors according to CFG: BB#4(0x30000000 / 0x80000000 = 37.50%) BB#3(0x50000000 / 0x80000000 = 62.50%)
+
+BB#3: derived from LLVM BB %14
+    Predecessors according to CFG: BB#2
+	%vreg2<def> = S4_lsli 1, %vreg0<kill>; IntRegs:%vreg2,%vreg0
+	%vreg10<def> = A2_tfrsi -1; IntRegs:%vreg10
+	%vreg11<def,tied1> = M4_and_xor %vreg1<kill,tied0>, %vreg2<kill>, %vreg10<kill>; IntRegs:%vreg11,%vreg1,%vreg2,%vreg10
+	S2_storeri_io %vreg5, 4, %vreg11<kill>; mem:ST4[%sunkaddr9] IntRegs:%vreg5,%vreg11
+	L4_isub_memopw_io %vreg5<kill>, 0, 1; mem:ST4[%17] LD4[%17] IntRegs:%vreg5
+    Successors according to CFG: BB#4(?%)
+
+BB#4: derived from LLVM BB %20
+    Predecessors according to CFG: BB#0 BB#1 BB#2 BB#3
+	JMPret %R31, %PC<imp-def,dead>
+
+# End machine code for function parms_set.
+
+# After Two-Address instruction pass:
+# Machine code for function parms_set: Post SSA
+Function Live Ins: %R0 in %vreg3, %R2 in %vreg5
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R2
+	%vreg5<def> = COPY %R2<kill>; IntRegs:%vreg5
+	%vreg3<def> = COPY %R0<kill>; IntRegs:%vreg3
+	%vreg6<def> = L2_loadrub_io %vreg3, 0; mem:LD1[%cgep47](align=4) IntRegs:%vreg6,%vreg3
+	%vreg7<def> = C2_cmpeqi %vreg6<kill>, 61; PredRegs:%vreg7 IntRegs:%vreg6
+	J2_jumpf %vreg7<kill>, <BB#4>, %PC<imp-def,dead>; PredRegs:%vreg7
+	J2_jump <BB#1>, %PC<imp-def,dead>
+    Successors according to CFG: BB#1(0x40000000 / 0x80000000 = 50.00%) BB#4(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %4
+    Predecessors according to CFG: BB#0
+	%vreg0<def> = L2_loadri_io %vreg3<kill>, 4; mem:LD4[%cgep5] IntRegs:%vreg0,%vreg3
+	%vreg8<def> = C2_cmpgtui %vreg0, 52; PredRegs:%vreg8 IntRegs:%vreg0
+	J2_jumpt %vreg8<kill>, <BB#4>, %PC<imp-def,dead>; PredRegs:%vreg8
+	J2_jump <BB#2>, %PC<imp-def,dead>
+    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#4(0x40000000 / 0x80000000 = 50.00%)
+
+BB#2: derived from LLVM BB %8
+    Predecessors according to CFG: BB#1
+	%vreg1<def> = L2_loadri_io %vreg5, 4; mem:LD4[%9] IntRegs:%vreg1,%vreg5
+	%vreg9<def> = S4_ntstbit_r %vreg1, %vreg0; PredRegs:%vreg9 IntRegs:%vreg1,%vreg0
+	J2_jumpt %vreg9<kill>, <BB#4>, %PC<imp-def,dead>; PredRegs:%vreg9
+	J2_jump <BB#3>, %PC<imp-def,dead>
+    Successors according to CFG: BB#4(0x30000000 / 0x80000000 = 37.50%) BB#3(0x50000000 / 0x80000000 = 62.50%)
+
+BB#3: derived from LLVM BB %14
+    Predecessors according to CFG: BB#2
+	%vreg2<def> = S4_lsli 1, %vreg0<kill>; IntRegs:%vreg2,%vreg0
+	%vreg10<def> = A2_tfrsi -1; IntRegs:%vreg10
+	%vreg11<def> = COPY %vreg1<kill>; IntRegs:%vreg11,%vreg1
+	%vreg11<def,tied1> = M4_and_xor %vreg11<tied0>, %vreg2<kill>, %vreg10<kill>; IntRegs:%vreg11,%vreg2,%vreg10
+	S2_storeri_io %vreg5, 4, %vreg11<kill>; mem:ST4[%sunkaddr9] IntRegs:%vreg5,%vreg11
+	L4_isub_memopw_io %vreg5<kill>, 0, 1; mem:ST4[%17] LD4[%17] IntRegs:%vreg5
+    Successors according to CFG: BB#4(?%)
+
+BB#4: derived from LLVM BB %20
+    Predecessors according to CFG: BB#0 BB#1 BB#2 BB#3
+	JMPret %R31, %PC<imp-def,dead>
+
+# End machine code for function parms_set.
+
+# After Simple Register Coalescing:
+# Machine code for function parms_set: Post SSA
+Function Live Ins: %R0 in %vreg3, %R2 in %vreg5
+
+0B	BB#0: derived from LLVM BB %0
+	    Live Ins: %R0 %R2
+16B		%vreg5<def> = COPY %R2; IntRegs:%vreg5
+32B		%vreg3<def> = COPY %R0; IntRegs:%vreg3
+48B		%vreg6<def> = L2_loadrub_io %vreg3, 0; mem:LD1[%cgep47](align=4) IntRegs:%vreg6,%vreg3
+64B		%vreg7<def> = C2_cmpeqi %vreg6, 61; PredRegs:%vreg7 IntRegs:%vreg6
+80B		J2_jumpf %vreg7, <BB#4>, %PC<imp-def,dead>; PredRegs:%vreg7
+96B		J2_jump <BB#1>, %PC<imp-def,dead>
+	    Successors according to CFG: BB#1(0x40000000 / 0x80000000 = 50.00%) BB#4(0x40000000 / 0x80000000 = 50.00%)
+
+112B	BB#1: derived from LLVM BB %4
+	    Predecessors according to CFG: BB#0
+128B		%vreg0<def> = L2_loadri_io %vreg3, 4; mem:LD4[%cgep5] IntRegs:%vreg0,%vreg3
+144B		%vreg8<def> = C2_cmpgtui %vreg0, 52; PredRegs:%vreg8 IntRegs:%vreg0
+160B		J2_jumpt %vreg8, <BB#4>, %PC<imp-def,dead>; PredRegs:%vreg8
+176B		J2_jump <BB#2>, %PC<imp-def,dead>
+	    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#4(0x40000000 / 0x80000000 = 50.00%)
+
+192B	BB#2: derived from LLVM BB %8
+	    Predecessors according to CFG: BB#1
+208B		%vreg11<def> = L2_loadri_io %vreg5, 4; mem:LD4[%9] IntRegs:%vreg11,%vreg5
+224B		%vreg9<def> = S4_ntstbit_r %vreg11, %vreg0; PredRegs:%vreg9 IntRegs:%vreg11,%vreg0
+240B		J2_jumpt %vreg9, <BB#4>, %PC<imp-def,dead>; PredRegs:%vreg9
+256B		J2_jump <BB#3>, %PC<imp-def,dead>
+	    Successors according to CFG: BB#4(0x30000000 / 0x80000000 = 37.50%) BB#3(0x50000000 / 0x80000000 = 62.50%)
+
+272B	BB#3: derived from LLVM BB %14
+	    Predecessors according to CFG: BB#2
+288B		%vreg2<def> = S4_lsli 1, %vreg0; IntRegs:%vreg2,%vreg0
+304B		%vreg10<def> = A2_tfrsi -1; IntRegs:%vreg10
+336B		%vreg11<def,tied1> = M4_and_xor %vreg11<tied0>, %vreg2, %vreg10; IntRegs:%vreg11,%vreg2,%vreg10
+352B		S2_storeri_io %vreg5, 4, %vreg11; mem:ST4[%sunkaddr9] IntRegs:%vreg5,%vreg11
+368B		L4_isub_memopw_io %vreg5, 0, 1; mem:ST4[%17] LD4[%17] IntRegs:%vreg5
+	    Successors according to CFG: BB#4(?%)
+
+384B	BB#4: derived from LLVM BB %20
+	    Predecessors according to CFG: BB#0 BB#1 BB#2 BB#3
+400B		JMPret %R31, %PC<imp-def,dead>
+
+# End machine code for function parms_set.
+
+# After Hexagon Expand Condsets:
+# Machine code for function parms_set: Post SSA
+Function Live Ins: %R0 in %vreg3, %R2 in %vreg5
+
+0B	BB#0: derived from LLVM BB %0
+	    Live Ins: %R0 %R2
+16B		%vreg5<def> = COPY %R2; IntRegs:%vreg5
+32B		%vreg3<def> = COPY %R0; IntRegs:%vreg3
+48B		%vreg6<def> = L2_loadrub_io %vreg3, 0; mem:LD1[%cgep47](align=4) IntRegs:%vreg6,%vreg3
+64B		%vreg7<def> = C2_cmpeqi %vreg6, 61; PredRegs:%vreg7 IntRegs:%vreg6
+80B		J2_jumpf %vreg7, <BB#4>, %PC<imp-def,dead>; PredRegs:%vreg7
+96B		J2_jump <BB#1>, %PC<imp-def,dead>
+	    Successors according to CFG: BB#1(0x40000000 / 0x80000000 = 50.00%) BB#4(0x40000000 / 0x80000000 = 50.00%)
+
+112B	BB#1: derived from LLVM BB %4
+	    Predecessors according to CFG: BB#0
+128B		%vreg0<def> = L2_loadri_io %vreg3, 4; mem:LD4[%cgep5] IntRegs:%vreg0,%vreg3
+144B		%vreg8<def> = C2_cmpgtui %vreg0, 52; PredRegs:%vreg8 IntRegs:%vreg0
+160B		J2_jumpt %vreg8, <BB#4>, %PC<imp-def,dead>; PredRegs:%vreg8
+176B		J2_jump <BB#2>, %PC<imp-def,dead>
+	    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#4(0x40000000 / 0x80000000 = 50.00%)
+
+192B	BB#2: derived from LLVM BB %8
+	    Predecessors according to CFG: BB#1
+208B		%vreg11<def> = L2_loadri_io %vreg5, 4; mem:LD4[%9] IntRegs:%vreg11,%vreg5
+224B		%vreg9<def> = S4_ntstbit_r %vreg11, %vreg0; PredRegs:%vreg9 IntRegs:%vreg11,%vreg0
+240B		J2_jumpt %vreg9, <BB#4>, %PC<imp-def,dead>; PredRegs:%vreg9
+256B		J2_jump <BB#3>, %PC<imp-def,dead>
+	    Successors according to CFG: BB#4(0x30000000 / 0x80000000 = 37.50%) BB#3(0x50000000 / 0x80000000 = 62.50%)
+
+272B	BB#3: derived from LLVM BB %14
+	    Predecessors according to CFG: BB#2
+288B		%vreg2<def> = S4_lsli 1, %vreg0; IntRegs:%vreg2,%vreg0
+304B		%vreg10<def> = A2_tfrsi -1; IntRegs:%vreg10
+336B		%vreg11<def,tied1> = M4_and_xor %vreg11<tied0>, %vreg2, %vreg10; IntRegs:%vreg11,%vreg2,%vreg10
+352B		S2_storeri_io %vreg5, 4, %vreg11; mem:ST4[%sunkaddr9] IntRegs:%vreg5,%vreg11
+368B		L4_isub_memopw_io %vreg5, 0, 1; mem:ST4[%17] LD4[%17] IntRegs:%vreg5
+	    Successors according to CFG: BB#4(?%)
+
+384B	BB#4: derived from LLVM BB %20
+	    Predecessors according to CFG: BB#0 BB#1 BB#2 BB#3
+400B		JMPret %R31, %PC<imp-def,dead>
+
+# End machine code for function parms_set.
+
+# After Machine Instruction Scheduler:
+# Machine code for function parms_set: Post SSA
+Function Live Ins: %R0 in %vreg3, %R2 in %vreg5
+
+0B	BB#0: derived from LLVM BB %0
+	    Live Ins: %R0 %R2
+32B		%vreg3<def> = COPY %R0; IntRegs:%vreg3
+48B		%vreg6<def> = L2_loadrub_io %vreg3, 0; mem:LD1[%cgep47](align=4) IntRegs:%vreg6,%vreg3
+56B		%vreg5<def> = COPY %R2; IntRegs:%vreg5
+64B		%vreg7<def> = C2_cmpeqi %vreg6, 61; PredRegs:%vreg7 IntRegs:%vreg6
+80B		J2_jumpf %vreg7, <BB#4>, %PC<imp-def,dead>; PredRegs:%vreg7
+96B		J2_jump <BB#1>, %PC<imp-def,dead>
+	    Successors according to CFG: BB#1(0x40000000 / 0x80000000 = 50.00%) BB#4(0x40000000 / 0x80000000 = 50.00%)
+
+112B	BB#1: derived from LLVM BB %4
+	    Predecessors according to CFG: BB#0
+128B		%vreg0<def> = L2_loadri_io %vreg3, 4; mem:LD4[%cgep5] IntRegs:%vreg0,%vreg3
+144B		%vreg8<def> = C2_cmpgtui %vreg0, 52; PredRegs:%vreg8 IntRegs:%vreg0
+160B		J2_jumpt %vreg8, <BB#4>, %PC<imp-def,dead>; PredRegs:%vreg8
+176B		J2_jump <BB#2>, %PC<imp-def,dead>
+	    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#4(0x40000000 / 0x80000000 = 50.00%)
+
+192B	BB#2: derived from LLVM BB %8
+	    Predecessors according to CFG: BB#1
+208B		%vreg11<def> = L2_loadri_io %vreg5, 4; mem:LD4[%9] IntRegs:%vreg11,%vreg5
+224B		%vreg9<def> = S4_ntstbit_r %vreg11, %vreg0; PredRegs:%vreg9 IntRegs:%vreg11,%vreg0
+240B		J2_jumpt %vreg9, <BB#4>, %PC<imp-def,dead>; PredRegs:%vreg9
+256B		J2_jump <BB#3>, %PC<imp-def,dead>
+	    Successors according to CFG: BB#4(0x30000000 / 0x80000000 = 37.50%) BB#3(0x50000000 / 0x80000000 = 62.50%)
+
+272B	BB#3: derived from LLVM BB %14
+	    Predecessors according to CFG: BB#2
+288B		%vreg2<def> = S4_lsli 1, %vreg0; IntRegs:%vreg2,%vreg0
+304B		%vreg10<def> = A2_tfrsi -1; IntRegs:%vreg10
+312B		L4_isub_memopw_io %vreg5, 0, 1; mem:ST4[%17] LD4[%17] IntRegs:%vreg5
+336B		%vreg11<def,tied1> = M4_and_xor %vreg11<tied0>, %vreg2, %vreg10; IntRegs:%vreg11,%vreg2,%vreg10
+376B		S2_storeri_io %vreg5, 4, %vreg11; mem:ST4[%sunkaddr9] IntRegs:%vreg5,%vreg11
+	    Successors according to CFG: BB#4(?%)
+
+384B	BB#4: derived from LLVM BB %20
+	    Predecessors according to CFG: BB#0 BB#1 BB#2 BB#3
+400B		JMPret %R31, %PC<imp-def,dead>
+
+# End machine code for function parms_set.
+
+# After Greedy Register Allocator:
+# Machine code for function parms_set: Post SSA
+Function Live Ins: %R0 in %vreg3, %R2 in %vreg5
+
+0B	BB#0: derived from LLVM BB %0
+	    Live Ins: %R0 %R2
+32B		%vreg3<def> = COPY %R0; IntRegs:%vreg3
+48B		%vreg6<def> = L2_loadrub_io %vreg3, 0; mem:LD1[%cgep47](align=4) IntRegs:%vreg6,%vreg3
+56B		%vreg5<def> = COPY %R2; IntRegs:%vreg5
+64B		%vreg7<def> = C2_cmpeqi %vreg6, 61; PredRegs:%vreg7 IntRegs:%vreg6
+80B		J2_jumpf %vreg7, <BB#4>, %PC<imp-def,dead>; PredRegs:%vreg7
+96B		J2_jump <BB#1>, %PC<imp-def,dead>
+	    Successors according to CFG: BB#1(0x40000000 / 0x80000000 = 50.00%) BB#4(0x40000000 / 0x80000000 = 50.00%)
+
+112B	BB#1: derived from LLVM BB %4
+	    Predecessors according to CFG: BB#0
+128B		%vreg0<def> = L2_loadri_io %vreg3, 4; mem:LD4[%cgep5] IntRegs:%vreg0,%vreg3
+144B		%vreg8<def> = C2_cmpgtui %vreg0, 52; PredRegs:%vreg8 IntRegs:%vreg0
+160B		J2_jumpt %vreg8, <BB#4>, %PC<imp-def,dead>; PredRegs:%vreg8
+176B		J2_jump <BB#2>, %PC<imp-def,dead>
+	    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#4(0x40000000 / 0x80000000 = 50.00%)
+
+192B	BB#2: derived from LLVM BB %8
+	    Predecessors according to CFG: BB#1
+208B		%vreg11<def> = L2_loadri_io %vreg5, 4; mem:LD4[%9] IntRegs:%vreg11,%vreg5
+224B		%vreg9<def> = S4_ntstbit_r %vreg11, %vreg0; PredRegs:%vreg9 IntRegs:%vreg11,%vreg0
+240B		J2_jumpt %vreg9, <BB#4>, %PC<imp-def,dead>; PredRegs:%vreg9
+256B		J2_jump <BB#3>, %PC<imp-def,dead>
+	    Successors according to CFG: BB#4(0x30000000 / 0x80000000 = 37.50%) BB#3(0x50000000 / 0x80000000 = 62.50%)
+
+272B	BB#3: derived from LLVM BB %14
+	    Predecessors according to CFG: BB#2
+288B		%vreg2<def> = S4_lsli 1, %vreg0; IntRegs:%vreg2,%vreg0
+304B		%vreg10<def> = A2_tfrsi -1; IntRegs:%vreg10
+312B		L4_isub_memopw_io %vreg5, 0, 1; mem:ST4[%17] LD4[%17] IntRegs:%vreg5
+336B		%vreg11<def,tied1> = M4_and_xor %vreg11<tied0>, %vreg2, %vreg10; IntRegs:%vreg11,%vreg2,%vreg10
+376B		S2_storeri_io %vreg5, 4, %vreg11; mem:ST4[%sunkaddr9] IntRegs:%vreg5,%vreg11
+	    Successors according to CFG: BB#4(?%)
+
+384B	BB#4: derived from LLVM BB %20
+	    Predecessors according to CFG: BB#0 BB#1 BB#2 BB#3
+400B		JMPret %R31, %PC<imp-def,dead>
+
+# End machine code for function parms_set.
+
+# After Virtual Register Rewriter:
+# Machine code for function parms_set: Post SSA
+Function Live Ins: %R0, %R2
+
+0B	BB#0: derived from LLVM BB %0
+	    Live Ins: %R0 %R2
+48B		%R1<def> = L2_loadrub_io %R0, 0; mem:LD1[%cgep47](align=4)
+64B		%P0<def> = C2_cmpeqi %R1<kill>, 61
+80B		J2_jumpf %P0<kill>, <BB#4>, %PC<imp-def,dead>
+96B		J2_jump <BB#1>, %PC<imp-def,dead>
+	    Successors according to CFG: BB#1(0x40000000 / 0x80000000 = 50.00%) BB#4(0x40000000 / 0x80000000 = 50.00%)
+
+112B	BB#1: derived from LLVM BB %4
+	    Live Ins: %R0 %R2
+	    Predecessors according to CFG: BB#0
+128B		%R1<def> = L2_loadri_io %R0<kill>, 4; mem:LD4[%cgep5]
+144B		%P0<def> = C2_cmpgtui %R1, 52
+160B		J2_jumpt %P0<kill>, <BB#4>, %PC<imp-def,dead>
+176B		J2_jump <BB#2>, %PC<imp-def,dead>
+	    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#4(0x40000000 / 0x80000000 = 50.00%)
+
+192B	BB#2: derived from LLVM BB %8
+	    Live Ins: %R1 %R2
+	    Predecessors according to CFG: BB#1
+208B		%R0<def> = L2_loadri_io %R2, 4; mem:LD4[%9]
+224B		%P0<def> = S4_ntstbit_r %R0, %R1
+240B		J2_jumpt %P0<kill>, <BB#4>, %PC<imp-def,dead>
+256B		J2_jump <BB#3>, %PC<imp-def,dead>
+	    Successors according to CFG: BB#4(0x30000000 / 0x80000000 = 37.50%) BB#3(0x50000000 / 0x80000000 = 62.50%)
+
+272B	BB#3: derived from LLVM BB %14
+	    Live Ins: %R0 %R1 %R2
+	    Predecessors according to CFG: BB#2
+288B		%R1<def> = S4_lsli 1, %R1<kill>
+304B		%R3<def> = A2_tfrsi -1
+312B		L4_isub_memopw_io %R2, 0, 1; mem:ST4[%17] LD4[%17]
+336B		%R0<def,tied1> = M4_and_xor %R0<kill,tied0>, %R1<kill>, %R3<kill>
+376B		S2_storeri_io %R2<kill>, 4, %R0<kill>; mem:ST4[%sunkaddr9]
+	    Successors according to CFG: BB#4(?%)
+
+384B	BB#4: derived from LLVM BB %20
+	    Predecessors according to CFG: BB#0 BB#1 BB#2 BB#3
+400B		JMPret %R31, %PC<imp-def,dead>
+
+# End machine code for function parms_set.
+
+# After Stack Slot Coloring:
+# Machine code for function parms_set: Post SSA
+Function Live Ins: %R0, %R2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R2
+	%R1<def> = L2_loadrub_io %R0, 0; mem:LD1[%cgep47](align=4)
+	%P0<def> = C2_cmpeqi %R1<kill>, 61
+	J2_jumpf %P0<kill>, <BB#4>, %PC<imp-def,dead>
+	J2_jump <BB#1>, %PC<imp-def,dead>
+    Successors according to CFG: BB#1(0x40000000 / 0x80000000 = 50.00%) BB#4(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %4
+    Live Ins: %R0 %R2
+    Predecessors according to CFG: BB#0
+	%R1<def> = L2_loadri_io %R0<kill>, 4; mem:LD4[%cgep5]
+	%P0<def> = C2_cmpgtui %R1, 52
+	J2_jumpt %P0<kill>, <BB#4>, %PC<imp-def,dead>
+	J2_jump <BB#2>, %PC<imp-def,dead>
+    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#4(0x40000000 / 0x80000000 = 50.00%)
+
+BB#2: derived from LLVM BB %8
+    Live Ins: %R1 %R2
+    Predecessors according to CFG: BB#1
+	%R0<def> = L2_loadri_io %R2, 4; mem:LD4[%9]
+	%P0<def> = S4_ntstbit_r %R0, %R1
+	J2_jumpt %P0<kill>, <BB#4>, %PC<imp-def,dead>
+	J2_jump <BB#3>, %PC<imp-def,dead>
+    Successors according to CFG: BB#4(0x30000000 / 0x80000000 = 37.50%) BB#3(0x50000000 / 0x80000000 = 62.50%)
+
+BB#3: derived from LLVM BB %14
+    Live Ins: %R0 %R1 %R2
+    Predecessors according to CFG: BB#2
+	%R1<def> = S4_lsli 1, %R1<kill>
+	%R3<def> = A2_tfrsi -1
+	L4_isub_memopw_io %R2, 0, 1; mem:ST4[%17] LD4[%17]
+	%R0<def,tied1> = M4_and_xor %R0<kill,tied0>, %R1<kill>, %R3<kill>
+	S2_storeri_io %R2<kill>, 4, %R0<kill>; mem:ST4[%sunkaddr9]
+    Successors according to CFG: BB#4(?%)
+
+BB#4: derived from LLVM BB %20
+    Predecessors according to CFG: BB#0 BB#1 BB#2 BB#3
+	JMPret %R31, %PC<imp-def,dead>
+
+# End machine code for function parms_set.
+
+# After Machine Loop Invariant Code Motion:
+# Machine code for function parms_set: Post SSA
+Function Live Ins: %R0, %R2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R2
+	%R1<def> = L2_loadrub_io %R0, 0; mem:LD1[%cgep47](align=4)
+	%P0<def> = C2_cmpeqi %R1<kill>, 61
+	J2_jumpf %P0<kill>, <BB#4>, %PC<imp-def,dead>
+	J2_jump <BB#1>, %PC<imp-def,dead>
+    Successors according to CFG: BB#1(0x40000000 / 0x80000000 = 50.00%) BB#4(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %4
+    Live Ins: %R0 %R2
+    Predecessors according to CFG: BB#0
+	%R1<def> = L2_loadri_io %R0<kill>, 4; mem:LD4[%cgep5]
+	%P0<def> = C2_cmpgtui %R1, 52
+	J2_jumpt %P0<kill>, <BB#4>, %PC<imp-def,dead>
+	J2_jump <BB#2>, %PC<imp-def,dead>
+    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#4(0x40000000 / 0x80000000 = 50.00%)
+
+BB#2: derived from LLVM BB %8
+    Live Ins: %R1 %R2
+    Predecessors according to CFG: BB#1
+	%R0<def> = L2_loadri_io %R2, 4; mem:LD4[%9]
+	%P0<def> = S4_ntstbit_r %R0, %R1
+	J2_jumpt %P0<kill>, <BB#4>, %PC<imp-def,dead>
+	J2_jump <BB#3>, %PC<imp-def,dead>
+    Successors according to CFG: BB#4(0x30000000 / 0x80000000 = 37.50%) BB#3(0x50000000 / 0x80000000 = 62.50%)
+
+BB#3: derived from LLVM BB %14
+    Live Ins: %R0 %R1 %R2
+    Predecessors according to CFG: BB#2
+	%R1<def> = S4_lsli 1, %R1<kill>
+	%R3<def> = A2_tfrsi -1
+	L4_isub_memopw_io %R2, 0, 1; mem:ST4[%17] LD4[%17]
+	%R0<def,tied1> = M4_and_xor %R0<kill,tied0>, %R1<kill>, %R3<kill>
+	S2_storeri_io %R2<kill>, 4, %R0<kill>; mem:ST4[%sunkaddr9]
+    Successors according to CFG: BB#4(?%)
+
+BB#4: derived from LLVM BB %20
+    Predecessors according to CFG: BB#0 BB#1 BB#2 BB#3
+	JMPret %R31, %PC<imp-def,dead>
+
+# End machine code for function parms_set.
+
+# After Hexagon RDF optimizations:
+# Machine code for function parms_set: Post SSA
+Function Live Ins: %R0, %R2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R2
+	%R1<def> = L2_loadrub_io %R0, 0; mem:LD1[%cgep47](align=4)
+	%P0<def> = C2_cmpeqi %R1<kill>, 61
+	J2_jumpf %P0<kill>, <BB#4>, %PC<imp-def,dead>
+	J2_jump <BB#1>, %PC<imp-def,dead>
+    Successors according to CFG: BB#1(0x40000000 / 0x80000000 = 50.00%) BB#4(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %4
+    Live Ins: %R0 %R2
+    Predecessors according to CFG: BB#0
+	%R1<def> = L2_loadri_io %R0<kill>, 4; mem:LD4[%cgep5]
+	%P0<def> = C2_cmpgtui %R1, 52
+	J2_jumpt %P0<kill>, <BB#4>, %PC<imp-def,dead>
+	J2_jump <BB#2>, %PC<imp-def,dead>
+    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#4(0x40000000 / 0x80000000 = 50.00%)
+
+BB#2: derived from LLVM BB %8
+    Live Ins: %R1 %R2
+    Predecessors according to CFG: BB#1
+	%R0<def> = L2_loadri_io %R2, 4; mem:LD4[%9]
+	%P0<def> = S4_ntstbit_r %R0, %R1
+	J2_jumpt %P0<kill>, <BB#4>, %PC<imp-def,dead>
+	J2_jump <BB#3>, %PC<imp-def,dead>
+    Successors according to CFG: BB#4(0x30000000 / 0x80000000 = 37.50%) BB#3(0x50000000 / 0x80000000 = 62.50%)
+
+BB#3: derived from LLVM BB %14
+    Live Ins: %R0 %R1 %R2
+    Predecessors according to CFG: BB#2
+	%R1<def> = S4_lsli 1, %R1<kill>
+	%R3<def> = A2_tfrsi -1
+	L4_isub_memopw_io %R2, 0, 1; mem:ST4[%17] LD4[%17]
+	%R0<def,tied1> = M4_and_xor %R0<kill,tied0>, %R1<kill>, %R3<kill>
+	S2_storeri_io %R2<kill>, 4, %R0<kill>; mem:ST4[%sunkaddr9]
+    Successors according to CFG: BB#4(?%)
+
+BB#4: derived from LLVM BB %20
+    Predecessors according to CFG: BB#0 BB#1 BB#2 BB#3
+	JMPret %R31<kill>, %PC<imp-def,dead>
+
+# End machine code for function parms_set.
+
+# After Shrink Wrapping analysis:
+# Machine code for function parms_set: Post SSA
+Function Live Ins: %R0, %R2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R2
+	%R1<def> = L2_loadrub_io %R0, 0; mem:LD1[%cgep47](align=4)
+	%P0<def> = C2_cmpeqi %R1<kill>, 61
+	J2_jumpf %P0<kill>, <BB#4>, %PC<imp-def,dead>
+	J2_jump <BB#1>, %PC<imp-def,dead>
+    Successors according to CFG: BB#1(0x40000000 / 0x80000000 = 50.00%) BB#4(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %4
+    Live Ins: %R0 %R2
+    Predecessors according to CFG: BB#0
+	%R1<def> = L2_loadri_io %R0<kill>, 4; mem:LD4[%cgep5]
+	%P0<def> = C2_cmpgtui %R1, 52
+	J2_jumpt %P0<kill>, <BB#4>, %PC<imp-def,dead>
+	J2_jump <BB#2>, %PC<imp-def,dead>
+    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#4(0x40000000 / 0x80000000 = 50.00%)
+
+BB#2: derived from LLVM BB %8
+    Live Ins: %R1 %R2
+    Predecessors according to CFG: BB#1
+	%R0<def> = L2_loadri_io %R2, 4; mem:LD4[%9]
+	%P0<def> = S4_ntstbit_r %R0, %R1
+	J2_jumpt %P0<kill>, <BB#4>, %PC<imp-def,dead>
+	J2_jump <BB#3>, %PC<imp-def,dead>
+    Successors according to CFG: BB#4(0x30000000 / 0x80000000 = 37.50%) BB#3(0x50000000 / 0x80000000 = 62.50%)
+
+BB#3: derived from LLVM BB %14
+    Live Ins: %R0 %R1 %R2
+    Predecessors according to CFG: BB#2
+	%R1<def> = S4_lsli 1, %R1<kill>
+	%R3<def> = A2_tfrsi -1
+	L4_isub_memopw_io %R2, 0, 1; mem:ST4[%17] LD4[%17]
+	%R0<def,tied1> = M4_and_xor %R0<kill,tied0>, %R1<kill>, %R3<kill>
+	S2_storeri_io %R2<kill>, 4, %R0<kill>; mem:ST4[%sunkaddr9]
+    Successors according to CFG: BB#4(?%)
+
+BB#4: derived from LLVM BB %20
+    Predecessors according to CFG: BB#0 BB#1 BB#2 BB#3
+	JMPret %R31<kill>, %PC<imp-def,dead>
+
+# End machine code for function parms_set.
+
+# After Prologue/Epilogue Insertion & Frame Finalization:
+# Machine code for function parms_set: Post SSA
+Function Live Ins: %R0, %R2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R2
+	%R1<def> = L2_loadrub_io %R0, 0; mem:LD1[%cgep47](align=4)
+	%P0<def> = C2_cmpeqi %R1<kill>, 61
+	J2_jumpf %P0<kill>, <BB#4>, %PC<imp-def,dead>
+	J2_jump <BB#1>, %PC<imp-def,dead>
+    Successors according to CFG: BB#1(0x40000000 / 0x80000000 = 50.00%) BB#4(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %4
+    Live Ins: %R0 %R2
+    Predecessors according to CFG: BB#0
+	%R1<def> = L2_loadri_io %R0<kill>, 4; mem:LD4[%cgep5]
+	%P0<def> = C2_cmpgtui %R1, 52
+	J2_jumpt %P0<kill>, <BB#4>, %PC<imp-def,dead>
+	J2_jump <BB#2>, %PC<imp-def,dead>
+    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#4(0x40000000 / 0x80000000 = 50.00%)
+
+BB#2: derived from LLVM BB %8
+    Live Ins: %R1 %R2
+    Predecessors according to CFG: BB#1
+	%R0<def> = L2_loadri_io %R2, 4; mem:LD4[%9]
+	%P0<def> = S4_ntstbit_r %R0, %R1
+	J2_jumpt %P0<kill>, <BB#4>, %PC<imp-def,dead>
+	J2_jump <BB#3>, %PC<imp-def,dead>
+    Successors according to CFG: BB#4(0x30000000 / 0x80000000 = 37.50%) BB#3(0x50000000 / 0x80000000 = 62.50%)
+
+BB#3: derived from LLVM BB %14
+    Live Ins: %R0 %R1 %R2
+    Predecessors according to CFG: BB#2
+	%R1<def> = S4_lsli 1, %R1<kill>
+	%R3<def> = A2_tfrsi -1
+	L4_isub_memopw_io %R2, 0, 1; mem:ST4[%17] LD4[%17]
+	%R0<def,tied1> = M4_and_xor %R0<kill,tied0>, %R1<kill>, %R3<kill>
+	S2_storeri_io %R2<kill>, 4, %R0<kill>; mem:ST4[%sunkaddr9]
+    Successors according to CFG: BB#4(?%)
+
+BB#4: derived from LLVM BB %20
+    Predecessors according to CFG: BB#0 BB#1 BB#2 BB#3
+	JMPret %R31<kill>, %PC<imp-def,dead>
+
+# End machine code for function parms_set.
+
+# After Machine Copy Propagation Pass:
+# Machine code for function parms_set: Post SSA
+Function Live Ins: %R0, %R2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R2
+	%R1<def> = L2_loadrub_io %R0, 0; mem:LD1[%cgep47](align=4)
+	%P0<def> = C2_cmpeqi %R1<kill>, 61
+	J2_jumpf %P0<kill>, <BB#4>, %PC<imp-def,dead>
+	J2_jump <BB#1>, %PC<imp-def,dead>
+    Successors according to CFG: BB#1(0x40000000 / 0x80000000 = 50.00%) BB#4(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %4
+    Live Ins: %R0 %R2
+    Predecessors according to CFG: BB#0
+	%R1<def> = L2_loadri_io %R0<kill>, 4; mem:LD4[%cgep5]
+	%P0<def> = C2_cmpgtui %R1, 52
+	J2_jumpt %P0<kill>, <BB#4>, %PC<imp-def,dead>
+	J2_jump <BB#2>, %PC<imp-def,dead>
+    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#4(0x40000000 / 0x80000000 = 50.00%)
+
+BB#2: derived from LLVM BB %8
+    Live Ins: %R1 %R2
+    Predecessors according to CFG: BB#1
+	%R0<def> = L2_loadri_io %R2, 4; mem:LD4[%9]
+	%P0<def> = S4_ntstbit_r %R0, %R1
+	J2_jumpt %P0<kill>, <BB#4>, %PC<imp-def,dead>
+	J2_jump <BB#3>, %PC<imp-def,dead>
+    Successors according to CFG: BB#4(0x30000000 / 0x80000000 = 37.50%) BB#3(0x50000000 / 0x80000000 = 62.50%)
+
+BB#3: derived from LLVM BB %14
+    Live Ins: %R0 %R1 %R2
+    Predecessors according to CFG: BB#2
+	%R1<def> = S4_lsli 1, %R1<kill>
+	%R3<def> = A2_tfrsi -1
+	L4_isub_memopw_io %R2, 0, 1; mem:ST4[%17] LD4[%17]
+	%R0<def,tied1> = M4_and_xor %R0<kill,tied0>, %R1<kill>, %R3<kill>
+	S2_storeri_io %R2<kill>, 4, %R0<kill>; mem:ST4[%sunkaddr9]
+    Successors according to CFG: BB#4(?%)
+
+BB#4: derived from LLVM BB %20
+    Predecessors according to CFG: BB#0 BB#1 BB#2 BB#3
+	JMPret %R31<kill>, %PC<imp-def,dead>
+
+# End machine code for function parms_set.
+
+# After Post-RA pseudo instruction expansion pass:
+# Machine code for function parms_set: Post SSA
+Function Live Ins: %R0, %R2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R2
+	%R1<def> = L2_loadrub_io %R0, 0; mem:LD1[%cgep47](align=4)
+	%P0<def> = C2_cmpeqi %R1<kill>, 61
+	J2_jumpf %P0<kill>, <BB#4>, %PC<imp-def,dead>
+	J2_jump <BB#1>, %PC<imp-def,dead>
+    Successors according to CFG: BB#1(0x40000000 / 0x80000000 = 50.00%) BB#4(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %4
+    Live Ins: %R0 %R2
+    Predecessors according to CFG: BB#0
+	%R1<def> = L2_loadri_io %R0<kill>, 4; mem:LD4[%cgep5]
+	%P0<def> = C2_cmpgtui %R1, 52
+	J2_jumpt %P0<kill>, <BB#4>, %PC<imp-def,dead>
+	J2_jump <BB#2>, %PC<imp-def,dead>
+    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#4(0x40000000 / 0x80000000 = 50.00%)
+
+BB#2: derived from LLVM BB %8
+    Live Ins: %R1 %R2
+    Predecessors according to CFG: BB#1
+	%R0<def> = L2_loadri_io %R2, 4; mem:LD4[%9]
+	%P0<def> = S4_ntstbit_r %R0, %R1
+	J2_jumpt %P0<kill>, <BB#4>, %PC<imp-def,dead>
+	J2_jump <BB#3>, %PC<imp-def,dead>
+    Successors according to CFG: BB#4(0x30000000 / 0x80000000 = 37.50%) BB#3(0x50000000 / 0x80000000 = 62.50%)
+
+BB#3: derived from LLVM BB %14
+    Live Ins: %R0 %R1 %R2
+    Predecessors according to CFG: BB#2
+	%R1<def> = S4_lsli 1, %R1<kill>
+	%R3<def> = A2_tfrsi -1
+	L4_isub_memopw_io %R2, 0, 1; mem:ST4[%17] LD4[%17]
+	%R0<def,tied1> = M4_and_xor %R0<kill,tied0>, %R1<kill>, %R3<kill>
+	S2_storeri_io %R2<kill>, 4, %R0<kill>; mem:ST4[%sunkaddr9]
+    Successors according to CFG: BB#4(?%)
+
+BB#4: derived from LLVM BB %20
+    Predecessors according to CFG: BB#0 BB#1 BB#2 BB#3
+	JMPret %R31<kill>, %PC<imp-def,dead>
+
+# End machine code for function parms_set.
+
+# After Hexagon Copy-To-Combine Pass:
+# Machine code for function parms_set: Post SSA
+Function Live Ins: %R0, %R2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R2
+	%R1<def> = L2_loadrub_io %R0, 0; mem:LD1[%cgep47](align=4)
+	%P0<def> = C2_cmpeqi %R1<kill>, 61
+	J2_jumpf %P0<kill>, <BB#4>, %PC<imp-def,dead>
+	J2_jump <BB#1>, %PC<imp-def,dead>
+    Successors according to CFG: BB#1(0x40000000 / 0x80000000 = 50.00%) BB#4(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %4
+    Live Ins: %R0 %R2
+    Predecessors according to CFG: BB#0
+	%R1<def> = L2_loadri_io %R0<kill>, 4; mem:LD4[%cgep5]
+	%P0<def> = C2_cmpgtui %R1, 52
+	J2_jumpt %P0<kill>, <BB#4>, %PC<imp-def,dead>
+	J2_jump <BB#2>, %PC<imp-def,dead>
+    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#4(0x40000000 / 0x80000000 = 50.00%)
+
+BB#2: derived from LLVM BB %8
+    Live Ins: %R1 %R2
+    Predecessors according to CFG: BB#1
+	%R0<def> = L2_loadri_io %R2, 4; mem:LD4[%9]
+	%P0<def> = S4_ntstbit_r %R0, %R1
+	J2_jumpt %P0<kill>, <BB#4>, %PC<imp-def,dead>
+	J2_jump <BB#3>, %PC<imp-def,dead>
+    Successors according to CFG: BB#4(0x30000000 / 0x80000000 = 37.50%) BB#3(0x50000000 / 0x80000000 = 62.50%)
+
+BB#3: derived from LLVM BB %14
+    Live Ins: %R0 %R1 %R2
+    Predecessors according to CFG: BB#2
+	%R1<def> = S4_lsli 1, %R1<kill>
+	%R3<def> = A2_tfrsi -1
+	L4_isub_memopw_io %R2, 0, 1; mem:ST4[%17] LD4[%17]
+	%R0<def,tied1> = M4_and_xor %R0<kill,tied0>, %R1<kill>, %R3<kill>
+	S2_storeri_io %R2<kill>, 4, %R0<kill>; mem:ST4[%sunkaddr9]
+    Successors according to CFG: BB#4(?%)
+
+BB#4: derived from LLVM BB %20
+    Predecessors according to CFG: BB#0 BB#1 BB#2 BB#3
+	JMPret %R31<kill>, %PC<imp-def,dead>
+
+# End machine code for function parms_set.
+
+# After Hexagon Split Const32s and Const64s:
+# Machine code for function parms_set: Post SSA
+Function Live Ins: %R0, %R2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R2
+	%R1<def> = L2_loadrub_io %R0, 0; mem:LD1[%cgep47](align=4)
+	%P0<def> = C2_cmpeqi %R1<kill>, 61
+	J2_jumpf %P0<kill>, <BB#4>, %PC<imp-def,dead>
+	J2_jump <BB#1>, %PC<imp-def,dead>
+    Successors according to CFG: BB#1(0x40000000 / 0x80000000 = 50.00%) BB#4(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %4
+    Live Ins: %R0 %R2
+    Predecessors according to CFG: BB#0
+	%R1<def> = L2_loadri_io %R0<kill>, 4; mem:LD4[%cgep5]
+	%P0<def> = C2_cmpgtui %R1, 52
+	J2_jumpt %P0<kill>, <BB#4>, %PC<imp-def,dead>
+	J2_jump <BB#2>, %PC<imp-def,dead>
+    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#4(0x40000000 / 0x80000000 = 50.00%)
+
+BB#2: derived from LLVM BB %8
+    Live Ins: %R1 %R2
+    Predecessors according to CFG: BB#1
+	%R0<def> = L2_loadri_io %R2, 4; mem:LD4[%9]
+	%P0<def> = S4_ntstbit_r %R0, %R1
+	J2_jumpt %P0<kill>, <BB#4>, %PC<imp-def,dead>
+	J2_jump <BB#3>, %PC<imp-def,dead>
+    Successors according to CFG: BB#4(0x30000000 / 0x80000000 = 37.50%) BB#3(0x50000000 / 0x80000000 = 62.50%)
+
+BB#3: derived from LLVM BB %14
+    Live Ins: %R0 %R1 %R2
+    Predecessors according to CFG: BB#2
+	%R1<def> = S4_lsli 1, %R1<kill>
+	%R3<def> = A2_tfrsi -1
+	L4_isub_memopw_io %R2, 0, 1; mem:ST4[%17] LD4[%17]
+	%R0<def,tied1> = M4_and_xor %R0<kill,tied0>, %R1<kill>, %R3<kill>
+	S2_storeri_io %R2<kill>, 4, %R0<kill>; mem:ST4[%sunkaddr9]
+    Successors according to CFG: BB#4(?%)
+
+BB#4: derived from LLVM BB %20
+    Predecessors according to CFG: BB#0 BB#1 BB#2 BB#3
+	JMPret %R31<kill>, %PC<imp-def,dead>
+
+# End machine code for function parms_set.
+
+# After Analyze Machine Code For Garbage Collection:
+# Machine code for function parms_set: Post SSA
+Function Live Ins: %R0, %R2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R2
+	%R1<def> = L2_loadrub_io %R0, 0; mem:LD1[%cgep47](align=4)
+	%P0<def> = C2_cmpeqi %R1<kill>, 61
+	J2_jumpf %P0<kill>, <BB#4>, %PC<imp-def,dead>
+	J2_jump <BB#1>, %PC<imp-def,dead>
+    Successors according to CFG: BB#1(0x40000000 / 0x80000000 = 50.00%) BB#4(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %4
+    Live Ins: %R0 %R2
+    Predecessors according to CFG: BB#0
+	%R1<def> = L2_loadri_io %R0<kill>, 4; mem:LD4[%cgep5]
+	%P0<def> = C2_cmpgtui %R1, 52
+	J2_jumpt %P0<kill>, <BB#4>, %PC<imp-def,dead>
+	J2_jump <BB#2>, %PC<imp-def,dead>
+    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#4(0x40000000 / 0x80000000 = 50.00%)
+
+BB#2: derived from LLVM BB %8
+    Live Ins: %R1 %R2
+    Predecessors according to CFG: BB#1
+	%R0<def> = L2_loadri_io %R2, 4; mem:LD4[%9]
+	%P0<def> = S4_ntstbit_r %R0, %R1
+	J2_jumpt %P0<kill>, <BB#4>, %PC<imp-def,dead>
+	J2_jump <BB#3>, %PC<imp-def,dead>
+    Successors according to CFG: BB#4(0x30000000 / 0x80000000 = 37.50%) BB#3(0x50000000 / 0x80000000 = 62.50%)
+
+BB#3: derived from LLVM BB %14
+    Live Ins: %R0 %R1 %R2
+    Predecessors according to CFG: BB#2
+	%R1<def> = S4_lsli 1, %R1<kill>
+	%R3<def> = A2_tfrsi -1
+	L4_isub_memopw_io %R2, 0, 1; mem:ST4[%17] LD4[%17]
+	%R0<def,tied1> = M4_and_xor %R0<kill,tied0>, %R1<kill>, %R3<kill>
+	S2_storeri_io %R2<kill>, 4, %R0<kill>; mem:ST4[%sunkaddr9]
+    Successors according to CFG: BB#4(?%)
+
+BB#4: derived from LLVM BB %20
+    Predecessors according to CFG: BB#0 BB#1 BB#2 BB#3
+	JMPret %R31<kill>, %PC<imp-def,dead>
+
+# End machine code for function parms_set.
+
+# After Hexagon NewValueJump:
+# Machine code for function parms_set: Post SSA
+Function Live Ins: %R0, %R2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R2
+	%R1<def> = L2_loadrub_io %R0, 0; mem:LD1[%cgep47](align=4)
+	%P0<def> = C2_cmpeqi %R1<kill>, 61
+	J2_jumpf %P0<kill>, <BB#4>, %PC<imp-def,dead>
+	J2_jump <BB#1>, %PC<imp-def,dead>
+    Successors according to CFG: BB#1(0x40000000 / 0x80000000 = 50.00%) BB#4(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %4
+    Live Ins: %R0 %R2
+    Predecessors according to CFG: BB#0
+	%R1<def> = L2_loadri_io %R0<kill>, 4; mem:LD4[%cgep5]
+	%P0<def> = C2_cmpgtui %R1, 52
+	J2_jumpt %P0<kill>, <BB#4>, %PC<imp-def,dead>
+	J2_jump <BB#2>, %PC<imp-def,dead>
+    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#4(0x40000000 / 0x80000000 = 50.00%)
+
+BB#2: derived from LLVM BB %8
+    Live Ins: %R1 %R2
+    Predecessors according to CFG: BB#1
+	%R0<def> = L2_loadri_io %R2, 4; mem:LD4[%9]
+	%P0<def> = S4_ntstbit_r %R0, %R1
+	J2_jumpt %P0<kill>, <BB#4>, %PC<imp-def,dead>
+	J2_jump <BB#3>, %PC<imp-def,dead>
+    Successors according to CFG: BB#4(0x30000000 / 0x80000000 = 37.50%) BB#3(0x50000000 / 0x80000000 = 62.50%)
+
+BB#3: derived from LLVM BB %14
+    Live Ins: %R0 %R1 %R2
+    Predecessors according to CFG: BB#2
+	%R1<def> = S4_lsli 1, %R1<kill>
+	%R3<def> = A2_tfrsi -1
+	L4_isub_memopw_io %R2, 0, 1; mem:ST4[%17] LD4[%17]
+	%R0<def,tied1> = M4_and_xor %R0<kill,tied0>, %R1<kill>, %R3<kill>
+	S2_storeri_io %R2<kill>, 4, %R0<kill>; mem:ST4[%sunkaddr9]
+    Successors according to CFG: BB#4(?%)
+
+BB#4: derived from LLVM BB %20
+    Predecessors according to CFG: BB#0 BB#1 BB#2 BB#3
+	JMPret %R31<kill>, %PC<imp-def,dead>
+
+# End machine code for function parms_set.
+
+# After Hexagon Expand Predicate Spill Code:
+# Machine code for function parms_set: Post SSA
+Function Live Ins: %R0, %R2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R2
+	%R1<def> = L2_loadrub_io %R0, 0; mem:LD1[%cgep47](align=4)
+	%P0<def> = C2_cmpeqi %R1<kill>, 61
+	J2_jumpf %P0<kill>, <BB#4>, %PC<imp-def,dead>
+	J2_jump <BB#1>, %PC<imp-def,dead>
+    Successors according to CFG: BB#1(0x40000000 / 0x80000000 = 50.00%) BB#4(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %4
+    Live Ins: %R0 %R2
+    Predecessors according to CFG: BB#0
+	%R1<def> = L2_loadri_io %R0<kill>, 4; mem:LD4[%cgep5]
+	%P0<def> = C2_cmpgtui %R1, 52
+	J2_jumpt %P0<kill>, <BB#4>, %PC<imp-def,dead>
+	J2_jump <BB#2>, %PC<imp-def,dead>
+    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#4(0x40000000 / 0x80000000 = 50.00%)
+
+BB#2: derived from LLVM BB %8
+    Live Ins: %R1 %R2
+    Predecessors according to CFG: BB#1
+	%R0<def> = L2_loadri_io %R2, 4; mem:LD4[%9]
+	%P0<def> = S4_ntstbit_r %R0, %R1
+	J2_jumpt %P0<kill>, <BB#4>, %PC<imp-def,dead>
+	J2_jump <BB#3>, %PC<imp-def,dead>
+    Successors according to CFG: BB#4(0x30000000 / 0x80000000 = 37.50%) BB#3(0x50000000 / 0x80000000 = 62.50%)
+
+BB#3: derived from LLVM BB %14
+    Live Ins: %R0 %R1 %R2
+    Predecessors according to CFG: BB#2
+	%R1<def> = S4_lsli 1, %R1<kill>
+	%R3<def> = A2_tfrsi -1
+	L4_isub_memopw_io %R2, 0, 1; mem:ST4[%17] LD4[%17]
+	%R0<def,tied1> = M4_and_xor %R0<kill,tied0>, %R1<kill>, %R3<kill>
+	S2_storeri_io %R2<kill>, 4, %R0<kill>; mem:ST4[%sunkaddr9]
+    Successors according to CFG: BB#4(?%)
+
+BB#4: derived from LLVM BB %20
+    Predecessors according to CFG: BB#0 BB#1 BB#2 BB#3
+	JMPret %R31<kill>, %PC<imp-def,dead>
+
+# End machine code for function parms_set.
+
+# After Hexagon Hardware Loop Fixup:
+# Machine code for function parms_set: Post SSA
+Function Live Ins: %R0, %R2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R2
+	%R1<def> = L2_loadrub_io %R0, 0; mem:LD1[%cgep47](align=4)
+	%P0<def> = C2_cmpeqi %R1<kill>, 61
+	J2_jumpf %P0<kill>, <BB#4>, %PC<imp-def,dead>
+	J2_jump <BB#1>, %PC<imp-def,dead>
+    Successors according to CFG: BB#1(0x40000000 / 0x80000000 = 50.00%) BB#4(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %4
+    Live Ins: %R0 %R2
+    Predecessors according to CFG: BB#0
+	%R1<def> = L2_loadri_io %R0<kill>, 4; mem:LD4[%cgep5]
+	%P0<def> = C2_cmpgtui %R1, 52
+	J2_jumpt %P0<kill>, <BB#4>, %PC<imp-def,dead>
+	J2_jump <BB#2>, %PC<imp-def,dead>
+    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#4(0x40000000 / 0x80000000 = 50.00%)
+
+BB#2: derived from LLVM BB %8
+    Live Ins: %R1 %R2
+    Predecessors according to CFG: BB#1
+	%R0<def> = L2_loadri_io %R2, 4; mem:LD4[%9]
+	%P0<def> = S4_ntstbit_r %R0, %R1
+	J2_jumpt %P0<kill>, <BB#4>, %PC<imp-def,dead>
+	J2_jump <BB#3>, %PC<imp-def,dead>
+    Successors according to CFG: BB#4(0x30000000 / 0x80000000 = 37.50%) BB#3(0x50000000 / 0x80000000 = 62.50%)
+
+BB#3: derived from LLVM BB %14
+    Live Ins: %R0 %R1 %R2
+    Predecessors according to CFG: BB#2
+	%R1<def> = S4_lsli 1, %R1<kill>
+	%R3<def> = A2_tfrsi -1
+	L4_isub_memopw_io %R2, 0, 1; mem:ST4[%17] LD4[%17]
+	%R0<def,tied1> = M4_and_xor %R0<kill,tied0>, %R1<kill>, %R3<kill>
+	S2_storeri_io %R2<kill>, 4, %R0<kill>; mem:ST4[%sunkaddr9]
+    Successors according to CFG: BB#4(?%)
+
+BB#4: derived from LLVM BB %20
+    Predecessors according to CFG: BB#0 BB#1 BB#2 BB#3
+	JMPret %R31<kill>, %PC<imp-def,dead>
+
+# End machine code for function parms_set.
+
+# After Hexagon generate mux instructions:
+# Machine code for function parms_set: Post SSA
+Function Live Ins: %R0, %R2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R2
+	%R1<def> = L2_loadrub_io %R0, 0; mem:LD1[%cgep47](align=4)
+	%P0<def> = C2_cmpeqi %R1<kill>, 61
+	J2_jumpf %P0<kill>, <BB#4>, %PC<imp-def,dead>
+	J2_jump <BB#1>, %PC<imp-def,dead>
+    Successors according to CFG: BB#1(0x40000000 / 0x80000000 = 50.00%) BB#4(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %4
+    Live Ins: %R0 %R2
+    Predecessors according to CFG: BB#0
+	%R1<def> = L2_loadri_io %R0<kill>, 4; mem:LD4[%cgep5]
+	%P0<def> = C2_cmpgtui %R1, 52
+	J2_jumpt %P0<kill>, <BB#4>, %PC<imp-def,dead>
+	J2_jump <BB#2>, %PC<imp-def,dead>
+    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#4(0x40000000 / 0x80000000 = 50.00%)
+
+BB#2: derived from LLVM BB %8
+    Live Ins: %R1 %R2
+    Predecessors according to CFG: BB#1
+	%R0<def> = L2_loadri_io %R2, 4; mem:LD4[%9]
+	%P0<def> = S4_ntstbit_r %R0, %R1
+	J2_jumpt %P0<kill>, <BB#4>, %PC<imp-def,dead>
+	J2_jump <BB#3>, %PC<imp-def,dead>
+    Successors according to CFG: BB#4(0x30000000 / 0x80000000 = 37.50%) BB#3(0x50000000 / 0x80000000 = 62.50%)
+
+BB#3: derived from LLVM BB %14
+    Live Ins: %R0 %R1 %R2
+    Predecessors according to CFG: BB#2
+	%R1<def> = S4_lsli 1, %R1<kill>
+	%R3<def> = A2_tfrsi -1
+	L4_isub_memopw_io %R2, 0, 1; mem:ST4[%17] LD4[%17]
+	%R0<def,tied1> = M4_and_xor %R0<kill,tied0>, %R1<kill>, %R3<kill>
+	S2_storeri_io %R2<kill>, 4, %R0<kill>; mem:ST4[%sunkaddr9]
+    Successors according to CFG: BB#4(?%)
+
+BB#4: derived from LLVM BB %20
+    Predecessors according to CFG: BB#0 BB#1 BB#2 BB#3
+	JMPret %R31<kill>, %PC<imp-def,dead>
+
+# End machine code for function parms_set.
+
+# After Hexagon Packetizer:
+# Machine code for function parms_set: Post SSA
+Function Live Ins: %R0, %R2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R2
+	%R1<def> = L2_loadrub_io %R0, 0; mem:LD1[%cgep47](align=4)
+	BUNDLE %P0<imp-def,dead>, %PC<imp-def,dead>, %R1<imp-use,kill>
+	  * %P0<def> = C2_cmpeqi %R1<kill>, 61
+	  * J2_jumpfnew %P0<kill,internal>, <BB#4>, %PC<imp-def,dead>
+	J2_jump <BB#1>, %PC<imp-def,dead>
+    Successors according to CFG: BB#1(0x40000000 / 0x80000000 = 50.00%) BB#4(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %4
+    Live Ins: %R0 %R2
+    Predecessors according to CFG: BB#0
+	%R1<def> = L2_loadri_io %R0<kill>, 4; mem:LD4[%cgep5]
+	BUNDLE %P0<imp-def,dead>, %PC<imp-def,dead>, %R1<imp-use>
+	  * %P0<def> = C2_cmpgtui %R1, 52
+	  * J2_jumptnew %P0<kill,internal>, <BB#4>, %PC<imp-def,dead>
+	J2_jump <BB#2>, %PC<imp-def,dead>
+    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#4(0x40000000 / 0x80000000 = 50.00%)
+
+BB#2: derived from LLVM BB %8
+    Live Ins: %R1 %R2
+    Predecessors according to CFG: BB#1
+	%R0<def> = L2_loadri_io %R2, 4; mem:LD4[%9]
+	BUNDLE %P0<imp-def,dead>, %PC<imp-def,dead>, %R0<imp-use>, %R1<imp-use>
+	  * %P0<def> = S4_ntstbit_r %R0, %R1
+	  * J2_jumptnew %P0<kill,internal>, <BB#4>, %PC<imp-def,dead>
+	J2_jump <BB#3>, %PC<imp-def,dead>
+    Successors according to CFG: BB#4(0x30000000 / 0x80000000 = 37.50%) BB#3(0x50000000 / 0x80000000 = 62.50%)
+
+BB#3: derived from LLVM BB %14
+    Live Ins: %R0 %R1 %R2
+    Predecessors according to CFG: BB#2
+	BUNDLE %R1<imp-def>, %R3<imp-def>, %R1<imp-use,kill>, %R2<imp-use>
+	  * %R1<def> = S4_lsli 1, %R1<kill>
+	  * %R3<def> = A2_tfrsi -1
+	  * L4_isub_memopw_io %R2, 0, 1; mem:ST4[%17] LD4[%17]
+	BUNDLE %R0<imp-def,dead>, %R0<imp-use,kill>, %R1<imp-use,kill>, %R3<imp-use,kill>, %R2<imp-use,kill>
+	  * %R0<def,tied1> = M4_and_xor %R0<kill,tied0>, %R1<kill>, %R3<kill>
+	  * S2_storerinew_io %R2<kill>, 4, %R0<kill,internal>; mem:ST4[%sunkaddr9]
+    Successors according to CFG: BB#4(?%)
+
+BB#4: derived from LLVM BB %20
+    Predecessors according to CFG: BB#0 BB#1 BB#2 BB#3
+	JMPret %R31<kill>, %PC<imp-def,dead>
+
+# End machine code for function parms_set.
+
+# After Hexagon call frame information:
+# Machine code for function parms_set: Post SSA
+Function Live Ins: %R0, %R2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R2
+	%R1<def> = L2_loadrub_io %R0, 0; mem:LD1[%cgep47](align=4)
+	BUNDLE %P0<imp-def,dead>, %PC<imp-def,dead>, %R1<imp-use,kill>
+	  * %P0<def> = C2_cmpeqi %R1<kill>, 61
+	  * J2_jumpfnew %P0<kill,internal>, <BB#4>, %PC<imp-def,dead>
+	J2_jump <BB#1>, %PC<imp-def,dead>
+    Successors according to CFG: BB#1(0x40000000 / 0x80000000 = 50.00%) BB#4(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %4
+    Live Ins: %R0 %R2
+    Predecessors according to CFG: BB#0
+	%R1<def> = L2_loadri_io %R0<kill>, 4; mem:LD4[%cgep5]
+	BUNDLE %P0<imp-def,dead>, %PC<imp-def,dead>, %R1<imp-use>
+	  * %P0<def> = C2_cmpgtui %R1, 52
+	  * J2_jumptnew %P0<kill,internal>, <BB#4>, %PC<imp-def,dead>
+	J2_jump <BB#2>, %PC<imp-def,dead>
+    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#4(0x40000000 / 0x80000000 = 50.00%)
+
+BB#2: derived from LLVM BB %8
+    Live Ins: %R1 %R2
+    Predecessors according to CFG: BB#1
+	%R0<def> = L2_loadri_io %R2, 4; mem:LD4[%9]
+	BUNDLE %P0<imp-def,dead>, %PC<imp-def,dead>, %R0<imp-use>, %R1<imp-use>
+	  * %P0<def> = S4_ntstbit_r %R0, %R1
+	  * J2_jumptnew %P0<kill,internal>, <BB#4>, %PC<imp-def,dead>
+	J2_jump <BB#3>, %PC<imp-def,dead>
+    Successors according to CFG: BB#4(0x30000000 / 0x80000000 = 37.50%) BB#3(0x50000000 / 0x80000000 = 62.50%)
+
+BB#3: derived from LLVM BB %14
+    Live Ins: %R0 %R1 %R2
+    Predecessors according to CFG: BB#2
+	BUNDLE %R1<imp-def>, %R3<imp-def>, %R1<imp-use,kill>, %R2<imp-use>
+	  * %R1<def> = S4_lsli 1, %R1<kill>
+	  * %R3<def> = A2_tfrsi -1
+	  * L4_isub_memopw_io %R2, 0, 1; mem:ST4[%17] LD4[%17]
+	BUNDLE %R0<imp-def,dead>, %R0<imp-use,kill>, %R1<imp-use,kill>, %R3<imp-use,kill>, %R2<imp-use,kill>
+	  * %R0<def,tied1> = M4_and_xor %R0<kill,tied0>, %R1<kill>, %R3<kill>
+	  * S2_storerinew_io %R2<kill>, 4, %R0<kill,internal>; mem:ST4[%sunkaddr9]
+    Successors according to CFG: BB#4(?%)
+
+BB#4: derived from LLVM BB %20
+    Predecessors according to CFG: BB#0 BB#1 BB#2 BB#3
+	JMPret %R31<kill>, %PC<imp-def,dead>
+
+# End machine code for function parms_set.
+
+# After Contiguously Lay Out Funclets:
+# Machine code for function parms_set: Post SSA
+Function Live Ins: %R0, %R2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R2
+	%R1<def> = L2_loadrub_io %R0, 0; mem:LD1[%cgep47](align=4)
+	BUNDLE %P0<imp-def,dead>, %PC<imp-def,dead>, %R1<imp-use,kill>
+	  * %P0<def> = C2_cmpeqi %R1<kill>, 61
+	  * J2_jumpfnew %P0<kill,internal>, <BB#4>, %PC<imp-def,dead>
+	J2_jump <BB#1>, %PC<imp-def,dead>
+    Successors according to CFG: BB#1(0x40000000 / 0x80000000 = 50.00%) BB#4(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %4
+    Live Ins: %R0 %R2
+    Predecessors according to CFG: BB#0
+	%R1<def> = L2_loadri_io %R0<kill>, 4; mem:LD4[%cgep5]
+	BUNDLE %P0<imp-def,dead>, %PC<imp-def,dead>, %R1<imp-use>
+	  * %P0<def> = C2_cmpgtui %R1, 52
+	  * J2_jumptnew %P0<kill,internal>, <BB#4>, %PC<imp-def,dead>
+	J2_jump <BB#2>, %PC<imp-def,dead>
+    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#4(0x40000000 / 0x80000000 = 50.00%)
+
+BB#2: derived from LLVM BB %8
+    Live Ins: %R1 %R2
+    Predecessors according to CFG: BB#1
+	%R0<def> = L2_loadri_io %R2, 4; mem:LD4[%9]
+	BUNDLE %P0<imp-def,dead>, %PC<imp-def,dead>, %R0<imp-use>, %R1<imp-use>
+	  * %P0<def> = S4_ntstbit_r %R0, %R1
+	  * J2_jumptnew %P0<kill,internal>, <BB#4>, %PC<imp-def,dead>
+	J2_jump <BB#3>, %PC<imp-def,dead>
+    Successors according to CFG: BB#4(0x30000000 / 0x80000000 = 37.50%) BB#3(0x50000000 / 0x80000000 = 62.50%)
+
+BB#3: derived from LLVM BB %14
+    Live Ins: %R0 %R1 %R2
+    Predecessors according to CFG: BB#2
+	BUNDLE %R1<imp-def>, %R3<imp-def>, %R1<imp-use,kill>, %R2<imp-use>
+	  * %R1<def> = S4_lsli 1, %R1<kill>
+	  * %R3<def> = A2_tfrsi -1
+	  * L4_isub_memopw_io %R2, 0, 1; mem:ST4[%17] LD4[%17]
+	BUNDLE %R0<imp-def,dead>, %R0<imp-use,kill>, %R1<imp-use,kill>, %R3<imp-use,kill>, %R2<imp-use,kill>
+	  * %R0<def,tied1> = M4_and_xor %R0<kill,tied0>, %R1<kill>, %R3<kill>
+	  * S2_storerinew_io %R2<kill>, 4, %R0<kill,internal>; mem:ST4[%sunkaddr9]
+    Successors according to CFG: BB#4(?%)
+
+BB#4: derived from LLVM BB %20
+    Predecessors according to CFG: BB#0 BB#1 BB#2 BB#3
+	JMPret %R31<kill>, %PC<imp-def,dead>
+
+# End machine code for function parms_set.
+
+# After StackMap Liveness Analysis:
+# Machine code for function parms_set: Post SSA
+Function Live Ins: %R0, %R2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R2
+	%R1<def> = L2_loadrub_io %R0, 0; mem:LD1[%cgep47](align=4)
+	BUNDLE %P0<imp-def,dead>, %PC<imp-def,dead>, %R1<imp-use,kill>
+	  * %P0<def> = C2_cmpeqi %R1<kill>, 61
+	  * J2_jumpfnew %P0<kill,internal>, <BB#4>, %PC<imp-def,dead>
+	J2_jump <BB#1>, %PC<imp-def,dead>
+    Successors according to CFG: BB#1(0x40000000 / 0x80000000 = 50.00%) BB#4(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %4
+    Live Ins: %R0 %R2
+    Predecessors according to CFG: BB#0
+	%R1<def> = L2_loadri_io %R0<kill>, 4; mem:LD4[%cgep5]
+	BUNDLE %P0<imp-def,dead>, %PC<imp-def,dead>, %R1<imp-use>
+	  * %P0<def> = C2_cmpgtui %R1, 52
+	  * J2_jumptnew %P0<kill,internal>, <BB#4>, %PC<imp-def,dead>
+	J2_jump <BB#2>, %PC<imp-def,dead>
+    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#4(0x40000000 / 0x80000000 = 50.00%)
+
+BB#2: derived from LLVM BB %8
+    Live Ins: %R1 %R2
+    Predecessors according to CFG: BB#1
+	%R0<def> = L2_loadri_io %R2, 4; mem:LD4[%9]
+	BUNDLE %P0<imp-def,dead>, %PC<imp-def,dead>, %R0<imp-use>, %R1<imp-use>
+	  * %P0<def> = S4_ntstbit_r %R0, %R1
+	  * J2_jumptnew %P0<kill,internal>, <BB#4>, %PC<imp-def,dead>
+	J2_jump <BB#3>, %PC<imp-def,dead>
+    Successors according to CFG: BB#4(0x30000000 / 0x80000000 = 37.50%) BB#3(0x50000000 / 0x80000000 = 62.50%)
+
+BB#3: derived from LLVM BB %14
+    Live Ins: %R0 %R1 %R2
+    Predecessors according to CFG: BB#2
+	BUNDLE %R1<imp-def>, %R3<imp-def>, %R1<imp-use,kill>, %R2<imp-use>
+	  * %R1<def> = S4_lsli 1, %R1<kill>
+	  * %R3<def> = A2_tfrsi -1
+	  * L4_isub_memopw_io %R2, 0, 1; mem:ST4[%17] LD4[%17]
+	BUNDLE %R0<imp-def,dead>, %R0<imp-use,kill>, %R1<imp-use,kill>, %R3<imp-use,kill>, %R2<imp-use,kill>
+	  * %R0<def,tied1> = M4_and_xor %R0<kill,tied0>, %R1<kill>, %R3<kill>
+	  * S2_storerinew_io %R2<kill>, 4, %R0<kill,internal>; mem:ST4[%sunkaddr9]
+    Successors according to CFG: BB#4(?%)
+
+BB#4: derived from LLVM BB %20
+    Predecessors according to CFG: BB#0 BB#1 BB#2 BB#3
+	JMPret %R31<kill>, %PC<imp-def,dead>
+
+# End machine code for function parms_set.
+
+# After Live DEBUG_VALUE analysis:
+# Machine code for function parms_set: Post SSA
+Function Live Ins: %R0, %R2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R2
+	%R1<def> = L2_loadrub_io %R0, 0; mem:LD1[%cgep47](align=4)
+	BUNDLE %P0<imp-def,dead>, %PC<imp-def,dead>, %R1<imp-use,kill>
+	  * %P0<def> = C2_cmpeqi %R1<kill>, 61
+	  * J2_jumpfnew %P0<kill,internal>, <BB#4>, %PC<imp-def,dead>
+	J2_jump <BB#1>, %PC<imp-def,dead>
+    Successors according to CFG: BB#1(0x40000000 / 0x80000000 = 50.00%) BB#4(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %4
+    Live Ins: %R0 %R2
+    Predecessors according to CFG: BB#0
+	%R1<def> = L2_loadri_io %R0<kill>, 4; mem:LD4[%cgep5]
+	BUNDLE %P0<imp-def,dead>, %PC<imp-def,dead>, %R1<imp-use>
+	  * %P0<def> = C2_cmpgtui %R1, 52
+	  * J2_jumptnew %P0<kill,internal>, <BB#4>, %PC<imp-def,dead>
+	J2_jump <BB#2>, %PC<imp-def,dead>
+    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#4(0x40000000 / 0x80000000 = 50.00%)
+
+BB#2: derived from LLVM BB %8
+    Live Ins: %R1 %R2
+    Predecessors according to CFG: BB#1
+	%R0<def> = L2_loadri_io %R2, 4; mem:LD4[%9]
+	BUNDLE %P0<imp-def,dead>, %PC<imp-def,dead>, %R0<imp-use>, %R1<imp-use>
+	  * %P0<def> = S4_ntstbit_r %R0, %R1
+	  * J2_jumptnew %P0<kill,internal>, <BB#4>, %PC<imp-def,dead>
+	J2_jump <BB#3>, %PC<imp-def,dead>
+    Successors according to CFG: BB#4(0x30000000 / 0x80000000 = 37.50%) BB#3(0x50000000 / 0x80000000 = 62.50%)
+
+BB#3: derived from LLVM BB %14
+    Live Ins: %R0 %R1 %R2
+    Predecessors according to CFG: BB#2
+	BUNDLE %R1<imp-def>, %R3<imp-def>, %R1<imp-use,kill>, %R2<imp-use>
+	  * %R1<def> = S4_lsli 1, %R1<kill>
+	  * %R3<def> = A2_tfrsi -1
+	  * L4_isub_memopw_io %R2, 0, 1; mem:ST4[%17] LD4[%17]
+	BUNDLE %R0<imp-def,dead>, %R0<imp-use,kill>, %R1<imp-use,kill>, %R3<imp-use,kill>, %R2<imp-use,kill>
+	  * %R0<def,tied1> = M4_and_xor %R0<kill,tied0>, %R1<kill>, %R3<kill>
+	  * S2_storerinew_io %R2<kill>, 4, %R0<kill,internal>; mem:ST4[%sunkaddr9]
+    Successors according to CFG: BB#4(?%)
+
+BB#4: derived from LLVM BB %20
+    Predecessors according to CFG: BB#0 BB#1 BB#2 BB#3
+	JMPret %R31<kill>, %PC<imp-def,dead>
+
+# End machine code for function parms_set.
+

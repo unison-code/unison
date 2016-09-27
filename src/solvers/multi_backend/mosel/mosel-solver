@@ -1,0 +1,5 @@
+#!/bin/bash
+# assuming current directory is ../../.. i.e. .../src
+BASENAME=$(basename $1 .ext.json)
+echo "json2mos('$1')." | sicstus -f --nologo --noinfo -l solvers/multi_backend/mosel/model2mos.pl
+mosel -c "exec $BASENAME.mos"

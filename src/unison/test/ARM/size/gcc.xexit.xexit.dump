@@ -1,0 +1,1485 @@
+# After Instruction Selection:
+# Machine code for function xexit: SSA
+Function Live Ins: %R0 in %vreg1
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%vreg1<def> = COPY %R0; GPR:%vreg1
+	%vreg2<def> = t2MOVi32imm <ga:@_xexit_cleanup>; rGPR:%vreg2
+	%vreg0<def> = t2LDRi12 %vreg2<kill>, 0, pred:14, pred:%noreg; mem:LD4[@_xexit_cleanup] GPRnopc:%vreg0 rGPR:%vreg2
+	t2CMPri %vreg0, 0, pred:14, pred:%noreg, %CPSR<imp-def>; GPRnopc:%vreg0
+	t2Bcc <BB#2>, pred:0, pred:%CPSR
+	t2B <BB#1>, pred:14, pred:%noreg
+    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#1(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %3
+    Predecessors according to CFG: BB#0
+	ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	tBLXr pred:14, pred:%noreg, %vreg0, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %SP<imp-def>, ...; GPRnopc:%vreg0
+	ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %4
+    Predecessors according to CFG: BB#0 BB#1
+	ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%R0<def> = COPY %vreg1; GPR:%vreg1
+	tBL pred:14, pred:%noreg, <ga:@exit>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+
+# End machine code for function xexit.
+
+# After Expand ISel Pseudo-instructions:
+# Machine code for function xexit: SSA
+Function Live Ins: %R0 in %vreg1
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%vreg1<def> = COPY %R0; GPR:%vreg1
+	%vreg2<def> = t2MOVi32imm <ga:@_xexit_cleanup>; rGPR:%vreg2
+	%vreg0<def> = t2LDRi12 %vreg2<kill>, 0, pred:14, pred:%noreg; mem:LD4[@_xexit_cleanup] GPRnopc:%vreg0 rGPR:%vreg2
+	t2CMPri %vreg0, 0, pred:14, pred:%noreg, %CPSR<imp-def>; GPRnopc:%vreg0
+	t2Bcc <BB#2>, pred:0, pred:%CPSR
+	t2B <BB#1>, pred:14, pred:%noreg
+    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#1(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %3
+    Predecessors according to CFG: BB#0
+	ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	tBLXr pred:14, pred:%noreg, %vreg0, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %SP<imp-def>, ...; GPRnopc:%vreg0
+	ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %4
+    Predecessors according to CFG: BB#0 BB#1
+	ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%R0<def> = COPY %vreg1; GPR:%vreg1
+	tBL pred:14, pred:%noreg, <ga:@exit>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+
+# End machine code for function xexit.
+
+# After Tail Duplication:
+# Machine code for function xexit: SSA
+Function Live Ins: %R0 in %vreg1
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%vreg1<def> = COPY %R0; GPR:%vreg1
+	%vreg2<def> = t2MOVi32imm <ga:@_xexit_cleanup>; rGPR:%vreg2
+	%vreg0<def> = t2LDRi12 %vreg2<kill>, 0, pred:14, pred:%noreg; mem:LD4[@_xexit_cleanup] GPRnopc:%vreg0 rGPR:%vreg2
+	t2CMPri %vreg0, 0, pred:14, pred:%noreg, %CPSR<imp-def>; GPRnopc:%vreg0
+	t2Bcc <BB#2>, pred:0, pred:%CPSR
+	t2B <BB#1>, pred:14, pred:%noreg
+    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#1(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %3
+    Predecessors according to CFG: BB#0
+	ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	tBLXr pred:14, pred:%noreg, %vreg0, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %SP<imp-def>, ...; GPRnopc:%vreg0
+	ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %4
+    Predecessors according to CFG: BB#0 BB#1
+	ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%R0<def> = COPY %vreg1; GPR:%vreg1
+	tBL pred:14, pred:%noreg, <ga:@exit>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+
+# End machine code for function xexit.
+
+# After Optimize machine instruction PHIs:
+# Machine code for function xexit: SSA
+Function Live Ins: %R0 in %vreg1
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%vreg1<def> = COPY %R0; GPR:%vreg1
+	%vreg2<def> = t2MOVi32imm <ga:@_xexit_cleanup>; rGPR:%vreg2
+	%vreg0<def> = t2LDRi12 %vreg2<kill>, 0, pred:14, pred:%noreg; mem:LD4[@_xexit_cleanup] GPRnopc:%vreg0 rGPR:%vreg2
+	t2CMPri %vreg0, 0, pred:14, pred:%noreg, %CPSR<imp-def>; GPRnopc:%vreg0
+	t2Bcc <BB#2>, pred:0, pred:%CPSR
+	t2B <BB#1>, pred:14, pred:%noreg
+    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#1(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %3
+    Predecessors according to CFG: BB#0
+	ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	tBLXr pred:14, pred:%noreg, %vreg0, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %SP<imp-def>, ...; GPRnopc:%vreg0
+	ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %4
+    Predecessors according to CFG: BB#0 BB#1
+	ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%R0<def> = COPY %vreg1; GPR:%vreg1
+	tBL pred:14, pred:%noreg, <ga:@exit>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+
+# End machine code for function xexit.
+
+# After Merge disjoint stack slots:
+# Machine code for function xexit: SSA
+Function Live Ins: %R0 in %vreg1
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%vreg1<def> = COPY %R0; GPR:%vreg1
+	%vreg2<def> = t2MOVi32imm <ga:@_xexit_cleanup>; rGPR:%vreg2
+	%vreg0<def> = t2LDRi12 %vreg2<kill>, 0, pred:14, pred:%noreg; mem:LD4[@_xexit_cleanup] GPRnopc:%vreg0 rGPR:%vreg2
+	t2CMPri %vreg0, 0, pred:14, pred:%noreg, %CPSR<imp-def>; GPRnopc:%vreg0
+	t2Bcc <BB#2>, pred:0, pred:%CPSR
+	t2B <BB#1>, pred:14, pred:%noreg
+    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#1(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %3
+    Predecessors according to CFG: BB#0
+	ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	tBLXr pred:14, pred:%noreg, %vreg0, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %SP<imp-def>, ...; GPRnopc:%vreg0
+	ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %4
+    Predecessors according to CFG: BB#0 BB#1
+	ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%R0<def> = COPY %vreg1; GPR:%vreg1
+	tBL pred:14, pred:%noreg, <ga:@exit>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+
+# End machine code for function xexit.
+
+# After Local Stack Slot Allocation:
+# Machine code for function xexit: SSA
+Function Live Ins: %R0 in %vreg1
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%vreg1<def> = COPY %R0; GPR:%vreg1
+	%vreg2<def> = t2MOVi32imm <ga:@_xexit_cleanup>; rGPR:%vreg2
+	%vreg0<def> = t2LDRi12 %vreg2<kill>, 0, pred:14, pred:%noreg; mem:LD4[@_xexit_cleanup] GPRnopc:%vreg0 rGPR:%vreg2
+	t2CMPri %vreg0, 0, pred:14, pred:%noreg, %CPSR<imp-def>; GPRnopc:%vreg0
+	t2Bcc <BB#2>, pred:0, pred:%CPSR
+	t2B <BB#1>, pred:14, pred:%noreg
+    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#1(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %3
+    Predecessors according to CFG: BB#0
+	ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	tBLXr pred:14, pred:%noreg, %vreg0, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %SP<imp-def>, ...; GPRnopc:%vreg0
+	ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %4
+    Predecessors according to CFG: BB#0 BB#1
+	ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%R0<def> = COPY %vreg1; GPR:%vreg1
+	tBL pred:14, pred:%noreg, <ga:@exit>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+
+# End machine code for function xexit.
+
+# After Remove dead machine instructions:
+# Machine code for function xexit: SSA
+Function Live Ins: %R0 in %vreg1
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%vreg1<def> = COPY %R0; GPR:%vreg1
+	%vreg2<def> = t2MOVi32imm <ga:@_xexit_cleanup>; rGPR:%vreg2
+	%vreg0<def> = t2LDRi12 %vreg2<kill>, 0, pred:14, pred:%noreg; mem:LD4[@_xexit_cleanup] GPRnopc:%vreg0 rGPR:%vreg2
+	t2CMPri %vreg0, 0, pred:14, pred:%noreg, %CPSR<imp-def>; GPRnopc:%vreg0
+	t2Bcc <BB#2>, pred:0, pred:%CPSR
+	t2B <BB#1>, pred:14, pred:%noreg
+    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#1(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %3
+    Predecessors according to CFG: BB#0
+	ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	tBLXr pred:14, pred:%noreg, %vreg0, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %SP<imp-def>, ...; GPRnopc:%vreg0
+	ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %4
+    Predecessors according to CFG: BB#0 BB#1
+	ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%R0<def> = COPY %vreg1; GPR:%vreg1
+	tBL pred:14, pred:%noreg, <ga:@exit>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+
+# End machine code for function xexit.
+
+# After Machine Loop Invariant Code Motion:
+# Machine code for function xexit: SSA
+Function Live Ins: %R0 in %vreg1
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%vreg1<def> = COPY %R0; GPR:%vreg1
+	%vreg2<def> = t2MOVi32imm <ga:@_xexit_cleanup>; rGPR:%vreg2
+	%vreg0<def> = t2LDRi12 %vreg2<kill>, 0, pred:14, pred:%noreg; mem:LD4[@_xexit_cleanup] GPRnopc:%vreg0 rGPR:%vreg2
+	t2CMPri %vreg0, 0, pred:14, pred:%noreg, %CPSR<imp-def>; GPRnopc:%vreg0
+	t2Bcc <BB#2>, pred:0, pred:%CPSR
+	t2B <BB#1>, pred:14, pred:%noreg
+    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#1(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %3
+    Predecessors according to CFG: BB#0
+	ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	tBLXr pred:14, pred:%noreg, %vreg0, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %SP<imp-def>, ...; GPRnopc:%vreg0
+	ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %4
+    Predecessors according to CFG: BB#0 BB#1
+	ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%R0<def> = COPY %vreg1; GPR:%vreg1
+	tBL pred:14, pred:%noreg, <ga:@exit>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+
+# End machine code for function xexit.
+
+# After Machine Common Subexpression Elimination:
+# Machine code for function xexit: SSA
+Function Live Ins: %R0 in %vreg1
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%vreg1<def> = COPY %R0; GPR:%vreg1
+	%vreg2<def> = t2MOVi32imm <ga:@_xexit_cleanup>; rGPR:%vreg2
+	%vreg0<def> = t2LDRi12 %vreg2<kill>, 0, pred:14, pred:%noreg; mem:LD4[@_xexit_cleanup] GPRnopc:%vreg0 rGPR:%vreg2
+	t2CMPri %vreg0, 0, pred:14, pred:%noreg, %CPSR<imp-def>; GPRnopc:%vreg0
+	t2Bcc <BB#2>, pred:0, pred:%CPSR
+	t2B <BB#1>, pred:14, pred:%noreg
+    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#1(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %3
+    Predecessors according to CFG: BB#0
+	ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	tBLXr pred:14, pred:%noreg, %vreg0, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %SP<imp-def>, ...; GPRnopc:%vreg0
+	ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %4
+    Predecessors according to CFG: BB#0 BB#1
+	ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%R0<def> = COPY %vreg1; GPR:%vreg1
+	tBL pred:14, pred:%noreg, <ga:@exit>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+
+# End machine code for function xexit.
+
+# After Machine code sinking:
+# Machine code for function xexit: SSA
+Function Live Ins: %R0 in %vreg1
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%vreg1<def> = COPY %R0; GPR:%vreg1
+	%vreg2<def> = t2MOVi32imm <ga:@_xexit_cleanup>; rGPR:%vreg2
+	%vreg0<def> = t2LDRi12 %vreg2<kill>, 0, pred:14, pred:%noreg; mem:LD4[@_xexit_cleanup] GPRnopc:%vreg0 rGPR:%vreg2
+	t2CMPri %vreg0, 0, pred:14, pred:%noreg, %CPSR<imp-def>; GPRnopc:%vreg0
+	t2Bcc <BB#2>, pred:0, pred:%CPSR
+	t2B <BB#1>, pred:14, pred:%noreg
+    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#1(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %3
+    Predecessors according to CFG: BB#0
+	ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	tBLXr pred:14, pred:%noreg, %vreg0, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %SP<imp-def>, ...; GPRnopc:%vreg0
+	ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %4
+    Predecessors according to CFG: BB#0 BB#1
+	ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%R0<def> = COPY %vreg1; GPR:%vreg1
+	tBL pred:14, pred:%noreg, <ga:@exit>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+
+# End machine code for function xexit.
+
+# After Peephole Optimizations:
+# Machine code for function xexit: SSA
+Function Live Ins: %R0 in %vreg1
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%vreg1<def> = COPY %R0; GPR:%vreg1
+	%vreg2<def> = t2MOVi32imm <ga:@_xexit_cleanup>; rGPR:%vreg2
+	%vreg0<def> = t2LDRi12 %vreg2<kill>, 0, pred:14, pred:%noreg; mem:LD4[@_xexit_cleanup] GPRnopc:%vreg0 rGPR:%vreg2
+	t2CMPri %vreg0, 0, pred:14, pred:%noreg, %CPSR<imp-def>; GPRnopc:%vreg0
+	t2Bcc <BB#2>, pred:0, pred:%CPSR
+	t2B <BB#1>, pred:14, pred:%noreg
+    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#1(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %3
+    Predecessors according to CFG: BB#0
+	ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	tBLXr pred:14, pred:%noreg, %vreg0, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %SP<imp-def>, ...; GPRnopc:%vreg0
+	ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %4
+    Predecessors according to CFG: BB#0 BB#1
+	ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%R0<def> = COPY %vreg1; GPR:%vreg1
+	tBL pred:14, pred:%noreg, <ga:@exit>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+
+# End machine code for function xexit.
+
+# After Remove dead machine instructions:
+# Machine code for function xexit: SSA
+Function Live Ins: %R0 in %vreg1
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%vreg1<def> = COPY %R0; GPR:%vreg1
+	%vreg2<def> = t2MOVi32imm <ga:@_xexit_cleanup>; rGPR:%vreg2
+	%vreg0<def> = t2LDRi12 %vreg2<kill>, 0, pred:14, pred:%noreg; mem:LD4[@_xexit_cleanup] GPRnopc:%vreg0 rGPR:%vreg2
+	t2CMPri %vreg0, 0, pred:14, pred:%noreg, %CPSR<imp-def>; GPRnopc:%vreg0
+	t2Bcc <BB#2>, pred:0, pred:%CPSR
+	t2B <BB#1>, pred:14, pred:%noreg
+    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#1(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %3
+    Predecessors according to CFG: BB#0
+	ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	tBLXr pred:14, pred:%noreg, %vreg0, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %SP<imp-def>, ...; GPRnopc:%vreg0
+	ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %4
+    Predecessors according to CFG: BB#0 BB#1
+	ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%R0<def> = COPY %vreg1; GPR:%vreg1
+	tBL pred:14, pred:%noreg, <ga:@exit>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+
+# End machine code for function xexit.
+
+# After ARM MLA / MLS expansion pass:
+# Machine code for function xexit: SSA
+Function Live Ins: %R0 in %vreg1
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%vreg1<def> = COPY %R0; GPR:%vreg1
+	%vreg2<def> = t2MOVi32imm <ga:@_xexit_cleanup>; rGPR:%vreg2
+	%vreg0<def> = t2LDRi12 %vreg2<kill>, 0, pred:14, pred:%noreg; mem:LD4[@_xexit_cleanup] GPRnopc:%vreg0 rGPR:%vreg2
+	t2CMPri %vreg0, 0, pred:14, pred:%noreg, %CPSR<imp-def>; GPRnopc:%vreg0
+	t2Bcc <BB#2>, pred:0, pred:%CPSR
+	t2B <BB#1>, pred:14, pred:%noreg
+    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#1(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %3
+    Predecessors according to CFG: BB#0
+	ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	tBLXr pred:14, pred:%noreg, %vreg0, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %SP<imp-def>, ...; GPRnopc:%vreg0
+	ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %4
+    Predecessors according to CFG: BB#0 BB#1
+	ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%R0<def> = COPY %vreg1; GPR:%vreg1
+	tBL pred:14, pred:%noreg, <ga:@exit>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+
+# End machine code for function xexit.
+
+# After ARM pre- register allocation load / store optimization pass:
+# Machine code for function xexit: SSA
+Function Live Ins: %R0 in %vreg1
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%vreg1<def> = COPY %R0; GPR:%vreg1
+	%vreg2<def> = t2MOVi32imm <ga:@_xexit_cleanup>; rGPR:%vreg2
+	%vreg0<def> = t2LDRi12 %vreg2<kill>, 0, pred:14, pred:%noreg; mem:LD4[@_xexit_cleanup] GPRnopc:%vreg0 rGPR:%vreg2
+	t2CMPri %vreg0, 0, pred:14, pred:%noreg, %CPSR<imp-def>; GPRnopc:%vreg0
+	t2Bcc <BB#2>, pred:0, pred:%CPSR
+	t2B <BB#1>, pred:14, pred:%noreg
+    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#1(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %3
+    Predecessors according to CFG: BB#0
+	ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	tBLXr pred:14, pred:%noreg, %vreg0, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %SP<imp-def>, ...; GPRnopc:%vreg0
+	ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %4
+    Predecessors according to CFG: BB#0 BB#1
+	ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%R0<def> = COPY %vreg1; GPR:%vreg1
+	tBL pred:14, pred:%noreg, <ga:@exit>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+
+# End machine code for function xexit.
+
+# After ARM A15 S->D optimizer:
+# Machine code for function xexit: SSA
+Function Live Ins: %R0 in %vreg1
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%vreg1<def> = COPY %R0; GPR:%vreg1
+	%vreg2<def> = t2MOVi32imm <ga:@_xexit_cleanup>; rGPR:%vreg2
+	%vreg0<def> = t2LDRi12 %vreg2<kill>, 0, pred:14, pred:%noreg; mem:LD4[@_xexit_cleanup] GPRnopc:%vreg0 rGPR:%vreg2
+	t2CMPri %vreg0, 0, pred:14, pred:%noreg, %CPSR<imp-def>; GPRnopc:%vreg0
+	t2Bcc <BB#2>, pred:0, pred:%CPSR
+	t2B <BB#1>, pred:14, pred:%noreg
+    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#1(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %3
+    Predecessors according to CFG: BB#0
+	ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	tBLXr pred:14, pred:%noreg, %vreg0, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %SP<imp-def>, ...; GPRnopc:%vreg0
+	ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %4
+    Predecessors according to CFG: BB#0 BB#1
+	ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%R0<def> = COPY %vreg1; GPR:%vreg1
+	tBL pred:14, pred:%noreg, <ga:@exit>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+
+# End machine code for function xexit.
+
+# After Process Implicit Definitions:
+# Machine code for function xexit: SSA
+Function Live Ins: %R0 in %vreg1
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%vreg1<def> = COPY %R0; GPR:%vreg1
+	%vreg2<def> = t2MOVi32imm <ga:@_xexit_cleanup>; rGPR:%vreg2
+	%vreg0<def> = t2LDRi12 %vreg2<kill>, 0, pred:14, pred:%noreg; mem:LD4[@_xexit_cleanup] GPRnopc:%vreg0 rGPR:%vreg2
+	t2CMPri %vreg0, 0, pred:14, pred:%noreg, %CPSR<imp-def>; GPRnopc:%vreg0
+	t2Bcc <BB#2>, pred:0, pred:%CPSR
+	t2B <BB#1>, pred:14, pred:%noreg
+    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#1(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %3
+    Predecessors according to CFG: BB#0
+	ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	tBLXr pred:14, pred:%noreg, %vreg0, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %SP<imp-def>, ...; GPRnopc:%vreg0
+	ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %4
+    Predecessors according to CFG: BB#0 BB#1
+	ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%R0<def> = COPY %vreg1; GPR:%vreg1
+	tBL pred:14, pred:%noreg, <ga:@exit>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+
+# End machine code for function xexit.
+
+# After Live Variable Analysis:
+# Machine code for function xexit: SSA
+Function Live Ins: %R0 in %vreg1
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%vreg1<def> = COPY %R0<kill>; GPR:%vreg1
+	%vreg2<def> = t2MOVi32imm <ga:@_xexit_cleanup>; rGPR:%vreg2
+	%vreg0<def> = t2LDRi12 %vreg2<kill>, 0, pred:14, pred:%noreg; mem:LD4[@_xexit_cleanup] GPRnopc:%vreg0 rGPR:%vreg2
+	t2CMPri %vreg0, 0, pred:14, pred:%noreg, %CPSR<imp-def>; GPRnopc:%vreg0
+	t2Bcc <BB#2>, pred:0, pred:%CPSR<kill>
+	t2B <BB#1>, pred:14, pred:%noreg
+    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#1(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %3
+    Predecessors according to CFG: BB#0
+	ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	tBLXr pred:14, pred:%noreg, %vreg0<kill>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %SP<imp-def>, ...; GPRnopc:%vreg0
+	ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %4
+    Predecessors according to CFG: BB#0 BB#1
+	ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%R0<def> = COPY %vreg1<kill>; GPR:%vreg1
+	tBL pred:14, pred:%noreg, <ga:@exit>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use,kill>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+
+# End machine code for function xexit.
+
+# After Machine Natural Loop Construction:
+# Machine code for function xexit: SSA
+Function Live Ins: %R0 in %vreg1
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%vreg1<def> = COPY %R0<kill>; GPR:%vreg1
+	%vreg2<def> = t2MOVi32imm <ga:@_xexit_cleanup>; rGPR:%vreg2
+	%vreg0<def> = t2LDRi12 %vreg2<kill>, 0, pred:14, pred:%noreg; mem:LD4[@_xexit_cleanup] GPRnopc:%vreg0 rGPR:%vreg2
+	t2CMPri %vreg0, 0, pred:14, pred:%noreg, %CPSR<imp-def>; GPRnopc:%vreg0
+	t2Bcc <BB#2>, pred:0, pred:%CPSR<kill>
+	t2B <BB#1>, pred:14, pred:%noreg
+    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#1(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %3
+    Predecessors according to CFG: BB#0
+	ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	tBLXr pred:14, pred:%noreg, %vreg0<kill>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %SP<imp-def>, ...; GPRnopc:%vreg0
+	ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %4
+    Predecessors according to CFG: BB#0 BB#1
+	ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%R0<def> = COPY %vreg1<kill>; GPR:%vreg1
+	tBL pred:14, pred:%noreg, <ga:@exit>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use,kill>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+
+# End machine code for function xexit.
+
+# After Eliminate PHI nodes for register allocation:
+# Machine code for function xexit: Post SSA
+Function Live Ins: %R0 in %vreg1
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%vreg1<def> = COPY %R0<kill>; GPR:%vreg1
+	%vreg2<def> = t2MOVi32imm <ga:@_xexit_cleanup>; rGPR:%vreg2
+	%vreg0<def> = t2LDRi12 %vreg2<kill>, 0, pred:14, pred:%noreg; mem:LD4[@_xexit_cleanup] GPRnopc:%vreg0 rGPR:%vreg2
+	t2CMPri %vreg0, 0, pred:14, pred:%noreg, %CPSR<imp-def>; GPRnopc:%vreg0
+	t2Bcc <BB#2>, pred:0, pred:%CPSR<kill>
+	t2B <BB#1>, pred:14, pred:%noreg
+    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#1(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %3
+    Predecessors according to CFG: BB#0
+	ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	tBLXr pred:14, pred:%noreg, %vreg0<kill>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %SP<imp-def>, ...; GPRnopc:%vreg0
+	ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %4
+    Predecessors according to CFG: BB#0 BB#1
+	ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%R0<def> = COPY %vreg1<kill>; GPR:%vreg1
+	tBL pred:14, pred:%noreg, <ga:@exit>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use,kill>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+
+# End machine code for function xexit.
+
+# After Two-Address instruction pass:
+# Machine code for function xexit: Post SSA
+Function Live Ins: %R0 in %vreg1
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%vreg1<def> = COPY %R0<kill>; GPR:%vreg1
+	%vreg2<def> = t2MOVi32imm <ga:@_xexit_cleanup>; rGPR:%vreg2
+	%vreg0<def> = t2LDRi12 %vreg2<kill>, 0, pred:14, pred:%noreg; mem:LD4[@_xexit_cleanup] GPRnopc:%vreg0 rGPR:%vreg2
+	t2CMPri %vreg0, 0, pred:14, pred:%noreg, %CPSR<imp-def>; GPRnopc:%vreg0
+	t2Bcc <BB#2>, pred:0, pred:%CPSR<kill>
+	t2B <BB#1>, pred:14, pred:%noreg
+    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#1(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %3
+    Predecessors according to CFG: BB#0
+	ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	tBLXr pred:14, pred:%noreg, %vreg0<kill>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %SP<imp-def>, ...; GPRnopc:%vreg0
+	ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %4
+    Predecessors according to CFG: BB#0 BB#1
+	ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%R0<def> = COPY %vreg1<kill>; GPR:%vreg1
+	tBL pred:14, pred:%noreg, <ga:@exit>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use,kill>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+
+# End machine code for function xexit.
+
+# After Simple Register Coalescing:
+# Machine code for function xexit: Post SSA
+Function Live Ins: %R0 in %vreg1
+
+0B	BB#0: derived from LLVM BB %0
+	    Live Ins: %R0
+16B		%vreg1<def> = COPY %R0; GPR:%vreg1
+32B		%vreg2<def> = t2MOVi32imm <ga:@_xexit_cleanup>; rGPR:%vreg2
+48B		%vreg0<def> = t2LDRi12 %vreg2, 0, pred:14, pred:%noreg; mem:LD4[@_xexit_cleanup] GPRnopc:%vreg0 rGPR:%vreg2
+64B		t2CMPri %vreg0, 0, pred:14, pred:%noreg, %CPSR<imp-def>; GPRnopc:%vreg0
+80B		t2Bcc <BB#2>, pred:0, pred:%CPSR<kill>
+96B		t2B <BB#1>, pred:14, pred:%noreg
+	    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#1(0x40000000 / 0x80000000 = 50.00%)
+
+112B	BB#1: derived from LLVM BB %3
+	    Predecessors according to CFG: BB#0
+128B		ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+144B		tBLXr pred:14, pred:%noreg, %vreg0, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %SP<imp-def>, ...; GPRnopc:%vreg0
+160B		ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	    Successors according to CFG: BB#2(?%)
+
+176B	BB#2: derived from LLVM BB %4
+	    Predecessors according to CFG: BB#0 BB#1
+192B		ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+208B		%R0<def> = COPY %vreg1; GPR:%vreg1
+224B		tBL pred:14, pred:%noreg, <ga:@exit>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %SP<imp-def>, ...
+240B		ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+
+# End machine code for function xexit.
+
+# After Machine Instruction Scheduler:
+# Machine code for function xexit: Post SSA
+Function Live Ins: %R0 in %vreg1
+
+0B	BB#0: derived from LLVM BB %0
+	    Live Ins: %R0
+16B		%vreg1<def> = COPY %R0; GPR:%vreg1
+32B		%vreg2<def> = t2MOVi32imm <ga:@_xexit_cleanup>; rGPR:%vreg2
+48B		%vreg0<def> = t2LDRi12 %vreg2, 0, pred:14, pred:%noreg; mem:LD4[@_xexit_cleanup] GPRnopc:%vreg0 rGPR:%vreg2
+64B		t2CMPri %vreg0, 0, pred:14, pred:%noreg, %CPSR<imp-def>; GPRnopc:%vreg0
+80B		t2Bcc <BB#2>, pred:0, pred:%CPSR<kill>
+96B		t2B <BB#1>, pred:14, pred:%noreg
+	    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#1(0x40000000 / 0x80000000 = 50.00%)
+
+112B	BB#1: derived from LLVM BB %3
+	    Predecessors according to CFG: BB#0
+128B		ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+144B		tBLXr pred:14, pred:%noreg, %vreg0, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %SP<imp-def>, ...; GPRnopc:%vreg0
+160B		ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	    Successors according to CFG: BB#2(?%)
+
+176B	BB#2: derived from LLVM BB %4
+	    Predecessors according to CFG: BB#0 BB#1
+192B		ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+208B		%R0<def> = COPY %vreg1; GPR:%vreg1
+224B		tBL pred:14, pred:%noreg, <ga:@exit>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %SP<imp-def>, ...
+240B		ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+
+# End machine code for function xexit.
+
+# After Greedy Register Allocator:
+# Machine code for function xexit: Post SSA
+Function Live Ins: %R0 in %vreg1
+
+0B	BB#0: derived from LLVM BB %0
+	    Live Ins: %R0
+16B		%vreg1<def> = COPY %R0; GPR:%vreg1
+32B		%vreg2<def> = t2MOVi32imm <ga:@_xexit_cleanup>; rGPR:%vreg2
+48B		%vreg0<def> = t2LDRi12 %vreg2, 0, pred:14, pred:%noreg; mem:LD4[@_xexit_cleanup] GPRnopc:%vreg0 rGPR:%vreg2
+64B		t2CMPri %vreg0, 0, pred:14, pred:%noreg, %CPSR<imp-def>; GPRnopc:%vreg0
+80B		t2Bcc <BB#2>, pred:0, pred:%CPSR<kill>
+96B		t2B <BB#1>, pred:14, pred:%noreg
+	    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#1(0x40000000 / 0x80000000 = 50.00%)
+
+112B	BB#1: derived from LLVM BB %3
+	    Predecessors according to CFG: BB#0
+128B		ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+144B		tBLXr pred:14, pred:%noreg, %vreg0, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %SP<imp-def>, ...; GPRnopc:%vreg0
+160B		ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	    Successors according to CFG: BB#2(?%)
+
+176B	BB#2: derived from LLVM BB %4
+	    Predecessors according to CFG: BB#0 BB#1
+192B		ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+208B		%R0<def> = COPY %vreg1; GPR:%vreg1
+224B		tBL pred:14, pred:%noreg, <ga:@exit>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %SP<imp-def>, ...
+240B		ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+
+# End machine code for function xexit.
+
+# After Virtual Register Rewriter:
+# Machine code for function xexit: Post SSA
+Function Live Ins: %R0
+
+0B	BB#0: derived from LLVM BB %0
+	    Live Ins: %R0
+16B		%R4<def> = COPY %R0
+32B		%R0<def> = t2MOVi32imm <ga:@_xexit_cleanup>
+48B		%R0<def> = t2LDRi12 %R0<kill>, 0, pred:14, pred:%noreg; mem:LD4[@_xexit_cleanup]
+64B		t2CMPri %R0, 0, pred:14, pred:%noreg, %CPSR<imp-def>
+80B		t2Bcc <BB#2>, pred:0, pred:%CPSR<kill>
+96B		t2B <BB#1>, pred:14, pred:%noreg
+	    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#1(0x40000000 / 0x80000000 = 50.00%)
+
+112B	BB#1: derived from LLVM BB %3
+	    Live Ins: %R0 %R4
+	    Predecessors according to CFG: BB#0
+128B		ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+144B		tBLXr pred:14, pred:%noreg, %R0<kill>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %SP<imp-def>, ...
+160B		ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	    Successors according to CFG: BB#2(?%)
+
+176B	BB#2: derived from LLVM BB %4
+	    Live Ins: %R4
+	    Predecessors according to CFG: BB#0 BB#1
+192B		ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+208B		%R0<def> = COPY %R4<kill>
+224B		tBL pred:14, pred:%noreg, <ga:@exit>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %SP<imp-def>, ...
+240B		ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+
+# End machine code for function xexit.
+
+# After Stack Slot Coloring:
+# Machine code for function xexit: Post SSA
+Function Live Ins: %R0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%R4<def> = COPY %R0
+	%R0<def> = t2MOVi32imm <ga:@_xexit_cleanup>
+	%R0<def> = t2LDRi12 %R0<kill>, 0, pred:14, pred:%noreg; mem:LD4[@_xexit_cleanup]
+	t2CMPri %R0, 0, pred:14, pred:%noreg, %CPSR<imp-def>
+	t2Bcc <BB#2>, pred:0, pred:%CPSR<kill>
+	t2B <BB#1>, pred:14, pred:%noreg
+    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#1(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %3
+    Live Ins: %R0 %R4
+    Predecessors according to CFG: BB#0
+	ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	tBLXr pred:14, pred:%noreg, %R0<kill>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %4
+    Live Ins: %R4
+    Predecessors according to CFG: BB#0 BB#1
+	ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%R0<def> = COPY %R4<kill>
+	tBL pred:14, pred:%noreg, <ga:@exit>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+
+# End machine code for function xexit.
+
+# After Machine Loop Invariant Code Motion:
+# Machine code for function xexit: Post SSA
+Function Live Ins: %R0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%R4<def> = COPY %R0
+	%R0<def> = t2MOVi32imm <ga:@_xexit_cleanup>
+	%R0<def> = t2LDRi12 %R0<kill>, 0, pred:14, pred:%noreg; mem:LD4[@_xexit_cleanup]
+	t2CMPri %R0, 0, pred:14, pred:%noreg, %CPSR<imp-def>
+	t2Bcc <BB#2>, pred:0, pred:%CPSR<kill>
+	t2B <BB#1>, pred:14, pred:%noreg
+    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#1(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %3
+    Live Ins: %R0 %R4
+    Predecessors according to CFG: BB#0
+	ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	tBLXr pred:14, pred:%noreg, %R0<kill>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %4
+    Live Ins: %R4
+    Predecessors according to CFG: BB#0 BB#1
+	ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%R0<def> = COPY %R4<kill>
+	tBL pred:14, pred:%noreg, <ga:@exit>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+
+# End machine code for function xexit.
+
+# After Shrink Wrapping analysis:
+# Machine code for function xexit: Post SSA
+Function Live Ins: %R0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%R4<def> = COPY %R0
+	%R0<def> = t2MOVi32imm <ga:@_xexit_cleanup>
+	%R0<def> = t2LDRi12 %R0<kill>, 0, pred:14, pred:%noreg; mem:LD4[@_xexit_cleanup]
+	t2CMPri %R0, 0, pred:14, pred:%noreg, %CPSR<imp-def>
+	t2Bcc <BB#2>, pred:0, pred:%CPSR<kill>
+	t2B <BB#1>, pred:14, pred:%noreg
+    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#1(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %3
+    Live Ins: %R0 %R4
+    Predecessors according to CFG: BB#0
+	ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	tBLXr pred:14, pred:%noreg, %R0<kill>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %4
+    Live Ins: %R4
+    Predecessors according to CFG: BB#0 BB#1
+	ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%R0<def> = COPY %R4<kill>
+	tBL pred:14, pred:%noreg, <ga:@exit>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+
+# End machine code for function xexit.
+
+# After Prologue/Epilogue Insertion & Frame Finalization:
+# Machine code for function xexit: Post SSA
+Frame Objects:
+  fi#0: size=4, align=4, at location [SP-4]
+  fi#1: size=4, align=4, at location [SP-8]
+  fi#2: size=4, align=4, at location [SP-12]
+  fi#3: size=4, align=4, at location [SP-16]
+Function Live Ins: %R0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R4 %R6 %R7 %LR
+	%SP<def,tied1> = t2STMDB_UPD %SP<tied0>, pred:14, pred:%noreg, %R4<kill>, %R6<kill>, %R7<kill>, %LR<kill>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%R7<def> = t2ADDri %SP<kill>, 8, pred:14, pred:%noreg, opt:%noreg; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%R4<def> = COPY %R0
+	%R0<def> = t2MOVi32imm <ga:@_xexit_cleanup>
+	%R0<def> = t2LDRi12 %R0<kill>, 0, pred:14, pred:%noreg; mem:LD4[@_xexit_cleanup]
+	t2CMPri %R0, 0, pred:14, pred:%noreg, %CPSR<imp-def>
+	t2Bcc <BB#2>, pred:0, pred:%CPSR<kill>
+	t2B <BB#1>, pred:14, pred:%noreg
+    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#1(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %3
+    Live Ins: %R0 %R4
+    Predecessors according to CFG: BB#0
+	tBLXr pred:14, pred:%noreg, %R0<kill>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %LR<imp-def,dead>, %SP<imp-use>, %SP<imp-def>
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %4
+    Live Ins: %R4
+    Predecessors according to CFG: BB#0 BB#1
+	%R0<def> = COPY %R4<kill>
+	tBL pred:14, pred:%noreg, <ga:@exit>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %LR<imp-def,dead>, %SP<imp-use>, %R0<imp-use>, %SP<imp-def>
+
+# End machine code for function xexit.
+
+# After Machine Copy Propagation Pass:
+# Machine code for function xexit: Post SSA
+Frame Objects:
+  fi#0: size=4, align=4, at location [SP-4]
+  fi#1: size=4, align=4, at location [SP-8]
+  fi#2: size=4, align=4, at location [SP-12]
+  fi#3: size=4, align=4, at location [SP-16]
+Function Live Ins: %R0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R4 %R6 %R7 %LR
+	%SP<def,tied1> = t2STMDB_UPD %SP<tied0>, pred:14, pred:%noreg, %R4<kill>, %R6<kill>, %R7<kill>, %LR<kill>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%R7<def> = t2ADDri %SP<kill>, 8, pred:14, pred:%noreg, opt:%noreg; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%R4<def> = COPY %R0
+	%R0<def> = t2MOVi32imm <ga:@_xexit_cleanup>
+	%R0<def> = t2LDRi12 %R0<kill>, 0, pred:14, pred:%noreg; mem:LD4[@_xexit_cleanup]
+	t2CMPri %R0, 0, pred:14, pred:%noreg, %CPSR<imp-def>
+	t2Bcc <BB#2>, pred:0, pred:%CPSR<kill>
+	t2B <BB#1>, pred:14, pred:%noreg
+    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#1(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %3
+    Live Ins: %R0 %R4
+    Predecessors according to CFG: BB#0
+	tBLXr pred:14, pred:%noreg, %R0<kill>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %LR<imp-def,dead>, %SP<imp-use>, %SP<imp-def>
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %4
+    Live Ins: %R4
+    Predecessors according to CFG: BB#0 BB#1
+	%R0<def> = COPY %R4<kill>
+	tBL pred:14, pred:%noreg, <ga:@exit>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %LR<imp-def,dead>, %SP<imp-use>, %R0<imp-use>, %SP<imp-def>
+
+# End machine code for function xexit.
+
+# After Post-RA pseudo instruction expansion pass:
+# Machine code for function xexit: Post SSA
+Frame Objects:
+  fi#0: size=4, align=4, at location [SP-4]
+  fi#1: size=4, align=4, at location [SP-8]
+  fi#2: size=4, align=4, at location [SP-12]
+  fi#3: size=4, align=4, at location [SP-16]
+Function Live Ins: %R0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R4 %R6 %R7 %LR
+	%SP<def,tied1> = t2STMDB_UPD %SP<tied0>, pred:14, pred:%noreg, %R4<kill>, %R6<kill>, %R7<kill>, %LR<kill>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%R7<def> = t2ADDri %SP<kill>, 8, pred:14, pred:%noreg, opt:%noreg; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%R4<def> = tMOVr %R0, pred:14, pred:%noreg
+	%R0<def> = t2MOVi32imm <ga:@_xexit_cleanup>
+	%R0<def> = t2LDRi12 %R0<kill>, 0, pred:14, pred:%noreg; mem:LD4[@_xexit_cleanup]
+	t2CMPri %R0, 0, pred:14, pred:%noreg, %CPSR<imp-def>
+	t2Bcc <BB#2>, pred:0, pred:%CPSR<kill>
+	t2B <BB#1>, pred:14, pred:%noreg
+    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#1(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %3
+    Live Ins: %R0 %R4
+    Predecessors according to CFG: BB#0
+	tBLXr pred:14, pred:%noreg, %R0<kill>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %LR<imp-def,dead>, %SP<imp-use>, %SP<imp-def>
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %4
+    Live Ins: %R4
+    Predecessors according to CFG: BB#0 BB#1
+	%R0<def> = tMOVr %R4<kill>, pred:14, pred:%noreg
+	tBL pred:14, pred:%noreg, <ga:@exit>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %LR<imp-def,dead>, %SP<imp-use>, %R0<imp-use>, %SP<imp-def>
+
+# End machine code for function xexit.
+
+# After ARM load / store optimization pass:
+# Machine code for function xexit: Post SSA
+Frame Objects:
+  fi#0: size=4, align=4, at location [SP-4]
+  fi#1: size=4, align=4, at location [SP-8]
+  fi#2: size=4, align=4, at location [SP-12]
+  fi#3: size=4, align=4, at location [SP-16]
+Function Live Ins: %R0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R4 %R6 %R7 %LR
+	%SP<def,tied1> = t2STMDB_UPD %SP<tied0>, pred:14, pred:%noreg, %R4<kill>, %R6<kill>, %R7<kill>, %LR<kill>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%R7<def> = t2ADDri %SP<kill>, 8, pred:14, pred:%noreg, opt:%noreg; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%R4<def> = tMOVr %R0, pred:14, pred:%noreg
+	%R0<def> = t2MOVi32imm <ga:@_xexit_cleanup>
+	%R0<def> = t2LDRi12 %R0<kill>, 0, pred:14, pred:%noreg; mem:LD4[@_xexit_cleanup]
+	t2CMPri %R0, 0, pred:14, pred:%noreg, %CPSR<imp-def>
+	t2Bcc <BB#2>, pred:0, pred:%CPSR<kill>
+	t2B <BB#1>, pred:14, pred:%noreg
+    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#1(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %3
+    Live Ins: %R0 %R4
+    Predecessors according to CFG: BB#0
+	tBLXr pred:14, pred:%noreg, %R0<kill>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %LR<imp-def,dead>, %SP<imp-use>, %SP<imp-def>
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %4
+    Live Ins: %R4
+    Predecessors according to CFG: BB#0 BB#1
+	%R0<def> = tMOVr %R4<kill>, pred:14, pred:%noreg
+	tBL pred:14, pred:%noreg, <ga:@exit>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %LR<imp-def,dead>, %SP<imp-use>, %R0<imp-use>, %SP<imp-def>
+
+# End machine code for function xexit.
+
+# After Execution dependency fix:
+# Machine code for function xexit: Post SSA
+Frame Objects:
+  fi#0: size=4, align=4, at location [SP-4]
+  fi#1: size=4, align=4, at location [SP-8]
+  fi#2: size=4, align=4, at location [SP-12]
+  fi#3: size=4, align=4, at location [SP-16]
+Function Live Ins: %R0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R4 %R6 %R7 %LR
+	%SP<def,tied1> = t2STMDB_UPD %SP<tied0>, pred:14, pred:%noreg, %R4<kill>, %R6<kill>, %R7<kill>, %LR<kill>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%R7<def> = t2ADDri %SP<kill>, 8, pred:14, pred:%noreg, opt:%noreg; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%R4<def> = tMOVr %R0, pred:14, pred:%noreg
+	%R0<def> = t2MOVi32imm <ga:@_xexit_cleanup>
+	%R0<def> = t2LDRi12 %R0<kill>, 0, pred:14, pred:%noreg; mem:LD4[@_xexit_cleanup]
+	t2CMPri %R0, 0, pred:14, pred:%noreg, %CPSR<imp-def>
+	t2Bcc <BB#2>, pred:0, pred:%CPSR<kill>
+	t2B <BB#1>, pred:14, pred:%noreg
+    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#1(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %3
+    Live Ins: %R0 %R4
+    Predecessors according to CFG: BB#0
+	tBLXr pred:14, pred:%noreg, %R0<kill>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %LR<imp-def,dead>, %SP<imp-use>, %SP<imp-def>
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %4
+    Live Ins: %R4
+    Predecessors according to CFG: BB#0 BB#1
+	%R0<def> = tMOVr %R4<kill>, pred:14, pred:%noreg
+	tBL pred:14, pred:%noreg, <ga:@exit>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %LR<imp-def,dead>, %SP<imp-use>, %R0<imp-use>, %SP<imp-def>
+
+# End machine code for function xexit.
+
+# After ARM pseudo instruction expansion pass:
+# Machine code for function xexit: Post SSA
+Frame Objects:
+  fi#0: size=4, align=4, at location [SP-4]
+  fi#1: size=4, align=4, at location [SP-8]
+  fi#2: size=4, align=4, at location [SP-12]
+  fi#3: size=4, align=4, at location [SP-16]
+Function Live Ins: %R0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R4 %R6 %R7 %LR
+	%SP<def,tied1> = t2STMDB_UPD %SP<tied0>, pred:14, pred:%noreg, %R4<kill>, %R6<kill>, %R7<kill>, %LR<kill>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%R7<def> = t2ADDri %SP<kill>, 8, pred:14, pred:%noreg, opt:%noreg; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%R4<def> = tMOVr %R0, pred:14, pred:%noreg
+	%R0<def> = t2MOVi16 <ga:@_xexit_cleanup>[TF=1], pred:14, pred:%noreg
+	%R0<def,tied1> = t2MOVTi16 %R0<tied0>, <ga:@_xexit_cleanup>[TF=2], pred:14, pred:%noreg
+	%R0<def> = t2LDRi12 %R0<kill>, 0, pred:14, pred:%noreg; mem:LD4[@_xexit_cleanup]
+	t2CMPri %R0, 0, pred:14, pred:%noreg, %CPSR<imp-def>
+	t2Bcc <BB#2>, pred:0, pred:%CPSR<kill>
+	t2B <BB#1>, pred:14, pred:%noreg
+    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#1(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %3
+    Live Ins: %R0 %R4
+    Predecessors according to CFG: BB#0
+	tBLXr pred:14, pred:%noreg, %R0<kill>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %LR<imp-def,dead>, %SP<imp-use>, %SP<imp-def>
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %4
+    Live Ins: %R4
+    Predecessors according to CFG: BB#0 BB#1
+	%R0<def> = tMOVr %R4<kill>, pred:14, pred:%noreg
+	tBL pred:14, pred:%noreg, <ga:@exit>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %LR<imp-def,dead>, %SP<imp-use>, %R0<imp-use>, %SP<imp-def>
+
+# End machine code for function xexit.
+
+# After Thumb2 instruction size reduction pass:
+# Machine code for function xexit: Post SSA
+Frame Objects:
+  fi#0: size=4, align=4, at location [SP-4]
+  fi#1: size=4, align=4, at location [SP-8]
+  fi#2: size=4, align=4, at location [SP-12]
+  fi#3: size=4, align=4, at location [SP-16]
+Function Live Ins: %R0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R4 %R6 %R7 %LR
+	%SP<def,tied1> = t2STMDB_UPD %SP<tied0>, pred:14, pred:%noreg, %R4<kill>, %R6<kill>, %R7<kill>, %LR<kill>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%R7<def> = t2ADDri %SP<kill>, 8, pred:14, pred:%noreg, opt:%noreg; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%R4<def> = tMOVr %R0, pred:14, pred:%noreg
+	%R0<def> = t2MOVi16 <ga:@_xexit_cleanup>[TF=1], pred:14, pred:%noreg
+	%R0<def,tied1> = t2MOVTi16 %R0<tied0>, <ga:@_xexit_cleanup>[TF=2], pred:14, pred:%noreg
+	%R0<def> = t2LDRi12 %R0<kill>, 0, pred:14, pred:%noreg; mem:LD4[@_xexit_cleanup]
+	t2CMPri %R0, 0, pred:14, pred:%noreg, %CPSR<imp-def>
+	t2Bcc <BB#2>, pred:0, pred:%CPSR<kill>
+	t2B <BB#1>, pred:14, pred:%noreg
+    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#1(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %3
+    Live Ins: %R0 %R4
+    Predecessors according to CFG: BB#0
+	tBLXr pred:14, pred:%noreg, %R0<kill>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %LR<imp-def,dead>, %SP<imp-use>, %SP<imp-def>
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %4
+    Live Ins: %R4
+    Predecessors according to CFG: BB#0 BB#1
+	%R0<def> = tMOVr %R4<kill>, pred:14, pred:%noreg
+	tBL pred:14, pred:%noreg, <ga:@exit>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %LR<imp-def,dead>, %SP<imp-use>, %R0<imp-use>, %SP<imp-def>
+
+# End machine code for function xexit.
+
+# After Thumb IT blocks insertion pass:
+# Machine code for function xexit: Post SSA
+Frame Objects:
+  fi#0: size=4, align=4, at location [SP-4]
+  fi#1: size=4, align=4, at location [SP-8]
+  fi#2: size=4, align=4, at location [SP-12]
+  fi#3: size=4, align=4, at location [SP-16]
+Function Live Ins: %R0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R4 %R6 %R7 %LR
+	%SP<def,tied1> = t2STMDB_UPD %SP<tied0>, pred:14, pred:%noreg, %R4<kill>, %R6<kill>, %R7<kill>, %LR<kill>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%R7<def> = t2ADDri %SP<kill>, 8, pred:14, pred:%noreg, opt:%noreg; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%R4<def> = tMOVr %R0, pred:14, pred:%noreg
+	%R0<def> = t2MOVi16 <ga:@_xexit_cleanup>[TF=1], pred:14, pred:%noreg
+	%R0<def,tied1> = t2MOVTi16 %R0<tied0>, <ga:@_xexit_cleanup>[TF=2], pred:14, pred:%noreg
+	%R0<def> = t2LDRi12 %R0<kill>, 0, pred:14, pred:%noreg; mem:LD4[@_xexit_cleanup]
+	t2CMPri %R0, 0, pred:14, pred:%noreg, %CPSR<imp-def>
+	t2Bcc <BB#2>, pred:0, pred:%CPSR<kill>
+	t2B <BB#1>, pred:14, pred:%noreg
+    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#1(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %3
+    Live Ins: %R0 %R4
+    Predecessors according to CFG: BB#0
+	tBLXr pred:14, pred:%noreg, %R0<kill>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %LR<imp-def,dead>, %SP<imp-use>, %SP<imp-def>
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %4
+    Live Ins: %R4
+    Predecessors according to CFG: BB#0 BB#1
+	%R0<def> = tMOVr %R4<kill>, pred:14, pred:%noreg
+	tBL pred:14, pred:%noreg, <ga:@exit>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %LR<imp-def,dead>, %SP<imp-use>, %R0<imp-use>, %SP<imp-def>
+
+# End machine code for function xexit.
+
+# After Analyze Machine Code For Garbage Collection:
+# Machine code for function xexit: Post SSA
+Frame Objects:
+  fi#0: size=4, align=4, at location [SP-4]
+  fi#1: size=4, align=4, at location [SP-8]
+  fi#2: size=4, align=4, at location [SP-12]
+  fi#3: size=4, align=4, at location [SP-16]
+Function Live Ins: %R0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R4 %R6 %R7 %LR
+	%SP<def,tied1> = t2STMDB_UPD %SP<tied0>, pred:14, pred:%noreg, %R4<kill>, %R6<kill>, %R7<kill>, %LR<kill>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%R7<def> = t2ADDri %SP<kill>, 8, pred:14, pred:%noreg, opt:%noreg; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%R4<def> = tMOVr %R0, pred:14, pred:%noreg
+	%R0<def> = t2MOVi16 <ga:@_xexit_cleanup>[TF=1], pred:14, pred:%noreg
+	%R0<def,tied1> = t2MOVTi16 %R0<tied0>, <ga:@_xexit_cleanup>[TF=2], pred:14, pred:%noreg
+	%R0<def> = t2LDRi12 %R0<kill>, 0, pred:14, pred:%noreg; mem:LD4[@_xexit_cleanup]
+	t2CMPri %R0, 0, pred:14, pred:%noreg, %CPSR<imp-def>
+	t2Bcc <BB#2>, pred:0, pred:%CPSR<kill>
+	t2B <BB#1>, pred:14, pred:%noreg
+    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#1(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %3
+    Live Ins: %R0 %R4
+    Predecessors according to CFG: BB#0
+	tBLXr pred:14, pred:%noreg, %R0<kill>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %LR<imp-def,dead>, %SP<imp-use>, %SP<imp-def>
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %4
+    Live Ins: %R4
+    Predecessors according to CFG: BB#0 BB#1
+	%R0<def> = tMOVr %R4<kill>, pred:14, pred:%noreg
+	tBL pred:14, pred:%noreg, <ga:@exit>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %LR<imp-def,dead>, %SP<imp-use>, %R0<imp-use>, %SP<imp-def>
+
+# End machine code for function xexit.
+
+# After Thumb2 instruction size reduction pass:
+# Machine code for function xexit: Post SSA
+Frame Objects:
+  fi#0: size=4, align=4, at location [SP-4]
+  fi#1: size=4, align=4, at location [SP-8]
+  fi#2: size=4, align=4, at location [SP-12]
+  fi#3: size=4, align=4, at location [SP-16]
+Function Live Ins: %R0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R4 %R6 %R7 %LR
+	tPUSH pred:14, pred:%noreg, %R4<kill>, %R6<kill>, %R7<kill>, %LR<kill>, %SP<imp-def>, %SP<imp-use>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%R7<def> = tADDrSPi %SP<kill>, 2, pred:14, pred:%noreg; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%R4<def> = tMOVr %R0, pred:14, pred:%noreg
+	%R0<def> = t2MOVi16 <ga:@_xexit_cleanup>[TF=1], pred:14, pred:%noreg
+	%R0<def,tied1> = t2MOVTi16 %R0<tied0>, <ga:@_xexit_cleanup>[TF=2], pred:14, pred:%noreg
+	%R0<def> = tLDRi %R0<kill>, 0, pred:14, pred:%noreg; mem:LD4[@_xexit_cleanup]
+	tCMPi8 %R0, 0, pred:14, pred:%noreg, %CPSR<imp-def>
+	t2Bcc <BB#2>, pred:0, pred:%CPSR<kill>
+	t2B <BB#1>, pred:14, pred:%noreg
+    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#1(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %3
+    Live Ins: %R0 %R4
+    Predecessors according to CFG: BB#0
+	tBLXr pred:14, pred:%noreg, %R0<kill>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %LR<imp-def,dead>, %SP<imp-use>, %SP<imp-def>
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %4
+    Live Ins: %R4
+    Predecessors according to CFG: BB#0 BB#1
+	%R0<def> = tMOVr %R4<kill>, pred:14, pred:%noreg
+	tBL pred:14, pred:%noreg, <ga:@exit>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %LR<imp-def,dead>, %SP<imp-use>, %R0<imp-use>, %SP<imp-def>
+
+# End machine code for function xexit.
+
+# After Unpack machine instruction bundles:
+# Machine code for function xexit: Post SSA
+Frame Objects:
+  fi#0: size=4, align=4, at location [SP-4]
+  fi#1: size=4, align=4, at location [SP-8]
+  fi#2: size=4, align=4, at location [SP-12]
+  fi#3: size=4, align=4, at location [SP-16]
+Function Live Ins: %R0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R4 %R6 %R7 %LR
+	tPUSH pred:14, pred:%noreg, %R4<kill>, %R6<kill>, %R7<kill>, %LR<kill>, %SP<imp-def>, %SP<imp-use>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%R7<def> = tADDrSPi %SP<kill>, 2, pred:14, pred:%noreg; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%R4<def> = tMOVr %R0, pred:14, pred:%noreg
+	%R0<def> = t2MOVi16 <ga:@_xexit_cleanup>[TF=1], pred:14, pred:%noreg
+	%R0<def,tied1> = t2MOVTi16 %R0<tied0>, <ga:@_xexit_cleanup>[TF=2], pred:14, pred:%noreg
+	%R0<def> = tLDRi %R0<kill>, 0, pred:14, pred:%noreg; mem:LD4[@_xexit_cleanup]
+	tCMPi8 %R0, 0, pred:14, pred:%noreg, %CPSR<imp-def>
+	t2Bcc <BB#2>, pred:0, pred:%CPSR<kill>
+	t2B <BB#1>, pred:14, pred:%noreg
+    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#1(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %3
+    Live Ins: %R0 %R4
+    Predecessors according to CFG: BB#0
+	tBLXr pred:14, pred:%noreg, %R0<kill>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %LR<imp-def,dead>, %SP<imp-use>, %SP<imp-def>
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %4
+    Live Ins: %R4
+    Predecessors according to CFG: BB#0 BB#1
+	%R0<def> = tMOVr %R4<kill>, pred:14, pred:%noreg
+	tBL pred:14, pred:%noreg, <ga:@exit>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %LR<imp-def,dead>, %SP<imp-use>, %R0<imp-use>, %SP<imp-def>
+
+# End machine code for function xexit.
+
+# After optimise barriers pass:
+# Machine code for function xexit: Post SSA
+Frame Objects:
+  fi#0: size=4, align=4, at location [SP-4]
+  fi#1: size=4, align=4, at location [SP-8]
+  fi#2: size=4, align=4, at location [SP-12]
+  fi#3: size=4, align=4, at location [SP-16]
+Function Live Ins: %R0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R4 %R6 %R7 %LR
+	tPUSH pred:14, pred:%noreg, %R4<kill>, %R6<kill>, %R7<kill>, %LR<kill>, %SP<imp-def>, %SP<imp-use>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%R7<def> = tADDrSPi %SP<kill>, 2, pred:14, pred:%noreg; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%R4<def> = tMOVr %R0, pred:14, pred:%noreg
+	%R0<def> = t2MOVi16 <ga:@_xexit_cleanup>[TF=1], pred:14, pred:%noreg
+	%R0<def,tied1> = t2MOVTi16 %R0<tied0>, <ga:@_xexit_cleanup>[TF=2], pred:14, pred:%noreg
+	%R0<def> = tLDRi %R0<kill>, 0, pred:14, pred:%noreg; mem:LD4[@_xexit_cleanup]
+	tCMPi8 %R0, 0, pred:14, pred:%noreg, %CPSR<imp-def>
+	t2Bcc <BB#2>, pred:0, pred:%CPSR<kill>
+	t2B <BB#1>, pred:14, pred:%noreg
+    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#1(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %3
+    Live Ins: %R0 %R4
+    Predecessors according to CFG: BB#0
+	tBLXr pred:14, pred:%noreg, %R0<kill>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %LR<imp-def,dead>, %SP<imp-use>, %SP<imp-def>
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %4
+    Live Ins: %R4
+    Predecessors according to CFG: BB#0 BB#1
+	%R0<def> = tMOVr %R4<kill>, pred:14, pred:%noreg
+	tBL pred:14, pred:%noreg, <ga:@exit>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %LR<imp-def,dead>, %SP<imp-use>, %R0<imp-use>, %SP<imp-def>
+
+# End machine code for function xexit.
+
+# After ARM constant island placement and branch shortening pass:
+# Machine code for function xexit: Post SSA, not tracking liveness
+Frame Objects:
+  fi#0: size=4, align=4, at location [SP-4]
+  fi#1: size=4, align=4, at location [SP-8]
+  fi#2: size=4, align=4, at location [SP-12]
+  fi#3: size=4, align=4, at location [SP-16]
+Function Live Ins: %R0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R4 %R6 %R7 %LR
+	tPUSH pred:14, pred:%noreg, %R4<kill>, %R6<kill>, %R7<kill>, %LR<kill>, %SP<imp-def>, %SP<imp-use>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%R7<def> = tADDrSPi %SP<kill>, 2, pred:14, pred:%noreg; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%R4<def> = tMOVr %R0, pred:14, pred:%noreg
+	%R0<def> = t2MOVi16 <ga:@_xexit_cleanup>[TF=1], pred:14, pred:%noreg
+	%R0<def,tied1> = t2MOVTi16 %R0<tied0>, <ga:@_xexit_cleanup>[TF=2], pred:14, pred:%noreg
+	%R0<def> = tLDRi %R0<kill>, 0, pred:14, pred:%noreg; mem:LD4[@_xexit_cleanup]
+	tCMPi8 %R0, 0, pred:14, pred:%noreg, %CPSR<imp-def>
+	t2Bcc <BB#2>, pred:0, pred:%CPSR<kill>
+	t2B <BB#1>, pred:14, pred:%noreg
+    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#1(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %3
+    Live Ins: %R0 %R4
+    Predecessors according to CFG: BB#0
+	tBLXr pred:14, pred:%noreg, %R0<kill>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %LR<imp-def,dead>, %SP<imp-use>, %SP<imp-def>
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %4
+    Live Ins: %R4
+    Predecessors according to CFG: BB#0 BB#1
+	%R0<def> = tMOVr %R4<kill>, pred:14, pred:%noreg
+	tBL pred:14, pred:%noreg, <ga:@exit>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %LR<imp-def,dead>, %SP<imp-use>, %R0<imp-use>, %SP<imp-def>
+
+# End machine code for function xexit.
+
+# After Contiguously Lay Out Funclets:
+# Machine code for function xexit: Post SSA, not tracking liveness
+Frame Objects:
+  fi#0: size=4, align=4, at location [SP-4]
+  fi#1: size=4, align=4, at location [SP-8]
+  fi#2: size=4, align=4, at location [SP-12]
+  fi#3: size=4, align=4, at location [SP-16]
+Function Live Ins: %R0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R4 %R6 %R7 %LR
+	tPUSH pred:14, pred:%noreg, %R4<kill>, %R6<kill>, %R7<kill>, %LR<kill>, %SP<imp-def>, %SP<imp-use>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%R7<def> = tADDrSPi %SP<kill>, 2, pred:14, pred:%noreg; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%R4<def> = tMOVr %R0, pred:14, pred:%noreg
+	%R0<def> = t2MOVi16 <ga:@_xexit_cleanup>[TF=1], pred:14, pred:%noreg
+	%R0<def,tied1> = t2MOVTi16 %R0<tied0>, <ga:@_xexit_cleanup>[TF=2], pred:14, pred:%noreg
+	%R0<def> = tLDRi %R0<kill>, 0, pred:14, pred:%noreg; mem:LD4[@_xexit_cleanup]
+	tCMPi8 %R0, 0, pred:14, pred:%noreg, %CPSR<imp-def>
+	t2Bcc <BB#2>, pred:0, pred:%CPSR<kill>
+	t2B <BB#1>, pred:14, pred:%noreg
+    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#1(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %3
+    Live Ins: %R0 %R4
+    Predecessors according to CFG: BB#0
+	tBLXr pred:14, pred:%noreg, %R0<kill>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %LR<imp-def,dead>, %SP<imp-use>, %SP<imp-def>
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %4
+    Live Ins: %R4
+    Predecessors according to CFG: BB#0 BB#1
+	%R0<def> = tMOVr %R4<kill>, pred:14, pred:%noreg
+	tBL pred:14, pred:%noreg, <ga:@exit>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %LR<imp-def,dead>, %SP<imp-use>, %R0<imp-use>, %SP<imp-def>
+
+# End machine code for function xexit.
+
+# After StackMap Liveness Analysis:
+# Machine code for function xexit: Post SSA, not tracking liveness
+Frame Objects:
+  fi#0: size=4, align=4, at location [SP-4]
+  fi#1: size=4, align=4, at location [SP-8]
+  fi#2: size=4, align=4, at location [SP-12]
+  fi#3: size=4, align=4, at location [SP-16]
+Function Live Ins: %R0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R4 %R6 %R7 %LR
+	tPUSH pred:14, pred:%noreg, %R4<kill>, %R6<kill>, %R7<kill>, %LR<kill>, %SP<imp-def>, %SP<imp-use>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%R7<def> = tADDrSPi %SP<kill>, 2, pred:14, pred:%noreg; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%R4<def> = tMOVr %R0, pred:14, pred:%noreg
+	%R0<def> = t2MOVi16 <ga:@_xexit_cleanup>[TF=1], pred:14, pred:%noreg
+	%R0<def,tied1> = t2MOVTi16 %R0<tied0>, <ga:@_xexit_cleanup>[TF=2], pred:14, pred:%noreg
+	%R0<def> = tLDRi %R0<kill>, 0, pred:14, pred:%noreg; mem:LD4[@_xexit_cleanup]
+	tCMPi8 %R0, 0, pred:14, pred:%noreg, %CPSR<imp-def>
+	t2Bcc <BB#2>, pred:0, pred:%CPSR<kill>
+	t2B <BB#1>, pred:14, pred:%noreg
+    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#1(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %3
+    Live Ins: %R0 %R4
+    Predecessors according to CFG: BB#0
+	tBLXr pred:14, pred:%noreg, %R0<kill>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %LR<imp-def,dead>, %SP<imp-use>, %SP<imp-def>
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %4
+    Live Ins: %R4
+    Predecessors according to CFG: BB#0 BB#1
+	%R0<def> = tMOVr %R4<kill>, pred:14, pred:%noreg
+	tBL pred:14, pred:%noreg, <ga:@exit>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %LR<imp-def,dead>, %SP<imp-use>, %R0<imp-use>, %SP<imp-def>
+
+# End machine code for function xexit.
+
+# After Live DEBUG_VALUE analysis:
+# Machine code for function xexit: Post SSA, not tracking liveness
+Frame Objects:
+  fi#0: size=4, align=4, at location [SP-4]
+  fi#1: size=4, align=4, at location [SP-8]
+  fi#2: size=4, align=4, at location [SP-12]
+  fi#3: size=4, align=4, at location [SP-16]
+Function Live Ins: %R0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R4 %R6 %R7 %LR
+	tPUSH pred:14, pred:%noreg, %R4<kill>, %R6<kill>, %R7<kill>, %LR<kill>, %SP<imp-def>, %SP<imp-use>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%R7<def> = tADDrSPi %SP<kill>, 2, pred:14, pred:%noreg; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%R4<def> = tMOVr %R0, pred:14, pred:%noreg
+	%R0<def> = t2MOVi16 <ga:@_xexit_cleanup>[TF=1], pred:14, pred:%noreg
+	%R0<def,tied1> = t2MOVTi16 %R0<tied0>, <ga:@_xexit_cleanup>[TF=2], pred:14, pred:%noreg
+	%R0<def> = tLDRi %R0<kill>, 0, pred:14, pred:%noreg; mem:LD4[@_xexit_cleanup]
+	tCMPi8 %R0, 0, pred:14, pred:%noreg, %CPSR<imp-def>
+	t2Bcc <BB#2>, pred:0, pred:%CPSR<kill>
+	t2B <BB#1>, pred:14, pred:%noreg
+    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#1(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %3
+    Live Ins: %R0 %R4
+    Predecessors according to CFG: BB#0
+	tBLXr pred:14, pred:%noreg, %R0<kill>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %LR<imp-def,dead>, %SP<imp-use>, %SP<imp-def>
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %4
+    Live Ins: %R4
+    Predecessors according to CFG: BB#0 BB#1
+	%R0<def> = tMOVr %R4<kill>, pred:14, pred:%noreg
+	tBL pred:14, pred:%noreg, <ga:@exit>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %LR<imp-def,dead>, %SP<imp-use>, %R0<imp-use>, %SP<imp-def>
+
+# End machine code for function xexit.
+

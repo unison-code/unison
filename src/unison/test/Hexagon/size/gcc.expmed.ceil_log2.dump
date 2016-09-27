@@ -1,0 +1,732 @@
+# After Instruction Selection:
+# Machine code for function ceil_log2: SSA
+Function Live Ins: %R0 in %vreg0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%vreg0<def> = COPY %R0; IntRegs:%vreg0
+	%vreg1<def> = A2_addi %vreg0, -1; IntRegs:%vreg1,%vreg0
+	ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	%R0<def> = COPY %vreg1; IntRegs:%vreg1
+	J2_call <ga:@floor_log2_wide>, %D0<imp-def>, %R31<imp-def,dead>, %R0<imp-use>, ...
+	ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	%vreg2<def> = COPY %R0; IntRegs:%vreg2
+	%vreg3<def> = A2_addi %vreg2, 1; IntRegs:%vreg3,%vreg2
+	%R0<def> = COPY %vreg3; IntRegs:%vreg3
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function ceil_log2.
+
+# After Expand ISel Pseudo-instructions:
+# Machine code for function ceil_log2: SSA
+Function Live Ins: %R0 in %vreg0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%vreg0<def> = COPY %R0; IntRegs:%vreg0
+	%vreg1<def> = A2_addi %vreg0, -1; IntRegs:%vreg1,%vreg0
+	ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	%R0<def> = COPY %vreg1; IntRegs:%vreg1
+	J2_call <ga:@floor_log2_wide>, %D0<imp-def>, %R31<imp-def,dead>, %R0<imp-use>, ...
+	ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	%vreg2<def> = COPY %R0; IntRegs:%vreg2
+	%vreg3<def> = A2_addi %vreg2, 1; IntRegs:%vreg3,%vreg2
+	%R0<def> = COPY %vreg3; IntRegs:%vreg3
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function ceil_log2.
+
+# After Tail Duplication:
+# Machine code for function ceil_log2: SSA
+Function Live Ins: %R0 in %vreg0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%vreg0<def> = COPY %R0; IntRegs:%vreg0
+	%vreg1<def> = A2_addi %vreg0, -1; IntRegs:%vreg1,%vreg0
+	ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	%R0<def> = COPY %vreg1; IntRegs:%vreg1
+	J2_call <ga:@floor_log2_wide>, %D0<imp-def>, %R31<imp-def,dead>, %R0<imp-use>, ...
+	ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	%vreg2<def> = COPY %R0; IntRegs:%vreg2
+	%vreg3<def> = A2_addi %vreg2, 1; IntRegs:%vreg3,%vreg2
+	%R0<def> = COPY %vreg3; IntRegs:%vreg3
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function ceil_log2.
+
+# After Optimize machine instruction PHIs:
+# Machine code for function ceil_log2: SSA
+Function Live Ins: %R0 in %vreg0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%vreg0<def> = COPY %R0; IntRegs:%vreg0
+	%vreg1<def> = A2_addi %vreg0, -1; IntRegs:%vreg1,%vreg0
+	ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	%R0<def> = COPY %vreg1; IntRegs:%vreg1
+	J2_call <ga:@floor_log2_wide>, %D0<imp-def>, %R31<imp-def,dead>, %R0<imp-use>, ...
+	ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	%vreg2<def> = COPY %R0; IntRegs:%vreg2
+	%vreg3<def> = A2_addi %vreg2, 1; IntRegs:%vreg3,%vreg2
+	%R0<def> = COPY %vreg3; IntRegs:%vreg3
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function ceil_log2.
+
+# After Merge disjoint stack slots:
+# Machine code for function ceil_log2: SSA
+Function Live Ins: %R0 in %vreg0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%vreg0<def> = COPY %R0; IntRegs:%vreg0
+	%vreg1<def> = A2_addi %vreg0, -1; IntRegs:%vreg1,%vreg0
+	ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	%R0<def> = COPY %vreg1; IntRegs:%vreg1
+	J2_call <ga:@floor_log2_wide>, %D0<imp-def>, %R31<imp-def,dead>, %R0<imp-use>, ...
+	ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	%vreg2<def> = COPY %R0; IntRegs:%vreg2
+	%vreg3<def> = A2_addi %vreg2, 1; IntRegs:%vreg3,%vreg2
+	%R0<def> = COPY %vreg3; IntRegs:%vreg3
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function ceil_log2.
+
+# After Local Stack Slot Allocation:
+# Machine code for function ceil_log2: SSA
+Function Live Ins: %R0 in %vreg0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%vreg0<def> = COPY %R0; IntRegs:%vreg0
+	%vreg1<def> = A2_addi %vreg0, -1; IntRegs:%vreg1,%vreg0
+	ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	%R0<def> = COPY %vreg1; IntRegs:%vreg1
+	J2_call <ga:@floor_log2_wide>, %D0<imp-def>, %R31<imp-def,dead>, %R0<imp-use>, ...
+	ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	%vreg2<def> = COPY %R0; IntRegs:%vreg2
+	%vreg3<def> = A2_addi %vreg2, 1; IntRegs:%vreg3,%vreg2
+	%R0<def> = COPY %vreg3; IntRegs:%vreg3
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function ceil_log2.
+
+# After Remove dead machine instructions:
+# Machine code for function ceil_log2: SSA
+Function Live Ins: %R0 in %vreg0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%vreg0<def> = COPY %R0; IntRegs:%vreg0
+	%vreg1<def> = A2_addi %vreg0, -1; IntRegs:%vreg1,%vreg0
+	ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	%R0<def> = COPY %vreg1; IntRegs:%vreg1
+	J2_call <ga:@floor_log2_wide>, %D0<imp-def>, %R31<imp-def,dead>, %R0<imp-use>, ...
+	ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	%vreg2<def> = COPY %R0; IntRegs:%vreg2
+	%vreg3<def> = A2_addi %vreg2, 1; IntRegs:%vreg3,%vreg2
+	%R0<def> = COPY %vreg3; IntRegs:%vreg3
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function ceil_log2.
+
+# After Machine Loop Invariant Code Motion:
+# Machine code for function ceil_log2: SSA
+Function Live Ins: %R0 in %vreg0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%vreg0<def> = COPY %R0; IntRegs:%vreg0
+	%vreg1<def> = A2_addi %vreg0, -1; IntRegs:%vreg1,%vreg0
+	ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	%R0<def> = COPY %vreg1; IntRegs:%vreg1
+	J2_call <ga:@floor_log2_wide>, %D0<imp-def>, %R31<imp-def,dead>, %R0<imp-use>, ...
+	ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	%vreg2<def> = COPY %R0; IntRegs:%vreg2
+	%vreg3<def> = A2_addi %vreg2, 1; IntRegs:%vreg3,%vreg2
+	%R0<def> = COPY %vreg3; IntRegs:%vreg3
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function ceil_log2.
+
+# After Machine Common Subexpression Elimination:
+# Machine code for function ceil_log2: SSA
+Function Live Ins: %R0 in %vreg0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%vreg0<def> = COPY %R0; IntRegs:%vreg0
+	%vreg1<def> = A2_addi %vreg0, -1; IntRegs:%vreg1,%vreg0
+	ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	%R0<def> = COPY %vreg1; IntRegs:%vreg1
+	J2_call <ga:@floor_log2_wide>, %D0<imp-def>, %R31<imp-def,dead>, %R0<imp-use>, ...
+	ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	%vreg2<def> = COPY %R0; IntRegs:%vreg2
+	%vreg3<def> = A2_addi %vreg2, 1; IntRegs:%vreg3,%vreg2
+	%R0<def> = COPY %vreg3; IntRegs:%vreg3
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function ceil_log2.
+
+# After Machine code sinking:
+# Machine code for function ceil_log2: SSA
+Function Live Ins: %R0 in %vreg0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%vreg0<def> = COPY %R0; IntRegs:%vreg0
+	%vreg1<def> = A2_addi %vreg0, -1; IntRegs:%vreg1,%vreg0
+	ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	%R0<def> = COPY %vreg1; IntRegs:%vreg1
+	J2_call <ga:@floor_log2_wide>, %D0<imp-def>, %R31<imp-def,dead>, %R0<imp-use>, ...
+	ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	%vreg2<def> = COPY %R0; IntRegs:%vreg2
+	%vreg3<def> = A2_addi %vreg2, 1; IntRegs:%vreg3,%vreg2
+	%R0<def> = COPY %vreg3; IntRegs:%vreg3
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function ceil_log2.
+
+# After Peephole Optimizations:
+# Machine code for function ceil_log2: SSA
+Function Live Ins: %R0 in %vreg0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%vreg0<def> = COPY %R0; IntRegs:%vreg0
+	%vreg1<def> = A2_addi %vreg0, -1; IntRegs:%vreg1,%vreg0
+	ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	%R0<def> = COPY %vreg1; IntRegs:%vreg1
+	J2_call <ga:@floor_log2_wide>, %D0<imp-def>, %R31<imp-def,dead>, %R0<imp-use>, ...
+	ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	%vreg2<def> = COPY %R0; IntRegs:%vreg2
+	%vreg3<def> = A2_addi %vreg2, 1; IntRegs:%vreg3,%vreg2
+	%R0<def> = COPY %vreg3; IntRegs:%vreg3
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function ceil_log2.
+
+# After Remove dead machine instructions:
+# Machine code for function ceil_log2: SSA
+Function Live Ins: %R0 in %vreg0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%vreg0<def> = COPY %R0; IntRegs:%vreg0
+	%vreg1<def> = A2_addi %vreg0, -1; IntRegs:%vreg1,%vreg0
+	ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	%R0<def> = COPY %vreg1; IntRegs:%vreg1
+	J2_call <ga:@floor_log2_wide>, %D0<imp-def>, %R31<imp-def,dead>, %R0<imp-use>, ...
+	ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	%vreg2<def> = COPY %R0; IntRegs:%vreg2
+	%vreg3<def> = A2_addi %vreg2, 1; IntRegs:%vreg3,%vreg2
+	%R0<def> = COPY %vreg3; IntRegs:%vreg3
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function ceil_log2.
+
+# After Hexagon Store Widening:
+# Machine code for function ceil_log2: SSA
+Function Live Ins: %R0 in %vreg0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%vreg0<def> = COPY %R0; IntRegs:%vreg0
+	%vreg1<def> = A2_addi %vreg0, -1; IntRegs:%vreg1,%vreg0
+	ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	%R0<def> = COPY %vreg1; IntRegs:%vreg1
+	J2_call <ga:@floor_log2_wide>, %D0<imp-def>, %R31<imp-def,dead>, %R0<imp-use>, ...
+	ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	%vreg2<def> = COPY %R0; IntRegs:%vreg2
+	%vreg3<def> = A2_addi %vreg2, 1; IntRegs:%vreg3,%vreg2
+	%R0<def> = COPY %vreg3; IntRegs:%vreg3
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function ceil_log2.
+
+# After Hexagon Hardware Loops:
+# Machine code for function ceil_log2: SSA
+Function Live Ins: %R0 in %vreg0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%vreg0<def> = COPY %R0; IntRegs:%vreg0
+	%vreg1<def> = A2_addi %vreg0, -1; IntRegs:%vreg1,%vreg0
+	ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	%R0<def> = COPY %vreg1; IntRegs:%vreg1
+	J2_call <ga:@floor_log2_wide>, %D0<imp-def>, %R31<imp-def,dead>, %R0<imp-use>, ...
+	ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	%vreg2<def> = COPY %R0; IntRegs:%vreg2
+	%vreg3<def> = A2_addi %vreg2, 1; IntRegs:%vreg3,%vreg2
+	%R0<def> = COPY %vreg3; IntRegs:%vreg3
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function ceil_log2.
+
+# After Process Implicit Definitions:
+# Machine code for function ceil_log2: SSA
+Function Live Ins: %R0 in %vreg0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%vreg0<def> = COPY %R0; IntRegs:%vreg0
+	%vreg1<def> = A2_addi %vreg0, -1; IntRegs:%vreg1,%vreg0
+	ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	%R0<def> = COPY %vreg1; IntRegs:%vreg1
+	J2_call <ga:@floor_log2_wide>, %D0<imp-def>, %R31<imp-def,dead>, %R0<imp-use>, ...
+	ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	%vreg2<def> = COPY %R0; IntRegs:%vreg2
+	%vreg3<def> = A2_addi %vreg2, 1; IntRegs:%vreg3,%vreg2
+	%R0<def> = COPY %vreg3; IntRegs:%vreg3
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function ceil_log2.
+
+# After Live Variable Analysis:
+# Machine code for function ceil_log2: SSA
+Function Live Ins: %R0 in %vreg0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%vreg0<def> = COPY %R0<kill>; IntRegs:%vreg0
+	%vreg1<def> = A2_addi %vreg0<kill>, -1; IntRegs:%vreg1,%vreg0
+	ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	%R0<def> = COPY %vreg1<kill>; IntRegs:%vreg1
+	J2_call <ga:@floor_log2_wide>, %D0<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use,kill>, %R0<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	%vreg2<def> = COPY %R0<kill>; IntRegs:%vreg2
+	%vreg3<def> = A2_addi %vreg2<kill>, 1; IntRegs:%vreg3,%vreg2
+	%R0<def> = COPY %vreg3<kill>; IntRegs:%vreg3
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use,kill>
+
+# End machine code for function ceil_log2.
+
+# After Machine Natural Loop Construction:
+# Machine code for function ceil_log2: SSA
+Function Live Ins: %R0 in %vreg0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%vreg0<def> = COPY %R0<kill>; IntRegs:%vreg0
+	%vreg1<def> = A2_addi %vreg0<kill>, -1; IntRegs:%vreg1,%vreg0
+	ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	%R0<def> = COPY %vreg1<kill>; IntRegs:%vreg1
+	J2_call <ga:@floor_log2_wide>, %D0<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use,kill>, %R0<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	%vreg2<def> = COPY %R0<kill>; IntRegs:%vreg2
+	%vreg3<def> = A2_addi %vreg2<kill>, 1; IntRegs:%vreg3,%vreg2
+	%R0<def> = COPY %vreg3<kill>; IntRegs:%vreg3
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use,kill>
+
+# End machine code for function ceil_log2.
+
+# After Eliminate PHI nodes for register allocation:
+# Machine code for function ceil_log2: Post SSA
+Function Live Ins: %R0 in %vreg0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%vreg0<def> = COPY %R0<kill>; IntRegs:%vreg0
+	%vreg1<def> = A2_addi %vreg0<kill>, -1; IntRegs:%vreg1,%vreg0
+	ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	%R0<def> = COPY %vreg1<kill>; IntRegs:%vreg1
+	J2_call <ga:@floor_log2_wide>, %D0<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use,kill>, %R0<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	%vreg2<def> = COPY %R0<kill>; IntRegs:%vreg2
+	%vreg3<def> = A2_addi %vreg2<kill>, 1; IntRegs:%vreg3,%vreg2
+	%R0<def> = COPY %vreg3<kill>; IntRegs:%vreg3
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use,kill>
+
+# End machine code for function ceil_log2.
+
+# After Two-Address instruction pass:
+# Machine code for function ceil_log2: Post SSA
+Function Live Ins: %R0 in %vreg0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%vreg0<def> = COPY %R0<kill>; IntRegs:%vreg0
+	%vreg1<def> = A2_addi %vreg0<kill>, -1; IntRegs:%vreg1,%vreg0
+	ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	%R0<def> = COPY %vreg1<kill>; IntRegs:%vreg1
+	J2_call <ga:@floor_log2_wide>, %D0<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use,kill>, %R0<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	%vreg2<def> = COPY %R0<kill>; IntRegs:%vreg2
+	%vreg3<def> = A2_addi %vreg2<kill>, 1; IntRegs:%vreg3,%vreg2
+	%R0<def> = COPY %vreg3<kill>; IntRegs:%vreg3
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use,kill>
+
+# End machine code for function ceil_log2.
+
+# After Simple Register Coalescing:
+# Machine code for function ceil_log2: Post SSA
+Function Live Ins: %R0 in %vreg0
+
+0B	BB#0: derived from LLVM BB %0
+	    Live Ins: %R0
+16B		%vreg0<def> = COPY %R0; IntRegs:%vreg0
+32B		%vreg1<def> = A2_addi %vreg0, -1; IntRegs:%vreg1,%vreg0
+48B		ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+64B		%R0<def> = COPY %vreg1; IntRegs:%vreg1
+80B		J2_call <ga:@floor_log2_wide>, %D0<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use>, %R0<imp-def>, ...
+96B		ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+112B		%vreg2<def> = COPY %R0; IntRegs:%vreg2
+128B		%vreg3<def> = A2_addi %vreg2, 1; IntRegs:%vreg3,%vreg2
+144B		%R0<def> = COPY %vreg3; IntRegs:%vreg3
+160B		JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function ceil_log2.
+
+# After Hexagon Expand Condsets:
+# Machine code for function ceil_log2: Post SSA
+Function Live Ins: %R0 in %vreg0
+
+0B	BB#0: derived from LLVM BB %0
+	    Live Ins: %R0
+16B		%vreg0<def> = COPY %R0; IntRegs:%vreg0
+32B		%vreg1<def> = A2_addi %vreg0, -1; IntRegs:%vreg1,%vreg0
+48B		ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+64B		%R0<def> = COPY %vreg1; IntRegs:%vreg1
+80B		J2_call <ga:@floor_log2_wide>, %D0<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use>, %R0<imp-def>, ...
+96B		ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+112B		%vreg2<def> = COPY %R0; IntRegs:%vreg2
+128B		%vreg3<def> = A2_addi %vreg2, 1; IntRegs:%vreg3,%vreg2
+144B		%R0<def> = COPY %vreg3; IntRegs:%vreg3
+160B		JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function ceil_log2.
+
+# After Machine Instruction Scheduler:
+# Machine code for function ceil_log2: Post SSA
+Function Live Ins: %R0 in %vreg0
+
+0B	BB#0: derived from LLVM BB %0
+	    Live Ins: %R0
+16B		%vreg0<def> = COPY %R0; IntRegs:%vreg0
+32B		%vreg1<def> = A2_addi %vreg0, -1; IntRegs:%vreg1,%vreg0
+48B		ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+64B		%R0<def> = COPY %vreg1; IntRegs:%vreg1
+80B		J2_call <ga:@floor_log2_wide>, %D0<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use>, %R0<imp-def>, ...
+96B		ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+112B		%vreg2<def> = COPY %R0; IntRegs:%vreg2
+128B		%vreg3<def> = A2_addi %vreg2, 1; IntRegs:%vreg3,%vreg2
+144B		%R0<def> = COPY %vreg3; IntRegs:%vreg3
+160B		JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function ceil_log2.
+
+# After Greedy Register Allocator:
+# Machine code for function ceil_log2: Post SSA
+Function Live Ins: %R0 in %vreg0
+
+0B	BB#0: derived from LLVM BB %0
+	    Live Ins: %R0
+16B		%vreg0<def> = COPY %R0; IntRegs:%vreg0
+32B		%vreg1<def> = A2_addi %vreg0, -1; IntRegs:%vreg1,%vreg0
+48B		ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+64B		%R0<def> = COPY %vreg1; IntRegs:%vreg1
+80B		J2_call <ga:@floor_log2_wide>, %D0<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use>, %R0<imp-def>, ...
+96B		ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+112B		%vreg2<def> = COPY %R0; IntRegs:%vreg2
+128B		%vreg3<def> = A2_addi %vreg2, 1; IntRegs:%vreg3,%vreg2
+144B		%R0<def> = COPY %vreg3; IntRegs:%vreg3
+160B		JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function ceil_log2.
+
+# After Virtual Register Rewriter:
+# Machine code for function ceil_log2: Post SSA
+Function Live Ins: %R0
+
+0B	BB#0: derived from LLVM BB %0
+	    Live Ins: %R0
+32B		%R0<def> = A2_addi %R0<kill>, -1
+48B		ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+80B		J2_call <ga:@floor_log2_wide>, %D0<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use>, %R0<imp-def>, ...
+96B		ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+128B		%R0<def> = A2_addi %R0<kill>, 1
+160B		JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function ceil_log2.
+
+# After Stack Slot Coloring:
+# Machine code for function ceil_log2: Post SSA
+Function Live Ins: %R0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%R0<def> = A2_addi %R0<kill>, -1
+	ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	J2_call <ga:@floor_log2_wide>, %D0<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use>, %R0<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	%R0<def> = A2_addi %R0<kill>, 1
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function ceil_log2.
+
+# After Machine Loop Invariant Code Motion:
+# Machine code for function ceil_log2: Post SSA
+Function Live Ins: %R0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%R0<def> = A2_addi %R0<kill>, -1
+	ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	J2_call <ga:@floor_log2_wide>, %D0<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use>, %R0<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	%R0<def> = A2_addi %R0<kill>, 1
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function ceil_log2.
+
+# After Hexagon RDF optimizations:
+# Machine code for function ceil_log2: Post SSA
+Function Live Ins: %R0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%R0<def> = A2_addi %R0<kill>, -1
+	ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	J2_call <ga:@floor_log2_wide>, %D0<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use>, %R0<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	%R0<def> = A2_addi %R0<kill>, 1
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function ceil_log2.
+
+# After Shrink Wrapping analysis:
+# Machine code for function ceil_log2: Post SSA
+Function Live Ins: %R0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%R0<def> = A2_addi %R0<kill>, -1
+	ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	J2_call <ga:@floor_log2_wide>, %D0<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use>, %R0<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	%R0<def> = A2_addi %R0<kill>, 1
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function ceil_log2.
+
+# After Prologue/Epilogue Insertion & Frame Finalization:
+# Machine code for function ceil_log2: Post SSA
+Function Live Ins: %R0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	S2_allocframe 0, %R29<imp-def>, %R30<imp-def>, %R29<imp-use>, %R31<imp-use>, %R30<imp-use>; mem:ST4[<unknown>]
+	%R0<def> = A2_addi %R0<kill>, -1
+	J2_call <ga:@floor_log2_wide>, %D0<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use>, %R0<imp-def>, ...
+	%R0<def> = A2_addi %R0<kill>, 1
+	L4_return %R29<imp-def>, %R30<imp-def>, %R31<imp-def>, %PC<imp-def>, %R30<imp-use>, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function ceil_log2.
+
+# After Machine Copy Propagation Pass:
+# Machine code for function ceil_log2: Post SSA
+Function Live Ins: %R0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	S2_allocframe 0, %R29<imp-def>, %R30<imp-def>, %R29<imp-use>, %R31<imp-use>, %R30<imp-use>; mem:ST4[<unknown>]
+	%R0<def> = A2_addi %R0<kill>, -1
+	J2_call <ga:@floor_log2_wide>, %D0<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use>, %R0<imp-def>, ...
+	%R0<def> = A2_addi %R0<kill>, 1
+	L4_return %R29<imp-def>, %R30<imp-def>, %R31<imp-def>, %PC<imp-def>, %R30<imp-use>, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function ceil_log2.
+
+# After Post-RA pseudo instruction expansion pass:
+# Machine code for function ceil_log2: Post SSA
+Function Live Ins: %R0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	S2_allocframe 0, %R29<imp-def>, %R30<imp-def>, %R29<imp-use>, %R31<imp-use>, %R30<imp-use>; mem:ST4[<unknown>]
+	%R0<def> = A2_addi %R0<kill>, -1
+	J2_call <ga:@floor_log2_wide>, %D0<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use>, %R0<imp-def>, ...
+	%R0<def> = A2_addi %R0<kill>, 1
+	L4_return %R29<imp-def>, %R30<imp-def>, %R31<imp-def>, %PC<imp-def>, %R30<imp-use>, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function ceil_log2.
+
+# After Hexagon Copy-To-Combine Pass:
+# Machine code for function ceil_log2: Post SSA
+Function Live Ins: %R0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	S2_allocframe 0, %R29<imp-def>, %R30<imp-def>, %R29<imp-use>, %R31<imp-use>, %R30<imp-use>; mem:ST4[<unknown>]
+	%R0<def> = A2_addi %R0<kill>, -1
+	J2_call <ga:@floor_log2_wide>, %D0<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use>, %R0<imp-def>, ...
+	%R0<def> = A2_addi %R0<kill>, 1
+	L4_return %R29<imp-def>, %R30<imp-def>, %R31<imp-def>, %PC<imp-def>, %R30<imp-use>, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function ceil_log2.
+
+# After Hexagon Split Const32s and Const64s:
+# Machine code for function ceil_log2: Post SSA
+Function Live Ins: %R0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	S2_allocframe 0, %R29<imp-def>, %R30<imp-def>, %R29<imp-use>, %R31<imp-use>, %R30<imp-use>; mem:ST4[<unknown>]
+	%R0<def> = A2_addi %R0<kill>, -1
+	J2_call <ga:@floor_log2_wide>, %D0<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use>, %R0<imp-def>, ...
+	%R0<def> = A2_addi %R0<kill>, 1
+	L4_return %R29<imp-def>, %R30<imp-def>, %R31<imp-def>, %PC<imp-def>, %R30<imp-use>, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function ceil_log2.
+
+# After Analyze Machine Code For Garbage Collection:
+# Machine code for function ceil_log2: Post SSA
+Function Live Ins: %R0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	S2_allocframe 0, %R29<imp-def>, %R30<imp-def>, %R29<imp-use>, %R31<imp-use>, %R30<imp-use>; mem:ST4[<unknown>]
+	%R0<def> = A2_addi %R0<kill>, -1
+	J2_call <ga:@floor_log2_wide>, %D0<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use>, %R0<imp-def>, ...
+	%R0<def> = A2_addi %R0<kill>, 1
+	L4_return %R29<imp-def>, %R30<imp-def>, %R31<imp-def>, %PC<imp-def>, %R30<imp-use>, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function ceil_log2.
+
+# After Hexagon NewValueJump:
+# Machine code for function ceil_log2: Post SSA
+Function Live Ins: %R0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	S2_allocframe 0, %R29<imp-def>, %R30<imp-def>, %R29<imp-use>, %R31<imp-use>, %R30<imp-use>; mem:ST4[<unknown>]
+	%R0<def> = A2_addi %R0<kill>, -1
+	J2_call <ga:@floor_log2_wide>, %D0<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use>, %R0<imp-def>, ...
+	%R0<def> = A2_addi %R0<kill>, 1
+	L4_return %R29<imp-def>, %R30<imp-def>, %R31<imp-def>, %PC<imp-def>, %R30<imp-use>, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function ceil_log2.
+
+# After Hexagon Expand Predicate Spill Code:
+# Machine code for function ceil_log2: Post SSA
+Function Live Ins: %R0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	S2_allocframe 0, %R29<imp-def>, %R30<imp-def>, %R29<imp-use>, %R31<imp-use>, %R30<imp-use>; mem:ST4[<unknown>]
+	%R0<def> = A2_addi %R0<kill>, -1
+	J2_call <ga:@floor_log2_wide>, %D0<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use>, %R0<imp-def>, ...
+	%R0<def> = A2_addi %R0<kill>, 1
+	L4_return %R29<imp-def>, %R30<imp-def>, %R31<imp-def>, %PC<imp-def>, %R30<imp-use>, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function ceil_log2.
+
+# After Hexagon Hardware Loop Fixup:
+# Machine code for function ceil_log2: Post SSA
+Function Live Ins: %R0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	S2_allocframe 0, %R29<imp-def>, %R30<imp-def>, %R29<imp-use>, %R31<imp-use>, %R30<imp-use>; mem:ST4[<unknown>]
+	%R0<def> = A2_addi %R0<kill>, -1
+	J2_call <ga:@floor_log2_wide>, %D0<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use>, %R0<imp-def>, ...
+	%R0<def> = A2_addi %R0<kill>, 1
+	L4_return %R29<imp-def>, %R30<imp-def>, %R31<imp-def>, %PC<imp-def>, %R30<imp-use>, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function ceil_log2.
+
+# After Hexagon generate mux instructions:
+# Machine code for function ceil_log2: Post SSA
+Function Live Ins: %R0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	S2_allocframe 0, %R29<imp-def>, %R30<imp-def>, %R29<imp-use>, %R31<imp-use>, %R30<imp-use>; mem:ST4[<unknown>]
+	%R0<def> = A2_addi %R0<kill>, -1
+	J2_call <ga:@floor_log2_wide>, %D0<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use>, %R0<imp-def>, ...
+	%R0<def> = A2_addi %R0<kill>, 1
+	L4_return %R29<imp-def>, %R30<imp-def>, %R31<imp-def>, %PC<imp-def>, %R30<imp-use>, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function ceil_log2.
+
+# After Hexagon Packetizer:
+# Machine code for function ceil_log2: Post SSA
+Function Live Ins: %R0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	BUNDLE %R29<imp-def>, %R30<imp-def>, %R0<imp-def>, %D0<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>, %R31<imp-use>, %R30<imp-use>, %R0<imp-use,kill>, ...
+	  * S2_allocframe 0, %R29<imp-def>, %R30<imp-def>, %R29<imp-use>, %R31<imp-use>, %R30<imp-use>; mem:ST4[<unknown>]
+	  * %R0<def> = A2_addi %R0<kill>, -1
+	  * J2_call <ga:@floor_log2_wide>, %D0<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use,internal>, %R0<imp-def>, ...
+	BUNDLE %R0<imp-def>, %R29<imp-def>, %R30<imp-def>, %R31<imp-def>, %PC<imp-def>, %R0<imp-use,kill>, %R30<imp-use>
+	  * %R0<def> = A2_addi %R0<kill>, 1
+	  * L4_return %R29<imp-def>, %R30<imp-def>, %R31<imp-def>, %PC<imp-def>, %R30<imp-use>, %PC<imp-def,dead>, %R0<imp-use,internal>
+
+# End machine code for function ceil_log2.
+
+# After Hexagon call frame information:
+# Machine code for function ceil_log2: Post SSA
+Function Live Ins: %R0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	BUNDLE %R29<imp-def>, %R30<imp-def>, %R0<imp-def>, %D0<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>, %R31<imp-use>, %R30<imp-use>, %R0<imp-use,kill>, ...
+	  * S2_allocframe 0, %R29<imp-def>, %R30<imp-def>, %R29<imp-use>, %R31<imp-use>, %R30<imp-use>; mem:ST4[<unknown>]
+	  * %R0<def> = A2_addi %R0<kill>, -1
+	  * J2_call <ga:@floor_log2_wide>, %D0<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use,internal>, %R0<imp-def>, ...
+	BUNDLE %R0<imp-def>, %R29<imp-def>, %R30<imp-def>, %R31<imp-def>, %PC<imp-def>, %R0<imp-use,kill>, %R30<imp-use>
+	  * %R0<def> = A2_addi %R0<kill>, 1
+	  * L4_return %R29<imp-def>, %R30<imp-def>, %R31<imp-def>, %PC<imp-def>, %R30<imp-use>, %PC<imp-def,dead>, %R0<imp-use,internal>
+
+# End machine code for function ceil_log2.
+
+# After Contiguously Lay Out Funclets:
+# Machine code for function ceil_log2: Post SSA
+Function Live Ins: %R0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	BUNDLE %R29<imp-def>, %R30<imp-def>, %R0<imp-def>, %D0<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>, %R31<imp-use>, %R30<imp-use>, %R0<imp-use,kill>, ...
+	  * S2_allocframe 0, %R29<imp-def>, %R30<imp-def>, %R29<imp-use>, %R31<imp-use>, %R30<imp-use>; mem:ST4[<unknown>]
+	  * %R0<def> = A2_addi %R0<kill>, -1
+	  * J2_call <ga:@floor_log2_wide>, %D0<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use,internal>, %R0<imp-def>, ...
+	BUNDLE %R0<imp-def>, %R29<imp-def>, %R30<imp-def>, %R31<imp-def>, %PC<imp-def>, %R0<imp-use,kill>, %R30<imp-use>
+	  * %R0<def> = A2_addi %R0<kill>, 1
+	  * L4_return %R29<imp-def>, %R30<imp-def>, %R31<imp-def>, %PC<imp-def>, %R30<imp-use>, %PC<imp-def,dead>, %R0<imp-use,internal>
+
+# End machine code for function ceil_log2.
+
+# After StackMap Liveness Analysis:
+# Machine code for function ceil_log2: Post SSA
+Function Live Ins: %R0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	BUNDLE %R29<imp-def>, %R30<imp-def>, %R0<imp-def>, %D0<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>, %R31<imp-use>, %R30<imp-use>, %R0<imp-use,kill>, ...
+	  * S2_allocframe 0, %R29<imp-def>, %R30<imp-def>, %R29<imp-use>, %R31<imp-use>, %R30<imp-use>; mem:ST4[<unknown>]
+	  * %R0<def> = A2_addi %R0<kill>, -1
+	  * J2_call <ga:@floor_log2_wide>, %D0<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use,internal>, %R0<imp-def>, ...
+	BUNDLE %R0<imp-def>, %R29<imp-def>, %R30<imp-def>, %R31<imp-def>, %PC<imp-def>, %R0<imp-use,kill>, %R30<imp-use>
+	  * %R0<def> = A2_addi %R0<kill>, 1
+	  * L4_return %R29<imp-def>, %R30<imp-def>, %R31<imp-def>, %PC<imp-def>, %R30<imp-use>, %PC<imp-def,dead>, %R0<imp-use,internal>
+
+# End machine code for function ceil_log2.
+
+# After Live DEBUG_VALUE analysis:
+# Machine code for function ceil_log2: Post SSA
+Function Live Ins: %R0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	BUNDLE %R29<imp-def>, %R30<imp-def>, %R0<imp-def>, %D0<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>, %R31<imp-use>, %R30<imp-use>, %R0<imp-use,kill>, ...
+	  * S2_allocframe 0, %R29<imp-def>, %R30<imp-def>, %R29<imp-use>, %R31<imp-use>, %R30<imp-use>; mem:ST4[<unknown>]
+	  * %R0<def> = A2_addi %R0<kill>, -1
+	  * J2_call <ga:@floor_log2_wide>, %D0<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use,internal>, %R0<imp-def>, ...
+	BUNDLE %R0<imp-def>, %R29<imp-def>, %R30<imp-def>, %R31<imp-def>, %PC<imp-def>, %R0<imp-use,kill>, %R30<imp-use>
+	  * %R0<def> = A2_addi %R0<kill>, 1
+	  * L4_return %R29<imp-def>, %R30<imp-def>, %R31<imp-def>, %PC<imp-def>, %R30<imp-use>, %PC<imp-def,dead>, %R0<imp-use,internal>
+
+# End machine code for function ceil_log2.
+

@@ -1,0 +1,1555 @@
+# After Instruction Selection:
+# Machine code for function autohelperbarrierspat145: SSA
+Function Live Ins: %R0 in %vreg0, %R1 in %vreg1, %R2 in %vreg2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R2
+	%vreg2<def> = COPY %R2; GPR:%vreg2
+	%vreg1<def> = COPY %R1; rGPR:%vreg1
+	%vreg0<def> = COPY %R0; rGPR:%vreg0
+	%vreg4<def> = t2MOVi32imm <ga:@transformation>; rGPR:%vreg4
+	%vreg5<def> = t2ADDrs %vreg4<kill>, %vreg0, 18, pred:14, pred:%noreg, opt:%noreg; GPRnopc:%vreg5 rGPR:%vreg4,%vreg0
+	%vreg6<def> = t2MOVi16 19552, pred:14, pred:%noreg; rGPR:%vreg6
+	%vreg7<def> = t2LDRs %vreg5, %vreg6<kill>, 0, pred:14, pred:%noreg; mem:LD4[%1] GPRnopc:%vreg7,%vreg5 rGPR:%vreg6
+	%vreg8<def> = t2MOVi 20736, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg8
+	%vreg9<def> = t2LDRs %vreg5, %vreg8<kill>, 0, pred:14, pred:%noreg; mem:LD4[%4] GPRnopc:%vreg9,%vreg5 rGPR:%vreg8
+	%vreg10<def> = t2ADDrr %vreg7<kill>, %vreg1, pred:14, pred:%noreg, opt:%noreg; GPRnopc:%vreg10,%vreg7 rGPR:%vreg1
+	ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%R0<def> = COPY %vreg10; GPRnopc:%vreg10
+	%R1<def> = COPY %vreg2; GPR:%vreg2
+	tBL pred:14, pred:%noreg, <ga:@influence_mark_non_territory>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg11<def> = t2ADDrr %vreg9<kill>, %vreg1, pred:14, pred:%noreg, opt:%noreg; GPRnopc:%vreg11,%vreg9 rGPR:%vreg1
+	ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%R0<def> = COPY %vreg11; GPRnopc:%vreg11
+	%R1<def> = COPY %vreg2; GPR:%vreg2
+	tBL pred:14, pred:%noreg, <ga:@influence_mark_non_territory>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg12<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg12
+	%R0<def> = COPY %vreg12; rGPR:%vreg12
+	tBX_RET pred:14, pred:%noreg, %R0<imp-use>
+
+# End machine code for function autohelperbarrierspat145.
+
+# After Expand ISel Pseudo-instructions:
+# Machine code for function autohelperbarrierspat145: SSA
+Function Live Ins: %R0 in %vreg0, %R1 in %vreg1, %R2 in %vreg2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R2
+	%vreg2<def> = COPY %R2; GPR:%vreg2
+	%vreg1<def> = COPY %R1; rGPR:%vreg1
+	%vreg0<def> = COPY %R0; rGPR:%vreg0
+	%vreg4<def> = t2MOVi32imm <ga:@transformation>; rGPR:%vreg4
+	%vreg5<def> = t2ADDrs %vreg4<kill>, %vreg0, 18, pred:14, pred:%noreg, opt:%noreg; GPRnopc:%vreg5 rGPR:%vreg4,%vreg0
+	%vreg6<def> = t2MOVi16 19552, pred:14, pred:%noreg; rGPR:%vreg6
+	%vreg7<def> = t2LDRs %vreg5, %vreg6<kill>, 0, pred:14, pred:%noreg; mem:LD4[%1] GPRnopc:%vreg7,%vreg5 rGPR:%vreg6
+	%vreg8<def> = t2MOVi 20736, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg8
+	%vreg9<def> = t2LDRs %vreg5, %vreg8<kill>, 0, pred:14, pred:%noreg; mem:LD4[%4] GPRnopc:%vreg9,%vreg5 rGPR:%vreg8
+	%vreg10<def> = t2ADDrr %vreg7<kill>, %vreg1, pred:14, pred:%noreg, opt:%noreg; GPRnopc:%vreg10,%vreg7 rGPR:%vreg1
+	ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%R0<def> = COPY %vreg10; GPRnopc:%vreg10
+	%R1<def> = COPY %vreg2; GPR:%vreg2
+	tBL pred:14, pred:%noreg, <ga:@influence_mark_non_territory>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg11<def> = t2ADDrr %vreg9<kill>, %vreg1, pred:14, pred:%noreg, opt:%noreg; GPRnopc:%vreg11,%vreg9 rGPR:%vreg1
+	ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%R0<def> = COPY %vreg11; GPRnopc:%vreg11
+	%R1<def> = COPY %vreg2; GPR:%vreg2
+	tBL pred:14, pred:%noreg, <ga:@influence_mark_non_territory>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg12<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg12
+	%R0<def> = COPY %vreg12; rGPR:%vreg12
+	tBX_RET pred:14, pred:%noreg, %R0<imp-use>
+
+# End machine code for function autohelperbarrierspat145.
+
+# After Tail Duplication:
+# Machine code for function autohelperbarrierspat145: SSA
+Function Live Ins: %R0 in %vreg0, %R1 in %vreg1, %R2 in %vreg2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R2
+	%vreg2<def> = COPY %R2; GPR:%vreg2
+	%vreg1<def> = COPY %R1; rGPR:%vreg1
+	%vreg0<def> = COPY %R0; rGPR:%vreg0
+	%vreg4<def> = t2MOVi32imm <ga:@transformation>; rGPR:%vreg4
+	%vreg5<def> = t2ADDrs %vreg4<kill>, %vreg0, 18, pred:14, pred:%noreg, opt:%noreg; GPRnopc:%vreg5 rGPR:%vreg4,%vreg0
+	%vreg6<def> = t2MOVi16 19552, pred:14, pred:%noreg; rGPR:%vreg6
+	%vreg7<def> = t2LDRs %vreg5, %vreg6<kill>, 0, pred:14, pred:%noreg; mem:LD4[%1] GPRnopc:%vreg7,%vreg5 rGPR:%vreg6
+	%vreg8<def> = t2MOVi 20736, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg8
+	%vreg9<def> = t2LDRs %vreg5, %vreg8<kill>, 0, pred:14, pred:%noreg; mem:LD4[%4] GPRnopc:%vreg9,%vreg5 rGPR:%vreg8
+	%vreg10<def> = t2ADDrr %vreg7<kill>, %vreg1, pred:14, pred:%noreg, opt:%noreg; GPRnopc:%vreg10,%vreg7 rGPR:%vreg1
+	ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%R0<def> = COPY %vreg10; GPRnopc:%vreg10
+	%R1<def> = COPY %vreg2; GPR:%vreg2
+	tBL pred:14, pred:%noreg, <ga:@influence_mark_non_territory>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg11<def> = t2ADDrr %vreg9<kill>, %vreg1, pred:14, pred:%noreg, opt:%noreg; GPRnopc:%vreg11,%vreg9 rGPR:%vreg1
+	ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%R0<def> = COPY %vreg11; GPRnopc:%vreg11
+	%R1<def> = COPY %vreg2; GPR:%vreg2
+	tBL pred:14, pred:%noreg, <ga:@influence_mark_non_territory>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg12<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg12
+	%R0<def> = COPY %vreg12; rGPR:%vreg12
+	tBX_RET pred:14, pred:%noreg, %R0<imp-use>
+
+# End machine code for function autohelperbarrierspat145.
+
+# After Optimize machine instruction PHIs:
+# Machine code for function autohelperbarrierspat145: SSA
+Function Live Ins: %R0 in %vreg0, %R1 in %vreg1, %R2 in %vreg2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R2
+	%vreg2<def> = COPY %R2; GPR:%vreg2
+	%vreg1<def> = COPY %R1; rGPR:%vreg1
+	%vreg0<def> = COPY %R0; rGPR:%vreg0
+	%vreg4<def> = t2MOVi32imm <ga:@transformation>; rGPR:%vreg4
+	%vreg5<def> = t2ADDrs %vreg4<kill>, %vreg0, 18, pred:14, pred:%noreg, opt:%noreg; GPRnopc:%vreg5 rGPR:%vreg4,%vreg0
+	%vreg6<def> = t2MOVi16 19552, pred:14, pred:%noreg; rGPR:%vreg6
+	%vreg7<def> = t2LDRs %vreg5, %vreg6<kill>, 0, pred:14, pred:%noreg; mem:LD4[%1] GPRnopc:%vreg7,%vreg5 rGPR:%vreg6
+	%vreg8<def> = t2MOVi 20736, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg8
+	%vreg9<def> = t2LDRs %vreg5, %vreg8<kill>, 0, pred:14, pred:%noreg; mem:LD4[%4] GPRnopc:%vreg9,%vreg5 rGPR:%vreg8
+	%vreg10<def> = t2ADDrr %vreg7<kill>, %vreg1, pred:14, pred:%noreg, opt:%noreg; GPRnopc:%vreg10,%vreg7 rGPR:%vreg1
+	ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%R0<def> = COPY %vreg10; GPRnopc:%vreg10
+	%R1<def> = COPY %vreg2; GPR:%vreg2
+	tBL pred:14, pred:%noreg, <ga:@influence_mark_non_territory>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg11<def> = t2ADDrr %vreg9<kill>, %vreg1, pred:14, pred:%noreg, opt:%noreg; GPRnopc:%vreg11,%vreg9 rGPR:%vreg1
+	ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%R0<def> = COPY %vreg11; GPRnopc:%vreg11
+	%R1<def> = COPY %vreg2; GPR:%vreg2
+	tBL pred:14, pred:%noreg, <ga:@influence_mark_non_territory>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg12<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg12
+	%R0<def> = COPY %vreg12; rGPR:%vreg12
+	tBX_RET pred:14, pred:%noreg, %R0<imp-use>
+
+# End machine code for function autohelperbarrierspat145.
+
+# After Merge disjoint stack slots:
+# Machine code for function autohelperbarrierspat145: SSA
+Function Live Ins: %R0 in %vreg0, %R1 in %vreg1, %R2 in %vreg2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R2
+	%vreg2<def> = COPY %R2; GPR:%vreg2
+	%vreg1<def> = COPY %R1; rGPR:%vreg1
+	%vreg0<def> = COPY %R0; rGPR:%vreg0
+	%vreg4<def> = t2MOVi32imm <ga:@transformation>; rGPR:%vreg4
+	%vreg5<def> = t2ADDrs %vreg4<kill>, %vreg0, 18, pred:14, pred:%noreg, opt:%noreg; GPRnopc:%vreg5 rGPR:%vreg4,%vreg0
+	%vreg6<def> = t2MOVi16 19552, pred:14, pred:%noreg; rGPR:%vreg6
+	%vreg7<def> = t2LDRs %vreg5, %vreg6<kill>, 0, pred:14, pred:%noreg; mem:LD4[%1] GPRnopc:%vreg7,%vreg5 rGPR:%vreg6
+	%vreg8<def> = t2MOVi 20736, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg8
+	%vreg9<def> = t2LDRs %vreg5, %vreg8<kill>, 0, pred:14, pred:%noreg; mem:LD4[%4] GPRnopc:%vreg9,%vreg5 rGPR:%vreg8
+	%vreg10<def> = t2ADDrr %vreg7<kill>, %vreg1, pred:14, pred:%noreg, opt:%noreg; GPRnopc:%vreg10,%vreg7 rGPR:%vreg1
+	ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%R0<def> = COPY %vreg10; GPRnopc:%vreg10
+	%R1<def> = COPY %vreg2; GPR:%vreg2
+	tBL pred:14, pred:%noreg, <ga:@influence_mark_non_territory>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg11<def> = t2ADDrr %vreg9<kill>, %vreg1, pred:14, pred:%noreg, opt:%noreg; GPRnopc:%vreg11,%vreg9 rGPR:%vreg1
+	ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%R0<def> = COPY %vreg11; GPRnopc:%vreg11
+	%R1<def> = COPY %vreg2; GPR:%vreg2
+	tBL pred:14, pred:%noreg, <ga:@influence_mark_non_territory>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg12<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg12
+	%R0<def> = COPY %vreg12; rGPR:%vreg12
+	tBX_RET pred:14, pred:%noreg, %R0<imp-use>
+
+# End machine code for function autohelperbarrierspat145.
+
+# After Local Stack Slot Allocation:
+# Machine code for function autohelperbarrierspat145: SSA
+Function Live Ins: %R0 in %vreg0, %R1 in %vreg1, %R2 in %vreg2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R2
+	%vreg2<def> = COPY %R2; GPR:%vreg2
+	%vreg1<def> = COPY %R1; rGPR:%vreg1
+	%vreg0<def> = COPY %R0; rGPR:%vreg0
+	%vreg4<def> = t2MOVi32imm <ga:@transformation>; rGPR:%vreg4
+	%vreg5<def> = t2ADDrs %vreg4<kill>, %vreg0, 18, pred:14, pred:%noreg, opt:%noreg; GPRnopc:%vreg5 rGPR:%vreg4,%vreg0
+	%vreg6<def> = t2MOVi16 19552, pred:14, pred:%noreg; rGPR:%vreg6
+	%vreg7<def> = t2LDRs %vreg5, %vreg6<kill>, 0, pred:14, pred:%noreg; mem:LD4[%1] GPRnopc:%vreg7,%vreg5 rGPR:%vreg6
+	%vreg8<def> = t2MOVi 20736, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg8
+	%vreg9<def> = t2LDRs %vreg5, %vreg8<kill>, 0, pred:14, pred:%noreg; mem:LD4[%4] GPRnopc:%vreg9,%vreg5 rGPR:%vreg8
+	%vreg10<def> = t2ADDrr %vreg7<kill>, %vreg1, pred:14, pred:%noreg, opt:%noreg; GPRnopc:%vreg10,%vreg7 rGPR:%vreg1
+	ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%R0<def> = COPY %vreg10; GPRnopc:%vreg10
+	%R1<def> = COPY %vreg2; GPR:%vreg2
+	tBL pred:14, pred:%noreg, <ga:@influence_mark_non_territory>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg11<def> = t2ADDrr %vreg9<kill>, %vreg1, pred:14, pred:%noreg, opt:%noreg; GPRnopc:%vreg11,%vreg9 rGPR:%vreg1
+	ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%R0<def> = COPY %vreg11; GPRnopc:%vreg11
+	%R1<def> = COPY %vreg2; GPR:%vreg2
+	tBL pred:14, pred:%noreg, <ga:@influence_mark_non_territory>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg12<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg12
+	%R0<def> = COPY %vreg12; rGPR:%vreg12
+	tBX_RET pred:14, pred:%noreg, %R0<imp-use>
+
+# End machine code for function autohelperbarrierspat145.
+
+# After Remove dead machine instructions:
+# Machine code for function autohelperbarrierspat145: SSA
+Function Live Ins: %R0 in %vreg0, %R1 in %vreg1, %R2 in %vreg2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R2
+	%vreg2<def> = COPY %R2; GPR:%vreg2
+	%vreg1<def> = COPY %R1; rGPR:%vreg1
+	%vreg0<def> = COPY %R0; rGPR:%vreg0
+	%vreg4<def> = t2MOVi32imm <ga:@transformation>; rGPR:%vreg4
+	%vreg5<def> = t2ADDrs %vreg4<kill>, %vreg0, 18, pred:14, pred:%noreg, opt:%noreg; GPRnopc:%vreg5 rGPR:%vreg4,%vreg0
+	%vreg6<def> = t2MOVi16 19552, pred:14, pred:%noreg; rGPR:%vreg6
+	%vreg7<def> = t2LDRs %vreg5, %vreg6<kill>, 0, pred:14, pred:%noreg; mem:LD4[%1] GPRnopc:%vreg7,%vreg5 rGPR:%vreg6
+	%vreg8<def> = t2MOVi 20736, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg8
+	%vreg9<def> = t2LDRs %vreg5, %vreg8<kill>, 0, pred:14, pred:%noreg; mem:LD4[%4] GPRnopc:%vreg9,%vreg5 rGPR:%vreg8
+	%vreg10<def> = t2ADDrr %vreg7<kill>, %vreg1, pred:14, pred:%noreg, opt:%noreg; GPRnopc:%vreg10,%vreg7 rGPR:%vreg1
+	ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%R0<def> = COPY %vreg10; GPRnopc:%vreg10
+	%R1<def> = COPY %vreg2; GPR:%vreg2
+	tBL pred:14, pred:%noreg, <ga:@influence_mark_non_territory>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg11<def> = t2ADDrr %vreg9<kill>, %vreg1, pred:14, pred:%noreg, opt:%noreg; GPRnopc:%vreg11,%vreg9 rGPR:%vreg1
+	ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%R0<def> = COPY %vreg11; GPRnopc:%vreg11
+	%R1<def> = COPY %vreg2; GPR:%vreg2
+	tBL pred:14, pred:%noreg, <ga:@influence_mark_non_territory>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg12<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg12
+	%R0<def> = COPY %vreg12; rGPR:%vreg12
+	tBX_RET pred:14, pred:%noreg, %R0<imp-use>
+
+# End machine code for function autohelperbarrierspat145.
+
+# After Machine Loop Invariant Code Motion:
+# Machine code for function autohelperbarrierspat145: SSA
+Function Live Ins: %R0 in %vreg0, %R1 in %vreg1, %R2 in %vreg2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R2
+	%vreg2<def> = COPY %R2; GPR:%vreg2
+	%vreg1<def> = COPY %R1; rGPR:%vreg1
+	%vreg0<def> = COPY %R0; rGPR:%vreg0
+	%vreg4<def> = t2MOVi32imm <ga:@transformation>; rGPR:%vreg4
+	%vreg5<def> = t2ADDrs %vreg4<kill>, %vreg0, 18, pred:14, pred:%noreg, opt:%noreg; GPRnopc:%vreg5 rGPR:%vreg4,%vreg0
+	%vreg6<def> = t2MOVi16 19552, pred:14, pred:%noreg; rGPR:%vreg6
+	%vreg7<def> = t2LDRs %vreg5, %vreg6<kill>, 0, pred:14, pred:%noreg; mem:LD4[%1] GPRnopc:%vreg7,%vreg5 rGPR:%vreg6
+	%vreg8<def> = t2MOVi 20736, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg8
+	%vreg9<def> = t2LDRs %vreg5, %vreg8<kill>, 0, pred:14, pred:%noreg; mem:LD4[%4] GPRnopc:%vreg9,%vreg5 rGPR:%vreg8
+	%vreg10<def> = t2ADDrr %vreg7<kill>, %vreg1, pred:14, pred:%noreg, opt:%noreg; GPRnopc:%vreg10,%vreg7 rGPR:%vreg1
+	ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%R0<def> = COPY %vreg10; GPRnopc:%vreg10
+	%R1<def> = COPY %vreg2; GPR:%vreg2
+	tBL pred:14, pred:%noreg, <ga:@influence_mark_non_territory>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg11<def> = t2ADDrr %vreg9<kill>, %vreg1, pred:14, pred:%noreg, opt:%noreg; GPRnopc:%vreg11,%vreg9 rGPR:%vreg1
+	ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%R0<def> = COPY %vreg11; GPRnopc:%vreg11
+	%R1<def> = COPY %vreg2; GPR:%vreg2
+	tBL pred:14, pred:%noreg, <ga:@influence_mark_non_territory>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg12<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg12
+	%R0<def> = COPY %vreg12; rGPR:%vreg12
+	tBX_RET pred:14, pred:%noreg, %R0<imp-use>
+
+# End machine code for function autohelperbarrierspat145.
+
+# After Machine Common Subexpression Elimination:
+# Machine code for function autohelperbarrierspat145: SSA
+Function Live Ins: %R0 in %vreg0, %R1 in %vreg1, %R2 in %vreg2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R2
+	%vreg2<def> = COPY %R2; GPR:%vreg2
+	%vreg1<def> = COPY %R1; rGPR:%vreg1
+	%vreg0<def> = COPY %R0; rGPR:%vreg0
+	%vreg4<def> = t2MOVi32imm <ga:@transformation>; rGPR:%vreg4
+	%vreg5<def> = t2ADDrs %vreg4<kill>, %vreg0, 18, pred:14, pred:%noreg, opt:%noreg; GPRnopc:%vreg5 rGPR:%vreg4,%vreg0
+	%vreg6<def> = t2MOVi16 19552, pred:14, pred:%noreg; rGPR:%vreg6
+	%vreg7<def> = t2LDRs %vreg5, %vreg6<kill>, 0, pred:14, pred:%noreg; mem:LD4[%1] GPRnopc:%vreg7,%vreg5 rGPR:%vreg6
+	%vreg8<def> = t2MOVi 20736, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg8
+	%vreg9<def> = t2LDRs %vreg5, %vreg8<kill>, 0, pred:14, pred:%noreg; mem:LD4[%4] GPRnopc:%vreg9,%vreg5 rGPR:%vreg8
+	%vreg10<def> = t2ADDrr %vreg7<kill>, %vreg1, pred:14, pred:%noreg, opt:%noreg; GPRnopc:%vreg10,%vreg7 rGPR:%vreg1
+	ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%R0<def> = COPY %vreg10; GPRnopc:%vreg10
+	%R1<def> = COPY %vreg2; GPR:%vreg2
+	tBL pred:14, pred:%noreg, <ga:@influence_mark_non_territory>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg11<def> = t2ADDrr %vreg9<kill>, %vreg1, pred:14, pred:%noreg, opt:%noreg; GPRnopc:%vreg11,%vreg9 rGPR:%vreg1
+	ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%R0<def> = COPY %vreg11; GPRnopc:%vreg11
+	%R1<def> = COPY %vreg2; GPR:%vreg2
+	tBL pred:14, pred:%noreg, <ga:@influence_mark_non_territory>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg12<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg12
+	%R0<def> = COPY %vreg12; rGPR:%vreg12
+	tBX_RET pred:14, pred:%noreg, %R0<imp-use>
+
+# End machine code for function autohelperbarrierspat145.
+
+# After Machine code sinking:
+# Machine code for function autohelperbarrierspat145: SSA
+Function Live Ins: %R0 in %vreg0, %R1 in %vreg1, %R2 in %vreg2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R2
+	%vreg2<def> = COPY %R2; GPR:%vreg2
+	%vreg1<def> = COPY %R1; rGPR:%vreg1
+	%vreg0<def> = COPY %R0; rGPR:%vreg0
+	%vreg4<def> = t2MOVi32imm <ga:@transformation>; rGPR:%vreg4
+	%vreg5<def> = t2ADDrs %vreg4<kill>, %vreg0, 18, pred:14, pred:%noreg, opt:%noreg; GPRnopc:%vreg5 rGPR:%vreg4,%vreg0
+	%vreg6<def> = t2MOVi16 19552, pred:14, pred:%noreg; rGPR:%vreg6
+	%vreg7<def> = t2LDRs %vreg5, %vreg6<kill>, 0, pred:14, pred:%noreg; mem:LD4[%1] GPRnopc:%vreg7,%vreg5 rGPR:%vreg6
+	%vreg8<def> = t2MOVi 20736, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg8
+	%vreg9<def> = t2LDRs %vreg5, %vreg8<kill>, 0, pred:14, pred:%noreg; mem:LD4[%4] GPRnopc:%vreg9,%vreg5 rGPR:%vreg8
+	%vreg10<def> = t2ADDrr %vreg7<kill>, %vreg1, pred:14, pred:%noreg, opt:%noreg; GPRnopc:%vreg10,%vreg7 rGPR:%vreg1
+	ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%R0<def> = COPY %vreg10; GPRnopc:%vreg10
+	%R1<def> = COPY %vreg2; GPR:%vreg2
+	tBL pred:14, pred:%noreg, <ga:@influence_mark_non_territory>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg11<def> = t2ADDrr %vreg9<kill>, %vreg1, pred:14, pred:%noreg, opt:%noreg; GPRnopc:%vreg11,%vreg9 rGPR:%vreg1
+	ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%R0<def> = COPY %vreg11; GPRnopc:%vreg11
+	%R1<def> = COPY %vreg2; GPR:%vreg2
+	tBL pred:14, pred:%noreg, <ga:@influence_mark_non_territory>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg12<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg12
+	%R0<def> = COPY %vreg12; rGPR:%vreg12
+	tBX_RET pred:14, pred:%noreg, %R0<imp-use>
+
+# End machine code for function autohelperbarrierspat145.
+
+# After Peephole Optimizations:
+# Machine code for function autohelperbarrierspat145: SSA
+Function Live Ins: %R0 in %vreg0, %R1 in %vreg1, %R2 in %vreg2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R2
+	%vreg2<def> = COPY %R2; GPR:%vreg2
+	%vreg1<def> = COPY %R1; rGPR:%vreg1
+	%vreg0<def> = COPY %R0; rGPR:%vreg0
+	%vreg4<def> = t2MOVi32imm <ga:@transformation>; rGPR:%vreg4
+	%vreg5<def> = t2ADDrs %vreg4<kill>, %vreg0, 18, pred:14, pred:%noreg, opt:%noreg; GPRnopc:%vreg5 rGPR:%vreg4,%vreg0
+	%vreg6<def> = t2MOVi16 19552, pred:14, pred:%noreg; rGPR:%vreg6
+	%vreg7<def> = t2LDRs %vreg5, %vreg6<kill>, 0, pred:14, pred:%noreg; mem:LD4[%1] GPRnopc:%vreg7,%vreg5 rGPR:%vreg6
+	%vreg8<def> = t2MOVi 20736, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg8
+	%vreg9<def> = t2LDRs %vreg5, %vreg8<kill>, 0, pred:14, pred:%noreg; mem:LD4[%4] GPRnopc:%vreg9,%vreg5 rGPR:%vreg8
+	%vreg10<def> = t2ADDrr %vreg7<kill>, %vreg1, pred:14, pred:%noreg, opt:%noreg; GPRnopc:%vreg10,%vreg7 rGPR:%vreg1
+	ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%R0<def> = COPY %vreg10; GPRnopc:%vreg10
+	%R1<def> = COPY %vreg2; GPR:%vreg2
+	tBL pred:14, pred:%noreg, <ga:@influence_mark_non_territory>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg11<def> = t2ADDrr %vreg9<kill>, %vreg1, pred:14, pred:%noreg, opt:%noreg; GPRnopc:%vreg11,%vreg9 rGPR:%vreg1
+	ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%R0<def> = COPY %vreg11; GPRnopc:%vreg11
+	%R1<def> = COPY %vreg2; GPR:%vreg2
+	tBL pred:14, pred:%noreg, <ga:@influence_mark_non_territory>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg12<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg12
+	%R0<def> = COPY %vreg12; rGPR:%vreg12
+	tBX_RET pred:14, pred:%noreg, %R0<imp-use>
+
+# End machine code for function autohelperbarrierspat145.
+
+# After Remove dead machine instructions:
+# Machine code for function autohelperbarrierspat145: SSA
+Function Live Ins: %R0 in %vreg0, %R1 in %vreg1, %R2 in %vreg2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R2
+	%vreg2<def> = COPY %R2; GPR:%vreg2
+	%vreg1<def> = COPY %R1; rGPR:%vreg1
+	%vreg0<def> = COPY %R0; rGPR:%vreg0
+	%vreg4<def> = t2MOVi32imm <ga:@transformation>; rGPR:%vreg4
+	%vreg5<def> = t2ADDrs %vreg4<kill>, %vreg0, 18, pred:14, pred:%noreg, opt:%noreg; GPRnopc:%vreg5 rGPR:%vreg4,%vreg0
+	%vreg6<def> = t2MOVi16 19552, pred:14, pred:%noreg; rGPR:%vreg6
+	%vreg7<def> = t2LDRs %vreg5, %vreg6<kill>, 0, pred:14, pred:%noreg; mem:LD4[%1] GPRnopc:%vreg7,%vreg5 rGPR:%vreg6
+	%vreg8<def> = t2MOVi 20736, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg8
+	%vreg9<def> = t2LDRs %vreg5, %vreg8<kill>, 0, pred:14, pred:%noreg; mem:LD4[%4] GPRnopc:%vreg9,%vreg5 rGPR:%vreg8
+	%vreg10<def> = t2ADDrr %vreg7<kill>, %vreg1, pred:14, pred:%noreg, opt:%noreg; GPRnopc:%vreg10,%vreg7 rGPR:%vreg1
+	ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%R0<def> = COPY %vreg10; GPRnopc:%vreg10
+	%R1<def> = COPY %vreg2; GPR:%vreg2
+	tBL pred:14, pred:%noreg, <ga:@influence_mark_non_territory>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg11<def> = t2ADDrr %vreg9<kill>, %vreg1, pred:14, pred:%noreg, opt:%noreg; GPRnopc:%vreg11,%vreg9 rGPR:%vreg1
+	ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%R0<def> = COPY %vreg11; GPRnopc:%vreg11
+	%R1<def> = COPY %vreg2; GPR:%vreg2
+	tBL pred:14, pred:%noreg, <ga:@influence_mark_non_territory>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg12<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg12
+	%R0<def> = COPY %vreg12; rGPR:%vreg12
+	tBX_RET pred:14, pred:%noreg, %R0<imp-use>
+
+# End machine code for function autohelperbarrierspat145.
+
+# After ARM MLA / MLS expansion pass:
+# Machine code for function autohelperbarrierspat145: SSA
+Function Live Ins: %R0 in %vreg0, %R1 in %vreg1, %R2 in %vreg2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R2
+	%vreg2<def> = COPY %R2; GPR:%vreg2
+	%vreg1<def> = COPY %R1; rGPR:%vreg1
+	%vreg0<def> = COPY %R0; rGPR:%vreg0
+	%vreg4<def> = t2MOVi32imm <ga:@transformation>; rGPR:%vreg4
+	%vreg5<def> = t2ADDrs %vreg4<kill>, %vreg0, 18, pred:14, pred:%noreg, opt:%noreg; GPRnopc:%vreg5 rGPR:%vreg4,%vreg0
+	%vreg6<def> = t2MOVi16 19552, pred:14, pred:%noreg; rGPR:%vreg6
+	%vreg7<def> = t2LDRs %vreg5, %vreg6<kill>, 0, pred:14, pred:%noreg; mem:LD4[%1] GPRnopc:%vreg7,%vreg5 rGPR:%vreg6
+	%vreg8<def> = t2MOVi 20736, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg8
+	%vreg9<def> = t2LDRs %vreg5, %vreg8<kill>, 0, pred:14, pred:%noreg; mem:LD4[%4] GPRnopc:%vreg9,%vreg5 rGPR:%vreg8
+	%vreg10<def> = t2ADDrr %vreg7<kill>, %vreg1, pred:14, pred:%noreg, opt:%noreg; GPRnopc:%vreg10,%vreg7 rGPR:%vreg1
+	ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%R0<def> = COPY %vreg10; GPRnopc:%vreg10
+	%R1<def> = COPY %vreg2; GPR:%vreg2
+	tBL pred:14, pred:%noreg, <ga:@influence_mark_non_territory>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg11<def> = t2ADDrr %vreg9<kill>, %vreg1, pred:14, pred:%noreg, opt:%noreg; GPRnopc:%vreg11,%vreg9 rGPR:%vreg1
+	ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%R0<def> = COPY %vreg11; GPRnopc:%vreg11
+	%R1<def> = COPY %vreg2; GPR:%vreg2
+	tBL pred:14, pred:%noreg, <ga:@influence_mark_non_territory>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg12<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg12
+	%R0<def> = COPY %vreg12; rGPR:%vreg12
+	tBX_RET pred:14, pred:%noreg, %R0<imp-use>
+
+# End machine code for function autohelperbarrierspat145.
+
+# After ARM pre- register allocation load / store optimization pass:
+# Machine code for function autohelperbarrierspat145: SSA
+Function Live Ins: %R0 in %vreg0, %R1 in %vreg1, %R2 in %vreg2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R2
+	%vreg2<def> = COPY %R2; GPR:%vreg2
+	%vreg1<def> = COPY %R1; rGPR:%vreg1
+	%vreg0<def> = COPY %R0; rGPR:%vreg0
+	%vreg4<def> = t2MOVi32imm <ga:@transformation>; rGPR:%vreg4
+	%vreg5<def> = t2ADDrs %vreg4<kill>, %vreg0, 18, pred:14, pred:%noreg, opt:%noreg; GPRnopc:%vreg5 rGPR:%vreg4,%vreg0
+	%vreg6<def> = t2MOVi16 19552, pred:14, pred:%noreg; rGPR:%vreg6
+	%vreg7<def> = t2LDRs %vreg5, %vreg6<kill>, 0, pred:14, pred:%noreg; mem:LD4[%1] GPRnopc:%vreg7,%vreg5 rGPR:%vreg6
+	%vreg8<def> = t2MOVi 20736, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg8
+	%vreg9<def> = t2LDRs %vreg5, %vreg8<kill>, 0, pred:14, pred:%noreg; mem:LD4[%4] GPRnopc:%vreg9,%vreg5 rGPR:%vreg8
+	%vreg10<def> = t2ADDrr %vreg7<kill>, %vreg1, pred:14, pred:%noreg, opt:%noreg; GPRnopc:%vreg10,%vreg7 rGPR:%vreg1
+	ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%R0<def> = COPY %vreg10; GPRnopc:%vreg10
+	%R1<def> = COPY %vreg2; GPR:%vreg2
+	tBL pred:14, pred:%noreg, <ga:@influence_mark_non_territory>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg11<def> = t2ADDrr %vreg9<kill>, %vreg1, pred:14, pred:%noreg, opt:%noreg; GPRnopc:%vreg11,%vreg9 rGPR:%vreg1
+	ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%R0<def> = COPY %vreg11; GPRnopc:%vreg11
+	%R1<def> = COPY %vreg2; GPR:%vreg2
+	tBL pred:14, pred:%noreg, <ga:@influence_mark_non_territory>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg12<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg12
+	%R0<def> = COPY %vreg12; rGPR:%vreg12
+	tBX_RET pred:14, pred:%noreg, %R0<imp-use>
+
+# End machine code for function autohelperbarrierspat145.
+
+# After ARM A15 S->D optimizer:
+# Machine code for function autohelperbarrierspat145: SSA
+Function Live Ins: %R0 in %vreg0, %R1 in %vreg1, %R2 in %vreg2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R2
+	%vreg2<def> = COPY %R2; GPR:%vreg2
+	%vreg1<def> = COPY %R1; rGPR:%vreg1
+	%vreg0<def> = COPY %R0; rGPR:%vreg0
+	%vreg4<def> = t2MOVi32imm <ga:@transformation>; rGPR:%vreg4
+	%vreg5<def> = t2ADDrs %vreg4<kill>, %vreg0, 18, pred:14, pred:%noreg, opt:%noreg; GPRnopc:%vreg5 rGPR:%vreg4,%vreg0
+	%vreg6<def> = t2MOVi16 19552, pred:14, pred:%noreg; rGPR:%vreg6
+	%vreg7<def> = t2LDRs %vreg5, %vreg6<kill>, 0, pred:14, pred:%noreg; mem:LD4[%1] GPRnopc:%vreg7,%vreg5 rGPR:%vreg6
+	%vreg8<def> = t2MOVi 20736, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg8
+	%vreg9<def> = t2LDRs %vreg5, %vreg8<kill>, 0, pred:14, pred:%noreg; mem:LD4[%4] GPRnopc:%vreg9,%vreg5 rGPR:%vreg8
+	%vreg10<def> = t2ADDrr %vreg7<kill>, %vreg1, pred:14, pred:%noreg, opt:%noreg; GPRnopc:%vreg10,%vreg7 rGPR:%vreg1
+	ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%R0<def> = COPY %vreg10; GPRnopc:%vreg10
+	%R1<def> = COPY %vreg2; GPR:%vreg2
+	tBL pred:14, pred:%noreg, <ga:@influence_mark_non_territory>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg11<def> = t2ADDrr %vreg9<kill>, %vreg1, pred:14, pred:%noreg, opt:%noreg; GPRnopc:%vreg11,%vreg9 rGPR:%vreg1
+	ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%R0<def> = COPY %vreg11; GPRnopc:%vreg11
+	%R1<def> = COPY %vreg2; GPR:%vreg2
+	tBL pred:14, pred:%noreg, <ga:@influence_mark_non_territory>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg12<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg12
+	%R0<def> = COPY %vreg12; rGPR:%vreg12
+	tBX_RET pred:14, pred:%noreg, %R0<imp-use>
+
+# End machine code for function autohelperbarrierspat145.
+
+# After Process Implicit Definitions:
+# Machine code for function autohelperbarrierspat145: SSA
+Function Live Ins: %R0 in %vreg0, %R1 in %vreg1, %R2 in %vreg2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R2
+	%vreg2<def> = COPY %R2; GPR:%vreg2
+	%vreg1<def> = COPY %R1; rGPR:%vreg1
+	%vreg0<def> = COPY %R0; rGPR:%vreg0
+	%vreg4<def> = t2MOVi32imm <ga:@transformation>; rGPR:%vreg4
+	%vreg5<def> = t2ADDrs %vreg4<kill>, %vreg0, 18, pred:14, pred:%noreg, opt:%noreg; GPRnopc:%vreg5 rGPR:%vreg4,%vreg0
+	%vreg6<def> = t2MOVi16 19552, pred:14, pred:%noreg; rGPR:%vreg6
+	%vreg7<def> = t2LDRs %vreg5, %vreg6<kill>, 0, pred:14, pred:%noreg; mem:LD4[%1] GPRnopc:%vreg7,%vreg5 rGPR:%vreg6
+	%vreg8<def> = t2MOVi 20736, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg8
+	%vreg9<def> = t2LDRs %vreg5, %vreg8<kill>, 0, pred:14, pred:%noreg; mem:LD4[%4] GPRnopc:%vreg9,%vreg5 rGPR:%vreg8
+	%vreg10<def> = t2ADDrr %vreg7<kill>, %vreg1, pred:14, pred:%noreg, opt:%noreg; GPRnopc:%vreg10,%vreg7 rGPR:%vreg1
+	ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%R0<def> = COPY %vreg10; GPRnopc:%vreg10
+	%R1<def> = COPY %vreg2; GPR:%vreg2
+	tBL pred:14, pred:%noreg, <ga:@influence_mark_non_territory>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg11<def> = t2ADDrr %vreg9<kill>, %vreg1, pred:14, pred:%noreg, opt:%noreg; GPRnopc:%vreg11,%vreg9 rGPR:%vreg1
+	ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%R0<def> = COPY %vreg11; GPRnopc:%vreg11
+	%R1<def> = COPY %vreg2; GPR:%vreg2
+	tBL pred:14, pred:%noreg, <ga:@influence_mark_non_territory>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg12<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg12
+	%R0<def> = COPY %vreg12; rGPR:%vreg12
+	tBX_RET pred:14, pred:%noreg, %R0<imp-use>
+
+# End machine code for function autohelperbarrierspat145.
+
+# After Live Variable Analysis:
+# Machine code for function autohelperbarrierspat145: SSA
+Function Live Ins: %R0 in %vreg0, %R1 in %vreg1, %R2 in %vreg2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R2
+	%vreg2<def> = COPY %R2<kill>; GPR:%vreg2
+	%vreg1<def> = COPY %R1<kill>; rGPR:%vreg1
+	%vreg0<def> = COPY %R0<kill>; rGPR:%vreg0
+	%vreg4<def> = t2MOVi32imm <ga:@transformation>; rGPR:%vreg4
+	%vreg5<def> = t2ADDrs %vreg4<kill>, %vreg0<kill>, 18, pred:14, pred:%noreg, opt:%noreg; GPRnopc:%vreg5 rGPR:%vreg4,%vreg0
+	%vreg6<def> = t2MOVi16 19552, pred:14, pred:%noreg; rGPR:%vreg6
+	%vreg7<def> = t2LDRs %vreg5, %vreg6<kill>, 0, pred:14, pred:%noreg; mem:LD4[%1] GPRnopc:%vreg7,%vreg5 rGPR:%vreg6
+	%vreg8<def> = t2MOVi 20736, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg8
+	%vreg9<def> = t2LDRs %vreg5<kill>, %vreg8<kill>, 0, pred:14, pred:%noreg; mem:LD4[%4] GPRnopc:%vreg9,%vreg5 rGPR:%vreg8
+	%vreg10<def> = t2ADDrr %vreg7<kill>, %vreg1, pred:14, pred:%noreg, opt:%noreg; GPRnopc:%vreg10,%vreg7 rGPR:%vreg1
+	ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%R0<def> = COPY %vreg10<kill>; GPRnopc:%vreg10
+	%R1<def> = COPY %vreg2; GPR:%vreg2
+	tBL pred:14, pred:%noreg, <ga:@influence_mark_non_territory>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use,kill>, %R1<imp-use,kill>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg11<def> = t2ADDrr %vreg9<kill>, %vreg1<kill>, pred:14, pred:%noreg, opt:%noreg; GPRnopc:%vreg11,%vreg9 rGPR:%vreg1
+	ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%R0<def> = COPY %vreg11<kill>; GPRnopc:%vreg11
+	%R1<def> = COPY %vreg2<kill>; GPR:%vreg2
+	tBL pred:14, pred:%noreg, <ga:@influence_mark_non_territory>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use,kill>, %R1<imp-use,kill>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg12<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg12
+	%R0<def> = COPY %vreg12<kill>; rGPR:%vreg12
+	tBX_RET pred:14, pred:%noreg, %R0<imp-use,kill>
+
+# End machine code for function autohelperbarrierspat145.
+
+# After Machine Natural Loop Construction:
+# Machine code for function autohelperbarrierspat145: SSA
+Function Live Ins: %R0 in %vreg0, %R1 in %vreg1, %R2 in %vreg2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R2
+	%vreg2<def> = COPY %R2<kill>; GPR:%vreg2
+	%vreg1<def> = COPY %R1<kill>; rGPR:%vreg1
+	%vreg0<def> = COPY %R0<kill>; rGPR:%vreg0
+	%vreg4<def> = t2MOVi32imm <ga:@transformation>; rGPR:%vreg4
+	%vreg5<def> = t2ADDrs %vreg4<kill>, %vreg0<kill>, 18, pred:14, pred:%noreg, opt:%noreg; GPRnopc:%vreg5 rGPR:%vreg4,%vreg0
+	%vreg6<def> = t2MOVi16 19552, pred:14, pred:%noreg; rGPR:%vreg6
+	%vreg7<def> = t2LDRs %vreg5, %vreg6<kill>, 0, pred:14, pred:%noreg; mem:LD4[%1] GPRnopc:%vreg7,%vreg5 rGPR:%vreg6
+	%vreg8<def> = t2MOVi 20736, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg8
+	%vreg9<def> = t2LDRs %vreg5<kill>, %vreg8<kill>, 0, pred:14, pred:%noreg; mem:LD4[%4] GPRnopc:%vreg9,%vreg5 rGPR:%vreg8
+	%vreg10<def> = t2ADDrr %vreg7<kill>, %vreg1, pred:14, pred:%noreg, opt:%noreg; GPRnopc:%vreg10,%vreg7 rGPR:%vreg1
+	ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%R0<def> = COPY %vreg10<kill>; GPRnopc:%vreg10
+	%R1<def> = COPY %vreg2; GPR:%vreg2
+	tBL pred:14, pred:%noreg, <ga:@influence_mark_non_territory>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use,kill>, %R1<imp-use,kill>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg11<def> = t2ADDrr %vreg9<kill>, %vreg1<kill>, pred:14, pred:%noreg, opt:%noreg; GPRnopc:%vreg11,%vreg9 rGPR:%vreg1
+	ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%R0<def> = COPY %vreg11<kill>; GPRnopc:%vreg11
+	%R1<def> = COPY %vreg2<kill>; GPR:%vreg2
+	tBL pred:14, pred:%noreg, <ga:@influence_mark_non_territory>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use,kill>, %R1<imp-use,kill>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg12<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg12
+	%R0<def> = COPY %vreg12<kill>; rGPR:%vreg12
+	tBX_RET pred:14, pred:%noreg, %R0<imp-use,kill>
+
+# End machine code for function autohelperbarrierspat145.
+
+# After Eliminate PHI nodes for register allocation:
+# Machine code for function autohelperbarrierspat145: Post SSA
+Function Live Ins: %R0 in %vreg0, %R1 in %vreg1, %R2 in %vreg2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R2
+	%vreg2<def> = COPY %R2<kill>; GPR:%vreg2
+	%vreg1<def> = COPY %R1<kill>; rGPR:%vreg1
+	%vreg0<def> = COPY %R0<kill>; rGPR:%vreg0
+	%vreg4<def> = t2MOVi32imm <ga:@transformation>; rGPR:%vreg4
+	%vreg5<def> = t2ADDrs %vreg4<kill>, %vreg0<kill>, 18, pred:14, pred:%noreg, opt:%noreg; GPRnopc:%vreg5 rGPR:%vreg4,%vreg0
+	%vreg6<def> = t2MOVi16 19552, pred:14, pred:%noreg; rGPR:%vreg6
+	%vreg7<def> = t2LDRs %vreg5, %vreg6<kill>, 0, pred:14, pred:%noreg; mem:LD4[%1] GPRnopc:%vreg7,%vreg5 rGPR:%vreg6
+	%vreg8<def> = t2MOVi 20736, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg8
+	%vreg9<def> = t2LDRs %vreg5<kill>, %vreg8<kill>, 0, pred:14, pred:%noreg; mem:LD4[%4] GPRnopc:%vreg9,%vreg5 rGPR:%vreg8
+	%vreg10<def> = t2ADDrr %vreg7<kill>, %vreg1, pred:14, pred:%noreg, opt:%noreg; GPRnopc:%vreg10,%vreg7 rGPR:%vreg1
+	ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%R0<def> = COPY %vreg10<kill>; GPRnopc:%vreg10
+	%R1<def> = COPY %vreg2; GPR:%vreg2
+	tBL pred:14, pred:%noreg, <ga:@influence_mark_non_territory>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use,kill>, %R1<imp-use,kill>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg11<def> = t2ADDrr %vreg9<kill>, %vreg1<kill>, pred:14, pred:%noreg, opt:%noreg; GPRnopc:%vreg11,%vreg9 rGPR:%vreg1
+	ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%R0<def> = COPY %vreg11<kill>; GPRnopc:%vreg11
+	%R1<def> = COPY %vreg2<kill>; GPR:%vreg2
+	tBL pred:14, pred:%noreg, <ga:@influence_mark_non_territory>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use,kill>, %R1<imp-use,kill>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg12<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg12
+	%R0<def> = COPY %vreg12<kill>; rGPR:%vreg12
+	tBX_RET pred:14, pred:%noreg, %R0<imp-use,kill>
+
+# End machine code for function autohelperbarrierspat145.
+
+# After Two-Address instruction pass:
+# Machine code for function autohelperbarrierspat145: Post SSA
+Function Live Ins: %R0 in %vreg0, %R1 in %vreg1, %R2 in %vreg2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R2
+	%vreg2<def> = COPY %R2<kill>; GPR:%vreg2
+	%vreg1<def> = COPY %R1<kill>; rGPR:%vreg1
+	%vreg0<def> = COPY %R0<kill>; rGPR:%vreg0
+	%vreg4<def> = t2MOVi32imm <ga:@transformation>; rGPR:%vreg4
+	%vreg5<def> = t2ADDrs %vreg4<kill>, %vreg0<kill>, 18, pred:14, pred:%noreg, opt:%noreg; GPRnopc:%vreg5 rGPR:%vreg4,%vreg0
+	%vreg6<def> = t2MOVi16 19552, pred:14, pred:%noreg; rGPR:%vreg6
+	%vreg7<def> = t2LDRs %vreg5, %vreg6<kill>, 0, pred:14, pred:%noreg; mem:LD4[%1] GPRnopc:%vreg7,%vreg5 rGPR:%vreg6
+	%vreg8<def> = t2MOVi 20736, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg8
+	%vreg9<def> = t2LDRs %vreg5<kill>, %vreg8<kill>, 0, pred:14, pred:%noreg; mem:LD4[%4] GPRnopc:%vreg9,%vreg5 rGPR:%vreg8
+	%vreg10<def> = t2ADDrr %vreg7<kill>, %vreg1, pred:14, pred:%noreg, opt:%noreg; GPRnopc:%vreg10,%vreg7 rGPR:%vreg1
+	ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%R0<def> = COPY %vreg10<kill>; GPRnopc:%vreg10
+	%R1<def> = COPY %vreg2; GPR:%vreg2
+	tBL pred:14, pred:%noreg, <ga:@influence_mark_non_territory>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use,kill>, %R1<imp-use,kill>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg11<def> = t2ADDrr %vreg9<kill>, %vreg1<kill>, pred:14, pred:%noreg, opt:%noreg; GPRnopc:%vreg11,%vreg9 rGPR:%vreg1
+	ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%R0<def> = COPY %vreg11<kill>; GPRnopc:%vreg11
+	%R1<def> = COPY %vreg2<kill>; GPR:%vreg2
+	tBL pred:14, pred:%noreg, <ga:@influence_mark_non_territory>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use,kill>, %R1<imp-use,kill>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg12<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg12
+	%R0<def> = COPY %vreg12<kill>; rGPR:%vreg12
+	tBX_RET pred:14, pred:%noreg, %R0<imp-use,kill>
+
+# End machine code for function autohelperbarrierspat145.
+
+# After Simple Register Coalescing:
+# Machine code for function autohelperbarrierspat145: Post SSA
+Function Live Ins: %R0 in %vreg0, %R1 in %vreg1, %R2 in %vreg2
+
+0B	BB#0: derived from LLVM BB %0
+	    Live Ins: %R0 %R1 %R2
+16B		%vreg2<def> = COPY %R2; GPR:%vreg2
+32B		%vreg1<def> = COPY %R1; rGPR:%vreg1
+48B		%vreg0<def> = COPY %R0; rGPR:%vreg0
+64B		%vreg4<def> = t2MOVi32imm <ga:@transformation>; rGPR:%vreg4
+80B		%vreg5<def> = t2ADDrs %vreg4, %vreg0, 18, pred:14, pred:%noreg, opt:%noreg; GPRnopc:%vreg5 rGPR:%vreg4,%vreg0
+96B		%vreg6<def> = t2MOVi16 19552, pred:14, pred:%noreg; rGPR:%vreg6
+112B		%vreg7<def> = t2LDRs %vreg5, %vreg6, 0, pred:14, pred:%noreg; mem:LD4[%1] GPRnopc:%vreg7,%vreg5 rGPR:%vreg6
+128B		%vreg8<def> = t2MOVi 20736, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg8
+144B		%vreg9<def> = t2LDRs %vreg5, %vreg8, 0, pred:14, pred:%noreg; mem:LD4[%4] GPRnopc:%vreg9,%vreg5 rGPR:%vreg8
+160B		%vreg10<def> = t2ADDrr %vreg7, %vreg1, pred:14, pred:%noreg, opt:%noreg; GPRnopc:%vreg10,%vreg7 rGPR:%vreg1
+176B		ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+192B		%R0<def> = COPY %vreg10; GPRnopc:%vreg10
+208B		%R1<def> = COPY %vreg2; GPR:%vreg2
+224B		tBL pred:14, pred:%noreg, <ga:@influence_mark_non_territory>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %SP<imp-def>, ...
+240B		ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+256B		%vreg11<def> = t2ADDrr %vreg9, %vreg1, pred:14, pred:%noreg, opt:%noreg; GPRnopc:%vreg11,%vreg9 rGPR:%vreg1
+272B		ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+288B		%R0<def> = COPY %vreg11; GPRnopc:%vreg11
+304B		%R1<def> = COPY %vreg2; GPR:%vreg2
+320B		tBL pred:14, pred:%noreg, <ga:@influence_mark_non_territory>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %SP<imp-def>, ...
+336B		ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+368B		%R0<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg
+384B		tBX_RET pred:14, pred:%noreg, %R0<imp-use>
+
+# End machine code for function autohelperbarrierspat145.
+
+# After Machine Instruction Scheduler:
+# Machine code for function autohelperbarrierspat145: Post SSA
+Function Live Ins: %R0 in %vreg0, %R1 in %vreg1, %R2 in %vreg2
+
+0B	BB#0: derived from LLVM BB %0
+	    Live Ins: %R0 %R1 %R2
+16B		%vreg2<def> = COPY %R2; GPR:%vreg2
+32B		%vreg1<def> = COPY %R1; rGPR:%vreg1
+48B		%vreg0<def> = COPY %R0; rGPR:%vreg0
+64B		%vreg4<def> = t2MOVi32imm <ga:@transformation>; rGPR:%vreg4
+80B		%vreg5<def> = t2ADDrs %vreg4, %vreg0, 18, pred:14, pred:%noreg, opt:%noreg; GPRnopc:%vreg5 rGPR:%vreg4,%vreg0
+96B		%vreg6<def> = t2MOVi16 19552, pred:14, pred:%noreg; rGPR:%vreg6
+112B		%vreg7<def> = t2LDRs %vreg5, %vreg6, 0, pred:14, pred:%noreg; mem:LD4[%1] GPRnopc:%vreg7,%vreg5 rGPR:%vreg6
+128B		%vreg8<def> = t2MOVi 20736, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg8
+144B		%vreg9<def> = t2LDRs %vreg5, %vreg8, 0, pred:14, pred:%noreg; mem:LD4[%4] GPRnopc:%vreg9,%vreg5 rGPR:%vreg8
+160B		%vreg10<def> = t2ADDrr %vreg7, %vreg1, pred:14, pred:%noreg, opt:%noreg; GPRnopc:%vreg10,%vreg7 rGPR:%vreg1
+176B		ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+192B		%R0<def> = COPY %vreg10; GPRnopc:%vreg10
+208B		%R1<def> = COPY %vreg2; GPR:%vreg2
+224B		tBL pred:14, pred:%noreg, <ga:@influence_mark_non_territory>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %SP<imp-def>, ...
+240B		ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+256B		%vreg11<def> = t2ADDrr %vreg9, %vreg1, pred:14, pred:%noreg, opt:%noreg; GPRnopc:%vreg11,%vreg9 rGPR:%vreg1
+272B		ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+288B		%R0<def> = COPY %vreg11; GPRnopc:%vreg11
+304B		%R1<def> = COPY %vreg2; GPR:%vreg2
+320B		tBL pred:14, pred:%noreg, <ga:@influence_mark_non_territory>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %SP<imp-def>, ...
+336B		ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+368B		%R0<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg
+384B		tBX_RET pred:14, pred:%noreg, %R0<imp-use>
+
+# End machine code for function autohelperbarrierspat145.
+
+# After Greedy Register Allocator:
+# Machine code for function autohelperbarrierspat145: Post SSA
+Function Live Ins: %R0 in %vreg0, %R1 in %vreg1, %R2 in %vreg2
+
+0B	BB#0: derived from LLVM BB %0
+	    Live Ins: %R0 %R1 %R2
+16B		%vreg2<def> = COPY %R2; GPR:%vreg2
+32B		%vreg1<def> = COPY %R1; rGPR:%vreg1
+48B		%vreg0<def> = COPY %R0; rGPR:%vreg0
+64B		%vreg4<def> = t2MOVi32imm <ga:@transformation>; rGPR:%vreg4
+80B		%vreg5<def> = t2ADDrs %vreg4, %vreg0, 18, pred:14, pred:%noreg, opt:%noreg; GPRnopc:%vreg5 rGPR:%vreg4,%vreg0
+96B		%vreg6<def> = t2MOVi16 19552, pred:14, pred:%noreg; rGPR:%vreg6
+112B		%vreg7<def> = t2LDRs %vreg5, %vreg6, 0, pred:14, pred:%noreg; mem:LD4[%1] GPRnopc:%vreg7,%vreg5 rGPR:%vreg6
+128B		%vreg8<def> = t2MOVi 20736, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg8
+144B		%vreg9<def> = t2LDRs %vreg5, %vreg8, 0, pred:14, pred:%noreg; mem:LD4[%4] GPRnopc:%vreg9,%vreg5 rGPR:%vreg8
+160B		%vreg10<def> = t2ADDrr %vreg7, %vreg1, pred:14, pred:%noreg, opt:%noreg; GPRnopc:%vreg10,%vreg7 rGPR:%vreg1
+176B		ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+192B		%R0<def> = COPY %vreg10; GPRnopc:%vreg10
+208B		%R1<def> = COPY %vreg2; GPR:%vreg2
+224B		tBL pred:14, pred:%noreg, <ga:@influence_mark_non_territory>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %SP<imp-def>, ...
+240B		ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+256B		%vreg11<def> = t2ADDrr %vreg9, %vreg1, pred:14, pred:%noreg, opt:%noreg; GPRnopc:%vreg11,%vreg9 rGPR:%vreg1
+272B		ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+288B		%R0<def> = COPY %vreg11; GPRnopc:%vreg11
+304B		%R1<def> = COPY %vreg2; GPR:%vreg2
+320B		tBL pred:14, pred:%noreg, <ga:@influence_mark_non_territory>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %SP<imp-def>, ...
+336B		ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+368B		%R0<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg
+384B		tBX_RET pred:14, pred:%noreg, %R0<imp-use>
+
+# End machine code for function autohelperbarrierspat145.
+
+# After Virtual Register Rewriter:
+# Machine code for function autohelperbarrierspat145: Post SSA
+Function Live Ins: %R0, %R1, %R2
+
+0B	BB#0: derived from LLVM BB %0
+	    Live Ins: %R0 %R1 %R2
+16B		%R4<def> = COPY %R2
+32B		%R5<def> = COPY %R1
+64B		%R1<def> = t2MOVi32imm <ga:@transformation>
+80B		%R0<def> = t2ADDrs %R1<kill>, %R0<kill>, 18, pred:14, pred:%noreg, opt:%noreg
+96B		%R1<def> = t2MOVi16 19552, pred:14, pred:%noreg
+112B		%R1<def> = t2LDRs %R0, %R1<kill>, 0, pred:14, pred:%noreg; mem:LD4[%1]
+128B		%R2<def> = t2MOVi 20736, pred:14, pred:%noreg, opt:%noreg
+144B		%R6<def> = t2LDRs %R0<kill>, %R2<kill>, 0, pred:14, pred:%noreg; mem:LD4[%4]
+160B		%R0<def> = t2ADDrr %R1<kill>, %R5, pred:14, pred:%noreg, opt:%noreg
+176B		ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+208B		%R1<def> = COPY %R4
+224B		tBL pred:14, pred:%noreg, <ga:@influence_mark_non_territory>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %SP<imp-def>, ...
+240B		ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+256B		%R0<def> = t2ADDrr %R6<kill>, %R5<kill>, pred:14, pred:%noreg, opt:%noreg
+272B		ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+304B		%R1<def> = COPY %R4<kill>
+320B		tBL pred:14, pred:%noreg, <ga:@influence_mark_non_territory>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %SP<imp-def>, ...
+336B		ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+368B		%R0<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg
+384B		tBX_RET pred:14, pred:%noreg, %R0<imp-use>
+
+# End machine code for function autohelperbarrierspat145.
+
+# After Stack Slot Coloring:
+# Machine code for function autohelperbarrierspat145: Post SSA
+Function Live Ins: %R0, %R1, %R2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R2
+	%R4<def> = COPY %R2
+	%R5<def> = COPY %R1
+	%R1<def> = t2MOVi32imm <ga:@transformation>
+	%R0<def> = t2ADDrs %R1<kill>, %R0<kill>, 18, pred:14, pred:%noreg, opt:%noreg
+	%R1<def> = t2MOVi16 19552, pred:14, pred:%noreg
+	%R1<def> = t2LDRs %R0, %R1<kill>, 0, pred:14, pred:%noreg; mem:LD4[%1]
+	%R2<def> = t2MOVi 20736, pred:14, pred:%noreg, opt:%noreg
+	%R6<def> = t2LDRs %R0<kill>, %R2<kill>, 0, pred:14, pred:%noreg; mem:LD4[%4]
+	%R0<def> = t2ADDrr %R1<kill>, %R5, pred:14, pred:%noreg, opt:%noreg
+	ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%R1<def> = COPY %R4
+	tBL pred:14, pred:%noreg, <ga:@influence_mark_non_territory>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%R0<def> = t2ADDrr %R6<kill>, %R5<kill>, pred:14, pred:%noreg, opt:%noreg
+	ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%R1<def> = COPY %R4<kill>
+	tBL pred:14, pred:%noreg, <ga:@influence_mark_non_territory>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%R0<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg
+	tBX_RET pred:14, pred:%noreg, %R0<imp-use>
+
+# End machine code for function autohelperbarrierspat145.
+
+# After Machine Loop Invariant Code Motion:
+# Machine code for function autohelperbarrierspat145: Post SSA
+Function Live Ins: %R0, %R1, %R2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R2
+	%R4<def> = COPY %R2
+	%R5<def> = COPY %R1
+	%R1<def> = t2MOVi32imm <ga:@transformation>
+	%R0<def> = t2ADDrs %R1<kill>, %R0<kill>, 18, pred:14, pred:%noreg, opt:%noreg
+	%R1<def> = t2MOVi16 19552, pred:14, pred:%noreg
+	%R1<def> = t2LDRs %R0, %R1<kill>, 0, pred:14, pred:%noreg; mem:LD4[%1]
+	%R2<def> = t2MOVi 20736, pred:14, pred:%noreg, opt:%noreg
+	%R6<def> = t2LDRs %R0<kill>, %R2<kill>, 0, pred:14, pred:%noreg; mem:LD4[%4]
+	%R0<def> = t2ADDrr %R1<kill>, %R5, pred:14, pred:%noreg, opt:%noreg
+	ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%R1<def> = COPY %R4
+	tBL pred:14, pred:%noreg, <ga:@influence_mark_non_territory>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%R0<def> = t2ADDrr %R6<kill>, %R5<kill>, pred:14, pred:%noreg, opt:%noreg
+	ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%R1<def> = COPY %R4<kill>
+	tBL pred:14, pred:%noreg, <ga:@influence_mark_non_territory>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%R0<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg
+	tBX_RET pred:14, pred:%noreg, %R0<imp-use>
+
+# End machine code for function autohelperbarrierspat145.
+
+# After Shrink Wrapping analysis:
+# Machine code for function autohelperbarrierspat145: Post SSA
+Function Live Ins: %R0, %R1, %R2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R2
+	%R4<def> = COPY %R2
+	%R5<def> = COPY %R1
+	%R1<def> = t2MOVi32imm <ga:@transformation>
+	%R0<def> = t2ADDrs %R1<kill>, %R0<kill>, 18, pred:14, pred:%noreg, opt:%noreg
+	%R1<def> = t2MOVi16 19552, pred:14, pred:%noreg
+	%R1<def> = t2LDRs %R0, %R1<kill>, 0, pred:14, pred:%noreg; mem:LD4[%1]
+	%R2<def> = t2MOVi 20736, pred:14, pred:%noreg, opt:%noreg
+	%R6<def> = t2LDRs %R0<kill>, %R2<kill>, 0, pred:14, pred:%noreg; mem:LD4[%4]
+	%R0<def> = t2ADDrr %R1<kill>, %R5, pred:14, pred:%noreg, opt:%noreg
+	ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%R1<def> = COPY %R4
+	tBL pred:14, pred:%noreg, <ga:@influence_mark_non_territory>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%R0<def> = t2ADDrr %R6<kill>, %R5<kill>, pred:14, pred:%noreg, opt:%noreg
+	ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%R1<def> = COPY %R4<kill>
+	tBL pred:14, pred:%noreg, <ga:@influence_mark_non_territory>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%R0<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg
+	tBX_RET pred:14, pred:%noreg, %R0<imp-use>
+
+# End machine code for function autohelperbarrierspat145.
+
+# After Prologue/Epilogue Insertion & Frame Finalization:
+# Machine code for function autohelperbarrierspat145: Post SSA
+Frame Objects:
+  fi#0: size=4, align=4, at location [SP-4]
+  fi#1: size=4, align=4, at location [SP-8]
+  fi#2: size=4, align=4, at location [SP-12]
+  fi#3: size=4, align=4, at location [SP-16]
+  fi#4: size=4, align=4, at location [SP-20]
+Function Live Ins: %R0, %R1, %R2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R2 %R4 %R5 %R6 %R7 %LR
+	%SP<def,tied1> = t2STMDB_UPD %SP<tied0>, pred:14, pred:%noreg, %R4<kill>, %R5<kill>, %R6<kill>, %R7<kill>, %LR<kill>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%R7<def> = t2ADDri %SP<kill>, 12, pred:14, pred:%noreg, opt:%noreg; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%SP<def,tied1> = tSUBspi %SP<tied0>, 1, pred:14, pred:%noreg; flags: FrameSetup
+	%R4<def> = COPY %R2
+	%R5<def> = COPY %R1
+	%R1<def> = t2MOVi32imm <ga:@transformation>
+	%R0<def> = t2ADDrs %R1<kill>, %R0<kill>, 18, pred:14, pred:%noreg, opt:%noreg
+	%R1<def> = t2MOVi16 19552, pred:14, pred:%noreg
+	%R1<def> = t2LDRs %R0, %R1<kill>, 0, pred:14, pred:%noreg; mem:LD4[%1]
+	%R2<def> = t2MOVi 20736, pred:14, pred:%noreg, opt:%noreg
+	%R6<def> = t2LDRs %R0<kill>, %R2<kill>, 0, pred:14, pred:%noreg; mem:LD4[%4]
+	%R0<def> = t2ADDrr %R1<kill>, %R5, pred:14, pred:%noreg, opt:%noreg
+	%R1<def> = COPY %R4
+	tBL pred:14, pred:%noreg, <ga:@influence_mark_non_territory>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %LR<imp-def,dead>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %SP<imp-def>
+	%R0<def> = t2ADDrr %R6<kill>, %R5<kill>, pred:14, pred:%noreg, opt:%noreg
+	%R1<def> = COPY %R4<kill>
+	tBL pred:14, pred:%noreg, <ga:@influence_mark_non_territory>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %LR<imp-def,dead>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %SP<imp-def>
+	%R0<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg
+	%SP<def,tied1> = tADDspi %SP<tied0>, 1, pred:14, pred:%noreg
+	%SP<def,tied1> = t2LDMIA_RET %SP<tied0>, pred:14, pred:%noreg, %R4<def>, %R5<def>, %R6<def>, %R7<def>, %PC<def>, %R0<imp-use>
+
+# End machine code for function autohelperbarrierspat145.
+
+# After Machine Copy Propagation Pass:
+# Machine code for function autohelperbarrierspat145: Post SSA
+Frame Objects:
+  fi#0: size=4, align=4, at location [SP-4]
+  fi#1: size=4, align=4, at location [SP-8]
+  fi#2: size=4, align=4, at location [SP-12]
+  fi#3: size=4, align=4, at location [SP-16]
+  fi#4: size=4, align=4, at location [SP-20]
+Function Live Ins: %R0, %R1, %R2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R2 %R4 %R5 %R6 %R7 %LR
+	%SP<def,tied1> = t2STMDB_UPD %SP<tied0>, pred:14, pred:%noreg, %R4<kill>, %R5<kill>, %R6<kill>, %R7<kill>, %LR<kill>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%R7<def> = t2ADDri %SP<kill>, 12, pred:14, pred:%noreg, opt:%noreg; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%SP<def,tied1> = tSUBspi %SP<tied0>, 1, pred:14, pred:%noreg; flags: FrameSetup
+	%R4<def> = COPY %R2
+	%R5<def> = COPY %R1
+	%R1<def> = t2MOVi32imm <ga:@transformation>
+	%R0<def> = t2ADDrs %R1<kill>, %R0<kill>, 18, pred:14, pred:%noreg, opt:%noreg
+	%R1<def> = t2MOVi16 19552, pred:14, pred:%noreg
+	%R1<def> = t2LDRs %R0, %R1<kill>, 0, pred:14, pred:%noreg; mem:LD4[%1]
+	%R2<def> = t2MOVi 20736, pred:14, pred:%noreg, opt:%noreg
+	%R6<def> = t2LDRs %R0<kill>, %R2<kill>, 0, pred:14, pred:%noreg; mem:LD4[%4]
+	%R0<def> = t2ADDrr %R1<kill>, %R5, pred:14, pred:%noreg, opt:%noreg
+	%R1<def> = COPY %R4
+	tBL pred:14, pred:%noreg, <ga:@influence_mark_non_territory>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %LR<imp-def,dead>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %SP<imp-def>
+	%R0<def> = t2ADDrr %R6<kill>, %R5<kill>, pred:14, pred:%noreg, opt:%noreg
+	%R1<def> = COPY %R4<kill>
+	tBL pred:14, pred:%noreg, <ga:@influence_mark_non_territory>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %LR<imp-def,dead>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %SP<imp-def>
+	%R0<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg
+	%SP<def,tied1> = tADDspi %SP<tied0>, 1, pred:14, pred:%noreg
+	%SP<def,tied1> = t2LDMIA_RET %SP<tied0>, pred:14, pred:%noreg, %R4<def>, %R5<def>, %R6<def>, %R7<def>, %PC<def>, %R0<imp-use>
+
+# End machine code for function autohelperbarrierspat145.
+
+# After Post-RA pseudo instruction expansion pass:
+# Machine code for function autohelperbarrierspat145: Post SSA
+Frame Objects:
+  fi#0: size=4, align=4, at location [SP-4]
+  fi#1: size=4, align=4, at location [SP-8]
+  fi#2: size=4, align=4, at location [SP-12]
+  fi#3: size=4, align=4, at location [SP-16]
+  fi#4: size=4, align=4, at location [SP-20]
+Function Live Ins: %R0, %R1, %R2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R2 %R4 %R5 %R6 %R7 %LR
+	%SP<def,tied1> = t2STMDB_UPD %SP<tied0>, pred:14, pred:%noreg, %R4<kill>, %R5<kill>, %R6<kill>, %R7<kill>, %LR<kill>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%R7<def> = t2ADDri %SP<kill>, 12, pred:14, pred:%noreg, opt:%noreg; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%SP<def,tied1> = tSUBspi %SP<tied0>, 1, pred:14, pred:%noreg; flags: FrameSetup
+	%R4<def> = tMOVr %R2, pred:14, pred:%noreg
+	%R5<def> = tMOVr %R1, pred:14, pred:%noreg
+	%R1<def> = t2MOVi32imm <ga:@transformation>
+	%R0<def> = t2ADDrs %R1<kill>, %R0<kill>, 18, pred:14, pred:%noreg, opt:%noreg
+	%R1<def> = t2MOVi16 19552, pred:14, pred:%noreg
+	%R1<def> = t2LDRs %R0, %R1<kill>, 0, pred:14, pred:%noreg; mem:LD4[%1]
+	%R2<def> = t2MOVi 20736, pred:14, pred:%noreg, opt:%noreg
+	%R6<def> = t2LDRs %R0<kill>, %R2<kill>, 0, pred:14, pred:%noreg; mem:LD4[%4]
+	%R0<def> = t2ADDrr %R1<kill>, %R5, pred:14, pred:%noreg, opt:%noreg
+	%R1<def> = tMOVr %R4, pred:14, pred:%noreg
+	tBL pred:14, pred:%noreg, <ga:@influence_mark_non_territory>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %LR<imp-def,dead>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %SP<imp-def>
+	%R0<def> = t2ADDrr %R6<kill>, %R5<kill>, pred:14, pred:%noreg, opt:%noreg
+	%R1<def> = tMOVr %R4<kill>, pred:14, pred:%noreg
+	tBL pred:14, pred:%noreg, <ga:@influence_mark_non_territory>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %LR<imp-def,dead>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %SP<imp-def>
+	%R0<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg
+	%SP<def,tied1> = tADDspi %SP<tied0>, 1, pred:14, pred:%noreg
+	%SP<def,tied1> = t2LDMIA_RET %SP<tied0>, pred:14, pred:%noreg, %R4<def>, %R5<def>, %R6<def>, %R7<def>, %PC<def>, %R0<imp-use>
+
+# End machine code for function autohelperbarrierspat145.
+
+# After ARM load / store optimization pass:
+# Machine code for function autohelperbarrierspat145: Post SSA
+Frame Objects:
+  fi#0: size=4, align=4, at location [SP-4]
+  fi#1: size=4, align=4, at location [SP-8]
+  fi#2: size=4, align=4, at location [SP-12]
+  fi#3: size=4, align=4, at location [SP-16]
+  fi#4: size=4, align=4, at location [SP-20]
+Function Live Ins: %R0, %R1, %R2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R2 %R4 %R5 %R6 %R7 %LR
+	%SP<def,tied1> = t2STMDB_UPD %SP<tied0>, pred:14, pred:%noreg, %R4<kill>, %R5<kill>, %R6<kill>, %R7<kill>, %LR<kill>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%R7<def> = t2ADDri %SP<kill>, 12, pred:14, pred:%noreg, opt:%noreg; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%SP<def,tied1> = tSUBspi %SP<tied0>, 1, pred:14, pred:%noreg; flags: FrameSetup
+	%R4<def> = tMOVr %R2, pred:14, pred:%noreg
+	%R5<def> = tMOVr %R1, pred:14, pred:%noreg
+	%R1<def> = t2MOVi32imm <ga:@transformation>
+	%R0<def> = t2ADDrs %R1<kill>, %R0<kill>, 18, pred:14, pred:%noreg, opt:%noreg
+	%R1<def> = t2MOVi16 19552, pred:14, pred:%noreg
+	%R1<def> = t2LDRs %R0, %R1<kill>, 0, pred:14, pred:%noreg; mem:LD4[%1]
+	%R2<def> = t2MOVi 20736, pred:14, pred:%noreg, opt:%noreg
+	%R6<def> = t2LDRs %R0<kill>, %R2<kill>, 0, pred:14, pred:%noreg; mem:LD4[%4]
+	%R0<def> = t2ADDrr %R1<kill>, %R5, pred:14, pred:%noreg, opt:%noreg
+	%R1<def> = tMOVr %R4, pred:14, pred:%noreg
+	tBL pred:14, pred:%noreg, <ga:@influence_mark_non_territory>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %LR<imp-def,dead>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %SP<imp-def>
+	%R0<def> = t2ADDrr %R6<kill>, %R5<kill>, pred:14, pred:%noreg, opt:%noreg
+	%R1<def> = tMOVr %R4<kill>, pred:14, pred:%noreg
+	tBL pred:14, pred:%noreg, <ga:@influence_mark_non_territory>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %LR<imp-def,dead>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %SP<imp-def>
+	%R0<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg
+	%SP<def,tied1> = tADDspi %SP<tied0>, 1, pred:14, pred:%noreg
+	%SP<def,tied1> = t2LDMIA_RET %SP<tied0>, pred:14, pred:%noreg, %R4<def>, %R5<def>, %R6<def>, %R7<def>, %PC<def>, %R0<imp-use>
+
+# End machine code for function autohelperbarrierspat145.
+
+# After Execution dependency fix:
+# Machine code for function autohelperbarrierspat145: Post SSA
+Frame Objects:
+  fi#0: size=4, align=4, at location [SP-4]
+  fi#1: size=4, align=4, at location [SP-8]
+  fi#2: size=4, align=4, at location [SP-12]
+  fi#3: size=4, align=4, at location [SP-16]
+  fi#4: size=4, align=4, at location [SP-20]
+Function Live Ins: %R0, %R1, %R2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R2 %R4 %R5 %R6 %R7 %LR
+	%SP<def,tied1> = t2STMDB_UPD %SP<tied0>, pred:14, pred:%noreg, %R4<kill>, %R5<kill>, %R6<kill>, %R7<kill>, %LR<kill>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%R7<def> = t2ADDri %SP<kill>, 12, pred:14, pred:%noreg, opt:%noreg; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%SP<def,tied1> = tSUBspi %SP<tied0>, 1, pred:14, pred:%noreg; flags: FrameSetup
+	%R4<def> = tMOVr %R2, pred:14, pred:%noreg
+	%R5<def> = tMOVr %R1, pred:14, pred:%noreg
+	%R1<def> = t2MOVi32imm <ga:@transformation>
+	%R0<def> = t2ADDrs %R1<kill>, %R0<kill>, 18, pred:14, pred:%noreg, opt:%noreg
+	%R1<def> = t2MOVi16 19552, pred:14, pred:%noreg
+	%R1<def> = t2LDRs %R0, %R1<kill>, 0, pred:14, pred:%noreg; mem:LD4[%1]
+	%R2<def> = t2MOVi 20736, pred:14, pred:%noreg, opt:%noreg
+	%R6<def> = t2LDRs %R0<kill>, %R2<kill>, 0, pred:14, pred:%noreg; mem:LD4[%4]
+	%R0<def> = t2ADDrr %R1<kill>, %R5, pred:14, pred:%noreg, opt:%noreg
+	%R1<def> = tMOVr %R4, pred:14, pred:%noreg
+	tBL pred:14, pred:%noreg, <ga:@influence_mark_non_territory>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %LR<imp-def,dead>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %SP<imp-def>
+	%R0<def> = t2ADDrr %R6<kill>, %R5<kill>, pred:14, pred:%noreg, opt:%noreg
+	%R1<def> = tMOVr %R4<kill>, pred:14, pred:%noreg
+	tBL pred:14, pred:%noreg, <ga:@influence_mark_non_territory>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %LR<imp-def,dead>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %SP<imp-def>
+	%R0<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg
+	%SP<def,tied1> = tADDspi %SP<tied0>, 1, pred:14, pred:%noreg
+	%SP<def,tied1> = t2LDMIA_RET %SP<tied0>, pred:14, pred:%noreg, %R4<def>, %R5<def>, %R6<def>, %R7<def>, %PC<def>, %R0<imp-use>
+
+# End machine code for function autohelperbarrierspat145.
+
+# After ARM pseudo instruction expansion pass:
+# Machine code for function autohelperbarrierspat145: Post SSA
+Frame Objects:
+  fi#0: size=4, align=4, at location [SP-4]
+  fi#1: size=4, align=4, at location [SP-8]
+  fi#2: size=4, align=4, at location [SP-12]
+  fi#3: size=4, align=4, at location [SP-16]
+  fi#4: size=4, align=4, at location [SP-20]
+Function Live Ins: %R0, %R1, %R2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R2 %R4 %R5 %R6 %R7 %LR
+	%SP<def,tied1> = t2STMDB_UPD %SP<tied0>, pred:14, pred:%noreg, %R4<kill>, %R5<kill>, %R6<kill>, %R7<kill>, %LR<kill>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%R7<def> = t2ADDri %SP<kill>, 12, pred:14, pred:%noreg, opt:%noreg; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%SP<def,tied1> = tSUBspi %SP<tied0>, 1, pred:14, pred:%noreg; flags: FrameSetup
+	%R4<def> = tMOVr %R2, pred:14, pred:%noreg
+	%R5<def> = tMOVr %R1, pred:14, pred:%noreg
+	%R1<def> = t2MOVi16 <ga:@transformation>[TF=1], pred:14, pred:%noreg
+	%R1<def,tied1> = t2MOVTi16 %R1<tied0>, <ga:@transformation>[TF=2], pred:14, pred:%noreg
+	%R0<def> = t2ADDrs %R1<kill>, %R0<kill>, 18, pred:14, pred:%noreg, opt:%noreg
+	%R1<def> = t2MOVi16 19552, pred:14, pred:%noreg
+	%R1<def> = t2LDRs %R0, %R1<kill>, 0, pred:14, pred:%noreg; mem:LD4[%1]
+	%R2<def> = t2MOVi 20736, pred:14, pred:%noreg, opt:%noreg
+	%R6<def> = t2LDRs %R0<kill>, %R2<kill>, 0, pred:14, pred:%noreg; mem:LD4[%4]
+	%R0<def> = t2ADDrr %R1<kill>, %R5, pred:14, pred:%noreg, opt:%noreg
+	%R1<def> = tMOVr %R4, pred:14, pred:%noreg
+	tBL pred:14, pred:%noreg, <ga:@influence_mark_non_territory>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %LR<imp-def,dead>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %SP<imp-def>
+	%R0<def> = t2ADDrr %R6<kill>, %R5<kill>, pred:14, pred:%noreg, opt:%noreg
+	%R1<def> = tMOVr %R4<kill>, pred:14, pred:%noreg
+	tBL pred:14, pred:%noreg, <ga:@influence_mark_non_territory>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %LR<imp-def,dead>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %SP<imp-def>
+	%R0<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg
+	%SP<def,tied1> = tADDspi %SP<tied0>, 1, pred:14, pred:%noreg
+	%SP<def,tied1> = t2LDMIA_RET %SP<tied0>, pred:14, pred:%noreg, %R4<def>, %R5<def>, %R6<def>, %R7<def>, %PC<def>, %R0<imp-use>
+
+# End machine code for function autohelperbarrierspat145.
+
+# After Thumb2 instruction size reduction pass:
+# Machine code for function autohelperbarrierspat145: Post SSA
+Frame Objects:
+  fi#0: size=4, align=4, at location [SP-4]
+  fi#1: size=4, align=4, at location [SP-8]
+  fi#2: size=4, align=4, at location [SP-12]
+  fi#3: size=4, align=4, at location [SP-16]
+  fi#4: size=4, align=4, at location [SP-20]
+Function Live Ins: %R0, %R1, %R2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R2 %R4 %R5 %R6 %R7 %LR
+	%SP<def,tied1> = t2STMDB_UPD %SP<tied0>, pred:14, pred:%noreg, %R4<kill>, %R5<kill>, %R6<kill>, %R7<kill>, %LR<kill>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%R7<def> = t2ADDri %SP<kill>, 12, pred:14, pred:%noreg, opt:%noreg; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%SP<def,tied1> = tSUBspi %SP<tied0>, 1, pred:14, pred:%noreg; flags: FrameSetup
+	%R4<def> = tMOVr %R2, pred:14, pred:%noreg
+	%R5<def> = tMOVr %R1, pred:14, pred:%noreg
+	%R1<def> = t2MOVi16 <ga:@transformation>[TF=1], pred:14, pred:%noreg
+	%R1<def,tied1> = t2MOVTi16 %R1<tied0>, <ga:@transformation>[TF=2], pred:14, pred:%noreg
+	%R0<def> = t2ADDrs %R1<kill>, %R0<kill>, 18, pred:14, pred:%noreg, opt:%noreg
+	%R1<def> = t2MOVi16 19552, pred:14, pred:%noreg
+	%R1<def> = t2LDRs %R0, %R1<kill>, 0, pred:14, pred:%noreg; mem:LD4[%1]
+	%R2<def> = t2MOVi 20736, pred:14, pred:%noreg, opt:%noreg
+	%R6<def> = t2LDRs %R0<kill>, %R2<kill>, 0, pred:14, pred:%noreg; mem:LD4[%4]
+	%R0<def> = t2ADDrr %R1<kill>, %R5, pred:14, pred:%noreg, opt:%noreg
+	%R1<def> = tMOVr %R4, pred:14, pred:%noreg
+	tBL pred:14, pred:%noreg, <ga:@influence_mark_non_territory>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %LR<imp-def,dead>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %SP<imp-def>
+	%R0<def> = t2ADDrr %R6<kill>, %R5<kill>, pred:14, pred:%noreg, opt:%noreg
+	%R1<def> = tMOVr %R4<kill>, pred:14, pred:%noreg
+	tBL pred:14, pred:%noreg, <ga:@influence_mark_non_territory>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %LR<imp-def,dead>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %SP<imp-def>
+	%R0<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg
+	%SP<def,tied1> = tADDspi %SP<tied0>, 1, pred:14, pred:%noreg
+	%SP<def,tied1> = t2LDMIA_RET %SP<tied0>, pred:14, pred:%noreg, %R4<def>, %R5<def>, %R6<def>, %R7<def>, %PC<def>, %R0<imp-use>
+
+# End machine code for function autohelperbarrierspat145.
+
+# After Thumb IT blocks insertion pass:
+# Machine code for function autohelperbarrierspat145: Post SSA
+Frame Objects:
+  fi#0: size=4, align=4, at location [SP-4]
+  fi#1: size=4, align=4, at location [SP-8]
+  fi#2: size=4, align=4, at location [SP-12]
+  fi#3: size=4, align=4, at location [SP-16]
+  fi#4: size=4, align=4, at location [SP-20]
+Function Live Ins: %R0, %R1, %R2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R2 %R4 %R5 %R6 %R7 %LR
+	%SP<def,tied1> = t2STMDB_UPD %SP<tied0>, pred:14, pred:%noreg, %R4<kill>, %R5<kill>, %R6<kill>, %R7<kill>, %LR<kill>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%R7<def> = t2ADDri %SP<kill>, 12, pred:14, pred:%noreg, opt:%noreg; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%SP<def,tied1> = tSUBspi %SP<tied0>, 1, pred:14, pred:%noreg; flags: FrameSetup
+	%R4<def> = tMOVr %R2, pred:14, pred:%noreg
+	%R5<def> = tMOVr %R1, pred:14, pred:%noreg
+	%R1<def> = t2MOVi16 <ga:@transformation>[TF=1], pred:14, pred:%noreg
+	%R1<def,tied1> = t2MOVTi16 %R1<tied0>, <ga:@transformation>[TF=2], pred:14, pred:%noreg
+	%R0<def> = t2ADDrs %R1<kill>, %R0<kill>, 18, pred:14, pred:%noreg, opt:%noreg
+	%R1<def> = t2MOVi16 19552, pred:14, pred:%noreg
+	%R1<def> = t2LDRs %R0, %R1<kill>, 0, pred:14, pred:%noreg; mem:LD4[%1]
+	%R2<def> = t2MOVi 20736, pred:14, pred:%noreg, opt:%noreg
+	%R6<def> = t2LDRs %R0<kill>, %R2<kill>, 0, pred:14, pred:%noreg; mem:LD4[%4]
+	%R0<def> = t2ADDrr %R1<kill>, %R5, pred:14, pred:%noreg, opt:%noreg
+	%R1<def> = tMOVr %R4, pred:14, pred:%noreg
+	tBL pred:14, pred:%noreg, <ga:@influence_mark_non_territory>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %LR<imp-def,dead>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %SP<imp-def>
+	%R0<def> = t2ADDrr %R6<kill>, %R5<kill>, pred:14, pred:%noreg, opt:%noreg
+	%R1<def> = tMOVr %R4<kill>, pred:14, pred:%noreg
+	tBL pred:14, pred:%noreg, <ga:@influence_mark_non_territory>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %LR<imp-def,dead>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %SP<imp-def>
+	%R0<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg
+	%SP<def,tied1> = tADDspi %SP<tied0>, 1, pred:14, pred:%noreg
+	%SP<def,tied1> = t2LDMIA_RET %SP<tied0>, pred:14, pred:%noreg, %R4<def>, %R5<def>, %R6<def>, %R7<def>, %PC<def>, %R0<imp-use>
+
+# End machine code for function autohelperbarrierspat145.
+
+# After Analyze Machine Code For Garbage Collection:
+# Machine code for function autohelperbarrierspat145: Post SSA
+Frame Objects:
+  fi#0: size=4, align=4, at location [SP-4]
+  fi#1: size=4, align=4, at location [SP-8]
+  fi#2: size=4, align=4, at location [SP-12]
+  fi#3: size=4, align=4, at location [SP-16]
+  fi#4: size=4, align=4, at location [SP-20]
+Function Live Ins: %R0, %R1, %R2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R2 %R4 %R5 %R6 %R7 %LR
+	%SP<def,tied1> = t2STMDB_UPD %SP<tied0>, pred:14, pred:%noreg, %R4<kill>, %R5<kill>, %R6<kill>, %R7<kill>, %LR<kill>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%R7<def> = t2ADDri %SP<kill>, 12, pred:14, pred:%noreg, opt:%noreg; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%SP<def,tied1> = tSUBspi %SP<tied0>, 1, pred:14, pred:%noreg; flags: FrameSetup
+	%R4<def> = tMOVr %R2, pred:14, pred:%noreg
+	%R5<def> = tMOVr %R1, pred:14, pred:%noreg
+	%R1<def> = t2MOVi16 <ga:@transformation>[TF=1], pred:14, pred:%noreg
+	%R1<def,tied1> = t2MOVTi16 %R1<tied0>, <ga:@transformation>[TF=2], pred:14, pred:%noreg
+	%R0<def> = t2ADDrs %R1<kill>, %R0<kill>, 18, pred:14, pred:%noreg, opt:%noreg
+	%R1<def> = t2MOVi16 19552, pred:14, pred:%noreg
+	%R1<def> = t2LDRs %R0, %R1<kill>, 0, pred:14, pred:%noreg; mem:LD4[%1]
+	%R2<def> = t2MOVi 20736, pred:14, pred:%noreg, opt:%noreg
+	%R6<def> = t2LDRs %R0<kill>, %R2<kill>, 0, pred:14, pred:%noreg; mem:LD4[%4]
+	%R0<def> = t2ADDrr %R1<kill>, %R5, pred:14, pred:%noreg, opt:%noreg
+	%R1<def> = tMOVr %R4, pred:14, pred:%noreg
+	tBL pred:14, pred:%noreg, <ga:@influence_mark_non_territory>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %LR<imp-def,dead>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %SP<imp-def>
+	%R0<def> = t2ADDrr %R6<kill>, %R5<kill>, pred:14, pred:%noreg, opt:%noreg
+	%R1<def> = tMOVr %R4<kill>, pred:14, pred:%noreg
+	tBL pred:14, pred:%noreg, <ga:@influence_mark_non_territory>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %LR<imp-def,dead>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %SP<imp-def>
+	%R0<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg
+	%SP<def,tied1> = tADDspi %SP<tied0>, 1, pred:14, pred:%noreg
+	%SP<def,tied1> = t2LDMIA_RET %SP<tied0>, pred:14, pred:%noreg, %R4<def>, %R5<def>, %R6<def>, %R7<def>, %PC<def>, %R0<imp-use>
+
+# End machine code for function autohelperbarrierspat145.
+
+# After Thumb2 instruction size reduction pass:
+# Machine code for function autohelperbarrierspat145: Post SSA
+Frame Objects:
+  fi#0: size=4, align=4, at location [SP-4]
+  fi#1: size=4, align=4, at location [SP-8]
+  fi#2: size=4, align=4, at location [SP-12]
+  fi#3: size=4, align=4, at location [SP-16]
+  fi#4: size=4, align=4, at location [SP-20]
+Function Live Ins: %R0, %R1, %R2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R2 %R4 %R5 %R6 %R7 %LR
+	tPUSH pred:14, pred:%noreg, %R4<kill>, %R5<kill>, %R6<kill>, %R7<kill>, %LR<kill>, %SP<imp-def>, %SP<imp-use>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%R7<def> = tADDrSPi %SP<kill>, 3, pred:14, pred:%noreg; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%SP<def,tied1> = tSUBspi %SP<tied0>, 1, pred:14, pred:%noreg; flags: FrameSetup
+	%R4<def> = tMOVr %R2, pred:14, pred:%noreg
+	%R5<def> = tMOVr %R1, pred:14, pred:%noreg
+	%R1<def> = t2MOVi16 <ga:@transformation>[TF=1], pred:14, pred:%noreg
+	%R1<def,tied1> = t2MOVTi16 %R1<tied0>, <ga:@transformation>[TF=2], pred:14, pred:%noreg
+	%R0<def> = t2ADDrs %R1<kill>, %R0<kill>, 18, pred:14, pred:%noreg, opt:%noreg
+	%R1<def> = t2MOVi16 19552, pred:14, pred:%noreg
+	%R1<def> = tLDRr %R0, %R1<kill>, pred:14, pred:%noreg; mem:LD4[%1]
+	%R2<def> = t2MOVi 20736, pred:14, pred:%noreg, opt:%noreg
+	%R6<def> = tLDRr %R0<kill>, %R2<kill>, pred:14, pred:%noreg; mem:LD4[%4]
+	%R0<def>, %CPSR<def,dead> = tADDrr %R1<kill>, %R5, pred:14, pred:%noreg
+	%R1<def> = tMOVr %R4, pred:14, pred:%noreg
+	tBL pred:14, pred:%noreg, <ga:@influence_mark_non_territory>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %LR<imp-def,dead>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %SP<imp-def>
+	%R0<def>, %CPSR<def,dead> = tADDrr %R6<kill>, %R5<kill>, pred:14, pred:%noreg
+	%R1<def> = tMOVr %R4<kill>, pred:14, pred:%noreg
+	tBL pred:14, pred:%noreg, <ga:@influence_mark_non_territory>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %LR<imp-def,dead>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %SP<imp-def>
+	%R0<def>, %CPSR<def,dead> = tMOVi8 0, pred:14, pred:%noreg
+	%SP<def,tied1> = tADDspi %SP<tied0>, 1, pred:14, pred:%noreg
+	tPOP_RET pred:14, pred:%noreg, %R4<def>, %R5<def>, %R6<def>, %R7<def>, %PC<def>, %R0<imp-use>
+
+# End machine code for function autohelperbarrierspat145.
+
+# After Unpack machine instruction bundles:
+# Machine code for function autohelperbarrierspat145: Post SSA
+Frame Objects:
+  fi#0: size=4, align=4, at location [SP-4]
+  fi#1: size=4, align=4, at location [SP-8]
+  fi#2: size=4, align=4, at location [SP-12]
+  fi#3: size=4, align=4, at location [SP-16]
+  fi#4: size=4, align=4, at location [SP-20]
+Function Live Ins: %R0, %R1, %R2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R2 %R4 %R5 %R6 %R7 %LR
+	tPUSH pred:14, pred:%noreg, %R4<kill>, %R5<kill>, %R6<kill>, %R7<kill>, %LR<kill>, %SP<imp-def>, %SP<imp-use>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%R7<def> = tADDrSPi %SP<kill>, 3, pred:14, pred:%noreg; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%SP<def,tied1> = tSUBspi %SP<tied0>, 1, pred:14, pred:%noreg; flags: FrameSetup
+	%R4<def> = tMOVr %R2, pred:14, pred:%noreg
+	%R5<def> = tMOVr %R1, pred:14, pred:%noreg
+	%R1<def> = t2MOVi16 <ga:@transformation>[TF=1], pred:14, pred:%noreg
+	%R1<def,tied1> = t2MOVTi16 %R1<tied0>, <ga:@transformation>[TF=2], pred:14, pred:%noreg
+	%R0<def> = t2ADDrs %R1<kill>, %R0<kill>, 18, pred:14, pred:%noreg, opt:%noreg
+	%R1<def> = t2MOVi16 19552, pred:14, pred:%noreg
+	%R1<def> = tLDRr %R0, %R1<kill>, pred:14, pred:%noreg; mem:LD4[%1]
+	%R2<def> = t2MOVi 20736, pred:14, pred:%noreg, opt:%noreg
+	%R6<def> = tLDRr %R0<kill>, %R2<kill>, pred:14, pred:%noreg; mem:LD4[%4]
+	%R0<def>, %CPSR<def,dead> = tADDrr %R1<kill>, %R5, pred:14, pred:%noreg
+	%R1<def> = tMOVr %R4, pred:14, pred:%noreg
+	tBL pred:14, pred:%noreg, <ga:@influence_mark_non_territory>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %LR<imp-def,dead>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %SP<imp-def>
+	%R0<def>, %CPSR<def,dead> = tADDrr %R6<kill>, %R5<kill>, pred:14, pred:%noreg
+	%R1<def> = tMOVr %R4<kill>, pred:14, pred:%noreg
+	tBL pred:14, pred:%noreg, <ga:@influence_mark_non_territory>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %LR<imp-def,dead>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %SP<imp-def>
+	%R0<def>, %CPSR<def,dead> = tMOVi8 0, pred:14, pred:%noreg
+	%SP<def,tied1> = tADDspi %SP<tied0>, 1, pred:14, pred:%noreg
+	tPOP_RET pred:14, pred:%noreg, %R4<def>, %R5<def>, %R6<def>, %R7<def>, %PC<def>, %R0<imp-use>
+
+# End machine code for function autohelperbarrierspat145.
+
+# After optimise barriers pass:
+# Machine code for function autohelperbarrierspat145: Post SSA
+Frame Objects:
+  fi#0: size=4, align=4, at location [SP-4]
+  fi#1: size=4, align=4, at location [SP-8]
+  fi#2: size=4, align=4, at location [SP-12]
+  fi#3: size=4, align=4, at location [SP-16]
+  fi#4: size=4, align=4, at location [SP-20]
+Function Live Ins: %R0, %R1, %R2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R2 %R4 %R5 %R6 %R7 %LR
+	tPUSH pred:14, pred:%noreg, %R4<kill>, %R5<kill>, %R6<kill>, %R7<kill>, %LR<kill>, %SP<imp-def>, %SP<imp-use>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%R7<def> = tADDrSPi %SP<kill>, 3, pred:14, pred:%noreg; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%SP<def,tied1> = tSUBspi %SP<tied0>, 1, pred:14, pred:%noreg; flags: FrameSetup
+	%R4<def> = tMOVr %R2, pred:14, pred:%noreg
+	%R5<def> = tMOVr %R1, pred:14, pred:%noreg
+	%R1<def> = t2MOVi16 <ga:@transformation>[TF=1], pred:14, pred:%noreg
+	%R1<def,tied1> = t2MOVTi16 %R1<tied0>, <ga:@transformation>[TF=2], pred:14, pred:%noreg
+	%R0<def> = t2ADDrs %R1<kill>, %R0<kill>, 18, pred:14, pred:%noreg, opt:%noreg
+	%R1<def> = t2MOVi16 19552, pred:14, pred:%noreg
+	%R1<def> = tLDRr %R0, %R1<kill>, pred:14, pred:%noreg; mem:LD4[%1]
+	%R2<def> = t2MOVi 20736, pred:14, pred:%noreg, opt:%noreg
+	%R6<def> = tLDRr %R0<kill>, %R2<kill>, pred:14, pred:%noreg; mem:LD4[%4]
+	%R0<def>, %CPSR<def,dead> = tADDrr %R1<kill>, %R5, pred:14, pred:%noreg
+	%R1<def> = tMOVr %R4, pred:14, pred:%noreg
+	tBL pred:14, pred:%noreg, <ga:@influence_mark_non_territory>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %LR<imp-def,dead>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %SP<imp-def>
+	%R0<def>, %CPSR<def,dead> = tADDrr %R6<kill>, %R5<kill>, pred:14, pred:%noreg
+	%R1<def> = tMOVr %R4<kill>, pred:14, pred:%noreg
+	tBL pred:14, pred:%noreg, <ga:@influence_mark_non_territory>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %LR<imp-def,dead>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %SP<imp-def>
+	%R0<def>, %CPSR<def,dead> = tMOVi8 0, pred:14, pred:%noreg
+	%SP<def,tied1> = tADDspi %SP<tied0>, 1, pred:14, pred:%noreg
+	tPOP_RET pred:14, pred:%noreg, %R4<def>, %R5<def>, %R6<def>, %R7<def>, %PC<def>, %R0<imp-use>
+
+# End machine code for function autohelperbarrierspat145.
+
+# After ARM constant island placement and branch shortening pass:
+# Machine code for function autohelperbarrierspat145: Post SSA, not tracking liveness
+Frame Objects:
+  fi#0: size=4, align=4, at location [SP-4]
+  fi#1: size=4, align=4, at location [SP-8]
+  fi#2: size=4, align=4, at location [SP-12]
+  fi#3: size=4, align=4, at location [SP-16]
+  fi#4: size=4, align=4, at location [SP-20]
+Function Live Ins: %R0, %R1, %R2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R2 %R4 %R5 %R6 %R7 %LR
+	tPUSH pred:14, pred:%noreg, %R4<kill>, %R5<kill>, %R6<kill>, %R7<kill>, %LR<kill>, %SP<imp-def>, %SP<imp-use>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%R7<def> = tADDrSPi %SP<kill>, 3, pred:14, pred:%noreg; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%SP<def,tied1> = tSUBspi %SP<tied0>, 1, pred:14, pred:%noreg; flags: FrameSetup
+	%R4<def> = tMOVr %R2, pred:14, pred:%noreg
+	%R5<def> = tMOVr %R1, pred:14, pred:%noreg
+	%R1<def> = t2MOVi16 <ga:@transformation>[TF=1], pred:14, pred:%noreg
+	%R1<def,tied1> = t2MOVTi16 %R1<tied0>, <ga:@transformation>[TF=2], pred:14, pred:%noreg
+	%R0<def> = t2ADDrs %R1<kill>, %R0<kill>, 18, pred:14, pred:%noreg, opt:%noreg
+	%R1<def> = t2MOVi16 19552, pred:14, pred:%noreg
+	%R1<def> = tLDRr %R0, %R1<kill>, pred:14, pred:%noreg; mem:LD4[%1]
+	%R2<def> = t2MOVi 20736, pred:14, pred:%noreg, opt:%noreg
+	%R6<def> = tLDRr %R0<kill>, %R2<kill>, pred:14, pred:%noreg; mem:LD4[%4]
+	%R0<def>, %CPSR<def,dead> = tADDrr %R1<kill>, %R5, pred:14, pred:%noreg
+	%R1<def> = tMOVr %R4, pred:14, pred:%noreg
+	tBL pred:14, pred:%noreg, <ga:@influence_mark_non_territory>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %LR<imp-def,dead>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %SP<imp-def>
+	%R0<def>, %CPSR<def,dead> = tADDrr %R6<kill>, %R5<kill>, pred:14, pred:%noreg
+	%R1<def> = tMOVr %R4<kill>, pred:14, pred:%noreg
+	tBL pred:14, pred:%noreg, <ga:@influence_mark_non_territory>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %LR<imp-def,dead>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %SP<imp-def>
+	%R0<def>, %CPSR<def,dead> = tMOVi8 0, pred:14, pred:%noreg
+	%SP<def,tied1> = tADDspi %SP<tied0>, 1, pred:14, pred:%noreg
+	tPOP_RET pred:14, pred:%noreg, %R4<def>, %R5<def>, %R6<def>, %R7<def>, %PC<def>, %R0<imp-use>
+
+# End machine code for function autohelperbarrierspat145.
+
+# After Contiguously Lay Out Funclets:
+# Machine code for function autohelperbarrierspat145: Post SSA, not tracking liveness
+Frame Objects:
+  fi#0: size=4, align=4, at location [SP-4]
+  fi#1: size=4, align=4, at location [SP-8]
+  fi#2: size=4, align=4, at location [SP-12]
+  fi#3: size=4, align=4, at location [SP-16]
+  fi#4: size=4, align=4, at location [SP-20]
+Function Live Ins: %R0, %R1, %R2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R2 %R4 %R5 %R6 %R7 %LR
+	tPUSH pred:14, pred:%noreg, %R4<kill>, %R5<kill>, %R6<kill>, %R7<kill>, %LR<kill>, %SP<imp-def>, %SP<imp-use>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%R7<def> = tADDrSPi %SP<kill>, 3, pred:14, pred:%noreg; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%SP<def,tied1> = tSUBspi %SP<tied0>, 1, pred:14, pred:%noreg; flags: FrameSetup
+	%R4<def> = tMOVr %R2, pred:14, pred:%noreg
+	%R5<def> = tMOVr %R1, pred:14, pred:%noreg
+	%R1<def> = t2MOVi16 <ga:@transformation>[TF=1], pred:14, pred:%noreg
+	%R1<def,tied1> = t2MOVTi16 %R1<tied0>, <ga:@transformation>[TF=2], pred:14, pred:%noreg
+	%R0<def> = t2ADDrs %R1<kill>, %R0<kill>, 18, pred:14, pred:%noreg, opt:%noreg
+	%R1<def> = t2MOVi16 19552, pred:14, pred:%noreg
+	%R1<def> = tLDRr %R0, %R1<kill>, pred:14, pred:%noreg; mem:LD4[%1]
+	%R2<def> = t2MOVi 20736, pred:14, pred:%noreg, opt:%noreg
+	%R6<def> = tLDRr %R0<kill>, %R2<kill>, pred:14, pred:%noreg; mem:LD4[%4]
+	%R0<def>, %CPSR<def,dead> = tADDrr %R1<kill>, %R5, pred:14, pred:%noreg
+	%R1<def> = tMOVr %R4, pred:14, pred:%noreg
+	tBL pred:14, pred:%noreg, <ga:@influence_mark_non_territory>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %LR<imp-def,dead>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %SP<imp-def>
+	%R0<def>, %CPSR<def,dead> = tADDrr %R6<kill>, %R5<kill>, pred:14, pred:%noreg
+	%R1<def> = tMOVr %R4<kill>, pred:14, pred:%noreg
+	tBL pred:14, pred:%noreg, <ga:@influence_mark_non_territory>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %LR<imp-def,dead>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %SP<imp-def>
+	%R0<def>, %CPSR<def,dead> = tMOVi8 0, pred:14, pred:%noreg
+	%SP<def,tied1> = tADDspi %SP<tied0>, 1, pred:14, pred:%noreg
+	tPOP_RET pred:14, pred:%noreg, %R4<def>, %R5<def>, %R6<def>, %R7<def>, %PC<def>, %R0<imp-use>
+
+# End machine code for function autohelperbarrierspat145.
+
+# After StackMap Liveness Analysis:
+# Machine code for function autohelperbarrierspat145: Post SSA, not tracking liveness
+Frame Objects:
+  fi#0: size=4, align=4, at location [SP-4]
+  fi#1: size=4, align=4, at location [SP-8]
+  fi#2: size=4, align=4, at location [SP-12]
+  fi#3: size=4, align=4, at location [SP-16]
+  fi#4: size=4, align=4, at location [SP-20]
+Function Live Ins: %R0, %R1, %R2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R2 %R4 %R5 %R6 %R7 %LR
+	tPUSH pred:14, pred:%noreg, %R4<kill>, %R5<kill>, %R6<kill>, %R7<kill>, %LR<kill>, %SP<imp-def>, %SP<imp-use>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%R7<def> = tADDrSPi %SP<kill>, 3, pred:14, pred:%noreg; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%SP<def,tied1> = tSUBspi %SP<tied0>, 1, pred:14, pred:%noreg; flags: FrameSetup
+	%R4<def> = tMOVr %R2, pred:14, pred:%noreg
+	%R5<def> = tMOVr %R1, pred:14, pred:%noreg
+	%R1<def> = t2MOVi16 <ga:@transformation>[TF=1], pred:14, pred:%noreg
+	%R1<def,tied1> = t2MOVTi16 %R1<tied0>, <ga:@transformation>[TF=2], pred:14, pred:%noreg
+	%R0<def> = t2ADDrs %R1<kill>, %R0<kill>, 18, pred:14, pred:%noreg, opt:%noreg
+	%R1<def> = t2MOVi16 19552, pred:14, pred:%noreg
+	%R1<def> = tLDRr %R0, %R1<kill>, pred:14, pred:%noreg; mem:LD4[%1]
+	%R2<def> = t2MOVi 20736, pred:14, pred:%noreg, opt:%noreg
+	%R6<def> = tLDRr %R0<kill>, %R2<kill>, pred:14, pred:%noreg; mem:LD4[%4]
+	%R0<def>, %CPSR<def,dead> = tADDrr %R1<kill>, %R5, pred:14, pred:%noreg
+	%R1<def> = tMOVr %R4, pred:14, pred:%noreg
+	tBL pred:14, pred:%noreg, <ga:@influence_mark_non_territory>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %LR<imp-def,dead>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %SP<imp-def>
+	%R0<def>, %CPSR<def,dead> = tADDrr %R6<kill>, %R5<kill>, pred:14, pred:%noreg
+	%R1<def> = tMOVr %R4<kill>, pred:14, pred:%noreg
+	tBL pred:14, pred:%noreg, <ga:@influence_mark_non_territory>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %LR<imp-def,dead>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %SP<imp-def>
+	%R0<def>, %CPSR<def,dead> = tMOVi8 0, pred:14, pred:%noreg
+	%SP<def,tied1> = tADDspi %SP<tied0>, 1, pred:14, pred:%noreg
+	tPOP_RET pred:14, pred:%noreg, %R4<def>, %R5<def>, %R6<def>, %R7<def>, %PC<def>, %R0<imp-use>
+
+# End machine code for function autohelperbarrierspat145.
+
+# After Live DEBUG_VALUE analysis:
+# Machine code for function autohelperbarrierspat145: Post SSA, not tracking liveness
+Frame Objects:
+  fi#0: size=4, align=4, at location [SP-4]
+  fi#1: size=4, align=4, at location [SP-8]
+  fi#2: size=4, align=4, at location [SP-12]
+  fi#3: size=4, align=4, at location [SP-16]
+  fi#4: size=4, align=4, at location [SP-20]
+Function Live Ins: %R0, %R1, %R2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R2 %R4 %R5 %R6 %R7 %LR
+	tPUSH pred:14, pred:%noreg, %R4<kill>, %R5<kill>, %R6<kill>, %R7<kill>, %LR<kill>, %SP<imp-def>, %SP<imp-use>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%R7<def> = tADDrSPi %SP<kill>, 3, pred:14, pred:%noreg; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%SP<def,tied1> = tSUBspi %SP<tied0>, 1, pred:14, pred:%noreg; flags: FrameSetup
+	%R4<def> = tMOVr %R2, pred:14, pred:%noreg
+	%R5<def> = tMOVr %R1, pred:14, pred:%noreg
+	%R1<def> = t2MOVi16 <ga:@transformation>[TF=1], pred:14, pred:%noreg
+	%R1<def,tied1> = t2MOVTi16 %R1<tied0>, <ga:@transformation>[TF=2], pred:14, pred:%noreg
+	%R0<def> = t2ADDrs %R1<kill>, %R0<kill>, 18, pred:14, pred:%noreg, opt:%noreg
+	%R1<def> = t2MOVi16 19552, pred:14, pred:%noreg
+	%R1<def> = tLDRr %R0, %R1<kill>, pred:14, pred:%noreg; mem:LD4[%1]
+	%R2<def> = t2MOVi 20736, pred:14, pred:%noreg, opt:%noreg
+	%R6<def> = tLDRr %R0<kill>, %R2<kill>, pred:14, pred:%noreg; mem:LD4[%4]
+	%R0<def>, %CPSR<def,dead> = tADDrr %R1<kill>, %R5, pred:14, pred:%noreg
+	%R1<def> = tMOVr %R4, pred:14, pred:%noreg
+	tBL pred:14, pred:%noreg, <ga:@influence_mark_non_territory>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %LR<imp-def,dead>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %SP<imp-def>
+	%R0<def>, %CPSR<def,dead> = tADDrr %R6<kill>, %R5<kill>, pred:14, pred:%noreg
+	%R1<def> = tMOVr %R4<kill>, pred:14, pred:%noreg
+	tBL pred:14, pred:%noreg, <ga:@influence_mark_non_territory>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %LR<imp-def,dead>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %SP<imp-def>
+	%R0<def>, %CPSR<def,dead> = tMOVi8 0, pred:14, pred:%noreg
+	%SP<def,tied1> = tADDspi %SP<tied0>, 1, pred:14, pred:%noreg
+	tPOP_RET pred:14, pred:%noreg, %R4<def>, %R5<def>, %R6<def>, %R7<def>, %PC<def>, %R0<imp-use>
+
+# End machine code for function autohelperbarrierspat145.
+

@@ -1,0 +1,1456 @@
+# After Instruction Selection:
+# Machine code for function autohelperbarrierspat145: SSA
+Function Live Ins: %A0 in %vreg0, %A1 in %vreg1, %A2 in %vreg2, %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %A0 %A1 %A2 %T9 %V0
+	%vreg4<def> = ADDu %V0, %T9; GPR32:%vreg4
+	%vreg2<def> = COPY %A2; GPR32:%vreg2
+	%vreg1<def> = COPY %A1; GPR32:%vreg1
+	%vreg0<def> = COPY %A0; GPR32:%vreg0
+	%vreg5<def> = SLL %vreg0, 2; GPR32:%vreg5,%vreg0
+	%vreg6<def> = LW %vreg4, <ga:@transformation>[TF=1]; mem:LD4[GOT] GPR32:%vreg6,%vreg4
+	%vreg7<def> = ADDu %vreg6<kill>, %vreg5<kill>; GPR32:%vreg7,%vreg6,%vreg5
+	%vreg8<def> = LW %vreg7, 20736; mem:LD4[%4] GPR32:%vreg8,%vreg7
+	%vreg9<def> = LW %vreg7, 19552; mem:LD4[%1] GPR32:%vreg9,%vreg7
+	ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg10<def> = LW %vreg4, <ga:@influence_mark_non_territory>[TF=3]; mem:LD4[GlobalValueCallEntry] GPR32:%vreg10,%vreg4
+	%vreg11<def> = ADDu %vreg9<kill>, %vreg1; GPR32:%vreg11,%vreg9,%vreg1
+	%A0<def> = COPY %vreg11; GPR32:%vreg11
+	%A1<def> = COPY %vreg2; GPR32:%vreg2
+	%GP<def> = COPY %vreg4; GPR32:%vreg4
+	JALRPseudo %vreg10<kill>, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %A0<imp-use>, %A1<imp-use>, %GP<imp-use>, %SP<imp-def>, ...; GPR32:%vreg10
+	ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg12<def> = ADDu %vreg8<kill>, %vreg1; GPR32:%vreg12,%vreg8,%vreg1
+	ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg13<def> = LW %vreg4, <ga:@influence_mark_non_territory>[TF=3]; mem:LD4[GlobalValueCallEntry] GPR32:%vreg13,%vreg4
+	%A0<def> = COPY %vreg12; GPR32:%vreg12
+	%A1<def> = COPY %vreg2; GPR32:%vreg2
+	%GP<def> = COPY %vreg4; GPR32:%vreg4
+	JALRPseudo %vreg13<kill>, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %A0<imp-use>, %A1<imp-use>, %GP<imp-use>, %SP<imp-def>, ...; GPR32:%vreg13
+	ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg14<def> = ADDiu %ZERO, 0; GPR32:%vreg14
+	%V0<def> = COPY %vreg14; GPR32:%vreg14
+	RetRA %V0<imp-use>
+
+# End machine code for function autohelperbarrierspat145.
+
+# After Expand ISel Pseudo-instructions:
+# Machine code for function autohelperbarrierspat145: SSA
+Function Live Ins: %A0 in %vreg0, %A1 in %vreg1, %A2 in %vreg2, %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %A0 %A1 %A2 %T9 %V0
+	%vreg4<def> = ADDu %V0, %T9; GPR32:%vreg4
+	%vreg2<def> = COPY %A2; GPR32:%vreg2
+	%vreg1<def> = COPY %A1; GPR32:%vreg1
+	%vreg0<def> = COPY %A0; GPR32:%vreg0
+	%vreg5<def> = SLL %vreg0, 2; GPR32:%vreg5,%vreg0
+	%vreg6<def> = LW %vreg4, <ga:@transformation>[TF=1]; mem:LD4[GOT] GPR32:%vreg6,%vreg4
+	%vreg7<def> = ADDu %vreg6<kill>, %vreg5<kill>; GPR32:%vreg7,%vreg6,%vreg5
+	%vreg8<def> = LW %vreg7, 20736; mem:LD4[%4] GPR32:%vreg8,%vreg7
+	%vreg9<def> = LW %vreg7, 19552; mem:LD4[%1] GPR32:%vreg9,%vreg7
+	ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg10<def> = LW %vreg4, <ga:@influence_mark_non_territory>[TF=3]; mem:LD4[GlobalValueCallEntry] GPR32:%vreg10,%vreg4
+	%vreg11<def> = ADDu %vreg9<kill>, %vreg1; GPR32:%vreg11,%vreg9,%vreg1
+	%A0<def> = COPY %vreg11; GPR32:%vreg11
+	%A1<def> = COPY %vreg2; GPR32:%vreg2
+	%GP<def> = COPY %vreg4; GPR32:%vreg4
+	JALRPseudo %vreg10<kill>, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %A0<imp-use>, %A1<imp-use>, %GP<imp-use>, %SP<imp-def>, ...; GPR32:%vreg10
+	ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg12<def> = ADDu %vreg8<kill>, %vreg1; GPR32:%vreg12,%vreg8,%vreg1
+	ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg13<def> = LW %vreg4, <ga:@influence_mark_non_territory>[TF=3]; mem:LD4[GlobalValueCallEntry] GPR32:%vreg13,%vreg4
+	%A0<def> = COPY %vreg12; GPR32:%vreg12
+	%A1<def> = COPY %vreg2; GPR32:%vreg2
+	%GP<def> = COPY %vreg4; GPR32:%vreg4
+	JALRPseudo %vreg13<kill>, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %A0<imp-use>, %A1<imp-use>, %GP<imp-use>, %SP<imp-def>, ...; GPR32:%vreg13
+	ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg14<def> = ADDiu %ZERO, 0; GPR32:%vreg14
+	%V0<def> = COPY %vreg14; GPR32:%vreg14
+	RetRA %V0<imp-use>
+
+# End machine code for function autohelperbarrierspat145.
+
+# After Mips OptimizePICCall:
+# Machine code for function autohelperbarrierspat145: SSA
+Function Live Ins: %A0 in %vreg0, %A1 in %vreg1, %A2 in %vreg2, %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %A0 %A1 %A2 %T9 %V0
+	%vreg4<def> = ADDu %V0, %T9; GPR32:%vreg4
+	%vreg2<def> = COPY %A2; GPR32:%vreg2
+	%vreg1<def> = COPY %A1; GPR32:%vreg1
+	%vreg0<def> = COPY %A0; GPR32:%vreg0
+	%vreg5<def> = SLL %vreg0, 2; GPR32:%vreg5,%vreg0
+	%vreg6<def> = LW %vreg4, <ga:@transformation>[TF=1]; mem:LD4[GOT] GPR32:%vreg6,%vreg4
+	%vreg7<def> = ADDu %vreg6<kill>, %vreg5<kill>; GPR32:%vreg7,%vreg6,%vreg5
+	%vreg8<def> = LW %vreg7, 20736; mem:LD4[%4] GPR32:%vreg8,%vreg7
+	%vreg9<def> = LW %vreg7, 19552; mem:LD4[%1] GPR32:%vreg9,%vreg7
+	ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg10<def> = LW %vreg4, <ga:@influence_mark_non_territory>[TF=3]; mem:LD4[GlobalValueCallEntry] GPR32:%vreg10,%vreg4
+	%vreg11<def> = ADDu %vreg9<kill>, %vreg1; GPR32:%vreg11,%vreg9,%vreg1
+	%A0<def> = COPY %vreg11; GPR32:%vreg11
+	%A1<def> = COPY %vreg2; GPR32:%vreg2
+	%GP<def> = COPY %vreg4; GPR32:%vreg4
+	%T9<def> = COPY %vreg10; GPR32:%vreg10
+	JALRPseudo %T9<kill>, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %A0<imp-use>, %A1<imp-use>, %GP<imp-use>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg12<def> = ADDu %vreg8<kill>, %vreg1; GPR32:%vreg12,%vreg8,%vreg1
+	ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg13<def> = LW %vreg4, <ga:@influence_mark_non_territory>[TF=3]; mem:LD4[GlobalValueCallEntry] GPR32:%vreg13,%vreg4
+	%A0<def> = COPY %vreg12; GPR32:%vreg12
+	%A1<def> = COPY %vreg2; GPR32:%vreg2
+	%GP<def> = COPY %vreg4; GPR32:%vreg4
+	%T9<def> = COPY %vreg13; GPR32:%vreg13
+	JALRPseudo %T9<kill>, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %A0<imp-use>, %A1<imp-use>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg14<def> = ADDiu %ZERO, 0; GPR32:%vreg14
+	%V0<def> = COPY %vreg14; GPR32:%vreg14
+	RetRA %V0<imp-use>
+
+# End machine code for function autohelperbarrierspat145.
+
+# After Tail Duplication:
+# Machine code for function autohelperbarrierspat145: SSA
+Function Live Ins: %A0 in %vreg0, %A1 in %vreg1, %A2 in %vreg2, %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %A0 %A1 %A2 %T9 %V0
+	%vreg4<def> = ADDu %V0, %T9; GPR32:%vreg4
+	%vreg2<def> = COPY %A2; GPR32:%vreg2
+	%vreg1<def> = COPY %A1; GPR32:%vreg1
+	%vreg0<def> = COPY %A0; GPR32:%vreg0
+	%vreg5<def> = SLL %vreg0, 2; GPR32:%vreg5,%vreg0
+	%vreg6<def> = LW %vreg4, <ga:@transformation>[TF=1]; mem:LD4[GOT] GPR32:%vreg6,%vreg4
+	%vreg7<def> = ADDu %vreg6<kill>, %vreg5<kill>; GPR32:%vreg7,%vreg6,%vreg5
+	%vreg8<def> = LW %vreg7, 20736; mem:LD4[%4] GPR32:%vreg8,%vreg7
+	%vreg9<def> = LW %vreg7, 19552; mem:LD4[%1] GPR32:%vreg9,%vreg7
+	ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg10<def> = LW %vreg4, <ga:@influence_mark_non_territory>[TF=3]; mem:LD4[GlobalValueCallEntry] GPR32:%vreg10,%vreg4
+	%vreg11<def> = ADDu %vreg9<kill>, %vreg1; GPR32:%vreg11,%vreg9,%vreg1
+	%A0<def> = COPY %vreg11; GPR32:%vreg11
+	%A1<def> = COPY %vreg2; GPR32:%vreg2
+	%GP<def> = COPY %vreg4; GPR32:%vreg4
+	%T9<def> = COPY %vreg10; GPR32:%vreg10
+	JALRPseudo %T9<kill>, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %A0<imp-use>, %A1<imp-use>, %GP<imp-use>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg12<def> = ADDu %vreg8<kill>, %vreg1; GPR32:%vreg12,%vreg8,%vreg1
+	ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg13<def> = LW %vreg4, <ga:@influence_mark_non_territory>[TF=3]; mem:LD4[GlobalValueCallEntry] GPR32:%vreg13,%vreg4
+	%A0<def> = COPY %vreg12; GPR32:%vreg12
+	%A1<def> = COPY %vreg2; GPR32:%vreg2
+	%GP<def> = COPY %vreg4; GPR32:%vreg4
+	%T9<def> = COPY %vreg13; GPR32:%vreg13
+	JALRPseudo %T9<kill>, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %A0<imp-use>, %A1<imp-use>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg14<def> = ADDiu %ZERO, 0; GPR32:%vreg14
+	%V0<def> = COPY %vreg14; GPR32:%vreg14
+	RetRA %V0<imp-use>
+
+# End machine code for function autohelperbarrierspat145.
+
+# After Optimize machine instruction PHIs:
+# Machine code for function autohelperbarrierspat145: SSA
+Function Live Ins: %A0 in %vreg0, %A1 in %vreg1, %A2 in %vreg2, %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %A0 %A1 %A2 %T9 %V0
+	%vreg4<def> = ADDu %V0, %T9; GPR32:%vreg4
+	%vreg2<def> = COPY %A2; GPR32:%vreg2
+	%vreg1<def> = COPY %A1; GPR32:%vreg1
+	%vreg0<def> = COPY %A0; GPR32:%vreg0
+	%vreg5<def> = SLL %vreg0, 2; GPR32:%vreg5,%vreg0
+	%vreg6<def> = LW %vreg4, <ga:@transformation>[TF=1]; mem:LD4[GOT] GPR32:%vreg6,%vreg4
+	%vreg7<def> = ADDu %vreg6<kill>, %vreg5<kill>; GPR32:%vreg7,%vreg6,%vreg5
+	%vreg8<def> = LW %vreg7, 20736; mem:LD4[%4] GPR32:%vreg8,%vreg7
+	%vreg9<def> = LW %vreg7, 19552; mem:LD4[%1] GPR32:%vreg9,%vreg7
+	ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg10<def> = LW %vreg4, <ga:@influence_mark_non_territory>[TF=3]; mem:LD4[GlobalValueCallEntry] GPR32:%vreg10,%vreg4
+	%vreg11<def> = ADDu %vreg9<kill>, %vreg1; GPR32:%vreg11,%vreg9,%vreg1
+	%A0<def> = COPY %vreg11; GPR32:%vreg11
+	%A1<def> = COPY %vreg2; GPR32:%vreg2
+	%GP<def> = COPY %vreg4; GPR32:%vreg4
+	%T9<def> = COPY %vreg10; GPR32:%vreg10
+	JALRPseudo %T9<kill>, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %A0<imp-use>, %A1<imp-use>, %GP<imp-use>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg12<def> = ADDu %vreg8<kill>, %vreg1; GPR32:%vreg12,%vreg8,%vreg1
+	ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg13<def> = LW %vreg4, <ga:@influence_mark_non_territory>[TF=3]; mem:LD4[GlobalValueCallEntry] GPR32:%vreg13,%vreg4
+	%A0<def> = COPY %vreg12; GPR32:%vreg12
+	%A1<def> = COPY %vreg2; GPR32:%vreg2
+	%GP<def> = COPY %vreg4; GPR32:%vreg4
+	%T9<def> = COPY %vreg13; GPR32:%vreg13
+	JALRPseudo %T9<kill>, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %A0<imp-use>, %A1<imp-use>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg14<def> = ADDiu %ZERO, 0; GPR32:%vreg14
+	%V0<def> = COPY %vreg14; GPR32:%vreg14
+	RetRA %V0<imp-use>
+
+# End machine code for function autohelperbarrierspat145.
+
+# After Merge disjoint stack slots:
+# Machine code for function autohelperbarrierspat145: SSA
+Function Live Ins: %A0 in %vreg0, %A1 in %vreg1, %A2 in %vreg2, %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %A0 %A1 %A2 %T9 %V0
+	%vreg4<def> = ADDu %V0, %T9; GPR32:%vreg4
+	%vreg2<def> = COPY %A2; GPR32:%vreg2
+	%vreg1<def> = COPY %A1; GPR32:%vreg1
+	%vreg0<def> = COPY %A0; GPR32:%vreg0
+	%vreg5<def> = SLL %vreg0, 2; GPR32:%vreg5,%vreg0
+	%vreg6<def> = LW %vreg4, <ga:@transformation>[TF=1]; mem:LD4[GOT] GPR32:%vreg6,%vreg4
+	%vreg7<def> = ADDu %vreg6<kill>, %vreg5<kill>; GPR32:%vreg7,%vreg6,%vreg5
+	%vreg8<def> = LW %vreg7, 20736; mem:LD4[%4] GPR32:%vreg8,%vreg7
+	%vreg9<def> = LW %vreg7, 19552; mem:LD4[%1] GPR32:%vreg9,%vreg7
+	ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg10<def> = LW %vreg4, <ga:@influence_mark_non_territory>[TF=3]; mem:LD4[GlobalValueCallEntry] GPR32:%vreg10,%vreg4
+	%vreg11<def> = ADDu %vreg9<kill>, %vreg1; GPR32:%vreg11,%vreg9,%vreg1
+	%A0<def> = COPY %vreg11; GPR32:%vreg11
+	%A1<def> = COPY %vreg2; GPR32:%vreg2
+	%GP<def> = COPY %vreg4; GPR32:%vreg4
+	%T9<def> = COPY %vreg10; GPR32:%vreg10
+	JALRPseudo %T9<kill>, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %A0<imp-use>, %A1<imp-use>, %GP<imp-use>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg12<def> = ADDu %vreg8<kill>, %vreg1; GPR32:%vreg12,%vreg8,%vreg1
+	ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg13<def> = LW %vreg4, <ga:@influence_mark_non_territory>[TF=3]; mem:LD4[GlobalValueCallEntry] GPR32:%vreg13,%vreg4
+	%A0<def> = COPY %vreg12; GPR32:%vreg12
+	%A1<def> = COPY %vreg2; GPR32:%vreg2
+	%GP<def> = COPY %vreg4; GPR32:%vreg4
+	%T9<def> = COPY %vreg13; GPR32:%vreg13
+	JALRPseudo %T9<kill>, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %A0<imp-use>, %A1<imp-use>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg14<def> = ADDiu %ZERO, 0; GPR32:%vreg14
+	%V0<def> = COPY %vreg14; GPR32:%vreg14
+	RetRA %V0<imp-use>
+
+# End machine code for function autohelperbarrierspat145.
+
+# After Local Stack Slot Allocation:
+# Machine code for function autohelperbarrierspat145: SSA
+Function Live Ins: %A0 in %vreg0, %A1 in %vreg1, %A2 in %vreg2, %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %A0 %A1 %A2 %T9 %V0
+	%vreg4<def> = ADDu %V0, %T9; GPR32:%vreg4
+	%vreg2<def> = COPY %A2; GPR32:%vreg2
+	%vreg1<def> = COPY %A1; GPR32:%vreg1
+	%vreg0<def> = COPY %A0; GPR32:%vreg0
+	%vreg5<def> = SLL %vreg0, 2; GPR32:%vreg5,%vreg0
+	%vreg6<def> = LW %vreg4, <ga:@transformation>[TF=1]; mem:LD4[GOT] GPR32:%vreg6,%vreg4
+	%vreg7<def> = ADDu %vreg6<kill>, %vreg5<kill>; GPR32:%vreg7,%vreg6,%vreg5
+	%vreg8<def> = LW %vreg7, 20736; mem:LD4[%4] GPR32:%vreg8,%vreg7
+	%vreg9<def> = LW %vreg7, 19552; mem:LD4[%1] GPR32:%vreg9,%vreg7
+	ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg10<def> = LW %vreg4, <ga:@influence_mark_non_territory>[TF=3]; mem:LD4[GlobalValueCallEntry] GPR32:%vreg10,%vreg4
+	%vreg11<def> = ADDu %vreg9<kill>, %vreg1; GPR32:%vreg11,%vreg9,%vreg1
+	%A0<def> = COPY %vreg11; GPR32:%vreg11
+	%A1<def> = COPY %vreg2; GPR32:%vreg2
+	%GP<def> = COPY %vreg4; GPR32:%vreg4
+	%T9<def> = COPY %vreg10; GPR32:%vreg10
+	JALRPseudo %T9<kill>, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %A0<imp-use>, %A1<imp-use>, %GP<imp-use>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg12<def> = ADDu %vreg8<kill>, %vreg1; GPR32:%vreg12,%vreg8,%vreg1
+	ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg13<def> = LW %vreg4, <ga:@influence_mark_non_territory>[TF=3]; mem:LD4[GlobalValueCallEntry] GPR32:%vreg13,%vreg4
+	%A0<def> = COPY %vreg12; GPR32:%vreg12
+	%A1<def> = COPY %vreg2; GPR32:%vreg2
+	%GP<def> = COPY %vreg4; GPR32:%vreg4
+	%T9<def> = COPY %vreg13; GPR32:%vreg13
+	JALRPseudo %T9<kill>, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %A0<imp-use>, %A1<imp-use>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg14<def> = ADDiu %ZERO, 0; GPR32:%vreg14
+	%V0<def> = COPY %vreg14; GPR32:%vreg14
+	RetRA %V0<imp-use>
+
+# End machine code for function autohelperbarrierspat145.
+
+# After Remove dead machine instructions:
+# Machine code for function autohelperbarrierspat145: SSA
+Function Live Ins: %A0 in %vreg0, %A1 in %vreg1, %A2 in %vreg2, %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %A0 %A1 %A2 %T9 %V0
+	%vreg4<def> = ADDu %V0, %T9; GPR32:%vreg4
+	%vreg2<def> = COPY %A2; GPR32:%vreg2
+	%vreg1<def> = COPY %A1; GPR32:%vreg1
+	%vreg0<def> = COPY %A0; GPR32:%vreg0
+	%vreg5<def> = SLL %vreg0, 2; GPR32:%vreg5,%vreg0
+	%vreg6<def> = LW %vreg4, <ga:@transformation>[TF=1]; mem:LD4[GOT] GPR32:%vreg6,%vreg4
+	%vreg7<def> = ADDu %vreg6<kill>, %vreg5<kill>; GPR32:%vreg7,%vreg6,%vreg5
+	%vreg8<def> = LW %vreg7, 20736; mem:LD4[%4] GPR32:%vreg8,%vreg7
+	%vreg9<def> = LW %vreg7, 19552; mem:LD4[%1] GPR32:%vreg9,%vreg7
+	ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg10<def> = LW %vreg4, <ga:@influence_mark_non_territory>[TF=3]; mem:LD4[GlobalValueCallEntry] GPR32:%vreg10,%vreg4
+	%vreg11<def> = ADDu %vreg9<kill>, %vreg1; GPR32:%vreg11,%vreg9,%vreg1
+	%A0<def> = COPY %vreg11; GPR32:%vreg11
+	%A1<def> = COPY %vreg2; GPR32:%vreg2
+	%GP<def> = COPY %vreg4; GPR32:%vreg4
+	%T9<def> = COPY %vreg10; GPR32:%vreg10
+	JALRPseudo %T9<kill>, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %A0<imp-use>, %A1<imp-use>, %GP<imp-use>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg12<def> = ADDu %vreg8<kill>, %vreg1; GPR32:%vreg12,%vreg8,%vreg1
+	ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg13<def> = LW %vreg4, <ga:@influence_mark_non_territory>[TF=3]; mem:LD4[GlobalValueCallEntry] GPR32:%vreg13,%vreg4
+	%A0<def> = COPY %vreg12; GPR32:%vreg12
+	%A1<def> = COPY %vreg2; GPR32:%vreg2
+	%T9<def> = COPY %vreg13; GPR32:%vreg13
+	JALRPseudo %T9<kill>, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %A0<imp-use>, %A1<imp-use>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg14<def> = ADDiu %ZERO, 0; GPR32:%vreg14
+	%V0<def> = COPY %vreg14; GPR32:%vreg14
+	RetRA %V0<imp-use>
+
+# End machine code for function autohelperbarrierspat145.
+
+# After Machine Loop Invariant Code Motion:
+# Machine code for function autohelperbarrierspat145: SSA
+Function Live Ins: %A0 in %vreg0, %A1 in %vreg1, %A2 in %vreg2, %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %A0 %A1 %A2 %T9 %V0
+	%vreg4<def> = ADDu %V0, %T9; GPR32:%vreg4
+	%vreg2<def> = COPY %A2; GPR32:%vreg2
+	%vreg1<def> = COPY %A1; GPR32:%vreg1
+	%vreg0<def> = COPY %A0; GPR32:%vreg0
+	%vreg5<def> = SLL %vreg0, 2; GPR32:%vreg5,%vreg0
+	%vreg6<def> = LW %vreg4, <ga:@transformation>[TF=1]; mem:LD4[GOT] GPR32:%vreg6,%vreg4
+	%vreg7<def> = ADDu %vreg6<kill>, %vreg5<kill>; GPR32:%vreg7,%vreg6,%vreg5
+	%vreg8<def> = LW %vreg7, 20736; mem:LD4[%4] GPR32:%vreg8,%vreg7
+	%vreg9<def> = LW %vreg7, 19552; mem:LD4[%1] GPR32:%vreg9,%vreg7
+	ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg10<def> = LW %vreg4, <ga:@influence_mark_non_territory>[TF=3]; mem:LD4[GlobalValueCallEntry] GPR32:%vreg10,%vreg4
+	%vreg11<def> = ADDu %vreg9<kill>, %vreg1; GPR32:%vreg11,%vreg9,%vreg1
+	%A0<def> = COPY %vreg11; GPR32:%vreg11
+	%A1<def> = COPY %vreg2; GPR32:%vreg2
+	%GP<def> = COPY %vreg4; GPR32:%vreg4
+	%T9<def> = COPY %vreg10; GPR32:%vreg10
+	JALRPseudo %T9<kill>, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %A0<imp-use>, %A1<imp-use>, %GP<imp-use>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg12<def> = ADDu %vreg8<kill>, %vreg1; GPR32:%vreg12,%vreg8,%vreg1
+	ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg13<def> = LW %vreg4, <ga:@influence_mark_non_territory>[TF=3]; mem:LD4[GlobalValueCallEntry] GPR32:%vreg13,%vreg4
+	%A0<def> = COPY %vreg12; GPR32:%vreg12
+	%A1<def> = COPY %vreg2; GPR32:%vreg2
+	%T9<def> = COPY %vreg13; GPR32:%vreg13
+	JALRPseudo %T9<kill>, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %A0<imp-use>, %A1<imp-use>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg14<def> = ADDiu %ZERO, 0; GPR32:%vreg14
+	%V0<def> = COPY %vreg14; GPR32:%vreg14
+	RetRA %V0<imp-use>
+
+# End machine code for function autohelperbarrierspat145.
+
+# After Machine Common Subexpression Elimination:
+# Machine code for function autohelperbarrierspat145: SSA
+Function Live Ins: %A0 in %vreg0, %A1 in %vreg1, %A2 in %vreg2, %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %A0 %A1 %A2 %T9 %V0
+	%vreg4<def> = ADDu %V0, %T9; GPR32:%vreg4
+	%vreg2<def> = COPY %A2; GPR32:%vreg2
+	%vreg1<def> = COPY %A1; GPR32:%vreg1
+	%vreg0<def> = COPY %A0; GPR32:%vreg0
+	%vreg5<def> = SLL %vreg0, 2; GPR32:%vreg5,%vreg0
+	%vreg6<def> = LW %vreg4, <ga:@transformation>[TF=1]; mem:LD4[GOT] GPR32:%vreg6,%vreg4
+	%vreg7<def> = ADDu %vreg6<kill>, %vreg5<kill>; GPR32:%vreg7,%vreg6,%vreg5
+	%vreg8<def> = LW %vreg7, 20736; mem:LD4[%4] GPR32:%vreg8,%vreg7
+	%vreg9<def> = LW %vreg7, 19552; mem:LD4[%1] GPR32:%vreg9,%vreg7
+	ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg10<def> = LW %vreg4, <ga:@influence_mark_non_territory>[TF=3]; mem:LD4[GlobalValueCallEntry] GPR32:%vreg10,%vreg4
+	%vreg11<def> = ADDu %vreg9<kill>, %vreg1; GPR32:%vreg11,%vreg9,%vreg1
+	%A0<def> = COPY %vreg11; GPR32:%vreg11
+	%A1<def> = COPY %vreg2; GPR32:%vreg2
+	%GP<def> = COPY %vreg4; GPR32:%vreg4
+	%T9<def> = COPY %vreg10; GPR32:%vreg10
+	JALRPseudo %T9<kill>, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %A0<imp-use>, %A1<imp-use>, %GP<imp-use>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg12<def> = ADDu %vreg8<kill>, %vreg1; GPR32:%vreg12,%vreg8,%vreg1
+	ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg13<def> = LW %vreg4, <ga:@influence_mark_non_territory>[TF=3]; mem:LD4[GlobalValueCallEntry] GPR32:%vreg13,%vreg4
+	%A0<def> = COPY %vreg12; GPR32:%vreg12
+	%A1<def> = COPY %vreg2; GPR32:%vreg2
+	%T9<def> = COPY %vreg13; GPR32:%vreg13
+	JALRPseudo %T9<kill>, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %A0<imp-use>, %A1<imp-use>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg14<def> = ADDiu %ZERO, 0; GPR32:%vreg14
+	%V0<def> = COPY %vreg14; GPR32:%vreg14
+	RetRA %V0<imp-use>
+
+# End machine code for function autohelperbarrierspat145.
+
+# After Machine code sinking:
+# Machine code for function autohelperbarrierspat145: SSA
+Function Live Ins: %A0 in %vreg0, %A1 in %vreg1, %A2 in %vreg2, %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %A0 %A1 %A2 %T9 %V0
+	%vreg4<def> = ADDu %V0, %T9; GPR32:%vreg4
+	%vreg2<def> = COPY %A2; GPR32:%vreg2
+	%vreg1<def> = COPY %A1; GPR32:%vreg1
+	%vreg0<def> = COPY %A0; GPR32:%vreg0
+	%vreg5<def> = SLL %vreg0, 2; GPR32:%vreg5,%vreg0
+	%vreg6<def> = LW %vreg4, <ga:@transformation>[TF=1]; mem:LD4[GOT] GPR32:%vreg6,%vreg4
+	%vreg7<def> = ADDu %vreg6<kill>, %vreg5<kill>; GPR32:%vreg7,%vreg6,%vreg5
+	%vreg8<def> = LW %vreg7, 20736; mem:LD4[%4] GPR32:%vreg8,%vreg7
+	%vreg9<def> = LW %vreg7, 19552; mem:LD4[%1] GPR32:%vreg9,%vreg7
+	ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg10<def> = LW %vreg4, <ga:@influence_mark_non_territory>[TF=3]; mem:LD4[GlobalValueCallEntry] GPR32:%vreg10,%vreg4
+	%vreg11<def> = ADDu %vreg9<kill>, %vreg1; GPR32:%vreg11,%vreg9,%vreg1
+	%A0<def> = COPY %vreg11; GPR32:%vreg11
+	%A1<def> = COPY %vreg2; GPR32:%vreg2
+	%GP<def> = COPY %vreg4; GPR32:%vreg4
+	%T9<def> = COPY %vreg10; GPR32:%vreg10
+	JALRPseudo %T9<kill>, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %A0<imp-use>, %A1<imp-use>, %GP<imp-use>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg12<def> = ADDu %vreg8<kill>, %vreg1; GPR32:%vreg12,%vreg8,%vreg1
+	ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg13<def> = LW %vreg4, <ga:@influence_mark_non_territory>[TF=3]; mem:LD4[GlobalValueCallEntry] GPR32:%vreg13,%vreg4
+	%A0<def> = COPY %vreg12; GPR32:%vreg12
+	%A1<def> = COPY %vreg2; GPR32:%vreg2
+	%T9<def> = COPY %vreg13; GPR32:%vreg13
+	JALRPseudo %T9<kill>, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %A0<imp-use>, %A1<imp-use>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg14<def> = ADDiu %ZERO, 0; GPR32:%vreg14
+	%V0<def> = COPY %vreg14; GPR32:%vreg14
+	RetRA %V0<imp-use>
+
+# End machine code for function autohelperbarrierspat145.
+
+# After Peephole Optimizations:
+# Machine code for function autohelperbarrierspat145: SSA
+Function Live Ins: %A0 in %vreg0, %A1 in %vreg1, %A2 in %vreg2, %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %A0 %A1 %A2 %T9 %V0
+	%vreg4<def> = ADDu %V0, %T9; GPR32:%vreg4
+	%vreg2<def> = COPY %A2; GPR32:%vreg2
+	%vreg1<def> = COPY %A1; GPR32:%vreg1
+	%vreg0<def> = COPY %A0; GPR32:%vreg0
+	%vreg5<def> = SLL %vreg0, 2; GPR32:%vreg5,%vreg0
+	%vreg6<def> = LW %vreg4, <ga:@transformation>[TF=1]; mem:LD4[GOT] GPR32:%vreg6,%vreg4
+	%vreg7<def> = ADDu %vreg6<kill>, %vreg5<kill>; GPR32:%vreg7,%vreg6,%vreg5
+	%vreg8<def> = LW %vreg7, 20736; mem:LD4[%4] GPR32:%vreg8,%vreg7
+	%vreg9<def> = LW %vreg7, 19552; mem:LD4[%1] GPR32:%vreg9,%vreg7
+	ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg10<def> = LW %vreg4, <ga:@influence_mark_non_territory>[TF=3]; mem:LD4[GlobalValueCallEntry] GPR32:%vreg10,%vreg4
+	%vreg11<def> = ADDu %vreg9<kill>, %vreg1; GPR32:%vreg11,%vreg9,%vreg1
+	%A0<def> = COPY %vreg11; GPR32:%vreg11
+	%A1<def> = COPY %vreg2; GPR32:%vreg2
+	%GP<def> = COPY %vreg4; GPR32:%vreg4
+	%T9<def> = COPY %vreg10; GPR32:%vreg10
+	JALRPseudo %T9<kill>, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %A0<imp-use>, %A1<imp-use>, %GP<imp-use>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg12<def> = ADDu %vreg8<kill>, %vreg1; GPR32:%vreg12,%vreg8,%vreg1
+	ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg13<def> = LW %vreg4, <ga:@influence_mark_non_territory>[TF=3]; mem:LD4[GlobalValueCallEntry] GPR32:%vreg13,%vreg4
+	%A0<def> = COPY %vreg12; GPR32:%vreg12
+	%A1<def> = COPY %vreg2; GPR32:%vreg2
+	%T9<def> = COPY %vreg13; GPR32:%vreg13
+	JALRPseudo %T9<kill>, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %A0<imp-use>, %A1<imp-use>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg14<def> = ADDiu %ZERO, 0; GPR32:%vreg14
+	%V0<def> = COPY %vreg14; GPR32:%vreg14
+	RetRA %V0<imp-use>
+
+# End machine code for function autohelperbarrierspat145.
+
+# After Remove dead machine instructions:
+# Machine code for function autohelperbarrierspat145: SSA
+Function Live Ins: %A0 in %vreg0, %A1 in %vreg1, %A2 in %vreg2, %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %A0 %A1 %A2 %T9 %V0
+	%vreg4<def> = ADDu %V0, %T9; GPR32:%vreg4
+	%vreg2<def> = COPY %A2; GPR32:%vreg2
+	%vreg1<def> = COPY %A1; GPR32:%vreg1
+	%vreg0<def> = COPY %A0; GPR32:%vreg0
+	%vreg5<def> = SLL %vreg0, 2; GPR32:%vreg5,%vreg0
+	%vreg6<def> = LW %vreg4, <ga:@transformation>[TF=1]; mem:LD4[GOT] GPR32:%vreg6,%vreg4
+	%vreg7<def> = ADDu %vreg6<kill>, %vreg5<kill>; GPR32:%vreg7,%vreg6,%vreg5
+	%vreg8<def> = LW %vreg7, 20736; mem:LD4[%4] GPR32:%vreg8,%vreg7
+	%vreg9<def> = LW %vreg7, 19552; mem:LD4[%1] GPR32:%vreg9,%vreg7
+	ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg10<def> = LW %vreg4, <ga:@influence_mark_non_territory>[TF=3]; mem:LD4[GlobalValueCallEntry] GPR32:%vreg10,%vreg4
+	%vreg11<def> = ADDu %vreg9<kill>, %vreg1; GPR32:%vreg11,%vreg9,%vreg1
+	%A0<def> = COPY %vreg11; GPR32:%vreg11
+	%A1<def> = COPY %vreg2; GPR32:%vreg2
+	%GP<def> = COPY %vreg4; GPR32:%vreg4
+	%T9<def> = COPY %vreg10; GPR32:%vreg10
+	JALRPseudo %T9<kill>, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %A0<imp-use>, %A1<imp-use>, %GP<imp-use>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg12<def> = ADDu %vreg8<kill>, %vreg1; GPR32:%vreg12,%vreg8,%vreg1
+	ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg13<def> = LW %vreg4, <ga:@influence_mark_non_territory>[TF=3]; mem:LD4[GlobalValueCallEntry] GPR32:%vreg13,%vreg4
+	%A0<def> = COPY %vreg12; GPR32:%vreg12
+	%A1<def> = COPY %vreg2; GPR32:%vreg2
+	%T9<def> = COPY %vreg13; GPR32:%vreg13
+	JALRPseudo %T9<kill>, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %A0<imp-use>, %A1<imp-use>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg14<def> = ADDiu %ZERO, 0; GPR32:%vreg14
+	%V0<def> = COPY %vreg14; GPR32:%vreg14
+	RetRA %V0<imp-use>
+
+# End machine code for function autohelperbarrierspat145.
+
+# After Process Implicit Definitions:
+# Machine code for function autohelperbarrierspat145: SSA
+Function Live Ins: %A0 in %vreg0, %A1 in %vreg1, %A2 in %vreg2, %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %A0 %A1 %A2 %T9 %V0
+	%vreg4<def> = ADDu %V0, %T9; GPR32:%vreg4
+	%vreg2<def> = COPY %A2; GPR32:%vreg2
+	%vreg1<def> = COPY %A1; GPR32:%vreg1
+	%vreg0<def> = COPY %A0; GPR32:%vreg0
+	%vreg5<def> = SLL %vreg0, 2; GPR32:%vreg5,%vreg0
+	%vreg6<def> = LW %vreg4, <ga:@transformation>[TF=1]; mem:LD4[GOT] GPR32:%vreg6,%vreg4
+	%vreg7<def> = ADDu %vreg6<kill>, %vreg5<kill>; GPR32:%vreg7,%vreg6,%vreg5
+	%vreg8<def> = LW %vreg7, 20736; mem:LD4[%4] GPR32:%vreg8,%vreg7
+	%vreg9<def> = LW %vreg7, 19552; mem:LD4[%1] GPR32:%vreg9,%vreg7
+	ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg10<def> = LW %vreg4, <ga:@influence_mark_non_territory>[TF=3]; mem:LD4[GlobalValueCallEntry] GPR32:%vreg10,%vreg4
+	%vreg11<def> = ADDu %vreg9<kill>, %vreg1; GPR32:%vreg11,%vreg9,%vreg1
+	%A0<def> = COPY %vreg11; GPR32:%vreg11
+	%A1<def> = COPY %vreg2; GPR32:%vreg2
+	%GP<def> = COPY %vreg4; GPR32:%vreg4
+	%T9<def> = COPY %vreg10; GPR32:%vreg10
+	JALRPseudo %T9<kill>, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %A0<imp-use>, %A1<imp-use>, %GP<imp-use>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg12<def> = ADDu %vreg8<kill>, %vreg1; GPR32:%vreg12,%vreg8,%vreg1
+	ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg13<def> = LW %vreg4, <ga:@influence_mark_non_territory>[TF=3]; mem:LD4[GlobalValueCallEntry] GPR32:%vreg13,%vreg4
+	%A0<def> = COPY %vreg12; GPR32:%vreg12
+	%A1<def> = COPY %vreg2; GPR32:%vreg2
+	%T9<def> = COPY %vreg13; GPR32:%vreg13
+	JALRPseudo %T9<kill>, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %A0<imp-use>, %A1<imp-use>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg14<def> = ADDiu %ZERO, 0; GPR32:%vreg14
+	%V0<def> = COPY %vreg14; GPR32:%vreg14
+	RetRA %V0<imp-use>
+
+# End machine code for function autohelperbarrierspat145.
+
+# After Live Variable Analysis:
+# Machine code for function autohelperbarrierspat145: SSA
+Function Live Ins: %A0 in %vreg0, %A1 in %vreg1, %A2 in %vreg2, %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %A0 %A1 %A2 %T9 %V0
+	%vreg4<def> = ADDu %V0<kill>, %T9<kill>; GPR32:%vreg4
+	%vreg2<def> = COPY %A2<kill>; GPR32:%vreg2
+	%vreg1<def> = COPY %A1<kill>; GPR32:%vreg1
+	%vreg0<def> = COPY %A0<kill>; GPR32:%vreg0
+	%vreg5<def> = SLL %vreg0<kill>, 2; GPR32:%vreg5,%vreg0
+	%vreg6<def> = LW %vreg4, <ga:@transformation>[TF=1]; mem:LD4[GOT] GPR32:%vreg6,%vreg4
+	%vreg7<def> = ADDu %vreg6<kill>, %vreg5<kill>; GPR32:%vreg7,%vreg6,%vreg5
+	%vreg8<def> = LW %vreg7, 20736; mem:LD4[%4] GPR32:%vreg8,%vreg7
+	%vreg9<def> = LW %vreg7<kill>, 19552; mem:LD4[%1] GPR32:%vreg9,%vreg7
+	ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg10<def> = LW %vreg4, <ga:@influence_mark_non_territory>[TF=3]; mem:LD4[GlobalValueCallEntry] GPR32:%vreg10,%vreg4
+	%vreg11<def> = ADDu %vreg9<kill>, %vreg1; GPR32:%vreg11,%vreg9,%vreg1
+	%A0<def> = COPY %vreg11<kill>; GPR32:%vreg11
+	%A1<def> = COPY %vreg2; GPR32:%vreg2
+	%GP<def> = COPY %vreg4; GPR32:%vreg4
+	%T9<def> = COPY %vreg10<kill>; GPR32:%vreg10
+	JALRPseudo %T9<kill>, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %A0<imp-use,kill>, %A1<imp-use,kill>, %GP<imp-use,kill>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg12<def> = ADDu %vreg8<kill>, %vreg1<kill>; GPR32:%vreg12,%vreg8,%vreg1
+	ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg13<def> = LW %vreg4<kill>, <ga:@influence_mark_non_territory>[TF=3]; mem:LD4[GlobalValueCallEntry] GPR32:%vreg13,%vreg4
+	%A0<def> = COPY %vreg12<kill>; GPR32:%vreg12
+	%A1<def> = COPY %vreg2<kill>; GPR32:%vreg2
+	%T9<def> = COPY %vreg13<kill>; GPR32:%vreg13
+	JALRPseudo %T9<kill>, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %A0<imp-use,kill>, %A1<imp-use,kill>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg14<def> = ADDiu %ZERO, 0; GPR32:%vreg14
+	%V0<def> = COPY %vreg14<kill>; GPR32:%vreg14
+	RetRA %V0<imp-use,kill>
+
+# End machine code for function autohelperbarrierspat145.
+
+# After Machine Natural Loop Construction:
+# Machine code for function autohelperbarrierspat145: SSA
+Function Live Ins: %A0 in %vreg0, %A1 in %vreg1, %A2 in %vreg2, %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %A0 %A1 %A2 %T9 %V0
+	%vreg4<def> = ADDu %V0<kill>, %T9<kill>; GPR32:%vreg4
+	%vreg2<def> = COPY %A2<kill>; GPR32:%vreg2
+	%vreg1<def> = COPY %A1<kill>; GPR32:%vreg1
+	%vreg0<def> = COPY %A0<kill>; GPR32:%vreg0
+	%vreg5<def> = SLL %vreg0<kill>, 2; GPR32:%vreg5,%vreg0
+	%vreg6<def> = LW %vreg4, <ga:@transformation>[TF=1]; mem:LD4[GOT] GPR32:%vreg6,%vreg4
+	%vreg7<def> = ADDu %vreg6<kill>, %vreg5<kill>; GPR32:%vreg7,%vreg6,%vreg5
+	%vreg8<def> = LW %vreg7, 20736; mem:LD4[%4] GPR32:%vreg8,%vreg7
+	%vreg9<def> = LW %vreg7<kill>, 19552; mem:LD4[%1] GPR32:%vreg9,%vreg7
+	ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg10<def> = LW %vreg4, <ga:@influence_mark_non_territory>[TF=3]; mem:LD4[GlobalValueCallEntry] GPR32:%vreg10,%vreg4
+	%vreg11<def> = ADDu %vreg9<kill>, %vreg1; GPR32:%vreg11,%vreg9,%vreg1
+	%A0<def> = COPY %vreg11<kill>; GPR32:%vreg11
+	%A1<def> = COPY %vreg2; GPR32:%vreg2
+	%GP<def> = COPY %vreg4; GPR32:%vreg4
+	%T9<def> = COPY %vreg10<kill>; GPR32:%vreg10
+	JALRPseudo %T9<kill>, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %A0<imp-use,kill>, %A1<imp-use,kill>, %GP<imp-use,kill>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg12<def> = ADDu %vreg8<kill>, %vreg1<kill>; GPR32:%vreg12,%vreg8,%vreg1
+	ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg13<def> = LW %vreg4<kill>, <ga:@influence_mark_non_territory>[TF=3]; mem:LD4[GlobalValueCallEntry] GPR32:%vreg13,%vreg4
+	%A0<def> = COPY %vreg12<kill>; GPR32:%vreg12
+	%A1<def> = COPY %vreg2<kill>; GPR32:%vreg2
+	%T9<def> = COPY %vreg13<kill>; GPR32:%vreg13
+	JALRPseudo %T9<kill>, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %A0<imp-use,kill>, %A1<imp-use,kill>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg14<def> = ADDiu %ZERO, 0; GPR32:%vreg14
+	%V0<def> = COPY %vreg14<kill>; GPR32:%vreg14
+	RetRA %V0<imp-use,kill>
+
+# End machine code for function autohelperbarrierspat145.
+
+# After Eliminate PHI nodes for register allocation:
+# Machine code for function autohelperbarrierspat145: Post SSA
+Function Live Ins: %A0 in %vreg0, %A1 in %vreg1, %A2 in %vreg2, %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %A0 %A1 %A2 %T9 %V0
+	%vreg4<def> = ADDu %V0<kill>, %T9<kill>; GPR32:%vreg4
+	%vreg2<def> = COPY %A2<kill>; GPR32:%vreg2
+	%vreg1<def> = COPY %A1<kill>; GPR32:%vreg1
+	%vreg0<def> = COPY %A0<kill>; GPR32:%vreg0
+	%vreg5<def> = SLL %vreg0<kill>, 2; GPR32:%vreg5,%vreg0
+	%vreg6<def> = LW %vreg4, <ga:@transformation>[TF=1]; mem:LD4[GOT] GPR32:%vreg6,%vreg4
+	%vreg7<def> = ADDu %vreg6<kill>, %vreg5<kill>; GPR32:%vreg7,%vreg6,%vreg5
+	%vreg8<def> = LW %vreg7, 20736; mem:LD4[%4] GPR32:%vreg8,%vreg7
+	%vreg9<def> = LW %vreg7<kill>, 19552; mem:LD4[%1] GPR32:%vreg9,%vreg7
+	ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg10<def> = LW %vreg4, <ga:@influence_mark_non_territory>[TF=3]; mem:LD4[GlobalValueCallEntry] GPR32:%vreg10,%vreg4
+	%vreg11<def> = ADDu %vreg9<kill>, %vreg1; GPR32:%vreg11,%vreg9,%vreg1
+	%A0<def> = COPY %vreg11<kill>; GPR32:%vreg11
+	%A1<def> = COPY %vreg2; GPR32:%vreg2
+	%GP<def> = COPY %vreg4; GPR32:%vreg4
+	%T9<def> = COPY %vreg10<kill>; GPR32:%vreg10
+	JALRPseudo %T9<kill>, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %A0<imp-use,kill>, %A1<imp-use,kill>, %GP<imp-use,kill>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg12<def> = ADDu %vreg8<kill>, %vreg1<kill>; GPR32:%vreg12,%vreg8,%vreg1
+	ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg13<def> = LW %vreg4<kill>, <ga:@influence_mark_non_territory>[TF=3]; mem:LD4[GlobalValueCallEntry] GPR32:%vreg13,%vreg4
+	%A0<def> = COPY %vreg12<kill>; GPR32:%vreg12
+	%A1<def> = COPY %vreg2<kill>; GPR32:%vreg2
+	%T9<def> = COPY %vreg13<kill>; GPR32:%vreg13
+	JALRPseudo %T9<kill>, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %A0<imp-use,kill>, %A1<imp-use,kill>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg14<def> = ADDiu %ZERO, 0; GPR32:%vreg14
+	%V0<def> = COPY %vreg14<kill>; GPR32:%vreg14
+	RetRA %V0<imp-use,kill>
+
+# End machine code for function autohelperbarrierspat145.
+
+# After Two-Address instruction pass:
+# Machine code for function autohelperbarrierspat145: Post SSA
+Function Live Ins: %A0 in %vreg0, %A1 in %vreg1, %A2 in %vreg2, %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %A0 %A1 %A2 %T9 %V0
+	%vreg4<def> = ADDu %V0<kill>, %T9<kill>; GPR32:%vreg4
+	%vreg2<def> = COPY %A2<kill>; GPR32:%vreg2
+	%vreg1<def> = COPY %A1<kill>; GPR32:%vreg1
+	%vreg0<def> = COPY %A0<kill>; GPR32:%vreg0
+	%vreg5<def> = SLL %vreg0<kill>, 2; GPR32:%vreg5,%vreg0
+	%vreg6<def> = LW %vreg4, <ga:@transformation>[TF=1]; mem:LD4[GOT] GPR32:%vreg6,%vreg4
+	%vreg7<def> = ADDu %vreg6<kill>, %vreg5<kill>; GPR32:%vreg7,%vreg6,%vreg5
+	%vreg8<def> = LW %vreg7, 20736; mem:LD4[%4] GPR32:%vreg8,%vreg7
+	%vreg9<def> = LW %vreg7<kill>, 19552; mem:LD4[%1] GPR32:%vreg9,%vreg7
+	ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg10<def> = LW %vreg4, <ga:@influence_mark_non_territory>[TF=3]; mem:LD4[GlobalValueCallEntry] GPR32:%vreg10,%vreg4
+	%vreg11<def> = ADDu %vreg9<kill>, %vreg1; GPR32:%vreg11,%vreg9,%vreg1
+	%A0<def> = COPY %vreg11<kill>; GPR32:%vreg11
+	%A1<def> = COPY %vreg2; GPR32:%vreg2
+	%GP<def> = COPY %vreg4; GPR32:%vreg4
+	%T9<def> = COPY %vreg10<kill>; GPR32:%vreg10
+	JALRPseudo %T9<kill>, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %A0<imp-use,kill>, %A1<imp-use,kill>, %GP<imp-use,kill>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg12<def> = ADDu %vreg8<kill>, %vreg1<kill>; GPR32:%vreg12,%vreg8,%vreg1
+	ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg13<def> = LW %vreg4<kill>, <ga:@influence_mark_non_territory>[TF=3]; mem:LD4[GlobalValueCallEntry] GPR32:%vreg13,%vreg4
+	%A0<def> = COPY %vreg12<kill>; GPR32:%vreg12
+	%A1<def> = COPY %vreg2<kill>; GPR32:%vreg2
+	%T9<def> = COPY %vreg13<kill>; GPR32:%vreg13
+	JALRPseudo %T9<kill>, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %A0<imp-use,kill>, %A1<imp-use,kill>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg14<def> = ADDiu %ZERO, 0; GPR32:%vreg14
+	%V0<def> = COPY %vreg14<kill>; GPR32:%vreg14
+	RetRA %V0<imp-use,kill>
+
+# End machine code for function autohelperbarrierspat145.
+
+# After Simple Register Coalescing:
+# Machine code for function autohelperbarrierspat145: Post SSA
+Function Live Ins: %A0 in %vreg0, %A1 in %vreg1, %A2 in %vreg2, %T9, %V0
+
+0B	BB#0: derived from LLVM BB %0
+	    Live Ins: %A0 %A1 %A2 %T9 %V0
+16B		%vreg4<def> = ADDu %V0, %T9; GPR32:%vreg4
+32B		%vreg2<def> = COPY %A2; GPR32:%vreg2
+48B		%vreg1<def> = COPY %A1; GPR32:%vreg1
+64B		%vreg0<def> = COPY %A0; GPR32:%vreg0
+80B		%vreg5<def> = SLL %vreg0, 2; GPR32:%vreg5,%vreg0
+96B		%vreg6<def> = LW %vreg4, <ga:@transformation>[TF=1]; mem:LD4[GOT] GPR32:%vreg6,%vreg4
+112B		%vreg7<def> = ADDu %vreg6, %vreg5; GPR32:%vreg7,%vreg6,%vreg5
+128B		%vreg8<def> = LW %vreg7, 20736; mem:LD4[%4] GPR32:%vreg8,%vreg7
+144B		%vreg9<def> = LW %vreg7, 19552; mem:LD4[%1] GPR32:%vreg9,%vreg7
+160B		ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+176B		%vreg10<def> = LW %vreg4, <ga:@influence_mark_non_territory>[TF=3]; mem:LD4[GlobalValueCallEntry] GPR32:%vreg10,%vreg4
+192B		%vreg11<def> = ADDu %vreg9, %vreg1; GPR32:%vreg11,%vreg9,%vreg1
+208B		%A0<def> = COPY %vreg11; GPR32:%vreg11
+224B		%A1<def> = COPY %vreg2; GPR32:%vreg2
+240B		%GP<def> = COPY %vreg4; GPR32:%vreg4
+256B		%T9<def> = COPY %vreg10; GPR32:%vreg10
+272B		JALRPseudo %T9, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %A0<imp-use>, %A1<imp-use>, %GP<imp-use,kill>, %SP<imp-def>, ...
+288B		ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+304B		%vreg12<def> = ADDu %vreg8, %vreg1; GPR32:%vreg12,%vreg8,%vreg1
+320B		ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+336B		%vreg13<def> = LW %vreg4, <ga:@influence_mark_non_territory>[TF=3]; mem:LD4[GlobalValueCallEntry] GPR32:%vreg13,%vreg4
+352B		%A0<def> = COPY %vreg12; GPR32:%vreg12
+368B		%A1<def> = COPY %vreg2; GPR32:%vreg2
+384B		%T9<def> = COPY %vreg13; GPR32:%vreg13
+400B		JALRPseudo %T9, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %A0<imp-use>, %A1<imp-use>, %SP<imp-def>, ...
+416B		ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+448B		%V0<def> = ADDiu %ZERO, 0
+464B		RetRA %V0<imp-use>
+
+# End machine code for function autohelperbarrierspat145.
+
+# After Machine Instruction Scheduler:
+# Machine code for function autohelperbarrierspat145: Post SSA
+Function Live Ins: %A0 in %vreg0, %A1 in %vreg1, %A2 in %vreg2, %T9, %V0
+
+0B	BB#0: derived from LLVM BB %0
+	    Live Ins: %A0 %A1 %A2 %T9 %V0
+16B		%vreg4<def> = ADDu %V0, %T9; GPR32:%vreg4
+32B		%vreg2<def> = COPY %A2; GPR32:%vreg2
+48B		%vreg1<def> = COPY %A1; GPR32:%vreg1
+64B		%vreg0<def> = COPY %A0; GPR32:%vreg0
+80B		%vreg5<def> = SLL %vreg0, 2; GPR32:%vreg5,%vreg0
+96B		%vreg6<def> = LW %vreg4, <ga:@transformation>[TF=1]; mem:LD4[GOT] GPR32:%vreg6,%vreg4
+112B		%vreg7<def> = ADDu %vreg6, %vreg5; GPR32:%vreg7,%vreg6,%vreg5
+128B		%vreg8<def> = LW %vreg7, 20736; mem:LD4[%4] GPR32:%vreg8,%vreg7
+144B		%vreg9<def> = LW %vreg7, 19552; mem:LD4[%1] GPR32:%vreg9,%vreg7
+160B		ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+176B		%vreg10<def> = LW %vreg4, <ga:@influence_mark_non_territory>[TF=3]; mem:LD4[GlobalValueCallEntry] GPR32:%vreg10,%vreg4
+192B		%vreg11<def> = ADDu %vreg9, %vreg1; GPR32:%vreg11,%vreg9,%vreg1
+208B		%A0<def> = COPY %vreg11; GPR32:%vreg11
+224B		%A1<def> = COPY %vreg2; GPR32:%vreg2
+240B		%GP<def> = COPY %vreg4; GPR32:%vreg4
+256B		%T9<def> = COPY %vreg10; GPR32:%vreg10
+272B		JALRPseudo %T9, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %A0<imp-use>, %A1<imp-use>, %GP<imp-use,kill>, %SP<imp-def>, ...
+288B		ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+304B		%vreg12<def> = ADDu %vreg8, %vreg1; GPR32:%vreg12,%vreg8,%vreg1
+320B		ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+336B		%vreg13<def> = LW %vreg4, <ga:@influence_mark_non_territory>[TF=3]; mem:LD4[GlobalValueCallEntry] GPR32:%vreg13,%vreg4
+352B		%A0<def> = COPY %vreg12; GPR32:%vreg12
+368B		%A1<def> = COPY %vreg2; GPR32:%vreg2
+384B		%T9<def> = COPY %vreg13; GPR32:%vreg13
+400B		JALRPseudo %T9, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %A0<imp-use>, %A1<imp-use>, %SP<imp-def>, ...
+416B		ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+448B		%V0<def> = ADDiu %ZERO, 0
+464B		RetRA %V0<imp-use>
+
+# End machine code for function autohelperbarrierspat145.
+
+# After Greedy Register Allocator:
+# Machine code for function autohelperbarrierspat145: Post SSA
+Function Live Ins: %A0 in %vreg0, %A1 in %vreg1, %A2 in %vreg2, %T9, %V0
+
+0B	BB#0: derived from LLVM BB %0
+	    Live Ins: %A0 %A1 %A2 %T9 %V0
+16B		%vreg4<def> = ADDu %V0, %T9; GPR32:%vreg4
+32B		%vreg2<def> = COPY %A2; GPR32:%vreg2
+48B		%vreg1<def> = COPY %A1; GPR32:%vreg1
+64B		%vreg0<def> = COPY %A0; GPR32:%vreg0
+80B		%vreg5<def> = SLL %vreg0, 2; GPR32:%vreg5,%vreg0
+96B		%vreg6<def> = LW %vreg4, <ga:@transformation>[TF=1]; mem:LD4[GOT] GPR32:%vreg6,%vreg4
+112B		%vreg7<def> = ADDu %vreg6, %vreg5; GPR32:%vreg7,%vreg6,%vreg5
+128B		%vreg8<def> = LW %vreg7, 20736; mem:LD4[%4] GPR32:%vreg8,%vreg7
+144B		%vreg9<def> = LW %vreg7, 19552; mem:LD4[%1] GPR32:%vreg9,%vreg7
+160B		ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+176B		%vreg10<def> = LW %vreg4, <ga:@influence_mark_non_territory>[TF=3]; mem:LD4[GlobalValueCallEntry] GPR32:%vreg10,%vreg4
+192B		%vreg11<def> = ADDu %vreg9, %vreg1; GPR32:%vreg11,%vreg9,%vreg1
+208B		%A0<def> = COPY %vreg11; GPR32:%vreg11
+224B		%A1<def> = COPY %vreg2; GPR32:%vreg2
+240B		%GP<def> = COPY %vreg4; GPR32:%vreg4
+256B		%T9<def> = COPY %vreg10; GPR32:%vreg10
+272B		JALRPseudo %T9, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %A0<imp-use>, %A1<imp-use>, %GP<imp-use,kill>, %SP<imp-def>, ...
+288B		ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+304B		%vreg12<def> = ADDu %vreg8, %vreg1; GPR32:%vreg12,%vreg8,%vreg1
+320B		ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+336B		%vreg13<def> = LW %vreg4, <ga:@influence_mark_non_territory>[TF=3]; mem:LD4[GlobalValueCallEntry] GPR32:%vreg13,%vreg4
+352B		%A0<def> = COPY %vreg12; GPR32:%vreg12
+368B		%A1<def> = COPY %vreg2; GPR32:%vreg2
+384B		%T9<def> = COPY %vreg13; GPR32:%vreg13
+400B		JALRPseudo %T9, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %A0<imp-use>, %A1<imp-use>, %SP<imp-def>, ...
+416B		ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+448B		%V0<def> = ADDiu %ZERO, 0
+464B		RetRA %V0<imp-use>
+
+# End machine code for function autohelperbarrierspat145.
+
+# After Virtual Register Rewriter:
+# Machine code for function autohelperbarrierspat145: Post SSA
+Function Live Ins: %A0, %A1, %A2, %T9, %V0
+
+0B	BB#0: derived from LLVM BB %0
+	    Live Ins: %A0 %A1 %A2 %T9 %V0
+16B		%S0<def> = ADDu %V0, %T9
+32B		%S1<def> = COPY %A2
+48B		%S2<def> = COPY %A1
+80B		%AT<def> = SLL %A0<kill>, 2
+96B		%V0<def> = LW %S0, <ga:@transformation>[TF=1]; mem:LD4[GOT]
+112B		%AT<def> = ADDu %V0<kill>, %AT<kill>
+128B		%S3<def> = LW %AT, 20736; mem:LD4[%4]
+144B		%AT<def> = LW %AT<kill>, 19552; mem:LD4[%1]
+160B		ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+176B		%T9<def> = LW %S0, <ga:@influence_mark_non_territory>[TF=3]; mem:LD4[GlobalValueCallEntry]
+192B		%A0<def> = ADDu %AT<kill>, %S2
+224B		%A1<def> = COPY %S1
+240B		%GP<def> = COPY %S0
+272B		JALRPseudo %T9, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %A0<imp-use>, %A1<imp-use>, %GP<imp-use,kill>, %SP<imp-def>, ...
+288B		ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+304B		%A0<def> = ADDu %S3<kill>, %S2<kill>
+320B		ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+336B		%T9<def> = LW %S0<kill>, <ga:@influence_mark_non_territory>[TF=3]; mem:LD4[GlobalValueCallEntry]
+368B		%A1<def> = COPY %S1<kill>
+400B		JALRPseudo %T9, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %A0<imp-use>, %A1<imp-use>, %SP<imp-def>, ...
+416B		ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+448B		%V0<def> = ADDiu %ZERO, 0
+464B		RetRA %V0<imp-use>
+
+# End machine code for function autohelperbarrierspat145.
+
+# After Stack Slot Coloring:
+# Machine code for function autohelperbarrierspat145: Post SSA
+Function Live Ins: %A0, %A1, %A2, %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %A0 %A1 %A2 %T9 %V0
+	%S0<def> = ADDu %V0, %T9
+	%S1<def> = COPY %A2
+	%S2<def> = COPY %A1
+	%AT<def> = SLL %A0<kill>, 2
+	%V0<def> = LW %S0, <ga:@transformation>[TF=1]; mem:LD4[GOT]
+	%AT<def> = ADDu %V0<kill>, %AT<kill>
+	%S3<def> = LW %AT, 20736; mem:LD4[%4]
+	%AT<def> = LW %AT<kill>, 19552; mem:LD4[%1]
+	ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+	%T9<def> = LW %S0, <ga:@influence_mark_non_territory>[TF=3]; mem:LD4[GlobalValueCallEntry]
+	%A0<def> = ADDu %AT<kill>, %S2
+	%A1<def> = COPY %S1
+	%GP<def> = COPY %S0
+	JALRPseudo %T9, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %A0<imp-use>, %A1<imp-use>, %GP<imp-use,kill>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+	%A0<def> = ADDu %S3<kill>, %S2<kill>
+	ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+	%T9<def> = LW %S0<kill>, <ga:@influence_mark_non_territory>[TF=3]; mem:LD4[GlobalValueCallEntry]
+	%A1<def> = COPY %S1<kill>
+	JALRPseudo %T9, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %A0<imp-use>, %A1<imp-use>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+	%V0<def> = ADDiu %ZERO, 0
+	RetRA %V0<imp-use>
+
+# End machine code for function autohelperbarrierspat145.
+
+# After Machine Loop Invariant Code Motion:
+# Machine code for function autohelperbarrierspat145: Post SSA
+Function Live Ins: %A0, %A1, %A2, %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %A0 %A1 %A2 %T9 %V0
+	%S0<def> = ADDu %V0, %T9
+	%S1<def> = COPY %A2
+	%S2<def> = COPY %A1
+	%AT<def> = SLL %A0<kill>, 2
+	%V0<def> = LW %S0, <ga:@transformation>[TF=1]; mem:LD4[GOT]
+	%AT<def> = ADDu %V0<kill>, %AT<kill>
+	%S3<def> = LW %AT, 20736; mem:LD4[%4]
+	%AT<def> = LW %AT<kill>, 19552; mem:LD4[%1]
+	ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+	%T9<def> = LW %S0, <ga:@influence_mark_non_territory>[TF=3]; mem:LD4[GlobalValueCallEntry]
+	%A0<def> = ADDu %AT<kill>, %S2
+	%A1<def> = COPY %S1
+	%GP<def> = COPY %S0
+	JALRPseudo %T9, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %A0<imp-use>, %A1<imp-use>, %GP<imp-use,kill>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+	%A0<def> = ADDu %S3<kill>, %S2<kill>
+	ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+	%T9<def> = LW %S0<kill>, <ga:@influence_mark_non_territory>[TF=3]; mem:LD4[GlobalValueCallEntry]
+	%A1<def> = COPY %S1<kill>
+	JALRPseudo %T9, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %A0<imp-use>, %A1<imp-use>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+	%V0<def> = ADDiu %ZERO, 0
+	RetRA %V0<imp-use>
+
+# End machine code for function autohelperbarrierspat145.
+
+# After Shrink Wrapping analysis:
+# Machine code for function autohelperbarrierspat145: Post SSA
+Function Live Ins: %A0, %A1, %A2, %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %A0 %A1 %A2 %T9 %V0
+	%S0<def> = ADDu %V0, %T9
+	%S1<def> = COPY %A2
+	%S2<def> = COPY %A1
+	%AT<def> = SLL %A0<kill>, 2
+	%V0<def> = LW %S0, <ga:@transformation>[TF=1]; mem:LD4[GOT]
+	%AT<def> = ADDu %V0<kill>, %AT<kill>
+	%S3<def> = LW %AT, 20736; mem:LD4[%4]
+	%AT<def> = LW %AT<kill>, 19552; mem:LD4[%1]
+	ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+	%T9<def> = LW %S0, <ga:@influence_mark_non_territory>[TF=3]; mem:LD4[GlobalValueCallEntry]
+	%A0<def> = ADDu %AT<kill>, %S2
+	%A1<def> = COPY %S1
+	%GP<def> = COPY %S0
+	JALRPseudo %T9, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %A0<imp-use>, %A1<imp-use>, %GP<imp-use,kill>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+	%A0<def> = ADDu %S3<kill>, %S2<kill>
+	ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+	%T9<def> = LW %S0<kill>, <ga:@influence_mark_non_territory>[TF=3]; mem:LD4[GlobalValueCallEntry]
+	%A1<def> = COPY %S1<kill>
+	JALRPseudo %T9, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %A0<imp-use>, %A1<imp-use>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+	%V0<def> = ADDiu %ZERO, 0
+	RetRA %V0<imp-use>
+
+# End machine code for function autohelperbarrierspat145.
+
+# After Prologue/Epilogue Insertion & Frame Finalization:
+# Machine code for function autohelperbarrierspat145: Post SSA
+Frame Objects:
+  fi#0: size=4, align=4, at location [SP-4]
+  fi#1: size=4, align=4, at location [SP-8]
+  fi#2: size=4, align=4, at location [SP-12]
+  fi#3: size=4, align=4, at location [SP-16]
+  fi#4: size=4, align=4, at location [SP-20]
+Function Live Ins: %A0, %A1, %A2, %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %A0 %A1 %A2 %T9 %V0 %RA %S3 %S2 %S1 %S0
+	%SP<def> = ADDiu %SP, -40
+	CFI_INSTRUCTION <call frame instruction>
+	SW %RA<kill>, %SP, 36; mem:ST4[FixedStack0]
+	SW %S3<kill>, %SP, 32; mem:ST4[FixedStack1]
+	SW %S2<kill>, %SP, 28; mem:ST4[FixedStack2]
+	SW %S1<kill>, %SP, 24; mem:ST4[FixedStack3]
+	SW %S0<kill>, %SP, 20; mem:ST4[FixedStack4]
+	CFI_INSTRUCTION <call frame instruction>
+	CFI_INSTRUCTION <call frame instruction>
+	CFI_INSTRUCTION <call frame instruction>
+	CFI_INSTRUCTION <call frame instruction>
+	CFI_INSTRUCTION <call frame instruction>
+	%S0<def> = ADDu %V0, %T9
+	%S1<def> = COPY %A2
+	%S2<def> = COPY %A1
+	%AT<def> = SLL %A0<kill>, 2
+	%V0<def> = LW %S0, <ga:@transformation>[TF=1]; mem:LD4[GOT]
+	%AT<def> = ADDu %V0<kill>, %AT<kill>
+	%S3<def> = LW %AT, 20736; mem:LD4[%4]
+	%AT<def> = LW %AT<kill>, 19552; mem:LD4[%1]
+	%T9<def> = LW %S0, <ga:@influence_mark_non_territory>[TF=3]; mem:LD4[GlobalValueCallEntry]
+	%A0<def> = ADDu %AT<kill>, %S2
+	%A1<def> = COPY %S1
+	%GP<def> = COPY %S0
+	JALRPseudo %T9, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %RA<imp-def,dead>, %A0<imp-use>, %A1<imp-use>, %GP<imp-use,kill>, %SP<imp-def>
+	%A0<def> = ADDu %S3<kill>, %S2<kill>
+	%T9<def> = LW %S0<kill>, <ga:@influence_mark_non_territory>[TF=3]; mem:LD4[GlobalValueCallEntry]
+	%A1<def> = COPY %S1<kill>
+	JALRPseudo %T9, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %RA<imp-def,dead>, %A0<imp-use>, %A1<imp-use>, %SP<imp-def>
+	%V0<def> = ADDiu %ZERO, 0
+	%S0<def> = LW %SP, 20; mem:LD4[FixedStack4]
+	%S1<def> = LW %SP, 24; mem:LD4[FixedStack3]
+	%S2<def> = LW %SP, 28; mem:LD4[FixedStack2]
+	%S3<def> = LW %SP, 32; mem:LD4[FixedStack1]
+	%RA<def> = LW %SP, 36; mem:LD4[FixedStack0]
+	%SP<def> = ADDiu %SP, 40
+	RetRA %V0<imp-use>
+
+# End machine code for function autohelperbarrierspat145.
+
+# After Machine Copy Propagation Pass:
+# Machine code for function autohelperbarrierspat145: Post SSA
+Frame Objects:
+  fi#0: size=4, align=4, at location [SP-4]
+  fi#1: size=4, align=4, at location [SP-8]
+  fi#2: size=4, align=4, at location [SP-12]
+  fi#3: size=4, align=4, at location [SP-16]
+  fi#4: size=4, align=4, at location [SP-20]
+Function Live Ins: %A0, %A1, %A2, %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %A0 %A1 %A2 %T9 %V0 %RA %S3 %S2 %S1 %S0
+	%SP<def> = ADDiu %SP, -40
+	CFI_INSTRUCTION <call frame instruction>
+	SW %RA<kill>, %SP, 36; mem:ST4[FixedStack0]
+	SW %S3<kill>, %SP, 32; mem:ST4[FixedStack1]
+	SW %S2<kill>, %SP, 28; mem:ST4[FixedStack2]
+	SW %S1<kill>, %SP, 24; mem:ST4[FixedStack3]
+	SW %S0<kill>, %SP, 20; mem:ST4[FixedStack4]
+	CFI_INSTRUCTION <call frame instruction>
+	CFI_INSTRUCTION <call frame instruction>
+	CFI_INSTRUCTION <call frame instruction>
+	CFI_INSTRUCTION <call frame instruction>
+	CFI_INSTRUCTION <call frame instruction>
+	%S0<def> = ADDu %V0, %T9
+	%S1<def> = COPY %A2
+	%S2<def> = COPY %A1
+	%AT<def> = SLL %A0<kill>, 2
+	%V0<def> = LW %S0, <ga:@transformation>[TF=1]; mem:LD4[GOT]
+	%AT<def> = ADDu %V0<kill>, %AT<kill>
+	%S3<def> = LW %AT, 20736; mem:LD4[%4]
+	%AT<def> = LW %AT<kill>, 19552; mem:LD4[%1]
+	%T9<def> = LW %S0, <ga:@influence_mark_non_territory>[TF=3]; mem:LD4[GlobalValueCallEntry]
+	%A0<def> = ADDu %AT<kill>, %S2
+	%A1<def> = COPY %S1
+	%GP<def> = COPY %S0
+	JALRPseudo %T9, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %RA<imp-def,dead>, %A0<imp-use>, %A1<imp-use>, %GP<imp-use,kill>, %SP<imp-def>
+	%A0<def> = ADDu %S3<kill>, %S2<kill>
+	%T9<def> = LW %S0<kill>, <ga:@influence_mark_non_territory>[TF=3]; mem:LD4[GlobalValueCallEntry]
+	%A1<def> = COPY %S1<kill>
+	JALRPseudo %T9, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %RA<imp-def,dead>, %A0<imp-use>, %A1<imp-use>, %SP<imp-def>
+	%V0<def> = ADDiu %ZERO, 0
+	%S0<def> = LW %SP, 20; mem:LD4[FixedStack4]
+	%S1<def> = LW %SP, 24; mem:LD4[FixedStack3]
+	%S2<def> = LW %SP, 28; mem:LD4[FixedStack2]
+	%S3<def> = LW %SP, 32; mem:LD4[FixedStack1]
+	%RA<def> = LW %SP, 36; mem:LD4[FixedStack0]
+	%SP<def> = ADDiu %SP, 40
+	RetRA %V0<imp-use>
+
+# End machine code for function autohelperbarrierspat145.
+
+# After Post-RA pseudo instruction expansion pass:
+# Machine code for function autohelperbarrierspat145: Post SSA
+Frame Objects:
+  fi#0: size=4, align=4, at location [SP-4]
+  fi#1: size=4, align=4, at location [SP-8]
+  fi#2: size=4, align=4, at location [SP-12]
+  fi#3: size=4, align=4, at location [SP-16]
+  fi#4: size=4, align=4, at location [SP-20]
+Function Live Ins: %A0, %A1, %A2, %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %A0 %A1 %A2 %T9 %V0 %RA %S3 %S2 %S1 %S0
+	%SP<def> = ADDiu %SP, -40
+	CFI_INSTRUCTION <call frame instruction>
+	SW %RA<kill>, %SP, 36; mem:ST4[FixedStack0]
+	SW %S3<kill>, %SP, 32; mem:ST4[FixedStack1]
+	SW %S2<kill>, %SP, 28; mem:ST4[FixedStack2]
+	SW %S1<kill>, %SP, 24; mem:ST4[FixedStack3]
+	SW %S0<kill>, %SP, 20; mem:ST4[FixedStack4]
+	CFI_INSTRUCTION <call frame instruction>
+	CFI_INSTRUCTION <call frame instruction>
+	CFI_INSTRUCTION <call frame instruction>
+	CFI_INSTRUCTION <call frame instruction>
+	CFI_INSTRUCTION <call frame instruction>
+	%S0<def> = ADDu %V0, %T9
+	%S1<def> = OR %A2, %ZERO
+	%S2<def> = OR %A1, %ZERO
+	%AT<def> = SLL %A0<kill>, 2
+	%V0<def> = LW %S0, <ga:@transformation>[TF=1]; mem:LD4[GOT]
+	%AT<def> = ADDu %V0<kill>, %AT<kill>
+	%S3<def> = LW %AT, 20736; mem:LD4[%4]
+	%AT<def> = LW %AT<kill>, 19552; mem:LD4[%1]
+	%T9<def> = LW %S0, <ga:@influence_mark_non_territory>[TF=3]; mem:LD4[GlobalValueCallEntry]
+	%A0<def> = ADDu %AT<kill>, %S2
+	%A1<def> = OR %S1, %ZERO
+	%GP<def> = OR %S0, %ZERO
+	JALRPseudo %T9, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %RA<imp-def,dead>, %A0<imp-use>, %A1<imp-use>, %GP<imp-use,kill>, %SP<imp-def>
+	%A0<def> = ADDu %S3<kill>, %S2<kill>
+	%T9<def> = LW %S0<kill>, <ga:@influence_mark_non_territory>[TF=3]; mem:LD4[GlobalValueCallEntry]
+	%A1<def> = OR %S1<kill>, %ZERO
+	JALRPseudo %T9, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %RA<imp-def,dead>, %A0<imp-use>, %A1<imp-use>, %SP<imp-def>
+	%V0<def> = ADDiu %ZERO, 0
+	%S0<def> = LW %SP, 20; mem:LD4[FixedStack4]
+	%S1<def> = LW %SP, 24; mem:LD4[FixedStack3]
+	%S2<def> = LW %SP, 28; mem:LD4[FixedStack2]
+	%S3<def> = LW %SP, 32; mem:LD4[FixedStack1]
+	%RA<def> = LW %SP, 36; mem:LD4[FixedStack0]
+	%SP<def> = ADDiu %SP, 40
+	PseudoReturn %RA
+
+# End machine code for function autohelperbarrierspat145.
+
+# After Analyze Machine Code For Garbage Collection:
+# Machine code for function autohelperbarrierspat145: Post SSA
+Frame Objects:
+  fi#0: size=4, align=4, at location [SP-4]
+  fi#1: size=4, align=4, at location [SP-8]
+  fi#2: size=4, align=4, at location [SP-12]
+  fi#3: size=4, align=4, at location [SP-16]
+  fi#4: size=4, align=4, at location [SP-20]
+Function Live Ins: %A0, %A1, %A2, %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %A0 %A1 %A2 %T9 %V0 %RA %S3 %S2 %S1 %S0
+	%SP<def> = ADDiu %SP, -40
+	CFI_INSTRUCTION <call frame instruction>
+	SW %RA<kill>, %SP, 36; mem:ST4[FixedStack0]
+	SW %S3<kill>, %SP, 32; mem:ST4[FixedStack1]
+	SW %S2<kill>, %SP, 28; mem:ST4[FixedStack2]
+	SW %S1<kill>, %SP, 24; mem:ST4[FixedStack3]
+	SW %S0<kill>, %SP, 20; mem:ST4[FixedStack4]
+	CFI_INSTRUCTION <call frame instruction>
+	CFI_INSTRUCTION <call frame instruction>
+	CFI_INSTRUCTION <call frame instruction>
+	CFI_INSTRUCTION <call frame instruction>
+	CFI_INSTRUCTION <call frame instruction>
+	%S0<def> = ADDu %V0, %T9
+	%S1<def> = OR %A2, %ZERO
+	%S2<def> = OR %A1, %ZERO
+	%AT<def> = SLL %A0<kill>, 2
+	%V0<def> = LW %S0, <ga:@transformation>[TF=1]; mem:LD4[GOT]
+	%AT<def> = ADDu %V0<kill>, %AT<kill>
+	%S3<def> = LW %AT, 20736; mem:LD4[%4]
+	%AT<def> = LW %AT<kill>, 19552; mem:LD4[%1]
+	%T9<def> = LW %S0, <ga:@influence_mark_non_territory>[TF=3]; mem:LD4[GlobalValueCallEntry]
+	%A0<def> = ADDu %AT<kill>, %S2
+	%A1<def> = OR %S1, %ZERO
+	%GP<def> = OR %S0, %ZERO
+	JALRPseudo %T9, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %RA<imp-def,dead>, %A0<imp-use>, %A1<imp-use>, %GP<imp-use,kill>, %SP<imp-def>
+	%A0<def> = ADDu %S3<kill>, %S2<kill>
+	%T9<def> = LW %S0<kill>, <ga:@influence_mark_non_territory>[TF=3]; mem:LD4[GlobalValueCallEntry]
+	%A1<def> = OR %S1<kill>, %ZERO
+	JALRPseudo %T9, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %RA<imp-def,dead>, %A0<imp-use>, %A1<imp-use>, %SP<imp-def>
+	%V0<def> = ADDiu %ZERO, 0
+	%S0<def> = LW %SP, 20; mem:LD4[FixedStack4]
+	%S1<def> = LW %SP, 24; mem:LD4[FixedStack3]
+	%S2<def> = LW %SP, 28; mem:LD4[FixedStack2]
+	%S3<def> = LW %SP, 32; mem:LD4[FixedStack1]
+	%RA<def> = LW %SP, 36; mem:LD4[FixedStack0]
+	%SP<def> = ADDiu %SP, 40
+	PseudoReturn %RA
+
+# End machine code for function autohelperbarrierspat145.
+
+# After Mips Delay Slot Filler:
+# Machine code for function autohelperbarrierspat145: Post SSA, not tracking liveness
+Frame Objects:
+  fi#0: size=4, align=4, at location [SP-4]
+  fi#1: size=4, align=4, at location [SP-8]
+  fi#2: size=4, align=4, at location [SP-12]
+  fi#3: size=4, align=4, at location [SP-16]
+  fi#4: size=4, align=4, at location [SP-20]
+Function Live Ins: %A0, %A1, %A2, %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %A0 %A1 %A2 %T9 %V0 %RA %S3 %S2 %S1 %S0
+	%SP<def> = ADDiu %SP, -40
+	CFI_INSTRUCTION <call frame instruction>
+	SW %RA<kill>, %SP, 36; mem:ST4[FixedStack0]
+	SW %S3<kill>, %SP, 32; mem:ST4[FixedStack1]
+	SW %S2<kill>, %SP, 28; mem:ST4[FixedStack2]
+	SW %S1<kill>, %SP, 24; mem:ST4[FixedStack3]
+	SW %S0<kill>, %SP, 20; mem:ST4[FixedStack4]
+	CFI_INSTRUCTION <call frame instruction>
+	CFI_INSTRUCTION <call frame instruction>
+	CFI_INSTRUCTION <call frame instruction>
+	CFI_INSTRUCTION <call frame instruction>
+	CFI_INSTRUCTION <call frame instruction>
+	%S0<def> = ADDu %V0, %T9
+	%S1<def> = OR %A2, %ZERO
+	%S2<def> = OR %A1, %ZERO
+	%AT<def> = SLL %A0<kill>, 2
+	%V0<def> = LW %S0, <ga:@transformation>[TF=1]; mem:LD4[GOT]
+	%AT<def> = ADDu %V0<kill>, %AT<kill>
+	%S3<def> = LW %AT, 20736; mem:LD4[%4]
+	%AT<def> = LW %AT<kill>, 19552; mem:LD4[%1]
+	%T9<def> = LW %S0, <ga:@influence_mark_non_territory>[TF=3]; mem:LD4[GlobalValueCallEntry]
+	%A0<def> = ADDu %AT<kill>, %S2
+	%A1<def> = OR %S1, %ZERO
+	JALRPseudo %T9, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %RA<imp-def,dead>, %A0<imp-use>, %A1<imp-use>, %GP<imp-use,kill>, %SP<imp-def>
+	  * %GP<def> = OR %S0, %ZERO
+	%A0<def> = ADDu %S3<kill>, %S2<kill>
+	%T9<def> = LW %S0<kill>, <ga:@influence_mark_non_territory>[TF=3]; mem:LD4[GlobalValueCallEntry]
+	JALRPseudo %T9, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %RA<imp-def,dead>, %A0<imp-use>, %A1<imp-use>, %SP<imp-def>
+	  * %A1<def> = OR %S1<kill>, %ZERO
+	%V0<def> = ADDiu %ZERO, 0
+	%S0<def> = LW %SP, 20; mem:LD4[FixedStack4]
+	%S1<def> = LW %SP, 24; mem:LD4[FixedStack3]
+	%S2<def> = LW %SP, 28; mem:LD4[FixedStack2]
+	%S3<def> = LW %SP, 32; mem:LD4[FixedStack1]
+	%RA<def> = LW %SP, 36; mem:LD4[FixedStack0]
+	PseudoReturn %RA
+	  * %SP<def> = ADDiu %SP, 40
+
+# End machine code for function autohelperbarrierspat145.
+
+# After Mips Long Branch:
+# Machine code for function autohelperbarrierspat145: Post SSA, not tracking liveness
+Frame Objects:
+  fi#0: size=4, align=4, at location [SP-4]
+  fi#1: size=4, align=4, at location [SP-8]
+  fi#2: size=4, align=4, at location [SP-12]
+  fi#3: size=4, align=4, at location [SP-16]
+  fi#4: size=4, align=4, at location [SP-20]
+Function Live Ins: %A0, %A1, %A2, %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %A0 %A1 %A2 %T9 %RA %S3 %S2 %S1 %S0
+	%V0<def> = LUi <es:_gp_disp>[TF=5]
+	%V0<def> = ADDiu %V0, <es:_gp_disp>[TF=6]
+	%SP<def> = ADDiu %SP, -40
+	CFI_INSTRUCTION <call frame instruction>
+	SW %RA<kill>, %SP, 36; mem:ST4[FixedStack0]
+	SW %S3<kill>, %SP, 32; mem:ST4[FixedStack1]
+	SW %S2<kill>, %SP, 28; mem:ST4[FixedStack2]
+	SW %S1<kill>, %SP, 24; mem:ST4[FixedStack3]
+	SW %S0<kill>, %SP, 20; mem:ST4[FixedStack4]
+	CFI_INSTRUCTION <call frame instruction>
+	CFI_INSTRUCTION <call frame instruction>
+	CFI_INSTRUCTION <call frame instruction>
+	CFI_INSTRUCTION <call frame instruction>
+	CFI_INSTRUCTION <call frame instruction>
+	%S0<def> = ADDu %V0, %T9
+	%S1<def> = OR %A2, %ZERO
+	%S2<def> = OR %A1, %ZERO
+	%AT<def> = SLL %A0<kill>, 2
+	%V0<def> = LW %S0, <ga:@transformation>[TF=1]; mem:LD4[GOT]
+	%AT<def> = ADDu %V0<kill>, %AT<kill>
+	%S3<def> = LW %AT, 20736; mem:LD4[%4]
+	%AT<def> = LW %AT<kill>, 19552; mem:LD4[%1]
+	%T9<def> = LW %S0, <ga:@influence_mark_non_territory>[TF=3]; mem:LD4[GlobalValueCallEntry]
+	%A0<def> = ADDu %AT<kill>, %S2
+	%A1<def> = OR %S1, %ZERO
+	JALRPseudo %T9, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %RA<imp-def,dead>, %A0<imp-use>, %A1<imp-use>, %GP<imp-use,kill>, %SP<imp-def>
+	  * %GP<def> = OR %S0, %ZERO
+	%A0<def> = ADDu %S3<kill>, %S2<kill>
+	%T9<def> = LW %S0<kill>, <ga:@influence_mark_non_territory>[TF=3]; mem:LD4[GlobalValueCallEntry]
+	JALRPseudo %T9, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %RA<imp-def,dead>, %A0<imp-use>, %A1<imp-use>, %SP<imp-def>
+	  * %A1<def> = OR %S1<kill>, %ZERO
+	%V0<def> = ADDiu %ZERO, 0
+	%S0<def> = LW %SP, 20; mem:LD4[FixedStack4]
+	%S1<def> = LW %SP, 24; mem:LD4[FixedStack3]
+	%S2<def> = LW %SP, 28; mem:LD4[FixedStack2]
+	%S3<def> = LW %SP, 32; mem:LD4[FixedStack1]
+	%RA<def> = LW %SP, 36; mem:LD4[FixedStack0]
+	PseudoReturn %RA
+	  * %SP<def> = ADDiu %SP, 40
+
+# End machine code for function autohelperbarrierspat145.
+
+# After Mips Constant Islands:
+# Machine code for function autohelperbarrierspat145: Post SSA, not tracking liveness
+Frame Objects:
+  fi#0: size=4, align=4, at location [SP-4]
+  fi#1: size=4, align=4, at location [SP-8]
+  fi#2: size=4, align=4, at location [SP-12]
+  fi#3: size=4, align=4, at location [SP-16]
+  fi#4: size=4, align=4, at location [SP-20]
+Function Live Ins: %A0, %A1, %A2, %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %A0 %A1 %A2 %T9 %RA %S3 %S2 %S1 %S0
+	%V0<def> = LUi <es:_gp_disp>[TF=5]
+	%V0<def> = ADDiu %V0, <es:_gp_disp>[TF=6]
+	%SP<def> = ADDiu %SP, -40
+	CFI_INSTRUCTION <call frame instruction>
+	SW %RA<kill>, %SP, 36; mem:ST4[FixedStack0]
+	SW %S3<kill>, %SP, 32; mem:ST4[FixedStack1]
+	SW %S2<kill>, %SP, 28; mem:ST4[FixedStack2]
+	SW %S1<kill>, %SP, 24; mem:ST4[FixedStack3]
+	SW %S0<kill>, %SP, 20; mem:ST4[FixedStack4]
+	CFI_INSTRUCTION <call frame instruction>
+	CFI_INSTRUCTION <call frame instruction>
+	CFI_INSTRUCTION <call frame instruction>
+	CFI_INSTRUCTION <call frame instruction>
+	CFI_INSTRUCTION <call frame instruction>
+	%S0<def> = ADDu %V0, %T9
+	%S1<def> = OR %A2, %ZERO
+	%S2<def> = OR %A1, %ZERO
+	%AT<def> = SLL %A0<kill>, 2
+	%V0<def> = LW %S0, <ga:@transformation>[TF=1]; mem:LD4[GOT]
+	%AT<def> = ADDu %V0<kill>, %AT<kill>
+	%S3<def> = LW %AT, 20736; mem:LD4[%4]
+	%AT<def> = LW %AT<kill>, 19552; mem:LD4[%1]
+	%T9<def> = LW %S0, <ga:@influence_mark_non_territory>[TF=3]; mem:LD4[GlobalValueCallEntry]
+	%A0<def> = ADDu %AT<kill>, %S2
+	%A1<def> = OR %S1, %ZERO
+	JALRPseudo %T9, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %RA<imp-def,dead>, %A0<imp-use>, %A1<imp-use>, %GP<imp-use,kill>, %SP<imp-def>
+	  * %GP<def> = OR %S0, %ZERO
+	%A0<def> = ADDu %S3<kill>, %S2<kill>
+	%T9<def> = LW %S0<kill>, <ga:@influence_mark_non_territory>[TF=3]; mem:LD4[GlobalValueCallEntry]
+	JALRPseudo %T9, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %RA<imp-def,dead>, %A0<imp-use>, %A1<imp-use>, %SP<imp-def>
+	  * %A1<def> = OR %S1<kill>, %ZERO
+	%V0<def> = ADDiu %ZERO, 0
+	%S0<def> = LW %SP, 20; mem:LD4[FixedStack4]
+	%S1<def> = LW %SP, 24; mem:LD4[FixedStack3]
+	%S2<def> = LW %SP, 28; mem:LD4[FixedStack2]
+	%S3<def> = LW %SP, 32; mem:LD4[FixedStack1]
+	%RA<def> = LW %SP, 36; mem:LD4[FixedStack0]
+	PseudoReturn %RA
+	  * %SP<def> = ADDiu %SP, 40
+
+# End machine code for function autohelperbarrierspat145.
+
+# After Contiguously Lay Out Funclets:
+# Machine code for function autohelperbarrierspat145: Post SSA, not tracking liveness
+Frame Objects:
+  fi#0: size=4, align=4, at location [SP-4]
+  fi#1: size=4, align=4, at location [SP-8]
+  fi#2: size=4, align=4, at location [SP-12]
+  fi#3: size=4, align=4, at location [SP-16]
+  fi#4: size=4, align=4, at location [SP-20]
+Function Live Ins: %A0, %A1, %A2, %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %A0 %A1 %A2 %T9 %RA %S3 %S2 %S1 %S0
+	%V0<def> = LUi <es:_gp_disp>[TF=5]
+	%V0<def> = ADDiu %V0, <es:_gp_disp>[TF=6]
+	%SP<def> = ADDiu %SP, -40
+	CFI_INSTRUCTION <call frame instruction>
+	SW %RA<kill>, %SP, 36; mem:ST4[FixedStack0]
+	SW %S3<kill>, %SP, 32; mem:ST4[FixedStack1]
+	SW %S2<kill>, %SP, 28; mem:ST4[FixedStack2]
+	SW %S1<kill>, %SP, 24; mem:ST4[FixedStack3]
+	SW %S0<kill>, %SP, 20; mem:ST4[FixedStack4]
+	CFI_INSTRUCTION <call frame instruction>
+	CFI_INSTRUCTION <call frame instruction>
+	CFI_INSTRUCTION <call frame instruction>
+	CFI_INSTRUCTION <call frame instruction>
+	CFI_INSTRUCTION <call frame instruction>
+	%S0<def> = ADDu %V0, %T9
+	%S1<def> = OR %A2, %ZERO
+	%S2<def> = OR %A1, %ZERO
+	%AT<def> = SLL %A0<kill>, 2
+	%V0<def> = LW %S0, <ga:@transformation>[TF=1]; mem:LD4[GOT]
+	%AT<def> = ADDu %V0<kill>, %AT<kill>
+	%S3<def> = LW %AT, 20736; mem:LD4[%4]
+	%AT<def> = LW %AT<kill>, 19552; mem:LD4[%1]
+	%T9<def> = LW %S0, <ga:@influence_mark_non_territory>[TF=3]; mem:LD4[GlobalValueCallEntry]
+	%A0<def> = ADDu %AT<kill>, %S2
+	%A1<def> = OR %S1, %ZERO
+	JALRPseudo %T9, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %RA<imp-def,dead>, %A0<imp-use>, %A1<imp-use>, %GP<imp-use,kill>, %SP<imp-def>
+	  * %GP<def> = OR %S0, %ZERO
+	%A0<def> = ADDu %S3<kill>, %S2<kill>
+	%T9<def> = LW %S0<kill>, <ga:@influence_mark_non_territory>[TF=3]; mem:LD4[GlobalValueCallEntry]
+	JALRPseudo %T9, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %RA<imp-def,dead>, %A0<imp-use>, %A1<imp-use>, %SP<imp-def>
+	  * %A1<def> = OR %S1<kill>, %ZERO
+	%V0<def> = ADDiu %ZERO, 0
+	%S0<def> = LW %SP, 20; mem:LD4[FixedStack4]
+	%S1<def> = LW %SP, 24; mem:LD4[FixedStack3]
+	%S2<def> = LW %SP, 28; mem:LD4[FixedStack2]
+	%S3<def> = LW %SP, 32; mem:LD4[FixedStack1]
+	%RA<def> = LW %SP, 36; mem:LD4[FixedStack0]
+	PseudoReturn %RA
+	  * %SP<def> = ADDiu %SP, 40
+
+# End machine code for function autohelperbarrierspat145.
+
+# After StackMap Liveness Analysis:
+# Machine code for function autohelperbarrierspat145: Post SSA, not tracking liveness
+Frame Objects:
+  fi#0: size=4, align=4, at location [SP-4]
+  fi#1: size=4, align=4, at location [SP-8]
+  fi#2: size=4, align=4, at location [SP-12]
+  fi#3: size=4, align=4, at location [SP-16]
+  fi#4: size=4, align=4, at location [SP-20]
+Function Live Ins: %A0, %A1, %A2, %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %A0 %A1 %A2 %T9 %RA %S3 %S2 %S1 %S0
+	%V0<def> = LUi <es:_gp_disp>[TF=5]
+	%V0<def> = ADDiu %V0, <es:_gp_disp>[TF=6]
+	%SP<def> = ADDiu %SP, -40
+	CFI_INSTRUCTION <call frame instruction>
+	SW %RA<kill>, %SP, 36; mem:ST4[FixedStack0]
+	SW %S3<kill>, %SP, 32; mem:ST4[FixedStack1]
+	SW %S2<kill>, %SP, 28; mem:ST4[FixedStack2]
+	SW %S1<kill>, %SP, 24; mem:ST4[FixedStack3]
+	SW %S0<kill>, %SP, 20; mem:ST4[FixedStack4]
+	CFI_INSTRUCTION <call frame instruction>
+	CFI_INSTRUCTION <call frame instruction>
+	CFI_INSTRUCTION <call frame instruction>
+	CFI_INSTRUCTION <call frame instruction>
+	CFI_INSTRUCTION <call frame instruction>
+	%S0<def> = ADDu %V0, %T9
+	%S1<def> = OR %A2, %ZERO
+	%S2<def> = OR %A1, %ZERO
+	%AT<def> = SLL %A0<kill>, 2
+	%V0<def> = LW %S0, <ga:@transformation>[TF=1]; mem:LD4[GOT]
+	%AT<def> = ADDu %V0<kill>, %AT<kill>
+	%S3<def> = LW %AT, 20736; mem:LD4[%4]
+	%AT<def> = LW %AT<kill>, 19552; mem:LD4[%1]
+	%T9<def> = LW %S0, <ga:@influence_mark_non_territory>[TF=3]; mem:LD4[GlobalValueCallEntry]
+	%A0<def> = ADDu %AT<kill>, %S2
+	%A1<def> = OR %S1, %ZERO
+	JALRPseudo %T9, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %RA<imp-def,dead>, %A0<imp-use>, %A1<imp-use>, %GP<imp-use,kill>, %SP<imp-def>
+	  * %GP<def> = OR %S0, %ZERO
+	%A0<def> = ADDu %S3<kill>, %S2<kill>
+	%T9<def> = LW %S0<kill>, <ga:@influence_mark_non_territory>[TF=3]; mem:LD4[GlobalValueCallEntry]
+	JALRPseudo %T9, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %RA<imp-def,dead>, %A0<imp-use>, %A1<imp-use>, %SP<imp-def>
+	  * %A1<def> = OR %S1<kill>, %ZERO
+	%V0<def> = ADDiu %ZERO, 0
+	%S0<def> = LW %SP, 20; mem:LD4[FixedStack4]
+	%S1<def> = LW %SP, 24; mem:LD4[FixedStack3]
+	%S2<def> = LW %SP, 28; mem:LD4[FixedStack2]
+	%S3<def> = LW %SP, 32; mem:LD4[FixedStack1]
+	%RA<def> = LW %SP, 36; mem:LD4[FixedStack0]
+	PseudoReturn %RA
+	  * %SP<def> = ADDiu %SP, 40
+
+# End machine code for function autohelperbarrierspat145.
+
+# After Live DEBUG_VALUE analysis:
+# Machine code for function autohelperbarrierspat145: Post SSA, not tracking liveness
+Frame Objects:
+  fi#0: size=4, align=4, at location [SP-4]
+  fi#1: size=4, align=4, at location [SP-8]
+  fi#2: size=4, align=4, at location [SP-12]
+  fi#3: size=4, align=4, at location [SP-16]
+  fi#4: size=4, align=4, at location [SP-20]
+Function Live Ins: %A0, %A1, %A2, %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %A0 %A1 %A2 %T9 %RA %S3 %S2 %S1 %S0
+	%V0<def> = LUi <es:_gp_disp>[TF=5]
+	%V0<def> = ADDiu %V0, <es:_gp_disp>[TF=6]
+	%SP<def> = ADDiu %SP, -40
+	CFI_INSTRUCTION <call frame instruction>
+	SW %RA<kill>, %SP, 36; mem:ST4[FixedStack0]
+	SW %S3<kill>, %SP, 32; mem:ST4[FixedStack1]
+	SW %S2<kill>, %SP, 28; mem:ST4[FixedStack2]
+	SW %S1<kill>, %SP, 24; mem:ST4[FixedStack3]
+	SW %S0<kill>, %SP, 20; mem:ST4[FixedStack4]
+	CFI_INSTRUCTION <call frame instruction>
+	CFI_INSTRUCTION <call frame instruction>
+	CFI_INSTRUCTION <call frame instruction>
+	CFI_INSTRUCTION <call frame instruction>
+	CFI_INSTRUCTION <call frame instruction>
+	%S0<def> = ADDu %V0, %T9
+	%S1<def> = OR %A2, %ZERO
+	%S2<def> = OR %A1, %ZERO
+	%AT<def> = SLL %A0<kill>, 2
+	%V0<def> = LW %S0, <ga:@transformation>[TF=1]; mem:LD4[GOT]
+	%AT<def> = ADDu %V0<kill>, %AT<kill>
+	%S3<def> = LW %AT, 20736; mem:LD4[%4]
+	%AT<def> = LW %AT<kill>, 19552; mem:LD4[%1]
+	%T9<def> = LW %S0, <ga:@influence_mark_non_territory>[TF=3]; mem:LD4[GlobalValueCallEntry]
+	%A0<def> = ADDu %AT<kill>, %S2
+	%A1<def> = OR %S1, %ZERO
+	JALRPseudo %T9, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %RA<imp-def,dead>, %A0<imp-use>, %A1<imp-use>, %GP<imp-use,kill>, %SP<imp-def>
+	  * %GP<def> = OR %S0, %ZERO
+	%A0<def> = ADDu %S3<kill>, %S2<kill>
+	%T9<def> = LW %S0<kill>, <ga:@influence_mark_non_territory>[TF=3]; mem:LD4[GlobalValueCallEntry]
+	JALRPseudo %T9, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %RA<imp-def,dead>, %A0<imp-use>, %A1<imp-use>, %SP<imp-def>
+	  * %A1<def> = OR %S1<kill>, %ZERO
+	%V0<def> = ADDiu %ZERO, 0
+	%S0<def> = LW %SP, 20; mem:LD4[FixedStack4]
+	%S1<def> = LW %SP, 24; mem:LD4[FixedStack3]
+	%S2<def> = LW %SP, 28; mem:LD4[FixedStack2]
+	%S3<def> = LW %SP, 32; mem:LD4[FixedStack1]
+	%RA<def> = LW %SP, 36; mem:LD4[FixedStack0]
+	PseudoReturn %RA
+	  * %SP<def> = ADDiu %SP, 40
+
+# End machine code for function autohelperbarrierspat145.
+

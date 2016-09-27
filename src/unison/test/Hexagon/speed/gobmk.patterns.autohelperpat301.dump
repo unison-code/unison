@@ -1,0 +1,1152 @@
+# After Instruction Selection:
+# Machine code for function autohelperpat301: SSA
+Function Live Ins: %R0 in %vreg0, %R1 in %vreg1, %R2 in %vreg2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R2
+	%vreg2<def> = COPY %R2; IntRegs:%vreg2
+	%vreg1<def> = COPY %R1; IntRegs:%vreg1
+	%vreg0<def> = COPY %R0; IntRegs:%vreg0
+	%vreg4<def,tied2> = S4_addi_asl_ri <ga:@transformation>, %vreg0<tied0>, 2; IntRegs:%vreg4,%vreg0
+	%vreg5<def> = L2_loadri_io %vreg4<kill>, 25440; mem:LD4[%cgep] IntRegs:%vreg5,%vreg4
+	%vreg6<def> = A2_add %vreg5<kill>, %vreg1; IntRegs:%vreg6,%vreg5,%vreg1
+	%vreg7<def> = C2_cmpeqi %vreg2, 2; PredRegs:%vreg7 IntRegs:%vreg2
+	%vreg8<def> = A2_tfrsi <ga:@initial_black_influence>; IntRegs:%vreg8
+	%vreg9<def> = A2_tfrsi <ga:@initial_white_influence>; IntRegs:%vreg9
+	%vreg10<def> = C2_mux %vreg7<kill>, %vreg9<kill>, %vreg8<kill>; IntRegs:%vreg10,%vreg9,%vreg8 PredRegs:%vreg7
+	ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	%R0<def> = COPY %vreg10; IntRegs:%vreg10
+	%R1<def> = COPY %vreg6; IntRegs:%vreg6
+	J2_call <ga:@whose_moyo>, %D0<imp-def>, %D1<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use>, %R1<imp-use>, ...
+	ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	%vreg11<def> = COPY %R0; IntRegs:%vreg11
+	%vreg12<def> = A4_rcmpeq %vreg11, %vreg2; IntRegs:%vreg12,%vreg11,%vreg2
+	%R0<def> = COPY %vreg12; IntRegs:%vreg12
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function autohelperpat301.
+
+# After Expand ISel Pseudo-instructions:
+# Machine code for function autohelperpat301: SSA
+Function Live Ins: %R0 in %vreg0, %R1 in %vreg1, %R2 in %vreg2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R2
+	%vreg2<def> = COPY %R2; IntRegs:%vreg2
+	%vreg1<def> = COPY %R1; IntRegs:%vreg1
+	%vreg0<def> = COPY %R0; IntRegs:%vreg0
+	%vreg4<def,tied2> = S4_addi_asl_ri <ga:@transformation>, %vreg0<tied0>, 2; IntRegs:%vreg4,%vreg0
+	%vreg5<def> = L2_loadri_io %vreg4<kill>, 25440; mem:LD4[%cgep] IntRegs:%vreg5,%vreg4
+	%vreg6<def> = A2_add %vreg5<kill>, %vreg1; IntRegs:%vreg6,%vreg5,%vreg1
+	%vreg7<def> = C2_cmpeqi %vreg2, 2; PredRegs:%vreg7 IntRegs:%vreg2
+	%vreg8<def> = A2_tfrsi <ga:@initial_black_influence>; IntRegs:%vreg8
+	%vreg9<def> = A2_tfrsi <ga:@initial_white_influence>; IntRegs:%vreg9
+	%vreg10<def> = C2_mux %vreg7<kill>, %vreg9<kill>, %vreg8<kill>; IntRegs:%vreg10,%vreg9,%vreg8 PredRegs:%vreg7
+	ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	%R0<def> = COPY %vreg10; IntRegs:%vreg10
+	%R1<def> = COPY %vreg6; IntRegs:%vreg6
+	J2_call <ga:@whose_moyo>, %D0<imp-def>, %D1<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use>, %R1<imp-use>, ...
+	ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	%vreg11<def> = COPY %R0; IntRegs:%vreg11
+	%vreg12<def> = A4_rcmpeq %vreg11, %vreg2; IntRegs:%vreg12,%vreg11,%vreg2
+	%R0<def> = COPY %vreg12; IntRegs:%vreg12
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function autohelperpat301.
+
+# After Tail Duplication:
+# Machine code for function autohelperpat301: SSA
+Function Live Ins: %R0 in %vreg0, %R1 in %vreg1, %R2 in %vreg2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R2
+	%vreg2<def> = COPY %R2; IntRegs:%vreg2
+	%vreg1<def> = COPY %R1; IntRegs:%vreg1
+	%vreg0<def> = COPY %R0; IntRegs:%vreg0
+	%vreg4<def,tied2> = S4_addi_asl_ri <ga:@transformation>, %vreg0<tied0>, 2; IntRegs:%vreg4,%vreg0
+	%vreg5<def> = L2_loadri_io %vreg4<kill>, 25440; mem:LD4[%cgep] IntRegs:%vreg5,%vreg4
+	%vreg6<def> = A2_add %vreg5<kill>, %vreg1; IntRegs:%vreg6,%vreg5,%vreg1
+	%vreg7<def> = C2_cmpeqi %vreg2, 2; PredRegs:%vreg7 IntRegs:%vreg2
+	%vreg8<def> = A2_tfrsi <ga:@initial_black_influence>; IntRegs:%vreg8
+	%vreg9<def> = A2_tfrsi <ga:@initial_white_influence>; IntRegs:%vreg9
+	%vreg10<def> = C2_mux %vreg7<kill>, %vreg9<kill>, %vreg8<kill>; IntRegs:%vreg10,%vreg9,%vreg8 PredRegs:%vreg7
+	ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	%R0<def> = COPY %vreg10; IntRegs:%vreg10
+	%R1<def> = COPY %vreg6; IntRegs:%vreg6
+	J2_call <ga:@whose_moyo>, %D0<imp-def>, %D1<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use>, %R1<imp-use>, ...
+	ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	%vreg11<def> = COPY %R0; IntRegs:%vreg11
+	%vreg12<def> = A4_rcmpeq %vreg11, %vreg2; IntRegs:%vreg12,%vreg11,%vreg2
+	%R0<def> = COPY %vreg12; IntRegs:%vreg12
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function autohelperpat301.
+
+# After Optimize machine instruction PHIs:
+# Machine code for function autohelperpat301: SSA
+Function Live Ins: %R0 in %vreg0, %R1 in %vreg1, %R2 in %vreg2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R2
+	%vreg2<def> = COPY %R2; IntRegs:%vreg2
+	%vreg1<def> = COPY %R1; IntRegs:%vreg1
+	%vreg0<def> = COPY %R0; IntRegs:%vreg0
+	%vreg4<def,tied2> = S4_addi_asl_ri <ga:@transformation>, %vreg0<tied0>, 2; IntRegs:%vreg4,%vreg0
+	%vreg5<def> = L2_loadri_io %vreg4<kill>, 25440; mem:LD4[%cgep] IntRegs:%vreg5,%vreg4
+	%vreg6<def> = A2_add %vreg5<kill>, %vreg1; IntRegs:%vreg6,%vreg5,%vreg1
+	%vreg7<def> = C2_cmpeqi %vreg2, 2; PredRegs:%vreg7 IntRegs:%vreg2
+	%vreg8<def> = A2_tfrsi <ga:@initial_black_influence>; IntRegs:%vreg8
+	%vreg9<def> = A2_tfrsi <ga:@initial_white_influence>; IntRegs:%vreg9
+	%vreg10<def> = C2_mux %vreg7<kill>, %vreg9<kill>, %vreg8<kill>; IntRegs:%vreg10,%vreg9,%vreg8 PredRegs:%vreg7
+	ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	%R0<def> = COPY %vreg10; IntRegs:%vreg10
+	%R1<def> = COPY %vreg6; IntRegs:%vreg6
+	J2_call <ga:@whose_moyo>, %D0<imp-def>, %D1<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use>, %R1<imp-use>, ...
+	ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	%vreg11<def> = COPY %R0; IntRegs:%vreg11
+	%vreg12<def> = A4_rcmpeq %vreg11, %vreg2; IntRegs:%vreg12,%vreg11,%vreg2
+	%R0<def> = COPY %vreg12; IntRegs:%vreg12
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function autohelperpat301.
+
+# After Merge disjoint stack slots:
+# Machine code for function autohelperpat301: SSA
+Function Live Ins: %R0 in %vreg0, %R1 in %vreg1, %R2 in %vreg2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R2
+	%vreg2<def> = COPY %R2; IntRegs:%vreg2
+	%vreg1<def> = COPY %R1; IntRegs:%vreg1
+	%vreg0<def> = COPY %R0; IntRegs:%vreg0
+	%vreg4<def,tied2> = S4_addi_asl_ri <ga:@transformation>, %vreg0<tied0>, 2; IntRegs:%vreg4,%vreg0
+	%vreg5<def> = L2_loadri_io %vreg4<kill>, 25440; mem:LD4[%cgep] IntRegs:%vreg5,%vreg4
+	%vreg6<def> = A2_add %vreg5<kill>, %vreg1; IntRegs:%vreg6,%vreg5,%vreg1
+	%vreg7<def> = C2_cmpeqi %vreg2, 2; PredRegs:%vreg7 IntRegs:%vreg2
+	%vreg8<def> = A2_tfrsi <ga:@initial_black_influence>; IntRegs:%vreg8
+	%vreg9<def> = A2_tfrsi <ga:@initial_white_influence>; IntRegs:%vreg9
+	%vreg10<def> = C2_mux %vreg7<kill>, %vreg9<kill>, %vreg8<kill>; IntRegs:%vreg10,%vreg9,%vreg8 PredRegs:%vreg7
+	ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	%R0<def> = COPY %vreg10; IntRegs:%vreg10
+	%R1<def> = COPY %vreg6; IntRegs:%vreg6
+	J2_call <ga:@whose_moyo>, %D0<imp-def>, %D1<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use>, %R1<imp-use>, ...
+	ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	%vreg11<def> = COPY %R0; IntRegs:%vreg11
+	%vreg12<def> = A4_rcmpeq %vreg11, %vreg2; IntRegs:%vreg12,%vreg11,%vreg2
+	%R0<def> = COPY %vreg12; IntRegs:%vreg12
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function autohelperpat301.
+
+# After Local Stack Slot Allocation:
+# Machine code for function autohelperpat301: SSA
+Function Live Ins: %R0 in %vreg0, %R1 in %vreg1, %R2 in %vreg2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R2
+	%vreg2<def> = COPY %R2; IntRegs:%vreg2
+	%vreg1<def> = COPY %R1; IntRegs:%vreg1
+	%vreg0<def> = COPY %R0; IntRegs:%vreg0
+	%vreg4<def,tied2> = S4_addi_asl_ri <ga:@transformation>, %vreg0<tied0>, 2; IntRegs:%vreg4,%vreg0
+	%vreg5<def> = L2_loadri_io %vreg4<kill>, 25440; mem:LD4[%cgep] IntRegs:%vreg5,%vreg4
+	%vreg6<def> = A2_add %vreg5<kill>, %vreg1; IntRegs:%vreg6,%vreg5,%vreg1
+	%vreg7<def> = C2_cmpeqi %vreg2, 2; PredRegs:%vreg7 IntRegs:%vreg2
+	%vreg8<def> = A2_tfrsi <ga:@initial_black_influence>; IntRegs:%vreg8
+	%vreg9<def> = A2_tfrsi <ga:@initial_white_influence>; IntRegs:%vreg9
+	%vreg10<def> = C2_mux %vreg7<kill>, %vreg9<kill>, %vreg8<kill>; IntRegs:%vreg10,%vreg9,%vreg8 PredRegs:%vreg7
+	ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	%R0<def> = COPY %vreg10; IntRegs:%vreg10
+	%R1<def> = COPY %vreg6; IntRegs:%vreg6
+	J2_call <ga:@whose_moyo>, %D0<imp-def>, %D1<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use>, %R1<imp-use>, ...
+	ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	%vreg11<def> = COPY %R0; IntRegs:%vreg11
+	%vreg12<def> = A4_rcmpeq %vreg11, %vreg2; IntRegs:%vreg12,%vreg11,%vreg2
+	%R0<def> = COPY %vreg12; IntRegs:%vreg12
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function autohelperpat301.
+
+# After Remove dead machine instructions:
+# Machine code for function autohelperpat301: SSA
+Function Live Ins: %R0 in %vreg0, %R1 in %vreg1, %R2 in %vreg2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R2
+	%vreg2<def> = COPY %R2; IntRegs:%vreg2
+	%vreg1<def> = COPY %R1; IntRegs:%vreg1
+	%vreg0<def> = COPY %R0; IntRegs:%vreg0
+	%vreg4<def,tied2> = S4_addi_asl_ri <ga:@transformation>, %vreg0<tied0>, 2; IntRegs:%vreg4,%vreg0
+	%vreg5<def> = L2_loadri_io %vreg4<kill>, 25440; mem:LD4[%cgep] IntRegs:%vreg5,%vreg4
+	%vreg6<def> = A2_add %vreg5<kill>, %vreg1; IntRegs:%vreg6,%vreg5,%vreg1
+	%vreg7<def> = C2_cmpeqi %vreg2, 2; PredRegs:%vreg7 IntRegs:%vreg2
+	%vreg8<def> = A2_tfrsi <ga:@initial_black_influence>; IntRegs:%vreg8
+	%vreg9<def> = A2_tfrsi <ga:@initial_white_influence>; IntRegs:%vreg9
+	%vreg10<def> = C2_mux %vreg7<kill>, %vreg9<kill>, %vreg8<kill>; IntRegs:%vreg10,%vreg9,%vreg8 PredRegs:%vreg7
+	ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	%R0<def> = COPY %vreg10; IntRegs:%vreg10
+	%R1<def> = COPY %vreg6; IntRegs:%vreg6
+	J2_call <ga:@whose_moyo>, %D0<imp-def>, %D1<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use>, %R1<imp-use>, ...
+	ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	%vreg11<def> = COPY %R0; IntRegs:%vreg11
+	%vreg12<def> = A4_rcmpeq %vreg11, %vreg2; IntRegs:%vreg12,%vreg11,%vreg2
+	%R0<def> = COPY %vreg12; IntRegs:%vreg12
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function autohelperpat301.
+
+# After Machine Loop Invariant Code Motion:
+# Machine code for function autohelperpat301: SSA
+Function Live Ins: %R0 in %vreg0, %R1 in %vreg1, %R2 in %vreg2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R2
+	%vreg2<def> = COPY %R2; IntRegs:%vreg2
+	%vreg1<def> = COPY %R1; IntRegs:%vreg1
+	%vreg0<def> = COPY %R0; IntRegs:%vreg0
+	%vreg4<def,tied2> = S4_addi_asl_ri <ga:@transformation>, %vreg0<tied0>, 2; IntRegs:%vreg4,%vreg0
+	%vreg5<def> = L2_loadri_io %vreg4<kill>, 25440; mem:LD4[%cgep] IntRegs:%vreg5,%vreg4
+	%vreg6<def> = A2_add %vreg5<kill>, %vreg1; IntRegs:%vreg6,%vreg5,%vreg1
+	%vreg7<def> = C2_cmpeqi %vreg2, 2; PredRegs:%vreg7 IntRegs:%vreg2
+	%vreg8<def> = A2_tfrsi <ga:@initial_black_influence>; IntRegs:%vreg8
+	%vreg9<def> = A2_tfrsi <ga:@initial_white_influence>; IntRegs:%vreg9
+	%vreg10<def> = C2_mux %vreg7<kill>, %vreg9<kill>, %vreg8<kill>; IntRegs:%vreg10,%vreg9,%vreg8 PredRegs:%vreg7
+	ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	%R0<def> = COPY %vreg10; IntRegs:%vreg10
+	%R1<def> = COPY %vreg6; IntRegs:%vreg6
+	J2_call <ga:@whose_moyo>, %D0<imp-def>, %D1<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use>, %R1<imp-use>, ...
+	ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	%vreg11<def> = COPY %R0; IntRegs:%vreg11
+	%vreg12<def> = A4_rcmpeq %vreg11, %vreg2; IntRegs:%vreg12,%vreg11,%vreg2
+	%R0<def> = COPY %vreg12; IntRegs:%vreg12
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function autohelperpat301.
+
+# After Machine Common Subexpression Elimination:
+# Machine code for function autohelperpat301: SSA
+Function Live Ins: %R0 in %vreg0, %R1 in %vreg1, %R2 in %vreg2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R2
+	%vreg2<def> = COPY %R2; IntRegs:%vreg2
+	%vreg1<def> = COPY %R1; IntRegs:%vreg1
+	%vreg0<def> = COPY %R0; IntRegs:%vreg0
+	%vreg4<def,tied2> = S4_addi_asl_ri <ga:@transformation>, %vreg0<tied0>, 2; IntRegs:%vreg4,%vreg0
+	%vreg5<def> = L2_loadri_io %vreg4<kill>, 25440; mem:LD4[%cgep] IntRegs:%vreg5,%vreg4
+	%vreg6<def> = A2_add %vreg5<kill>, %vreg1; IntRegs:%vreg6,%vreg5,%vreg1
+	%vreg7<def> = C2_cmpeqi %vreg2, 2; PredRegs:%vreg7 IntRegs:%vreg2
+	%vreg8<def> = A2_tfrsi <ga:@initial_black_influence>; IntRegs:%vreg8
+	%vreg9<def> = A2_tfrsi <ga:@initial_white_influence>; IntRegs:%vreg9
+	%vreg10<def> = C2_mux %vreg7<kill>, %vreg9<kill>, %vreg8<kill>; IntRegs:%vreg10,%vreg9,%vreg8 PredRegs:%vreg7
+	ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	%R0<def> = COPY %vreg10; IntRegs:%vreg10
+	%R1<def> = COPY %vreg6; IntRegs:%vreg6
+	J2_call <ga:@whose_moyo>, %D0<imp-def>, %D1<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use>, %R1<imp-use>, ...
+	ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	%vreg11<def> = COPY %R0; IntRegs:%vreg11
+	%vreg12<def> = A4_rcmpeq %vreg11, %vreg2; IntRegs:%vreg12,%vreg11,%vreg2
+	%R0<def> = COPY %vreg12; IntRegs:%vreg12
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function autohelperpat301.
+
+# After Machine code sinking:
+# Machine code for function autohelperpat301: SSA
+Function Live Ins: %R0 in %vreg0, %R1 in %vreg1, %R2 in %vreg2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R2
+	%vreg2<def> = COPY %R2; IntRegs:%vreg2
+	%vreg1<def> = COPY %R1; IntRegs:%vreg1
+	%vreg0<def> = COPY %R0; IntRegs:%vreg0
+	%vreg4<def,tied2> = S4_addi_asl_ri <ga:@transformation>, %vreg0<tied0>, 2; IntRegs:%vreg4,%vreg0
+	%vreg5<def> = L2_loadri_io %vreg4<kill>, 25440; mem:LD4[%cgep] IntRegs:%vreg5,%vreg4
+	%vreg6<def> = A2_add %vreg5<kill>, %vreg1; IntRegs:%vreg6,%vreg5,%vreg1
+	%vreg7<def> = C2_cmpeqi %vreg2, 2; PredRegs:%vreg7 IntRegs:%vreg2
+	%vreg8<def> = A2_tfrsi <ga:@initial_black_influence>; IntRegs:%vreg8
+	%vreg9<def> = A2_tfrsi <ga:@initial_white_influence>; IntRegs:%vreg9
+	%vreg10<def> = C2_mux %vreg7<kill>, %vreg9<kill>, %vreg8<kill>; IntRegs:%vreg10,%vreg9,%vreg8 PredRegs:%vreg7
+	ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	%R0<def> = COPY %vreg10; IntRegs:%vreg10
+	%R1<def> = COPY %vreg6; IntRegs:%vreg6
+	J2_call <ga:@whose_moyo>, %D0<imp-def>, %D1<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use>, %R1<imp-use>, ...
+	ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	%vreg11<def> = COPY %R0; IntRegs:%vreg11
+	%vreg12<def> = A4_rcmpeq %vreg11, %vreg2; IntRegs:%vreg12,%vreg11,%vreg2
+	%R0<def> = COPY %vreg12; IntRegs:%vreg12
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function autohelperpat301.
+
+# After Peephole Optimizations:
+# Machine code for function autohelperpat301: SSA
+Function Live Ins: %R0 in %vreg0, %R1 in %vreg1, %R2 in %vreg2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R2
+	%vreg2<def> = COPY %R2; IntRegs:%vreg2
+	%vreg1<def> = COPY %R1; IntRegs:%vreg1
+	%vreg0<def> = COPY %R0; IntRegs:%vreg0
+	%vreg4<def,tied2> = S4_addi_asl_ri <ga:@transformation>, %vreg0<tied0>, 2; IntRegs:%vreg4,%vreg0
+	%vreg5<def> = L2_loadri_io %vreg4<kill>, 25440; mem:LD4[%cgep] IntRegs:%vreg5,%vreg4
+	%vreg6<def> = A2_add %vreg5<kill>, %vreg1; IntRegs:%vreg6,%vreg5,%vreg1
+	%vreg7<def> = C2_cmpeqi %vreg2, 2; PredRegs:%vreg7 IntRegs:%vreg2
+	%vreg8<def> = A2_tfrsi <ga:@initial_black_influence>; IntRegs:%vreg8
+	%vreg9<def> = A2_tfrsi <ga:@initial_white_influence>; IntRegs:%vreg9
+	%vreg10<def> = C2_mux %vreg7<kill>, %vreg9<kill>, %vreg8<kill>; IntRegs:%vreg10,%vreg9,%vreg8 PredRegs:%vreg7
+	ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	%R0<def> = COPY %vreg10; IntRegs:%vreg10
+	%R1<def> = COPY %vreg6; IntRegs:%vreg6
+	J2_call <ga:@whose_moyo>, %D0<imp-def>, %D1<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use>, %R1<imp-use>, ...
+	ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	%vreg11<def> = COPY %R0; IntRegs:%vreg11
+	%vreg12<def> = A4_rcmpeq %vreg11, %vreg2; IntRegs:%vreg12,%vreg11,%vreg2
+	%R0<def> = COPY %vreg12; IntRegs:%vreg12
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function autohelperpat301.
+
+# After Remove dead machine instructions:
+# Machine code for function autohelperpat301: SSA
+Function Live Ins: %R0 in %vreg0, %R1 in %vreg1, %R2 in %vreg2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R2
+	%vreg2<def> = COPY %R2; IntRegs:%vreg2
+	%vreg1<def> = COPY %R1; IntRegs:%vreg1
+	%vreg0<def> = COPY %R0; IntRegs:%vreg0
+	%vreg4<def,tied2> = S4_addi_asl_ri <ga:@transformation>, %vreg0<tied0>, 2; IntRegs:%vreg4,%vreg0
+	%vreg5<def> = L2_loadri_io %vreg4<kill>, 25440; mem:LD4[%cgep] IntRegs:%vreg5,%vreg4
+	%vreg6<def> = A2_add %vreg5<kill>, %vreg1; IntRegs:%vreg6,%vreg5,%vreg1
+	%vreg7<def> = C2_cmpeqi %vreg2, 2; PredRegs:%vreg7 IntRegs:%vreg2
+	%vreg8<def> = A2_tfrsi <ga:@initial_black_influence>; IntRegs:%vreg8
+	%vreg9<def> = A2_tfrsi <ga:@initial_white_influence>; IntRegs:%vreg9
+	%vreg10<def> = C2_mux %vreg7<kill>, %vreg9<kill>, %vreg8<kill>; IntRegs:%vreg10,%vreg9,%vreg8 PredRegs:%vreg7
+	ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	%R0<def> = COPY %vreg10; IntRegs:%vreg10
+	%R1<def> = COPY %vreg6; IntRegs:%vreg6
+	J2_call <ga:@whose_moyo>, %D0<imp-def>, %D1<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use>, %R1<imp-use>, ...
+	ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	%vreg11<def> = COPY %R0; IntRegs:%vreg11
+	%vreg12<def> = A4_rcmpeq %vreg11, %vreg2; IntRegs:%vreg12,%vreg11,%vreg2
+	%R0<def> = COPY %vreg12; IntRegs:%vreg12
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function autohelperpat301.
+
+# After Hexagon Store Widening:
+# Machine code for function autohelperpat301: SSA
+Function Live Ins: %R0 in %vreg0, %R1 in %vreg1, %R2 in %vreg2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R2
+	%vreg2<def> = COPY %R2; IntRegs:%vreg2
+	%vreg1<def> = COPY %R1; IntRegs:%vreg1
+	%vreg0<def> = COPY %R0; IntRegs:%vreg0
+	%vreg4<def,tied2> = S4_addi_asl_ri <ga:@transformation>, %vreg0<tied0>, 2; IntRegs:%vreg4,%vreg0
+	%vreg5<def> = L2_loadri_io %vreg4<kill>, 25440; mem:LD4[%cgep] IntRegs:%vreg5,%vreg4
+	%vreg6<def> = A2_add %vreg5<kill>, %vreg1; IntRegs:%vreg6,%vreg5,%vreg1
+	%vreg7<def> = C2_cmpeqi %vreg2, 2; PredRegs:%vreg7 IntRegs:%vreg2
+	%vreg8<def> = A2_tfrsi <ga:@initial_black_influence>; IntRegs:%vreg8
+	%vreg9<def> = A2_tfrsi <ga:@initial_white_influence>; IntRegs:%vreg9
+	%vreg10<def> = C2_mux %vreg7<kill>, %vreg9<kill>, %vreg8<kill>; IntRegs:%vreg10,%vreg9,%vreg8 PredRegs:%vreg7
+	ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	%R0<def> = COPY %vreg10; IntRegs:%vreg10
+	%R1<def> = COPY %vreg6; IntRegs:%vreg6
+	J2_call <ga:@whose_moyo>, %D0<imp-def>, %D1<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use>, %R1<imp-use>, ...
+	ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	%vreg11<def> = COPY %R0; IntRegs:%vreg11
+	%vreg12<def> = A4_rcmpeq %vreg11, %vreg2; IntRegs:%vreg12,%vreg11,%vreg2
+	%R0<def> = COPY %vreg12; IntRegs:%vreg12
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function autohelperpat301.
+
+# After Hexagon Hardware Loops:
+# Machine code for function autohelperpat301: SSA
+Function Live Ins: %R0 in %vreg0, %R1 in %vreg1, %R2 in %vreg2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R2
+	%vreg2<def> = COPY %R2; IntRegs:%vreg2
+	%vreg1<def> = COPY %R1; IntRegs:%vreg1
+	%vreg0<def> = COPY %R0; IntRegs:%vreg0
+	%vreg4<def,tied2> = S4_addi_asl_ri <ga:@transformation>, %vreg0<tied0>, 2; IntRegs:%vreg4,%vreg0
+	%vreg5<def> = L2_loadri_io %vreg4<kill>, 25440; mem:LD4[%cgep] IntRegs:%vreg5,%vreg4
+	%vreg6<def> = A2_add %vreg5<kill>, %vreg1; IntRegs:%vreg6,%vreg5,%vreg1
+	%vreg7<def> = C2_cmpeqi %vreg2, 2; PredRegs:%vreg7 IntRegs:%vreg2
+	%vreg8<def> = A2_tfrsi <ga:@initial_black_influence>; IntRegs:%vreg8
+	%vreg9<def> = A2_tfrsi <ga:@initial_white_influence>; IntRegs:%vreg9
+	%vreg10<def> = C2_mux %vreg7<kill>, %vreg9<kill>, %vreg8<kill>; IntRegs:%vreg10,%vreg9,%vreg8 PredRegs:%vreg7
+	ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	%R0<def> = COPY %vreg10; IntRegs:%vreg10
+	%R1<def> = COPY %vreg6; IntRegs:%vreg6
+	J2_call <ga:@whose_moyo>, %D0<imp-def>, %D1<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use>, %R1<imp-use>, ...
+	ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	%vreg11<def> = COPY %R0; IntRegs:%vreg11
+	%vreg12<def> = A4_rcmpeq %vreg11, %vreg2; IntRegs:%vreg12,%vreg11,%vreg2
+	%R0<def> = COPY %vreg12; IntRegs:%vreg12
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function autohelperpat301.
+
+# After Process Implicit Definitions:
+# Machine code for function autohelperpat301: SSA
+Function Live Ins: %R0 in %vreg0, %R1 in %vreg1, %R2 in %vreg2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R2
+	%vreg2<def> = COPY %R2; IntRegs:%vreg2
+	%vreg1<def> = COPY %R1; IntRegs:%vreg1
+	%vreg0<def> = COPY %R0; IntRegs:%vreg0
+	%vreg4<def,tied2> = S4_addi_asl_ri <ga:@transformation>, %vreg0<tied0>, 2; IntRegs:%vreg4,%vreg0
+	%vreg5<def> = L2_loadri_io %vreg4<kill>, 25440; mem:LD4[%cgep] IntRegs:%vreg5,%vreg4
+	%vreg6<def> = A2_add %vreg5<kill>, %vreg1; IntRegs:%vreg6,%vreg5,%vreg1
+	%vreg7<def> = C2_cmpeqi %vreg2, 2; PredRegs:%vreg7 IntRegs:%vreg2
+	%vreg8<def> = A2_tfrsi <ga:@initial_black_influence>; IntRegs:%vreg8
+	%vreg9<def> = A2_tfrsi <ga:@initial_white_influence>; IntRegs:%vreg9
+	%vreg10<def> = C2_mux %vreg7<kill>, %vreg9<kill>, %vreg8<kill>; IntRegs:%vreg10,%vreg9,%vreg8 PredRegs:%vreg7
+	ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	%R0<def> = COPY %vreg10; IntRegs:%vreg10
+	%R1<def> = COPY %vreg6; IntRegs:%vreg6
+	J2_call <ga:@whose_moyo>, %D0<imp-def>, %D1<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use>, %R1<imp-use>, ...
+	ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	%vreg11<def> = COPY %R0; IntRegs:%vreg11
+	%vreg12<def> = A4_rcmpeq %vreg11, %vreg2; IntRegs:%vreg12,%vreg11,%vreg2
+	%R0<def> = COPY %vreg12; IntRegs:%vreg12
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function autohelperpat301.
+
+# After Live Variable Analysis:
+# Machine code for function autohelperpat301: SSA
+Function Live Ins: %R0 in %vreg0, %R1 in %vreg1, %R2 in %vreg2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R2
+	%vreg2<def> = COPY %R2<kill>; IntRegs:%vreg2
+	%vreg1<def> = COPY %R1<kill>; IntRegs:%vreg1
+	%vreg0<def> = COPY %R0<kill>; IntRegs:%vreg0
+	%vreg4<def,tied2> = S4_addi_asl_ri <ga:@transformation>, %vreg0<kill,tied0>, 2; IntRegs:%vreg4,%vreg0
+	%vreg5<def> = L2_loadri_io %vreg4<kill>, 25440; mem:LD4[%cgep] IntRegs:%vreg5,%vreg4
+	%vreg6<def> = A2_add %vreg5<kill>, %vreg1<kill>; IntRegs:%vreg6,%vreg5,%vreg1
+	%vreg7<def> = C2_cmpeqi %vreg2, 2; PredRegs:%vreg7 IntRegs:%vreg2
+	%vreg8<def> = A2_tfrsi <ga:@initial_black_influence>; IntRegs:%vreg8
+	%vreg9<def> = A2_tfrsi <ga:@initial_white_influence>; IntRegs:%vreg9
+	%vreg10<def> = C2_mux %vreg7<kill>, %vreg9<kill>, %vreg8<kill>; IntRegs:%vreg10,%vreg9,%vreg8 PredRegs:%vreg7
+	ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	%R0<def> = COPY %vreg10<kill>; IntRegs:%vreg10
+	%R1<def> = COPY %vreg6<kill>; IntRegs:%vreg6
+	J2_call <ga:@whose_moyo>, %D0<imp-def,dead>, %D1<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use,kill>, %R1<imp-use,kill>, %R0<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	%vreg11<def> = COPY %R0<kill>; IntRegs:%vreg11
+	%vreg12<def> = A4_rcmpeq %vreg11<kill>, %vreg2<kill>; IntRegs:%vreg12,%vreg11,%vreg2
+	%R0<def> = COPY %vreg12<kill>; IntRegs:%vreg12
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use,kill>
+
+# End machine code for function autohelperpat301.
+
+# After Machine Natural Loop Construction:
+# Machine code for function autohelperpat301: SSA
+Function Live Ins: %R0 in %vreg0, %R1 in %vreg1, %R2 in %vreg2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R2
+	%vreg2<def> = COPY %R2<kill>; IntRegs:%vreg2
+	%vreg1<def> = COPY %R1<kill>; IntRegs:%vreg1
+	%vreg0<def> = COPY %R0<kill>; IntRegs:%vreg0
+	%vreg4<def,tied2> = S4_addi_asl_ri <ga:@transformation>, %vreg0<kill,tied0>, 2; IntRegs:%vreg4,%vreg0
+	%vreg5<def> = L2_loadri_io %vreg4<kill>, 25440; mem:LD4[%cgep] IntRegs:%vreg5,%vreg4
+	%vreg6<def> = A2_add %vreg5<kill>, %vreg1<kill>; IntRegs:%vreg6,%vreg5,%vreg1
+	%vreg7<def> = C2_cmpeqi %vreg2, 2; PredRegs:%vreg7 IntRegs:%vreg2
+	%vreg8<def> = A2_tfrsi <ga:@initial_black_influence>; IntRegs:%vreg8
+	%vreg9<def> = A2_tfrsi <ga:@initial_white_influence>; IntRegs:%vreg9
+	%vreg10<def> = C2_mux %vreg7<kill>, %vreg9<kill>, %vreg8<kill>; IntRegs:%vreg10,%vreg9,%vreg8 PredRegs:%vreg7
+	ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	%R0<def> = COPY %vreg10<kill>; IntRegs:%vreg10
+	%R1<def> = COPY %vreg6<kill>; IntRegs:%vreg6
+	J2_call <ga:@whose_moyo>, %D0<imp-def,dead>, %D1<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use,kill>, %R1<imp-use,kill>, %R0<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	%vreg11<def> = COPY %R0<kill>; IntRegs:%vreg11
+	%vreg12<def> = A4_rcmpeq %vreg11<kill>, %vreg2<kill>; IntRegs:%vreg12,%vreg11,%vreg2
+	%R0<def> = COPY %vreg12<kill>; IntRegs:%vreg12
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use,kill>
+
+# End machine code for function autohelperpat301.
+
+# After Eliminate PHI nodes for register allocation:
+# Machine code for function autohelperpat301: Post SSA
+Function Live Ins: %R0 in %vreg0, %R1 in %vreg1, %R2 in %vreg2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R2
+	%vreg2<def> = COPY %R2<kill>; IntRegs:%vreg2
+	%vreg1<def> = COPY %R1<kill>; IntRegs:%vreg1
+	%vreg0<def> = COPY %R0<kill>; IntRegs:%vreg0
+	%vreg4<def,tied2> = S4_addi_asl_ri <ga:@transformation>, %vreg0<kill,tied0>, 2; IntRegs:%vreg4,%vreg0
+	%vreg5<def> = L2_loadri_io %vreg4<kill>, 25440; mem:LD4[%cgep] IntRegs:%vreg5,%vreg4
+	%vreg6<def> = A2_add %vreg5<kill>, %vreg1<kill>; IntRegs:%vreg6,%vreg5,%vreg1
+	%vreg7<def> = C2_cmpeqi %vreg2, 2; PredRegs:%vreg7 IntRegs:%vreg2
+	%vreg8<def> = A2_tfrsi <ga:@initial_black_influence>; IntRegs:%vreg8
+	%vreg9<def> = A2_tfrsi <ga:@initial_white_influence>; IntRegs:%vreg9
+	%vreg10<def> = C2_mux %vreg7<kill>, %vreg9<kill>, %vreg8<kill>; IntRegs:%vreg10,%vreg9,%vreg8 PredRegs:%vreg7
+	ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	%R0<def> = COPY %vreg10<kill>; IntRegs:%vreg10
+	%R1<def> = COPY %vreg6<kill>; IntRegs:%vreg6
+	J2_call <ga:@whose_moyo>, %D0<imp-def,dead>, %D1<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use,kill>, %R1<imp-use,kill>, %R0<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	%vreg11<def> = COPY %R0<kill>; IntRegs:%vreg11
+	%vreg12<def> = A4_rcmpeq %vreg11<kill>, %vreg2<kill>; IntRegs:%vreg12,%vreg11,%vreg2
+	%R0<def> = COPY %vreg12<kill>; IntRegs:%vreg12
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use,kill>
+
+# End machine code for function autohelperpat301.
+
+# After Two-Address instruction pass:
+# Machine code for function autohelperpat301: Post SSA
+Function Live Ins: %R0 in %vreg0, %R1 in %vreg1, %R2 in %vreg2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R2
+	%vreg2<def> = COPY %R2<kill>; IntRegs:%vreg2
+	%vreg1<def> = COPY %R1<kill>; IntRegs:%vreg1
+	%vreg0<def> = COPY %R0<kill>; IntRegs:%vreg0
+	%vreg4<def> = COPY %vreg0<kill>; IntRegs:%vreg4,%vreg0
+	%vreg4<def,tied2> = S4_addi_asl_ri <ga:@transformation>, %vreg4<tied0>, 2; IntRegs:%vreg4
+	%vreg5<def> = L2_loadri_io %vreg4<kill>, 25440; mem:LD4[%cgep] IntRegs:%vreg5,%vreg4
+	%vreg6<def> = A2_add %vreg5<kill>, %vreg1<kill>; IntRegs:%vreg6,%vreg5,%vreg1
+	%vreg7<def> = C2_cmpeqi %vreg2, 2; PredRegs:%vreg7 IntRegs:%vreg2
+	%vreg8<def> = A2_tfrsi <ga:@initial_black_influence>; IntRegs:%vreg8
+	%vreg9<def> = A2_tfrsi <ga:@initial_white_influence>; IntRegs:%vreg9
+	%vreg10<def> = C2_mux %vreg7<kill>, %vreg9<kill>, %vreg8<kill>; IntRegs:%vreg10,%vreg9,%vreg8 PredRegs:%vreg7
+	ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	%R0<def> = COPY %vreg10<kill>; IntRegs:%vreg10
+	%R1<def> = COPY %vreg6<kill>; IntRegs:%vreg6
+	J2_call <ga:@whose_moyo>, %D0<imp-def,dead>, %D1<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use,kill>, %R1<imp-use,kill>, %R0<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	%vreg11<def> = COPY %R0<kill>; IntRegs:%vreg11
+	%vreg12<def> = A4_rcmpeq %vreg11<kill>, %vreg2<kill>; IntRegs:%vreg12,%vreg11,%vreg2
+	%R0<def> = COPY %vreg12<kill>; IntRegs:%vreg12
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use,kill>
+
+# End machine code for function autohelperpat301.
+
+# After Simple Register Coalescing:
+# Machine code for function autohelperpat301: Post SSA
+Function Live Ins: %R0 in %vreg0, %R1 in %vreg1, %R2 in %vreg2
+
+0B	BB#0: derived from LLVM BB %0
+	    Live Ins: %R0 %R1 %R2
+16B		%vreg2<def> = COPY %R2; IntRegs:%vreg2
+32B		%vreg1<def> = COPY %R1; IntRegs:%vreg1
+48B		%vreg4<def> = COPY %R0; IntRegs:%vreg4
+80B		%vreg4<def,tied2> = S4_addi_asl_ri <ga:@transformation>, %vreg4<tied0>, 2; IntRegs:%vreg4
+96B		%vreg5<def> = L2_loadri_io %vreg4, 25440; mem:LD4[%cgep] IntRegs:%vreg5,%vreg4
+112B		%vreg6<def> = A2_add %vreg5, %vreg1; IntRegs:%vreg6,%vreg5,%vreg1
+128B		%vreg7<def> = C2_cmpeqi %vreg2, 2; PredRegs:%vreg7 IntRegs:%vreg2
+144B		%vreg8<def> = A2_tfrsi <ga:@initial_black_influence>; IntRegs:%vreg8
+160B		%vreg9<def> = A2_tfrsi <ga:@initial_white_influence>; IntRegs:%vreg9
+176B		%vreg10<def> = C2_mux %vreg7, %vreg9, %vreg8; IntRegs:%vreg10,%vreg9,%vreg8 PredRegs:%vreg7
+192B		ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+208B		%R0<def> = COPY %vreg10; IntRegs:%vreg10
+224B		%R1<def> = COPY %vreg6; IntRegs:%vreg6
+240B		J2_call <ga:@whose_moyo>, %D0<imp-def,dead>, %D1<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use>, %R1<imp-use>, %R0<imp-def>, ...
+256B		ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+272B		%vreg11<def> = COPY %R0; IntRegs:%vreg11
+288B		%vreg12<def> = A4_rcmpeq %vreg11, %vreg2; IntRegs:%vreg12,%vreg11,%vreg2
+304B		%R0<def> = COPY %vreg12; IntRegs:%vreg12
+320B		JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function autohelperpat301.
+
+# After Hexagon Expand Condsets:
+# Machine code for function autohelperpat301: Post SSA
+Function Live Ins: %R0 in %vreg0, %R1 in %vreg1, %R2 in %vreg2
+
+0B	BB#0: derived from LLVM BB %0
+	    Live Ins: %R0 %R1 %R2
+16B		%vreg2<def> = COPY %R2; IntRegs:%vreg2
+32B		%vreg1<def> = COPY %R1; IntRegs:%vreg1
+48B		%vreg4<def> = COPY %R0; IntRegs:%vreg4
+80B		%vreg4<def,tied2> = S4_addi_asl_ri <ga:@transformation>, %vreg4<tied0>, 2; IntRegs:%vreg4
+96B		%vreg5<def> = L2_loadri_io %vreg4, 25440; mem:LD4[%cgep] IntRegs:%vreg5,%vreg4
+112B		%vreg6<def> = A2_add %vreg5, %vreg1; IntRegs:%vreg6,%vreg5,%vreg1
+128B		%vreg7<def> = C2_cmpeqi %vreg2, 2; PredRegs:%vreg7 IntRegs:%vreg2
+164B		%vreg10<def> = C2_cmoveit %vreg7, <ga:@initial_white_influence>; IntRegs:%vreg10 PredRegs:%vreg7
+172B		%vreg10<def> = C2_cmoveif %vreg7<kill>, <ga:@initial_black_influence>, %vreg10<imp-use,kill>; IntRegs:%vreg10 PredRegs:%vreg7
+204B		ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+208B		%R0<def> = COPY %vreg10<kill>; IntRegs:%vreg10
+224B		%R1<def> = COPY %vreg6; IntRegs:%vreg6
+240B		J2_call <ga:@whose_moyo>, %D0<imp-def,dead>, %D1<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use>, %R1<imp-use>, %R0<imp-def>, ...
+256B		ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+272B		%vreg11<def> = COPY %R0; IntRegs:%vreg11
+288B		%vreg12<def> = A4_rcmpeq %vreg11, %vreg2; IntRegs:%vreg12,%vreg11,%vreg2
+304B		%R0<def> = COPY %vreg12; IntRegs:%vreg12
+320B		JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function autohelperpat301.
+
+# After Machine Instruction Scheduler:
+# Machine code for function autohelperpat301: Post SSA
+Function Live Ins: %R0 in %vreg0, %R1 in %vreg1, %R2 in %vreg2
+
+0B	BB#0: derived from LLVM BB %0
+	    Live Ins: %R0 %R1 %R2
+8B		%vreg4<def> = COPY %R0; IntRegs:%vreg4
+16B		%vreg2<def> = COPY %R2; IntRegs:%vreg2
+32B		%vreg1<def> = COPY %R1; IntRegs:%vreg1
+40B		%vreg7<def> = C2_cmpeqi %vreg2, 2; PredRegs:%vreg7 IntRegs:%vreg2
+80B		%vreg4<def,tied2> = S4_addi_asl_ri <ga:@transformation>, %vreg4<tied0>, 2; IntRegs:%vreg4
+204B		ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+212B		%vreg10<def> = C2_cmoveit %vreg7, <ga:@initial_white_influence>; IntRegs:%vreg10 PredRegs:%vreg7
+220B		%vreg5<def> = L2_loadri_io %vreg4, 25440; mem:LD4[%cgep] IntRegs:%vreg5,%vreg4
+228B		%vreg10<def> = C2_cmoveif %vreg7, <ga:@initial_black_influence>, %vreg10<imp-use>; IntRegs:%vreg10 PredRegs:%vreg7
+236B		%R0<def> = COPY %vreg10<kill>; IntRegs:%vreg10
+244B		%vreg6<def> = A2_add %vreg5, %vreg1; IntRegs:%vreg6,%vreg5,%vreg1
+252B		%R1<def> = COPY %vreg6; IntRegs:%vreg6
+260B		J2_call <ga:@whose_moyo>, %D0<imp-def,dead>, %D1<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use>, %R1<imp-use>, %R0<imp-def>, ...
+268B		ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+272B		%vreg11<def> = COPY %R0; IntRegs:%vreg11
+288B		%vreg12<def> = A4_rcmpeq %vreg11, %vreg2; IntRegs:%vreg12,%vreg11,%vreg2
+304B		%R0<def> = COPY %vreg12; IntRegs:%vreg12
+320B		JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function autohelperpat301.
+
+# After Greedy Register Allocator:
+# Machine code for function autohelperpat301: Post SSA
+Function Live Ins: %R0 in %vreg0, %R1 in %vreg1, %R2 in %vreg2
+
+0B	BB#0: derived from LLVM BB %0
+	    Live Ins: %R0 %R1 %R2
+8B		%vreg4<def> = COPY %R0; IntRegs:%vreg4
+16B		%vreg2<def> = COPY %R2; IntRegs:%vreg2
+32B		%vreg1<def> = COPY %R1; IntRegs:%vreg1
+40B		%vreg7<def> = C2_cmpeqi %vreg2, 2; PredRegs:%vreg7 IntRegs:%vreg2
+80B		%vreg4<def,tied2> = S4_addi_asl_ri <ga:@transformation>, %vreg4<tied0>, 2; IntRegs:%vreg4
+204B		ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+212B		%vreg10<def> = C2_cmoveit %vreg7, <ga:@initial_white_influence>; IntRegs:%vreg10 PredRegs:%vreg7
+220B		%vreg5<def> = L2_loadri_io %vreg4, 25440; mem:LD4[%cgep] IntRegs:%vreg5,%vreg4
+228B		%vreg10<def> = C2_cmoveif %vreg7, <ga:@initial_black_influence>, %vreg10<imp-use>; IntRegs:%vreg10 PredRegs:%vreg7
+236B		%R0<def> = COPY %vreg10<kill>; IntRegs:%vreg10
+244B		%vreg6<def> = A2_add %vreg5, %vreg1; IntRegs:%vreg6,%vreg5,%vreg1
+252B		%R1<def> = COPY %vreg6; IntRegs:%vreg6
+260B		J2_call <ga:@whose_moyo>, %D0<imp-def,dead>, %D1<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use>, %R1<imp-use>, %R0<imp-def>, ...
+268B		ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+272B		%vreg11<def> = COPY %R0; IntRegs:%vreg11
+288B		%vreg12<def> = A4_rcmpeq %vreg11, %vreg2; IntRegs:%vreg12,%vreg11,%vreg2
+304B		%R0<def> = COPY %vreg12; IntRegs:%vreg12
+320B		JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function autohelperpat301.
+
+# After Virtual Register Rewriter:
+# Machine code for function autohelperpat301: Post SSA
+Function Live Ins: %R0, %R1, %R2
+
+0B	BB#0: derived from LLVM BB %0
+	    Live Ins: %R0 %R1 %R2
+16B		%R16<def> = COPY %R2
+40B		%P0<def> = C2_cmpeqi %R16, 2
+80B		%R0<def,tied2> = S4_addi_asl_ri <ga:@transformation>, %R0<kill,tied0>, 2
+204B		ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+212B		%R2<def> = C2_cmoveit %P0, <ga:@initial_white_influence>
+220B		%R3<def> = L2_loadri_io %R0<kill>, 25440; mem:LD4[%cgep]
+228B		%R2<def> = C2_cmoveif %P0<kill>, <ga:@initial_black_influence>, %R2<imp-use,kill>
+236B		%R0<def> = COPY %R2<kill>
+244B		%R1<def> = A2_add %R3<kill>, %R1<kill>
+260B		J2_call <ga:@whose_moyo>, %D0<imp-def,dead>, %D1<imp-def,dead>, %R31<imp-def,dead>, %P0<imp-def,dead>, %R0<imp-use>, %R1<imp-use>, %R0<imp-def>, ...
+268B		ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+288B		%R0<def> = A4_rcmpeq %R0<kill>, %R16<kill>
+320B		JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function autohelperpat301.
+
+# After Stack Slot Coloring:
+# Machine code for function autohelperpat301: Post SSA
+Function Live Ins: %R0, %R1, %R2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R2
+	%R16<def> = COPY %R2
+	%P0<def> = C2_cmpeqi %R16, 2
+	%R0<def,tied2> = S4_addi_asl_ri <ga:@transformation>, %R0<kill,tied0>, 2
+	ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	%R2<def> = C2_cmoveit %P0, <ga:@initial_white_influence>
+	%R3<def> = L2_loadri_io %R0<kill>, 25440; mem:LD4[%cgep]
+	%R2<def> = C2_cmoveif %P0<kill>, <ga:@initial_black_influence>, %R2<imp-use,kill>
+	%R0<def> = COPY %R2<kill>
+	%R1<def> = A2_add %R3<kill>, %R1<kill>
+	J2_call <ga:@whose_moyo>, %D0<imp-def,dead>, %D1<imp-def,dead>, %R31<imp-def,dead>, %P0<imp-def,dead>, %R0<imp-use>, %R1<imp-use>, %R0<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	%R0<def> = A4_rcmpeq %R0<kill>, %R16<kill>
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function autohelperpat301.
+
+# After Machine Loop Invariant Code Motion:
+# Machine code for function autohelperpat301: Post SSA
+Function Live Ins: %R0, %R1, %R2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R2
+	%R16<def> = COPY %R2
+	%P0<def> = C2_cmpeqi %R16, 2
+	%R0<def,tied2> = S4_addi_asl_ri <ga:@transformation>, %R0<kill,tied0>, 2
+	ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	%R2<def> = C2_cmoveit %P0, <ga:@initial_white_influence>
+	%R3<def> = L2_loadri_io %R0<kill>, 25440; mem:LD4[%cgep]
+	%R2<def> = C2_cmoveif %P0<kill>, <ga:@initial_black_influence>, %R2<imp-use,kill>
+	%R0<def> = COPY %R2<kill>
+	%R1<def> = A2_add %R3<kill>, %R1<kill>
+	J2_call <ga:@whose_moyo>, %D0<imp-def,dead>, %D1<imp-def,dead>, %R31<imp-def,dead>, %P0<imp-def,dead>, %R0<imp-use>, %R1<imp-use>, %R0<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	%R0<def> = A4_rcmpeq %R0<kill>, %R16<kill>
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function autohelperpat301.
+
+# After Hexagon RDF optimizations:
+# Machine code for function autohelperpat301: Post SSA
+Function Live Ins: %R0, %R1, %R2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R2
+	%R16<def> = COPY %R2
+	%P0<def> = C2_cmpeqi %R16, 2
+	%R0<def,tied2> = S4_addi_asl_ri <ga:@transformation>, %R0<kill,tied0>, 2
+	ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	%R2<def> = C2_cmoveit %P0, <ga:@initial_white_influence>
+	%R3<def> = L2_loadri_io %R0<kill>, 25440; mem:LD4[%cgep]
+	%R2<def> = C2_cmoveif %P0<kill>, <ga:@initial_black_influence>, %R2<imp-use,kill>
+	%R0<def> = COPY %R2<kill>
+	%R1<def> = A2_add %R3<kill>, %R1<kill>
+	J2_call <ga:@whose_moyo>, %D0<imp-def,dead>, %D1<imp-def,dead>, %R31<imp-def,dead>, %P0<imp-def,dead>, %R0<imp-use>, %R1<imp-use>, %R0<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	%R0<def> = A4_rcmpeq %R0<kill>, %R16<kill>
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function autohelperpat301.
+
+# After Shrink Wrapping analysis:
+# Machine code for function autohelperpat301: Post SSA
+Function Live Ins: %R0, %R1, %R2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R2
+	%R16<def> = COPY %R2
+	%P0<def> = C2_cmpeqi %R16, 2
+	%R0<def,tied2> = S4_addi_asl_ri <ga:@transformation>, %R0<kill,tied0>, 2
+	ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	%R2<def> = C2_cmoveit %P0, <ga:@initial_white_influence>
+	%R3<def> = L2_loadri_io %R0<kill>, 25440; mem:LD4[%cgep]
+	%R2<def> = C2_cmoveif %P0<kill>, <ga:@initial_black_influence>, %R2<imp-use,kill>
+	%R0<def> = COPY %R2<kill>
+	%R1<def> = A2_add %R3<kill>, %R1<kill>
+	J2_call <ga:@whose_moyo>, %D0<imp-def,dead>, %D1<imp-def,dead>, %R31<imp-def,dead>, %P0<imp-def,dead>, %R0<imp-use>, %R1<imp-use>, %R0<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	%R0<def> = A4_rcmpeq %R0<kill>, %R16<kill>
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function autohelperpat301.
+
+# After Prologue/Epilogue Insertion & Frame Finalization:
+# Machine code for function autohelperpat301: Post SSA
+Frame Objects:
+  fi#-1: size=8, align=8, fixed, at location [SP-8]
+Function Live Ins: %R0, %R1, %R2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R2 %D8 %D8
+	S2_allocframe 8, %R29<imp-def>, %R30<imp-def>, %R29<imp-use>, %R31<imp-use>, %R30<imp-use>; mem:ST4[<unknown>]
+	S2_storerd_io %R29, 0, %D8<kill>; mem:ST8[FixedStack-1]
+	%R16<def> = COPY %R2
+	%P0<def> = C2_cmpeqi %R16, 2
+	%R0<def,tied2> = S4_addi_asl_ri <ga:@transformation>, %R0<kill,tied0>, 2
+	%R2<def> = C2_cmoveit %P0, <ga:@initial_white_influence>
+	%R3<def> = L2_loadri_io %R0<kill>, 25440; mem:LD4[%cgep]
+	%R2<def> = C2_cmoveif %P0<kill>, <ga:@initial_black_influence>, %R2<imp-use,kill>
+	%R0<def> = COPY %R2<kill>
+	%R1<def> = A2_add %R3<kill>, %R1<kill>
+	J2_call <ga:@whose_moyo>, %D0<imp-def,dead>, %D1<imp-def,dead>, %R31<imp-def,dead>, %P0<imp-def,dead>, %R0<imp-use>, %R1<imp-use>, %R0<imp-def>, ...
+	%R0<def> = A4_rcmpeq %R0<kill>, %R16<kill>
+	%D8<def> = L2_loadrd_io %R29, 0; mem:LD8[FixedStack-1]
+	L4_return %R29<imp-def>, %R30<imp-def>, %R31<imp-def>, %PC<imp-def>, %R30<imp-use>, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function autohelperpat301.
+
+# After Machine Copy Propagation Pass:
+# Machine code for function autohelperpat301: Post SSA
+Frame Objects:
+  fi#-1: size=8, align=8, fixed, at location [SP-8]
+Function Live Ins: %R0, %R1, %R2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R2 %D8 %D8
+	S2_allocframe 8, %R29<imp-def>, %R30<imp-def>, %R29<imp-use>, %R31<imp-use>, %R30<imp-use>; mem:ST4[<unknown>]
+	S2_storerd_io %R29, 0, %D8<kill>; mem:ST8[FixedStack-1]
+	%R16<def> = COPY %R2
+	%P0<def> = C2_cmpeqi %R16, 2
+	%R0<def,tied2> = S4_addi_asl_ri <ga:@transformation>, %R0<kill,tied0>, 2
+	%R2<def> = C2_cmoveit %P0, <ga:@initial_white_influence>
+	%R3<def> = L2_loadri_io %R0<kill>, 25440; mem:LD4[%cgep]
+	%R2<def> = C2_cmoveif %P0<kill>, <ga:@initial_black_influence>, %R2<imp-use,kill>
+	%R0<def> = COPY %R2<kill>
+	%R1<def> = A2_add %R3<kill>, %R1<kill>
+	J2_call <ga:@whose_moyo>, %D0<imp-def,dead>, %D1<imp-def,dead>, %R31<imp-def,dead>, %P0<imp-def,dead>, %R0<imp-use>, %R1<imp-use>, %R0<imp-def>, ...
+	%R0<def> = A4_rcmpeq %R0<kill>, %R16<kill>
+	%D8<def> = L2_loadrd_io %R29, 0; mem:LD8[FixedStack-1]
+	L4_return %R29<imp-def>, %R30<imp-def>, %R31<imp-def>, %PC<imp-def>, %R30<imp-use>, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function autohelperpat301.
+
+# After Post-RA pseudo instruction expansion pass:
+# Machine code for function autohelperpat301: Post SSA
+Frame Objects:
+  fi#-1: size=8, align=8, fixed, at location [SP-8]
+Function Live Ins: %R0, %R1, %R2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R2 %D8 %D8
+	S2_allocframe 8, %R29<imp-def>, %R30<imp-def>, %R29<imp-use>, %R31<imp-use>, %R30<imp-use>; mem:ST4[<unknown>]
+	S2_storerd_io %R29, 0, %D8<kill>; mem:ST8[FixedStack-1]
+	%R16<def> = A2_tfr %R2
+	%P0<def> = C2_cmpeqi %R16, 2
+	%R0<def,tied2> = S4_addi_asl_ri <ga:@transformation>, %R0<kill,tied0>, 2
+	%R2<def> = C2_cmoveit %P0, <ga:@initial_white_influence>
+	%R3<def> = L2_loadri_io %R0<kill>, 25440; mem:LD4[%cgep]
+	%R2<def> = C2_cmoveif %P0<kill>, <ga:@initial_black_influence>, %R2<imp-use,kill>
+	%R0<def> = A2_tfr %R2
+	%R1<def> = A2_add %R3<kill>, %R1<kill>
+	J2_call <ga:@whose_moyo>, %D0<imp-def,dead>, %D1<imp-def,dead>, %R31<imp-def,dead>, %P0<imp-def,dead>, %R0<imp-use>, %R1<imp-use>, %R0<imp-def>, ...
+	%R0<def> = A4_rcmpeq %R0<kill>, %R16<kill>
+	%D8<def> = L2_loadrd_io %R29, 0; mem:LD8[FixedStack-1]
+	L4_return %R29<imp-def>, %R30<imp-def>, %R31<imp-def>, %PC<imp-def>, %R30<imp-use>, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function autohelperpat301.
+
+# After Hexagon Copy-To-Combine Pass:
+# Machine code for function autohelperpat301: Post SSA
+Frame Objects:
+  fi#-1: size=8, align=8, fixed, at location [SP-8]
+Function Live Ins: %R0, %R1, %R2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R2 %D8 %D8
+	S2_allocframe 8, %R29<imp-def>, %R30<imp-def>, %R29<imp-use>, %R31<imp-use>, %R30<imp-use>; mem:ST4[<unknown>]
+	S2_storerd_io %R29, 0, %D8<kill>; mem:ST8[FixedStack-1]
+	%R16<def> = A2_tfr %R2
+	%P0<def> = C2_cmpeqi %R16, 2
+	%R0<def,tied2> = S4_addi_asl_ri <ga:@transformation>, %R0<kill,tied0>, 2
+	%R2<def> = C2_cmoveit %P0, <ga:@initial_white_influence>
+	%R3<def> = L2_loadri_io %R0<kill>, 25440; mem:LD4[%cgep]
+	%R2<def> = C2_cmoveif %P0<kill>, <ga:@initial_black_influence>, %R2<imp-use,kill>
+	%R0<def> = A2_tfr %R2
+	%R1<def> = A2_add %R3<kill>, %R1<kill>
+	J2_call <ga:@whose_moyo>, %D0<imp-def,dead>, %D1<imp-def,dead>, %R31<imp-def,dead>, %P0<imp-def,dead>, %R0<imp-use>, %R1<imp-use>, %R0<imp-def>, ...
+	%R0<def> = A4_rcmpeq %R0<kill>, %R16<kill>
+	%D8<def> = L2_loadrd_io %R29, 0; mem:LD8[FixedStack-1]
+	L4_return %R29<imp-def>, %R30<imp-def>, %R31<imp-def>, %PC<imp-def>, %R30<imp-use>, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function autohelperpat301.
+
+# After Hexagon Split Const32s and Const64s:
+# Machine code for function autohelperpat301: Post SSA
+Frame Objects:
+  fi#-1: size=8, align=8, fixed, at location [SP-8]
+Function Live Ins: %R0, %R1, %R2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R2 %D8 %D8
+	S2_allocframe 8, %R29<imp-def>, %R30<imp-def>, %R29<imp-use>, %R31<imp-use>, %R30<imp-use>; mem:ST4[<unknown>]
+	S2_storerd_io %R29, 0, %D8<kill>; mem:ST8[FixedStack-1]
+	%R16<def> = A2_tfr %R2
+	%P0<def> = C2_cmpeqi %R16, 2
+	%R0<def,tied2> = S4_addi_asl_ri <ga:@transformation>, %R0<kill,tied0>, 2
+	%R2<def> = C2_cmoveit %P0, <ga:@initial_white_influence>
+	%R3<def> = L2_loadri_io %R0<kill>, 25440; mem:LD4[%cgep]
+	%R2<def> = C2_cmoveif %P0<kill>, <ga:@initial_black_influence>, %R2<imp-use,kill>
+	%R0<def> = A2_tfr %R2
+	%R1<def> = A2_add %R3<kill>, %R1<kill>
+	J2_call <ga:@whose_moyo>, %D0<imp-def,dead>, %D1<imp-def,dead>, %R31<imp-def,dead>, %P0<imp-def,dead>, %R0<imp-use>, %R1<imp-use>, %R0<imp-def>, ...
+	%R0<def> = A4_rcmpeq %R0<kill>, %R16<kill>
+	%D8<def> = L2_loadrd_io %R29, 0; mem:LD8[FixedStack-1]
+	L4_return %R29<imp-def>, %R30<imp-def>, %R31<imp-def>, %PC<imp-def>, %R30<imp-use>, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function autohelperpat301.
+
+# After Analyze Machine Code For Garbage Collection:
+# Machine code for function autohelperpat301: Post SSA
+Frame Objects:
+  fi#-1: size=8, align=8, fixed, at location [SP-8]
+Function Live Ins: %R0, %R1, %R2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R2 %D8 %D8
+	S2_allocframe 8, %R29<imp-def>, %R30<imp-def>, %R29<imp-use>, %R31<imp-use>, %R30<imp-use>; mem:ST4[<unknown>]
+	S2_storerd_io %R29, 0, %D8<kill>; mem:ST8[FixedStack-1]
+	%R16<def> = A2_tfr %R2
+	%P0<def> = C2_cmpeqi %R16, 2
+	%R0<def,tied2> = S4_addi_asl_ri <ga:@transformation>, %R0<kill,tied0>, 2
+	%R2<def> = C2_cmoveit %P0, <ga:@initial_white_influence>
+	%R3<def> = L2_loadri_io %R0<kill>, 25440; mem:LD4[%cgep]
+	%R2<def> = C2_cmoveif %P0<kill>, <ga:@initial_black_influence>, %R2<imp-use,kill>
+	%R0<def> = A2_tfr %R2
+	%R1<def> = A2_add %R3<kill>, %R1<kill>
+	J2_call <ga:@whose_moyo>, %D0<imp-def,dead>, %D1<imp-def,dead>, %R31<imp-def,dead>, %P0<imp-def,dead>, %R0<imp-use>, %R1<imp-use>, %R0<imp-def>, ...
+	%R0<def> = A4_rcmpeq %R0<kill>, %R16<kill>
+	%D8<def> = L2_loadrd_io %R29, 0; mem:LD8[FixedStack-1]
+	L4_return %R29<imp-def>, %R30<imp-def>, %R31<imp-def>, %PC<imp-def>, %R30<imp-use>, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function autohelperpat301.
+
+# After Hexagon NewValueJump:
+# Machine code for function autohelperpat301: Post SSA
+Frame Objects:
+  fi#-1: size=8, align=8, fixed, at location [SP-8]
+Function Live Ins: %R0, %R1, %R2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R2 %D8 %D8
+	S2_allocframe 8, %R29<imp-def>, %R30<imp-def>, %R29<imp-use>, %R31<imp-use>, %R30<imp-use>; mem:ST4[<unknown>]
+	S2_storerd_io %R29, 0, %D8<kill>; mem:ST8[FixedStack-1]
+	%R16<def> = A2_tfr %R2
+	%P0<def> = C2_cmpeqi %R16, 2
+	%R0<def,tied2> = S4_addi_asl_ri <ga:@transformation>, %R0<kill,tied0>, 2
+	%R2<def> = C2_cmoveit %P0, <ga:@initial_white_influence>
+	%R3<def> = L2_loadri_io %R0<kill>, 25440; mem:LD4[%cgep]
+	%R2<def> = C2_cmoveif %P0<kill>, <ga:@initial_black_influence>, %R2<imp-use,kill>
+	%R0<def> = A2_tfr %R2
+	%R1<def> = A2_add %R3<kill>, %R1<kill>
+	J2_call <ga:@whose_moyo>, %D0<imp-def,dead>, %D1<imp-def,dead>, %R31<imp-def,dead>, %P0<imp-def,dead>, %R0<imp-use>, %R1<imp-use>, %R0<imp-def>, ...
+	%R0<def> = A4_rcmpeq %R0<kill>, %R16<kill>
+	%D8<def> = L2_loadrd_io %R29, 0; mem:LD8[FixedStack-1]
+	L4_return %R29<imp-def>, %R30<imp-def>, %R31<imp-def>, %PC<imp-def>, %R30<imp-use>, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function autohelperpat301.
+
+# After Hexagon Expand Predicate Spill Code:
+# Machine code for function autohelperpat301: Post SSA
+Frame Objects:
+  fi#-1: size=8, align=8, fixed, at location [SP-8]
+Function Live Ins: %R0, %R1, %R2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R2 %D8 %D8
+	S2_allocframe 8, %R29<imp-def>, %R30<imp-def>, %R29<imp-use>, %R31<imp-use>, %R30<imp-use>; mem:ST4[<unknown>]
+	S2_storerd_io %R29, 0, %D8<kill>; mem:ST8[FixedStack-1]
+	%R16<def> = A2_tfr %R2
+	%P0<def> = C2_cmpeqi %R16, 2
+	%R0<def,tied2> = S4_addi_asl_ri <ga:@transformation>, %R0<kill,tied0>, 2
+	%R2<def> = C2_cmoveit %P0, <ga:@initial_white_influence>
+	%R3<def> = L2_loadri_io %R0<kill>, 25440; mem:LD4[%cgep]
+	%R2<def> = C2_cmoveif %P0<kill>, <ga:@initial_black_influence>, %R2<imp-use,kill>
+	%R0<def> = A2_tfr %R2
+	%R1<def> = A2_add %R3<kill>, %R1<kill>
+	J2_call <ga:@whose_moyo>, %D0<imp-def,dead>, %D1<imp-def,dead>, %R31<imp-def,dead>, %P0<imp-def,dead>, %R0<imp-use>, %R1<imp-use>, %R0<imp-def>, ...
+	%R0<def> = A4_rcmpeq %R0<kill>, %R16<kill>
+	%D8<def> = L2_loadrd_io %R29, 0; mem:LD8[FixedStack-1]
+	L4_return %R29<imp-def>, %R30<imp-def>, %R31<imp-def>, %PC<imp-def>, %R30<imp-use>, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function autohelperpat301.
+
+# After Hexagon Hardware Loop Fixup:
+# Machine code for function autohelperpat301: Post SSA
+Frame Objects:
+  fi#-1: size=8, align=8, fixed, at location [SP-8]
+Function Live Ins: %R0, %R1, %R2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R2 %D8 %D8
+	S2_allocframe 8, %R29<imp-def>, %R30<imp-def>, %R29<imp-use>, %R31<imp-use>, %R30<imp-use>; mem:ST4[<unknown>]
+	S2_storerd_io %R29, 0, %D8<kill>; mem:ST8[FixedStack-1]
+	%R16<def> = A2_tfr %R2
+	%P0<def> = C2_cmpeqi %R16, 2
+	%R0<def,tied2> = S4_addi_asl_ri <ga:@transformation>, %R0<kill,tied0>, 2
+	%R2<def> = C2_cmoveit %P0, <ga:@initial_white_influence>
+	%R3<def> = L2_loadri_io %R0<kill>, 25440; mem:LD4[%cgep]
+	%R2<def> = C2_cmoveif %P0<kill>, <ga:@initial_black_influence>, %R2<imp-use,kill>
+	%R0<def> = A2_tfr %R2
+	%R1<def> = A2_add %R3<kill>, %R1<kill>
+	J2_call <ga:@whose_moyo>, %D0<imp-def,dead>, %D1<imp-def,dead>, %R31<imp-def,dead>, %P0<imp-def,dead>, %R0<imp-use>, %R1<imp-use>, %R0<imp-def>, ...
+	%R0<def> = A4_rcmpeq %R0<kill>, %R16<kill>
+	%D8<def> = L2_loadrd_io %R29, 0; mem:LD8[FixedStack-1]
+	L4_return %R29<imp-def>, %R30<imp-def>, %R31<imp-def>, %PC<imp-def>, %R30<imp-use>, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function autohelperpat301.
+
+# After Hexagon generate mux instructions:
+# Machine code for function autohelperpat301: Post SSA
+Frame Objects:
+  fi#-1: size=8, align=8, fixed, at location [SP-8]
+Function Live Ins: %R0, %R1, %R2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R2 %D8 %D8
+	S2_allocframe 8, %R29<imp-def>, %R30<imp-def>, %R29<imp-use>, %R31<imp-use>, %R30<imp-use>; mem:ST4[<unknown>]
+	S2_storerd_io %R29, 0, %D8<kill>; mem:ST8[FixedStack-1]
+	%R16<def> = A2_tfr %R2
+	%P0<def> = C2_cmpeqi %R16, 2
+	%R0<def,tied2> = S4_addi_asl_ri <ga:@transformation>, %R0<kill,tied0>, 2
+	%R2<def> = C2_cmoveit %P0, <ga:@initial_white_influence>
+	%R3<def> = L2_loadri_io %R0<kill>, 25440; mem:LD4[%cgep]
+	%R2<def> = C2_cmoveif %P0<kill>, <ga:@initial_black_influence>, %R2<imp-use,kill>
+	%R0<def> = A2_tfr %R2
+	%R1<def> = A2_add %R3<kill>, %R1<kill>
+	J2_call <ga:@whose_moyo>, %D0<imp-def,dead>, %D1<imp-def,dead>, %R31<imp-def,dead>, %P0<imp-def,dead>, %R0<imp-use>, %R1<imp-use>, %R0<imp-def>, ...
+	%R0<def> = A4_rcmpeq %R0<kill>, %R16<kill>
+	%D8<def> = L2_loadrd_io %R29, 0; mem:LD8[FixedStack-1]
+	L4_return %R29<imp-def>, %R30<imp-def>, %R31<imp-def>, %PC<imp-def>, %R30<imp-use>, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function autohelperpat301.
+
+# After Hexagon Packetizer:
+# Machine code for function autohelperpat301: Post SSA
+Frame Objects:
+  fi#-1: size=8, align=8, fixed, at location [SP-8]
+Function Live Ins: %R0, %R1, %R2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R2 %D8 %D8
+	BUNDLE %R29<imp-def>, %R30<imp-def>, %R16<imp-def>, %R29<imp-use>, %R31<imp-use>, %R30<imp-use>, %D8<imp-use,kill>, %R2<imp-use>
+	  * S2_allocframe 8, %R29<imp-def>, %R30<imp-def>, %R29<imp-use>, %R31<imp-use>, %R30<imp-use>; mem:ST4[<unknown>]
+	  * S2_storerd_io %R29<internal>, -16, %D8<kill>; mem:ST8[FixedStack-1]
+	  * %R16<def> = A2_tfr %R2
+	BUNDLE %P0<imp-def>, %R0<imp-def>, %R16<imp-use>, %R0<imp-use,kill>
+	  * %P0<def> = C2_cmpeqi %R16, 2
+	  * %R0<def,tied2> = S4_addi_asl_ri <ga:@transformation>, %R0<kill,tied0>, 2
+	BUNDLE %R2<imp-def>, %R3<imp-def>, %P0<imp-use>, %R0<imp-use,kill>
+	  * %R2<def> = C2_cmoveit %P0, <ga:@initial_white_influence>
+	  * %R3<def> = L2_loadri_io %R0<kill>, 25440; mem:LD4[%cgep]
+	%R2<def> = C2_cmoveif %P0<kill>, <ga:@initial_black_influence>, %R2<imp-use,kill>
+	BUNDLE %R0<imp-def>, %R1<imp-def>, %D0<imp-def,dead>, %D1<imp-def,dead>, %R31<imp-def,dead>, %P0<imp-def,dead>, %R2<imp-use>, %R3<imp-use,kill>, %R1<imp-use,kill>, ...
+	  * %R0<def> = A2_tfr %R2
+	  * %R1<def> = A2_add %R3<kill>, %R1<kill>
+	  * J2_call <ga:@whose_moyo>, %D0<imp-def,dead>, %D1<imp-def,dead>, %R31<imp-def,dead>, %P0<imp-def,dead>, %R0<imp-use,internal>, %R1<imp-use,internal>, %R0<imp-def>, ...
+	BUNDLE %R0<imp-def>, %D8<imp-def>, %R16<imp-def>, %R17<imp-def>, %R29<imp-def>, %R30<imp-def>, %R31<imp-def>, %PC<imp-def>, %R0<imp-use,kill>, %R16<imp-use,kill>, %R29<imp-use>, %R30<imp-use>
+	  * %R0<def> = A4_rcmpeq %R0<kill>, %R16<kill>
+	  * %D8<def> = L2_loadrd_io %R29, 0; mem:LD8[FixedStack-1]
+	  * L4_return %R29<imp-def>, %R30<imp-def>, %R31<imp-def>, %PC<imp-def>, %R30<imp-use>, %PC<imp-def,dead>, %R0<imp-use,internal>
+
+# End machine code for function autohelperpat301.
+
+# After Hexagon call frame information:
+# Machine code for function autohelperpat301: Post SSA
+Frame Objects:
+  fi#-1: size=8, align=8, fixed, at location [SP-8]
+Function Live Ins: %R0, %R1, %R2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R2 %D8 %D8
+	BUNDLE %R29<imp-def>, %R30<imp-def>, %R16<imp-def>, %R29<imp-use>, %R31<imp-use>, %R30<imp-use>, %D8<imp-use,kill>, %R2<imp-use>
+	  * S2_allocframe 8, %R29<imp-def>, %R30<imp-def>, %R29<imp-use>, %R31<imp-use>, %R30<imp-use>; mem:ST4[<unknown>]
+	  * S2_storerd_io %R29<internal>, -16, %D8<kill>; mem:ST8[FixedStack-1]
+	  * %R16<def> = A2_tfr %R2
+	BUNDLE %P0<imp-def>, %R0<imp-def>, %R16<imp-use>, %R0<imp-use,kill>
+	  * %P0<def> = C2_cmpeqi %R16, 2
+	  * %R0<def,tied2> = S4_addi_asl_ri <ga:@transformation>, %R0<kill,tied0>, 2
+	BUNDLE %R2<imp-def>, %R3<imp-def>, %P0<imp-use>, %R0<imp-use,kill>
+	  * %R2<def> = C2_cmoveit %P0, <ga:@initial_white_influence>
+	  * %R3<def> = L2_loadri_io %R0<kill>, 25440; mem:LD4[%cgep]
+	%R2<def> = C2_cmoveif %P0<kill>, <ga:@initial_black_influence>, %R2<imp-use,kill>
+	BUNDLE %R0<imp-def>, %R1<imp-def>, %D0<imp-def,dead>, %D1<imp-def,dead>, %R31<imp-def,dead>, %P0<imp-def,dead>, %R2<imp-use>, %R3<imp-use,kill>, %R1<imp-use,kill>, ...
+	  * %R0<def> = A2_tfr %R2
+	  * %R1<def> = A2_add %R3<kill>, %R1<kill>
+	  * J2_call <ga:@whose_moyo>, %D0<imp-def,dead>, %D1<imp-def,dead>, %R31<imp-def,dead>, %P0<imp-def,dead>, %R0<imp-use,internal>, %R1<imp-use,internal>, %R0<imp-def>, ...
+	BUNDLE %R0<imp-def>, %D8<imp-def>, %R16<imp-def>, %R17<imp-def>, %R29<imp-def>, %R30<imp-def>, %R31<imp-def>, %PC<imp-def>, %R0<imp-use,kill>, %R16<imp-use,kill>, %R29<imp-use>, %R30<imp-use>
+	  * %R0<def> = A4_rcmpeq %R0<kill>, %R16<kill>
+	  * %D8<def> = L2_loadrd_io %R29, 0; mem:LD8[FixedStack-1]
+	  * L4_return %R29<imp-def>, %R30<imp-def>, %R31<imp-def>, %PC<imp-def>, %R30<imp-use>, %PC<imp-def,dead>, %R0<imp-use,internal>
+
+# End machine code for function autohelperpat301.
+
+# After Contiguously Lay Out Funclets:
+# Machine code for function autohelperpat301: Post SSA
+Frame Objects:
+  fi#-1: size=8, align=8, fixed, at location [SP-8]
+Function Live Ins: %R0, %R1, %R2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R2 %D8 %D8
+	BUNDLE %R29<imp-def>, %R30<imp-def>, %R16<imp-def>, %R29<imp-use>, %R31<imp-use>, %R30<imp-use>, %D8<imp-use,kill>, %R2<imp-use>
+	  * S2_allocframe 8, %R29<imp-def>, %R30<imp-def>, %R29<imp-use>, %R31<imp-use>, %R30<imp-use>; mem:ST4[<unknown>]
+	  * S2_storerd_io %R29<internal>, -16, %D8<kill>; mem:ST8[FixedStack-1]
+	  * %R16<def> = A2_tfr %R2
+	BUNDLE %P0<imp-def>, %R0<imp-def>, %R16<imp-use>, %R0<imp-use,kill>
+	  * %P0<def> = C2_cmpeqi %R16, 2
+	  * %R0<def,tied2> = S4_addi_asl_ri <ga:@transformation>, %R0<kill,tied0>, 2
+	BUNDLE %R2<imp-def>, %R3<imp-def>, %P0<imp-use>, %R0<imp-use,kill>
+	  * %R2<def> = C2_cmoveit %P0, <ga:@initial_white_influence>
+	  * %R3<def> = L2_loadri_io %R0<kill>, 25440; mem:LD4[%cgep]
+	%R2<def> = C2_cmoveif %P0<kill>, <ga:@initial_black_influence>, %R2<imp-use,kill>
+	BUNDLE %R0<imp-def>, %R1<imp-def>, %D0<imp-def,dead>, %D1<imp-def,dead>, %R31<imp-def,dead>, %P0<imp-def,dead>, %R2<imp-use>, %R3<imp-use,kill>, %R1<imp-use,kill>, ...
+	  * %R0<def> = A2_tfr %R2
+	  * %R1<def> = A2_add %R3<kill>, %R1<kill>
+	  * J2_call <ga:@whose_moyo>, %D0<imp-def,dead>, %D1<imp-def,dead>, %R31<imp-def,dead>, %P0<imp-def,dead>, %R0<imp-use,internal>, %R1<imp-use,internal>, %R0<imp-def>, ...
+	BUNDLE %R0<imp-def>, %D8<imp-def>, %R16<imp-def>, %R17<imp-def>, %R29<imp-def>, %R30<imp-def>, %R31<imp-def>, %PC<imp-def>, %R0<imp-use,kill>, %R16<imp-use,kill>, %R29<imp-use>, %R30<imp-use>
+	  * %R0<def> = A4_rcmpeq %R0<kill>, %R16<kill>
+	  * %D8<def> = L2_loadrd_io %R29, 0; mem:LD8[FixedStack-1]
+	  * L4_return %R29<imp-def>, %R30<imp-def>, %R31<imp-def>, %PC<imp-def>, %R30<imp-use>, %PC<imp-def,dead>, %R0<imp-use,internal>
+
+# End machine code for function autohelperpat301.
+
+# After StackMap Liveness Analysis:
+# Machine code for function autohelperpat301: Post SSA
+Frame Objects:
+  fi#-1: size=8, align=8, fixed, at location [SP-8]
+Function Live Ins: %R0, %R1, %R2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R2 %D8 %D8
+	BUNDLE %R29<imp-def>, %R30<imp-def>, %R16<imp-def>, %R29<imp-use>, %R31<imp-use>, %R30<imp-use>, %D8<imp-use,kill>, %R2<imp-use>
+	  * S2_allocframe 8, %R29<imp-def>, %R30<imp-def>, %R29<imp-use>, %R31<imp-use>, %R30<imp-use>; mem:ST4[<unknown>]
+	  * S2_storerd_io %R29<internal>, -16, %D8<kill>; mem:ST8[FixedStack-1]
+	  * %R16<def> = A2_tfr %R2
+	BUNDLE %P0<imp-def>, %R0<imp-def>, %R16<imp-use>, %R0<imp-use,kill>
+	  * %P0<def> = C2_cmpeqi %R16, 2
+	  * %R0<def,tied2> = S4_addi_asl_ri <ga:@transformation>, %R0<kill,tied0>, 2
+	BUNDLE %R2<imp-def>, %R3<imp-def>, %P0<imp-use>, %R0<imp-use,kill>
+	  * %R2<def> = C2_cmoveit %P0, <ga:@initial_white_influence>
+	  * %R3<def> = L2_loadri_io %R0<kill>, 25440; mem:LD4[%cgep]
+	%R2<def> = C2_cmoveif %P0<kill>, <ga:@initial_black_influence>, %R2<imp-use,kill>
+	BUNDLE %R0<imp-def>, %R1<imp-def>, %D0<imp-def,dead>, %D1<imp-def,dead>, %R31<imp-def,dead>, %P0<imp-def,dead>, %R2<imp-use>, %R3<imp-use,kill>, %R1<imp-use,kill>, ...
+	  * %R0<def> = A2_tfr %R2
+	  * %R1<def> = A2_add %R3<kill>, %R1<kill>
+	  * J2_call <ga:@whose_moyo>, %D0<imp-def,dead>, %D1<imp-def,dead>, %R31<imp-def,dead>, %P0<imp-def,dead>, %R0<imp-use,internal>, %R1<imp-use,internal>, %R0<imp-def>, ...
+	BUNDLE %R0<imp-def>, %D8<imp-def>, %R16<imp-def>, %R17<imp-def>, %R29<imp-def>, %R30<imp-def>, %R31<imp-def>, %PC<imp-def>, %R0<imp-use,kill>, %R16<imp-use,kill>, %R29<imp-use>, %R30<imp-use>
+	  * %R0<def> = A4_rcmpeq %R0<kill>, %R16<kill>
+	  * %D8<def> = L2_loadrd_io %R29, 0; mem:LD8[FixedStack-1]
+	  * L4_return %R29<imp-def>, %R30<imp-def>, %R31<imp-def>, %PC<imp-def>, %R30<imp-use>, %PC<imp-def,dead>, %R0<imp-use,internal>
+
+# End machine code for function autohelperpat301.
+
+# After Live DEBUG_VALUE analysis:
+# Machine code for function autohelperpat301: Post SSA
+Frame Objects:
+  fi#-1: size=8, align=8, fixed, at location [SP-8]
+Function Live Ins: %R0, %R1, %R2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R2 %D8 %D8
+	BUNDLE %R29<imp-def>, %R30<imp-def>, %R16<imp-def>, %R29<imp-use>, %R31<imp-use>, %R30<imp-use>, %D8<imp-use,kill>, %R2<imp-use>
+	  * S2_allocframe 8, %R29<imp-def>, %R30<imp-def>, %R29<imp-use>, %R31<imp-use>, %R30<imp-use>; mem:ST4[<unknown>]
+	  * S2_storerd_io %R29<internal>, -16, %D8<kill>; mem:ST8[FixedStack-1]
+	  * %R16<def> = A2_tfr %R2
+	BUNDLE %P0<imp-def>, %R0<imp-def>, %R16<imp-use>, %R0<imp-use,kill>
+	  * %P0<def> = C2_cmpeqi %R16, 2
+	  * %R0<def,tied2> = S4_addi_asl_ri <ga:@transformation>, %R0<kill,tied0>, 2
+	BUNDLE %R2<imp-def>, %R3<imp-def>, %P0<imp-use>, %R0<imp-use,kill>
+	  * %R2<def> = C2_cmoveit %P0, <ga:@initial_white_influence>
+	  * %R3<def> = L2_loadri_io %R0<kill>, 25440; mem:LD4[%cgep]
+	%R2<def> = C2_cmoveif %P0<kill>, <ga:@initial_black_influence>, %R2<imp-use,kill>
+	BUNDLE %R0<imp-def>, %R1<imp-def>, %D0<imp-def,dead>, %D1<imp-def,dead>, %R31<imp-def,dead>, %P0<imp-def,dead>, %R2<imp-use>, %R3<imp-use,kill>, %R1<imp-use,kill>, ...
+	  * %R0<def> = A2_tfr %R2
+	  * %R1<def> = A2_add %R3<kill>, %R1<kill>
+	  * J2_call <ga:@whose_moyo>, %D0<imp-def,dead>, %D1<imp-def,dead>, %R31<imp-def,dead>, %P0<imp-def,dead>, %R0<imp-use,internal>, %R1<imp-use,internal>, %R0<imp-def>, ...
+	BUNDLE %R0<imp-def>, %D8<imp-def>, %R16<imp-def>, %R17<imp-def>, %R29<imp-def>, %R30<imp-def>, %R31<imp-def>, %PC<imp-def>, %R0<imp-use,kill>, %R16<imp-use,kill>, %R29<imp-use>, %R30<imp-use>
+	  * %R0<def> = A4_rcmpeq %R0<kill>, %R16<kill>
+	  * %D8<def> = L2_loadrd_io %R29, 0; mem:LD8[FixedStack-1]
+	  * L4_return %R29<imp-def>, %R30<imp-def>, %R31<imp-def>, %PC<imp-def>, %R30<imp-use>, %PC<imp-def,dead>, %R0<imp-use,internal>
+
+# End machine code for function autohelperpat301.
+

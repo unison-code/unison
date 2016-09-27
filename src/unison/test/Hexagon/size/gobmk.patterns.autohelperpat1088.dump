@@ -1,0 +1,1248 @@
+# After Instruction Selection:
+# Machine code for function autohelperpat1088: SSA
+Function Live Ins: %R0 in %vreg0, %R1 in %vreg1, %R2 in %vreg2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R2
+	%vreg2<def> = COPY %R2; IntRegs:%vreg2
+	%vreg1<def> = COPY %R1; IntRegs:%vreg1
+	%vreg0<def> = COPY %R0; IntRegs:%vreg0
+	%vreg4<def,tied2> = S4_addi_asl_ri <ga:@transformation>, %vreg0<tied0>, 2; IntRegs:%vreg4,%vreg0
+	%vreg5<def> = L2_loadri_io %vreg4, 23040; mem:LD4[%cgep1] IntRegs:%vreg5,%vreg4
+	%vreg6<def> = A2_add %vreg5<kill>, %vreg1; IntRegs:%vreg6,%vreg5,%vreg1
+	%vreg7<def> = L2_loadri_io %vreg4, 21856; mem:LD4[%cgep2] IntRegs:%vreg7,%vreg4
+	%vreg8<def> = A2_add %vreg7<kill>, %vreg1; IntRegs:%vreg8,%vreg7,%vreg1
+	%vreg9<def> = COPY %R29; IntRegs:%vreg9
+	S2_storeri_io %vreg9, 4, %vreg8<kill>; mem:ST4[Stack+4] IntRegs:%vreg9,%vreg8
+	S2_storeri_io %vreg9, 0, %vreg6<kill>; mem:ST4[Stack] IntRegs:%vreg9,%vreg6
+	ADJCALLSTACKDOWN 8, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	%vreg10<def> = A2_tfrsi 0; IntRegs:%vreg10
+	%vreg11<def> = A2_tfrsi 1; IntRegs:%vreg11
+	%R0<def> = COPY %vreg2; IntRegs:%vreg2
+	%R1<def> = COPY %vreg10; IntRegs:%vreg10
+	%R2<def> = COPY %vreg11; IntRegs:%vreg11
+	J2_call <ga:@play_attack_defend_n>, %D0<imp-def>, %D1<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, ...
+	ADJCALLSTACKUP 8, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	%vreg12<def> = COPY %R0; IntRegs:%vreg12
+	%vreg13<def> = A4_rcmpeqi %vreg12, 0; IntRegs:%vreg13,%vreg12
+	%R0<def> = COPY %vreg13; IntRegs:%vreg13
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function autohelperpat1088.
+
+# After Expand ISel Pseudo-instructions:
+# Machine code for function autohelperpat1088: SSA
+Function Live Ins: %R0 in %vreg0, %R1 in %vreg1, %R2 in %vreg2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R2
+	%vreg2<def> = COPY %R2; IntRegs:%vreg2
+	%vreg1<def> = COPY %R1; IntRegs:%vreg1
+	%vreg0<def> = COPY %R0; IntRegs:%vreg0
+	%vreg4<def,tied2> = S4_addi_asl_ri <ga:@transformation>, %vreg0<tied0>, 2; IntRegs:%vreg4,%vreg0
+	%vreg5<def> = L2_loadri_io %vreg4, 23040; mem:LD4[%cgep1] IntRegs:%vreg5,%vreg4
+	%vreg6<def> = A2_add %vreg5<kill>, %vreg1; IntRegs:%vreg6,%vreg5,%vreg1
+	%vreg7<def> = L2_loadri_io %vreg4, 21856; mem:LD4[%cgep2] IntRegs:%vreg7,%vreg4
+	%vreg8<def> = A2_add %vreg7<kill>, %vreg1; IntRegs:%vreg8,%vreg7,%vreg1
+	%vreg9<def> = COPY %R29; IntRegs:%vreg9
+	S2_storeri_io %vreg9, 4, %vreg8<kill>; mem:ST4[Stack+4] IntRegs:%vreg9,%vreg8
+	S2_storeri_io %vreg9, 0, %vreg6<kill>; mem:ST4[Stack] IntRegs:%vreg9,%vreg6
+	ADJCALLSTACKDOWN 8, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	%vreg10<def> = A2_tfrsi 0; IntRegs:%vreg10
+	%vreg11<def> = A2_tfrsi 1; IntRegs:%vreg11
+	%R0<def> = COPY %vreg2; IntRegs:%vreg2
+	%R1<def> = COPY %vreg10; IntRegs:%vreg10
+	%R2<def> = COPY %vreg11; IntRegs:%vreg11
+	J2_call <ga:@play_attack_defend_n>, %D0<imp-def>, %D1<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, ...
+	ADJCALLSTACKUP 8, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	%vreg12<def> = COPY %R0; IntRegs:%vreg12
+	%vreg13<def> = A4_rcmpeqi %vreg12, 0; IntRegs:%vreg13,%vreg12
+	%R0<def> = COPY %vreg13; IntRegs:%vreg13
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function autohelperpat1088.
+
+# After Tail Duplication:
+# Machine code for function autohelperpat1088: SSA
+Function Live Ins: %R0 in %vreg0, %R1 in %vreg1, %R2 in %vreg2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R2
+	%vreg2<def> = COPY %R2; IntRegs:%vreg2
+	%vreg1<def> = COPY %R1; IntRegs:%vreg1
+	%vreg0<def> = COPY %R0; IntRegs:%vreg0
+	%vreg4<def,tied2> = S4_addi_asl_ri <ga:@transformation>, %vreg0<tied0>, 2; IntRegs:%vreg4,%vreg0
+	%vreg5<def> = L2_loadri_io %vreg4, 23040; mem:LD4[%cgep1] IntRegs:%vreg5,%vreg4
+	%vreg6<def> = A2_add %vreg5<kill>, %vreg1; IntRegs:%vreg6,%vreg5,%vreg1
+	%vreg7<def> = L2_loadri_io %vreg4, 21856; mem:LD4[%cgep2] IntRegs:%vreg7,%vreg4
+	%vreg8<def> = A2_add %vreg7<kill>, %vreg1; IntRegs:%vreg8,%vreg7,%vreg1
+	%vreg9<def> = COPY %R29; IntRegs:%vreg9
+	S2_storeri_io %vreg9, 4, %vreg8<kill>; mem:ST4[Stack+4] IntRegs:%vreg9,%vreg8
+	S2_storeri_io %vreg9, 0, %vreg6<kill>; mem:ST4[Stack] IntRegs:%vreg9,%vreg6
+	ADJCALLSTACKDOWN 8, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	%vreg10<def> = A2_tfrsi 0; IntRegs:%vreg10
+	%vreg11<def> = A2_tfrsi 1; IntRegs:%vreg11
+	%R0<def> = COPY %vreg2; IntRegs:%vreg2
+	%R1<def> = COPY %vreg10; IntRegs:%vreg10
+	%R2<def> = COPY %vreg11; IntRegs:%vreg11
+	J2_call <ga:@play_attack_defend_n>, %D0<imp-def>, %D1<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, ...
+	ADJCALLSTACKUP 8, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	%vreg12<def> = COPY %R0; IntRegs:%vreg12
+	%vreg13<def> = A4_rcmpeqi %vreg12, 0; IntRegs:%vreg13,%vreg12
+	%R0<def> = COPY %vreg13; IntRegs:%vreg13
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function autohelperpat1088.
+
+# After Optimize machine instruction PHIs:
+# Machine code for function autohelperpat1088: SSA
+Function Live Ins: %R0 in %vreg0, %R1 in %vreg1, %R2 in %vreg2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R2
+	%vreg2<def> = COPY %R2; IntRegs:%vreg2
+	%vreg1<def> = COPY %R1; IntRegs:%vreg1
+	%vreg0<def> = COPY %R0; IntRegs:%vreg0
+	%vreg4<def,tied2> = S4_addi_asl_ri <ga:@transformation>, %vreg0<tied0>, 2; IntRegs:%vreg4,%vreg0
+	%vreg5<def> = L2_loadri_io %vreg4, 23040; mem:LD4[%cgep1] IntRegs:%vreg5,%vreg4
+	%vreg6<def> = A2_add %vreg5<kill>, %vreg1; IntRegs:%vreg6,%vreg5,%vreg1
+	%vreg7<def> = L2_loadri_io %vreg4, 21856; mem:LD4[%cgep2] IntRegs:%vreg7,%vreg4
+	%vreg8<def> = A2_add %vreg7<kill>, %vreg1; IntRegs:%vreg8,%vreg7,%vreg1
+	%vreg9<def> = COPY %R29; IntRegs:%vreg9
+	S2_storeri_io %vreg9, 4, %vreg8<kill>; mem:ST4[Stack+4] IntRegs:%vreg9,%vreg8
+	S2_storeri_io %vreg9, 0, %vreg6<kill>; mem:ST4[Stack] IntRegs:%vreg9,%vreg6
+	ADJCALLSTACKDOWN 8, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	%vreg10<def> = A2_tfrsi 0; IntRegs:%vreg10
+	%vreg11<def> = A2_tfrsi 1; IntRegs:%vreg11
+	%R0<def> = COPY %vreg2; IntRegs:%vreg2
+	%R1<def> = COPY %vreg10; IntRegs:%vreg10
+	%R2<def> = COPY %vreg11; IntRegs:%vreg11
+	J2_call <ga:@play_attack_defend_n>, %D0<imp-def>, %D1<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, ...
+	ADJCALLSTACKUP 8, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	%vreg12<def> = COPY %R0; IntRegs:%vreg12
+	%vreg13<def> = A4_rcmpeqi %vreg12, 0; IntRegs:%vreg13,%vreg12
+	%R0<def> = COPY %vreg13; IntRegs:%vreg13
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function autohelperpat1088.
+
+# After Merge disjoint stack slots:
+# Machine code for function autohelperpat1088: SSA
+Function Live Ins: %R0 in %vreg0, %R1 in %vreg1, %R2 in %vreg2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R2
+	%vreg2<def> = COPY %R2; IntRegs:%vreg2
+	%vreg1<def> = COPY %R1; IntRegs:%vreg1
+	%vreg0<def> = COPY %R0; IntRegs:%vreg0
+	%vreg4<def,tied2> = S4_addi_asl_ri <ga:@transformation>, %vreg0<tied0>, 2; IntRegs:%vreg4,%vreg0
+	%vreg5<def> = L2_loadri_io %vreg4, 23040; mem:LD4[%cgep1] IntRegs:%vreg5,%vreg4
+	%vreg6<def> = A2_add %vreg5<kill>, %vreg1; IntRegs:%vreg6,%vreg5,%vreg1
+	%vreg7<def> = L2_loadri_io %vreg4, 21856; mem:LD4[%cgep2] IntRegs:%vreg7,%vreg4
+	%vreg8<def> = A2_add %vreg7<kill>, %vreg1; IntRegs:%vreg8,%vreg7,%vreg1
+	%vreg9<def> = COPY %R29; IntRegs:%vreg9
+	S2_storeri_io %vreg9, 4, %vreg8<kill>; mem:ST4[Stack+4] IntRegs:%vreg9,%vreg8
+	S2_storeri_io %vreg9, 0, %vreg6<kill>; mem:ST4[Stack] IntRegs:%vreg9,%vreg6
+	ADJCALLSTACKDOWN 8, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	%vreg10<def> = A2_tfrsi 0; IntRegs:%vreg10
+	%vreg11<def> = A2_tfrsi 1; IntRegs:%vreg11
+	%R0<def> = COPY %vreg2; IntRegs:%vreg2
+	%R1<def> = COPY %vreg10; IntRegs:%vreg10
+	%R2<def> = COPY %vreg11; IntRegs:%vreg11
+	J2_call <ga:@play_attack_defend_n>, %D0<imp-def>, %D1<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, ...
+	ADJCALLSTACKUP 8, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	%vreg12<def> = COPY %R0; IntRegs:%vreg12
+	%vreg13<def> = A4_rcmpeqi %vreg12, 0; IntRegs:%vreg13,%vreg12
+	%R0<def> = COPY %vreg13; IntRegs:%vreg13
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function autohelperpat1088.
+
+# After Local Stack Slot Allocation:
+# Machine code for function autohelperpat1088: SSA
+Function Live Ins: %R0 in %vreg0, %R1 in %vreg1, %R2 in %vreg2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R2
+	%vreg2<def> = COPY %R2; IntRegs:%vreg2
+	%vreg1<def> = COPY %R1; IntRegs:%vreg1
+	%vreg0<def> = COPY %R0; IntRegs:%vreg0
+	%vreg4<def,tied2> = S4_addi_asl_ri <ga:@transformation>, %vreg0<tied0>, 2; IntRegs:%vreg4,%vreg0
+	%vreg5<def> = L2_loadri_io %vreg4, 23040; mem:LD4[%cgep1] IntRegs:%vreg5,%vreg4
+	%vreg6<def> = A2_add %vreg5<kill>, %vreg1; IntRegs:%vreg6,%vreg5,%vreg1
+	%vreg7<def> = L2_loadri_io %vreg4, 21856; mem:LD4[%cgep2] IntRegs:%vreg7,%vreg4
+	%vreg8<def> = A2_add %vreg7<kill>, %vreg1; IntRegs:%vreg8,%vreg7,%vreg1
+	%vreg9<def> = COPY %R29; IntRegs:%vreg9
+	S2_storeri_io %vreg9, 4, %vreg8<kill>; mem:ST4[Stack+4] IntRegs:%vreg9,%vreg8
+	S2_storeri_io %vreg9, 0, %vreg6<kill>; mem:ST4[Stack] IntRegs:%vreg9,%vreg6
+	ADJCALLSTACKDOWN 8, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	%vreg10<def> = A2_tfrsi 0; IntRegs:%vreg10
+	%vreg11<def> = A2_tfrsi 1; IntRegs:%vreg11
+	%R0<def> = COPY %vreg2; IntRegs:%vreg2
+	%R1<def> = COPY %vreg10; IntRegs:%vreg10
+	%R2<def> = COPY %vreg11; IntRegs:%vreg11
+	J2_call <ga:@play_attack_defend_n>, %D0<imp-def>, %D1<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, ...
+	ADJCALLSTACKUP 8, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	%vreg12<def> = COPY %R0; IntRegs:%vreg12
+	%vreg13<def> = A4_rcmpeqi %vreg12, 0; IntRegs:%vreg13,%vreg12
+	%R0<def> = COPY %vreg13; IntRegs:%vreg13
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function autohelperpat1088.
+
+# After Remove dead machine instructions:
+# Machine code for function autohelperpat1088: SSA
+Function Live Ins: %R0 in %vreg0, %R1 in %vreg1, %R2 in %vreg2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R2
+	%vreg2<def> = COPY %R2; IntRegs:%vreg2
+	%vreg1<def> = COPY %R1; IntRegs:%vreg1
+	%vreg0<def> = COPY %R0; IntRegs:%vreg0
+	%vreg4<def,tied2> = S4_addi_asl_ri <ga:@transformation>, %vreg0<tied0>, 2; IntRegs:%vreg4,%vreg0
+	%vreg5<def> = L2_loadri_io %vreg4, 23040; mem:LD4[%cgep1] IntRegs:%vreg5,%vreg4
+	%vreg6<def> = A2_add %vreg5<kill>, %vreg1; IntRegs:%vreg6,%vreg5,%vreg1
+	%vreg7<def> = L2_loadri_io %vreg4, 21856; mem:LD4[%cgep2] IntRegs:%vreg7,%vreg4
+	%vreg8<def> = A2_add %vreg7<kill>, %vreg1; IntRegs:%vreg8,%vreg7,%vreg1
+	%vreg9<def> = COPY %R29; IntRegs:%vreg9
+	S2_storeri_io %vreg9, 4, %vreg8<kill>; mem:ST4[Stack+4] IntRegs:%vreg9,%vreg8
+	S2_storeri_io %vreg9, 0, %vreg6<kill>; mem:ST4[Stack] IntRegs:%vreg9,%vreg6
+	ADJCALLSTACKDOWN 8, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	%vreg10<def> = A2_tfrsi 0; IntRegs:%vreg10
+	%vreg11<def> = A2_tfrsi 1; IntRegs:%vreg11
+	%R0<def> = COPY %vreg2; IntRegs:%vreg2
+	%R1<def> = COPY %vreg10; IntRegs:%vreg10
+	%R2<def> = COPY %vreg11; IntRegs:%vreg11
+	J2_call <ga:@play_attack_defend_n>, %D0<imp-def>, %D1<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, ...
+	ADJCALLSTACKUP 8, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	%vreg12<def> = COPY %R0; IntRegs:%vreg12
+	%vreg13<def> = A4_rcmpeqi %vreg12, 0; IntRegs:%vreg13,%vreg12
+	%R0<def> = COPY %vreg13; IntRegs:%vreg13
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function autohelperpat1088.
+
+# After Machine Loop Invariant Code Motion:
+# Machine code for function autohelperpat1088: SSA
+Function Live Ins: %R0 in %vreg0, %R1 in %vreg1, %R2 in %vreg2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R2
+	%vreg2<def> = COPY %R2; IntRegs:%vreg2
+	%vreg1<def> = COPY %R1; IntRegs:%vreg1
+	%vreg0<def> = COPY %R0; IntRegs:%vreg0
+	%vreg4<def,tied2> = S4_addi_asl_ri <ga:@transformation>, %vreg0<tied0>, 2; IntRegs:%vreg4,%vreg0
+	%vreg5<def> = L2_loadri_io %vreg4, 23040; mem:LD4[%cgep1] IntRegs:%vreg5,%vreg4
+	%vreg6<def> = A2_add %vreg5<kill>, %vreg1; IntRegs:%vreg6,%vreg5,%vreg1
+	%vreg7<def> = L2_loadri_io %vreg4, 21856; mem:LD4[%cgep2] IntRegs:%vreg7,%vreg4
+	%vreg8<def> = A2_add %vreg7<kill>, %vreg1; IntRegs:%vreg8,%vreg7,%vreg1
+	%vreg9<def> = COPY %R29; IntRegs:%vreg9
+	S2_storeri_io %vreg9, 4, %vreg8<kill>; mem:ST4[Stack+4] IntRegs:%vreg9,%vreg8
+	S2_storeri_io %vreg9, 0, %vreg6<kill>; mem:ST4[Stack] IntRegs:%vreg9,%vreg6
+	ADJCALLSTACKDOWN 8, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	%vreg10<def> = A2_tfrsi 0; IntRegs:%vreg10
+	%vreg11<def> = A2_tfrsi 1; IntRegs:%vreg11
+	%R0<def> = COPY %vreg2; IntRegs:%vreg2
+	%R1<def> = COPY %vreg10; IntRegs:%vreg10
+	%R2<def> = COPY %vreg11; IntRegs:%vreg11
+	J2_call <ga:@play_attack_defend_n>, %D0<imp-def>, %D1<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, ...
+	ADJCALLSTACKUP 8, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	%vreg12<def> = COPY %R0; IntRegs:%vreg12
+	%vreg13<def> = A4_rcmpeqi %vreg12, 0; IntRegs:%vreg13,%vreg12
+	%R0<def> = COPY %vreg13; IntRegs:%vreg13
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function autohelperpat1088.
+
+# After Machine Common Subexpression Elimination:
+# Machine code for function autohelperpat1088: SSA
+Function Live Ins: %R0 in %vreg0, %R1 in %vreg1, %R2 in %vreg2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R2
+	%vreg2<def> = COPY %R2; IntRegs:%vreg2
+	%vreg1<def> = COPY %R1; IntRegs:%vreg1
+	%vreg0<def> = COPY %R0; IntRegs:%vreg0
+	%vreg4<def,tied2> = S4_addi_asl_ri <ga:@transformation>, %vreg0<tied0>, 2; IntRegs:%vreg4,%vreg0
+	%vreg5<def> = L2_loadri_io %vreg4, 23040; mem:LD4[%cgep1] IntRegs:%vreg5,%vreg4
+	%vreg6<def> = A2_add %vreg5<kill>, %vreg1; IntRegs:%vreg6,%vreg5,%vreg1
+	%vreg7<def> = L2_loadri_io %vreg4, 21856; mem:LD4[%cgep2] IntRegs:%vreg7,%vreg4
+	%vreg8<def> = A2_add %vreg7<kill>, %vreg1; IntRegs:%vreg8,%vreg7,%vreg1
+	%vreg9<def> = COPY %R29; IntRegs:%vreg9
+	S2_storeri_io %vreg9, 4, %vreg8<kill>; mem:ST4[Stack+4] IntRegs:%vreg9,%vreg8
+	S2_storeri_io %vreg9, 0, %vreg6<kill>; mem:ST4[Stack] IntRegs:%vreg9,%vreg6
+	ADJCALLSTACKDOWN 8, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	%vreg10<def> = A2_tfrsi 0; IntRegs:%vreg10
+	%vreg11<def> = A2_tfrsi 1; IntRegs:%vreg11
+	%R0<def> = COPY %vreg2; IntRegs:%vreg2
+	%R1<def> = COPY %vreg10; IntRegs:%vreg10
+	%R2<def> = COPY %vreg11; IntRegs:%vreg11
+	J2_call <ga:@play_attack_defend_n>, %D0<imp-def>, %D1<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, ...
+	ADJCALLSTACKUP 8, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	%vreg12<def> = COPY %R0; IntRegs:%vreg12
+	%vreg13<def> = A4_rcmpeqi %vreg12, 0; IntRegs:%vreg13,%vreg12
+	%R0<def> = COPY %vreg13; IntRegs:%vreg13
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function autohelperpat1088.
+
+# After Machine code sinking:
+# Machine code for function autohelperpat1088: SSA
+Function Live Ins: %R0 in %vreg0, %R1 in %vreg1, %R2 in %vreg2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R2
+	%vreg2<def> = COPY %R2; IntRegs:%vreg2
+	%vreg1<def> = COPY %R1; IntRegs:%vreg1
+	%vreg0<def> = COPY %R0; IntRegs:%vreg0
+	%vreg4<def,tied2> = S4_addi_asl_ri <ga:@transformation>, %vreg0<tied0>, 2; IntRegs:%vreg4,%vreg0
+	%vreg5<def> = L2_loadri_io %vreg4, 23040; mem:LD4[%cgep1] IntRegs:%vreg5,%vreg4
+	%vreg6<def> = A2_add %vreg5<kill>, %vreg1; IntRegs:%vreg6,%vreg5,%vreg1
+	%vreg7<def> = L2_loadri_io %vreg4, 21856; mem:LD4[%cgep2] IntRegs:%vreg7,%vreg4
+	%vreg8<def> = A2_add %vreg7<kill>, %vreg1; IntRegs:%vreg8,%vreg7,%vreg1
+	%vreg9<def> = COPY %R29; IntRegs:%vreg9
+	S2_storeri_io %vreg9, 4, %vreg8<kill>; mem:ST4[Stack+4] IntRegs:%vreg9,%vreg8
+	S2_storeri_io %vreg9, 0, %vreg6<kill>; mem:ST4[Stack] IntRegs:%vreg9,%vreg6
+	ADJCALLSTACKDOWN 8, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	%vreg10<def> = A2_tfrsi 0; IntRegs:%vreg10
+	%vreg11<def> = A2_tfrsi 1; IntRegs:%vreg11
+	%R0<def> = COPY %vreg2; IntRegs:%vreg2
+	%R1<def> = COPY %vreg10; IntRegs:%vreg10
+	%R2<def> = COPY %vreg11; IntRegs:%vreg11
+	J2_call <ga:@play_attack_defend_n>, %D0<imp-def>, %D1<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, ...
+	ADJCALLSTACKUP 8, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	%vreg12<def> = COPY %R0; IntRegs:%vreg12
+	%vreg13<def> = A4_rcmpeqi %vreg12, 0; IntRegs:%vreg13,%vreg12
+	%R0<def> = COPY %vreg13; IntRegs:%vreg13
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function autohelperpat1088.
+
+# After Peephole Optimizations:
+# Machine code for function autohelperpat1088: SSA
+Function Live Ins: %R0 in %vreg0, %R1 in %vreg1, %R2 in %vreg2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R2
+	%vreg2<def> = COPY %R2; IntRegs:%vreg2
+	%vreg1<def> = COPY %R1; IntRegs:%vreg1
+	%vreg0<def> = COPY %R0; IntRegs:%vreg0
+	%vreg4<def,tied2> = S4_addi_asl_ri <ga:@transformation>, %vreg0<tied0>, 2; IntRegs:%vreg4,%vreg0
+	%vreg5<def> = L2_loadri_io %vreg4, 23040; mem:LD4[%cgep1] IntRegs:%vreg5,%vreg4
+	%vreg6<def> = A2_add %vreg5<kill>, %vreg1; IntRegs:%vreg6,%vreg5,%vreg1
+	%vreg7<def> = L2_loadri_io %vreg4, 21856; mem:LD4[%cgep2] IntRegs:%vreg7,%vreg4
+	%vreg8<def> = A2_add %vreg7<kill>, %vreg1; IntRegs:%vreg8,%vreg7,%vreg1
+	%vreg9<def> = COPY %R29; IntRegs:%vreg9
+	S2_storeri_io %vreg9, 4, %vreg8<kill>; mem:ST4[Stack+4] IntRegs:%vreg9,%vreg8
+	S2_storeri_io %vreg9, 0, %vreg6<kill>; mem:ST4[Stack] IntRegs:%vreg9,%vreg6
+	ADJCALLSTACKDOWN 8, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	%vreg10<def> = A2_tfrsi 0; IntRegs:%vreg10
+	%vreg11<def> = A2_tfrsi 1; IntRegs:%vreg11
+	%R0<def> = COPY %vreg2; IntRegs:%vreg2
+	%R1<def> = COPY %vreg10; IntRegs:%vreg10
+	%R2<def> = COPY %vreg11; IntRegs:%vreg11
+	J2_call <ga:@play_attack_defend_n>, %D0<imp-def>, %D1<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, ...
+	ADJCALLSTACKUP 8, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	%vreg12<def> = COPY %R0; IntRegs:%vreg12
+	%vreg13<def> = A4_rcmpeqi %vreg12, 0; IntRegs:%vreg13,%vreg12
+	%R0<def> = COPY %vreg13; IntRegs:%vreg13
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function autohelperpat1088.
+
+# After Remove dead machine instructions:
+# Machine code for function autohelperpat1088: SSA
+Function Live Ins: %R0 in %vreg0, %R1 in %vreg1, %R2 in %vreg2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R2
+	%vreg2<def> = COPY %R2; IntRegs:%vreg2
+	%vreg1<def> = COPY %R1; IntRegs:%vreg1
+	%vreg0<def> = COPY %R0; IntRegs:%vreg0
+	%vreg4<def,tied2> = S4_addi_asl_ri <ga:@transformation>, %vreg0<tied0>, 2; IntRegs:%vreg4,%vreg0
+	%vreg5<def> = L2_loadri_io %vreg4, 23040; mem:LD4[%cgep1] IntRegs:%vreg5,%vreg4
+	%vreg6<def> = A2_add %vreg5<kill>, %vreg1; IntRegs:%vreg6,%vreg5,%vreg1
+	%vreg7<def> = L2_loadri_io %vreg4, 21856; mem:LD4[%cgep2] IntRegs:%vreg7,%vreg4
+	%vreg8<def> = A2_add %vreg7<kill>, %vreg1; IntRegs:%vreg8,%vreg7,%vreg1
+	%vreg9<def> = COPY %R29; IntRegs:%vreg9
+	S2_storeri_io %vreg9, 4, %vreg8<kill>; mem:ST4[Stack+4] IntRegs:%vreg9,%vreg8
+	S2_storeri_io %vreg9, 0, %vreg6<kill>; mem:ST4[Stack] IntRegs:%vreg9,%vreg6
+	ADJCALLSTACKDOWN 8, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	%vreg10<def> = A2_tfrsi 0; IntRegs:%vreg10
+	%vreg11<def> = A2_tfrsi 1; IntRegs:%vreg11
+	%R0<def> = COPY %vreg2; IntRegs:%vreg2
+	%R1<def> = COPY %vreg10; IntRegs:%vreg10
+	%R2<def> = COPY %vreg11; IntRegs:%vreg11
+	J2_call <ga:@play_attack_defend_n>, %D0<imp-def>, %D1<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, ...
+	ADJCALLSTACKUP 8, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	%vreg12<def> = COPY %R0; IntRegs:%vreg12
+	%vreg13<def> = A4_rcmpeqi %vreg12, 0; IntRegs:%vreg13,%vreg12
+	%R0<def> = COPY %vreg13; IntRegs:%vreg13
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function autohelperpat1088.
+
+# After Hexagon Store Widening:
+# Machine code for function autohelperpat1088: SSA
+Function Live Ins: %R0 in %vreg0, %R1 in %vreg1, %R2 in %vreg2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R2
+	%vreg2<def> = COPY %R2; IntRegs:%vreg2
+	%vreg1<def> = COPY %R1; IntRegs:%vreg1
+	%vreg0<def> = COPY %R0; IntRegs:%vreg0
+	%vreg4<def,tied2> = S4_addi_asl_ri <ga:@transformation>, %vreg0<tied0>, 2; IntRegs:%vreg4,%vreg0
+	%vreg5<def> = L2_loadri_io %vreg4, 23040; mem:LD4[%cgep1] IntRegs:%vreg5,%vreg4
+	%vreg6<def> = A2_add %vreg5<kill>, %vreg1; IntRegs:%vreg6,%vreg5,%vreg1
+	%vreg7<def> = L2_loadri_io %vreg4, 21856; mem:LD4[%cgep2] IntRegs:%vreg7,%vreg4
+	%vreg8<def> = A2_add %vreg7<kill>, %vreg1; IntRegs:%vreg8,%vreg7,%vreg1
+	%vreg9<def> = COPY %R29; IntRegs:%vreg9
+	S2_storeri_io %vreg9, 4, %vreg8<kill>; mem:ST4[Stack+4] IntRegs:%vreg9,%vreg8
+	S2_storeri_io %vreg9, 0, %vreg6<kill>; mem:ST4[Stack] IntRegs:%vreg9,%vreg6
+	ADJCALLSTACKDOWN 8, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	%vreg10<def> = A2_tfrsi 0; IntRegs:%vreg10
+	%vreg11<def> = A2_tfrsi 1; IntRegs:%vreg11
+	%R0<def> = COPY %vreg2; IntRegs:%vreg2
+	%R1<def> = COPY %vreg10; IntRegs:%vreg10
+	%R2<def> = COPY %vreg11; IntRegs:%vreg11
+	J2_call <ga:@play_attack_defend_n>, %D0<imp-def>, %D1<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, ...
+	ADJCALLSTACKUP 8, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	%vreg12<def> = COPY %R0; IntRegs:%vreg12
+	%vreg13<def> = A4_rcmpeqi %vreg12, 0; IntRegs:%vreg13,%vreg12
+	%R0<def> = COPY %vreg13; IntRegs:%vreg13
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function autohelperpat1088.
+
+# After Hexagon Hardware Loops:
+# Machine code for function autohelperpat1088: SSA
+Function Live Ins: %R0 in %vreg0, %R1 in %vreg1, %R2 in %vreg2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R2
+	%vreg2<def> = COPY %R2; IntRegs:%vreg2
+	%vreg1<def> = COPY %R1; IntRegs:%vreg1
+	%vreg0<def> = COPY %R0; IntRegs:%vreg0
+	%vreg4<def,tied2> = S4_addi_asl_ri <ga:@transformation>, %vreg0<tied0>, 2; IntRegs:%vreg4,%vreg0
+	%vreg5<def> = L2_loadri_io %vreg4, 23040; mem:LD4[%cgep1] IntRegs:%vreg5,%vreg4
+	%vreg6<def> = A2_add %vreg5<kill>, %vreg1; IntRegs:%vreg6,%vreg5,%vreg1
+	%vreg7<def> = L2_loadri_io %vreg4, 21856; mem:LD4[%cgep2] IntRegs:%vreg7,%vreg4
+	%vreg8<def> = A2_add %vreg7<kill>, %vreg1; IntRegs:%vreg8,%vreg7,%vreg1
+	%vreg9<def> = COPY %R29; IntRegs:%vreg9
+	S2_storeri_io %vreg9, 4, %vreg8<kill>; mem:ST4[Stack+4] IntRegs:%vreg9,%vreg8
+	S2_storeri_io %vreg9, 0, %vreg6<kill>; mem:ST4[Stack] IntRegs:%vreg9,%vreg6
+	ADJCALLSTACKDOWN 8, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	%vreg10<def> = A2_tfrsi 0; IntRegs:%vreg10
+	%vreg11<def> = A2_tfrsi 1; IntRegs:%vreg11
+	%R0<def> = COPY %vreg2; IntRegs:%vreg2
+	%R1<def> = COPY %vreg10; IntRegs:%vreg10
+	%R2<def> = COPY %vreg11; IntRegs:%vreg11
+	J2_call <ga:@play_attack_defend_n>, %D0<imp-def>, %D1<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, ...
+	ADJCALLSTACKUP 8, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	%vreg12<def> = COPY %R0; IntRegs:%vreg12
+	%vreg13<def> = A4_rcmpeqi %vreg12, 0; IntRegs:%vreg13,%vreg12
+	%R0<def> = COPY %vreg13; IntRegs:%vreg13
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function autohelperpat1088.
+
+# After Process Implicit Definitions:
+# Machine code for function autohelperpat1088: SSA
+Function Live Ins: %R0 in %vreg0, %R1 in %vreg1, %R2 in %vreg2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R2
+	%vreg2<def> = COPY %R2; IntRegs:%vreg2
+	%vreg1<def> = COPY %R1; IntRegs:%vreg1
+	%vreg0<def> = COPY %R0; IntRegs:%vreg0
+	%vreg4<def,tied2> = S4_addi_asl_ri <ga:@transformation>, %vreg0<tied0>, 2; IntRegs:%vreg4,%vreg0
+	%vreg5<def> = L2_loadri_io %vreg4, 23040; mem:LD4[%cgep1] IntRegs:%vreg5,%vreg4
+	%vreg6<def> = A2_add %vreg5<kill>, %vreg1; IntRegs:%vreg6,%vreg5,%vreg1
+	%vreg7<def> = L2_loadri_io %vreg4, 21856; mem:LD4[%cgep2] IntRegs:%vreg7,%vreg4
+	%vreg8<def> = A2_add %vreg7<kill>, %vreg1; IntRegs:%vreg8,%vreg7,%vreg1
+	%vreg9<def> = COPY %R29; IntRegs:%vreg9
+	S2_storeri_io %vreg9, 4, %vreg8<kill>; mem:ST4[Stack+4] IntRegs:%vreg9,%vreg8
+	S2_storeri_io %vreg9, 0, %vreg6<kill>; mem:ST4[Stack] IntRegs:%vreg9,%vreg6
+	ADJCALLSTACKDOWN 8, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	%vreg10<def> = A2_tfrsi 0; IntRegs:%vreg10
+	%vreg11<def> = A2_tfrsi 1; IntRegs:%vreg11
+	%R0<def> = COPY %vreg2; IntRegs:%vreg2
+	%R1<def> = COPY %vreg10; IntRegs:%vreg10
+	%R2<def> = COPY %vreg11; IntRegs:%vreg11
+	J2_call <ga:@play_attack_defend_n>, %D0<imp-def>, %D1<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, ...
+	ADJCALLSTACKUP 8, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	%vreg12<def> = COPY %R0; IntRegs:%vreg12
+	%vreg13<def> = A4_rcmpeqi %vreg12, 0; IntRegs:%vreg13,%vreg12
+	%R0<def> = COPY %vreg13; IntRegs:%vreg13
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function autohelperpat1088.
+
+# After Live Variable Analysis:
+# Machine code for function autohelperpat1088: SSA
+Function Live Ins: %R0 in %vreg0, %R1 in %vreg1, %R2 in %vreg2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R2
+	%vreg2<def> = COPY %R2<kill>; IntRegs:%vreg2
+	%vreg1<def> = COPY %R1<kill>; IntRegs:%vreg1
+	%vreg0<def> = COPY %R0<kill>; IntRegs:%vreg0
+	%vreg4<def,tied2> = S4_addi_asl_ri <ga:@transformation>, %vreg0<kill,tied0>, 2; IntRegs:%vreg4,%vreg0
+	%vreg5<def> = L2_loadri_io %vreg4, 23040; mem:LD4[%cgep1] IntRegs:%vreg5,%vreg4
+	%vreg6<def> = A2_add %vreg5<kill>, %vreg1; IntRegs:%vreg6,%vreg5,%vreg1
+	%vreg7<def> = L2_loadri_io %vreg4<kill>, 21856; mem:LD4[%cgep2] IntRegs:%vreg7,%vreg4
+	%vreg8<def> = A2_add %vreg7<kill>, %vreg1<kill>; IntRegs:%vreg8,%vreg7,%vreg1
+	%vreg9<def> = COPY %R29; IntRegs:%vreg9
+	S2_storeri_io %vreg9, 4, %vreg8<kill>; mem:ST4[Stack+4] IntRegs:%vreg9,%vreg8
+	S2_storeri_io %vreg9<kill>, 0, %vreg6<kill>; mem:ST4[Stack] IntRegs:%vreg9,%vreg6
+	ADJCALLSTACKDOWN 8, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	%vreg10<def> = A2_tfrsi 0; IntRegs:%vreg10
+	%vreg11<def> = A2_tfrsi 1; IntRegs:%vreg11
+	%R0<def> = COPY %vreg2<kill>; IntRegs:%vreg2
+	%R1<def> = COPY %vreg10<kill>; IntRegs:%vreg10
+	%R2<def> = COPY %vreg11<kill>; IntRegs:%vreg11
+	J2_call <ga:@play_attack_defend_n>, %D0<imp-def,dead>, %D1<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use,kill>, %R1<imp-use,kill>, %R2<imp-use,kill>, %R0<imp-def>, ...
+	ADJCALLSTACKUP 8, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	%vreg12<def> = COPY %R0<kill>; IntRegs:%vreg12
+	%vreg13<def> = A4_rcmpeqi %vreg12<kill>, 0; IntRegs:%vreg13,%vreg12
+	%R0<def> = COPY %vreg13<kill>; IntRegs:%vreg13
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use,kill>
+
+# End machine code for function autohelperpat1088.
+
+# After Machine Natural Loop Construction:
+# Machine code for function autohelperpat1088: SSA
+Function Live Ins: %R0 in %vreg0, %R1 in %vreg1, %R2 in %vreg2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R2
+	%vreg2<def> = COPY %R2<kill>; IntRegs:%vreg2
+	%vreg1<def> = COPY %R1<kill>; IntRegs:%vreg1
+	%vreg0<def> = COPY %R0<kill>; IntRegs:%vreg0
+	%vreg4<def,tied2> = S4_addi_asl_ri <ga:@transformation>, %vreg0<kill,tied0>, 2; IntRegs:%vreg4,%vreg0
+	%vreg5<def> = L2_loadri_io %vreg4, 23040; mem:LD4[%cgep1] IntRegs:%vreg5,%vreg4
+	%vreg6<def> = A2_add %vreg5<kill>, %vreg1; IntRegs:%vreg6,%vreg5,%vreg1
+	%vreg7<def> = L2_loadri_io %vreg4<kill>, 21856; mem:LD4[%cgep2] IntRegs:%vreg7,%vreg4
+	%vreg8<def> = A2_add %vreg7<kill>, %vreg1<kill>; IntRegs:%vreg8,%vreg7,%vreg1
+	%vreg9<def> = COPY %R29; IntRegs:%vreg9
+	S2_storeri_io %vreg9, 4, %vreg8<kill>; mem:ST4[Stack+4] IntRegs:%vreg9,%vreg8
+	S2_storeri_io %vreg9<kill>, 0, %vreg6<kill>; mem:ST4[Stack] IntRegs:%vreg9,%vreg6
+	ADJCALLSTACKDOWN 8, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	%vreg10<def> = A2_tfrsi 0; IntRegs:%vreg10
+	%vreg11<def> = A2_tfrsi 1; IntRegs:%vreg11
+	%R0<def> = COPY %vreg2<kill>; IntRegs:%vreg2
+	%R1<def> = COPY %vreg10<kill>; IntRegs:%vreg10
+	%R2<def> = COPY %vreg11<kill>; IntRegs:%vreg11
+	J2_call <ga:@play_attack_defend_n>, %D0<imp-def,dead>, %D1<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use,kill>, %R1<imp-use,kill>, %R2<imp-use,kill>, %R0<imp-def>, ...
+	ADJCALLSTACKUP 8, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	%vreg12<def> = COPY %R0<kill>; IntRegs:%vreg12
+	%vreg13<def> = A4_rcmpeqi %vreg12<kill>, 0; IntRegs:%vreg13,%vreg12
+	%R0<def> = COPY %vreg13<kill>; IntRegs:%vreg13
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use,kill>
+
+# End machine code for function autohelperpat1088.
+
+# After Eliminate PHI nodes for register allocation:
+# Machine code for function autohelperpat1088: Post SSA
+Function Live Ins: %R0 in %vreg0, %R1 in %vreg1, %R2 in %vreg2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R2
+	%vreg2<def> = COPY %R2<kill>; IntRegs:%vreg2
+	%vreg1<def> = COPY %R1<kill>; IntRegs:%vreg1
+	%vreg0<def> = COPY %R0<kill>; IntRegs:%vreg0
+	%vreg4<def,tied2> = S4_addi_asl_ri <ga:@transformation>, %vreg0<kill,tied0>, 2; IntRegs:%vreg4,%vreg0
+	%vreg5<def> = L2_loadri_io %vreg4, 23040; mem:LD4[%cgep1] IntRegs:%vreg5,%vreg4
+	%vreg6<def> = A2_add %vreg5<kill>, %vreg1; IntRegs:%vreg6,%vreg5,%vreg1
+	%vreg7<def> = L2_loadri_io %vreg4<kill>, 21856; mem:LD4[%cgep2] IntRegs:%vreg7,%vreg4
+	%vreg8<def> = A2_add %vreg7<kill>, %vreg1<kill>; IntRegs:%vreg8,%vreg7,%vreg1
+	%vreg9<def> = COPY %R29; IntRegs:%vreg9
+	S2_storeri_io %vreg9, 4, %vreg8<kill>; mem:ST4[Stack+4] IntRegs:%vreg9,%vreg8
+	S2_storeri_io %vreg9<kill>, 0, %vreg6<kill>; mem:ST4[Stack] IntRegs:%vreg9,%vreg6
+	ADJCALLSTACKDOWN 8, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	%vreg10<def> = A2_tfrsi 0; IntRegs:%vreg10
+	%vreg11<def> = A2_tfrsi 1; IntRegs:%vreg11
+	%R0<def> = COPY %vreg2<kill>; IntRegs:%vreg2
+	%R1<def> = COPY %vreg10<kill>; IntRegs:%vreg10
+	%R2<def> = COPY %vreg11<kill>; IntRegs:%vreg11
+	J2_call <ga:@play_attack_defend_n>, %D0<imp-def,dead>, %D1<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use,kill>, %R1<imp-use,kill>, %R2<imp-use,kill>, %R0<imp-def>, ...
+	ADJCALLSTACKUP 8, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	%vreg12<def> = COPY %R0<kill>; IntRegs:%vreg12
+	%vreg13<def> = A4_rcmpeqi %vreg12<kill>, 0; IntRegs:%vreg13,%vreg12
+	%R0<def> = COPY %vreg13<kill>; IntRegs:%vreg13
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use,kill>
+
+# End machine code for function autohelperpat1088.
+
+# After Two-Address instruction pass:
+# Machine code for function autohelperpat1088: Post SSA
+Function Live Ins: %R0 in %vreg0, %R1 in %vreg1, %R2 in %vreg2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R2
+	%vreg2<def> = COPY %R2<kill>; IntRegs:%vreg2
+	%vreg1<def> = COPY %R1<kill>; IntRegs:%vreg1
+	%vreg0<def> = COPY %R0<kill>; IntRegs:%vreg0
+	%vreg4<def> = COPY %vreg0<kill>; IntRegs:%vreg4,%vreg0
+	%vreg4<def,tied2> = S4_addi_asl_ri <ga:@transformation>, %vreg4<tied0>, 2; IntRegs:%vreg4
+	%vreg5<def> = L2_loadri_io %vreg4, 23040; mem:LD4[%cgep1] IntRegs:%vreg5,%vreg4
+	%vreg6<def> = A2_add %vreg5<kill>, %vreg1; IntRegs:%vreg6,%vreg5,%vreg1
+	%vreg7<def> = L2_loadri_io %vreg4<kill>, 21856; mem:LD4[%cgep2] IntRegs:%vreg7,%vreg4
+	%vreg8<def> = A2_add %vreg7<kill>, %vreg1<kill>; IntRegs:%vreg8,%vreg7,%vreg1
+	%vreg9<def> = COPY %R29; IntRegs:%vreg9
+	S2_storeri_io %vreg9, 4, %vreg8<kill>; mem:ST4[Stack+4] IntRegs:%vreg9,%vreg8
+	S2_storeri_io %vreg9<kill>, 0, %vreg6<kill>; mem:ST4[Stack] IntRegs:%vreg9,%vreg6
+	ADJCALLSTACKDOWN 8, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	%vreg10<def> = A2_tfrsi 0; IntRegs:%vreg10
+	%vreg11<def> = A2_tfrsi 1; IntRegs:%vreg11
+	%R0<def> = COPY %vreg2<kill>; IntRegs:%vreg2
+	%R1<def> = COPY %vreg10<kill>; IntRegs:%vreg10
+	%R2<def> = COPY %vreg11<kill>; IntRegs:%vreg11
+	J2_call <ga:@play_attack_defend_n>, %D0<imp-def,dead>, %D1<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use,kill>, %R1<imp-use,kill>, %R2<imp-use,kill>, %R0<imp-def>, ...
+	ADJCALLSTACKUP 8, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	%vreg12<def> = COPY %R0<kill>; IntRegs:%vreg12
+	%vreg13<def> = A4_rcmpeqi %vreg12<kill>, 0; IntRegs:%vreg13,%vreg12
+	%R0<def> = COPY %vreg13<kill>; IntRegs:%vreg13
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use,kill>
+
+# End machine code for function autohelperpat1088.
+
+# After Simple Register Coalescing:
+# Machine code for function autohelperpat1088: Post SSA
+Function Live Ins: %R0 in %vreg0, %R1 in %vreg1, %R2 in %vreg2
+
+0B	BB#0: derived from LLVM BB %0
+	    Live Ins: %R0 %R1 %R2
+16B		%vreg2<def> = COPY %R2; IntRegs:%vreg2
+32B		%vreg1<def> = COPY %R1; IntRegs:%vreg1
+48B		%vreg4<def> = COPY %R0; IntRegs:%vreg4
+80B		%vreg4<def,tied2> = S4_addi_asl_ri <ga:@transformation>, %vreg4<tied0>, 2; IntRegs:%vreg4
+96B		%vreg5<def> = L2_loadri_io %vreg4, 23040; mem:LD4[%cgep1] IntRegs:%vreg5,%vreg4
+112B		%vreg6<def> = A2_add %vreg5, %vreg1; IntRegs:%vreg6,%vreg5,%vreg1
+128B		%vreg7<def> = L2_loadri_io %vreg4, 21856; mem:LD4[%cgep2] IntRegs:%vreg7,%vreg4
+144B		%vreg8<def> = A2_add %vreg7, %vreg1; IntRegs:%vreg8,%vreg7,%vreg1
+176B		S2_storeri_io %R29, 4, %vreg8; mem:ST4[Stack+4] IntRegs:%vreg8
+192B		S2_storeri_io %R29, 0, %vreg6; mem:ST4[Stack] IntRegs:%vreg6
+208B		ADJCALLSTACKDOWN 8, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+256B		%R0<def> = COPY %vreg2; IntRegs:%vreg2
+272B		%R1<def> = A2_tfrsi 0
+288B		%R2<def> = A2_tfrsi 1
+304B		J2_call <ga:@play_attack_defend_n>, %D0<imp-def,dead>, %D1<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, %R0<imp-def>, ...
+320B		ADJCALLSTACKUP 8, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+336B		%vreg12<def> = COPY %R0; IntRegs:%vreg12
+352B		%vreg13<def> = A4_rcmpeqi %vreg12, 0; IntRegs:%vreg13,%vreg12
+368B		%R0<def> = COPY %vreg13; IntRegs:%vreg13
+384B		JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function autohelperpat1088.
+
+# After Hexagon Expand Condsets:
+# Machine code for function autohelperpat1088: Post SSA
+Function Live Ins: %R0 in %vreg0, %R1 in %vreg1, %R2 in %vreg2
+
+0B	BB#0: derived from LLVM BB %0
+	    Live Ins: %R0 %R1 %R2
+16B		%vreg2<def> = COPY %R2; IntRegs:%vreg2
+32B		%vreg1<def> = COPY %R1; IntRegs:%vreg1
+48B		%vreg4<def> = COPY %R0; IntRegs:%vreg4
+80B		%vreg4<def,tied2> = S4_addi_asl_ri <ga:@transformation>, %vreg4<tied0>, 2; IntRegs:%vreg4
+96B		%vreg5<def> = L2_loadri_io %vreg4, 23040; mem:LD4[%cgep1] IntRegs:%vreg5,%vreg4
+112B		%vreg6<def> = A2_add %vreg5, %vreg1; IntRegs:%vreg6,%vreg5,%vreg1
+128B		%vreg7<def> = L2_loadri_io %vreg4, 21856; mem:LD4[%cgep2] IntRegs:%vreg7,%vreg4
+144B		%vreg8<def> = A2_add %vreg7, %vreg1; IntRegs:%vreg8,%vreg7,%vreg1
+176B		S2_storeri_io %R29, 4, %vreg8; mem:ST4[Stack+4] IntRegs:%vreg8
+192B		S2_storeri_io %R29, 0, %vreg6; mem:ST4[Stack] IntRegs:%vreg6
+208B		ADJCALLSTACKDOWN 8, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+256B		%R0<def> = COPY %vreg2; IntRegs:%vreg2
+272B		%R1<def> = A2_tfrsi 0
+288B		%R2<def> = A2_tfrsi 1
+304B		J2_call <ga:@play_attack_defend_n>, %D0<imp-def,dead>, %D1<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, %R0<imp-def>, ...
+320B		ADJCALLSTACKUP 8, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+336B		%vreg12<def> = COPY %R0; IntRegs:%vreg12
+352B		%vreg13<def> = A4_rcmpeqi %vreg12, 0; IntRegs:%vreg13,%vreg12
+368B		%R0<def> = COPY %vreg13; IntRegs:%vreg13
+384B		JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function autohelperpat1088.
+
+# After Machine Instruction Scheduler:
+# Machine code for function autohelperpat1088: Post SSA
+Function Live Ins: %R0 in %vreg0, %R1 in %vreg1, %R2 in %vreg2
+
+0B	BB#0: derived from LLVM BB %0
+	    Live Ins: %R0 %R1 %R2
+8B		%vreg4<def> = COPY %R0; IntRegs:%vreg4
+12B		%vreg1<def> = COPY %R1; IntRegs:%vreg1
+16B		%vreg2<def> = COPY %R2; IntRegs:%vreg2
+24B		%R1<def> = A2_tfrsi 0
+80B		%vreg4<def,tied2> = S4_addi_asl_ri <ga:@transformation>, %vreg4<tied0>, 2; IntRegs:%vreg4
+88B		%R2<def> = A2_tfrsi 1
+256B		%R0<def> = COPY %vreg2; IntRegs:%vreg2
+296B		%vreg7<def> = L2_loadri_io %vreg4, 21856; mem:LD4[%cgep2] IntRegs:%vreg7,%vreg4
+304B		%vreg5<def> = L2_loadri_io %vreg4, 23040; mem:LD4[%cgep1] IntRegs:%vreg5,%vreg4
+312B		%vreg8<def> = A2_add %vreg7, %vreg1; IntRegs:%vreg8,%vreg7,%vreg1
+320B		%vreg6<def> = A2_add %vreg5, %vreg1; IntRegs:%vreg6,%vreg5,%vreg1
+328B		S2_storeri_io %R29, 4, %vreg8; mem:ST4[Stack+4] IntRegs:%vreg8
+336B		S2_storeri_io %R29, 0, %vreg6; mem:ST4[Stack] IntRegs:%vreg6
+344B		ADJCALLSTACKDOWN 8, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+352B		J2_call <ga:@play_attack_defend_n>, %D0<imp-def,dead>, %D1<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, %R0<imp-def>, ...
+360B		ADJCALLSTACKUP 8, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+368B		%vreg12<def> = COPY %R0; IntRegs:%vreg12
+376B		%vreg13<def> = A4_rcmpeqi %vreg12, 0; IntRegs:%vreg13,%vreg12
+384B		%R0<def> = COPY %vreg13; IntRegs:%vreg13
+392B		JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function autohelperpat1088.
+
+# After Greedy Register Allocator:
+# Machine code for function autohelperpat1088: Post SSA
+Function Live Ins: %R0 in %vreg0, %R1 in %vreg1, %R2 in %vreg2
+
+0B	BB#0: derived from LLVM BB %0
+	    Live Ins: %R0 %R1 %R2
+8B		%vreg4<def> = COPY %R0; IntRegs:%vreg4
+12B		%vreg1<def> = COPY %R1; IntRegs:%vreg1
+16B		%vreg2<def> = COPY %R2; IntRegs:%vreg2
+24B		%R1<def> = A2_tfrsi 0
+80B		%vreg4<def,tied2> = S4_addi_asl_ri <ga:@transformation>, %vreg4<tied0>, 2; IntRegs:%vreg4
+88B		%R2<def> = A2_tfrsi 1
+256B		%R0<def> = COPY %vreg2; IntRegs:%vreg2
+296B		%vreg7<def> = L2_loadri_io %vreg4, 21856; mem:LD4[%cgep2] IntRegs:%vreg7,%vreg4
+304B		%vreg5<def> = L2_loadri_io %vreg4, 23040; mem:LD4[%cgep1] IntRegs:%vreg5,%vreg4
+312B		%vreg8<def> = A2_add %vreg7, %vreg1; IntRegs:%vreg8,%vreg7,%vreg1
+320B		%vreg6<def> = A2_add %vreg5, %vreg1; IntRegs:%vreg6,%vreg5,%vreg1
+328B		S2_storeri_io %R29, 4, %vreg8; mem:ST4[Stack+4] IntRegs:%vreg8
+336B		S2_storeri_io %R29, 0, %vreg6; mem:ST4[Stack] IntRegs:%vreg6
+344B		ADJCALLSTACKDOWN 8, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+352B		J2_call <ga:@play_attack_defend_n>, %D0<imp-def,dead>, %D1<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, %R0<imp-def>, ...
+360B		ADJCALLSTACKUP 8, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+368B		%vreg12<def> = COPY %R0; IntRegs:%vreg12
+376B		%vreg13<def> = A4_rcmpeqi %vreg12, 0; IntRegs:%vreg13,%vreg12
+384B		%R0<def> = COPY %vreg13; IntRegs:%vreg13
+392B		JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function autohelperpat1088.
+
+# After Virtual Register Rewriter:
+# Machine code for function autohelperpat1088: Post SSA
+Function Live Ins: %R0, %R1, %R2
+
+0B	BB#0: derived from LLVM BB %0
+	    Live Ins: %R0 %R1 %R2
+8B		%R3<def> = COPY %R0
+12B		%R4<def> = COPY %R1
+16B		%R0<def> = COPY %R2
+24B		%R1<def> = A2_tfrsi 0
+80B		%R3<def,tied2> = S4_addi_asl_ri <ga:@transformation>, %R3<kill,tied0>, 2
+88B		%R2<def> = A2_tfrsi 1
+296B		%R5<def> = L2_loadri_io %R3, 21856; mem:LD4[%cgep2]
+304B		%R3<def> = L2_loadri_io %R3<kill>, 23040; mem:LD4[%cgep1]
+312B		%R5<def> = A2_add %R5<kill>, %R4
+320B		%R3<def> = A2_add %R3<kill>, %R4<kill>
+328B		S2_storeri_io %R29, 4, %R5<kill>; mem:ST4[Stack+4]
+336B		S2_storeri_io %R29, 0, %R3<kill>; mem:ST4[Stack]
+344B		ADJCALLSTACKDOWN 8, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+352B		J2_call <ga:@play_attack_defend_n>, %D0<imp-def,dead>, %D1<imp-def,dead>, %D2<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, %R0<imp-def>, ...
+360B		ADJCALLSTACKUP 8, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+376B		%R0<def> = A4_rcmpeqi %R0<kill>, 0
+392B		JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function autohelperpat1088.
+
+# After Stack Slot Coloring:
+# Machine code for function autohelperpat1088: Post SSA
+Function Live Ins: %R0, %R1, %R2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R2
+	%R3<def> = COPY %R0
+	%R4<def> = COPY %R1
+	%R0<def> = COPY %R2
+	%R1<def> = A2_tfrsi 0
+	%R3<def,tied2> = S4_addi_asl_ri <ga:@transformation>, %R3<kill,tied0>, 2
+	%R2<def> = A2_tfrsi 1
+	%R5<def> = L2_loadri_io %R3, 21856; mem:LD4[%cgep2]
+	%R3<def> = L2_loadri_io %R3<kill>, 23040; mem:LD4[%cgep1]
+	%R5<def> = A2_add %R5<kill>, %R4
+	%R3<def> = A2_add %R3<kill>, %R4<kill>
+	S2_storeri_io %R29, 4, %R5<kill>; mem:ST4[Stack+4]
+	S2_storeri_io %R29, 0, %R3<kill>; mem:ST4[Stack]
+	ADJCALLSTACKDOWN 8, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	J2_call <ga:@play_attack_defend_n>, %D0<imp-def,dead>, %D1<imp-def,dead>, %D2<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, %R0<imp-def>, ...
+	ADJCALLSTACKUP 8, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	%R0<def> = A4_rcmpeqi %R0<kill>, 0
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function autohelperpat1088.
+
+# After Machine Loop Invariant Code Motion:
+# Machine code for function autohelperpat1088: Post SSA
+Function Live Ins: %R0, %R1, %R2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R2
+	%R3<def> = COPY %R0
+	%R4<def> = COPY %R1
+	%R0<def> = COPY %R2
+	%R1<def> = A2_tfrsi 0
+	%R3<def,tied2> = S4_addi_asl_ri <ga:@transformation>, %R3<kill,tied0>, 2
+	%R2<def> = A2_tfrsi 1
+	%R5<def> = L2_loadri_io %R3, 21856; mem:LD4[%cgep2]
+	%R3<def> = L2_loadri_io %R3<kill>, 23040; mem:LD4[%cgep1]
+	%R5<def> = A2_add %R5<kill>, %R4
+	%R3<def> = A2_add %R3<kill>, %R4<kill>
+	S2_storeri_io %R29, 4, %R5<kill>; mem:ST4[Stack+4]
+	S2_storeri_io %R29, 0, %R3<kill>; mem:ST4[Stack]
+	ADJCALLSTACKDOWN 8, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	J2_call <ga:@play_attack_defend_n>, %D0<imp-def,dead>, %D1<imp-def,dead>, %D2<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, %R0<imp-def>, ...
+	ADJCALLSTACKUP 8, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	%R0<def> = A4_rcmpeqi %R0<kill>, 0
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function autohelperpat1088.
+
+# After Hexagon RDF optimizations:
+# Machine code for function autohelperpat1088: Post SSA
+Function Live Ins: %R0, %R1, %R2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R2
+	%R3<def> = COPY %R0
+	%R4<def> = COPY %R1
+	%R0<def> = COPY %R2
+	%R1<def> = A2_tfrsi 0
+	%R3<def,tied2> = S4_addi_asl_ri <ga:@transformation>, %R3<kill,tied0>, 2
+	%R2<def> = A2_tfrsi 1
+	%R5<def> = L2_loadri_io %R3, 21856; mem:LD4[%cgep2]
+	%R3<def> = L2_loadri_io %R3<kill>, 23040; mem:LD4[%cgep1]
+	%R5<def> = A2_add %R5<kill>, %R4
+	%R3<def> = A2_add %R3<kill>, %R4<kill>
+	S2_storeri_io %R29, 4, %R5<kill>; mem:ST4[Stack+4]
+	S2_storeri_io %R29, 0, %R3<kill>; mem:ST4[Stack]
+	ADJCALLSTACKDOWN 8, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	J2_call <ga:@play_attack_defend_n>, %D0<imp-def,dead>, %D1<imp-def,dead>, %D2<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, %R0<imp-def>, ...
+	ADJCALLSTACKUP 8, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	%R0<def> = A4_rcmpeqi %R0<kill>, 0
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function autohelperpat1088.
+
+# After Shrink Wrapping analysis:
+# Machine code for function autohelperpat1088: Post SSA
+Function Live Ins: %R0, %R1, %R2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R2
+	%R3<def> = COPY %R0
+	%R4<def> = COPY %R1
+	%R0<def> = COPY %R2
+	%R1<def> = A2_tfrsi 0
+	%R3<def,tied2> = S4_addi_asl_ri <ga:@transformation>, %R3<kill,tied0>, 2
+	%R2<def> = A2_tfrsi 1
+	%R5<def> = L2_loadri_io %R3, 21856; mem:LD4[%cgep2]
+	%R3<def> = L2_loadri_io %R3<kill>, 23040; mem:LD4[%cgep1]
+	%R5<def> = A2_add %R5<kill>, %R4
+	%R3<def> = A2_add %R3<kill>, %R4<kill>
+	S2_storeri_io %R29, 4, %R5<kill>; mem:ST4[Stack+4]
+	S2_storeri_io %R29, 0, %R3<kill>; mem:ST4[Stack]
+	ADJCALLSTACKDOWN 8, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	J2_call <ga:@play_attack_defend_n>, %D0<imp-def,dead>, %D1<imp-def,dead>, %D2<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, %R0<imp-def>, ...
+	ADJCALLSTACKUP 8, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	%R0<def> = A4_rcmpeqi %R0<kill>, 0
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function autohelperpat1088.
+
+# After Prologue/Epilogue Insertion & Frame Finalization:
+# Machine code for function autohelperpat1088: Post SSA
+Function Live Ins: %R0, %R1, %R2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R2
+	S2_allocframe 8, %R29<imp-def>, %R30<imp-def>, %R29<imp-use>, %R31<imp-use>, %R30<imp-use>; mem:ST4[<unknown>]
+	%R3<def> = COPY %R0
+	%R4<def> = COPY %R1
+	%R0<def> = COPY %R2
+	%R1<def> = A2_tfrsi 0
+	%R3<def,tied2> = S4_addi_asl_ri <ga:@transformation>, %R3<kill,tied0>, 2
+	%R2<def> = A2_tfrsi 1
+	%R5<def> = L2_loadri_io %R3, 21856; mem:LD4[%cgep2]
+	%R3<def> = L2_loadri_io %R3<kill>, 23040; mem:LD4[%cgep1]
+	%R5<def> = A2_add %R5<kill>, %R4
+	%R3<def> = A2_add %R3<kill>, %R4<kill>
+	S2_storeri_io %R29, 4, %R5<kill>; mem:ST4[Stack+4]
+	S2_storeri_io %R29, 0, %R3<kill>; mem:ST4[Stack]
+	J2_call <ga:@play_attack_defend_n>, %D0<imp-def,dead>, %D1<imp-def,dead>, %D2<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, %R0<imp-def>, ...
+	%R0<def> = A4_rcmpeqi %R0<kill>, 0
+	L4_return %R29<imp-def>, %R30<imp-def>, %R31<imp-def>, %PC<imp-def>, %R30<imp-use>, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function autohelperpat1088.
+
+# After Machine Copy Propagation Pass:
+# Machine code for function autohelperpat1088: Post SSA
+Function Live Ins: %R0, %R1, %R2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R2
+	S2_allocframe 8, %R29<imp-def>, %R30<imp-def>, %R29<imp-use>, %R31<imp-use>, %R30<imp-use>; mem:ST4[<unknown>]
+	%R3<def> = COPY %R0
+	%R4<def> = COPY %R1
+	%R0<def> = COPY %R2
+	%R1<def> = A2_tfrsi 0
+	%R3<def,tied2> = S4_addi_asl_ri <ga:@transformation>, %R3<kill,tied0>, 2
+	%R2<def> = A2_tfrsi 1
+	%R5<def> = L2_loadri_io %R3, 21856; mem:LD4[%cgep2]
+	%R3<def> = L2_loadri_io %R3<kill>, 23040; mem:LD4[%cgep1]
+	%R5<def> = A2_add %R5<kill>, %R4
+	%R3<def> = A2_add %R3<kill>, %R4<kill>
+	S2_storeri_io %R29, 4, %R5<kill>; mem:ST4[Stack+4]
+	S2_storeri_io %R29, 0, %R3<kill>; mem:ST4[Stack]
+	J2_call <ga:@play_attack_defend_n>, %D0<imp-def,dead>, %D1<imp-def,dead>, %D2<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, %R0<imp-def>, ...
+	%R0<def> = A4_rcmpeqi %R0<kill>, 0
+	L4_return %R29<imp-def>, %R30<imp-def>, %R31<imp-def>, %PC<imp-def>, %R30<imp-use>, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function autohelperpat1088.
+
+# After Post-RA pseudo instruction expansion pass:
+# Machine code for function autohelperpat1088: Post SSA
+Function Live Ins: %R0, %R1, %R2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R2
+	S2_allocframe 8, %R29<imp-def>, %R30<imp-def>, %R29<imp-use>, %R31<imp-use>, %R30<imp-use>; mem:ST4[<unknown>]
+	%R3<def> = A2_tfr %R0
+	%R4<def> = A2_tfr %R1
+	%R0<def> = A2_tfr %R2
+	%R1<def> = A2_tfrsi 0
+	%R3<def,tied2> = S4_addi_asl_ri <ga:@transformation>, %R3<kill,tied0>, 2
+	%R2<def> = A2_tfrsi 1
+	%R5<def> = L2_loadri_io %R3, 21856; mem:LD4[%cgep2]
+	%R3<def> = L2_loadri_io %R3<kill>, 23040; mem:LD4[%cgep1]
+	%R5<def> = A2_add %R5<kill>, %R4
+	%R3<def> = A2_add %R3<kill>, %R4<kill>
+	S2_storeri_io %R29, 4, %R5<kill>; mem:ST4[Stack+4]
+	S2_storeri_io %R29, 0, %R3<kill>; mem:ST4[Stack]
+	J2_call <ga:@play_attack_defend_n>, %D0<imp-def,dead>, %D1<imp-def,dead>, %D2<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, %R0<imp-def>, ...
+	%R0<def> = A4_rcmpeqi %R0<kill>, 0
+	L4_return %R29<imp-def>, %R30<imp-def>, %R31<imp-def>, %PC<imp-def>, %R30<imp-use>, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function autohelperpat1088.
+
+# After Hexagon Copy-To-Combine Pass:
+# Machine code for function autohelperpat1088: Post SSA
+Function Live Ins: %R0, %R1, %R2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R2
+	S2_allocframe 8, %R29<imp-def>, %R30<imp-def>, %R29<imp-use>, %R31<imp-use>, %R30<imp-use>; mem:ST4[<unknown>]
+	%R3<def> = A2_tfr %R0
+	%R4<def> = A2_tfr %R1
+	%D0<def> = A4_combineir 0, %R2
+	%R3<def,tied2> = S4_addi_asl_ri <ga:@transformation>, %R3<kill,tied0>, 2
+	%R2<def> = A2_tfrsi 1
+	%R5<def> = L2_loadri_io %R3, 21856; mem:LD4[%cgep2]
+	%R3<def> = L2_loadri_io %R3<kill>, 23040; mem:LD4[%cgep1]
+	%R5<def> = A2_add %R5<kill>, %R4
+	%R3<def> = A2_add %R3<kill>, %R4<kill>
+	S2_storeri_io %R29, 4, %R5<kill>; mem:ST4[Stack+4]
+	S2_storeri_io %R29, 0, %R3<kill>; mem:ST4[Stack]
+	J2_call <ga:@play_attack_defend_n>, %D0<imp-def,dead>, %D1<imp-def,dead>, %D2<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, %R0<imp-def>, ...
+	%R0<def> = A4_rcmpeqi %R0<kill>, 0
+	L4_return %R29<imp-def>, %R30<imp-def>, %R31<imp-def>, %PC<imp-def>, %R30<imp-use>, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function autohelperpat1088.
+
+# After Hexagon Split Const32s and Const64s:
+# Machine code for function autohelperpat1088: Post SSA
+Function Live Ins: %R0, %R1, %R2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R2
+	S2_allocframe 8, %R29<imp-def>, %R30<imp-def>, %R29<imp-use>, %R31<imp-use>, %R30<imp-use>; mem:ST4[<unknown>]
+	%R3<def> = A2_tfr %R0
+	%R4<def> = A2_tfr %R1
+	%D0<def> = A4_combineir 0, %R2
+	%R3<def,tied2> = S4_addi_asl_ri <ga:@transformation>, %R3<kill,tied0>, 2
+	%R2<def> = A2_tfrsi 1
+	%R5<def> = L2_loadri_io %R3, 21856; mem:LD4[%cgep2]
+	%R3<def> = L2_loadri_io %R3<kill>, 23040; mem:LD4[%cgep1]
+	%R5<def> = A2_add %R5<kill>, %R4
+	%R3<def> = A2_add %R3<kill>, %R4<kill>
+	S2_storeri_io %R29, 4, %R5<kill>; mem:ST4[Stack+4]
+	S2_storeri_io %R29, 0, %R3<kill>; mem:ST4[Stack]
+	J2_call <ga:@play_attack_defend_n>, %D0<imp-def,dead>, %D1<imp-def,dead>, %D2<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, %R0<imp-def>, ...
+	%R0<def> = A4_rcmpeqi %R0<kill>, 0
+	L4_return %R29<imp-def>, %R30<imp-def>, %R31<imp-def>, %PC<imp-def>, %R30<imp-use>, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function autohelperpat1088.
+
+# After Analyze Machine Code For Garbage Collection:
+# Machine code for function autohelperpat1088: Post SSA
+Function Live Ins: %R0, %R1, %R2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R2
+	S2_allocframe 8, %R29<imp-def>, %R30<imp-def>, %R29<imp-use>, %R31<imp-use>, %R30<imp-use>; mem:ST4[<unknown>]
+	%R3<def> = A2_tfr %R0
+	%R4<def> = A2_tfr %R1
+	%D0<def> = A4_combineir 0, %R2
+	%R3<def,tied2> = S4_addi_asl_ri <ga:@transformation>, %R3<kill,tied0>, 2
+	%R2<def> = A2_tfrsi 1
+	%R5<def> = L2_loadri_io %R3, 21856; mem:LD4[%cgep2]
+	%R3<def> = L2_loadri_io %R3<kill>, 23040; mem:LD4[%cgep1]
+	%R5<def> = A2_add %R5<kill>, %R4
+	%R3<def> = A2_add %R3<kill>, %R4<kill>
+	S2_storeri_io %R29, 4, %R5<kill>; mem:ST4[Stack+4]
+	S2_storeri_io %R29, 0, %R3<kill>; mem:ST4[Stack]
+	J2_call <ga:@play_attack_defend_n>, %D0<imp-def,dead>, %D1<imp-def,dead>, %D2<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, %R0<imp-def>, ...
+	%R0<def> = A4_rcmpeqi %R0<kill>, 0
+	L4_return %R29<imp-def>, %R30<imp-def>, %R31<imp-def>, %PC<imp-def>, %R30<imp-use>, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function autohelperpat1088.
+
+# After Hexagon NewValueJump:
+# Machine code for function autohelperpat1088: Post SSA
+Function Live Ins: %R0, %R1, %R2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R2
+	S2_allocframe 8, %R29<imp-def>, %R30<imp-def>, %R29<imp-use>, %R31<imp-use>, %R30<imp-use>; mem:ST4[<unknown>]
+	%R3<def> = A2_tfr %R0
+	%R4<def> = A2_tfr %R1
+	%D0<def> = A4_combineir 0, %R2
+	%R3<def,tied2> = S4_addi_asl_ri <ga:@transformation>, %R3<kill,tied0>, 2
+	%R2<def> = A2_tfrsi 1
+	%R5<def> = L2_loadri_io %R3, 21856; mem:LD4[%cgep2]
+	%R3<def> = L2_loadri_io %R3<kill>, 23040; mem:LD4[%cgep1]
+	%R5<def> = A2_add %R5<kill>, %R4
+	%R3<def> = A2_add %R3<kill>, %R4<kill>
+	S2_storeri_io %R29, 4, %R5<kill>; mem:ST4[Stack+4]
+	S2_storeri_io %R29, 0, %R3<kill>; mem:ST4[Stack]
+	J2_call <ga:@play_attack_defend_n>, %D0<imp-def,dead>, %D1<imp-def,dead>, %D2<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, %R0<imp-def>, ...
+	%R0<def> = A4_rcmpeqi %R0<kill>, 0
+	L4_return %R29<imp-def>, %R30<imp-def>, %R31<imp-def>, %PC<imp-def>, %R30<imp-use>, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function autohelperpat1088.
+
+# After Hexagon Expand Predicate Spill Code:
+# Machine code for function autohelperpat1088: Post SSA
+Function Live Ins: %R0, %R1, %R2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R2
+	S2_allocframe 8, %R29<imp-def>, %R30<imp-def>, %R29<imp-use>, %R31<imp-use>, %R30<imp-use>; mem:ST4[<unknown>]
+	%R3<def> = A2_tfr %R0
+	%R4<def> = A2_tfr %R1
+	%D0<def> = A4_combineir 0, %R2
+	%R3<def,tied2> = S4_addi_asl_ri <ga:@transformation>, %R3<kill,tied0>, 2
+	%R2<def> = A2_tfrsi 1
+	%R5<def> = L2_loadri_io %R3, 21856; mem:LD4[%cgep2]
+	%R3<def> = L2_loadri_io %R3<kill>, 23040; mem:LD4[%cgep1]
+	%R5<def> = A2_add %R5<kill>, %R4
+	%R3<def> = A2_add %R3<kill>, %R4<kill>
+	S2_storeri_io %R29, 4, %R5<kill>; mem:ST4[Stack+4]
+	S2_storeri_io %R29, 0, %R3<kill>; mem:ST4[Stack]
+	J2_call <ga:@play_attack_defend_n>, %D0<imp-def,dead>, %D1<imp-def,dead>, %D2<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, %R0<imp-def>, ...
+	%R0<def> = A4_rcmpeqi %R0<kill>, 0
+	L4_return %R29<imp-def>, %R30<imp-def>, %R31<imp-def>, %PC<imp-def>, %R30<imp-use>, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function autohelperpat1088.
+
+# After Hexagon Hardware Loop Fixup:
+# Machine code for function autohelperpat1088: Post SSA
+Function Live Ins: %R0, %R1, %R2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R2
+	S2_allocframe 8, %R29<imp-def>, %R30<imp-def>, %R29<imp-use>, %R31<imp-use>, %R30<imp-use>; mem:ST4[<unknown>]
+	%R3<def> = A2_tfr %R0
+	%R4<def> = A2_tfr %R1
+	%D0<def> = A4_combineir 0, %R2
+	%R3<def,tied2> = S4_addi_asl_ri <ga:@transformation>, %R3<kill,tied0>, 2
+	%R2<def> = A2_tfrsi 1
+	%R5<def> = L2_loadri_io %R3, 21856; mem:LD4[%cgep2]
+	%R3<def> = L2_loadri_io %R3<kill>, 23040; mem:LD4[%cgep1]
+	%R5<def> = A2_add %R5<kill>, %R4
+	%R3<def> = A2_add %R3<kill>, %R4<kill>
+	S2_storeri_io %R29, 4, %R5<kill>; mem:ST4[Stack+4]
+	S2_storeri_io %R29, 0, %R3<kill>; mem:ST4[Stack]
+	J2_call <ga:@play_attack_defend_n>, %D0<imp-def,dead>, %D1<imp-def,dead>, %D2<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, %R0<imp-def>, ...
+	%R0<def> = A4_rcmpeqi %R0<kill>, 0
+	L4_return %R29<imp-def>, %R30<imp-def>, %R31<imp-def>, %PC<imp-def>, %R30<imp-use>, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function autohelperpat1088.
+
+# After Hexagon generate mux instructions:
+# Machine code for function autohelperpat1088: Post SSA
+Function Live Ins: %R0, %R1, %R2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R2
+	S2_allocframe 8, %R29<imp-def>, %R30<imp-def>, %R29<imp-use>, %R31<imp-use>, %R30<imp-use>; mem:ST4[<unknown>]
+	%R3<def> = A2_tfr %R0
+	%R4<def> = A2_tfr %R1
+	%D0<def> = A4_combineir 0, %R2
+	%R3<def,tied2> = S4_addi_asl_ri <ga:@transformation>, %R3<kill,tied0>, 2
+	%R2<def> = A2_tfrsi 1
+	%R5<def> = L2_loadri_io %R3, 21856; mem:LD4[%cgep2]
+	%R3<def> = L2_loadri_io %R3<kill>, 23040; mem:LD4[%cgep1]
+	%R5<def> = A2_add %R5<kill>, %R4
+	%R3<def> = A2_add %R3<kill>, %R4<kill>
+	S2_storeri_io %R29, 4, %R5<kill>; mem:ST4[Stack+4]
+	S2_storeri_io %R29, 0, %R3<kill>; mem:ST4[Stack]
+	J2_call <ga:@play_attack_defend_n>, %D0<imp-def,dead>, %D1<imp-def,dead>, %D2<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, %R0<imp-def>, ...
+	%R0<def> = A4_rcmpeqi %R0<kill>, 0
+	L4_return %R29<imp-def>, %R30<imp-def>, %R31<imp-def>, %PC<imp-def>, %R30<imp-use>, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function autohelperpat1088.
+
+# After Hexagon Packetizer:
+# Machine code for function autohelperpat1088: Post SSA
+Function Live Ins: %R0, %R1, %R2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R2
+	BUNDLE %R29<imp-def>, %R30<imp-def>, %R3<imp-def>, %R4<imp-def>, %D0<imp-def>, %R0<imp-def>, %R1<imp-def>, %R29<imp-use>, %R31<imp-use>, %R30<imp-use>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>
+	  * S2_allocframe 8, %R29<imp-def>, %R30<imp-def>, %R29<imp-use>, %R31<imp-use>, %R30<imp-use>; mem:ST4[<unknown>]
+	  * %R3<def> = A2_tfr %R0
+	  * %R4<def> = A2_tfr %R1
+	  * %D0<def> = A4_combineir 0, %R2
+	BUNDLE %R3<imp-def>, %R2<imp-def>, %R3<imp-use,kill>
+	  * %R3<def,tied2> = S4_addi_asl_ri <ga:@transformation>, %R3<kill,tied0>, 2
+	  * %R2<def> = A2_tfrsi 1
+	BUNDLE %R5<imp-def>, %R3<imp-def>, %R3<imp-use,kill>
+	  * %R5<def> = L2_loadri_io %R3, 21856; mem:LD4[%cgep2]
+	  * %R3<def> = L2_loadri_io %R3<kill>, 23040; mem:LD4[%cgep1]
+	BUNDLE %R5<imp-def,dead>, %R3<imp-def>, %R5<imp-use,kill>, %R4<imp-use,kill>, %R3<imp-use,kill>, %R29<imp-use>
+	  * %R5<def> = A2_add %R5<kill>, %R4
+	  * %R3<def> = A2_add %R3<kill>, %R4<kill>
+	  * S2_storerinew_io %R29, 4, %R5<kill,internal>; mem:ST4[Stack+4]
+	BUNDLE %D0<imp-def,dead>, %D1<imp-def,dead>, %D2<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-def>, %R29<imp-use>, %R3<imp-use,kill>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, ...
+	  * S2_storeri_io %R29, 0, %R3<kill>; mem:ST4[Stack]
+	  * J2_call <ga:@play_attack_defend_n>, %D0<imp-def,dead>, %D1<imp-def,dead>, %D2<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, %R0<imp-def>, ...
+	BUNDLE %R0<imp-def>, %R29<imp-def>, %R30<imp-def>, %R31<imp-def>, %PC<imp-def>, %R0<imp-use,kill>, %R30<imp-use>
+	  * %R0<def> = A4_rcmpeqi %R0<kill>, 0
+	  * L4_return %R29<imp-def>, %R30<imp-def>, %R31<imp-def>, %PC<imp-def>, %R30<imp-use>, %PC<imp-def,dead>, %R0<imp-use,internal>
+
+# End machine code for function autohelperpat1088.
+
+# After Hexagon call frame information:
+# Machine code for function autohelperpat1088: Post SSA
+Function Live Ins: %R0, %R1, %R2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R2
+	BUNDLE %R29<imp-def>, %R30<imp-def>, %R3<imp-def>, %R4<imp-def>, %D0<imp-def>, %R0<imp-def>, %R1<imp-def>, %R29<imp-use>, %R31<imp-use>, %R30<imp-use>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>
+	  * S2_allocframe 8, %R29<imp-def>, %R30<imp-def>, %R29<imp-use>, %R31<imp-use>, %R30<imp-use>; mem:ST4[<unknown>]
+	  * %R3<def> = A2_tfr %R0
+	  * %R4<def> = A2_tfr %R1
+	  * %D0<def> = A4_combineir 0, %R2
+	BUNDLE %R3<imp-def>, %R2<imp-def>, %R3<imp-use,kill>
+	  * %R3<def,tied2> = S4_addi_asl_ri <ga:@transformation>, %R3<kill,tied0>, 2
+	  * %R2<def> = A2_tfrsi 1
+	BUNDLE %R5<imp-def>, %R3<imp-def>, %R3<imp-use,kill>
+	  * %R5<def> = L2_loadri_io %R3, 21856; mem:LD4[%cgep2]
+	  * %R3<def> = L2_loadri_io %R3<kill>, 23040; mem:LD4[%cgep1]
+	BUNDLE %R5<imp-def,dead>, %R3<imp-def>, %R5<imp-use,kill>, %R4<imp-use,kill>, %R3<imp-use,kill>, %R29<imp-use>
+	  * %R5<def> = A2_add %R5<kill>, %R4
+	  * %R3<def> = A2_add %R3<kill>, %R4<kill>
+	  * S2_storerinew_io %R29, 4, %R5<kill,internal>; mem:ST4[Stack+4]
+	BUNDLE %D0<imp-def,dead>, %D1<imp-def,dead>, %D2<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-def>, %R29<imp-use>, %R3<imp-use,kill>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, ...
+	  * S2_storeri_io %R29, 0, %R3<kill>; mem:ST4[Stack]
+	  * J2_call <ga:@play_attack_defend_n>, %D0<imp-def,dead>, %D1<imp-def,dead>, %D2<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, %R0<imp-def>, ...
+	BUNDLE %R0<imp-def>, %R29<imp-def>, %R30<imp-def>, %R31<imp-def>, %PC<imp-def>, %R0<imp-use,kill>, %R30<imp-use>
+	  * %R0<def> = A4_rcmpeqi %R0<kill>, 0
+	  * L4_return %R29<imp-def>, %R30<imp-def>, %R31<imp-def>, %PC<imp-def>, %R30<imp-use>, %PC<imp-def,dead>, %R0<imp-use,internal>
+
+# End machine code for function autohelperpat1088.
+
+# After Contiguously Lay Out Funclets:
+# Machine code for function autohelperpat1088: Post SSA
+Function Live Ins: %R0, %R1, %R2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R2
+	BUNDLE %R29<imp-def>, %R30<imp-def>, %R3<imp-def>, %R4<imp-def>, %D0<imp-def>, %R0<imp-def>, %R1<imp-def>, %R29<imp-use>, %R31<imp-use>, %R30<imp-use>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>
+	  * S2_allocframe 8, %R29<imp-def>, %R30<imp-def>, %R29<imp-use>, %R31<imp-use>, %R30<imp-use>; mem:ST4[<unknown>]
+	  * %R3<def> = A2_tfr %R0
+	  * %R4<def> = A2_tfr %R1
+	  * %D0<def> = A4_combineir 0, %R2
+	BUNDLE %R3<imp-def>, %R2<imp-def>, %R3<imp-use,kill>
+	  * %R3<def,tied2> = S4_addi_asl_ri <ga:@transformation>, %R3<kill,tied0>, 2
+	  * %R2<def> = A2_tfrsi 1
+	BUNDLE %R5<imp-def>, %R3<imp-def>, %R3<imp-use,kill>
+	  * %R5<def> = L2_loadri_io %R3, 21856; mem:LD4[%cgep2]
+	  * %R3<def> = L2_loadri_io %R3<kill>, 23040; mem:LD4[%cgep1]
+	BUNDLE %R5<imp-def,dead>, %R3<imp-def>, %R5<imp-use,kill>, %R4<imp-use,kill>, %R3<imp-use,kill>, %R29<imp-use>
+	  * %R5<def> = A2_add %R5<kill>, %R4
+	  * %R3<def> = A2_add %R3<kill>, %R4<kill>
+	  * S2_storerinew_io %R29, 4, %R5<kill,internal>; mem:ST4[Stack+4]
+	BUNDLE %D0<imp-def,dead>, %D1<imp-def,dead>, %D2<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-def>, %R29<imp-use>, %R3<imp-use,kill>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, ...
+	  * S2_storeri_io %R29, 0, %R3<kill>; mem:ST4[Stack]
+	  * J2_call <ga:@play_attack_defend_n>, %D0<imp-def,dead>, %D1<imp-def,dead>, %D2<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, %R0<imp-def>, ...
+	BUNDLE %R0<imp-def>, %R29<imp-def>, %R30<imp-def>, %R31<imp-def>, %PC<imp-def>, %R0<imp-use,kill>, %R30<imp-use>
+	  * %R0<def> = A4_rcmpeqi %R0<kill>, 0
+	  * L4_return %R29<imp-def>, %R30<imp-def>, %R31<imp-def>, %PC<imp-def>, %R30<imp-use>, %PC<imp-def,dead>, %R0<imp-use,internal>
+
+# End machine code for function autohelperpat1088.
+
+# After StackMap Liveness Analysis:
+# Machine code for function autohelperpat1088: Post SSA
+Function Live Ins: %R0, %R1, %R2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R2
+	BUNDLE %R29<imp-def>, %R30<imp-def>, %R3<imp-def>, %R4<imp-def>, %D0<imp-def>, %R0<imp-def>, %R1<imp-def>, %R29<imp-use>, %R31<imp-use>, %R30<imp-use>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>
+	  * S2_allocframe 8, %R29<imp-def>, %R30<imp-def>, %R29<imp-use>, %R31<imp-use>, %R30<imp-use>; mem:ST4[<unknown>]
+	  * %R3<def> = A2_tfr %R0
+	  * %R4<def> = A2_tfr %R1
+	  * %D0<def> = A4_combineir 0, %R2
+	BUNDLE %R3<imp-def>, %R2<imp-def>, %R3<imp-use,kill>
+	  * %R3<def,tied2> = S4_addi_asl_ri <ga:@transformation>, %R3<kill,tied0>, 2
+	  * %R2<def> = A2_tfrsi 1
+	BUNDLE %R5<imp-def>, %R3<imp-def>, %R3<imp-use,kill>
+	  * %R5<def> = L2_loadri_io %R3, 21856; mem:LD4[%cgep2]
+	  * %R3<def> = L2_loadri_io %R3<kill>, 23040; mem:LD4[%cgep1]
+	BUNDLE %R5<imp-def,dead>, %R3<imp-def>, %R5<imp-use,kill>, %R4<imp-use,kill>, %R3<imp-use,kill>, %R29<imp-use>
+	  * %R5<def> = A2_add %R5<kill>, %R4
+	  * %R3<def> = A2_add %R3<kill>, %R4<kill>
+	  * S2_storerinew_io %R29, 4, %R5<kill,internal>; mem:ST4[Stack+4]
+	BUNDLE %D0<imp-def,dead>, %D1<imp-def,dead>, %D2<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-def>, %R29<imp-use>, %R3<imp-use,kill>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, ...
+	  * S2_storeri_io %R29, 0, %R3<kill>; mem:ST4[Stack]
+	  * J2_call <ga:@play_attack_defend_n>, %D0<imp-def,dead>, %D1<imp-def,dead>, %D2<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, %R0<imp-def>, ...
+	BUNDLE %R0<imp-def>, %R29<imp-def>, %R30<imp-def>, %R31<imp-def>, %PC<imp-def>, %R0<imp-use,kill>, %R30<imp-use>
+	  * %R0<def> = A4_rcmpeqi %R0<kill>, 0
+	  * L4_return %R29<imp-def>, %R30<imp-def>, %R31<imp-def>, %PC<imp-def>, %R30<imp-use>, %PC<imp-def,dead>, %R0<imp-use,internal>
+
+# End machine code for function autohelperpat1088.
+
+# After Live DEBUG_VALUE analysis:
+# Machine code for function autohelperpat1088: Post SSA
+Function Live Ins: %R0, %R1, %R2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R2
+	BUNDLE %R29<imp-def>, %R30<imp-def>, %R3<imp-def>, %R4<imp-def>, %D0<imp-def>, %R0<imp-def>, %R1<imp-def>, %R29<imp-use>, %R31<imp-use>, %R30<imp-use>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>
+	  * S2_allocframe 8, %R29<imp-def>, %R30<imp-def>, %R29<imp-use>, %R31<imp-use>, %R30<imp-use>; mem:ST4[<unknown>]
+	  * %R3<def> = A2_tfr %R0
+	  * %R4<def> = A2_tfr %R1
+	  * %D0<def> = A4_combineir 0, %R2
+	BUNDLE %R3<imp-def>, %R2<imp-def>, %R3<imp-use,kill>
+	  * %R3<def,tied2> = S4_addi_asl_ri <ga:@transformation>, %R3<kill,tied0>, 2
+	  * %R2<def> = A2_tfrsi 1
+	BUNDLE %R5<imp-def>, %R3<imp-def>, %R3<imp-use,kill>
+	  * %R5<def> = L2_loadri_io %R3, 21856; mem:LD4[%cgep2]
+	  * %R3<def> = L2_loadri_io %R3<kill>, 23040; mem:LD4[%cgep1]
+	BUNDLE %R5<imp-def,dead>, %R3<imp-def>, %R5<imp-use,kill>, %R4<imp-use,kill>, %R3<imp-use,kill>, %R29<imp-use>
+	  * %R5<def> = A2_add %R5<kill>, %R4
+	  * %R3<def> = A2_add %R3<kill>, %R4<kill>
+	  * S2_storerinew_io %R29, 4, %R5<kill,internal>; mem:ST4[Stack+4]
+	BUNDLE %D0<imp-def,dead>, %D1<imp-def,dead>, %D2<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-def>, %R29<imp-use>, %R3<imp-use,kill>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, ...
+	  * S2_storeri_io %R29, 0, %R3<kill>; mem:ST4[Stack]
+	  * J2_call <ga:@play_attack_defend_n>, %D0<imp-def,dead>, %D1<imp-def,dead>, %D2<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, %R0<imp-def>, ...
+	BUNDLE %R0<imp-def>, %R29<imp-def>, %R30<imp-def>, %R31<imp-def>, %PC<imp-def>, %R0<imp-use,kill>, %R30<imp-use>
+	  * %R0<def> = A4_rcmpeqi %R0<kill>, 0
+	  * L4_return %R29<imp-def>, %R30<imp-def>, %R31<imp-def>, %PC<imp-def>, %R30<imp-use>, %PC<imp-def,dead>, %R0<imp-use,internal>
+
+# End machine code for function autohelperpat1088.
+

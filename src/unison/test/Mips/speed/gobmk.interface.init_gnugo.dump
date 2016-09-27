@@ -1,0 +1,1211 @@
+# After Instruction Selection:
+# Machine code for function init_gnugo: SSA
+Function Live Ins: %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %T9 %V0
+	%vreg0<def> = ADDu %V0, %T9; GPR32:%vreg0
+	ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg1<def> = LW %vreg0, <ga:@reading_cache_init>[TF=3]; mem:LD4[GlobalValueCallEntry] GPR32:%vreg1,%vreg0
+	%GP<def> = COPY %vreg0; GPR32:%vreg0
+	JALRPseudo %vreg1<kill>, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %GP<imp-use>, %SP<imp-def>, ...; GPR32:%vreg1
+	ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+	ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg2<def> = LW %vreg0, <ga:@clear_board>[TF=3]; mem:LD4[GlobalValueCallEntry] GPR32:%vreg2,%vreg0
+	%GP<def> = COPY %vreg0; GPR32:%vreg0
+	JALRPseudo %vreg2<kill>, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %GP<imp-use>, %SP<imp-def>, ...; GPR32:%vreg2
+	ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+	ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg3<def> = LW %vreg0, <ga:@transformation_init>[TF=3]; mem:LD4[GlobalValueCallEntry] GPR32:%vreg3,%vreg0
+	%GP<def> = COPY %vreg0; GPR32:%vreg0
+	JALRPseudo %vreg3<kill>, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %GP<imp-use>, %SP<imp-def>, ...; GPR32:%vreg3
+	ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+	ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg4<def> = LW %vreg0, <ga:@dfa_match_init>[TF=3]; mem:LD4[GlobalValueCallEntry] GPR32:%vreg4,%vreg0
+	%GP<def> = COPY %vreg0; GPR32:%vreg0
+	JALRPseudo %vreg4<kill>, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %GP<imp-use>, %SP<imp-def>, ...; GPR32:%vreg4
+	ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+	RetRA
+
+# End machine code for function init_gnugo.
+
+# After Expand ISel Pseudo-instructions:
+# Machine code for function init_gnugo: SSA
+Function Live Ins: %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %T9 %V0
+	%vreg0<def> = ADDu %V0, %T9; GPR32:%vreg0
+	ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg1<def> = LW %vreg0, <ga:@reading_cache_init>[TF=3]; mem:LD4[GlobalValueCallEntry] GPR32:%vreg1,%vreg0
+	%GP<def> = COPY %vreg0; GPR32:%vreg0
+	JALRPseudo %vreg1<kill>, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %GP<imp-use>, %SP<imp-def>, ...; GPR32:%vreg1
+	ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+	ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg2<def> = LW %vreg0, <ga:@clear_board>[TF=3]; mem:LD4[GlobalValueCallEntry] GPR32:%vreg2,%vreg0
+	%GP<def> = COPY %vreg0; GPR32:%vreg0
+	JALRPseudo %vreg2<kill>, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %GP<imp-use>, %SP<imp-def>, ...; GPR32:%vreg2
+	ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+	ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg3<def> = LW %vreg0, <ga:@transformation_init>[TF=3]; mem:LD4[GlobalValueCallEntry] GPR32:%vreg3,%vreg0
+	%GP<def> = COPY %vreg0; GPR32:%vreg0
+	JALRPseudo %vreg3<kill>, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %GP<imp-use>, %SP<imp-def>, ...; GPR32:%vreg3
+	ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+	ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg4<def> = LW %vreg0, <ga:@dfa_match_init>[TF=3]; mem:LD4[GlobalValueCallEntry] GPR32:%vreg4,%vreg0
+	%GP<def> = COPY %vreg0; GPR32:%vreg0
+	JALRPseudo %vreg4<kill>, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %GP<imp-use>, %SP<imp-def>, ...; GPR32:%vreg4
+	ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+	RetRA
+
+# End machine code for function init_gnugo.
+
+# After Mips OptimizePICCall:
+# Machine code for function init_gnugo: SSA
+Function Live Ins: %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %T9 %V0
+	%vreg0<def> = ADDu %V0, %T9; GPR32:%vreg0
+	ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg1<def> = LW %vreg0, <ga:@reading_cache_init>[TF=3]; mem:LD4[GlobalValueCallEntry] GPR32:%vreg1,%vreg0
+	%GP<def> = COPY %vreg0; GPR32:%vreg0
+	%T9<def> = COPY %vreg1; GPR32:%vreg1
+	JALRPseudo %T9<kill>, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %GP<imp-use>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+	ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg2<def> = LW %vreg0, <ga:@clear_board>[TF=3]; mem:LD4[GlobalValueCallEntry] GPR32:%vreg2,%vreg0
+	%GP<def> = COPY %vreg0; GPR32:%vreg0
+	%T9<def> = COPY %vreg2; GPR32:%vreg2
+	JALRPseudo %T9<kill>, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %GP<imp-use>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+	ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg3<def> = LW %vreg0, <ga:@transformation_init>[TF=3]; mem:LD4[GlobalValueCallEntry] GPR32:%vreg3,%vreg0
+	%GP<def> = COPY %vreg0; GPR32:%vreg0
+	%T9<def> = COPY %vreg3; GPR32:%vreg3
+	JALRPseudo %T9<kill>, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %GP<imp-use>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+	ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg4<def> = LW %vreg0, <ga:@dfa_match_init>[TF=3]; mem:LD4[GlobalValueCallEntry] GPR32:%vreg4,%vreg0
+	%GP<def> = COPY %vreg0; GPR32:%vreg0
+	%T9<def> = COPY %vreg4; GPR32:%vreg4
+	JALRPseudo %T9<kill>, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %GP<imp-use>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+	RetRA
+
+# End machine code for function init_gnugo.
+
+# After Tail Duplication:
+# Machine code for function init_gnugo: SSA
+Function Live Ins: %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %T9 %V0
+	%vreg0<def> = ADDu %V0, %T9; GPR32:%vreg0
+	ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg1<def> = LW %vreg0, <ga:@reading_cache_init>[TF=3]; mem:LD4[GlobalValueCallEntry] GPR32:%vreg1,%vreg0
+	%GP<def> = COPY %vreg0; GPR32:%vreg0
+	%T9<def> = COPY %vreg1; GPR32:%vreg1
+	JALRPseudo %T9<kill>, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %GP<imp-use>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+	ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg2<def> = LW %vreg0, <ga:@clear_board>[TF=3]; mem:LD4[GlobalValueCallEntry] GPR32:%vreg2,%vreg0
+	%GP<def> = COPY %vreg0; GPR32:%vreg0
+	%T9<def> = COPY %vreg2; GPR32:%vreg2
+	JALRPseudo %T9<kill>, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %GP<imp-use>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+	ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg3<def> = LW %vreg0, <ga:@transformation_init>[TF=3]; mem:LD4[GlobalValueCallEntry] GPR32:%vreg3,%vreg0
+	%GP<def> = COPY %vreg0; GPR32:%vreg0
+	%T9<def> = COPY %vreg3; GPR32:%vreg3
+	JALRPseudo %T9<kill>, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %GP<imp-use>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+	ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg4<def> = LW %vreg0, <ga:@dfa_match_init>[TF=3]; mem:LD4[GlobalValueCallEntry] GPR32:%vreg4,%vreg0
+	%GP<def> = COPY %vreg0; GPR32:%vreg0
+	%T9<def> = COPY %vreg4; GPR32:%vreg4
+	JALRPseudo %T9<kill>, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %GP<imp-use>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+	RetRA
+
+# End machine code for function init_gnugo.
+
+# After Optimize machine instruction PHIs:
+# Machine code for function init_gnugo: SSA
+Function Live Ins: %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %T9 %V0
+	%vreg0<def> = ADDu %V0, %T9; GPR32:%vreg0
+	ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg1<def> = LW %vreg0, <ga:@reading_cache_init>[TF=3]; mem:LD4[GlobalValueCallEntry] GPR32:%vreg1,%vreg0
+	%GP<def> = COPY %vreg0; GPR32:%vreg0
+	%T9<def> = COPY %vreg1; GPR32:%vreg1
+	JALRPseudo %T9<kill>, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %GP<imp-use>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+	ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg2<def> = LW %vreg0, <ga:@clear_board>[TF=3]; mem:LD4[GlobalValueCallEntry] GPR32:%vreg2,%vreg0
+	%GP<def> = COPY %vreg0; GPR32:%vreg0
+	%T9<def> = COPY %vreg2; GPR32:%vreg2
+	JALRPseudo %T9<kill>, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %GP<imp-use>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+	ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg3<def> = LW %vreg0, <ga:@transformation_init>[TF=3]; mem:LD4[GlobalValueCallEntry] GPR32:%vreg3,%vreg0
+	%GP<def> = COPY %vreg0; GPR32:%vreg0
+	%T9<def> = COPY %vreg3; GPR32:%vreg3
+	JALRPseudo %T9<kill>, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %GP<imp-use>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+	ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg4<def> = LW %vreg0, <ga:@dfa_match_init>[TF=3]; mem:LD4[GlobalValueCallEntry] GPR32:%vreg4,%vreg0
+	%GP<def> = COPY %vreg0; GPR32:%vreg0
+	%T9<def> = COPY %vreg4; GPR32:%vreg4
+	JALRPseudo %T9<kill>, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %GP<imp-use>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+	RetRA
+
+# End machine code for function init_gnugo.
+
+# After Merge disjoint stack slots:
+# Machine code for function init_gnugo: SSA
+Function Live Ins: %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %T9 %V0
+	%vreg0<def> = ADDu %V0, %T9; GPR32:%vreg0
+	ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg1<def> = LW %vreg0, <ga:@reading_cache_init>[TF=3]; mem:LD4[GlobalValueCallEntry] GPR32:%vreg1,%vreg0
+	%GP<def> = COPY %vreg0; GPR32:%vreg0
+	%T9<def> = COPY %vreg1; GPR32:%vreg1
+	JALRPseudo %T9<kill>, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %GP<imp-use>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+	ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg2<def> = LW %vreg0, <ga:@clear_board>[TF=3]; mem:LD4[GlobalValueCallEntry] GPR32:%vreg2,%vreg0
+	%GP<def> = COPY %vreg0; GPR32:%vreg0
+	%T9<def> = COPY %vreg2; GPR32:%vreg2
+	JALRPseudo %T9<kill>, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %GP<imp-use>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+	ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg3<def> = LW %vreg0, <ga:@transformation_init>[TF=3]; mem:LD4[GlobalValueCallEntry] GPR32:%vreg3,%vreg0
+	%GP<def> = COPY %vreg0; GPR32:%vreg0
+	%T9<def> = COPY %vreg3; GPR32:%vreg3
+	JALRPseudo %T9<kill>, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %GP<imp-use>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+	ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg4<def> = LW %vreg0, <ga:@dfa_match_init>[TF=3]; mem:LD4[GlobalValueCallEntry] GPR32:%vreg4,%vreg0
+	%GP<def> = COPY %vreg0; GPR32:%vreg0
+	%T9<def> = COPY %vreg4; GPR32:%vreg4
+	JALRPseudo %T9<kill>, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %GP<imp-use>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+	RetRA
+
+# End machine code for function init_gnugo.
+
+# After Local Stack Slot Allocation:
+# Machine code for function init_gnugo: SSA
+Function Live Ins: %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %T9 %V0
+	%vreg0<def> = ADDu %V0, %T9; GPR32:%vreg0
+	ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg1<def> = LW %vreg0, <ga:@reading_cache_init>[TF=3]; mem:LD4[GlobalValueCallEntry] GPR32:%vreg1,%vreg0
+	%GP<def> = COPY %vreg0; GPR32:%vreg0
+	%T9<def> = COPY %vreg1; GPR32:%vreg1
+	JALRPseudo %T9<kill>, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %GP<imp-use>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+	ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg2<def> = LW %vreg0, <ga:@clear_board>[TF=3]; mem:LD4[GlobalValueCallEntry] GPR32:%vreg2,%vreg0
+	%GP<def> = COPY %vreg0; GPR32:%vreg0
+	%T9<def> = COPY %vreg2; GPR32:%vreg2
+	JALRPseudo %T9<kill>, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %GP<imp-use>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+	ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg3<def> = LW %vreg0, <ga:@transformation_init>[TF=3]; mem:LD4[GlobalValueCallEntry] GPR32:%vreg3,%vreg0
+	%GP<def> = COPY %vreg0; GPR32:%vreg0
+	%T9<def> = COPY %vreg3; GPR32:%vreg3
+	JALRPseudo %T9<kill>, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %GP<imp-use>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+	ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg4<def> = LW %vreg0, <ga:@dfa_match_init>[TF=3]; mem:LD4[GlobalValueCallEntry] GPR32:%vreg4,%vreg0
+	%GP<def> = COPY %vreg0; GPR32:%vreg0
+	%T9<def> = COPY %vreg4; GPR32:%vreg4
+	JALRPseudo %T9<kill>, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %GP<imp-use>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+	RetRA
+
+# End machine code for function init_gnugo.
+
+# After Remove dead machine instructions:
+# Machine code for function init_gnugo: SSA
+Function Live Ins: %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %T9 %V0
+	%vreg0<def> = ADDu %V0, %T9; GPR32:%vreg0
+	ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg1<def> = LW %vreg0, <ga:@reading_cache_init>[TF=3]; mem:LD4[GlobalValueCallEntry] GPR32:%vreg1,%vreg0
+	%GP<def> = COPY %vreg0; GPR32:%vreg0
+	%T9<def> = COPY %vreg1; GPR32:%vreg1
+	JALRPseudo %T9<kill>, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %GP<imp-use>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+	ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg2<def> = LW %vreg0, <ga:@clear_board>[TF=3]; mem:LD4[GlobalValueCallEntry] GPR32:%vreg2,%vreg0
+	%GP<def> = COPY %vreg0; GPR32:%vreg0
+	%T9<def> = COPY %vreg2; GPR32:%vreg2
+	JALRPseudo %T9<kill>, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %GP<imp-use>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+	ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg3<def> = LW %vreg0, <ga:@transformation_init>[TF=3]; mem:LD4[GlobalValueCallEntry] GPR32:%vreg3,%vreg0
+	%GP<def> = COPY %vreg0; GPR32:%vreg0
+	%T9<def> = COPY %vreg3; GPR32:%vreg3
+	JALRPseudo %T9<kill>, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %GP<imp-use>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+	ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg4<def> = LW %vreg0, <ga:@dfa_match_init>[TF=3]; mem:LD4[GlobalValueCallEntry] GPR32:%vreg4,%vreg0
+	%GP<def> = COPY %vreg0; GPR32:%vreg0
+	%T9<def> = COPY %vreg4; GPR32:%vreg4
+	JALRPseudo %T9<kill>, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %GP<imp-use>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+	RetRA
+
+# End machine code for function init_gnugo.
+
+# After Machine Loop Invariant Code Motion:
+# Machine code for function init_gnugo: SSA
+Function Live Ins: %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %T9 %V0
+	%vreg0<def> = ADDu %V0, %T9; GPR32:%vreg0
+	ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg1<def> = LW %vreg0, <ga:@reading_cache_init>[TF=3]; mem:LD4[GlobalValueCallEntry] GPR32:%vreg1,%vreg0
+	%GP<def> = COPY %vreg0; GPR32:%vreg0
+	%T9<def> = COPY %vreg1; GPR32:%vreg1
+	JALRPseudo %T9<kill>, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %GP<imp-use>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+	ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg2<def> = LW %vreg0, <ga:@clear_board>[TF=3]; mem:LD4[GlobalValueCallEntry] GPR32:%vreg2,%vreg0
+	%GP<def> = COPY %vreg0; GPR32:%vreg0
+	%T9<def> = COPY %vreg2; GPR32:%vreg2
+	JALRPseudo %T9<kill>, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %GP<imp-use>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+	ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg3<def> = LW %vreg0, <ga:@transformation_init>[TF=3]; mem:LD4[GlobalValueCallEntry] GPR32:%vreg3,%vreg0
+	%GP<def> = COPY %vreg0; GPR32:%vreg0
+	%T9<def> = COPY %vreg3; GPR32:%vreg3
+	JALRPseudo %T9<kill>, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %GP<imp-use>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+	ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg4<def> = LW %vreg0, <ga:@dfa_match_init>[TF=3]; mem:LD4[GlobalValueCallEntry] GPR32:%vreg4,%vreg0
+	%GP<def> = COPY %vreg0; GPR32:%vreg0
+	%T9<def> = COPY %vreg4; GPR32:%vreg4
+	JALRPseudo %T9<kill>, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %GP<imp-use>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+	RetRA
+
+# End machine code for function init_gnugo.
+
+# After Machine Common Subexpression Elimination:
+# Machine code for function init_gnugo: SSA
+Function Live Ins: %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %T9 %V0
+	%vreg0<def> = ADDu %V0, %T9; GPR32:%vreg0
+	ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg1<def> = LW %vreg0, <ga:@reading_cache_init>[TF=3]; mem:LD4[GlobalValueCallEntry] GPR32:%vreg1,%vreg0
+	%GP<def> = COPY %vreg0; GPR32:%vreg0
+	%T9<def> = COPY %vreg1; GPR32:%vreg1
+	JALRPseudo %T9<kill>, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %GP<imp-use>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+	ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg2<def> = LW %vreg0, <ga:@clear_board>[TF=3]; mem:LD4[GlobalValueCallEntry] GPR32:%vreg2,%vreg0
+	%GP<def> = COPY %vreg0; GPR32:%vreg0
+	%T9<def> = COPY %vreg2; GPR32:%vreg2
+	JALRPseudo %T9<kill>, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %GP<imp-use>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+	ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg3<def> = LW %vreg0, <ga:@transformation_init>[TF=3]; mem:LD4[GlobalValueCallEntry] GPR32:%vreg3,%vreg0
+	%GP<def> = COPY %vreg0; GPR32:%vreg0
+	%T9<def> = COPY %vreg3; GPR32:%vreg3
+	JALRPseudo %T9<kill>, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %GP<imp-use>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+	ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg4<def> = LW %vreg0, <ga:@dfa_match_init>[TF=3]; mem:LD4[GlobalValueCallEntry] GPR32:%vreg4,%vreg0
+	%GP<def> = COPY %vreg0; GPR32:%vreg0
+	%T9<def> = COPY %vreg4; GPR32:%vreg4
+	JALRPseudo %T9<kill>, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %GP<imp-use>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+	RetRA
+
+# End machine code for function init_gnugo.
+
+# After Machine code sinking:
+# Machine code for function init_gnugo: SSA
+Function Live Ins: %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %T9 %V0
+	%vreg0<def> = ADDu %V0, %T9; GPR32:%vreg0
+	ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg1<def> = LW %vreg0, <ga:@reading_cache_init>[TF=3]; mem:LD4[GlobalValueCallEntry] GPR32:%vreg1,%vreg0
+	%GP<def> = COPY %vreg0; GPR32:%vreg0
+	%T9<def> = COPY %vreg1; GPR32:%vreg1
+	JALRPseudo %T9<kill>, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %GP<imp-use>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+	ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg2<def> = LW %vreg0, <ga:@clear_board>[TF=3]; mem:LD4[GlobalValueCallEntry] GPR32:%vreg2,%vreg0
+	%GP<def> = COPY %vreg0; GPR32:%vreg0
+	%T9<def> = COPY %vreg2; GPR32:%vreg2
+	JALRPseudo %T9<kill>, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %GP<imp-use>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+	ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg3<def> = LW %vreg0, <ga:@transformation_init>[TF=3]; mem:LD4[GlobalValueCallEntry] GPR32:%vreg3,%vreg0
+	%GP<def> = COPY %vreg0; GPR32:%vreg0
+	%T9<def> = COPY %vreg3; GPR32:%vreg3
+	JALRPseudo %T9<kill>, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %GP<imp-use>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+	ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg4<def> = LW %vreg0, <ga:@dfa_match_init>[TF=3]; mem:LD4[GlobalValueCallEntry] GPR32:%vreg4,%vreg0
+	%GP<def> = COPY %vreg0; GPR32:%vreg0
+	%T9<def> = COPY %vreg4; GPR32:%vreg4
+	JALRPseudo %T9<kill>, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %GP<imp-use>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+	RetRA
+
+# End machine code for function init_gnugo.
+
+# After Peephole Optimizations:
+# Machine code for function init_gnugo: SSA
+Function Live Ins: %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %T9 %V0
+	%vreg0<def> = ADDu %V0, %T9; GPR32:%vreg0
+	ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg1<def> = LW %vreg0, <ga:@reading_cache_init>[TF=3]; mem:LD4[GlobalValueCallEntry] GPR32:%vreg1,%vreg0
+	%GP<def> = COPY %vreg0; GPR32:%vreg0
+	%T9<def> = COPY %vreg1; GPR32:%vreg1
+	JALRPseudo %T9<kill>, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %GP<imp-use>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+	ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg2<def> = LW %vreg0, <ga:@clear_board>[TF=3]; mem:LD4[GlobalValueCallEntry] GPR32:%vreg2,%vreg0
+	%GP<def> = COPY %vreg0; GPR32:%vreg0
+	%T9<def> = COPY %vreg2; GPR32:%vreg2
+	JALRPseudo %T9<kill>, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %GP<imp-use>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+	ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg3<def> = LW %vreg0, <ga:@transformation_init>[TF=3]; mem:LD4[GlobalValueCallEntry] GPR32:%vreg3,%vreg0
+	%GP<def> = COPY %vreg0; GPR32:%vreg0
+	%T9<def> = COPY %vreg3; GPR32:%vreg3
+	JALRPseudo %T9<kill>, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %GP<imp-use>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+	ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg4<def> = LW %vreg0, <ga:@dfa_match_init>[TF=3]; mem:LD4[GlobalValueCallEntry] GPR32:%vreg4,%vreg0
+	%GP<def> = COPY %vreg0; GPR32:%vreg0
+	%T9<def> = COPY %vreg4; GPR32:%vreg4
+	JALRPseudo %T9<kill>, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %GP<imp-use>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+	RetRA
+
+# End machine code for function init_gnugo.
+
+# After Remove dead machine instructions:
+# Machine code for function init_gnugo: SSA
+Function Live Ins: %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %T9 %V0
+	%vreg0<def> = ADDu %V0, %T9; GPR32:%vreg0
+	ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg1<def> = LW %vreg0, <ga:@reading_cache_init>[TF=3]; mem:LD4[GlobalValueCallEntry] GPR32:%vreg1,%vreg0
+	%GP<def> = COPY %vreg0; GPR32:%vreg0
+	%T9<def> = COPY %vreg1; GPR32:%vreg1
+	JALRPseudo %T9<kill>, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %GP<imp-use>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+	ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg2<def> = LW %vreg0, <ga:@clear_board>[TF=3]; mem:LD4[GlobalValueCallEntry] GPR32:%vreg2,%vreg0
+	%GP<def> = COPY %vreg0; GPR32:%vreg0
+	%T9<def> = COPY %vreg2; GPR32:%vreg2
+	JALRPseudo %T9<kill>, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %GP<imp-use>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+	ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg3<def> = LW %vreg0, <ga:@transformation_init>[TF=3]; mem:LD4[GlobalValueCallEntry] GPR32:%vreg3,%vreg0
+	%GP<def> = COPY %vreg0; GPR32:%vreg0
+	%T9<def> = COPY %vreg3; GPR32:%vreg3
+	JALRPseudo %T9<kill>, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %GP<imp-use>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+	ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg4<def> = LW %vreg0, <ga:@dfa_match_init>[TF=3]; mem:LD4[GlobalValueCallEntry] GPR32:%vreg4,%vreg0
+	%GP<def> = COPY %vreg0; GPR32:%vreg0
+	%T9<def> = COPY %vreg4; GPR32:%vreg4
+	JALRPseudo %T9<kill>, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %GP<imp-use>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+	RetRA
+
+# End machine code for function init_gnugo.
+
+# After Process Implicit Definitions:
+# Machine code for function init_gnugo: SSA
+Function Live Ins: %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %T9 %V0
+	%vreg0<def> = ADDu %V0, %T9; GPR32:%vreg0
+	ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg1<def> = LW %vreg0, <ga:@reading_cache_init>[TF=3]; mem:LD4[GlobalValueCallEntry] GPR32:%vreg1,%vreg0
+	%GP<def> = COPY %vreg0; GPR32:%vreg0
+	%T9<def> = COPY %vreg1; GPR32:%vreg1
+	JALRPseudo %T9<kill>, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %GP<imp-use>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+	ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg2<def> = LW %vreg0, <ga:@clear_board>[TF=3]; mem:LD4[GlobalValueCallEntry] GPR32:%vreg2,%vreg0
+	%GP<def> = COPY %vreg0; GPR32:%vreg0
+	%T9<def> = COPY %vreg2; GPR32:%vreg2
+	JALRPseudo %T9<kill>, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %GP<imp-use>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+	ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg3<def> = LW %vreg0, <ga:@transformation_init>[TF=3]; mem:LD4[GlobalValueCallEntry] GPR32:%vreg3,%vreg0
+	%GP<def> = COPY %vreg0; GPR32:%vreg0
+	%T9<def> = COPY %vreg3; GPR32:%vreg3
+	JALRPseudo %T9<kill>, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %GP<imp-use>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+	ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg4<def> = LW %vreg0, <ga:@dfa_match_init>[TF=3]; mem:LD4[GlobalValueCallEntry] GPR32:%vreg4,%vreg0
+	%GP<def> = COPY %vreg0; GPR32:%vreg0
+	%T9<def> = COPY %vreg4; GPR32:%vreg4
+	JALRPseudo %T9<kill>, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %GP<imp-use>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+	RetRA
+
+# End machine code for function init_gnugo.
+
+# After Live Variable Analysis:
+# Machine code for function init_gnugo: SSA
+Function Live Ins: %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %T9 %V0
+	%vreg0<def> = ADDu %V0<kill>, %T9<kill>; GPR32:%vreg0
+	ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg1<def> = LW %vreg0, <ga:@reading_cache_init>[TF=3]; mem:LD4[GlobalValueCallEntry] GPR32:%vreg1,%vreg0
+	%GP<def> = COPY %vreg0; GPR32:%vreg0
+	%T9<def> = COPY %vreg1<kill>; GPR32:%vreg1
+	JALRPseudo %T9<kill>, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %GP<imp-use,kill>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+	ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg2<def> = LW %vreg0, <ga:@clear_board>[TF=3]; mem:LD4[GlobalValueCallEntry] GPR32:%vreg2,%vreg0
+	%GP<def> = COPY %vreg0; GPR32:%vreg0
+	%T9<def> = COPY %vreg2<kill>; GPR32:%vreg2
+	JALRPseudo %T9<kill>, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %GP<imp-use,kill>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+	ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg3<def> = LW %vreg0, <ga:@transformation_init>[TF=3]; mem:LD4[GlobalValueCallEntry] GPR32:%vreg3,%vreg0
+	%GP<def> = COPY %vreg0; GPR32:%vreg0
+	%T9<def> = COPY %vreg3<kill>; GPR32:%vreg3
+	JALRPseudo %T9<kill>, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %GP<imp-use,kill>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+	ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg4<def> = LW %vreg0, <ga:@dfa_match_init>[TF=3]; mem:LD4[GlobalValueCallEntry] GPR32:%vreg4,%vreg0
+	%GP<def> = COPY %vreg0<kill>; GPR32:%vreg0
+	%T9<def> = COPY %vreg4<kill>; GPR32:%vreg4
+	JALRPseudo %T9<kill>, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %GP<imp-use,kill>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+	RetRA
+
+# End machine code for function init_gnugo.
+
+# After Machine Natural Loop Construction:
+# Machine code for function init_gnugo: SSA
+Function Live Ins: %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %T9 %V0
+	%vreg0<def> = ADDu %V0<kill>, %T9<kill>; GPR32:%vreg0
+	ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg1<def> = LW %vreg0, <ga:@reading_cache_init>[TF=3]; mem:LD4[GlobalValueCallEntry] GPR32:%vreg1,%vreg0
+	%GP<def> = COPY %vreg0; GPR32:%vreg0
+	%T9<def> = COPY %vreg1<kill>; GPR32:%vreg1
+	JALRPseudo %T9<kill>, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %GP<imp-use,kill>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+	ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg2<def> = LW %vreg0, <ga:@clear_board>[TF=3]; mem:LD4[GlobalValueCallEntry] GPR32:%vreg2,%vreg0
+	%GP<def> = COPY %vreg0; GPR32:%vreg0
+	%T9<def> = COPY %vreg2<kill>; GPR32:%vreg2
+	JALRPseudo %T9<kill>, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %GP<imp-use,kill>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+	ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg3<def> = LW %vreg0, <ga:@transformation_init>[TF=3]; mem:LD4[GlobalValueCallEntry] GPR32:%vreg3,%vreg0
+	%GP<def> = COPY %vreg0; GPR32:%vreg0
+	%T9<def> = COPY %vreg3<kill>; GPR32:%vreg3
+	JALRPseudo %T9<kill>, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %GP<imp-use,kill>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+	ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg4<def> = LW %vreg0, <ga:@dfa_match_init>[TF=3]; mem:LD4[GlobalValueCallEntry] GPR32:%vreg4,%vreg0
+	%GP<def> = COPY %vreg0<kill>; GPR32:%vreg0
+	%T9<def> = COPY %vreg4<kill>; GPR32:%vreg4
+	JALRPseudo %T9<kill>, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %GP<imp-use,kill>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+	RetRA
+
+# End machine code for function init_gnugo.
+
+# After Eliminate PHI nodes for register allocation:
+# Machine code for function init_gnugo: Post SSA
+Function Live Ins: %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %T9 %V0
+	%vreg0<def> = ADDu %V0<kill>, %T9<kill>; GPR32:%vreg0
+	ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg1<def> = LW %vreg0, <ga:@reading_cache_init>[TF=3]; mem:LD4[GlobalValueCallEntry] GPR32:%vreg1,%vreg0
+	%GP<def> = COPY %vreg0; GPR32:%vreg0
+	%T9<def> = COPY %vreg1<kill>; GPR32:%vreg1
+	JALRPseudo %T9<kill>, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %GP<imp-use,kill>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+	ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg2<def> = LW %vreg0, <ga:@clear_board>[TF=3]; mem:LD4[GlobalValueCallEntry] GPR32:%vreg2,%vreg0
+	%GP<def> = COPY %vreg0; GPR32:%vreg0
+	%T9<def> = COPY %vreg2<kill>; GPR32:%vreg2
+	JALRPseudo %T9<kill>, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %GP<imp-use,kill>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+	ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg3<def> = LW %vreg0, <ga:@transformation_init>[TF=3]; mem:LD4[GlobalValueCallEntry] GPR32:%vreg3,%vreg0
+	%GP<def> = COPY %vreg0; GPR32:%vreg0
+	%T9<def> = COPY %vreg3<kill>; GPR32:%vreg3
+	JALRPseudo %T9<kill>, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %GP<imp-use,kill>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+	ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg4<def> = LW %vreg0, <ga:@dfa_match_init>[TF=3]; mem:LD4[GlobalValueCallEntry] GPR32:%vreg4,%vreg0
+	%GP<def> = COPY %vreg0<kill>; GPR32:%vreg0
+	%T9<def> = COPY %vreg4<kill>; GPR32:%vreg4
+	JALRPseudo %T9<kill>, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %GP<imp-use,kill>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+	RetRA
+
+# End machine code for function init_gnugo.
+
+# After Two-Address instruction pass:
+# Machine code for function init_gnugo: Post SSA
+Function Live Ins: %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %T9 %V0
+	%vreg0<def> = ADDu %V0<kill>, %T9<kill>; GPR32:%vreg0
+	ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg1<def> = LW %vreg0, <ga:@reading_cache_init>[TF=3]; mem:LD4[GlobalValueCallEntry] GPR32:%vreg1,%vreg0
+	%GP<def> = COPY %vreg0; GPR32:%vreg0
+	%T9<def> = COPY %vreg1<kill>; GPR32:%vreg1
+	JALRPseudo %T9<kill>, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %GP<imp-use,kill>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+	ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg2<def> = LW %vreg0, <ga:@clear_board>[TF=3]; mem:LD4[GlobalValueCallEntry] GPR32:%vreg2,%vreg0
+	%GP<def> = COPY %vreg0; GPR32:%vreg0
+	%T9<def> = COPY %vreg2<kill>; GPR32:%vreg2
+	JALRPseudo %T9<kill>, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %GP<imp-use,kill>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+	ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg3<def> = LW %vreg0, <ga:@transformation_init>[TF=3]; mem:LD4[GlobalValueCallEntry] GPR32:%vreg3,%vreg0
+	%GP<def> = COPY %vreg0; GPR32:%vreg0
+	%T9<def> = COPY %vreg3<kill>; GPR32:%vreg3
+	JALRPseudo %T9<kill>, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %GP<imp-use,kill>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+	ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg4<def> = LW %vreg0, <ga:@dfa_match_init>[TF=3]; mem:LD4[GlobalValueCallEntry] GPR32:%vreg4,%vreg0
+	%GP<def> = COPY %vreg0<kill>; GPR32:%vreg0
+	%T9<def> = COPY %vreg4<kill>; GPR32:%vreg4
+	JALRPseudo %T9<kill>, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %GP<imp-use,kill>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+	RetRA
+
+# End machine code for function init_gnugo.
+
+# After Simple Register Coalescing:
+# Machine code for function init_gnugo: Post SSA
+Function Live Ins: %T9, %V0
+
+0B	BB#0: derived from LLVM BB %0
+	    Live Ins: %T9 %V0
+16B		%vreg0<def> = ADDu %V0, %T9; GPR32:%vreg0
+32B		ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+48B		%vreg1<def> = LW %vreg0, <ga:@reading_cache_init>[TF=3]; mem:LD4[GlobalValueCallEntry] GPR32:%vreg1,%vreg0
+64B		%GP<def> = COPY %vreg0; GPR32:%vreg0
+80B		%T9<def> = COPY %vreg1; GPR32:%vreg1
+96B		JALRPseudo %T9, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %GP<imp-use,kill>, %SP<imp-def>, ...
+112B		ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+128B		ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+144B		%vreg2<def> = LW %vreg0, <ga:@clear_board>[TF=3]; mem:LD4[GlobalValueCallEntry] GPR32:%vreg2,%vreg0
+160B		%GP<def> = COPY %vreg0; GPR32:%vreg0
+176B		%T9<def> = COPY %vreg2; GPR32:%vreg2
+192B		JALRPseudo %T9, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %GP<imp-use,kill>, %SP<imp-def>, ...
+208B		ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+224B		ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+240B		%vreg3<def> = LW %vreg0, <ga:@transformation_init>[TF=3]; mem:LD4[GlobalValueCallEntry] GPR32:%vreg3,%vreg0
+256B		%GP<def> = COPY %vreg0; GPR32:%vreg0
+272B		%T9<def> = COPY %vreg3; GPR32:%vreg3
+288B		JALRPseudo %T9, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %GP<imp-use,kill>, %SP<imp-def>, ...
+304B		ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+320B		ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+336B		%vreg4<def> = LW %vreg0, <ga:@dfa_match_init>[TF=3]; mem:LD4[GlobalValueCallEntry] GPR32:%vreg4,%vreg0
+352B		%GP<def> = COPY %vreg0; GPR32:%vreg0
+368B		%T9<def> = COPY %vreg4; GPR32:%vreg4
+384B		JALRPseudo %T9, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %GP<imp-use,kill>, %SP<imp-def>, ...
+400B		ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+416B		RetRA
+
+# End machine code for function init_gnugo.
+
+# After Machine Instruction Scheduler:
+# Machine code for function init_gnugo: Post SSA
+Function Live Ins: %T9, %V0
+
+0B	BB#0: derived from LLVM BB %0
+	    Live Ins: %T9 %V0
+16B		%vreg0<def> = ADDu %V0, %T9; GPR32:%vreg0
+32B		ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+48B		%vreg1<def> = LW %vreg0, <ga:@reading_cache_init>[TF=3]; mem:LD4[GlobalValueCallEntry] GPR32:%vreg1,%vreg0
+64B		%GP<def> = COPY %vreg0; GPR32:%vreg0
+80B		%T9<def> = COPY %vreg1; GPR32:%vreg1
+96B		JALRPseudo %T9, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %GP<imp-use,kill>, %SP<imp-def>, ...
+112B		ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+128B		ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+144B		%vreg2<def> = LW %vreg0, <ga:@clear_board>[TF=3]; mem:LD4[GlobalValueCallEntry] GPR32:%vreg2,%vreg0
+160B		%GP<def> = COPY %vreg0; GPR32:%vreg0
+176B		%T9<def> = COPY %vreg2; GPR32:%vreg2
+192B		JALRPseudo %T9, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %GP<imp-use,kill>, %SP<imp-def>, ...
+208B		ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+224B		ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+240B		%vreg3<def> = LW %vreg0, <ga:@transformation_init>[TF=3]; mem:LD4[GlobalValueCallEntry] GPR32:%vreg3,%vreg0
+256B		%GP<def> = COPY %vreg0; GPR32:%vreg0
+272B		%T9<def> = COPY %vreg3; GPR32:%vreg3
+288B		JALRPseudo %T9, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %GP<imp-use,kill>, %SP<imp-def>, ...
+304B		ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+320B		ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+336B		%vreg4<def> = LW %vreg0, <ga:@dfa_match_init>[TF=3]; mem:LD4[GlobalValueCallEntry] GPR32:%vreg4,%vreg0
+352B		%GP<def> = COPY %vreg0; GPR32:%vreg0
+368B		%T9<def> = COPY %vreg4; GPR32:%vreg4
+384B		JALRPseudo %T9, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %GP<imp-use,kill>, %SP<imp-def>, ...
+400B		ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+416B		RetRA
+
+# End machine code for function init_gnugo.
+
+# After Greedy Register Allocator:
+# Machine code for function init_gnugo: Post SSA
+Function Live Ins: %T9, %V0
+
+0B	BB#0: derived from LLVM BB %0
+	    Live Ins: %T9 %V0
+16B		%vreg0<def> = ADDu %V0, %T9; GPR32:%vreg0
+32B		ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+48B		%vreg1<def> = LW %vreg0, <ga:@reading_cache_init>[TF=3]; mem:LD4[GlobalValueCallEntry] GPR32:%vreg1,%vreg0
+64B		%GP<def> = COPY %vreg0; GPR32:%vreg0
+80B		%T9<def> = COPY %vreg1; GPR32:%vreg1
+96B		JALRPseudo %T9, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %GP<imp-use,kill>, %SP<imp-def>, ...
+112B		ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+128B		ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+144B		%vreg2<def> = LW %vreg0, <ga:@clear_board>[TF=3]; mem:LD4[GlobalValueCallEntry] GPR32:%vreg2,%vreg0
+160B		%GP<def> = COPY %vreg0; GPR32:%vreg0
+176B		%T9<def> = COPY %vreg2; GPR32:%vreg2
+192B		JALRPseudo %T9, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %GP<imp-use,kill>, %SP<imp-def>, ...
+208B		ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+224B		ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+240B		%vreg3<def> = LW %vreg0, <ga:@transformation_init>[TF=3]; mem:LD4[GlobalValueCallEntry] GPR32:%vreg3,%vreg0
+256B		%GP<def> = COPY %vreg0; GPR32:%vreg0
+272B		%T9<def> = COPY %vreg3; GPR32:%vreg3
+288B		JALRPseudo %T9, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %GP<imp-use,kill>, %SP<imp-def>, ...
+304B		ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+320B		ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+336B		%vreg4<def> = LW %vreg0, <ga:@dfa_match_init>[TF=3]; mem:LD4[GlobalValueCallEntry] GPR32:%vreg4,%vreg0
+352B		%GP<def> = COPY %vreg0; GPR32:%vreg0
+368B		%T9<def> = COPY %vreg4; GPR32:%vreg4
+384B		JALRPseudo %T9, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %GP<imp-use,kill>, %SP<imp-def>, ...
+400B		ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+416B		RetRA
+
+# End machine code for function init_gnugo.
+
+# After Virtual Register Rewriter:
+# Machine code for function init_gnugo: Post SSA
+Function Live Ins: %T9, %V0
+
+0B	BB#0: derived from LLVM BB %0
+	    Live Ins: %T9 %V0
+16B		%S0<def> = ADDu %V0, %T9
+32B		ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+48B		%T9<def> = LW %S0, <ga:@reading_cache_init>[TF=3]; mem:LD4[GlobalValueCallEntry]
+64B		%GP<def> = COPY %S0
+96B		JALRPseudo %T9, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %GP<imp-use,kill>, %SP<imp-def>, ...
+112B		ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+128B		ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+144B		%T9<def> = LW %S0, <ga:@clear_board>[TF=3]; mem:LD4[GlobalValueCallEntry]
+160B		%GP<def> = COPY %S0
+192B		JALRPseudo %T9, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %GP<imp-use,kill>, %SP<imp-def>, ...
+208B		ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+224B		ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+240B		%T9<def> = LW %S0, <ga:@transformation_init>[TF=3]; mem:LD4[GlobalValueCallEntry]
+256B		%GP<def> = COPY %S0
+288B		JALRPseudo %T9, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %GP<imp-use,kill>, %SP<imp-def>, ...
+304B		ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+320B		ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+336B		%T9<def> = LW %S0, <ga:@dfa_match_init>[TF=3]; mem:LD4[GlobalValueCallEntry]
+352B		%GP<def> = COPY %S0<kill>
+384B		JALRPseudo %T9, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %GP<imp-use,kill>, %SP<imp-def>, ...
+400B		ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+416B		RetRA
+
+# End machine code for function init_gnugo.
+
+# After Stack Slot Coloring:
+# Machine code for function init_gnugo: Post SSA
+Function Live Ins: %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %T9 %V0
+	%S0<def> = ADDu %V0, %T9
+	ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+	%T9<def> = LW %S0, <ga:@reading_cache_init>[TF=3]; mem:LD4[GlobalValueCallEntry]
+	%GP<def> = COPY %S0
+	JALRPseudo %T9, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %GP<imp-use,kill>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+	ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+	%T9<def> = LW %S0, <ga:@clear_board>[TF=3]; mem:LD4[GlobalValueCallEntry]
+	%GP<def> = COPY %S0
+	JALRPseudo %T9, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %GP<imp-use,kill>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+	ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+	%T9<def> = LW %S0, <ga:@transformation_init>[TF=3]; mem:LD4[GlobalValueCallEntry]
+	%GP<def> = COPY %S0
+	JALRPseudo %T9, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %GP<imp-use,kill>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+	ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+	%T9<def> = LW %S0, <ga:@dfa_match_init>[TF=3]; mem:LD4[GlobalValueCallEntry]
+	%GP<def> = COPY %S0<kill>
+	JALRPseudo %T9, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %GP<imp-use,kill>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+	RetRA
+
+# End machine code for function init_gnugo.
+
+# After Machine Loop Invariant Code Motion:
+# Machine code for function init_gnugo: Post SSA
+Function Live Ins: %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %T9 %V0
+	%S0<def> = ADDu %V0, %T9
+	ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+	%T9<def> = LW %S0, <ga:@reading_cache_init>[TF=3]; mem:LD4[GlobalValueCallEntry]
+	%GP<def> = COPY %S0
+	JALRPseudo %T9, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %GP<imp-use,kill>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+	ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+	%T9<def> = LW %S0, <ga:@clear_board>[TF=3]; mem:LD4[GlobalValueCallEntry]
+	%GP<def> = COPY %S0
+	JALRPseudo %T9, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %GP<imp-use,kill>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+	ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+	%T9<def> = LW %S0, <ga:@transformation_init>[TF=3]; mem:LD4[GlobalValueCallEntry]
+	%GP<def> = COPY %S0
+	JALRPseudo %T9, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %GP<imp-use,kill>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+	ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+	%T9<def> = LW %S0, <ga:@dfa_match_init>[TF=3]; mem:LD4[GlobalValueCallEntry]
+	%GP<def> = COPY %S0<kill>
+	JALRPseudo %T9, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %GP<imp-use,kill>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+	RetRA
+
+# End machine code for function init_gnugo.
+
+# After Shrink Wrapping analysis:
+# Machine code for function init_gnugo: Post SSA
+Function Live Ins: %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %T9 %V0
+	%S0<def> = ADDu %V0, %T9
+	ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+	%T9<def> = LW %S0, <ga:@reading_cache_init>[TF=3]; mem:LD4[GlobalValueCallEntry]
+	%GP<def> = COPY %S0
+	JALRPseudo %T9, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %GP<imp-use,kill>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+	ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+	%T9<def> = LW %S0, <ga:@clear_board>[TF=3]; mem:LD4[GlobalValueCallEntry]
+	%GP<def> = COPY %S0
+	JALRPseudo %T9, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %GP<imp-use,kill>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+	ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+	%T9<def> = LW %S0, <ga:@transformation_init>[TF=3]; mem:LD4[GlobalValueCallEntry]
+	%GP<def> = COPY %S0
+	JALRPseudo %T9, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %GP<imp-use,kill>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+	ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+	%T9<def> = LW %S0, <ga:@dfa_match_init>[TF=3]; mem:LD4[GlobalValueCallEntry]
+	%GP<def> = COPY %S0<kill>
+	JALRPseudo %T9, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %GP<imp-use,kill>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+	RetRA
+
+# End machine code for function init_gnugo.
+
+# After Prologue/Epilogue Insertion & Frame Finalization:
+# Machine code for function init_gnugo: Post SSA
+Frame Objects:
+  fi#0: size=4, align=4, at location [SP-4]
+  fi#1: size=4, align=4, at location [SP-8]
+Function Live Ins: %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %T9 %V0 %RA %S0
+	%SP<def> = ADDiu %SP, -24
+	CFI_INSTRUCTION <call frame instruction>
+	SW %RA<kill>, %SP, 20; mem:ST4[FixedStack0]
+	SW %S0<kill>, %SP, 16; mem:ST4[FixedStack1]
+	CFI_INSTRUCTION <call frame instruction>
+	CFI_INSTRUCTION <call frame instruction>
+	%S0<def> = ADDu %V0, %T9
+	%T9<def> = LW %S0, <ga:@reading_cache_init>[TF=3]; mem:LD4[GlobalValueCallEntry]
+	%GP<def> = COPY %S0
+	JALRPseudo %T9, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %RA<imp-def,dead>, %GP<imp-use,kill>, %SP<imp-def>
+	%T9<def> = LW %S0, <ga:@clear_board>[TF=3]; mem:LD4[GlobalValueCallEntry]
+	%GP<def> = COPY %S0
+	JALRPseudo %T9, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %RA<imp-def,dead>, %GP<imp-use,kill>, %SP<imp-def>
+	%T9<def> = LW %S0, <ga:@transformation_init>[TF=3]; mem:LD4[GlobalValueCallEntry]
+	%GP<def> = COPY %S0
+	JALRPseudo %T9, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %RA<imp-def,dead>, %GP<imp-use,kill>, %SP<imp-def>
+	%T9<def> = LW %S0, <ga:@dfa_match_init>[TF=3]; mem:LD4[GlobalValueCallEntry]
+	%GP<def> = COPY %S0<kill>
+	JALRPseudo %T9, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %RA<imp-def,dead>, %GP<imp-use,kill>, %SP<imp-def>
+	%S0<def> = LW %SP, 16; mem:LD4[FixedStack1]
+	%RA<def> = LW %SP, 20; mem:LD4[FixedStack0]
+	%SP<def> = ADDiu %SP, 24
+	RetRA
+
+# End machine code for function init_gnugo.
+
+# After Machine Copy Propagation Pass:
+# Machine code for function init_gnugo: Post SSA
+Frame Objects:
+  fi#0: size=4, align=4, at location [SP-4]
+  fi#1: size=4, align=4, at location [SP-8]
+Function Live Ins: %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %T9 %V0 %RA %S0
+	%SP<def> = ADDiu %SP, -24
+	CFI_INSTRUCTION <call frame instruction>
+	SW %RA<kill>, %SP, 20; mem:ST4[FixedStack0]
+	SW %S0<kill>, %SP, 16; mem:ST4[FixedStack1]
+	CFI_INSTRUCTION <call frame instruction>
+	CFI_INSTRUCTION <call frame instruction>
+	%S0<def> = ADDu %V0, %T9
+	%T9<def> = LW %S0, <ga:@reading_cache_init>[TF=3]; mem:LD4[GlobalValueCallEntry]
+	%GP<def> = COPY %S0
+	JALRPseudo %T9, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %RA<imp-def,dead>, %GP<imp-use,kill>, %SP<imp-def>
+	%T9<def> = LW %S0, <ga:@clear_board>[TF=3]; mem:LD4[GlobalValueCallEntry]
+	%GP<def> = COPY %S0
+	JALRPseudo %T9, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %RA<imp-def,dead>, %GP<imp-use,kill>, %SP<imp-def>
+	%T9<def> = LW %S0, <ga:@transformation_init>[TF=3]; mem:LD4[GlobalValueCallEntry]
+	%GP<def> = COPY %S0
+	JALRPseudo %T9, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %RA<imp-def,dead>, %GP<imp-use,kill>, %SP<imp-def>
+	%T9<def> = LW %S0, <ga:@dfa_match_init>[TF=3]; mem:LD4[GlobalValueCallEntry]
+	%GP<def> = COPY %S0<kill>
+	JALRPseudo %T9, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %RA<imp-def,dead>, %GP<imp-use,kill>, %SP<imp-def>
+	%S0<def> = LW %SP, 16; mem:LD4[FixedStack1]
+	%RA<def> = LW %SP, 20; mem:LD4[FixedStack0]
+	%SP<def> = ADDiu %SP, 24
+	RetRA
+
+# End machine code for function init_gnugo.
+
+# After Post-RA pseudo instruction expansion pass:
+# Machine code for function init_gnugo: Post SSA
+Frame Objects:
+  fi#0: size=4, align=4, at location [SP-4]
+  fi#1: size=4, align=4, at location [SP-8]
+Function Live Ins: %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %T9 %V0 %RA %S0
+	%SP<def> = ADDiu %SP, -24
+	CFI_INSTRUCTION <call frame instruction>
+	SW %RA<kill>, %SP, 20; mem:ST4[FixedStack0]
+	SW %S0<kill>, %SP, 16; mem:ST4[FixedStack1]
+	CFI_INSTRUCTION <call frame instruction>
+	CFI_INSTRUCTION <call frame instruction>
+	%S0<def> = ADDu %V0, %T9
+	%T9<def> = LW %S0, <ga:@reading_cache_init>[TF=3]; mem:LD4[GlobalValueCallEntry]
+	%GP<def> = OR %S0, %ZERO
+	JALRPseudo %T9, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %RA<imp-def,dead>, %GP<imp-use,kill>, %SP<imp-def>
+	%T9<def> = LW %S0, <ga:@clear_board>[TF=3]; mem:LD4[GlobalValueCallEntry]
+	%GP<def> = OR %S0, %ZERO
+	JALRPseudo %T9, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %RA<imp-def,dead>, %GP<imp-use,kill>, %SP<imp-def>
+	%T9<def> = LW %S0, <ga:@transformation_init>[TF=3]; mem:LD4[GlobalValueCallEntry]
+	%GP<def> = OR %S0, %ZERO
+	JALRPseudo %T9, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %RA<imp-def,dead>, %GP<imp-use,kill>, %SP<imp-def>
+	%T9<def> = LW %S0, <ga:@dfa_match_init>[TF=3]; mem:LD4[GlobalValueCallEntry]
+	%GP<def> = OR %S0<kill>, %ZERO
+	JALRPseudo %T9, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %RA<imp-def,dead>, %GP<imp-use,kill>, %SP<imp-def>
+	%S0<def> = LW %SP, 16; mem:LD4[FixedStack1]
+	%RA<def> = LW %SP, 20; mem:LD4[FixedStack0]
+	%SP<def> = ADDiu %SP, 24
+	PseudoReturn %RA
+
+# End machine code for function init_gnugo.
+
+# After Analyze Machine Code For Garbage Collection:
+# Machine code for function init_gnugo: Post SSA
+Frame Objects:
+  fi#0: size=4, align=4, at location [SP-4]
+  fi#1: size=4, align=4, at location [SP-8]
+Function Live Ins: %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %T9 %V0 %RA %S0
+	%SP<def> = ADDiu %SP, -24
+	CFI_INSTRUCTION <call frame instruction>
+	SW %RA<kill>, %SP, 20; mem:ST4[FixedStack0]
+	SW %S0<kill>, %SP, 16; mem:ST4[FixedStack1]
+	CFI_INSTRUCTION <call frame instruction>
+	CFI_INSTRUCTION <call frame instruction>
+	%S0<def> = ADDu %V0, %T9
+	%T9<def> = LW %S0, <ga:@reading_cache_init>[TF=3]; mem:LD4[GlobalValueCallEntry]
+	%GP<def> = OR %S0, %ZERO
+	JALRPseudo %T9, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %RA<imp-def,dead>, %GP<imp-use,kill>, %SP<imp-def>
+	%T9<def> = LW %S0, <ga:@clear_board>[TF=3]; mem:LD4[GlobalValueCallEntry]
+	%GP<def> = OR %S0, %ZERO
+	JALRPseudo %T9, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %RA<imp-def,dead>, %GP<imp-use,kill>, %SP<imp-def>
+	%T9<def> = LW %S0, <ga:@transformation_init>[TF=3]; mem:LD4[GlobalValueCallEntry]
+	%GP<def> = OR %S0, %ZERO
+	JALRPseudo %T9, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %RA<imp-def,dead>, %GP<imp-use,kill>, %SP<imp-def>
+	%T9<def> = LW %S0, <ga:@dfa_match_init>[TF=3]; mem:LD4[GlobalValueCallEntry]
+	%GP<def> = OR %S0<kill>, %ZERO
+	JALRPseudo %T9, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %RA<imp-def,dead>, %GP<imp-use,kill>, %SP<imp-def>
+	%S0<def> = LW %SP, 16; mem:LD4[FixedStack1]
+	%RA<def> = LW %SP, 20; mem:LD4[FixedStack0]
+	%SP<def> = ADDiu %SP, 24
+	PseudoReturn %RA
+
+# End machine code for function init_gnugo.
+
+# After Mips Delay Slot Filler:
+# Machine code for function init_gnugo: Post SSA, not tracking liveness
+Frame Objects:
+  fi#0: size=4, align=4, at location [SP-4]
+  fi#1: size=4, align=4, at location [SP-8]
+Function Live Ins: %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %T9 %V0 %RA %S0
+	%SP<def> = ADDiu %SP, -24
+	CFI_INSTRUCTION <call frame instruction>
+	SW %RA<kill>, %SP, 20; mem:ST4[FixedStack0]
+	SW %S0<kill>, %SP, 16; mem:ST4[FixedStack1]
+	CFI_INSTRUCTION <call frame instruction>
+	CFI_INSTRUCTION <call frame instruction>
+	%S0<def> = ADDu %V0, %T9
+	%T9<def> = LW %S0, <ga:@reading_cache_init>[TF=3]; mem:LD4[GlobalValueCallEntry]
+	JALRPseudo %T9, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %RA<imp-def,dead>, %GP<imp-use,kill>, %SP<imp-def>
+	  * %GP<def> = OR %S0, %ZERO
+	%T9<def> = LW %S0, <ga:@clear_board>[TF=3]; mem:LD4[GlobalValueCallEntry]
+	JALRPseudo %T9, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %RA<imp-def,dead>, %GP<imp-use,kill>, %SP<imp-def>
+	  * %GP<def> = OR %S0, %ZERO
+	%T9<def> = LW %S0, <ga:@transformation_init>[TF=3]; mem:LD4[GlobalValueCallEntry]
+	JALRPseudo %T9, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %RA<imp-def,dead>, %GP<imp-use,kill>, %SP<imp-def>
+	  * %GP<def> = OR %S0, %ZERO
+	%T9<def> = LW %S0, <ga:@dfa_match_init>[TF=3]; mem:LD4[GlobalValueCallEntry]
+	JALRPseudo %T9, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %RA<imp-def,dead>, %GP<imp-use,kill>, %SP<imp-def>
+	  * %GP<def> = OR %S0<kill>, %ZERO
+	%S0<def> = LW %SP, 16; mem:LD4[FixedStack1]
+	%RA<def> = LW %SP, 20; mem:LD4[FixedStack0]
+	PseudoReturn %RA
+	  * %SP<def> = ADDiu %SP, 24
+
+# End machine code for function init_gnugo.
+
+# After Mips Long Branch:
+# Machine code for function init_gnugo: Post SSA, not tracking liveness
+Frame Objects:
+  fi#0: size=4, align=4, at location [SP-4]
+  fi#1: size=4, align=4, at location [SP-8]
+Function Live Ins: %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %T9 %RA %S0
+	%V0<def> = LUi <es:_gp_disp>[TF=5]
+	%V0<def> = ADDiu %V0, <es:_gp_disp>[TF=6]
+	%SP<def> = ADDiu %SP, -24
+	CFI_INSTRUCTION <call frame instruction>
+	SW %RA<kill>, %SP, 20; mem:ST4[FixedStack0]
+	SW %S0<kill>, %SP, 16; mem:ST4[FixedStack1]
+	CFI_INSTRUCTION <call frame instruction>
+	CFI_INSTRUCTION <call frame instruction>
+	%S0<def> = ADDu %V0, %T9
+	%T9<def> = LW %S0, <ga:@reading_cache_init>[TF=3]; mem:LD4[GlobalValueCallEntry]
+	JALRPseudo %T9, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %RA<imp-def,dead>, %GP<imp-use,kill>, %SP<imp-def>
+	  * %GP<def> = OR %S0, %ZERO
+	%T9<def> = LW %S0, <ga:@clear_board>[TF=3]; mem:LD4[GlobalValueCallEntry]
+	JALRPseudo %T9, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %RA<imp-def,dead>, %GP<imp-use,kill>, %SP<imp-def>
+	  * %GP<def> = OR %S0, %ZERO
+	%T9<def> = LW %S0, <ga:@transformation_init>[TF=3]; mem:LD4[GlobalValueCallEntry]
+	JALRPseudo %T9, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %RA<imp-def,dead>, %GP<imp-use,kill>, %SP<imp-def>
+	  * %GP<def> = OR %S0, %ZERO
+	%T9<def> = LW %S0, <ga:@dfa_match_init>[TF=3]; mem:LD4[GlobalValueCallEntry]
+	JALRPseudo %T9, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %RA<imp-def,dead>, %GP<imp-use,kill>, %SP<imp-def>
+	  * %GP<def> = OR %S0<kill>, %ZERO
+	%S0<def> = LW %SP, 16; mem:LD4[FixedStack1]
+	%RA<def> = LW %SP, 20; mem:LD4[FixedStack0]
+	PseudoReturn %RA
+	  * %SP<def> = ADDiu %SP, 24
+
+# End machine code for function init_gnugo.
+
+# After Mips Constant Islands:
+# Machine code for function init_gnugo: Post SSA, not tracking liveness
+Frame Objects:
+  fi#0: size=4, align=4, at location [SP-4]
+  fi#1: size=4, align=4, at location [SP-8]
+Function Live Ins: %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %T9 %RA %S0
+	%V0<def> = LUi <es:_gp_disp>[TF=5]
+	%V0<def> = ADDiu %V0, <es:_gp_disp>[TF=6]
+	%SP<def> = ADDiu %SP, -24
+	CFI_INSTRUCTION <call frame instruction>
+	SW %RA<kill>, %SP, 20; mem:ST4[FixedStack0]
+	SW %S0<kill>, %SP, 16; mem:ST4[FixedStack1]
+	CFI_INSTRUCTION <call frame instruction>
+	CFI_INSTRUCTION <call frame instruction>
+	%S0<def> = ADDu %V0, %T9
+	%T9<def> = LW %S0, <ga:@reading_cache_init>[TF=3]; mem:LD4[GlobalValueCallEntry]
+	JALRPseudo %T9, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %RA<imp-def,dead>, %GP<imp-use,kill>, %SP<imp-def>
+	  * %GP<def> = OR %S0, %ZERO
+	%T9<def> = LW %S0, <ga:@clear_board>[TF=3]; mem:LD4[GlobalValueCallEntry]
+	JALRPseudo %T9, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %RA<imp-def,dead>, %GP<imp-use,kill>, %SP<imp-def>
+	  * %GP<def> = OR %S0, %ZERO
+	%T9<def> = LW %S0, <ga:@transformation_init>[TF=3]; mem:LD4[GlobalValueCallEntry]
+	JALRPseudo %T9, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %RA<imp-def,dead>, %GP<imp-use,kill>, %SP<imp-def>
+	  * %GP<def> = OR %S0, %ZERO
+	%T9<def> = LW %S0, <ga:@dfa_match_init>[TF=3]; mem:LD4[GlobalValueCallEntry]
+	JALRPseudo %T9, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %RA<imp-def,dead>, %GP<imp-use,kill>, %SP<imp-def>
+	  * %GP<def> = OR %S0<kill>, %ZERO
+	%S0<def> = LW %SP, 16; mem:LD4[FixedStack1]
+	%RA<def> = LW %SP, 20; mem:LD4[FixedStack0]
+	PseudoReturn %RA
+	  * %SP<def> = ADDiu %SP, 24
+
+# End machine code for function init_gnugo.
+
+# After Contiguously Lay Out Funclets:
+# Machine code for function init_gnugo: Post SSA, not tracking liveness
+Frame Objects:
+  fi#0: size=4, align=4, at location [SP-4]
+  fi#1: size=4, align=4, at location [SP-8]
+Function Live Ins: %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %T9 %RA %S0
+	%V0<def> = LUi <es:_gp_disp>[TF=5]
+	%V0<def> = ADDiu %V0, <es:_gp_disp>[TF=6]
+	%SP<def> = ADDiu %SP, -24
+	CFI_INSTRUCTION <call frame instruction>
+	SW %RA<kill>, %SP, 20; mem:ST4[FixedStack0]
+	SW %S0<kill>, %SP, 16; mem:ST4[FixedStack1]
+	CFI_INSTRUCTION <call frame instruction>
+	CFI_INSTRUCTION <call frame instruction>
+	%S0<def> = ADDu %V0, %T9
+	%T9<def> = LW %S0, <ga:@reading_cache_init>[TF=3]; mem:LD4[GlobalValueCallEntry]
+	JALRPseudo %T9, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %RA<imp-def,dead>, %GP<imp-use,kill>, %SP<imp-def>
+	  * %GP<def> = OR %S0, %ZERO
+	%T9<def> = LW %S0, <ga:@clear_board>[TF=3]; mem:LD4[GlobalValueCallEntry]
+	JALRPseudo %T9, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %RA<imp-def,dead>, %GP<imp-use,kill>, %SP<imp-def>
+	  * %GP<def> = OR %S0, %ZERO
+	%T9<def> = LW %S0, <ga:@transformation_init>[TF=3]; mem:LD4[GlobalValueCallEntry]
+	JALRPseudo %T9, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %RA<imp-def,dead>, %GP<imp-use,kill>, %SP<imp-def>
+	  * %GP<def> = OR %S0, %ZERO
+	%T9<def> = LW %S0, <ga:@dfa_match_init>[TF=3]; mem:LD4[GlobalValueCallEntry]
+	JALRPseudo %T9, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %RA<imp-def,dead>, %GP<imp-use,kill>, %SP<imp-def>
+	  * %GP<def> = OR %S0<kill>, %ZERO
+	%S0<def> = LW %SP, 16; mem:LD4[FixedStack1]
+	%RA<def> = LW %SP, 20; mem:LD4[FixedStack0]
+	PseudoReturn %RA
+	  * %SP<def> = ADDiu %SP, 24
+
+# End machine code for function init_gnugo.
+
+# After StackMap Liveness Analysis:
+# Machine code for function init_gnugo: Post SSA, not tracking liveness
+Frame Objects:
+  fi#0: size=4, align=4, at location [SP-4]
+  fi#1: size=4, align=4, at location [SP-8]
+Function Live Ins: %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %T9 %RA %S0
+	%V0<def> = LUi <es:_gp_disp>[TF=5]
+	%V0<def> = ADDiu %V0, <es:_gp_disp>[TF=6]
+	%SP<def> = ADDiu %SP, -24
+	CFI_INSTRUCTION <call frame instruction>
+	SW %RA<kill>, %SP, 20; mem:ST4[FixedStack0]
+	SW %S0<kill>, %SP, 16; mem:ST4[FixedStack1]
+	CFI_INSTRUCTION <call frame instruction>
+	CFI_INSTRUCTION <call frame instruction>
+	%S0<def> = ADDu %V0, %T9
+	%T9<def> = LW %S0, <ga:@reading_cache_init>[TF=3]; mem:LD4[GlobalValueCallEntry]
+	JALRPseudo %T9, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %RA<imp-def,dead>, %GP<imp-use,kill>, %SP<imp-def>
+	  * %GP<def> = OR %S0, %ZERO
+	%T9<def> = LW %S0, <ga:@clear_board>[TF=3]; mem:LD4[GlobalValueCallEntry]
+	JALRPseudo %T9, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %RA<imp-def,dead>, %GP<imp-use,kill>, %SP<imp-def>
+	  * %GP<def> = OR %S0, %ZERO
+	%T9<def> = LW %S0, <ga:@transformation_init>[TF=3]; mem:LD4[GlobalValueCallEntry]
+	JALRPseudo %T9, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %RA<imp-def,dead>, %GP<imp-use,kill>, %SP<imp-def>
+	  * %GP<def> = OR %S0, %ZERO
+	%T9<def> = LW %S0, <ga:@dfa_match_init>[TF=3]; mem:LD4[GlobalValueCallEntry]
+	JALRPseudo %T9, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %RA<imp-def,dead>, %GP<imp-use,kill>, %SP<imp-def>
+	  * %GP<def> = OR %S0<kill>, %ZERO
+	%S0<def> = LW %SP, 16; mem:LD4[FixedStack1]
+	%RA<def> = LW %SP, 20; mem:LD4[FixedStack0]
+	PseudoReturn %RA
+	  * %SP<def> = ADDiu %SP, 24
+
+# End machine code for function init_gnugo.
+
+# After Live DEBUG_VALUE analysis:
+# Machine code for function init_gnugo: Post SSA, not tracking liveness
+Frame Objects:
+  fi#0: size=4, align=4, at location [SP-4]
+  fi#1: size=4, align=4, at location [SP-8]
+Function Live Ins: %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %T9 %RA %S0
+	%V0<def> = LUi <es:_gp_disp>[TF=5]
+	%V0<def> = ADDiu %V0, <es:_gp_disp>[TF=6]
+	%SP<def> = ADDiu %SP, -24
+	CFI_INSTRUCTION <call frame instruction>
+	SW %RA<kill>, %SP, 20; mem:ST4[FixedStack0]
+	SW %S0<kill>, %SP, 16; mem:ST4[FixedStack1]
+	CFI_INSTRUCTION <call frame instruction>
+	CFI_INSTRUCTION <call frame instruction>
+	%S0<def> = ADDu %V0, %T9
+	%T9<def> = LW %S0, <ga:@reading_cache_init>[TF=3]; mem:LD4[GlobalValueCallEntry]
+	JALRPseudo %T9, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %RA<imp-def,dead>, %GP<imp-use,kill>, %SP<imp-def>
+	  * %GP<def> = OR %S0, %ZERO
+	%T9<def> = LW %S0, <ga:@clear_board>[TF=3]; mem:LD4[GlobalValueCallEntry]
+	JALRPseudo %T9, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %RA<imp-def,dead>, %GP<imp-use,kill>, %SP<imp-def>
+	  * %GP<def> = OR %S0, %ZERO
+	%T9<def> = LW %S0, <ga:@transformation_init>[TF=3]; mem:LD4[GlobalValueCallEntry]
+	JALRPseudo %T9, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %RA<imp-def,dead>, %GP<imp-use,kill>, %SP<imp-def>
+	  * %GP<def> = OR %S0, %ZERO
+	%T9<def> = LW %S0, <ga:@dfa_match_init>[TF=3]; mem:LD4[GlobalValueCallEntry]
+	JALRPseudo %T9, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %RA<imp-def,dead>, %GP<imp-use,kill>, %SP<imp-def>
+	  * %GP<def> = OR %S0<kill>, %ZERO
+	%S0<def> = LW %SP, 16; mem:LD4[FixedStack1]
+	%RA<def> = LW %SP, 20; mem:LD4[FixedStack0]
+	PseudoReturn %RA
+	  * %SP<def> = ADDiu %SP, 24
+
+# End machine code for function init_gnugo.
+

@@ -1,0 +1,651 @@
+# After Instruction Selection:
+# Machine code for function ptmr_init: SSA
+Function Live Ins: %A0 in %vreg0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %A0
+	%vreg0<def> = COPY %A0; GPR32:%vreg0
+	SW %ZERO, %vreg0, 36; mem:ST4[%2(align=8)+28](align=4) GPR32:%vreg0
+	SW %ZERO, %vreg0, 32; mem:ST4[%2+24](align=8) GPR32:%vreg0
+	SW %ZERO, %vreg0, 28; mem:ST4[%2(align=8)+20](align=4) GPR32:%vreg0
+	SW %ZERO, %vreg0, 24; mem:ST4[%2+16](align=8) GPR32:%vreg0
+	SW %ZERO, %vreg0, 20; mem:ST4[%2(align=8)+12](align=4) GPR32:%vreg0
+	SW %ZERO, %vreg0, 16; mem:ST4[%2+8](align=8) GPR32:%vreg0
+	SW %ZERO, %vreg0, 12; mem:ST4[%2(align=8)+4](align=4) GPR32:%vreg0
+	SW %ZERO, %vreg0, 8; mem:ST4[%2](align=8) GPR32:%vreg0
+	RetRA
+
+# End machine code for function ptmr_init.
+
+# After Expand ISel Pseudo-instructions:
+# Machine code for function ptmr_init: SSA
+Function Live Ins: %A0 in %vreg0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %A0
+	%vreg0<def> = COPY %A0; GPR32:%vreg0
+	SW %ZERO, %vreg0, 36; mem:ST4[%2(align=8)+28](align=4) GPR32:%vreg0
+	SW %ZERO, %vreg0, 32; mem:ST4[%2+24](align=8) GPR32:%vreg0
+	SW %ZERO, %vreg0, 28; mem:ST4[%2(align=8)+20](align=4) GPR32:%vreg0
+	SW %ZERO, %vreg0, 24; mem:ST4[%2+16](align=8) GPR32:%vreg0
+	SW %ZERO, %vreg0, 20; mem:ST4[%2(align=8)+12](align=4) GPR32:%vreg0
+	SW %ZERO, %vreg0, 16; mem:ST4[%2+8](align=8) GPR32:%vreg0
+	SW %ZERO, %vreg0, 12; mem:ST4[%2(align=8)+4](align=4) GPR32:%vreg0
+	SW %ZERO, %vreg0, 8; mem:ST4[%2](align=8) GPR32:%vreg0
+	RetRA
+
+# End machine code for function ptmr_init.
+
+# After Mips OptimizePICCall:
+# Machine code for function ptmr_init: SSA
+Function Live Ins: %A0 in %vreg0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %A0
+	%vreg0<def> = COPY %A0; GPR32:%vreg0
+	SW %ZERO, %vreg0, 36; mem:ST4[%2(align=8)+28](align=4) GPR32:%vreg0
+	SW %ZERO, %vreg0, 32; mem:ST4[%2+24](align=8) GPR32:%vreg0
+	SW %ZERO, %vreg0, 28; mem:ST4[%2(align=8)+20](align=4) GPR32:%vreg0
+	SW %ZERO, %vreg0, 24; mem:ST4[%2+16](align=8) GPR32:%vreg0
+	SW %ZERO, %vreg0, 20; mem:ST4[%2(align=8)+12](align=4) GPR32:%vreg0
+	SW %ZERO, %vreg0, 16; mem:ST4[%2+8](align=8) GPR32:%vreg0
+	SW %ZERO, %vreg0, 12; mem:ST4[%2(align=8)+4](align=4) GPR32:%vreg0
+	SW %ZERO, %vreg0, 8; mem:ST4[%2](align=8) GPR32:%vreg0
+	RetRA
+
+# End machine code for function ptmr_init.
+
+# After Tail Duplication:
+# Machine code for function ptmr_init: SSA
+Function Live Ins: %A0 in %vreg0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %A0
+	%vreg0<def> = COPY %A0; GPR32:%vreg0
+	SW %ZERO, %vreg0, 36; mem:ST4[%2(align=8)+28](align=4) GPR32:%vreg0
+	SW %ZERO, %vreg0, 32; mem:ST4[%2+24](align=8) GPR32:%vreg0
+	SW %ZERO, %vreg0, 28; mem:ST4[%2(align=8)+20](align=4) GPR32:%vreg0
+	SW %ZERO, %vreg0, 24; mem:ST4[%2+16](align=8) GPR32:%vreg0
+	SW %ZERO, %vreg0, 20; mem:ST4[%2(align=8)+12](align=4) GPR32:%vreg0
+	SW %ZERO, %vreg0, 16; mem:ST4[%2+8](align=8) GPR32:%vreg0
+	SW %ZERO, %vreg0, 12; mem:ST4[%2(align=8)+4](align=4) GPR32:%vreg0
+	SW %ZERO, %vreg0, 8; mem:ST4[%2](align=8) GPR32:%vreg0
+	RetRA
+
+# End machine code for function ptmr_init.
+
+# After Optimize machine instruction PHIs:
+# Machine code for function ptmr_init: SSA
+Function Live Ins: %A0 in %vreg0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %A0
+	%vreg0<def> = COPY %A0; GPR32:%vreg0
+	SW %ZERO, %vreg0, 36; mem:ST4[%2(align=8)+28](align=4) GPR32:%vreg0
+	SW %ZERO, %vreg0, 32; mem:ST4[%2+24](align=8) GPR32:%vreg0
+	SW %ZERO, %vreg0, 28; mem:ST4[%2(align=8)+20](align=4) GPR32:%vreg0
+	SW %ZERO, %vreg0, 24; mem:ST4[%2+16](align=8) GPR32:%vreg0
+	SW %ZERO, %vreg0, 20; mem:ST4[%2(align=8)+12](align=4) GPR32:%vreg0
+	SW %ZERO, %vreg0, 16; mem:ST4[%2+8](align=8) GPR32:%vreg0
+	SW %ZERO, %vreg0, 12; mem:ST4[%2(align=8)+4](align=4) GPR32:%vreg0
+	SW %ZERO, %vreg0, 8; mem:ST4[%2](align=8) GPR32:%vreg0
+	RetRA
+
+# End machine code for function ptmr_init.
+
+# After Merge disjoint stack slots:
+# Machine code for function ptmr_init: SSA
+Function Live Ins: %A0 in %vreg0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %A0
+	%vreg0<def> = COPY %A0; GPR32:%vreg0
+	SW %ZERO, %vreg0, 36; mem:ST4[%2(align=8)+28](align=4) GPR32:%vreg0
+	SW %ZERO, %vreg0, 32; mem:ST4[%2+24](align=8) GPR32:%vreg0
+	SW %ZERO, %vreg0, 28; mem:ST4[%2(align=8)+20](align=4) GPR32:%vreg0
+	SW %ZERO, %vreg0, 24; mem:ST4[%2+16](align=8) GPR32:%vreg0
+	SW %ZERO, %vreg0, 20; mem:ST4[%2(align=8)+12](align=4) GPR32:%vreg0
+	SW %ZERO, %vreg0, 16; mem:ST4[%2+8](align=8) GPR32:%vreg0
+	SW %ZERO, %vreg0, 12; mem:ST4[%2(align=8)+4](align=4) GPR32:%vreg0
+	SW %ZERO, %vreg0, 8; mem:ST4[%2](align=8) GPR32:%vreg0
+	RetRA
+
+# End machine code for function ptmr_init.
+
+# After Local Stack Slot Allocation:
+# Machine code for function ptmr_init: SSA
+Function Live Ins: %A0 in %vreg0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %A0
+	%vreg0<def> = COPY %A0; GPR32:%vreg0
+	SW %ZERO, %vreg0, 36; mem:ST4[%2(align=8)+28](align=4) GPR32:%vreg0
+	SW %ZERO, %vreg0, 32; mem:ST4[%2+24](align=8) GPR32:%vreg0
+	SW %ZERO, %vreg0, 28; mem:ST4[%2(align=8)+20](align=4) GPR32:%vreg0
+	SW %ZERO, %vreg0, 24; mem:ST4[%2+16](align=8) GPR32:%vreg0
+	SW %ZERO, %vreg0, 20; mem:ST4[%2(align=8)+12](align=4) GPR32:%vreg0
+	SW %ZERO, %vreg0, 16; mem:ST4[%2+8](align=8) GPR32:%vreg0
+	SW %ZERO, %vreg0, 12; mem:ST4[%2(align=8)+4](align=4) GPR32:%vreg0
+	SW %ZERO, %vreg0, 8; mem:ST4[%2](align=8) GPR32:%vreg0
+	RetRA
+
+# End machine code for function ptmr_init.
+
+# After Remove dead machine instructions:
+# Machine code for function ptmr_init: SSA
+Function Live Ins: %A0 in %vreg0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %A0
+	%vreg0<def> = COPY %A0; GPR32:%vreg0
+	SW %ZERO, %vreg0, 36; mem:ST4[%2(align=8)+28](align=4) GPR32:%vreg0
+	SW %ZERO, %vreg0, 32; mem:ST4[%2+24](align=8) GPR32:%vreg0
+	SW %ZERO, %vreg0, 28; mem:ST4[%2(align=8)+20](align=4) GPR32:%vreg0
+	SW %ZERO, %vreg0, 24; mem:ST4[%2+16](align=8) GPR32:%vreg0
+	SW %ZERO, %vreg0, 20; mem:ST4[%2(align=8)+12](align=4) GPR32:%vreg0
+	SW %ZERO, %vreg0, 16; mem:ST4[%2+8](align=8) GPR32:%vreg0
+	SW %ZERO, %vreg0, 12; mem:ST4[%2(align=8)+4](align=4) GPR32:%vreg0
+	SW %ZERO, %vreg0, 8; mem:ST4[%2](align=8) GPR32:%vreg0
+	RetRA
+
+# End machine code for function ptmr_init.
+
+# After Machine Loop Invariant Code Motion:
+# Machine code for function ptmr_init: SSA
+Function Live Ins: %A0 in %vreg0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %A0
+	%vreg0<def> = COPY %A0; GPR32:%vreg0
+	SW %ZERO, %vreg0, 36; mem:ST4[%2(align=8)+28](align=4) GPR32:%vreg0
+	SW %ZERO, %vreg0, 32; mem:ST4[%2+24](align=8) GPR32:%vreg0
+	SW %ZERO, %vreg0, 28; mem:ST4[%2(align=8)+20](align=4) GPR32:%vreg0
+	SW %ZERO, %vreg0, 24; mem:ST4[%2+16](align=8) GPR32:%vreg0
+	SW %ZERO, %vreg0, 20; mem:ST4[%2(align=8)+12](align=4) GPR32:%vreg0
+	SW %ZERO, %vreg0, 16; mem:ST4[%2+8](align=8) GPR32:%vreg0
+	SW %ZERO, %vreg0, 12; mem:ST4[%2(align=8)+4](align=4) GPR32:%vreg0
+	SW %ZERO, %vreg0, 8; mem:ST4[%2](align=8) GPR32:%vreg0
+	RetRA
+
+# End machine code for function ptmr_init.
+
+# After Machine Common Subexpression Elimination:
+# Machine code for function ptmr_init: SSA
+Function Live Ins: %A0 in %vreg0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %A0
+	%vreg0<def> = COPY %A0; GPR32:%vreg0
+	SW %ZERO, %vreg0, 36; mem:ST4[%2(align=8)+28](align=4) GPR32:%vreg0
+	SW %ZERO, %vreg0, 32; mem:ST4[%2+24](align=8) GPR32:%vreg0
+	SW %ZERO, %vreg0, 28; mem:ST4[%2(align=8)+20](align=4) GPR32:%vreg0
+	SW %ZERO, %vreg0, 24; mem:ST4[%2+16](align=8) GPR32:%vreg0
+	SW %ZERO, %vreg0, 20; mem:ST4[%2(align=8)+12](align=4) GPR32:%vreg0
+	SW %ZERO, %vreg0, 16; mem:ST4[%2+8](align=8) GPR32:%vreg0
+	SW %ZERO, %vreg0, 12; mem:ST4[%2(align=8)+4](align=4) GPR32:%vreg0
+	SW %ZERO, %vreg0, 8; mem:ST4[%2](align=8) GPR32:%vreg0
+	RetRA
+
+# End machine code for function ptmr_init.
+
+# After Machine code sinking:
+# Machine code for function ptmr_init: SSA
+Function Live Ins: %A0 in %vreg0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %A0
+	%vreg0<def> = COPY %A0; GPR32:%vreg0
+	SW %ZERO, %vreg0, 36; mem:ST4[%2(align=8)+28](align=4) GPR32:%vreg0
+	SW %ZERO, %vreg0, 32; mem:ST4[%2+24](align=8) GPR32:%vreg0
+	SW %ZERO, %vreg0, 28; mem:ST4[%2(align=8)+20](align=4) GPR32:%vreg0
+	SW %ZERO, %vreg0, 24; mem:ST4[%2+16](align=8) GPR32:%vreg0
+	SW %ZERO, %vreg0, 20; mem:ST4[%2(align=8)+12](align=4) GPR32:%vreg0
+	SW %ZERO, %vreg0, 16; mem:ST4[%2+8](align=8) GPR32:%vreg0
+	SW %ZERO, %vreg0, 12; mem:ST4[%2(align=8)+4](align=4) GPR32:%vreg0
+	SW %ZERO, %vreg0, 8; mem:ST4[%2](align=8) GPR32:%vreg0
+	RetRA
+
+# End machine code for function ptmr_init.
+
+# After Peephole Optimizations:
+# Machine code for function ptmr_init: SSA
+Function Live Ins: %A0 in %vreg0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %A0
+	%vreg0<def> = COPY %A0; GPR32:%vreg0
+	SW %ZERO, %vreg0, 36; mem:ST4[%2(align=8)+28](align=4) GPR32:%vreg0
+	SW %ZERO, %vreg0, 32; mem:ST4[%2+24](align=8) GPR32:%vreg0
+	SW %ZERO, %vreg0, 28; mem:ST4[%2(align=8)+20](align=4) GPR32:%vreg0
+	SW %ZERO, %vreg0, 24; mem:ST4[%2+16](align=8) GPR32:%vreg0
+	SW %ZERO, %vreg0, 20; mem:ST4[%2(align=8)+12](align=4) GPR32:%vreg0
+	SW %ZERO, %vreg0, 16; mem:ST4[%2+8](align=8) GPR32:%vreg0
+	SW %ZERO, %vreg0, 12; mem:ST4[%2(align=8)+4](align=4) GPR32:%vreg0
+	SW %ZERO, %vreg0, 8; mem:ST4[%2](align=8) GPR32:%vreg0
+	RetRA
+
+# End machine code for function ptmr_init.
+
+# After Remove dead machine instructions:
+# Machine code for function ptmr_init: SSA
+Function Live Ins: %A0 in %vreg0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %A0
+	%vreg0<def> = COPY %A0; GPR32:%vreg0
+	SW %ZERO, %vreg0, 36; mem:ST4[%2(align=8)+28](align=4) GPR32:%vreg0
+	SW %ZERO, %vreg0, 32; mem:ST4[%2+24](align=8) GPR32:%vreg0
+	SW %ZERO, %vreg0, 28; mem:ST4[%2(align=8)+20](align=4) GPR32:%vreg0
+	SW %ZERO, %vreg0, 24; mem:ST4[%2+16](align=8) GPR32:%vreg0
+	SW %ZERO, %vreg0, 20; mem:ST4[%2(align=8)+12](align=4) GPR32:%vreg0
+	SW %ZERO, %vreg0, 16; mem:ST4[%2+8](align=8) GPR32:%vreg0
+	SW %ZERO, %vreg0, 12; mem:ST4[%2(align=8)+4](align=4) GPR32:%vreg0
+	SW %ZERO, %vreg0, 8; mem:ST4[%2](align=8) GPR32:%vreg0
+	RetRA
+
+# End machine code for function ptmr_init.
+
+# After Process Implicit Definitions:
+# Machine code for function ptmr_init: SSA
+Function Live Ins: %A0 in %vreg0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %A0
+	%vreg0<def> = COPY %A0; GPR32:%vreg0
+	SW %ZERO, %vreg0, 36; mem:ST4[%2(align=8)+28](align=4) GPR32:%vreg0
+	SW %ZERO, %vreg0, 32; mem:ST4[%2+24](align=8) GPR32:%vreg0
+	SW %ZERO, %vreg0, 28; mem:ST4[%2(align=8)+20](align=4) GPR32:%vreg0
+	SW %ZERO, %vreg0, 24; mem:ST4[%2+16](align=8) GPR32:%vreg0
+	SW %ZERO, %vreg0, 20; mem:ST4[%2(align=8)+12](align=4) GPR32:%vreg0
+	SW %ZERO, %vreg0, 16; mem:ST4[%2+8](align=8) GPR32:%vreg0
+	SW %ZERO, %vreg0, 12; mem:ST4[%2(align=8)+4](align=4) GPR32:%vreg0
+	SW %ZERO, %vreg0, 8; mem:ST4[%2](align=8) GPR32:%vreg0
+	RetRA
+
+# End machine code for function ptmr_init.
+
+# After Live Variable Analysis:
+# Machine code for function ptmr_init: SSA
+Function Live Ins: %A0 in %vreg0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %A0
+	%vreg0<def> = COPY %A0<kill>; GPR32:%vreg0
+	SW %ZERO, %vreg0, 36; mem:ST4[%2(align=8)+28](align=4) GPR32:%vreg0
+	SW %ZERO, %vreg0, 32; mem:ST4[%2+24](align=8) GPR32:%vreg0
+	SW %ZERO, %vreg0, 28; mem:ST4[%2(align=8)+20](align=4) GPR32:%vreg0
+	SW %ZERO, %vreg0, 24; mem:ST4[%2+16](align=8) GPR32:%vreg0
+	SW %ZERO, %vreg0, 20; mem:ST4[%2(align=8)+12](align=4) GPR32:%vreg0
+	SW %ZERO, %vreg0, 16; mem:ST4[%2+8](align=8) GPR32:%vreg0
+	SW %ZERO, %vreg0, 12; mem:ST4[%2(align=8)+4](align=4) GPR32:%vreg0
+	SW %ZERO, %vreg0<kill>, 8; mem:ST4[%2](align=8) GPR32:%vreg0
+	RetRA
+
+# End machine code for function ptmr_init.
+
+# After Machine Natural Loop Construction:
+# Machine code for function ptmr_init: SSA
+Function Live Ins: %A0 in %vreg0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %A0
+	%vreg0<def> = COPY %A0<kill>; GPR32:%vreg0
+	SW %ZERO, %vreg0, 36; mem:ST4[%2(align=8)+28](align=4) GPR32:%vreg0
+	SW %ZERO, %vreg0, 32; mem:ST4[%2+24](align=8) GPR32:%vreg0
+	SW %ZERO, %vreg0, 28; mem:ST4[%2(align=8)+20](align=4) GPR32:%vreg0
+	SW %ZERO, %vreg0, 24; mem:ST4[%2+16](align=8) GPR32:%vreg0
+	SW %ZERO, %vreg0, 20; mem:ST4[%2(align=8)+12](align=4) GPR32:%vreg0
+	SW %ZERO, %vreg0, 16; mem:ST4[%2+8](align=8) GPR32:%vreg0
+	SW %ZERO, %vreg0, 12; mem:ST4[%2(align=8)+4](align=4) GPR32:%vreg0
+	SW %ZERO, %vreg0<kill>, 8; mem:ST4[%2](align=8) GPR32:%vreg0
+	RetRA
+
+# End machine code for function ptmr_init.
+
+# After Eliminate PHI nodes for register allocation:
+# Machine code for function ptmr_init: Post SSA
+Function Live Ins: %A0 in %vreg0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %A0
+	%vreg0<def> = COPY %A0<kill>; GPR32:%vreg0
+	SW %ZERO, %vreg0, 36; mem:ST4[%2(align=8)+28](align=4) GPR32:%vreg0
+	SW %ZERO, %vreg0, 32; mem:ST4[%2+24](align=8) GPR32:%vreg0
+	SW %ZERO, %vreg0, 28; mem:ST4[%2(align=8)+20](align=4) GPR32:%vreg0
+	SW %ZERO, %vreg0, 24; mem:ST4[%2+16](align=8) GPR32:%vreg0
+	SW %ZERO, %vreg0, 20; mem:ST4[%2(align=8)+12](align=4) GPR32:%vreg0
+	SW %ZERO, %vreg0, 16; mem:ST4[%2+8](align=8) GPR32:%vreg0
+	SW %ZERO, %vreg0, 12; mem:ST4[%2(align=8)+4](align=4) GPR32:%vreg0
+	SW %ZERO, %vreg0<kill>, 8; mem:ST4[%2](align=8) GPR32:%vreg0
+	RetRA
+
+# End machine code for function ptmr_init.
+
+# After Two-Address instruction pass:
+# Machine code for function ptmr_init: Post SSA
+Function Live Ins: %A0 in %vreg0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %A0
+	%vreg0<def> = COPY %A0<kill>; GPR32:%vreg0
+	SW %ZERO, %vreg0, 36; mem:ST4[%2(align=8)+28](align=4) GPR32:%vreg0
+	SW %ZERO, %vreg0, 32; mem:ST4[%2+24](align=8) GPR32:%vreg0
+	SW %ZERO, %vreg0, 28; mem:ST4[%2(align=8)+20](align=4) GPR32:%vreg0
+	SW %ZERO, %vreg0, 24; mem:ST4[%2+16](align=8) GPR32:%vreg0
+	SW %ZERO, %vreg0, 20; mem:ST4[%2(align=8)+12](align=4) GPR32:%vreg0
+	SW %ZERO, %vreg0, 16; mem:ST4[%2+8](align=8) GPR32:%vreg0
+	SW %ZERO, %vreg0, 12; mem:ST4[%2(align=8)+4](align=4) GPR32:%vreg0
+	SW %ZERO, %vreg0<kill>, 8; mem:ST4[%2](align=8) GPR32:%vreg0
+	RetRA
+
+# End machine code for function ptmr_init.
+
+# After Simple Register Coalescing:
+# Machine code for function ptmr_init: Post SSA
+Function Live Ins: %A0 in %vreg0
+
+0B	BB#0: derived from LLVM BB %0
+	    Live Ins: %A0
+16B		%vreg0<def> = COPY %A0; GPR32:%vreg0
+32B		SW %ZERO, %vreg0, 36; mem:ST4[%2(align=8)+28](align=4) GPR32:%vreg0
+48B		SW %ZERO, %vreg0, 32; mem:ST4[%2+24](align=8) GPR32:%vreg0
+64B		SW %ZERO, %vreg0, 28; mem:ST4[%2(align=8)+20](align=4) GPR32:%vreg0
+80B		SW %ZERO, %vreg0, 24; mem:ST4[%2+16](align=8) GPR32:%vreg0
+96B		SW %ZERO, %vreg0, 20; mem:ST4[%2(align=8)+12](align=4) GPR32:%vreg0
+112B		SW %ZERO, %vreg0, 16; mem:ST4[%2+8](align=8) GPR32:%vreg0
+128B		SW %ZERO, %vreg0, 12; mem:ST4[%2(align=8)+4](align=4) GPR32:%vreg0
+144B		SW %ZERO, %vreg0, 8; mem:ST4[%2](align=8) GPR32:%vreg0
+160B		RetRA
+
+# End machine code for function ptmr_init.
+
+# After Machine Instruction Scheduler:
+# Machine code for function ptmr_init: Post SSA
+Function Live Ins: %A0 in %vreg0
+
+0B	BB#0: derived from LLVM BB %0
+	    Live Ins: %A0
+16B		%vreg0<def> = COPY %A0; GPR32:%vreg0
+32B		SW %ZERO, %vreg0, 36; mem:ST4[%2(align=8)+28](align=4) GPR32:%vreg0
+48B		SW %ZERO, %vreg0, 32; mem:ST4[%2+24](align=8) GPR32:%vreg0
+64B		SW %ZERO, %vreg0, 28; mem:ST4[%2(align=8)+20](align=4) GPR32:%vreg0
+80B		SW %ZERO, %vreg0, 24; mem:ST4[%2+16](align=8) GPR32:%vreg0
+96B		SW %ZERO, %vreg0, 20; mem:ST4[%2(align=8)+12](align=4) GPR32:%vreg0
+112B		SW %ZERO, %vreg0, 16; mem:ST4[%2+8](align=8) GPR32:%vreg0
+128B		SW %ZERO, %vreg0, 12; mem:ST4[%2(align=8)+4](align=4) GPR32:%vreg0
+144B		SW %ZERO, %vreg0, 8; mem:ST4[%2](align=8) GPR32:%vreg0
+160B		RetRA
+
+# End machine code for function ptmr_init.
+
+# After Greedy Register Allocator:
+# Machine code for function ptmr_init: Post SSA
+Function Live Ins: %A0 in %vreg0
+
+0B	BB#0: derived from LLVM BB %0
+	    Live Ins: %A0
+16B		%vreg0<def> = COPY %A0; GPR32:%vreg0
+32B		SW %ZERO, %vreg0, 36; mem:ST4[%2(align=8)+28](align=4) GPR32:%vreg0
+48B		SW %ZERO, %vreg0, 32; mem:ST4[%2+24](align=8) GPR32:%vreg0
+64B		SW %ZERO, %vreg0, 28; mem:ST4[%2(align=8)+20](align=4) GPR32:%vreg0
+80B		SW %ZERO, %vreg0, 24; mem:ST4[%2+16](align=8) GPR32:%vreg0
+96B		SW %ZERO, %vreg0, 20; mem:ST4[%2(align=8)+12](align=4) GPR32:%vreg0
+112B		SW %ZERO, %vreg0, 16; mem:ST4[%2+8](align=8) GPR32:%vreg0
+128B		SW %ZERO, %vreg0, 12; mem:ST4[%2(align=8)+4](align=4) GPR32:%vreg0
+144B		SW %ZERO, %vreg0, 8; mem:ST4[%2](align=8) GPR32:%vreg0
+160B		RetRA
+
+# End machine code for function ptmr_init.
+
+# After Virtual Register Rewriter:
+# Machine code for function ptmr_init: Post SSA
+Function Live Ins: %A0
+
+0B	BB#0: derived from LLVM BB %0
+	    Live Ins: %A0
+32B		SW %ZERO, %A0, 36; mem:ST4[%2(align=8)+28](align=4)
+48B		SW %ZERO, %A0, 32; mem:ST4[%2+24](align=8)
+64B		SW %ZERO, %A0, 28; mem:ST4[%2(align=8)+20](align=4)
+80B		SW %ZERO, %A0, 24; mem:ST4[%2+16](align=8)
+96B		SW %ZERO, %A0, 20; mem:ST4[%2(align=8)+12](align=4)
+112B		SW %ZERO, %A0, 16; mem:ST4[%2+8](align=8)
+128B		SW %ZERO, %A0, 12; mem:ST4[%2(align=8)+4](align=4)
+144B		SW %ZERO, %A0<kill>, 8; mem:ST4[%2](align=8)
+160B		RetRA
+
+# End machine code for function ptmr_init.
+
+# After Stack Slot Coloring:
+# Machine code for function ptmr_init: Post SSA
+Function Live Ins: %A0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %A0
+	SW %ZERO, %A0, 36; mem:ST4[%2(align=8)+28](align=4)
+	SW %ZERO, %A0, 32; mem:ST4[%2+24](align=8)
+	SW %ZERO, %A0, 28; mem:ST4[%2(align=8)+20](align=4)
+	SW %ZERO, %A0, 24; mem:ST4[%2+16](align=8)
+	SW %ZERO, %A0, 20; mem:ST4[%2(align=8)+12](align=4)
+	SW %ZERO, %A0, 16; mem:ST4[%2+8](align=8)
+	SW %ZERO, %A0, 12; mem:ST4[%2(align=8)+4](align=4)
+	SW %ZERO, %A0<kill>, 8; mem:ST4[%2](align=8)
+	RetRA
+
+# End machine code for function ptmr_init.
+
+# After Machine Loop Invariant Code Motion:
+# Machine code for function ptmr_init: Post SSA
+Function Live Ins: %A0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %A0
+	SW %ZERO, %A0, 36; mem:ST4[%2(align=8)+28](align=4)
+	SW %ZERO, %A0, 32; mem:ST4[%2+24](align=8)
+	SW %ZERO, %A0, 28; mem:ST4[%2(align=8)+20](align=4)
+	SW %ZERO, %A0, 24; mem:ST4[%2+16](align=8)
+	SW %ZERO, %A0, 20; mem:ST4[%2(align=8)+12](align=4)
+	SW %ZERO, %A0, 16; mem:ST4[%2+8](align=8)
+	SW %ZERO, %A0, 12; mem:ST4[%2(align=8)+4](align=4)
+	SW %ZERO, %A0<kill>, 8; mem:ST4[%2](align=8)
+	RetRA
+
+# End machine code for function ptmr_init.
+
+# After Shrink Wrapping analysis:
+# Machine code for function ptmr_init: Post SSA
+Function Live Ins: %A0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %A0
+	SW %ZERO, %A0, 36; mem:ST4[%2(align=8)+28](align=4)
+	SW %ZERO, %A0, 32; mem:ST4[%2+24](align=8)
+	SW %ZERO, %A0, 28; mem:ST4[%2(align=8)+20](align=4)
+	SW %ZERO, %A0, 24; mem:ST4[%2+16](align=8)
+	SW %ZERO, %A0, 20; mem:ST4[%2(align=8)+12](align=4)
+	SW %ZERO, %A0, 16; mem:ST4[%2+8](align=8)
+	SW %ZERO, %A0, 12; mem:ST4[%2(align=8)+4](align=4)
+	SW %ZERO, %A0<kill>, 8; mem:ST4[%2](align=8)
+	RetRA
+
+# End machine code for function ptmr_init.
+
+# After Prologue/Epilogue Insertion & Frame Finalization:
+# Machine code for function ptmr_init: Post SSA
+Function Live Ins: %A0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %A0
+	SW %ZERO, %A0, 36; mem:ST4[%2(align=8)+28](align=4)
+	SW %ZERO, %A0, 32; mem:ST4[%2+24](align=8)
+	SW %ZERO, %A0, 28; mem:ST4[%2(align=8)+20](align=4)
+	SW %ZERO, %A0, 24; mem:ST4[%2+16](align=8)
+	SW %ZERO, %A0, 20; mem:ST4[%2(align=8)+12](align=4)
+	SW %ZERO, %A0, 16; mem:ST4[%2+8](align=8)
+	SW %ZERO, %A0, 12; mem:ST4[%2(align=8)+4](align=4)
+	SW %ZERO, %A0<kill>, 8; mem:ST4[%2](align=8)
+	RetRA
+
+# End machine code for function ptmr_init.
+
+# After Machine Copy Propagation Pass:
+# Machine code for function ptmr_init: Post SSA
+Function Live Ins: %A0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %A0
+	SW %ZERO, %A0, 36; mem:ST4[%2(align=8)+28](align=4)
+	SW %ZERO, %A0, 32; mem:ST4[%2+24](align=8)
+	SW %ZERO, %A0, 28; mem:ST4[%2(align=8)+20](align=4)
+	SW %ZERO, %A0, 24; mem:ST4[%2+16](align=8)
+	SW %ZERO, %A0, 20; mem:ST4[%2(align=8)+12](align=4)
+	SW %ZERO, %A0, 16; mem:ST4[%2+8](align=8)
+	SW %ZERO, %A0, 12; mem:ST4[%2(align=8)+4](align=4)
+	SW %ZERO, %A0<kill>, 8; mem:ST4[%2](align=8)
+	RetRA
+
+# End machine code for function ptmr_init.
+
+# After Post-RA pseudo instruction expansion pass:
+# Machine code for function ptmr_init: Post SSA
+Function Live Ins: %A0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %A0
+	SW %ZERO, %A0, 36; mem:ST4[%2(align=8)+28](align=4)
+	SW %ZERO, %A0, 32; mem:ST4[%2+24](align=8)
+	SW %ZERO, %A0, 28; mem:ST4[%2(align=8)+20](align=4)
+	SW %ZERO, %A0, 24; mem:ST4[%2+16](align=8)
+	SW %ZERO, %A0, 20; mem:ST4[%2(align=8)+12](align=4)
+	SW %ZERO, %A0, 16; mem:ST4[%2+8](align=8)
+	SW %ZERO, %A0, 12; mem:ST4[%2(align=8)+4](align=4)
+	SW %ZERO, %A0<kill>, 8; mem:ST4[%2](align=8)
+	PseudoReturn %RA
+
+# End machine code for function ptmr_init.
+
+# After Analyze Machine Code For Garbage Collection:
+# Machine code for function ptmr_init: Post SSA
+Function Live Ins: %A0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %A0
+	SW %ZERO, %A0, 36; mem:ST4[%2(align=8)+28](align=4)
+	SW %ZERO, %A0, 32; mem:ST4[%2+24](align=8)
+	SW %ZERO, %A0, 28; mem:ST4[%2(align=8)+20](align=4)
+	SW %ZERO, %A0, 24; mem:ST4[%2+16](align=8)
+	SW %ZERO, %A0, 20; mem:ST4[%2(align=8)+12](align=4)
+	SW %ZERO, %A0, 16; mem:ST4[%2+8](align=8)
+	SW %ZERO, %A0, 12; mem:ST4[%2(align=8)+4](align=4)
+	SW %ZERO, %A0<kill>, 8; mem:ST4[%2](align=8)
+	PseudoReturn %RA
+
+# End machine code for function ptmr_init.
+
+# After Mips Delay Slot Filler:
+# Machine code for function ptmr_init: Post SSA, not tracking liveness
+Function Live Ins: %A0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %A0
+	SW %ZERO, %A0, 36; mem:ST4[%2(align=8)+28](align=4)
+	SW %ZERO, %A0, 32; mem:ST4[%2+24](align=8)
+	SW %ZERO, %A0, 28; mem:ST4[%2(align=8)+20](align=4)
+	SW %ZERO, %A0, 24; mem:ST4[%2+16](align=8)
+	SW %ZERO, %A0, 20; mem:ST4[%2(align=8)+12](align=4)
+	SW %ZERO, %A0, 16; mem:ST4[%2+8](align=8)
+	SW %ZERO, %A0, 12; mem:ST4[%2(align=8)+4](align=4)
+	PseudoReturn %RA
+	  * SW %ZERO, %A0<kill>, 8; mem:ST4[%2](align=8)
+
+# End machine code for function ptmr_init.
+
+# After Mips Long Branch:
+# Machine code for function ptmr_init: Post SSA, not tracking liveness
+Function Live Ins: %A0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %A0
+	SW %ZERO, %A0, 36; mem:ST4[%2(align=8)+28](align=4)
+	SW %ZERO, %A0, 32; mem:ST4[%2+24](align=8)
+	SW %ZERO, %A0, 28; mem:ST4[%2(align=8)+20](align=4)
+	SW %ZERO, %A0, 24; mem:ST4[%2+16](align=8)
+	SW %ZERO, %A0, 20; mem:ST4[%2(align=8)+12](align=4)
+	SW %ZERO, %A0, 16; mem:ST4[%2+8](align=8)
+	SW %ZERO, %A0, 12; mem:ST4[%2(align=8)+4](align=4)
+	PseudoReturn %RA
+	  * SW %ZERO, %A0<kill>, 8; mem:ST4[%2](align=8)
+
+# End machine code for function ptmr_init.
+
+# After Mips Constant Islands:
+# Machine code for function ptmr_init: Post SSA, not tracking liveness
+Function Live Ins: %A0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %A0
+	SW %ZERO, %A0, 36; mem:ST4[%2(align=8)+28](align=4)
+	SW %ZERO, %A0, 32; mem:ST4[%2+24](align=8)
+	SW %ZERO, %A0, 28; mem:ST4[%2(align=8)+20](align=4)
+	SW %ZERO, %A0, 24; mem:ST4[%2+16](align=8)
+	SW %ZERO, %A0, 20; mem:ST4[%2(align=8)+12](align=4)
+	SW %ZERO, %A0, 16; mem:ST4[%2+8](align=8)
+	SW %ZERO, %A0, 12; mem:ST4[%2(align=8)+4](align=4)
+	PseudoReturn %RA
+	  * SW %ZERO, %A0<kill>, 8; mem:ST4[%2](align=8)
+
+# End machine code for function ptmr_init.
+
+# After Contiguously Lay Out Funclets:
+# Machine code for function ptmr_init: Post SSA, not tracking liveness
+Function Live Ins: %A0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %A0
+	SW %ZERO, %A0, 36; mem:ST4[%2(align=8)+28](align=4)
+	SW %ZERO, %A0, 32; mem:ST4[%2+24](align=8)
+	SW %ZERO, %A0, 28; mem:ST4[%2(align=8)+20](align=4)
+	SW %ZERO, %A0, 24; mem:ST4[%2+16](align=8)
+	SW %ZERO, %A0, 20; mem:ST4[%2(align=8)+12](align=4)
+	SW %ZERO, %A0, 16; mem:ST4[%2+8](align=8)
+	SW %ZERO, %A0, 12; mem:ST4[%2(align=8)+4](align=4)
+	PseudoReturn %RA
+	  * SW %ZERO, %A0<kill>, 8; mem:ST4[%2](align=8)
+
+# End machine code for function ptmr_init.
+
+# After StackMap Liveness Analysis:
+# Machine code for function ptmr_init: Post SSA, not tracking liveness
+Function Live Ins: %A0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %A0
+	SW %ZERO, %A0, 36; mem:ST4[%2(align=8)+28](align=4)
+	SW %ZERO, %A0, 32; mem:ST4[%2+24](align=8)
+	SW %ZERO, %A0, 28; mem:ST4[%2(align=8)+20](align=4)
+	SW %ZERO, %A0, 24; mem:ST4[%2+16](align=8)
+	SW %ZERO, %A0, 20; mem:ST4[%2(align=8)+12](align=4)
+	SW %ZERO, %A0, 16; mem:ST4[%2+8](align=8)
+	SW %ZERO, %A0, 12; mem:ST4[%2(align=8)+4](align=4)
+	PseudoReturn %RA
+	  * SW %ZERO, %A0<kill>, 8; mem:ST4[%2](align=8)
+
+# End machine code for function ptmr_init.
+
+# After Live DEBUG_VALUE analysis:
+# Machine code for function ptmr_init: Post SSA, not tracking liveness
+Function Live Ins: %A0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %A0
+	SW %ZERO, %A0, 36; mem:ST4[%2(align=8)+28](align=4)
+	SW %ZERO, %A0, 32; mem:ST4[%2+24](align=8)
+	SW %ZERO, %A0, 28; mem:ST4[%2(align=8)+20](align=4)
+	SW %ZERO, %A0, 24; mem:ST4[%2+16](align=8)
+	SW %ZERO, %A0, 20; mem:ST4[%2(align=8)+12](align=4)
+	SW %ZERO, %A0, 16; mem:ST4[%2+8](align=8)
+	SW %ZERO, %A0, 12; mem:ST4[%2(align=8)+4](align=4)
+	PseudoReturn %RA
+	  * SW %ZERO, %A0<kill>, 8; mem:ST4[%2](align=8)
+
+# End machine code for function ptmr_init.
+

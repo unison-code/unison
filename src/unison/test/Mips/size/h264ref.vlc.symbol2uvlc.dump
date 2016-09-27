@@ -1,0 +1,809 @@
+# After Instruction Selection:
+# Machine code for function symbol2uvlc: SSA
+Function Live Ins: %A0 in %vreg0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %A0
+	%vreg0<def> = COPY %A0; GPR32:%vreg0
+	%vreg1<def> = LW %vreg0, 12; mem:LD4[%1] GPR32:%vreg1,%vreg0
+	%vreg2<def> = SRL %vreg1, 31; GPR32:%vreg2,%vreg1
+	%vreg3<def> = ADDu %vreg1, %vreg2<kill>; GPR32:%vreg3,%vreg1,%vreg2
+	%vreg4<def> = SRA %vreg3<kill>, 1; GPR32:%vreg4,%vreg3
+	%vreg5<def> = ADDiu %ZERO, 1; GPR32:%vreg5
+	%vreg6<def> = SLLV %vreg5<kill>, %vreg4<kill>; GPR32:%vreg6,%vreg5,%vreg4
+	%vreg7<def> = LW %vreg0, 16; mem:LD4[%5] GPR32:%vreg7,%vreg0
+	%vreg8<def> = ADDiu %ZERO, 0; GPR32:%vreg8
+	%vreg9<def> = ADDiu %vreg6, -1; GPR32:%vreg9,%vreg6
+	%vreg10<def> = AND %vreg9<kill>, %vreg7<kill>; GPR32:%vreg10,%vreg9,%vreg7
+	%vreg11<def> = OR %vreg10<kill>, %vreg6; GPR32:%vreg11,%vreg10,%vreg6
+	SW %vreg11<kill>, %vreg0, 20; mem:ST4[%10] GPR32:%vreg11,%vreg0
+	%V0<def> = COPY %vreg8; GPR32:%vreg8
+	RetRA %V0<imp-use>
+
+# End machine code for function symbol2uvlc.
+
+# After Expand ISel Pseudo-instructions:
+# Machine code for function symbol2uvlc: SSA
+Function Live Ins: %A0 in %vreg0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %A0
+	%vreg0<def> = COPY %A0; GPR32:%vreg0
+	%vreg1<def> = LW %vreg0, 12; mem:LD4[%1] GPR32:%vreg1,%vreg0
+	%vreg2<def> = SRL %vreg1, 31; GPR32:%vreg2,%vreg1
+	%vreg3<def> = ADDu %vreg1, %vreg2<kill>; GPR32:%vreg3,%vreg1,%vreg2
+	%vreg4<def> = SRA %vreg3<kill>, 1; GPR32:%vreg4,%vreg3
+	%vreg5<def> = ADDiu %ZERO, 1; GPR32:%vreg5
+	%vreg6<def> = SLLV %vreg5<kill>, %vreg4<kill>; GPR32:%vreg6,%vreg5,%vreg4
+	%vreg7<def> = LW %vreg0, 16; mem:LD4[%5] GPR32:%vreg7,%vreg0
+	%vreg8<def> = ADDiu %ZERO, 0; GPR32:%vreg8
+	%vreg9<def> = ADDiu %vreg6, -1; GPR32:%vreg9,%vreg6
+	%vreg10<def> = AND %vreg9<kill>, %vreg7<kill>; GPR32:%vreg10,%vreg9,%vreg7
+	%vreg11<def> = OR %vreg10<kill>, %vreg6; GPR32:%vreg11,%vreg10,%vreg6
+	SW %vreg11<kill>, %vreg0, 20; mem:ST4[%10] GPR32:%vreg11,%vreg0
+	%V0<def> = COPY %vreg8; GPR32:%vreg8
+	RetRA %V0<imp-use>
+
+# End machine code for function symbol2uvlc.
+
+# After Mips OptimizePICCall:
+# Machine code for function symbol2uvlc: SSA
+Function Live Ins: %A0 in %vreg0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %A0
+	%vreg0<def> = COPY %A0; GPR32:%vreg0
+	%vreg1<def> = LW %vreg0, 12; mem:LD4[%1] GPR32:%vreg1,%vreg0
+	%vreg2<def> = SRL %vreg1, 31; GPR32:%vreg2,%vreg1
+	%vreg3<def> = ADDu %vreg1, %vreg2<kill>; GPR32:%vreg3,%vreg1,%vreg2
+	%vreg4<def> = SRA %vreg3<kill>, 1; GPR32:%vreg4,%vreg3
+	%vreg5<def> = ADDiu %ZERO, 1; GPR32:%vreg5
+	%vreg6<def> = SLLV %vreg5<kill>, %vreg4<kill>; GPR32:%vreg6,%vreg5,%vreg4
+	%vreg7<def> = LW %vreg0, 16; mem:LD4[%5] GPR32:%vreg7,%vreg0
+	%vreg8<def> = ADDiu %ZERO, 0; GPR32:%vreg8
+	%vreg9<def> = ADDiu %vreg6, -1; GPR32:%vreg9,%vreg6
+	%vreg10<def> = AND %vreg9<kill>, %vreg7<kill>; GPR32:%vreg10,%vreg9,%vreg7
+	%vreg11<def> = OR %vreg10<kill>, %vreg6; GPR32:%vreg11,%vreg10,%vreg6
+	SW %vreg11<kill>, %vreg0, 20; mem:ST4[%10] GPR32:%vreg11,%vreg0
+	%V0<def> = COPY %vreg8; GPR32:%vreg8
+	RetRA %V0<imp-use>
+
+# End machine code for function symbol2uvlc.
+
+# After Tail Duplication:
+# Machine code for function symbol2uvlc: SSA
+Function Live Ins: %A0 in %vreg0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %A0
+	%vreg0<def> = COPY %A0; GPR32:%vreg0
+	%vreg1<def> = LW %vreg0, 12; mem:LD4[%1] GPR32:%vreg1,%vreg0
+	%vreg2<def> = SRL %vreg1, 31; GPR32:%vreg2,%vreg1
+	%vreg3<def> = ADDu %vreg1, %vreg2<kill>; GPR32:%vreg3,%vreg1,%vreg2
+	%vreg4<def> = SRA %vreg3<kill>, 1; GPR32:%vreg4,%vreg3
+	%vreg5<def> = ADDiu %ZERO, 1; GPR32:%vreg5
+	%vreg6<def> = SLLV %vreg5<kill>, %vreg4<kill>; GPR32:%vreg6,%vreg5,%vreg4
+	%vreg7<def> = LW %vreg0, 16; mem:LD4[%5] GPR32:%vreg7,%vreg0
+	%vreg8<def> = ADDiu %ZERO, 0; GPR32:%vreg8
+	%vreg9<def> = ADDiu %vreg6, -1; GPR32:%vreg9,%vreg6
+	%vreg10<def> = AND %vreg9<kill>, %vreg7<kill>; GPR32:%vreg10,%vreg9,%vreg7
+	%vreg11<def> = OR %vreg10<kill>, %vreg6; GPR32:%vreg11,%vreg10,%vreg6
+	SW %vreg11<kill>, %vreg0, 20; mem:ST4[%10] GPR32:%vreg11,%vreg0
+	%V0<def> = COPY %vreg8; GPR32:%vreg8
+	RetRA %V0<imp-use>
+
+# End machine code for function symbol2uvlc.
+
+# After Optimize machine instruction PHIs:
+# Machine code for function symbol2uvlc: SSA
+Function Live Ins: %A0 in %vreg0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %A0
+	%vreg0<def> = COPY %A0; GPR32:%vreg0
+	%vreg1<def> = LW %vreg0, 12; mem:LD4[%1] GPR32:%vreg1,%vreg0
+	%vreg2<def> = SRL %vreg1, 31; GPR32:%vreg2,%vreg1
+	%vreg3<def> = ADDu %vreg1, %vreg2<kill>; GPR32:%vreg3,%vreg1,%vreg2
+	%vreg4<def> = SRA %vreg3<kill>, 1; GPR32:%vreg4,%vreg3
+	%vreg5<def> = ADDiu %ZERO, 1; GPR32:%vreg5
+	%vreg6<def> = SLLV %vreg5<kill>, %vreg4<kill>; GPR32:%vreg6,%vreg5,%vreg4
+	%vreg7<def> = LW %vreg0, 16; mem:LD4[%5] GPR32:%vreg7,%vreg0
+	%vreg8<def> = ADDiu %ZERO, 0; GPR32:%vreg8
+	%vreg9<def> = ADDiu %vreg6, -1; GPR32:%vreg9,%vreg6
+	%vreg10<def> = AND %vreg9<kill>, %vreg7<kill>; GPR32:%vreg10,%vreg9,%vreg7
+	%vreg11<def> = OR %vreg10<kill>, %vreg6; GPR32:%vreg11,%vreg10,%vreg6
+	SW %vreg11<kill>, %vreg0, 20; mem:ST4[%10] GPR32:%vreg11,%vreg0
+	%V0<def> = COPY %vreg8; GPR32:%vreg8
+	RetRA %V0<imp-use>
+
+# End machine code for function symbol2uvlc.
+
+# After Merge disjoint stack slots:
+# Machine code for function symbol2uvlc: SSA
+Function Live Ins: %A0 in %vreg0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %A0
+	%vreg0<def> = COPY %A0; GPR32:%vreg0
+	%vreg1<def> = LW %vreg0, 12; mem:LD4[%1] GPR32:%vreg1,%vreg0
+	%vreg2<def> = SRL %vreg1, 31; GPR32:%vreg2,%vreg1
+	%vreg3<def> = ADDu %vreg1, %vreg2<kill>; GPR32:%vreg3,%vreg1,%vreg2
+	%vreg4<def> = SRA %vreg3<kill>, 1; GPR32:%vreg4,%vreg3
+	%vreg5<def> = ADDiu %ZERO, 1; GPR32:%vreg5
+	%vreg6<def> = SLLV %vreg5<kill>, %vreg4<kill>; GPR32:%vreg6,%vreg5,%vreg4
+	%vreg7<def> = LW %vreg0, 16; mem:LD4[%5] GPR32:%vreg7,%vreg0
+	%vreg8<def> = ADDiu %ZERO, 0; GPR32:%vreg8
+	%vreg9<def> = ADDiu %vreg6, -1; GPR32:%vreg9,%vreg6
+	%vreg10<def> = AND %vreg9<kill>, %vreg7<kill>; GPR32:%vreg10,%vreg9,%vreg7
+	%vreg11<def> = OR %vreg10<kill>, %vreg6; GPR32:%vreg11,%vreg10,%vreg6
+	SW %vreg11<kill>, %vreg0, 20; mem:ST4[%10] GPR32:%vreg11,%vreg0
+	%V0<def> = COPY %vreg8; GPR32:%vreg8
+	RetRA %V0<imp-use>
+
+# End machine code for function symbol2uvlc.
+
+# After Local Stack Slot Allocation:
+# Machine code for function symbol2uvlc: SSA
+Function Live Ins: %A0 in %vreg0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %A0
+	%vreg0<def> = COPY %A0; GPR32:%vreg0
+	%vreg1<def> = LW %vreg0, 12; mem:LD4[%1] GPR32:%vreg1,%vreg0
+	%vreg2<def> = SRL %vreg1, 31; GPR32:%vreg2,%vreg1
+	%vreg3<def> = ADDu %vreg1, %vreg2<kill>; GPR32:%vreg3,%vreg1,%vreg2
+	%vreg4<def> = SRA %vreg3<kill>, 1; GPR32:%vreg4,%vreg3
+	%vreg5<def> = ADDiu %ZERO, 1; GPR32:%vreg5
+	%vreg6<def> = SLLV %vreg5<kill>, %vreg4<kill>; GPR32:%vreg6,%vreg5,%vreg4
+	%vreg7<def> = LW %vreg0, 16; mem:LD4[%5] GPR32:%vreg7,%vreg0
+	%vreg8<def> = ADDiu %ZERO, 0; GPR32:%vreg8
+	%vreg9<def> = ADDiu %vreg6, -1; GPR32:%vreg9,%vreg6
+	%vreg10<def> = AND %vreg9<kill>, %vreg7<kill>; GPR32:%vreg10,%vreg9,%vreg7
+	%vreg11<def> = OR %vreg10<kill>, %vreg6; GPR32:%vreg11,%vreg10,%vreg6
+	SW %vreg11<kill>, %vreg0, 20; mem:ST4[%10] GPR32:%vreg11,%vreg0
+	%V0<def> = COPY %vreg8; GPR32:%vreg8
+	RetRA %V0<imp-use>
+
+# End machine code for function symbol2uvlc.
+
+# After Remove dead machine instructions:
+# Machine code for function symbol2uvlc: SSA
+Function Live Ins: %A0 in %vreg0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %A0
+	%vreg0<def> = COPY %A0; GPR32:%vreg0
+	%vreg1<def> = LW %vreg0, 12; mem:LD4[%1] GPR32:%vreg1,%vreg0
+	%vreg2<def> = SRL %vreg1, 31; GPR32:%vreg2,%vreg1
+	%vreg3<def> = ADDu %vreg1, %vreg2<kill>; GPR32:%vreg3,%vreg1,%vreg2
+	%vreg4<def> = SRA %vreg3<kill>, 1; GPR32:%vreg4,%vreg3
+	%vreg5<def> = ADDiu %ZERO, 1; GPR32:%vreg5
+	%vreg6<def> = SLLV %vreg5<kill>, %vreg4<kill>; GPR32:%vreg6,%vreg5,%vreg4
+	%vreg7<def> = LW %vreg0, 16; mem:LD4[%5] GPR32:%vreg7,%vreg0
+	%vreg8<def> = ADDiu %ZERO, 0; GPR32:%vreg8
+	%vreg9<def> = ADDiu %vreg6, -1; GPR32:%vreg9,%vreg6
+	%vreg10<def> = AND %vreg9<kill>, %vreg7<kill>; GPR32:%vreg10,%vreg9,%vreg7
+	%vreg11<def> = OR %vreg10<kill>, %vreg6; GPR32:%vreg11,%vreg10,%vreg6
+	SW %vreg11<kill>, %vreg0, 20; mem:ST4[%10] GPR32:%vreg11,%vreg0
+	%V0<def> = COPY %vreg8; GPR32:%vreg8
+	RetRA %V0<imp-use>
+
+# End machine code for function symbol2uvlc.
+
+# After Machine Loop Invariant Code Motion:
+# Machine code for function symbol2uvlc: SSA
+Function Live Ins: %A0 in %vreg0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %A0
+	%vreg0<def> = COPY %A0; GPR32:%vreg0
+	%vreg1<def> = LW %vreg0, 12; mem:LD4[%1] GPR32:%vreg1,%vreg0
+	%vreg2<def> = SRL %vreg1, 31; GPR32:%vreg2,%vreg1
+	%vreg3<def> = ADDu %vreg1, %vreg2<kill>; GPR32:%vreg3,%vreg1,%vreg2
+	%vreg4<def> = SRA %vreg3<kill>, 1; GPR32:%vreg4,%vreg3
+	%vreg5<def> = ADDiu %ZERO, 1; GPR32:%vreg5
+	%vreg6<def> = SLLV %vreg5<kill>, %vreg4<kill>; GPR32:%vreg6,%vreg5,%vreg4
+	%vreg7<def> = LW %vreg0, 16; mem:LD4[%5] GPR32:%vreg7,%vreg0
+	%vreg8<def> = ADDiu %ZERO, 0; GPR32:%vreg8
+	%vreg9<def> = ADDiu %vreg6, -1; GPR32:%vreg9,%vreg6
+	%vreg10<def> = AND %vreg9<kill>, %vreg7<kill>; GPR32:%vreg10,%vreg9,%vreg7
+	%vreg11<def> = OR %vreg10<kill>, %vreg6; GPR32:%vreg11,%vreg10,%vreg6
+	SW %vreg11<kill>, %vreg0, 20; mem:ST4[%10] GPR32:%vreg11,%vreg0
+	%V0<def> = COPY %vreg8; GPR32:%vreg8
+	RetRA %V0<imp-use>
+
+# End machine code for function symbol2uvlc.
+
+# After Machine Common Subexpression Elimination:
+# Machine code for function symbol2uvlc: SSA
+Function Live Ins: %A0 in %vreg0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %A0
+	%vreg0<def> = COPY %A0; GPR32:%vreg0
+	%vreg1<def> = LW %vreg0, 12; mem:LD4[%1] GPR32:%vreg1,%vreg0
+	%vreg2<def> = SRL %vreg1, 31; GPR32:%vreg2,%vreg1
+	%vreg3<def> = ADDu %vreg1, %vreg2<kill>; GPR32:%vreg3,%vreg1,%vreg2
+	%vreg4<def> = SRA %vreg3<kill>, 1; GPR32:%vreg4,%vreg3
+	%vreg5<def> = ADDiu %ZERO, 1; GPR32:%vreg5
+	%vreg6<def> = SLLV %vreg5<kill>, %vreg4<kill>; GPR32:%vreg6,%vreg5,%vreg4
+	%vreg7<def> = LW %vreg0, 16; mem:LD4[%5] GPR32:%vreg7,%vreg0
+	%vreg8<def> = ADDiu %ZERO, 0; GPR32:%vreg8
+	%vreg9<def> = ADDiu %vreg6, -1; GPR32:%vreg9,%vreg6
+	%vreg10<def> = AND %vreg9<kill>, %vreg7<kill>; GPR32:%vreg10,%vreg9,%vreg7
+	%vreg11<def> = OR %vreg10<kill>, %vreg6; GPR32:%vreg11,%vreg10,%vreg6
+	SW %vreg11<kill>, %vreg0, 20; mem:ST4[%10] GPR32:%vreg11,%vreg0
+	%V0<def> = COPY %vreg8; GPR32:%vreg8
+	RetRA %V0<imp-use>
+
+# End machine code for function symbol2uvlc.
+
+# After Machine code sinking:
+# Machine code for function symbol2uvlc: SSA
+Function Live Ins: %A0 in %vreg0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %A0
+	%vreg0<def> = COPY %A0; GPR32:%vreg0
+	%vreg1<def> = LW %vreg0, 12; mem:LD4[%1] GPR32:%vreg1,%vreg0
+	%vreg2<def> = SRL %vreg1, 31; GPR32:%vreg2,%vreg1
+	%vreg3<def> = ADDu %vreg1, %vreg2<kill>; GPR32:%vreg3,%vreg1,%vreg2
+	%vreg4<def> = SRA %vreg3<kill>, 1; GPR32:%vreg4,%vreg3
+	%vreg5<def> = ADDiu %ZERO, 1; GPR32:%vreg5
+	%vreg6<def> = SLLV %vreg5<kill>, %vreg4<kill>; GPR32:%vreg6,%vreg5,%vreg4
+	%vreg7<def> = LW %vreg0, 16; mem:LD4[%5] GPR32:%vreg7,%vreg0
+	%vreg8<def> = ADDiu %ZERO, 0; GPR32:%vreg8
+	%vreg9<def> = ADDiu %vreg6, -1; GPR32:%vreg9,%vreg6
+	%vreg10<def> = AND %vreg9<kill>, %vreg7<kill>; GPR32:%vreg10,%vreg9,%vreg7
+	%vreg11<def> = OR %vreg10<kill>, %vreg6; GPR32:%vreg11,%vreg10,%vreg6
+	SW %vreg11<kill>, %vreg0, 20; mem:ST4[%10] GPR32:%vreg11,%vreg0
+	%V0<def> = COPY %vreg8; GPR32:%vreg8
+	RetRA %V0<imp-use>
+
+# End machine code for function symbol2uvlc.
+
+# After Peephole Optimizations:
+# Machine code for function symbol2uvlc: SSA
+Function Live Ins: %A0 in %vreg0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %A0
+	%vreg0<def> = COPY %A0; GPR32:%vreg0
+	%vreg1<def> = LW %vreg0, 12; mem:LD4[%1] GPR32:%vreg1,%vreg0
+	%vreg2<def> = SRL %vreg1, 31; GPR32:%vreg2,%vreg1
+	%vreg3<def> = ADDu %vreg1, %vreg2<kill>; GPR32:%vreg3,%vreg1,%vreg2
+	%vreg4<def> = SRA %vreg3<kill>, 1; GPR32:%vreg4,%vreg3
+	%vreg5<def> = ADDiu %ZERO, 1; GPR32:%vreg5
+	%vreg6<def> = SLLV %vreg5<kill>, %vreg4<kill>; GPR32:%vreg6,%vreg5,%vreg4
+	%vreg7<def> = LW %vreg0, 16; mem:LD4[%5] GPR32:%vreg7,%vreg0
+	%vreg8<def> = ADDiu %ZERO, 0; GPR32:%vreg8
+	%vreg9<def> = ADDiu %vreg6, -1; GPR32:%vreg9,%vreg6
+	%vreg10<def> = AND %vreg9<kill>, %vreg7<kill>; GPR32:%vreg10,%vreg9,%vreg7
+	%vreg11<def> = OR %vreg10<kill>, %vreg6; GPR32:%vreg11,%vreg10,%vreg6
+	SW %vreg11<kill>, %vreg0, 20; mem:ST4[%10] GPR32:%vreg11,%vreg0
+	%V0<def> = COPY %vreg8; GPR32:%vreg8
+	RetRA %V0<imp-use>
+
+# End machine code for function symbol2uvlc.
+
+# After Remove dead machine instructions:
+# Machine code for function symbol2uvlc: SSA
+Function Live Ins: %A0 in %vreg0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %A0
+	%vreg0<def> = COPY %A0; GPR32:%vreg0
+	%vreg1<def> = LW %vreg0, 12; mem:LD4[%1] GPR32:%vreg1,%vreg0
+	%vreg2<def> = SRL %vreg1, 31; GPR32:%vreg2,%vreg1
+	%vreg3<def> = ADDu %vreg1, %vreg2<kill>; GPR32:%vreg3,%vreg1,%vreg2
+	%vreg4<def> = SRA %vreg3<kill>, 1; GPR32:%vreg4,%vreg3
+	%vreg5<def> = ADDiu %ZERO, 1; GPR32:%vreg5
+	%vreg6<def> = SLLV %vreg5<kill>, %vreg4<kill>; GPR32:%vreg6,%vreg5,%vreg4
+	%vreg7<def> = LW %vreg0, 16; mem:LD4[%5] GPR32:%vreg7,%vreg0
+	%vreg8<def> = ADDiu %ZERO, 0; GPR32:%vreg8
+	%vreg9<def> = ADDiu %vreg6, -1; GPR32:%vreg9,%vreg6
+	%vreg10<def> = AND %vreg9<kill>, %vreg7<kill>; GPR32:%vreg10,%vreg9,%vreg7
+	%vreg11<def> = OR %vreg10<kill>, %vreg6; GPR32:%vreg11,%vreg10,%vreg6
+	SW %vreg11<kill>, %vreg0, 20; mem:ST4[%10] GPR32:%vreg11,%vreg0
+	%V0<def> = COPY %vreg8; GPR32:%vreg8
+	RetRA %V0<imp-use>
+
+# End machine code for function symbol2uvlc.
+
+# After Process Implicit Definitions:
+# Machine code for function symbol2uvlc: SSA
+Function Live Ins: %A0 in %vreg0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %A0
+	%vreg0<def> = COPY %A0; GPR32:%vreg0
+	%vreg1<def> = LW %vreg0, 12; mem:LD4[%1] GPR32:%vreg1,%vreg0
+	%vreg2<def> = SRL %vreg1, 31; GPR32:%vreg2,%vreg1
+	%vreg3<def> = ADDu %vreg1, %vreg2<kill>; GPR32:%vreg3,%vreg1,%vreg2
+	%vreg4<def> = SRA %vreg3<kill>, 1; GPR32:%vreg4,%vreg3
+	%vreg5<def> = ADDiu %ZERO, 1; GPR32:%vreg5
+	%vreg6<def> = SLLV %vreg5<kill>, %vreg4<kill>; GPR32:%vreg6,%vreg5,%vreg4
+	%vreg7<def> = LW %vreg0, 16; mem:LD4[%5] GPR32:%vreg7,%vreg0
+	%vreg8<def> = ADDiu %ZERO, 0; GPR32:%vreg8
+	%vreg9<def> = ADDiu %vreg6, -1; GPR32:%vreg9,%vreg6
+	%vreg10<def> = AND %vreg9<kill>, %vreg7<kill>; GPR32:%vreg10,%vreg9,%vreg7
+	%vreg11<def> = OR %vreg10<kill>, %vreg6; GPR32:%vreg11,%vreg10,%vreg6
+	SW %vreg11<kill>, %vreg0, 20; mem:ST4[%10] GPR32:%vreg11,%vreg0
+	%V0<def> = COPY %vreg8; GPR32:%vreg8
+	RetRA %V0<imp-use>
+
+# End machine code for function symbol2uvlc.
+
+# After Live Variable Analysis:
+# Machine code for function symbol2uvlc: SSA
+Function Live Ins: %A0 in %vreg0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %A0
+	%vreg0<def> = COPY %A0<kill>; GPR32:%vreg0
+	%vreg1<def> = LW %vreg0, 12; mem:LD4[%1] GPR32:%vreg1,%vreg0
+	%vreg2<def> = SRL %vreg1, 31; GPR32:%vreg2,%vreg1
+	%vreg3<def> = ADDu %vreg1<kill>, %vreg2<kill>; GPR32:%vreg3,%vreg1,%vreg2
+	%vreg4<def> = SRA %vreg3<kill>, 1; GPR32:%vreg4,%vreg3
+	%vreg5<def> = ADDiu %ZERO, 1; GPR32:%vreg5
+	%vreg6<def> = SLLV %vreg5<kill>, %vreg4<kill>; GPR32:%vreg6,%vreg5,%vreg4
+	%vreg7<def> = LW %vreg0, 16; mem:LD4[%5] GPR32:%vreg7,%vreg0
+	%vreg8<def> = ADDiu %ZERO, 0; GPR32:%vreg8
+	%vreg9<def> = ADDiu %vreg6, -1; GPR32:%vreg9,%vreg6
+	%vreg10<def> = AND %vreg9<kill>, %vreg7<kill>; GPR32:%vreg10,%vreg9,%vreg7
+	%vreg11<def> = OR %vreg10<kill>, %vreg6<kill>; GPR32:%vreg11,%vreg10,%vreg6
+	SW %vreg11<kill>, %vreg0<kill>, 20; mem:ST4[%10] GPR32:%vreg11,%vreg0
+	%V0<def> = COPY %vreg8<kill>; GPR32:%vreg8
+	RetRA %V0<imp-use,kill>
+
+# End machine code for function symbol2uvlc.
+
+# After Machine Natural Loop Construction:
+# Machine code for function symbol2uvlc: SSA
+Function Live Ins: %A0 in %vreg0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %A0
+	%vreg0<def> = COPY %A0<kill>; GPR32:%vreg0
+	%vreg1<def> = LW %vreg0, 12; mem:LD4[%1] GPR32:%vreg1,%vreg0
+	%vreg2<def> = SRL %vreg1, 31; GPR32:%vreg2,%vreg1
+	%vreg3<def> = ADDu %vreg1<kill>, %vreg2<kill>; GPR32:%vreg3,%vreg1,%vreg2
+	%vreg4<def> = SRA %vreg3<kill>, 1; GPR32:%vreg4,%vreg3
+	%vreg5<def> = ADDiu %ZERO, 1; GPR32:%vreg5
+	%vreg6<def> = SLLV %vreg5<kill>, %vreg4<kill>; GPR32:%vreg6,%vreg5,%vreg4
+	%vreg7<def> = LW %vreg0, 16; mem:LD4[%5] GPR32:%vreg7,%vreg0
+	%vreg8<def> = ADDiu %ZERO, 0; GPR32:%vreg8
+	%vreg9<def> = ADDiu %vreg6, -1; GPR32:%vreg9,%vreg6
+	%vreg10<def> = AND %vreg9<kill>, %vreg7<kill>; GPR32:%vreg10,%vreg9,%vreg7
+	%vreg11<def> = OR %vreg10<kill>, %vreg6<kill>; GPR32:%vreg11,%vreg10,%vreg6
+	SW %vreg11<kill>, %vreg0<kill>, 20; mem:ST4[%10] GPR32:%vreg11,%vreg0
+	%V0<def> = COPY %vreg8<kill>; GPR32:%vreg8
+	RetRA %V0<imp-use,kill>
+
+# End machine code for function symbol2uvlc.
+
+# After Eliminate PHI nodes for register allocation:
+# Machine code for function symbol2uvlc: Post SSA
+Function Live Ins: %A0 in %vreg0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %A0
+	%vreg0<def> = COPY %A0<kill>; GPR32:%vreg0
+	%vreg1<def> = LW %vreg0, 12; mem:LD4[%1] GPR32:%vreg1,%vreg0
+	%vreg2<def> = SRL %vreg1, 31; GPR32:%vreg2,%vreg1
+	%vreg3<def> = ADDu %vreg1<kill>, %vreg2<kill>; GPR32:%vreg3,%vreg1,%vreg2
+	%vreg4<def> = SRA %vreg3<kill>, 1; GPR32:%vreg4,%vreg3
+	%vreg5<def> = ADDiu %ZERO, 1; GPR32:%vreg5
+	%vreg6<def> = SLLV %vreg5<kill>, %vreg4<kill>; GPR32:%vreg6,%vreg5,%vreg4
+	%vreg7<def> = LW %vreg0, 16; mem:LD4[%5] GPR32:%vreg7,%vreg0
+	%vreg8<def> = ADDiu %ZERO, 0; GPR32:%vreg8
+	%vreg9<def> = ADDiu %vreg6, -1; GPR32:%vreg9,%vreg6
+	%vreg10<def> = AND %vreg9<kill>, %vreg7<kill>; GPR32:%vreg10,%vreg9,%vreg7
+	%vreg11<def> = OR %vreg10<kill>, %vreg6<kill>; GPR32:%vreg11,%vreg10,%vreg6
+	SW %vreg11<kill>, %vreg0<kill>, 20; mem:ST4[%10] GPR32:%vreg11,%vreg0
+	%V0<def> = COPY %vreg8<kill>; GPR32:%vreg8
+	RetRA %V0<imp-use,kill>
+
+# End machine code for function symbol2uvlc.
+
+# After Two-Address instruction pass:
+# Machine code for function symbol2uvlc: Post SSA
+Function Live Ins: %A0 in %vreg0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %A0
+	%vreg0<def> = COPY %A0<kill>; GPR32:%vreg0
+	%vreg1<def> = LW %vreg0, 12; mem:LD4[%1] GPR32:%vreg1,%vreg0
+	%vreg2<def> = SRL %vreg1, 31; GPR32:%vreg2,%vreg1
+	%vreg3<def> = ADDu %vreg1<kill>, %vreg2<kill>; GPR32:%vreg3,%vreg1,%vreg2
+	%vreg4<def> = SRA %vreg3<kill>, 1; GPR32:%vreg4,%vreg3
+	%vreg5<def> = ADDiu %ZERO, 1; GPR32:%vreg5
+	%vreg6<def> = SLLV %vreg5<kill>, %vreg4<kill>; GPR32:%vreg6,%vreg5,%vreg4
+	%vreg7<def> = LW %vreg0, 16; mem:LD4[%5] GPR32:%vreg7,%vreg0
+	%vreg8<def> = ADDiu %ZERO, 0; GPR32:%vreg8
+	%vreg9<def> = ADDiu %vreg6, -1; GPR32:%vreg9,%vreg6
+	%vreg10<def> = AND %vreg9<kill>, %vreg7<kill>; GPR32:%vreg10,%vreg9,%vreg7
+	%vreg11<def> = OR %vreg10<kill>, %vreg6<kill>; GPR32:%vreg11,%vreg10,%vreg6
+	SW %vreg11<kill>, %vreg0<kill>, 20; mem:ST4[%10] GPR32:%vreg11,%vreg0
+	%V0<def> = COPY %vreg8<kill>; GPR32:%vreg8
+	RetRA %V0<imp-use,kill>
+
+# End machine code for function symbol2uvlc.
+
+# After Simple Register Coalescing:
+# Machine code for function symbol2uvlc: Post SSA
+Function Live Ins: %A0 in %vreg0
+
+0B	BB#0: derived from LLVM BB %0
+	    Live Ins: %A0
+16B		%vreg0<def> = COPY %A0; GPR32:%vreg0
+32B		%vreg1<def> = LW %vreg0, 12; mem:LD4[%1] GPR32:%vreg1,%vreg0
+48B		%vreg2<def> = SRL %vreg1, 31; GPR32:%vreg2,%vreg1
+64B		%vreg3<def> = ADDu %vreg1, %vreg2; GPR32:%vreg3,%vreg1,%vreg2
+80B		%vreg4<def> = SRA %vreg3, 1; GPR32:%vreg4,%vreg3
+96B		%vreg5<def> = ADDiu %ZERO, 1; GPR32:%vreg5
+112B		%vreg6<def> = SLLV %vreg5, %vreg4; GPR32:%vreg6,%vreg5,%vreg4
+128B		%vreg7<def> = LW %vreg0, 16; mem:LD4[%5] GPR32:%vreg7,%vreg0
+160B		%vreg9<def> = ADDiu %vreg6, -1; GPR32:%vreg9,%vreg6
+176B		%vreg10<def> = AND %vreg9, %vreg7; GPR32:%vreg10,%vreg9,%vreg7
+192B		%vreg11<def> = OR %vreg10, %vreg6; GPR32:%vreg11,%vreg10,%vreg6
+208B		SW %vreg11, %vreg0, 20; mem:ST4[%10] GPR32:%vreg11,%vreg0
+224B		%V0<def> = ADDiu %ZERO, 0
+240B		RetRA %V0<imp-use,kill>
+
+# End machine code for function symbol2uvlc.
+
+# After Machine Instruction Scheduler:
+# Machine code for function symbol2uvlc: Post SSA
+Function Live Ins: %A0 in %vreg0
+
+0B	BB#0: derived from LLVM BB %0
+	    Live Ins: %A0
+16B		%vreg0<def> = COPY %A0; GPR32:%vreg0
+32B		%vreg1<def> = LW %vreg0, 12; mem:LD4[%1] GPR32:%vreg1,%vreg0
+48B		%vreg2<def> = SRL %vreg1, 31; GPR32:%vreg2,%vreg1
+64B		%vreg3<def> = ADDu %vreg1, %vreg2; GPR32:%vreg3,%vreg1,%vreg2
+80B		%vreg4<def> = SRA %vreg3, 1; GPR32:%vreg4,%vreg3
+96B		%vreg5<def> = ADDiu %ZERO, 1; GPR32:%vreg5
+112B		%vreg6<def> = SLLV %vreg5, %vreg4; GPR32:%vreg6,%vreg5,%vreg4
+128B		%vreg7<def> = LW %vreg0, 16; mem:LD4[%5] GPR32:%vreg7,%vreg0
+160B		%vreg9<def> = ADDiu %vreg6, -1; GPR32:%vreg9,%vreg6
+176B		%vreg10<def> = AND %vreg9, %vreg7; GPR32:%vreg10,%vreg9,%vreg7
+192B		%vreg11<def> = OR %vreg10, %vreg6; GPR32:%vreg11,%vreg10,%vreg6
+208B		SW %vreg11, %vreg0, 20; mem:ST4[%10] GPR32:%vreg11,%vreg0
+224B		%V0<def> = ADDiu %ZERO, 0
+240B		RetRA %V0<imp-use,kill>
+
+# End machine code for function symbol2uvlc.
+
+# After Greedy Register Allocator:
+# Machine code for function symbol2uvlc: Post SSA
+Function Live Ins: %A0 in %vreg0
+
+0B	BB#0: derived from LLVM BB %0
+	    Live Ins: %A0
+16B		%vreg0<def> = COPY %A0; GPR32:%vreg0
+32B		%vreg1<def> = LW %vreg0, 12; mem:LD4[%1] GPR32:%vreg1,%vreg0
+48B		%vreg2<def> = SRL %vreg1, 31; GPR32:%vreg2,%vreg1
+64B		%vreg3<def> = ADDu %vreg1, %vreg2; GPR32:%vreg3,%vreg1,%vreg2
+80B		%vreg4<def> = SRA %vreg3, 1; GPR32:%vreg4,%vreg3
+96B		%vreg5<def> = ADDiu %ZERO, 1; GPR32:%vreg5
+112B		%vreg6<def> = SLLV %vreg5, %vreg4; GPR32:%vreg6,%vreg5,%vreg4
+128B		%vreg7<def> = LW %vreg0, 16; mem:LD4[%5] GPR32:%vreg7,%vreg0
+160B		%vreg9<def> = ADDiu %vreg6, -1; GPR32:%vreg9,%vreg6
+176B		%vreg10<def> = AND %vreg9, %vreg7; GPR32:%vreg10,%vreg9,%vreg7
+192B		%vreg11<def> = OR %vreg10, %vreg6; GPR32:%vreg11,%vreg10,%vreg6
+208B		SW %vreg11, %vreg0, 20; mem:ST4[%10] GPR32:%vreg11,%vreg0
+224B		%V0<def> = ADDiu %ZERO, 0
+240B		RetRA %V0<imp-use>
+
+# End machine code for function symbol2uvlc.
+
+# After Virtual Register Rewriter:
+# Machine code for function symbol2uvlc: Post SSA
+Function Live Ins: %A0
+
+0B	BB#0: derived from LLVM BB %0
+	    Live Ins: %A0
+32B		%AT<def> = LW %A0, 12; mem:LD4[%1]
+48B		%V0<def> = SRL %AT, 31
+64B		%AT<def> = ADDu %AT<kill>, %V0<kill>
+80B		%AT<def> = SRA %AT<kill>, 1
+96B		%V0<def> = ADDiu %ZERO, 1
+112B		%AT<def> = SLLV %V0<kill>, %AT<kill>
+128B		%V0<def> = LW %A0, 16; mem:LD4[%5]
+160B		%V1<def> = ADDiu %AT, -1
+176B		%V0<def> = AND %V1<kill>, %V0<kill>
+192B		%AT<def> = OR %V0<kill>, %AT<kill>
+208B		SW %AT<kill>, %A0<kill>, 20; mem:ST4[%10]
+224B		%V0<def> = ADDiu %ZERO, 0
+240B		RetRA %V0<imp-use>
+
+# End machine code for function symbol2uvlc.
+
+# After Stack Slot Coloring:
+# Machine code for function symbol2uvlc: Post SSA
+Function Live Ins: %A0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %A0
+	%AT<def> = LW %A0, 12; mem:LD4[%1]
+	%V0<def> = SRL %AT, 31
+	%AT<def> = ADDu %AT<kill>, %V0<kill>
+	%AT<def> = SRA %AT<kill>, 1
+	%V0<def> = ADDiu %ZERO, 1
+	%AT<def> = SLLV %V0<kill>, %AT<kill>
+	%V0<def> = LW %A0, 16; mem:LD4[%5]
+	%V1<def> = ADDiu %AT, -1
+	%V0<def> = AND %V1<kill>, %V0<kill>
+	%AT<def> = OR %V0<kill>, %AT<kill>
+	SW %AT<kill>, %A0<kill>, 20; mem:ST4[%10]
+	%V0<def> = ADDiu %ZERO, 0
+	RetRA %V0<imp-use>
+
+# End machine code for function symbol2uvlc.
+
+# After Machine Loop Invariant Code Motion:
+# Machine code for function symbol2uvlc: Post SSA
+Function Live Ins: %A0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %A0
+	%AT<def> = LW %A0, 12; mem:LD4[%1]
+	%V0<def> = SRL %AT, 31
+	%AT<def> = ADDu %AT<kill>, %V0<kill>
+	%AT<def> = SRA %AT<kill>, 1
+	%V0<def> = ADDiu %ZERO, 1
+	%AT<def> = SLLV %V0<kill>, %AT<kill>
+	%V0<def> = LW %A0, 16; mem:LD4[%5]
+	%V1<def> = ADDiu %AT, -1
+	%V0<def> = AND %V1<kill>, %V0<kill>
+	%AT<def> = OR %V0<kill>, %AT<kill>
+	SW %AT<kill>, %A0<kill>, 20; mem:ST4[%10]
+	%V0<def> = ADDiu %ZERO, 0
+	RetRA %V0<imp-use>
+
+# End machine code for function symbol2uvlc.
+
+# After Shrink Wrapping analysis:
+# Machine code for function symbol2uvlc: Post SSA
+Function Live Ins: %A0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %A0
+	%AT<def> = LW %A0, 12; mem:LD4[%1]
+	%V0<def> = SRL %AT, 31
+	%AT<def> = ADDu %AT<kill>, %V0<kill>
+	%AT<def> = SRA %AT<kill>, 1
+	%V0<def> = ADDiu %ZERO, 1
+	%AT<def> = SLLV %V0<kill>, %AT<kill>
+	%V0<def> = LW %A0, 16; mem:LD4[%5]
+	%V1<def> = ADDiu %AT, -1
+	%V0<def> = AND %V1<kill>, %V0<kill>
+	%AT<def> = OR %V0<kill>, %AT<kill>
+	SW %AT<kill>, %A0<kill>, 20; mem:ST4[%10]
+	%V0<def> = ADDiu %ZERO, 0
+	RetRA %V0<imp-use>
+
+# End machine code for function symbol2uvlc.
+
+# After Prologue/Epilogue Insertion & Frame Finalization:
+# Machine code for function symbol2uvlc: Post SSA
+Function Live Ins: %A0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %A0
+	%AT<def> = LW %A0, 12; mem:LD4[%1]
+	%V0<def> = SRL %AT, 31
+	%AT<def> = ADDu %AT<kill>, %V0<kill>
+	%AT<def> = SRA %AT<kill>, 1
+	%V0<def> = ADDiu %ZERO, 1
+	%AT<def> = SLLV %V0<kill>, %AT<kill>
+	%V0<def> = LW %A0, 16; mem:LD4[%5]
+	%V1<def> = ADDiu %AT, -1
+	%V0<def> = AND %V1<kill>, %V0<kill>
+	%AT<def> = OR %V0<kill>, %AT<kill>
+	SW %AT<kill>, %A0<kill>, 20; mem:ST4[%10]
+	%V0<def> = ADDiu %ZERO, 0
+	RetRA %V0<imp-use>
+
+# End machine code for function symbol2uvlc.
+
+# After Machine Copy Propagation Pass:
+# Machine code for function symbol2uvlc: Post SSA
+Function Live Ins: %A0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %A0
+	%AT<def> = LW %A0, 12; mem:LD4[%1]
+	%V0<def> = SRL %AT, 31
+	%AT<def> = ADDu %AT<kill>, %V0<kill>
+	%AT<def> = SRA %AT<kill>, 1
+	%V0<def> = ADDiu %ZERO, 1
+	%AT<def> = SLLV %V0<kill>, %AT<kill>
+	%V0<def> = LW %A0, 16; mem:LD4[%5]
+	%V1<def> = ADDiu %AT, -1
+	%V0<def> = AND %V1<kill>, %V0<kill>
+	%AT<def> = OR %V0<kill>, %AT<kill>
+	SW %AT<kill>, %A0<kill>, 20; mem:ST4[%10]
+	%V0<def> = ADDiu %ZERO, 0
+	RetRA %V0<imp-use>
+
+# End machine code for function symbol2uvlc.
+
+# After Post-RA pseudo instruction expansion pass:
+# Machine code for function symbol2uvlc: Post SSA
+Function Live Ins: %A0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %A0
+	%AT<def> = LW %A0, 12; mem:LD4[%1]
+	%V0<def> = SRL %AT, 31
+	%AT<def> = ADDu %AT<kill>, %V0<kill>
+	%AT<def> = SRA %AT<kill>, 1
+	%V0<def> = ADDiu %ZERO, 1
+	%AT<def> = SLLV %V0<kill>, %AT<kill>
+	%V0<def> = LW %A0, 16; mem:LD4[%5]
+	%V1<def> = ADDiu %AT, -1
+	%V0<def> = AND %V1<kill>, %V0<kill>
+	%AT<def> = OR %V0<kill>, %AT<kill>
+	SW %AT<kill>, %A0<kill>, 20; mem:ST4[%10]
+	%V0<def> = ADDiu %ZERO, 0
+	PseudoReturn %RA
+
+# End machine code for function symbol2uvlc.
+
+# After Analyze Machine Code For Garbage Collection:
+# Machine code for function symbol2uvlc: Post SSA
+Function Live Ins: %A0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %A0
+	%AT<def> = LW %A0, 12; mem:LD4[%1]
+	%V0<def> = SRL %AT, 31
+	%AT<def> = ADDu %AT<kill>, %V0<kill>
+	%AT<def> = SRA %AT<kill>, 1
+	%V0<def> = ADDiu %ZERO, 1
+	%AT<def> = SLLV %V0<kill>, %AT<kill>
+	%V0<def> = LW %A0, 16; mem:LD4[%5]
+	%V1<def> = ADDiu %AT, -1
+	%V0<def> = AND %V1<kill>, %V0<kill>
+	%AT<def> = OR %V0<kill>, %AT<kill>
+	SW %AT<kill>, %A0<kill>, 20; mem:ST4[%10]
+	%V0<def> = ADDiu %ZERO, 0
+	PseudoReturn %RA
+
+# End machine code for function symbol2uvlc.
+
+# After Mips Delay Slot Filler:
+# Machine code for function symbol2uvlc: Post SSA, not tracking liveness
+Function Live Ins: %A0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %A0
+	%AT<def> = LW %A0, 12; mem:LD4[%1]
+	%V0<def> = SRL %AT, 31
+	%AT<def> = ADDu %AT<kill>, %V0<kill>
+	%AT<def> = SRA %AT<kill>, 1
+	%V0<def> = ADDiu %ZERO, 1
+	%AT<def> = SLLV %V0<kill>, %AT<kill>
+	%V0<def> = LW %A0, 16; mem:LD4[%5]
+	%V1<def> = ADDiu %AT, -1
+	%V0<def> = AND %V1<kill>, %V0<kill>
+	%AT<def> = OR %V0<kill>, %AT<kill>
+	SW %AT<kill>, %A0<kill>, 20; mem:ST4[%10]
+	PseudoReturn %RA
+	  * %V0<def> = ADDiu %ZERO, 0
+
+# End machine code for function symbol2uvlc.
+
+# After Mips Long Branch:
+# Machine code for function symbol2uvlc: Post SSA, not tracking liveness
+Function Live Ins: %A0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %A0
+	%AT<def> = LW %A0, 12; mem:LD4[%1]
+	%V0<def> = SRL %AT, 31
+	%AT<def> = ADDu %AT<kill>, %V0<kill>
+	%AT<def> = SRA %AT<kill>, 1
+	%V0<def> = ADDiu %ZERO, 1
+	%AT<def> = SLLV %V0<kill>, %AT<kill>
+	%V0<def> = LW %A0, 16; mem:LD4[%5]
+	%V1<def> = ADDiu %AT, -1
+	%V0<def> = AND %V1<kill>, %V0<kill>
+	%AT<def> = OR %V0<kill>, %AT<kill>
+	SW %AT<kill>, %A0<kill>, 20; mem:ST4[%10]
+	PseudoReturn %RA
+	  * %V0<def> = ADDiu %ZERO, 0
+
+# End machine code for function symbol2uvlc.
+
+# After Mips Constant Islands:
+# Machine code for function symbol2uvlc: Post SSA, not tracking liveness
+Function Live Ins: %A0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %A0
+	%AT<def> = LW %A0, 12; mem:LD4[%1]
+	%V0<def> = SRL %AT, 31
+	%AT<def> = ADDu %AT<kill>, %V0<kill>
+	%AT<def> = SRA %AT<kill>, 1
+	%V0<def> = ADDiu %ZERO, 1
+	%AT<def> = SLLV %V0<kill>, %AT<kill>
+	%V0<def> = LW %A0, 16; mem:LD4[%5]
+	%V1<def> = ADDiu %AT, -1
+	%V0<def> = AND %V1<kill>, %V0<kill>
+	%AT<def> = OR %V0<kill>, %AT<kill>
+	SW %AT<kill>, %A0<kill>, 20; mem:ST4[%10]
+	PseudoReturn %RA
+	  * %V0<def> = ADDiu %ZERO, 0
+
+# End machine code for function symbol2uvlc.
+
+# After Contiguously Lay Out Funclets:
+# Machine code for function symbol2uvlc: Post SSA, not tracking liveness
+Function Live Ins: %A0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %A0
+	%AT<def> = LW %A0, 12; mem:LD4[%1]
+	%V0<def> = SRL %AT, 31
+	%AT<def> = ADDu %AT<kill>, %V0<kill>
+	%AT<def> = SRA %AT<kill>, 1
+	%V0<def> = ADDiu %ZERO, 1
+	%AT<def> = SLLV %V0<kill>, %AT<kill>
+	%V0<def> = LW %A0, 16; mem:LD4[%5]
+	%V1<def> = ADDiu %AT, -1
+	%V0<def> = AND %V1<kill>, %V0<kill>
+	%AT<def> = OR %V0<kill>, %AT<kill>
+	SW %AT<kill>, %A0<kill>, 20; mem:ST4[%10]
+	PseudoReturn %RA
+	  * %V0<def> = ADDiu %ZERO, 0
+
+# End machine code for function symbol2uvlc.
+
+# After StackMap Liveness Analysis:
+# Machine code for function symbol2uvlc: Post SSA, not tracking liveness
+Function Live Ins: %A0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %A0
+	%AT<def> = LW %A0, 12; mem:LD4[%1]
+	%V0<def> = SRL %AT, 31
+	%AT<def> = ADDu %AT<kill>, %V0<kill>
+	%AT<def> = SRA %AT<kill>, 1
+	%V0<def> = ADDiu %ZERO, 1
+	%AT<def> = SLLV %V0<kill>, %AT<kill>
+	%V0<def> = LW %A0, 16; mem:LD4[%5]
+	%V1<def> = ADDiu %AT, -1
+	%V0<def> = AND %V1<kill>, %V0<kill>
+	%AT<def> = OR %V0<kill>, %AT<kill>
+	SW %AT<kill>, %A0<kill>, 20; mem:ST4[%10]
+	PseudoReturn %RA
+	  * %V0<def> = ADDiu %ZERO, 0
+
+# End machine code for function symbol2uvlc.
+
+# After Live DEBUG_VALUE analysis:
+# Machine code for function symbol2uvlc: Post SSA, not tracking liveness
+Function Live Ins: %A0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %A0
+	%AT<def> = LW %A0, 12; mem:LD4[%1]
+	%V0<def> = SRL %AT, 31
+	%AT<def> = ADDu %AT<kill>, %V0<kill>
+	%AT<def> = SRA %AT<kill>, 1
+	%V0<def> = ADDiu %ZERO, 1
+	%AT<def> = SLLV %V0<kill>, %AT<kill>
+	%V0<def> = LW %A0, 16; mem:LD4[%5]
+	%V1<def> = ADDiu %AT, -1
+	%V0<def> = AND %V1<kill>, %V0<kill>
+	%AT<def> = OR %V0<kill>, %AT<kill>
+	SW %AT<kill>, %A0<kill>, 20; mem:ST4[%10]
+	PseudoReturn %RA
+	  * %V0<def> = ADDiu %ZERO, 0
+
+# End machine code for function symbol2uvlc.
+

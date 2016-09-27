@@ -1,0 +1,1065 @@
+---
+instruction-set:
+
+  - templates:
+
+  - group: MANUAL
+    instructions:
+
+        - id:                 t2ADDri_fi
+          type:               linear
+          operands:
+           - Rd:              [register, def, GPRnopc]
+           - Rn:              bound
+           - imm:             bound
+           - p1:              bound
+           - p2:              bound
+           - s:               [register, use, CCR]
+          uses:               [Rn, imm, p1, p2, s]
+          defines:            [Rd]
+          size:               4
+          affects:
+          affected-by:
+          itinerary:          IIC_iALUi
+
+        - id:                 t2LDRi12_fi
+          type:               linear
+          operands:
+           - Rt:              [register, def, GPR]
+           - addr1:           bound
+           - addr2:           bound
+           - p1:              bound
+           - p2:              bound
+          uses:               [addr1, addr2, p1, p2]
+          defines:            [Rt]
+          size:               4
+          affects:
+          affected-by:
+          itinerary:          IIC_iLoad_i
+
+        - id:                 t2LDRBi12_fi
+          type:               linear
+          operands:
+           - Rt:              [register, def, GPRnopc]
+           - addr1:           bound
+           - addr2:           bound
+           - p1:              bound
+           - p2:              bound
+          uses:               [addr1, addr2, p1, p2]
+          defines:            [Rt]
+          size:               4
+          affects:
+          affected-by:
+          itinerary:          IIC_iLoad_bh_i
+
+        - id:                 t2LDRHi12_fi
+          type:               linear
+          operands:
+           - Rt:              [register, def, GPRnopc]
+           - addr1:           bound
+           - addr2:           bound
+           - p1:              bound
+           - p2:              bound
+          uses:               [addr1, addr2, p1, p2]
+          defines:            [Rt]
+          size:               4
+          affects:
+          affected-by:
+          itinerary:          IIC_iLoad_bh_i
+
+        - id:                 t2LDRSHi12_fi
+          type:               linear
+          operands:
+           - Rt:              [register, def, GPRnopc]
+           - addr1:           bound
+           - addr2:           bound
+           - p1:              bound
+           - p2:              bound
+          uses:               [addr1, addr2, p1, p2]
+          defines:            [Rt]
+          size:               4
+          affects:
+          affected-by:
+          itinerary:          IIC_iLoad_bh_i
+
+        - id:                 t2STRHi12_fi
+          type:               linear
+          operands:
+           - Rt:              [register, use, rGPR]
+           - addr1:           bound
+           - addr2:           bound
+           - p1:              bound
+           - p2:              bound
+          uses:               [Rt, addr1, addr2, p1, p2]
+          defines:            []
+          size:               4
+          affects:
+          affected-by:
+          itinerary:          IIC_iStore_bh_i
+
+        - id:                 t2STRi12_fi
+          type:               linear
+          operands:
+           - Rt:              [register, use, GPR]
+           - addr1:           bound
+           - addr2:           bound
+           - p1:              bound
+           - p2:              bound
+          uses:               [Rt, addr1, addr2, p1, p2]
+          defines:            []
+          size:               4
+          affects:
+          affected-by:
+          itinerary:          IIC_iStore_i
+
+
+        - id:                 t2STRBi12_fi
+          type:               linear
+          operands:
+           - Rt:              [register, use, rGPR]
+           - addr1:           bound
+           - addr2:           bound
+           - p1:              bound
+           - p2:              bound
+          uses:               [Rt, addr1, addr2, p1, p2]
+          defines:            []
+          size:               4
+          affects:
+          affected-by:
+          itinerary:          IIC_iStore_bh_i
+
+        - id:                 VSTRS_fi
+          type:               linear
+          operands:
+           - Sd:              [register, use, SPR]
+           - addr1:           bound
+           - addr2:           bound
+           - p1:              bound
+           - p2:              bound
+          uses:               [Sd, addr1, addr2, p1, p2]
+          defines:            []
+          size:               4
+          affects:
+          affected-by:
+          itinerary:          IIC_fpStore32
+
+        - id:                 VLDRD_fi
+          type:               linear
+          operands:
+           - Dd:              [register, def, DPR]
+           - addr1:           bound
+           - addr2:           bound
+           - p1:              bound
+           - p2:              bound
+          uses:               [addr1, addr2, p1, p2]
+          defines:            [Dd]
+          size:               4
+          affects:
+          affected-by:
+          itinerary:          IIC_fpLoad64
+
+        - id:                 VLDRS_fi
+          type:               linear
+          operands:
+           - Sd:              [register, def, SPR]
+           - addr1:           bound
+           - addr2:           bound
+           - p1:              bound
+           - p2:              bound
+          uses:               [addr1, addr2, p1, p2]
+          defines:            [Sd]
+          size:               4
+          affects:
+          affected-by:
+          itinerary:          IIC_fpLoad32
+
+        - id:                 VLDRD_cpi
+          type:               linear
+          operands:
+           - Dd:              [register, def, DPR]
+           - addr1:           bound
+           - addr2:           bound
+           - p1:              bound
+           - p2:              bound
+          uses:               [addr1, addr2, p1, p2]
+          defines:            [Dd]
+          size:               4
+          affects:
+          affected-by:
+          itinerary:          IIC_fpLoad64
+
+        - id:                 VLDRS_cpi
+          type:               linear
+          operands:
+           - Sd:              [register, def, SPR]
+           - addr1:           bound
+           - addr2:           bound
+           - p1:              bound
+           - p2:              bound
+          uses:               [addr1, addr2, p1, p2]
+          defines:            [Sd]
+          size:               4
+          affects:
+          affected-by:
+          itinerary:          IIC_fpLoad32
+
+        - id:                 MOVE
+          type:               copy
+          operands:
+           - src:             [register, use, GPR]
+           - dst:             [register, def, GPR]
+          uses:               [src]
+          defines:            [dst]
+          size:               2
+          affects:
+          affected-by:
+          itinerary:          IIC_iMOVr
+
+        - id:                 MOVE_ALL
+          type:               copy
+          operands:
+           - src:             [register, use, ALL]
+           - dst:             [register, def, ALL]
+          uses:               [src]
+          defines:            [dst]
+          size:               4
+          affects:
+          affected-by:
+          itinerary:          IIC_fpMOVIS
+
+        - id:                 MOVE_D
+          type:               copy
+          operands:
+           - src:             [register, use, DPR]
+           - dst:             [register, def, DPR]
+          uses:               [src]
+          defines:            [dst]
+          size:               4
+          affects:
+          affected-by:
+          itinerary:          IIC_fpUNA64
+
+        - id:                 STORE
+          type:               copy
+          operands:
+           - src:             [register, use, GPR]
+           - dst:             [register, def, M32]
+          uses:               [src]
+          defines:            [dst]
+          size:               4
+          affects:
+          affected-by:
+          itinerary:          IIC_iStore_i
+
+        - id:                 STORE_T
+          type:               copy
+          operands:
+           - src:             [register, use, tGPR]
+           - dst:             [register, def, M32t]
+          uses:               [src]
+          defines:            [dst]
+          size:               2
+          affects:
+          affected-by:
+          itinerary:          IIC_iStore_i
+
+        - id:                 STORE_D
+          type:               copy
+          operands:
+           - src:             [register, use, DPR]
+           - dst:             [register, def, M64]
+          uses:               [src]
+          defines:            [dst]
+          size:               4
+          affects:
+          affected-by:
+          itinerary:          IIC_fpStore64
+
+        - id:                 LOAD
+          type:               copy
+          operands:
+           - src:             [register, use, M32]
+           - dst:             [register, def, GPR]
+          uses:               [src]
+          defines:            [dst]
+          size:               4
+          affects:
+          affected-by:
+          itinerary:          IIC_iLoad_i
+
+        - id:                 LOAD_T
+          type:               copy
+          operands:
+           - src:             [register, use, M32t]
+           - dst:             [register, def, tGPR]
+          uses:               [src]
+          defines:            [dst]
+          size:               2
+          affects:
+          affected-by:
+          itinerary:          IIC_iLoad_i
+
+        - id:                 LOAD_D
+          type:               copy
+          operands:
+           - src:             [register, use, M64]
+           - dst:             [register, def, DPR]
+          uses:               [src]
+          defines:            [dst]
+          size:               4
+          affects:
+          affected-by:
+          itinerary:          IIC_fpLoad64
+
+        - id:                 NOP
+          type:               linear
+          operands:
+          uses:               []
+          defines:            []
+          size:               4
+          affects:
+          affected-by:
+          itinerary:          IIC_iMOVr
+
+        - id:                 tMOVi8s
+          type:               linear
+          operands:
+           - Rd:              [register, def, tGPR]
+           - imm8:            bound
+           - p1:              bound
+           - p2:              bound
+           - s:               [register, def, CCR]
+          uses:               [imm8, p1, p2, s]
+          defines:            [Rd]
+          size:               2
+          affects:
+          affected-by:
+          itinerary:          IIC_iMOVi
+
+        - id:                 tLSLris
+          type:               linear
+          operands:
+           - Rd:              [register, def, tGPR]
+           - Rm:              [register, use, tGPR]
+           - imm5:            bound
+           - p1:              bound
+           - p2:              bound
+           - s:               [register, use, CCR]
+          uses:               [Rm, imm5, p1, p2, s]
+          defines:            [Rd]
+          size:               2
+          affects:
+          affected-by:
+          itinerary:          IIC_iMOVsi
+
+        - id:                 tASRris
+          type:               linear
+          operands:
+           - Rd:              [register, def, tGPR]
+           - Rm:              [register, use, tGPR]
+           - imm5:            bound
+           - p1:              bound
+           - p2:              bound
+           - s:               [register, use, CCR]
+          uses:               [Rm, imm5, p1, p2, s]
+          defines:            [Rd]
+          size:               2
+          affects:
+          affected-by:
+          itinerary:          IIC_iMOVsi
+
+        - id:                 tLSRris
+          type:               linear
+          operands:
+           - Rd:              [register, def, tGPR]
+           - Rm:              [register, use, tGPR]
+           - imm5:            bound
+           - p1:              bound
+           - p2:              bound
+           - s:               [register, use, CCR]
+          uses:               [Rm, imm5, p1, p2, s]
+          defines:            [Rd]
+          size:               2
+          affects:
+          affected-by:
+          itinerary:          IIC_iMOVsi
+
+        - id:                 tSUBi3s
+          type:               linear
+          operands:
+           - Rd:              [register, def, tGPR]
+           - Rm:              [register, use, tGPR]
+           - imm3:            bound
+           - p1:              bound
+           - p2:              bound
+           - s:               [register, use, CCR]
+          uses:               [Rm, imm3, p1, p2, s]
+          defines:            [Rd]
+          size:               2
+          affects:
+          affected-by:
+          itinerary:          IIC_iALUi
+
+        - id:                 tSUBi8s
+          type:               linear
+          operands:
+           - Rn:              [register, usedef, tGPR]
+           - imm8:            bound
+           - p1:              bound
+           - p2:              bound
+           - s:               [register, use, CCR]
+          uses:               [Rn, imm8, p1, p2, s]
+          defines:            [Rn]
+          size:               2
+          affects:
+          affected-by:
+          itinerary:          IIC_iALUi
+
+        - id:                 tADDi8s
+          type:               linear
+          operands:
+           - Rn:              [register, usedef, tGPR]
+           - imm8:            bound
+           - p1:              bound
+           - p2:              bound
+           - s:               [register, use, CCR]
+          uses:               [Rn, imm8, p1, p2, s]
+          defines:            [Rn]
+          size:               2
+          affects:
+          affected-by:
+          itinerary:          IIC_iALUi
+
+        - id:                 tMULz
+          type:               linear
+          operands:
+           - Rm:              [register, usedef, tGPR]
+           - Rn:              [register, use, tGPR]
+           - p1:              bound
+           - p2:              bound
+          uses:               [Rn, Rm, p1, p2]
+          defines:            [Rm]
+          size:               2
+          affects:
+          affected-by:
+          itinerary:          IIC_iMUL32
+
+        - id:                 tADDi3s
+          type:               linear
+          operands:
+           - Rd:              [register, def, tGPR]
+           - Rm:              [register, use, tGPR]
+           - imm3:            bound
+           - p1:              bound
+           - p2:              bound
+           - s:               [register, use, CCR]
+          uses:               [Rm, imm3, p1, p2, s]
+          defines:            [Rd]
+          size:               2
+          affects:
+          affected-by:
+          itinerary:          IIC_iALUi
+
+        - id:                 tRSBs
+          type:               linear
+          operands:
+           - Rd:              [register, def, tGPR]
+           - Rn:              [register, use, tGPR]
+           - imm:             bound
+           - p1:              bound
+           - p2:              bound
+           - s:               [register, use, CCR]
+          uses:               [Rn, imm, p1, p2, s]
+          defines:            [Rd]
+          size:               2
+          affects:
+          affected-by:
+          itinerary:          IIC_iALUi
+
+        - id:                 tLSLrrs
+          type:               linear
+          operands:
+           - Rn:              [register, usedef, tGPR]
+           - Rm:              [register, use, tGPR]
+           - p1:              bound
+           - p2:              bound
+           - s:               [register, use, CCR]
+          uses:               [Rn, Rm, p1, p2, s]
+          defines:            [Rn]
+          size:               2
+          affects:
+          affected-by:
+          itinerary:          IIC_iMOVsr
+
+        - id:                 tASRrrs
+          type:               linear
+          operands:
+           - Rn:              [register, usedef, tGPR]
+           - Rm:              [register, use, tGPR]
+           - p1:              bound
+           - p2:              bound
+           - s:               [register, use, CCR]
+          uses:               [Rn, Rm, p1, p2, s]
+          defines:            [Rn]
+          size:               2
+          affects:
+          affected-by:
+          itinerary:          IIC_iMOVsr
+
+        - id:                 tSUBrrs
+          type:               linear
+          operands:
+           - Rd:              [register, def, tGPR]
+           - Rn:              [register, use, tGPR]
+           - Rm:              [register, use, tGPR]
+           - p1:              bound
+           - p2:              bound
+           - s:               [register, use, CCR]
+          uses:               [Rn, Rm, p1, p2, s]
+          defines:            [Rd]
+          size:               2
+          affects:
+          affected-by:
+          itinerary:          IIC_iALUr
+
+        - id:                 tADDrrs
+          type:               linear
+          operands:
+           - Rd:              [register, def, tGPR]
+           - Rn:              [register, use, tGPR]
+           - Rm:              [register, use, tGPR]
+           - p1:              bound
+           - p2:              bound
+           - s:               [register, use, CCR]
+          uses:               [Rn, Rm, p1, p2, s]
+          defines:            [Rd]
+          size:               2
+          affects:
+          affected-by:
+          itinerary:          IIC_iALUr
+
+        - id:                 tADDhirrs
+          type:               linear
+          operands:
+           - Rn:              [register, usedef, GPR]
+           - Rm:              [register, use, GPR]
+           - p1:              bound
+           - p2:              bound
+           - s:               [register, use, CCR]
+          uses:               [Rn, Rm, p1, p2, s]
+          defines:            [Rn]
+          size:               2
+          affects:
+          affected-by:
+          itinerary:          IIC_iALUr
+
+        - id:                 tORRs
+          type:               linear
+          operands:
+           - Rn:              [register, usedef, tGPR]
+           - Rm:              [register, use, tGPR]
+           - p1:              bound
+           - p2:              bound
+           - s:               [register, use, CCR]
+          uses:               [Rn, Rm, p1, p2, s]
+          defines:            [Rn]
+          size:               2
+          affects:
+          affected-by:
+          itinerary:          IIC_iBITr
+
+        - id:                 tBICs
+          type:               linear
+          operands:
+           - Rn:              [register, usedef, tGPR]
+           - Rm:              [register, use, tGPR]
+           - p1:              bound
+           - p2:              bound
+           - s:               [register, use, CCR]
+          uses:               [Rn, Rm, p1, p2, s]
+          defines:            [Rn]
+          size:               2
+          affects:
+          affected-by:
+          itinerary:          IIC_iBITr
+
+        - id:                 tUXTBz
+          type:               linear
+          operands:
+           - Rd:              [register, def, tGPR]
+           - Rm:              [register, use, tGPR]
+           - rot:             bound
+           - p1:              bound
+           - p2:              bound
+          uses:               [Rm, rot, p1, p2]
+          defines:            [Rd]
+          size:               2
+          affects:
+          affected-by:
+          itinerary:          IIC_iUNAr
+
+        - id:                 tMVNs
+          type:               linear
+          operands:
+           - Rd:              [register, def, tGPR]
+           - s:               [register, def, CCR]
+           - Rn:              [register, use, tGPR]
+           - p1:              bound
+           - p2:              bound
+           - s:               [register, use, CCR]
+          uses:               [Rn, p1, p2, s]
+          defines:            [Rd]
+          size:               2
+          affects:
+          affected-by:
+          itinerary:          IIC_iMVNr
+
+        - id:                 tANDs
+          type:               linear
+          operands:
+           - Rn:              [register, usedef, tGPR]
+           - Rm:              [register, use, tGPR]
+           - p1:              bound
+           - p2:              bound
+           - s:               [register, use, CCR]
+          uses:               [Rn, Rm, p1, p2, s]
+          defines:            [Rn]
+          size:               2
+          affects:
+          affected-by:
+          itinerary:          IIC_iBITr
+
+        - id:                 tUXTHz
+          type:               linear
+          operands:
+           - Rd:              [register, def, tGPR]
+           - Rm:              [register, use, tGPR]
+           - rot:             bound
+           - p1:              bound
+           - p2:              bound
+          uses:               [Rm, rot, p1, p2]
+          defines:            [Rd]
+          size:               2
+          affects:
+          affected-by:
+          itinerary:          IIC_iUNAr
+
+        - id:                 tEORs
+          type:               linear
+          operands:
+           - Rn:              [register, usedef, tGPR]
+           - Rm:              [register, use, tGPR]
+           - p1:              bound
+           - p2:              bound
+           - s:               [register, use, CCR]
+          uses:               [Rn, Rm, p1, p2, s]
+          defines:            [Rn]
+          size:               2
+          affects:
+          affected-by:
+          itinerary:          IIC_iBITr
+
+        - id:                 tSXTHz
+          type:               linear
+          operands:
+           - Rd:              [register, def, tGPR]
+           - Rm:              [register, use, tGPR]
+           - rot:             bound
+           - p1:              bound
+           - p2:              bound
+          uses:               [Rm, rot, p1, p2]
+          defines:            [Rd]
+          size:               2
+          affects:
+          affected-by:
+          itinerary:          IIC_iUNAr
+
+        - id:                 tLSRrrs
+          type:               linear
+          operands:
+           - Rn:              [register, usedef, tGPR]
+           - Rm:              [register, use, tGPR]
+           - p1:              bound
+           - p2:              bound
+           - s:               [register, use, CCR]
+          uses:               [Rn, Rm, p1, p2, s]
+          defines:            [Rn]
+          size:               2
+          affects:
+          affected-by:
+          itinerary:          IIC_iMOVsr
+
+        - id:                 tLDRSHz
+          type:               linear
+          operands:
+           - Rt:              [register, def, tGPR]
+           - addr1:           [register, use, tGPR]
+           - addr2:           [register, use, tGPR]
+           - addr3:           bound
+           - p1:              bound
+           - p2:              bound
+          uses:               [addr1, addr2, addr3, p1, p2]
+          defines:            [Rt]
+          size:               2
+          affects:
+          affected-by:
+          itinerary:          IIC_iLoad_bh_r
+
+        - id:                 tLDRHrz
+          type:               linear
+          operands:
+           - Rt:              [register, def, tGPR]
+           - addr1:           [register, use, tGPR]
+           - addr2:           [register, use, tGPR]
+           - addr3:           bound
+           - p1:              bound
+           - p2:              bound
+          uses:               [addr1, addr2, addr3, p1, p2]
+          defines:            [Rt]
+          size:               2
+          affects:
+          affected-by:
+          itinerary:          IIC_iLoad_bh_r
+
+        - id:                 tSTRHrz
+          type:               linear
+          operands:
+           - Rt:              [register, use, tGPR]
+           - addr1:           [register, use, tGPR]
+           - addr2:           [register, use, tGPR]
+           - addr3:           bound
+           - p1:              bound
+           - p2:              bound
+          uses:               [Rt, addr1, addr2, addr3, p1, p2]
+          defines:            []
+          size:               2
+          affects:
+          affected-by:
+          itinerary:          IIC_iStore_bh_r
+
+        - id:                 tSTRrz
+          type:               linear
+          operands:
+           - Rt:              [register, use, tGPR]
+           - addr1:           [register, use, tGPR]
+           - addr2:           [register, use, tGPR]
+           - addr3:           bound
+           - p1:              bound
+           - p2:              bound
+          uses:               [Rt, addr1, addr2, addr3, p1, p2]
+          defines:            []
+          size:               2
+          affects:
+          affected-by:
+          itinerary:          IIC_iStore_r
+
+        - id:                 tLDRBrz
+          type:               linear
+          operands:
+           - Rt:              [register, def, tGPR]
+           - addr1:           [register, use, tGPR]
+           - addr2:           [register, use, tGPR]
+           - addr3:           bound
+           - p1:              bound
+           - p2:              bound
+          uses:               [addr1, addr2, addr3, p1, p2]
+          defines:            [Rt]
+          size:               2
+          affects:
+          affected-by:
+          itinerary:          IIC_iLoad_bh_r
+
+        - id:                 tSTRBrz
+          type:               linear
+          operands:
+           - Rt:              [register, use, tGPR]
+           - addr1:           [register, use, tGPR]
+           - addr2:           [register, use, tGPR]
+           - addr3:           bound
+           - p1:              bound
+           - p2:              bound
+          uses:               [Rt, addr1, addr2, addr3, p1, p2]
+          defines:            []
+          size:               2
+          affects:
+          affected-by:
+          itinerary:          IIC_iStore_bh_r
+
+        - id:                 tLDRrz
+          type:               linear
+          operands:
+           - Rt:              [register, def, tGPR]
+           - addr1:           [register, use, tGPR]
+           - addr2:           [register, use, tGPR]
+           - addr3:           bound
+           - p1:              bound
+           - p2:              bound
+          uses:               [addr1, addr2, addr3, p1, p2]
+          defines:            [Rt]
+          size:               2
+          affects:
+          affected-by:
+          itinerary:          IIC_iLoad_r
+
+        - id:                 tCMPi8_cpsr
+          parent:             tCMPi8
+          operands:
+           - Rn:              [register, use, tGPR]
+           - imm8:            bound
+           - p1:              bound
+           - p2:              bound
+           - cpsr:            [register, def, CCR]
+          uses:               [Rn, imm8, p1, p2]
+          defines:            [cpsr]
+          affects:
+
+        - id:                 t2CMPri_cpsr
+          parent:             t2CMPri
+          operands:
+           - Rn:              [register, use, GPRnopc]
+           - imm:             bound
+           - p1:              bound
+           - p2:              bound
+           - cpsr:            [register, def, CCR]
+          uses:               [Rn, imm, p1, p2]
+          defines:            [cpsr]
+          affects:
+
+        - id:                 t2TSTri_cpsr
+          parent:             t2TSTri
+          operands:
+           - Rn:              [register, use, GPRnopc]
+           - imm:             bound
+           - p1:              bound
+           - p2:              bound
+           - cpsr:            [register, def, CCR]
+          uses:               [Rn, imm, p1, p2]
+          defines:            [cpsr]
+          affects:
+
+        - id:                 t2CMNri_cpsr
+          parent:             t2CMNri
+          operands:
+           - Rn:              [register, use, GPRnopc]
+           - imm:             bound
+           - p1:              bound
+           - p2:              bound
+           - cpsr:            [register, def, CCR]
+          uses:               [Rn, imm, p1, p2]
+          defines:            [cpsr]
+          affects:
+
+        - id:                 t2CMPrr_cpsr
+          parent:             t2CMPrr
+          operands:
+           - Rn:              [register, use, GPRnopc]
+           - Rm:              [register, use, rGPR]
+           - p1:              bound
+           - p2:              bound
+           - cpsr:            [register, def, CCR]
+          uses:               [Rn, Rm, p1, p2]
+          defines:            [cpsr]
+          affects:
+
+        - id:                 t2TSTrr_cpsr
+          parent:             t2TSTrr
+          operands:
+           - Rn:              [register, use, GPRnopc]
+           - Rm:              [register, use, rGPR]
+           - p1:              bound
+           - p2:              bound
+           - cpsr:            [register, def, CCR]
+          uses:               [Rn, Rm, p1, p2]
+          defines:            [cpsr]
+          affects:
+
+        - id:                 t2CMPrs_cpsr
+          parent:             t2CMPrs
+          operands:
+           - Rn:              [register, use, GPRnopc]
+           - ShiftedRm1:      [register, use, rGPR]
+           - ShiftedRm2:      bound
+           - p1:              bound
+           - p2:              bound
+           - cpsr:            [register, def, CCR]
+          uses:               [Rn, ShiftedRm1, ShiftedRm2, p1, p2]
+          defines:            [cpsr]
+          affects:
+
+        - id:                 t2TSTrs_cpsr
+          parent:             t2TSTrs
+          operands:
+           - Rn:              [register, use, GPRnopc]
+           - ShiftedRm1:      [register, use, rGPR]
+           - ShiftedRm2:      bound
+           - p1:              bound
+           - p2:              bound
+           - cpsr:            [register, def, CCR]
+          uses:               [Rn, ShiftedRm1, ShiftedRm2, p1, p2]
+          defines:            [cpsr]
+          affects:
+
+        - id:                 t2SUBrr_cpsr
+          parent:             t2SUBrr
+          operands:
+           - Rd:              [register, def, GPRnopc]
+           - Rn:              [register, use, GPRnopc]
+           - Rm:              [register, use, rGPR]
+           - p1:              bound
+           - p2:              bound
+           - cpsr:            [register, def, CCR]
+          uses:               [Rn, Rm, p1, p2]
+          defines:            [Rd, cpsr]
+          affects:
+
+        - id:                 t2SUBri_cpsr
+          parent:             t2SUBri
+          operands:
+           - Rd:              [register, def, GPRnopc]
+           - Rn:              [register, use, GPRnopc]
+           - imm:             bound
+           - p1:              bound
+           - p2:              bound
+           - cpsr:            [register, def, CCR]
+          uses:               [Rn, imm, p1, p2]
+          defines:            [Rd, cpsr]
+          affects:
+
+        - id:                 t2ORRrr_cpsr
+          parent:             t2ORRrr
+          operands:
+           - Rd:              [register, def, rGPR]
+           - Rn:              [register, use, rGPR]
+           - Rm:              [register, use, rGPR]
+           - p1:              bound
+           - p2:              bound
+           - cpsr:            [register, def, CCR]
+          uses:               [Rn, Rm, p1, p2]
+          defines:            [Rd, cpsr]
+          affects:
+
+        - id:                 t2ANDri_cpsr
+          parent:             t2ANDri
+          operands:
+           - Rd:              [register, def, rGPR]
+           - Rn:              [register, use, rGPR]
+           - imm:             bound
+           - p1:              bound
+           - p2:              bound
+           - cpsr:            [register, def, CCR]
+          uses:               [Rn, imm, p1, p2]
+          defines:            [Rd, cpsr]
+          affects:
+
+        - id:                 t2ADDri_cpsr
+          parent:             t2ADDri
+          operands:
+           - Rd:              [register, def, GPRnopc]
+           - Rn:              [register, use, GPRnopc]
+           - imm:             bound
+           - p1:              bound
+           - p2:              bound
+           - cpsr:            [register, def, CCR]
+          uses:               [Rn, imm, p1, p2]
+          defines:            [Rd, cpsr]
+          affects:
+
+        - id:                 FMSTAT_cpsr
+          parent:             FMSTAT
+          operands:
+           - p1:              bound
+           - p2:              bound
+           - cpsr:            [register, def, CCR]
+          uses:               [p1, p2]
+          defines:            [cpsr]
+          affects:
+
+        - id:                 tCMPr_cpsr
+          parent:             tCMPr
+          operands:
+           - Rn:              [register, use, tGPR]
+           - Rm:              [register, use, tGPR]
+           - p1:              bound
+           - p2:              bound
+           - cpsr:            [register, def, CCR]
+          uses:               [Rn, Rm, p1, p2]
+          defines:            [cpsr]
+          affects:
+
+        - id:                 tCMPhir_cpsr
+          parent:             tCMPhir
+          operands:
+           - Rn:              [register, use, GPR]
+           - Rm:              [register, use, GPR]
+           - p1:              bound
+           - p2:              bound
+           - cpsr:            [register, def, CCR]
+          uses:               [Rn, Rm, p1, p2]
+          defines:            [cpsr]
+          affects:
+
+        - id:                 tTST_cpsr
+          parent:             tTST
+          operands:
+           - Rn:              [register, use, tGPR]
+           - Rm:              [register, use, tGPR]
+           - p1:              bound
+           - p2:              bound
+           - cpsr:            [register, def, CCR]
+          uses:               [Rn, Rm, p1, p2]
+          defines:            [cpsr]
+          affects:
+
+        - id:                 t2TEQrr_cpsr
+          parent:             t2TEQrr
+          operands:
+           - Rn:              [register, use, GPRnopc]
+           - Rm:              [register, use, rGPR]
+           - p1:              bound
+           - p2:              bound
+           - cpsr:            [register, def, CCR]
+          uses:               [Rn, Rm, p1, p2]
+          defines:            [cpsr]
+          affects:
+
+        - id:                 tPUSHcs
+          type:               copy
+          operands:
+           - src:             [register, use, CS]
+           - dst:             [register, def, M128]
+          uses:               [src]
+          defines:            [dst]
+          size:               2
+          affects:
+           - SP:              register
+          affected-by:
+           - SP:              register
+          itinerary:          IIC_iStore_m
+
+        - id:                 tPOPcs
+          type:               copy
+          operands:
+           - src:             [register, use, M128]
+           - dst:             [register, def, CS]
+          uses:               [src]
+          defines:            [dst]
+          size:               2
+          affects:
+           - SP:              register
+          affected-by:
+           - SP:              register
+          itinerary:          IIC_iPop
+
+        - id:                 tPOPcs_free
+          type:               copy
+          operands:
+           - src:             [register, use, M128]
+           - dst:             [register, def, CS]
+          uses:               [src]
+          defines:            [dst]
+          size:               0
+          affects:
+           - SP:              register
+          affected-by:
+           - SP:              register
+          itinerary:          IIC_iPop

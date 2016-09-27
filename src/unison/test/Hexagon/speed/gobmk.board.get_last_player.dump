@@ -1,0 +1,1072 @@
+# After Instruction Selection:
+# Machine code for function get_last_player: SSA
+
+BB#0: derived from LLVM BB %0
+	%vreg0<def> = L4_loadri_abs <ga:@move_history_pointer>; mem:LD4[@move_history_pointer] IntRegs:%vreg0
+	%vreg4<def> = C2_cmpeqi %vreg0, 0; PredRegs:%vreg4 IntRegs:%vreg0
+	%vreg3<def> = A2_tfrsi 0; IntRegs:%vreg3
+	J2_jumpt %vreg4<kill>, <BB#2>, %PC<imp-def,dead>; PredRegs:%vreg4
+	J2_jump <BB#1>, %PC<imp-def,dead>
+    Successors according to CFG: BB#2(0x30000000 / 0x80000000 = 37.50%) BB#1(0x50000000 / 0x80000000 = 62.50%)
+
+BB#1: derived from LLVM BB %3
+    Predecessors according to CFG: BB#0
+	%vreg5<def,tied2> = S4_addi_asl_ri <ga:@move_history_color>, %vreg0<tied0>, 2; IntRegs:%vreg5,%vreg0
+	%vreg1<def> = L2_loadri_io %vreg5<kill>, -4; mem:LD4[%cgep] IntRegs:%vreg1,%vreg5
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %6
+    Predecessors according to CFG: BB#0 BB#1
+	%vreg2<def> = PHI %vreg3, <BB#0>, %vreg1, <BB#1>; IntRegs:%vreg2,%vreg3,%vreg1
+	%R0<def> = COPY %vreg2; IntRegs:%vreg2
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function get_last_player.
+
+# After Expand ISel Pseudo-instructions:
+# Machine code for function get_last_player: SSA
+
+BB#0: derived from LLVM BB %0
+	%vreg0<def> = L4_loadri_abs <ga:@move_history_pointer>; mem:LD4[@move_history_pointer] IntRegs:%vreg0
+	%vreg4<def> = C2_cmpeqi %vreg0, 0; PredRegs:%vreg4 IntRegs:%vreg0
+	%vreg3<def> = A2_tfrsi 0; IntRegs:%vreg3
+	J2_jumpt %vreg4<kill>, <BB#2>, %PC<imp-def,dead>; PredRegs:%vreg4
+	J2_jump <BB#1>, %PC<imp-def,dead>
+    Successors according to CFG: BB#2(0x30000000 / 0x80000000 = 37.50%) BB#1(0x50000000 / 0x80000000 = 62.50%)
+
+BB#1: derived from LLVM BB %3
+    Predecessors according to CFG: BB#0
+	%vreg5<def,tied2> = S4_addi_asl_ri <ga:@move_history_color>, %vreg0<tied0>, 2; IntRegs:%vreg5,%vreg0
+	%vreg1<def> = L2_loadri_io %vreg5<kill>, -4; mem:LD4[%cgep] IntRegs:%vreg1,%vreg5
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %6
+    Predecessors according to CFG: BB#0 BB#1
+	%vreg2<def> = PHI %vreg3, <BB#0>, %vreg1, <BB#1>; IntRegs:%vreg2,%vreg3,%vreg1
+	%R0<def> = COPY %vreg2; IntRegs:%vreg2
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function get_last_player.
+
+# After Tail Duplication:
+# Machine code for function get_last_player: SSA
+
+BB#0: derived from LLVM BB %0
+	%vreg0<def> = L4_loadri_abs <ga:@move_history_pointer>; mem:LD4[@move_history_pointer] IntRegs:%vreg0
+	%vreg4<def> = C2_cmpeqi %vreg0, 0; PredRegs:%vreg4 IntRegs:%vreg0
+	%vreg3<def> = A2_tfrsi 0; IntRegs:%vreg3
+	J2_jumpt %vreg4<kill>, <BB#2>, %PC<imp-def,dead>; PredRegs:%vreg4
+	J2_jump <BB#1>, %PC<imp-def,dead>
+    Successors according to CFG: BB#2(0x30000000 / 0x80000000 = 37.50%) BB#1(0x50000000 / 0x80000000 = 62.50%)
+
+BB#1: derived from LLVM BB %3
+    Predecessors according to CFG: BB#0
+	%vreg5<def,tied2> = S4_addi_asl_ri <ga:@move_history_color>, %vreg0<tied0>, 2; IntRegs:%vreg5,%vreg0
+	%vreg1<def> = L2_loadri_io %vreg5<kill>, -4; mem:LD4[%cgep] IntRegs:%vreg1,%vreg5
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %6
+    Predecessors according to CFG: BB#0 BB#1
+	%vreg2<def> = PHI %vreg3, <BB#0>, %vreg1, <BB#1>; IntRegs:%vreg2,%vreg3,%vreg1
+	%R0<def> = COPY %vreg2; IntRegs:%vreg2
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function get_last_player.
+
+# After Optimize machine instruction PHIs:
+# Machine code for function get_last_player: SSA
+
+BB#0: derived from LLVM BB %0
+	%vreg0<def> = L4_loadri_abs <ga:@move_history_pointer>; mem:LD4[@move_history_pointer] IntRegs:%vreg0
+	%vreg4<def> = C2_cmpeqi %vreg0, 0; PredRegs:%vreg4 IntRegs:%vreg0
+	%vreg3<def> = A2_tfrsi 0; IntRegs:%vreg3
+	J2_jumpt %vreg4<kill>, <BB#2>, %PC<imp-def,dead>; PredRegs:%vreg4
+	J2_jump <BB#1>, %PC<imp-def,dead>
+    Successors according to CFG: BB#2(0x30000000 / 0x80000000 = 37.50%) BB#1(0x50000000 / 0x80000000 = 62.50%)
+
+BB#1: derived from LLVM BB %3
+    Predecessors according to CFG: BB#0
+	%vreg5<def,tied2> = S4_addi_asl_ri <ga:@move_history_color>, %vreg0<tied0>, 2; IntRegs:%vreg5,%vreg0
+	%vreg1<def> = L2_loadri_io %vreg5<kill>, -4; mem:LD4[%cgep] IntRegs:%vreg1,%vreg5
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %6
+    Predecessors according to CFG: BB#0 BB#1
+	%vreg2<def> = PHI %vreg3, <BB#0>, %vreg1, <BB#1>; IntRegs:%vreg2,%vreg3,%vreg1
+	%R0<def> = COPY %vreg2; IntRegs:%vreg2
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function get_last_player.
+
+# After Merge disjoint stack slots:
+# Machine code for function get_last_player: SSA
+
+BB#0: derived from LLVM BB %0
+	%vreg0<def> = L4_loadri_abs <ga:@move_history_pointer>; mem:LD4[@move_history_pointer] IntRegs:%vreg0
+	%vreg4<def> = C2_cmpeqi %vreg0, 0; PredRegs:%vreg4 IntRegs:%vreg0
+	%vreg3<def> = A2_tfrsi 0; IntRegs:%vreg3
+	J2_jumpt %vreg4<kill>, <BB#2>, %PC<imp-def,dead>; PredRegs:%vreg4
+	J2_jump <BB#1>, %PC<imp-def,dead>
+    Successors according to CFG: BB#2(0x30000000 / 0x80000000 = 37.50%) BB#1(0x50000000 / 0x80000000 = 62.50%)
+
+BB#1: derived from LLVM BB %3
+    Predecessors according to CFG: BB#0
+	%vreg5<def,tied2> = S4_addi_asl_ri <ga:@move_history_color>, %vreg0<tied0>, 2; IntRegs:%vreg5,%vreg0
+	%vreg1<def> = L2_loadri_io %vreg5<kill>, -4; mem:LD4[%cgep] IntRegs:%vreg1,%vreg5
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %6
+    Predecessors according to CFG: BB#0 BB#1
+	%vreg2<def> = PHI %vreg3, <BB#0>, %vreg1, <BB#1>; IntRegs:%vreg2,%vreg3,%vreg1
+	%R0<def> = COPY %vreg2; IntRegs:%vreg2
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function get_last_player.
+
+# After Local Stack Slot Allocation:
+# Machine code for function get_last_player: SSA
+
+BB#0: derived from LLVM BB %0
+	%vreg0<def> = L4_loadri_abs <ga:@move_history_pointer>; mem:LD4[@move_history_pointer] IntRegs:%vreg0
+	%vreg4<def> = C2_cmpeqi %vreg0, 0; PredRegs:%vreg4 IntRegs:%vreg0
+	%vreg3<def> = A2_tfrsi 0; IntRegs:%vreg3
+	J2_jumpt %vreg4<kill>, <BB#2>, %PC<imp-def,dead>; PredRegs:%vreg4
+	J2_jump <BB#1>, %PC<imp-def,dead>
+    Successors according to CFG: BB#2(0x30000000 / 0x80000000 = 37.50%) BB#1(0x50000000 / 0x80000000 = 62.50%)
+
+BB#1: derived from LLVM BB %3
+    Predecessors according to CFG: BB#0
+	%vreg5<def,tied2> = S4_addi_asl_ri <ga:@move_history_color>, %vreg0<tied0>, 2; IntRegs:%vreg5,%vreg0
+	%vreg1<def> = L2_loadri_io %vreg5<kill>, -4; mem:LD4[%cgep] IntRegs:%vreg1,%vreg5
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %6
+    Predecessors according to CFG: BB#0 BB#1
+	%vreg2<def> = PHI %vreg3, <BB#0>, %vreg1, <BB#1>; IntRegs:%vreg2,%vreg3,%vreg1
+	%R0<def> = COPY %vreg2; IntRegs:%vreg2
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function get_last_player.
+
+# After Remove dead machine instructions:
+# Machine code for function get_last_player: SSA
+
+BB#0: derived from LLVM BB %0
+	%vreg0<def> = L4_loadri_abs <ga:@move_history_pointer>; mem:LD4[@move_history_pointer] IntRegs:%vreg0
+	%vreg4<def> = C2_cmpeqi %vreg0, 0; PredRegs:%vreg4 IntRegs:%vreg0
+	%vreg3<def> = A2_tfrsi 0; IntRegs:%vreg3
+	J2_jumpt %vreg4<kill>, <BB#2>, %PC<imp-def,dead>; PredRegs:%vreg4
+	J2_jump <BB#1>, %PC<imp-def,dead>
+    Successors according to CFG: BB#2(0x30000000 / 0x80000000 = 37.50%) BB#1(0x50000000 / 0x80000000 = 62.50%)
+
+BB#1: derived from LLVM BB %3
+    Predecessors according to CFG: BB#0
+	%vreg5<def,tied2> = S4_addi_asl_ri <ga:@move_history_color>, %vreg0<tied0>, 2; IntRegs:%vreg5,%vreg0
+	%vreg1<def> = L2_loadri_io %vreg5<kill>, -4; mem:LD4[%cgep] IntRegs:%vreg1,%vreg5
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %6
+    Predecessors according to CFG: BB#0 BB#1
+	%vreg2<def> = PHI %vreg3, <BB#0>, %vreg1, <BB#1>; IntRegs:%vreg2,%vreg3,%vreg1
+	%R0<def> = COPY %vreg2; IntRegs:%vreg2
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function get_last_player.
+
+# After Machine Loop Invariant Code Motion:
+# Machine code for function get_last_player: SSA
+
+BB#0: derived from LLVM BB %0
+	%vreg0<def> = L4_loadri_abs <ga:@move_history_pointer>; mem:LD4[@move_history_pointer] IntRegs:%vreg0
+	%vreg4<def> = C2_cmpeqi %vreg0, 0; PredRegs:%vreg4 IntRegs:%vreg0
+	%vreg3<def> = A2_tfrsi 0; IntRegs:%vreg3
+	J2_jumpt %vreg4<kill>, <BB#2>, %PC<imp-def,dead>; PredRegs:%vreg4
+	J2_jump <BB#1>, %PC<imp-def,dead>
+    Successors according to CFG: BB#2(0x30000000 / 0x80000000 = 37.50%) BB#1(0x50000000 / 0x80000000 = 62.50%)
+
+BB#1: derived from LLVM BB %3
+    Predecessors according to CFG: BB#0
+	%vreg5<def,tied2> = S4_addi_asl_ri <ga:@move_history_color>, %vreg0<tied0>, 2; IntRegs:%vreg5,%vreg0
+	%vreg1<def> = L2_loadri_io %vreg5<kill>, -4; mem:LD4[%cgep] IntRegs:%vreg1,%vreg5
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %6
+    Predecessors according to CFG: BB#0 BB#1
+	%vreg2<def> = PHI %vreg3, <BB#0>, %vreg1, <BB#1>; IntRegs:%vreg2,%vreg3,%vreg1
+	%R0<def> = COPY %vreg2; IntRegs:%vreg2
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function get_last_player.
+
+# After Machine Common Subexpression Elimination:
+# Machine code for function get_last_player: SSA
+
+BB#0: derived from LLVM BB %0
+	%vreg0<def> = L4_loadri_abs <ga:@move_history_pointer>; mem:LD4[@move_history_pointer] IntRegs:%vreg0
+	%vreg4<def> = C2_cmpeqi %vreg0, 0; PredRegs:%vreg4 IntRegs:%vreg0
+	%vreg3<def> = A2_tfrsi 0; IntRegs:%vreg3
+	J2_jumpt %vreg4<kill>, <BB#2>, %PC<imp-def,dead>; PredRegs:%vreg4
+	J2_jump <BB#1>, %PC<imp-def,dead>
+    Successors according to CFG: BB#2(0x30000000 / 0x80000000 = 37.50%) BB#1(0x50000000 / 0x80000000 = 62.50%)
+
+BB#1: derived from LLVM BB %3
+    Predecessors according to CFG: BB#0
+	%vreg5<def,tied2> = S4_addi_asl_ri <ga:@move_history_color>, %vreg0<tied0>, 2; IntRegs:%vreg5,%vreg0
+	%vreg1<def> = L2_loadri_io %vreg5<kill>, -4; mem:LD4[%cgep] IntRegs:%vreg1,%vreg5
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %6
+    Predecessors according to CFG: BB#0 BB#1
+	%vreg2<def> = PHI %vreg3, <BB#0>, %vreg1, <BB#1>; IntRegs:%vreg2,%vreg3,%vreg1
+	%R0<def> = COPY %vreg2; IntRegs:%vreg2
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function get_last_player.
+
+# After Machine code sinking:
+# Machine code for function get_last_player: SSA
+
+BB#0: derived from LLVM BB %0
+	%vreg0<def> = L4_loadri_abs <ga:@move_history_pointer>; mem:LD4[@move_history_pointer] IntRegs:%vreg0
+	%vreg4<def> = C2_cmpeqi %vreg0, 0; PredRegs:%vreg4 IntRegs:%vreg0
+	%vreg3<def> = A2_tfrsi 0; IntRegs:%vreg3
+	J2_jumpt %vreg4<kill>, <BB#2>, %PC<imp-def,dead>; PredRegs:%vreg4
+	J2_jump <BB#1>, %PC<imp-def,dead>
+    Successors according to CFG: BB#2(0x30000000 / 0x80000000 = 37.50%) BB#1(0x50000000 / 0x80000000 = 62.50%)
+
+BB#1: derived from LLVM BB %3
+    Predecessors according to CFG: BB#0
+	%vreg5<def,tied2> = S4_addi_asl_ri <ga:@move_history_color>, %vreg0<tied0>, 2; IntRegs:%vreg5,%vreg0
+	%vreg1<def> = L2_loadri_io %vreg5<kill>, -4; mem:LD4[%cgep] IntRegs:%vreg1,%vreg5
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %6
+    Predecessors according to CFG: BB#0 BB#1
+	%vreg2<def> = PHI %vreg3, <BB#0>, %vreg1, <BB#1>; IntRegs:%vreg2,%vreg3,%vreg1
+	%R0<def> = COPY %vreg2; IntRegs:%vreg2
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function get_last_player.
+
+# After Peephole Optimizations:
+# Machine code for function get_last_player: SSA
+
+BB#0: derived from LLVM BB %0
+	%vreg0<def> = L4_loadri_abs <ga:@move_history_pointer>; mem:LD4[@move_history_pointer] IntRegs:%vreg0
+	%vreg4<def> = C2_cmpeqi %vreg0, 0; PredRegs:%vreg4 IntRegs:%vreg0
+	%vreg3<def> = A2_tfrsi 0; IntRegs:%vreg3
+	J2_jumpt %vreg4<kill>, <BB#2>, %PC<imp-def,dead>; PredRegs:%vreg4
+	J2_jump <BB#1>, %PC<imp-def,dead>
+    Successors according to CFG: BB#2(0x30000000 / 0x80000000 = 37.50%) BB#1(0x50000000 / 0x80000000 = 62.50%)
+
+BB#1: derived from LLVM BB %3
+    Predecessors according to CFG: BB#0
+	%vreg5<def,tied2> = S4_addi_asl_ri <ga:@move_history_color>, %vreg0<tied0>, 2; IntRegs:%vreg5,%vreg0
+	%vreg1<def> = L2_loadri_io %vreg5<kill>, -4; mem:LD4[%cgep] IntRegs:%vreg1,%vreg5
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %6
+    Predecessors according to CFG: BB#0 BB#1
+	%vreg2<def> = PHI %vreg3, <BB#0>, %vreg1, <BB#1>; IntRegs:%vreg2,%vreg3,%vreg1
+	%R0<def> = COPY %vreg2; IntRegs:%vreg2
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function get_last_player.
+
+# After Remove dead machine instructions:
+# Machine code for function get_last_player: SSA
+
+BB#0: derived from LLVM BB %0
+	%vreg0<def> = L4_loadri_abs <ga:@move_history_pointer>; mem:LD4[@move_history_pointer] IntRegs:%vreg0
+	%vreg4<def> = C2_cmpeqi %vreg0, 0; PredRegs:%vreg4 IntRegs:%vreg0
+	%vreg3<def> = A2_tfrsi 0; IntRegs:%vreg3
+	J2_jumpt %vreg4<kill>, <BB#2>, %PC<imp-def,dead>; PredRegs:%vreg4
+	J2_jump <BB#1>, %PC<imp-def,dead>
+    Successors according to CFG: BB#2(0x30000000 / 0x80000000 = 37.50%) BB#1(0x50000000 / 0x80000000 = 62.50%)
+
+BB#1: derived from LLVM BB %3
+    Predecessors according to CFG: BB#0
+	%vreg5<def,tied2> = S4_addi_asl_ri <ga:@move_history_color>, %vreg0<tied0>, 2; IntRegs:%vreg5,%vreg0
+	%vreg1<def> = L2_loadri_io %vreg5<kill>, -4; mem:LD4[%cgep] IntRegs:%vreg1,%vreg5
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %6
+    Predecessors according to CFG: BB#0 BB#1
+	%vreg2<def> = PHI %vreg3, <BB#0>, %vreg1, <BB#1>; IntRegs:%vreg2,%vreg3,%vreg1
+	%R0<def> = COPY %vreg2; IntRegs:%vreg2
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function get_last_player.
+
+# After Hexagon Store Widening:
+# Machine code for function get_last_player: SSA
+
+BB#0: derived from LLVM BB %0
+	%vreg0<def> = L4_loadri_abs <ga:@move_history_pointer>; mem:LD4[@move_history_pointer] IntRegs:%vreg0
+	%vreg4<def> = C2_cmpeqi %vreg0, 0; PredRegs:%vreg4 IntRegs:%vreg0
+	%vreg3<def> = A2_tfrsi 0; IntRegs:%vreg3
+	J2_jumpt %vreg4<kill>, <BB#2>, %PC<imp-def,dead>; PredRegs:%vreg4
+	J2_jump <BB#1>, %PC<imp-def,dead>
+    Successors according to CFG: BB#2(0x30000000 / 0x80000000 = 37.50%) BB#1(0x50000000 / 0x80000000 = 62.50%)
+
+BB#1: derived from LLVM BB %3
+    Predecessors according to CFG: BB#0
+	%vreg5<def,tied2> = S4_addi_asl_ri <ga:@move_history_color>, %vreg0<tied0>, 2; IntRegs:%vreg5,%vreg0
+	%vreg1<def> = L2_loadri_io %vreg5<kill>, -4; mem:LD4[%cgep] IntRegs:%vreg1,%vreg5
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %6
+    Predecessors according to CFG: BB#0 BB#1
+	%vreg2<def> = PHI %vreg3, <BB#0>, %vreg1, <BB#1>; IntRegs:%vreg2,%vreg3,%vreg1
+	%R0<def> = COPY %vreg2; IntRegs:%vreg2
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function get_last_player.
+
+# After Hexagon Hardware Loops:
+# Machine code for function get_last_player: SSA
+
+BB#0: derived from LLVM BB %0
+	%vreg0<def> = L4_loadri_abs <ga:@move_history_pointer>; mem:LD4[@move_history_pointer] IntRegs:%vreg0
+	%vreg4<def> = C2_cmpeqi %vreg0, 0; PredRegs:%vreg4 IntRegs:%vreg0
+	%vreg3<def> = A2_tfrsi 0; IntRegs:%vreg3
+	J2_jumpt %vreg4<kill>, <BB#2>, %PC<imp-def,dead>; PredRegs:%vreg4
+	J2_jump <BB#1>, %PC<imp-def,dead>
+    Successors according to CFG: BB#2(0x30000000 / 0x80000000 = 37.50%) BB#1(0x50000000 / 0x80000000 = 62.50%)
+
+BB#1: derived from LLVM BB %3
+    Predecessors according to CFG: BB#0
+	%vreg5<def,tied2> = S4_addi_asl_ri <ga:@move_history_color>, %vreg0<tied0>, 2; IntRegs:%vreg5,%vreg0
+	%vreg1<def> = L2_loadri_io %vreg5<kill>, -4; mem:LD4[%cgep] IntRegs:%vreg1,%vreg5
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %6
+    Predecessors according to CFG: BB#0 BB#1
+	%vreg2<def> = PHI %vreg3, <BB#0>, %vreg1, <BB#1>; IntRegs:%vreg2,%vreg3,%vreg1
+	%R0<def> = COPY %vreg2; IntRegs:%vreg2
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function get_last_player.
+
+# After Process Implicit Definitions:
+# Machine code for function get_last_player: SSA
+
+BB#0: derived from LLVM BB %0
+	%vreg0<def> = L4_loadri_abs <ga:@move_history_pointer>; mem:LD4[@move_history_pointer] IntRegs:%vreg0
+	%vreg4<def> = C2_cmpeqi %vreg0, 0; PredRegs:%vreg4 IntRegs:%vreg0
+	%vreg3<def> = A2_tfrsi 0; IntRegs:%vreg3
+	J2_jumpt %vreg4<kill>, <BB#2>, %PC<imp-def,dead>; PredRegs:%vreg4
+	J2_jump <BB#1>, %PC<imp-def,dead>
+    Successors according to CFG: BB#2(0x30000000 / 0x80000000 = 37.50%) BB#1(0x50000000 / 0x80000000 = 62.50%)
+
+BB#1: derived from LLVM BB %3
+    Predecessors according to CFG: BB#0
+	%vreg5<def,tied2> = S4_addi_asl_ri <ga:@move_history_color>, %vreg0<tied0>, 2; IntRegs:%vreg5,%vreg0
+	%vreg1<def> = L2_loadri_io %vreg5<kill>, -4; mem:LD4[%cgep] IntRegs:%vreg1,%vreg5
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %6
+    Predecessors according to CFG: BB#0 BB#1
+	%vreg2<def> = PHI %vreg3, <BB#0>, %vreg1, <BB#1>; IntRegs:%vreg2,%vreg3,%vreg1
+	%R0<def> = COPY %vreg2; IntRegs:%vreg2
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function get_last_player.
+
+# After Live Variable Analysis:
+# Machine code for function get_last_player: SSA
+
+BB#0: derived from LLVM BB %0
+	%vreg0<def> = L4_loadri_abs <ga:@move_history_pointer>; mem:LD4[@move_history_pointer] IntRegs:%vreg0
+	%vreg4<def> = C2_cmpeqi %vreg0, 0; PredRegs:%vreg4 IntRegs:%vreg0
+	%vreg3<def> = A2_tfrsi 0; IntRegs:%vreg3
+	J2_jumpt %vreg4<kill>, <BB#2>, %PC<imp-def,dead>; PredRegs:%vreg4
+	J2_jump <BB#1>, %PC<imp-def,dead>
+    Successors according to CFG: BB#2(0x30000000 / 0x80000000 = 37.50%) BB#1(0x50000000 / 0x80000000 = 62.50%)
+
+BB#1: derived from LLVM BB %3
+    Predecessors according to CFG: BB#0
+	%vreg5<def,tied2> = S4_addi_asl_ri <ga:@move_history_color>, %vreg0<kill,tied0>, 2; IntRegs:%vreg5,%vreg0
+	%vreg1<def> = L2_loadri_io %vreg5<kill>, -4; mem:LD4[%cgep] IntRegs:%vreg1,%vreg5
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %6
+    Predecessors according to CFG: BB#0 BB#1
+	%vreg2<def> = PHI %vreg3, <BB#0>, %vreg1, <BB#1>; IntRegs:%vreg2,%vreg3,%vreg1
+	%R0<def> = COPY %vreg2<kill>; IntRegs:%vreg2
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use,kill>
+
+# End machine code for function get_last_player.
+
+# After Machine Natural Loop Construction:
+# Machine code for function get_last_player: SSA
+
+BB#0: derived from LLVM BB %0
+	%vreg0<def> = L4_loadri_abs <ga:@move_history_pointer>; mem:LD4[@move_history_pointer] IntRegs:%vreg0
+	%vreg4<def> = C2_cmpeqi %vreg0, 0; PredRegs:%vreg4 IntRegs:%vreg0
+	%vreg3<def> = A2_tfrsi 0; IntRegs:%vreg3
+	J2_jumpt %vreg4<kill>, <BB#2>, %PC<imp-def,dead>; PredRegs:%vreg4
+	J2_jump <BB#1>, %PC<imp-def,dead>
+    Successors according to CFG: BB#2(0x30000000 / 0x80000000 = 37.50%) BB#1(0x50000000 / 0x80000000 = 62.50%)
+
+BB#1: derived from LLVM BB %3
+    Predecessors according to CFG: BB#0
+	%vreg5<def,tied2> = S4_addi_asl_ri <ga:@move_history_color>, %vreg0<kill,tied0>, 2; IntRegs:%vreg5,%vreg0
+	%vreg1<def> = L2_loadri_io %vreg5<kill>, -4; mem:LD4[%cgep] IntRegs:%vreg1,%vreg5
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %6
+    Predecessors according to CFG: BB#0 BB#1
+	%vreg2<def> = PHI %vreg3, <BB#0>, %vreg1, <BB#1>; IntRegs:%vreg2,%vreg3,%vreg1
+	%R0<def> = COPY %vreg2<kill>; IntRegs:%vreg2
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use,kill>
+
+# End machine code for function get_last_player.
+
+# After Eliminate PHI nodes for register allocation:
+# Machine code for function get_last_player: Post SSA
+
+BB#0: derived from LLVM BB %0
+	%vreg0<def> = L4_loadri_abs <ga:@move_history_pointer>; mem:LD4[@move_history_pointer] IntRegs:%vreg0
+	%vreg4<def> = C2_cmpeqi %vreg0, 0; PredRegs:%vreg4 IntRegs:%vreg0
+	%vreg3<def> = A2_tfrsi 0; IntRegs:%vreg3
+	%vreg6<def> = COPY %vreg3<kill>; IntRegs:%vreg6,%vreg3
+	J2_jumpt %vreg4<kill>, <BB#2>, %PC<imp-def,dead>; PredRegs:%vreg4
+	J2_jump <BB#1>, %PC<imp-def,dead>
+    Successors according to CFG: BB#2(0x30000000 / 0x80000000 = 37.50%) BB#1(0x50000000 / 0x80000000 = 62.50%)
+
+BB#1: derived from LLVM BB %3
+    Predecessors according to CFG: BB#0
+	%vreg5<def,tied2> = S4_addi_asl_ri <ga:@move_history_color>, %vreg0<kill,tied0>, 2; IntRegs:%vreg5,%vreg0
+	%vreg1<def> = L2_loadri_io %vreg5<kill>, -4; mem:LD4[%cgep] IntRegs:%vreg1,%vreg5
+	%vreg6<def> = COPY %vreg1<kill>; IntRegs:%vreg6,%vreg1
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %6
+    Predecessors according to CFG: BB#0 BB#1
+	%vreg2<def> = COPY %vreg6<kill>; IntRegs:%vreg2,%vreg6
+	%R0<def> = COPY %vreg2<kill>; IntRegs:%vreg2
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use,kill>
+
+# End machine code for function get_last_player.
+
+# After Two-Address instruction pass:
+# Machine code for function get_last_player: Post SSA
+
+BB#0: derived from LLVM BB %0
+	%vreg0<def> = L4_loadri_abs <ga:@move_history_pointer>; mem:LD4[@move_history_pointer] IntRegs:%vreg0
+	%vreg4<def> = C2_cmpeqi %vreg0, 0; PredRegs:%vreg4 IntRegs:%vreg0
+	%vreg3<def> = A2_tfrsi 0; IntRegs:%vreg3
+	%vreg6<def> = COPY %vreg3<kill>; IntRegs:%vreg6,%vreg3
+	J2_jumpt %vreg4<kill>, <BB#2>, %PC<imp-def,dead>; PredRegs:%vreg4
+	J2_jump <BB#1>, %PC<imp-def,dead>
+    Successors according to CFG: BB#2(0x30000000 / 0x80000000 = 37.50%) BB#1(0x50000000 / 0x80000000 = 62.50%)
+
+BB#1: derived from LLVM BB %3
+    Predecessors according to CFG: BB#0
+	%vreg5<def> = COPY %vreg0<kill>; IntRegs:%vreg5,%vreg0
+	%vreg5<def,tied2> = S4_addi_asl_ri <ga:@move_history_color>, %vreg5<tied0>, 2; IntRegs:%vreg5
+	%vreg1<def> = L2_loadri_io %vreg5<kill>, -4; mem:LD4[%cgep] IntRegs:%vreg1,%vreg5
+	%vreg6<def> = COPY %vreg1<kill>; IntRegs:%vreg6,%vreg1
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %6
+    Predecessors according to CFG: BB#0 BB#1
+	%vreg2<def> = COPY %vreg6<kill>; IntRegs:%vreg2,%vreg6
+	%R0<def> = COPY %vreg2<kill>; IntRegs:%vreg2
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use,kill>
+
+# End machine code for function get_last_player.
+
+# After Simple Register Coalescing:
+# Machine code for function get_last_player: Post SSA
+
+0B	BB#0: derived from LLVM BB %0
+16B		%vreg5<def> = L4_loadri_abs <ga:@move_history_pointer>; mem:LD4[@move_history_pointer] IntRegs:%vreg5
+32B		%vreg4<def> = C2_cmpeqi %vreg5, 0; PredRegs:%vreg4 IntRegs:%vreg5
+48B		%vreg6<def> = A2_tfrsi 0; IntRegs:%vreg6
+80B		J2_jumpt %vreg4, <BB#2>, %PC<imp-def,dead>; PredRegs:%vreg4
+96B		J2_jump <BB#1>, %PC<imp-def,dead>
+	    Successors according to CFG: BB#2(0x30000000 / 0x80000000 = 37.50%) BB#1(0x50000000 / 0x80000000 = 62.50%)
+
+112B	BB#1: derived from LLVM BB %3
+	    Predecessors according to CFG: BB#0
+144B		%vreg5<def,tied2> = S4_addi_asl_ri <ga:@move_history_color>, %vreg5<tied0>, 2; IntRegs:%vreg5
+160B		%vreg6<def> = L2_loadri_io %vreg5, -4; mem:LD4[%cgep] IntRegs:%vreg6,%vreg5
+	    Successors according to CFG: BB#2(?%)
+
+192B	BB#2: derived from LLVM BB %6
+	    Predecessors according to CFG: BB#0 BB#1
+224B		%R0<def> = COPY %vreg6; IntRegs:%vreg6
+240B		JMPret %R31, %PC<imp-def,dead>, %R0<imp-use,kill>
+
+# End machine code for function get_last_player.
+
+# After Hexagon Expand Condsets:
+# Machine code for function get_last_player: Post SSA
+
+0B	BB#0: derived from LLVM BB %0
+16B		%vreg5<def> = L4_loadri_abs <ga:@move_history_pointer>; mem:LD4[@move_history_pointer] IntRegs:%vreg5
+32B		%vreg4<def> = C2_cmpeqi %vreg5, 0; PredRegs:%vreg4 IntRegs:%vreg5
+48B		%vreg6<def> = A2_tfrsi 0; IntRegs:%vreg6
+80B		J2_jumpt %vreg4, <BB#2>, %PC<imp-def,dead>; PredRegs:%vreg4
+96B		J2_jump <BB#1>, %PC<imp-def,dead>
+	    Successors according to CFG: BB#2(0x30000000 / 0x80000000 = 37.50%) BB#1(0x50000000 / 0x80000000 = 62.50%)
+
+112B	BB#1: derived from LLVM BB %3
+	    Predecessors according to CFG: BB#0
+144B		%vreg5<def,tied2> = S4_addi_asl_ri <ga:@move_history_color>, %vreg5<tied0>, 2; IntRegs:%vreg5
+160B		%vreg6<def> = L2_loadri_io %vreg5, -4; mem:LD4[%cgep] IntRegs:%vreg6,%vreg5
+	    Successors according to CFG: BB#2(?%)
+
+192B	BB#2: derived from LLVM BB %6
+	    Predecessors according to CFG: BB#0 BB#1
+224B		%R0<def> = COPY %vreg6; IntRegs:%vreg6
+240B		JMPret %R31, %PC<imp-def,dead>, %R0<imp-use,kill>
+
+# End machine code for function get_last_player.
+
+# After Machine Instruction Scheduler:
+# Machine code for function get_last_player: Post SSA
+
+0B	BB#0: derived from LLVM BB %0
+16B		%vreg5<def> = L4_loadri_abs <ga:@move_history_pointer>; mem:LD4[@move_history_pointer] IntRegs:%vreg5
+48B		%vreg6<def> = A2_tfrsi 0; IntRegs:%vreg6
+56B		%vreg4<def> = C2_cmpeqi %vreg5, 0; PredRegs:%vreg4 IntRegs:%vreg5
+80B		J2_jumpt %vreg4, <BB#2>, %PC<imp-def,dead>; PredRegs:%vreg4
+96B		J2_jump <BB#1>, %PC<imp-def,dead>
+	    Successors according to CFG: BB#2(0x30000000 / 0x80000000 = 37.50%) BB#1(0x50000000 / 0x80000000 = 62.50%)
+
+112B	BB#1: derived from LLVM BB %3
+	    Predecessors according to CFG: BB#0
+144B		%vreg5<def,tied2> = S4_addi_asl_ri <ga:@move_history_color>, %vreg5<tied0>, 2; IntRegs:%vreg5
+160B		%vreg6<def> = L2_loadri_io %vreg5, -4; mem:LD4[%cgep] IntRegs:%vreg6,%vreg5
+	    Successors according to CFG: BB#2(?%)
+
+192B	BB#2: derived from LLVM BB %6
+	    Predecessors according to CFG: BB#0 BB#1
+224B		%R0<def> = COPY %vreg6; IntRegs:%vreg6
+240B		JMPret %R31, %PC<imp-def,dead>, %R0<imp-use,kill>
+
+# End machine code for function get_last_player.
+
+# After Greedy Register Allocator:
+# Machine code for function get_last_player: Post SSA
+
+0B	BB#0: derived from LLVM BB %0
+16B		%vreg5<def> = L4_loadri_abs <ga:@move_history_pointer>; mem:LD4[@move_history_pointer] IntRegs:%vreg5
+48B		%vreg6<def> = A2_tfrsi 0; IntRegs:%vreg6
+56B		%vreg4<def> = C2_cmpeqi %vreg5, 0; PredRegs:%vreg4 IntRegs:%vreg5
+80B		J2_jumpt %vreg4, <BB#2>, %PC<imp-def,dead>; PredRegs:%vreg4
+96B		J2_jump <BB#1>, %PC<imp-def,dead>
+	    Successors according to CFG: BB#2(0x30000000 / 0x80000000 = 37.50%) BB#1(0x50000000 / 0x80000000 = 62.50%)
+
+112B	BB#1: derived from LLVM BB %3
+	    Predecessors according to CFG: BB#0
+144B		%vreg5<def,tied2> = S4_addi_asl_ri <ga:@move_history_color>, %vreg5<tied0>, 2; IntRegs:%vreg5
+160B		%vreg6<def> = L2_loadri_io %vreg5, -4; mem:LD4[%cgep] IntRegs:%vreg6,%vreg5
+	    Successors according to CFG: BB#2(?%)
+
+192B	BB#2: derived from LLVM BB %6
+	    Predecessors according to CFG: BB#0 BB#1
+224B		%R0<def> = COPY %vreg6; IntRegs:%vreg6
+240B		JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function get_last_player.
+
+# After Virtual Register Rewriter:
+# Machine code for function get_last_player: Post SSA
+
+0B	BB#0: derived from LLVM BB %0
+16B		%R1<def> = L4_loadri_abs <ga:@move_history_pointer>; mem:LD4[@move_history_pointer]
+48B		%R0<def> = A2_tfrsi 0
+56B		%P0<def> = C2_cmpeqi %R1, 0
+80B		J2_jumpt %P0<kill>, <BB#2>, %PC<imp-def,dead>
+96B		J2_jump <BB#1>, %PC<imp-def,dead>
+	    Successors according to CFG: BB#2(0x30000000 / 0x80000000 = 37.50%) BB#1(0x50000000 / 0x80000000 = 62.50%)
+
+112B	BB#1: derived from LLVM BB %3
+	    Live Ins: %R1
+	    Predecessors according to CFG: BB#0
+144B		%R1<def,tied2> = S4_addi_asl_ri <ga:@move_history_color>, %R1<kill,tied0>, 2
+160B		%R0<def> = L2_loadri_io %R1<kill>, -4; mem:LD4[%cgep]
+	    Successors according to CFG: BB#2(?%)
+
+192B	BB#2: derived from LLVM BB %6
+	    Live Ins: %R0
+	    Predecessors according to CFG: BB#0 BB#1
+240B		JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function get_last_player.
+
+# After Stack Slot Coloring:
+# Machine code for function get_last_player: Post SSA
+
+BB#0: derived from LLVM BB %0
+	%R1<def> = L4_loadri_abs <ga:@move_history_pointer>; mem:LD4[@move_history_pointer]
+	%R0<def> = A2_tfrsi 0
+	%P0<def> = C2_cmpeqi %R1, 0
+	J2_jumpt %P0<kill>, <BB#2>, %PC<imp-def,dead>
+	J2_jump <BB#1>, %PC<imp-def,dead>
+    Successors according to CFG: BB#2(0x30000000 / 0x80000000 = 37.50%) BB#1(0x50000000 / 0x80000000 = 62.50%)
+
+BB#1: derived from LLVM BB %3
+    Live Ins: %R1
+    Predecessors according to CFG: BB#0
+	%R1<def,tied2> = S4_addi_asl_ri <ga:@move_history_color>, %R1<kill,tied0>, 2
+	%R0<def> = L2_loadri_io %R1<kill>, -4; mem:LD4[%cgep]
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %6
+    Live Ins: %R0
+    Predecessors according to CFG: BB#0 BB#1
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function get_last_player.
+
+# After Machine Loop Invariant Code Motion:
+# Machine code for function get_last_player: Post SSA
+
+BB#0: derived from LLVM BB %0
+	%R1<def> = L4_loadri_abs <ga:@move_history_pointer>; mem:LD4[@move_history_pointer]
+	%R0<def> = A2_tfrsi 0
+	%P0<def> = C2_cmpeqi %R1, 0
+	J2_jumpt %P0<kill>, <BB#2>, %PC<imp-def,dead>
+	J2_jump <BB#1>, %PC<imp-def,dead>
+    Successors according to CFG: BB#2(0x30000000 / 0x80000000 = 37.50%) BB#1(0x50000000 / 0x80000000 = 62.50%)
+
+BB#1: derived from LLVM BB %3
+    Live Ins: %R1
+    Predecessors according to CFG: BB#0
+	%R1<def,tied2> = S4_addi_asl_ri <ga:@move_history_color>, %R1<kill,tied0>, 2
+	%R0<def> = L2_loadri_io %R1<kill>, -4; mem:LD4[%cgep]
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %6
+    Live Ins: %R0
+    Predecessors according to CFG: BB#0 BB#1
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function get_last_player.
+
+# After Hexagon RDF optimizations:
+# Machine code for function get_last_player: Post SSA
+
+BB#0: derived from LLVM BB %0
+	%R1<def> = L4_loadri_abs <ga:@move_history_pointer>; mem:LD4[@move_history_pointer]
+	%R0<def> = A2_tfrsi 0
+	%P0<def> = C2_cmpeqi %R1, 0
+	J2_jumpt %P0<kill>, <BB#2>, %PC<imp-def,dead>
+	J2_jump <BB#1>, %PC<imp-def,dead>
+    Successors according to CFG: BB#2(0x30000000 / 0x80000000 = 37.50%) BB#1(0x50000000 / 0x80000000 = 62.50%)
+
+BB#1: derived from LLVM BB %3
+    Live Ins: %R1
+    Predecessors according to CFG: BB#0
+	%R1<def,tied2> = S4_addi_asl_ri <ga:@move_history_color>, %R1<kill,tied0>, 2
+	%R0<def> = L2_loadri_io %R1<kill>, -4; mem:LD4[%cgep]
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %6
+    Live Ins: %R0
+    Predecessors according to CFG: BB#0 BB#1
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function get_last_player.
+
+# After Shrink Wrapping analysis:
+# Machine code for function get_last_player: Post SSA
+
+BB#0: derived from LLVM BB %0
+	%R1<def> = L4_loadri_abs <ga:@move_history_pointer>; mem:LD4[@move_history_pointer]
+	%R0<def> = A2_tfrsi 0
+	%P0<def> = C2_cmpeqi %R1, 0
+	J2_jumpt %P0<kill>, <BB#2>, %PC<imp-def,dead>
+	J2_jump <BB#1>, %PC<imp-def,dead>
+    Successors according to CFG: BB#2(0x30000000 / 0x80000000 = 37.50%) BB#1(0x50000000 / 0x80000000 = 62.50%)
+
+BB#1: derived from LLVM BB %3
+    Live Ins: %R1
+    Predecessors according to CFG: BB#0
+	%R1<def,tied2> = S4_addi_asl_ri <ga:@move_history_color>, %R1<kill,tied0>, 2
+	%R0<def> = L2_loadri_io %R1<kill>, -4; mem:LD4[%cgep]
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %6
+    Live Ins: %R0
+    Predecessors according to CFG: BB#0 BB#1
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function get_last_player.
+
+# After Prologue/Epilogue Insertion & Frame Finalization:
+# Machine code for function get_last_player: Post SSA
+
+BB#0: derived from LLVM BB %0
+	%R1<def> = L4_loadri_abs <ga:@move_history_pointer>; mem:LD4[@move_history_pointer]
+	%R0<def> = A2_tfrsi 0
+	%P0<def> = C2_cmpeqi %R1, 0
+	J2_jumpt %P0<kill>, <BB#2>, %PC<imp-def,dead>
+	J2_jump <BB#1>, %PC<imp-def,dead>
+    Successors according to CFG: BB#2(0x30000000 / 0x80000000 = 37.50%) BB#1(0x50000000 / 0x80000000 = 62.50%)
+
+BB#1: derived from LLVM BB %3
+    Live Ins: %R1
+    Predecessors according to CFG: BB#0
+	%R1<def,tied2> = S4_addi_asl_ri <ga:@move_history_color>, %R1<kill,tied0>, 2
+	%R0<def> = L2_loadri_io %R1<kill>, -4; mem:LD4[%cgep]
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %6
+    Live Ins: %R0
+    Predecessors according to CFG: BB#0 BB#1
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function get_last_player.
+
+# After Machine Copy Propagation Pass:
+# Machine code for function get_last_player: Post SSA
+
+BB#0: derived from LLVM BB %0
+	%R1<def> = L4_loadri_abs <ga:@move_history_pointer>; mem:LD4[@move_history_pointer]
+	%R0<def> = A2_tfrsi 0
+	%P0<def> = C2_cmpeqi %R1, 0
+	J2_jumpt %P0<kill>, <BB#2>, %PC<imp-def,dead>
+	J2_jump <BB#1>, %PC<imp-def,dead>
+    Successors according to CFG: BB#2(0x30000000 / 0x80000000 = 37.50%) BB#1(0x50000000 / 0x80000000 = 62.50%)
+
+BB#1: derived from LLVM BB %3
+    Live Ins: %R1
+    Predecessors according to CFG: BB#0
+	%R1<def,tied2> = S4_addi_asl_ri <ga:@move_history_color>, %R1<kill,tied0>, 2
+	%R0<def> = L2_loadri_io %R1<kill>, -4; mem:LD4[%cgep]
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %6
+    Live Ins: %R0
+    Predecessors according to CFG: BB#0 BB#1
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function get_last_player.
+
+# After Post-RA pseudo instruction expansion pass:
+# Machine code for function get_last_player: Post SSA
+
+BB#0: derived from LLVM BB %0
+	%R1<def> = L4_loadri_abs <ga:@move_history_pointer>; mem:LD4[@move_history_pointer]
+	%R0<def> = A2_tfrsi 0
+	%P0<def> = C2_cmpeqi %R1, 0
+	J2_jumpt %P0<kill>, <BB#2>, %PC<imp-def,dead>
+	J2_jump <BB#1>, %PC<imp-def,dead>
+    Successors according to CFG: BB#2(0x30000000 / 0x80000000 = 37.50%) BB#1(0x50000000 / 0x80000000 = 62.50%)
+
+BB#1: derived from LLVM BB %3
+    Live Ins: %R1
+    Predecessors according to CFG: BB#0
+	%R1<def,tied2> = S4_addi_asl_ri <ga:@move_history_color>, %R1<kill,tied0>, 2
+	%R0<def> = L2_loadri_io %R1<kill>, -4; mem:LD4[%cgep]
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %6
+    Live Ins: %R0
+    Predecessors according to CFG: BB#0 BB#1
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function get_last_player.
+
+# After Hexagon Copy-To-Combine Pass:
+# Machine code for function get_last_player: Post SSA
+
+BB#0: derived from LLVM BB %0
+	%R1<def> = L4_loadri_abs <ga:@move_history_pointer>; mem:LD4[@move_history_pointer]
+	%R0<def> = A2_tfrsi 0
+	%P0<def> = C2_cmpeqi %R1, 0
+	J2_jumpt %P0<kill>, <BB#2>, %PC<imp-def,dead>
+	J2_jump <BB#1>, %PC<imp-def,dead>
+    Successors according to CFG: BB#2(0x30000000 / 0x80000000 = 37.50%) BB#1(0x50000000 / 0x80000000 = 62.50%)
+
+BB#1: derived from LLVM BB %3
+    Live Ins: %R1
+    Predecessors according to CFG: BB#0
+	%R1<def,tied2> = S4_addi_asl_ri <ga:@move_history_color>, %R1<kill,tied0>, 2
+	%R0<def> = L2_loadri_io %R1<kill>, -4; mem:LD4[%cgep]
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %6
+    Live Ins: %R0
+    Predecessors according to CFG: BB#0 BB#1
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function get_last_player.
+
+# After Hexagon Split Const32s and Const64s:
+# Machine code for function get_last_player: Post SSA
+
+BB#0: derived from LLVM BB %0
+	%R1<def> = L4_loadri_abs <ga:@move_history_pointer>; mem:LD4[@move_history_pointer]
+	%R0<def> = A2_tfrsi 0
+	%P0<def> = C2_cmpeqi %R1, 0
+	J2_jumpt %P0<kill>, <BB#2>, %PC<imp-def,dead>
+	J2_jump <BB#1>, %PC<imp-def,dead>
+    Successors according to CFG: BB#2(0x30000000 / 0x80000000 = 37.50%) BB#1(0x50000000 / 0x80000000 = 62.50%)
+
+BB#1: derived from LLVM BB %3
+    Live Ins: %R1
+    Predecessors according to CFG: BB#0
+	%R1<def,tied2> = S4_addi_asl_ri <ga:@move_history_color>, %R1<kill,tied0>, 2
+	%R0<def> = L2_loadri_io %R1<kill>, -4; mem:LD4[%cgep]
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %6
+    Live Ins: %R0
+    Predecessors according to CFG: BB#0 BB#1
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function get_last_player.
+
+# After Analyze Machine Code For Garbage Collection:
+# Machine code for function get_last_player: Post SSA
+
+BB#0: derived from LLVM BB %0
+	%R1<def> = L4_loadri_abs <ga:@move_history_pointer>; mem:LD4[@move_history_pointer]
+	%R0<def> = A2_tfrsi 0
+	%P0<def> = C2_cmpeqi %R1, 0
+	J2_jumpt %P0<kill>, <BB#2>, %PC<imp-def,dead>
+	J2_jump <BB#1>, %PC<imp-def,dead>
+    Successors according to CFG: BB#2(0x30000000 / 0x80000000 = 37.50%) BB#1(0x50000000 / 0x80000000 = 62.50%)
+
+BB#1: derived from LLVM BB %3
+    Live Ins: %R1
+    Predecessors according to CFG: BB#0
+	%R1<def,tied2> = S4_addi_asl_ri <ga:@move_history_color>, %R1<kill,tied0>, 2
+	%R0<def> = L2_loadri_io %R1<kill>, -4; mem:LD4[%cgep]
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %6
+    Live Ins: %R0
+    Predecessors according to CFG: BB#0 BB#1
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function get_last_player.
+
+# After Hexagon NewValueJump:
+# Machine code for function get_last_player: Post SSA
+
+BB#0: derived from LLVM BB %0
+	%R0<def> = A2_tfrsi 0
+	%R1<def> = L4_loadri_abs <ga:@move_history_pointer>; mem:LD4[@move_history_pointer]
+	J4_cmpeqi_t_jumpnv_nt %R1, 0, <BB#2>, %PC<imp-def>
+	J2_jump <BB#1>, %PC<imp-def,dead>
+    Successors according to CFG: BB#2(0x30000000 / 0x80000000 = 37.50%) BB#1(0x50000000 / 0x80000000 = 62.50%)
+
+BB#1: derived from LLVM BB %3
+    Live Ins: %R1
+    Predecessors according to CFG: BB#0
+	%R1<def,tied2> = S4_addi_asl_ri <ga:@move_history_color>, %R1<kill,tied0>, 2
+	%R0<def> = L2_loadri_io %R1<kill>, -4; mem:LD4[%cgep]
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %6
+    Live Ins: %R0
+    Predecessors according to CFG: BB#0 BB#1
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function get_last_player.
+
+# After Hexagon Expand Predicate Spill Code:
+# Machine code for function get_last_player: Post SSA
+
+BB#0: derived from LLVM BB %0
+	%R0<def> = A2_tfrsi 0
+	%R1<def> = L4_loadri_abs <ga:@move_history_pointer>; mem:LD4[@move_history_pointer]
+	J4_cmpeqi_t_jumpnv_nt %R1, 0, <BB#2>, %PC<imp-def>
+	J2_jump <BB#1>, %PC<imp-def,dead>
+    Successors according to CFG: BB#2(0x30000000 / 0x80000000 = 37.50%) BB#1(0x50000000 / 0x80000000 = 62.50%)
+
+BB#1: derived from LLVM BB %3
+    Live Ins: %R1
+    Predecessors according to CFG: BB#0
+	%R1<def,tied2> = S4_addi_asl_ri <ga:@move_history_color>, %R1<kill,tied0>, 2
+	%R0<def> = L2_loadri_io %R1<kill>, -4; mem:LD4[%cgep]
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %6
+    Live Ins: %R0
+    Predecessors according to CFG: BB#0 BB#1
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function get_last_player.
+
+# After Hexagon Hardware Loop Fixup:
+# Machine code for function get_last_player: Post SSA
+
+BB#0: derived from LLVM BB %0
+	%R0<def> = A2_tfrsi 0
+	%R1<def> = L4_loadri_abs <ga:@move_history_pointer>; mem:LD4[@move_history_pointer]
+	J4_cmpeqi_t_jumpnv_nt %R1, 0, <BB#2>, %PC<imp-def>
+	J2_jump <BB#1>, %PC<imp-def,dead>
+    Successors according to CFG: BB#2(0x30000000 / 0x80000000 = 37.50%) BB#1(0x50000000 / 0x80000000 = 62.50%)
+
+BB#1: derived from LLVM BB %3
+    Live Ins: %R1
+    Predecessors according to CFG: BB#0
+	%R1<def,tied2> = S4_addi_asl_ri <ga:@move_history_color>, %R1<kill,tied0>, 2
+	%R0<def> = L2_loadri_io %R1<kill>, -4; mem:LD4[%cgep]
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %6
+    Live Ins: %R0
+    Predecessors according to CFG: BB#0 BB#1
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function get_last_player.
+
+# After Hexagon generate mux instructions:
+# Machine code for function get_last_player: Post SSA
+
+BB#0: derived from LLVM BB %0
+	%R0<def> = A2_tfrsi 0
+	%R1<def> = L4_loadri_abs <ga:@move_history_pointer>; mem:LD4[@move_history_pointer]
+	J4_cmpeqi_t_jumpnv_nt %R1, 0, <BB#2>, %PC<imp-def>
+	J2_jump <BB#1>, %PC<imp-def,dead>
+    Successors according to CFG: BB#2(0x30000000 / 0x80000000 = 37.50%) BB#1(0x50000000 / 0x80000000 = 62.50%)
+
+BB#1: derived from LLVM BB %3
+    Live Ins: %R1
+    Predecessors according to CFG: BB#0
+	%R1<def,tied2> = S4_addi_asl_ri <ga:@move_history_color>, %R1<kill,tied0>, 2
+	%R0<def> = L2_loadri_io %R1<kill>, -4; mem:LD4[%cgep]
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %6
+    Live Ins: %R0
+    Predecessors according to CFG: BB#0 BB#1
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function get_last_player.
+
+# After Hexagon Packetizer:
+# Machine code for function get_last_player: Post SSA
+
+BB#0: derived from LLVM BB %0
+	BUNDLE %R0<imp-def>, %R1<imp-def>, %PC<imp-def>
+	  * %R0<def> = A2_tfrsi 0
+	  * %R1<def> = L4_loadri_abs <ga:@move_history_pointer>; mem:LD4[@move_history_pointer]
+	  * J4_cmpeqi_t_jumpnv_nt %R1<internal>, 0, <BB#2>, %PC<imp-def>
+	J2_jump <BB#1>, %PC<imp-def,dead>
+    Successors according to CFG: BB#2(0x30000000 / 0x80000000 = 37.50%) BB#1(0x50000000 / 0x80000000 = 62.50%)
+
+BB#1: derived from LLVM BB %3
+    Live Ins: %R1
+    Predecessors according to CFG: BB#0
+	%R1<def,tied2> = S4_addi_asl_ri <ga:@move_history_color>, %R1<kill,tied0>, 2
+	%R0<def> = L2_loadri_io %R1<kill>, -4; mem:LD4[%cgep]
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %6
+    Live Ins: %R0
+    Predecessors according to CFG: BB#0 BB#1
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function get_last_player.
+
+# After Hexagon call frame information:
+# Machine code for function get_last_player: Post SSA
+
+BB#0: derived from LLVM BB %0
+	BUNDLE %R0<imp-def>, %R1<imp-def>, %PC<imp-def>
+	  * %R0<def> = A2_tfrsi 0
+	  * %R1<def> = L4_loadri_abs <ga:@move_history_pointer>; mem:LD4[@move_history_pointer]
+	  * J4_cmpeqi_t_jumpnv_nt %R1<internal>, 0, <BB#2>, %PC<imp-def>
+	J2_jump <BB#1>, %PC<imp-def,dead>
+    Successors according to CFG: BB#2(0x30000000 / 0x80000000 = 37.50%) BB#1(0x50000000 / 0x80000000 = 62.50%)
+
+BB#1: derived from LLVM BB %3
+    Live Ins: %R1
+    Predecessors according to CFG: BB#0
+	%R1<def,tied2> = S4_addi_asl_ri <ga:@move_history_color>, %R1<kill,tied0>, 2
+	%R0<def> = L2_loadri_io %R1<kill>, -4; mem:LD4[%cgep]
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %6
+    Live Ins: %R0
+    Predecessors according to CFG: BB#0 BB#1
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function get_last_player.
+
+# After Contiguously Lay Out Funclets:
+# Machine code for function get_last_player: Post SSA
+
+BB#0: derived from LLVM BB %0
+	BUNDLE %R0<imp-def>, %R1<imp-def>, %PC<imp-def>
+	  * %R0<def> = A2_tfrsi 0
+	  * %R1<def> = L4_loadri_abs <ga:@move_history_pointer>; mem:LD4[@move_history_pointer]
+	  * J4_cmpeqi_t_jumpnv_nt %R1<internal>, 0, <BB#2>, %PC<imp-def>
+	J2_jump <BB#1>, %PC<imp-def,dead>
+    Successors according to CFG: BB#2(0x30000000 / 0x80000000 = 37.50%) BB#1(0x50000000 / 0x80000000 = 62.50%)
+
+BB#1: derived from LLVM BB %3
+    Live Ins: %R1
+    Predecessors according to CFG: BB#0
+	%R1<def,tied2> = S4_addi_asl_ri <ga:@move_history_color>, %R1<kill,tied0>, 2
+	%R0<def> = L2_loadri_io %R1<kill>, -4; mem:LD4[%cgep]
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %6
+    Live Ins: %R0
+    Predecessors according to CFG: BB#0 BB#1
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function get_last_player.
+
+# After StackMap Liveness Analysis:
+# Machine code for function get_last_player: Post SSA
+
+BB#0: derived from LLVM BB %0
+	BUNDLE %R0<imp-def>, %R1<imp-def>, %PC<imp-def>
+	  * %R0<def> = A2_tfrsi 0
+	  * %R1<def> = L4_loadri_abs <ga:@move_history_pointer>; mem:LD4[@move_history_pointer]
+	  * J4_cmpeqi_t_jumpnv_nt %R1<internal>, 0, <BB#2>, %PC<imp-def>
+	J2_jump <BB#1>, %PC<imp-def,dead>
+    Successors according to CFG: BB#2(0x30000000 / 0x80000000 = 37.50%) BB#1(0x50000000 / 0x80000000 = 62.50%)
+
+BB#1: derived from LLVM BB %3
+    Live Ins: %R1
+    Predecessors according to CFG: BB#0
+	%R1<def,tied2> = S4_addi_asl_ri <ga:@move_history_color>, %R1<kill,tied0>, 2
+	%R0<def> = L2_loadri_io %R1<kill>, -4; mem:LD4[%cgep]
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %6
+    Live Ins: %R0
+    Predecessors according to CFG: BB#0 BB#1
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function get_last_player.
+
+# After Live DEBUG_VALUE analysis:
+# Machine code for function get_last_player: Post SSA
+
+BB#0: derived from LLVM BB %0
+	BUNDLE %R0<imp-def>, %R1<imp-def>, %PC<imp-def>
+	  * %R0<def> = A2_tfrsi 0
+	  * %R1<def> = L4_loadri_abs <ga:@move_history_pointer>; mem:LD4[@move_history_pointer]
+	  * J4_cmpeqi_t_jumpnv_nt %R1<internal>, 0, <BB#2>, %PC<imp-def>
+	J2_jump <BB#1>, %PC<imp-def,dead>
+    Successors according to CFG: BB#2(0x30000000 / 0x80000000 = 37.50%) BB#1(0x50000000 / 0x80000000 = 62.50%)
+
+BB#1: derived from LLVM BB %3
+    Live Ins: %R1
+    Predecessors according to CFG: BB#0
+	%R1<def,tied2> = S4_addi_asl_ri <ga:@move_history_color>, %R1<kill,tied0>, 2
+	%R0<def> = L2_loadri_io %R1<kill>, -4; mem:LD4[%cgep]
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %6
+    Live Ins: %R0
+    Predecessors according to CFG: BB#0 BB#1
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function get_last_player.
+

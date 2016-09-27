@@ -1,0 +1,788 @@
+# After Instruction Selection:
+# Machine code for function ptmr_init: SSA
+Function Live Ins: %R0 in %vreg0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%vreg0<def> = COPY %R0; GPR:%vreg0
+	%vreg1<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg1
+	t2STRi12 %vreg1, %vreg0, 36, pred:14, pred:%noreg; mem:ST4[%2(align=8)+28](align=4) rGPR:%vreg1 GPR:%vreg0
+	t2STRi12 %vreg1, %vreg0, 32, pred:14, pred:%noreg; mem:ST4[%2+24](align=8) rGPR:%vreg1 GPR:%vreg0
+	t2STRi12 %vreg1, %vreg0, 28, pred:14, pred:%noreg; mem:ST4[%2(align=8)+20](align=4) rGPR:%vreg1 GPR:%vreg0
+	t2STRi12 %vreg1, %vreg0, 24, pred:14, pred:%noreg; mem:ST4[%2+16](align=8) rGPR:%vreg1 GPR:%vreg0
+	t2STRi12 %vreg1, %vreg0, 20, pred:14, pred:%noreg; mem:ST4[%2(align=8)+12](align=4) rGPR:%vreg1 GPR:%vreg0
+	t2STRi12 %vreg1, %vreg0, 16, pred:14, pred:%noreg; mem:ST4[%2+8](align=8) rGPR:%vreg1 GPR:%vreg0
+	t2STRi12 %vreg1, %vreg0, 12, pred:14, pred:%noreg; mem:ST4[%2(align=8)+4](align=4) rGPR:%vreg1 GPR:%vreg0
+	t2STRi12 %vreg1, %vreg0, 8, pred:14, pred:%noreg; mem:ST4[%2](align=8) rGPR:%vreg1 GPR:%vreg0
+	tBX_RET pred:14, pred:%noreg
+
+# End machine code for function ptmr_init.
+
+# After Expand ISel Pseudo-instructions:
+# Machine code for function ptmr_init: SSA
+Function Live Ins: %R0 in %vreg0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%vreg0<def> = COPY %R0; GPR:%vreg0
+	%vreg1<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg1
+	t2STRi12 %vreg1, %vreg0, 36, pred:14, pred:%noreg; mem:ST4[%2(align=8)+28](align=4) rGPR:%vreg1 GPR:%vreg0
+	t2STRi12 %vreg1, %vreg0, 32, pred:14, pred:%noreg; mem:ST4[%2+24](align=8) rGPR:%vreg1 GPR:%vreg0
+	t2STRi12 %vreg1, %vreg0, 28, pred:14, pred:%noreg; mem:ST4[%2(align=8)+20](align=4) rGPR:%vreg1 GPR:%vreg0
+	t2STRi12 %vreg1, %vreg0, 24, pred:14, pred:%noreg; mem:ST4[%2+16](align=8) rGPR:%vreg1 GPR:%vreg0
+	t2STRi12 %vreg1, %vreg0, 20, pred:14, pred:%noreg; mem:ST4[%2(align=8)+12](align=4) rGPR:%vreg1 GPR:%vreg0
+	t2STRi12 %vreg1, %vreg0, 16, pred:14, pred:%noreg; mem:ST4[%2+8](align=8) rGPR:%vreg1 GPR:%vreg0
+	t2STRi12 %vreg1, %vreg0, 12, pred:14, pred:%noreg; mem:ST4[%2(align=8)+4](align=4) rGPR:%vreg1 GPR:%vreg0
+	t2STRi12 %vreg1, %vreg0, 8, pred:14, pred:%noreg; mem:ST4[%2](align=8) rGPR:%vreg1 GPR:%vreg0
+	tBX_RET pred:14, pred:%noreg
+
+# End machine code for function ptmr_init.
+
+# After Tail Duplication:
+# Machine code for function ptmr_init: SSA
+Function Live Ins: %R0 in %vreg0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%vreg0<def> = COPY %R0; GPR:%vreg0
+	%vreg1<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg1
+	t2STRi12 %vreg1, %vreg0, 36, pred:14, pred:%noreg; mem:ST4[%2(align=8)+28](align=4) rGPR:%vreg1 GPR:%vreg0
+	t2STRi12 %vreg1, %vreg0, 32, pred:14, pred:%noreg; mem:ST4[%2+24](align=8) rGPR:%vreg1 GPR:%vreg0
+	t2STRi12 %vreg1, %vreg0, 28, pred:14, pred:%noreg; mem:ST4[%2(align=8)+20](align=4) rGPR:%vreg1 GPR:%vreg0
+	t2STRi12 %vreg1, %vreg0, 24, pred:14, pred:%noreg; mem:ST4[%2+16](align=8) rGPR:%vreg1 GPR:%vreg0
+	t2STRi12 %vreg1, %vreg0, 20, pred:14, pred:%noreg; mem:ST4[%2(align=8)+12](align=4) rGPR:%vreg1 GPR:%vreg0
+	t2STRi12 %vreg1, %vreg0, 16, pred:14, pred:%noreg; mem:ST4[%2+8](align=8) rGPR:%vreg1 GPR:%vreg0
+	t2STRi12 %vreg1, %vreg0, 12, pred:14, pred:%noreg; mem:ST4[%2(align=8)+4](align=4) rGPR:%vreg1 GPR:%vreg0
+	t2STRi12 %vreg1, %vreg0, 8, pred:14, pred:%noreg; mem:ST4[%2](align=8) rGPR:%vreg1 GPR:%vreg0
+	tBX_RET pred:14, pred:%noreg
+
+# End machine code for function ptmr_init.
+
+# After Optimize machine instruction PHIs:
+# Machine code for function ptmr_init: SSA
+Function Live Ins: %R0 in %vreg0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%vreg0<def> = COPY %R0; GPR:%vreg0
+	%vreg1<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg1
+	t2STRi12 %vreg1, %vreg0, 36, pred:14, pred:%noreg; mem:ST4[%2(align=8)+28](align=4) rGPR:%vreg1 GPR:%vreg0
+	t2STRi12 %vreg1, %vreg0, 32, pred:14, pred:%noreg; mem:ST4[%2+24](align=8) rGPR:%vreg1 GPR:%vreg0
+	t2STRi12 %vreg1, %vreg0, 28, pred:14, pred:%noreg; mem:ST4[%2(align=8)+20](align=4) rGPR:%vreg1 GPR:%vreg0
+	t2STRi12 %vreg1, %vreg0, 24, pred:14, pred:%noreg; mem:ST4[%2+16](align=8) rGPR:%vreg1 GPR:%vreg0
+	t2STRi12 %vreg1, %vreg0, 20, pred:14, pred:%noreg; mem:ST4[%2(align=8)+12](align=4) rGPR:%vreg1 GPR:%vreg0
+	t2STRi12 %vreg1, %vreg0, 16, pred:14, pred:%noreg; mem:ST4[%2+8](align=8) rGPR:%vreg1 GPR:%vreg0
+	t2STRi12 %vreg1, %vreg0, 12, pred:14, pred:%noreg; mem:ST4[%2(align=8)+4](align=4) rGPR:%vreg1 GPR:%vreg0
+	t2STRi12 %vreg1, %vreg0, 8, pred:14, pred:%noreg; mem:ST4[%2](align=8) rGPR:%vreg1 GPR:%vreg0
+	tBX_RET pred:14, pred:%noreg
+
+# End machine code for function ptmr_init.
+
+# After Merge disjoint stack slots:
+# Machine code for function ptmr_init: SSA
+Function Live Ins: %R0 in %vreg0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%vreg0<def> = COPY %R0; GPR:%vreg0
+	%vreg1<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg1
+	t2STRi12 %vreg1, %vreg0, 36, pred:14, pred:%noreg; mem:ST4[%2(align=8)+28](align=4) rGPR:%vreg1 GPR:%vreg0
+	t2STRi12 %vreg1, %vreg0, 32, pred:14, pred:%noreg; mem:ST4[%2+24](align=8) rGPR:%vreg1 GPR:%vreg0
+	t2STRi12 %vreg1, %vreg0, 28, pred:14, pred:%noreg; mem:ST4[%2(align=8)+20](align=4) rGPR:%vreg1 GPR:%vreg0
+	t2STRi12 %vreg1, %vreg0, 24, pred:14, pred:%noreg; mem:ST4[%2+16](align=8) rGPR:%vreg1 GPR:%vreg0
+	t2STRi12 %vreg1, %vreg0, 20, pred:14, pred:%noreg; mem:ST4[%2(align=8)+12](align=4) rGPR:%vreg1 GPR:%vreg0
+	t2STRi12 %vreg1, %vreg0, 16, pred:14, pred:%noreg; mem:ST4[%2+8](align=8) rGPR:%vreg1 GPR:%vreg0
+	t2STRi12 %vreg1, %vreg0, 12, pred:14, pred:%noreg; mem:ST4[%2(align=8)+4](align=4) rGPR:%vreg1 GPR:%vreg0
+	t2STRi12 %vreg1, %vreg0, 8, pred:14, pred:%noreg; mem:ST4[%2](align=8) rGPR:%vreg1 GPR:%vreg0
+	tBX_RET pred:14, pred:%noreg
+
+# End machine code for function ptmr_init.
+
+# After Local Stack Slot Allocation:
+# Machine code for function ptmr_init: SSA
+Function Live Ins: %R0 in %vreg0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%vreg0<def> = COPY %R0; GPR:%vreg0
+	%vreg1<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg1
+	t2STRi12 %vreg1, %vreg0, 36, pred:14, pred:%noreg; mem:ST4[%2(align=8)+28](align=4) rGPR:%vreg1 GPR:%vreg0
+	t2STRi12 %vreg1, %vreg0, 32, pred:14, pred:%noreg; mem:ST4[%2+24](align=8) rGPR:%vreg1 GPR:%vreg0
+	t2STRi12 %vreg1, %vreg0, 28, pred:14, pred:%noreg; mem:ST4[%2(align=8)+20](align=4) rGPR:%vreg1 GPR:%vreg0
+	t2STRi12 %vreg1, %vreg0, 24, pred:14, pred:%noreg; mem:ST4[%2+16](align=8) rGPR:%vreg1 GPR:%vreg0
+	t2STRi12 %vreg1, %vreg0, 20, pred:14, pred:%noreg; mem:ST4[%2(align=8)+12](align=4) rGPR:%vreg1 GPR:%vreg0
+	t2STRi12 %vreg1, %vreg0, 16, pred:14, pred:%noreg; mem:ST4[%2+8](align=8) rGPR:%vreg1 GPR:%vreg0
+	t2STRi12 %vreg1, %vreg0, 12, pred:14, pred:%noreg; mem:ST4[%2(align=8)+4](align=4) rGPR:%vreg1 GPR:%vreg0
+	t2STRi12 %vreg1, %vreg0, 8, pred:14, pred:%noreg; mem:ST4[%2](align=8) rGPR:%vreg1 GPR:%vreg0
+	tBX_RET pred:14, pred:%noreg
+
+# End machine code for function ptmr_init.
+
+# After Remove dead machine instructions:
+# Machine code for function ptmr_init: SSA
+Function Live Ins: %R0 in %vreg0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%vreg0<def> = COPY %R0; GPR:%vreg0
+	%vreg1<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg1
+	t2STRi12 %vreg1, %vreg0, 36, pred:14, pred:%noreg; mem:ST4[%2(align=8)+28](align=4) rGPR:%vreg1 GPR:%vreg0
+	t2STRi12 %vreg1, %vreg0, 32, pred:14, pred:%noreg; mem:ST4[%2+24](align=8) rGPR:%vreg1 GPR:%vreg0
+	t2STRi12 %vreg1, %vreg0, 28, pred:14, pred:%noreg; mem:ST4[%2(align=8)+20](align=4) rGPR:%vreg1 GPR:%vreg0
+	t2STRi12 %vreg1, %vreg0, 24, pred:14, pred:%noreg; mem:ST4[%2+16](align=8) rGPR:%vreg1 GPR:%vreg0
+	t2STRi12 %vreg1, %vreg0, 20, pred:14, pred:%noreg; mem:ST4[%2(align=8)+12](align=4) rGPR:%vreg1 GPR:%vreg0
+	t2STRi12 %vreg1, %vreg0, 16, pred:14, pred:%noreg; mem:ST4[%2+8](align=8) rGPR:%vreg1 GPR:%vreg0
+	t2STRi12 %vreg1, %vreg0, 12, pred:14, pred:%noreg; mem:ST4[%2(align=8)+4](align=4) rGPR:%vreg1 GPR:%vreg0
+	t2STRi12 %vreg1, %vreg0, 8, pred:14, pred:%noreg; mem:ST4[%2](align=8) rGPR:%vreg1 GPR:%vreg0
+	tBX_RET pred:14, pred:%noreg
+
+# End machine code for function ptmr_init.
+
+# After Machine Loop Invariant Code Motion:
+# Machine code for function ptmr_init: SSA
+Function Live Ins: %R0 in %vreg0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%vreg0<def> = COPY %R0; GPR:%vreg0
+	%vreg1<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg1
+	t2STRi12 %vreg1, %vreg0, 36, pred:14, pred:%noreg; mem:ST4[%2(align=8)+28](align=4) rGPR:%vreg1 GPR:%vreg0
+	t2STRi12 %vreg1, %vreg0, 32, pred:14, pred:%noreg; mem:ST4[%2+24](align=8) rGPR:%vreg1 GPR:%vreg0
+	t2STRi12 %vreg1, %vreg0, 28, pred:14, pred:%noreg; mem:ST4[%2(align=8)+20](align=4) rGPR:%vreg1 GPR:%vreg0
+	t2STRi12 %vreg1, %vreg0, 24, pred:14, pred:%noreg; mem:ST4[%2+16](align=8) rGPR:%vreg1 GPR:%vreg0
+	t2STRi12 %vreg1, %vreg0, 20, pred:14, pred:%noreg; mem:ST4[%2(align=8)+12](align=4) rGPR:%vreg1 GPR:%vreg0
+	t2STRi12 %vreg1, %vreg0, 16, pred:14, pred:%noreg; mem:ST4[%2+8](align=8) rGPR:%vreg1 GPR:%vreg0
+	t2STRi12 %vreg1, %vreg0, 12, pred:14, pred:%noreg; mem:ST4[%2(align=8)+4](align=4) rGPR:%vreg1 GPR:%vreg0
+	t2STRi12 %vreg1, %vreg0, 8, pred:14, pred:%noreg; mem:ST4[%2](align=8) rGPR:%vreg1 GPR:%vreg0
+	tBX_RET pred:14, pred:%noreg
+
+# End machine code for function ptmr_init.
+
+# After Machine Common Subexpression Elimination:
+# Machine code for function ptmr_init: SSA
+Function Live Ins: %R0 in %vreg0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%vreg0<def> = COPY %R0; GPR:%vreg0
+	%vreg1<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg1
+	t2STRi12 %vreg1, %vreg0, 36, pred:14, pred:%noreg; mem:ST4[%2(align=8)+28](align=4) rGPR:%vreg1 GPR:%vreg0
+	t2STRi12 %vreg1, %vreg0, 32, pred:14, pred:%noreg; mem:ST4[%2+24](align=8) rGPR:%vreg1 GPR:%vreg0
+	t2STRi12 %vreg1, %vreg0, 28, pred:14, pred:%noreg; mem:ST4[%2(align=8)+20](align=4) rGPR:%vreg1 GPR:%vreg0
+	t2STRi12 %vreg1, %vreg0, 24, pred:14, pred:%noreg; mem:ST4[%2+16](align=8) rGPR:%vreg1 GPR:%vreg0
+	t2STRi12 %vreg1, %vreg0, 20, pred:14, pred:%noreg; mem:ST4[%2(align=8)+12](align=4) rGPR:%vreg1 GPR:%vreg0
+	t2STRi12 %vreg1, %vreg0, 16, pred:14, pred:%noreg; mem:ST4[%2+8](align=8) rGPR:%vreg1 GPR:%vreg0
+	t2STRi12 %vreg1, %vreg0, 12, pred:14, pred:%noreg; mem:ST4[%2(align=8)+4](align=4) rGPR:%vreg1 GPR:%vreg0
+	t2STRi12 %vreg1, %vreg0, 8, pred:14, pred:%noreg; mem:ST4[%2](align=8) rGPR:%vreg1 GPR:%vreg0
+	tBX_RET pred:14, pred:%noreg
+
+# End machine code for function ptmr_init.
+
+# After Machine code sinking:
+# Machine code for function ptmr_init: SSA
+Function Live Ins: %R0 in %vreg0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%vreg0<def> = COPY %R0; GPR:%vreg0
+	%vreg1<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg1
+	t2STRi12 %vreg1, %vreg0, 36, pred:14, pred:%noreg; mem:ST4[%2(align=8)+28](align=4) rGPR:%vreg1 GPR:%vreg0
+	t2STRi12 %vreg1, %vreg0, 32, pred:14, pred:%noreg; mem:ST4[%2+24](align=8) rGPR:%vreg1 GPR:%vreg0
+	t2STRi12 %vreg1, %vreg0, 28, pred:14, pred:%noreg; mem:ST4[%2(align=8)+20](align=4) rGPR:%vreg1 GPR:%vreg0
+	t2STRi12 %vreg1, %vreg0, 24, pred:14, pred:%noreg; mem:ST4[%2+16](align=8) rGPR:%vreg1 GPR:%vreg0
+	t2STRi12 %vreg1, %vreg0, 20, pred:14, pred:%noreg; mem:ST4[%2(align=8)+12](align=4) rGPR:%vreg1 GPR:%vreg0
+	t2STRi12 %vreg1, %vreg0, 16, pred:14, pred:%noreg; mem:ST4[%2+8](align=8) rGPR:%vreg1 GPR:%vreg0
+	t2STRi12 %vreg1, %vreg0, 12, pred:14, pred:%noreg; mem:ST4[%2(align=8)+4](align=4) rGPR:%vreg1 GPR:%vreg0
+	t2STRi12 %vreg1, %vreg0, 8, pred:14, pred:%noreg; mem:ST4[%2](align=8) rGPR:%vreg1 GPR:%vreg0
+	tBX_RET pred:14, pred:%noreg
+
+# End machine code for function ptmr_init.
+
+# After Peephole Optimizations:
+# Machine code for function ptmr_init: SSA
+Function Live Ins: %R0 in %vreg0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%vreg0<def> = COPY %R0; GPR:%vreg0
+	%vreg1<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg1
+	t2STRi12 %vreg1, %vreg0, 36, pred:14, pred:%noreg; mem:ST4[%2(align=8)+28](align=4) rGPR:%vreg1 GPR:%vreg0
+	t2STRi12 %vreg1, %vreg0, 32, pred:14, pred:%noreg; mem:ST4[%2+24](align=8) rGPR:%vreg1 GPR:%vreg0
+	t2STRi12 %vreg1, %vreg0, 28, pred:14, pred:%noreg; mem:ST4[%2(align=8)+20](align=4) rGPR:%vreg1 GPR:%vreg0
+	t2STRi12 %vreg1, %vreg0, 24, pred:14, pred:%noreg; mem:ST4[%2+16](align=8) rGPR:%vreg1 GPR:%vreg0
+	t2STRi12 %vreg1, %vreg0, 20, pred:14, pred:%noreg; mem:ST4[%2(align=8)+12](align=4) rGPR:%vreg1 GPR:%vreg0
+	t2STRi12 %vreg1, %vreg0, 16, pred:14, pred:%noreg; mem:ST4[%2+8](align=8) rGPR:%vreg1 GPR:%vreg0
+	t2STRi12 %vreg1, %vreg0, 12, pred:14, pred:%noreg; mem:ST4[%2(align=8)+4](align=4) rGPR:%vreg1 GPR:%vreg0
+	t2STRi12 %vreg1, %vreg0, 8, pred:14, pred:%noreg; mem:ST4[%2](align=8) rGPR:%vreg1 GPR:%vreg0
+	tBX_RET pred:14, pred:%noreg
+
+# End machine code for function ptmr_init.
+
+# After Remove dead machine instructions:
+# Machine code for function ptmr_init: SSA
+Function Live Ins: %R0 in %vreg0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%vreg0<def> = COPY %R0; GPR:%vreg0
+	%vreg1<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg1
+	t2STRi12 %vreg1, %vreg0, 36, pred:14, pred:%noreg; mem:ST4[%2(align=8)+28](align=4) rGPR:%vreg1 GPR:%vreg0
+	t2STRi12 %vreg1, %vreg0, 32, pred:14, pred:%noreg; mem:ST4[%2+24](align=8) rGPR:%vreg1 GPR:%vreg0
+	t2STRi12 %vreg1, %vreg0, 28, pred:14, pred:%noreg; mem:ST4[%2(align=8)+20](align=4) rGPR:%vreg1 GPR:%vreg0
+	t2STRi12 %vreg1, %vreg0, 24, pred:14, pred:%noreg; mem:ST4[%2+16](align=8) rGPR:%vreg1 GPR:%vreg0
+	t2STRi12 %vreg1, %vreg0, 20, pred:14, pred:%noreg; mem:ST4[%2(align=8)+12](align=4) rGPR:%vreg1 GPR:%vreg0
+	t2STRi12 %vreg1, %vreg0, 16, pred:14, pred:%noreg; mem:ST4[%2+8](align=8) rGPR:%vreg1 GPR:%vreg0
+	t2STRi12 %vreg1, %vreg0, 12, pred:14, pred:%noreg; mem:ST4[%2(align=8)+4](align=4) rGPR:%vreg1 GPR:%vreg0
+	t2STRi12 %vreg1, %vreg0, 8, pred:14, pred:%noreg; mem:ST4[%2](align=8) rGPR:%vreg1 GPR:%vreg0
+	tBX_RET pred:14, pred:%noreg
+
+# End machine code for function ptmr_init.
+
+# After ARM MLA / MLS expansion pass:
+# Machine code for function ptmr_init: SSA
+Function Live Ins: %R0 in %vreg0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%vreg0<def> = COPY %R0; GPR:%vreg0
+	%vreg1<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg1
+	t2STRi12 %vreg1, %vreg0, 36, pred:14, pred:%noreg; mem:ST4[%2(align=8)+28](align=4) rGPR:%vreg1 GPR:%vreg0
+	t2STRi12 %vreg1, %vreg0, 32, pred:14, pred:%noreg; mem:ST4[%2+24](align=8) rGPR:%vreg1 GPR:%vreg0
+	t2STRi12 %vreg1, %vreg0, 28, pred:14, pred:%noreg; mem:ST4[%2(align=8)+20](align=4) rGPR:%vreg1 GPR:%vreg0
+	t2STRi12 %vreg1, %vreg0, 24, pred:14, pred:%noreg; mem:ST4[%2+16](align=8) rGPR:%vreg1 GPR:%vreg0
+	t2STRi12 %vreg1, %vreg0, 20, pred:14, pred:%noreg; mem:ST4[%2(align=8)+12](align=4) rGPR:%vreg1 GPR:%vreg0
+	t2STRi12 %vreg1, %vreg0, 16, pred:14, pred:%noreg; mem:ST4[%2+8](align=8) rGPR:%vreg1 GPR:%vreg0
+	t2STRi12 %vreg1, %vreg0, 12, pred:14, pred:%noreg; mem:ST4[%2(align=8)+4](align=4) rGPR:%vreg1 GPR:%vreg0
+	t2STRi12 %vreg1, %vreg0, 8, pred:14, pred:%noreg; mem:ST4[%2](align=8) rGPR:%vreg1 GPR:%vreg0
+	tBX_RET pred:14, pred:%noreg
+
+# End machine code for function ptmr_init.
+
+# After ARM pre- register allocation load / store optimization pass:
+# Machine code for function ptmr_init: SSA
+Function Live Ins: %R0 in %vreg0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%vreg0<def> = COPY %R0; GPR:%vreg0
+	%vreg1<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg1
+	t2STRi12 %vreg1, %vreg0, 8, pred:14, pred:%noreg; mem:ST4[%2](align=8) rGPR:%vreg1 GPR:%vreg0
+	t2STRi12 %vreg1, %vreg0, 12, pred:14, pred:%noreg; mem:ST4[%2(align=8)+4](align=4) rGPR:%vreg1 GPR:%vreg0
+	t2STRi12 %vreg1, %vreg0, 16, pred:14, pred:%noreg; mem:ST4[%2+8](align=8) rGPR:%vreg1 GPR:%vreg0
+	t2STRi12 %vreg1, %vreg0, 20, pred:14, pred:%noreg; mem:ST4[%2(align=8)+12](align=4) rGPR:%vreg1 GPR:%vreg0
+	t2STRi12 %vreg1, %vreg0, 24, pred:14, pred:%noreg; mem:ST4[%2+16](align=8) rGPR:%vreg1 GPR:%vreg0
+	t2STRi12 %vreg1, %vreg0, 28, pred:14, pred:%noreg; mem:ST4[%2(align=8)+20](align=4) rGPR:%vreg1 GPR:%vreg0
+	t2STRi12 %vreg1, %vreg0, 32, pred:14, pred:%noreg; mem:ST4[%2+24](align=8) rGPR:%vreg1 GPR:%vreg0
+	t2STRi12 %vreg1, %vreg0, 36, pred:14, pred:%noreg; mem:ST4[%2(align=8)+28](align=4) rGPR:%vreg1 GPR:%vreg0
+	tBX_RET pred:14, pred:%noreg
+
+# End machine code for function ptmr_init.
+
+# After ARM A15 S->D optimizer:
+# Machine code for function ptmr_init: SSA
+Function Live Ins: %R0 in %vreg0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%vreg0<def> = COPY %R0; GPR:%vreg0
+	%vreg1<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg1
+	t2STRi12 %vreg1, %vreg0, 8, pred:14, pred:%noreg; mem:ST4[%2](align=8) rGPR:%vreg1 GPR:%vreg0
+	t2STRi12 %vreg1, %vreg0, 12, pred:14, pred:%noreg; mem:ST4[%2(align=8)+4](align=4) rGPR:%vreg1 GPR:%vreg0
+	t2STRi12 %vreg1, %vreg0, 16, pred:14, pred:%noreg; mem:ST4[%2+8](align=8) rGPR:%vreg1 GPR:%vreg0
+	t2STRi12 %vreg1, %vreg0, 20, pred:14, pred:%noreg; mem:ST4[%2(align=8)+12](align=4) rGPR:%vreg1 GPR:%vreg0
+	t2STRi12 %vreg1, %vreg0, 24, pred:14, pred:%noreg; mem:ST4[%2+16](align=8) rGPR:%vreg1 GPR:%vreg0
+	t2STRi12 %vreg1, %vreg0, 28, pred:14, pred:%noreg; mem:ST4[%2(align=8)+20](align=4) rGPR:%vreg1 GPR:%vreg0
+	t2STRi12 %vreg1, %vreg0, 32, pred:14, pred:%noreg; mem:ST4[%2+24](align=8) rGPR:%vreg1 GPR:%vreg0
+	t2STRi12 %vreg1, %vreg0, 36, pred:14, pred:%noreg; mem:ST4[%2(align=8)+28](align=4) rGPR:%vreg1 GPR:%vreg0
+	tBX_RET pred:14, pred:%noreg
+
+# End machine code for function ptmr_init.
+
+# After Process Implicit Definitions:
+# Machine code for function ptmr_init: SSA
+Function Live Ins: %R0 in %vreg0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%vreg0<def> = COPY %R0; GPR:%vreg0
+	%vreg1<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg1
+	t2STRi12 %vreg1, %vreg0, 8, pred:14, pred:%noreg; mem:ST4[%2](align=8) rGPR:%vreg1 GPR:%vreg0
+	t2STRi12 %vreg1, %vreg0, 12, pred:14, pred:%noreg; mem:ST4[%2(align=8)+4](align=4) rGPR:%vreg1 GPR:%vreg0
+	t2STRi12 %vreg1, %vreg0, 16, pred:14, pred:%noreg; mem:ST4[%2+8](align=8) rGPR:%vreg1 GPR:%vreg0
+	t2STRi12 %vreg1, %vreg0, 20, pred:14, pred:%noreg; mem:ST4[%2(align=8)+12](align=4) rGPR:%vreg1 GPR:%vreg0
+	t2STRi12 %vreg1, %vreg0, 24, pred:14, pred:%noreg; mem:ST4[%2+16](align=8) rGPR:%vreg1 GPR:%vreg0
+	t2STRi12 %vreg1, %vreg0, 28, pred:14, pred:%noreg; mem:ST4[%2(align=8)+20](align=4) rGPR:%vreg1 GPR:%vreg0
+	t2STRi12 %vreg1, %vreg0, 32, pred:14, pred:%noreg; mem:ST4[%2+24](align=8) rGPR:%vreg1 GPR:%vreg0
+	t2STRi12 %vreg1, %vreg0, 36, pred:14, pred:%noreg; mem:ST4[%2(align=8)+28](align=4) rGPR:%vreg1 GPR:%vreg0
+	tBX_RET pred:14, pred:%noreg
+
+# End machine code for function ptmr_init.
+
+# After Live Variable Analysis:
+# Machine code for function ptmr_init: SSA
+Function Live Ins: %R0 in %vreg0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%vreg0<def> = COPY %R0<kill>; GPR:%vreg0
+	%vreg1<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg1
+	t2STRi12 %vreg1, %vreg0, 8, pred:14, pred:%noreg; mem:ST4[%2](align=8) rGPR:%vreg1 GPR:%vreg0
+	t2STRi12 %vreg1, %vreg0, 12, pred:14, pred:%noreg; mem:ST4[%2(align=8)+4](align=4) rGPR:%vreg1 GPR:%vreg0
+	t2STRi12 %vreg1, %vreg0, 16, pred:14, pred:%noreg; mem:ST4[%2+8](align=8) rGPR:%vreg1 GPR:%vreg0
+	t2STRi12 %vreg1, %vreg0, 20, pred:14, pred:%noreg; mem:ST4[%2(align=8)+12](align=4) rGPR:%vreg1 GPR:%vreg0
+	t2STRi12 %vreg1, %vreg0, 24, pred:14, pred:%noreg; mem:ST4[%2+16](align=8) rGPR:%vreg1 GPR:%vreg0
+	t2STRi12 %vreg1, %vreg0, 28, pred:14, pred:%noreg; mem:ST4[%2(align=8)+20](align=4) rGPR:%vreg1 GPR:%vreg0
+	t2STRi12 %vreg1, %vreg0, 32, pred:14, pred:%noreg; mem:ST4[%2+24](align=8) rGPR:%vreg1 GPR:%vreg0
+	t2STRi12 %vreg1<kill>, %vreg0<kill>, 36, pred:14, pred:%noreg; mem:ST4[%2(align=8)+28](align=4) rGPR:%vreg1 GPR:%vreg0
+	tBX_RET pred:14, pred:%noreg
+
+# End machine code for function ptmr_init.
+
+# After Machine Natural Loop Construction:
+# Machine code for function ptmr_init: SSA
+Function Live Ins: %R0 in %vreg0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%vreg0<def> = COPY %R0<kill>; GPR:%vreg0
+	%vreg1<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg1
+	t2STRi12 %vreg1, %vreg0, 8, pred:14, pred:%noreg; mem:ST4[%2](align=8) rGPR:%vreg1 GPR:%vreg0
+	t2STRi12 %vreg1, %vreg0, 12, pred:14, pred:%noreg; mem:ST4[%2(align=8)+4](align=4) rGPR:%vreg1 GPR:%vreg0
+	t2STRi12 %vreg1, %vreg0, 16, pred:14, pred:%noreg; mem:ST4[%2+8](align=8) rGPR:%vreg1 GPR:%vreg0
+	t2STRi12 %vreg1, %vreg0, 20, pred:14, pred:%noreg; mem:ST4[%2(align=8)+12](align=4) rGPR:%vreg1 GPR:%vreg0
+	t2STRi12 %vreg1, %vreg0, 24, pred:14, pred:%noreg; mem:ST4[%2+16](align=8) rGPR:%vreg1 GPR:%vreg0
+	t2STRi12 %vreg1, %vreg0, 28, pred:14, pred:%noreg; mem:ST4[%2(align=8)+20](align=4) rGPR:%vreg1 GPR:%vreg0
+	t2STRi12 %vreg1, %vreg0, 32, pred:14, pred:%noreg; mem:ST4[%2+24](align=8) rGPR:%vreg1 GPR:%vreg0
+	t2STRi12 %vreg1<kill>, %vreg0<kill>, 36, pred:14, pred:%noreg; mem:ST4[%2(align=8)+28](align=4) rGPR:%vreg1 GPR:%vreg0
+	tBX_RET pred:14, pred:%noreg
+
+# End machine code for function ptmr_init.
+
+# After Eliminate PHI nodes for register allocation:
+# Machine code for function ptmr_init: Post SSA
+Function Live Ins: %R0 in %vreg0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%vreg0<def> = COPY %R0<kill>; GPR:%vreg0
+	%vreg1<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg1
+	t2STRi12 %vreg1, %vreg0, 8, pred:14, pred:%noreg; mem:ST4[%2](align=8) rGPR:%vreg1 GPR:%vreg0
+	t2STRi12 %vreg1, %vreg0, 12, pred:14, pred:%noreg; mem:ST4[%2(align=8)+4](align=4) rGPR:%vreg1 GPR:%vreg0
+	t2STRi12 %vreg1, %vreg0, 16, pred:14, pred:%noreg; mem:ST4[%2+8](align=8) rGPR:%vreg1 GPR:%vreg0
+	t2STRi12 %vreg1, %vreg0, 20, pred:14, pred:%noreg; mem:ST4[%2(align=8)+12](align=4) rGPR:%vreg1 GPR:%vreg0
+	t2STRi12 %vreg1, %vreg0, 24, pred:14, pred:%noreg; mem:ST4[%2+16](align=8) rGPR:%vreg1 GPR:%vreg0
+	t2STRi12 %vreg1, %vreg0, 28, pred:14, pred:%noreg; mem:ST4[%2(align=8)+20](align=4) rGPR:%vreg1 GPR:%vreg0
+	t2STRi12 %vreg1, %vreg0, 32, pred:14, pred:%noreg; mem:ST4[%2+24](align=8) rGPR:%vreg1 GPR:%vreg0
+	t2STRi12 %vreg1<kill>, %vreg0<kill>, 36, pred:14, pred:%noreg; mem:ST4[%2(align=8)+28](align=4) rGPR:%vreg1 GPR:%vreg0
+	tBX_RET pred:14, pred:%noreg
+
+# End machine code for function ptmr_init.
+
+# After Two-Address instruction pass:
+# Machine code for function ptmr_init: Post SSA
+Function Live Ins: %R0 in %vreg0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%vreg0<def> = COPY %R0<kill>; GPR:%vreg0
+	%vreg1<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg1
+	t2STRi12 %vreg1, %vreg0, 8, pred:14, pred:%noreg; mem:ST4[%2](align=8) rGPR:%vreg1 GPR:%vreg0
+	t2STRi12 %vreg1, %vreg0, 12, pred:14, pred:%noreg; mem:ST4[%2(align=8)+4](align=4) rGPR:%vreg1 GPR:%vreg0
+	t2STRi12 %vreg1, %vreg0, 16, pred:14, pred:%noreg; mem:ST4[%2+8](align=8) rGPR:%vreg1 GPR:%vreg0
+	t2STRi12 %vreg1, %vreg0, 20, pred:14, pred:%noreg; mem:ST4[%2(align=8)+12](align=4) rGPR:%vreg1 GPR:%vreg0
+	t2STRi12 %vreg1, %vreg0, 24, pred:14, pred:%noreg; mem:ST4[%2+16](align=8) rGPR:%vreg1 GPR:%vreg0
+	t2STRi12 %vreg1, %vreg0, 28, pred:14, pred:%noreg; mem:ST4[%2(align=8)+20](align=4) rGPR:%vreg1 GPR:%vreg0
+	t2STRi12 %vreg1, %vreg0, 32, pred:14, pred:%noreg; mem:ST4[%2+24](align=8) rGPR:%vreg1 GPR:%vreg0
+	t2STRi12 %vreg1<kill>, %vreg0<kill>, 36, pred:14, pred:%noreg; mem:ST4[%2(align=8)+28](align=4) rGPR:%vreg1 GPR:%vreg0
+	tBX_RET pred:14, pred:%noreg
+
+# End machine code for function ptmr_init.
+
+# After Simple Register Coalescing:
+# Machine code for function ptmr_init: Post SSA
+Function Live Ins: %R0 in %vreg0
+
+0B	BB#0: derived from LLVM BB %0
+	    Live Ins: %R0
+16B		%vreg0<def> = COPY %R0; GPR:%vreg0
+32B		%vreg1<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg1
+48B		t2STRi12 %vreg1, %vreg0, 8, pred:14, pred:%noreg; mem:ST4[%2](align=8) rGPR:%vreg1 GPR:%vreg0
+64B		t2STRi12 %vreg1, %vreg0, 12, pred:14, pred:%noreg; mem:ST4[%2(align=8)+4](align=4) rGPR:%vreg1 GPR:%vreg0
+80B		t2STRi12 %vreg1, %vreg0, 16, pred:14, pred:%noreg; mem:ST4[%2+8](align=8) rGPR:%vreg1 GPR:%vreg0
+96B		t2STRi12 %vreg1, %vreg0, 20, pred:14, pred:%noreg; mem:ST4[%2(align=8)+12](align=4) rGPR:%vreg1 GPR:%vreg0
+112B		t2STRi12 %vreg1, %vreg0, 24, pred:14, pred:%noreg; mem:ST4[%2+16](align=8) rGPR:%vreg1 GPR:%vreg0
+128B		t2STRi12 %vreg1, %vreg0, 28, pred:14, pred:%noreg; mem:ST4[%2(align=8)+20](align=4) rGPR:%vreg1 GPR:%vreg0
+144B		t2STRi12 %vreg1, %vreg0, 32, pred:14, pred:%noreg; mem:ST4[%2+24](align=8) rGPR:%vreg1 GPR:%vreg0
+160B		t2STRi12 %vreg1, %vreg0, 36, pred:14, pred:%noreg; mem:ST4[%2(align=8)+28](align=4) rGPR:%vreg1 GPR:%vreg0
+176B		tBX_RET pred:14, pred:%noreg
+
+# End machine code for function ptmr_init.
+
+# After Machine Instruction Scheduler:
+# Machine code for function ptmr_init: Post SSA
+Function Live Ins: %R0 in %vreg0
+
+0B	BB#0: derived from LLVM BB %0
+	    Live Ins: %R0
+16B		%vreg0<def> = COPY %R0; GPR:%vreg0
+32B		%vreg1<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg1
+48B		t2STRi12 %vreg1, %vreg0, 8, pred:14, pred:%noreg; mem:ST4[%2](align=8) rGPR:%vreg1 GPR:%vreg0
+64B		t2STRi12 %vreg1, %vreg0, 12, pred:14, pred:%noreg; mem:ST4[%2(align=8)+4](align=4) rGPR:%vreg1 GPR:%vreg0
+80B		t2STRi12 %vreg1, %vreg0, 16, pred:14, pred:%noreg; mem:ST4[%2+8](align=8) rGPR:%vreg1 GPR:%vreg0
+96B		t2STRi12 %vreg1, %vreg0, 20, pred:14, pred:%noreg; mem:ST4[%2(align=8)+12](align=4) rGPR:%vreg1 GPR:%vreg0
+112B		t2STRi12 %vreg1, %vreg0, 24, pred:14, pred:%noreg; mem:ST4[%2+16](align=8) rGPR:%vreg1 GPR:%vreg0
+128B		t2STRi12 %vreg1, %vreg0, 28, pred:14, pred:%noreg; mem:ST4[%2(align=8)+20](align=4) rGPR:%vreg1 GPR:%vreg0
+144B		t2STRi12 %vreg1, %vreg0, 32, pred:14, pred:%noreg; mem:ST4[%2+24](align=8) rGPR:%vreg1 GPR:%vreg0
+160B		t2STRi12 %vreg1, %vreg0, 36, pred:14, pred:%noreg; mem:ST4[%2(align=8)+28](align=4) rGPR:%vreg1 GPR:%vreg0
+176B		tBX_RET pred:14, pred:%noreg
+
+# End machine code for function ptmr_init.
+
+# After Greedy Register Allocator:
+# Machine code for function ptmr_init: Post SSA
+Function Live Ins: %R0 in %vreg0
+
+0B	BB#0: derived from LLVM BB %0
+	    Live Ins: %R0
+16B		%vreg0<def> = COPY %R0; GPR:%vreg0
+32B		%vreg1<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg1
+48B		t2STRi12 %vreg1, %vreg0, 8, pred:14, pred:%noreg; mem:ST4[%2](align=8) rGPR:%vreg1 GPR:%vreg0
+64B		t2STRi12 %vreg1, %vreg0, 12, pred:14, pred:%noreg; mem:ST4[%2(align=8)+4](align=4) rGPR:%vreg1 GPR:%vreg0
+80B		t2STRi12 %vreg1, %vreg0, 16, pred:14, pred:%noreg; mem:ST4[%2+8](align=8) rGPR:%vreg1 GPR:%vreg0
+96B		t2STRi12 %vreg1, %vreg0, 20, pred:14, pred:%noreg; mem:ST4[%2(align=8)+12](align=4) rGPR:%vreg1 GPR:%vreg0
+112B		t2STRi12 %vreg1, %vreg0, 24, pred:14, pred:%noreg; mem:ST4[%2+16](align=8) rGPR:%vreg1 GPR:%vreg0
+128B		t2STRi12 %vreg1, %vreg0, 28, pred:14, pred:%noreg; mem:ST4[%2(align=8)+20](align=4) rGPR:%vreg1 GPR:%vreg0
+144B		t2STRi12 %vreg1, %vreg0, 32, pred:14, pred:%noreg; mem:ST4[%2+24](align=8) rGPR:%vreg1 GPR:%vreg0
+160B		t2STRi12 %vreg1, %vreg0, 36, pred:14, pred:%noreg; mem:ST4[%2(align=8)+28](align=4) rGPR:%vreg1 GPR:%vreg0
+176B		tBX_RET pred:14, pred:%noreg
+
+# End machine code for function ptmr_init.
+
+# After Virtual Register Rewriter:
+# Machine code for function ptmr_init: Post SSA
+Function Live Ins: %R0
+
+0B	BB#0: derived from LLVM BB %0
+	    Live Ins: %R0
+32B		%R1<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg
+48B		t2STRi12 %R1, %R0, 8, pred:14, pred:%noreg; mem:ST4[%2](align=8)
+64B		t2STRi12 %R1, %R0, 12, pred:14, pred:%noreg; mem:ST4[%2(align=8)+4](align=4)
+80B		t2STRi12 %R1, %R0, 16, pred:14, pred:%noreg; mem:ST4[%2+8](align=8)
+96B		t2STRi12 %R1, %R0, 20, pred:14, pred:%noreg; mem:ST4[%2(align=8)+12](align=4)
+112B		t2STRi12 %R1, %R0, 24, pred:14, pred:%noreg; mem:ST4[%2+16](align=8)
+128B		t2STRi12 %R1, %R0, 28, pred:14, pred:%noreg; mem:ST4[%2(align=8)+20](align=4)
+144B		t2STRi12 %R1, %R0, 32, pred:14, pred:%noreg; mem:ST4[%2+24](align=8)
+160B		t2STRi12 %R1<kill>, %R0<kill>, 36, pred:14, pred:%noreg; mem:ST4[%2(align=8)+28](align=4)
+176B		tBX_RET pred:14, pred:%noreg
+
+# End machine code for function ptmr_init.
+
+# After Stack Slot Coloring:
+# Machine code for function ptmr_init: Post SSA
+Function Live Ins: %R0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%R1<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg
+	t2STRi12 %R1, %R0, 8, pred:14, pred:%noreg; mem:ST4[%2](align=8)
+	t2STRi12 %R1, %R0, 12, pred:14, pred:%noreg; mem:ST4[%2(align=8)+4](align=4)
+	t2STRi12 %R1, %R0, 16, pred:14, pred:%noreg; mem:ST4[%2+8](align=8)
+	t2STRi12 %R1, %R0, 20, pred:14, pred:%noreg; mem:ST4[%2(align=8)+12](align=4)
+	t2STRi12 %R1, %R0, 24, pred:14, pred:%noreg; mem:ST4[%2+16](align=8)
+	t2STRi12 %R1, %R0, 28, pred:14, pred:%noreg; mem:ST4[%2(align=8)+20](align=4)
+	t2STRi12 %R1, %R0, 32, pred:14, pred:%noreg; mem:ST4[%2+24](align=8)
+	t2STRi12 %R1<kill>, %R0<kill>, 36, pred:14, pred:%noreg; mem:ST4[%2(align=8)+28](align=4)
+	tBX_RET pred:14, pred:%noreg
+
+# End machine code for function ptmr_init.
+
+# After Machine Loop Invariant Code Motion:
+# Machine code for function ptmr_init: Post SSA
+Function Live Ins: %R0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%R1<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg
+	t2STRi12 %R1, %R0, 8, pred:14, pred:%noreg; mem:ST4[%2](align=8)
+	t2STRi12 %R1, %R0, 12, pred:14, pred:%noreg; mem:ST4[%2(align=8)+4](align=4)
+	t2STRi12 %R1, %R0, 16, pred:14, pred:%noreg; mem:ST4[%2+8](align=8)
+	t2STRi12 %R1, %R0, 20, pred:14, pred:%noreg; mem:ST4[%2(align=8)+12](align=4)
+	t2STRi12 %R1, %R0, 24, pred:14, pred:%noreg; mem:ST4[%2+16](align=8)
+	t2STRi12 %R1, %R0, 28, pred:14, pred:%noreg; mem:ST4[%2(align=8)+20](align=4)
+	t2STRi12 %R1, %R0, 32, pred:14, pred:%noreg; mem:ST4[%2+24](align=8)
+	t2STRi12 %R1<kill>, %R0<kill>, 36, pred:14, pred:%noreg; mem:ST4[%2(align=8)+28](align=4)
+	tBX_RET pred:14, pred:%noreg
+
+# End machine code for function ptmr_init.
+
+# After Shrink Wrapping analysis:
+# Machine code for function ptmr_init: Post SSA
+Function Live Ins: %R0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%R1<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg
+	t2STRi12 %R1, %R0, 8, pred:14, pred:%noreg; mem:ST4[%2](align=8)
+	t2STRi12 %R1, %R0, 12, pred:14, pred:%noreg; mem:ST4[%2(align=8)+4](align=4)
+	t2STRi12 %R1, %R0, 16, pred:14, pred:%noreg; mem:ST4[%2+8](align=8)
+	t2STRi12 %R1, %R0, 20, pred:14, pred:%noreg; mem:ST4[%2(align=8)+12](align=4)
+	t2STRi12 %R1, %R0, 24, pred:14, pred:%noreg; mem:ST4[%2+16](align=8)
+	t2STRi12 %R1, %R0, 28, pred:14, pred:%noreg; mem:ST4[%2(align=8)+20](align=4)
+	t2STRi12 %R1, %R0, 32, pred:14, pred:%noreg; mem:ST4[%2+24](align=8)
+	t2STRi12 %R1<kill>, %R0<kill>, 36, pred:14, pred:%noreg; mem:ST4[%2(align=8)+28](align=4)
+	tBX_RET pred:14, pred:%noreg
+
+# End machine code for function ptmr_init.
+
+# After Prologue/Epilogue Insertion & Frame Finalization:
+# Machine code for function ptmr_init: Post SSA
+Function Live Ins: %R0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%R1<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg
+	t2STRi12 %R1, %R0, 8, pred:14, pred:%noreg; mem:ST4[%2](align=8)
+	t2STRi12 %R1, %R0, 12, pred:14, pred:%noreg; mem:ST4[%2(align=8)+4](align=4)
+	t2STRi12 %R1, %R0, 16, pred:14, pred:%noreg; mem:ST4[%2+8](align=8)
+	t2STRi12 %R1, %R0, 20, pred:14, pred:%noreg; mem:ST4[%2(align=8)+12](align=4)
+	t2STRi12 %R1, %R0, 24, pred:14, pred:%noreg; mem:ST4[%2+16](align=8)
+	t2STRi12 %R1, %R0, 28, pred:14, pred:%noreg; mem:ST4[%2(align=8)+20](align=4)
+	t2STRi12 %R1, %R0, 32, pred:14, pred:%noreg; mem:ST4[%2+24](align=8)
+	t2STRi12 %R1<kill>, %R0<kill>, 36, pred:14, pred:%noreg; mem:ST4[%2(align=8)+28](align=4)
+	tBX_RET pred:14, pred:%noreg
+
+# End machine code for function ptmr_init.
+
+# After Machine Copy Propagation Pass:
+# Machine code for function ptmr_init: Post SSA
+Function Live Ins: %R0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%R1<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg
+	t2STRi12 %R1, %R0, 8, pred:14, pred:%noreg; mem:ST4[%2](align=8)
+	t2STRi12 %R1, %R0, 12, pred:14, pred:%noreg; mem:ST4[%2(align=8)+4](align=4)
+	t2STRi12 %R1, %R0, 16, pred:14, pred:%noreg; mem:ST4[%2+8](align=8)
+	t2STRi12 %R1, %R0, 20, pred:14, pred:%noreg; mem:ST4[%2(align=8)+12](align=4)
+	t2STRi12 %R1, %R0, 24, pred:14, pred:%noreg; mem:ST4[%2+16](align=8)
+	t2STRi12 %R1, %R0, 28, pred:14, pred:%noreg; mem:ST4[%2(align=8)+20](align=4)
+	t2STRi12 %R1, %R0, 32, pred:14, pred:%noreg; mem:ST4[%2+24](align=8)
+	t2STRi12 %R1<kill>, %R0<kill>, 36, pred:14, pred:%noreg; mem:ST4[%2(align=8)+28](align=4)
+	tBX_RET pred:14, pred:%noreg
+
+# End machine code for function ptmr_init.
+
+# After Post-RA pseudo instruction expansion pass:
+# Machine code for function ptmr_init: Post SSA
+Function Live Ins: %R0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%R1<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg
+	t2STRi12 %R1, %R0, 8, pred:14, pred:%noreg; mem:ST4[%2](align=8)
+	t2STRi12 %R1, %R0, 12, pred:14, pred:%noreg; mem:ST4[%2(align=8)+4](align=4)
+	t2STRi12 %R1, %R0, 16, pred:14, pred:%noreg; mem:ST4[%2+8](align=8)
+	t2STRi12 %R1, %R0, 20, pred:14, pred:%noreg; mem:ST4[%2(align=8)+12](align=4)
+	t2STRi12 %R1, %R0, 24, pred:14, pred:%noreg; mem:ST4[%2+16](align=8)
+	t2STRi12 %R1, %R0, 28, pred:14, pred:%noreg; mem:ST4[%2(align=8)+20](align=4)
+	t2STRi12 %R1, %R0, 32, pred:14, pred:%noreg; mem:ST4[%2+24](align=8)
+	t2STRi12 %R1<kill>, %R0<kill>, 36, pred:14, pred:%noreg; mem:ST4[%2(align=8)+28](align=4)
+	tBX_RET pred:14, pred:%noreg
+
+# End machine code for function ptmr_init.
+
+# After ARM load / store optimization pass:
+# Machine code for function ptmr_init: Post SSA
+Function Live Ins: %R0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%R1<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg
+	t2STRDi8 %R1, %R1, %R0, 8, pred:14, pred:%noreg
+	t2STRDi8 %R1, %R1, %R0, 16, pred:14, pred:%noreg
+	t2STRDi8 %R1, %R1, %R0, 24, pred:14, pred:%noreg
+	t2STRDi8 %R1, %R1<kill>, %R0, 32, pred:14, pred:%noreg
+	tBX_RET pred:14, pred:%noreg
+
+# End machine code for function ptmr_init.
+
+# After Execution dependency fix:
+# Machine code for function ptmr_init: Post SSA
+Function Live Ins: %R0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%R1<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg
+	t2STRDi8 %R1, %R1, %R0, 8, pred:14, pred:%noreg
+	t2STRDi8 %R1, %R1, %R0, 16, pred:14, pred:%noreg
+	t2STRDi8 %R1, %R1, %R0, 24, pred:14, pred:%noreg
+	t2STRDi8 %R1, %R1<kill>, %R0, 32, pred:14, pred:%noreg
+	tBX_RET pred:14, pred:%noreg
+
+# End machine code for function ptmr_init.
+
+# After ARM pseudo instruction expansion pass:
+# Machine code for function ptmr_init: Post SSA
+Function Live Ins: %R0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%R1<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg
+	t2STRDi8 %R1, %R1, %R0, 8, pred:14, pred:%noreg
+	t2STRDi8 %R1, %R1, %R0, 16, pred:14, pred:%noreg
+	t2STRDi8 %R1, %R1, %R0, 24, pred:14, pred:%noreg
+	t2STRDi8 %R1, %R1<kill>, %R0, 32, pred:14, pred:%noreg
+	tBX_RET pred:14, pred:%noreg
+
+# End machine code for function ptmr_init.
+
+# After Thumb2 instruction size reduction pass:
+# Machine code for function ptmr_init: Post SSA
+Function Live Ins: %R0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%R1<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg
+	t2STRDi8 %R1, %R1, %R0, 8, pred:14, pred:%noreg
+	t2STRDi8 %R1, %R1, %R0, 16, pred:14, pred:%noreg
+	t2STRDi8 %R1, %R1, %R0, 24, pred:14, pred:%noreg
+	t2STRDi8 %R1, %R1<kill>, %R0, 32, pred:14, pred:%noreg
+	tBX_RET pred:14, pred:%noreg
+
+# End machine code for function ptmr_init.
+
+# After Thumb IT blocks insertion pass:
+# Machine code for function ptmr_init: Post SSA
+Function Live Ins: %R0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%R1<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg
+	t2STRDi8 %R1, %R1, %R0, 8, pred:14, pred:%noreg
+	t2STRDi8 %R1, %R1, %R0, 16, pred:14, pred:%noreg
+	t2STRDi8 %R1, %R1, %R0, 24, pred:14, pred:%noreg
+	t2STRDi8 %R1, %R1<kill>, %R0, 32, pred:14, pred:%noreg
+	tBX_RET pred:14, pred:%noreg
+
+# End machine code for function ptmr_init.
+
+# After Analyze Machine Code For Garbage Collection:
+# Machine code for function ptmr_init: Post SSA
+Function Live Ins: %R0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%R1<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg
+	t2STRDi8 %R1, %R1, %R0, 8, pred:14, pred:%noreg
+	t2STRDi8 %R1, %R1, %R0, 16, pred:14, pred:%noreg
+	t2STRDi8 %R1, %R1, %R0, 24, pred:14, pred:%noreg
+	t2STRDi8 %R1, %R1<kill>, %R0, 32, pred:14, pred:%noreg
+	tBX_RET pred:14, pred:%noreg
+
+# End machine code for function ptmr_init.
+
+# After Thumb2 instruction size reduction pass:
+# Machine code for function ptmr_init: Post SSA
+Function Live Ins: %R0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%R1<def>, %CPSR<def,dead> = tMOVi8 0, pred:14, pred:%noreg
+	t2STRDi8 %R1, %R1, %R0, 8, pred:14, pred:%noreg
+	t2STRDi8 %R1, %R1, %R0, 16, pred:14, pred:%noreg
+	t2STRDi8 %R1, %R1, %R0, 24, pred:14, pred:%noreg
+	t2STRDi8 %R1, %R1<kill>, %R0, 32, pred:14, pred:%noreg
+	tBX_RET pred:14, pred:%noreg
+
+# End machine code for function ptmr_init.
+
+# After Unpack machine instruction bundles:
+# Machine code for function ptmr_init: Post SSA
+Function Live Ins: %R0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%R1<def>, %CPSR<def,dead> = tMOVi8 0, pred:14, pred:%noreg
+	t2STRDi8 %R1, %R1, %R0, 8, pred:14, pred:%noreg
+	t2STRDi8 %R1, %R1, %R0, 16, pred:14, pred:%noreg
+	t2STRDi8 %R1, %R1, %R0, 24, pred:14, pred:%noreg
+	t2STRDi8 %R1, %R1<kill>, %R0, 32, pred:14, pred:%noreg
+	tBX_RET pred:14, pred:%noreg
+
+# End machine code for function ptmr_init.
+
+# After optimise barriers pass:
+# Machine code for function ptmr_init: Post SSA
+Function Live Ins: %R0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%R1<def>, %CPSR<def,dead> = tMOVi8 0, pred:14, pred:%noreg
+	t2STRDi8 %R1, %R1, %R0, 8, pred:14, pred:%noreg
+	t2STRDi8 %R1, %R1, %R0, 16, pred:14, pred:%noreg
+	t2STRDi8 %R1, %R1, %R0, 24, pred:14, pred:%noreg
+	t2STRDi8 %R1, %R1<kill>, %R0, 32, pred:14, pred:%noreg
+	tBX_RET pred:14, pred:%noreg
+
+# End machine code for function ptmr_init.
+
+# After ARM constant island placement and branch shortening pass:
+# Machine code for function ptmr_init: Post SSA, not tracking liveness
+Function Live Ins: %R0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%R1<def>, %CPSR<def,dead> = tMOVi8 0, pred:14, pred:%noreg
+	t2STRDi8 %R1, %R1, %R0, 8, pred:14, pred:%noreg
+	t2STRDi8 %R1, %R1, %R0, 16, pred:14, pred:%noreg
+	t2STRDi8 %R1, %R1, %R0, 24, pred:14, pred:%noreg
+	t2STRDi8 %R1, %R1<kill>, %R0, 32, pred:14, pred:%noreg
+	tBX_RET pred:14, pred:%noreg
+
+# End machine code for function ptmr_init.
+
+# After Contiguously Lay Out Funclets:
+# Machine code for function ptmr_init: Post SSA, not tracking liveness
+Function Live Ins: %R0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%R1<def>, %CPSR<def,dead> = tMOVi8 0, pred:14, pred:%noreg
+	t2STRDi8 %R1, %R1, %R0, 8, pred:14, pred:%noreg
+	t2STRDi8 %R1, %R1, %R0, 16, pred:14, pred:%noreg
+	t2STRDi8 %R1, %R1, %R0, 24, pred:14, pred:%noreg
+	t2STRDi8 %R1, %R1<kill>, %R0, 32, pred:14, pred:%noreg
+	tBX_RET pred:14, pred:%noreg
+
+# End machine code for function ptmr_init.
+
+# After StackMap Liveness Analysis:
+# Machine code for function ptmr_init: Post SSA, not tracking liveness
+Function Live Ins: %R0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%R1<def>, %CPSR<def,dead> = tMOVi8 0, pred:14, pred:%noreg
+	t2STRDi8 %R1, %R1, %R0, 8, pred:14, pred:%noreg
+	t2STRDi8 %R1, %R1, %R0, 16, pred:14, pred:%noreg
+	t2STRDi8 %R1, %R1, %R0, 24, pred:14, pred:%noreg
+	t2STRDi8 %R1, %R1<kill>, %R0, 32, pred:14, pred:%noreg
+	tBX_RET pred:14, pred:%noreg
+
+# End machine code for function ptmr_init.
+
+# After Live DEBUG_VALUE analysis:
+# Machine code for function ptmr_init: Post SSA, not tracking liveness
+Function Live Ins: %R0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%R1<def>, %CPSR<def,dead> = tMOVi8 0, pred:14, pred:%noreg
+	t2STRDi8 %R1, %R1, %R0, 8, pred:14, pred:%noreg
+	t2STRDi8 %R1, %R1, %R0, 16, pred:14, pred:%noreg
+	t2STRDi8 %R1, %R1, %R0, 24, pred:14, pred:%noreg
+	t2STRDi8 %R1, %R1<kill>, %R0, 32, pred:14, pred:%noreg
+	tBX_RET pred:14, pred:%noreg
+
+# End machine code for function ptmr_init.
+

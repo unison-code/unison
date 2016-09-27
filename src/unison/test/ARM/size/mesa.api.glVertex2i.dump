@@ -1,0 +1,1385 @@
+# After Instruction Selection:
+# Machine code for function glVertex2i: SSA
+Function Live Ins: %R0 in %vreg0, %R1 in %vreg1
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1
+	%vreg1<def> = COPY %R1; GPR:%vreg1
+	%vreg0<def> = COPY %R0; GPR:%vreg0
+	%vreg2<def> = COPY %vreg0; SPR:%vreg2 GPR:%vreg0
+	%vreg3<def> = VSITOS %vreg2<kill>, pred:14, pred:%noreg; SPR:%vreg3,%vreg2
+	%vreg4<def> = COPY %vreg1; SPR:%vreg4 GPR:%vreg1
+	%vreg5<def> = VSITOS %vreg4<kill>, pred:14, pred:%noreg; SPR:%vreg5,%vreg4
+	%vreg6<def> = t2MOVi32imm <ga:@CC>; rGPR:%vreg6
+	%vreg7<def> = t2LDRi12 %vreg6<kill>, 0, pred:14, pred:%noreg; mem:LD4[@CC](tbaa=!4) GPR:%vreg7 rGPR:%vreg6
+	%vreg8<def> = VMOVRS %vreg3<kill>, pred:14, pred:%noreg; GPR:%vreg8 SPR:%vreg3
+	%vreg9<def> = VMOVRS %vreg5<kill>, pred:14, pred:%noreg; GPR:%vreg9 SPR:%vreg5
+	%vreg10<def> = t2LDRi12 %vreg7, 656, pred:14, pred:%noreg; mem:LD4[%2](tbaa=!8) GPR:%vreg10,%vreg7
+	ADJCALLSTACKDOWN 4, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg11<def> = t2MOVi 1065353216, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg11
+	%vreg12<def> = COPY %SP; GPR:%vreg12
+	t2STRi12 %vreg11<kill>, %vreg12, 0, pred:14, pred:%noreg; mem:ST4[Stack] rGPR:%vreg11 GPR:%vreg12
+	%vreg13<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg13
+	%R0<def> = COPY %vreg7; GPR:%vreg7
+	%R1<def> = COPY %vreg8; GPR:%vreg8
+	%R2<def> = COPY %vreg9; GPR:%vreg9
+	%R3<def> = COPY %vreg13; rGPR:%vreg13
+	tBLXr pred:14, pred:%noreg, %vreg10<kill>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, %R3<imp-use>, %SP<imp-def>, ...; GPR:%vreg10
+	ADJCALLSTACKUP 4, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	tBX_RET pred:14, pred:%noreg
+
+# End machine code for function glVertex2i.
+
+# After Expand ISel Pseudo-instructions:
+# Machine code for function glVertex2i: SSA
+Function Live Ins: %R0 in %vreg0, %R1 in %vreg1
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1
+	%vreg1<def> = COPY %R1; GPR:%vreg1
+	%vreg0<def> = COPY %R0; GPR:%vreg0
+	%vreg2<def> = COPY %vreg0; SPR:%vreg2 GPR:%vreg0
+	%vreg3<def> = VSITOS %vreg2<kill>, pred:14, pred:%noreg; SPR:%vreg3,%vreg2
+	%vreg4<def> = COPY %vreg1; SPR:%vreg4 GPR:%vreg1
+	%vreg5<def> = VSITOS %vreg4<kill>, pred:14, pred:%noreg; SPR:%vreg5,%vreg4
+	%vreg6<def> = t2MOVi32imm <ga:@CC>; rGPR:%vreg6
+	%vreg7<def> = t2LDRi12 %vreg6<kill>, 0, pred:14, pred:%noreg; mem:LD4[@CC](tbaa=!4) GPR:%vreg7 rGPR:%vreg6
+	%vreg8<def> = VMOVRS %vreg3<kill>, pred:14, pred:%noreg; GPR:%vreg8 SPR:%vreg3
+	%vreg9<def> = VMOVRS %vreg5<kill>, pred:14, pred:%noreg; GPR:%vreg9 SPR:%vreg5
+	%vreg10<def> = t2LDRi12 %vreg7, 656, pred:14, pred:%noreg; mem:LD4[%2](tbaa=!8) GPR:%vreg10,%vreg7
+	ADJCALLSTACKDOWN 4, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg11<def> = t2MOVi 1065353216, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg11
+	%vreg12<def> = COPY %SP; GPR:%vreg12
+	t2STRi12 %vreg11<kill>, %vreg12, 0, pred:14, pred:%noreg; mem:ST4[Stack] rGPR:%vreg11 GPR:%vreg12
+	%vreg13<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg13
+	%R0<def> = COPY %vreg7; GPR:%vreg7
+	%R1<def> = COPY %vreg8; GPR:%vreg8
+	%R2<def> = COPY %vreg9; GPR:%vreg9
+	%R3<def> = COPY %vreg13; rGPR:%vreg13
+	tBLXr pred:14, pred:%noreg, %vreg10<kill>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, %R3<imp-use>, %SP<imp-def>, ...; GPR:%vreg10
+	ADJCALLSTACKUP 4, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	tBX_RET pred:14, pred:%noreg
+
+# End machine code for function glVertex2i.
+
+# After Tail Duplication:
+# Machine code for function glVertex2i: SSA
+Function Live Ins: %R0 in %vreg0, %R1 in %vreg1
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1
+	%vreg1<def> = COPY %R1; GPR:%vreg1
+	%vreg0<def> = COPY %R0; GPR:%vreg0
+	%vreg2<def> = COPY %vreg0; SPR:%vreg2 GPR:%vreg0
+	%vreg3<def> = VSITOS %vreg2<kill>, pred:14, pred:%noreg; SPR:%vreg3,%vreg2
+	%vreg4<def> = COPY %vreg1; SPR:%vreg4 GPR:%vreg1
+	%vreg5<def> = VSITOS %vreg4<kill>, pred:14, pred:%noreg; SPR:%vreg5,%vreg4
+	%vreg6<def> = t2MOVi32imm <ga:@CC>; rGPR:%vreg6
+	%vreg7<def> = t2LDRi12 %vreg6<kill>, 0, pred:14, pred:%noreg; mem:LD4[@CC](tbaa=!4) GPR:%vreg7 rGPR:%vreg6
+	%vreg8<def> = VMOVRS %vreg3<kill>, pred:14, pred:%noreg; GPR:%vreg8 SPR:%vreg3
+	%vreg9<def> = VMOVRS %vreg5<kill>, pred:14, pred:%noreg; GPR:%vreg9 SPR:%vreg5
+	%vreg10<def> = t2LDRi12 %vreg7, 656, pred:14, pred:%noreg; mem:LD4[%2](tbaa=!8) GPR:%vreg10,%vreg7
+	ADJCALLSTACKDOWN 4, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg11<def> = t2MOVi 1065353216, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg11
+	%vreg12<def> = COPY %SP; GPR:%vreg12
+	t2STRi12 %vreg11<kill>, %vreg12, 0, pred:14, pred:%noreg; mem:ST4[Stack] rGPR:%vreg11 GPR:%vreg12
+	%vreg13<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg13
+	%R0<def> = COPY %vreg7; GPR:%vreg7
+	%R1<def> = COPY %vreg8; GPR:%vreg8
+	%R2<def> = COPY %vreg9; GPR:%vreg9
+	%R3<def> = COPY %vreg13; rGPR:%vreg13
+	tBLXr pred:14, pred:%noreg, %vreg10<kill>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, %R3<imp-use>, %SP<imp-def>, ...; GPR:%vreg10
+	ADJCALLSTACKUP 4, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	tBX_RET pred:14, pred:%noreg
+
+# End machine code for function glVertex2i.
+
+# After Optimize machine instruction PHIs:
+# Machine code for function glVertex2i: SSA
+Function Live Ins: %R0 in %vreg0, %R1 in %vreg1
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1
+	%vreg1<def> = COPY %R1; GPR:%vreg1
+	%vreg0<def> = COPY %R0; GPR:%vreg0
+	%vreg2<def> = COPY %vreg0; SPR:%vreg2 GPR:%vreg0
+	%vreg3<def> = VSITOS %vreg2<kill>, pred:14, pred:%noreg; SPR:%vreg3,%vreg2
+	%vreg4<def> = COPY %vreg1; SPR:%vreg4 GPR:%vreg1
+	%vreg5<def> = VSITOS %vreg4<kill>, pred:14, pred:%noreg; SPR:%vreg5,%vreg4
+	%vreg6<def> = t2MOVi32imm <ga:@CC>; rGPR:%vreg6
+	%vreg7<def> = t2LDRi12 %vreg6<kill>, 0, pred:14, pred:%noreg; mem:LD4[@CC](tbaa=!4) GPR:%vreg7 rGPR:%vreg6
+	%vreg8<def> = VMOVRS %vreg3<kill>, pred:14, pred:%noreg; GPR:%vreg8 SPR:%vreg3
+	%vreg9<def> = VMOVRS %vreg5<kill>, pred:14, pred:%noreg; GPR:%vreg9 SPR:%vreg5
+	%vreg10<def> = t2LDRi12 %vreg7, 656, pred:14, pred:%noreg; mem:LD4[%2](tbaa=!8) GPR:%vreg10,%vreg7
+	ADJCALLSTACKDOWN 4, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg11<def> = t2MOVi 1065353216, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg11
+	%vreg12<def> = COPY %SP; GPR:%vreg12
+	t2STRi12 %vreg11<kill>, %vreg12, 0, pred:14, pred:%noreg; mem:ST4[Stack] rGPR:%vreg11 GPR:%vreg12
+	%vreg13<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg13
+	%R0<def> = COPY %vreg7; GPR:%vreg7
+	%R1<def> = COPY %vreg8; GPR:%vreg8
+	%R2<def> = COPY %vreg9; GPR:%vreg9
+	%R3<def> = COPY %vreg13; rGPR:%vreg13
+	tBLXr pred:14, pred:%noreg, %vreg10<kill>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, %R3<imp-use>, %SP<imp-def>, ...; GPR:%vreg10
+	ADJCALLSTACKUP 4, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	tBX_RET pred:14, pred:%noreg
+
+# End machine code for function glVertex2i.
+
+# After Merge disjoint stack slots:
+# Machine code for function glVertex2i: SSA
+Function Live Ins: %R0 in %vreg0, %R1 in %vreg1
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1
+	%vreg1<def> = COPY %R1; GPR:%vreg1
+	%vreg0<def> = COPY %R0; GPR:%vreg0
+	%vreg2<def> = COPY %vreg0; SPR:%vreg2 GPR:%vreg0
+	%vreg3<def> = VSITOS %vreg2<kill>, pred:14, pred:%noreg; SPR:%vreg3,%vreg2
+	%vreg4<def> = COPY %vreg1; SPR:%vreg4 GPR:%vreg1
+	%vreg5<def> = VSITOS %vreg4<kill>, pred:14, pred:%noreg; SPR:%vreg5,%vreg4
+	%vreg6<def> = t2MOVi32imm <ga:@CC>; rGPR:%vreg6
+	%vreg7<def> = t2LDRi12 %vreg6<kill>, 0, pred:14, pred:%noreg; mem:LD4[@CC](tbaa=!4) GPR:%vreg7 rGPR:%vreg6
+	%vreg8<def> = VMOVRS %vreg3<kill>, pred:14, pred:%noreg; GPR:%vreg8 SPR:%vreg3
+	%vreg9<def> = VMOVRS %vreg5<kill>, pred:14, pred:%noreg; GPR:%vreg9 SPR:%vreg5
+	%vreg10<def> = t2LDRi12 %vreg7, 656, pred:14, pred:%noreg; mem:LD4[%2](tbaa=!8) GPR:%vreg10,%vreg7
+	ADJCALLSTACKDOWN 4, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg11<def> = t2MOVi 1065353216, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg11
+	%vreg12<def> = COPY %SP; GPR:%vreg12
+	t2STRi12 %vreg11<kill>, %vreg12, 0, pred:14, pred:%noreg; mem:ST4[Stack] rGPR:%vreg11 GPR:%vreg12
+	%vreg13<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg13
+	%R0<def> = COPY %vreg7; GPR:%vreg7
+	%R1<def> = COPY %vreg8; GPR:%vreg8
+	%R2<def> = COPY %vreg9; GPR:%vreg9
+	%R3<def> = COPY %vreg13; rGPR:%vreg13
+	tBLXr pred:14, pred:%noreg, %vreg10<kill>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, %R3<imp-use>, %SP<imp-def>, ...; GPR:%vreg10
+	ADJCALLSTACKUP 4, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	tBX_RET pred:14, pred:%noreg
+
+# End machine code for function glVertex2i.
+
+# After Local Stack Slot Allocation:
+# Machine code for function glVertex2i: SSA
+Function Live Ins: %R0 in %vreg0, %R1 in %vreg1
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1
+	%vreg1<def> = COPY %R1; GPR:%vreg1
+	%vreg0<def> = COPY %R0; GPR:%vreg0
+	%vreg2<def> = COPY %vreg0; SPR:%vreg2 GPR:%vreg0
+	%vreg3<def> = VSITOS %vreg2<kill>, pred:14, pred:%noreg; SPR:%vreg3,%vreg2
+	%vreg4<def> = COPY %vreg1; SPR:%vreg4 GPR:%vreg1
+	%vreg5<def> = VSITOS %vreg4<kill>, pred:14, pred:%noreg; SPR:%vreg5,%vreg4
+	%vreg6<def> = t2MOVi32imm <ga:@CC>; rGPR:%vreg6
+	%vreg7<def> = t2LDRi12 %vreg6<kill>, 0, pred:14, pred:%noreg; mem:LD4[@CC](tbaa=!4) GPR:%vreg7 rGPR:%vreg6
+	%vreg8<def> = VMOVRS %vreg3<kill>, pred:14, pred:%noreg; GPR:%vreg8 SPR:%vreg3
+	%vreg9<def> = VMOVRS %vreg5<kill>, pred:14, pred:%noreg; GPR:%vreg9 SPR:%vreg5
+	%vreg10<def> = t2LDRi12 %vreg7, 656, pred:14, pred:%noreg; mem:LD4[%2](tbaa=!8) GPR:%vreg10,%vreg7
+	ADJCALLSTACKDOWN 4, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg11<def> = t2MOVi 1065353216, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg11
+	%vreg12<def> = COPY %SP; GPR:%vreg12
+	t2STRi12 %vreg11<kill>, %vreg12, 0, pred:14, pred:%noreg; mem:ST4[Stack] rGPR:%vreg11 GPR:%vreg12
+	%vreg13<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg13
+	%R0<def> = COPY %vreg7; GPR:%vreg7
+	%R1<def> = COPY %vreg8; GPR:%vreg8
+	%R2<def> = COPY %vreg9; GPR:%vreg9
+	%R3<def> = COPY %vreg13; rGPR:%vreg13
+	tBLXr pred:14, pred:%noreg, %vreg10<kill>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, %R3<imp-use>, %SP<imp-def>, ...; GPR:%vreg10
+	ADJCALLSTACKUP 4, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	tBX_RET pred:14, pred:%noreg
+
+# End machine code for function glVertex2i.
+
+# After Remove dead machine instructions:
+# Machine code for function glVertex2i: SSA
+Function Live Ins: %R0 in %vreg0, %R1 in %vreg1
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1
+	%vreg1<def> = COPY %R1; GPR:%vreg1
+	%vreg0<def> = COPY %R0; GPR:%vreg0
+	%vreg2<def> = COPY %vreg0; SPR:%vreg2 GPR:%vreg0
+	%vreg3<def> = VSITOS %vreg2<kill>, pred:14, pred:%noreg; SPR:%vreg3,%vreg2
+	%vreg4<def> = COPY %vreg1; SPR:%vreg4 GPR:%vreg1
+	%vreg5<def> = VSITOS %vreg4<kill>, pred:14, pred:%noreg; SPR:%vreg5,%vreg4
+	%vreg6<def> = t2MOVi32imm <ga:@CC>; rGPR:%vreg6
+	%vreg7<def> = t2LDRi12 %vreg6<kill>, 0, pred:14, pred:%noreg; mem:LD4[@CC](tbaa=!4) GPR:%vreg7 rGPR:%vreg6
+	%vreg8<def> = VMOVRS %vreg3<kill>, pred:14, pred:%noreg; GPR:%vreg8 SPR:%vreg3
+	%vreg9<def> = VMOVRS %vreg5<kill>, pred:14, pred:%noreg; GPR:%vreg9 SPR:%vreg5
+	%vreg10<def> = t2LDRi12 %vreg7, 656, pred:14, pred:%noreg; mem:LD4[%2](tbaa=!8) GPR:%vreg10,%vreg7
+	ADJCALLSTACKDOWN 4, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg11<def> = t2MOVi 1065353216, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg11
+	%vreg12<def> = COPY %SP; GPR:%vreg12
+	t2STRi12 %vreg11<kill>, %vreg12, 0, pred:14, pred:%noreg; mem:ST4[Stack] rGPR:%vreg11 GPR:%vreg12
+	%vreg13<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg13
+	%R0<def> = COPY %vreg7; GPR:%vreg7
+	%R1<def> = COPY %vreg8; GPR:%vreg8
+	%R2<def> = COPY %vreg9; GPR:%vreg9
+	%R3<def> = COPY %vreg13; rGPR:%vreg13
+	tBLXr pred:14, pred:%noreg, %vreg10<kill>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, %R3<imp-use>, %SP<imp-def>, ...; GPR:%vreg10
+	ADJCALLSTACKUP 4, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	tBX_RET pred:14, pred:%noreg
+
+# End machine code for function glVertex2i.
+
+# After Machine Loop Invariant Code Motion:
+# Machine code for function glVertex2i: SSA
+Function Live Ins: %R0 in %vreg0, %R1 in %vreg1
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1
+	%vreg1<def> = COPY %R1; GPR:%vreg1
+	%vreg0<def> = COPY %R0; GPR:%vreg0
+	%vreg2<def> = COPY %vreg0; SPR:%vreg2 GPR:%vreg0
+	%vreg3<def> = VSITOS %vreg2<kill>, pred:14, pred:%noreg; SPR:%vreg3,%vreg2
+	%vreg4<def> = COPY %vreg1; SPR:%vreg4 GPR:%vreg1
+	%vreg5<def> = VSITOS %vreg4<kill>, pred:14, pred:%noreg; SPR:%vreg5,%vreg4
+	%vreg6<def> = t2MOVi32imm <ga:@CC>; rGPR:%vreg6
+	%vreg7<def> = t2LDRi12 %vreg6<kill>, 0, pred:14, pred:%noreg; mem:LD4[@CC](tbaa=!4) GPR:%vreg7 rGPR:%vreg6
+	%vreg8<def> = VMOVRS %vreg3<kill>, pred:14, pred:%noreg; GPR:%vreg8 SPR:%vreg3
+	%vreg9<def> = VMOVRS %vreg5<kill>, pred:14, pred:%noreg; GPR:%vreg9 SPR:%vreg5
+	%vreg10<def> = t2LDRi12 %vreg7, 656, pred:14, pred:%noreg; mem:LD4[%2](tbaa=!8) GPR:%vreg10,%vreg7
+	ADJCALLSTACKDOWN 4, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg11<def> = t2MOVi 1065353216, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg11
+	%vreg12<def> = COPY %SP; GPR:%vreg12
+	t2STRi12 %vreg11<kill>, %vreg12, 0, pred:14, pred:%noreg; mem:ST4[Stack] rGPR:%vreg11 GPR:%vreg12
+	%vreg13<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg13
+	%R0<def> = COPY %vreg7; GPR:%vreg7
+	%R1<def> = COPY %vreg8; GPR:%vreg8
+	%R2<def> = COPY %vreg9; GPR:%vreg9
+	%R3<def> = COPY %vreg13; rGPR:%vreg13
+	tBLXr pred:14, pred:%noreg, %vreg10<kill>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, %R3<imp-use>, %SP<imp-def>, ...; GPR:%vreg10
+	ADJCALLSTACKUP 4, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	tBX_RET pred:14, pred:%noreg
+
+# End machine code for function glVertex2i.
+
+# After Machine Common Subexpression Elimination:
+# Machine code for function glVertex2i: SSA
+Function Live Ins: %R0 in %vreg0, %R1 in %vreg1
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1
+	%vreg1<def> = COPY %R1; GPR:%vreg1
+	%vreg0<def> = COPY %R0; GPR:%vreg0
+	%vreg2<def> = COPY %vreg0; SPR:%vreg2 GPR:%vreg0
+	%vreg3<def> = VSITOS %vreg2<kill>, pred:14, pred:%noreg; SPR:%vreg3,%vreg2
+	%vreg4<def> = COPY %vreg1; SPR:%vreg4 GPR:%vreg1
+	%vreg5<def> = VSITOS %vreg4<kill>, pred:14, pred:%noreg; SPR:%vreg5,%vreg4
+	%vreg6<def> = t2MOVi32imm <ga:@CC>; rGPR:%vreg6
+	%vreg7<def> = t2LDRi12 %vreg6<kill>, 0, pred:14, pred:%noreg; mem:LD4[@CC](tbaa=!4) GPR:%vreg7 rGPR:%vreg6
+	%vreg8<def> = VMOVRS %vreg3<kill>, pred:14, pred:%noreg; GPR:%vreg8 SPR:%vreg3
+	%vreg9<def> = VMOVRS %vreg5<kill>, pred:14, pred:%noreg; GPR:%vreg9 SPR:%vreg5
+	%vreg10<def> = t2LDRi12 %vreg7, 656, pred:14, pred:%noreg; mem:LD4[%2](tbaa=!8) GPR:%vreg10,%vreg7
+	ADJCALLSTACKDOWN 4, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg11<def> = t2MOVi 1065353216, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg11
+	%vreg12<def> = COPY %SP; GPR:%vreg12
+	t2STRi12 %vreg11<kill>, %vreg12, 0, pred:14, pred:%noreg; mem:ST4[Stack] rGPR:%vreg11 GPR:%vreg12
+	%vreg13<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg13
+	%R0<def> = COPY %vreg7; GPR:%vreg7
+	%R1<def> = COPY %vreg8; GPR:%vreg8
+	%R2<def> = COPY %vreg9; GPR:%vreg9
+	%R3<def> = COPY %vreg13; rGPR:%vreg13
+	tBLXr pred:14, pred:%noreg, %vreg10<kill>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, %R3<imp-use>, %SP<imp-def>, ...; GPR:%vreg10
+	ADJCALLSTACKUP 4, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	tBX_RET pred:14, pred:%noreg
+
+# End machine code for function glVertex2i.
+
+# After Machine code sinking:
+# Machine code for function glVertex2i: SSA
+Function Live Ins: %R0 in %vreg0, %R1 in %vreg1
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1
+	%vreg1<def> = COPY %R1; GPR:%vreg1
+	%vreg0<def> = COPY %R0; GPR:%vreg0
+	%vreg2<def> = COPY %vreg0; SPR:%vreg2 GPR:%vreg0
+	%vreg3<def> = VSITOS %vreg2<kill>, pred:14, pred:%noreg; SPR:%vreg3,%vreg2
+	%vreg4<def> = COPY %vreg1; SPR:%vreg4 GPR:%vreg1
+	%vreg5<def> = VSITOS %vreg4<kill>, pred:14, pred:%noreg; SPR:%vreg5,%vreg4
+	%vreg6<def> = t2MOVi32imm <ga:@CC>; rGPR:%vreg6
+	%vreg7<def> = t2LDRi12 %vreg6<kill>, 0, pred:14, pred:%noreg; mem:LD4[@CC](tbaa=!4) GPR:%vreg7 rGPR:%vreg6
+	%vreg8<def> = VMOVRS %vreg3<kill>, pred:14, pred:%noreg; GPR:%vreg8 SPR:%vreg3
+	%vreg9<def> = VMOVRS %vreg5<kill>, pred:14, pred:%noreg; GPR:%vreg9 SPR:%vreg5
+	%vreg10<def> = t2LDRi12 %vreg7, 656, pred:14, pred:%noreg; mem:LD4[%2](tbaa=!8) GPR:%vreg10,%vreg7
+	ADJCALLSTACKDOWN 4, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg11<def> = t2MOVi 1065353216, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg11
+	%vreg12<def> = COPY %SP; GPR:%vreg12
+	t2STRi12 %vreg11<kill>, %vreg12, 0, pred:14, pred:%noreg; mem:ST4[Stack] rGPR:%vreg11 GPR:%vreg12
+	%vreg13<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg13
+	%R0<def> = COPY %vreg7; GPR:%vreg7
+	%R1<def> = COPY %vreg8; GPR:%vreg8
+	%R2<def> = COPY %vreg9; GPR:%vreg9
+	%R3<def> = COPY %vreg13; rGPR:%vreg13
+	tBLXr pred:14, pred:%noreg, %vreg10<kill>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, %R3<imp-use>, %SP<imp-def>, ...; GPR:%vreg10
+	ADJCALLSTACKUP 4, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	tBX_RET pred:14, pred:%noreg
+
+# End machine code for function glVertex2i.
+
+# After Peephole Optimizations:
+# Machine code for function glVertex2i: SSA
+Function Live Ins: %R0 in %vreg0, %R1 in %vreg1
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1
+	%vreg1<def> = COPY %R1; GPR:%vreg1
+	%vreg0<def> = COPY %R0; GPR:%vreg0
+	%vreg2<def> = COPY %vreg0; SPR:%vreg2 GPR:%vreg0
+	%vreg3<def> = VSITOS %vreg2<kill>, pred:14, pred:%noreg; SPR:%vreg3,%vreg2
+	%vreg4<def> = COPY %vreg1; SPR:%vreg4 GPR:%vreg1
+	%vreg5<def> = VSITOS %vreg4<kill>, pred:14, pred:%noreg; SPR:%vreg5,%vreg4
+	%vreg6<def> = t2MOVi32imm <ga:@CC>; rGPR:%vreg6
+	%vreg7<def> = t2LDRi12 %vreg6<kill>, 0, pred:14, pred:%noreg; mem:LD4[@CC](tbaa=!4) GPR:%vreg7 rGPR:%vreg6
+	%vreg8<def> = VMOVRS %vreg3<kill>, pred:14, pred:%noreg; GPR:%vreg8 SPR:%vreg3
+	%vreg9<def> = VMOVRS %vreg5<kill>, pred:14, pred:%noreg; GPR:%vreg9 SPR:%vreg5
+	%vreg10<def> = t2LDRi12 %vreg7, 656, pred:14, pred:%noreg; mem:LD4[%2](tbaa=!8) GPR:%vreg10,%vreg7
+	ADJCALLSTACKDOWN 4, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg11<def> = t2MOVi 1065353216, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg11
+	%vreg12<def> = COPY %SP; GPR:%vreg12
+	t2STRi12 %vreg11<kill>, %vreg12, 0, pred:14, pred:%noreg; mem:ST4[Stack] rGPR:%vreg11 GPR:%vreg12
+	%vreg13<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg13
+	%R0<def> = COPY %vreg7; GPR:%vreg7
+	%R1<def> = COPY %vreg8; GPR:%vreg8
+	%R2<def> = COPY %vreg9; GPR:%vreg9
+	%R3<def> = COPY %vreg13; rGPR:%vreg13
+	tBLXr pred:14, pred:%noreg, %vreg10<kill>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, %R3<imp-use>, %SP<imp-def>, ...; GPR:%vreg10
+	ADJCALLSTACKUP 4, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	tBX_RET pred:14, pred:%noreg
+
+# End machine code for function glVertex2i.
+
+# After Remove dead machine instructions:
+# Machine code for function glVertex2i: SSA
+Function Live Ins: %R0 in %vreg0, %R1 in %vreg1
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1
+	%vreg1<def> = COPY %R1; GPR:%vreg1
+	%vreg0<def> = COPY %R0; GPR:%vreg0
+	%vreg2<def> = COPY %vreg0; SPR:%vreg2 GPR:%vreg0
+	%vreg3<def> = VSITOS %vreg2<kill>, pred:14, pred:%noreg; SPR:%vreg3,%vreg2
+	%vreg4<def> = COPY %vreg1; SPR:%vreg4 GPR:%vreg1
+	%vreg5<def> = VSITOS %vreg4<kill>, pred:14, pred:%noreg; SPR:%vreg5,%vreg4
+	%vreg6<def> = t2MOVi32imm <ga:@CC>; rGPR:%vreg6
+	%vreg7<def> = t2LDRi12 %vreg6<kill>, 0, pred:14, pred:%noreg; mem:LD4[@CC](tbaa=!4) GPR:%vreg7 rGPR:%vreg6
+	%vreg8<def> = VMOVRS %vreg3<kill>, pred:14, pred:%noreg; GPR:%vreg8 SPR:%vreg3
+	%vreg9<def> = VMOVRS %vreg5<kill>, pred:14, pred:%noreg; GPR:%vreg9 SPR:%vreg5
+	%vreg10<def> = t2LDRi12 %vreg7, 656, pred:14, pred:%noreg; mem:LD4[%2](tbaa=!8) GPR:%vreg10,%vreg7
+	ADJCALLSTACKDOWN 4, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg11<def> = t2MOVi 1065353216, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg11
+	%vreg12<def> = COPY %SP; GPR:%vreg12
+	t2STRi12 %vreg11<kill>, %vreg12, 0, pred:14, pred:%noreg; mem:ST4[Stack] rGPR:%vreg11 GPR:%vreg12
+	%vreg13<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg13
+	%R0<def> = COPY %vreg7; GPR:%vreg7
+	%R1<def> = COPY %vreg8; GPR:%vreg8
+	%R2<def> = COPY %vreg9; GPR:%vreg9
+	%R3<def> = COPY %vreg13; rGPR:%vreg13
+	tBLXr pred:14, pred:%noreg, %vreg10<kill>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, %R3<imp-use>, %SP<imp-def>, ...; GPR:%vreg10
+	ADJCALLSTACKUP 4, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	tBX_RET pred:14, pred:%noreg
+
+# End machine code for function glVertex2i.
+
+# After ARM MLA / MLS expansion pass:
+# Machine code for function glVertex2i: SSA
+Function Live Ins: %R0 in %vreg0, %R1 in %vreg1
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1
+	%vreg1<def> = COPY %R1; GPR:%vreg1
+	%vreg0<def> = COPY %R0; GPR:%vreg0
+	%vreg2<def> = COPY %vreg0; SPR:%vreg2 GPR:%vreg0
+	%vreg3<def> = VSITOS %vreg2<kill>, pred:14, pred:%noreg; SPR:%vreg3,%vreg2
+	%vreg4<def> = COPY %vreg1; SPR:%vreg4 GPR:%vreg1
+	%vreg5<def> = VSITOS %vreg4<kill>, pred:14, pred:%noreg; SPR:%vreg5,%vreg4
+	%vreg6<def> = t2MOVi32imm <ga:@CC>; rGPR:%vreg6
+	%vreg7<def> = t2LDRi12 %vreg6<kill>, 0, pred:14, pred:%noreg; mem:LD4[@CC](tbaa=!4) GPR:%vreg7 rGPR:%vreg6
+	%vreg8<def> = VMOVRS %vreg3<kill>, pred:14, pred:%noreg; GPR:%vreg8 SPR:%vreg3
+	%vreg9<def> = VMOVRS %vreg5<kill>, pred:14, pred:%noreg; GPR:%vreg9 SPR:%vreg5
+	%vreg10<def> = t2LDRi12 %vreg7, 656, pred:14, pred:%noreg; mem:LD4[%2](tbaa=!8) GPR:%vreg10,%vreg7
+	ADJCALLSTACKDOWN 4, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg11<def> = t2MOVi 1065353216, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg11
+	%vreg12<def> = COPY %SP; GPR:%vreg12
+	t2STRi12 %vreg11<kill>, %vreg12, 0, pred:14, pred:%noreg; mem:ST4[Stack] rGPR:%vreg11 GPR:%vreg12
+	%vreg13<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg13
+	%R0<def> = COPY %vreg7; GPR:%vreg7
+	%R1<def> = COPY %vreg8; GPR:%vreg8
+	%R2<def> = COPY %vreg9; GPR:%vreg9
+	%R3<def> = COPY %vreg13; rGPR:%vreg13
+	tBLXr pred:14, pred:%noreg, %vreg10<kill>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, %R3<imp-use>, %SP<imp-def>, ...; GPR:%vreg10
+	ADJCALLSTACKUP 4, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	tBX_RET pred:14, pred:%noreg
+
+# End machine code for function glVertex2i.
+
+# After ARM pre- register allocation load / store optimization pass:
+# Machine code for function glVertex2i: SSA
+Function Live Ins: %R0 in %vreg0, %R1 in %vreg1
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1
+	%vreg1<def> = COPY %R1; GPR:%vreg1
+	%vreg0<def> = COPY %R0; GPR:%vreg0
+	%vreg2<def> = COPY %vreg0; SPR:%vreg2 GPR:%vreg0
+	%vreg3<def> = VSITOS %vreg2<kill>, pred:14, pred:%noreg; SPR:%vreg3,%vreg2
+	%vreg4<def> = COPY %vreg1; SPR:%vreg4 GPR:%vreg1
+	%vreg5<def> = VSITOS %vreg4<kill>, pred:14, pred:%noreg; SPR:%vreg5,%vreg4
+	%vreg6<def> = t2MOVi32imm <ga:@CC>; rGPR:%vreg6
+	%vreg7<def> = t2LDRi12 %vreg6<kill>, 0, pred:14, pred:%noreg; mem:LD4[@CC](tbaa=!4) GPR:%vreg7 rGPR:%vreg6
+	%vreg8<def> = VMOVRS %vreg3<kill>, pred:14, pred:%noreg; GPR:%vreg8 SPR:%vreg3
+	%vreg9<def> = VMOVRS %vreg5<kill>, pred:14, pred:%noreg; GPR:%vreg9 SPR:%vreg5
+	%vreg10<def> = t2LDRi12 %vreg7, 656, pred:14, pred:%noreg; mem:LD4[%2](tbaa=!8) GPR:%vreg10,%vreg7
+	ADJCALLSTACKDOWN 4, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg11<def> = t2MOVi 1065353216, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg11
+	%vreg12<def> = COPY %SP; GPR:%vreg12
+	t2STRi12 %vreg11<kill>, %vreg12, 0, pred:14, pred:%noreg; mem:ST4[Stack] rGPR:%vreg11 GPR:%vreg12
+	%vreg13<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg13
+	%R0<def> = COPY %vreg7; GPR:%vreg7
+	%R1<def> = COPY %vreg8; GPR:%vreg8
+	%R2<def> = COPY %vreg9; GPR:%vreg9
+	%R3<def> = COPY %vreg13; rGPR:%vreg13
+	tBLXr pred:14, pred:%noreg, %vreg10<kill>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, %R3<imp-use>, %SP<imp-def>, ...; GPR:%vreg10
+	ADJCALLSTACKUP 4, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	tBX_RET pred:14, pred:%noreg
+
+# End machine code for function glVertex2i.
+
+# After ARM A15 S->D optimizer:
+# Machine code for function glVertex2i: SSA
+Function Live Ins: %R0 in %vreg0, %R1 in %vreg1
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1
+	%vreg1<def> = COPY %R1; GPR:%vreg1
+	%vreg0<def> = COPY %R0; GPR:%vreg0
+	%vreg2<def> = COPY %vreg0; SPR:%vreg2 GPR:%vreg0
+	%vreg3<def> = VSITOS %vreg2<kill>, pred:14, pred:%noreg; SPR:%vreg3,%vreg2
+	%vreg4<def> = COPY %vreg1; SPR:%vreg4 GPR:%vreg1
+	%vreg5<def> = VSITOS %vreg4<kill>, pred:14, pred:%noreg; SPR:%vreg5,%vreg4
+	%vreg6<def> = t2MOVi32imm <ga:@CC>; rGPR:%vreg6
+	%vreg7<def> = t2LDRi12 %vreg6<kill>, 0, pred:14, pred:%noreg; mem:LD4[@CC](tbaa=!4) GPR:%vreg7 rGPR:%vreg6
+	%vreg8<def> = VMOVRS %vreg3<kill>, pred:14, pred:%noreg; GPR:%vreg8 SPR:%vreg3
+	%vreg9<def> = VMOVRS %vreg5<kill>, pred:14, pred:%noreg; GPR:%vreg9 SPR:%vreg5
+	%vreg10<def> = t2LDRi12 %vreg7, 656, pred:14, pred:%noreg; mem:LD4[%2](tbaa=!8) GPR:%vreg10,%vreg7
+	ADJCALLSTACKDOWN 4, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg11<def> = t2MOVi 1065353216, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg11
+	%vreg12<def> = COPY %SP; GPR:%vreg12
+	t2STRi12 %vreg11<kill>, %vreg12, 0, pred:14, pred:%noreg; mem:ST4[Stack] rGPR:%vreg11 GPR:%vreg12
+	%vreg13<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg13
+	%R0<def> = COPY %vreg7; GPR:%vreg7
+	%R1<def> = COPY %vreg8; GPR:%vreg8
+	%R2<def> = COPY %vreg9; GPR:%vreg9
+	%R3<def> = COPY %vreg13; rGPR:%vreg13
+	tBLXr pred:14, pred:%noreg, %vreg10<kill>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, %R3<imp-use>, %SP<imp-def>, ...; GPR:%vreg10
+	ADJCALLSTACKUP 4, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	tBX_RET pred:14, pred:%noreg
+
+# End machine code for function glVertex2i.
+
+# After Process Implicit Definitions:
+# Machine code for function glVertex2i: SSA
+Function Live Ins: %R0 in %vreg0, %R1 in %vreg1
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1
+	%vreg1<def> = COPY %R1; GPR:%vreg1
+	%vreg0<def> = COPY %R0; GPR:%vreg0
+	%vreg2<def> = COPY %vreg0; SPR:%vreg2 GPR:%vreg0
+	%vreg3<def> = VSITOS %vreg2<kill>, pred:14, pred:%noreg; SPR:%vreg3,%vreg2
+	%vreg4<def> = COPY %vreg1; SPR:%vreg4 GPR:%vreg1
+	%vreg5<def> = VSITOS %vreg4<kill>, pred:14, pred:%noreg; SPR:%vreg5,%vreg4
+	%vreg6<def> = t2MOVi32imm <ga:@CC>; rGPR:%vreg6
+	%vreg7<def> = t2LDRi12 %vreg6<kill>, 0, pred:14, pred:%noreg; mem:LD4[@CC](tbaa=!4) GPR:%vreg7 rGPR:%vreg6
+	%vreg8<def> = VMOVRS %vreg3<kill>, pred:14, pred:%noreg; GPR:%vreg8 SPR:%vreg3
+	%vreg9<def> = VMOVRS %vreg5<kill>, pred:14, pred:%noreg; GPR:%vreg9 SPR:%vreg5
+	%vreg10<def> = t2LDRi12 %vreg7, 656, pred:14, pred:%noreg; mem:LD4[%2](tbaa=!8) GPR:%vreg10,%vreg7
+	ADJCALLSTACKDOWN 4, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg11<def> = t2MOVi 1065353216, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg11
+	%vreg12<def> = COPY %SP; GPR:%vreg12
+	t2STRi12 %vreg11<kill>, %vreg12, 0, pred:14, pred:%noreg; mem:ST4[Stack] rGPR:%vreg11 GPR:%vreg12
+	%vreg13<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg13
+	%R0<def> = COPY %vreg7; GPR:%vreg7
+	%R1<def> = COPY %vreg8; GPR:%vreg8
+	%R2<def> = COPY %vreg9; GPR:%vreg9
+	%R3<def> = COPY %vreg13; rGPR:%vreg13
+	tBLXr pred:14, pred:%noreg, %vreg10<kill>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, %R3<imp-use>, %SP<imp-def>, ...; GPR:%vreg10
+	ADJCALLSTACKUP 4, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	tBX_RET pred:14, pred:%noreg
+
+# End machine code for function glVertex2i.
+
+# After Live Variable Analysis:
+# Machine code for function glVertex2i: SSA
+Function Live Ins: %R0 in %vreg0, %R1 in %vreg1
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1
+	%vreg1<def> = COPY %R1<kill>; GPR:%vreg1
+	%vreg0<def> = COPY %R0<kill>; GPR:%vreg0
+	%vreg2<def> = COPY %vreg0<kill>; SPR:%vreg2 GPR:%vreg0
+	%vreg3<def> = VSITOS %vreg2<kill>, pred:14, pred:%noreg; SPR:%vreg3,%vreg2
+	%vreg4<def> = COPY %vreg1<kill>; SPR:%vreg4 GPR:%vreg1
+	%vreg5<def> = VSITOS %vreg4<kill>, pred:14, pred:%noreg; SPR:%vreg5,%vreg4
+	%vreg6<def> = t2MOVi32imm <ga:@CC>; rGPR:%vreg6
+	%vreg7<def> = t2LDRi12 %vreg6<kill>, 0, pred:14, pred:%noreg; mem:LD4[@CC](tbaa=!4) GPR:%vreg7 rGPR:%vreg6
+	%vreg8<def> = VMOVRS %vreg3<kill>, pred:14, pred:%noreg; GPR:%vreg8 SPR:%vreg3
+	%vreg9<def> = VMOVRS %vreg5<kill>, pred:14, pred:%noreg; GPR:%vreg9 SPR:%vreg5
+	%vreg10<def> = t2LDRi12 %vreg7, 656, pred:14, pred:%noreg; mem:LD4[%2](tbaa=!8) GPR:%vreg10,%vreg7
+	ADJCALLSTACKDOWN 4, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg11<def> = t2MOVi 1065353216, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg11
+	%vreg12<def> = COPY %SP; GPR:%vreg12
+	t2STRi12 %vreg11<kill>, %vreg12<kill>, 0, pred:14, pred:%noreg; mem:ST4[Stack] rGPR:%vreg11 GPR:%vreg12
+	%vreg13<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg13
+	%R0<def> = COPY %vreg7<kill>; GPR:%vreg7
+	%R1<def> = COPY %vreg8<kill>; GPR:%vreg8
+	%R2<def> = COPY %vreg9<kill>; GPR:%vreg9
+	%R3<def> = COPY %vreg13<kill>; rGPR:%vreg13
+	tBLXr pred:14, pred:%noreg, %vreg10<kill>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use,kill>, %R1<imp-use,kill>, %R2<imp-use,kill>, %R3<imp-use,kill>, %SP<imp-def>, ...; GPR:%vreg10
+	ADJCALLSTACKUP 4, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	tBX_RET pred:14, pred:%noreg
+
+# End machine code for function glVertex2i.
+
+# After Machine Natural Loop Construction:
+# Machine code for function glVertex2i: SSA
+Function Live Ins: %R0 in %vreg0, %R1 in %vreg1
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1
+	%vreg1<def> = COPY %R1<kill>; GPR:%vreg1
+	%vreg0<def> = COPY %R0<kill>; GPR:%vreg0
+	%vreg2<def> = COPY %vreg0<kill>; SPR:%vreg2 GPR:%vreg0
+	%vreg3<def> = VSITOS %vreg2<kill>, pred:14, pred:%noreg; SPR:%vreg3,%vreg2
+	%vreg4<def> = COPY %vreg1<kill>; SPR:%vreg4 GPR:%vreg1
+	%vreg5<def> = VSITOS %vreg4<kill>, pred:14, pred:%noreg; SPR:%vreg5,%vreg4
+	%vreg6<def> = t2MOVi32imm <ga:@CC>; rGPR:%vreg6
+	%vreg7<def> = t2LDRi12 %vreg6<kill>, 0, pred:14, pred:%noreg; mem:LD4[@CC](tbaa=!4) GPR:%vreg7 rGPR:%vreg6
+	%vreg8<def> = VMOVRS %vreg3<kill>, pred:14, pred:%noreg; GPR:%vreg8 SPR:%vreg3
+	%vreg9<def> = VMOVRS %vreg5<kill>, pred:14, pred:%noreg; GPR:%vreg9 SPR:%vreg5
+	%vreg10<def> = t2LDRi12 %vreg7, 656, pred:14, pred:%noreg; mem:LD4[%2](tbaa=!8) GPR:%vreg10,%vreg7
+	ADJCALLSTACKDOWN 4, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg11<def> = t2MOVi 1065353216, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg11
+	%vreg12<def> = COPY %SP; GPR:%vreg12
+	t2STRi12 %vreg11<kill>, %vreg12<kill>, 0, pred:14, pred:%noreg; mem:ST4[Stack] rGPR:%vreg11 GPR:%vreg12
+	%vreg13<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg13
+	%R0<def> = COPY %vreg7<kill>; GPR:%vreg7
+	%R1<def> = COPY %vreg8<kill>; GPR:%vreg8
+	%R2<def> = COPY %vreg9<kill>; GPR:%vreg9
+	%R3<def> = COPY %vreg13<kill>; rGPR:%vreg13
+	tBLXr pred:14, pred:%noreg, %vreg10<kill>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use,kill>, %R1<imp-use,kill>, %R2<imp-use,kill>, %R3<imp-use,kill>, %SP<imp-def>, ...; GPR:%vreg10
+	ADJCALLSTACKUP 4, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	tBX_RET pred:14, pred:%noreg
+
+# End machine code for function glVertex2i.
+
+# After Eliminate PHI nodes for register allocation:
+# Machine code for function glVertex2i: Post SSA
+Function Live Ins: %R0 in %vreg0, %R1 in %vreg1
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1
+	%vreg1<def> = COPY %R1<kill>; GPR:%vreg1
+	%vreg0<def> = COPY %R0<kill>; GPR:%vreg0
+	%vreg2<def> = COPY %vreg0<kill>; SPR:%vreg2 GPR:%vreg0
+	%vreg3<def> = VSITOS %vreg2<kill>, pred:14, pred:%noreg; SPR:%vreg3,%vreg2
+	%vreg4<def> = COPY %vreg1<kill>; SPR:%vreg4 GPR:%vreg1
+	%vreg5<def> = VSITOS %vreg4<kill>, pred:14, pred:%noreg; SPR:%vreg5,%vreg4
+	%vreg6<def> = t2MOVi32imm <ga:@CC>; rGPR:%vreg6
+	%vreg7<def> = t2LDRi12 %vreg6<kill>, 0, pred:14, pred:%noreg; mem:LD4[@CC](tbaa=!4) GPR:%vreg7 rGPR:%vreg6
+	%vreg8<def> = VMOVRS %vreg3<kill>, pred:14, pred:%noreg; GPR:%vreg8 SPR:%vreg3
+	%vreg9<def> = VMOVRS %vreg5<kill>, pred:14, pred:%noreg; GPR:%vreg9 SPR:%vreg5
+	%vreg10<def> = t2LDRi12 %vreg7, 656, pred:14, pred:%noreg; mem:LD4[%2](tbaa=!8) GPR:%vreg10,%vreg7
+	ADJCALLSTACKDOWN 4, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg11<def> = t2MOVi 1065353216, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg11
+	%vreg12<def> = COPY %SP; GPR:%vreg12
+	t2STRi12 %vreg11<kill>, %vreg12<kill>, 0, pred:14, pred:%noreg; mem:ST4[Stack] rGPR:%vreg11 GPR:%vreg12
+	%vreg13<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg13
+	%R0<def> = COPY %vreg7<kill>; GPR:%vreg7
+	%R1<def> = COPY %vreg8<kill>; GPR:%vreg8
+	%R2<def> = COPY %vreg9<kill>; GPR:%vreg9
+	%R3<def> = COPY %vreg13<kill>; rGPR:%vreg13
+	tBLXr pred:14, pred:%noreg, %vreg10<kill>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use,kill>, %R1<imp-use,kill>, %R2<imp-use,kill>, %R3<imp-use,kill>, %SP<imp-def>, ...; GPR:%vreg10
+	ADJCALLSTACKUP 4, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	tBX_RET pred:14, pred:%noreg
+
+# End machine code for function glVertex2i.
+
+# After Two-Address instruction pass:
+# Machine code for function glVertex2i: Post SSA
+Function Live Ins: %R0 in %vreg0, %R1 in %vreg1
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1
+	%vreg1<def> = COPY %R1<kill>; GPR:%vreg1
+	%vreg0<def> = COPY %R0<kill>; GPR:%vreg0
+	%vreg2<def> = COPY %vreg0<kill>; SPR:%vreg2 GPR:%vreg0
+	%vreg3<def> = VSITOS %vreg2<kill>, pred:14, pred:%noreg; SPR:%vreg3,%vreg2
+	%vreg4<def> = COPY %vreg1<kill>; SPR:%vreg4 GPR:%vreg1
+	%vreg5<def> = VSITOS %vreg4<kill>, pred:14, pred:%noreg; SPR:%vreg5,%vreg4
+	%vreg6<def> = t2MOVi32imm <ga:@CC>; rGPR:%vreg6
+	%vreg7<def> = t2LDRi12 %vreg6<kill>, 0, pred:14, pred:%noreg; mem:LD4[@CC](tbaa=!4) GPR:%vreg7 rGPR:%vreg6
+	%vreg8<def> = VMOVRS %vreg3<kill>, pred:14, pred:%noreg; GPR:%vreg8 SPR:%vreg3
+	%vreg9<def> = VMOVRS %vreg5<kill>, pred:14, pred:%noreg; GPR:%vreg9 SPR:%vreg5
+	%vreg10<def> = t2LDRi12 %vreg7, 656, pred:14, pred:%noreg; mem:LD4[%2](tbaa=!8) GPR:%vreg10,%vreg7
+	ADJCALLSTACKDOWN 4, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg11<def> = t2MOVi 1065353216, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg11
+	%vreg12<def> = COPY %SP; GPR:%vreg12
+	t2STRi12 %vreg11<kill>, %vreg12<kill>, 0, pred:14, pred:%noreg; mem:ST4[Stack] rGPR:%vreg11 GPR:%vreg12
+	%vreg13<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg13
+	%R0<def> = COPY %vreg7<kill>; GPR:%vreg7
+	%R1<def> = COPY %vreg8<kill>; GPR:%vreg8
+	%R2<def> = COPY %vreg9<kill>; GPR:%vreg9
+	%R3<def> = COPY %vreg13<kill>; rGPR:%vreg13
+	tBLXr pred:14, pred:%noreg, %vreg10<kill>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use,kill>, %R1<imp-use,kill>, %R2<imp-use,kill>, %R3<imp-use,kill>, %SP<imp-def>, ...; GPR:%vreg10
+	ADJCALLSTACKUP 4, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	tBX_RET pred:14, pred:%noreg
+
+# End machine code for function glVertex2i.
+
+# After Simple Register Coalescing:
+# Machine code for function glVertex2i: Post SSA
+Function Live Ins: %R0 in %vreg0, %R1 in %vreg1
+
+0B	BB#0: derived from LLVM BB %0
+	    Live Ins: %R0 %R1
+16B		%vreg1<def> = COPY %R1; GPR:%vreg1
+32B		%vreg0<def> = COPY %R0; GPR:%vreg0
+48B		%vreg2<def> = COPY %vreg0; SPR:%vreg2 GPR:%vreg0
+64B		%vreg3<def> = VSITOS %vreg2, pred:14, pred:%noreg; SPR:%vreg3,%vreg2
+80B		%vreg4<def> = COPY %vreg1; SPR:%vreg4 GPR:%vreg1
+96B		%vreg5<def> = VSITOS %vreg4, pred:14, pred:%noreg; SPR:%vreg5,%vreg4
+112B		%vreg6<def> = t2MOVi32imm <ga:@CC>; rGPR:%vreg6
+128B		%vreg7<def> = t2LDRi12 %vreg6, 0, pred:14, pred:%noreg; mem:LD4[@CC](tbaa=!4) GPR:%vreg7 rGPR:%vreg6
+144B		%vreg8<def> = VMOVRS %vreg3, pred:14, pred:%noreg; GPR:%vreg8 SPR:%vreg3
+160B		%vreg9<def> = VMOVRS %vreg5, pred:14, pred:%noreg; GPR:%vreg9 SPR:%vreg5
+176B		%vreg10<def> = t2LDRi12 %vreg7, 656, pred:14, pred:%noreg; mem:LD4[%2](tbaa=!8) GPR:%vreg10,%vreg7
+192B		ADJCALLSTACKDOWN 4, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+208B		%vreg11<def> = t2MOVi 1065353216, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg11
+240B		t2STRi12 %vreg11, %SP, 0, pred:14, pred:%noreg; mem:ST4[Stack] rGPR:%vreg11
+272B		%R0<def> = COPY %vreg7; GPR:%vreg7
+288B		%R1<def> = COPY %vreg8; GPR:%vreg8
+304B		%R2<def> = COPY %vreg9; GPR:%vreg9
+320B		%R3<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg
+336B		tBLXr pred:14, pred:%noreg, %vreg10, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use,kill>, %R3<imp-use,kill>, %SP<imp-def>, ...; GPR:%vreg10
+352B		ADJCALLSTACKUP 4, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+368B		tBX_RET pred:14, pred:%noreg
+
+# End machine code for function glVertex2i.
+
+# After Machine Instruction Scheduler:
+# Machine code for function glVertex2i: Post SSA
+Function Live Ins: %R0 in %vreg0, %R1 in %vreg1
+
+0B	BB#0: derived from LLVM BB %0
+	    Live Ins: %R0 %R1
+16B		%vreg1<def> = COPY %R1; GPR:%vreg1
+32B		%vreg0<def> = COPY %R0; GPR:%vreg0
+48B		%vreg2<def> = COPY %vreg0; SPR:%vreg2 GPR:%vreg0
+64B		%vreg3<def> = VSITOS %vreg2, pred:14, pred:%noreg; SPR:%vreg3,%vreg2
+80B		%vreg4<def> = COPY %vreg1; SPR:%vreg4 GPR:%vreg1
+96B		%vreg5<def> = VSITOS %vreg4, pred:14, pred:%noreg; SPR:%vreg5,%vreg4
+112B		%vreg6<def> = t2MOVi32imm <ga:@CC>; rGPR:%vreg6
+128B		%vreg7<def> = t2LDRi12 %vreg6, 0, pred:14, pred:%noreg; mem:LD4[@CC](tbaa=!4) GPR:%vreg7 rGPR:%vreg6
+144B		%vreg8<def> = VMOVRS %vreg3, pred:14, pred:%noreg; GPR:%vreg8 SPR:%vreg3
+160B		%vreg9<def> = VMOVRS %vreg5, pred:14, pred:%noreg; GPR:%vreg9 SPR:%vreg5
+176B		%vreg10<def> = t2LDRi12 %vreg7, 656, pred:14, pred:%noreg; mem:LD4[%2](tbaa=!8) GPR:%vreg10,%vreg7
+192B		ADJCALLSTACKDOWN 4, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+208B		%vreg11<def> = t2MOVi 1065353216, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg11
+240B		t2STRi12 %vreg11, %SP, 0, pred:14, pred:%noreg; mem:ST4[Stack] rGPR:%vreg11
+272B		%R0<def> = COPY %vreg7; GPR:%vreg7
+288B		%R1<def> = COPY %vreg8; GPR:%vreg8
+304B		%R2<def> = COPY %vreg9; GPR:%vreg9
+320B		%R3<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg
+336B		tBLXr pred:14, pred:%noreg, %vreg10, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use,kill>, %R3<imp-use,kill>, %SP<imp-def>, ...; GPR:%vreg10
+352B		ADJCALLSTACKUP 4, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+368B		tBX_RET pred:14, pred:%noreg
+
+# End machine code for function glVertex2i.
+
+# After Greedy Register Allocator:
+# Machine code for function glVertex2i: Post SSA
+Function Live Ins: %R0 in %vreg0, %R1 in %vreg1
+
+0B	BB#0: derived from LLVM BB %0
+	    Live Ins: %R0 %R1
+16B		%vreg1<def> = COPY %R1; GPR:%vreg1
+32B		%vreg0<def> = COPY %R0; GPR:%vreg0
+48B		%vreg2<def> = COPY %vreg0; SPR:%vreg2 GPR:%vreg0
+64B		%vreg3<def> = VSITOS %vreg2, pred:14, pred:%noreg; SPR:%vreg3,%vreg2
+80B		%vreg4<def> = COPY %vreg1; SPR:%vreg4 GPR:%vreg1
+96B		%vreg5<def> = VSITOS %vreg4, pred:14, pred:%noreg; SPR:%vreg5,%vreg4
+112B		%vreg6<def> = t2MOVi32imm <ga:@CC>; rGPR:%vreg6
+128B		%vreg7<def> = t2LDRi12 %vreg6, 0, pred:14, pred:%noreg; mem:LD4[@CC](tbaa=!4) GPR:%vreg7 rGPR:%vreg6
+144B		%vreg8<def> = VMOVRS %vreg3, pred:14, pred:%noreg; GPR:%vreg8 SPR:%vreg3
+160B		%vreg9<def> = VMOVRS %vreg5, pred:14, pred:%noreg; GPR:%vreg9 SPR:%vreg5
+176B		%vreg10<def> = t2LDRi12 %vreg7, 656, pred:14, pred:%noreg; mem:LD4[%2](tbaa=!8) GPR:%vreg10,%vreg7
+192B		ADJCALLSTACKDOWN 4, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+208B		%vreg11<def> = t2MOVi 1065353216, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg11
+240B		t2STRi12 %vreg11, %SP, 0, pred:14, pred:%noreg; mem:ST4[Stack] rGPR:%vreg11
+272B		%R0<def> = COPY %vreg7; GPR:%vreg7
+288B		%R1<def> = COPY %vreg8; GPR:%vreg8
+304B		%R2<def> = COPY %vreg9; GPR:%vreg9
+320B		%R3<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg
+336B		tBLXr pred:14, pred:%noreg, %vreg10, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, %R3<imp-use>, %SP<imp-def>, ...; GPR:%vreg10
+352B		ADJCALLSTACKUP 4, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+368B		tBX_RET pred:14, pred:%noreg
+
+# End machine code for function glVertex2i.
+
+# After Virtual Register Rewriter:
+# Machine code for function glVertex2i: Post SSA
+Function Live Ins: %R0, %R1
+
+0B	BB#0: derived from LLVM BB %0
+	    Live Ins: %R0 %R1
+48B		%S0<def> = COPY %R0<kill>
+64B		%S0<def> = VSITOS %S0<kill>, pred:14, pred:%noreg
+80B		%S2<def> = COPY %R1<kill>
+96B		%S2<def> = VSITOS %S2<kill>, pred:14, pred:%noreg
+112B		%R0<def> = t2MOVi32imm <ga:@CC>
+128B		%R0<def> = t2LDRi12 %R0<kill>, 0, pred:14, pred:%noreg; mem:LD4[@CC](tbaa=!4)
+144B		%R1<def> = VMOVRS %S0<kill>, pred:14, pred:%noreg
+160B		%R2<def> = VMOVRS %S2<kill>, pred:14, pred:%noreg
+176B		%R12<def> = t2LDRi12 %R0, 656, pred:14, pred:%noreg; mem:LD4[%2](tbaa=!8)
+192B		ADJCALLSTACKDOWN 4, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+208B		%R3<def> = t2MOVi 1065353216, pred:14, pred:%noreg, opt:%noreg
+240B		t2STRi12 %R3<kill>, %SP, 0, pred:14, pred:%noreg; mem:ST4[Stack]
+320B		%R3<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg
+336B		tBLXr pred:14, pred:%noreg, %R12<kill>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, %R3<imp-use>, %SP<imp-def>, ...
+352B		ADJCALLSTACKUP 4, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+368B		tBX_RET pred:14, pred:%noreg
+
+# End machine code for function glVertex2i.
+
+# After Stack Slot Coloring:
+# Machine code for function glVertex2i: Post SSA
+Function Live Ins: %R0, %R1
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1
+	%S0<def> = COPY %R0<kill>
+	%S0<def> = VSITOS %S0<kill>, pred:14, pred:%noreg
+	%S2<def> = COPY %R1<kill>
+	%S2<def> = VSITOS %S2<kill>, pred:14, pred:%noreg
+	%R0<def> = t2MOVi32imm <ga:@CC>
+	%R0<def> = t2LDRi12 %R0<kill>, 0, pred:14, pred:%noreg; mem:LD4[@CC](tbaa=!4)
+	%R1<def> = VMOVRS %S0<kill>, pred:14, pred:%noreg
+	%R2<def> = VMOVRS %S2<kill>, pred:14, pred:%noreg
+	%R12<def> = t2LDRi12 %R0, 656, pred:14, pred:%noreg; mem:LD4[%2](tbaa=!8)
+	ADJCALLSTACKDOWN 4, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%R3<def> = t2MOVi 1065353216, pred:14, pred:%noreg, opt:%noreg
+	t2STRi12 %R3<kill>, %SP, 0, pred:14, pred:%noreg; mem:ST4[Stack]
+	%R3<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg
+	tBLXr pred:14, pred:%noreg, %R12<kill>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, %R3<imp-use>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 4, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	tBX_RET pred:14, pred:%noreg
+
+# End machine code for function glVertex2i.
+
+# After Machine Loop Invariant Code Motion:
+# Machine code for function glVertex2i: Post SSA
+Function Live Ins: %R0, %R1
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1
+	%S0<def> = COPY %R0<kill>
+	%S0<def> = VSITOS %S0<kill>, pred:14, pred:%noreg
+	%S2<def> = COPY %R1<kill>
+	%S2<def> = VSITOS %S2<kill>, pred:14, pred:%noreg
+	%R0<def> = t2MOVi32imm <ga:@CC>
+	%R0<def> = t2LDRi12 %R0<kill>, 0, pred:14, pred:%noreg; mem:LD4[@CC](tbaa=!4)
+	%R1<def> = VMOVRS %S0<kill>, pred:14, pred:%noreg
+	%R2<def> = VMOVRS %S2<kill>, pred:14, pred:%noreg
+	%R12<def> = t2LDRi12 %R0, 656, pred:14, pred:%noreg; mem:LD4[%2](tbaa=!8)
+	ADJCALLSTACKDOWN 4, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%R3<def> = t2MOVi 1065353216, pred:14, pred:%noreg, opt:%noreg
+	t2STRi12 %R3<kill>, %SP, 0, pred:14, pred:%noreg; mem:ST4[Stack]
+	%R3<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg
+	tBLXr pred:14, pred:%noreg, %R12<kill>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, %R3<imp-use>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 4, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	tBX_RET pred:14, pred:%noreg
+
+# End machine code for function glVertex2i.
+
+# After Shrink Wrapping analysis:
+# Machine code for function glVertex2i: Post SSA
+Function Live Ins: %R0, %R1
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1
+	%S0<def> = COPY %R0<kill>
+	%S0<def> = VSITOS %S0<kill>, pred:14, pred:%noreg
+	%S2<def> = COPY %R1<kill>
+	%S2<def> = VSITOS %S2<kill>, pred:14, pred:%noreg
+	%R0<def> = t2MOVi32imm <ga:@CC>
+	%R0<def> = t2LDRi12 %R0<kill>, 0, pred:14, pred:%noreg; mem:LD4[@CC](tbaa=!4)
+	%R1<def> = VMOVRS %S0<kill>, pred:14, pred:%noreg
+	%R2<def> = VMOVRS %S2<kill>, pred:14, pred:%noreg
+	%R12<def> = t2LDRi12 %R0, 656, pred:14, pred:%noreg; mem:LD4[%2](tbaa=!8)
+	ADJCALLSTACKDOWN 4, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%R3<def> = t2MOVi 1065353216, pred:14, pred:%noreg, opt:%noreg
+	t2STRi12 %R3<kill>, %SP, 0, pred:14, pred:%noreg; mem:ST4[Stack]
+	%R3<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg
+	tBLXr pred:14, pred:%noreg, %R12<kill>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, %R3<imp-use>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 4, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	tBX_RET pred:14, pred:%noreg
+
+# End machine code for function glVertex2i.
+
+# After Prologue/Epilogue Insertion & Frame Finalization:
+# Machine code for function glVertex2i: Post SSA
+Frame Objects:
+  fi#0: size=4, align=4, at location [SP-4]
+  fi#1: size=4, align=4, at location [SP-8]
+Function Live Ins: %R0, %R1
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R7 %LR
+	%SP<def,tied1> = t2STMDB_UPD %SP<tied0>, pred:14, pred:%noreg, %R7<kill>, %LR<kill>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%R7<def> = tMOVr %SP<kill>, pred:14, pred:%noreg; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%SP<def,tied1> = tSUBspi %SP<tied0>, 2, pred:14, pred:%noreg; flags: FrameSetup
+	%S0<def> = COPY %R0<kill>
+	%S0<def> = VSITOS %S0<kill>, pred:14, pred:%noreg
+	%S2<def> = COPY %R1<kill>
+	%S2<def> = VSITOS %S2<kill>, pred:14, pred:%noreg
+	%R0<def> = t2MOVi32imm <ga:@CC>
+	%R0<def> = t2LDRi12 %R0<kill>, 0, pred:14, pred:%noreg; mem:LD4[@CC](tbaa=!4)
+	%R1<def> = VMOVRS %S0<kill>, pred:14, pred:%noreg
+	%R2<def> = VMOVRS %S2<kill>, pred:14, pred:%noreg
+	%R12<def> = t2LDRi12 %R0, 656, pred:14, pred:%noreg; mem:LD4[%2](tbaa=!8)
+	%R3<def> = t2MOVi 1065353216, pred:14, pred:%noreg, opt:%noreg
+	t2STRi12 %R3<kill>, %SP, 0, pred:14, pred:%noreg; mem:ST4[Stack]
+	%R3<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg
+	tBLXr pred:14, pred:%noreg, %R12<kill>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %LR<imp-def,dead>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, %R3<imp-use>, %SP<imp-def>
+	%SP<def,tied1> = tADDspi %SP<tied0>, 2, pred:14, pred:%noreg
+	%SP<def,tied1> = t2LDMIA_RET %SP<tied0>, pred:14, pred:%noreg, %R7<def>, %PC<def>
+
+# End machine code for function glVertex2i.
+
+# After Machine Copy Propagation Pass:
+# Machine code for function glVertex2i: Post SSA
+Frame Objects:
+  fi#0: size=4, align=4, at location [SP-4]
+  fi#1: size=4, align=4, at location [SP-8]
+Function Live Ins: %R0, %R1
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R7 %LR
+	%SP<def,tied1> = t2STMDB_UPD %SP<tied0>, pred:14, pred:%noreg, %R7<kill>, %LR<kill>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%R7<def> = tMOVr %SP<kill>, pred:14, pred:%noreg; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%SP<def,tied1> = tSUBspi %SP<tied0>, 2, pred:14, pred:%noreg; flags: FrameSetup
+	%S0<def> = COPY %R0<kill>
+	%S0<def> = VSITOS %S0<kill>, pred:14, pred:%noreg
+	%S2<def> = COPY %R1<kill>
+	%S2<def> = VSITOS %S2<kill>, pred:14, pred:%noreg
+	%R0<def> = t2MOVi32imm <ga:@CC>
+	%R0<def> = t2LDRi12 %R0<kill>, 0, pred:14, pred:%noreg; mem:LD4[@CC](tbaa=!4)
+	%R1<def> = VMOVRS %S0<kill>, pred:14, pred:%noreg
+	%R2<def> = VMOVRS %S2<kill>, pred:14, pred:%noreg
+	%R12<def> = t2LDRi12 %R0, 656, pred:14, pred:%noreg; mem:LD4[%2](tbaa=!8)
+	%R3<def> = t2MOVi 1065353216, pred:14, pred:%noreg, opt:%noreg
+	t2STRi12 %R3<kill>, %SP, 0, pred:14, pred:%noreg; mem:ST4[Stack]
+	%R3<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg
+	tBLXr pred:14, pred:%noreg, %R12<kill>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %LR<imp-def,dead>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, %R3<imp-use>, %SP<imp-def>
+	%SP<def,tied1> = tADDspi %SP<tied0>, 2, pred:14, pred:%noreg
+	%SP<def,tied1> = t2LDMIA_RET %SP<tied0>, pred:14, pred:%noreg, %R7<def>, %PC<def>
+
+# End machine code for function glVertex2i.
+
+# After Post-RA pseudo instruction expansion pass:
+# Machine code for function glVertex2i: Post SSA
+Frame Objects:
+  fi#0: size=4, align=4, at location [SP-4]
+  fi#1: size=4, align=4, at location [SP-8]
+Function Live Ins: %R0, %R1
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R7 %LR
+	%SP<def,tied1> = t2STMDB_UPD %SP<tied0>, pred:14, pred:%noreg, %R7<kill>, %LR<kill>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%R7<def> = tMOVr %SP<kill>, pred:14, pred:%noreg; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%SP<def,tied1> = tSUBspi %SP<tied0>, 2, pred:14, pred:%noreg; flags: FrameSetup
+	%S0<def> = VMOVSR %R0<kill>, pred:14, pred:%noreg
+	%S0<def> = VSITOS %S0<kill>, pred:14, pred:%noreg
+	%S2<def> = VMOVSR %R1<kill>, pred:14, pred:%noreg
+	%S2<def> = VSITOS %S2<kill>, pred:14, pred:%noreg
+	%R0<def> = t2MOVi32imm <ga:@CC>
+	%R0<def> = t2LDRi12 %R0<kill>, 0, pred:14, pred:%noreg; mem:LD4[@CC](tbaa=!4)
+	%R1<def> = VMOVRS %S0<kill>, pred:14, pred:%noreg
+	%R2<def> = VMOVRS %S2<kill>, pred:14, pred:%noreg
+	%R12<def> = t2LDRi12 %R0, 656, pred:14, pred:%noreg; mem:LD4[%2](tbaa=!8)
+	%R3<def> = t2MOVi 1065353216, pred:14, pred:%noreg, opt:%noreg
+	t2STRi12 %R3<kill>, %SP, 0, pred:14, pred:%noreg; mem:ST4[Stack]
+	%R3<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg
+	tBLXr pred:14, pred:%noreg, %R12<kill>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %LR<imp-def,dead>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, %R3<imp-use>, %SP<imp-def>
+	%SP<def,tied1> = tADDspi %SP<tied0>, 2, pred:14, pred:%noreg
+	%SP<def,tied1> = t2LDMIA_RET %SP<tied0>, pred:14, pred:%noreg, %R7<def>, %PC<def>
+
+# End machine code for function glVertex2i.
+
+# After ARM load / store optimization pass:
+# Machine code for function glVertex2i: Post SSA
+Frame Objects:
+  fi#0: size=4, align=4, at location [SP-4]
+  fi#1: size=4, align=4, at location [SP-8]
+Function Live Ins: %R0, %R1
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R7 %LR
+	%SP<def,tied1> = t2STMDB_UPD %SP<tied0>, pred:14, pred:%noreg, %R7<kill>, %LR<kill>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%R7<def> = tMOVr %SP<kill>, pred:14, pred:%noreg; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%SP<def,tied1> = tSUBspi %SP<tied0>, 2, pred:14, pred:%noreg; flags: FrameSetup
+	%S0<def> = VMOVSR %R0<kill>, pred:14, pred:%noreg
+	%S0<def> = VSITOS %S0<kill>, pred:14, pred:%noreg
+	%S2<def> = VMOVSR %R1<kill>, pred:14, pred:%noreg
+	%S2<def> = VSITOS %S2<kill>, pred:14, pred:%noreg
+	%R0<def> = t2MOVi32imm <ga:@CC>
+	%R0<def> = t2LDRi12 %R0<kill>, 0, pred:14, pred:%noreg; mem:LD4[@CC](tbaa=!4)
+	%R1<def> = VMOVRS %S0<kill>, pred:14, pred:%noreg
+	%R2<def> = VMOVRS %S2<kill>, pred:14, pred:%noreg
+	%R12<def> = t2LDRi12 %R0, 656, pred:14, pred:%noreg; mem:LD4[%2](tbaa=!8)
+	%R3<def> = t2MOVi 1065353216, pred:14, pred:%noreg, opt:%noreg
+	t2STRi12 %R3<kill>, %SP, 0, pred:14, pred:%noreg; mem:ST4[Stack]
+	%R3<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg
+	tBLXr pred:14, pred:%noreg, %R12<kill>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %LR<imp-def,dead>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, %R3<imp-use>, %SP<imp-def>
+	%SP<def,tied1> = tADDspi %SP<tied0>, 2, pred:14, pred:%noreg
+	%SP<def,tied1> = t2LDMIA_RET %SP<tied0>, pred:14, pred:%noreg, %R7<def>, %PC<def>
+
+# End machine code for function glVertex2i.
+
+# After Execution dependency fix:
+# Machine code for function glVertex2i: Post SSA
+Frame Objects:
+  fi#0: size=4, align=4, at location [SP-4]
+  fi#1: size=4, align=4, at location [SP-8]
+Function Live Ins: %R0, %R1
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R7 %LR
+	%SP<def,tied1> = t2STMDB_UPD %SP<tied0>, pred:14, pred:%noreg, %R7<kill>, %LR<kill>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%R7<def> = tMOVr %SP<kill>, pred:14, pred:%noreg; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%SP<def,tied1> = tSUBspi %SP<tied0>, 2, pred:14, pred:%noreg; flags: FrameSetup
+	%S0<def> = VMOVSR %R0<kill>, pred:14, pred:%noreg
+	%S0<def> = VSITOS %S0<kill>, pred:14, pred:%noreg
+	%S2<def> = VMOVSR %R1<kill>, pred:14, pred:%noreg
+	%S2<def> = VSITOS %S2<kill>, pred:14, pred:%noreg
+	%R0<def> = t2MOVi32imm <ga:@CC>
+	%R0<def> = t2LDRi12 %R0<kill>, 0, pred:14, pred:%noreg; mem:LD4[@CC](tbaa=!4)
+	%R1<def> = VMOVRS %S0<kill>, pred:14, pred:%noreg
+	%R2<def> = VMOVRS %S2<kill>, pred:14, pred:%noreg
+	%R12<def> = t2LDRi12 %R0, 656, pred:14, pred:%noreg; mem:LD4[%2](tbaa=!8)
+	%R3<def> = t2MOVi 1065353216, pred:14, pred:%noreg, opt:%noreg
+	t2STRi12 %R3<kill>, %SP, 0, pred:14, pred:%noreg; mem:ST4[Stack]
+	%R3<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg
+	tBLXr pred:14, pred:%noreg, %R12<kill>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %LR<imp-def,dead>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, %R3<imp-use>, %SP<imp-def>
+	%SP<def,tied1> = tADDspi %SP<tied0>, 2, pred:14, pred:%noreg
+	%SP<def,tied1> = t2LDMIA_RET %SP<tied0>, pred:14, pred:%noreg, %R7<def>, %PC<def>
+
+# End machine code for function glVertex2i.
+
+# After ARM pseudo instruction expansion pass:
+# Machine code for function glVertex2i: Post SSA
+Frame Objects:
+  fi#0: size=4, align=4, at location [SP-4]
+  fi#1: size=4, align=4, at location [SP-8]
+Function Live Ins: %R0, %R1
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R7 %LR
+	%SP<def,tied1> = t2STMDB_UPD %SP<tied0>, pred:14, pred:%noreg, %R7<kill>, %LR<kill>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%R7<def> = tMOVr %SP<kill>, pred:14, pred:%noreg; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%SP<def,tied1> = tSUBspi %SP<tied0>, 2, pred:14, pred:%noreg; flags: FrameSetup
+	%S0<def> = VMOVSR %R0<kill>, pred:14, pred:%noreg
+	%S0<def> = VSITOS %S0<kill>, pred:14, pred:%noreg
+	%S2<def> = VMOVSR %R1<kill>, pred:14, pred:%noreg
+	%S2<def> = VSITOS %S2<kill>, pred:14, pred:%noreg
+	%R0<def> = t2MOVi16 <ga:@CC>[TF=1], pred:14, pred:%noreg
+	%R0<def,tied1> = t2MOVTi16 %R0<tied0>, <ga:@CC>[TF=2], pred:14, pred:%noreg
+	%R0<def> = t2LDRi12 %R0<kill>, 0, pred:14, pred:%noreg; mem:LD4[@CC](tbaa=!4)
+	%R1<def> = VMOVRS %S0<kill>, pred:14, pred:%noreg
+	%R2<def> = VMOVRS %S2<kill>, pred:14, pred:%noreg
+	%R12<def> = t2LDRi12 %R0, 656, pred:14, pred:%noreg; mem:LD4[%2](tbaa=!8)
+	%R3<def> = t2MOVi 1065353216, pred:14, pred:%noreg, opt:%noreg
+	t2STRi12 %R3<kill>, %SP, 0, pred:14, pred:%noreg; mem:ST4[Stack]
+	%R3<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg
+	tBLXr pred:14, pred:%noreg, %R12<kill>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %LR<imp-def,dead>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, %R3<imp-use>, %SP<imp-def>
+	%SP<def,tied1> = tADDspi %SP<tied0>, 2, pred:14, pred:%noreg
+	%SP<def,tied1> = t2LDMIA_RET %SP<tied0>, pred:14, pred:%noreg, %R7<def>, %PC<def>
+
+# End machine code for function glVertex2i.
+
+# After Thumb2 instruction size reduction pass:
+# Machine code for function glVertex2i: Post SSA
+Frame Objects:
+  fi#0: size=4, align=4, at location [SP-4]
+  fi#1: size=4, align=4, at location [SP-8]
+Function Live Ins: %R0, %R1
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R7 %LR
+	%SP<def,tied1> = t2STMDB_UPD %SP<tied0>, pred:14, pred:%noreg, %R7<kill>, %LR<kill>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%R7<def> = tMOVr %SP<kill>, pred:14, pred:%noreg; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%SP<def,tied1> = tSUBspi %SP<tied0>, 2, pred:14, pred:%noreg; flags: FrameSetup
+	%S0<def> = VMOVSR %R0<kill>, pred:14, pred:%noreg
+	%S0<def> = VSITOS %S0<kill>, pred:14, pred:%noreg
+	%S2<def> = VMOVSR %R1<kill>, pred:14, pred:%noreg
+	%S2<def> = VSITOS %S2<kill>, pred:14, pred:%noreg
+	%R0<def> = t2MOVi16 <ga:@CC>[TF=1], pred:14, pred:%noreg
+	%R0<def,tied1> = t2MOVTi16 %R0<tied0>, <ga:@CC>[TF=2], pred:14, pred:%noreg
+	%R0<def> = t2LDRi12 %R0<kill>, 0, pred:14, pred:%noreg; mem:LD4[@CC](tbaa=!4)
+	%R1<def> = VMOVRS %S0<kill>, pred:14, pred:%noreg
+	%R2<def> = VMOVRS %S2<kill>, pred:14, pred:%noreg
+	%R12<def> = t2LDRi12 %R0, 656, pred:14, pred:%noreg; mem:LD4[%2](tbaa=!8)
+	%R3<def> = t2MOVi 1065353216, pred:14, pred:%noreg, opt:%noreg
+	t2STRi12 %R3<kill>, %SP, 0, pred:14, pred:%noreg; mem:ST4[Stack]
+	%R3<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg
+	tBLXr pred:14, pred:%noreg, %R12<kill>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %LR<imp-def,dead>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, %R3<imp-use>, %SP<imp-def>
+	%SP<def,tied1> = tADDspi %SP<tied0>, 2, pred:14, pred:%noreg
+	%SP<def,tied1> = t2LDMIA_RET %SP<tied0>, pred:14, pred:%noreg, %R7<def>, %PC<def>
+
+# End machine code for function glVertex2i.
+
+# After Thumb IT blocks insertion pass:
+# Machine code for function glVertex2i: Post SSA
+Frame Objects:
+  fi#0: size=4, align=4, at location [SP-4]
+  fi#1: size=4, align=4, at location [SP-8]
+Function Live Ins: %R0, %R1
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R7 %LR
+	%SP<def,tied1> = t2STMDB_UPD %SP<tied0>, pred:14, pred:%noreg, %R7<kill>, %LR<kill>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%R7<def> = tMOVr %SP<kill>, pred:14, pred:%noreg; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%SP<def,tied1> = tSUBspi %SP<tied0>, 2, pred:14, pred:%noreg; flags: FrameSetup
+	%S0<def> = VMOVSR %R0<kill>, pred:14, pred:%noreg
+	%S0<def> = VSITOS %S0<kill>, pred:14, pred:%noreg
+	%S2<def> = VMOVSR %R1<kill>, pred:14, pred:%noreg
+	%S2<def> = VSITOS %S2<kill>, pred:14, pred:%noreg
+	%R0<def> = t2MOVi16 <ga:@CC>[TF=1], pred:14, pred:%noreg
+	%R0<def,tied1> = t2MOVTi16 %R0<tied0>, <ga:@CC>[TF=2], pred:14, pred:%noreg
+	%R0<def> = t2LDRi12 %R0<kill>, 0, pred:14, pred:%noreg; mem:LD4[@CC](tbaa=!4)
+	%R1<def> = VMOVRS %S0<kill>, pred:14, pred:%noreg
+	%R2<def> = VMOVRS %S2<kill>, pred:14, pred:%noreg
+	%R12<def> = t2LDRi12 %R0, 656, pred:14, pred:%noreg; mem:LD4[%2](tbaa=!8)
+	%R3<def> = t2MOVi 1065353216, pred:14, pred:%noreg, opt:%noreg
+	t2STRi12 %R3<kill>, %SP, 0, pred:14, pred:%noreg; mem:ST4[Stack]
+	%R3<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg
+	tBLXr pred:14, pred:%noreg, %R12<kill>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %LR<imp-def,dead>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, %R3<imp-use>, %SP<imp-def>
+	%SP<def,tied1> = tADDspi %SP<tied0>, 2, pred:14, pred:%noreg
+	%SP<def,tied1> = t2LDMIA_RET %SP<tied0>, pred:14, pred:%noreg, %R7<def>, %PC<def>
+
+# End machine code for function glVertex2i.
+
+# After Analyze Machine Code For Garbage Collection:
+# Machine code for function glVertex2i: Post SSA
+Frame Objects:
+  fi#0: size=4, align=4, at location [SP-4]
+  fi#1: size=4, align=4, at location [SP-8]
+Function Live Ins: %R0, %R1
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R7 %LR
+	%SP<def,tied1> = t2STMDB_UPD %SP<tied0>, pred:14, pred:%noreg, %R7<kill>, %LR<kill>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%R7<def> = tMOVr %SP<kill>, pred:14, pred:%noreg; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%SP<def,tied1> = tSUBspi %SP<tied0>, 2, pred:14, pred:%noreg; flags: FrameSetup
+	%S0<def> = VMOVSR %R0<kill>, pred:14, pred:%noreg
+	%S0<def> = VSITOS %S0<kill>, pred:14, pred:%noreg
+	%S2<def> = VMOVSR %R1<kill>, pred:14, pred:%noreg
+	%S2<def> = VSITOS %S2<kill>, pred:14, pred:%noreg
+	%R0<def> = t2MOVi16 <ga:@CC>[TF=1], pred:14, pred:%noreg
+	%R0<def,tied1> = t2MOVTi16 %R0<tied0>, <ga:@CC>[TF=2], pred:14, pred:%noreg
+	%R0<def> = t2LDRi12 %R0<kill>, 0, pred:14, pred:%noreg; mem:LD4[@CC](tbaa=!4)
+	%R1<def> = VMOVRS %S0<kill>, pred:14, pred:%noreg
+	%R2<def> = VMOVRS %S2<kill>, pred:14, pred:%noreg
+	%R12<def> = t2LDRi12 %R0, 656, pred:14, pred:%noreg; mem:LD4[%2](tbaa=!8)
+	%R3<def> = t2MOVi 1065353216, pred:14, pred:%noreg, opt:%noreg
+	t2STRi12 %R3<kill>, %SP, 0, pred:14, pred:%noreg; mem:ST4[Stack]
+	%R3<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg
+	tBLXr pred:14, pred:%noreg, %R12<kill>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %LR<imp-def,dead>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, %R3<imp-use>, %SP<imp-def>
+	%SP<def,tied1> = tADDspi %SP<tied0>, 2, pred:14, pred:%noreg
+	%SP<def,tied1> = t2LDMIA_RET %SP<tied0>, pred:14, pred:%noreg, %R7<def>, %PC<def>
+
+# End machine code for function glVertex2i.
+
+# After Thumb2 instruction size reduction pass:
+# Machine code for function glVertex2i: Post SSA
+Frame Objects:
+  fi#0: size=4, align=4, at location [SP-4]
+  fi#1: size=4, align=4, at location [SP-8]
+Function Live Ins: %R0, %R1
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R7 %LR
+	tPUSH pred:14, pred:%noreg, %R7<kill>, %LR<kill>, %SP<imp-def>, %SP<imp-use>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%R7<def> = tMOVr %SP<kill>, pred:14, pred:%noreg; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%SP<def,tied1> = tSUBspi %SP<tied0>, 2, pred:14, pred:%noreg; flags: FrameSetup
+	%S0<def> = VMOVSR %R0<kill>, pred:14, pred:%noreg
+	%S0<def> = VSITOS %S0<kill>, pred:14, pred:%noreg
+	%S2<def> = VMOVSR %R1<kill>, pred:14, pred:%noreg
+	%S2<def> = VSITOS %S2<kill>, pred:14, pred:%noreg
+	%R0<def> = t2MOVi16 <ga:@CC>[TF=1], pred:14, pred:%noreg
+	%R0<def,tied1> = t2MOVTi16 %R0<tied0>, <ga:@CC>[TF=2], pred:14, pred:%noreg
+	%R0<def> = tLDRi %R0<kill>, 0, pred:14, pred:%noreg; mem:LD4[@CC](tbaa=!4)
+	%R1<def> = VMOVRS %S0<kill>, pred:14, pred:%noreg
+	%R2<def> = VMOVRS %S2<kill>, pred:14, pred:%noreg
+	%R12<def> = t2LDRi12 %R0, 656, pred:14, pred:%noreg; mem:LD4[%2](tbaa=!8)
+	%R3<def> = t2MOVi 1065353216, pred:14, pred:%noreg, opt:%noreg
+	tSTRspi %R3<kill>, %SP, 0, pred:14, pred:%noreg; mem:ST4[Stack]
+	%R3<def>, %CPSR<def,dead> = tMOVi8 0, pred:14, pred:%noreg
+	tBLXr pred:14, pred:%noreg, %R12<kill>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %LR<imp-def,dead>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, %R3<imp-use>, %SP<imp-def>
+	%SP<def,tied1> = tADDspi %SP<tied0>, 2, pred:14, pred:%noreg
+	tPOP_RET pred:14, pred:%noreg, %R7<def>, %PC<def>
+
+# End machine code for function glVertex2i.
+
+# After Unpack machine instruction bundles:
+# Machine code for function glVertex2i: Post SSA
+Frame Objects:
+  fi#0: size=4, align=4, at location [SP-4]
+  fi#1: size=4, align=4, at location [SP-8]
+Function Live Ins: %R0, %R1
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R7 %LR
+	tPUSH pred:14, pred:%noreg, %R7<kill>, %LR<kill>, %SP<imp-def>, %SP<imp-use>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%R7<def> = tMOVr %SP<kill>, pred:14, pred:%noreg; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%SP<def,tied1> = tSUBspi %SP<tied0>, 2, pred:14, pred:%noreg; flags: FrameSetup
+	%S0<def> = VMOVSR %R0<kill>, pred:14, pred:%noreg
+	%S0<def> = VSITOS %S0<kill>, pred:14, pred:%noreg
+	%S2<def> = VMOVSR %R1<kill>, pred:14, pred:%noreg
+	%S2<def> = VSITOS %S2<kill>, pred:14, pred:%noreg
+	%R0<def> = t2MOVi16 <ga:@CC>[TF=1], pred:14, pred:%noreg
+	%R0<def,tied1> = t2MOVTi16 %R0<tied0>, <ga:@CC>[TF=2], pred:14, pred:%noreg
+	%R0<def> = tLDRi %R0<kill>, 0, pred:14, pred:%noreg; mem:LD4[@CC](tbaa=!4)
+	%R1<def> = VMOVRS %S0<kill>, pred:14, pred:%noreg
+	%R2<def> = VMOVRS %S2<kill>, pred:14, pred:%noreg
+	%R12<def> = t2LDRi12 %R0, 656, pred:14, pred:%noreg; mem:LD4[%2](tbaa=!8)
+	%R3<def> = t2MOVi 1065353216, pred:14, pred:%noreg, opt:%noreg
+	tSTRspi %R3<kill>, %SP, 0, pred:14, pred:%noreg; mem:ST4[Stack]
+	%R3<def>, %CPSR<def,dead> = tMOVi8 0, pred:14, pred:%noreg
+	tBLXr pred:14, pred:%noreg, %R12<kill>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %LR<imp-def,dead>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, %R3<imp-use>, %SP<imp-def>
+	%SP<def,tied1> = tADDspi %SP<tied0>, 2, pred:14, pred:%noreg
+	tPOP_RET pred:14, pred:%noreg, %R7<def>, %PC<def>
+
+# End machine code for function glVertex2i.
+
+# After optimise barriers pass:
+# Machine code for function glVertex2i: Post SSA
+Frame Objects:
+  fi#0: size=4, align=4, at location [SP-4]
+  fi#1: size=4, align=4, at location [SP-8]
+Function Live Ins: %R0, %R1
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R7 %LR
+	tPUSH pred:14, pred:%noreg, %R7<kill>, %LR<kill>, %SP<imp-def>, %SP<imp-use>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%R7<def> = tMOVr %SP<kill>, pred:14, pred:%noreg; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%SP<def,tied1> = tSUBspi %SP<tied0>, 2, pred:14, pred:%noreg; flags: FrameSetup
+	%S0<def> = VMOVSR %R0<kill>, pred:14, pred:%noreg
+	%S0<def> = VSITOS %S0<kill>, pred:14, pred:%noreg
+	%S2<def> = VMOVSR %R1<kill>, pred:14, pred:%noreg
+	%S2<def> = VSITOS %S2<kill>, pred:14, pred:%noreg
+	%R0<def> = t2MOVi16 <ga:@CC>[TF=1], pred:14, pred:%noreg
+	%R0<def,tied1> = t2MOVTi16 %R0<tied0>, <ga:@CC>[TF=2], pred:14, pred:%noreg
+	%R0<def> = tLDRi %R0<kill>, 0, pred:14, pred:%noreg; mem:LD4[@CC](tbaa=!4)
+	%R1<def> = VMOVRS %S0<kill>, pred:14, pred:%noreg
+	%R2<def> = VMOVRS %S2<kill>, pred:14, pred:%noreg
+	%R12<def> = t2LDRi12 %R0, 656, pred:14, pred:%noreg; mem:LD4[%2](tbaa=!8)
+	%R3<def> = t2MOVi 1065353216, pred:14, pred:%noreg, opt:%noreg
+	tSTRspi %R3<kill>, %SP, 0, pred:14, pred:%noreg; mem:ST4[Stack]
+	%R3<def>, %CPSR<def,dead> = tMOVi8 0, pred:14, pred:%noreg
+	tBLXr pred:14, pred:%noreg, %R12<kill>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %LR<imp-def,dead>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, %R3<imp-use>, %SP<imp-def>
+	%SP<def,tied1> = tADDspi %SP<tied0>, 2, pred:14, pred:%noreg
+	tPOP_RET pred:14, pred:%noreg, %R7<def>, %PC<def>
+
+# End machine code for function glVertex2i.
+
+# After ARM constant island placement and branch shortening pass:
+# Machine code for function glVertex2i: Post SSA, not tracking liveness
+Frame Objects:
+  fi#0: size=4, align=4, at location [SP-4]
+  fi#1: size=4, align=4, at location [SP-8]
+Function Live Ins: %R0, %R1
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R7 %LR
+	tPUSH pred:14, pred:%noreg, %R7<kill>, %LR<kill>, %SP<imp-def>, %SP<imp-use>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%R7<def> = tMOVr %SP<kill>, pred:14, pred:%noreg; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%SP<def,tied1> = tSUBspi %SP<tied0>, 2, pred:14, pred:%noreg; flags: FrameSetup
+	%S0<def> = VMOVSR %R0<kill>, pred:14, pred:%noreg
+	%S0<def> = VSITOS %S0<kill>, pred:14, pred:%noreg
+	%S2<def> = VMOVSR %R1<kill>, pred:14, pred:%noreg
+	%S2<def> = VSITOS %S2<kill>, pred:14, pred:%noreg
+	%R0<def> = t2MOVi16 <ga:@CC>[TF=1], pred:14, pred:%noreg
+	%R0<def,tied1> = t2MOVTi16 %R0<tied0>, <ga:@CC>[TF=2], pred:14, pred:%noreg
+	%R0<def> = tLDRi %R0<kill>, 0, pred:14, pred:%noreg; mem:LD4[@CC](tbaa=!4)
+	%R1<def> = VMOVRS %S0<kill>, pred:14, pred:%noreg
+	%R2<def> = VMOVRS %S2<kill>, pred:14, pred:%noreg
+	%R12<def> = t2LDRi12 %R0, 656, pred:14, pred:%noreg; mem:LD4[%2](tbaa=!8)
+	%R3<def> = t2MOVi 1065353216, pred:14, pred:%noreg, opt:%noreg
+	tSTRspi %R3<kill>, %SP, 0, pred:14, pred:%noreg; mem:ST4[Stack]
+	%R3<def>, %CPSR<def,dead> = tMOVi8 0, pred:14, pred:%noreg
+	tBLXr pred:14, pred:%noreg, %R12<kill>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %LR<imp-def,dead>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, %R3<imp-use>, %SP<imp-def>
+	%SP<def,tied1> = tADDspi %SP<tied0>, 2, pred:14, pred:%noreg
+	tPOP_RET pred:14, pred:%noreg, %R7<def>, %PC<def>
+
+# End machine code for function glVertex2i.
+
+# After Contiguously Lay Out Funclets:
+# Machine code for function glVertex2i: Post SSA, not tracking liveness
+Frame Objects:
+  fi#0: size=4, align=4, at location [SP-4]
+  fi#1: size=4, align=4, at location [SP-8]
+Function Live Ins: %R0, %R1
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R7 %LR
+	tPUSH pred:14, pred:%noreg, %R7<kill>, %LR<kill>, %SP<imp-def>, %SP<imp-use>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%R7<def> = tMOVr %SP<kill>, pred:14, pred:%noreg; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%SP<def,tied1> = tSUBspi %SP<tied0>, 2, pred:14, pred:%noreg; flags: FrameSetup
+	%S0<def> = VMOVSR %R0<kill>, pred:14, pred:%noreg
+	%S0<def> = VSITOS %S0<kill>, pred:14, pred:%noreg
+	%S2<def> = VMOVSR %R1<kill>, pred:14, pred:%noreg
+	%S2<def> = VSITOS %S2<kill>, pred:14, pred:%noreg
+	%R0<def> = t2MOVi16 <ga:@CC>[TF=1], pred:14, pred:%noreg
+	%R0<def,tied1> = t2MOVTi16 %R0<tied0>, <ga:@CC>[TF=2], pred:14, pred:%noreg
+	%R0<def> = tLDRi %R0<kill>, 0, pred:14, pred:%noreg; mem:LD4[@CC](tbaa=!4)
+	%R1<def> = VMOVRS %S0<kill>, pred:14, pred:%noreg
+	%R2<def> = VMOVRS %S2<kill>, pred:14, pred:%noreg
+	%R12<def> = t2LDRi12 %R0, 656, pred:14, pred:%noreg; mem:LD4[%2](tbaa=!8)
+	%R3<def> = t2MOVi 1065353216, pred:14, pred:%noreg, opt:%noreg
+	tSTRspi %R3<kill>, %SP, 0, pred:14, pred:%noreg; mem:ST4[Stack]
+	%R3<def>, %CPSR<def,dead> = tMOVi8 0, pred:14, pred:%noreg
+	tBLXr pred:14, pred:%noreg, %R12<kill>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %LR<imp-def,dead>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, %R3<imp-use>, %SP<imp-def>
+	%SP<def,tied1> = tADDspi %SP<tied0>, 2, pred:14, pred:%noreg
+	tPOP_RET pred:14, pred:%noreg, %R7<def>, %PC<def>
+
+# End machine code for function glVertex2i.
+
+# After StackMap Liveness Analysis:
+# Machine code for function glVertex2i: Post SSA, not tracking liveness
+Frame Objects:
+  fi#0: size=4, align=4, at location [SP-4]
+  fi#1: size=4, align=4, at location [SP-8]
+Function Live Ins: %R0, %R1
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R7 %LR
+	tPUSH pred:14, pred:%noreg, %R7<kill>, %LR<kill>, %SP<imp-def>, %SP<imp-use>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%R7<def> = tMOVr %SP<kill>, pred:14, pred:%noreg; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%SP<def,tied1> = tSUBspi %SP<tied0>, 2, pred:14, pred:%noreg; flags: FrameSetup
+	%S0<def> = VMOVSR %R0<kill>, pred:14, pred:%noreg
+	%S0<def> = VSITOS %S0<kill>, pred:14, pred:%noreg
+	%S2<def> = VMOVSR %R1<kill>, pred:14, pred:%noreg
+	%S2<def> = VSITOS %S2<kill>, pred:14, pred:%noreg
+	%R0<def> = t2MOVi16 <ga:@CC>[TF=1], pred:14, pred:%noreg
+	%R0<def,tied1> = t2MOVTi16 %R0<tied0>, <ga:@CC>[TF=2], pred:14, pred:%noreg
+	%R0<def> = tLDRi %R0<kill>, 0, pred:14, pred:%noreg; mem:LD4[@CC](tbaa=!4)
+	%R1<def> = VMOVRS %S0<kill>, pred:14, pred:%noreg
+	%R2<def> = VMOVRS %S2<kill>, pred:14, pred:%noreg
+	%R12<def> = t2LDRi12 %R0, 656, pred:14, pred:%noreg; mem:LD4[%2](tbaa=!8)
+	%R3<def> = t2MOVi 1065353216, pred:14, pred:%noreg, opt:%noreg
+	tSTRspi %R3<kill>, %SP, 0, pred:14, pred:%noreg; mem:ST4[Stack]
+	%R3<def>, %CPSR<def,dead> = tMOVi8 0, pred:14, pred:%noreg
+	tBLXr pred:14, pred:%noreg, %R12<kill>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %LR<imp-def,dead>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, %R3<imp-use>, %SP<imp-def>
+	%SP<def,tied1> = tADDspi %SP<tied0>, 2, pred:14, pred:%noreg
+	tPOP_RET pred:14, pred:%noreg, %R7<def>, %PC<def>
+
+# End machine code for function glVertex2i.
+
+# After Live DEBUG_VALUE analysis:
+# Machine code for function glVertex2i: Post SSA, not tracking liveness
+Frame Objects:
+  fi#0: size=4, align=4, at location [SP-4]
+  fi#1: size=4, align=4, at location [SP-8]
+Function Live Ins: %R0, %R1
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R7 %LR
+	tPUSH pred:14, pred:%noreg, %R7<kill>, %LR<kill>, %SP<imp-def>, %SP<imp-use>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%R7<def> = tMOVr %SP<kill>, pred:14, pred:%noreg; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%SP<def,tied1> = tSUBspi %SP<tied0>, 2, pred:14, pred:%noreg; flags: FrameSetup
+	%S0<def> = VMOVSR %R0<kill>, pred:14, pred:%noreg
+	%S0<def> = VSITOS %S0<kill>, pred:14, pred:%noreg
+	%S2<def> = VMOVSR %R1<kill>, pred:14, pred:%noreg
+	%S2<def> = VSITOS %S2<kill>, pred:14, pred:%noreg
+	%R0<def> = t2MOVi16 <ga:@CC>[TF=1], pred:14, pred:%noreg
+	%R0<def,tied1> = t2MOVTi16 %R0<tied0>, <ga:@CC>[TF=2], pred:14, pred:%noreg
+	%R0<def> = tLDRi %R0<kill>, 0, pred:14, pred:%noreg; mem:LD4[@CC](tbaa=!4)
+	%R1<def> = VMOVRS %S0<kill>, pred:14, pred:%noreg
+	%R2<def> = VMOVRS %S2<kill>, pred:14, pred:%noreg
+	%R12<def> = t2LDRi12 %R0, 656, pred:14, pred:%noreg; mem:LD4[%2](tbaa=!8)
+	%R3<def> = t2MOVi 1065353216, pred:14, pred:%noreg, opt:%noreg
+	tSTRspi %R3<kill>, %SP, 0, pred:14, pred:%noreg; mem:ST4[Stack]
+	%R3<def>, %CPSR<def,dead> = tMOVi8 0, pred:14, pred:%noreg
+	tBLXr pred:14, pred:%noreg, %R12<kill>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %LR<imp-def,dead>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, %R3<imp-use>, %SP<imp-def>
+	%SP<def,tied1> = tADDspi %SP<tied0>, 2, pred:14, pred:%noreg
+	tPOP_RET pred:14, pred:%noreg, %R7<def>, %PC<def>
+
+# End machine code for function glVertex2i.
+

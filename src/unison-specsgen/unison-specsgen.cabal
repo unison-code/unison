@@ -1,0 +1,57 @@
+Name:           unison-specsgen
+Version:        0
+Cabal-Version:  >= 1.8
+License:        BSD3
+License-file:   LICENSE
+Author:         Roberto Castaneda Lozano <rcas@sics.se>
+Maintainer:     Roberto Castaneda Lozano <rcas@sics.se>
+Synopsis:       An extension to the unison package with automatic generation of
+                target files from a specification
+Category:       Language, Compiler, Code generation, Program Transformation
+Build-Type:     Simple
+Description:    This package extends the unison package a tool that generates
+                Unison target files with information from a YAML specification
+                (typically generated from LLVM's TableGen), see
+                http://unison-code.github.io
+
+Library
+
+  Hs-source-dirs:  src
+  Exposed-Modules: SpecsGen.OperandInfoGen
+                   SpecsGen.ReadWriteInfoGen
+                   SpecsGen.ItineraryGen
+                   SpecsGen.SizeGen
+                   SpecsGen.AlignedPairsGen
+                   SpecsGen.ReadOpGen
+                   SpecsGen.InstructionTypeGen
+                   SpecsGen.ShowInstanceGen
+                   SpecsGen.InstructionDeclGen
+                   SpecsGen.AllInstructionsGen
+                   SpecsGen.ItineraryDeclGen
+                   SpecsGen.ParentGen
+                   SpecsGen.HsGen
+                   SpecsGen.SimpleYaml
+                   SpecsGen.Driver
+
+  Build-Depends: base >= 4.0,
+                 split >= 0.1,
+                 containers >= 0.3,
+                 haskell-src >= 1.0,
+                 text >= 1.1,
+                 vector >= 0.10,
+                 unordered-containers >= 0.2,
+                 yaml >= 0.8,
+                 bytestring >= 0.9,
+                 cmdargs >= 0.10,
+                 filepath >= 1.3,
+                 regex-posix >= 0.95
+
+  Ghc-options: -fwarn-dodgy-exports -fwarn-dodgy-imports -fwarn-unused-matches
+               -fwarn-unused-imports -fwarn-unused-binds -O2
+
+Executable specsgen
+
+  Hs-source-dirs: exec/specsgen
+  Main-is:        Main.hs
+  Build-depends:  unison-specsgen, base
+  Ghc-options:    -rtsopts

@@ -1,0 +1,345 @@
+---
+instruction-set:
+
+  - templates:
+
+    - instruction-attrs: &alu32
+        type:            linear
+        itinerary:       ALU32_2op_tc_1_SLOT0123
+
+    - instruction-attrs: &xtype
+        type:            linear
+        itinerary:       S_2op_tc_1_SLOT23
+
+    - instruction-attrs: &ld
+        type:            linear
+        itinerary:       LD_tc_ld_SLOT01
+
+    - instruction-attrs: &st
+        type:            linear
+        itinerary:       ST_tc_st_SLOT01
+
+    - instruction-attrs: &stnv
+        type:            linear
+        itinerary:       ST_tc_st_SLOT0
+
+    - instruction-attrs: &s4st
+        type:            linear
+        itinerary:       V4LDST_tc_st_SLOT01
+
+    - instruction-attrs: &nvst
+        type:            linear
+        itinerary:       NCJ_tc_3or4stall_SLOT0
+
+    - instruction-attrs: &nvcmp
+        type:            linear
+        itinerary:       NCJ_tc_3or4stall_SLOT0_NV
+
+    - instruction-attrs: &modelnvcmpj
+        type:            branch
+        itinerary:       J_tc_2early_SLOT23
+
+    - instruction-attrs: &i2r
+        operands:
+          - src:         bound
+          - dst:         [register, def, IntRegs]
+        uses:            [src]
+        defines:         [dst]
+
+    - instruction-attrs: &ii2r
+        operands:
+          - src1:        bound
+          - src2:        bound
+          - dst:         [register, def, IntRegs]
+        uses:            [src1, src2]
+        defines:         [dst]
+
+    - instruction-attrs: &ii2d
+        operands:
+          - src1:        bound
+          - src2:        bound
+          - dst:         [register, def, DoubleRegs]
+        uses:            [src1, src2]
+        defines:         [dst]
+
+    - instruction-attrs: &dr2d
+        operands:
+          - src1:        [register, use, DoubleRegs]
+          - src2:        [register, use, IntRegs]
+          - dst:         [register, def, DoubleRegs]
+        uses:            [src1, src2]
+        defines:         [dst]
+
+    - instruction-attrs: &ri2f
+        operands:
+          - src1:        [register, use, IntRegs, -1]
+          - src2:        bound
+          - dst:         [register, def, f32]
+        uses:            [src1, src2]
+        defines:         [dst]
+
+    - instruction-attrs: &rr2f
+        operands:
+          - src1:        [register, use, IntRegs, -1]
+          - src2:        [register, use, IntRegs, -1]
+          - dst:         [register, def, f32]
+        uses:            [src1, src2]
+        defines:         [dst]
+
+    - instruction-attrs: &dd2f
+        operands:
+          - src1:        [register, use, DoubleRegs, -1]
+          - src2:        [register, use, DoubleRegs, -1]
+          - dst:         [register, def, f32]
+        uses:            [src1, src2]
+        defines:         [dst]
+
+    - instruction-attrs: &fl
+        operands:
+          - src:         [register, use, f32, -1]
+          - l:           label
+        uses:            [src, l]
+
+    - instruction-attrs: &M2d
+        operands:
+          - src:         [register, use, m64]
+          - dst:         [register, def, DoubleRegs]
+        uses:            [src]
+        defines:         [dst]
+
+    - instruction-attrs: &i2d
+        operands:
+          - src:         bound
+          - dst:         [register, def, DoubleRegs]
+        uses:            [src]
+        defines:         [dst]
+
+    - instruction-attrs: &m2r
+        operands:
+          - src:         [register, use, m32]
+          - dst:         [register, def, IntRegs]
+        uses:            [src]
+        defines:         [dst]
+
+    - instruction-attrs: &r2r
+        operands:
+          - src:         [register, use, IntRegs]
+          - dst:         [register, def, IntRegs]
+        uses:            [src]
+        defines:         [dst]
+
+    - instruction-attrs: &d2M
+        operands:
+          - src:         [register, use, DoubleRegs]
+          - dst:         [register, def, m64]
+        uses:            [src]
+        defines:         [dst]
+
+    - instruction-attrs: &id
+        operands:
+          - src1:        bound
+          - src2:        [register, use, DoubleRegs]
+        uses:            [src1, src2]
+        defines:         []
+
+    - instruction-attrs: &ir
+        operands:
+          - src1:        bound
+          - src2:        [register, use, IntRegs]
+        uses:            [src1, src2]
+        defines:         []
+
+    - instruction-attrs: &iir
+        operands:
+          - src1:        bound
+          - src2:        bound
+          - src3:        [register, use, IntRegs]
+        uses:            [src1, src2, src3]
+        defines:         []
+
+    - instruction-attrs: &iid
+        operands:
+          - src1:        bound
+          - src2:        bound
+          - src3:        [register, use, DoubleRegs]
+        uses:            [src1, src2, src3]
+        defines:         []
+
+    - instruction-attrs: &ir_nv
+        operands:
+          - src1:        bound
+          - src2:        [register, use, IntRegs, -1]
+        uses:            [src1, src2]
+        defines:         []
+
+    - instruction-attrs: &ii
+        operands:
+          - src1:        bound
+          - src2:        bound
+        uses:            [src1, src2]
+        defines:         []
+
+    - instruction-attrs: &r2m
+        operands:
+          - src:         [register, use, IntRegs]
+          - dst:         [register, def, m32]
+        uses:            [src]
+        defines:         [dst]
+
+    - instruction-attrs: &r2m_nv
+        operands:
+          - src:         [register, use, IntRegs, -1]
+          - dst:         [register, def, m32]
+        uses:            [src]
+        defines:         [dst]
+
+    - instruction-attrs: &r
+        operands:
+          - src:         [register, use, IntRegs]
+        uses:            [src]
+        defines:         []
+
+    - instruction-attrs: &mem-read
+        affected-by:     mem
+
+    - instruction-attrs: &mem-write
+        affects:         mem
+
+  - group: MANUAL
+    instructions:
+
+      - id:     C2_cmpeqi_nv
+        << :    [*nvcmp, *ri2f]
+
+      - id:     C2_cmpeq_nv
+        << :    [*nvcmp, *rr2f]
+
+      - id:     C2_cmpgti_nv
+        << :    [*nvcmp, *ri2f]
+
+      - id:     C2_cmpgt_nv
+        << :    [*nvcmp, *rr2f]
+
+      - id:     C2_cmpgtui_nv
+        << :    [*nvcmp, *ri2f]
+
+      - id:     C2_cmpgtu_nv
+        << :    [*nvcmp, *rr2f]
+
+      - id:     C4_cmplteu_nv
+        << :    [*nvcmp, *rr2f]
+
+      - id:     C2_cmpeqp_nv
+        << :    [*nvcmp, *dd2f]
+
+      - id:     J2_jumpf_nv
+        << :    [*modelnvcmpj, *fl]
+
+      - id:     J2_jumpt_nv
+        << :    [*modelnvcmpj, *fl]
+
+      - id:     L2_loadrb_io_fi
+        << :    [*ld, *ii2r, *mem-read]
+
+      - id:     L2_loadrh_io_fi
+        << :    [*ld, *ii2r, *mem-read]
+
+      - id:     L2_loadrd_io_fi
+        << :    [*ld, *ii2d, *mem-read]
+
+      - id:     L2_loadri_io_fi
+        << :    [*ld, *ii2r, *mem-read]
+
+      - id:     L2_loadrub_io_fi
+        << :    [*ld, *ii2r, *mem-read]
+
+      - id:     L2_loadruh_io_fi
+        << :    [*ld, *ii2r, *mem-read]
+
+      - id:     LDD
+        << :    [*ld, *M2d]
+
+      - id:     LDW
+        << :    [*ld, *m2r]
+
+      - id:     S2_storerd_io_fi
+        << :    [*st, *iid, *mem-write]
+
+      - id:     S2_storeri_io_fi
+        << :    [*st, *iir, *mem-write]
+
+      - id:     S2_storerb_io_fi
+        << :    [*st, *iir, *mem-write]
+
+      - id:     S2_storerh_io_fi
+        << :    [*st, *iir, *mem-write]
+
+      - id:     S4_storeiri_io_fi
+        << :    [*s4st, *iir, *mem-write]
+
+      - id:     S2_storerinew_io_fi
+        << :    [*stnv, *iir, *mem-write]
+
+      - id:     S2_storerf_io_fi
+        parent: S2_storerf_io
+        << :    [*iir]
+
+      - id:     STD
+        << :    [*st, *d2M]
+
+      - id:     STW
+        << :    [*st, *r2m]
+
+      - id:     STW_nv
+        << :    [*nvst, *r2m_nv]
+
+      - id:     TFR_FI_fi
+        << :    [*alu32, *ii2r]
+
+      - id:                 MVW
+        type:               copy
+        operands:
+         - dst:             [register, def, IntRegs]
+         - src:             [register, use, IntRegs]
+        uses:               [src]
+        defines:            [dst]
+        size:               4
+        affects:
+        affected-by:
+        itinerary:          ALU32_2op_tc_1_SLOT0123
+
+      - id:                 MVD
+        type:               copy
+        operands:
+         - dst:             [register, def, DoubleRegs]
+         - src:             [register, use, DoubleRegs]
+        uses:               [src]
+        defines:            [dst]
+        size:               4
+        affects:
+        affected-by:
+        itinerary:          ALU32_2op_tc_1_SLOT0123
+
+      - id:                 MVPR
+        type:               copy
+        operands:
+         - Rd:              [register, def, IntRegs]
+         - Ps:              [register, use, PredRegs]
+        uses:               [Ps]
+        defines:            [Rd]
+        size:               4
+        affects:
+        affected-by:
+        itinerary:          S_2op_tc_1_SLOT23
+
+      - id:                 MVRP
+        type:               copy
+        operands:
+         - Pd:              [register, def, PredRegs]
+         - Rs:              [register, use, IntRegs]
+        uses:               [Rs]
+        defines:            [Pd]
+        size:               4
+        affects:
+        affected-by:
+        itinerary:          S_2op_tc_2early_SLOT23

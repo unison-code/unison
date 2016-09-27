@@ -1,0 +1,1154 @@
+# After Instruction Selection:
+# Machine code for function AllocFancyAli: SSA
+Function Live Ins: %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %T9 %V0
+	%vreg0<def> = ADDu %V0, %T9; GPR32:%vreg0
+	ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg1<def> = LW %vreg0, <ga:@.str>[TF=1]; mem:LD4[GOT] GPR32:%vreg1,%vreg0
+	%vreg2<def> = LW %vreg0, <ga:@sre_malloc>[TF=3]; mem:LD4[GlobalValueCallEntry] GPR32:%vreg2,%vreg0
+	%vreg3<def> = ADDiu %ZERO, 117; GPR32:%vreg3
+	%vreg4<def> = ADDiu %ZERO, 40; GPR32:%vreg4
+	%A0<def> = COPY %vreg1; GPR32:%vreg1
+	%A1<def> = COPY %vreg3; GPR32:%vreg3
+	%A2<def> = COPY %vreg4; GPR32:%vreg4
+	%GP<def> = COPY %vreg0; GPR32:%vreg0
+	JALRPseudo %vreg2<kill>, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %A0<imp-use>, %A1<imp-use>, %A2<imp-use>, %GP<imp-use>, %SP<imp-def>, %V0<imp-def>, ...; GPR32:%vreg2
+	ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg5<def> = COPY %V0; GPR32:%vreg5
+	SW %ZERO, %vreg5, 16; mem:ST4[%1+16] GPR32:%vreg5
+	SW %ZERO, %vreg5, 12; mem:ST4[%1+12] GPR32:%vreg5
+	SW %ZERO, %vreg5, 8; mem:ST4[%1+8] GPR32:%vreg5
+	SW %ZERO, %vreg5, 4; mem:ST4[%1+4] GPR32:%vreg5
+	SW %ZERO, %vreg5, 0; mem:ST4[%1] GPR32:%vreg5
+	SW %ZERO, %vreg5, 36; mem:ST4[%3+12] GPR32:%vreg5
+	SW %ZERO, %vreg5, 32; mem:ST4[%3+8] GPR32:%vreg5
+	SW %ZERO, %vreg5, 28; mem:ST4[%3+4] GPR32:%vreg5
+	SW %ZERO, %vreg5, 24; mem:ST4[%3] GPR32:%vreg5
+	%V0<def> = COPY %vreg5; GPR32:%vreg5
+	RetRA %V0<imp-use>
+
+# End machine code for function AllocFancyAli.
+
+# After Expand ISel Pseudo-instructions:
+# Machine code for function AllocFancyAli: SSA
+Function Live Ins: %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %T9 %V0
+	%vreg0<def> = ADDu %V0, %T9; GPR32:%vreg0
+	ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg1<def> = LW %vreg0, <ga:@.str>[TF=1]; mem:LD4[GOT] GPR32:%vreg1,%vreg0
+	%vreg2<def> = LW %vreg0, <ga:@sre_malloc>[TF=3]; mem:LD4[GlobalValueCallEntry] GPR32:%vreg2,%vreg0
+	%vreg3<def> = ADDiu %ZERO, 117; GPR32:%vreg3
+	%vreg4<def> = ADDiu %ZERO, 40; GPR32:%vreg4
+	%A0<def> = COPY %vreg1; GPR32:%vreg1
+	%A1<def> = COPY %vreg3; GPR32:%vreg3
+	%A2<def> = COPY %vreg4; GPR32:%vreg4
+	%GP<def> = COPY %vreg0; GPR32:%vreg0
+	JALRPseudo %vreg2<kill>, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %A0<imp-use>, %A1<imp-use>, %A2<imp-use>, %GP<imp-use>, %SP<imp-def>, %V0<imp-def>, ...; GPR32:%vreg2
+	ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg5<def> = COPY %V0; GPR32:%vreg5
+	SW %ZERO, %vreg5, 16; mem:ST4[%1+16] GPR32:%vreg5
+	SW %ZERO, %vreg5, 12; mem:ST4[%1+12] GPR32:%vreg5
+	SW %ZERO, %vreg5, 8; mem:ST4[%1+8] GPR32:%vreg5
+	SW %ZERO, %vreg5, 4; mem:ST4[%1+4] GPR32:%vreg5
+	SW %ZERO, %vreg5, 0; mem:ST4[%1] GPR32:%vreg5
+	SW %ZERO, %vreg5, 36; mem:ST4[%3+12] GPR32:%vreg5
+	SW %ZERO, %vreg5, 32; mem:ST4[%3+8] GPR32:%vreg5
+	SW %ZERO, %vreg5, 28; mem:ST4[%3+4] GPR32:%vreg5
+	SW %ZERO, %vreg5, 24; mem:ST4[%3] GPR32:%vreg5
+	%V0<def> = COPY %vreg5; GPR32:%vreg5
+	RetRA %V0<imp-use>
+
+# End machine code for function AllocFancyAli.
+
+# After Mips OptimizePICCall:
+# Machine code for function AllocFancyAli: SSA
+Function Live Ins: %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %T9 %V0
+	%vreg0<def> = ADDu %V0, %T9; GPR32:%vreg0
+	ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg1<def> = LW %vreg0, <ga:@.str>[TF=1]; mem:LD4[GOT] GPR32:%vreg1,%vreg0
+	%vreg2<def> = LW %vreg0, <ga:@sre_malloc>[TF=3]; mem:LD4[GlobalValueCallEntry] GPR32:%vreg2,%vreg0
+	%vreg3<def> = ADDiu %ZERO, 117; GPR32:%vreg3
+	%vreg4<def> = ADDiu %ZERO, 40; GPR32:%vreg4
+	%A0<def> = COPY %vreg1; GPR32:%vreg1
+	%A1<def> = COPY %vreg3; GPR32:%vreg3
+	%A2<def> = COPY %vreg4; GPR32:%vreg4
+	%GP<def> = COPY %vreg0; GPR32:%vreg0
+	%T9<def> = COPY %vreg2; GPR32:%vreg2
+	JALRPseudo %T9<kill>, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %A0<imp-use>, %A1<imp-use>, %A2<imp-use>, %GP<imp-use>, %SP<imp-def>, %V0<imp-def>, ...
+	ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg5<def> = COPY %V0; GPR32:%vreg5
+	SW %ZERO, %vreg5, 16; mem:ST4[%1+16] GPR32:%vreg5
+	SW %ZERO, %vreg5, 12; mem:ST4[%1+12] GPR32:%vreg5
+	SW %ZERO, %vreg5, 8; mem:ST4[%1+8] GPR32:%vreg5
+	SW %ZERO, %vreg5, 4; mem:ST4[%1+4] GPR32:%vreg5
+	SW %ZERO, %vreg5, 0; mem:ST4[%1] GPR32:%vreg5
+	SW %ZERO, %vreg5, 36; mem:ST4[%3+12] GPR32:%vreg5
+	SW %ZERO, %vreg5, 32; mem:ST4[%3+8] GPR32:%vreg5
+	SW %ZERO, %vreg5, 28; mem:ST4[%3+4] GPR32:%vreg5
+	SW %ZERO, %vreg5, 24; mem:ST4[%3] GPR32:%vreg5
+	%V0<def> = COPY %vreg5; GPR32:%vreg5
+	RetRA %V0<imp-use>
+
+# End machine code for function AllocFancyAli.
+
+# After Tail Duplication:
+# Machine code for function AllocFancyAli: SSA
+Function Live Ins: %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %T9 %V0
+	%vreg0<def> = ADDu %V0, %T9; GPR32:%vreg0
+	ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg1<def> = LW %vreg0, <ga:@.str>[TF=1]; mem:LD4[GOT] GPR32:%vreg1,%vreg0
+	%vreg2<def> = LW %vreg0, <ga:@sre_malloc>[TF=3]; mem:LD4[GlobalValueCallEntry] GPR32:%vreg2,%vreg0
+	%vreg3<def> = ADDiu %ZERO, 117; GPR32:%vreg3
+	%vreg4<def> = ADDiu %ZERO, 40; GPR32:%vreg4
+	%A0<def> = COPY %vreg1; GPR32:%vreg1
+	%A1<def> = COPY %vreg3; GPR32:%vreg3
+	%A2<def> = COPY %vreg4; GPR32:%vreg4
+	%GP<def> = COPY %vreg0; GPR32:%vreg0
+	%T9<def> = COPY %vreg2; GPR32:%vreg2
+	JALRPseudo %T9<kill>, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %A0<imp-use>, %A1<imp-use>, %A2<imp-use>, %GP<imp-use>, %SP<imp-def>, %V0<imp-def>, ...
+	ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg5<def> = COPY %V0; GPR32:%vreg5
+	SW %ZERO, %vreg5, 16; mem:ST4[%1+16] GPR32:%vreg5
+	SW %ZERO, %vreg5, 12; mem:ST4[%1+12] GPR32:%vreg5
+	SW %ZERO, %vreg5, 8; mem:ST4[%1+8] GPR32:%vreg5
+	SW %ZERO, %vreg5, 4; mem:ST4[%1+4] GPR32:%vreg5
+	SW %ZERO, %vreg5, 0; mem:ST4[%1] GPR32:%vreg5
+	SW %ZERO, %vreg5, 36; mem:ST4[%3+12] GPR32:%vreg5
+	SW %ZERO, %vreg5, 32; mem:ST4[%3+8] GPR32:%vreg5
+	SW %ZERO, %vreg5, 28; mem:ST4[%3+4] GPR32:%vreg5
+	SW %ZERO, %vreg5, 24; mem:ST4[%3] GPR32:%vreg5
+	%V0<def> = COPY %vreg5; GPR32:%vreg5
+	RetRA %V0<imp-use>
+
+# End machine code for function AllocFancyAli.
+
+# After Optimize machine instruction PHIs:
+# Machine code for function AllocFancyAli: SSA
+Function Live Ins: %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %T9 %V0
+	%vreg0<def> = ADDu %V0, %T9; GPR32:%vreg0
+	ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg1<def> = LW %vreg0, <ga:@.str>[TF=1]; mem:LD4[GOT] GPR32:%vreg1,%vreg0
+	%vreg2<def> = LW %vreg0, <ga:@sre_malloc>[TF=3]; mem:LD4[GlobalValueCallEntry] GPR32:%vreg2,%vreg0
+	%vreg3<def> = ADDiu %ZERO, 117; GPR32:%vreg3
+	%vreg4<def> = ADDiu %ZERO, 40; GPR32:%vreg4
+	%A0<def> = COPY %vreg1; GPR32:%vreg1
+	%A1<def> = COPY %vreg3; GPR32:%vreg3
+	%A2<def> = COPY %vreg4; GPR32:%vreg4
+	%GP<def> = COPY %vreg0; GPR32:%vreg0
+	%T9<def> = COPY %vreg2; GPR32:%vreg2
+	JALRPseudo %T9<kill>, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %A0<imp-use>, %A1<imp-use>, %A2<imp-use>, %GP<imp-use>, %SP<imp-def>, %V0<imp-def>, ...
+	ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg5<def> = COPY %V0; GPR32:%vreg5
+	SW %ZERO, %vreg5, 16; mem:ST4[%1+16] GPR32:%vreg5
+	SW %ZERO, %vreg5, 12; mem:ST4[%1+12] GPR32:%vreg5
+	SW %ZERO, %vreg5, 8; mem:ST4[%1+8] GPR32:%vreg5
+	SW %ZERO, %vreg5, 4; mem:ST4[%1+4] GPR32:%vreg5
+	SW %ZERO, %vreg5, 0; mem:ST4[%1] GPR32:%vreg5
+	SW %ZERO, %vreg5, 36; mem:ST4[%3+12] GPR32:%vreg5
+	SW %ZERO, %vreg5, 32; mem:ST4[%3+8] GPR32:%vreg5
+	SW %ZERO, %vreg5, 28; mem:ST4[%3+4] GPR32:%vreg5
+	SW %ZERO, %vreg5, 24; mem:ST4[%3] GPR32:%vreg5
+	%V0<def> = COPY %vreg5; GPR32:%vreg5
+	RetRA %V0<imp-use>
+
+# End machine code for function AllocFancyAli.
+
+# After Merge disjoint stack slots:
+# Machine code for function AllocFancyAli: SSA
+Function Live Ins: %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %T9 %V0
+	%vreg0<def> = ADDu %V0, %T9; GPR32:%vreg0
+	ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg1<def> = LW %vreg0, <ga:@.str>[TF=1]; mem:LD4[GOT] GPR32:%vreg1,%vreg0
+	%vreg2<def> = LW %vreg0, <ga:@sre_malloc>[TF=3]; mem:LD4[GlobalValueCallEntry] GPR32:%vreg2,%vreg0
+	%vreg3<def> = ADDiu %ZERO, 117; GPR32:%vreg3
+	%vreg4<def> = ADDiu %ZERO, 40; GPR32:%vreg4
+	%A0<def> = COPY %vreg1; GPR32:%vreg1
+	%A1<def> = COPY %vreg3; GPR32:%vreg3
+	%A2<def> = COPY %vreg4; GPR32:%vreg4
+	%GP<def> = COPY %vreg0; GPR32:%vreg0
+	%T9<def> = COPY %vreg2; GPR32:%vreg2
+	JALRPseudo %T9<kill>, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %A0<imp-use>, %A1<imp-use>, %A2<imp-use>, %GP<imp-use>, %SP<imp-def>, %V0<imp-def>, ...
+	ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg5<def> = COPY %V0; GPR32:%vreg5
+	SW %ZERO, %vreg5, 16; mem:ST4[%1+16] GPR32:%vreg5
+	SW %ZERO, %vreg5, 12; mem:ST4[%1+12] GPR32:%vreg5
+	SW %ZERO, %vreg5, 8; mem:ST4[%1+8] GPR32:%vreg5
+	SW %ZERO, %vreg5, 4; mem:ST4[%1+4] GPR32:%vreg5
+	SW %ZERO, %vreg5, 0; mem:ST4[%1] GPR32:%vreg5
+	SW %ZERO, %vreg5, 36; mem:ST4[%3+12] GPR32:%vreg5
+	SW %ZERO, %vreg5, 32; mem:ST4[%3+8] GPR32:%vreg5
+	SW %ZERO, %vreg5, 28; mem:ST4[%3+4] GPR32:%vreg5
+	SW %ZERO, %vreg5, 24; mem:ST4[%3] GPR32:%vreg5
+	%V0<def> = COPY %vreg5; GPR32:%vreg5
+	RetRA %V0<imp-use>
+
+# End machine code for function AllocFancyAli.
+
+# After Local Stack Slot Allocation:
+# Machine code for function AllocFancyAli: SSA
+Function Live Ins: %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %T9 %V0
+	%vreg0<def> = ADDu %V0, %T9; GPR32:%vreg0
+	ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg1<def> = LW %vreg0, <ga:@.str>[TF=1]; mem:LD4[GOT] GPR32:%vreg1,%vreg0
+	%vreg2<def> = LW %vreg0, <ga:@sre_malloc>[TF=3]; mem:LD4[GlobalValueCallEntry] GPR32:%vreg2,%vreg0
+	%vreg3<def> = ADDiu %ZERO, 117; GPR32:%vreg3
+	%vreg4<def> = ADDiu %ZERO, 40; GPR32:%vreg4
+	%A0<def> = COPY %vreg1; GPR32:%vreg1
+	%A1<def> = COPY %vreg3; GPR32:%vreg3
+	%A2<def> = COPY %vreg4; GPR32:%vreg4
+	%GP<def> = COPY %vreg0; GPR32:%vreg0
+	%T9<def> = COPY %vreg2; GPR32:%vreg2
+	JALRPseudo %T9<kill>, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %A0<imp-use>, %A1<imp-use>, %A2<imp-use>, %GP<imp-use>, %SP<imp-def>, %V0<imp-def>, ...
+	ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg5<def> = COPY %V0; GPR32:%vreg5
+	SW %ZERO, %vreg5, 16; mem:ST4[%1+16] GPR32:%vreg5
+	SW %ZERO, %vreg5, 12; mem:ST4[%1+12] GPR32:%vreg5
+	SW %ZERO, %vreg5, 8; mem:ST4[%1+8] GPR32:%vreg5
+	SW %ZERO, %vreg5, 4; mem:ST4[%1+4] GPR32:%vreg5
+	SW %ZERO, %vreg5, 0; mem:ST4[%1] GPR32:%vreg5
+	SW %ZERO, %vreg5, 36; mem:ST4[%3+12] GPR32:%vreg5
+	SW %ZERO, %vreg5, 32; mem:ST4[%3+8] GPR32:%vreg5
+	SW %ZERO, %vreg5, 28; mem:ST4[%3+4] GPR32:%vreg5
+	SW %ZERO, %vreg5, 24; mem:ST4[%3] GPR32:%vreg5
+	%V0<def> = COPY %vreg5; GPR32:%vreg5
+	RetRA %V0<imp-use>
+
+# End machine code for function AllocFancyAli.
+
+# After Remove dead machine instructions:
+# Machine code for function AllocFancyAli: SSA
+Function Live Ins: %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %T9 %V0
+	%vreg0<def> = ADDu %V0, %T9; GPR32:%vreg0
+	ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg1<def> = LW %vreg0, <ga:@.str>[TF=1]; mem:LD4[GOT] GPR32:%vreg1,%vreg0
+	%vreg2<def> = LW %vreg0, <ga:@sre_malloc>[TF=3]; mem:LD4[GlobalValueCallEntry] GPR32:%vreg2,%vreg0
+	%vreg3<def> = ADDiu %ZERO, 117; GPR32:%vreg3
+	%vreg4<def> = ADDiu %ZERO, 40; GPR32:%vreg4
+	%A0<def> = COPY %vreg1; GPR32:%vreg1
+	%A1<def> = COPY %vreg3; GPR32:%vreg3
+	%A2<def> = COPY %vreg4; GPR32:%vreg4
+	%GP<def> = COPY %vreg0; GPR32:%vreg0
+	%T9<def> = COPY %vreg2; GPR32:%vreg2
+	JALRPseudo %T9<kill>, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %A0<imp-use>, %A1<imp-use>, %A2<imp-use>, %GP<imp-use>, %SP<imp-def>, %V0<imp-def>, ...
+	ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg5<def> = COPY %V0; GPR32:%vreg5
+	SW %ZERO, %vreg5, 16; mem:ST4[%1+16] GPR32:%vreg5
+	SW %ZERO, %vreg5, 12; mem:ST4[%1+12] GPR32:%vreg5
+	SW %ZERO, %vreg5, 8; mem:ST4[%1+8] GPR32:%vreg5
+	SW %ZERO, %vreg5, 4; mem:ST4[%1+4] GPR32:%vreg5
+	SW %ZERO, %vreg5, 0; mem:ST4[%1] GPR32:%vreg5
+	SW %ZERO, %vreg5, 36; mem:ST4[%3+12] GPR32:%vreg5
+	SW %ZERO, %vreg5, 32; mem:ST4[%3+8] GPR32:%vreg5
+	SW %ZERO, %vreg5, 28; mem:ST4[%3+4] GPR32:%vreg5
+	SW %ZERO, %vreg5, 24; mem:ST4[%3] GPR32:%vreg5
+	%V0<def> = COPY %vreg5; GPR32:%vreg5
+	RetRA %V0<imp-use>
+
+# End machine code for function AllocFancyAli.
+
+# After Machine Loop Invariant Code Motion:
+# Machine code for function AllocFancyAli: SSA
+Function Live Ins: %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %T9 %V0
+	%vreg0<def> = ADDu %V0, %T9; GPR32:%vreg0
+	ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg1<def> = LW %vreg0, <ga:@.str>[TF=1]; mem:LD4[GOT] GPR32:%vreg1,%vreg0
+	%vreg2<def> = LW %vreg0, <ga:@sre_malloc>[TF=3]; mem:LD4[GlobalValueCallEntry] GPR32:%vreg2,%vreg0
+	%vreg3<def> = ADDiu %ZERO, 117; GPR32:%vreg3
+	%vreg4<def> = ADDiu %ZERO, 40; GPR32:%vreg4
+	%A0<def> = COPY %vreg1; GPR32:%vreg1
+	%A1<def> = COPY %vreg3; GPR32:%vreg3
+	%A2<def> = COPY %vreg4; GPR32:%vreg4
+	%GP<def> = COPY %vreg0; GPR32:%vreg0
+	%T9<def> = COPY %vreg2; GPR32:%vreg2
+	JALRPseudo %T9<kill>, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %A0<imp-use>, %A1<imp-use>, %A2<imp-use>, %GP<imp-use>, %SP<imp-def>, %V0<imp-def>, ...
+	ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg5<def> = COPY %V0; GPR32:%vreg5
+	SW %ZERO, %vreg5, 16; mem:ST4[%1+16] GPR32:%vreg5
+	SW %ZERO, %vreg5, 12; mem:ST4[%1+12] GPR32:%vreg5
+	SW %ZERO, %vreg5, 8; mem:ST4[%1+8] GPR32:%vreg5
+	SW %ZERO, %vreg5, 4; mem:ST4[%1+4] GPR32:%vreg5
+	SW %ZERO, %vreg5, 0; mem:ST4[%1] GPR32:%vreg5
+	SW %ZERO, %vreg5, 36; mem:ST4[%3+12] GPR32:%vreg5
+	SW %ZERO, %vreg5, 32; mem:ST4[%3+8] GPR32:%vreg5
+	SW %ZERO, %vreg5, 28; mem:ST4[%3+4] GPR32:%vreg5
+	SW %ZERO, %vreg5, 24; mem:ST4[%3] GPR32:%vreg5
+	%V0<def> = COPY %vreg5; GPR32:%vreg5
+	RetRA %V0<imp-use>
+
+# End machine code for function AllocFancyAli.
+
+# After Machine Common Subexpression Elimination:
+# Machine code for function AllocFancyAli: SSA
+Function Live Ins: %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %T9 %V0
+	%vreg0<def> = ADDu %V0, %T9; GPR32:%vreg0
+	ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg1<def> = LW %vreg0, <ga:@.str>[TF=1]; mem:LD4[GOT] GPR32:%vreg1,%vreg0
+	%vreg2<def> = LW %vreg0, <ga:@sre_malloc>[TF=3]; mem:LD4[GlobalValueCallEntry] GPR32:%vreg2,%vreg0
+	%vreg3<def> = ADDiu %ZERO, 117; GPR32:%vreg3
+	%vreg4<def> = ADDiu %ZERO, 40; GPR32:%vreg4
+	%A0<def> = COPY %vreg1; GPR32:%vreg1
+	%A1<def> = COPY %vreg3; GPR32:%vreg3
+	%A2<def> = COPY %vreg4; GPR32:%vreg4
+	%GP<def> = COPY %vreg0; GPR32:%vreg0
+	%T9<def> = COPY %vreg2; GPR32:%vreg2
+	JALRPseudo %T9<kill>, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %A0<imp-use>, %A1<imp-use>, %A2<imp-use>, %GP<imp-use>, %SP<imp-def>, %V0<imp-def>, ...
+	ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg5<def> = COPY %V0; GPR32:%vreg5
+	SW %ZERO, %vreg5, 16; mem:ST4[%1+16] GPR32:%vreg5
+	SW %ZERO, %vreg5, 12; mem:ST4[%1+12] GPR32:%vreg5
+	SW %ZERO, %vreg5, 8; mem:ST4[%1+8] GPR32:%vreg5
+	SW %ZERO, %vreg5, 4; mem:ST4[%1+4] GPR32:%vreg5
+	SW %ZERO, %vreg5, 0; mem:ST4[%1] GPR32:%vreg5
+	SW %ZERO, %vreg5, 36; mem:ST4[%3+12] GPR32:%vreg5
+	SW %ZERO, %vreg5, 32; mem:ST4[%3+8] GPR32:%vreg5
+	SW %ZERO, %vreg5, 28; mem:ST4[%3+4] GPR32:%vreg5
+	SW %ZERO, %vreg5, 24; mem:ST4[%3] GPR32:%vreg5
+	%V0<def> = COPY %vreg5; GPR32:%vreg5
+	RetRA %V0<imp-use>
+
+# End machine code for function AllocFancyAli.
+
+# After Machine code sinking:
+# Machine code for function AllocFancyAli: SSA
+Function Live Ins: %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %T9 %V0
+	%vreg0<def> = ADDu %V0, %T9; GPR32:%vreg0
+	ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg1<def> = LW %vreg0, <ga:@.str>[TF=1]; mem:LD4[GOT] GPR32:%vreg1,%vreg0
+	%vreg2<def> = LW %vreg0, <ga:@sre_malloc>[TF=3]; mem:LD4[GlobalValueCallEntry] GPR32:%vreg2,%vreg0
+	%vreg3<def> = ADDiu %ZERO, 117; GPR32:%vreg3
+	%vreg4<def> = ADDiu %ZERO, 40; GPR32:%vreg4
+	%A0<def> = COPY %vreg1; GPR32:%vreg1
+	%A1<def> = COPY %vreg3; GPR32:%vreg3
+	%A2<def> = COPY %vreg4; GPR32:%vreg4
+	%GP<def> = COPY %vreg0; GPR32:%vreg0
+	%T9<def> = COPY %vreg2; GPR32:%vreg2
+	JALRPseudo %T9<kill>, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %A0<imp-use>, %A1<imp-use>, %A2<imp-use>, %GP<imp-use>, %SP<imp-def>, %V0<imp-def>, ...
+	ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg5<def> = COPY %V0; GPR32:%vreg5
+	SW %ZERO, %vreg5, 16; mem:ST4[%1+16] GPR32:%vreg5
+	SW %ZERO, %vreg5, 12; mem:ST4[%1+12] GPR32:%vreg5
+	SW %ZERO, %vreg5, 8; mem:ST4[%1+8] GPR32:%vreg5
+	SW %ZERO, %vreg5, 4; mem:ST4[%1+4] GPR32:%vreg5
+	SW %ZERO, %vreg5, 0; mem:ST4[%1] GPR32:%vreg5
+	SW %ZERO, %vreg5, 36; mem:ST4[%3+12] GPR32:%vreg5
+	SW %ZERO, %vreg5, 32; mem:ST4[%3+8] GPR32:%vreg5
+	SW %ZERO, %vreg5, 28; mem:ST4[%3+4] GPR32:%vreg5
+	SW %ZERO, %vreg5, 24; mem:ST4[%3] GPR32:%vreg5
+	%V0<def> = COPY %vreg5; GPR32:%vreg5
+	RetRA %V0<imp-use>
+
+# End machine code for function AllocFancyAli.
+
+# After Peephole Optimizations:
+# Machine code for function AllocFancyAli: SSA
+Function Live Ins: %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %T9 %V0
+	%vreg0<def> = ADDu %V0, %T9; GPR32:%vreg0
+	ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg1<def> = LW %vreg0, <ga:@.str>[TF=1]; mem:LD4[GOT] GPR32:%vreg1,%vreg0
+	%vreg2<def> = LW %vreg0, <ga:@sre_malloc>[TF=3]; mem:LD4[GlobalValueCallEntry] GPR32:%vreg2,%vreg0
+	%vreg3<def> = ADDiu %ZERO, 117; GPR32:%vreg3
+	%vreg4<def> = ADDiu %ZERO, 40; GPR32:%vreg4
+	%A0<def> = COPY %vreg1; GPR32:%vreg1
+	%A1<def> = COPY %vreg3; GPR32:%vreg3
+	%A2<def> = COPY %vreg4; GPR32:%vreg4
+	%GP<def> = COPY %vreg0; GPR32:%vreg0
+	%T9<def> = COPY %vreg2; GPR32:%vreg2
+	JALRPseudo %T9<kill>, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %A0<imp-use>, %A1<imp-use>, %A2<imp-use>, %GP<imp-use>, %SP<imp-def>, %V0<imp-def>, ...
+	ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg5<def> = COPY %V0; GPR32:%vreg5
+	SW %ZERO, %vreg5, 16; mem:ST4[%1+16] GPR32:%vreg5
+	SW %ZERO, %vreg5, 12; mem:ST4[%1+12] GPR32:%vreg5
+	SW %ZERO, %vreg5, 8; mem:ST4[%1+8] GPR32:%vreg5
+	SW %ZERO, %vreg5, 4; mem:ST4[%1+4] GPR32:%vreg5
+	SW %ZERO, %vreg5, 0; mem:ST4[%1] GPR32:%vreg5
+	SW %ZERO, %vreg5, 36; mem:ST4[%3+12] GPR32:%vreg5
+	SW %ZERO, %vreg5, 32; mem:ST4[%3+8] GPR32:%vreg5
+	SW %ZERO, %vreg5, 28; mem:ST4[%3+4] GPR32:%vreg5
+	SW %ZERO, %vreg5, 24; mem:ST4[%3] GPR32:%vreg5
+	%V0<def> = COPY %vreg5; GPR32:%vreg5
+	RetRA %V0<imp-use>
+
+# End machine code for function AllocFancyAli.
+
+# After Remove dead machine instructions:
+# Machine code for function AllocFancyAli: SSA
+Function Live Ins: %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %T9 %V0
+	%vreg0<def> = ADDu %V0, %T9; GPR32:%vreg0
+	ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg1<def> = LW %vreg0, <ga:@.str>[TF=1]; mem:LD4[GOT] GPR32:%vreg1,%vreg0
+	%vreg2<def> = LW %vreg0, <ga:@sre_malloc>[TF=3]; mem:LD4[GlobalValueCallEntry] GPR32:%vreg2,%vreg0
+	%vreg3<def> = ADDiu %ZERO, 117; GPR32:%vreg3
+	%vreg4<def> = ADDiu %ZERO, 40; GPR32:%vreg4
+	%A0<def> = COPY %vreg1; GPR32:%vreg1
+	%A1<def> = COPY %vreg3; GPR32:%vreg3
+	%A2<def> = COPY %vreg4; GPR32:%vreg4
+	%GP<def> = COPY %vreg0; GPR32:%vreg0
+	%T9<def> = COPY %vreg2; GPR32:%vreg2
+	JALRPseudo %T9<kill>, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %A0<imp-use>, %A1<imp-use>, %A2<imp-use>, %GP<imp-use>, %SP<imp-def>, %V0<imp-def>, ...
+	ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg5<def> = COPY %V0; GPR32:%vreg5
+	SW %ZERO, %vreg5, 16; mem:ST4[%1+16] GPR32:%vreg5
+	SW %ZERO, %vreg5, 12; mem:ST4[%1+12] GPR32:%vreg5
+	SW %ZERO, %vreg5, 8; mem:ST4[%1+8] GPR32:%vreg5
+	SW %ZERO, %vreg5, 4; mem:ST4[%1+4] GPR32:%vreg5
+	SW %ZERO, %vreg5, 0; mem:ST4[%1] GPR32:%vreg5
+	SW %ZERO, %vreg5, 36; mem:ST4[%3+12] GPR32:%vreg5
+	SW %ZERO, %vreg5, 32; mem:ST4[%3+8] GPR32:%vreg5
+	SW %ZERO, %vreg5, 28; mem:ST4[%3+4] GPR32:%vreg5
+	SW %ZERO, %vreg5, 24; mem:ST4[%3] GPR32:%vreg5
+	%V0<def> = COPY %vreg5; GPR32:%vreg5
+	RetRA %V0<imp-use>
+
+# End machine code for function AllocFancyAli.
+
+# After Process Implicit Definitions:
+# Machine code for function AllocFancyAli: SSA
+Function Live Ins: %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %T9 %V0
+	%vreg0<def> = ADDu %V0, %T9; GPR32:%vreg0
+	ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg1<def> = LW %vreg0, <ga:@.str>[TF=1]; mem:LD4[GOT] GPR32:%vreg1,%vreg0
+	%vreg2<def> = LW %vreg0, <ga:@sre_malloc>[TF=3]; mem:LD4[GlobalValueCallEntry] GPR32:%vreg2,%vreg0
+	%vreg3<def> = ADDiu %ZERO, 117; GPR32:%vreg3
+	%vreg4<def> = ADDiu %ZERO, 40; GPR32:%vreg4
+	%A0<def> = COPY %vreg1; GPR32:%vreg1
+	%A1<def> = COPY %vreg3; GPR32:%vreg3
+	%A2<def> = COPY %vreg4; GPR32:%vreg4
+	%GP<def> = COPY %vreg0; GPR32:%vreg0
+	%T9<def> = COPY %vreg2; GPR32:%vreg2
+	JALRPseudo %T9<kill>, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %A0<imp-use>, %A1<imp-use>, %A2<imp-use>, %GP<imp-use>, %SP<imp-def>, %V0<imp-def>, ...
+	ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg5<def> = COPY %V0; GPR32:%vreg5
+	SW %ZERO, %vreg5, 16; mem:ST4[%1+16] GPR32:%vreg5
+	SW %ZERO, %vreg5, 12; mem:ST4[%1+12] GPR32:%vreg5
+	SW %ZERO, %vreg5, 8; mem:ST4[%1+8] GPR32:%vreg5
+	SW %ZERO, %vreg5, 4; mem:ST4[%1+4] GPR32:%vreg5
+	SW %ZERO, %vreg5, 0; mem:ST4[%1] GPR32:%vreg5
+	SW %ZERO, %vreg5, 36; mem:ST4[%3+12] GPR32:%vreg5
+	SW %ZERO, %vreg5, 32; mem:ST4[%3+8] GPR32:%vreg5
+	SW %ZERO, %vreg5, 28; mem:ST4[%3+4] GPR32:%vreg5
+	SW %ZERO, %vreg5, 24; mem:ST4[%3] GPR32:%vreg5
+	%V0<def> = COPY %vreg5; GPR32:%vreg5
+	RetRA %V0<imp-use>
+
+# End machine code for function AllocFancyAli.
+
+# After Live Variable Analysis:
+# Machine code for function AllocFancyAli: SSA
+Function Live Ins: %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %T9 %V0
+	%vreg0<def> = ADDu %V0<kill>, %T9<kill>; GPR32:%vreg0
+	ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg1<def> = LW %vreg0, <ga:@.str>[TF=1]; mem:LD4[GOT] GPR32:%vreg1,%vreg0
+	%vreg2<def> = LW %vreg0, <ga:@sre_malloc>[TF=3]; mem:LD4[GlobalValueCallEntry] GPR32:%vreg2,%vreg0
+	%vreg3<def> = ADDiu %ZERO, 117; GPR32:%vreg3
+	%vreg4<def> = ADDiu %ZERO, 40; GPR32:%vreg4
+	%A0<def> = COPY %vreg1<kill>; GPR32:%vreg1
+	%A1<def> = COPY %vreg3<kill>; GPR32:%vreg3
+	%A2<def> = COPY %vreg4<kill>; GPR32:%vreg4
+	%GP<def> = COPY %vreg0<kill>; GPR32:%vreg0
+	%T9<def> = COPY %vreg2<kill>; GPR32:%vreg2
+	JALRPseudo %T9<kill>, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %A0<imp-use,kill>, %A1<imp-use,kill>, %A2<imp-use,kill>, %GP<imp-use,kill>, %SP<imp-def>, %V0<imp-def>, ...
+	ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg5<def> = COPY %V0<kill>; GPR32:%vreg5
+	SW %ZERO, %vreg5, 16; mem:ST4[%1+16] GPR32:%vreg5
+	SW %ZERO, %vreg5, 12; mem:ST4[%1+12] GPR32:%vreg5
+	SW %ZERO, %vreg5, 8; mem:ST4[%1+8] GPR32:%vreg5
+	SW %ZERO, %vreg5, 4; mem:ST4[%1+4] GPR32:%vreg5
+	SW %ZERO, %vreg5, 0; mem:ST4[%1] GPR32:%vreg5
+	SW %ZERO, %vreg5, 36; mem:ST4[%3+12] GPR32:%vreg5
+	SW %ZERO, %vreg5, 32; mem:ST4[%3+8] GPR32:%vreg5
+	SW %ZERO, %vreg5, 28; mem:ST4[%3+4] GPR32:%vreg5
+	SW %ZERO, %vreg5, 24; mem:ST4[%3] GPR32:%vreg5
+	%V0<def> = COPY %vreg5<kill>; GPR32:%vreg5
+	RetRA %V0<imp-use,kill>
+
+# End machine code for function AllocFancyAli.
+
+# After Machine Natural Loop Construction:
+# Machine code for function AllocFancyAli: SSA
+Function Live Ins: %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %T9 %V0
+	%vreg0<def> = ADDu %V0<kill>, %T9<kill>; GPR32:%vreg0
+	ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg1<def> = LW %vreg0, <ga:@.str>[TF=1]; mem:LD4[GOT] GPR32:%vreg1,%vreg0
+	%vreg2<def> = LW %vreg0, <ga:@sre_malloc>[TF=3]; mem:LD4[GlobalValueCallEntry] GPR32:%vreg2,%vreg0
+	%vreg3<def> = ADDiu %ZERO, 117; GPR32:%vreg3
+	%vreg4<def> = ADDiu %ZERO, 40; GPR32:%vreg4
+	%A0<def> = COPY %vreg1<kill>; GPR32:%vreg1
+	%A1<def> = COPY %vreg3<kill>; GPR32:%vreg3
+	%A2<def> = COPY %vreg4<kill>; GPR32:%vreg4
+	%GP<def> = COPY %vreg0<kill>; GPR32:%vreg0
+	%T9<def> = COPY %vreg2<kill>; GPR32:%vreg2
+	JALRPseudo %T9<kill>, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %A0<imp-use,kill>, %A1<imp-use,kill>, %A2<imp-use,kill>, %GP<imp-use,kill>, %SP<imp-def>, %V0<imp-def>, ...
+	ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg5<def> = COPY %V0<kill>; GPR32:%vreg5
+	SW %ZERO, %vreg5, 16; mem:ST4[%1+16] GPR32:%vreg5
+	SW %ZERO, %vreg5, 12; mem:ST4[%1+12] GPR32:%vreg5
+	SW %ZERO, %vreg5, 8; mem:ST4[%1+8] GPR32:%vreg5
+	SW %ZERO, %vreg5, 4; mem:ST4[%1+4] GPR32:%vreg5
+	SW %ZERO, %vreg5, 0; mem:ST4[%1] GPR32:%vreg5
+	SW %ZERO, %vreg5, 36; mem:ST4[%3+12] GPR32:%vreg5
+	SW %ZERO, %vreg5, 32; mem:ST4[%3+8] GPR32:%vreg5
+	SW %ZERO, %vreg5, 28; mem:ST4[%3+4] GPR32:%vreg5
+	SW %ZERO, %vreg5, 24; mem:ST4[%3] GPR32:%vreg5
+	%V0<def> = COPY %vreg5<kill>; GPR32:%vreg5
+	RetRA %V0<imp-use,kill>
+
+# End machine code for function AllocFancyAli.
+
+# After Eliminate PHI nodes for register allocation:
+# Machine code for function AllocFancyAli: Post SSA
+Function Live Ins: %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %T9 %V0
+	%vreg0<def> = ADDu %V0<kill>, %T9<kill>; GPR32:%vreg0
+	ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg1<def> = LW %vreg0, <ga:@.str>[TF=1]; mem:LD4[GOT] GPR32:%vreg1,%vreg0
+	%vreg2<def> = LW %vreg0, <ga:@sre_malloc>[TF=3]; mem:LD4[GlobalValueCallEntry] GPR32:%vreg2,%vreg0
+	%vreg3<def> = ADDiu %ZERO, 117; GPR32:%vreg3
+	%vreg4<def> = ADDiu %ZERO, 40; GPR32:%vreg4
+	%A0<def> = COPY %vreg1<kill>; GPR32:%vreg1
+	%A1<def> = COPY %vreg3<kill>; GPR32:%vreg3
+	%A2<def> = COPY %vreg4<kill>; GPR32:%vreg4
+	%GP<def> = COPY %vreg0<kill>; GPR32:%vreg0
+	%T9<def> = COPY %vreg2<kill>; GPR32:%vreg2
+	JALRPseudo %T9<kill>, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %A0<imp-use,kill>, %A1<imp-use,kill>, %A2<imp-use,kill>, %GP<imp-use,kill>, %SP<imp-def>, %V0<imp-def>, ...
+	ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg5<def> = COPY %V0<kill>; GPR32:%vreg5
+	SW %ZERO, %vreg5, 16; mem:ST4[%1+16] GPR32:%vreg5
+	SW %ZERO, %vreg5, 12; mem:ST4[%1+12] GPR32:%vreg5
+	SW %ZERO, %vreg5, 8; mem:ST4[%1+8] GPR32:%vreg5
+	SW %ZERO, %vreg5, 4; mem:ST4[%1+4] GPR32:%vreg5
+	SW %ZERO, %vreg5, 0; mem:ST4[%1] GPR32:%vreg5
+	SW %ZERO, %vreg5, 36; mem:ST4[%3+12] GPR32:%vreg5
+	SW %ZERO, %vreg5, 32; mem:ST4[%3+8] GPR32:%vreg5
+	SW %ZERO, %vreg5, 28; mem:ST4[%3+4] GPR32:%vreg5
+	SW %ZERO, %vreg5, 24; mem:ST4[%3] GPR32:%vreg5
+	%V0<def> = COPY %vreg5<kill>; GPR32:%vreg5
+	RetRA %V0<imp-use,kill>
+
+# End machine code for function AllocFancyAli.
+
+# After Two-Address instruction pass:
+# Machine code for function AllocFancyAli: Post SSA
+Function Live Ins: %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %T9 %V0
+	%vreg0<def> = ADDu %V0<kill>, %T9<kill>; GPR32:%vreg0
+	ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg1<def> = LW %vreg0, <ga:@.str>[TF=1]; mem:LD4[GOT] GPR32:%vreg1,%vreg0
+	%vreg2<def> = LW %vreg0, <ga:@sre_malloc>[TF=3]; mem:LD4[GlobalValueCallEntry] GPR32:%vreg2,%vreg0
+	%vreg3<def> = ADDiu %ZERO, 117; GPR32:%vreg3
+	%vreg4<def> = ADDiu %ZERO, 40; GPR32:%vreg4
+	%A0<def> = COPY %vreg1<kill>; GPR32:%vreg1
+	%A1<def> = COPY %vreg3<kill>; GPR32:%vreg3
+	%A2<def> = COPY %vreg4<kill>; GPR32:%vreg4
+	%GP<def> = COPY %vreg0<kill>; GPR32:%vreg0
+	%T9<def> = COPY %vreg2<kill>; GPR32:%vreg2
+	JALRPseudo %T9<kill>, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %A0<imp-use,kill>, %A1<imp-use,kill>, %A2<imp-use,kill>, %GP<imp-use,kill>, %SP<imp-def>, %V0<imp-def>, ...
+	ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg5<def> = COPY %V0<kill>; GPR32:%vreg5
+	SW %ZERO, %vreg5, 16; mem:ST4[%1+16] GPR32:%vreg5
+	SW %ZERO, %vreg5, 12; mem:ST4[%1+12] GPR32:%vreg5
+	SW %ZERO, %vreg5, 8; mem:ST4[%1+8] GPR32:%vreg5
+	SW %ZERO, %vreg5, 4; mem:ST4[%1+4] GPR32:%vreg5
+	SW %ZERO, %vreg5, 0; mem:ST4[%1] GPR32:%vreg5
+	SW %ZERO, %vreg5, 36; mem:ST4[%3+12] GPR32:%vreg5
+	SW %ZERO, %vreg5, 32; mem:ST4[%3+8] GPR32:%vreg5
+	SW %ZERO, %vreg5, 28; mem:ST4[%3+4] GPR32:%vreg5
+	SW %ZERO, %vreg5, 24; mem:ST4[%3] GPR32:%vreg5
+	%V0<def> = COPY %vreg5<kill>; GPR32:%vreg5
+	RetRA %V0<imp-use,kill>
+
+# End machine code for function AllocFancyAli.
+
+# After Simple Register Coalescing:
+# Machine code for function AllocFancyAli: Post SSA
+Function Live Ins: %T9, %V0
+
+0B	BB#0: derived from LLVM BB %0
+	    Live Ins: %T9 %V0
+16B		%vreg0<def> = ADDu %V0, %T9; GPR32:%vreg0
+32B		ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+48B		%vreg1<def> = LW %vreg0, <ga:@.str>[TF=1]; mem:LD4[GOT] GPR32:%vreg1,%vreg0
+64B		%vreg2<def> = LW %vreg0, <ga:@sre_malloc>[TF=3]; mem:LD4[GlobalValueCallEntry] GPR32:%vreg2,%vreg0
+112B		%A0<def> = COPY %vreg1; GPR32:%vreg1
+128B		%A1<def> = ADDiu %ZERO, 117
+144B		%A2<def> = ADDiu %ZERO, 40
+160B		%GP<def> = COPY %vreg0; GPR32:%vreg0
+176B		%T9<def> = COPY %vreg2; GPR32:%vreg2
+192B		JALRPseudo %T9, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %A0<imp-use,kill>, %A1<imp-use,kill>, %A2<imp-use,kill>, %GP<imp-use,kill>, %SP<imp-def>, %V0<imp-def>, ...
+208B		ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+224B		%vreg5<def> = COPY %V0; GPR32:%vreg5
+240B		SW %ZERO, %vreg5, 16; mem:ST4[%1+16] GPR32:%vreg5
+256B		SW %ZERO, %vreg5, 12; mem:ST4[%1+12] GPR32:%vreg5
+272B		SW %ZERO, %vreg5, 8; mem:ST4[%1+8] GPR32:%vreg5
+288B		SW %ZERO, %vreg5, 4; mem:ST4[%1+4] GPR32:%vreg5
+304B		SW %ZERO, %vreg5, 0; mem:ST4[%1] GPR32:%vreg5
+320B		SW %ZERO, %vreg5, 36; mem:ST4[%3+12] GPR32:%vreg5
+336B		SW %ZERO, %vreg5, 32; mem:ST4[%3+8] GPR32:%vreg5
+352B		SW %ZERO, %vreg5, 28; mem:ST4[%3+4] GPR32:%vreg5
+368B		SW %ZERO, %vreg5, 24; mem:ST4[%3] GPR32:%vreg5
+384B		%V0<def> = COPY %vreg5; GPR32:%vreg5
+400B		RetRA %V0<imp-use>
+
+# End machine code for function AllocFancyAli.
+
+# After Machine Instruction Scheduler:
+# Machine code for function AllocFancyAli: Post SSA
+Function Live Ins: %T9, %V0
+
+0B	BB#0: derived from LLVM BB %0
+	    Live Ins: %T9 %V0
+16B		%vreg0<def> = ADDu %V0, %T9; GPR32:%vreg0
+32B		ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+48B		%vreg1<def> = LW %vreg0, <ga:@.str>[TF=1]; mem:LD4[GOT] GPR32:%vreg1,%vreg0
+64B		%vreg2<def> = LW %vreg0, <ga:@sre_malloc>[TF=3]; mem:LD4[GlobalValueCallEntry] GPR32:%vreg2,%vreg0
+112B		%A0<def> = COPY %vreg1; GPR32:%vreg1
+128B		%A1<def> = ADDiu %ZERO, 117
+144B		%A2<def> = ADDiu %ZERO, 40
+160B		%GP<def> = COPY %vreg0; GPR32:%vreg0
+176B		%T9<def> = COPY %vreg2; GPR32:%vreg2
+192B		JALRPseudo %T9, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %A0<imp-use,kill>, %A1<imp-use,kill>, %A2<imp-use,kill>, %GP<imp-use,kill>, %SP<imp-def>, %V0<imp-def>, ...
+208B		ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+224B		%vreg5<def> = COPY %V0; GPR32:%vreg5
+240B		SW %ZERO, %vreg5, 16; mem:ST4[%1+16] GPR32:%vreg5
+256B		SW %ZERO, %vreg5, 12; mem:ST4[%1+12] GPR32:%vreg5
+272B		SW %ZERO, %vreg5, 8; mem:ST4[%1+8] GPR32:%vreg5
+288B		SW %ZERO, %vreg5, 4; mem:ST4[%1+4] GPR32:%vreg5
+304B		SW %ZERO, %vreg5, 0; mem:ST4[%1] GPR32:%vreg5
+320B		SW %ZERO, %vreg5, 36; mem:ST4[%3+12] GPR32:%vreg5
+336B		SW %ZERO, %vreg5, 32; mem:ST4[%3+8] GPR32:%vreg5
+352B		SW %ZERO, %vreg5, 28; mem:ST4[%3+4] GPR32:%vreg5
+368B		SW %ZERO, %vreg5, 24; mem:ST4[%3] GPR32:%vreg5
+384B		%V0<def> = COPY %vreg5; GPR32:%vreg5
+400B		RetRA %V0<imp-use>
+
+# End machine code for function AllocFancyAli.
+
+# After Greedy Register Allocator:
+# Machine code for function AllocFancyAli: Post SSA
+Function Live Ins: %T9, %V0
+
+0B	BB#0: derived from LLVM BB %0
+	    Live Ins: %T9 %V0
+16B		%vreg0<def> = ADDu %V0, %T9; GPR32:%vreg0
+32B		ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+48B		%vreg1<def> = LW %vreg0, <ga:@.str>[TF=1]; mem:LD4[GOT] GPR32:%vreg1,%vreg0
+64B		%vreg2<def> = LW %vreg0, <ga:@sre_malloc>[TF=3]; mem:LD4[GlobalValueCallEntry] GPR32:%vreg2,%vreg0
+112B		%A0<def> = COPY %vreg1; GPR32:%vreg1
+128B		%A1<def> = ADDiu %ZERO, 117
+144B		%A2<def> = ADDiu %ZERO, 40
+160B		%GP<def> = COPY %vreg0; GPR32:%vreg0
+176B		%T9<def> = COPY %vreg2; GPR32:%vreg2
+192B		JALRPseudo %T9, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %A0<imp-use>, %A1<imp-use,kill>, %A2<imp-use,kill>, %GP<imp-use>, %SP<imp-def>, %V0<imp-def>, ...
+208B		ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+224B		%vreg5<def> = COPY %V0; GPR32:%vreg5
+240B		SW %ZERO, %vreg5, 16; mem:ST4[%1+16] GPR32:%vreg5
+256B		SW %ZERO, %vreg5, 12; mem:ST4[%1+12] GPR32:%vreg5
+272B		SW %ZERO, %vreg5, 8; mem:ST4[%1+8] GPR32:%vreg5
+288B		SW %ZERO, %vreg5, 4; mem:ST4[%1+4] GPR32:%vreg5
+304B		SW %ZERO, %vreg5, 0; mem:ST4[%1] GPR32:%vreg5
+320B		SW %ZERO, %vreg5, 36; mem:ST4[%3+12] GPR32:%vreg5
+336B		SW %ZERO, %vreg5, 32; mem:ST4[%3+8] GPR32:%vreg5
+352B		SW %ZERO, %vreg5, 28; mem:ST4[%3+4] GPR32:%vreg5
+368B		SW %ZERO, %vreg5, 24; mem:ST4[%3] GPR32:%vreg5
+384B		%V0<def> = COPY %vreg5; GPR32:%vreg5
+400B		RetRA %V0<imp-use>
+
+# End machine code for function AllocFancyAli.
+
+# After Virtual Register Rewriter:
+# Machine code for function AllocFancyAli: Post SSA
+Function Live Ins: %T9, %V0
+
+0B	BB#0: derived from LLVM BB %0
+	    Live Ins: %T9 %V0
+16B		%GP<def> = ADDu %V0, %T9
+32B		ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+48B		%A0<def> = LW %GP, <ga:@.str>[TF=1]; mem:LD4[GOT]
+64B		%T9<def> = LW %GP, <ga:@sre_malloc>[TF=3]; mem:LD4[GlobalValueCallEntry]
+128B		%A1<def> = ADDiu %ZERO, 117
+144B		%A2<def> = ADDiu %ZERO, 40
+192B		JALRPseudo %T9, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %A0<imp-use>, %A1<imp-use,kill>, %A2<imp-use,kill>, %GP<imp-use>, %SP<imp-def>, %V0<imp-def>, ...
+208B		ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+240B		SW %ZERO, %V0, 16; mem:ST4[%1+16]
+256B		SW %ZERO, %V0, 12; mem:ST4[%1+12]
+272B		SW %ZERO, %V0, 8; mem:ST4[%1+8]
+288B		SW %ZERO, %V0, 4; mem:ST4[%1+4]
+304B		SW %ZERO, %V0, 0; mem:ST4[%1]
+320B		SW %ZERO, %V0, 36; mem:ST4[%3+12]
+336B		SW %ZERO, %V0, 32; mem:ST4[%3+8]
+352B		SW %ZERO, %V0, 28; mem:ST4[%3+4]
+368B		SW %ZERO, %V0, 24; mem:ST4[%3]
+400B		RetRA %V0<imp-use>
+
+# End machine code for function AllocFancyAli.
+
+# After Stack Slot Coloring:
+# Machine code for function AllocFancyAli: Post SSA
+Function Live Ins: %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %T9 %V0
+	%GP<def> = ADDu %V0, %T9
+	ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+	%A0<def> = LW %GP, <ga:@.str>[TF=1]; mem:LD4[GOT]
+	%T9<def> = LW %GP, <ga:@sre_malloc>[TF=3]; mem:LD4[GlobalValueCallEntry]
+	%A1<def> = ADDiu %ZERO, 117
+	%A2<def> = ADDiu %ZERO, 40
+	JALRPseudo %T9, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %A0<imp-use>, %A1<imp-use,kill>, %A2<imp-use,kill>, %GP<imp-use>, %SP<imp-def>, %V0<imp-def>, ...
+	ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+	SW %ZERO, %V0, 16; mem:ST4[%1+16]
+	SW %ZERO, %V0, 12; mem:ST4[%1+12]
+	SW %ZERO, %V0, 8; mem:ST4[%1+8]
+	SW %ZERO, %V0, 4; mem:ST4[%1+4]
+	SW %ZERO, %V0, 0; mem:ST4[%1]
+	SW %ZERO, %V0, 36; mem:ST4[%3+12]
+	SW %ZERO, %V0, 32; mem:ST4[%3+8]
+	SW %ZERO, %V0, 28; mem:ST4[%3+4]
+	SW %ZERO, %V0, 24; mem:ST4[%3]
+	RetRA %V0<imp-use>
+
+# End machine code for function AllocFancyAli.
+
+# After Machine Loop Invariant Code Motion:
+# Machine code for function AllocFancyAli: Post SSA
+Function Live Ins: %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %T9 %V0
+	%GP<def> = ADDu %V0, %T9
+	ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+	%A0<def> = LW %GP, <ga:@.str>[TF=1]; mem:LD4[GOT]
+	%T9<def> = LW %GP, <ga:@sre_malloc>[TF=3]; mem:LD4[GlobalValueCallEntry]
+	%A1<def> = ADDiu %ZERO, 117
+	%A2<def> = ADDiu %ZERO, 40
+	JALRPseudo %T9, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %A0<imp-use>, %A1<imp-use,kill>, %A2<imp-use,kill>, %GP<imp-use>, %SP<imp-def>, %V0<imp-def>, ...
+	ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+	SW %ZERO, %V0, 16; mem:ST4[%1+16]
+	SW %ZERO, %V0, 12; mem:ST4[%1+12]
+	SW %ZERO, %V0, 8; mem:ST4[%1+8]
+	SW %ZERO, %V0, 4; mem:ST4[%1+4]
+	SW %ZERO, %V0, 0; mem:ST4[%1]
+	SW %ZERO, %V0, 36; mem:ST4[%3+12]
+	SW %ZERO, %V0, 32; mem:ST4[%3+8]
+	SW %ZERO, %V0, 28; mem:ST4[%3+4]
+	SW %ZERO, %V0, 24; mem:ST4[%3]
+	RetRA %V0<imp-use>
+
+# End machine code for function AllocFancyAli.
+
+# After Shrink Wrapping analysis:
+# Machine code for function AllocFancyAli: Post SSA
+Function Live Ins: %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %T9 %V0
+	%GP<def> = ADDu %V0, %T9
+	ADJCALLSTACKDOWN 16, %SP<imp-def,dead>, %SP<imp-use>
+	%A0<def> = LW %GP, <ga:@.str>[TF=1]; mem:LD4[GOT]
+	%T9<def> = LW %GP, <ga:@sre_malloc>[TF=3]; mem:LD4[GlobalValueCallEntry]
+	%A1<def> = ADDiu %ZERO, 117
+	%A2<def> = ADDiu %ZERO, 40
+	JALRPseudo %T9, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %A0<imp-use>, %A1<imp-use,kill>, %A2<imp-use,kill>, %GP<imp-use>, %SP<imp-def>, %V0<imp-def>, ...
+	ADJCALLSTACKUP 16, 0, %SP<imp-def,dead>, %SP<imp-use>
+	SW %ZERO, %V0, 16; mem:ST4[%1+16]
+	SW %ZERO, %V0, 12; mem:ST4[%1+12]
+	SW %ZERO, %V0, 8; mem:ST4[%1+8]
+	SW %ZERO, %V0, 4; mem:ST4[%1+4]
+	SW %ZERO, %V0, 0; mem:ST4[%1]
+	SW %ZERO, %V0, 36; mem:ST4[%3+12]
+	SW %ZERO, %V0, 32; mem:ST4[%3+8]
+	SW %ZERO, %V0, 28; mem:ST4[%3+4]
+	SW %ZERO, %V0, 24; mem:ST4[%3]
+	RetRA %V0<imp-use>
+
+# End machine code for function AllocFancyAli.
+
+# After Prologue/Epilogue Insertion & Frame Finalization:
+# Machine code for function AllocFancyAli: Post SSA
+Frame Objects:
+  fi#0: size=4, align=4, at location [SP-4]
+Function Live Ins: %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %T9 %V0 %RA
+	%SP<def> = ADDiu %SP, -24
+	CFI_INSTRUCTION <call frame instruction>
+	SW %RA<kill>, %SP, 20; mem:ST4[FixedStack0]
+	CFI_INSTRUCTION <call frame instruction>
+	%GP<def> = ADDu %V0, %T9
+	%A0<def> = LW %GP, <ga:@.str>[TF=1]; mem:LD4[GOT]
+	%T9<def> = LW %GP, <ga:@sre_malloc>[TF=3]; mem:LD4[GlobalValueCallEntry]
+	%A1<def> = ADDiu %ZERO, 117
+	%A2<def> = ADDiu %ZERO, 40
+	JALRPseudo %T9, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %RA<imp-def,dead>, %A0<imp-use>, %A1<imp-use,kill>, %A2<imp-use,kill>, %GP<imp-use>, %SP<imp-def>, %V0<imp-def>
+	SW %ZERO, %V0, 16; mem:ST4[%1+16]
+	SW %ZERO, %V0, 12; mem:ST4[%1+12]
+	SW %ZERO, %V0, 8; mem:ST4[%1+8]
+	SW %ZERO, %V0, 4; mem:ST4[%1+4]
+	SW %ZERO, %V0, 0; mem:ST4[%1]
+	SW %ZERO, %V0, 36; mem:ST4[%3+12]
+	SW %ZERO, %V0, 32; mem:ST4[%3+8]
+	SW %ZERO, %V0, 28; mem:ST4[%3+4]
+	SW %ZERO, %V0, 24; mem:ST4[%3]
+	%RA<def> = LW %SP, 20; mem:LD4[FixedStack0]
+	%SP<def> = ADDiu %SP, 24
+	RetRA %V0<imp-use>
+
+# End machine code for function AllocFancyAli.
+
+# After Machine Copy Propagation Pass:
+# Machine code for function AllocFancyAli: Post SSA
+Frame Objects:
+  fi#0: size=4, align=4, at location [SP-4]
+Function Live Ins: %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %T9 %V0 %RA
+	%SP<def> = ADDiu %SP, -24
+	CFI_INSTRUCTION <call frame instruction>
+	SW %RA<kill>, %SP, 20; mem:ST4[FixedStack0]
+	CFI_INSTRUCTION <call frame instruction>
+	%GP<def> = ADDu %V0, %T9
+	%A0<def> = LW %GP, <ga:@.str>[TF=1]; mem:LD4[GOT]
+	%T9<def> = LW %GP, <ga:@sre_malloc>[TF=3]; mem:LD4[GlobalValueCallEntry]
+	%A1<def> = ADDiu %ZERO, 117
+	%A2<def> = ADDiu %ZERO, 40
+	JALRPseudo %T9, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %RA<imp-def,dead>, %A0<imp-use>, %A1<imp-use,kill>, %A2<imp-use,kill>, %GP<imp-use>, %SP<imp-def>, %V0<imp-def>
+	SW %ZERO, %V0, 16; mem:ST4[%1+16]
+	SW %ZERO, %V0, 12; mem:ST4[%1+12]
+	SW %ZERO, %V0, 8; mem:ST4[%1+8]
+	SW %ZERO, %V0, 4; mem:ST4[%1+4]
+	SW %ZERO, %V0, 0; mem:ST4[%1]
+	SW %ZERO, %V0, 36; mem:ST4[%3+12]
+	SW %ZERO, %V0, 32; mem:ST4[%3+8]
+	SW %ZERO, %V0, 28; mem:ST4[%3+4]
+	SW %ZERO, %V0, 24; mem:ST4[%3]
+	%RA<def> = LW %SP, 20; mem:LD4[FixedStack0]
+	%SP<def> = ADDiu %SP, 24
+	RetRA %V0<imp-use>
+
+# End machine code for function AllocFancyAli.
+
+# After Post-RA pseudo instruction expansion pass:
+# Machine code for function AllocFancyAli: Post SSA
+Frame Objects:
+  fi#0: size=4, align=4, at location [SP-4]
+Function Live Ins: %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %T9 %V0 %RA
+	%SP<def> = ADDiu %SP, -24
+	CFI_INSTRUCTION <call frame instruction>
+	SW %RA<kill>, %SP, 20; mem:ST4[FixedStack0]
+	CFI_INSTRUCTION <call frame instruction>
+	%GP<def> = ADDu %V0, %T9
+	%A0<def> = LW %GP, <ga:@.str>[TF=1]; mem:LD4[GOT]
+	%T9<def> = LW %GP, <ga:@sre_malloc>[TF=3]; mem:LD4[GlobalValueCallEntry]
+	%A1<def> = ADDiu %ZERO, 117
+	%A2<def> = ADDiu %ZERO, 40
+	JALRPseudo %T9, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %RA<imp-def,dead>, %A0<imp-use>, %A1<imp-use,kill>, %A2<imp-use,kill>, %GP<imp-use>, %SP<imp-def>, %V0<imp-def>
+	SW %ZERO, %V0, 16; mem:ST4[%1+16]
+	SW %ZERO, %V0, 12; mem:ST4[%1+12]
+	SW %ZERO, %V0, 8; mem:ST4[%1+8]
+	SW %ZERO, %V0, 4; mem:ST4[%1+4]
+	SW %ZERO, %V0, 0; mem:ST4[%1]
+	SW %ZERO, %V0, 36; mem:ST4[%3+12]
+	SW %ZERO, %V0, 32; mem:ST4[%3+8]
+	SW %ZERO, %V0, 28; mem:ST4[%3+4]
+	SW %ZERO, %V0, 24; mem:ST4[%3]
+	%RA<def> = LW %SP, 20; mem:LD4[FixedStack0]
+	%SP<def> = ADDiu %SP, 24
+	PseudoReturn %RA
+
+# End machine code for function AllocFancyAli.
+
+# After Analyze Machine Code For Garbage Collection:
+# Machine code for function AllocFancyAli: Post SSA
+Frame Objects:
+  fi#0: size=4, align=4, at location [SP-4]
+Function Live Ins: %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %T9 %V0 %RA
+	%SP<def> = ADDiu %SP, -24
+	CFI_INSTRUCTION <call frame instruction>
+	SW %RA<kill>, %SP, 20; mem:ST4[FixedStack0]
+	CFI_INSTRUCTION <call frame instruction>
+	%GP<def> = ADDu %V0, %T9
+	%A0<def> = LW %GP, <ga:@.str>[TF=1]; mem:LD4[GOT]
+	%T9<def> = LW %GP, <ga:@sre_malloc>[TF=3]; mem:LD4[GlobalValueCallEntry]
+	%A1<def> = ADDiu %ZERO, 117
+	%A2<def> = ADDiu %ZERO, 40
+	JALRPseudo %T9, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %RA<imp-def,dead>, %A0<imp-use>, %A1<imp-use,kill>, %A2<imp-use,kill>, %GP<imp-use>, %SP<imp-def>, %V0<imp-def>
+	SW %ZERO, %V0, 16; mem:ST4[%1+16]
+	SW %ZERO, %V0, 12; mem:ST4[%1+12]
+	SW %ZERO, %V0, 8; mem:ST4[%1+8]
+	SW %ZERO, %V0, 4; mem:ST4[%1+4]
+	SW %ZERO, %V0, 0; mem:ST4[%1]
+	SW %ZERO, %V0, 36; mem:ST4[%3+12]
+	SW %ZERO, %V0, 32; mem:ST4[%3+8]
+	SW %ZERO, %V0, 28; mem:ST4[%3+4]
+	SW %ZERO, %V0, 24; mem:ST4[%3]
+	%RA<def> = LW %SP, 20; mem:LD4[FixedStack0]
+	%SP<def> = ADDiu %SP, 24
+	PseudoReturn %RA
+
+# End machine code for function AllocFancyAli.
+
+# After Mips Delay Slot Filler:
+# Machine code for function AllocFancyAli: Post SSA, not tracking liveness
+Frame Objects:
+  fi#0: size=4, align=4, at location [SP-4]
+Function Live Ins: %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %T9 %V0 %RA
+	%SP<def> = ADDiu %SP, -24
+	CFI_INSTRUCTION <call frame instruction>
+	SW %RA<kill>, %SP, 20; mem:ST4[FixedStack0]
+	CFI_INSTRUCTION <call frame instruction>
+	%GP<def> = ADDu %V0, %T9
+	%A0<def> = LW %GP, <ga:@.str>[TF=1]; mem:LD4[GOT]
+	%T9<def> = LW %GP, <ga:@sre_malloc>[TF=3]; mem:LD4[GlobalValueCallEntry]
+	%A1<def> = ADDiu %ZERO, 117
+	JALRPseudo %T9, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %RA<imp-def,dead>, %A0<imp-use>, %A1<imp-use,kill>, %A2<imp-use,kill>, %GP<imp-use>, %SP<imp-def>, %V0<imp-def>
+	  * %A2<def> = ADDiu %ZERO, 40
+	SW %ZERO, %V0, 16; mem:ST4[%1+16]
+	SW %ZERO, %V0, 12; mem:ST4[%1+12]
+	SW %ZERO, %V0, 8; mem:ST4[%1+8]
+	SW %ZERO, %V0, 4; mem:ST4[%1+4]
+	SW %ZERO, %V0, 0; mem:ST4[%1]
+	SW %ZERO, %V0, 36; mem:ST4[%3+12]
+	SW %ZERO, %V0, 32; mem:ST4[%3+8]
+	SW %ZERO, %V0, 28; mem:ST4[%3+4]
+	SW %ZERO, %V0, 24; mem:ST4[%3]
+	%RA<def> = LW %SP, 20; mem:LD4[FixedStack0]
+	PseudoReturn %RA
+	  * %SP<def> = ADDiu %SP, 24
+
+# End machine code for function AllocFancyAli.
+
+# After Mips Long Branch:
+# Machine code for function AllocFancyAli: Post SSA, not tracking liveness
+Frame Objects:
+  fi#0: size=4, align=4, at location [SP-4]
+Function Live Ins: %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %T9 %RA
+	%V0<def> = LUi <es:_gp_disp>[TF=5]
+	%V0<def> = ADDiu %V0, <es:_gp_disp>[TF=6]
+	%SP<def> = ADDiu %SP, -24
+	CFI_INSTRUCTION <call frame instruction>
+	SW %RA<kill>, %SP, 20; mem:ST4[FixedStack0]
+	CFI_INSTRUCTION <call frame instruction>
+	%GP<def> = ADDu %V0, %T9
+	%A0<def> = LW %GP, <ga:@.str>[TF=1]; mem:LD4[GOT]
+	%T9<def> = LW %GP, <ga:@sre_malloc>[TF=3]; mem:LD4[GlobalValueCallEntry]
+	%A1<def> = ADDiu %ZERO, 117
+	JALRPseudo %T9, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %RA<imp-def,dead>, %A0<imp-use>, %A1<imp-use,kill>, %A2<imp-use,kill>, %GP<imp-use>, %SP<imp-def>, %V0<imp-def>
+	  * %A2<def> = ADDiu %ZERO, 40
+	SW %ZERO, %V0, 16; mem:ST4[%1+16]
+	SW %ZERO, %V0, 12; mem:ST4[%1+12]
+	SW %ZERO, %V0, 8; mem:ST4[%1+8]
+	SW %ZERO, %V0, 4; mem:ST4[%1+4]
+	SW %ZERO, %V0, 0; mem:ST4[%1]
+	SW %ZERO, %V0, 36; mem:ST4[%3+12]
+	SW %ZERO, %V0, 32; mem:ST4[%3+8]
+	SW %ZERO, %V0, 28; mem:ST4[%3+4]
+	SW %ZERO, %V0, 24; mem:ST4[%3]
+	%RA<def> = LW %SP, 20; mem:LD4[FixedStack0]
+	PseudoReturn %RA
+	  * %SP<def> = ADDiu %SP, 24
+
+# End machine code for function AllocFancyAli.
+
+# After Mips Constant Islands:
+# Machine code for function AllocFancyAli: Post SSA, not tracking liveness
+Frame Objects:
+  fi#0: size=4, align=4, at location [SP-4]
+Function Live Ins: %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %T9 %RA
+	%V0<def> = LUi <es:_gp_disp>[TF=5]
+	%V0<def> = ADDiu %V0, <es:_gp_disp>[TF=6]
+	%SP<def> = ADDiu %SP, -24
+	CFI_INSTRUCTION <call frame instruction>
+	SW %RA<kill>, %SP, 20; mem:ST4[FixedStack0]
+	CFI_INSTRUCTION <call frame instruction>
+	%GP<def> = ADDu %V0, %T9
+	%A0<def> = LW %GP, <ga:@.str>[TF=1]; mem:LD4[GOT]
+	%T9<def> = LW %GP, <ga:@sre_malloc>[TF=3]; mem:LD4[GlobalValueCallEntry]
+	%A1<def> = ADDiu %ZERO, 117
+	JALRPseudo %T9, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %RA<imp-def,dead>, %A0<imp-use>, %A1<imp-use,kill>, %A2<imp-use,kill>, %GP<imp-use>, %SP<imp-def>, %V0<imp-def>
+	  * %A2<def> = ADDiu %ZERO, 40
+	SW %ZERO, %V0, 16; mem:ST4[%1+16]
+	SW %ZERO, %V0, 12; mem:ST4[%1+12]
+	SW %ZERO, %V0, 8; mem:ST4[%1+8]
+	SW %ZERO, %V0, 4; mem:ST4[%1+4]
+	SW %ZERO, %V0, 0; mem:ST4[%1]
+	SW %ZERO, %V0, 36; mem:ST4[%3+12]
+	SW %ZERO, %V0, 32; mem:ST4[%3+8]
+	SW %ZERO, %V0, 28; mem:ST4[%3+4]
+	SW %ZERO, %V0, 24; mem:ST4[%3]
+	%RA<def> = LW %SP, 20; mem:LD4[FixedStack0]
+	PseudoReturn %RA
+	  * %SP<def> = ADDiu %SP, 24
+
+# End machine code for function AllocFancyAli.
+
+# After Contiguously Lay Out Funclets:
+# Machine code for function AllocFancyAli: Post SSA, not tracking liveness
+Frame Objects:
+  fi#0: size=4, align=4, at location [SP-4]
+Function Live Ins: %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %T9 %RA
+	%V0<def> = LUi <es:_gp_disp>[TF=5]
+	%V0<def> = ADDiu %V0, <es:_gp_disp>[TF=6]
+	%SP<def> = ADDiu %SP, -24
+	CFI_INSTRUCTION <call frame instruction>
+	SW %RA<kill>, %SP, 20; mem:ST4[FixedStack0]
+	CFI_INSTRUCTION <call frame instruction>
+	%GP<def> = ADDu %V0, %T9
+	%A0<def> = LW %GP, <ga:@.str>[TF=1]; mem:LD4[GOT]
+	%T9<def> = LW %GP, <ga:@sre_malloc>[TF=3]; mem:LD4[GlobalValueCallEntry]
+	%A1<def> = ADDiu %ZERO, 117
+	JALRPseudo %T9, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %RA<imp-def,dead>, %A0<imp-use>, %A1<imp-use,kill>, %A2<imp-use,kill>, %GP<imp-use>, %SP<imp-def>, %V0<imp-def>
+	  * %A2<def> = ADDiu %ZERO, 40
+	SW %ZERO, %V0, 16; mem:ST4[%1+16]
+	SW %ZERO, %V0, 12; mem:ST4[%1+12]
+	SW %ZERO, %V0, 8; mem:ST4[%1+8]
+	SW %ZERO, %V0, 4; mem:ST4[%1+4]
+	SW %ZERO, %V0, 0; mem:ST4[%1]
+	SW %ZERO, %V0, 36; mem:ST4[%3+12]
+	SW %ZERO, %V0, 32; mem:ST4[%3+8]
+	SW %ZERO, %V0, 28; mem:ST4[%3+4]
+	SW %ZERO, %V0, 24; mem:ST4[%3]
+	%RA<def> = LW %SP, 20; mem:LD4[FixedStack0]
+	PseudoReturn %RA
+	  * %SP<def> = ADDiu %SP, 24
+
+# End machine code for function AllocFancyAli.
+
+# After StackMap Liveness Analysis:
+# Machine code for function AllocFancyAli: Post SSA, not tracking liveness
+Frame Objects:
+  fi#0: size=4, align=4, at location [SP-4]
+Function Live Ins: %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %T9 %RA
+	%V0<def> = LUi <es:_gp_disp>[TF=5]
+	%V0<def> = ADDiu %V0, <es:_gp_disp>[TF=6]
+	%SP<def> = ADDiu %SP, -24
+	CFI_INSTRUCTION <call frame instruction>
+	SW %RA<kill>, %SP, 20; mem:ST4[FixedStack0]
+	CFI_INSTRUCTION <call frame instruction>
+	%GP<def> = ADDu %V0, %T9
+	%A0<def> = LW %GP, <ga:@.str>[TF=1]; mem:LD4[GOT]
+	%T9<def> = LW %GP, <ga:@sre_malloc>[TF=3]; mem:LD4[GlobalValueCallEntry]
+	%A1<def> = ADDiu %ZERO, 117
+	JALRPseudo %T9, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %RA<imp-def,dead>, %A0<imp-use>, %A1<imp-use,kill>, %A2<imp-use,kill>, %GP<imp-use>, %SP<imp-def>, %V0<imp-def>
+	  * %A2<def> = ADDiu %ZERO, 40
+	SW %ZERO, %V0, 16; mem:ST4[%1+16]
+	SW %ZERO, %V0, 12; mem:ST4[%1+12]
+	SW %ZERO, %V0, 8; mem:ST4[%1+8]
+	SW %ZERO, %V0, 4; mem:ST4[%1+4]
+	SW %ZERO, %V0, 0; mem:ST4[%1]
+	SW %ZERO, %V0, 36; mem:ST4[%3+12]
+	SW %ZERO, %V0, 32; mem:ST4[%3+8]
+	SW %ZERO, %V0, 28; mem:ST4[%3+4]
+	SW %ZERO, %V0, 24; mem:ST4[%3]
+	%RA<def> = LW %SP, 20; mem:LD4[FixedStack0]
+	PseudoReturn %RA
+	  * %SP<def> = ADDiu %SP, 24
+
+# End machine code for function AllocFancyAli.
+
+# After Live DEBUG_VALUE analysis:
+# Machine code for function AllocFancyAli: Post SSA, not tracking liveness
+Frame Objects:
+  fi#0: size=4, align=4, at location [SP-4]
+Function Live Ins: %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %T9 %RA
+	%V0<def> = LUi <es:_gp_disp>[TF=5]
+	%V0<def> = ADDiu %V0, <es:_gp_disp>[TF=6]
+	%SP<def> = ADDiu %SP, -24
+	CFI_INSTRUCTION <call frame instruction>
+	SW %RA<kill>, %SP, 20; mem:ST4[FixedStack0]
+	CFI_INSTRUCTION <call frame instruction>
+	%GP<def> = ADDu %V0, %T9
+	%A0<def> = LW %GP, <ga:@.str>[TF=1]; mem:LD4[GOT]
+	%T9<def> = LW %GP, <ga:@sre_malloc>[TF=3]; mem:LD4[GlobalValueCallEntry]
+	%A1<def> = ADDiu %ZERO, 117
+	JALRPseudo %T9, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %RA<imp-def,dead>, %A0<imp-use>, %A1<imp-use,kill>, %A2<imp-use,kill>, %GP<imp-use>, %SP<imp-def>, %V0<imp-def>
+	  * %A2<def> = ADDiu %ZERO, 40
+	SW %ZERO, %V0, 16; mem:ST4[%1+16]
+	SW %ZERO, %V0, 12; mem:ST4[%1+12]
+	SW %ZERO, %V0, 8; mem:ST4[%1+8]
+	SW %ZERO, %V0, 4; mem:ST4[%1+4]
+	SW %ZERO, %V0, 0; mem:ST4[%1]
+	SW %ZERO, %V0, 36; mem:ST4[%3+12]
+	SW %ZERO, %V0, 32; mem:ST4[%3+8]
+	SW %ZERO, %V0, 28; mem:ST4[%3+4]
+	SW %ZERO, %V0, 24; mem:ST4[%3]
+	%RA<def> = LW %SP, 20; mem:LD4[FixedStack0]
+	PseudoReturn %RA
+	  * %SP<def> = ADDiu %SP, 24
+
+# End machine code for function AllocFancyAli.
+

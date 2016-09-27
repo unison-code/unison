@@ -1,0 +1,8 @@
+gecode-solver
+gecode-presolver
+generated.mk
+gecode-solver-static
+generated-static.mk
+presolver-generated.mk
+*.o
+moc_*.cpp

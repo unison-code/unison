@@ -1,0 +1,987 @@
+# After Instruction Selection:
+# Machine code for function symbol2uvlc: SSA
+Function Live Ins: %R0 in %vreg0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%vreg0<def> = COPY %R0; IntRegs:%vreg0
+	%vreg1<def> = L2_loadri_io %vreg0, 12; mem:LD4[%cgep4] IntRegs:%vreg1,%vreg0
+	%vreg2<def,tied1> = S2_lsr_i_r_acc %vreg1<tied0>, %vreg1, 31; IntRegs:%vreg2,%vreg1,%vreg1
+	%vreg3<def> = S2_asr_i_r %vreg2<kill>, 1; IntRegs:%vreg3,%vreg2
+	%vreg4<def> = L2_loadri_io %vreg0, 16; mem:LD4[%cgep5] IntRegs:%vreg4,%vreg0
+	%vreg5<def> = A2_tfrsi 1; IntRegs:%vreg5
+	%vreg6<def> = A2_tfrsi -1; IntRegs:%vreg6
+	%vreg7<def,tied1> = S2_asl_r_r_acc %vreg6<tied0>, %vreg5<kill>, %vreg3; IntRegs:%vreg7,%vreg6,%vreg5,%vreg3
+	%vreg8<def> = A2_and %vreg7<kill>, %vreg4<kill>; IntRegs:%vreg8,%vreg7,%vreg4
+	%vreg9<def> = S2_setbit_r %vreg8<kill>, %vreg3; IntRegs:%vreg9,%vreg8,%vreg3
+	S2_storeri_io %vreg0, 20, %vreg9<kill>; mem:ST4[%cgep6] IntRegs:%vreg0,%vreg9
+	%vreg10<def> = A2_tfrsi 0; IntRegs:%vreg10
+	%R0<def> = COPY %vreg10; IntRegs:%vreg10
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function symbol2uvlc.
+
+# After Expand ISel Pseudo-instructions:
+# Machine code for function symbol2uvlc: SSA
+Function Live Ins: %R0 in %vreg0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%vreg0<def> = COPY %R0; IntRegs:%vreg0
+	%vreg1<def> = L2_loadri_io %vreg0, 12; mem:LD4[%cgep4] IntRegs:%vreg1,%vreg0
+	%vreg2<def,tied1> = S2_lsr_i_r_acc %vreg1<tied0>, %vreg1, 31; IntRegs:%vreg2,%vreg1,%vreg1
+	%vreg3<def> = S2_asr_i_r %vreg2<kill>, 1; IntRegs:%vreg3,%vreg2
+	%vreg4<def> = L2_loadri_io %vreg0, 16; mem:LD4[%cgep5] IntRegs:%vreg4,%vreg0
+	%vreg5<def> = A2_tfrsi 1; IntRegs:%vreg5
+	%vreg6<def> = A2_tfrsi -1; IntRegs:%vreg6
+	%vreg7<def,tied1> = S2_asl_r_r_acc %vreg6<tied0>, %vreg5<kill>, %vreg3; IntRegs:%vreg7,%vreg6,%vreg5,%vreg3
+	%vreg8<def> = A2_and %vreg7<kill>, %vreg4<kill>; IntRegs:%vreg8,%vreg7,%vreg4
+	%vreg9<def> = S2_setbit_r %vreg8<kill>, %vreg3; IntRegs:%vreg9,%vreg8,%vreg3
+	S2_storeri_io %vreg0, 20, %vreg9<kill>; mem:ST4[%cgep6] IntRegs:%vreg0,%vreg9
+	%vreg10<def> = A2_tfrsi 0; IntRegs:%vreg10
+	%R0<def> = COPY %vreg10; IntRegs:%vreg10
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function symbol2uvlc.
+
+# After Tail Duplication:
+# Machine code for function symbol2uvlc: SSA
+Function Live Ins: %R0 in %vreg0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%vreg0<def> = COPY %R0; IntRegs:%vreg0
+	%vreg1<def> = L2_loadri_io %vreg0, 12; mem:LD4[%cgep4] IntRegs:%vreg1,%vreg0
+	%vreg2<def,tied1> = S2_lsr_i_r_acc %vreg1<tied0>, %vreg1, 31; IntRegs:%vreg2,%vreg1,%vreg1
+	%vreg3<def> = S2_asr_i_r %vreg2<kill>, 1; IntRegs:%vreg3,%vreg2
+	%vreg4<def> = L2_loadri_io %vreg0, 16; mem:LD4[%cgep5] IntRegs:%vreg4,%vreg0
+	%vreg5<def> = A2_tfrsi 1; IntRegs:%vreg5
+	%vreg6<def> = A2_tfrsi -1; IntRegs:%vreg6
+	%vreg7<def,tied1> = S2_asl_r_r_acc %vreg6<tied0>, %vreg5<kill>, %vreg3; IntRegs:%vreg7,%vreg6,%vreg5,%vreg3
+	%vreg8<def> = A2_and %vreg7<kill>, %vreg4<kill>; IntRegs:%vreg8,%vreg7,%vreg4
+	%vreg9<def> = S2_setbit_r %vreg8<kill>, %vreg3; IntRegs:%vreg9,%vreg8,%vreg3
+	S2_storeri_io %vreg0, 20, %vreg9<kill>; mem:ST4[%cgep6] IntRegs:%vreg0,%vreg9
+	%vreg10<def> = A2_tfrsi 0; IntRegs:%vreg10
+	%R0<def> = COPY %vreg10; IntRegs:%vreg10
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function symbol2uvlc.
+
+# After Optimize machine instruction PHIs:
+# Machine code for function symbol2uvlc: SSA
+Function Live Ins: %R0 in %vreg0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%vreg0<def> = COPY %R0; IntRegs:%vreg0
+	%vreg1<def> = L2_loadri_io %vreg0, 12; mem:LD4[%cgep4] IntRegs:%vreg1,%vreg0
+	%vreg2<def,tied1> = S2_lsr_i_r_acc %vreg1<tied0>, %vreg1, 31; IntRegs:%vreg2,%vreg1,%vreg1
+	%vreg3<def> = S2_asr_i_r %vreg2<kill>, 1; IntRegs:%vreg3,%vreg2
+	%vreg4<def> = L2_loadri_io %vreg0, 16; mem:LD4[%cgep5] IntRegs:%vreg4,%vreg0
+	%vreg5<def> = A2_tfrsi 1; IntRegs:%vreg5
+	%vreg6<def> = A2_tfrsi -1; IntRegs:%vreg6
+	%vreg7<def,tied1> = S2_asl_r_r_acc %vreg6<tied0>, %vreg5<kill>, %vreg3; IntRegs:%vreg7,%vreg6,%vreg5,%vreg3
+	%vreg8<def> = A2_and %vreg7<kill>, %vreg4<kill>; IntRegs:%vreg8,%vreg7,%vreg4
+	%vreg9<def> = S2_setbit_r %vreg8<kill>, %vreg3; IntRegs:%vreg9,%vreg8,%vreg3
+	S2_storeri_io %vreg0, 20, %vreg9<kill>; mem:ST4[%cgep6] IntRegs:%vreg0,%vreg9
+	%vreg10<def> = A2_tfrsi 0; IntRegs:%vreg10
+	%R0<def> = COPY %vreg10; IntRegs:%vreg10
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function symbol2uvlc.
+
+# After Merge disjoint stack slots:
+# Machine code for function symbol2uvlc: SSA
+Function Live Ins: %R0 in %vreg0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%vreg0<def> = COPY %R0; IntRegs:%vreg0
+	%vreg1<def> = L2_loadri_io %vreg0, 12; mem:LD4[%cgep4] IntRegs:%vreg1,%vreg0
+	%vreg2<def,tied1> = S2_lsr_i_r_acc %vreg1<tied0>, %vreg1, 31; IntRegs:%vreg2,%vreg1,%vreg1
+	%vreg3<def> = S2_asr_i_r %vreg2<kill>, 1; IntRegs:%vreg3,%vreg2
+	%vreg4<def> = L2_loadri_io %vreg0, 16; mem:LD4[%cgep5] IntRegs:%vreg4,%vreg0
+	%vreg5<def> = A2_tfrsi 1; IntRegs:%vreg5
+	%vreg6<def> = A2_tfrsi -1; IntRegs:%vreg6
+	%vreg7<def,tied1> = S2_asl_r_r_acc %vreg6<tied0>, %vreg5<kill>, %vreg3; IntRegs:%vreg7,%vreg6,%vreg5,%vreg3
+	%vreg8<def> = A2_and %vreg7<kill>, %vreg4<kill>; IntRegs:%vreg8,%vreg7,%vreg4
+	%vreg9<def> = S2_setbit_r %vreg8<kill>, %vreg3; IntRegs:%vreg9,%vreg8,%vreg3
+	S2_storeri_io %vreg0, 20, %vreg9<kill>; mem:ST4[%cgep6] IntRegs:%vreg0,%vreg9
+	%vreg10<def> = A2_tfrsi 0; IntRegs:%vreg10
+	%R0<def> = COPY %vreg10; IntRegs:%vreg10
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function symbol2uvlc.
+
+# After Local Stack Slot Allocation:
+# Machine code for function symbol2uvlc: SSA
+Function Live Ins: %R0 in %vreg0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%vreg0<def> = COPY %R0; IntRegs:%vreg0
+	%vreg1<def> = L2_loadri_io %vreg0, 12; mem:LD4[%cgep4] IntRegs:%vreg1,%vreg0
+	%vreg2<def,tied1> = S2_lsr_i_r_acc %vreg1<tied0>, %vreg1, 31; IntRegs:%vreg2,%vreg1,%vreg1
+	%vreg3<def> = S2_asr_i_r %vreg2<kill>, 1; IntRegs:%vreg3,%vreg2
+	%vreg4<def> = L2_loadri_io %vreg0, 16; mem:LD4[%cgep5] IntRegs:%vreg4,%vreg0
+	%vreg5<def> = A2_tfrsi 1; IntRegs:%vreg5
+	%vreg6<def> = A2_tfrsi -1; IntRegs:%vreg6
+	%vreg7<def,tied1> = S2_asl_r_r_acc %vreg6<tied0>, %vreg5<kill>, %vreg3; IntRegs:%vreg7,%vreg6,%vreg5,%vreg3
+	%vreg8<def> = A2_and %vreg7<kill>, %vreg4<kill>; IntRegs:%vreg8,%vreg7,%vreg4
+	%vreg9<def> = S2_setbit_r %vreg8<kill>, %vreg3; IntRegs:%vreg9,%vreg8,%vreg3
+	S2_storeri_io %vreg0, 20, %vreg9<kill>; mem:ST4[%cgep6] IntRegs:%vreg0,%vreg9
+	%vreg10<def> = A2_tfrsi 0; IntRegs:%vreg10
+	%R0<def> = COPY %vreg10; IntRegs:%vreg10
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function symbol2uvlc.
+
+# After Remove dead machine instructions:
+# Machine code for function symbol2uvlc: SSA
+Function Live Ins: %R0 in %vreg0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%vreg0<def> = COPY %R0; IntRegs:%vreg0
+	%vreg1<def> = L2_loadri_io %vreg0, 12; mem:LD4[%cgep4] IntRegs:%vreg1,%vreg0
+	%vreg2<def,tied1> = S2_lsr_i_r_acc %vreg1<tied0>, %vreg1, 31; IntRegs:%vreg2,%vreg1,%vreg1
+	%vreg3<def> = S2_asr_i_r %vreg2<kill>, 1; IntRegs:%vreg3,%vreg2
+	%vreg4<def> = L2_loadri_io %vreg0, 16; mem:LD4[%cgep5] IntRegs:%vreg4,%vreg0
+	%vreg5<def> = A2_tfrsi 1; IntRegs:%vreg5
+	%vreg6<def> = A2_tfrsi -1; IntRegs:%vreg6
+	%vreg7<def,tied1> = S2_asl_r_r_acc %vreg6<tied0>, %vreg5<kill>, %vreg3; IntRegs:%vreg7,%vreg6,%vreg5,%vreg3
+	%vreg8<def> = A2_and %vreg7<kill>, %vreg4<kill>; IntRegs:%vreg8,%vreg7,%vreg4
+	%vreg9<def> = S2_setbit_r %vreg8<kill>, %vreg3; IntRegs:%vreg9,%vreg8,%vreg3
+	S2_storeri_io %vreg0, 20, %vreg9<kill>; mem:ST4[%cgep6] IntRegs:%vreg0,%vreg9
+	%vreg10<def> = A2_tfrsi 0; IntRegs:%vreg10
+	%R0<def> = COPY %vreg10; IntRegs:%vreg10
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function symbol2uvlc.
+
+# After Machine Loop Invariant Code Motion:
+# Machine code for function symbol2uvlc: SSA
+Function Live Ins: %R0 in %vreg0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%vreg0<def> = COPY %R0; IntRegs:%vreg0
+	%vreg1<def> = L2_loadri_io %vreg0, 12; mem:LD4[%cgep4] IntRegs:%vreg1,%vreg0
+	%vreg2<def,tied1> = S2_lsr_i_r_acc %vreg1<tied0>, %vreg1, 31; IntRegs:%vreg2,%vreg1,%vreg1
+	%vreg3<def> = S2_asr_i_r %vreg2<kill>, 1; IntRegs:%vreg3,%vreg2
+	%vreg4<def> = L2_loadri_io %vreg0, 16; mem:LD4[%cgep5] IntRegs:%vreg4,%vreg0
+	%vreg5<def> = A2_tfrsi 1; IntRegs:%vreg5
+	%vreg6<def> = A2_tfrsi -1; IntRegs:%vreg6
+	%vreg7<def,tied1> = S2_asl_r_r_acc %vreg6<tied0>, %vreg5<kill>, %vreg3; IntRegs:%vreg7,%vreg6,%vreg5,%vreg3
+	%vreg8<def> = A2_and %vreg7<kill>, %vreg4<kill>; IntRegs:%vreg8,%vreg7,%vreg4
+	%vreg9<def> = S2_setbit_r %vreg8<kill>, %vreg3; IntRegs:%vreg9,%vreg8,%vreg3
+	S2_storeri_io %vreg0, 20, %vreg9<kill>; mem:ST4[%cgep6] IntRegs:%vreg0,%vreg9
+	%vreg10<def> = A2_tfrsi 0; IntRegs:%vreg10
+	%R0<def> = COPY %vreg10; IntRegs:%vreg10
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function symbol2uvlc.
+
+# After Machine Common Subexpression Elimination:
+# Machine code for function symbol2uvlc: SSA
+Function Live Ins: %R0 in %vreg0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%vreg0<def> = COPY %R0; IntRegs:%vreg0
+	%vreg1<def> = L2_loadri_io %vreg0, 12; mem:LD4[%cgep4] IntRegs:%vreg1,%vreg0
+	%vreg2<def,tied1> = S2_lsr_i_r_acc %vreg1<tied0>, %vreg1, 31; IntRegs:%vreg2,%vreg1,%vreg1
+	%vreg3<def> = S2_asr_i_r %vreg2<kill>, 1; IntRegs:%vreg3,%vreg2
+	%vreg4<def> = L2_loadri_io %vreg0, 16; mem:LD4[%cgep5] IntRegs:%vreg4,%vreg0
+	%vreg5<def> = A2_tfrsi 1; IntRegs:%vreg5
+	%vreg6<def> = A2_tfrsi -1; IntRegs:%vreg6
+	%vreg7<def,tied1> = S2_asl_r_r_acc %vreg6<tied0>, %vreg5<kill>, %vreg3; IntRegs:%vreg7,%vreg6,%vreg5,%vreg3
+	%vreg8<def> = A2_and %vreg7<kill>, %vreg4<kill>; IntRegs:%vreg8,%vreg7,%vreg4
+	%vreg9<def> = S2_setbit_r %vreg8<kill>, %vreg3; IntRegs:%vreg9,%vreg8,%vreg3
+	S2_storeri_io %vreg0, 20, %vreg9<kill>; mem:ST4[%cgep6] IntRegs:%vreg0,%vreg9
+	%vreg10<def> = A2_tfrsi 0; IntRegs:%vreg10
+	%R0<def> = COPY %vreg10; IntRegs:%vreg10
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function symbol2uvlc.
+
+# After Machine code sinking:
+# Machine code for function symbol2uvlc: SSA
+Function Live Ins: %R0 in %vreg0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%vreg0<def> = COPY %R0; IntRegs:%vreg0
+	%vreg1<def> = L2_loadri_io %vreg0, 12; mem:LD4[%cgep4] IntRegs:%vreg1,%vreg0
+	%vreg2<def,tied1> = S2_lsr_i_r_acc %vreg1<tied0>, %vreg1, 31; IntRegs:%vreg2,%vreg1,%vreg1
+	%vreg3<def> = S2_asr_i_r %vreg2<kill>, 1; IntRegs:%vreg3,%vreg2
+	%vreg4<def> = L2_loadri_io %vreg0, 16; mem:LD4[%cgep5] IntRegs:%vreg4,%vreg0
+	%vreg5<def> = A2_tfrsi 1; IntRegs:%vreg5
+	%vreg6<def> = A2_tfrsi -1; IntRegs:%vreg6
+	%vreg7<def,tied1> = S2_asl_r_r_acc %vreg6<tied0>, %vreg5<kill>, %vreg3; IntRegs:%vreg7,%vreg6,%vreg5,%vreg3
+	%vreg8<def> = A2_and %vreg7<kill>, %vreg4<kill>; IntRegs:%vreg8,%vreg7,%vreg4
+	%vreg9<def> = S2_setbit_r %vreg8<kill>, %vreg3; IntRegs:%vreg9,%vreg8,%vreg3
+	S2_storeri_io %vreg0, 20, %vreg9<kill>; mem:ST4[%cgep6] IntRegs:%vreg0,%vreg9
+	%vreg10<def> = A2_tfrsi 0; IntRegs:%vreg10
+	%R0<def> = COPY %vreg10; IntRegs:%vreg10
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function symbol2uvlc.
+
+# After Peephole Optimizations:
+# Machine code for function symbol2uvlc: SSA
+Function Live Ins: %R0 in %vreg0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%vreg0<def> = COPY %R0; IntRegs:%vreg0
+	%vreg1<def> = L2_loadri_io %vreg0, 12; mem:LD4[%cgep4] IntRegs:%vreg1,%vreg0
+	%vreg2<def,tied1> = S2_lsr_i_r_acc %vreg1<tied0>, %vreg1, 31; IntRegs:%vreg2,%vreg1,%vreg1
+	%vreg3<def> = S2_asr_i_r %vreg2<kill>, 1; IntRegs:%vreg3,%vreg2
+	%vreg4<def> = L2_loadri_io %vreg0, 16; mem:LD4[%cgep5] IntRegs:%vreg4,%vreg0
+	%vreg5<def> = A2_tfrsi 1; IntRegs:%vreg5
+	%vreg6<def> = A2_tfrsi -1; IntRegs:%vreg6
+	%vreg7<def,tied1> = S2_asl_r_r_acc %vreg6<tied0>, %vreg5<kill>, %vreg3; IntRegs:%vreg7,%vreg6,%vreg5,%vreg3
+	%vreg8<def> = A2_and %vreg7<kill>, %vreg4<kill>; IntRegs:%vreg8,%vreg7,%vreg4
+	%vreg9<def> = S2_setbit_r %vreg8<kill>, %vreg3; IntRegs:%vreg9,%vreg8,%vreg3
+	S2_storeri_io %vreg0, 20, %vreg9<kill>; mem:ST4[%cgep6] IntRegs:%vreg0,%vreg9
+	%vreg10<def> = A2_tfrsi 0; IntRegs:%vreg10
+	%R0<def> = COPY %vreg10; IntRegs:%vreg10
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function symbol2uvlc.
+
+# After Remove dead machine instructions:
+# Machine code for function symbol2uvlc: SSA
+Function Live Ins: %R0 in %vreg0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%vreg0<def> = COPY %R0; IntRegs:%vreg0
+	%vreg1<def> = L2_loadri_io %vreg0, 12; mem:LD4[%cgep4] IntRegs:%vreg1,%vreg0
+	%vreg2<def,tied1> = S2_lsr_i_r_acc %vreg1<tied0>, %vreg1, 31; IntRegs:%vreg2,%vreg1,%vreg1
+	%vreg3<def> = S2_asr_i_r %vreg2<kill>, 1; IntRegs:%vreg3,%vreg2
+	%vreg4<def> = L2_loadri_io %vreg0, 16; mem:LD4[%cgep5] IntRegs:%vreg4,%vreg0
+	%vreg5<def> = A2_tfrsi 1; IntRegs:%vreg5
+	%vreg6<def> = A2_tfrsi -1; IntRegs:%vreg6
+	%vreg7<def,tied1> = S2_asl_r_r_acc %vreg6<tied0>, %vreg5<kill>, %vreg3; IntRegs:%vreg7,%vreg6,%vreg5,%vreg3
+	%vreg8<def> = A2_and %vreg7<kill>, %vreg4<kill>; IntRegs:%vreg8,%vreg7,%vreg4
+	%vreg9<def> = S2_setbit_r %vreg8<kill>, %vreg3; IntRegs:%vreg9,%vreg8,%vreg3
+	S2_storeri_io %vreg0, 20, %vreg9<kill>; mem:ST4[%cgep6] IntRegs:%vreg0,%vreg9
+	%vreg10<def> = A2_tfrsi 0; IntRegs:%vreg10
+	%R0<def> = COPY %vreg10; IntRegs:%vreg10
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function symbol2uvlc.
+
+# After Hexagon Store Widening:
+# Machine code for function symbol2uvlc: SSA
+Function Live Ins: %R0 in %vreg0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%vreg0<def> = COPY %R0; IntRegs:%vreg0
+	%vreg1<def> = L2_loadri_io %vreg0, 12; mem:LD4[%cgep4] IntRegs:%vreg1,%vreg0
+	%vreg2<def,tied1> = S2_lsr_i_r_acc %vreg1<tied0>, %vreg1, 31; IntRegs:%vreg2,%vreg1,%vreg1
+	%vreg3<def> = S2_asr_i_r %vreg2<kill>, 1; IntRegs:%vreg3,%vreg2
+	%vreg4<def> = L2_loadri_io %vreg0, 16; mem:LD4[%cgep5] IntRegs:%vreg4,%vreg0
+	%vreg5<def> = A2_tfrsi 1; IntRegs:%vreg5
+	%vreg6<def> = A2_tfrsi -1; IntRegs:%vreg6
+	%vreg7<def,tied1> = S2_asl_r_r_acc %vreg6<tied0>, %vreg5<kill>, %vreg3; IntRegs:%vreg7,%vreg6,%vreg5,%vreg3
+	%vreg8<def> = A2_and %vreg7<kill>, %vreg4<kill>; IntRegs:%vreg8,%vreg7,%vreg4
+	%vreg9<def> = S2_setbit_r %vreg8<kill>, %vreg3; IntRegs:%vreg9,%vreg8,%vreg3
+	S2_storeri_io %vreg0, 20, %vreg9<kill>; mem:ST4[%cgep6] IntRegs:%vreg0,%vreg9
+	%vreg10<def> = A2_tfrsi 0; IntRegs:%vreg10
+	%R0<def> = COPY %vreg10; IntRegs:%vreg10
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function symbol2uvlc.
+
+# After Hexagon Hardware Loops:
+# Machine code for function symbol2uvlc: SSA
+Function Live Ins: %R0 in %vreg0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%vreg0<def> = COPY %R0; IntRegs:%vreg0
+	%vreg1<def> = L2_loadri_io %vreg0, 12; mem:LD4[%cgep4] IntRegs:%vreg1,%vreg0
+	%vreg2<def,tied1> = S2_lsr_i_r_acc %vreg1<tied0>, %vreg1, 31; IntRegs:%vreg2,%vreg1,%vreg1
+	%vreg3<def> = S2_asr_i_r %vreg2<kill>, 1; IntRegs:%vreg3,%vreg2
+	%vreg4<def> = L2_loadri_io %vreg0, 16; mem:LD4[%cgep5] IntRegs:%vreg4,%vreg0
+	%vreg5<def> = A2_tfrsi 1; IntRegs:%vreg5
+	%vreg6<def> = A2_tfrsi -1; IntRegs:%vreg6
+	%vreg7<def,tied1> = S2_asl_r_r_acc %vreg6<tied0>, %vreg5<kill>, %vreg3; IntRegs:%vreg7,%vreg6,%vreg5,%vreg3
+	%vreg8<def> = A2_and %vreg7<kill>, %vreg4<kill>; IntRegs:%vreg8,%vreg7,%vreg4
+	%vreg9<def> = S2_setbit_r %vreg8<kill>, %vreg3; IntRegs:%vreg9,%vreg8,%vreg3
+	S2_storeri_io %vreg0, 20, %vreg9<kill>; mem:ST4[%cgep6] IntRegs:%vreg0,%vreg9
+	%vreg10<def> = A2_tfrsi 0; IntRegs:%vreg10
+	%R0<def> = COPY %vreg10; IntRegs:%vreg10
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function symbol2uvlc.
+
+# After Process Implicit Definitions:
+# Machine code for function symbol2uvlc: SSA
+Function Live Ins: %R0 in %vreg0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%vreg0<def> = COPY %R0; IntRegs:%vreg0
+	%vreg1<def> = L2_loadri_io %vreg0, 12; mem:LD4[%cgep4] IntRegs:%vreg1,%vreg0
+	%vreg2<def,tied1> = S2_lsr_i_r_acc %vreg1<tied0>, %vreg1, 31; IntRegs:%vreg2,%vreg1,%vreg1
+	%vreg3<def> = S2_asr_i_r %vreg2<kill>, 1; IntRegs:%vreg3,%vreg2
+	%vreg4<def> = L2_loadri_io %vreg0, 16; mem:LD4[%cgep5] IntRegs:%vreg4,%vreg0
+	%vreg5<def> = A2_tfrsi 1; IntRegs:%vreg5
+	%vreg6<def> = A2_tfrsi -1; IntRegs:%vreg6
+	%vreg7<def,tied1> = S2_asl_r_r_acc %vreg6<tied0>, %vreg5<kill>, %vreg3; IntRegs:%vreg7,%vreg6,%vreg5,%vreg3
+	%vreg8<def> = A2_and %vreg7<kill>, %vreg4<kill>; IntRegs:%vreg8,%vreg7,%vreg4
+	%vreg9<def> = S2_setbit_r %vreg8<kill>, %vreg3; IntRegs:%vreg9,%vreg8,%vreg3
+	S2_storeri_io %vreg0, 20, %vreg9<kill>; mem:ST4[%cgep6] IntRegs:%vreg0,%vreg9
+	%vreg10<def> = A2_tfrsi 0; IntRegs:%vreg10
+	%R0<def> = COPY %vreg10; IntRegs:%vreg10
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function symbol2uvlc.
+
+# After Live Variable Analysis:
+# Machine code for function symbol2uvlc: SSA
+Function Live Ins: %R0 in %vreg0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%vreg0<def> = COPY %R0<kill>; IntRegs:%vreg0
+	%vreg1<def> = L2_loadri_io %vreg0, 12; mem:LD4[%cgep4] IntRegs:%vreg1,%vreg0
+	%vreg2<def,tied1> = S2_lsr_i_r_acc %vreg1<kill,tied0>, %vreg1, 31; IntRegs:%vreg2,%vreg1,%vreg1
+	%vreg3<def> = S2_asr_i_r %vreg2<kill>, 1; IntRegs:%vreg3,%vreg2
+	%vreg4<def> = L2_loadri_io %vreg0, 16; mem:LD4[%cgep5] IntRegs:%vreg4,%vreg0
+	%vreg5<def> = A2_tfrsi 1; IntRegs:%vreg5
+	%vreg6<def> = A2_tfrsi -1; IntRegs:%vreg6
+	%vreg7<def,tied1> = S2_asl_r_r_acc %vreg6<kill,tied0>, %vreg5<kill>, %vreg3; IntRegs:%vreg7,%vreg6,%vreg5,%vreg3
+	%vreg8<def> = A2_and %vreg7<kill>, %vreg4<kill>; IntRegs:%vreg8,%vreg7,%vreg4
+	%vreg9<def> = S2_setbit_r %vreg8<kill>, %vreg3<kill>; IntRegs:%vreg9,%vreg8,%vreg3
+	S2_storeri_io %vreg0<kill>, 20, %vreg9<kill>; mem:ST4[%cgep6] IntRegs:%vreg0,%vreg9
+	%vreg10<def> = A2_tfrsi 0; IntRegs:%vreg10
+	%R0<def> = COPY %vreg10<kill>; IntRegs:%vreg10
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use,kill>
+
+# End machine code for function symbol2uvlc.
+
+# After Machine Natural Loop Construction:
+# Machine code for function symbol2uvlc: SSA
+Function Live Ins: %R0 in %vreg0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%vreg0<def> = COPY %R0<kill>; IntRegs:%vreg0
+	%vreg1<def> = L2_loadri_io %vreg0, 12; mem:LD4[%cgep4] IntRegs:%vreg1,%vreg0
+	%vreg2<def,tied1> = S2_lsr_i_r_acc %vreg1<kill,tied0>, %vreg1, 31; IntRegs:%vreg2,%vreg1,%vreg1
+	%vreg3<def> = S2_asr_i_r %vreg2<kill>, 1; IntRegs:%vreg3,%vreg2
+	%vreg4<def> = L2_loadri_io %vreg0, 16; mem:LD4[%cgep5] IntRegs:%vreg4,%vreg0
+	%vreg5<def> = A2_tfrsi 1; IntRegs:%vreg5
+	%vreg6<def> = A2_tfrsi -1; IntRegs:%vreg6
+	%vreg7<def,tied1> = S2_asl_r_r_acc %vreg6<kill,tied0>, %vreg5<kill>, %vreg3; IntRegs:%vreg7,%vreg6,%vreg5,%vreg3
+	%vreg8<def> = A2_and %vreg7<kill>, %vreg4<kill>; IntRegs:%vreg8,%vreg7,%vreg4
+	%vreg9<def> = S2_setbit_r %vreg8<kill>, %vreg3<kill>; IntRegs:%vreg9,%vreg8,%vreg3
+	S2_storeri_io %vreg0<kill>, 20, %vreg9<kill>; mem:ST4[%cgep6] IntRegs:%vreg0,%vreg9
+	%vreg10<def> = A2_tfrsi 0; IntRegs:%vreg10
+	%R0<def> = COPY %vreg10<kill>; IntRegs:%vreg10
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use,kill>
+
+# End machine code for function symbol2uvlc.
+
+# After Eliminate PHI nodes for register allocation:
+# Machine code for function symbol2uvlc: Post SSA
+Function Live Ins: %R0 in %vreg0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%vreg0<def> = COPY %R0<kill>; IntRegs:%vreg0
+	%vreg1<def> = L2_loadri_io %vreg0, 12; mem:LD4[%cgep4] IntRegs:%vreg1,%vreg0
+	%vreg2<def,tied1> = S2_lsr_i_r_acc %vreg1<kill,tied0>, %vreg1, 31; IntRegs:%vreg2,%vreg1,%vreg1
+	%vreg3<def> = S2_asr_i_r %vreg2<kill>, 1; IntRegs:%vreg3,%vreg2
+	%vreg4<def> = L2_loadri_io %vreg0, 16; mem:LD4[%cgep5] IntRegs:%vreg4,%vreg0
+	%vreg5<def> = A2_tfrsi 1; IntRegs:%vreg5
+	%vreg6<def> = A2_tfrsi -1; IntRegs:%vreg6
+	%vreg7<def,tied1> = S2_asl_r_r_acc %vreg6<kill,tied0>, %vreg5<kill>, %vreg3; IntRegs:%vreg7,%vreg6,%vreg5,%vreg3
+	%vreg8<def> = A2_and %vreg7<kill>, %vreg4<kill>; IntRegs:%vreg8,%vreg7,%vreg4
+	%vreg9<def> = S2_setbit_r %vreg8<kill>, %vreg3<kill>; IntRegs:%vreg9,%vreg8,%vreg3
+	S2_storeri_io %vreg0<kill>, 20, %vreg9<kill>; mem:ST4[%cgep6] IntRegs:%vreg0,%vreg9
+	%vreg10<def> = A2_tfrsi 0; IntRegs:%vreg10
+	%R0<def> = COPY %vreg10<kill>; IntRegs:%vreg10
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use,kill>
+
+# End machine code for function symbol2uvlc.
+
+# After Two-Address instruction pass:
+# Machine code for function symbol2uvlc: Post SSA
+Function Live Ins: %R0 in %vreg0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%vreg0<def> = COPY %R0<kill>; IntRegs:%vreg0
+	%vreg1<def> = L2_loadri_io %vreg0, 12; mem:LD4[%cgep4] IntRegs:%vreg1,%vreg0
+	%vreg2<def> = COPY %vreg1<kill>; IntRegs:%vreg2,%vreg1
+	%vreg2<def,tied1> = S2_lsr_i_r_acc %vreg2<tied0>, %vreg2, 31; IntRegs:%vreg2
+	%vreg3<def> = S2_asr_i_r %vreg2<kill>, 1; IntRegs:%vreg3,%vreg2
+	%vreg4<def> = L2_loadri_io %vreg0, 16; mem:LD4[%cgep5] IntRegs:%vreg4,%vreg0
+	%vreg5<def> = A2_tfrsi 1; IntRegs:%vreg5
+	%vreg6<def> = A2_tfrsi -1; IntRegs:%vreg6
+	%vreg7<def> = COPY %vreg6<kill>; IntRegs:%vreg7,%vreg6
+	%vreg7<def,tied1> = S2_asl_r_r_acc %vreg7<tied0>, %vreg5<kill>, %vreg3; IntRegs:%vreg7,%vreg5,%vreg3
+	%vreg8<def> = A2_and %vreg7<kill>, %vreg4<kill>; IntRegs:%vreg8,%vreg7,%vreg4
+	%vreg9<def> = S2_setbit_r %vreg8<kill>, %vreg3<kill>; IntRegs:%vreg9,%vreg8,%vreg3
+	S2_storeri_io %vreg0<kill>, 20, %vreg9<kill>; mem:ST4[%cgep6] IntRegs:%vreg0,%vreg9
+	%vreg10<def> = A2_tfrsi 0; IntRegs:%vreg10
+	%R0<def> = COPY %vreg10<kill>; IntRegs:%vreg10
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use,kill>
+
+# End machine code for function symbol2uvlc.
+
+# After Simple Register Coalescing:
+# Machine code for function symbol2uvlc: Post SSA
+Function Live Ins: %R0 in %vreg0
+
+0B	BB#0: derived from LLVM BB %0
+	    Live Ins: %R0
+16B		%vreg0<def> = COPY %R0; IntRegs:%vreg0
+32B		%vreg2<def> = L2_loadri_io %vreg0, 12; mem:LD4[%cgep4] IntRegs:%vreg2,%vreg0
+64B		%vreg2<def,tied1> = S2_lsr_i_r_acc %vreg2<tied0>, %vreg2, 31; IntRegs:%vreg2
+80B		%vreg3<def> = S2_asr_i_r %vreg2, 1; IntRegs:%vreg3,%vreg2
+96B		%vreg4<def> = L2_loadri_io %vreg0, 16; mem:LD4[%cgep5] IntRegs:%vreg4,%vreg0
+112B		%vreg5<def> = A2_tfrsi 1; IntRegs:%vreg5
+128B		%vreg7<def> = A2_tfrsi -1; IntRegs:%vreg7
+160B		%vreg7<def,tied1> = S2_asl_r_r_acc %vreg7<tied0>, %vreg5, %vreg3; IntRegs:%vreg7,%vreg5,%vreg3
+176B		%vreg8<def> = A2_and %vreg7, %vreg4; IntRegs:%vreg8,%vreg7,%vreg4
+192B		%vreg9<def> = S2_setbit_r %vreg8, %vreg3; IntRegs:%vreg9,%vreg8,%vreg3
+208B		S2_storeri_io %vreg0, 20, %vreg9; mem:ST4[%cgep6] IntRegs:%vreg0,%vreg9
+240B		%R0<def> = A2_tfrsi 0
+256B		JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function symbol2uvlc.
+
+# After Hexagon Expand Condsets:
+# Machine code for function symbol2uvlc: Post SSA
+Function Live Ins: %R0 in %vreg0
+
+0B	BB#0: derived from LLVM BB %0
+	    Live Ins: %R0
+16B		%vreg0<def> = COPY %R0; IntRegs:%vreg0
+32B		%vreg2<def> = L2_loadri_io %vreg0, 12; mem:LD4[%cgep4] IntRegs:%vreg2,%vreg0
+64B		%vreg2<def,tied1> = S2_lsr_i_r_acc %vreg2<tied0>, %vreg2, 31; IntRegs:%vreg2
+80B		%vreg3<def> = S2_asr_i_r %vreg2, 1; IntRegs:%vreg3,%vreg2
+96B		%vreg4<def> = L2_loadri_io %vreg0, 16; mem:LD4[%cgep5] IntRegs:%vreg4,%vreg0
+112B		%vreg5<def> = A2_tfrsi 1; IntRegs:%vreg5
+128B		%vreg7<def> = A2_tfrsi -1; IntRegs:%vreg7
+160B		%vreg7<def,tied1> = S2_asl_r_r_acc %vreg7<tied0>, %vreg5, %vreg3; IntRegs:%vreg7,%vreg5,%vreg3
+176B		%vreg8<def> = A2_and %vreg7, %vreg4; IntRegs:%vreg8,%vreg7,%vreg4
+192B		%vreg9<def> = S2_setbit_r %vreg8, %vreg3; IntRegs:%vreg9,%vreg8,%vreg3
+208B		S2_storeri_io %vreg0, 20, %vreg9; mem:ST4[%cgep6] IntRegs:%vreg0,%vreg9
+240B		%R0<def> = A2_tfrsi 0
+256B		JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function symbol2uvlc.
+
+# After Machine Instruction Scheduler:
+# Machine code for function symbol2uvlc: Post SSA
+Function Live Ins: %R0 in %vreg0
+
+0B	BB#0: derived from LLVM BB %0
+	    Live Ins: %R0
+16B		%vreg0<def> = COPY %R0; IntRegs:%vreg0
+24B		%vreg7<def> = A2_tfrsi -1; IntRegs:%vreg7
+28B		%vreg5<def> = A2_tfrsi 1; IntRegs:%vreg5
+32B		%vreg2<def> = L2_loadri_io %vreg0, 12; mem:LD4[%cgep4] IntRegs:%vreg2,%vreg0
+64B		%vreg2<def,tied1> = S2_lsr_i_r_acc %vreg2<tied0>, %vreg2, 31; IntRegs:%vreg2
+80B		%vreg3<def> = S2_asr_i_r %vreg2, 1; IntRegs:%vreg3,%vreg2
+136B		%vreg4<def> = L2_loadri_io %vreg0, 16; mem:LD4[%cgep5] IntRegs:%vreg4,%vreg0
+160B		%vreg7<def,tied1> = S2_asl_r_r_acc %vreg7<tied0>, %vreg5, %vreg3; IntRegs:%vreg7,%vreg5,%vreg3
+176B		%vreg8<def> = A2_and %vreg7, %vreg4; IntRegs:%vreg8,%vreg7,%vreg4
+240B		%R0<def> = A2_tfrsi 0
+244B		%vreg9<def> = S2_setbit_r %vreg8, %vreg3; IntRegs:%vreg9,%vreg8,%vreg3
+248B		S2_storeri_io %vreg0, 20, %vreg9; mem:ST4[%cgep6] IntRegs:%vreg0,%vreg9
+256B		JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function symbol2uvlc.
+
+# After Greedy Register Allocator:
+# Machine code for function symbol2uvlc: Post SSA
+Function Live Ins: %R0 in %vreg0
+
+0B	BB#0: derived from LLVM BB %0
+	    Live Ins: %R0
+16B		%vreg0<def> = COPY %R0; IntRegs:%vreg0
+24B		%vreg7<def> = A2_tfrsi -1; IntRegs:%vreg7
+28B		%vreg5<def> = A2_tfrsi 1; IntRegs:%vreg5
+32B		%vreg2<def> = L2_loadri_io %vreg0, 12; mem:LD4[%cgep4] IntRegs:%vreg2,%vreg0
+64B		%vreg2<def,tied1> = S2_lsr_i_r_acc %vreg2<tied0>, %vreg2, 31; IntRegs:%vreg2
+80B		%vreg3<def> = S2_asr_i_r %vreg2, 1; IntRegs:%vreg3,%vreg2
+136B		%vreg4<def> = L2_loadri_io %vreg0, 16; mem:LD4[%cgep5] IntRegs:%vreg4,%vreg0
+160B		%vreg7<def,tied1> = S2_asl_r_r_acc %vreg7<tied0>, %vreg5, %vreg3; IntRegs:%vreg7,%vreg5,%vreg3
+176B		%vreg8<def> = A2_and %vreg7, %vreg4; IntRegs:%vreg8,%vreg7,%vreg4
+240B		%R0<def> = A2_tfrsi 0
+244B		%vreg9<def> = S2_setbit_r %vreg8, %vreg3; IntRegs:%vreg9,%vreg8,%vreg3
+248B		S2_storeri_io %vreg0, 20, %vreg9; mem:ST4[%cgep6] IntRegs:%vreg0,%vreg9
+256B		JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function symbol2uvlc.
+
+# After Virtual Register Rewriter:
+# Machine code for function symbol2uvlc: Post SSA
+Function Live Ins: %R0
+
+0B	BB#0: derived from LLVM BB %0
+	    Live Ins: %R0
+16B		%R1<def> = COPY %R0
+24B		%R0<def> = A2_tfrsi -1
+28B		%R2<def> = A2_tfrsi 1
+32B		%R3<def> = L2_loadri_io %R1, 12; mem:LD4[%cgep4]
+64B		%R3<def,tied1> = S2_lsr_i_r_acc %R3<kill,tied0>, %R3, 31
+80B		%R3<def> = S2_asr_i_r %R3<kill>, 1
+136B		%R4<def> = L2_loadri_io %R1, 16; mem:LD4[%cgep5]
+160B		%R0<def,tied1> = S2_asl_r_r_acc %R0<kill,tied0>, %R2<kill>, %R3
+176B		%R2<def> = A2_and %R0<kill>, %R4<kill>
+240B		%R0<def> = A2_tfrsi 0
+244B		%R2<def> = S2_setbit_r %R2<kill>, %R3<kill>
+248B		S2_storeri_io %R1<kill>, 20, %R2<kill>; mem:ST4[%cgep6]
+256B		JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function symbol2uvlc.
+
+# After Stack Slot Coloring:
+# Machine code for function symbol2uvlc: Post SSA
+Function Live Ins: %R0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%R1<def> = COPY %R0
+	%R0<def> = A2_tfrsi -1
+	%R2<def> = A2_tfrsi 1
+	%R3<def> = L2_loadri_io %R1, 12; mem:LD4[%cgep4]
+	%R3<def,tied1> = S2_lsr_i_r_acc %R3<kill,tied0>, %R3, 31
+	%R3<def> = S2_asr_i_r %R3<kill>, 1
+	%R4<def> = L2_loadri_io %R1, 16; mem:LD4[%cgep5]
+	%R0<def,tied1> = S2_asl_r_r_acc %R0<kill,tied0>, %R2<kill>, %R3
+	%R2<def> = A2_and %R0<kill>, %R4<kill>
+	%R0<def> = A2_tfrsi 0
+	%R2<def> = S2_setbit_r %R2<kill>, %R3<kill>
+	S2_storeri_io %R1<kill>, 20, %R2<kill>; mem:ST4[%cgep6]
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function symbol2uvlc.
+
+# After Machine Loop Invariant Code Motion:
+# Machine code for function symbol2uvlc: Post SSA
+Function Live Ins: %R0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%R1<def> = COPY %R0
+	%R0<def> = A2_tfrsi -1
+	%R2<def> = A2_tfrsi 1
+	%R3<def> = L2_loadri_io %R1, 12; mem:LD4[%cgep4]
+	%R3<def,tied1> = S2_lsr_i_r_acc %R3<kill,tied0>, %R3, 31
+	%R3<def> = S2_asr_i_r %R3<kill>, 1
+	%R4<def> = L2_loadri_io %R1, 16; mem:LD4[%cgep5]
+	%R0<def,tied1> = S2_asl_r_r_acc %R0<kill,tied0>, %R2<kill>, %R3
+	%R2<def> = A2_and %R0<kill>, %R4<kill>
+	%R0<def> = A2_tfrsi 0
+	%R2<def> = S2_setbit_r %R2<kill>, %R3<kill>
+	S2_storeri_io %R1<kill>, 20, %R2<kill>; mem:ST4[%cgep6]
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function symbol2uvlc.
+
+# After Hexagon RDF optimizations:
+# Machine code for function symbol2uvlc: Post SSA
+Function Live Ins: %R0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%R1<def> = COPY %R0
+	%R0<def> = A2_tfrsi -1
+	%R2<def> = A2_tfrsi 1
+	%R3<def> = L2_loadri_io %R1, 12; mem:LD4[%cgep4]
+	%R3<def,tied1> = S2_lsr_i_r_acc %R3<kill,tied0>, %R3, 31
+	%R3<def> = S2_asr_i_r %R3<kill>, 1
+	%R4<def> = L2_loadri_io %R1, 16; mem:LD4[%cgep5]
+	%R0<def,tied1> = S2_asl_r_r_acc %R0<kill,tied0>, %R2<kill>, %R3
+	%R2<def> = A2_and %R0<kill>, %R4<kill>
+	%R0<def> = A2_tfrsi 0
+	%R2<def> = S2_setbit_r %R2<kill>, %R3<kill>
+	S2_storeri_io %R1<kill>, 20, %R2<kill>; mem:ST4[%cgep6]
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function symbol2uvlc.
+
+# After Shrink Wrapping analysis:
+# Machine code for function symbol2uvlc: Post SSA
+Function Live Ins: %R0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%R1<def> = COPY %R0
+	%R0<def> = A2_tfrsi -1
+	%R2<def> = A2_tfrsi 1
+	%R3<def> = L2_loadri_io %R1, 12; mem:LD4[%cgep4]
+	%R3<def,tied1> = S2_lsr_i_r_acc %R3<kill,tied0>, %R3, 31
+	%R3<def> = S2_asr_i_r %R3<kill>, 1
+	%R4<def> = L2_loadri_io %R1, 16; mem:LD4[%cgep5]
+	%R0<def,tied1> = S2_asl_r_r_acc %R0<kill,tied0>, %R2<kill>, %R3
+	%R2<def> = A2_and %R0<kill>, %R4<kill>
+	%R0<def> = A2_tfrsi 0
+	%R2<def> = S2_setbit_r %R2<kill>, %R3<kill>
+	S2_storeri_io %R1<kill>, 20, %R2<kill>; mem:ST4[%cgep6]
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function symbol2uvlc.
+
+# After Prologue/Epilogue Insertion & Frame Finalization:
+# Machine code for function symbol2uvlc: Post SSA
+Function Live Ins: %R0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%R1<def> = COPY %R0
+	%R0<def> = A2_tfrsi -1
+	%R2<def> = A2_tfrsi 1
+	%R3<def> = L2_loadri_io %R1, 12; mem:LD4[%cgep4]
+	%R3<def,tied1> = S2_lsr_i_r_acc %R3<kill,tied0>, %R3, 31
+	%R3<def> = S2_asr_i_r %R3<kill>, 1
+	%R4<def> = L2_loadri_io %R1, 16; mem:LD4[%cgep5]
+	%R0<def,tied1> = S2_asl_r_r_acc %R0<kill,tied0>, %R2<kill>, %R3
+	%R2<def> = A2_and %R0<kill>, %R4<kill>
+	%R0<def> = A2_tfrsi 0
+	%R2<def> = S2_setbit_r %R2<kill>, %R3<kill>
+	S2_storeri_io %R1<kill>, 20, %R2<kill>; mem:ST4[%cgep6]
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function symbol2uvlc.
+
+# After Machine Copy Propagation Pass:
+# Machine code for function symbol2uvlc: Post SSA
+Function Live Ins: %R0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%R1<def> = COPY %R0
+	%R0<def> = A2_tfrsi -1
+	%R2<def> = A2_tfrsi 1
+	%R3<def> = L2_loadri_io %R1, 12; mem:LD4[%cgep4]
+	%R3<def,tied1> = S2_lsr_i_r_acc %R3<kill,tied0>, %R3, 31
+	%R3<def> = S2_asr_i_r %R3<kill>, 1
+	%R4<def> = L2_loadri_io %R1, 16; mem:LD4[%cgep5]
+	%R0<def,tied1> = S2_asl_r_r_acc %R0<kill,tied0>, %R2<kill>, %R3
+	%R2<def> = A2_and %R0<kill>, %R4<kill>
+	%R0<def> = A2_tfrsi 0
+	%R2<def> = S2_setbit_r %R2<kill>, %R3<kill>
+	S2_storeri_io %R1<kill>, 20, %R2<kill>; mem:ST4[%cgep6]
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function symbol2uvlc.
+
+# After Post-RA pseudo instruction expansion pass:
+# Machine code for function symbol2uvlc: Post SSA
+Function Live Ins: %R0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%R1<def> = A2_tfr %R0
+	%R0<def> = A2_tfrsi -1
+	%R2<def> = A2_tfrsi 1
+	%R3<def> = L2_loadri_io %R1, 12; mem:LD4[%cgep4]
+	%R3<def,tied1> = S2_lsr_i_r_acc %R3<kill,tied0>, %R3, 31
+	%R3<def> = S2_asr_i_r %R3<kill>, 1
+	%R4<def> = L2_loadri_io %R1, 16; mem:LD4[%cgep5]
+	%R0<def,tied1> = S2_asl_r_r_acc %R0<kill,tied0>, %R2<kill>, %R3
+	%R2<def> = A2_and %R0<kill>, %R4<kill>
+	%R0<def> = A2_tfrsi 0
+	%R2<def> = S2_setbit_r %R2<kill>, %R3<kill>
+	S2_storeri_io %R1<kill>, 20, %R2<kill>; mem:ST4[%cgep6]
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function symbol2uvlc.
+
+# After Hexagon Copy-To-Combine Pass:
+# Machine code for function symbol2uvlc: Post SSA
+Function Live Ins: %R0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%R1<def> = A2_tfr %R0
+	%R0<def> = A2_tfrsi -1
+	%R2<def> = A2_tfrsi 1
+	%R3<def> = L2_loadri_io %R1, 12; mem:LD4[%cgep4]
+	%R3<def,tied1> = S2_lsr_i_r_acc %R3<kill,tied0>, %R3, 31
+	%R3<def> = S2_asr_i_r %R3<kill>, 1
+	%R4<def> = L2_loadri_io %R1, 16; mem:LD4[%cgep5]
+	%R0<def,tied1> = S2_asl_r_r_acc %R0<kill,tied0>, %R2<kill>, %R3
+	%R2<def> = A2_and %R0<kill>, %R4<kill>
+	%R0<def> = A2_tfrsi 0
+	%R2<def> = S2_setbit_r %R2<kill>, %R3<kill>
+	S2_storeri_io %R1<kill>, 20, %R2<kill>; mem:ST4[%cgep6]
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function symbol2uvlc.
+
+# After Hexagon Split Const32s and Const64s:
+# Machine code for function symbol2uvlc: Post SSA
+Function Live Ins: %R0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%R1<def> = A2_tfr %R0
+	%R0<def> = A2_tfrsi -1
+	%R2<def> = A2_tfrsi 1
+	%R3<def> = L2_loadri_io %R1, 12; mem:LD4[%cgep4]
+	%R3<def,tied1> = S2_lsr_i_r_acc %R3<kill,tied0>, %R3, 31
+	%R3<def> = S2_asr_i_r %R3<kill>, 1
+	%R4<def> = L2_loadri_io %R1, 16; mem:LD4[%cgep5]
+	%R0<def,tied1> = S2_asl_r_r_acc %R0<kill,tied0>, %R2<kill>, %R3
+	%R2<def> = A2_and %R0<kill>, %R4<kill>
+	%R0<def> = A2_tfrsi 0
+	%R2<def> = S2_setbit_r %R2<kill>, %R3<kill>
+	S2_storeri_io %R1<kill>, 20, %R2<kill>; mem:ST4[%cgep6]
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function symbol2uvlc.
+
+# After Analyze Machine Code For Garbage Collection:
+# Machine code for function symbol2uvlc: Post SSA
+Function Live Ins: %R0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%R1<def> = A2_tfr %R0
+	%R0<def> = A2_tfrsi -1
+	%R2<def> = A2_tfrsi 1
+	%R3<def> = L2_loadri_io %R1, 12; mem:LD4[%cgep4]
+	%R3<def,tied1> = S2_lsr_i_r_acc %R3<kill,tied0>, %R3, 31
+	%R3<def> = S2_asr_i_r %R3<kill>, 1
+	%R4<def> = L2_loadri_io %R1, 16; mem:LD4[%cgep5]
+	%R0<def,tied1> = S2_asl_r_r_acc %R0<kill,tied0>, %R2<kill>, %R3
+	%R2<def> = A2_and %R0<kill>, %R4<kill>
+	%R0<def> = A2_tfrsi 0
+	%R2<def> = S2_setbit_r %R2<kill>, %R3<kill>
+	S2_storeri_io %R1<kill>, 20, %R2<kill>; mem:ST4[%cgep6]
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function symbol2uvlc.
+
+# After Hexagon NewValueJump:
+# Machine code for function symbol2uvlc: Post SSA
+Function Live Ins: %R0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%R1<def> = A2_tfr %R0
+	%R0<def> = A2_tfrsi -1
+	%R2<def> = A2_tfrsi 1
+	%R3<def> = L2_loadri_io %R1, 12; mem:LD4[%cgep4]
+	%R3<def,tied1> = S2_lsr_i_r_acc %R3<kill,tied0>, %R3, 31
+	%R3<def> = S2_asr_i_r %R3<kill>, 1
+	%R4<def> = L2_loadri_io %R1, 16; mem:LD4[%cgep5]
+	%R0<def,tied1> = S2_asl_r_r_acc %R0<kill,tied0>, %R2<kill>, %R3
+	%R2<def> = A2_and %R0<kill>, %R4<kill>
+	%R0<def> = A2_tfrsi 0
+	%R2<def> = S2_setbit_r %R2<kill>, %R3<kill>
+	S2_storeri_io %R1<kill>, 20, %R2<kill>; mem:ST4[%cgep6]
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function symbol2uvlc.
+
+# After Hexagon Expand Predicate Spill Code:
+# Machine code for function symbol2uvlc: Post SSA
+Function Live Ins: %R0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%R1<def> = A2_tfr %R0
+	%R0<def> = A2_tfrsi -1
+	%R2<def> = A2_tfrsi 1
+	%R3<def> = L2_loadri_io %R1, 12; mem:LD4[%cgep4]
+	%R3<def,tied1> = S2_lsr_i_r_acc %R3<kill,tied0>, %R3, 31
+	%R3<def> = S2_asr_i_r %R3<kill>, 1
+	%R4<def> = L2_loadri_io %R1, 16; mem:LD4[%cgep5]
+	%R0<def,tied1> = S2_asl_r_r_acc %R0<kill,tied0>, %R2<kill>, %R3
+	%R2<def> = A2_and %R0<kill>, %R4<kill>
+	%R0<def> = A2_tfrsi 0
+	%R2<def> = S2_setbit_r %R2<kill>, %R3<kill>
+	S2_storeri_io %R1<kill>, 20, %R2<kill>; mem:ST4[%cgep6]
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function symbol2uvlc.
+
+# After Hexagon Hardware Loop Fixup:
+# Machine code for function symbol2uvlc: Post SSA
+Function Live Ins: %R0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%R1<def> = A2_tfr %R0
+	%R0<def> = A2_tfrsi -1
+	%R2<def> = A2_tfrsi 1
+	%R3<def> = L2_loadri_io %R1, 12; mem:LD4[%cgep4]
+	%R3<def,tied1> = S2_lsr_i_r_acc %R3<kill,tied0>, %R3, 31
+	%R3<def> = S2_asr_i_r %R3<kill>, 1
+	%R4<def> = L2_loadri_io %R1, 16; mem:LD4[%cgep5]
+	%R0<def,tied1> = S2_asl_r_r_acc %R0<kill,tied0>, %R2<kill>, %R3
+	%R2<def> = A2_and %R0<kill>, %R4<kill>
+	%R0<def> = A2_tfrsi 0
+	%R2<def> = S2_setbit_r %R2<kill>, %R3<kill>
+	S2_storeri_io %R1<kill>, 20, %R2<kill>; mem:ST4[%cgep6]
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function symbol2uvlc.
+
+# After Hexagon generate mux instructions:
+# Machine code for function symbol2uvlc: Post SSA
+Function Live Ins: %R0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%R1<def> = A2_tfr %R0
+	%R0<def> = A2_tfrsi -1
+	%R2<def> = A2_tfrsi 1
+	%R3<def> = L2_loadri_io %R1, 12; mem:LD4[%cgep4]
+	%R3<def,tied1> = S2_lsr_i_r_acc %R3<kill,tied0>, %R3, 31
+	%R3<def> = S2_asr_i_r %R3<kill>, 1
+	%R4<def> = L2_loadri_io %R1, 16; mem:LD4[%cgep5]
+	%R0<def,tied1> = S2_asl_r_r_acc %R0<kill,tied0>, %R2<kill>, %R3
+	%R2<def> = A2_and %R0<kill>, %R4<kill>
+	%R0<def> = A2_tfrsi 0
+	%R2<def> = S2_setbit_r %R2<kill>, %R3<kill>
+	S2_storeri_io %R1<kill>, 20, %R2<kill>; mem:ST4[%cgep6]
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function symbol2uvlc.
+
+# After Hexagon Packetizer:
+# Machine code for function symbol2uvlc: Post SSA
+Function Live Ins: %R0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	BUNDLE %R1<imp-def>, %R0<imp-def>, %R2<imp-def>, %R0<imp-use>
+	  * %R1<def> = A2_tfr %R0
+	  * %R0<def> = A2_tfrsi -1
+	  * %R2<def> = A2_tfrsi 1
+	%R3<def> = L2_loadri_io %R1, 12; mem:LD4[%cgep4]
+	%R3<def,tied1> = S2_lsr_i_r_acc %R3<kill,tied0>, %R3, 31
+	BUNDLE %R3<imp-def>, %R4<imp-def>, %R3<imp-use,kill>, %R1<imp-use>
+	  * %R3<def> = S2_asr_i_r %R3<kill>, 1
+	  * %R4<def> = L2_loadri_io %R1, 16; mem:LD4[%cgep5]
+	%R0<def,tied1> = S2_asl_r_r_acc %R0<kill,tied0>, %R2<kill>, %R3
+	BUNDLE %R2<imp-def>, %R0<imp-def>, %R0<imp-use,kill>, %R4<imp-use,kill>
+	  * %R2<def> = A2_and %R0<kill>, %R4<kill>
+	  * %R0<def> = A2_tfrsi 0
+	BUNDLE %R2<imp-def,dead>, %PC<imp-def,dead>, %R2<imp-use,kill>, %R3<imp-use,kill>, %R1<imp-use,kill>, %R31<imp-use>, %R0<imp-use>
+	  * %R2<def> = S2_setbit_r %R2<kill>, %R3<kill>
+	  * S2_storerinew_io %R1<kill>, 20, %R2<kill,internal>; mem:ST4[%cgep6]
+	  * JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function symbol2uvlc.
+
+# After Hexagon call frame information:
+# Machine code for function symbol2uvlc: Post SSA
+Function Live Ins: %R0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	BUNDLE %R1<imp-def>, %R0<imp-def>, %R2<imp-def>, %R0<imp-use>
+	  * %R1<def> = A2_tfr %R0
+	  * %R0<def> = A2_tfrsi -1
+	  * %R2<def> = A2_tfrsi 1
+	%R3<def> = L2_loadri_io %R1, 12; mem:LD4[%cgep4]
+	%R3<def,tied1> = S2_lsr_i_r_acc %R3<kill,tied0>, %R3, 31
+	BUNDLE %R3<imp-def>, %R4<imp-def>, %R3<imp-use,kill>, %R1<imp-use>
+	  * %R3<def> = S2_asr_i_r %R3<kill>, 1
+	  * %R4<def> = L2_loadri_io %R1, 16; mem:LD4[%cgep5]
+	%R0<def,tied1> = S2_asl_r_r_acc %R0<kill,tied0>, %R2<kill>, %R3
+	BUNDLE %R2<imp-def>, %R0<imp-def>, %R0<imp-use,kill>, %R4<imp-use,kill>
+	  * %R2<def> = A2_and %R0<kill>, %R4<kill>
+	  * %R0<def> = A2_tfrsi 0
+	BUNDLE %R2<imp-def,dead>, %PC<imp-def,dead>, %R2<imp-use,kill>, %R3<imp-use,kill>, %R1<imp-use,kill>, %R31<imp-use>, %R0<imp-use>
+	  * %R2<def> = S2_setbit_r %R2<kill>, %R3<kill>
+	  * S2_storerinew_io %R1<kill>, 20, %R2<kill,internal>; mem:ST4[%cgep6]
+	  * JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function symbol2uvlc.
+
+# After Contiguously Lay Out Funclets:
+# Machine code for function symbol2uvlc: Post SSA
+Function Live Ins: %R0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	BUNDLE %R1<imp-def>, %R0<imp-def>, %R2<imp-def>, %R0<imp-use>
+	  * %R1<def> = A2_tfr %R0
+	  * %R0<def> = A2_tfrsi -1
+	  * %R2<def> = A2_tfrsi 1
+	%R3<def> = L2_loadri_io %R1, 12; mem:LD4[%cgep4]
+	%R3<def,tied1> = S2_lsr_i_r_acc %R3<kill,tied0>, %R3, 31
+	BUNDLE %R3<imp-def>, %R4<imp-def>, %R3<imp-use,kill>, %R1<imp-use>
+	  * %R3<def> = S2_asr_i_r %R3<kill>, 1
+	  * %R4<def> = L2_loadri_io %R1, 16; mem:LD4[%cgep5]
+	%R0<def,tied1> = S2_asl_r_r_acc %R0<kill,tied0>, %R2<kill>, %R3
+	BUNDLE %R2<imp-def>, %R0<imp-def>, %R0<imp-use,kill>, %R4<imp-use,kill>
+	  * %R2<def> = A2_and %R0<kill>, %R4<kill>
+	  * %R0<def> = A2_tfrsi 0
+	BUNDLE %R2<imp-def,dead>, %PC<imp-def,dead>, %R2<imp-use,kill>, %R3<imp-use,kill>, %R1<imp-use,kill>, %R31<imp-use>, %R0<imp-use>
+	  * %R2<def> = S2_setbit_r %R2<kill>, %R3<kill>
+	  * S2_storerinew_io %R1<kill>, 20, %R2<kill,internal>; mem:ST4[%cgep6]
+	  * JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function symbol2uvlc.
+
+# After StackMap Liveness Analysis:
+# Machine code for function symbol2uvlc: Post SSA
+Function Live Ins: %R0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	BUNDLE %R1<imp-def>, %R0<imp-def>, %R2<imp-def>, %R0<imp-use>
+	  * %R1<def> = A2_tfr %R0
+	  * %R0<def> = A2_tfrsi -1
+	  * %R2<def> = A2_tfrsi 1
+	%R3<def> = L2_loadri_io %R1, 12; mem:LD4[%cgep4]
+	%R3<def,tied1> = S2_lsr_i_r_acc %R3<kill,tied0>, %R3, 31
+	BUNDLE %R3<imp-def>, %R4<imp-def>, %R3<imp-use,kill>, %R1<imp-use>
+	  * %R3<def> = S2_asr_i_r %R3<kill>, 1
+	  * %R4<def> = L2_loadri_io %R1, 16; mem:LD4[%cgep5]
+	%R0<def,tied1> = S2_asl_r_r_acc %R0<kill,tied0>, %R2<kill>, %R3
+	BUNDLE %R2<imp-def>, %R0<imp-def>, %R0<imp-use,kill>, %R4<imp-use,kill>
+	  * %R2<def> = A2_and %R0<kill>, %R4<kill>
+	  * %R0<def> = A2_tfrsi 0
+	BUNDLE %R2<imp-def,dead>, %PC<imp-def,dead>, %R2<imp-use,kill>, %R3<imp-use,kill>, %R1<imp-use,kill>, %R31<imp-use>, %R0<imp-use>
+	  * %R2<def> = S2_setbit_r %R2<kill>, %R3<kill>
+	  * S2_storerinew_io %R1<kill>, 20, %R2<kill,internal>; mem:ST4[%cgep6]
+	  * JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function symbol2uvlc.
+
+# After Live DEBUG_VALUE analysis:
+# Machine code for function symbol2uvlc: Post SSA
+Function Live Ins: %R0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	BUNDLE %R1<imp-def>, %R0<imp-def>, %R2<imp-def>, %R0<imp-use>
+	  * %R1<def> = A2_tfr %R0
+	  * %R0<def> = A2_tfrsi -1
+	  * %R2<def> = A2_tfrsi 1
+	%R3<def> = L2_loadri_io %R1, 12; mem:LD4[%cgep4]
+	%R3<def,tied1> = S2_lsr_i_r_acc %R3<kill,tied0>, %R3, 31
+	BUNDLE %R3<imp-def>, %R4<imp-def>, %R3<imp-use,kill>, %R1<imp-use>
+	  * %R3<def> = S2_asr_i_r %R3<kill>, 1
+	  * %R4<def> = L2_loadri_io %R1, 16; mem:LD4[%cgep5]
+	%R0<def,tied1> = S2_asl_r_r_acc %R0<kill,tied0>, %R2<kill>, %R3
+	BUNDLE %R2<imp-def>, %R0<imp-def>, %R0<imp-use,kill>, %R4<imp-use,kill>
+	  * %R2<def> = A2_and %R0<kill>, %R4<kill>
+	  * %R0<def> = A2_tfrsi 0
+	BUNDLE %R2<imp-def,dead>, %PC<imp-def,dead>, %R2<imp-use,kill>, %R3<imp-use,kill>, %R1<imp-use,kill>, %R31<imp-use>, %R0<imp-use>
+	  * %R2<def> = S2_setbit_r %R2<kill>, %R3<kill>
+	  * S2_storerinew_io %R1<kill>, 20, %R2<kill,internal>; mem:ST4[%cgep6]
+	  * JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function symbol2uvlc.
+

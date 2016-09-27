@@ -1,0 +1,1114 @@
+# After Instruction Selection:
+# Machine code for function glVertex2i: SSA
+Function Live Ins: %A0 in %vreg0, %A1 in %vreg1, %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %A0 %A1 %T9 %V0
+	%vreg2<def> = ADDu %V0, %T9; GPR32:%vreg2
+	%vreg1<def> = COPY %A1; GPR32:%vreg1
+	%vreg0<def> = COPY %A0; GPR32:%vreg0
+	%vreg3<def> = LW %vreg2, <ga:@CC>[TF=1]; mem:LD4[GOT] GPR32:%vreg3,%vreg2
+	%vreg4<def> = LW %vreg3<kill>, 0; mem:LD4[@CC](tbaa=!2) GPR32:%vreg4,%vreg3
+	%vreg5<def> = LW %vreg4, 656; mem:LD4[%2](tbaa=!6) GPR32:%vreg5,%vreg4
+	%vreg6<def> = PseudoCVT_S_W %vreg0; FGR32:%vreg6 GPR32:%vreg0
+	%vreg7<def> = MFC1 %vreg6<kill>; GPR32:%vreg7 FGR32:%vreg6
+	%vreg8<def> = PseudoCVT_S_W %vreg1; FGR32:%vreg8 GPR32:%vreg1
+	%vreg9<def> = MFC1 %vreg8<kill>; GPR32:%vreg9 FGR32:%vreg8
+	%vreg10<def> = ADDiu %ZERO, 0; GPR32:%vreg10
+	%vreg11<def> = LUi 16256; GPR32:%vreg11
+	ADJCALLSTACKDOWN 24, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg12<def> = COPY %SP; GPR32:%vreg12
+	SW %vreg11<kill>, %vreg12, 16; mem:ST4[<unknown>] GPR32:%vreg11,%vreg12
+	%A0<def> = COPY %vreg4; GPR32:%vreg4
+	%A1<def> = COPY %vreg7; GPR32:%vreg7
+	%A2<def> = COPY %vreg9; GPR32:%vreg9
+	%A3<def> = COPY %vreg10; GPR32:%vreg10
+	JALRPseudo %vreg5<kill>, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %A0<imp-use>, %A1<imp-use>, %A2<imp-use>, %A3<imp-use>, %SP<imp-def>, ...; GPR32:%vreg5
+	ADJCALLSTACKUP 24, 0, %SP<imp-def,dead>, %SP<imp-use>
+	RetRA
+
+# End machine code for function glVertex2i.
+
+# After Expand ISel Pseudo-instructions:
+# Machine code for function glVertex2i: SSA
+Function Live Ins: %A0 in %vreg0, %A1 in %vreg1, %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %A0 %A1 %T9 %V0
+	%vreg2<def> = ADDu %V0, %T9; GPR32:%vreg2
+	%vreg1<def> = COPY %A1; GPR32:%vreg1
+	%vreg0<def> = COPY %A0; GPR32:%vreg0
+	%vreg3<def> = LW %vreg2, <ga:@CC>[TF=1]; mem:LD4[GOT] GPR32:%vreg3,%vreg2
+	%vreg4<def> = LW %vreg3<kill>, 0; mem:LD4[@CC](tbaa=!2) GPR32:%vreg4,%vreg3
+	%vreg5<def> = LW %vreg4, 656; mem:LD4[%2](tbaa=!6) GPR32:%vreg5,%vreg4
+	%vreg6<def> = PseudoCVT_S_W %vreg0; FGR32:%vreg6 GPR32:%vreg0
+	%vreg7<def> = MFC1 %vreg6<kill>; GPR32:%vreg7 FGR32:%vreg6
+	%vreg8<def> = PseudoCVT_S_W %vreg1; FGR32:%vreg8 GPR32:%vreg1
+	%vreg9<def> = MFC1 %vreg8<kill>; GPR32:%vreg9 FGR32:%vreg8
+	%vreg10<def> = ADDiu %ZERO, 0; GPR32:%vreg10
+	%vreg11<def> = LUi 16256; GPR32:%vreg11
+	ADJCALLSTACKDOWN 24, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg12<def> = COPY %SP; GPR32:%vreg12
+	SW %vreg11<kill>, %vreg12, 16; mem:ST4[<unknown>] GPR32:%vreg11,%vreg12
+	%A0<def> = COPY %vreg4; GPR32:%vreg4
+	%A1<def> = COPY %vreg7; GPR32:%vreg7
+	%A2<def> = COPY %vreg9; GPR32:%vreg9
+	%A3<def> = COPY %vreg10; GPR32:%vreg10
+	JALRPseudo %vreg5<kill>, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %A0<imp-use>, %A1<imp-use>, %A2<imp-use>, %A3<imp-use>, %SP<imp-def>, ...; GPR32:%vreg5
+	ADJCALLSTACKUP 24, 0, %SP<imp-def,dead>, %SP<imp-use>
+	RetRA
+
+# End machine code for function glVertex2i.
+
+# After Mips OptimizePICCall:
+# Machine code for function glVertex2i: SSA
+Function Live Ins: %A0 in %vreg0, %A1 in %vreg1, %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %A0 %A1 %T9 %V0
+	%vreg2<def> = ADDu %V0, %T9; GPR32:%vreg2
+	%vreg1<def> = COPY %A1; GPR32:%vreg1
+	%vreg0<def> = COPY %A0; GPR32:%vreg0
+	%vreg3<def> = LW %vreg2, <ga:@CC>[TF=1]; mem:LD4[GOT] GPR32:%vreg3,%vreg2
+	%vreg4<def> = LW %vreg3<kill>, 0; mem:LD4[@CC](tbaa=!2) GPR32:%vreg4,%vreg3
+	%vreg5<def> = LW %vreg4, 656; mem:LD4[%2](tbaa=!6) GPR32:%vreg5,%vreg4
+	%vreg6<def> = PseudoCVT_S_W %vreg0; FGR32:%vreg6 GPR32:%vreg0
+	%vreg7<def> = MFC1 %vreg6<kill>; GPR32:%vreg7 FGR32:%vreg6
+	%vreg8<def> = PseudoCVT_S_W %vreg1; FGR32:%vreg8 GPR32:%vreg1
+	%vreg9<def> = MFC1 %vreg8<kill>; GPR32:%vreg9 FGR32:%vreg8
+	%vreg10<def> = ADDiu %ZERO, 0; GPR32:%vreg10
+	%vreg11<def> = LUi 16256; GPR32:%vreg11
+	ADJCALLSTACKDOWN 24, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg12<def> = COPY %SP; GPR32:%vreg12
+	SW %vreg11<kill>, %vreg12, 16; mem:ST4[<unknown>] GPR32:%vreg11,%vreg12
+	%A0<def> = COPY %vreg4; GPR32:%vreg4
+	%A1<def> = COPY %vreg7; GPR32:%vreg7
+	%A2<def> = COPY %vreg9; GPR32:%vreg9
+	%A3<def> = COPY %vreg10; GPR32:%vreg10
+	%T9<def> = COPY %vreg5; GPR32:%vreg5
+	JALRPseudo %T9<kill>, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %A0<imp-use>, %A1<imp-use>, %A2<imp-use>, %A3<imp-use>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 24, 0, %SP<imp-def,dead>, %SP<imp-use>
+	RetRA
+
+# End machine code for function glVertex2i.
+
+# After Tail Duplication:
+# Machine code for function glVertex2i: SSA
+Function Live Ins: %A0 in %vreg0, %A1 in %vreg1, %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %A0 %A1 %T9 %V0
+	%vreg2<def> = ADDu %V0, %T9; GPR32:%vreg2
+	%vreg1<def> = COPY %A1; GPR32:%vreg1
+	%vreg0<def> = COPY %A0; GPR32:%vreg0
+	%vreg3<def> = LW %vreg2, <ga:@CC>[TF=1]; mem:LD4[GOT] GPR32:%vreg3,%vreg2
+	%vreg4<def> = LW %vreg3<kill>, 0; mem:LD4[@CC](tbaa=!2) GPR32:%vreg4,%vreg3
+	%vreg5<def> = LW %vreg4, 656; mem:LD4[%2](tbaa=!6) GPR32:%vreg5,%vreg4
+	%vreg6<def> = PseudoCVT_S_W %vreg0; FGR32:%vreg6 GPR32:%vreg0
+	%vreg7<def> = MFC1 %vreg6<kill>; GPR32:%vreg7 FGR32:%vreg6
+	%vreg8<def> = PseudoCVT_S_W %vreg1; FGR32:%vreg8 GPR32:%vreg1
+	%vreg9<def> = MFC1 %vreg8<kill>; GPR32:%vreg9 FGR32:%vreg8
+	%vreg10<def> = ADDiu %ZERO, 0; GPR32:%vreg10
+	%vreg11<def> = LUi 16256; GPR32:%vreg11
+	ADJCALLSTACKDOWN 24, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg12<def> = COPY %SP; GPR32:%vreg12
+	SW %vreg11<kill>, %vreg12, 16; mem:ST4[<unknown>] GPR32:%vreg11,%vreg12
+	%A0<def> = COPY %vreg4; GPR32:%vreg4
+	%A1<def> = COPY %vreg7; GPR32:%vreg7
+	%A2<def> = COPY %vreg9; GPR32:%vreg9
+	%A3<def> = COPY %vreg10; GPR32:%vreg10
+	%T9<def> = COPY %vreg5; GPR32:%vreg5
+	JALRPseudo %T9<kill>, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %A0<imp-use>, %A1<imp-use>, %A2<imp-use>, %A3<imp-use>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 24, 0, %SP<imp-def,dead>, %SP<imp-use>
+	RetRA
+
+# End machine code for function glVertex2i.
+
+# After Optimize machine instruction PHIs:
+# Machine code for function glVertex2i: SSA
+Function Live Ins: %A0 in %vreg0, %A1 in %vreg1, %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %A0 %A1 %T9 %V0
+	%vreg2<def> = ADDu %V0, %T9; GPR32:%vreg2
+	%vreg1<def> = COPY %A1; GPR32:%vreg1
+	%vreg0<def> = COPY %A0; GPR32:%vreg0
+	%vreg3<def> = LW %vreg2, <ga:@CC>[TF=1]; mem:LD4[GOT] GPR32:%vreg3,%vreg2
+	%vreg4<def> = LW %vreg3<kill>, 0; mem:LD4[@CC](tbaa=!2) GPR32:%vreg4,%vreg3
+	%vreg5<def> = LW %vreg4, 656; mem:LD4[%2](tbaa=!6) GPR32:%vreg5,%vreg4
+	%vreg6<def> = PseudoCVT_S_W %vreg0; FGR32:%vreg6 GPR32:%vreg0
+	%vreg7<def> = MFC1 %vreg6<kill>; GPR32:%vreg7 FGR32:%vreg6
+	%vreg8<def> = PseudoCVT_S_W %vreg1; FGR32:%vreg8 GPR32:%vreg1
+	%vreg9<def> = MFC1 %vreg8<kill>; GPR32:%vreg9 FGR32:%vreg8
+	%vreg10<def> = ADDiu %ZERO, 0; GPR32:%vreg10
+	%vreg11<def> = LUi 16256; GPR32:%vreg11
+	ADJCALLSTACKDOWN 24, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg12<def> = COPY %SP; GPR32:%vreg12
+	SW %vreg11<kill>, %vreg12, 16; mem:ST4[<unknown>] GPR32:%vreg11,%vreg12
+	%A0<def> = COPY %vreg4; GPR32:%vreg4
+	%A1<def> = COPY %vreg7; GPR32:%vreg7
+	%A2<def> = COPY %vreg9; GPR32:%vreg9
+	%A3<def> = COPY %vreg10; GPR32:%vreg10
+	%T9<def> = COPY %vreg5; GPR32:%vreg5
+	JALRPseudo %T9<kill>, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %A0<imp-use>, %A1<imp-use>, %A2<imp-use>, %A3<imp-use>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 24, 0, %SP<imp-def,dead>, %SP<imp-use>
+	RetRA
+
+# End machine code for function glVertex2i.
+
+# After Merge disjoint stack slots:
+# Machine code for function glVertex2i: SSA
+Function Live Ins: %A0 in %vreg0, %A1 in %vreg1, %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %A0 %A1 %T9 %V0
+	%vreg2<def> = ADDu %V0, %T9; GPR32:%vreg2
+	%vreg1<def> = COPY %A1; GPR32:%vreg1
+	%vreg0<def> = COPY %A0; GPR32:%vreg0
+	%vreg3<def> = LW %vreg2, <ga:@CC>[TF=1]; mem:LD4[GOT] GPR32:%vreg3,%vreg2
+	%vreg4<def> = LW %vreg3<kill>, 0; mem:LD4[@CC](tbaa=!2) GPR32:%vreg4,%vreg3
+	%vreg5<def> = LW %vreg4, 656; mem:LD4[%2](tbaa=!6) GPR32:%vreg5,%vreg4
+	%vreg6<def> = PseudoCVT_S_W %vreg0; FGR32:%vreg6 GPR32:%vreg0
+	%vreg7<def> = MFC1 %vreg6<kill>; GPR32:%vreg7 FGR32:%vreg6
+	%vreg8<def> = PseudoCVT_S_W %vreg1; FGR32:%vreg8 GPR32:%vreg1
+	%vreg9<def> = MFC1 %vreg8<kill>; GPR32:%vreg9 FGR32:%vreg8
+	%vreg10<def> = ADDiu %ZERO, 0; GPR32:%vreg10
+	%vreg11<def> = LUi 16256; GPR32:%vreg11
+	ADJCALLSTACKDOWN 24, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg12<def> = COPY %SP; GPR32:%vreg12
+	SW %vreg11<kill>, %vreg12, 16; mem:ST4[<unknown>] GPR32:%vreg11,%vreg12
+	%A0<def> = COPY %vreg4; GPR32:%vreg4
+	%A1<def> = COPY %vreg7; GPR32:%vreg7
+	%A2<def> = COPY %vreg9; GPR32:%vreg9
+	%A3<def> = COPY %vreg10; GPR32:%vreg10
+	%T9<def> = COPY %vreg5; GPR32:%vreg5
+	JALRPseudo %T9<kill>, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %A0<imp-use>, %A1<imp-use>, %A2<imp-use>, %A3<imp-use>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 24, 0, %SP<imp-def,dead>, %SP<imp-use>
+	RetRA
+
+# End machine code for function glVertex2i.
+
+# After Local Stack Slot Allocation:
+# Machine code for function glVertex2i: SSA
+Function Live Ins: %A0 in %vreg0, %A1 in %vreg1, %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %A0 %A1 %T9 %V0
+	%vreg2<def> = ADDu %V0, %T9; GPR32:%vreg2
+	%vreg1<def> = COPY %A1; GPR32:%vreg1
+	%vreg0<def> = COPY %A0; GPR32:%vreg0
+	%vreg3<def> = LW %vreg2, <ga:@CC>[TF=1]; mem:LD4[GOT] GPR32:%vreg3,%vreg2
+	%vreg4<def> = LW %vreg3<kill>, 0; mem:LD4[@CC](tbaa=!2) GPR32:%vreg4,%vreg3
+	%vreg5<def> = LW %vreg4, 656; mem:LD4[%2](tbaa=!6) GPR32:%vreg5,%vreg4
+	%vreg6<def> = PseudoCVT_S_W %vreg0; FGR32:%vreg6 GPR32:%vreg0
+	%vreg7<def> = MFC1 %vreg6<kill>; GPR32:%vreg7 FGR32:%vreg6
+	%vreg8<def> = PseudoCVT_S_W %vreg1; FGR32:%vreg8 GPR32:%vreg1
+	%vreg9<def> = MFC1 %vreg8<kill>; GPR32:%vreg9 FGR32:%vreg8
+	%vreg10<def> = ADDiu %ZERO, 0; GPR32:%vreg10
+	%vreg11<def> = LUi 16256; GPR32:%vreg11
+	ADJCALLSTACKDOWN 24, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg12<def> = COPY %SP; GPR32:%vreg12
+	SW %vreg11<kill>, %vreg12, 16; mem:ST4[<unknown>] GPR32:%vreg11,%vreg12
+	%A0<def> = COPY %vreg4; GPR32:%vreg4
+	%A1<def> = COPY %vreg7; GPR32:%vreg7
+	%A2<def> = COPY %vreg9; GPR32:%vreg9
+	%A3<def> = COPY %vreg10; GPR32:%vreg10
+	%T9<def> = COPY %vreg5; GPR32:%vreg5
+	JALRPseudo %T9<kill>, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %A0<imp-use>, %A1<imp-use>, %A2<imp-use>, %A3<imp-use>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 24, 0, %SP<imp-def,dead>, %SP<imp-use>
+	RetRA
+
+# End machine code for function glVertex2i.
+
+# After Remove dead machine instructions:
+# Machine code for function glVertex2i: SSA
+Function Live Ins: %A0 in %vreg0, %A1 in %vreg1, %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %A0 %A1 %T9 %V0
+	%vreg2<def> = ADDu %V0, %T9; GPR32:%vreg2
+	%vreg1<def> = COPY %A1; GPR32:%vreg1
+	%vreg0<def> = COPY %A0; GPR32:%vreg0
+	%vreg3<def> = LW %vreg2, <ga:@CC>[TF=1]; mem:LD4[GOT] GPR32:%vreg3,%vreg2
+	%vreg4<def> = LW %vreg3<kill>, 0; mem:LD4[@CC](tbaa=!2) GPR32:%vreg4,%vreg3
+	%vreg5<def> = LW %vreg4, 656; mem:LD4[%2](tbaa=!6) GPR32:%vreg5,%vreg4
+	%vreg6<def> = PseudoCVT_S_W %vreg0; FGR32:%vreg6 GPR32:%vreg0
+	%vreg7<def> = MFC1 %vreg6<kill>; GPR32:%vreg7 FGR32:%vreg6
+	%vreg8<def> = PseudoCVT_S_W %vreg1; FGR32:%vreg8 GPR32:%vreg1
+	%vreg9<def> = MFC1 %vreg8<kill>; GPR32:%vreg9 FGR32:%vreg8
+	%vreg10<def> = ADDiu %ZERO, 0; GPR32:%vreg10
+	%vreg11<def> = LUi 16256; GPR32:%vreg11
+	ADJCALLSTACKDOWN 24, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg12<def> = COPY %SP; GPR32:%vreg12
+	SW %vreg11<kill>, %vreg12, 16; mem:ST4[<unknown>] GPR32:%vreg11,%vreg12
+	%A0<def> = COPY %vreg4; GPR32:%vreg4
+	%A1<def> = COPY %vreg7; GPR32:%vreg7
+	%A2<def> = COPY %vreg9; GPR32:%vreg9
+	%A3<def> = COPY %vreg10; GPR32:%vreg10
+	%T9<def> = COPY %vreg5; GPR32:%vreg5
+	JALRPseudo %T9<kill>, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %A0<imp-use>, %A1<imp-use>, %A2<imp-use>, %A3<imp-use>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 24, 0, %SP<imp-def,dead>, %SP<imp-use>
+	RetRA
+
+# End machine code for function glVertex2i.
+
+# After Machine Loop Invariant Code Motion:
+# Machine code for function glVertex2i: SSA
+Function Live Ins: %A0 in %vreg0, %A1 in %vreg1, %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %A0 %A1 %T9 %V0
+	%vreg2<def> = ADDu %V0, %T9; GPR32:%vreg2
+	%vreg1<def> = COPY %A1; GPR32:%vreg1
+	%vreg0<def> = COPY %A0; GPR32:%vreg0
+	%vreg3<def> = LW %vreg2, <ga:@CC>[TF=1]; mem:LD4[GOT] GPR32:%vreg3,%vreg2
+	%vreg4<def> = LW %vreg3<kill>, 0; mem:LD4[@CC](tbaa=!2) GPR32:%vreg4,%vreg3
+	%vreg5<def> = LW %vreg4, 656; mem:LD4[%2](tbaa=!6) GPR32:%vreg5,%vreg4
+	%vreg6<def> = PseudoCVT_S_W %vreg0; FGR32:%vreg6 GPR32:%vreg0
+	%vreg7<def> = MFC1 %vreg6<kill>; GPR32:%vreg7 FGR32:%vreg6
+	%vreg8<def> = PseudoCVT_S_W %vreg1; FGR32:%vreg8 GPR32:%vreg1
+	%vreg9<def> = MFC1 %vreg8<kill>; GPR32:%vreg9 FGR32:%vreg8
+	%vreg10<def> = ADDiu %ZERO, 0; GPR32:%vreg10
+	%vreg11<def> = LUi 16256; GPR32:%vreg11
+	ADJCALLSTACKDOWN 24, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg12<def> = COPY %SP; GPR32:%vreg12
+	SW %vreg11<kill>, %vreg12, 16; mem:ST4[<unknown>] GPR32:%vreg11,%vreg12
+	%A0<def> = COPY %vreg4; GPR32:%vreg4
+	%A1<def> = COPY %vreg7; GPR32:%vreg7
+	%A2<def> = COPY %vreg9; GPR32:%vreg9
+	%A3<def> = COPY %vreg10; GPR32:%vreg10
+	%T9<def> = COPY %vreg5; GPR32:%vreg5
+	JALRPseudo %T9<kill>, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %A0<imp-use>, %A1<imp-use>, %A2<imp-use>, %A3<imp-use>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 24, 0, %SP<imp-def,dead>, %SP<imp-use>
+	RetRA
+
+# End machine code for function glVertex2i.
+
+# After Machine Common Subexpression Elimination:
+# Machine code for function glVertex2i: SSA
+Function Live Ins: %A0 in %vreg0, %A1 in %vreg1, %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %A0 %A1 %T9 %V0
+	%vreg2<def> = ADDu %V0, %T9; GPR32:%vreg2
+	%vreg1<def> = COPY %A1; GPR32:%vreg1
+	%vreg0<def> = COPY %A0; GPR32:%vreg0
+	%vreg3<def> = LW %vreg2, <ga:@CC>[TF=1]; mem:LD4[GOT] GPR32:%vreg3,%vreg2
+	%vreg4<def> = LW %vreg3<kill>, 0; mem:LD4[@CC](tbaa=!2) GPR32:%vreg4,%vreg3
+	%vreg5<def> = LW %vreg4, 656; mem:LD4[%2](tbaa=!6) GPR32:%vreg5,%vreg4
+	%vreg6<def> = PseudoCVT_S_W %vreg0; FGR32:%vreg6 GPR32:%vreg0
+	%vreg7<def> = MFC1 %vreg6<kill>; GPR32:%vreg7 FGR32:%vreg6
+	%vreg8<def> = PseudoCVT_S_W %vreg1; FGR32:%vreg8 GPR32:%vreg1
+	%vreg9<def> = MFC1 %vreg8<kill>; GPR32:%vreg9 FGR32:%vreg8
+	%vreg10<def> = ADDiu %ZERO, 0; GPR32:%vreg10
+	%vreg11<def> = LUi 16256; GPR32:%vreg11
+	ADJCALLSTACKDOWN 24, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg12<def> = COPY %SP; GPR32:%vreg12
+	SW %vreg11<kill>, %vreg12, 16; mem:ST4[<unknown>] GPR32:%vreg11,%vreg12
+	%A0<def> = COPY %vreg4; GPR32:%vreg4
+	%A1<def> = COPY %vreg7; GPR32:%vreg7
+	%A2<def> = COPY %vreg9; GPR32:%vreg9
+	%A3<def> = COPY %vreg10; GPR32:%vreg10
+	%T9<def> = COPY %vreg5; GPR32:%vreg5
+	JALRPseudo %T9<kill>, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %A0<imp-use>, %A1<imp-use>, %A2<imp-use>, %A3<imp-use>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 24, 0, %SP<imp-def,dead>, %SP<imp-use>
+	RetRA
+
+# End machine code for function glVertex2i.
+
+# After Machine code sinking:
+# Machine code for function glVertex2i: SSA
+Function Live Ins: %A0 in %vreg0, %A1 in %vreg1, %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %A0 %A1 %T9 %V0
+	%vreg2<def> = ADDu %V0, %T9; GPR32:%vreg2
+	%vreg1<def> = COPY %A1; GPR32:%vreg1
+	%vreg0<def> = COPY %A0; GPR32:%vreg0
+	%vreg3<def> = LW %vreg2, <ga:@CC>[TF=1]; mem:LD4[GOT] GPR32:%vreg3,%vreg2
+	%vreg4<def> = LW %vreg3<kill>, 0; mem:LD4[@CC](tbaa=!2) GPR32:%vreg4,%vreg3
+	%vreg5<def> = LW %vreg4, 656; mem:LD4[%2](tbaa=!6) GPR32:%vreg5,%vreg4
+	%vreg6<def> = PseudoCVT_S_W %vreg0; FGR32:%vreg6 GPR32:%vreg0
+	%vreg7<def> = MFC1 %vreg6<kill>; GPR32:%vreg7 FGR32:%vreg6
+	%vreg8<def> = PseudoCVT_S_W %vreg1; FGR32:%vreg8 GPR32:%vreg1
+	%vreg9<def> = MFC1 %vreg8<kill>; GPR32:%vreg9 FGR32:%vreg8
+	%vreg10<def> = ADDiu %ZERO, 0; GPR32:%vreg10
+	%vreg11<def> = LUi 16256; GPR32:%vreg11
+	ADJCALLSTACKDOWN 24, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg12<def> = COPY %SP; GPR32:%vreg12
+	SW %vreg11<kill>, %vreg12, 16; mem:ST4[<unknown>] GPR32:%vreg11,%vreg12
+	%A0<def> = COPY %vreg4; GPR32:%vreg4
+	%A1<def> = COPY %vreg7; GPR32:%vreg7
+	%A2<def> = COPY %vreg9; GPR32:%vreg9
+	%A3<def> = COPY %vreg10; GPR32:%vreg10
+	%T9<def> = COPY %vreg5; GPR32:%vreg5
+	JALRPseudo %T9<kill>, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %A0<imp-use>, %A1<imp-use>, %A2<imp-use>, %A3<imp-use>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 24, 0, %SP<imp-def,dead>, %SP<imp-use>
+	RetRA
+
+# End machine code for function glVertex2i.
+
+# After Peephole Optimizations:
+# Machine code for function glVertex2i: SSA
+Function Live Ins: %A0 in %vreg0, %A1 in %vreg1, %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %A0 %A1 %T9 %V0
+	%vreg2<def> = ADDu %V0, %T9; GPR32:%vreg2
+	%vreg1<def> = COPY %A1; GPR32:%vreg1
+	%vreg0<def> = COPY %A0; GPR32:%vreg0
+	%vreg3<def> = LW %vreg2, <ga:@CC>[TF=1]; mem:LD4[GOT] GPR32:%vreg3,%vreg2
+	%vreg4<def> = LW %vreg3<kill>, 0; mem:LD4[@CC](tbaa=!2) GPR32:%vreg4,%vreg3
+	%vreg5<def> = LW %vreg4, 656; mem:LD4[%2](tbaa=!6) GPR32:%vreg5,%vreg4
+	%vreg6<def> = PseudoCVT_S_W %vreg0; FGR32:%vreg6 GPR32:%vreg0
+	%vreg7<def> = MFC1 %vreg6<kill>; GPR32:%vreg7 FGR32:%vreg6
+	%vreg8<def> = PseudoCVT_S_W %vreg1; FGR32:%vreg8 GPR32:%vreg1
+	%vreg9<def> = MFC1 %vreg8<kill>; GPR32:%vreg9 FGR32:%vreg8
+	%vreg10<def> = ADDiu %ZERO, 0; GPR32:%vreg10
+	%vreg11<def> = LUi 16256; GPR32:%vreg11
+	ADJCALLSTACKDOWN 24, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg12<def> = COPY %SP; GPR32:%vreg12
+	SW %vreg11<kill>, %vreg12, 16; mem:ST4[<unknown>] GPR32:%vreg11,%vreg12
+	%A0<def> = COPY %vreg4; GPR32:%vreg4
+	%A1<def> = COPY %vreg7; GPR32:%vreg7
+	%A2<def> = COPY %vreg9; GPR32:%vreg9
+	%A3<def> = COPY %vreg10; GPR32:%vreg10
+	%T9<def> = COPY %vreg5; GPR32:%vreg5
+	JALRPseudo %T9<kill>, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %A0<imp-use>, %A1<imp-use>, %A2<imp-use>, %A3<imp-use>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 24, 0, %SP<imp-def,dead>, %SP<imp-use>
+	RetRA
+
+# End machine code for function glVertex2i.
+
+# After Remove dead machine instructions:
+# Machine code for function glVertex2i: SSA
+Function Live Ins: %A0 in %vreg0, %A1 in %vreg1, %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %A0 %A1 %T9 %V0
+	%vreg2<def> = ADDu %V0, %T9; GPR32:%vreg2
+	%vreg1<def> = COPY %A1; GPR32:%vreg1
+	%vreg0<def> = COPY %A0; GPR32:%vreg0
+	%vreg3<def> = LW %vreg2, <ga:@CC>[TF=1]; mem:LD4[GOT] GPR32:%vreg3,%vreg2
+	%vreg4<def> = LW %vreg3<kill>, 0; mem:LD4[@CC](tbaa=!2) GPR32:%vreg4,%vreg3
+	%vreg5<def> = LW %vreg4, 656; mem:LD4[%2](tbaa=!6) GPR32:%vreg5,%vreg4
+	%vreg6<def> = PseudoCVT_S_W %vreg0; FGR32:%vreg6 GPR32:%vreg0
+	%vreg7<def> = MFC1 %vreg6<kill>; GPR32:%vreg7 FGR32:%vreg6
+	%vreg8<def> = PseudoCVT_S_W %vreg1; FGR32:%vreg8 GPR32:%vreg1
+	%vreg9<def> = MFC1 %vreg8<kill>; GPR32:%vreg9 FGR32:%vreg8
+	%vreg10<def> = ADDiu %ZERO, 0; GPR32:%vreg10
+	%vreg11<def> = LUi 16256; GPR32:%vreg11
+	ADJCALLSTACKDOWN 24, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg12<def> = COPY %SP; GPR32:%vreg12
+	SW %vreg11<kill>, %vreg12, 16; mem:ST4[<unknown>] GPR32:%vreg11,%vreg12
+	%A0<def> = COPY %vreg4; GPR32:%vreg4
+	%A1<def> = COPY %vreg7; GPR32:%vreg7
+	%A2<def> = COPY %vreg9; GPR32:%vreg9
+	%A3<def> = COPY %vreg10; GPR32:%vreg10
+	%T9<def> = COPY %vreg5; GPR32:%vreg5
+	JALRPseudo %T9<kill>, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %A0<imp-use>, %A1<imp-use>, %A2<imp-use>, %A3<imp-use>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 24, 0, %SP<imp-def,dead>, %SP<imp-use>
+	RetRA
+
+# End machine code for function glVertex2i.
+
+# After Process Implicit Definitions:
+# Machine code for function glVertex2i: SSA
+Function Live Ins: %A0 in %vreg0, %A1 in %vreg1, %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %A0 %A1 %T9 %V0
+	%vreg2<def> = ADDu %V0, %T9; GPR32:%vreg2
+	%vreg1<def> = COPY %A1; GPR32:%vreg1
+	%vreg0<def> = COPY %A0; GPR32:%vreg0
+	%vreg3<def> = LW %vreg2, <ga:@CC>[TF=1]; mem:LD4[GOT] GPR32:%vreg3,%vreg2
+	%vreg4<def> = LW %vreg3<kill>, 0; mem:LD4[@CC](tbaa=!2) GPR32:%vreg4,%vreg3
+	%vreg5<def> = LW %vreg4, 656; mem:LD4[%2](tbaa=!6) GPR32:%vreg5,%vreg4
+	%vreg6<def> = PseudoCVT_S_W %vreg0; FGR32:%vreg6 GPR32:%vreg0
+	%vreg7<def> = MFC1 %vreg6<kill>; GPR32:%vreg7 FGR32:%vreg6
+	%vreg8<def> = PseudoCVT_S_W %vreg1; FGR32:%vreg8 GPR32:%vreg1
+	%vreg9<def> = MFC1 %vreg8<kill>; GPR32:%vreg9 FGR32:%vreg8
+	%vreg10<def> = ADDiu %ZERO, 0; GPR32:%vreg10
+	%vreg11<def> = LUi 16256; GPR32:%vreg11
+	ADJCALLSTACKDOWN 24, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg12<def> = COPY %SP; GPR32:%vreg12
+	SW %vreg11<kill>, %vreg12, 16; mem:ST4[<unknown>] GPR32:%vreg11,%vreg12
+	%A0<def> = COPY %vreg4; GPR32:%vreg4
+	%A1<def> = COPY %vreg7; GPR32:%vreg7
+	%A2<def> = COPY %vreg9; GPR32:%vreg9
+	%A3<def> = COPY %vreg10; GPR32:%vreg10
+	%T9<def> = COPY %vreg5; GPR32:%vreg5
+	JALRPseudo %T9<kill>, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %A0<imp-use>, %A1<imp-use>, %A2<imp-use>, %A3<imp-use>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 24, 0, %SP<imp-def,dead>, %SP<imp-use>
+	RetRA
+
+# End machine code for function glVertex2i.
+
+# After Live Variable Analysis:
+# Machine code for function glVertex2i: SSA
+Function Live Ins: %A0 in %vreg0, %A1 in %vreg1, %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %A0 %A1 %T9 %V0
+	%vreg2<def> = ADDu %V0<kill>, %T9<kill>; GPR32:%vreg2
+	%vreg1<def> = COPY %A1<kill>; GPR32:%vreg1
+	%vreg0<def> = COPY %A0<kill>; GPR32:%vreg0
+	%vreg3<def> = LW %vreg2<kill>, <ga:@CC>[TF=1]; mem:LD4[GOT] GPR32:%vreg3,%vreg2
+	%vreg4<def> = LW %vreg3<kill>, 0; mem:LD4[@CC](tbaa=!2) GPR32:%vreg4,%vreg3
+	%vreg5<def> = LW %vreg4, 656; mem:LD4[%2](tbaa=!6) GPR32:%vreg5,%vreg4
+	%vreg6<def> = PseudoCVT_S_W %vreg0<kill>; FGR32:%vreg6 GPR32:%vreg0
+	%vreg7<def> = MFC1 %vreg6<kill>; GPR32:%vreg7 FGR32:%vreg6
+	%vreg8<def> = PseudoCVT_S_W %vreg1<kill>; FGR32:%vreg8 GPR32:%vreg1
+	%vreg9<def> = MFC1 %vreg8<kill>; GPR32:%vreg9 FGR32:%vreg8
+	%vreg10<def> = ADDiu %ZERO, 0; GPR32:%vreg10
+	%vreg11<def> = LUi 16256; GPR32:%vreg11
+	ADJCALLSTACKDOWN 24, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg12<def> = COPY %SP; GPR32:%vreg12
+	SW %vreg11<kill>, %vreg12<kill>, 16; mem:ST4[<unknown>] GPR32:%vreg11,%vreg12
+	%A0<def> = COPY %vreg4<kill>; GPR32:%vreg4
+	%A1<def> = COPY %vreg7<kill>; GPR32:%vreg7
+	%A2<def> = COPY %vreg9<kill>; GPR32:%vreg9
+	%A3<def> = COPY %vreg10<kill>; GPR32:%vreg10
+	%T9<def> = COPY %vreg5<kill>; GPR32:%vreg5
+	JALRPseudo %T9<kill>, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %A0<imp-use,kill>, %A1<imp-use,kill>, %A2<imp-use,kill>, %A3<imp-use,kill>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 24, 0, %SP<imp-def,dead>, %SP<imp-use>
+	RetRA
+
+# End machine code for function glVertex2i.
+
+# After Machine Natural Loop Construction:
+# Machine code for function glVertex2i: SSA
+Function Live Ins: %A0 in %vreg0, %A1 in %vreg1, %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %A0 %A1 %T9 %V0
+	%vreg2<def> = ADDu %V0<kill>, %T9<kill>; GPR32:%vreg2
+	%vreg1<def> = COPY %A1<kill>; GPR32:%vreg1
+	%vreg0<def> = COPY %A0<kill>; GPR32:%vreg0
+	%vreg3<def> = LW %vreg2<kill>, <ga:@CC>[TF=1]; mem:LD4[GOT] GPR32:%vreg3,%vreg2
+	%vreg4<def> = LW %vreg3<kill>, 0; mem:LD4[@CC](tbaa=!2) GPR32:%vreg4,%vreg3
+	%vreg5<def> = LW %vreg4, 656; mem:LD4[%2](tbaa=!6) GPR32:%vreg5,%vreg4
+	%vreg6<def> = PseudoCVT_S_W %vreg0<kill>; FGR32:%vreg6 GPR32:%vreg0
+	%vreg7<def> = MFC1 %vreg6<kill>; GPR32:%vreg7 FGR32:%vreg6
+	%vreg8<def> = PseudoCVT_S_W %vreg1<kill>; FGR32:%vreg8 GPR32:%vreg1
+	%vreg9<def> = MFC1 %vreg8<kill>; GPR32:%vreg9 FGR32:%vreg8
+	%vreg10<def> = ADDiu %ZERO, 0; GPR32:%vreg10
+	%vreg11<def> = LUi 16256; GPR32:%vreg11
+	ADJCALLSTACKDOWN 24, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg12<def> = COPY %SP; GPR32:%vreg12
+	SW %vreg11<kill>, %vreg12<kill>, 16; mem:ST4[<unknown>] GPR32:%vreg11,%vreg12
+	%A0<def> = COPY %vreg4<kill>; GPR32:%vreg4
+	%A1<def> = COPY %vreg7<kill>; GPR32:%vreg7
+	%A2<def> = COPY %vreg9<kill>; GPR32:%vreg9
+	%A3<def> = COPY %vreg10<kill>; GPR32:%vreg10
+	%T9<def> = COPY %vreg5<kill>; GPR32:%vreg5
+	JALRPseudo %T9<kill>, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %A0<imp-use,kill>, %A1<imp-use,kill>, %A2<imp-use,kill>, %A3<imp-use,kill>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 24, 0, %SP<imp-def,dead>, %SP<imp-use>
+	RetRA
+
+# End machine code for function glVertex2i.
+
+# After Eliminate PHI nodes for register allocation:
+# Machine code for function glVertex2i: Post SSA
+Function Live Ins: %A0 in %vreg0, %A1 in %vreg1, %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %A0 %A1 %T9 %V0
+	%vreg2<def> = ADDu %V0<kill>, %T9<kill>; GPR32:%vreg2
+	%vreg1<def> = COPY %A1<kill>; GPR32:%vreg1
+	%vreg0<def> = COPY %A0<kill>; GPR32:%vreg0
+	%vreg3<def> = LW %vreg2<kill>, <ga:@CC>[TF=1]; mem:LD4[GOT] GPR32:%vreg3,%vreg2
+	%vreg4<def> = LW %vreg3<kill>, 0; mem:LD4[@CC](tbaa=!2) GPR32:%vreg4,%vreg3
+	%vreg5<def> = LW %vreg4, 656; mem:LD4[%2](tbaa=!6) GPR32:%vreg5,%vreg4
+	%vreg6<def> = PseudoCVT_S_W %vreg0<kill>; FGR32:%vreg6 GPR32:%vreg0
+	%vreg7<def> = MFC1 %vreg6<kill>; GPR32:%vreg7 FGR32:%vreg6
+	%vreg8<def> = PseudoCVT_S_W %vreg1<kill>; FGR32:%vreg8 GPR32:%vreg1
+	%vreg9<def> = MFC1 %vreg8<kill>; GPR32:%vreg9 FGR32:%vreg8
+	%vreg10<def> = ADDiu %ZERO, 0; GPR32:%vreg10
+	%vreg11<def> = LUi 16256; GPR32:%vreg11
+	ADJCALLSTACKDOWN 24, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg12<def> = COPY %SP; GPR32:%vreg12
+	SW %vreg11<kill>, %vreg12<kill>, 16; mem:ST4[<unknown>] GPR32:%vreg11,%vreg12
+	%A0<def> = COPY %vreg4<kill>; GPR32:%vreg4
+	%A1<def> = COPY %vreg7<kill>; GPR32:%vreg7
+	%A2<def> = COPY %vreg9<kill>; GPR32:%vreg9
+	%A3<def> = COPY %vreg10<kill>; GPR32:%vreg10
+	%T9<def> = COPY %vreg5<kill>; GPR32:%vreg5
+	JALRPseudo %T9<kill>, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %A0<imp-use,kill>, %A1<imp-use,kill>, %A2<imp-use,kill>, %A3<imp-use,kill>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 24, 0, %SP<imp-def,dead>, %SP<imp-use>
+	RetRA
+
+# End machine code for function glVertex2i.
+
+# After Two-Address instruction pass:
+# Machine code for function glVertex2i: Post SSA
+Function Live Ins: %A0 in %vreg0, %A1 in %vreg1, %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %A0 %A1 %T9 %V0
+	%vreg2<def> = ADDu %V0<kill>, %T9<kill>; GPR32:%vreg2
+	%vreg1<def> = COPY %A1<kill>; GPR32:%vreg1
+	%vreg0<def> = COPY %A0<kill>; GPR32:%vreg0
+	%vreg3<def> = LW %vreg2<kill>, <ga:@CC>[TF=1]; mem:LD4[GOT] GPR32:%vreg3,%vreg2
+	%vreg4<def> = LW %vreg3<kill>, 0; mem:LD4[@CC](tbaa=!2) GPR32:%vreg4,%vreg3
+	%vreg5<def> = LW %vreg4, 656; mem:LD4[%2](tbaa=!6) GPR32:%vreg5,%vreg4
+	%vreg6<def> = PseudoCVT_S_W %vreg0<kill>; FGR32:%vreg6 GPR32:%vreg0
+	%vreg7<def> = MFC1 %vreg6<kill>; GPR32:%vreg7 FGR32:%vreg6
+	%vreg8<def> = PseudoCVT_S_W %vreg1<kill>; FGR32:%vreg8 GPR32:%vreg1
+	%vreg9<def> = MFC1 %vreg8<kill>; GPR32:%vreg9 FGR32:%vreg8
+	%vreg10<def> = ADDiu %ZERO, 0; GPR32:%vreg10
+	%vreg11<def> = LUi 16256; GPR32:%vreg11
+	ADJCALLSTACKDOWN 24, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg12<def> = COPY %SP; GPR32:%vreg12
+	SW %vreg11<kill>, %vreg12<kill>, 16; mem:ST4[<unknown>] GPR32:%vreg11,%vreg12
+	%A0<def> = COPY %vreg4<kill>; GPR32:%vreg4
+	%A1<def> = COPY %vreg7<kill>; GPR32:%vreg7
+	%A2<def> = COPY %vreg9<kill>; GPR32:%vreg9
+	%A3<def> = COPY %vreg10<kill>; GPR32:%vreg10
+	%T9<def> = COPY %vreg5<kill>; GPR32:%vreg5
+	JALRPseudo %T9<kill>, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %A0<imp-use,kill>, %A1<imp-use,kill>, %A2<imp-use,kill>, %A3<imp-use,kill>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 24, 0, %SP<imp-def,dead>, %SP<imp-use>
+	RetRA
+
+# End machine code for function glVertex2i.
+
+# After Simple Register Coalescing:
+# Machine code for function glVertex2i: Post SSA
+Function Live Ins: %A0 in %vreg0, %A1 in %vreg1, %T9, %V0
+
+0B	BB#0: derived from LLVM BB %0
+	    Live Ins: %A0 %A1 %T9 %V0
+16B		%vreg2<def> = ADDu %V0, %T9; GPR32:%vreg2
+32B		%vreg1<def> = COPY %A1; GPR32:%vreg1
+48B		%vreg0<def> = COPY %A0; GPR32:%vreg0
+64B		%vreg3<def> = LW %vreg2, <ga:@CC>[TF=1]; mem:LD4[GOT] GPR32:%vreg3,%vreg2
+80B		%vreg4<def> = LW %vreg3, 0; mem:LD4[@CC](tbaa=!2) GPR32:%vreg4,%vreg3
+96B		%vreg5<def> = LW %vreg4, 656; mem:LD4[%2](tbaa=!6) GPR32:%vreg5,%vreg4
+112B		%vreg6<def> = PseudoCVT_S_W %vreg0; FGR32:%vreg6 GPR32:%vreg0
+128B		%vreg7<def> = MFC1 %vreg6; GPR32:%vreg7 FGR32:%vreg6
+144B		%vreg8<def> = PseudoCVT_S_W %vreg1; FGR32:%vreg8 GPR32:%vreg1
+160B		%vreg9<def> = MFC1 %vreg8; GPR32:%vreg9 FGR32:%vreg8
+192B		%vreg11<def> = LUi 16256; GPR32:%vreg11
+208B		ADJCALLSTACKDOWN 24, %SP<imp-def,dead>, %SP<imp-use>
+240B		SW %vreg11, %SP, 16; mem:ST4[<unknown>] GPR32:%vreg11
+256B		%A0<def> = COPY %vreg4; GPR32:%vreg4
+272B		%A1<def> = COPY %vreg7; GPR32:%vreg7
+288B		%A2<def> = COPY %vreg9; GPR32:%vreg9
+304B		%A3<def> = ADDiu %ZERO, 0
+320B		%T9<def> = COPY %vreg5; GPR32:%vreg5
+336B		JALRPseudo %T9, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %A0<imp-use>, %A1<imp-use>, %A2<imp-use,kill>, %A3<imp-use,kill>, %SP<imp-def>, ...
+352B		ADJCALLSTACKUP 24, 0, %SP<imp-def,dead>, %SP<imp-use>
+368B		RetRA
+
+# End machine code for function glVertex2i.
+
+# After Machine Instruction Scheduler:
+# Machine code for function glVertex2i: Post SSA
+Function Live Ins: %A0 in %vreg0, %A1 in %vreg1, %T9, %V0
+
+0B	BB#0: derived from LLVM BB %0
+	    Live Ins: %A0 %A1 %T9 %V0
+16B		%vreg2<def> = ADDu %V0, %T9; GPR32:%vreg2
+32B		%vreg1<def> = COPY %A1; GPR32:%vreg1
+48B		%vreg0<def> = COPY %A0; GPR32:%vreg0
+64B		%vreg3<def> = LW %vreg2, <ga:@CC>[TF=1]; mem:LD4[GOT] GPR32:%vreg3,%vreg2
+80B		%vreg4<def> = LW %vreg3, 0; mem:LD4[@CC](tbaa=!2) GPR32:%vreg4,%vreg3
+96B		%vreg5<def> = LW %vreg4, 656; mem:LD4[%2](tbaa=!6) GPR32:%vreg5,%vreg4
+112B		%vreg6<def> = PseudoCVT_S_W %vreg0; FGR32:%vreg6 GPR32:%vreg0
+128B		%vreg7<def> = MFC1 %vreg6; GPR32:%vreg7 FGR32:%vreg6
+144B		%vreg8<def> = PseudoCVT_S_W %vreg1; FGR32:%vreg8 GPR32:%vreg1
+160B		%vreg9<def> = MFC1 %vreg8; GPR32:%vreg9 FGR32:%vreg8
+192B		%vreg11<def> = LUi 16256; GPR32:%vreg11
+208B		ADJCALLSTACKDOWN 24, %SP<imp-def,dead>, %SP<imp-use>
+240B		SW %vreg11, %SP, 16; mem:ST4[<unknown>] GPR32:%vreg11
+256B		%A0<def> = COPY %vreg4; GPR32:%vreg4
+272B		%A1<def> = COPY %vreg7; GPR32:%vreg7
+288B		%A2<def> = COPY %vreg9; GPR32:%vreg9
+304B		%A3<def> = ADDiu %ZERO, 0
+320B		%T9<def> = COPY %vreg5; GPR32:%vreg5
+336B		JALRPseudo %T9, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %A0<imp-use>, %A1<imp-use>, %A2<imp-use,kill>, %A3<imp-use,kill>, %SP<imp-def>, ...
+352B		ADJCALLSTACKUP 24, 0, %SP<imp-def,dead>, %SP<imp-use>
+368B		RetRA
+
+# End machine code for function glVertex2i.
+
+# After Greedy Register Allocator:
+# Machine code for function glVertex2i: Post SSA
+Function Live Ins: %A0 in %vreg0, %A1 in %vreg1, %T9, %V0
+
+0B	BB#0: derived from LLVM BB %0
+	    Live Ins: %A0 %A1 %T9 %V0
+16B		%vreg2<def> = ADDu %V0, %T9; GPR32:%vreg2
+32B		%vreg1<def> = COPY %A1; GPR32:%vreg1
+48B		%vreg0<def> = COPY %A0; GPR32:%vreg0
+64B		%vreg3<def> = LW %vreg2, <ga:@CC>[TF=1]; mem:LD4[GOT] GPR32:%vreg3,%vreg2
+80B		%vreg4<def> = LW %vreg3, 0; mem:LD4[@CC](tbaa=!2) GPR32:%vreg4,%vreg3
+96B		%vreg5<def> = LW %vreg4, 656; mem:LD4[%2](tbaa=!6) GPR32:%vreg5,%vreg4
+112B		%vreg6<def> = PseudoCVT_S_W %vreg0; FGR32:%vreg6 GPR32:%vreg0
+128B		%vreg7<def> = MFC1 %vreg6; GPR32:%vreg7 FGR32:%vreg6
+144B		%vreg8<def> = PseudoCVT_S_W %vreg1; FGR32:%vreg8 GPR32:%vreg1
+160B		%vreg9<def> = MFC1 %vreg8; GPR32:%vreg9 FGR32:%vreg8
+192B		%vreg11<def> = LUi 16256; GPR32:%vreg11
+208B		ADJCALLSTACKDOWN 24, %SP<imp-def,dead>, %SP<imp-use>
+240B		SW %vreg11, %SP, 16; mem:ST4[<unknown>] GPR32:%vreg11
+256B		%A0<def> = COPY %vreg4; GPR32:%vreg4
+272B		%A1<def> = COPY %vreg7; GPR32:%vreg7
+288B		%A2<def> = COPY %vreg9; GPR32:%vreg9
+304B		%A3<def> = ADDiu %ZERO, 0
+320B		%T9<def> = COPY %vreg5; GPR32:%vreg5
+336B		JALRPseudo %T9, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %A0<imp-use>, %A1<imp-use>, %A2<imp-use>, %A3<imp-use,kill>, %SP<imp-def>, ...
+352B		ADJCALLSTACKUP 24, 0, %SP<imp-def,dead>, %SP<imp-use>
+368B		RetRA
+
+# End machine code for function glVertex2i.
+
+# After Virtual Register Rewriter:
+# Machine code for function glVertex2i: Post SSA
+Function Live Ins: %A0, %A1, %T9, %V0
+
+0B	BB#0: derived from LLVM BB %0
+	    Live Ins: %A0 %A1 %T9 %V0
+16B		%AT<def> = ADDu %V0, %T9
+64B		%AT<def> = LW %AT<kill>, <ga:@CC>[TF=1]; mem:LD4[GOT]
+80B		%AT<def> = LW %AT<kill>, 0; mem:LD4[@CC](tbaa=!2)
+96B		%T9<def> = LW %AT, 656; mem:LD4[%2](tbaa=!6)
+112B		%F0<def> = PseudoCVT_S_W %A0<kill>
+128B		%V0<def> = MFC1 %F0<kill>
+144B		%F0<def> = PseudoCVT_S_W %A1<kill>
+160B		%A2<def> = MFC1 %F0<kill>
+192B		%V1<def> = LUi 16256
+208B		ADJCALLSTACKDOWN 24, %SP<imp-def,dead>, %SP<imp-use>
+240B		SW %V1<kill>, %SP, 16; mem:ST4[<unknown>]
+256B		%A0<def> = COPY %AT<kill>
+272B		%A1<def> = COPY %V0<kill>
+304B		%A3<def> = ADDiu %ZERO, 0
+336B		JALRPseudo %T9, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %A0<imp-use>, %A1<imp-use>, %A2<imp-use>, %A3<imp-use,kill>, %SP<imp-def>, ...
+352B		ADJCALLSTACKUP 24, 0, %SP<imp-def,dead>, %SP<imp-use>
+368B		RetRA
+
+# End machine code for function glVertex2i.
+
+# After Stack Slot Coloring:
+# Machine code for function glVertex2i: Post SSA
+Function Live Ins: %A0, %A1, %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %A0 %A1 %T9 %V0
+	%AT<def> = ADDu %V0, %T9
+	%AT<def> = LW %AT<kill>, <ga:@CC>[TF=1]; mem:LD4[GOT]
+	%AT<def> = LW %AT<kill>, 0; mem:LD4[@CC](tbaa=!2)
+	%T9<def> = LW %AT, 656; mem:LD4[%2](tbaa=!6)
+	%F0<def> = PseudoCVT_S_W %A0<kill>
+	%V0<def> = MFC1 %F0<kill>
+	%F0<def> = PseudoCVT_S_W %A1<kill>
+	%A2<def> = MFC1 %F0<kill>
+	%V1<def> = LUi 16256
+	ADJCALLSTACKDOWN 24, %SP<imp-def,dead>, %SP<imp-use>
+	SW %V1<kill>, %SP, 16; mem:ST4[<unknown>]
+	%A0<def> = COPY %AT<kill>
+	%A1<def> = COPY %V0<kill>
+	%A3<def> = ADDiu %ZERO, 0
+	JALRPseudo %T9, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %A0<imp-use>, %A1<imp-use>, %A2<imp-use>, %A3<imp-use,kill>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 24, 0, %SP<imp-def,dead>, %SP<imp-use>
+	RetRA
+
+# End machine code for function glVertex2i.
+
+# After Machine Loop Invariant Code Motion:
+# Machine code for function glVertex2i: Post SSA
+Function Live Ins: %A0, %A1, %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %A0 %A1 %T9 %V0
+	%AT<def> = ADDu %V0, %T9
+	%AT<def> = LW %AT<kill>, <ga:@CC>[TF=1]; mem:LD4[GOT]
+	%AT<def> = LW %AT<kill>, 0; mem:LD4[@CC](tbaa=!2)
+	%T9<def> = LW %AT, 656; mem:LD4[%2](tbaa=!6)
+	%F0<def> = PseudoCVT_S_W %A0<kill>
+	%V0<def> = MFC1 %F0<kill>
+	%F0<def> = PseudoCVT_S_W %A1<kill>
+	%A2<def> = MFC1 %F0<kill>
+	%V1<def> = LUi 16256
+	ADJCALLSTACKDOWN 24, %SP<imp-def,dead>, %SP<imp-use>
+	SW %V1<kill>, %SP, 16; mem:ST4[<unknown>]
+	%A0<def> = COPY %AT<kill>
+	%A1<def> = COPY %V0<kill>
+	%A3<def> = ADDiu %ZERO, 0
+	JALRPseudo %T9, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %A0<imp-use>, %A1<imp-use>, %A2<imp-use>, %A3<imp-use,kill>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 24, 0, %SP<imp-def,dead>, %SP<imp-use>
+	RetRA
+
+# End machine code for function glVertex2i.
+
+# After Shrink Wrapping analysis:
+# Machine code for function glVertex2i: Post SSA
+Function Live Ins: %A0, %A1, %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %A0 %A1 %T9 %V0
+	%AT<def> = ADDu %V0, %T9
+	%AT<def> = LW %AT<kill>, <ga:@CC>[TF=1]; mem:LD4[GOT]
+	%AT<def> = LW %AT<kill>, 0; mem:LD4[@CC](tbaa=!2)
+	%T9<def> = LW %AT, 656; mem:LD4[%2](tbaa=!6)
+	%F0<def> = PseudoCVT_S_W %A0<kill>
+	%V0<def> = MFC1 %F0<kill>
+	%F0<def> = PseudoCVT_S_W %A1<kill>
+	%A2<def> = MFC1 %F0<kill>
+	%V1<def> = LUi 16256
+	ADJCALLSTACKDOWN 24, %SP<imp-def,dead>, %SP<imp-use>
+	SW %V1<kill>, %SP, 16; mem:ST4[<unknown>]
+	%A0<def> = COPY %AT<kill>
+	%A1<def> = COPY %V0<kill>
+	%A3<def> = ADDiu %ZERO, 0
+	JALRPseudo %T9, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %A0<imp-use>, %A1<imp-use>, %A2<imp-use>, %A3<imp-use,kill>, %SP<imp-def>, ...
+	ADJCALLSTACKUP 24, 0, %SP<imp-def,dead>, %SP<imp-use>
+	RetRA
+
+# End machine code for function glVertex2i.
+
+# After Prologue/Epilogue Insertion & Frame Finalization:
+# Machine code for function glVertex2i: Post SSA
+Frame Objects:
+  fi#0: size=4, align=4, at location [SP-4]
+Function Live Ins: %A0, %A1, %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %A0 %A1 %T9 %V0 %RA
+	%SP<def> = ADDiu %SP, -32
+	CFI_INSTRUCTION <call frame instruction>
+	SW %RA<kill>, %SP, 28; mem:ST4[FixedStack0]
+	CFI_INSTRUCTION <call frame instruction>
+	%AT<def> = ADDu %V0, %T9
+	%AT<def> = LW %AT<kill>, <ga:@CC>[TF=1]; mem:LD4[GOT]
+	%AT<def> = LW %AT<kill>, 0; mem:LD4[@CC](tbaa=!2)
+	%T9<def> = LW %AT, 656; mem:LD4[%2](tbaa=!6)
+	%F0<def> = PseudoCVT_S_W %A0<kill>
+	%V0<def> = MFC1 %F0<kill>
+	%F0<def> = PseudoCVT_S_W %A1<kill>
+	%A2<def> = MFC1 %F0<kill>
+	%V1<def> = LUi 16256
+	SW %V1<kill>, %SP, 16; mem:ST4[<unknown>]
+	%A0<def> = COPY %AT<kill>
+	%A1<def> = COPY %V0<kill>
+	%A3<def> = ADDiu %ZERO, 0
+	JALRPseudo %T9, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %RA<imp-def,dead>, %A0<imp-use>, %A1<imp-use>, %A2<imp-use>, %A3<imp-use,kill>, %SP<imp-def>
+	%RA<def> = LW %SP, 28; mem:LD4[FixedStack0]
+	%SP<def> = ADDiu %SP, 32
+	RetRA
+
+# End machine code for function glVertex2i.
+
+# After Machine Copy Propagation Pass:
+# Machine code for function glVertex2i: Post SSA
+Frame Objects:
+  fi#0: size=4, align=4, at location [SP-4]
+Function Live Ins: %A0, %A1, %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %A0 %A1 %T9 %V0 %RA
+	%SP<def> = ADDiu %SP, -32
+	CFI_INSTRUCTION <call frame instruction>
+	SW %RA<kill>, %SP, 28; mem:ST4[FixedStack0]
+	CFI_INSTRUCTION <call frame instruction>
+	%AT<def> = ADDu %V0, %T9
+	%AT<def> = LW %AT<kill>, <ga:@CC>[TF=1]; mem:LD4[GOT]
+	%AT<def> = LW %AT<kill>, 0; mem:LD4[@CC](tbaa=!2)
+	%T9<def> = LW %AT, 656; mem:LD4[%2](tbaa=!6)
+	%F0<def> = PseudoCVT_S_W %A0<kill>
+	%V0<def> = MFC1 %F0<kill>
+	%F0<def> = PseudoCVT_S_W %A1<kill>
+	%A2<def> = MFC1 %F0<kill>
+	%V1<def> = LUi 16256
+	SW %V1<kill>, %SP, 16; mem:ST4[<unknown>]
+	%A0<def> = COPY %AT<kill>
+	%A1<def> = COPY %V0<kill>
+	%A3<def> = ADDiu %ZERO, 0
+	JALRPseudo %T9, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %RA<imp-def,dead>, %A0<imp-use>, %A1<imp-use>, %A2<imp-use>, %A3<imp-use,kill>, %SP<imp-def>
+	%RA<def> = LW %SP, 28; mem:LD4[FixedStack0]
+	%SP<def> = ADDiu %SP, 32
+	RetRA
+
+# End machine code for function glVertex2i.
+
+# After Post-RA pseudo instruction expansion pass:
+# Machine code for function glVertex2i: Post SSA
+Frame Objects:
+  fi#0: size=4, align=4, at location [SP-4]
+Function Live Ins: %A0, %A1, %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %A0 %A1 %T9 %V0 %RA
+	%SP<def> = ADDiu %SP, -32
+	CFI_INSTRUCTION <call frame instruction>
+	SW %RA<kill>, %SP, 28; mem:ST4[FixedStack0]
+	CFI_INSTRUCTION <call frame instruction>
+	%AT<def> = ADDu %V0, %T9
+	%AT<def> = LW %AT<kill>, <ga:@CC>[TF=1]; mem:LD4[GOT]
+	%AT<def> = LW %AT<kill>, 0; mem:LD4[@CC](tbaa=!2)
+	%T9<def> = LW %AT, 656; mem:LD4[%2](tbaa=!6)
+	%F0<def> = MTC1 %A0<kill>
+	%F0<def> = CVT_S_W %F0<kill>
+	%V0<def> = MFC1 %F0<kill>
+	%F0<def> = MTC1 %A1<kill>
+	%F0<def> = CVT_S_W %F0<kill>
+	%A2<def> = MFC1 %F0<kill>
+	%V1<def> = LUi 16256
+	SW %V1<kill>, %SP, 16; mem:ST4[<unknown>]
+	%A0<def> = OR %AT<kill>, %ZERO
+	%A1<def> = OR %V0<kill>, %ZERO
+	%A3<def> = ADDiu %ZERO, 0
+	JALRPseudo %T9, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %RA<imp-def,dead>, %A0<imp-use>, %A1<imp-use>, %A2<imp-use>, %A3<imp-use,kill>, %SP<imp-def>
+	%RA<def> = LW %SP, 28; mem:LD4[FixedStack0]
+	%SP<def> = ADDiu %SP, 32
+	PseudoReturn %RA
+
+# End machine code for function glVertex2i.
+
+# After Analyze Machine Code For Garbage Collection:
+# Machine code for function glVertex2i: Post SSA
+Frame Objects:
+  fi#0: size=4, align=4, at location [SP-4]
+Function Live Ins: %A0, %A1, %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %A0 %A1 %T9 %V0 %RA
+	%SP<def> = ADDiu %SP, -32
+	CFI_INSTRUCTION <call frame instruction>
+	SW %RA<kill>, %SP, 28; mem:ST4[FixedStack0]
+	CFI_INSTRUCTION <call frame instruction>
+	%AT<def> = ADDu %V0, %T9
+	%AT<def> = LW %AT<kill>, <ga:@CC>[TF=1]; mem:LD4[GOT]
+	%AT<def> = LW %AT<kill>, 0; mem:LD4[@CC](tbaa=!2)
+	%T9<def> = LW %AT, 656; mem:LD4[%2](tbaa=!6)
+	%F0<def> = MTC1 %A0<kill>
+	%F0<def> = CVT_S_W %F0<kill>
+	%V0<def> = MFC1 %F0<kill>
+	%F0<def> = MTC1 %A1<kill>
+	%F0<def> = CVT_S_W %F0<kill>
+	%A2<def> = MFC1 %F0<kill>
+	%V1<def> = LUi 16256
+	SW %V1<kill>, %SP, 16; mem:ST4[<unknown>]
+	%A0<def> = OR %AT<kill>, %ZERO
+	%A1<def> = OR %V0<kill>, %ZERO
+	%A3<def> = ADDiu %ZERO, 0
+	JALRPseudo %T9, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %RA<imp-def,dead>, %A0<imp-use>, %A1<imp-use>, %A2<imp-use>, %A3<imp-use,kill>, %SP<imp-def>
+	%RA<def> = LW %SP, 28; mem:LD4[FixedStack0]
+	%SP<def> = ADDiu %SP, 32
+	PseudoReturn %RA
+
+# End machine code for function glVertex2i.
+
+# After Mips Delay Slot Filler:
+# Machine code for function glVertex2i: Post SSA, not tracking liveness
+Frame Objects:
+  fi#0: size=4, align=4, at location [SP-4]
+Function Live Ins: %A0, %A1, %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %A0 %A1 %T9 %V0 %RA
+	%SP<def> = ADDiu %SP, -32
+	CFI_INSTRUCTION <call frame instruction>
+	SW %RA<kill>, %SP, 28; mem:ST4[FixedStack0]
+	CFI_INSTRUCTION <call frame instruction>
+	%AT<def> = ADDu %V0, %T9
+	%AT<def> = LW %AT<kill>, <ga:@CC>[TF=1]; mem:LD4[GOT]
+	%AT<def> = LW %AT<kill>, 0; mem:LD4[@CC](tbaa=!2)
+	%T9<def> = LW %AT, 656; mem:LD4[%2](tbaa=!6)
+	%F0<def> = MTC1 %A0<kill>
+	%F0<def> = CVT_S_W %F0<kill>
+	%V0<def> = MFC1 %F0<kill>
+	%F0<def> = MTC1 %A1<kill>
+	%F0<def> = CVT_S_W %F0<kill>
+	%A2<def> = MFC1 %F0<kill>
+	%V1<def> = LUi 16256
+	SW %V1<kill>, %SP, 16; mem:ST4[<unknown>]
+	%A0<def> = OR %AT<kill>, %ZERO
+	%A1<def> = OR %V0<kill>, %ZERO
+	JALRPseudo %T9, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %RA<imp-def,dead>, %A0<imp-use>, %A1<imp-use>, %A2<imp-use>, %A3<imp-use,kill>, %SP<imp-def>
+	  * %A3<def> = ADDiu %ZERO, 0
+	%RA<def> = LW %SP, 28; mem:LD4[FixedStack0]
+	PseudoReturn %RA
+	  * %SP<def> = ADDiu %SP, 32
+
+# End machine code for function glVertex2i.
+
+# After Mips Long Branch:
+# Machine code for function glVertex2i: Post SSA, not tracking liveness
+Frame Objects:
+  fi#0: size=4, align=4, at location [SP-4]
+Function Live Ins: %A0, %A1, %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %A0 %A1 %T9 %RA
+	%V0<def> = LUi <es:_gp_disp>[TF=5]
+	%V0<def> = ADDiu %V0, <es:_gp_disp>[TF=6]
+	%SP<def> = ADDiu %SP, -32
+	CFI_INSTRUCTION <call frame instruction>
+	SW %RA<kill>, %SP, 28; mem:ST4[FixedStack0]
+	CFI_INSTRUCTION <call frame instruction>
+	%AT<def> = ADDu %V0, %T9
+	%AT<def> = LW %AT<kill>, <ga:@CC>[TF=1]; mem:LD4[GOT]
+	%AT<def> = LW %AT<kill>, 0; mem:LD4[@CC](tbaa=!2)
+	%T9<def> = LW %AT, 656; mem:LD4[%2](tbaa=!6)
+	%F0<def> = MTC1 %A0<kill>
+	%F0<def> = CVT_S_W %F0<kill>
+	%V0<def> = MFC1 %F0<kill>
+	%F0<def> = MTC1 %A1<kill>
+	%F0<def> = CVT_S_W %F0<kill>
+	%A2<def> = MFC1 %F0<kill>
+	%V1<def> = LUi 16256
+	SW %V1<kill>, %SP, 16; mem:ST4[<unknown>]
+	%A0<def> = OR %AT<kill>, %ZERO
+	%A1<def> = OR %V0<kill>, %ZERO
+	JALRPseudo %T9, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %RA<imp-def,dead>, %A0<imp-use>, %A1<imp-use>, %A2<imp-use>, %A3<imp-use,kill>, %SP<imp-def>
+	  * %A3<def> = ADDiu %ZERO, 0
+	%RA<def> = LW %SP, 28; mem:LD4[FixedStack0]
+	PseudoReturn %RA
+	  * %SP<def> = ADDiu %SP, 32
+
+# End machine code for function glVertex2i.
+
+# After Mips Constant Islands:
+# Machine code for function glVertex2i: Post SSA, not tracking liveness
+Frame Objects:
+  fi#0: size=4, align=4, at location [SP-4]
+Function Live Ins: %A0, %A1, %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %A0 %A1 %T9 %RA
+	%V0<def> = LUi <es:_gp_disp>[TF=5]
+	%V0<def> = ADDiu %V0, <es:_gp_disp>[TF=6]
+	%SP<def> = ADDiu %SP, -32
+	CFI_INSTRUCTION <call frame instruction>
+	SW %RA<kill>, %SP, 28; mem:ST4[FixedStack0]
+	CFI_INSTRUCTION <call frame instruction>
+	%AT<def> = ADDu %V0, %T9
+	%AT<def> = LW %AT<kill>, <ga:@CC>[TF=1]; mem:LD4[GOT]
+	%AT<def> = LW %AT<kill>, 0; mem:LD4[@CC](tbaa=!2)
+	%T9<def> = LW %AT, 656; mem:LD4[%2](tbaa=!6)
+	%F0<def> = MTC1 %A0<kill>
+	%F0<def> = CVT_S_W %F0<kill>
+	%V0<def> = MFC1 %F0<kill>
+	%F0<def> = MTC1 %A1<kill>
+	%F0<def> = CVT_S_W %F0<kill>
+	%A2<def> = MFC1 %F0<kill>
+	%V1<def> = LUi 16256
+	SW %V1<kill>, %SP, 16; mem:ST4[<unknown>]
+	%A0<def> = OR %AT<kill>, %ZERO
+	%A1<def> = OR %V0<kill>, %ZERO
+	JALRPseudo %T9, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %RA<imp-def,dead>, %A0<imp-use>, %A1<imp-use>, %A2<imp-use>, %A3<imp-use,kill>, %SP<imp-def>
+	  * %A3<def> = ADDiu %ZERO, 0
+	%RA<def> = LW %SP, 28; mem:LD4[FixedStack0]
+	PseudoReturn %RA
+	  * %SP<def> = ADDiu %SP, 32
+
+# End machine code for function glVertex2i.
+
+# After Contiguously Lay Out Funclets:
+# Machine code for function glVertex2i: Post SSA, not tracking liveness
+Frame Objects:
+  fi#0: size=4, align=4, at location [SP-4]
+Function Live Ins: %A0, %A1, %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %A0 %A1 %T9 %RA
+	%V0<def> = LUi <es:_gp_disp>[TF=5]
+	%V0<def> = ADDiu %V0, <es:_gp_disp>[TF=6]
+	%SP<def> = ADDiu %SP, -32
+	CFI_INSTRUCTION <call frame instruction>
+	SW %RA<kill>, %SP, 28; mem:ST4[FixedStack0]
+	CFI_INSTRUCTION <call frame instruction>
+	%AT<def> = ADDu %V0, %T9
+	%AT<def> = LW %AT<kill>, <ga:@CC>[TF=1]; mem:LD4[GOT]
+	%AT<def> = LW %AT<kill>, 0; mem:LD4[@CC](tbaa=!2)
+	%T9<def> = LW %AT, 656; mem:LD4[%2](tbaa=!6)
+	%F0<def> = MTC1 %A0<kill>
+	%F0<def> = CVT_S_W %F0<kill>
+	%V0<def> = MFC1 %F0<kill>
+	%F0<def> = MTC1 %A1<kill>
+	%F0<def> = CVT_S_W %F0<kill>
+	%A2<def> = MFC1 %F0<kill>
+	%V1<def> = LUi 16256
+	SW %V1<kill>, %SP, 16; mem:ST4[<unknown>]
+	%A0<def> = OR %AT<kill>, %ZERO
+	%A1<def> = OR %V0<kill>, %ZERO
+	JALRPseudo %T9, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %RA<imp-def,dead>, %A0<imp-use>, %A1<imp-use>, %A2<imp-use>, %A3<imp-use,kill>, %SP<imp-def>
+	  * %A3<def> = ADDiu %ZERO, 0
+	%RA<def> = LW %SP, 28; mem:LD4[FixedStack0]
+	PseudoReturn %RA
+	  * %SP<def> = ADDiu %SP, 32
+
+# End machine code for function glVertex2i.
+
+# After StackMap Liveness Analysis:
+# Machine code for function glVertex2i: Post SSA, not tracking liveness
+Frame Objects:
+  fi#0: size=4, align=4, at location [SP-4]
+Function Live Ins: %A0, %A1, %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %A0 %A1 %T9 %RA
+	%V0<def> = LUi <es:_gp_disp>[TF=5]
+	%V0<def> = ADDiu %V0, <es:_gp_disp>[TF=6]
+	%SP<def> = ADDiu %SP, -32
+	CFI_INSTRUCTION <call frame instruction>
+	SW %RA<kill>, %SP, 28; mem:ST4[FixedStack0]
+	CFI_INSTRUCTION <call frame instruction>
+	%AT<def> = ADDu %V0, %T9
+	%AT<def> = LW %AT<kill>, <ga:@CC>[TF=1]; mem:LD4[GOT]
+	%AT<def> = LW %AT<kill>, 0; mem:LD4[@CC](tbaa=!2)
+	%T9<def> = LW %AT, 656; mem:LD4[%2](tbaa=!6)
+	%F0<def> = MTC1 %A0<kill>
+	%F0<def> = CVT_S_W %F0<kill>
+	%V0<def> = MFC1 %F0<kill>
+	%F0<def> = MTC1 %A1<kill>
+	%F0<def> = CVT_S_W %F0<kill>
+	%A2<def> = MFC1 %F0<kill>
+	%V1<def> = LUi 16256
+	SW %V1<kill>, %SP, 16; mem:ST4[<unknown>]
+	%A0<def> = OR %AT<kill>, %ZERO
+	%A1<def> = OR %V0<kill>, %ZERO
+	JALRPseudo %T9, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %RA<imp-def,dead>, %A0<imp-use>, %A1<imp-use>, %A2<imp-use>, %A3<imp-use,kill>, %SP<imp-def>
+	  * %A3<def> = ADDiu %ZERO, 0
+	%RA<def> = LW %SP, 28; mem:LD4[FixedStack0]
+	PseudoReturn %RA
+	  * %SP<def> = ADDiu %SP, 32
+
+# End machine code for function glVertex2i.
+
+# After Live DEBUG_VALUE analysis:
+# Machine code for function glVertex2i: Post SSA, not tracking liveness
+Frame Objects:
+  fi#0: size=4, align=4, at location [SP-4]
+Function Live Ins: %A0, %A1, %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %A0 %A1 %T9 %RA
+	%V0<def> = LUi <es:_gp_disp>[TF=5]
+	%V0<def> = ADDiu %V0, <es:_gp_disp>[TF=6]
+	%SP<def> = ADDiu %SP, -32
+	CFI_INSTRUCTION <call frame instruction>
+	SW %RA<kill>, %SP, 28; mem:ST4[FixedStack0]
+	CFI_INSTRUCTION <call frame instruction>
+	%AT<def> = ADDu %V0, %T9
+	%AT<def> = LW %AT<kill>, <ga:@CC>[TF=1]; mem:LD4[GOT]
+	%AT<def> = LW %AT<kill>, 0; mem:LD4[@CC](tbaa=!2)
+	%T9<def> = LW %AT, 656; mem:LD4[%2](tbaa=!6)
+	%F0<def> = MTC1 %A0<kill>
+	%F0<def> = CVT_S_W %F0<kill>
+	%V0<def> = MFC1 %F0<kill>
+	%F0<def> = MTC1 %A1<kill>
+	%F0<def> = CVT_S_W %F0<kill>
+	%A2<def> = MFC1 %F0<kill>
+	%V1<def> = LUi 16256
+	SW %V1<kill>, %SP, 16; mem:ST4[<unknown>]
+	%A0<def> = OR %AT<kill>, %ZERO
+	%A1<def> = OR %V0<kill>, %ZERO
+	JALRPseudo %T9, <regmask %FP %RA %D10 %D11 %D12 %D13 %D14 %D15 %F20 %F21 %F22 %F23 %F24 %F25 %F26 %F27 %F28 %F29 %F30 %F31 %S0 %S1 %S2 %S3 %S4 %S5 %S6 %S7>, %RA<imp-def,dead>, %A0<imp-use>, %A1<imp-use>, %A2<imp-use>, %A3<imp-use,kill>, %SP<imp-def>
+	  * %A3<def> = ADDiu %ZERO, 0
+	%RA<def> = LW %SP, 28; mem:LD4[FixedStack0]
+	PseudoReturn %RA
+	  * %SP<def> = ADDiu %SP, 32
+
+# End machine code for function glVertex2i.
+

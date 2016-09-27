@@ -1,1 +1,98 @@
-# unison
+# Getting Started with Unison
+
+Unison is a simple, flexible, and potentially optimal software tool that
+performs register allocation and instruction scheduling in integration using
+combinatorial optimization.
+
+## Prerequisities
+
+Unison has the following dependencies:
+
+### [Haskell platform](http://hackage.haskell.org/platform/)
+
+In Debian-based Linux distributions, just run:
+
+```
+apt-get install haskell-platform
+```
+
+### [GCC](https://gcc.gnu.org/) (version 4.6 or newer)
+
+Available by default in most systems.
+
+### [Qt](https://www.qt.io/) (version 4.x)
+
+In Debian-based Linux distributions, just run:
+
+```
+apt-get install libqt4-dev
+```
+
+### [Graphviz library](http://www.graphviz.org/)
+
+In Debian-based Linux distributions, just run:
+
+```
+apt-get install libgraphviz-dev
+```
+
+### [Gecode](http://www.gecode.org/) (svn revision 14847 or newer)
+
+The source of the required revision can be fetched with:
+
+```
+svn --username anonymous checkout -r14847 https://svn.gecode.org/svn/gecode/trunk
+```
+
+## Building
+
+Just go to the `src` directory and run:
+
+```
+make build
+```
+
+## Testing
+
+Unison contains a test suite with a few functions where different targets and
+optimization goals are exercised. To execute the tests just run:
+
+```
+make test
+```
+
+## Installing
+
+The building process generates three binaries. The installation process consists
+in copying the binaries into the appropriate system directory. To install the
+binaries under the default directory `usr/local` just run:
+
+```
+make install
+```
+
+The installation directory is specified by the Makefile variable `PREFIX`. To
+install the binaries under an alternative directory `$DIR` just run:
+
+```
+make install PREFIX=$DIR
+```
+
+## Running
+
+Unison can be run as a standalone tool but is only really useful as a complement
+to a full-fledged compiler such as [LLVM](http://llvm.org/). An instrumented
+version of LLVM with a Unison driver will soon be available.
+
+## Contact
+
+[Roberto Castañeda Lozano](https://www.sics.se/~rcas/) [<rcas@sics.se>]
+
+## License
+
+Unison is licensed under the BSD3 license see the [LICENSE.md](LICENSE.md) file
+for details.
+
+## Further Reading
+
+Check [the Unison website](https://unison-code.github.io/).

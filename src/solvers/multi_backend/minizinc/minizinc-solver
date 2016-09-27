@@ -1,0 +1,83 @@
+#!/bin/bash
+# assuming current directory is ../../.. i.e. .../src
+search='topdown.mzn'
+allsolns='-a'
+mzn='mzn-gecode'
+cumulative='false'
+ncores='1'
+statflag='-s'
+toflag=''
+freeflag=''
+while [ $# -gt  1 ]; do
+    opt="$1"
+    shift
+    case "${opt}" in
+      --bottomup | --bottom-up | --bottom_up)
+        search='bottomup.mzn'
+        allsolns=''
+      ;;
+      --topdown | --top-down | --top_down)
+        search='topdown.mzn'
+        allsolns='-a'
+      ;;
+      --gecode)
+        mzn='mzn-gecode'
+        cumulative='true'
+      ;;
+      --sicstus)
+        mzn='mzn-sicstus'
+        cumulative='true'
+      ;;
+      --g12cpx)
+        mzn='mzn-g12cpx'
+        cumulative='false'
+      ;;
+      --cpx)
+        mzn='mzn-cpx'
+        cumulative='false'
+      ;;
+      --chuffed)
+        mzn='mzn-chuffed'
+        cumulative='false'
+        statflag='--fzn-flag -verbosity=3'
+      ;;
+      --cumulative)
+        cumulative='true'
+      ;;
+      --no-cumulative)
+        cumulative='false'
+      ;;
+      --free)
+        freeflag='--fzn-flag -f'
+      ;;
+      --vsids)
+        freeflag='--fzn-flag -vsids=true'
+      ;;
+      --to)
+	toflag='--fzn-flag -time_out='$1
+	shift
+      ;;
+      -o)
+	OUTJSON=$1
+	shift
+      ;;
+      -p)
+	ncores=$1
+	shift
+      ;;
+    esac
+done
+BASENAME=$(basename $1 .ext.json)
+EXTJSON=$1
+shift
+echo "json2dzn('${EXTJSON}')." | sicstus -f --nologo --noinfo -l solvers/multi_backend/minizinc/model2dzn.pl
+cat solvers/multi_backend/minizinc/code-generation.mzn solvers/multi_backend/minizinc/${search} > code-generation.mzn
+if [ $mzn = 'mzn-gecode' ]; then
+  pflag='-p'
+  pvalue=${ncores}
+else
+  pflag=''
+  pvalue=''
+fi
+echo ${mzn} -k ${statflag} ${pflag} ${pvalue} ${freeflag} ${toflag} ${allsolns} --no-optimize -D good_cumulative=${cumulative} code-generation.mzn $BASENAME.dzn | solvers/multi_backend/common/outfilter.pl > ${OUTJSON}
+time ${mzn} -k ${statflag} ${pflag} ${pvalue} ${freeflag} ${toflag} ${allsolns} --no-optimize -D good_cumulative=${cumulative} code-generation.mzn $BASENAME.dzn | solvers/multi_backend/common/outfilter.pl > ${OUTJSON}

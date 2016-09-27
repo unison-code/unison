@@ -1,0 +1,1319 @@
+# After Instruction Selection:
+# Machine code for function data_section: SSA
+
+BB#0: derived from LLVM BB %0
+	%vreg0<def> = L4_loadrb_abs <ga:@in_section>; mem:LD1[@in_section] IntRegs:%vreg0
+	%vreg1<def> = C2_cmpeqi %vreg0, 2; PredRegs:%vreg1 IntRegs:%vreg0
+	J2_jumpt %vreg1, <BB#2>, %PC<imp-def,dead>; PredRegs:%vreg1
+	J2_jump <BB#1>, %PC<imp-def,dead>
+    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#1(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %3
+    Predecessors according to CFG: BB#0
+	%vreg2<def> = L4_loadri_abs <ga:@asm_out_file>; mem:LD4[@asm_out_file] IntRegs:%vreg2
+	%vreg3<def> = A2_tfrsi <ga:@.str.3>; IntRegs:%vreg3
+	%vreg4<def> = COPY %R29; IntRegs:%vreg4
+	S2_storeri_io %vreg4, 0, %vreg3; mem:ST4[Stack] IntRegs:%vreg4,%vreg3
+	ADJCALLSTACKDOWN 4, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	%vreg5<def> = A2_tfrsi <ga:@.str>; IntRegs:%vreg5
+	%R0<def> = COPY %vreg2; IntRegs:%vreg2
+	%R1<def> = COPY %vreg5; IntRegs:%vreg5
+	J2_call <ga:@fprintf>, %D0<imp-def>, %R31<imp-def,dead>, %R0<imp-use>, %R1<imp-use>, ...
+	ADJCALLSTACKUP 4, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	%vreg7<def> = A2_tfrsi 2; IntRegs:%vreg7
+	S2_storerbabs <ga:@in_section>, %vreg7; mem:ST1[@in_section] IntRegs:%vreg7
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %6
+    Predecessors according to CFG: BB#0 BB#1
+	JMPret %R31, %PC<imp-def,dead>
+
+# End machine code for function data_section.
+
+# After Expand ISel Pseudo-instructions:
+# Machine code for function data_section: SSA
+
+BB#0: derived from LLVM BB %0
+	%vreg0<def> = L4_loadrb_abs <ga:@in_section>; mem:LD1[@in_section] IntRegs:%vreg0
+	%vreg1<def> = C2_cmpeqi %vreg0, 2; PredRegs:%vreg1 IntRegs:%vreg0
+	J2_jumpt %vreg1, <BB#2>, %PC<imp-def,dead>; PredRegs:%vreg1
+	J2_jump <BB#1>, %PC<imp-def,dead>
+    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#1(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %3
+    Predecessors according to CFG: BB#0
+	%vreg2<def> = L4_loadri_abs <ga:@asm_out_file>; mem:LD4[@asm_out_file] IntRegs:%vreg2
+	%vreg3<def> = A2_tfrsi <ga:@.str.3>; IntRegs:%vreg3
+	%vreg4<def> = COPY %R29; IntRegs:%vreg4
+	S2_storeri_io %vreg4, 0, %vreg3; mem:ST4[Stack] IntRegs:%vreg4,%vreg3
+	ADJCALLSTACKDOWN 4, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	%vreg5<def> = A2_tfrsi <ga:@.str>; IntRegs:%vreg5
+	%R0<def> = COPY %vreg2; IntRegs:%vreg2
+	%R1<def> = COPY %vreg5; IntRegs:%vreg5
+	J2_call <ga:@fprintf>, %D0<imp-def>, %R31<imp-def,dead>, %R0<imp-use>, %R1<imp-use>, ...
+	ADJCALLSTACKUP 4, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	%vreg7<def> = A2_tfrsi 2; IntRegs:%vreg7
+	S2_storerbabs <ga:@in_section>, %vreg7; mem:ST1[@in_section] IntRegs:%vreg7
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %6
+    Predecessors according to CFG: BB#0 BB#1
+	JMPret %R31, %PC<imp-def,dead>
+
+# End machine code for function data_section.
+
+# After Tail Duplication:
+# Machine code for function data_section: SSA
+
+BB#0: derived from LLVM BB %0
+	%vreg0<def> = L4_loadrb_abs <ga:@in_section>; mem:LD1[@in_section] IntRegs:%vreg0
+	%vreg1<def> = C2_cmpeqi %vreg0, 2; PredRegs:%vreg1 IntRegs:%vreg0
+	J2_jumpt %vreg1, <BB#2>, %PC<imp-def,dead>; PredRegs:%vreg1
+	J2_jump <BB#1>, %PC<imp-def,dead>
+    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#1(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %3
+    Predecessors according to CFG: BB#0
+	%vreg2<def> = L4_loadri_abs <ga:@asm_out_file>; mem:LD4[@asm_out_file] IntRegs:%vreg2
+	%vreg3<def> = A2_tfrsi <ga:@.str.3>; IntRegs:%vreg3
+	%vreg4<def> = COPY %R29; IntRegs:%vreg4
+	S2_storeri_io %vreg4, 0, %vreg3; mem:ST4[Stack] IntRegs:%vreg4,%vreg3
+	ADJCALLSTACKDOWN 4, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	%vreg5<def> = A2_tfrsi <ga:@.str>; IntRegs:%vreg5
+	%R0<def> = COPY %vreg2; IntRegs:%vreg2
+	%R1<def> = COPY %vreg5; IntRegs:%vreg5
+	J2_call <ga:@fprintf>, %D0<imp-def>, %R31<imp-def,dead>, %R0<imp-use>, %R1<imp-use>, ...
+	ADJCALLSTACKUP 4, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	%vreg7<def> = A2_tfrsi 2; IntRegs:%vreg7
+	S2_storerbabs <ga:@in_section>, %vreg7; mem:ST1[@in_section] IntRegs:%vreg7
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %6
+    Predecessors according to CFG: BB#0 BB#1
+	JMPret %R31, %PC<imp-def,dead>
+
+# End machine code for function data_section.
+
+# After Optimize machine instruction PHIs:
+# Machine code for function data_section: SSA
+
+BB#0: derived from LLVM BB %0
+	%vreg0<def> = L4_loadrb_abs <ga:@in_section>; mem:LD1[@in_section] IntRegs:%vreg0
+	%vreg1<def> = C2_cmpeqi %vreg0, 2; PredRegs:%vreg1 IntRegs:%vreg0
+	J2_jumpt %vreg1, <BB#2>, %PC<imp-def,dead>; PredRegs:%vreg1
+	J2_jump <BB#1>, %PC<imp-def,dead>
+    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#1(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %3
+    Predecessors according to CFG: BB#0
+	%vreg2<def> = L4_loadri_abs <ga:@asm_out_file>; mem:LD4[@asm_out_file] IntRegs:%vreg2
+	%vreg3<def> = A2_tfrsi <ga:@.str.3>; IntRegs:%vreg3
+	%vreg4<def> = COPY %R29; IntRegs:%vreg4
+	S2_storeri_io %vreg4, 0, %vreg3; mem:ST4[Stack] IntRegs:%vreg4,%vreg3
+	ADJCALLSTACKDOWN 4, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	%vreg5<def> = A2_tfrsi <ga:@.str>; IntRegs:%vreg5
+	%R0<def> = COPY %vreg2; IntRegs:%vreg2
+	%R1<def> = COPY %vreg5; IntRegs:%vreg5
+	J2_call <ga:@fprintf>, %D0<imp-def>, %R31<imp-def,dead>, %R0<imp-use>, %R1<imp-use>, ...
+	ADJCALLSTACKUP 4, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	%vreg7<def> = A2_tfrsi 2; IntRegs:%vreg7
+	S2_storerbabs <ga:@in_section>, %vreg7; mem:ST1[@in_section] IntRegs:%vreg7
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %6
+    Predecessors according to CFG: BB#0 BB#1
+	JMPret %R31, %PC<imp-def,dead>
+
+# End machine code for function data_section.
+
+# After Merge disjoint stack slots:
+# Machine code for function data_section: SSA
+
+BB#0: derived from LLVM BB %0
+	%vreg0<def> = L4_loadrb_abs <ga:@in_section>; mem:LD1[@in_section] IntRegs:%vreg0
+	%vreg1<def> = C2_cmpeqi %vreg0, 2; PredRegs:%vreg1 IntRegs:%vreg0
+	J2_jumpt %vreg1, <BB#2>, %PC<imp-def,dead>; PredRegs:%vreg1
+	J2_jump <BB#1>, %PC<imp-def,dead>
+    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#1(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %3
+    Predecessors according to CFG: BB#0
+	%vreg2<def> = L4_loadri_abs <ga:@asm_out_file>; mem:LD4[@asm_out_file] IntRegs:%vreg2
+	%vreg3<def> = A2_tfrsi <ga:@.str.3>; IntRegs:%vreg3
+	%vreg4<def> = COPY %R29; IntRegs:%vreg4
+	S2_storeri_io %vreg4, 0, %vreg3; mem:ST4[Stack] IntRegs:%vreg4,%vreg3
+	ADJCALLSTACKDOWN 4, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	%vreg5<def> = A2_tfrsi <ga:@.str>; IntRegs:%vreg5
+	%R0<def> = COPY %vreg2; IntRegs:%vreg2
+	%R1<def> = COPY %vreg5; IntRegs:%vreg5
+	J2_call <ga:@fprintf>, %D0<imp-def>, %R31<imp-def,dead>, %R0<imp-use>, %R1<imp-use>, ...
+	ADJCALLSTACKUP 4, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	%vreg7<def> = A2_tfrsi 2; IntRegs:%vreg7
+	S2_storerbabs <ga:@in_section>, %vreg7; mem:ST1[@in_section] IntRegs:%vreg7
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %6
+    Predecessors according to CFG: BB#0 BB#1
+	JMPret %R31, %PC<imp-def,dead>
+
+# End machine code for function data_section.
+
+# After Local Stack Slot Allocation:
+# Machine code for function data_section: SSA
+
+BB#0: derived from LLVM BB %0
+	%vreg0<def> = L4_loadrb_abs <ga:@in_section>; mem:LD1[@in_section] IntRegs:%vreg0
+	%vreg1<def> = C2_cmpeqi %vreg0, 2; PredRegs:%vreg1 IntRegs:%vreg0
+	J2_jumpt %vreg1, <BB#2>, %PC<imp-def,dead>; PredRegs:%vreg1
+	J2_jump <BB#1>, %PC<imp-def,dead>
+    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#1(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %3
+    Predecessors according to CFG: BB#0
+	%vreg2<def> = L4_loadri_abs <ga:@asm_out_file>; mem:LD4[@asm_out_file] IntRegs:%vreg2
+	%vreg3<def> = A2_tfrsi <ga:@.str.3>; IntRegs:%vreg3
+	%vreg4<def> = COPY %R29; IntRegs:%vreg4
+	S2_storeri_io %vreg4, 0, %vreg3; mem:ST4[Stack] IntRegs:%vreg4,%vreg3
+	ADJCALLSTACKDOWN 4, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	%vreg5<def> = A2_tfrsi <ga:@.str>; IntRegs:%vreg5
+	%R0<def> = COPY %vreg2; IntRegs:%vreg2
+	%R1<def> = COPY %vreg5; IntRegs:%vreg5
+	J2_call <ga:@fprintf>, %D0<imp-def>, %R31<imp-def,dead>, %R0<imp-use>, %R1<imp-use>, ...
+	ADJCALLSTACKUP 4, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	%vreg7<def> = A2_tfrsi 2; IntRegs:%vreg7
+	S2_storerbabs <ga:@in_section>, %vreg7; mem:ST1[@in_section] IntRegs:%vreg7
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %6
+    Predecessors according to CFG: BB#0 BB#1
+	JMPret %R31, %PC<imp-def,dead>
+
+# End machine code for function data_section.
+
+# After Remove dead machine instructions:
+# Machine code for function data_section: SSA
+
+BB#0: derived from LLVM BB %0
+	%vreg0<def> = L4_loadrb_abs <ga:@in_section>; mem:LD1[@in_section] IntRegs:%vreg0
+	%vreg1<def> = C2_cmpeqi %vreg0, 2; PredRegs:%vreg1 IntRegs:%vreg0
+	J2_jumpt %vreg1, <BB#2>, %PC<imp-def,dead>; PredRegs:%vreg1
+	J2_jump <BB#1>, %PC<imp-def,dead>
+    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#1(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %3
+    Predecessors according to CFG: BB#0
+	%vreg2<def> = L4_loadri_abs <ga:@asm_out_file>; mem:LD4[@asm_out_file] IntRegs:%vreg2
+	%vreg3<def> = A2_tfrsi <ga:@.str.3>; IntRegs:%vreg3
+	%vreg4<def> = COPY %R29; IntRegs:%vreg4
+	S2_storeri_io %vreg4, 0, %vreg3; mem:ST4[Stack] IntRegs:%vreg4,%vreg3
+	ADJCALLSTACKDOWN 4, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	%vreg5<def> = A2_tfrsi <ga:@.str>; IntRegs:%vreg5
+	%R0<def> = COPY %vreg2; IntRegs:%vreg2
+	%R1<def> = COPY %vreg5; IntRegs:%vreg5
+	J2_call <ga:@fprintf>, %D0<imp-def>, %R31<imp-def,dead>, %R0<imp-use>, %R1<imp-use>, ...
+	ADJCALLSTACKUP 4, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	%vreg7<def> = A2_tfrsi 2; IntRegs:%vreg7
+	S2_storerbabs <ga:@in_section>, %vreg7; mem:ST1[@in_section] IntRegs:%vreg7
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %6
+    Predecessors according to CFG: BB#0 BB#1
+	JMPret %R31, %PC<imp-def,dead>
+
+# End machine code for function data_section.
+
+# After Machine Loop Invariant Code Motion:
+# Machine code for function data_section: SSA
+
+BB#0: derived from LLVM BB %0
+	%vreg0<def> = L4_loadrb_abs <ga:@in_section>; mem:LD1[@in_section] IntRegs:%vreg0
+	%vreg1<def> = C2_cmpeqi %vreg0, 2; PredRegs:%vreg1 IntRegs:%vreg0
+	J2_jumpt %vreg1, <BB#2>, %PC<imp-def,dead>; PredRegs:%vreg1
+	J2_jump <BB#1>, %PC<imp-def,dead>
+    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#1(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %3
+    Predecessors according to CFG: BB#0
+	%vreg2<def> = L4_loadri_abs <ga:@asm_out_file>; mem:LD4[@asm_out_file] IntRegs:%vreg2
+	%vreg3<def> = A2_tfrsi <ga:@.str.3>; IntRegs:%vreg3
+	%vreg4<def> = COPY %R29; IntRegs:%vreg4
+	S2_storeri_io %vreg4, 0, %vreg3; mem:ST4[Stack] IntRegs:%vreg4,%vreg3
+	ADJCALLSTACKDOWN 4, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	%vreg5<def> = A2_tfrsi <ga:@.str>; IntRegs:%vreg5
+	%R0<def> = COPY %vreg2; IntRegs:%vreg2
+	%R1<def> = COPY %vreg5; IntRegs:%vreg5
+	J2_call <ga:@fprintf>, %D0<imp-def>, %R31<imp-def,dead>, %R0<imp-use>, %R1<imp-use>, ...
+	ADJCALLSTACKUP 4, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	%vreg7<def> = A2_tfrsi 2; IntRegs:%vreg7
+	S2_storerbabs <ga:@in_section>, %vreg7; mem:ST1[@in_section] IntRegs:%vreg7
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %6
+    Predecessors according to CFG: BB#0 BB#1
+	JMPret %R31, %PC<imp-def,dead>
+
+# End machine code for function data_section.
+
+# After Machine Common Subexpression Elimination:
+# Machine code for function data_section: SSA
+
+BB#0: derived from LLVM BB %0
+	%vreg0<def> = L4_loadrb_abs <ga:@in_section>; mem:LD1[@in_section] IntRegs:%vreg0
+	%vreg1<def> = C2_cmpeqi %vreg0, 2; PredRegs:%vreg1 IntRegs:%vreg0
+	J2_jumpt %vreg1, <BB#2>, %PC<imp-def,dead>; PredRegs:%vreg1
+	J2_jump <BB#1>, %PC<imp-def,dead>
+    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#1(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %3
+    Predecessors according to CFG: BB#0
+	%vreg2<def> = L4_loadri_abs <ga:@asm_out_file>; mem:LD4[@asm_out_file] IntRegs:%vreg2
+	%vreg3<def> = A2_tfrsi <ga:@.str.3>; IntRegs:%vreg3
+	%vreg4<def> = COPY %R29; IntRegs:%vreg4
+	S2_storeri_io %vreg4, 0, %vreg3; mem:ST4[Stack] IntRegs:%vreg4,%vreg3
+	ADJCALLSTACKDOWN 4, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	%vreg5<def> = A2_tfrsi <ga:@.str>; IntRegs:%vreg5
+	%R0<def> = COPY %vreg2; IntRegs:%vreg2
+	%R1<def> = COPY %vreg5; IntRegs:%vreg5
+	J2_call <ga:@fprintf>, %D0<imp-def>, %R31<imp-def,dead>, %R0<imp-use>, %R1<imp-use>, ...
+	ADJCALLSTACKUP 4, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	%vreg7<def> = A2_tfrsi 2; IntRegs:%vreg7
+	S2_storerbabs <ga:@in_section>, %vreg7; mem:ST1[@in_section] IntRegs:%vreg7
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %6
+    Predecessors according to CFG: BB#0 BB#1
+	JMPret %R31, %PC<imp-def,dead>
+
+# End machine code for function data_section.
+
+# After Machine code sinking:
+# Machine code for function data_section: SSA
+
+BB#0: derived from LLVM BB %0
+	%vreg0<def> = L4_loadrb_abs <ga:@in_section>; mem:LD1[@in_section] IntRegs:%vreg0
+	%vreg1<def> = C2_cmpeqi %vreg0, 2; PredRegs:%vreg1 IntRegs:%vreg0
+	J2_jumpt %vreg1, <BB#2>, %PC<imp-def,dead>; PredRegs:%vreg1
+	J2_jump <BB#1>, %PC<imp-def,dead>
+    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#1(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %3
+    Predecessors according to CFG: BB#0
+	%vreg2<def> = L4_loadri_abs <ga:@asm_out_file>; mem:LD4[@asm_out_file] IntRegs:%vreg2
+	%vreg3<def> = A2_tfrsi <ga:@.str.3>; IntRegs:%vreg3
+	%vreg4<def> = COPY %R29; IntRegs:%vreg4
+	S2_storeri_io %vreg4, 0, %vreg3; mem:ST4[Stack] IntRegs:%vreg4,%vreg3
+	ADJCALLSTACKDOWN 4, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	%vreg5<def> = A2_tfrsi <ga:@.str>; IntRegs:%vreg5
+	%R0<def> = COPY %vreg2; IntRegs:%vreg2
+	%R1<def> = COPY %vreg5; IntRegs:%vreg5
+	J2_call <ga:@fprintf>, %D0<imp-def>, %R31<imp-def,dead>, %R0<imp-use>, %R1<imp-use>, ...
+	ADJCALLSTACKUP 4, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	%vreg7<def> = A2_tfrsi 2; IntRegs:%vreg7
+	S2_storerbabs <ga:@in_section>, %vreg7; mem:ST1[@in_section] IntRegs:%vreg7
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %6
+    Predecessors according to CFG: BB#0 BB#1
+	JMPret %R31, %PC<imp-def,dead>
+
+# End machine code for function data_section.
+
+# After Peephole Optimizations:
+# Machine code for function data_section: SSA
+
+BB#0: derived from LLVM BB %0
+	%vreg0<def> = L4_loadrb_abs <ga:@in_section>; mem:LD1[@in_section] IntRegs:%vreg0
+	%vreg1<def> = C2_cmpeqi %vreg0, 2; PredRegs:%vreg1 IntRegs:%vreg0
+	J2_jumpt %vreg1, <BB#2>, %PC<imp-def,dead>; PredRegs:%vreg1
+	J2_jump <BB#1>, %PC<imp-def,dead>
+    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#1(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %3
+    Predecessors according to CFG: BB#0
+	%vreg2<def> = L4_loadri_abs <ga:@asm_out_file>; mem:LD4[@asm_out_file] IntRegs:%vreg2
+	%vreg3<def> = A2_tfrsi <ga:@.str.3>; IntRegs:%vreg3
+	%vreg4<def> = COPY %R29; IntRegs:%vreg4
+	S2_storeri_io %vreg4, 0, %vreg3; mem:ST4[Stack] IntRegs:%vreg4,%vreg3
+	ADJCALLSTACKDOWN 4, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	%vreg5<def> = A2_tfrsi <ga:@.str>; IntRegs:%vreg5
+	%R0<def> = COPY %vreg2; IntRegs:%vreg2
+	%R1<def> = COPY %vreg5; IntRegs:%vreg5
+	J2_call <ga:@fprintf>, %D0<imp-def>, %R31<imp-def,dead>, %R0<imp-use>, %R1<imp-use>, ...
+	ADJCALLSTACKUP 4, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	%vreg7<def> = A2_tfrsi 2; IntRegs:%vreg7
+	S2_storerbabs <ga:@in_section>, %vreg7; mem:ST1[@in_section] IntRegs:%vreg7
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %6
+    Predecessors according to CFG: BB#0 BB#1
+	JMPret %R31, %PC<imp-def,dead>
+
+# End machine code for function data_section.
+
+# After Remove dead machine instructions:
+# Machine code for function data_section: SSA
+
+BB#0: derived from LLVM BB %0
+	%vreg0<def> = L4_loadrb_abs <ga:@in_section>; mem:LD1[@in_section] IntRegs:%vreg0
+	%vreg1<def> = C2_cmpeqi %vreg0, 2; PredRegs:%vreg1 IntRegs:%vreg0
+	J2_jumpt %vreg1, <BB#2>, %PC<imp-def,dead>; PredRegs:%vreg1
+	J2_jump <BB#1>, %PC<imp-def,dead>
+    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#1(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %3
+    Predecessors according to CFG: BB#0
+	%vreg2<def> = L4_loadri_abs <ga:@asm_out_file>; mem:LD4[@asm_out_file] IntRegs:%vreg2
+	%vreg3<def> = A2_tfrsi <ga:@.str.3>; IntRegs:%vreg3
+	%vreg4<def> = COPY %R29; IntRegs:%vreg4
+	S2_storeri_io %vreg4, 0, %vreg3; mem:ST4[Stack] IntRegs:%vreg4,%vreg3
+	ADJCALLSTACKDOWN 4, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	%vreg5<def> = A2_tfrsi <ga:@.str>; IntRegs:%vreg5
+	%R0<def> = COPY %vreg2; IntRegs:%vreg2
+	%R1<def> = COPY %vreg5; IntRegs:%vreg5
+	J2_call <ga:@fprintf>, %D0<imp-def>, %R31<imp-def,dead>, %R0<imp-use>, %R1<imp-use>, ...
+	ADJCALLSTACKUP 4, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	%vreg7<def> = A2_tfrsi 2; IntRegs:%vreg7
+	S2_storerbabs <ga:@in_section>, %vreg7; mem:ST1[@in_section] IntRegs:%vreg7
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %6
+    Predecessors according to CFG: BB#0 BB#1
+	JMPret %R31, %PC<imp-def,dead>
+
+# End machine code for function data_section.
+
+# After Hexagon Store Widening:
+# Machine code for function data_section: SSA
+
+BB#0: derived from LLVM BB %0
+	%vreg0<def> = L4_loadrb_abs <ga:@in_section>; mem:LD1[@in_section] IntRegs:%vreg0
+	%vreg1<def> = C2_cmpeqi %vreg0, 2; PredRegs:%vreg1 IntRegs:%vreg0
+	J2_jumpt %vreg1, <BB#2>, %PC<imp-def,dead>; PredRegs:%vreg1
+	J2_jump <BB#1>, %PC<imp-def,dead>
+    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#1(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %3
+    Predecessors according to CFG: BB#0
+	%vreg2<def> = L4_loadri_abs <ga:@asm_out_file>; mem:LD4[@asm_out_file] IntRegs:%vreg2
+	%vreg3<def> = A2_tfrsi <ga:@.str.3>; IntRegs:%vreg3
+	%vreg4<def> = COPY %R29; IntRegs:%vreg4
+	S2_storeri_io %vreg4, 0, %vreg3; mem:ST4[Stack] IntRegs:%vreg4,%vreg3
+	ADJCALLSTACKDOWN 4, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	%vreg5<def> = A2_tfrsi <ga:@.str>; IntRegs:%vreg5
+	%R0<def> = COPY %vreg2; IntRegs:%vreg2
+	%R1<def> = COPY %vreg5; IntRegs:%vreg5
+	J2_call <ga:@fprintf>, %D0<imp-def>, %R31<imp-def,dead>, %R0<imp-use>, %R1<imp-use>, ...
+	ADJCALLSTACKUP 4, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	%vreg7<def> = A2_tfrsi 2; IntRegs:%vreg7
+	S2_storerbabs <ga:@in_section>, %vreg7; mem:ST1[@in_section] IntRegs:%vreg7
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %6
+    Predecessors according to CFG: BB#0 BB#1
+	JMPret %R31, %PC<imp-def,dead>
+
+# End machine code for function data_section.
+
+# After Hexagon Hardware Loops:
+# Machine code for function data_section: SSA
+
+BB#0: derived from LLVM BB %0
+	%vreg0<def> = L4_loadrb_abs <ga:@in_section>; mem:LD1[@in_section] IntRegs:%vreg0
+	%vreg1<def> = C2_cmpeqi %vreg0, 2; PredRegs:%vreg1 IntRegs:%vreg0
+	J2_jumpt %vreg1, <BB#2>, %PC<imp-def,dead>; PredRegs:%vreg1
+	J2_jump <BB#1>, %PC<imp-def,dead>
+    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#1(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %3
+    Predecessors according to CFG: BB#0
+	%vreg2<def> = L4_loadri_abs <ga:@asm_out_file>; mem:LD4[@asm_out_file] IntRegs:%vreg2
+	%vreg3<def> = A2_tfrsi <ga:@.str.3>; IntRegs:%vreg3
+	%vreg4<def> = COPY %R29; IntRegs:%vreg4
+	S2_storeri_io %vreg4, 0, %vreg3; mem:ST4[Stack] IntRegs:%vreg4,%vreg3
+	ADJCALLSTACKDOWN 4, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	%vreg5<def> = A2_tfrsi <ga:@.str>; IntRegs:%vreg5
+	%R0<def> = COPY %vreg2; IntRegs:%vreg2
+	%R1<def> = COPY %vreg5; IntRegs:%vreg5
+	J2_call <ga:@fprintf>, %D0<imp-def>, %R31<imp-def,dead>, %R0<imp-use>, %R1<imp-use>, ...
+	ADJCALLSTACKUP 4, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	%vreg7<def> = A2_tfrsi 2; IntRegs:%vreg7
+	S2_storerbabs <ga:@in_section>, %vreg7; mem:ST1[@in_section] IntRegs:%vreg7
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %6
+    Predecessors according to CFG: BB#0 BB#1
+	JMPret %R31, %PC<imp-def,dead>
+
+# End machine code for function data_section.
+
+# After Process Implicit Definitions:
+# Machine code for function data_section: SSA
+
+BB#0: derived from LLVM BB %0
+	%vreg0<def> = L4_loadrb_abs <ga:@in_section>; mem:LD1[@in_section] IntRegs:%vreg0
+	%vreg1<def> = C2_cmpeqi %vreg0, 2; PredRegs:%vreg1 IntRegs:%vreg0
+	J2_jumpt %vreg1, <BB#2>, %PC<imp-def,dead>; PredRegs:%vreg1
+	J2_jump <BB#1>, %PC<imp-def,dead>
+    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#1(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %3
+    Predecessors according to CFG: BB#0
+	%vreg2<def> = L4_loadri_abs <ga:@asm_out_file>; mem:LD4[@asm_out_file] IntRegs:%vreg2
+	%vreg3<def> = A2_tfrsi <ga:@.str.3>; IntRegs:%vreg3
+	%vreg4<def> = COPY %R29; IntRegs:%vreg4
+	S2_storeri_io %vreg4, 0, %vreg3; mem:ST4[Stack] IntRegs:%vreg4,%vreg3
+	ADJCALLSTACKDOWN 4, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	%vreg5<def> = A2_tfrsi <ga:@.str>; IntRegs:%vreg5
+	%R0<def> = COPY %vreg2; IntRegs:%vreg2
+	%R1<def> = COPY %vreg5; IntRegs:%vreg5
+	J2_call <ga:@fprintf>, %D0<imp-def>, %R31<imp-def,dead>, %R0<imp-use>, %R1<imp-use>, ...
+	ADJCALLSTACKUP 4, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	%vreg7<def> = A2_tfrsi 2; IntRegs:%vreg7
+	S2_storerbabs <ga:@in_section>, %vreg7; mem:ST1[@in_section] IntRegs:%vreg7
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %6
+    Predecessors according to CFG: BB#0 BB#1
+	JMPret %R31, %PC<imp-def,dead>
+
+# End machine code for function data_section.
+
+# After Live Variable Analysis:
+# Machine code for function data_section: SSA
+
+BB#0: derived from LLVM BB %0
+	%vreg0<def> = L4_loadrb_abs <ga:@in_section>; mem:LD1[@in_section] IntRegs:%vreg0
+	%vreg1<def> = C2_cmpeqi %vreg0<kill>, 2; PredRegs:%vreg1 IntRegs:%vreg0
+	J2_jumpt %vreg1<kill>, <BB#2>, %PC<imp-def,dead>; PredRegs:%vreg1
+	J2_jump <BB#1>, %PC<imp-def,dead>
+    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#1(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %3
+    Predecessors according to CFG: BB#0
+	%vreg2<def> = L4_loadri_abs <ga:@asm_out_file>; mem:LD4[@asm_out_file] IntRegs:%vreg2
+	%vreg3<def> = A2_tfrsi <ga:@.str.3>; IntRegs:%vreg3
+	%vreg4<def> = COPY %R29; IntRegs:%vreg4
+	S2_storeri_io %vreg4<kill>, 0, %vreg3<kill>; mem:ST4[Stack] IntRegs:%vreg4,%vreg3
+	ADJCALLSTACKDOWN 4, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	%vreg5<def> = A2_tfrsi <ga:@.str>; IntRegs:%vreg5
+	%R0<def> = COPY %vreg2<kill>; IntRegs:%vreg2
+	%R1<def> = COPY %vreg5<kill>; IntRegs:%vreg5
+	J2_call <ga:@fprintf>, %D0<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use,kill>, %R1<imp-use,kill>, ...
+	ADJCALLSTACKUP 4, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	%vreg7<def> = A2_tfrsi 2; IntRegs:%vreg7
+	S2_storerbabs <ga:@in_section>, %vreg7<kill>; mem:ST1[@in_section] IntRegs:%vreg7
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %6
+    Predecessors according to CFG: BB#0 BB#1
+	JMPret %R31, %PC<imp-def,dead>
+
+# End machine code for function data_section.
+
+# After Machine Natural Loop Construction:
+# Machine code for function data_section: SSA
+
+BB#0: derived from LLVM BB %0
+	%vreg0<def> = L4_loadrb_abs <ga:@in_section>; mem:LD1[@in_section] IntRegs:%vreg0
+	%vreg1<def> = C2_cmpeqi %vreg0<kill>, 2; PredRegs:%vreg1 IntRegs:%vreg0
+	J2_jumpt %vreg1<kill>, <BB#2>, %PC<imp-def,dead>; PredRegs:%vreg1
+	J2_jump <BB#1>, %PC<imp-def,dead>
+    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#1(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %3
+    Predecessors according to CFG: BB#0
+	%vreg2<def> = L4_loadri_abs <ga:@asm_out_file>; mem:LD4[@asm_out_file] IntRegs:%vreg2
+	%vreg3<def> = A2_tfrsi <ga:@.str.3>; IntRegs:%vreg3
+	%vreg4<def> = COPY %R29; IntRegs:%vreg4
+	S2_storeri_io %vreg4<kill>, 0, %vreg3<kill>; mem:ST4[Stack] IntRegs:%vreg4,%vreg3
+	ADJCALLSTACKDOWN 4, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	%vreg5<def> = A2_tfrsi <ga:@.str>; IntRegs:%vreg5
+	%R0<def> = COPY %vreg2<kill>; IntRegs:%vreg2
+	%R1<def> = COPY %vreg5<kill>; IntRegs:%vreg5
+	J2_call <ga:@fprintf>, %D0<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use,kill>, %R1<imp-use,kill>, ...
+	ADJCALLSTACKUP 4, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	%vreg7<def> = A2_tfrsi 2; IntRegs:%vreg7
+	S2_storerbabs <ga:@in_section>, %vreg7<kill>; mem:ST1[@in_section] IntRegs:%vreg7
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %6
+    Predecessors according to CFG: BB#0 BB#1
+	JMPret %R31, %PC<imp-def,dead>
+
+# End machine code for function data_section.
+
+# After Eliminate PHI nodes for register allocation:
+# Machine code for function data_section: Post SSA
+
+BB#0: derived from LLVM BB %0
+	%vreg0<def> = L4_loadrb_abs <ga:@in_section>; mem:LD1[@in_section] IntRegs:%vreg0
+	%vreg1<def> = C2_cmpeqi %vreg0<kill>, 2; PredRegs:%vreg1 IntRegs:%vreg0
+	J2_jumpt %vreg1<kill>, <BB#2>, %PC<imp-def,dead>; PredRegs:%vreg1
+	J2_jump <BB#1>, %PC<imp-def,dead>
+    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#1(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %3
+    Predecessors according to CFG: BB#0
+	%vreg2<def> = L4_loadri_abs <ga:@asm_out_file>; mem:LD4[@asm_out_file] IntRegs:%vreg2
+	%vreg3<def> = A2_tfrsi <ga:@.str.3>; IntRegs:%vreg3
+	%vreg4<def> = COPY %R29; IntRegs:%vreg4
+	S2_storeri_io %vreg4<kill>, 0, %vreg3<kill>; mem:ST4[Stack] IntRegs:%vreg4,%vreg3
+	ADJCALLSTACKDOWN 4, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	%vreg5<def> = A2_tfrsi <ga:@.str>; IntRegs:%vreg5
+	%R0<def> = COPY %vreg2<kill>; IntRegs:%vreg2
+	%R1<def> = COPY %vreg5<kill>; IntRegs:%vreg5
+	J2_call <ga:@fprintf>, %D0<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use,kill>, %R1<imp-use,kill>, ...
+	ADJCALLSTACKUP 4, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	%vreg7<def> = A2_tfrsi 2; IntRegs:%vreg7
+	S2_storerbabs <ga:@in_section>, %vreg7<kill>; mem:ST1[@in_section] IntRegs:%vreg7
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %6
+    Predecessors according to CFG: BB#0 BB#1
+	JMPret %R31, %PC<imp-def,dead>
+
+# End machine code for function data_section.
+
+# After Two-Address instruction pass:
+# Machine code for function data_section: Post SSA
+
+BB#0: derived from LLVM BB %0
+	%vreg0<def> = L4_loadrb_abs <ga:@in_section>; mem:LD1[@in_section] IntRegs:%vreg0
+	%vreg1<def> = C2_cmpeqi %vreg0<kill>, 2; PredRegs:%vreg1 IntRegs:%vreg0
+	J2_jumpt %vreg1<kill>, <BB#2>, %PC<imp-def,dead>; PredRegs:%vreg1
+	J2_jump <BB#1>, %PC<imp-def,dead>
+    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#1(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %3
+    Predecessors according to CFG: BB#0
+	%vreg2<def> = L4_loadri_abs <ga:@asm_out_file>; mem:LD4[@asm_out_file] IntRegs:%vreg2
+	%vreg3<def> = A2_tfrsi <ga:@.str.3>; IntRegs:%vreg3
+	%vreg4<def> = COPY %R29; IntRegs:%vreg4
+	S2_storeri_io %vreg4<kill>, 0, %vreg3<kill>; mem:ST4[Stack] IntRegs:%vreg4,%vreg3
+	ADJCALLSTACKDOWN 4, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	%vreg5<def> = A2_tfrsi <ga:@.str>; IntRegs:%vreg5
+	%R0<def> = COPY %vreg2<kill>; IntRegs:%vreg2
+	%R1<def> = COPY %vreg5<kill>; IntRegs:%vreg5
+	J2_call <ga:@fprintf>, %D0<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use,kill>, %R1<imp-use,kill>, ...
+	ADJCALLSTACKUP 4, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	%vreg7<def> = A2_tfrsi 2; IntRegs:%vreg7
+	S2_storerbabs <ga:@in_section>, %vreg7<kill>; mem:ST1[@in_section] IntRegs:%vreg7
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %6
+    Predecessors according to CFG: BB#0 BB#1
+	JMPret %R31, %PC<imp-def,dead>
+
+# End machine code for function data_section.
+
+# After Simple Register Coalescing:
+# Machine code for function data_section: Post SSA
+
+0B	BB#0: derived from LLVM BB %0
+16B		%vreg0<def> = L4_loadrb_abs <ga:@in_section>; mem:LD1[@in_section] IntRegs:%vreg0
+32B		%vreg1<def> = C2_cmpeqi %vreg0, 2; PredRegs:%vreg1 IntRegs:%vreg0
+48B		J2_jumpt %vreg1, <BB#2>, %PC<imp-def,dead>; PredRegs:%vreg1
+64B		J2_jump <BB#1>, %PC<imp-def,dead>
+	    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#1(0x40000000 / 0x80000000 = 50.00%)
+
+80B	BB#1: derived from LLVM BB %3
+	    Predecessors according to CFG: BB#0
+96B		%vreg2<def> = L4_loadri_abs <ga:@asm_out_file>; mem:LD4[@asm_out_file] IntRegs:%vreg2
+112B		%vreg3<def> = A2_tfrsi <ga:@.str.3>; IntRegs:%vreg3
+144B		S2_storeri_io %R29, 0, %vreg3; mem:ST4[Stack] IntRegs:%vreg3
+160B		ADJCALLSTACKDOWN 4, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+192B		%R0<def> = COPY %vreg2; IntRegs:%vreg2
+208B		%R1<def> = A2_tfrsi <ga:@.str>
+224B		J2_call <ga:@fprintf>, %D0<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use,kill>, %R1<imp-use,kill>, ...
+240B		ADJCALLSTACKUP 4, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+256B		%vreg7<def> = A2_tfrsi 2; IntRegs:%vreg7
+272B		S2_storerbabs <ga:@in_section>, %vreg7; mem:ST1[@in_section] IntRegs:%vreg7
+	    Successors according to CFG: BB#2(?%)
+
+288B	BB#2: derived from LLVM BB %6
+	    Predecessors according to CFG: BB#0 BB#1
+304B		JMPret %R31, %PC<imp-def,dead>
+
+# End machine code for function data_section.
+
+# After Hexagon Expand Condsets:
+# Machine code for function data_section: Post SSA
+
+0B	BB#0: derived from LLVM BB %0
+16B		%vreg0<def> = L4_loadrb_abs <ga:@in_section>; mem:LD1[@in_section] IntRegs:%vreg0
+32B		%vreg1<def> = C2_cmpeqi %vreg0, 2; PredRegs:%vreg1 IntRegs:%vreg0
+48B		J2_jumpt %vreg1, <BB#2>, %PC<imp-def,dead>; PredRegs:%vreg1
+64B		J2_jump <BB#1>, %PC<imp-def,dead>
+	    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#1(0x40000000 / 0x80000000 = 50.00%)
+
+80B	BB#1: derived from LLVM BB %3
+	    Predecessors according to CFG: BB#0
+96B		%vreg2<def> = L4_loadri_abs <ga:@asm_out_file>; mem:LD4[@asm_out_file] IntRegs:%vreg2
+112B		%vreg3<def> = A2_tfrsi <ga:@.str.3>; IntRegs:%vreg3
+144B		S2_storeri_io %R29, 0, %vreg3; mem:ST4[Stack] IntRegs:%vreg3
+160B		ADJCALLSTACKDOWN 4, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+192B		%R0<def> = COPY %vreg2; IntRegs:%vreg2
+208B		%R1<def> = A2_tfrsi <ga:@.str>
+224B		J2_call <ga:@fprintf>, %D0<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use,kill>, %R1<imp-use,kill>, ...
+240B		ADJCALLSTACKUP 4, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+256B		%vreg7<def> = A2_tfrsi 2; IntRegs:%vreg7
+272B		S2_storerbabs <ga:@in_section>, %vreg7; mem:ST1[@in_section] IntRegs:%vreg7
+	    Successors according to CFG: BB#2(?%)
+
+288B	BB#2: derived from LLVM BB %6
+	    Predecessors according to CFG: BB#0 BB#1
+304B		JMPret %R31, %PC<imp-def,dead>
+
+# End machine code for function data_section.
+
+# After Machine Instruction Scheduler:
+# Machine code for function data_section: Post SSA
+
+0B	BB#0: derived from LLVM BB %0
+16B		%vreg0<def> = L4_loadrb_abs <ga:@in_section>; mem:LD1[@in_section] IntRegs:%vreg0
+32B		%vreg1<def> = C2_cmpeqi %vreg0, 2; PredRegs:%vreg1 IntRegs:%vreg0
+48B		J2_jumpt %vreg1, <BB#2>, %PC<imp-def,dead>; PredRegs:%vreg1
+64B		J2_jump <BB#1>, %PC<imp-def,dead>
+	    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#1(0x40000000 / 0x80000000 = 50.00%)
+
+80B	BB#1: derived from LLVM BB %3
+	    Predecessors according to CFG: BB#0
+96B		%vreg2<def> = L4_loadri_abs <ga:@asm_out_file>; mem:LD4[@asm_out_file] IntRegs:%vreg2
+112B		%vreg3<def> = A2_tfrsi <ga:@.str.3>; IntRegs:%vreg3
+208B		%R1<def> = A2_tfrsi <ga:@.str>
+216B		S2_storeri_io %R29, 0, %vreg3; mem:ST4[Stack] IntRegs:%vreg3
+224B		%R0<def> = COPY %vreg2; IntRegs:%vreg2
+232B		ADJCALLSTACKDOWN 4, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+240B		J2_call <ga:@fprintf>, %D0<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use>, %R1<imp-use,kill>, ...
+248B		%vreg7<def> = A2_tfrsi 2; IntRegs:%vreg7
+256B		ADJCALLSTACKUP 4, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+272B		S2_storerbabs <ga:@in_section>, %vreg7; mem:ST1[@in_section] IntRegs:%vreg7
+	    Successors according to CFG: BB#2(?%)
+
+288B	BB#2: derived from LLVM BB %6
+	    Predecessors according to CFG: BB#0 BB#1
+304B		JMPret %R31, %PC<imp-def,dead>
+
+# End machine code for function data_section.
+
+# After Greedy Register Allocator:
+# Machine code for function data_section: Post SSA
+
+0B	BB#0: derived from LLVM BB %0
+16B		%vreg0<def> = L4_loadrb_abs <ga:@in_section>; mem:LD1[@in_section] IntRegs:%vreg0
+32B		%vreg1<def> = C2_cmpeqi %vreg0, 2; PredRegs:%vreg1 IntRegs:%vreg0
+48B		J2_jumpt %vreg1, <BB#2>, %PC<imp-def,dead>; PredRegs:%vreg1
+64B		J2_jump <BB#1>, %PC<imp-def,dead>
+	    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#1(0x40000000 / 0x80000000 = 50.00%)
+
+80B	BB#1: derived from LLVM BB %3
+	    Predecessors according to CFG: BB#0
+96B		%vreg2<def> = L4_loadri_abs <ga:@asm_out_file>; mem:LD4[@asm_out_file] IntRegs:%vreg2
+112B		%vreg3<def> = A2_tfrsi <ga:@.str.3>; IntRegs:%vreg3
+208B		%R1<def> = A2_tfrsi <ga:@.str>
+216B		S2_storeri_io %R29, 0, %vreg3; mem:ST4[Stack] IntRegs:%vreg3
+224B		%R0<def> = COPY %vreg2; IntRegs:%vreg2
+232B		ADJCALLSTACKDOWN 4, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+240B		J2_call <ga:@fprintf>, %D0<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use>, %R1<imp-use>, ...
+248B		%vreg7<def> = A2_tfrsi 2; IntRegs:%vreg7
+256B		ADJCALLSTACKUP 4, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+272B		S2_storerbabs <ga:@in_section>, %vreg7; mem:ST1[@in_section] IntRegs:%vreg7
+	    Successors according to CFG: BB#2(?%)
+
+288B	BB#2: derived from LLVM BB %6
+	    Predecessors according to CFG: BB#0 BB#1
+304B		JMPret %R31, %PC<imp-def,dead>
+
+# End machine code for function data_section.
+
+# After Virtual Register Rewriter:
+# Machine code for function data_section: Post SSA
+
+0B	BB#0: derived from LLVM BB %0
+16B		%R0<def> = L4_loadrb_abs <ga:@in_section>; mem:LD1[@in_section]
+32B		%P0<def> = C2_cmpeqi %R0<kill>, 2
+48B		J2_jumpt %P0<kill>, <BB#2>, %PC<imp-def,dead>
+64B		J2_jump <BB#1>, %PC<imp-def,dead>
+	    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#1(0x40000000 / 0x80000000 = 50.00%)
+
+80B	BB#1: derived from LLVM BB %3
+	    Predecessors according to CFG: BB#0
+96B		%R0<def> = L4_loadri_abs <ga:@asm_out_file>; mem:LD4[@asm_out_file]
+112B		%R2<def> = A2_tfrsi <ga:@.str.3>
+208B		%R1<def> = A2_tfrsi <ga:@.str>
+216B		S2_storeri_io %R29, 0, %R2<kill>; mem:ST4[Stack]
+232B		ADJCALLSTACKDOWN 4, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+240B		J2_call <ga:@fprintf>, %D0<imp-def,dead>, %D1<imp-def,dead>, %R31<imp-def,dead>, %P0<imp-def,dead>, %R0<imp-use>, %R1<imp-use>, ...
+248B		%R0<def> = A2_tfrsi 2
+256B		ADJCALLSTACKUP 4, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+272B		S2_storerbabs <ga:@in_section>, %R0<kill>; mem:ST1[@in_section]
+	    Successors according to CFG: BB#2(?%)
+
+288B	BB#2: derived from LLVM BB %6
+	    Predecessors according to CFG: BB#0 BB#1
+304B		JMPret %R31, %PC<imp-def,dead>
+
+# End machine code for function data_section.
+
+# After Stack Slot Coloring:
+# Machine code for function data_section: Post SSA
+
+BB#0: derived from LLVM BB %0
+	%R0<def> = L4_loadrb_abs <ga:@in_section>; mem:LD1[@in_section]
+	%P0<def> = C2_cmpeqi %R0<kill>, 2
+	J2_jumpt %P0<kill>, <BB#2>, %PC<imp-def,dead>
+	J2_jump <BB#1>, %PC<imp-def,dead>
+    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#1(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %3
+    Predecessors according to CFG: BB#0
+	%R0<def> = L4_loadri_abs <ga:@asm_out_file>; mem:LD4[@asm_out_file]
+	%R2<def> = A2_tfrsi <ga:@.str.3>
+	%R1<def> = A2_tfrsi <ga:@.str>
+	S2_storeri_io %R29, 0, %R2<kill>; mem:ST4[Stack]
+	ADJCALLSTACKDOWN 4, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	J2_call <ga:@fprintf>, %D0<imp-def,dead>, %D1<imp-def,dead>, %R31<imp-def,dead>, %P0<imp-def,dead>, %R0<imp-use>, %R1<imp-use>, ...
+	%R0<def> = A2_tfrsi 2
+	ADJCALLSTACKUP 4, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	S2_storerbabs <ga:@in_section>, %R0<kill>; mem:ST1[@in_section]
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %6
+    Predecessors according to CFG: BB#0 BB#1
+	JMPret %R31, %PC<imp-def,dead>
+
+# End machine code for function data_section.
+
+# After Machine Loop Invariant Code Motion:
+# Machine code for function data_section: Post SSA
+
+BB#0: derived from LLVM BB %0
+	%R0<def> = L4_loadrb_abs <ga:@in_section>; mem:LD1[@in_section]
+	%P0<def> = C2_cmpeqi %R0<kill>, 2
+	J2_jumpt %P0<kill>, <BB#2>, %PC<imp-def,dead>
+	J2_jump <BB#1>, %PC<imp-def,dead>
+    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#1(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %3
+    Predecessors according to CFG: BB#0
+	%R0<def> = L4_loadri_abs <ga:@asm_out_file>; mem:LD4[@asm_out_file]
+	%R2<def> = A2_tfrsi <ga:@.str.3>
+	%R1<def> = A2_tfrsi <ga:@.str>
+	S2_storeri_io %R29, 0, %R2<kill>; mem:ST4[Stack]
+	ADJCALLSTACKDOWN 4, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	J2_call <ga:@fprintf>, %D0<imp-def,dead>, %D1<imp-def,dead>, %R31<imp-def,dead>, %P0<imp-def,dead>, %R0<imp-use>, %R1<imp-use>, ...
+	%R0<def> = A2_tfrsi 2
+	ADJCALLSTACKUP 4, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	S2_storerbabs <ga:@in_section>, %R0<kill>; mem:ST1[@in_section]
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %6
+    Predecessors according to CFG: BB#0 BB#1
+	JMPret %R31, %PC<imp-def,dead>
+
+# End machine code for function data_section.
+
+# After Hexagon RDF optimizations:
+# Machine code for function data_section: Post SSA
+
+BB#0: derived from LLVM BB %0
+	%R0<def> = L4_loadrb_abs <ga:@in_section>; mem:LD1[@in_section]
+	%P0<def> = C2_cmpeqi %R0<kill>, 2
+	J2_jumpt %P0<kill>, <BB#2>, %PC<imp-def,dead>
+	J2_jump <BB#1>, %PC<imp-def,dead>
+    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#1(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %3
+    Predecessors according to CFG: BB#0
+	%R0<def> = L4_loadri_abs <ga:@asm_out_file>; mem:LD4[@asm_out_file]
+	%R2<def> = A2_tfrsi <ga:@.str.3>
+	%R1<def> = A2_tfrsi <ga:@.str>
+	S2_storeri_io %R29, 0, %R2<kill>; mem:ST4[Stack]
+	ADJCALLSTACKDOWN 4, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	J2_call <ga:@fprintf>, %D0<imp-def,dead>, %D1<imp-def,dead>, %R31<imp-def,dead>, %P0<imp-def,dead>, %R0<imp-use>, %R1<imp-use>, ...
+	%R0<def> = A2_tfrsi 2
+	ADJCALLSTACKUP 4, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	S2_storerbabs <ga:@in_section>, %R0<kill>; mem:ST1[@in_section]
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %6
+    Predecessors according to CFG: BB#0 BB#1
+	JMPret %R31, %PC<imp-def,dead>
+
+# End machine code for function data_section.
+
+# After Shrink Wrapping analysis:
+# Machine code for function data_section: Post SSA
+
+BB#0: derived from LLVM BB %0
+	%R0<def> = L4_loadrb_abs <ga:@in_section>; mem:LD1[@in_section]
+	%P0<def> = C2_cmpeqi %R0<kill>, 2
+	J2_jumpt %P0<kill>, <BB#2>, %PC<imp-def,dead>
+	J2_jump <BB#1>, %PC<imp-def,dead>
+    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#1(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %3
+    Predecessors according to CFG: BB#0
+	%R0<def> = L4_loadri_abs <ga:@asm_out_file>; mem:LD4[@asm_out_file]
+	%R2<def> = A2_tfrsi <ga:@.str.3>
+	%R1<def> = A2_tfrsi <ga:@.str>
+	S2_storeri_io %R29, 0, %R2<kill>; mem:ST4[Stack]
+	ADJCALLSTACKDOWN 4, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	J2_call <ga:@fprintf>, %D0<imp-def,dead>, %D1<imp-def,dead>, %R31<imp-def,dead>, %P0<imp-def,dead>, %R0<imp-use>, %R1<imp-use>, ...
+	%R0<def> = A2_tfrsi 2
+	ADJCALLSTACKUP 4, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	S2_storerbabs <ga:@in_section>, %R0<kill>; mem:ST1[@in_section]
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %6
+    Predecessors according to CFG: BB#0 BB#1
+	JMPret %R31, %PC<imp-def,dead>
+
+# End machine code for function data_section.
+
+# After Prologue/Epilogue Insertion & Frame Finalization:
+# Machine code for function data_section: Post SSA
+
+BB#0: derived from LLVM BB %0
+	%R0<def> = L4_loadrb_abs <ga:@in_section>; mem:LD1[@in_section]
+	%P0<def> = C2_cmpeqi %R0<kill>, 2
+	J2_jumpt %P0<kill>, <BB#2>, %PC<imp-def,dead>
+	J2_jump <BB#1>, %PC<imp-def,dead>
+    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#1(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %3
+    Predecessors according to CFG: BB#0
+	S2_allocframe 8, %R29<imp-def>, %R30<imp-def>, %R29<imp-use>, %R31<imp-use>, %R30<imp-use>; mem:ST4[<unknown>]
+	%R0<def> = L4_loadri_abs <ga:@asm_out_file>; mem:LD4[@asm_out_file]
+	%R2<def> = A2_tfrsi <ga:@.str.3>
+	%R1<def> = A2_tfrsi <ga:@.str>
+	S2_storeri_io %R29, 0, %R2<kill>; mem:ST4[Stack]
+	J2_call <ga:@fprintf>, %D0<imp-def,dead>, %D1<imp-def,dead>, %R31<imp-def,dead>, %P0<imp-def,dead>, %R0<imp-use>, %R1<imp-use>, ...
+	%R0<def> = A2_tfrsi 2
+	S2_storerbabs <ga:@in_section>, %R0<kill>; mem:ST1[@in_section]
+	L2_deallocframe %R29<imp-def>, %R30<imp-def>, %R31<imp-def>, %R30<imp-use>
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %6
+    Predecessors according to CFG: BB#0 BB#1
+	JMPret %R31, %PC<imp-def,dead>
+
+# End machine code for function data_section.
+
+# After Machine Copy Propagation Pass:
+# Machine code for function data_section: Post SSA
+
+BB#0: derived from LLVM BB %0
+	%R0<def> = L4_loadrb_abs <ga:@in_section>; mem:LD1[@in_section]
+	%P0<def> = C2_cmpeqi %R0<kill>, 2
+	J2_jumpt %P0<kill>, <BB#2>, %PC<imp-def,dead>
+	J2_jump <BB#1>, %PC<imp-def,dead>
+    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#1(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %3
+    Predecessors according to CFG: BB#0
+	S2_allocframe 8, %R29<imp-def>, %R30<imp-def>, %R29<imp-use>, %R31<imp-use>, %R30<imp-use>; mem:ST4[<unknown>]
+	%R0<def> = L4_loadri_abs <ga:@asm_out_file>; mem:LD4[@asm_out_file]
+	%R2<def> = A2_tfrsi <ga:@.str.3>
+	%R1<def> = A2_tfrsi <ga:@.str>
+	S2_storeri_io %R29, 0, %R2<kill>; mem:ST4[Stack]
+	J2_call <ga:@fprintf>, %D0<imp-def,dead>, %D1<imp-def,dead>, %R31<imp-def,dead>, %P0<imp-def,dead>, %R0<imp-use>, %R1<imp-use>, ...
+	%R0<def> = A2_tfrsi 2
+	S2_storerbabs <ga:@in_section>, %R0<kill>; mem:ST1[@in_section]
+	L2_deallocframe %R29<imp-def>, %R30<imp-def>, %R31<imp-def>, %R30<imp-use>
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %6
+    Predecessors according to CFG: BB#0 BB#1
+	JMPret %R31, %PC<imp-def,dead>
+
+# End machine code for function data_section.
+
+# After Post-RA pseudo instruction expansion pass:
+# Machine code for function data_section: Post SSA
+
+BB#0: derived from LLVM BB %0
+	%R0<def> = L4_loadrb_abs <ga:@in_section>; mem:LD1[@in_section]
+	%P0<def> = C2_cmpeqi %R0<kill>, 2
+	J2_jumpt %P0<kill>, <BB#2>, %PC<imp-def,dead>
+	J2_jump <BB#1>, %PC<imp-def,dead>
+    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#1(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %3
+    Predecessors according to CFG: BB#0
+	S2_allocframe 8, %R29<imp-def>, %R30<imp-def>, %R29<imp-use>, %R31<imp-use>, %R30<imp-use>; mem:ST4[<unknown>]
+	%R0<def> = L4_loadri_abs <ga:@asm_out_file>; mem:LD4[@asm_out_file]
+	%R2<def> = A2_tfrsi <ga:@.str.3>
+	%R1<def> = A2_tfrsi <ga:@.str>
+	S2_storeri_io %R29, 0, %R2<kill>; mem:ST4[Stack]
+	J2_call <ga:@fprintf>, %D0<imp-def,dead>, %D1<imp-def,dead>, %R31<imp-def,dead>, %P0<imp-def,dead>, %R0<imp-use>, %R1<imp-use>, ...
+	%R0<def> = A2_tfrsi 2
+	S2_storerbabs <ga:@in_section>, %R0<kill>; mem:ST1[@in_section]
+	L2_deallocframe %R29<imp-def>, %R30<imp-def>, %R31<imp-def>, %R30<imp-use>
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %6
+    Predecessors according to CFG: BB#0 BB#1
+	JMPret %R31, %PC<imp-def,dead>
+
+# End machine code for function data_section.
+
+# After Hexagon Copy-To-Combine Pass:
+# Machine code for function data_section: Post SSA
+
+BB#0: derived from LLVM BB %0
+	%R0<def> = L4_loadrb_abs <ga:@in_section>; mem:LD1[@in_section]
+	%P0<def> = C2_cmpeqi %R0<kill>, 2
+	J2_jumpt %P0<kill>, <BB#2>, %PC<imp-def,dead>
+	J2_jump <BB#1>, %PC<imp-def,dead>
+    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#1(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %3
+    Predecessors according to CFG: BB#0
+	S2_allocframe 8, %R29<imp-def>, %R30<imp-def>, %R29<imp-use>, %R31<imp-use>, %R30<imp-use>; mem:ST4[<unknown>]
+	%R0<def> = L4_loadri_abs <ga:@asm_out_file>; mem:LD4[@asm_out_file]
+	%R2<def> = A2_tfrsi <ga:@.str.3>
+	%R1<def> = A2_tfrsi <ga:@.str>
+	S2_storeri_io %R29, 0, %R2<kill>; mem:ST4[Stack]
+	J2_call <ga:@fprintf>, %D0<imp-def,dead>, %D1<imp-def,dead>, %R31<imp-def,dead>, %P0<imp-def,dead>, %R0<imp-use>, %R1<imp-use>, ...
+	%R0<def> = A2_tfrsi 2
+	S2_storerbabs <ga:@in_section>, %R0<kill>; mem:ST1[@in_section]
+	L2_deallocframe %R29<imp-def>, %R30<imp-def>, %R31<imp-def>, %R30<imp-use>
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %6
+    Predecessors according to CFG: BB#0 BB#1
+	JMPret %R31, %PC<imp-def,dead>
+
+# End machine code for function data_section.
+
+# After Hexagon Split Const32s and Const64s:
+# Machine code for function data_section: Post SSA
+
+BB#0: derived from LLVM BB %0
+	%R0<def> = L4_loadrb_abs <ga:@in_section>; mem:LD1[@in_section]
+	%P0<def> = C2_cmpeqi %R0<kill>, 2
+	J2_jumpt %P0<kill>, <BB#2>, %PC<imp-def,dead>
+	J2_jump <BB#1>, %PC<imp-def,dead>
+    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#1(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %3
+    Predecessors according to CFG: BB#0
+	S2_allocframe 8, %R29<imp-def>, %R30<imp-def>, %R29<imp-use>, %R31<imp-use>, %R30<imp-use>; mem:ST4[<unknown>]
+	%R0<def> = L4_loadri_abs <ga:@asm_out_file>; mem:LD4[@asm_out_file]
+	%R2<def> = A2_tfrsi <ga:@.str.3>
+	%R1<def> = A2_tfrsi <ga:@.str>
+	S2_storeri_io %R29, 0, %R2<kill>; mem:ST4[Stack]
+	J2_call <ga:@fprintf>, %D0<imp-def,dead>, %D1<imp-def,dead>, %R31<imp-def,dead>, %P0<imp-def,dead>, %R0<imp-use>, %R1<imp-use>, ...
+	%R0<def> = A2_tfrsi 2
+	S2_storerbabs <ga:@in_section>, %R0<kill>; mem:ST1[@in_section]
+	L2_deallocframe %R29<imp-def>, %R30<imp-def>, %R31<imp-def>, %R30<imp-use>
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %6
+    Predecessors according to CFG: BB#0 BB#1
+	JMPret %R31, %PC<imp-def,dead>
+
+# End machine code for function data_section.
+
+# After Analyze Machine Code For Garbage Collection:
+# Machine code for function data_section: Post SSA
+
+BB#0: derived from LLVM BB %0
+	%R0<def> = L4_loadrb_abs <ga:@in_section>; mem:LD1[@in_section]
+	%P0<def> = C2_cmpeqi %R0<kill>, 2
+	J2_jumpt %P0<kill>, <BB#2>, %PC<imp-def,dead>
+	J2_jump <BB#1>, %PC<imp-def,dead>
+    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#1(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %3
+    Predecessors according to CFG: BB#0
+	S2_allocframe 8, %R29<imp-def>, %R30<imp-def>, %R29<imp-use>, %R31<imp-use>, %R30<imp-use>; mem:ST4[<unknown>]
+	%R0<def> = L4_loadri_abs <ga:@asm_out_file>; mem:LD4[@asm_out_file]
+	%R2<def> = A2_tfrsi <ga:@.str.3>
+	%R1<def> = A2_tfrsi <ga:@.str>
+	S2_storeri_io %R29, 0, %R2<kill>; mem:ST4[Stack]
+	J2_call <ga:@fprintf>, %D0<imp-def,dead>, %D1<imp-def,dead>, %R31<imp-def,dead>, %P0<imp-def,dead>, %R0<imp-use>, %R1<imp-use>, ...
+	%R0<def> = A2_tfrsi 2
+	S2_storerbabs <ga:@in_section>, %R0<kill>; mem:ST1[@in_section]
+	L2_deallocframe %R29<imp-def>, %R30<imp-def>, %R31<imp-def>, %R30<imp-use>
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %6
+    Predecessors according to CFG: BB#0 BB#1
+	JMPret %R31, %PC<imp-def,dead>
+
+# End machine code for function data_section.
+
+# After Hexagon NewValueJump:
+# Machine code for function data_section: Post SSA
+
+BB#0: derived from LLVM BB %0
+	%R0<def> = L4_loadrb_abs <ga:@in_section>; mem:LD1[@in_section]
+	J4_cmpeqi_t_jumpnv_t %R0<kill>, 2, <BB#2>, %PC<imp-def>
+	J2_jump <BB#1>, %PC<imp-def,dead>
+    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#1(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %3
+    Predecessors according to CFG: BB#0
+	S2_allocframe 8, %R29<imp-def>, %R30<imp-def>, %R29<imp-use>, %R31<imp-use>, %R30<imp-use>; mem:ST4[<unknown>]
+	%R0<def> = L4_loadri_abs <ga:@asm_out_file>; mem:LD4[@asm_out_file]
+	%R2<def> = A2_tfrsi <ga:@.str.3>
+	%R1<def> = A2_tfrsi <ga:@.str>
+	S2_storeri_io %R29, 0, %R2<kill>; mem:ST4[Stack]
+	J2_call <ga:@fprintf>, %D0<imp-def,dead>, %D1<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use>, %R1<imp-use>, ...
+	%R0<def> = A2_tfrsi 2
+	S2_storerbabs <ga:@in_section>, %R0<kill>; mem:ST1[@in_section]
+	L2_deallocframe %R29<imp-def>, %R30<imp-def>, %R31<imp-def>, %R30<imp-use>
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %6
+    Predecessors according to CFG: BB#0 BB#1
+	JMPret %R31, %PC<imp-def,dead>
+
+# End machine code for function data_section.
+
+# After Hexagon Expand Predicate Spill Code:
+# Machine code for function data_section: Post SSA
+
+BB#0: derived from LLVM BB %0
+	%R0<def> = L4_loadrb_abs <ga:@in_section>; mem:LD1[@in_section]
+	J4_cmpeqi_t_jumpnv_t %R0<kill>, 2, <BB#2>, %PC<imp-def>
+	J2_jump <BB#1>, %PC<imp-def,dead>
+    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#1(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %3
+    Predecessors according to CFG: BB#0
+	S2_allocframe 8, %R29<imp-def>, %R30<imp-def>, %R29<imp-use>, %R31<imp-use>, %R30<imp-use>; mem:ST4[<unknown>]
+	%R0<def> = L4_loadri_abs <ga:@asm_out_file>; mem:LD4[@asm_out_file]
+	%R2<def> = A2_tfrsi <ga:@.str.3>
+	%R1<def> = A2_tfrsi <ga:@.str>
+	S2_storeri_io %R29, 0, %R2<kill>; mem:ST4[Stack]
+	J2_call <ga:@fprintf>, %D0<imp-def,dead>, %D1<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use>, %R1<imp-use>, ...
+	%R0<def> = A2_tfrsi 2
+	S2_storerbabs <ga:@in_section>, %R0<kill>; mem:ST1[@in_section]
+	L2_deallocframe %R29<imp-def>, %R30<imp-def>, %R31<imp-def>, %R30<imp-use>
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %6
+    Predecessors according to CFG: BB#0 BB#1
+	JMPret %R31, %PC<imp-def,dead>
+
+# End machine code for function data_section.
+
+# After Hexagon Hardware Loop Fixup:
+# Machine code for function data_section: Post SSA
+
+BB#0: derived from LLVM BB %0
+	%R0<def> = L4_loadrb_abs <ga:@in_section>; mem:LD1[@in_section]
+	J4_cmpeqi_t_jumpnv_t %R0<kill>, 2, <BB#2>, %PC<imp-def>
+	J2_jump <BB#1>, %PC<imp-def,dead>
+    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#1(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %3
+    Predecessors according to CFG: BB#0
+	S2_allocframe 8, %R29<imp-def>, %R30<imp-def>, %R29<imp-use>, %R31<imp-use>, %R30<imp-use>; mem:ST4[<unknown>]
+	%R0<def> = L4_loadri_abs <ga:@asm_out_file>; mem:LD4[@asm_out_file]
+	%R2<def> = A2_tfrsi <ga:@.str.3>
+	%R1<def> = A2_tfrsi <ga:@.str>
+	S2_storeri_io %R29, 0, %R2<kill>; mem:ST4[Stack]
+	J2_call <ga:@fprintf>, %D0<imp-def,dead>, %D1<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use>, %R1<imp-use>, ...
+	%R0<def> = A2_tfrsi 2
+	S2_storerbabs <ga:@in_section>, %R0<kill>; mem:ST1[@in_section]
+	L2_deallocframe %R29<imp-def>, %R30<imp-def>, %R31<imp-def>, %R30<imp-use>
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %6
+    Predecessors according to CFG: BB#0 BB#1
+	JMPret %R31, %PC<imp-def,dead>
+
+# End machine code for function data_section.
+
+# After Hexagon generate mux instructions:
+# Machine code for function data_section: Post SSA
+
+BB#0: derived from LLVM BB %0
+	%R0<def> = L4_loadrb_abs <ga:@in_section>; mem:LD1[@in_section]
+	J4_cmpeqi_t_jumpnv_t %R0<kill>, 2, <BB#2>, %PC<imp-def>
+	J2_jump <BB#1>, %PC<imp-def,dead>
+    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#1(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %3
+    Predecessors according to CFG: BB#0
+	S2_allocframe 8, %R29<imp-def>, %R30<imp-def>, %R29<imp-use>, %R31<imp-use>, %R30<imp-use>; mem:ST4[<unknown>]
+	%R0<def> = L4_loadri_abs <ga:@asm_out_file>; mem:LD4[@asm_out_file]
+	%R2<def> = A2_tfrsi <ga:@.str.3>
+	%R1<def> = A2_tfrsi <ga:@.str>
+	S2_storeri_io %R29, 0, %R2<kill>; mem:ST4[Stack]
+	J2_call <ga:@fprintf>, %D0<imp-def,dead>, %D1<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use>, %R1<imp-use>, ...
+	%R0<def> = A2_tfrsi 2
+	S2_storerbabs <ga:@in_section>, %R0<kill>; mem:ST1[@in_section]
+	L2_deallocframe %R29<imp-def>, %R30<imp-def>, %R31<imp-def>, %R30<imp-use>
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %6
+    Predecessors according to CFG: BB#0 BB#1
+	JMPret %R31, %PC<imp-def,dead>
+
+# End machine code for function data_section.
+
+# After Hexagon Packetizer:
+# Machine code for function data_section: Post SSA
+
+BB#0: derived from LLVM BB %0
+	BUNDLE %R0<imp-def,dead>, %PC<imp-def>
+	  * %R0<def> = L4_loadrb_abs <ga:@in_section>; mem:LD1[@in_section]
+	  * J4_cmpeqi_t_jumpnv_t %R0<kill,internal>, 2, <BB#2>, %PC<imp-def>
+	J2_jump <BB#1>, %PC<imp-def,dead>
+    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#1(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %3
+    Predecessors according to CFG: BB#0
+	S2_allocframe 8, %R29<imp-def>, %R30<imp-def>, %R29<imp-use>, %R31<imp-use>, %R30<imp-use>; mem:ST4[<unknown>]
+	BUNDLE %R0<imp-def>, %R2<imp-def>
+	  * %R0<def> = L4_loadri_abs <ga:@asm_out_file>; mem:LD4[@asm_out_file]
+	  * %R2<def> = A2_tfrsi <ga:@.str.3>
+	BUNDLE %R1<imp-def>, %D0<imp-def,dead>, %D1<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>, %R2<imp-use,kill>, %R0<imp-use>, ...
+	  * %R1<def> = A2_tfrsi <ga:@.str>
+	  * S2_storeri_io %R29, 0, %R2<kill>; mem:ST4[Stack]
+	  * J2_call <ga:@fprintf>, %D0<imp-def,dead>, %D1<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use>, %R1<imp-use,internal>, ...
+	BUNDLE %R0<imp-def,dead>
+	  * %R0<def> = A2_tfrsi 2
+	  * S2_storerbnewabs <ga:@in_section>, %R0<kill,internal>; mem:ST1[@in_section]
+	L2_deallocframe %R29<imp-def>, %R30<imp-def>, %R31<imp-def>, %R30<imp-use>
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %6
+    Predecessors according to CFG: BB#0 BB#1
+	JMPret %R31, %PC<imp-def,dead>
+
+# End machine code for function data_section.
+
+# After Hexagon call frame information:
+# Machine code for function data_section: Post SSA
+
+BB#0: derived from LLVM BB %0
+	BUNDLE %R0<imp-def,dead>, %PC<imp-def>
+	  * %R0<def> = L4_loadrb_abs <ga:@in_section>; mem:LD1[@in_section]
+	  * J4_cmpeqi_t_jumpnv_t %R0<kill,internal>, 2, <BB#2>, %PC<imp-def>
+	J2_jump <BB#1>, %PC<imp-def,dead>
+    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#1(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %3
+    Predecessors according to CFG: BB#0
+	S2_allocframe 8, %R29<imp-def>, %R30<imp-def>, %R29<imp-use>, %R31<imp-use>, %R30<imp-use>; mem:ST4[<unknown>]
+	BUNDLE %R0<imp-def>, %R2<imp-def>
+	  * %R0<def> = L4_loadri_abs <ga:@asm_out_file>; mem:LD4[@asm_out_file]
+	  * %R2<def> = A2_tfrsi <ga:@.str.3>
+	BUNDLE %R1<imp-def>, %D0<imp-def,dead>, %D1<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>, %R2<imp-use,kill>, %R0<imp-use>, ...
+	  * %R1<def> = A2_tfrsi <ga:@.str>
+	  * S2_storeri_io %R29, 0, %R2<kill>; mem:ST4[Stack]
+	  * J2_call <ga:@fprintf>, %D0<imp-def,dead>, %D1<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use>, %R1<imp-use,internal>, ...
+	BUNDLE %R0<imp-def,dead>
+	  * %R0<def> = A2_tfrsi 2
+	  * S2_storerbnewabs <ga:@in_section>, %R0<kill,internal>; mem:ST1[@in_section]
+	L2_deallocframe %R29<imp-def>, %R30<imp-def>, %R31<imp-def>, %R30<imp-use>
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %6
+    Predecessors according to CFG: BB#0 BB#1
+	JMPret %R31, %PC<imp-def,dead>
+
+# End machine code for function data_section.
+
+# After Contiguously Lay Out Funclets:
+# Machine code for function data_section: Post SSA
+
+BB#0: derived from LLVM BB %0
+	BUNDLE %R0<imp-def,dead>, %PC<imp-def>
+	  * %R0<def> = L4_loadrb_abs <ga:@in_section>; mem:LD1[@in_section]
+	  * J4_cmpeqi_t_jumpnv_t %R0<kill,internal>, 2, <BB#2>, %PC<imp-def>
+	J2_jump <BB#1>, %PC<imp-def,dead>
+    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#1(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %3
+    Predecessors according to CFG: BB#0
+	S2_allocframe 8, %R29<imp-def>, %R30<imp-def>, %R29<imp-use>, %R31<imp-use>, %R30<imp-use>; mem:ST4[<unknown>]
+	BUNDLE %R0<imp-def>, %R2<imp-def>
+	  * %R0<def> = L4_loadri_abs <ga:@asm_out_file>; mem:LD4[@asm_out_file]
+	  * %R2<def> = A2_tfrsi <ga:@.str.3>
+	BUNDLE %R1<imp-def>, %D0<imp-def,dead>, %D1<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>, %R2<imp-use,kill>, %R0<imp-use>, ...
+	  * %R1<def> = A2_tfrsi <ga:@.str>
+	  * S2_storeri_io %R29, 0, %R2<kill>; mem:ST4[Stack]
+	  * J2_call <ga:@fprintf>, %D0<imp-def,dead>, %D1<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use>, %R1<imp-use,internal>, ...
+	BUNDLE %R0<imp-def,dead>
+	  * %R0<def> = A2_tfrsi 2
+	  * S2_storerbnewabs <ga:@in_section>, %R0<kill,internal>; mem:ST1[@in_section]
+	L2_deallocframe %R29<imp-def>, %R30<imp-def>, %R31<imp-def>, %R30<imp-use>
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %6
+    Predecessors according to CFG: BB#0 BB#1
+	JMPret %R31, %PC<imp-def,dead>
+
+# End machine code for function data_section.
+
+# After StackMap Liveness Analysis:
+# Machine code for function data_section: Post SSA
+
+BB#0: derived from LLVM BB %0
+	BUNDLE %R0<imp-def,dead>, %PC<imp-def>
+	  * %R0<def> = L4_loadrb_abs <ga:@in_section>; mem:LD1[@in_section]
+	  * J4_cmpeqi_t_jumpnv_t %R0<kill,internal>, 2, <BB#2>, %PC<imp-def>
+	J2_jump <BB#1>, %PC<imp-def,dead>
+    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#1(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %3
+    Predecessors according to CFG: BB#0
+	S2_allocframe 8, %R29<imp-def>, %R30<imp-def>, %R29<imp-use>, %R31<imp-use>, %R30<imp-use>; mem:ST4[<unknown>]
+	BUNDLE %R0<imp-def>, %R2<imp-def>
+	  * %R0<def> = L4_loadri_abs <ga:@asm_out_file>; mem:LD4[@asm_out_file]
+	  * %R2<def> = A2_tfrsi <ga:@.str.3>
+	BUNDLE %R1<imp-def>, %D0<imp-def,dead>, %D1<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>, %R2<imp-use,kill>, %R0<imp-use>, ...
+	  * %R1<def> = A2_tfrsi <ga:@.str>
+	  * S2_storeri_io %R29, 0, %R2<kill>; mem:ST4[Stack]
+	  * J2_call <ga:@fprintf>, %D0<imp-def,dead>, %D1<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use>, %R1<imp-use,internal>, ...
+	BUNDLE %R0<imp-def,dead>
+	  * %R0<def> = A2_tfrsi 2
+	  * S2_storerbnewabs <ga:@in_section>, %R0<kill,internal>; mem:ST1[@in_section]
+	L2_deallocframe %R29<imp-def>, %R30<imp-def>, %R31<imp-def>, %R30<imp-use>
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %6
+    Predecessors according to CFG: BB#0 BB#1
+	JMPret %R31, %PC<imp-def,dead>
+
+# End machine code for function data_section.
+
+# After Live DEBUG_VALUE analysis:
+# Machine code for function data_section: Post SSA
+
+BB#0: derived from LLVM BB %0
+	BUNDLE %R0<imp-def,dead>, %PC<imp-def>
+	  * %R0<def> = L4_loadrb_abs <ga:@in_section>; mem:LD1[@in_section]
+	  * J4_cmpeqi_t_jumpnv_t %R0<kill,internal>, 2, <BB#2>, %PC<imp-def>
+	J2_jump <BB#1>, %PC<imp-def,dead>
+    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#1(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %3
+    Predecessors according to CFG: BB#0
+	S2_allocframe 8, %R29<imp-def>, %R30<imp-def>, %R29<imp-use>, %R31<imp-use>, %R30<imp-use>; mem:ST4[<unknown>]
+	BUNDLE %R0<imp-def>, %R2<imp-def>
+	  * %R0<def> = L4_loadri_abs <ga:@asm_out_file>; mem:LD4[@asm_out_file]
+	  * %R2<def> = A2_tfrsi <ga:@.str.3>
+	BUNDLE %R1<imp-def>, %D0<imp-def,dead>, %D1<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>, %R2<imp-use,kill>, %R0<imp-use>, ...
+	  * %R1<def> = A2_tfrsi <ga:@.str>
+	  * S2_storeri_io %R29, 0, %R2<kill>; mem:ST4[Stack]
+	  * J2_call <ga:@fprintf>, %D0<imp-def,dead>, %D1<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use>, %R1<imp-use,internal>, ...
+	BUNDLE %R0<imp-def,dead>
+	  * %R0<def> = A2_tfrsi 2
+	  * S2_storerbnewabs <ga:@in_section>, %R0<kill,internal>; mem:ST1[@in_section]
+	L2_deallocframe %R29<imp-def>, %R30<imp-def>, %R31<imp-def>, %R30<imp-use>
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %6
+    Predecessors according to CFG: BB#0 BB#1
+	JMPret %R31, %PC<imp-def,dead>
+
+# End machine code for function data_section.
+

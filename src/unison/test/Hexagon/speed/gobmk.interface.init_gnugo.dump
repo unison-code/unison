@@ -1,0 +1,681 @@
+# After Instruction Selection:
+# Machine code for function init_gnugo: SSA
+
+BB#0: derived from LLVM BB %0
+	ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	J2_call <ga:@reading_cache_init>, %R31<imp-def,dead>, ...
+	ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	J2_call <ga:@clear_board>, %R31<imp-def,dead>, ...
+	ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	J2_call <ga:@transformation_init>, %R31<imp-def,dead>, ...
+	ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	TCRETURNi <ga:@dfa_match_init>
+
+# End machine code for function init_gnugo.
+
+# After Expand ISel Pseudo-instructions:
+# Machine code for function init_gnugo: SSA
+
+BB#0: derived from LLVM BB %0
+	ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	J2_call <ga:@reading_cache_init>, %R31<imp-def,dead>, ...
+	ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	J2_call <ga:@clear_board>, %R31<imp-def,dead>, ...
+	ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	J2_call <ga:@transformation_init>, %R31<imp-def,dead>, ...
+	ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	TCRETURNi <ga:@dfa_match_init>
+
+# End machine code for function init_gnugo.
+
+# After Tail Duplication:
+# Machine code for function init_gnugo: SSA
+
+BB#0: derived from LLVM BB %0
+	ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	J2_call <ga:@reading_cache_init>, %R31<imp-def,dead>, ...
+	ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	J2_call <ga:@clear_board>, %R31<imp-def,dead>, ...
+	ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	J2_call <ga:@transformation_init>, %R31<imp-def,dead>, ...
+	ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	TCRETURNi <ga:@dfa_match_init>
+
+# End machine code for function init_gnugo.
+
+# After Optimize machine instruction PHIs:
+# Machine code for function init_gnugo: SSA
+
+BB#0: derived from LLVM BB %0
+	ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	J2_call <ga:@reading_cache_init>, %R31<imp-def,dead>, ...
+	ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	J2_call <ga:@clear_board>, %R31<imp-def,dead>, ...
+	ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	J2_call <ga:@transformation_init>, %R31<imp-def,dead>, ...
+	ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	TCRETURNi <ga:@dfa_match_init>
+
+# End machine code for function init_gnugo.
+
+# After Merge disjoint stack slots:
+# Machine code for function init_gnugo: SSA
+
+BB#0: derived from LLVM BB %0
+	ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	J2_call <ga:@reading_cache_init>, %R31<imp-def,dead>, ...
+	ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	J2_call <ga:@clear_board>, %R31<imp-def,dead>, ...
+	ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	J2_call <ga:@transformation_init>, %R31<imp-def,dead>, ...
+	ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	TCRETURNi <ga:@dfa_match_init>
+
+# End machine code for function init_gnugo.
+
+# After Local Stack Slot Allocation:
+# Machine code for function init_gnugo: SSA
+
+BB#0: derived from LLVM BB %0
+	ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	J2_call <ga:@reading_cache_init>, %R31<imp-def,dead>, ...
+	ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	J2_call <ga:@clear_board>, %R31<imp-def,dead>, ...
+	ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	J2_call <ga:@transformation_init>, %R31<imp-def,dead>, ...
+	ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	TCRETURNi <ga:@dfa_match_init>
+
+# End machine code for function init_gnugo.
+
+# After Remove dead machine instructions:
+# Machine code for function init_gnugo: SSA
+
+BB#0: derived from LLVM BB %0
+	ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	J2_call <ga:@reading_cache_init>, %R31<imp-def,dead>, ...
+	ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	J2_call <ga:@clear_board>, %R31<imp-def,dead>, ...
+	ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	J2_call <ga:@transformation_init>, %R31<imp-def,dead>, ...
+	ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	TCRETURNi <ga:@dfa_match_init>
+
+# End machine code for function init_gnugo.
+
+# After Machine Loop Invariant Code Motion:
+# Machine code for function init_gnugo: SSA
+
+BB#0: derived from LLVM BB %0
+	ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	J2_call <ga:@reading_cache_init>, %R31<imp-def,dead>, ...
+	ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	J2_call <ga:@clear_board>, %R31<imp-def,dead>, ...
+	ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	J2_call <ga:@transformation_init>, %R31<imp-def,dead>, ...
+	ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	TCRETURNi <ga:@dfa_match_init>
+
+# End machine code for function init_gnugo.
+
+# After Machine Common Subexpression Elimination:
+# Machine code for function init_gnugo: SSA
+
+BB#0: derived from LLVM BB %0
+	ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	J2_call <ga:@reading_cache_init>, %R31<imp-def,dead>, ...
+	ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	J2_call <ga:@clear_board>, %R31<imp-def,dead>, ...
+	ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	J2_call <ga:@transformation_init>, %R31<imp-def,dead>, ...
+	ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	TCRETURNi <ga:@dfa_match_init>
+
+# End machine code for function init_gnugo.
+
+# After Machine code sinking:
+# Machine code for function init_gnugo: SSA
+
+BB#0: derived from LLVM BB %0
+	ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	J2_call <ga:@reading_cache_init>, %R31<imp-def,dead>, ...
+	ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	J2_call <ga:@clear_board>, %R31<imp-def,dead>, ...
+	ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	J2_call <ga:@transformation_init>, %R31<imp-def,dead>, ...
+	ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	TCRETURNi <ga:@dfa_match_init>
+
+# End machine code for function init_gnugo.
+
+# After Peephole Optimizations:
+# Machine code for function init_gnugo: SSA
+
+BB#0: derived from LLVM BB %0
+	ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	J2_call <ga:@reading_cache_init>, %R31<imp-def,dead>, ...
+	ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	J2_call <ga:@clear_board>, %R31<imp-def,dead>, ...
+	ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	J2_call <ga:@transformation_init>, %R31<imp-def,dead>, ...
+	ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	TCRETURNi <ga:@dfa_match_init>
+
+# End machine code for function init_gnugo.
+
+# After Remove dead machine instructions:
+# Machine code for function init_gnugo: SSA
+
+BB#0: derived from LLVM BB %0
+	ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	J2_call <ga:@reading_cache_init>, %R31<imp-def,dead>, ...
+	ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	J2_call <ga:@clear_board>, %R31<imp-def,dead>, ...
+	ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	J2_call <ga:@transformation_init>, %R31<imp-def,dead>, ...
+	ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	TCRETURNi <ga:@dfa_match_init>
+
+# End machine code for function init_gnugo.
+
+# After Hexagon Store Widening:
+# Machine code for function init_gnugo: SSA
+
+BB#0: derived from LLVM BB %0
+	ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	J2_call <ga:@reading_cache_init>, %R31<imp-def,dead>, ...
+	ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	J2_call <ga:@clear_board>, %R31<imp-def,dead>, ...
+	ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	J2_call <ga:@transformation_init>, %R31<imp-def,dead>, ...
+	ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	TCRETURNi <ga:@dfa_match_init>
+
+# End machine code for function init_gnugo.
+
+# After Hexagon Hardware Loops:
+# Machine code for function init_gnugo: SSA
+
+BB#0: derived from LLVM BB %0
+	ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	J2_call <ga:@reading_cache_init>, %R31<imp-def,dead>, ...
+	ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	J2_call <ga:@clear_board>, %R31<imp-def,dead>, ...
+	ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	J2_call <ga:@transformation_init>, %R31<imp-def,dead>, ...
+	ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	TCRETURNi <ga:@dfa_match_init>
+
+# End machine code for function init_gnugo.
+
+# After Process Implicit Definitions:
+# Machine code for function init_gnugo: SSA
+
+BB#0: derived from LLVM BB %0
+	ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	J2_call <ga:@reading_cache_init>, %R31<imp-def,dead>, ...
+	ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	J2_call <ga:@clear_board>, %R31<imp-def,dead>, ...
+	ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	J2_call <ga:@transformation_init>, %R31<imp-def,dead>, ...
+	ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	TCRETURNi <ga:@dfa_match_init>
+
+# End machine code for function init_gnugo.
+
+# After Live Variable Analysis:
+# Machine code for function init_gnugo: SSA
+
+BB#0: derived from LLVM BB %0
+	ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	J2_call <ga:@reading_cache_init>, %R31<imp-def,dead>, ...
+	ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	J2_call <ga:@clear_board>, %R31<imp-def,dead>, ...
+	ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	J2_call <ga:@transformation_init>, %R31<imp-def,dead>, ...
+	ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	TCRETURNi <ga:@dfa_match_init>
+
+# End machine code for function init_gnugo.
+
+# After Machine Natural Loop Construction:
+# Machine code for function init_gnugo: SSA
+
+BB#0: derived from LLVM BB %0
+	ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	J2_call <ga:@reading_cache_init>, %R31<imp-def,dead>, ...
+	ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	J2_call <ga:@clear_board>, %R31<imp-def,dead>, ...
+	ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	J2_call <ga:@transformation_init>, %R31<imp-def,dead>, ...
+	ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	TCRETURNi <ga:@dfa_match_init>
+
+# End machine code for function init_gnugo.
+
+# After Eliminate PHI nodes for register allocation:
+# Machine code for function init_gnugo: Post SSA
+
+BB#0: derived from LLVM BB %0
+	ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	J2_call <ga:@reading_cache_init>, %R31<imp-def,dead>, ...
+	ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	J2_call <ga:@clear_board>, %R31<imp-def,dead>, ...
+	ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	J2_call <ga:@transformation_init>, %R31<imp-def,dead>, ...
+	ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	TCRETURNi <ga:@dfa_match_init>
+
+# End machine code for function init_gnugo.
+
+# After Two-Address instruction pass:
+# Machine code for function init_gnugo: Post SSA
+
+BB#0: derived from LLVM BB %0
+	ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	J2_call <ga:@reading_cache_init>, %R31<imp-def,dead>, ...
+	ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	J2_call <ga:@clear_board>, %R31<imp-def,dead>, ...
+	ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	J2_call <ga:@transformation_init>, %R31<imp-def,dead>, ...
+	ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	TCRETURNi <ga:@dfa_match_init>
+
+# End machine code for function init_gnugo.
+
+# After Simple Register Coalescing:
+# Machine code for function init_gnugo: Post SSA
+
+0B	BB#0: derived from LLVM BB %0
+16B		ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+32B		J2_call <ga:@reading_cache_init>, %R31<imp-def,dead>, ...
+48B		ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+64B		ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+80B		J2_call <ga:@clear_board>, %R31<imp-def,dead>, ...
+96B		ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+112B		ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+128B		J2_call <ga:@transformation_init>, %R31<imp-def,dead>, ...
+144B		ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+160B		TCRETURNi <ga:@dfa_match_init>
+
+# End machine code for function init_gnugo.
+
+# After Hexagon Expand Condsets:
+# Machine code for function init_gnugo: Post SSA
+
+0B	BB#0: derived from LLVM BB %0
+16B		ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+32B		J2_call <ga:@reading_cache_init>, %R31<imp-def,dead>, ...
+48B		ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+64B		ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+80B		J2_call <ga:@clear_board>, %R31<imp-def,dead>, ...
+96B		ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+112B		ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+128B		J2_call <ga:@transformation_init>, %R31<imp-def,dead>, ...
+144B		ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+160B		TCRETURNi <ga:@dfa_match_init>
+
+# End machine code for function init_gnugo.
+
+# After Machine Instruction Scheduler:
+# Machine code for function init_gnugo: Post SSA
+
+0B	BB#0: derived from LLVM BB %0
+16B		ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+32B		J2_call <ga:@reading_cache_init>, %R31<imp-def,dead>, ...
+48B		ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+64B		ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+80B		J2_call <ga:@clear_board>, %R31<imp-def,dead>, ...
+96B		ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+112B		ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+128B		J2_call <ga:@transformation_init>, %R31<imp-def,dead>, ...
+144B		ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+160B		TCRETURNi <ga:@dfa_match_init>
+
+# End machine code for function init_gnugo.
+
+# After Greedy Register Allocator:
+# Machine code for function init_gnugo: Post SSA
+
+0B	BB#0: derived from LLVM BB %0
+16B		ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+32B		J2_call <ga:@reading_cache_init>, %R31<imp-def,dead>, ...
+48B		ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+64B		ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+80B		J2_call <ga:@clear_board>, %R31<imp-def,dead>, ...
+96B		ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+112B		ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+128B		J2_call <ga:@transformation_init>, %R31<imp-def,dead>, ...
+144B		ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+160B		TCRETURNi <ga:@dfa_match_init>
+
+# End machine code for function init_gnugo.
+
+# After Virtual Register Rewriter:
+# Machine code for function init_gnugo: Post SSA
+
+0B	BB#0: derived from LLVM BB %0
+16B		ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+32B		J2_call <ga:@reading_cache_init>, %R31<imp-def,dead>, ...
+48B		ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+64B		ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+80B		J2_call <ga:@clear_board>, %R31<imp-def,dead>, ...
+96B		ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+112B		ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+128B		J2_call <ga:@transformation_init>, %R31<imp-def,dead>, ...
+144B		ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+160B		TCRETURNi <ga:@dfa_match_init>
+
+# End machine code for function init_gnugo.
+
+# After Stack Slot Coloring:
+# Machine code for function init_gnugo: Post SSA
+
+BB#0: derived from LLVM BB %0
+	ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	J2_call <ga:@reading_cache_init>, %R31<imp-def,dead>, ...
+	ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	J2_call <ga:@clear_board>, %R31<imp-def,dead>, ...
+	ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	J2_call <ga:@transformation_init>, %R31<imp-def,dead>, ...
+	ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	TCRETURNi <ga:@dfa_match_init>
+
+# End machine code for function init_gnugo.
+
+# After Machine Loop Invariant Code Motion:
+# Machine code for function init_gnugo: Post SSA
+
+BB#0: derived from LLVM BB %0
+	ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	J2_call <ga:@reading_cache_init>, %R31<imp-def,dead>, ...
+	ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	J2_call <ga:@clear_board>, %R31<imp-def,dead>, ...
+	ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	J2_call <ga:@transformation_init>, %R31<imp-def,dead>, ...
+	ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	TCRETURNi <ga:@dfa_match_init>
+
+# End machine code for function init_gnugo.
+
+# After Hexagon RDF optimizations:
+# Machine code for function init_gnugo: Post SSA
+
+BB#0: derived from LLVM BB %0
+	ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	J2_call <ga:@reading_cache_init>, %R31<imp-def,dead>, ...
+	ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	J2_call <ga:@clear_board>, %R31<imp-def,dead>, ...
+	ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	J2_call <ga:@transformation_init>, %R31<imp-def,dead>, ...
+	ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	TCRETURNi <ga:@dfa_match_init>
+
+# End machine code for function init_gnugo.
+
+# After Shrink Wrapping analysis:
+# Machine code for function init_gnugo: Post SSA
+
+BB#0: derived from LLVM BB %0
+	ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	J2_call <ga:@reading_cache_init>, %R31<imp-def,dead>, ...
+	ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	J2_call <ga:@clear_board>, %R31<imp-def,dead>, ...
+	ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	J2_call <ga:@transformation_init>, %R31<imp-def,dead>, ...
+	ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	TCRETURNi <ga:@dfa_match_init>
+
+# End machine code for function init_gnugo.
+
+# After Prologue/Epilogue Insertion & Frame Finalization:
+# Machine code for function init_gnugo: Post SSA
+
+BB#0: derived from LLVM BB %0
+	S2_allocframe 0, %R29<imp-def>, %R30<imp-def>, %R29<imp-use>, %R31<imp-use>, %R30<imp-use>; mem:ST4[<unknown>]
+	J2_call <ga:@reading_cache_init>, %R31<imp-def,dead>, ...
+	J2_call <ga:@clear_board>, %R31<imp-def,dead>, ...
+	J2_call <ga:@transformation_init>, %R31<imp-def,dead>, ...
+	L2_deallocframe %R29<imp-def>, %R30<imp-def>, %R31<imp-def>, %R30<imp-use>
+	TCRETURNi <ga:@dfa_match_init>
+
+# End machine code for function init_gnugo.
+
+# After Machine Copy Propagation Pass:
+# Machine code for function init_gnugo: Post SSA
+
+BB#0: derived from LLVM BB %0
+	S2_allocframe 0, %R29<imp-def>, %R30<imp-def>, %R29<imp-use>, %R31<imp-use>, %R30<imp-use>; mem:ST4[<unknown>]
+	J2_call <ga:@reading_cache_init>, %R31<imp-def,dead>, ...
+	J2_call <ga:@clear_board>, %R31<imp-def,dead>, ...
+	J2_call <ga:@transformation_init>, %R31<imp-def,dead>, ...
+	L2_deallocframe %R29<imp-def>, %R30<imp-def>, %R31<imp-def>, %R30<imp-use>
+	TCRETURNi <ga:@dfa_match_init>
+
+# End machine code for function init_gnugo.
+
+# After Post-RA pseudo instruction expansion pass:
+# Machine code for function init_gnugo: Post SSA
+
+BB#0: derived from LLVM BB %0
+	S2_allocframe 0, %R29<imp-def>, %R30<imp-def>, %R29<imp-use>, %R31<imp-use>, %R30<imp-use>; mem:ST4[<unknown>]
+	J2_call <ga:@reading_cache_init>, %R31<imp-def,dead>, ...
+	J2_call <ga:@clear_board>, %R31<imp-def,dead>, ...
+	J2_call <ga:@transformation_init>, %R31<imp-def,dead>, ...
+	L2_deallocframe %R29<imp-def>, %R30<imp-def>, %R31<imp-def>, %R30<imp-use>
+	J2_jump <ga:@dfa_match_init>
+
+# End machine code for function init_gnugo.
+
+# After Hexagon Copy-To-Combine Pass:
+# Machine code for function init_gnugo: Post SSA
+
+BB#0: derived from LLVM BB %0
+	S2_allocframe 0, %R29<imp-def>, %R30<imp-def>, %R29<imp-use>, %R31<imp-use>, %R30<imp-use>; mem:ST4[<unknown>]
+	J2_call <ga:@reading_cache_init>, %R31<imp-def,dead>, ...
+	J2_call <ga:@clear_board>, %R31<imp-def,dead>, ...
+	J2_call <ga:@transformation_init>, %R31<imp-def,dead>, ...
+	L2_deallocframe %R29<imp-def>, %R30<imp-def>, %R31<imp-def>, %R30<imp-use>
+	J2_jump <ga:@dfa_match_init>
+
+# End machine code for function init_gnugo.
+
+# After Hexagon Split Const32s and Const64s:
+# Machine code for function init_gnugo: Post SSA
+
+BB#0: derived from LLVM BB %0
+	S2_allocframe 0, %R29<imp-def>, %R30<imp-def>, %R29<imp-use>, %R31<imp-use>, %R30<imp-use>; mem:ST4[<unknown>]
+	J2_call <ga:@reading_cache_init>, %R31<imp-def,dead>, ...
+	J2_call <ga:@clear_board>, %R31<imp-def,dead>, ...
+	J2_call <ga:@transformation_init>, %R31<imp-def,dead>, ...
+	L2_deallocframe %R29<imp-def>, %R30<imp-def>, %R31<imp-def>, %R30<imp-use>
+	J2_jump <ga:@dfa_match_init>
+
+# End machine code for function init_gnugo.
+
+# After Analyze Machine Code For Garbage Collection:
+# Machine code for function init_gnugo: Post SSA
+
+BB#0: derived from LLVM BB %0
+	S2_allocframe 0, %R29<imp-def>, %R30<imp-def>, %R29<imp-use>, %R31<imp-use>, %R30<imp-use>; mem:ST4[<unknown>]
+	J2_call <ga:@reading_cache_init>, %R31<imp-def,dead>, ...
+	J2_call <ga:@clear_board>, %R31<imp-def,dead>, ...
+	J2_call <ga:@transformation_init>, %R31<imp-def,dead>, ...
+	L2_deallocframe %R29<imp-def>, %R30<imp-def>, %R31<imp-def>, %R30<imp-use>
+	J2_jump <ga:@dfa_match_init>
+
+# End machine code for function init_gnugo.
+
+# After Hexagon NewValueJump:
+# Machine code for function init_gnugo: Post SSA
+
+BB#0: derived from LLVM BB %0
+	S2_allocframe 0, %R29<imp-def>, %R30<imp-def>, %R29<imp-use>, %R31<imp-use>, %R30<imp-use>; mem:ST4[<unknown>]
+	J2_call <ga:@reading_cache_init>, %R31<imp-def,dead>, ...
+	J2_call <ga:@clear_board>, %R31<imp-def,dead>, ...
+	J2_call <ga:@transformation_init>, %R31<imp-def,dead>, ...
+	L2_deallocframe %R29<imp-def>, %R30<imp-def>, %R31<imp-def>, %R30<imp-use>
+	J2_jump <ga:@dfa_match_init>
+
+# End machine code for function init_gnugo.
+
+# After Hexagon Expand Predicate Spill Code:
+# Machine code for function init_gnugo: Post SSA
+
+BB#0: derived from LLVM BB %0
+	S2_allocframe 0, %R29<imp-def>, %R30<imp-def>, %R29<imp-use>, %R31<imp-use>, %R30<imp-use>; mem:ST4[<unknown>]
+	J2_call <ga:@reading_cache_init>, %R31<imp-def,dead>, ...
+	J2_call <ga:@clear_board>, %R31<imp-def,dead>, ...
+	J2_call <ga:@transformation_init>, %R31<imp-def,dead>, ...
+	L2_deallocframe %R29<imp-def>, %R30<imp-def>, %R31<imp-def>, %R30<imp-use>
+	J2_jump <ga:@dfa_match_init>
+
+# End machine code for function init_gnugo.
+
+# After Hexagon Hardware Loop Fixup:
+# Machine code for function init_gnugo: Post SSA
+
+BB#0: derived from LLVM BB %0
+	S2_allocframe 0, %R29<imp-def>, %R30<imp-def>, %R29<imp-use>, %R31<imp-use>, %R30<imp-use>; mem:ST4[<unknown>]
+	J2_call <ga:@reading_cache_init>, %R31<imp-def,dead>, ...
+	J2_call <ga:@clear_board>, %R31<imp-def,dead>, ...
+	J2_call <ga:@transformation_init>, %R31<imp-def,dead>, ...
+	L2_deallocframe %R29<imp-def>, %R30<imp-def>, %R31<imp-def>, %R30<imp-use>
+	J2_jump <ga:@dfa_match_init>
+
+# End machine code for function init_gnugo.
+
+# After Hexagon generate mux instructions:
+# Machine code for function init_gnugo: Post SSA
+
+BB#0: derived from LLVM BB %0
+	S2_allocframe 0, %R29<imp-def>, %R30<imp-def>, %R29<imp-use>, %R31<imp-use>, %R30<imp-use>; mem:ST4[<unknown>]
+	J2_call <ga:@reading_cache_init>, %R31<imp-def,dead>, ...
+	J2_call <ga:@clear_board>, %R31<imp-def,dead>, ...
+	J2_call <ga:@transformation_init>, %R31<imp-def,dead>, ...
+	L2_deallocframe %R29<imp-def>, %R30<imp-def>, %R31<imp-def>, %R30<imp-use>
+	J2_jump <ga:@dfa_match_init>
+
+# End machine code for function init_gnugo.
+
+# After Hexagon Packetizer:
+# Machine code for function init_gnugo: Post SSA
+
+BB#0: derived from LLVM BB %0
+	BUNDLE %R29<imp-def>, %R30<imp-def>, %R31<imp-def,dead>, %R29<imp-use>, %R31<imp-use>, %R30<imp-use>, ...
+	  * S2_allocframe 0, %R29<imp-def>, %R30<imp-def>, %R29<imp-use>, %R31<imp-use>, %R30<imp-use>; mem:ST4[<unknown>]
+	  * J2_call <ga:@reading_cache_init>, %R31<imp-def,dead>, ...
+	J2_call <ga:@clear_board>, %R31<imp-def,dead>, ...
+	J2_call <ga:@transformation_init>, %R31<imp-def,dead>, ...
+	BUNDLE %R29<imp-def>, %R30<imp-def>, %R31<imp-def>, %R30<imp-use>
+	  * L2_deallocframe %R29<imp-def>, %R30<imp-def>, %R31<imp-def>, %R30<imp-use>
+	  * J2_jump <ga:@dfa_match_init>
+
+# End machine code for function init_gnugo.
+
+# After Hexagon call frame information:
+# Machine code for function init_gnugo: Post SSA
+
+BB#0: derived from LLVM BB %0
+	BUNDLE %R29<imp-def>, %R30<imp-def>, %R31<imp-def,dead>, %R29<imp-use>, %R31<imp-use>, %R30<imp-use>, ...
+	  * S2_allocframe 0, %R29<imp-def>, %R30<imp-def>, %R29<imp-use>, %R31<imp-use>, %R30<imp-use>; mem:ST4[<unknown>]
+	  * J2_call <ga:@reading_cache_init>, %R31<imp-def,dead>, ...
+	J2_call <ga:@clear_board>, %R31<imp-def,dead>, ...
+	J2_call <ga:@transformation_init>, %R31<imp-def,dead>, ...
+	BUNDLE %R29<imp-def>, %R30<imp-def>, %R31<imp-def>, %R30<imp-use>
+	  * L2_deallocframe %R29<imp-def>, %R30<imp-def>, %R31<imp-def>, %R30<imp-use>
+	  * J2_jump <ga:@dfa_match_init>
+
+# End machine code for function init_gnugo.
+
+# After Contiguously Lay Out Funclets:
+# Machine code for function init_gnugo: Post SSA
+
+BB#0: derived from LLVM BB %0
+	BUNDLE %R29<imp-def>, %R30<imp-def>, %R31<imp-def,dead>, %R29<imp-use>, %R31<imp-use>, %R30<imp-use>, ...
+	  * S2_allocframe 0, %R29<imp-def>, %R30<imp-def>, %R29<imp-use>, %R31<imp-use>, %R30<imp-use>; mem:ST4[<unknown>]
+	  * J2_call <ga:@reading_cache_init>, %R31<imp-def,dead>, ...
+	J2_call <ga:@clear_board>, %R31<imp-def,dead>, ...
+	J2_call <ga:@transformation_init>, %R31<imp-def,dead>, ...
+	BUNDLE %R29<imp-def>, %R30<imp-def>, %R31<imp-def>, %R30<imp-use>
+	  * L2_deallocframe %R29<imp-def>, %R30<imp-def>, %R31<imp-def>, %R30<imp-use>
+	  * J2_jump <ga:@dfa_match_init>
+
+# End machine code for function init_gnugo.
+
+# After StackMap Liveness Analysis:
+# Machine code for function init_gnugo: Post SSA
+
+BB#0: derived from LLVM BB %0
+	BUNDLE %R29<imp-def>, %R30<imp-def>, %R31<imp-def,dead>, %R29<imp-use>, %R31<imp-use>, %R30<imp-use>, ...
+	  * S2_allocframe 0, %R29<imp-def>, %R30<imp-def>, %R29<imp-use>, %R31<imp-use>, %R30<imp-use>; mem:ST4[<unknown>]
+	  * J2_call <ga:@reading_cache_init>, %R31<imp-def,dead>, ...
+	J2_call <ga:@clear_board>, %R31<imp-def,dead>, ...
+	J2_call <ga:@transformation_init>, %R31<imp-def,dead>, ...
+	BUNDLE %R29<imp-def>, %R30<imp-def>, %R31<imp-def>, %R30<imp-use>
+	  * L2_deallocframe %R29<imp-def>, %R30<imp-def>, %R31<imp-def>, %R30<imp-use>
+	  * J2_jump <ga:@dfa_match_init>
+
+# End machine code for function init_gnugo.
+
+# After Live DEBUG_VALUE analysis:
+# Machine code for function init_gnugo: Post SSA
+
+BB#0: derived from LLVM BB %0
+	BUNDLE %R29<imp-def>, %R30<imp-def>, %R31<imp-def,dead>, %R29<imp-use>, %R31<imp-use>, %R30<imp-use>, ...
+	  * S2_allocframe 0, %R29<imp-def>, %R30<imp-def>, %R29<imp-use>, %R31<imp-use>, %R30<imp-use>; mem:ST4[<unknown>]
+	  * J2_call <ga:@reading_cache_init>, %R31<imp-def,dead>, ...
+	J2_call <ga:@clear_board>, %R31<imp-def,dead>, ...
+	J2_call <ga:@transformation_init>, %R31<imp-def,dead>, ...
+	BUNDLE %R29<imp-def>, %R30<imp-def>, %R31<imp-def>, %R30<imp-use>
+	  * L2_deallocframe %R29<imp-def>, %R30<imp-def>, %R31<imp-def>, %R30<imp-use>
+	  * J2_jump <ga:@dfa_match_init>
+
+# End machine code for function init_gnugo.
+

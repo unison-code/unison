@@ -1,0 +1,2735 @@
+# After Instruction Selection:
+# Machine code for function unsigned_condition: SSA
+Jump Tables:
+  jt#0:  BB#6 BB#6 BB#2 BB#1 BB#4 BB#3 BB#6 BB#6 BB#6 BB#6
+Function Live Ins: %R0 in %vreg1
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%vreg1<def> = COPY %R0; IntRegs:%vreg1
+	%vreg3<def> = A2_addi %vreg1, -102; IntRegs:%vreg3,%vreg1
+	%vreg4<def> = C2_cmpgtui %vreg3, 9; PredRegs:%vreg4 IntRegs:%vreg3
+	J2_jumpt %vreg4, <BB#5>, %PC<imp-def,dead>; PredRegs:%vreg4
+    Successors according to CFG: BB#5(0x00000800 / 0x80000000 = 0.00%) BB#7(0x7ffff800 / 0x80000000 = 100.00%)
+
+BB#7: derived from LLVM BB %0
+    Predecessors according to CFG: BB#0
+	%vreg5<def> = A2_tfrsi <jt#0>; IntRegs:%vreg5
+	%vreg6<def> = L4_loadri_rr %vreg5, %vreg3, 2; mem:LD4[JumpTable] IntRegs:%vreg6,%vreg5,%vreg3
+	J2_jumpr %vreg6, %PC<imp-def,dead>; IntRegs:%vreg6
+    Successors according to CFG: BB#6(0x4ccccccd / 0x80000000 = 60.00%) BB#2(0x0ccccccd / 0x80000000 = 10.00%) BB#1(0x0ccccccd / 0x80000000 = 10.00%) BB#4(0x0ccccccd / 0x80000000 = 10.00%) BB#3(0x0ccccccd / 0x80000000 = 10.00%)
+
+BB#1: derived from LLVM BB %2
+    Predecessors according to CFG: BB#7
+	%vreg10<def> = A2_tfrsi 109; IntRegs:%vreg10
+	J2_jump <BB#6>, %PC<imp-def,dead>
+    Successors according to CFG: BB#6(?%)
+
+BB#2: derived from LLVM BB %3
+    Predecessors according to CFG: BB#7
+	%vreg9<def> = A2_tfrsi 108; IntRegs:%vreg9
+	J2_jump <BB#6>, %PC<imp-def,dead>
+    Successors according to CFG: BB#6(?%)
+
+BB#3: derived from LLVM BB %4
+    Predecessors according to CFG: BB#7
+	%vreg8<def> = A2_tfrsi 111; IntRegs:%vreg8
+	J2_jump <BB#6>, %PC<imp-def,dead>
+    Successors according to CFG: BB#6(?%)
+
+BB#4: derived from LLVM BB %5
+    Predecessors according to CFG: BB#7
+	%vreg7<def> = A2_tfrsi 110; IntRegs:%vreg7
+	J2_jump <BB#6>, %PC<imp-def,dead>
+    Successors according to CFG: BB#6(?%)
+
+BB#5: derived from LLVM BB %6
+    Predecessors according to CFG: BB#0
+	ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	%vreg11<def> = A2_tfrsi <ga:@.str>; IntRegs:%vreg11
+	%vreg12<def> = A2_tfrsi <ga:@__FUNCTION__.unsigned_condition>; IntRegs:%vreg12
+	%vreg13<def> = A2_tfrsi 951; IntRegs:%vreg13
+	%R0<def> = COPY %vreg11; IntRegs:%vreg11
+	%R1<def> = COPY %vreg13; IntRegs:%vreg13
+	%R2<def> = COPY %vreg12; IntRegs:%vreg12
+	CALLv3nr <ga:@fancy_abort>, %D0<imp-def,dead>, %D1<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, ...
+	ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+
+BB#6: derived from LLVM BB %7
+    Predecessors according to CFG: BB#7 BB#4 BB#3 BB#2 BB#1
+	%vreg0<def> = PHI %vreg1, <BB#7>, %vreg7, <BB#4>, %vreg8, <BB#3>, %vreg9, <BB#2>, %vreg10, <BB#1>; IntRegs:%vreg0,%vreg1,%vreg7,%vreg8,%vreg9,%vreg10
+	%R0<def> = COPY %vreg0; IntRegs:%vreg0
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function unsigned_condition.
+
+# After Expand ISel Pseudo-instructions:
+# Machine code for function unsigned_condition: SSA
+Jump Tables:
+  jt#0:  BB#6 BB#6 BB#2 BB#1 BB#4 BB#3 BB#6 BB#6 BB#6 BB#6
+Function Live Ins: %R0 in %vreg1
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%vreg1<def> = COPY %R0; IntRegs:%vreg1
+	%vreg3<def> = A2_addi %vreg1, -102; IntRegs:%vreg3,%vreg1
+	%vreg4<def> = C2_cmpgtui %vreg3, 9; PredRegs:%vreg4 IntRegs:%vreg3
+	J2_jumpt %vreg4, <BB#5>, %PC<imp-def,dead>; PredRegs:%vreg4
+    Successors according to CFG: BB#5(0x00000800 / 0x80000000 = 0.00%) BB#7(0x7ffff800 / 0x80000000 = 100.00%)
+
+BB#7: derived from LLVM BB %0
+    Predecessors according to CFG: BB#0
+	%vreg5<def> = A2_tfrsi <jt#0>; IntRegs:%vreg5
+	%vreg6<def> = L4_loadri_rr %vreg5, %vreg3, 2; mem:LD4[JumpTable] IntRegs:%vreg6,%vreg5,%vreg3
+	J2_jumpr %vreg6, %PC<imp-def,dead>; IntRegs:%vreg6
+    Successors according to CFG: BB#6(0x4ccccccd / 0x80000000 = 60.00%) BB#2(0x0ccccccd / 0x80000000 = 10.00%) BB#1(0x0ccccccd / 0x80000000 = 10.00%) BB#4(0x0ccccccd / 0x80000000 = 10.00%) BB#3(0x0ccccccd / 0x80000000 = 10.00%)
+
+BB#1: derived from LLVM BB %2
+    Predecessors according to CFG: BB#7
+	%vreg10<def> = A2_tfrsi 109; IntRegs:%vreg10
+	J2_jump <BB#6>, %PC<imp-def,dead>
+    Successors according to CFG: BB#6(?%)
+
+BB#2: derived from LLVM BB %3
+    Predecessors according to CFG: BB#7
+	%vreg9<def> = A2_tfrsi 108; IntRegs:%vreg9
+	J2_jump <BB#6>, %PC<imp-def,dead>
+    Successors according to CFG: BB#6(?%)
+
+BB#3: derived from LLVM BB %4
+    Predecessors according to CFG: BB#7
+	%vreg8<def> = A2_tfrsi 111; IntRegs:%vreg8
+	J2_jump <BB#6>, %PC<imp-def,dead>
+    Successors according to CFG: BB#6(?%)
+
+BB#4: derived from LLVM BB %5
+    Predecessors according to CFG: BB#7
+	%vreg7<def> = A2_tfrsi 110; IntRegs:%vreg7
+	J2_jump <BB#6>, %PC<imp-def,dead>
+    Successors according to CFG: BB#6(?%)
+
+BB#5: derived from LLVM BB %6
+    Predecessors according to CFG: BB#0
+	ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	%vreg11<def> = A2_tfrsi <ga:@.str>; IntRegs:%vreg11
+	%vreg12<def> = A2_tfrsi <ga:@__FUNCTION__.unsigned_condition>; IntRegs:%vreg12
+	%vreg13<def> = A2_tfrsi 951; IntRegs:%vreg13
+	%R0<def> = COPY %vreg11; IntRegs:%vreg11
+	%R1<def> = COPY %vreg13; IntRegs:%vreg13
+	%R2<def> = COPY %vreg12; IntRegs:%vreg12
+	CALLv3nr <ga:@fancy_abort>, %D0<imp-def,dead>, %D1<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, ...
+	ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+
+BB#6: derived from LLVM BB %7
+    Predecessors according to CFG: BB#7 BB#4 BB#3 BB#2 BB#1
+	%vreg0<def> = PHI %vreg1, <BB#7>, %vreg7, <BB#4>, %vreg8, <BB#3>, %vreg9, <BB#2>, %vreg10, <BB#1>; IntRegs:%vreg0,%vreg1,%vreg7,%vreg8,%vreg9,%vreg10
+	%R0<def> = COPY %vreg0; IntRegs:%vreg0
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function unsigned_condition.
+
+# After Tail Duplication:
+# Machine code for function unsigned_condition: SSA
+Jump Tables:
+  jt#0:  BB#6 BB#6 BB#2 BB#1 BB#4 BB#3 BB#6 BB#6 BB#6 BB#6
+Function Live Ins: %R0 in %vreg1
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%vreg1<def> = COPY %R0; IntRegs:%vreg1
+	%vreg3<def> = A2_addi %vreg1, -102; IntRegs:%vreg3,%vreg1
+	%vreg4<def> = C2_cmpgtui %vreg3, 9; PredRegs:%vreg4 IntRegs:%vreg3
+	J2_jumpt %vreg4, <BB#5>, %PC<imp-def,dead>; PredRegs:%vreg4
+    Successors according to CFG: BB#5(0x00000800 / 0x80000000 = 0.00%) BB#7(0x7ffff800 / 0x80000000 = 100.00%)
+
+BB#7: derived from LLVM BB %0
+    Predecessors according to CFG: BB#0
+	%vreg5<def> = A2_tfrsi <jt#0>; IntRegs:%vreg5
+	%vreg6<def> = L4_loadri_rr %vreg5, %vreg3, 2; mem:LD4[JumpTable] IntRegs:%vreg6,%vreg5,%vreg3
+	J2_jumpr %vreg6, %PC<imp-def,dead>; IntRegs:%vreg6
+    Successors according to CFG: BB#6(0x4ccccccd / 0x80000000 = 60.00%) BB#2(0x0ccccccd / 0x80000000 = 10.00%) BB#1(0x0ccccccd / 0x80000000 = 10.00%) BB#4(0x0ccccccd / 0x80000000 = 10.00%) BB#3(0x0ccccccd / 0x80000000 = 10.00%)
+
+BB#1: derived from LLVM BB %2
+    Predecessors according to CFG: BB#7
+	%vreg10<def> = A2_tfrsi 109; IntRegs:%vreg10
+	J2_jump <BB#6>, %PC<imp-def,dead>
+    Successors according to CFG: BB#6(?%)
+
+BB#2: derived from LLVM BB %3
+    Predecessors according to CFG: BB#7
+	%vreg9<def> = A2_tfrsi 108; IntRegs:%vreg9
+	J2_jump <BB#6>, %PC<imp-def,dead>
+    Successors according to CFG: BB#6(?%)
+
+BB#3: derived from LLVM BB %4
+    Predecessors according to CFG: BB#7
+	%vreg8<def> = A2_tfrsi 111; IntRegs:%vreg8
+	J2_jump <BB#6>, %PC<imp-def,dead>
+    Successors according to CFG: BB#6(?%)
+
+BB#4: derived from LLVM BB %5
+    Predecessors according to CFG: BB#7
+	%vreg7<def> = A2_tfrsi 110; IntRegs:%vreg7
+	J2_jump <BB#6>, %PC<imp-def,dead>
+    Successors according to CFG: BB#6(?%)
+
+BB#5: derived from LLVM BB %6
+    Predecessors according to CFG: BB#0
+	ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	%vreg11<def> = A2_tfrsi <ga:@.str>; IntRegs:%vreg11
+	%vreg12<def> = A2_tfrsi <ga:@__FUNCTION__.unsigned_condition>; IntRegs:%vreg12
+	%vreg13<def> = A2_tfrsi 951; IntRegs:%vreg13
+	%R0<def> = COPY %vreg11; IntRegs:%vreg11
+	%R1<def> = COPY %vreg13; IntRegs:%vreg13
+	%R2<def> = COPY %vreg12; IntRegs:%vreg12
+	CALLv3nr <ga:@fancy_abort>, %D0<imp-def,dead>, %D1<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, ...
+	ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+
+BB#6: derived from LLVM BB %7
+    Predecessors according to CFG: BB#7 BB#4 BB#3 BB#2 BB#1
+	%vreg0<def> = PHI %vreg1, <BB#7>, %vreg7, <BB#4>, %vreg8, <BB#3>, %vreg9, <BB#2>, %vreg10, <BB#1>; IntRegs:%vreg0,%vreg1,%vreg7,%vreg8,%vreg9,%vreg10
+	%R0<def> = COPY %vreg0; IntRegs:%vreg0
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function unsigned_condition.
+
+# After Optimize machine instruction PHIs:
+# Machine code for function unsigned_condition: SSA
+Jump Tables:
+  jt#0:  BB#6 BB#6 BB#2 BB#1 BB#4 BB#3 BB#6 BB#6 BB#6 BB#6
+Function Live Ins: %R0 in %vreg1
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%vreg1<def> = COPY %R0; IntRegs:%vreg1
+	%vreg3<def> = A2_addi %vreg1, -102; IntRegs:%vreg3,%vreg1
+	%vreg4<def> = C2_cmpgtui %vreg3, 9; PredRegs:%vreg4 IntRegs:%vreg3
+	J2_jumpt %vreg4, <BB#5>, %PC<imp-def,dead>; PredRegs:%vreg4
+    Successors according to CFG: BB#5(0x00000800 / 0x80000000 = 0.00%) BB#7(0x7ffff800 / 0x80000000 = 100.00%)
+
+BB#7: derived from LLVM BB %0
+    Predecessors according to CFG: BB#0
+	%vreg5<def> = A2_tfrsi <jt#0>; IntRegs:%vreg5
+	%vreg6<def> = L4_loadri_rr %vreg5, %vreg3, 2; mem:LD4[JumpTable] IntRegs:%vreg6,%vreg5,%vreg3
+	J2_jumpr %vreg6, %PC<imp-def,dead>; IntRegs:%vreg6
+    Successors according to CFG: BB#6(0x4ccccccd / 0x80000000 = 60.00%) BB#2(0x0ccccccd / 0x80000000 = 10.00%) BB#1(0x0ccccccd / 0x80000000 = 10.00%) BB#4(0x0ccccccd / 0x80000000 = 10.00%) BB#3(0x0ccccccd / 0x80000000 = 10.00%)
+
+BB#1: derived from LLVM BB %2
+    Predecessors according to CFG: BB#7
+	%vreg10<def> = A2_tfrsi 109; IntRegs:%vreg10
+	J2_jump <BB#6>, %PC<imp-def,dead>
+    Successors according to CFG: BB#6(?%)
+
+BB#2: derived from LLVM BB %3
+    Predecessors according to CFG: BB#7
+	%vreg9<def> = A2_tfrsi 108; IntRegs:%vreg9
+	J2_jump <BB#6>, %PC<imp-def,dead>
+    Successors according to CFG: BB#6(?%)
+
+BB#3: derived from LLVM BB %4
+    Predecessors according to CFG: BB#7
+	%vreg8<def> = A2_tfrsi 111; IntRegs:%vreg8
+	J2_jump <BB#6>, %PC<imp-def,dead>
+    Successors according to CFG: BB#6(?%)
+
+BB#4: derived from LLVM BB %5
+    Predecessors according to CFG: BB#7
+	%vreg7<def> = A2_tfrsi 110; IntRegs:%vreg7
+	J2_jump <BB#6>, %PC<imp-def,dead>
+    Successors according to CFG: BB#6(?%)
+
+BB#5: derived from LLVM BB %6
+    Predecessors according to CFG: BB#0
+	ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	%vreg11<def> = A2_tfrsi <ga:@.str>; IntRegs:%vreg11
+	%vreg12<def> = A2_tfrsi <ga:@__FUNCTION__.unsigned_condition>; IntRegs:%vreg12
+	%vreg13<def> = A2_tfrsi 951; IntRegs:%vreg13
+	%R0<def> = COPY %vreg11; IntRegs:%vreg11
+	%R1<def> = COPY %vreg13; IntRegs:%vreg13
+	%R2<def> = COPY %vreg12; IntRegs:%vreg12
+	CALLv3nr <ga:@fancy_abort>, %D0<imp-def,dead>, %D1<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, ...
+	ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+
+BB#6: derived from LLVM BB %7
+    Predecessors according to CFG: BB#7 BB#4 BB#3 BB#2 BB#1
+	%vreg0<def> = PHI %vreg1, <BB#7>, %vreg7, <BB#4>, %vreg8, <BB#3>, %vreg9, <BB#2>, %vreg10, <BB#1>; IntRegs:%vreg0,%vreg1,%vreg7,%vreg8,%vreg9,%vreg10
+	%R0<def> = COPY %vreg0; IntRegs:%vreg0
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function unsigned_condition.
+
+# After Merge disjoint stack slots:
+# Machine code for function unsigned_condition: SSA
+Jump Tables:
+  jt#0:  BB#6 BB#6 BB#2 BB#1 BB#4 BB#3 BB#6 BB#6 BB#6 BB#6
+Function Live Ins: %R0 in %vreg1
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%vreg1<def> = COPY %R0; IntRegs:%vreg1
+	%vreg3<def> = A2_addi %vreg1, -102; IntRegs:%vreg3,%vreg1
+	%vreg4<def> = C2_cmpgtui %vreg3, 9; PredRegs:%vreg4 IntRegs:%vreg3
+	J2_jumpt %vreg4, <BB#5>, %PC<imp-def,dead>; PredRegs:%vreg4
+    Successors according to CFG: BB#5(0x00000800 / 0x80000000 = 0.00%) BB#7(0x7ffff800 / 0x80000000 = 100.00%)
+
+BB#7: derived from LLVM BB %0
+    Predecessors according to CFG: BB#0
+	%vreg5<def> = A2_tfrsi <jt#0>; IntRegs:%vreg5
+	%vreg6<def> = L4_loadri_rr %vreg5, %vreg3, 2; mem:LD4[JumpTable] IntRegs:%vreg6,%vreg5,%vreg3
+	J2_jumpr %vreg6, %PC<imp-def,dead>; IntRegs:%vreg6
+    Successors according to CFG: BB#6(0x4ccccccd / 0x80000000 = 60.00%) BB#2(0x0ccccccd / 0x80000000 = 10.00%) BB#1(0x0ccccccd / 0x80000000 = 10.00%) BB#4(0x0ccccccd / 0x80000000 = 10.00%) BB#3(0x0ccccccd / 0x80000000 = 10.00%)
+
+BB#1: derived from LLVM BB %2
+    Predecessors according to CFG: BB#7
+	%vreg10<def> = A2_tfrsi 109; IntRegs:%vreg10
+	J2_jump <BB#6>, %PC<imp-def,dead>
+    Successors according to CFG: BB#6(?%)
+
+BB#2: derived from LLVM BB %3
+    Predecessors according to CFG: BB#7
+	%vreg9<def> = A2_tfrsi 108; IntRegs:%vreg9
+	J2_jump <BB#6>, %PC<imp-def,dead>
+    Successors according to CFG: BB#6(?%)
+
+BB#3: derived from LLVM BB %4
+    Predecessors according to CFG: BB#7
+	%vreg8<def> = A2_tfrsi 111; IntRegs:%vreg8
+	J2_jump <BB#6>, %PC<imp-def,dead>
+    Successors according to CFG: BB#6(?%)
+
+BB#4: derived from LLVM BB %5
+    Predecessors according to CFG: BB#7
+	%vreg7<def> = A2_tfrsi 110; IntRegs:%vreg7
+	J2_jump <BB#6>, %PC<imp-def,dead>
+    Successors according to CFG: BB#6(?%)
+
+BB#5: derived from LLVM BB %6
+    Predecessors according to CFG: BB#0
+	ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	%vreg11<def> = A2_tfrsi <ga:@.str>; IntRegs:%vreg11
+	%vreg12<def> = A2_tfrsi <ga:@__FUNCTION__.unsigned_condition>; IntRegs:%vreg12
+	%vreg13<def> = A2_tfrsi 951; IntRegs:%vreg13
+	%R0<def> = COPY %vreg11; IntRegs:%vreg11
+	%R1<def> = COPY %vreg13; IntRegs:%vreg13
+	%R2<def> = COPY %vreg12; IntRegs:%vreg12
+	CALLv3nr <ga:@fancy_abort>, %D0<imp-def,dead>, %D1<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, ...
+	ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+
+BB#6: derived from LLVM BB %7
+    Predecessors according to CFG: BB#7 BB#4 BB#3 BB#2 BB#1
+	%vreg0<def> = PHI %vreg1, <BB#7>, %vreg7, <BB#4>, %vreg8, <BB#3>, %vreg9, <BB#2>, %vreg10, <BB#1>; IntRegs:%vreg0,%vreg1,%vreg7,%vreg8,%vreg9,%vreg10
+	%R0<def> = COPY %vreg0; IntRegs:%vreg0
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function unsigned_condition.
+
+# After Local Stack Slot Allocation:
+# Machine code for function unsigned_condition: SSA
+Jump Tables:
+  jt#0:  BB#6 BB#6 BB#2 BB#1 BB#4 BB#3 BB#6 BB#6 BB#6 BB#6
+Function Live Ins: %R0 in %vreg1
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%vreg1<def> = COPY %R0; IntRegs:%vreg1
+	%vreg3<def> = A2_addi %vreg1, -102; IntRegs:%vreg3,%vreg1
+	%vreg4<def> = C2_cmpgtui %vreg3, 9; PredRegs:%vreg4 IntRegs:%vreg3
+	J2_jumpt %vreg4, <BB#5>, %PC<imp-def,dead>; PredRegs:%vreg4
+    Successors according to CFG: BB#5(0x00000800 / 0x80000000 = 0.00%) BB#7(0x7ffff800 / 0x80000000 = 100.00%)
+
+BB#7: derived from LLVM BB %0
+    Predecessors according to CFG: BB#0
+	%vreg5<def> = A2_tfrsi <jt#0>; IntRegs:%vreg5
+	%vreg6<def> = L4_loadri_rr %vreg5, %vreg3, 2; mem:LD4[JumpTable] IntRegs:%vreg6,%vreg5,%vreg3
+	J2_jumpr %vreg6, %PC<imp-def,dead>; IntRegs:%vreg6
+    Successors according to CFG: BB#6(0x4ccccccd / 0x80000000 = 60.00%) BB#2(0x0ccccccd / 0x80000000 = 10.00%) BB#1(0x0ccccccd / 0x80000000 = 10.00%) BB#4(0x0ccccccd / 0x80000000 = 10.00%) BB#3(0x0ccccccd / 0x80000000 = 10.00%)
+
+BB#1: derived from LLVM BB %2
+    Predecessors according to CFG: BB#7
+	%vreg10<def> = A2_tfrsi 109; IntRegs:%vreg10
+	J2_jump <BB#6>, %PC<imp-def,dead>
+    Successors according to CFG: BB#6(?%)
+
+BB#2: derived from LLVM BB %3
+    Predecessors according to CFG: BB#7
+	%vreg9<def> = A2_tfrsi 108; IntRegs:%vreg9
+	J2_jump <BB#6>, %PC<imp-def,dead>
+    Successors according to CFG: BB#6(?%)
+
+BB#3: derived from LLVM BB %4
+    Predecessors according to CFG: BB#7
+	%vreg8<def> = A2_tfrsi 111; IntRegs:%vreg8
+	J2_jump <BB#6>, %PC<imp-def,dead>
+    Successors according to CFG: BB#6(?%)
+
+BB#4: derived from LLVM BB %5
+    Predecessors according to CFG: BB#7
+	%vreg7<def> = A2_tfrsi 110; IntRegs:%vreg7
+	J2_jump <BB#6>, %PC<imp-def,dead>
+    Successors according to CFG: BB#6(?%)
+
+BB#5: derived from LLVM BB %6
+    Predecessors according to CFG: BB#0
+	ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	%vreg11<def> = A2_tfrsi <ga:@.str>; IntRegs:%vreg11
+	%vreg12<def> = A2_tfrsi <ga:@__FUNCTION__.unsigned_condition>; IntRegs:%vreg12
+	%vreg13<def> = A2_tfrsi 951; IntRegs:%vreg13
+	%R0<def> = COPY %vreg11; IntRegs:%vreg11
+	%R1<def> = COPY %vreg13; IntRegs:%vreg13
+	%R2<def> = COPY %vreg12; IntRegs:%vreg12
+	CALLv3nr <ga:@fancy_abort>, %D0<imp-def,dead>, %D1<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, ...
+	ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+
+BB#6: derived from LLVM BB %7
+    Predecessors according to CFG: BB#7 BB#4 BB#3 BB#2 BB#1
+	%vreg0<def> = PHI %vreg1, <BB#7>, %vreg7, <BB#4>, %vreg8, <BB#3>, %vreg9, <BB#2>, %vreg10, <BB#1>; IntRegs:%vreg0,%vreg1,%vreg7,%vreg8,%vreg9,%vreg10
+	%R0<def> = COPY %vreg0; IntRegs:%vreg0
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function unsigned_condition.
+
+# After Remove dead machine instructions:
+# Machine code for function unsigned_condition: SSA
+Jump Tables:
+  jt#0:  BB#6 BB#6 BB#2 BB#1 BB#4 BB#3 BB#6 BB#6 BB#6 BB#6
+Function Live Ins: %R0 in %vreg1
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%vreg1<def> = COPY %R0; IntRegs:%vreg1
+	%vreg3<def> = A2_addi %vreg1, -102; IntRegs:%vreg3,%vreg1
+	%vreg4<def> = C2_cmpgtui %vreg3, 9; PredRegs:%vreg4 IntRegs:%vreg3
+	J2_jumpt %vreg4, <BB#5>, %PC<imp-def,dead>; PredRegs:%vreg4
+    Successors according to CFG: BB#5(0x00000800 / 0x80000000 = 0.00%) BB#7(0x7ffff800 / 0x80000000 = 100.00%)
+
+BB#7: derived from LLVM BB %0
+    Predecessors according to CFG: BB#0
+	%vreg5<def> = A2_tfrsi <jt#0>; IntRegs:%vreg5
+	%vreg6<def> = L4_loadri_rr %vreg5, %vreg3, 2; mem:LD4[JumpTable] IntRegs:%vreg6,%vreg5,%vreg3
+	J2_jumpr %vreg6, %PC<imp-def,dead>; IntRegs:%vreg6
+    Successors according to CFG: BB#6(0x4ccccccd / 0x80000000 = 60.00%) BB#2(0x0ccccccd / 0x80000000 = 10.00%) BB#1(0x0ccccccd / 0x80000000 = 10.00%) BB#4(0x0ccccccd / 0x80000000 = 10.00%) BB#3(0x0ccccccd / 0x80000000 = 10.00%)
+
+BB#1: derived from LLVM BB %2
+    Predecessors according to CFG: BB#7
+	%vreg10<def> = A2_tfrsi 109; IntRegs:%vreg10
+	J2_jump <BB#6>, %PC<imp-def,dead>
+    Successors according to CFG: BB#6(?%)
+
+BB#2: derived from LLVM BB %3
+    Predecessors according to CFG: BB#7
+	%vreg9<def> = A2_tfrsi 108; IntRegs:%vreg9
+	J2_jump <BB#6>, %PC<imp-def,dead>
+    Successors according to CFG: BB#6(?%)
+
+BB#3: derived from LLVM BB %4
+    Predecessors according to CFG: BB#7
+	%vreg8<def> = A2_tfrsi 111; IntRegs:%vreg8
+	J2_jump <BB#6>, %PC<imp-def,dead>
+    Successors according to CFG: BB#6(?%)
+
+BB#4: derived from LLVM BB %5
+    Predecessors according to CFG: BB#7
+	%vreg7<def> = A2_tfrsi 110; IntRegs:%vreg7
+	J2_jump <BB#6>, %PC<imp-def,dead>
+    Successors according to CFG: BB#6(?%)
+
+BB#5: derived from LLVM BB %6
+    Predecessors according to CFG: BB#0
+	ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	%vreg11<def> = A2_tfrsi <ga:@.str>; IntRegs:%vreg11
+	%vreg12<def> = A2_tfrsi <ga:@__FUNCTION__.unsigned_condition>; IntRegs:%vreg12
+	%vreg13<def> = A2_tfrsi 951; IntRegs:%vreg13
+	%R0<def> = COPY %vreg11; IntRegs:%vreg11
+	%R1<def> = COPY %vreg13; IntRegs:%vreg13
+	%R2<def> = COPY %vreg12; IntRegs:%vreg12
+	CALLv3nr <ga:@fancy_abort>, %D0<imp-def,dead>, %D1<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, ...
+	ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+
+BB#6: derived from LLVM BB %7
+    Predecessors according to CFG: BB#7 BB#4 BB#3 BB#2 BB#1
+	%vreg0<def> = PHI %vreg1, <BB#7>, %vreg7, <BB#4>, %vreg8, <BB#3>, %vreg9, <BB#2>, %vreg10, <BB#1>; IntRegs:%vreg0,%vreg1,%vreg7,%vreg8,%vreg9,%vreg10
+	%R0<def> = COPY %vreg0; IntRegs:%vreg0
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function unsigned_condition.
+
+# After Machine Loop Invariant Code Motion:
+# Machine code for function unsigned_condition: SSA
+Jump Tables:
+  jt#0:  BB#6 BB#6 BB#2 BB#1 BB#4 BB#3 BB#6 BB#6 BB#6 BB#6
+Function Live Ins: %R0 in %vreg1
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%vreg1<def> = COPY %R0; IntRegs:%vreg1
+	%vreg3<def> = A2_addi %vreg1, -102; IntRegs:%vreg3,%vreg1
+	%vreg4<def> = C2_cmpgtui %vreg3, 9; PredRegs:%vreg4 IntRegs:%vreg3
+	J2_jumpt %vreg4, <BB#5>, %PC<imp-def,dead>; PredRegs:%vreg4
+    Successors according to CFG: BB#5(0x00000800 / 0x80000000 = 0.00%) BB#7(0x7ffff800 / 0x80000000 = 100.00%)
+
+BB#7: derived from LLVM BB %0
+    Predecessors according to CFG: BB#0
+	%vreg5<def> = A2_tfrsi <jt#0>; IntRegs:%vreg5
+	%vreg6<def> = L4_loadri_rr %vreg5, %vreg3, 2; mem:LD4[JumpTable] IntRegs:%vreg6,%vreg5,%vreg3
+	J2_jumpr %vreg6, %PC<imp-def,dead>; IntRegs:%vreg6
+    Successors according to CFG: BB#6(0x4ccccccd / 0x80000000 = 60.00%) BB#2(0x0ccccccd / 0x80000000 = 10.00%) BB#1(0x0ccccccd / 0x80000000 = 10.00%) BB#4(0x0ccccccd / 0x80000000 = 10.00%) BB#3(0x0ccccccd / 0x80000000 = 10.00%)
+
+BB#1: derived from LLVM BB %2
+    Predecessors according to CFG: BB#7
+	%vreg10<def> = A2_tfrsi 109; IntRegs:%vreg10
+	J2_jump <BB#6>, %PC<imp-def,dead>
+    Successors according to CFG: BB#6(?%)
+
+BB#2: derived from LLVM BB %3
+    Predecessors according to CFG: BB#7
+	%vreg9<def> = A2_tfrsi 108; IntRegs:%vreg9
+	J2_jump <BB#6>, %PC<imp-def,dead>
+    Successors according to CFG: BB#6(?%)
+
+BB#3: derived from LLVM BB %4
+    Predecessors according to CFG: BB#7
+	%vreg8<def> = A2_tfrsi 111; IntRegs:%vreg8
+	J2_jump <BB#6>, %PC<imp-def,dead>
+    Successors according to CFG: BB#6(?%)
+
+BB#4: derived from LLVM BB %5
+    Predecessors according to CFG: BB#7
+	%vreg7<def> = A2_tfrsi 110; IntRegs:%vreg7
+	J2_jump <BB#6>, %PC<imp-def,dead>
+    Successors according to CFG: BB#6(?%)
+
+BB#5: derived from LLVM BB %6
+    Predecessors according to CFG: BB#0
+	ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	%vreg11<def> = A2_tfrsi <ga:@.str>; IntRegs:%vreg11
+	%vreg12<def> = A2_tfrsi <ga:@__FUNCTION__.unsigned_condition>; IntRegs:%vreg12
+	%vreg13<def> = A2_tfrsi 951; IntRegs:%vreg13
+	%R0<def> = COPY %vreg11; IntRegs:%vreg11
+	%R1<def> = COPY %vreg13; IntRegs:%vreg13
+	%R2<def> = COPY %vreg12; IntRegs:%vreg12
+	CALLv3nr <ga:@fancy_abort>, %D0<imp-def,dead>, %D1<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, ...
+	ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+
+BB#6: derived from LLVM BB %7
+    Predecessors according to CFG: BB#7 BB#4 BB#3 BB#2 BB#1
+	%vreg0<def> = PHI %vreg1, <BB#7>, %vreg7, <BB#4>, %vreg8, <BB#3>, %vreg9, <BB#2>, %vreg10, <BB#1>; IntRegs:%vreg0,%vreg1,%vreg7,%vreg8,%vreg9,%vreg10
+	%R0<def> = COPY %vreg0; IntRegs:%vreg0
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function unsigned_condition.
+
+# After Machine Common Subexpression Elimination:
+# Machine code for function unsigned_condition: SSA
+Jump Tables:
+  jt#0:  BB#6 BB#6 BB#2 BB#1 BB#4 BB#3 BB#6 BB#6 BB#6 BB#6
+Function Live Ins: %R0 in %vreg1
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%vreg1<def> = COPY %R0; IntRegs:%vreg1
+	%vreg3<def> = A2_addi %vreg1, -102; IntRegs:%vreg3,%vreg1
+	%vreg4<def> = C2_cmpgtui %vreg3, 9; PredRegs:%vreg4 IntRegs:%vreg3
+	J2_jumpt %vreg4, <BB#5>, %PC<imp-def,dead>; PredRegs:%vreg4
+    Successors according to CFG: BB#5(0x00000800 / 0x80000000 = 0.00%) BB#7(0x7ffff800 / 0x80000000 = 100.00%)
+
+BB#7: derived from LLVM BB %0
+    Predecessors according to CFG: BB#0
+	%vreg5<def> = A2_tfrsi <jt#0>; IntRegs:%vreg5
+	%vreg6<def> = L4_loadri_rr %vreg5, %vreg3, 2; mem:LD4[JumpTable] IntRegs:%vreg6,%vreg5,%vreg3
+	J2_jumpr %vreg6, %PC<imp-def,dead>; IntRegs:%vreg6
+    Successors according to CFG: BB#6(0x4ccccccd / 0x80000000 = 60.00%) BB#2(0x0ccccccd / 0x80000000 = 10.00%) BB#1(0x0ccccccd / 0x80000000 = 10.00%) BB#4(0x0ccccccd / 0x80000000 = 10.00%) BB#3(0x0ccccccd / 0x80000000 = 10.00%)
+
+BB#1: derived from LLVM BB %2
+    Predecessors according to CFG: BB#7
+	%vreg10<def> = A2_tfrsi 109; IntRegs:%vreg10
+	J2_jump <BB#6>, %PC<imp-def,dead>
+    Successors according to CFG: BB#6(?%)
+
+BB#2: derived from LLVM BB %3
+    Predecessors according to CFG: BB#7
+	%vreg9<def> = A2_tfrsi 108; IntRegs:%vreg9
+	J2_jump <BB#6>, %PC<imp-def,dead>
+    Successors according to CFG: BB#6(?%)
+
+BB#3: derived from LLVM BB %4
+    Predecessors according to CFG: BB#7
+	%vreg8<def> = A2_tfrsi 111; IntRegs:%vreg8
+	J2_jump <BB#6>, %PC<imp-def,dead>
+    Successors according to CFG: BB#6(?%)
+
+BB#4: derived from LLVM BB %5
+    Predecessors according to CFG: BB#7
+	%vreg7<def> = A2_tfrsi 110; IntRegs:%vreg7
+	J2_jump <BB#6>, %PC<imp-def,dead>
+    Successors according to CFG: BB#6(?%)
+
+BB#5: derived from LLVM BB %6
+    Predecessors according to CFG: BB#0
+	ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	%vreg11<def> = A2_tfrsi <ga:@.str>; IntRegs:%vreg11
+	%vreg12<def> = A2_tfrsi <ga:@__FUNCTION__.unsigned_condition>; IntRegs:%vreg12
+	%vreg13<def> = A2_tfrsi 951; IntRegs:%vreg13
+	%R0<def> = COPY %vreg11; IntRegs:%vreg11
+	%R1<def> = COPY %vreg13; IntRegs:%vreg13
+	%R2<def> = COPY %vreg12; IntRegs:%vreg12
+	CALLv3nr <ga:@fancy_abort>, %D0<imp-def,dead>, %D1<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, ...
+	ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+
+BB#6: derived from LLVM BB %7
+    Predecessors according to CFG: BB#7 BB#4 BB#3 BB#2 BB#1
+	%vreg0<def> = PHI %vreg1, <BB#7>, %vreg7, <BB#4>, %vreg8, <BB#3>, %vreg9, <BB#2>, %vreg10, <BB#1>; IntRegs:%vreg0,%vreg1,%vreg7,%vreg8,%vreg9,%vreg10
+	%R0<def> = COPY %vreg0; IntRegs:%vreg0
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function unsigned_condition.
+
+# After Machine code sinking:
+# Machine code for function unsigned_condition: SSA
+Jump Tables:
+  jt#0:  BB#6 BB#6 BB#2 BB#1 BB#4 BB#3 BB#6 BB#6 BB#6 BB#6
+Function Live Ins: %R0 in %vreg1
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%vreg1<def> = COPY %R0; IntRegs:%vreg1
+	%vreg3<def> = A2_addi %vreg1, -102; IntRegs:%vreg3,%vreg1
+	%vreg4<def> = C2_cmpgtui %vreg3, 9; PredRegs:%vreg4 IntRegs:%vreg3
+	J2_jumpt %vreg4, <BB#5>, %PC<imp-def,dead>; PredRegs:%vreg4
+    Successors according to CFG: BB#5(0x00000800 / 0x80000000 = 0.00%) BB#7(0x7ffff800 / 0x80000000 = 100.00%)
+
+BB#7: derived from LLVM BB %0
+    Predecessors according to CFG: BB#0
+	%vreg5<def> = A2_tfrsi <jt#0>; IntRegs:%vreg5
+	%vreg6<def> = L4_loadri_rr %vreg5, %vreg3, 2; mem:LD4[JumpTable] IntRegs:%vreg6,%vreg5,%vreg3
+	J2_jumpr %vreg6, %PC<imp-def,dead>; IntRegs:%vreg6
+    Successors according to CFG: BB#6(0x4ccccccd / 0x80000000 = 60.00%) BB#2(0x0ccccccd / 0x80000000 = 10.00%) BB#1(0x0ccccccd / 0x80000000 = 10.00%) BB#4(0x0ccccccd / 0x80000000 = 10.00%) BB#3(0x0ccccccd / 0x80000000 = 10.00%)
+
+BB#1: derived from LLVM BB %2
+    Predecessors according to CFG: BB#7
+	%vreg10<def> = A2_tfrsi 109; IntRegs:%vreg10
+	J2_jump <BB#6>, %PC<imp-def,dead>
+    Successors according to CFG: BB#6(?%)
+
+BB#2: derived from LLVM BB %3
+    Predecessors according to CFG: BB#7
+	%vreg9<def> = A2_tfrsi 108; IntRegs:%vreg9
+	J2_jump <BB#6>, %PC<imp-def,dead>
+    Successors according to CFG: BB#6(?%)
+
+BB#3: derived from LLVM BB %4
+    Predecessors according to CFG: BB#7
+	%vreg8<def> = A2_tfrsi 111; IntRegs:%vreg8
+	J2_jump <BB#6>, %PC<imp-def,dead>
+    Successors according to CFG: BB#6(?%)
+
+BB#4: derived from LLVM BB %5
+    Predecessors according to CFG: BB#7
+	%vreg7<def> = A2_tfrsi 110; IntRegs:%vreg7
+	J2_jump <BB#6>, %PC<imp-def,dead>
+    Successors according to CFG: BB#6(?%)
+
+BB#5: derived from LLVM BB %6
+    Predecessors according to CFG: BB#0
+	ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	%vreg11<def> = A2_tfrsi <ga:@.str>; IntRegs:%vreg11
+	%vreg12<def> = A2_tfrsi <ga:@__FUNCTION__.unsigned_condition>; IntRegs:%vreg12
+	%vreg13<def> = A2_tfrsi 951; IntRegs:%vreg13
+	%R0<def> = COPY %vreg11; IntRegs:%vreg11
+	%R1<def> = COPY %vreg13; IntRegs:%vreg13
+	%R2<def> = COPY %vreg12; IntRegs:%vreg12
+	CALLv3nr <ga:@fancy_abort>, %D0<imp-def,dead>, %D1<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, ...
+	ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+
+BB#6: derived from LLVM BB %7
+    Predecessors according to CFG: BB#7 BB#4 BB#3 BB#2 BB#1
+	%vreg0<def> = PHI %vreg1, <BB#7>, %vreg7, <BB#4>, %vreg8, <BB#3>, %vreg9, <BB#2>, %vreg10, <BB#1>; IntRegs:%vreg0,%vreg1,%vreg7,%vreg8,%vreg9,%vreg10
+	%R0<def> = COPY %vreg0; IntRegs:%vreg0
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function unsigned_condition.
+
+# After Peephole Optimizations:
+# Machine code for function unsigned_condition: SSA
+Jump Tables:
+  jt#0:  BB#6 BB#6 BB#2 BB#1 BB#4 BB#3 BB#6 BB#6 BB#6 BB#6
+Function Live Ins: %R0 in %vreg1
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%vreg1<def> = COPY %R0; IntRegs:%vreg1
+	%vreg3<def> = A2_addi %vreg1, -102; IntRegs:%vreg3,%vreg1
+	%vreg4<def> = C2_cmpgtui %vreg3, 9; PredRegs:%vreg4 IntRegs:%vreg3
+	J2_jumpt %vreg4, <BB#5>, %PC<imp-def,dead>; PredRegs:%vreg4
+    Successors according to CFG: BB#5(0x00000800 / 0x80000000 = 0.00%) BB#7(0x7ffff800 / 0x80000000 = 100.00%)
+
+BB#7: derived from LLVM BB %0
+    Predecessors according to CFG: BB#0
+	%vreg5<def> = A2_tfrsi <jt#0>; IntRegs:%vreg5
+	%vreg6<def> = L4_loadri_rr %vreg5, %vreg3, 2; mem:LD4[JumpTable] IntRegs:%vreg6,%vreg5,%vreg3
+	J2_jumpr %vreg6, %PC<imp-def,dead>; IntRegs:%vreg6
+    Successors according to CFG: BB#6(0x4ccccccd / 0x80000000 = 60.00%) BB#2(0x0ccccccd / 0x80000000 = 10.00%) BB#1(0x0ccccccd / 0x80000000 = 10.00%) BB#4(0x0ccccccd / 0x80000000 = 10.00%) BB#3(0x0ccccccd / 0x80000000 = 10.00%)
+
+BB#1: derived from LLVM BB %2
+    Predecessors according to CFG: BB#7
+	%vreg10<def> = A2_tfrsi 109; IntRegs:%vreg10
+	J2_jump <BB#6>, %PC<imp-def,dead>
+    Successors according to CFG: BB#6(?%)
+
+BB#2: derived from LLVM BB %3
+    Predecessors according to CFG: BB#7
+	%vreg9<def> = A2_tfrsi 108; IntRegs:%vreg9
+	J2_jump <BB#6>, %PC<imp-def,dead>
+    Successors according to CFG: BB#6(?%)
+
+BB#3: derived from LLVM BB %4
+    Predecessors according to CFG: BB#7
+	%vreg8<def> = A2_tfrsi 111; IntRegs:%vreg8
+	J2_jump <BB#6>, %PC<imp-def,dead>
+    Successors according to CFG: BB#6(?%)
+
+BB#4: derived from LLVM BB %5
+    Predecessors according to CFG: BB#7
+	%vreg7<def> = A2_tfrsi 110; IntRegs:%vreg7
+	J2_jump <BB#6>, %PC<imp-def,dead>
+    Successors according to CFG: BB#6(?%)
+
+BB#5: derived from LLVM BB %6
+    Predecessors according to CFG: BB#0
+	ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	%vreg11<def> = A2_tfrsi <ga:@.str>; IntRegs:%vreg11
+	%vreg12<def> = A2_tfrsi <ga:@__FUNCTION__.unsigned_condition>; IntRegs:%vreg12
+	%vreg13<def> = A2_tfrsi 951; IntRegs:%vreg13
+	%R0<def> = COPY %vreg11; IntRegs:%vreg11
+	%R1<def> = COPY %vreg13; IntRegs:%vreg13
+	%R2<def> = COPY %vreg12; IntRegs:%vreg12
+	CALLv3nr <ga:@fancy_abort>, %D0<imp-def,dead>, %D1<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, ...
+	ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+
+BB#6: derived from LLVM BB %7
+    Predecessors according to CFG: BB#7 BB#4 BB#3 BB#2 BB#1
+	%vreg0<def> = PHI %vreg1, <BB#7>, %vreg7, <BB#4>, %vreg8, <BB#3>, %vreg9, <BB#2>, %vreg10, <BB#1>; IntRegs:%vreg0,%vreg1,%vreg7,%vreg8,%vreg9,%vreg10
+	%R0<def> = COPY %vreg0; IntRegs:%vreg0
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function unsigned_condition.
+
+# After Remove dead machine instructions:
+# Machine code for function unsigned_condition: SSA
+Jump Tables:
+  jt#0:  BB#6 BB#6 BB#2 BB#1 BB#4 BB#3 BB#6 BB#6 BB#6 BB#6
+Function Live Ins: %R0 in %vreg1
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%vreg1<def> = COPY %R0; IntRegs:%vreg1
+	%vreg3<def> = A2_addi %vreg1, -102; IntRegs:%vreg3,%vreg1
+	%vreg4<def> = C2_cmpgtui %vreg3, 9; PredRegs:%vreg4 IntRegs:%vreg3
+	J2_jumpt %vreg4, <BB#5>, %PC<imp-def,dead>; PredRegs:%vreg4
+    Successors according to CFG: BB#5(0x00000800 / 0x80000000 = 0.00%) BB#7(0x7ffff800 / 0x80000000 = 100.00%)
+
+BB#7: derived from LLVM BB %0
+    Predecessors according to CFG: BB#0
+	%vreg5<def> = A2_tfrsi <jt#0>; IntRegs:%vreg5
+	%vreg6<def> = L4_loadri_rr %vreg5, %vreg3, 2; mem:LD4[JumpTable] IntRegs:%vreg6,%vreg5,%vreg3
+	J2_jumpr %vreg6, %PC<imp-def,dead>; IntRegs:%vreg6
+    Successors according to CFG: BB#6(0x4ccccccd / 0x80000000 = 60.00%) BB#2(0x0ccccccd / 0x80000000 = 10.00%) BB#1(0x0ccccccd / 0x80000000 = 10.00%) BB#4(0x0ccccccd / 0x80000000 = 10.00%) BB#3(0x0ccccccd / 0x80000000 = 10.00%)
+
+BB#1: derived from LLVM BB %2
+    Predecessors according to CFG: BB#7
+	%vreg10<def> = A2_tfrsi 109; IntRegs:%vreg10
+	J2_jump <BB#6>, %PC<imp-def,dead>
+    Successors according to CFG: BB#6(?%)
+
+BB#2: derived from LLVM BB %3
+    Predecessors according to CFG: BB#7
+	%vreg9<def> = A2_tfrsi 108; IntRegs:%vreg9
+	J2_jump <BB#6>, %PC<imp-def,dead>
+    Successors according to CFG: BB#6(?%)
+
+BB#3: derived from LLVM BB %4
+    Predecessors according to CFG: BB#7
+	%vreg8<def> = A2_tfrsi 111; IntRegs:%vreg8
+	J2_jump <BB#6>, %PC<imp-def,dead>
+    Successors according to CFG: BB#6(?%)
+
+BB#4: derived from LLVM BB %5
+    Predecessors according to CFG: BB#7
+	%vreg7<def> = A2_tfrsi 110; IntRegs:%vreg7
+	J2_jump <BB#6>, %PC<imp-def,dead>
+    Successors according to CFG: BB#6(?%)
+
+BB#5: derived from LLVM BB %6
+    Predecessors according to CFG: BB#0
+	ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	%vreg11<def> = A2_tfrsi <ga:@.str>; IntRegs:%vreg11
+	%vreg12<def> = A2_tfrsi <ga:@__FUNCTION__.unsigned_condition>; IntRegs:%vreg12
+	%vreg13<def> = A2_tfrsi 951; IntRegs:%vreg13
+	%R0<def> = COPY %vreg11; IntRegs:%vreg11
+	%R1<def> = COPY %vreg13; IntRegs:%vreg13
+	%R2<def> = COPY %vreg12; IntRegs:%vreg12
+	CALLv3nr <ga:@fancy_abort>, %D0<imp-def,dead>, %D1<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, ...
+	ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+
+BB#6: derived from LLVM BB %7
+    Predecessors according to CFG: BB#7 BB#4 BB#3 BB#2 BB#1
+	%vreg0<def> = PHI %vreg1, <BB#7>, %vreg7, <BB#4>, %vreg8, <BB#3>, %vreg9, <BB#2>, %vreg10, <BB#1>; IntRegs:%vreg0,%vreg1,%vreg7,%vreg8,%vreg9,%vreg10
+	%R0<def> = COPY %vreg0; IntRegs:%vreg0
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function unsigned_condition.
+
+# After Hexagon Store Widening:
+# Machine code for function unsigned_condition: SSA
+Jump Tables:
+  jt#0:  BB#6 BB#6 BB#2 BB#1 BB#4 BB#3 BB#6 BB#6 BB#6 BB#6
+Function Live Ins: %R0 in %vreg1
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%vreg1<def> = COPY %R0; IntRegs:%vreg1
+	%vreg3<def> = A2_addi %vreg1, -102; IntRegs:%vreg3,%vreg1
+	%vreg4<def> = C2_cmpgtui %vreg3, 9; PredRegs:%vreg4 IntRegs:%vreg3
+	J2_jumpt %vreg4, <BB#5>, %PC<imp-def,dead>; PredRegs:%vreg4
+    Successors according to CFG: BB#5(0x00000800 / 0x80000000 = 0.00%) BB#7(0x7ffff800 / 0x80000000 = 100.00%)
+
+BB#7: derived from LLVM BB %0
+    Predecessors according to CFG: BB#0
+	%vreg5<def> = A2_tfrsi <jt#0>; IntRegs:%vreg5
+	%vreg6<def> = L4_loadri_rr %vreg5, %vreg3, 2; mem:LD4[JumpTable] IntRegs:%vreg6,%vreg5,%vreg3
+	J2_jumpr %vreg6, %PC<imp-def,dead>; IntRegs:%vreg6
+    Successors according to CFG: BB#6(0x4ccccccd / 0x80000000 = 60.00%) BB#2(0x0ccccccd / 0x80000000 = 10.00%) BB#1(0x0ccccccd / 0x80000000 = 10.00%) BB#4(0x0ccccccd / 0x80000000 = 10.00%) BB#3(0x0ccccccd / 0x80000000 = 10.00%)
+
+BB#1: derived from LLVM BB %2
+    Predecessors according to CFG: BB#7
+	%vreg10<def> = A2_tfrsi 109; IntRegs:%vreg10
+	J2_jump <BB#6>, %PC<imp-def,dead>
+    Successors according to CFG: BB#6(?%)
+
+BB#2: derived from LLVM BB %3
+    Predecessors according to CFG: BB#7
+	%vreg9<def> = A2_tfrsi 108; IntRegs:%vreg9
+	J2_jump <BB#6>, %PC<imp-def,dead>
+    Successors according to CFG: BB#6(?%)
+
+BB#3: derived from LLVM BB %4
+    Predecessors according to CFG: BB#7
+	%vreg8<def> = A2_tfrsi 111; IntRegs:%vreg8
+	J2_jump <BB#6>, %PC<imp-def,dead>
+    Successors according to CFG: BB#6(?%)
+
+BB#4: derived from LLVM BB %5
+    Predecessors according to CFG: BB#7
+	%vreg7<def> = A2_tfrsi 110; IntRegs:%vreg7
+	J2_jump <BB#6>, %PC<imp-def,dead>
+    Successors according to CFG: BB#6(?%)
+
+BB#5: derived from LLVM BB %6
+    Predecessors according to CFG: BB#0
+	ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	%vreg11<def> = A2_tfrsi <ga:@.str>; IntRegs:%vreg11
+	%vreg12<def> = A2_tfrsi <ga:@__FUNCTION__.unsigned_condition>; IntRegs:%vreg12
+	%vreg13<def> = A2_tfrsi 951; IntRegs:%vreg13
+	%R0<def> = COPY %vreg11; IntRegs:%vreg11
+	%R1<def> = COPY %vreg13; IntRegs:%vreg13
+	%R2<def> = COPY %vreg12; IntRegs:%vreg12
+	CALLv3nr <ga:@fancy_abort>, %D0<imp-def,dead>, %D1<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, ...
+	ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+
+BB#6: derived from LLVM BB %7
+    Predecessors according to CFG: BB#7 BB#4 BB#3 BB#2 BB#1
+	%vreg0<def> = PHI %vreg1, <BB#7>, %vreg7, <BB#4>, %vreg8, <BB#3>, %vreg9, <BB#2>, %vreg10, <BB#1>; IntRegs:%vreg0,%vreg1,%vreg7,%vreg8,%vreg9,%vreg10
+	%R0<def> = COPY %vreg0; IntRegs:%vreg0
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function unsigned_condition.
+
+# After Hexagon Hardware Loops:
+# Machine code for function unsigned_condition: SSA
+Jump Tables:
+  jt#0:  BB#6 BB#6 BB#2 BB#1 BB#4 BB#3 BB#6 BB#6 BB#6 BB#6
+Function Live Ins: %R0 in %vreg1
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%vreg1<def> = COPY %R0; IntRegs:%vreg1
+	%vreg3<def> = A2_addi %vreg1, -102; IntRegs:%vreg3,%vreg1
+	%vreg4<def> = C2_cmpgtui %vreg3, 9; PredRegs:%vreg4 IntRegs:%vreg3
+	J2_jumpt %vreg4, <BB#5>, %PC<imp-def,dead>; PredRegs:%vreg4
+    Successors according to CFG: BB#5(0x00000800 / 0x80000000 = 0.00%) BB#7(0x7ffff800 / 0x80000000 = 100.00%)
+
+BB#7: derived from LLVM BB %0
+    Predecessors according to CFG: BB#0
+	%vreg5<def> = A2_tfrsi <jt#0>; IntRegs:%vreg5
+	%vreg6<def> = L4_loadri_rr %vreg5, %vreg3, 2; mem:LD4[JumpTable] IntRegs:%vreg6,%vreg5,%vreg3
+	J2_jumpr %vreg6, %PC<imp-def,dead>; IntRegs:%vreg6
+    Successors according to CFG: BB#6(0x4ccccccd / 0x80000000 = 60.00%) BB#2(0x0ccccccd / 0x80000000 = 10.00%) BB#1(0x0ccccccd / 0x80000000 = 10.00%) BB#4(0x0ccccccd / 0x80000000 = 10.00%) BB#3(0x0ccccccd / 0x80000000 = 10.00%)
+
+BB#1: derived from LLVM BB %2
+    Predecessors according to CFG: BB#7
+	%vreg10<def> = A2_tfrsi 109; IntRegs:%vreg10
+	J2_jump <BB#6>, %PC<imp-def,dead>
+    Successors according to CFG: BB#6(?%)
+
+BB#2: derived from LLVM BB %3
+    Predecessors according to CFG: BB#7
+	%vreg9<def> = A2_tfrsi 108; IntRegs:%vreg9
+	J2_jump <BB#6>, %PC<imp-def,dead>
+    Successors according to CFG: BB#6(?%)
+
+BB#3: derived from LLVM BB %4
+    Predecessors according to CFG: BB#7
+	%vreg8<def> = A2_tfrsi 111; IntRegs:%vreg8
+	J2_jump <BB#6>, %PC<imp-def,dead>
+    Successors according to CFG: BB#6(?%)
+
+BB#4: derived from LLVM BB %5
+    Predecessors according to CFG: BB#7
+	%vreg7<def> = A2_tfrsi 110; IntRegs:%vreg7
+	J2_jump <BB#6>, %PC<imp-def,dead>
+    Successors according to CFG: BB#6(?%)
+
+BB#5: derived from LLVM BB %6
+    Predecessors according to CFG: BB#0
+	ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	%vreg11<def> = A2_tfrsi <ga:@.str>; IntRegs:%vreg11
+	%vreg12<def> = A2_tfrsi <ga:@__FUNCTION__.unsigned_condition>; IntRegs:%vreg12
+	%vreg13<def> = A2_tfrsi 951; IntRegs:%vreg13
+	%R0<def> = COPY %vreg11; IntRegs:%vreg11
+	%R1<def> = COPY %vreg13; IntRegs:%vreg13
+	%R2<def> = COPY %vreg12; IntRegs:%vreg12
+	CALLv3nr <ga:@fancy_abort>, %D0<imp-def,dead>, %D1<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, ...
+	ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+
+BB#6: derived from LLVM BB %7
+    Predecessors according to CFG: BB#7 BB#4 BB#3 BB#2 BB#1
+	%vreg0<def> = PHI %vreg1, <BB#7>, %vreg7, <BB#4>, %vreg8, <BB#3>, %vreg9, <BB#2>, %vreg10, <BB#1>; IntRegs:%vreg0,%vreg1,%vreg7,%vreg8,%vreg9,%vreg10
+	%R0<def> = COPY %vreg0; IntRegs:%vreg0
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function unsigned_condition.
+
+# After Process Implicit Definitions:
+# Machine code for function unsigned_condition: SSA
+Jump Tables:
+  jt#0:  BB#6 BB#6 BB#2 BB#1 BB#4 BB#3 BB#6 BB#6 BB#6 BB#6
+Function Live Ins: %R0 in %vreg1
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%vreg1<def> = COPY %R0; IntRegs:%vreg1
+	%vreg3<def> = A2_addi %vreg1, -102; IntRegs:%vreg3,%vreg1
+	%vreg4<def> = C2_cmpgtui %vreg3, 9; PredRegs:%vreg4 IntRegs:%vreg3
+	J2_jumpt %vreg4, <BB#5>, %PC<imp-def,dead>; PredRegs:%vreg4
+    Successors according to CFG: BB#5(0x00000800 / 0x80000000 = 0.00%) BB#7(0x7ffff800 / 0x80000000 = 100.00%)
+
+BB#7: derived from LLVM BB %0
+    Predecessors according to CFG: BB#0
+	%vreg5<def> = A2_tfrsi <jt#0>; IntRegs:%vreg5
+	%vreg6<def> = L4_loadri_rr %vreg5, %vreg3, 2; mem:LD4[JumpTable] IntRegs:%vreg6,%vreg5,%vreg3
+	J2_jumpr %vreg6, %PC<imp-def,dead>; IntRegs:%vreg6
+    Successors according to CFG: BB#6(0x4ccccccd / 0x80000000 = 60.00%) BB#2(0x0ccccccd / 0x80000000 = 10.00%) BB#1(0x0ccccccd / 0x80000000 = 10.00%) BB#4(0x0ccccccd / 0x80000000 = 10.00%) BB#3(0x0ccccccd / 0x80000000 = 10.00%)
+
+BB#1: derived from LLVM BB %2
+    Predecessors according to CFG: BB#7
+	%vreg10<def> = A2_tfrsi 109; IntRegs:%vreg10
+	J2_jump <BB#6>, %PC<imp-def,dead>
+    Successors according to CFG: BB#6(?%)
+
+BB#2: derived from LLVM BB %3
+    Predecessors according to CFG: BB#7
+	%vreg9<def> = A2_tfrsi 108; IntRegs:%vreg9
+	J2_jump <BB#6>, %PC<imp-def,dead>
+    Successors according to CFG: BB#6(?%)
+
+BB#3: derived from LLVM BB %4
+    Predecessors according to CFG: BB#7
+	%vreg8<def> = A2_tfrsi 111; IntRegs:%vreg8
+	J2_jump <BB#6>, %PC<imp-def,dead>
+    Successors according to CFG: BB#6(?%)
+
+BB#4: derived from LLVM BB %5
+    Predecessors according to CFG: BB#7
+	%vreg7<def> = A2_tfrsi 110; IntRegs:%vreg7
+	J2_jump <BB#6>, %PC<imp-def,dead>
+    Successors according to CFG: BB#6(?%)
+
+BB#5: derived from LLVM BB %6
+    Predecessors according to CFG: BB#0
+	ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	%vreg11<def> = A2_tfrsi <ga:@.str>; IntRegs:%vreg11
+	%vreg12<def> = A2_tfrsi <ga:@__FUNCTION__.unsigned_condition>; IntRegs:%vreg12
+	%vreg13<def> = A2_tfrsi 951; IntRegs:%vreg13
+	%R0<def> = COPY %vreg11; IntRegs:%vreg11
+	%R1<def> = COPY %vreg13; IntRegs:%vreg13
+	%R2<def> = COPY %vreg12; IntRegs:%vreg12
+	CALLv3nr <ga:@fancy_abort>, %D0<imp-def,dead>, %D1<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, ...
+	ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+
+BB#6: derived from LLVM BB %7
+    Predecessors according to CFG: BB#7 BB#4 BB#3 BB#2 BB#1
+	%vreg0<def> = PHI %vreg1, <BB#7>, %vreg7, <BB#4>, %vreg8, <BB#3>, %vreg9, <BB#2>, %vreg10, <BB#1>; IntRegs:%vreg0,%vreg1,%vreg7,%vreg8,%vreg9,%vreg10
+	%R0<def> = COPY %vreg0; IntRegs:%vreg0
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function unsigned_condition.
+
+# After Live Variable Analysis:
+# Machine code for function unsigned_condition: SSA
+Jump Tables:
+  jt#0:  BB#7 BB#7 BB#3 BB#2 BB#5 BB#4 BB#7 BB#7 BB#7 BB#7
+Function Live Ins: %R0 in %vreg1
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%vreg1<def> = COPY %R0<kill>; IntRegs:%vreg1
+	%vreg3<def> = A2_addi %vreg1, -102; IntRegs:%vreg3,%vreg1
+	%vreg4<def> = C2_cmpgtui %vreg3, 9; PredRegs:%vreg4 IntRegs:%vreg3
+	J2_jumpt %vreg4<kill>, <BB#6>, %PC<imp-def,dead>; PredRegs:%vreg4
+    Successors according to CFG: BB#6(0x00000800 / 0x80000000 = 0.00%) BB#1(0x7ffff800 / 0x80000000 = 100.00%)
+
+BB#1: derived from LLVM BB %0
+    Predecessors according to CFG: BB#0
+	%vreg5<def> = A2_tfrsi <jt#0>; IntRegs:%vreg5
+	%vreg6<def> = L4_loadri_rr %vreg5<kill>, %vreg3<kill>, 2; mem:LD4[JumpTable] IntRegs:%vreg6,%vreg5,%vreg3
+	J2_jumpr %vreg6<kill>, %PC<imp-def,dead>; IntRegs:%vreg6
+    Successors according to CFG: BB#7(0x4ccccccd / 0x80000000 = 60.00%) BB#3(0x0ccccccd / 0x80000000 = 10.00%) BB#2(0x0ccccccd / 0x80000000 = 10.00%) BB#5(0x0ccccccd / 0x80000000 = 10.00%) BB#4(0x0ccccccd / 0x80000000 = 10.00%)
+
+BB#2: derived from LLVM BB %2
+    Predecessors according to CFG: BB#1
+	%vreg10<def> = A2_tfrsi 109; IntRegs:%vreg10
+	J2_jump <BB#7>, %PC<imp-def,dead>
+    Successors according to CFG: BB#7(?%)
+
+BB#3: derived from LLVM BB %3
+    Predecessors according to CFG: BB#1
+	%vreg9<def> = A2_tfrsi 108; IntRegs:%vreg9
+	J2_jump <BB#7>, %PC<imp-def,dead>
+    Successors according to CFG: BB#7(?%)
+
+BB#4: derived from LLVM BB %4
+    Predecessors according to CFG: BB#1
+	%vreg8<def> = A2_tfrsi 111; IntRegs:%vreg8
+	J2_jump <BB#7>, %PC<imp-def,dead>
+    Successors according to CFG: BB#7(?%)
+
+BB#5: derived from LLVM BB %5
+    Predecessors according to CFG: BB#1
+	%vreg7<def> = A2_tfrsi 110; IntRegs:%vreg7
+	J2_jump <BB#7>, %PC<imp-def,dead>
+    Successors according to CFG: BB#7(?%)
+
+BB#6: derived from LLVM BB %6
+    Predecessors according to CFG: BB#0
+	ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	%vreg11<def> = A2_tfrsi <ga:@.str>; IntRegs:%vreg11
+	%vreg12<def> = A2_tfrsi <ga:@__FUNCTION__.unsigned_condition>; IntRegs:%vreg12
+	%vreg13<def> = A2_tfrsi 951; IntRegs:%vreg13
+	%R0<def> = COPY %vreg11<kill>; IntRegs:%vreg11
+	%R1<def> = COPY %vreg13<kill>; IntRegs:%vreg13
+	%R2<def> = COPY %vreg12<kill>; IntRegs:%vreg12
+	CALLv3nr <ga:@fancy_abort>, %D0<imp-def,dead>, %D1<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use,kill>, %R1<imp-use,kill>, %R2<imp-use,kill>, ...
+	ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+
+BB#7: derived from LLVM BB %7
+    Predecessors according to CFG: BB#1 BB#5 BB#4 BB#3 BB#2
+	%vreg0<def> = PHI %vreg1, <BB#1>, %vreg7, <BB#5>, %vreg8, <BB#4>, %vreg9, <BB#3>, %vreg10, <BB#2>; IntRegs:%vreg0,%vreg1,%vreg7,%vreg8,%vreg9,%vreg10
+	%R0<def> = COPY %vreg0<kill>; IntRegs:%vreg0
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use,kill>
+
+# End machine code for function unsigned_condition.
+
+# After Machine Natural Loop Construction:
+# Machine code for function unsigned_condition: SSA
+Jump Tables:
+  jt#0:  BB#7 BB#7 BB#3 BB#2 BB#5 BB#4 BB#7 BB#7 BB#7 BB#7
+Function Live Ins: %R0 in %vreg1
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%vreg1<def> = COPY %R0<kill>; IntRegs:%vreg1
+	%vreg3<def> = A2_addi %vreg1, -102; IntRegs:%vreg3,%vreg1
+	%vreg4<def> = C2_cmpgtui %vreg3, 9; PredRegs:%vreg4 IntRegs:%vreg3
+	J2_jumpt %vreg4<kill>, <BB#6>, %PC<imp-def,dead>; PredRegs:%vreg4
+    Successors according to CFG: BB#6(0x00000800 / 0x80000000 = 0.00%) BB#1(0x7ffff800 / 0x80000000 = 100.00%)
+
+BB#1: derived from LLVM BB %0
+    Predecessors according to CFG: BB#0
+	%vreg5<def> = A2_tfrsi <jt#0>; IntRegs:%vreg5
+	%vreg6<def> = L4_loadri_rr %vreg5<kill>, %vreg3<kill>, 2; mem:LD4[JumpTable] IntRegs:%vreg6,%vreg5,%vreg3
+	J2_jumpr %vreg6<kill>, %PC<imp-def,dead>; IntRegs:%vreg6
+    Successors according to CFG: BB#7(0x4ccccccd / 0x80000000 = 60.00%) BB#3(0x0ccccccd / 0x80000000 = 10.00%) BB#2(0x0ccccccd / 0x80000000 = 10.00%) BB#5(0x0ccccccd / 0x80000000 = 10.00%) BB#4(0x0ccccccd / 0x80000000 = 10.00%)
+
+BB#2: derived from LLVM BB %2
+    Predecessors according to CFG: BB#1
+	%vreg10<def> = A2_tfrsi 109; IntRegs:%vreg10
+	J2_jump <BB#7>, %PC<imp-def,dead>
+    Successors according to CFG: BB#7(?%)
+
+BB#3: derived from LLVM BB %3
+    Predecessors according to CFG: BB#1
+	%vreg9<def> = A2_tfrsi 108; IntRegs:%vreg9
+	J2_jump <BB#7>, %PC<imp-def,dead>
+    Successors according to CFG: BB#7(?%)
+
+BB#4: derived from LLVM BB %4
+    Predecessors according to CFG: BB#1
+	%vreg8<def> = A2_tfrsi 111; IntRegs:%vreg8
+	J2_jump <BB#7>, %PC<imp-def,dead>
+    Successors according to CFG: BB#7(?%)
+
+BB#5: derived from LLVM BB %5
+    Predecessors according to CFG: BB#1
+	%vreg7<def> = A2_tfrsi 110; IntRegs:%vreg7
+	J2_jump <BB#7>, %PC<imp-def,dead>
+    Successors according to CFG: BB#7(?%)
+
+BB#6: derived from LLVM BB %6
+    Predecessors according to CFG: BB#0
+	ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	%vreg11<def> = A2_tfrsi <ga:@.str>; IntRegs:%vreg11
+	%vreg12<def> = A2_tfrsi <ga:@__FUNCTION__.unsigned_condition>; IntRegs:%vreg12
+	%vreg13<def> = A2_tfrsi 951; IntRegs:%vreg13
+	%R0<def> = COPY %vreg11<kill>; IntRegs:%vreg11
+	%R1<def> = COPY %vreg13<kill>; IntRegs:%vreg13
+	%R2<def> = COPY %vreg12<kill>; IntRegs:%vreg12
+	CALLv3nr <ga:@fancy_abort>, %D0<imp-def,dead>, %D1<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use,kill>, %R1<imp-use,kill>, %R2<imp-use,kill>, ...
+	ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+
+BB#7: derived from LLVM BB %7
+    Predecessors according to CFG: BB#1 BB#5 BB#4 BB#3 BB#2
+	%vreg0<def> = PHI %vreg1, <BB#1>, %vreg7, <BB#5>, %vreg8, <BB#4>, %vreg9, <BB#3>, %vreg10, <BB#2>; IntRegs:%vreg0,%vreg1,%vreg7,%vreg8,%vreg9,%vreg10
+	%R0<def> = COPY %vreg0<kill>; IntRegs:%vreg0
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use,kill>
+
+# End machine code for function unsigned_condition.
+
+# After Eliminate PHI nodes for register allocation:
+# Machine code for function unsigned_condition: Post SSA
+Jump Tables:
+  jt#0:  BB#7 BB#7 BB#3 BB#2 BB#5 BB#4 BB#7 BB#7 BB#7 BB#7
+Function Live Ins: %R0 in %vreg1
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%vreg1<def> = COPY %R0<kill>; IntRegs:%vreg1
+	%vreg3<def> = A2_addi %vreg1, -102; IntRegs:%vreg3,%vreg1
+	%vreg4<def> = C2_cmpgtui %vreg3, 9; PredRegs:%vreg4 IntRegs:%vreg3
+	J2_jumpt %vreg4<kill>, <BB#6>, %PC<imp-def,dead>; PredRegs:%vreg4
+    Successors according to CFG: BB#6(0x00000800 / 0x80000000 = 0.00%) BB#1(0x7ffff800 / 0x80000000 = 100.00%)
+
+BB#1: derived from LLVM BB %0
+    Predecessors according to CFG: BB#0
+	%vreg5<def> = A2_tfrsi <jt#0>; IntRegs:%vreg5
+	%vreg6<def> = L4_loadri_rr %vreg5<kill>, %vreg3<kill>, 2; mem:LD4[JumpTable] IntRegs:%vreg6,%vreg5,%vreg3
+	%vreg14<def> = COPY %vreg1<kill>; IntRegs:%vreg14,%vreg1
+	J2_jumpr %vreg6<kill>, %PC<imp-def,dead>; IntRegs:%vreg6
+    Successors according to CFG: BB#7(0x4ccccccd / 0x80000000 = 60.00%) BB#3(0x0ccccccd / 0x80000000 = 10.00%) BB#2(0x0ccccccd / 0x80000000 = 10.00%) BB#5(0x0ccccccd / 0x80000000 = 10.00%) BB#4(0x0ccccccd / 0x80000000 = 10.00%)
+
+BB#2: derived from LLVM BB %2
+    Predecessors according to CFG: BB#1
+	%vreg10<def> = A2_tfrsi 109; IntRegs:%vreg10
+	%vreg14<def> = COPY %vreg10<kill>; IntRegs:%vreg14,%vreg10
+	J2_jump <BB#7>, %PC<imp-def,dead>
+    Successors according to CFG: BB#7(?%)
+
+BB#3: derived from LLVM BB %3
+    Predecessors according to CFG: BB#1
+	%vreg9<def> = A2_tfrsi 108; IntRegs:%vreg9
+	%vreg14<def> = COPY %vreg9<kill>; IntRegs:%vreg14,%vreg9
+	J2_jump <BB#7>, %PC<imp-def,dead>
+    Successors according to CFG: BB#7(?%)
+
+BB#4: derived from LLVM BB %4
+    Predecessors according to CFG: BB#1
+	%vreg8<def> = A2_tfrsi 111; IntRegs:%vreg8
+	%vreg14<def> = COPY %vreg8<kill>; IntRegs:%vreg14,%vreg8
+	J2_jump <BB#7>, %PC<imp-def,dead>
+    Successors according to CFG: BB#7(?%)
+
+BB#5: derived from LLVM BB %5
+    Predecessors according to CFG: BB#1
+	%vreg7<def> = A2_tfrsi 110; IntRegs:%vreg7
+	%vreg14<def> = COPY %vreg7<kill>; IntRegs:%vreg14,%vreg7
+	J2_jump <BB#7>, %PC<imp-def,dead>
+    Successors according to CFG: BB#7(?%)
+
+BB#6: derived from LLVM BB %6
+    Predecessors according to CFG: BB#0
+	ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	%vreg11<def> = A2_tfrsi <ga:@.str>; IntRegs:%vreg11
+	%vreg12<def> = A2_tfrsi <ga:@__FUNCTION__.unsigned_condition>; IntRegs:%vreg12
+	%vreg13<def> = A2_tfrsi 951; IntRegs:%vreg13
+	%R0<def> = COPY %vreg11<kill>; IntRegs:%vreg11
+	%R1<def> = COPY %vreg13<kill>; IntRegs:%vreg13
+	%R2<def> = COPY %vreg12<kill>; IntRegs:%vreg12
+	CALLv3nr <ga:@fancy_abort>, %D0<imp-def,dead>, %D1<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use,kill>, %R1<imp-use,kill>, %R2<imp-use,kill>, ...
+	ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+
+BB#7: derived from LLVM BB %7
+    Predecessors according to CFG: BB#1 BB#5 BB#4 BB#3 BB#2
+	%vreg0<def> = COPY %vreg14<kill>; IntRegs:%vreg0,%vreg14
+	%R0<def> = COPY %vreg0<kill>; IntRegs:%vreg0
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use,kill>
+
+# End machine code for function unsigned_condition.
+
+# After Two-Address instruction pass:
+# Machine code for function unsigned_condition: Post SSA
+Jump Tables:
+  jt#0:  BB#7 BB#7 BB#3 BB#2 BB#5 BB#4 BB#7 BB#7 BB#7 BB#7
+Function Live Ins: %R0 in %vreg1
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%vreg1<def> = COPY %R0<kill>; IntRegs:%vreg1
+	%vreg3<def> = A2_addi %vreg1, -102; IntRegs:%vreg3,%vreg1
+	%vreg4<def> = C2_cmpgtui %vreg3, 9; PredRegs:%vreg4 IntRegs:%vreg3
+	J2_jumpt %vreg4<kill>, <BB#6>, %PC<imp-def,dead>; PredRegs:%vreg4
+    Successors according to CFG: BB#6(0x00000800 / 0x80000000 = 0.00%) BB#1(0x7ffff800 / 0x80000000 = 100.00%)
+
+BB#1: derived from LLVM BB %0
+    Predecessors according to CFG: BB#0
+	%vreg5<def> = A2_tfrsi <jt#0>; IntRegs:%vreg5
+	%vreg6<def> = L4_loadri_rr %vreg5<kill>, %vreg3<kill>, 2; mem:LD4[JumpTable] IntRegs:%vreg6,%vreg5,%vreg3
+	%vreg14<def> = COPY %vreg1<kill>; IntRegs:%vreg14,%vreg1
+	J2_jumpr %vreg6<kill>, %PC<imp-def,dead>; IntRegs:%vreg6
+    Successors according to CFG: BB#7(0x4ccccccd / 0x80000000 = 60.00%) BB#3(0x0ccccccd / 0x80000000 = 10.00%) BB#2(0x0ccccccd / 0x80000000 = 10.00%) BB#5(0x0ccccccd / 0x80000000 = 10.00%) BB#4(0x0ccccccd / 0x80000000 = 10.00%)
+
+BB#2: derived from LLVM BB %2
+    Predecessors according to CFG: BB#1
+	%vreg10<def> = A2_tfrsi 109; IntRegs:%vreg10
+	%vreg14<def> = COPY %vreg10<kill>; IntRegs:%vreg14,%vreg10
+	J2_jump <BB#7>, %PC<imp-def,dead>
+    Successors according to CFG: BB#7(?%)
+
+BB#3: derived from LLVM BB %3
+    Predecessors according to CFG: BB#1
+	%vreg9<def> = A2_tfrsi 108; IntRegs:%vreg9
+	%vreg14<def> = COPY %vreg9<kill>; IntRegs:%vreg14,%vreg9
+	J2_jump <BB#7>, %PC<imp-def,dead>
+    Successors according to CFG: BB#7(?%)
+
+BB#4: derived from LLVM BB %4
+    Predecessors according to CFG: BB#1
+	%vreg8<def> = A2_tfrsi 111; IntRegs:%vreg8
+	%vreg14<def> = COPY %vreg8<kill>; IntRegs:%vreg14,%vreg8
+	J2_jump <BB#7>, %PC<imp-def,dead>
+    Successors according to CFG: BB#7(?%)
+
+BB#5: derived from LLVM BB %5
+    Predecessors according to CFG: BB#1
+	%vreg7<def> = A2_tfrsi 110; IntRegs:%vreg7
+	%vreg14<def> = COPY %vreg7<kill>; IntRegs:%vreg14,%vreg7
+	J2_jump <BB#7>, %PC<imp-def,dead>
+    Successors according to CFG: BB#7(?%)
+
+BB#6: derived from LLVM BB %6
+    Predecessors according to CFG: BB#0
+	ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	%vreg11<def> = A2_tfrsi <ga:@.str>; IntRegs:%vreg11
+	%vreg12<def> = A2_tfrsi <ga:@__FUNCTION__.unsigned_condition>; IntRegs:%vreg12
+	%vreg13<def> = A2_tfrsi 951; IntRegs:%vreg13
+	%R0<def> = COPY %vreg11<kill>; IntRegs:%vreg11
+	%R1<def> = COPY %vreg13<kill>; IntRegs:%vreg13
+	%R2<def> = COPY %vreg12<kill>; IntRegs:%vreg12
+	CALLv3nr <ga:@fancy_abort>, %D0<imp-def,dead>, %D1<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use,kill>, %R1<imp-use,kill>, %R2<imp-use,kill>, ...
+	ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+
+BB#7: derived from LLVM BB %7
+    Predecessors according to CFG: BB#1 BB#5 BB#4 BB#3 BB#2
+	%vreg0<def> = COPY %vreg14<kill>; IntRegs:%vreg0,%vreg14
+	%R0<def> = COPY %vreg0<kill>; IntRegs:%vreg0
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use,kill>
+
+# End machine code for function unsigned_condition.
+
+# After Simple Register Coalescing:
+# Machine code for function unsigned_condition: Post SSA
+Jump Tables:
+  jt#0:  BB#7 BB#7 BB#3 BB#2 BB#5 BB#4 BB#7 BB#7 BB#7 BB#7
+Function Live Ins: %R0 in %vreg1
+
+0B	BB#0: derived from LLVM BB %0
+	    Live Ins: %R0
+16B		%vreg14<def> = COPY %R0; IntRegs:%vreg14
+32B		%vreg3<def> = A2_addi %vreg14, -102; IntRegs:%vreg3,%vreg14
+48B		%vreg4<def> = C2_cmpgtui %vreg3, 9; PredRegs:%vreg4 IntRegs:%vreg3
+64B		J2_jumpt %vreg4, <BB#6>, %PC<imp-def,dead>; PredRegs:%vreg4
+	    Successors according to CFG: BB#6(0x00000800 / 0x80000000 = 0.00%) BB#1(0x7ffff800 / 0x80000000 = 100.00%)
+
+80B	BB#1: derived from LLVM BB %0
+	    Predecessors according to CFG: BB#0
+96B		%vreg5<def> = A2_tfrsi <jt#0>; IntRegs:%vreg5
+112B		%vreg6<def> = L4_loadri_rr %vreg5, %vreg3, 2; mem:LD4[JumpTable] IntRegs:%vreg6,%vreg5,%vreg3
+144B		J2_jumpr %vreg6, %PC<imp-def,dead>; IntRegs:%vreg6
+	    Successors according to CFG: BB#7(0x4ccccccd / 0x80000000 = 60.00%) BB#3(0x0ccccccd / 0x80000000 = 10.00%) BB#2(0x0ccccccd / 0x80000000 = 10.00%) BB#5(0x0ccccccd / 0x80000000 = 10.00%) BB#4(0x0ccccccd / 0x80000000 = 10.00%)
+
+160B	BB#2: derived from LLVM BB %2
+	    Predecessors according to CFG: BB#1
+176B		%vreg14<def> = A2_tfrsi 109; IntRegs:%vreg14
+208B		J2_jump <BB#7>, %PC<imp-def,dead>
+	    Successors according to CFG: BB#7(?%)
+
+224B	BB#3: derived from LLVM BB %3
+	    Predecessors according to CFG: BB#1
+240B		%vreg14<def> = A2_tfrsi 108; IntRegs:%vreg14
+272B		J2_jump <BB#7>, %PC<imp-def,dead>
+	    Successors according to CFG: BB#7(?%)
+
+288B	BB#4: derived from LLVM BB %4
+	    Predecessors according to CFG: BB#1
+304B		%vreg14<def> = A2_tfrsi 111; IntRegs:%vreg14
+336B		J2_jump <BB#7>, %PC<imp-def,dead>
+	    Successors according to CFG: BB#7(?%)
+
+352B	BB#5: derived from LLVM BB %5
+	    Predecessors according to CFG: BB#1
+368B		%vreg14<def> = A2_tfrsi 110; IntRegs:%vreg14
+400B		J2_jump <BB#7>, %PC<imp-def,dead>
+	    Successors according to CFG: BB#7(?%)
+
+416B	BB#6: derived from LLVM BB %6
+	    Predecessors according to CFG: BB#0
+432B		ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+496B		%R0<def> = A2_tfrsi <ga:@.str>
+512B		%R1<def> = A2_tfrsi 951
+528B		%R2<def> = A2_tfrsi <ga:@__FUNCTION__.unsigned_condition>
+544B		CALLv3nr <ga:@fancy_abort>, %D0<imp-def,dead>, %D1<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use>, %R1<imp-use,kill>, %R2<imp-use,kill>, ...
+560B		ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+
+576B	BB#7: derived from LLVM BB %7
+	    Predecessors according to CFG: BB#1 BB#5 BB#4 BB#3 BB#2
+608B		%R0<def> = COPY %vreg14; IntRegs:%vreg14
+624B		JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function unsigned_condition.
+
+# After Hexagon Expand Condsets:
+# Machine code for function unsigned_condition: Post SSA
+Jump Tables:
+  jt#0:  BB#7 BB#7 BB#3 BB#2 BB#5 BB#4 BB#7 BB#7 BB#7 BB#7
+Function Live Ins: %R0 in %vreg1
+
+0B	BB#0: derived from LLVM BB %0
+	    Live Ins: %R0
+16B		%vreg14<def> = COPY %R0; IntRegs:%vreg14
+32B		%vreg3<def> = A2_addi %vreg14, -102; IntRegs:%vreg3,%vreg14
+48B		%vreg4<def> = C2_cmpgtui %vreg3, 9; PredRegs:%vreg4 IntRegs:%vreg3
+64B		J2_jumpt %vreg4, <BB#6>, %PC<imp-def,dead>; PredRegs:%vreg4
+	    Successors according to CFG: BB#6(0x00000800 / 0x80000000 = 0.00%) BB#1(0x7ffff800 / 0x80000000 = 100.00%)
+
+80B	BB#1: derived from LLVM BB %0
+	    Predecessors according to CFG: BB#0
+96B		%vreg5<def> = A2_tfrsi <jt#0>; IntRegs:%vreg5
+112B		%vreg6<def> = L4_loadri_rr %vreg5, %vreg3, 2; mem:LD4[JumpTable] IntRegs:%vreg6,%vreg5,%vreg3
+144B		J2_jumpr %vreg6, %PC<imp-def,dead>; IntRegs:%vreg6
+	    Successors according to CFG: BB#7(0x4ccccccd / 0x80000000 = 60.00%) BB#3(0x0ccccccd / 0x80000000 = 10.00%) BB#2(0x0ccccccd / 0x80000000 = 10.00%) BB#5(0x0ccccccd / 0x80000000 = 10.00%) BB#4(0x0ccccccd / 0x80000000 = 10.00%)
+
+160B	BB#2: derived from LLVM BB %2
+	    Predecessors according to CFG: BB#1
+176B		%vreg14<def> = A2_tfrsi 109; IntRegs:%vreg14
+208B		J2_jump <BB#7>, %PC<imp-def,dead>
+	    Successors according to CFG: BB#7(?%)
+
+224B	BB#3: derived from LLVM BB %3
+	    Predecessors according to CFG: BB#1
+240B		%vreg14<def> = A2_tfrsi 108; IntRegs:%vreg14
+272B		J2_jump <BB#7>, %PC<imp-def,dead>
+	    Successors according to CFG: BB#7(?%)
+
+288B	BB#4: derived from LLVM BB %4
+	    Predecessors according to CFG: BB#1
+304B		%vreg14<def> = A2_tfrsi 111; IntRegs:%vreg14
+336B		J2_jump <BB#7>, %PC<imp-def,dead>
+	    Successors according to CFG: BB#7(?%)
+
+352B	BB#5: derived from LLVM BB %5
+	    Predecessors according to CFG: BB#1
+368B		%vreg14<def> = A2_tfrsi 110; IntRegs:%vreg14
+400B		J2_jump <BB#7>, %PC<imp-def,dead>
+	    Successors according to CFG: BB#7(?%)
+
+416B	BB#6: derived from LLVM BB %6
+	    Predecessors according to CFG: BB#0
+432B		ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+496B		%R0<def> = A2_tfrsi <ga:@.str>
+512B		%R1<def> = A2_tfrsi 951
+528B		%R2<def> = A2_tfrsi <ga:@__FUNCTION__.unsigned_condition>
+544B		CALLv3nr <ga:@fancy_abort>, %D0<imp-def,dead>, %D1<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use>, %R1<imp-use,kill>, %R2<imp-use,kill>, ...
+560B		ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+
+576B	BB#7: derived from LLVM BB %7
+	    Predecessors according to CFG: BB#1 BB#5 BB#4 BB#3 BB#2
+608B		%R0<def> = COPY %vreg14; IntRegs:%vreg14
+624B		JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function unsigned_condition.
+
+# After Machine Instruction Scheduler:
+# Machine code for function unsigned_condition: Post SSA
+Jump Tables:
+  jt#0:  BB#7 BB#7 BB#3 BB#2 BB#5 BB#4 BB#7 BB#7 BB#7 BB#7
+Function Live Ins: %R0 in %vreg1
+
+0B	BB#0: derived from LLVM BB %0
+	    Live Ins: %R0
+16B		%vreg14<def> = COPY %R0; IntRegs:%vreg14
+32B		%vreg3<def> = A2_addi %vreg14, -102; IntRegs:%vreg3,%vreg14
+48B		%vreg4<def> = C2_cmpgtui %vreg3, 9; PredRegs:%vreg4 IntRegs:%vreg3
+64B		J2_jumpt %vreg4, <BB#6>, %PC<imp-def,dead>; PredRegs:%vreg4
+	    Successors according to CFG: BB#6(0x00000800 / 0x80000000 = 0.00%) BB#1(0x7ffff800 / 0x80000000 = 100.00%)
+
+80B	BB#1: derived from LLVM BB %0
+	    Predecessors according to CFG: BB#0
+96B		%vreg5<def> = A2_tfrsi <jt#0>; IntRegs:%vreg5
+112B		%vreg6<def> = L4_loadri_rr %vreg5, %vreg3, 2; mem:LD4[JumpTable] IntRegs:%vreg6,%vreg5,%vreg3
+144B		J2_jumpr %vreg6, %PC<imp-def,dead>; IntRegs:%vreg6
+	    Successors according to CFG: BB#7(0x4ccccccd / 0x80000000 = 60.00%) BB#3(0x0ccccccd / 0x80000000 = 10.00%) BB#2(0x0ccccccd / 0x80000000 = 10.00%) BB#5(0x0ccccccd / 0x80000000 = 10.00%) BB#4(0x0ccccccd / 0x80000000 = 10.00%)
+
+160B	BB#2: derived from LLVM BB %2
+	    Predecessors according to CFG: BB#1
+176B		%vreg14<def> = A2_tfrsi 109; IntRegs:%vreg14
+208B		J2_jump <BB#7>, %PC<imp-def,dead>
+	    Successors according to CFG: BB#7(?%)
+
+224B	BB#3: derived from LLVM BB %3
+	    Predecessors according to CFG: BB#1
+240B		%vreg14<def> = A2_tfrsi 108; IntRegs:%vreg14
+272B		J2_jump <BB#7>, %PC<imp-def,dead>
+	    Successors according to CFG: BB#7(?%)
+
+288B	BB#4: derived from LLVM BB %4
+	    Predecessors according to CFG: BB#1
+304B		%vreg14<def> = A2_tfrsi 111; IntRegs:%vreg14
+336B		J2_jump <BB#7>, %PC<imp-def,dead>
+	    Successors according to CFG: BB#7(?%)
+
+352B	BB#5: derived from LLVM BB %5
+	    Predecessors according to CFG: BB#1
+368B		%vreg14<def> = A2_tfrsi 110; IntRegs:%vreg14
+400B		J2_jump <BB#7>, %PC<imp-def,dead>
+	    Successors according to CFG: BB#7(?%)
+
+416B	BB#6: derived from LLVM BB %6
+	    Predecessors according to CFG: BB#0
+424B		%R0<def> = A2_tfrsi <ga:@.str>
+428B		%R2<def> = A2_tfrsi <ga:@__FUNCTION__.unsigned_condition>
+436B		%R1<def> = A2_tfrsi 951
+444B		ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+544B		CALLv3nr <ga:@fancy_abort>, %D0<imp-def,dead>, %D1<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, ...
+560B		ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+
+576B	BB#7: derived from LLVM BB %7
+	    Predecessors according to CFG: BB#1 BB#5 BB#4 BB#3 BB#2
+608B		%R0<def> = COPY %vreg14; IntRegs:%vreg14
+624B		JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function unsigned_condition.
+
+# After Greedy Register Allocator:
+# Machine code for function unsigned_condition: Post SSA
+Jump Tables:
+  jt#0:  BB#7 BB#7 BB#3 BB#2 BB#5 BB#4 BB#7 BB#7 BB#7 BB#7
+Function Live Ins: %R0 in %vreg1
+
+0B	BB#0: derived from LLVM BB %0
+	    Live Ins: %R0
+16B		%vreg14<def> = COPY %R0; IntRegs:%vreg14
+32B		%vreg3<def> = A2_addi %vreg14, -102; IntRegs:%vreg3,%vreg14
+48B		%vreg4<def> = C2_cmpgtui %vreg3, 9; PredRegs:%vreg4 IntRegs:%vreg3
+64B		J2_jumpt %vreg4, <BB#6>, %PC<imp-def,dead>; PredRegs:%vreg4
+	    Successors according to CFG: BB#6(0x00000800 / 0x80000000 = 0.00%) BB#1(0x7ffff800 / 0x80000000 = 100.00%)
+
+80B	BB#1: derived from LLVM BB %0
+	    Predecessors according to CFG: BB#0
+96B		%vreg5<def> = A2_tfrsi <jt#0>; IntRegs:%vreg5
+112B		%vreg6<def> = L4_loadri_rr %vreg5, %vreg3, 2; mem:LD4[JumpTable] IntRegs:%vreg6,%vreg5,%vreg3
+144B		J2_jumpr %vreg6, %PC<imp-def,dead>; IntRegs:%vreg6
+	    Successors according to CFG: BB#7(0x4ccccccd / 0x80000000 = 60.00%) BB#3(0x0ccccccd / 0x80000000 = 10.00%) BB#2(0x0ccccccd / 0x80000000 = 10.00%) BB#5(0x0ccccccd / 0x80000000 = 10.00%) BB#4(0x0ccccccd / 0x80000000 = 10.00%)
+
+160B	BB#2: derived from LLVM BB %2
+	    Predecessors according to CFG: BB#1
+176B		%vreg14<def> = A2_tfrsi 109; IntRegs:%vreg14
+208B		J2_jump <BB#7>, %PC<imp-def,dead>
+	    Successors according to CFG: BB#7(?%)
+
+224B	BB#3: derived from LLVM BB %3
+	    Predecessors according to CFG: BB#1
+240B		%vreg14<def> = A2_tfrsi 108; IntRegs:%vreg14
+272B		J2_jump <BB#7>, %PC<imp-def,dead>
+	    Successors according to CFG: BB#7(?%)
+
+288B	BB#4: derived from LLVM BB %4
+	    Predecessors according to CFG: BB#1
+304B		%vreg14<def> = A2_tfrsi 111; IntRegs:%vreg14
+336B		J2_jump <BB#7>, %PC<imp-def,dead>
+	    Successors according to CFG: BB#7(?%)
+
+352B	BB#5: derived from LLVM BB %5
+	    Predecessors according to CFG: BB#1
+368B		%vreg14<def> = A2_tfrsi 110; IntRegs:%vreg14
+400B		J2_jump <BB#7>, %PC<imp-def,dead>
+	    Successors according to CFG: BB#7(?%)
+
+416B	BB#6: derived from LLVM BB %6
+	    Predecessors according to CFG: BB#0
+424B		%R0<def> = A2_tfrsi <ga:@.str>
+428B		%R2<def> = A2_tfrsi <ga:@__FUNCTION__.unsigned_condition>
+436B		%R1<def> = A2_tfrsi 951
+444B		ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+544B		CALLv3nr <ga:@fancy_abort>, %D0<imp-def,dead>, %D1<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, ...
+560B		ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+
+576B	BB#7: derived from LLVM BB %7
+	    Predecessors according to CFG: BB#1 BB#5 BB#4 BB#3 BB#2
+608B		%R0<def> = COPY %vreg14; IntRegs:%vreg14
+624B		JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function unsigned_condition.
+
+# After Virtual Register Rewriter:
+# Machine code for function unsigned_condition: Post SSA
+Jump Tables:
+  jt#0:  BB#7 BB#7 BB#3 BB#2 BB#5 BB#4 BB#7 BB#7 BB#7 BB#7
+Function Live Ins: %R0
+
+0B	BB#0: derived from LLVM BB %0
+	    Live Ins: %R0
+32B		%R1<def> = A2_addi %R0, -102
+48B		%P0<def> = C2_cmpgtui %R1, 9
+64B		J2_jumpt %P0<kill>, <BB#6>, %PC<imp-def,dead>
+	    Successors according to CFG: BB#6(0x00000800 / 0x80000000 = 0.00%) BB#1(0x7ffff800 / 0x80000000 = 100.00%)
+
+80B	BB#1: derived from LLVM BB %0
+	    Live Ins: %R0 %R1
+	    Predecessors according to CFG: BB#0
+96B		%R2<def> = A2_tfrsi <jt#0>
+112B		%R1<def> = L4_loadri_rr %R2<kill>, %R1<kill>, 2; mem:LD4[JumpTable]
+144B		J2_jumpr %R1<kill>, %PC<imp-def,dead>
+	    Successors according to CFG: BB#7(0x4ccccccd / 0x80000000 = 60.00%) BB#3(0x0ccccccd / 0x80000000 = 10.00%) BB#2(0x0ccccccd / 0x80000000 = 10.00%) BB#5(0x0ccccccd / 0x80000000 = 10.00%) BB#4(0x0ccccccd / 0x80000000 = 10.00%)
+
+160B	BB#2: derived from LLVM BB %2
+	    Predecessors according to CFG: BB#1
+176B		%R0<def> = A2_tfrsi 109
+208B		J2_jump <BB#7>, %PC<imp-def,dead>
+	    Successors according to CFG: BB#7(?%)
+
+224B	BB#3: derived from LLVM BB %3
+	    Predecessors according to CFG: BB#1
+240B		%R0<def> = A2_tfrsi 108
+272B		J2_jump <BB#7>, %PC<imp-def,dead>
+	    Successors according to CFG: BB#7(?%)
+
+288B	BB#4: derived from LLVM BB %4
+	    Predecessors according to CFG: BB#1
+304B		%R0<def> = A2_tfrsi 111
+336B		J2_jump <BB#7>, %PC<imp-def,dead>
+	    Successors according to CFG: BB#7(?%)
+
+352B	BB#5: derived from LLVM BB %5
+	    Predecessors according to CFG: BB#1
+368B		%R0<def> = A2_tfrsi 110
+400B		J2_jump <BB#7>, %PC<imp-def,dead>
+	    Successors according to CFG: BB#7(?%)
+
+416B	BB#6: derived from LLVM BB %6
+	    Predecessors according to CFG: BB#0
+424B		%R0<def> = A2_tfrsi <ga:@.str>
+428B		%R2<def> = A2_tfrsi <ga:@__FUNCTION__.unsigned_condition>
+436B		%R1<def> = A2_tfrsi 951
+444B		ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+544B		CALLv3nr <ga:@fancy_abort>, %D0<imp-def,dead>, %D1<imp-def,dead>, %R31<imp-def,dead>, %P0<imp-def,dead>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, ...
+560B		ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+
+576B	BB#7: derived from LLVM BB %7
+	    Live Ins: %R0
+	    Predecessors according to CFG: BB#1 BB#5 BB#4 BB#3 BB#2
+624B		JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function unsigned_condition.
+
+# After Stack Slot Coloring:
+# Machine code for function unsigned_condition: Post SSA
+Jump Tables:
+  jt#0:  BB#7 BB#7 BB#3 BB#2 BB#5 BB#4 BB#7 BB#7 BB#7 BB#7
+Function Live Ins: %R0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%R1<def> = A2_addi %R0, -102
+	%P0<def> = C2_cmpgtui %R1, 9
+	J2_jumpt %P0<kill>, <BB#6>, %PC<imp-def,dead>
+    Successors according to CFG: BB#6(0x00000800 / 0x80000000 = 0.00%) BB#1(0x7ffff800 / 0x80000000 = 100.00%)
+
+BB#1: derived from LLVM BB %0
+    Live Ins: %R0 %R1
+    Predecessors according to CFG: BB#0
+	%R2<def> = A2_tfrsi <jt#0>
+	%R1<def> = L4_loadri_rr %R2<kill>, %R1<kill>, 2; mem:LD4[JumpTable]
+	J2_jumpr %R1<kill>, %PC<imp-def,dead>
+    Successors according to CFG: BB#7(0x4ccccccd / 0x80000000 = 60.00%) BB#3(0x0ccccccd / 0x80000000 = 10.00%) BB#2(0x0ccccccd / 0x80000000 = 10.00%) BB#5(0x0ccccccd / 0x80000000 = 10.00%) BB#4(0x0ccccccd / 0x80000000 = 10.00%)
+
+BB#2: derived from LLVM BB %2
+    Predecessors according to CFG: BB#1
+	%R0<def> = A2_tfrsi 109
+	J2_jump <BB#7>, %PC<imp-def,dead>
+    Successors according to CFG: BB#7(?%)
+
+BB#3: derived from LLVM BB %3
+    Predecessors according to CFG: BB#1
+	%R0<def> = A2_tfrsi 108
+	J2_jump <BB#7>, %PC<imp-def,dead>
+    Successors according to CFG: BB#7(?%)
+
+BB#4: derived from LLVM BB %4
+    Predecessors according to CFG: BB#1
+	%R0<def> = A2_tfrsi 111
+	J2_jump <BB#7>, %PC<imp-def,dead>
+    Successors according to CFG: BB#7(?%)
+
+BB#5: derived from LLVM BB %5
+    Predecessors according to CFG: BB#1
+	%R0<def> = A2_tfrsi 110
+	J2_jump <BB#7>, %PC<imp-def,dead>
+    Successors according to CFG: BB#7(?%)
+
+BB#6: derived from LLVM BB %6
+    Predecessors according to CFG: BB#0
+	%R0<def> = A2_tfrsi <ga:@.str>
+	%R2<def> = A2_tfrsi <ga:@__FUNCTION__.unsigned_condition>
+	%R1<def> = A2_tfrsi 951
+	ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	CALLv3nr <ga:@fancy_abort>, %D0<imp-def,dead>, %D1<imp-def,dead>, %R31<imp-def,dead>, %P0<imp-def,dead>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, ...
+	ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+
+BB#7: derived from LLVM BB %7
+    Live Ins: %R0
+    Predecessors according to CFG: BB#1 BB#5 BB#4 BB#3 BB#2
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function unsigned_condition.
+
+# After Machine Loop Invariant Code Motion:
+# Machine code for function unsigned_condition: Post SSA
+Jump Tables:
+  jt#0:  BB#7 BB#7 BB#3 BB#2 BB#5 BB#4 BB#7 BB#7 BB#7 BB#7
+Function Live Ins: %R0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%R1<def> = A2_addi %R0, -102
+	%P0<def> = C2_cmpgtui %R1, 9
+	J2_jumpt %P0<kill>, <BB#6>, %PC<imp-def,dead>
+    Successors according to CFG: BB#6(0x00000800 / 0x80000000 = 0.00%) BB#1(0x7ffff800 / 0x80000000 = 100.00%)
+
+BB#1: derived from LLVM BB %0
+    Live Ins: %R0 %R1
+    Predecessors according to CFG: BB#0
+	%R2<def> = A2_tfrsi <jt#0>
+	%R1<def> = L4_loadri_rr %R2<kill>, %R1<kill>, 2; mem:LD4[JumpTable]
+	J2_jumpr %R1<kill>, %PC<imp-def,dead>
+    Successors according to CFG: BB#7(0x4ccccccd / 0x80000000 = 60.00%) BB#3(0x0ccccccd / 0x80000000 = 10.00%) BB#2(0x0ccccccd / 0x80000000 = 10.00%) BB#5(0x0ccccccd / 0x80000000 = 10.00%) BB#4(0x0ccccccd / 0x80000000 = 10.00%)
+
+BB#2: derived from LLVM BB %2
+    Predecessors according to CFG: BB#1
+	%R0<def> = A2_tfrsi 109
+	J2_jump <BB#7>, %PC<imp-def,dead>
+    Successors according to CFG: BB#7(?%)
+
+BB#3: derived from LLVM BB %3
+    Predecessors according to CFG: BB#1
+	%R0<def> = A2_tfrsi 108
+	J2_jump <BB#7>, %PC<imp-def,dead>
+    Successors according to CFG: BB#7(?%)
+
+BB#4: derived from LLVM BB %4
+    Predecessors according to CFG: BB#1
+	%R0<def> = A2_tfrsi 111
+	J2_jump <BB#7>, %PC<imp-def,dead>
+    Successors according to CFG: BB#7(?%)
+
+BB#5: derived from LLVM BB %5
+    Predecessors according to CFG: BB#1
+	%R0<def> = A2_tfrsi 110
+	J2_jump <BB#7>, %PC<imp-def,dead>
+    Successors according to CFG: BB#7(?%)
+
+BB#6: derived from LLVM BB %6
+    Predecessors according to CFG: BB#0
+	%R0<def> = A2_tfrsi <ga:@.str>
+	%R2<def> = A2_tfrsi <ga:@__FUNCTION__.unsigned_condition>
+	%R1<def> = A2_tfrsi 951
+	ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	CALLv3nr <ga:@fancy_abort>, %D0<imp-def,dead>, %D1<imp-def,dead>, %R31<imp-def,dead>, %P0<imp-def,dead>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, ...
+	ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+
+BB#7: derived from LLVM BB %7
+    Live Ins: %R0
+    Predecessors according to CFG: BB#1 BB#5 BB#4 BB#3 BB#2
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function unsigned_condition.
+
+# After Hexagon RDF optimizations:
+# Machine code for function unsigned_condition: Post SSA
+Jump Tables:
+  jt#0:  BB#7 BB#7 BB#3 BB#2 BB#5 BB#4 BB#7 BB#7 BB#7 BB#7
+Function Live Ins: %R0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%R1<def> = A2_addi %R0, -102
+	%P0<def> = C2_cmpgtui %R1, 9
+	J2_jumpt %P0<kill>, <BB#6>, %PC<imp-def,dead>
+    Successors according to CFG: BB#6(0x00000800 / 0x80000000 = 0.00%) BB#1(0x7ffff800 / 0x80000000 = 100.00%)
+
+BB#1: derived from LLVM BB %0
+    Live Ins: %R0 %R1
+    Predecessors according to CFG: BB#0
+	%R2<def> = A2_tfrsi <jt#0>
+	%R1<def> = L4_loadri_rr %R2<kill>, %R1<kill>, 2; mem:LD4[JumpTable]
+	J2_jumpr %R1<kill>, %PC<imp-def,dead>
+    Successors according to CFG: BB#7(0x4ccccccd / 0x80000000 = 60.00%) BB#3(0x0ccccccd / 0x80000000 = 10.00%) BB#2(0x0ccccccd / 0x80000000 = 10.00%) BB#5(0x0ccccccd / 0x80000000 = 10.00%) BB#4(0x0ccccccd / 0x80000000 = 10.00%)
+
+BB#2: derived from LLVM BB %2
+    Predecessors according to CFG: BB#1
+	%R0<def> = A2_tfrsi 109
+	J2_jump <BB#7>, %PC<imp-def,dead>
+    Successors according to CFG: BB#7(?%)
+
+BB#3: derived from LLVM BB %3
+    Predecessors according to CFG: BB#1
+	%R0<def> = A2_tfrsi 108
+	J2_jump <BB#7>, %PC<imp-def,dead>
+    Successors according to CFG: BB#7(?%)
+
+BB#4: derived from LLVM BB %4
+    Predecessors according to CFG: BB#1
+	%R0<def> = A2_tfrsi 111
+	J2_jump <BB#7>, %PC<imp-def,dead>
+    Successors according to CFG: BB#7(?%)
+
+BB#5: derived from LLVM BB %5
+    Predecessors according to CFG: BB#1
+	%R0<def> = A2_tfrsi 110
+	J2_jump <BB#7>, %PC<imp-def,dead>
+    Successors according to CFG: BB#7(?%)
+
+BB#6: derived from LLVM BB %6
+    Predecessors according to CFG: BB#0
+	%R0<def> = A2_tfrsi <ga:@.str>
+	%R2<def> = A2_tfrsi <ga:@__FUNCTION__.unsigned_condition>
+	%R1<def> = A2_tfrsi 951
+	ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use,kill>, %R30<imp-use,kill>, %R29<imp-use,kill>
+	CALLv3nr <ga:@fancy_abort>, %D0<imp-def,dead>, %D1<imp-def,dead>, %R31<imp-def,dead>, %P0<imp-def,dead>, %R0<imp-use,kill>, %R1<imp-use,kill>, %R2<imp-use,kill>, ...
+	ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use,kill>
+
+BB#7: derived from LLVM BB %7
+    Live Ins: %R0
+    Predecessors according to CFG: BB#1 BB#5 BB#4 BB#3 BB#2
+	JMPret %R31<kill>, %PC<imp-def,dead>, %R0<imp-use,kill>
+
+# End machine code for function unsigned_condition.
+
+# After Shrink Wrapping analysis:
+# Machine code for function unsigned_condition: Post SSA
+Jump Tables:
+  jt#0:  BB#7 BB#7 BB#3 BB#2 BB#5 BB#4 BB#7 BB#7 BB#7 BB#7
+Function Live Ins: %R0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%R1<def> = A2_addi %R0, -102
+	%P0<def> = C2_cmpgtui %R1, 9
+	J2_jumpt %P0<kill>, <BB#6>, %PC<imp-def,dead>
+    Successors according to CFG: BB#6(0x00000800 / 0x80000000 = 0.00%) BB#1(0x7ffff800 / 0x80000000 = 100.00%)
+
+BB#1: derived from LLVM BB %0
+    Live Ins: %R0 %R1
+    Predecessors according to CFG: BB#0
+	%R2<def> = A2_tfrsi <jt#0>
+	%R1<def> = L4_loadri_rr %R2<kill>, %R1<kill>, 2; mem:LD4[JumpTable]
+	J2_jumpr %R1<kill>, %PC<imp-def,dead>
+    Successors according to CFG: BB#7(0x4ccccccd / 0x80000000 = 60.00%) BB#3(0x0ccccccd / 0x80000000 = 10.00%) BB#2(0x0ccccccd / 0x80000000 = 10.00%) BB#5(0x0ccccccd / 0x80000000 = 10.00%) BB#4(0x0ccccccd / 0x80000000 = 10.00%)
+
+BB#2: derived from LLVM BB %2
+    Predecessors according to CFG: BB#1
+	%R0<def> = A2_tfrsi 109
+	J2_jump <BB#7>, %PC<imp-def,dead>
+    Successors according to CFG: BB#7(?%)
+
+BB#3: derived from LLVM BB %3
+    Predecessors according to CFG: BB#1
+	%R0<def> = A2_tfrsi 108
+	J2_jump <BB#7>, %PC<imp-def,dead>
+    Successors according to CFG: BB#7(?%)
+
+BB#4: derived from LLVM BB %4
+    Predecessors according to CFG: BB#1
+	%R0<def> = A2_tfrsi 111
+	J2_jump <BB#7>, %PC<imp-def,dead>
+    Successors according to CFG: BB#7(?%)
+
+BB#5: derived from LLVM BB %5
+    Predecessors according to CFG: BB#1
+	%R0<def> = A2_tfrsi 110
+	J2_jump <BB#7>, %PC<imp-def,dead>
+    Successors according to CFG: BB#7(?%)
+
+BB#6: derived from LLVM BB %6
+    Predecessors according to CFG: BB#0
+	%R0<def> = A2_tfrsi <ga:@.str>
+	%R2<def> = A2_tfrsi <ga:@__FUNCTION__.unsigned_condition>
+	%R1<def> = A2_tfrsi 951
+	ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use,kill>, %R30<imp-use,kill>, %R29<imp-use,kill>
+	CALLv3nr <ga:@fancy_abort>, %D0<imp-def,dead>, %D1<imp-def,dead>, %R31<imp-def,dead>, %P0<imp-def,dead>, %R0<imp-use,kill>, %R1<imp-use,kill>, %R2<imp-use,kill>, ...
+	ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use,kill>
+
+BB#7: derived from LLVM BB %7
+    Live Ins: %R0
+    Predecessors according to CFG: BB#1 BB#5 BB#4 BB#3 BB#2
+	JMPret %R31<kill>, %PC<imp-def,dead>, %R0<imp-use,kill>
+
+# End machine code for function unsigned_condition.
+
+# After Prologue/Epilogue Insertion & Frame Finalization:
+# Machine code for function unsigned_condition: Post SSA
+Jump Tables:
+  jt#0:  BB#7 BB#7 BB#3 BB#2 BB#5 BB#4 BB#7 BB#7 BB#7 BB#7
+Function Live Ins: %R0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%R1<def> = A2_addi %R0, -102
+	%P0<def> = C2_cmpgtui %R1, 9
+	J2_jumpt %P0<kill>, <BB#6>, %PC<imp-def,dead>
+    Successors according to CFG: BB#6(0x00000800 / 0x80000000 = 0.00%) BB#1(0x7ffff800 / 0x80000000 = 100.00%)
+
+BB#1: derived from LLVM BB %0
+    Live Ins: %R0 %R1
+    Predecessors according to CFG: BB#0
+	%R2<def> = A2_tfrsi <jt#0>
+	%R1<def> = L4_loadri_rr %R2<kill>, %R1<kill>, 2; mem:LD4[JumpTable]
+	J2_jumpr %R1<kill>, %PC<imp-def,dead>
+    Successors according to CFG: BB#7(0x4ccccccd / 0x80000000 = 60.00%) BB#3(0x0ccccccd / 0x80000000 = 10.00%) BB#2(0x0ccccccd / 0x80000000 = 10.00%) BB#5(0x0ccccccd / 0x80000000 = 10.00%) BB#4(0x0ccccccd / 0x80000000 = 10.00%)
+
+BB#2: derived from LLVM BB %2
+    Predecessors according to CFG: BB#1
+	%R0<def> = A2_tfrsi 109
+	J2_jump <BB#7>, %PC<imp-def,dead>
+    Successors according to CFG: BB#7(?%)
+
+BB#3: derived from LLVM BB %3
+    Predecessors according to CFG: BB#1
+	%R0<def> = A2_tfrsi 108
+	J2_jump <BB#7>, %PC<imp-def,dead>
+    Successors according to CFG: BB#7(?%)
+
+BB#4: derived from LLVM BB %4
+    Predecessors according to CFG: BB#1
+	%R0<def> = A2_tfrsi 111
+	J2_jump <BB#7>, %PC<imp-def,dead>
+    Successors according to CFG: BB#7(?%)
+
+BB#5: derived from LLVM BB %5
+    Predecessors according to CFG: BB#1
+	%R0<def> = A2_tfrsi 110
+	J2_jump <BB#7>, %PC<imp-def,dead>
+    Successors according to CFG: BB#7(?%)
+
+BB#6: derived from LLVM BB %6
+    Predecessors according to CFG: BB#0
+	S2_allocframe 0, %R29<imp-def>, %R30<imp-def>, %R29<imp-use>, %R31<imp-use>, %R30<imp-use>; mem:ST4[<unknown>]
+	%R0<def> = A2_tfrsi <ga:@.str>
+	%R2<def> = A2_tfrsi <ga:@__FUNCTION__.unsigned_condition>
+	%R1<def> = A2_tfrsi 951
+	CALLv3nr <ga:@fancy_abort>, %D0<imp-def,dead>, %D1<imp-def,dead>, %R31<imp-def,dead>, %P0<imp-def,dead>, %R0<imp-use,kill>, %R1<imp-use,kill>, %R2<imp-use,kill>, ...
+	L2_deallocframe %R29<imp-def>, %R30<imp-def>, %R31<imp-def>, %R30<imp-use>
+
+BB#7: derived from LLVM BB %7
+    Live Ins: %R0
+    Predecessors according to CFG: BB#1 BB#5 BB#4 BB#3 BB#2
+	JMPret %R31<kill>, %PC<imp-def,dead>, %R0<imp-use,kill>
+
+# End machine code for function unsigned_condition.
+
+# After Machine Copy Propagation Pass:
+# Machine code for function unsigned_condition: Post SSA
+Jump Tables:
+  jt#0:  BB#7 BB#7 BB#3 BB#2 BB#5 BB#4 BB#7 BB#7 BB#7 BB#7
+Function Live Ins: %R0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%R1<def> = A2_addi %R0, -102
+	%P0<def> = C2_cmpgtui %R1, 9
+	J2_jumpt %P0<kill>, <BB#6>, %PC<imp-def,dead>
+    Successors according to CFG: BB#6(0x00000800 / 0x80000000 = 0.00%) BB#1(0x7ffff800 / 0x80000000 = 100.00%)
+
+BB#1: derived from LLVM BB %0
+    Live Ins: %R0 %R1
+    Predecessors according to CFG: BB#0
+	%R2<def> = A2_tfrsi <jt#0>
+	%R1<def> = L4_loadri_rr %R2<kill>, %R1<kill>, 2; mem:LD4[JumpTable]
+	J2_jumpr %R1<kill>, %PC<imp-def,dead>
+    Successors according to CFG: BB#7(0x4ccccccd / 0x80000000 = 60.00%) BB#3(0x0ccccccd / 0x80000000 = 10.00%) BB#2(0x0ccccccd / 0x80000000 = 10.00%) BB#5(0x0ccccccd / 0x80000000 = 10.00%) BB#4(0x0ccccccd / 0x80000000 = 10.00%)
+
+BB#2: derived from LLVM BB %2
+    Predecessors according to CFG: BB#1
+	%R0<def> = A2_tfrsi 109
+	J2_jump <BB#7>, %PC<imp-def,dead>
+    Successors according to CFG: BB#7(?%)
+
+BB#3: derived from LLVM BB %3
+    Predecessors according to CFG: BB#1
+	%R0<def> = A2_tfrsi 108
+	J2_jump <BB#7>, %PC<imp-def,dead>
+    Successors according to CFG: BB#7(?%)
+
+BB#4: derived from LLVM BB %4
+    Predecessors according to CFG: BB#1
+	%R0<def> = A2_tfrsi 111
+	J2_jump <BB#7>, %PC<imp-def,dead>
+    Successors according to CFG: BB#7(?%)
+
+BB#5: derived from LLVM BB %5
+    Predecessors according to CFG: BB#1
+	%R0<def> = A2_tfrsi 110
+	J2_jump <BB#7>, %PC<imp-def,dead>
+    Successors according to CFG: BB#7(?%)
+
+BB#6: derived from LLVM BB %6
+    Predecessors according to CFG: BB#0
+	S2_allocframe 0, %R29<imp-def>, %R30<imp-def>, %R29<imp-use>, %R31<imp-use>, %R30<imp-use>; mem:ST4[<unknown>]
+	%R0<def> = A2_tfrsi <ga:@.str>
+	%R2<def> = A2_tfrsi <ga:@__FUNCTION__.unsigned_condition>
+	%R1<def> = A2_tfrsi 951
+	CALLv3nr <ga:@fancy_abort>, %D0<imp-def,dead>, %D1<imp-def,dead>, %R31<imp-def,dead>, %P0<imp-def,dead>, %R0<imp-use,kill>, %R1<imp-use,kill>, %R2<imp-use,kill>, ...
+	L2_deallocframe %R29<imp-def>, %R30<imp-def>, %R31<imp-def>, %R30<imp-use>
+
+BB#7: derived from LLVM BB %7
+    Live Ins: %R0
+    Predecessors according to CFG: BB#1 BB#5 BB#4 BB#3 BB#2
+	JMPret %R31<kill>, %PC<imp-def,dead>, %R0<imp-use,kill>
+
+# End machine code for function unsigned_condition.
+
+# After Post-RA pseudo instruction expansion pass:
+# Machine code for function unsigned_condition: Post SSA
+Jump Tables:
+  jt#0:  BB#7 BB#7 BB#3 BB#2 BB#5 BB#4 BB#7 BB#7 BB#7 BB#7
+Function Live Ins: %R0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%R1<def> = A2_addi %R0, -102
+	%P0<def> = C2_cmpgtui %R1, 9
+	J2_jumpt %P0<kill>, <BB#6>, %PC<imp-def,dead>
+    Successors according to CFG: BB#6(0x00000800 / 0x80000000 = 0.00%) BB#1(0x7ffff800 / 0x80000000 = 100.00%)
+
+BB#1: derived from LLVM BB %0
+    Live Ins: %R0 %R1
+    Predecessors according to CFG: BB#0
+	%R2<def> = A2_tfrsi <jt#0>
+	%R1<def> = L4_loadri_rr %R2<kill>, %R1<kill>, 2; mem:LD4[JumpTable]
+	J2_jumpr %R1<kill>, %PC<imp-def,dead>
+    Successors according to CFG: BB#7(0x4ccccccd / 0x80000000 = 60.00%) BB#3(0x0ccccccd / 0x80000000 = 10.00%) BB#2(0x0ccccccd / 0x80000000 = 10.00%) BB#5(0x0ccccccd / 0x80000000 = 10.00%) BB#4(0x0ccccccd / 0x80000000 = 10.00%)
+
+BB#2: derived from LLVM BB %2
+    Predecessors according to CFG: BB#1
+	%R0<def> = A2_tfrsi 109
+	J2_jump <BB#7>, %PC<imp-def,dead>
+    Successors according to CFG: BB#7(?%)
+
+BB#3: derived from LLVM BB %3
+    Predecessors according to CFG: BB#1
+	%R0<def> = A2_tfrsi 108
+	J2_jump <BB#7>, %PC<imp-def,dead>
+    Successors according to CFG: BB#7(?%)
+
+BB#4: derived from LLVM BB %4
+    Predecessors according to CFG: BB#1
+	%R0<def> = A2_tfrsi 111
+	J2_jump <BB#7>, %PC<imp-def,dead>
+    Successors according to CFG: BB#7(?%)
+
+BB#5: derived from LLVM BB %5
+    Predecessors according to CFG: BB#1
+	%R0<def> = A2_tfrsi 110
+	J2_jump <BB#7>, %PC<imp-def,dead>
+    Successors according to CFG: BB#7(?%)
+
+BB#6: derived from LLVM BB %6
+    Predecessors according to CFG: BB#0
+	S2_allocframe 0, %R29<imp-def>, %R30<imp-def>, %R29<imp-use>, %R31<imp-use>, %R30<imp-use>; mem:ST4[<unknown>]
+	%R0<def> = A2_tfrsi <ga:@.str>
+	%R2<def> = A2_tfrsi <ga:@__FUNCTION__.unsigned_condition>
+	%R1<def> = A2_tfrsi 951
+	CALLv3nr <ga:@fancy_abort>, %D0<imp-def,dead>, %D1<imp-def,dead>, %R31<imp-def,dead>, %P0<imp-def,dead>, %R0<imp-use,kill>, %R1<imp-use,kill>, %R2<imp-use,kill>, ...
+	L2_deallocframe %R29<imp-def>, %R30<imp-def>, %R31<imp-def>, %R30<imp-use>
+
+BB#7: derived from LLVM BB %7
+    Live Ins: %R0
+    Predecessors according to CFG: BB#1 BB#5 BB#4 BB#3 BB#2
+	JMPret %R31<kill>, %PC<imp-def,dead>, %R0<imp-use,kill>
+
+# End machine code for function unsigned_condition.
+
+# After Hexagon Copy-To-Combine Pass:
+# Machine code for function unsigned_condition: Post SSA
+Jump Tables:
+  jt#0:  BB#7 BB#7 BB#3 BB#2 BB#5 BB#4 BB#7 BB#7 BB#7 BB#7
+Function Live Ins: %R0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%R1<def> = A2_addi %R0, -102
+	%P0<def> = C2_cmpgtui %R1, 9
+	J2_jumpt %P0<kill>, <BB#6>, %PC<imp-def,dead>
+    Successors according to CFG: BB#6(0x00000800 / 0x80000000 = 0.00%) BB#1(0x7ffff800 / 0x80000000 = 100.00%)
+
+BB#1: derived from LLVM BB %0
+    Live Ins: %R0 %R1
+    Predecessors according to CFG: BB#0
+	%R2<def> = A2_tfrsi <jt#0>
+	%R1<def> = L4_loadri_rr %R2<kill>, %R1<kill>, 2; mem:LD4[JumpTable]
+	J2_jumpr %R1<kill>, %PC<imp-def,dead>
+    Successors according to CFG: BB#7(0x4ccccccd / 0x80000000 = 60.00%) BB#3(0x0ccccccd / 0x80000000 = 10.00%) BB#2(0x0ccccccd / 0x80000000 = 10.00%) BB#5(0x0ccccccd / 0x80000000 = 10.00%) BB#4(0x0ccccccd / 0x80000000 = 10.00%)
+
+BB#2: derived from LLVM BB %2
+    Predecessors according to CFG: BB#1
+	%R0<def> = A2_tfrsi 109
+	J2_jump <BB#7>, %PC<imp-def,dead>
+    Successors according to CFG: BB#7(?%)
+
+BB#3: derived from LLVM BB %3
+    Predecessors according to CFG: BB#1
+	%R0<def> = A2_tfrsi 108
+	J2_jump <BB#7>, %PC<imp-def,dead>
+    Successors according to CFG: BB#7(?%)
+
+BB#4: derived from LLVM BB %4
+    Predecessors according to CFG: BB#1
+	%R0<def> = A2_tfrsi 111
+	J2_jump <BB#7>, %PC<imp-def,dead>
+    Successors according to CFG: BB#7(?%)
+
+BB#5: derived from LLVM BB %5
+    Predecessors according to CFG: BB#1
+	%R0<def> = A2_tfrsi 110
+	J2_jump <BB#7>, %PC<imp-def,dead>
+    Successors according to CFG: BB#7(?%)
+
+BB#6: derived from LLVM BB %6
+    Predecessors according to CFG: BB#0
+	S2_allocframe 0, %R29<imp-def>, %R30<imp-def>, %R29<imp-use>, %R31<imp-use>, %R30<imp-use>; mem:ST4[<unknown>]
+	%R0<def> = A2_tfrsi <ga:@.str>
+	%R2<def> = A2_tfrsi <ga:@__FUNCTION__.unsigned_condition>
+	%R1<def> = A2_tfrsi 951
+	CALLv3nr <ga:@fancy_abort>, %D0<imp-def,dead>, %D1<imp-def,dead>, %R31<imp-def,dead>, %P0<imp-def,dead>, %R0<imp-use,kill>, %R1<imp-use,kill>, %R2<imp-use,kill>, ...
+	L2_deallocframe %R29<imp-def>, %R30<imp-def>, %R31<imp-def>, %R30<imp-use>
+
+BB#7: derived from LLVM BB %7
+    Live Ins: %R0
+    Predecessors according to CFG: BB#1 BB#5 BB#4 BB#3 BB#2
+	JMPret %R31<kill>, %PC<imp-def,dead>, %R0<imp-use,kill>
+
+# End machine code for function unsigned_condition.
+
+# After Hexagon Split Const32s and Const64s:
+# Machine code for function unsigned_condition: Post SSA
+Jump Tables:
+  jt#0:  BB#7 BB#7 BB#3 BB#2 BB#5 BB#4 BB#7 BB#7 BB#7 BB#7
+Function Live Ins: %R0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%R1<def> = A2_addi %R0, -102
+	%P0<def> = C2_cmpgtui %R1, 9
+	J2_jumpt %P0<kill>, <BB#6>, %PC<imp-def,dead>
+    Successors according to CFG: BB#6(0x00000800 / 0x80000000 = 0.00%) BB#1(0x7ffff800 / 0x80000000 = 100.00%)
+
+BB#1: derived from LLVM BB %0
+    Live Ins: %R0 %R1
+    Predecessors according to CFG: BB#0
+	%R2<def> = A2_tfrsi <jt#0>
+	%R1<def> = L4_loadri_rr %R2<kill>, %R1<kill>, 2; mem:LD4[JumpTable]
+	J2_jumpr %R1<kill>, %PC<imp-def,dead>
+    Successors according to CFG: BB#7(0x4ccccccd / 0x80000000 = 60.00%) BB#3(0x0ccccccd / 0x80000000 = 10.00%) BB#2(0x0ccccccd / 0x80000000 = 10.00%) BB#5(0x0ccccccd / 0x80000000 = 10.00%) BB#4(0x0ccccccd / 0x80000000 = 10.00%)
+
+BB#2: derived from LLVM BB %2
+    Predecessors according to CFG: BB#1
+	%R0<def> = A2_tfrsi 109
+	J2_jump <BB#7>, %PC<imp-def,dead>
+    Successors according to CFG: BB#7(?%)
+
+BB#3: derived from LLVM BB %3
+    Predecessors according to CFG: BB#1
+	%R0<def> = A2_tfrsi 108
+	J2_jump <BB#7>, %PC<imp-def,dead>
+    Successors according to CFG: BB#7(?%)
+
+BB#4: derived from LLVM BB %4
+    Predecessors according to CFG: BB#1
+	%R0<def> = A2_tfrsi 111
+	J2_jump <BB#7>, %PC<imp-def,dead>
+    Successors according to CFG: BB#7(?%)
+
+BB#5: derived from LLVM BB %5
+    Predecessors according to CFG: BB#1
+	%R0<def> = A2_tfrsi 110
+	J2_jump <BB#7>, %PC<imp-def,dead>
+    Successors according to CFG: BB#7(?%)
+
+BB#6: derived from LLVM BB %6
+    Predecessors according to CFG: BB#0
+	S2_allocframe 0, %R29<imp-def>, %R30<imp-def>, %R29<imp-use>, %R31<imp-use>, %R30<imp-use>; mem:ST4[<unknown>]
+	%R0<def> = A2_tfrsi <ga:@.str>
+	%R2<def> = A2_tfrsi <ga:@__FUNCTION__.unsigned_condition>
+	%R1<def> = A2_tfrsi 951
+	CALLv3nr <ga:@fancy_abort>, %D0<imp-def,dead>, %D1<imp-def,dead>, %R31<imp-def,dead>, %P0<imp-def,dead>, %R0<imp-use,kill>, %R1<imp-use,kill>, %R2<imp-use,kill>, ...
+	L2_deallocframe %R29<imp-def>, %R30<imp-def>, %R31<imp-def>, %R30<imp-use>
+
+BB#7: derived from LLVM BB %7
+    Live Ins: %R0
+    Predecessors according to CFG: BB#1 BB#5 BB#4 BB#3 BB#2
+	JMPret %R31<kill>, %PC<imp-def,dead>, %R0<imp-use,kill>
+
+# End machine code for function unsigned_condition.
+
+# After Analyze Machine Code For Garbage Collection:
+# Machine code for function unsigned_condition: Post SSA
+Jump Tables:
+  jt#0:  BB#7 BB#7 BB#3 BB#2 BB#5 BB#4 BB#7 BB#7 BB#7 BB#7
+Function Live Ins: %R0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%R1<def> = A2_addi %R0, -102
+	%P0<def> = C2_cmpgtui %R1, 9
+	J2_jumpt %P0<kill>, <BB#6>, %PC<imp-def,dead>
+    Successors according to CFG: BB#6(0x00000800 / 0x80000000 = 0.00%) BB#1(0x7ffff800 / 0x80000000 = 100.00%)
+
+BB#1: derived from LLVM BB %0
+    Live Ins: %R0 %R1
+    Predecessors according to CFG: BB#0
+	%R2<def> = A2_tfrsi <jt#0>
+	%R1<def> = L4_loadri_rr %R2<kill>, %R1<kill>, 2; mem:LD4[JumpTable]
+	J2_jumpr %R1<kill>, %PC<imp-def,dead>
+    Successors according to CFG: BB#7(0x4ccccccd / 0x80000000 = 60.00%) BB#3(0x0ccccccd / 0x80000000 = 10.00%) BB#2(0x0ccccccd / 0x80000000 = 10.00%) BB#5(0x0ccccccd / 0x80000000 = 10.00%) BB#4(0x0ccccccd / 0x80000000 = 10.00%)
+
+BB#2: derived from LLVM BB %2
+    Predecessors according to CFG: BB#1
+	%R0<def> = A2_tfrsi 109
+	J2_jump <BB#7>, %PC<imp-def,dead>
+    Successors according to CFG: BB#7(?%)
+
+BB#3: derived from LLVM BB %3
+    Predecessors according to CFG: BB#1
+	%R0<def> = A2_tfrsi 108
+	J2_jump <BB#7>, %PC<imp-def,dead>
+    Successors according to CFG: BB#7(?%)
+
+BB#4: derived from LLVM BB %4
+    Predecessors according to CFG: BB#1
+	%R0<def> = A2_tfrsi 111
+	J2_jump <BB#7>, %PC<imp-def,dead>
+    Successors according to CFG: BB#7(?%)
+
+BB#5: derived from LLVM BB %5
+    Predecessors according to CFG: BB#1
+	%R0<def> = A2_tfrsi 110
+	J2_jump <BB#7>, %PC<imp-def,dead>
+    Successors according to CFG: BB#7(?%)
+
+BB#6: derived from LLVM BB %6
+    Predecessors according to CFG: BB#0
+	S2_allocframe 0, %R29<imp-def>, %R30<imp-def>, %R29<imp-use>, %R31<imp-use>, %R30<imp-use>; mem:ST4[<unknown>]
+	%R0<def> = A2_tfrsi <ga:@.str>
+	%R2<def> = A2_tfrsi <ga:@__FUNCTION__.unsigned_condition>
+	%R1<def> = A2_tfrsi 951
+	CALLv3nr <ga:@fancy_abort>, %D0<imp-def,dead>, %D1<imp-def,dead>, %R31<imp-def,dead>, %P0<imp-def,dead>, %R0<imp-use,kill>, %R1<imp-use,kill>, %R2<imp-use,kill>, ...
+	L2_deallocframe %R29<imp-def>, %R30<imp-def>, %R31<imp-def>, %R30<imp-use>
+
+BB#7: derived from LLVM BB %7
+    Live Ins: %R0
+    Predecessors according to CFG: BB#1 BB#5 BB#4 BB#3 BB#2
+	JMPret %R31<kill>, %PC<imp-def,dead>, %R0<imp-use,kill>
+
+# End machine code for function unsigned_condition.
+
+# After Hexagon NewValueJump:
+# Machine code for function unsigned_condition: Post SSA
+Jump Tables:
+  jt#0:  BB#7 BB#7 BB#3 BB#2 BB#5 BB#4 BB#7 BB#7 BB#7 BB#7
+Function Live Ins: %R0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%R1<def> = A2_addi %R0, -102
+	J4_cmpgtui_t_jumpnv_nt %R1, 9, <BB#6>, %PC<imp-def>
+    Successors according to CFG: BB#6(0x00000800 / 0x80000000 = 0.00%) BB#1(0x7ffff800 / 0x80000000 = 100.00%)
+
+BB#1: derived from LLVM BB %0
+    Live Ins: %R0 %R1
+    Predecessors according to CFG: BB#0
+	%R2<def> = A2_tfrsi <jt#0>
+	%R1<def> = L4_loadri_rr %R2<kill>, %R1<kill>, 2; mem:LD4[JumpTable]
+	J2_jumpr %R1<kill>, %PC<imp-def,dead>
+    Successors according to CFG: BB#7(0x4ccccccd / 0x80000000 = 60.00%) BB#3(0x0ccccccd / 0x80000000 = 10.00%) BB#2(0x0ccccccd / 0x80000000 = 10.00%) BB#5(0x0ccccccd / 0x80000000 = 10.00%) BB#4(0x0ccccccd / 0x80000000 = 10.00%)
+
+BB#2: derived from LLVM BB %2
+    Predecessors according to CFG: BB#1
+	%R0<def> = A2_tfrsi 109
+	J2_jump <BB#7>, %PC<imp-def,dead>
+    Successors according to CFG: BB#7(?%)
+
+BB#3: derived from LLVM BB %3
+    Predecessors according to CFG: BB#1
+	%R0<def> = A2_tfrsi 108
+	J2_jump <BB#7>, %PC<imp-def,dead>
+    Successors according to CFG: BB#7(?%)
+
+BB#4: derived from LLVM BB %4
+    Predecessors according to CFG: BB#1
+	%R0<def> = A2_tfrsi 111
+	J2_jump <BB#7>, %PC<imp-def,dead>
+    Successors according to CFG: BB#7(?%)
+
+BB#5: derived from LLVM BB %5
+    Predecessors according to CFG: BB#1
+	%R0<def> = A2_tfrsi 110
+	J2_jump <BB#7>, %PC<imp-def,dead>
+    Successors according to CFG: BB#7(?%)
+
+BB#6: derived from LLVM BB %6
+    Predecessors according to CFG: BB#0
+	S2_allocframe 0, %R29<imp-def>, %R30<imp-def>, %R29<imp-use>, %R31<imp-use>, %R30<imp-use>; mem:ST4[<unknown>]
+	%R0<def> = A2_tfrsi <ga:@.str>
+	%R2<def> = A2_tfrsi <ga:@__FUNCTION__.unsigned_condition>
+	%R1<def> = A2_tfrsi 951
+	CALLv3nr <ga:@fancy_abort>, %D0<imp-def,dead>, %D1<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use,kill>, %R1<imp-use,kill>, %R2<imp-use,kill>, ...
+	L2_deallocframe %R29<imp-def>, %R30<imp-def>, %R31<imp-def>, %R30<imp-use>
+
+BB#7: derived from LLVM BB %7
+    Live Ins: %R0
+    Predecessors according to CFG: BB#1 BB#5 BB#4 BB#3 BB#2
+	JMPret %R31<kill>, %PC<imp-def,dead>, %R0<imp-use,kill>
+
+# End machine code for function unsigned_condition.
+
+# After Hexagon Expand Predicate Spill Code:
+# Machine code for function unsigned_condition: Post SSA
+Jump Tables:
+  jt#0:  BB#7 BB#7 BB#3 BB#2 BB#5 BB#4 BB#7 BB#7 BB#7 BB#7
+Function Live Ins: %R0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%R1<def> = A2_addi %R0, -102
+	J4_cmpgtui_t_jumpnv_nt %R1, 9, <BB#6>, %PC<imp-def>
+    Successors according to CFG: BB#6(0x00000800 / 0x80000000 = 0.00%) BB#1(0x7ffff800 / 0x80000000 = 100.00%)
+
+BB#1: derived from LLVM BB %0
+    Live Ins: %R0 %R1
+    Predecessors according to CFG: BB#0
+	%R2<def> = A2_tfrsi <jt#0>
+	%R1<def> = L4_loadri_rr %R2<kill>, %R1<kill>, 2; mem:LD4[JumpTable]
+	J2_jumpr %R1<kill>, %PC<imp-def,dead>
+    Successors according to CFG: BB#7(0x4ccccccd / 0x80000000 = 60.00%) BB#3(0x0ccccccd / 0x80000000 = 10.00%) BB#2(0x0ccccccd / 0x80000000 = 10.00%) BB#5(0x0ccccccd / 0x80000000 = 10.00%) BB#4(0x0ccccccd / 0x80000000 = 10.00%)
+
+BB#2: derived from LLVM BB %2
+    Predecessors according to CFG: BB#1
+	%R0<def> = A2_tfrsi 109
+	J2_jump <BB#7>, %PC<imp-def,dead>
+    Successors according to CFG: BB#7(?%)
+
+BB#3: derived from LLVM BB %3
+    Predecessors according to CFG: BB#1
+	%R0<def> = A2_tfrsi 108
+	J2_jump <BB#7>, %PC<imp-def,dead>
+    Successors according to CFG: BB#7(?%)
+
+BB#4: derived from LLVM BB %4
+    Predecessors according to CFG: BB#1
+	%R0<def> = A2_tfrsi 111
+	J2_jump <BB#7>, %PC<imp-def,dead>
+    Successors according to CFG: BB#7(?%)
+
+BB#5: derived from LLVM BB %5
+    Predecessors according to CFG: BB#1
+	%R0<def> = A2_tfrsi 110
+	J2_jump <BB#7>, %PC<imp-def,dead>
+    Successors according to CFG: BB#7(?%)
+
+BB#6: derived from LLVM BB %6
+    Predecessors according to CFG: BB#0
+	S2_allocframe 0, %R29<imp-def>, %R30<imp-def>, %R29<imp-use>, %R31<imp-use>, %R30<imp-use>; mem:ST4[<unknown>]
+	%R0<def> = A2_tfrsi <ga:@.str>
+	%R2<def> = A2_tfrsi <ga:@__FUNCTION__.unsigned_condition>
+	%R1<def> = A2_tfrsi 951
+	CALLv3nr <ga:@fancy_abort>, %D0<imp-def,dead>, %D1<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use,kill>, %R1<imp-use,kill>, %R2<imp-use,kill>, ...
+	L2_deallocframe %R29<imp-def>, %R30<imp-def>, %R31<imp-def>, %R30<imp-use>
+
+BB#7: derived from LLVM BB %7
+    Live Ins: %R0
+    Predecessors according to CFG: BB#1 BB#5 BB#4 BB#3 BB#2
+	JMPret %R31<kill>, %PC<imp-def,dead>, %R0<imp-use,kill>
+
+# End machine code for function unsigned_condition.
+
+# After Hexagon Hardware Loop Fixup:
+# Machine code for function unsigned_condition: Post SSA
+Jump Tables:
+  jt#0:  BB#7 BB#7 BB#3 BB#2 BB#5 BB#4 BB#7 BB#7 BB#7 BB#7
+Function Live Ins: %R0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%R1<def> = A2_addi %R0, -102
+	J4_cmpgtui_t_jumpnv_nt %R1, 9, <BB#6>, %PC<imp-def>
+    Successors according to CFG: BB#6(0x00000800 / 0x80000000 = 0.00%) BB#1(0x7ffff800 / 0x80000000 = 100.00%)
+
+BB#1: derived from LLVM BB %0
+    Live Ins: %R0 %R1
+    Predecessors according to CFG: BB#0
+	%R2<def> = A2_tfrsi <jt#0>
+	%R1<def> = L4_loadri_rr %R2<kill>, %R1<kill>, 2; mem:LD4[JumpTable]
+	J2_jumpr %R1<kill>, %PC<imp-def,dead>
+    Successors according to CFG: BB#7(0x4ccccccd / 0x80000000 = 60.00%) BB#3(0x0ccccccd / 0x80000000 = 10.00%) BB#2(0x0ccccccd / 0x80000000 = 10.00%) BB#5(0x0ccccccd / 0x80000000 = 10.00%) BB#4(0x0ccccccd / 0x80000000 = 10.00%)
+
+BB#2: derived from LLVM BB %2
+    Predecessors according to CFG: BB#1
+	%R0<def> = A2_tfrsi 109
+	J2_jump <BB#7>, %PC<imp-def,dead>
+    Successors according to CFG: BB#7(?%)
+
+BB#3: derived from LLVM BB %3
+    Predecessors according to CFG: BB#1
+	%R0<def> = A2_tfrsi 108
+	J2_jump <BB#7>, %PC<imp-def,dead>
+    Successors according to CFG: BB#7(?%)
+
+BB#4: derived from LLVM BB %4
+    Predecessors according to CFG: BB#1
+	%R0<def> = A2_tfrsi 111
+	J2_jump <BB#7>, %PC<imp-def,dead>
+    Successors according to CFG: BB#7(?%)
+
+BB#5: derived from LLVM BB %5
+    Predecessors according to CFG: BB#1
+	%R0<def> = A2_tfrsi 110
+	J2_jump <BB#7>, %PC<imp-def,dead>
+    Successors according to CFG: BB#7(?%)
+
+BB#6: derived from LLVM BB %6
+    Predecessors according to CFG: BB#0
+	S2_allocframe 0, %R29<imp-def>, %R30<imp-def>, %R29<imp-use>, %R31<imp-use>, %R30<imp-use>; mem:ST4[<unknown>]
+	%R0<def> = A2_tfrsi <ga:@.str>
+	%R2<def> = A2_tfrsi <ga:@__FUNCTION__.unsigned_condition>
+	%R1<def> = A2_tfrsi 951
+	CALLv3nr <ga:@fancy_abort>, %D0<imp-def,dead>, %D1<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use,kill>, %R1<imp-use,kill>, %R2<imp-use,kill>, ...
+	L2_deallocframe %R29<imp-def>, %R30<imp-def>, %R31<imp-def>, %R30<imp-use>
+
+BB#7: derived from LLVM BB %7
+    Live Ins: %R0
+    Predecessors according to CFG: BB#1 BB#5 BB#4 BB#3 BB#2
+	JMPret %R31<kill>, %PC<imp-def,dead>, %R0<imp-use,kill>
+
+# End machine code for function unsigned_condition.
+
+# After Hexagon generate mux instructions:
+# Machine code for function unsigned_condition: Post SSA
+Jump Tables:
+  jt#0:  BB#7 BB#7 BB#3 BB#2 BB#5 BB#4 BB#7 BB#7 BB#7 BB#7
+Function Live Ins: %R0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%R1<def> = A2_addi %R0, -102
+	J4_cmpgtui_t_jumpnv_nt %R1, 9, <BB#6>, %PC<imp-def>
+    Successors according to CFG: BB#6(0x00000800 / 0x80000000 = 0.00%) BB#1(0x7ffff800 / 0x80000000 = 100.00%)
+
+BB#1: derived from LLVM BB %0
+    Live Ins: %R0 %R1
+    Predecessors according to CFG: BB#0
+	%R2<def> = A2_tfrsi <jt#0>
+	%R1<def> = L4_loadri_rr %R2<kill>, %R1<kill>, 2; mem:LD4[JumpTable]
+	J2_jumpr %R1<kill>, %PC<imp-def,dead>
+    Successors according to CFG: BB#7(0x4ccccccd / 0x80000000 = 60.00%) BB#3(0x0ccccccd / 0x80000000 = 10.00%) BB#2(0x0ccccccd / 0x80000000 = 10.00%) BB#5(0x0ccccccd / 0x80000000 = 10.00%) BB#4(0x0ccccccd / 0x80000000 = 10.00%)
+
+BB#2: derived from LLVM BB %2
+    Predecessors according to CFG: BB#1
+	%R0<def> = A2_tfrsi 109
+	J2_jump <BB#7>, %PC<imp-def,dead>
+    Successors according to CFG: BB#7(?%)
+
+BB#3: derived from LLVM BB %3
+    Predecessors according to CFG: BB#1
+	%R0<def> = A2_tfrsi 108
+	J2_jump <BB#7>, %PC<imp-def,dead>
+    Successors according to CFG: BB#7(?%)
+
+BB#4: derived from LLVM BB %4
+    Predecessors according to CFG: BB#1
+	%R0<def> = A2_tfrsi 111
+	J2_jump <BB#7>, %PC<imp-def,dead>
+    Successors according to CFG: BB#7(?%)
+
+BB#5: derived from LLVM BB %5
+    Predecessors according to CFG: BB#1
+	%R0<def> = A2_tfrsi 110
+	J2_jump <BB#7>, %PC<imp-def,dead>
+    Successors according to CFG: BB#7(?%)
+
+BB#6: derived from LLVM BB %6
+    Predecessors according to CFG: BB#0
+	S2_allocframe 0, %R29<imp-def>, %R30<imp-def>, %R29<imp-use>, %R31<imp-use>, %R30<imp-use>; mem:ST4[<unknown>]
+	%R0<def> = A2_tfrsi <ga:@.str>
+	%R2<def> = A2_tfrsi <ga:@__FUNCTION__.unsigned_condition>
+	%R1<def> = A2_tfrsi 951
+	CALLv3nr <ga:@fancy_abort>, %D0<imp-def,dead>, %D1<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use,kill>, %R1<imp-use,kill>, %R2<imp-use,kill>, ...
+	L2_deallocframe %R29<imp-def>, %R30<imp-def>, %R31<imp-def>, %R30<imp-use>
+
+BB#7: derived from LLVM BB %7
+    Live Ins: %R0
+    Predecessors according to CFG: BB#1 BB#5 BB#4 BB#3 BB#2
+	JMPret %R31<kill>, %PC<imp-def,dead>, %R0<imp-use,kill>
+
+# End machine code for function unsigned_condition.
+
+# After Hexagon Packetizer:
+# Machine code for function unsigned_condition: Post SSA
+Jump Tables:
+  jt#0:  BB#7 BB#7 BB#3 BB#2 BB#5 BB#4 BB#7 BB#7 BB#7 BB#7
+Function Live Ins: %R0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	BUNDLE %R1<imp-def>, %PC<imp-def>, %R0<imp-use>
+	  * %R1<def> = A2_addi %R0, -102
+	  * J4_cmpgtui_t_jumpnv_nt %R1<internal>, 9, <BB#6>, %PC<imp-def>
+    Successors according to CFG: BB#6(0x00000800 / 0x80000000 = 0.00%) BB#1(0x7ffff800 / 0x80000000 = 100.00%)
+
+BB#1: derived from LLVM BB %0
+    Live Ins: %R0 %R1
+    Predecessors according to CFG: BB#0
+	%R2<def> = A2_tfrsi <jt#0>
+	%R1<def> = L4_loadri_rr %R2<kill>, %R1<kill>, 2; mem:LD4[JumpTable]
+	J2_jumpr %R1<kill>, %PC<imp-def,dead>
+    Successors according to CFG: BB#7(0x4ccccccd / 0x80000000 = 60.00%) BB#3(0x0ccccccd / 0x80000000 = 10.00%) BB#2(0x0ccccccd / 0x80000000 = 10.00%) BB#5(0x0ccccccd / 0x80000000 = 10.00%) BB#4(0x0ccccccd / 0x80000000 = 10.00%)
+
+BB#2: derived from LLVM BB %2
+    Predecessors according to CFG: BB#1
+	BUNDLE %R0<imp-def>, %PC<imp-def,dead>
+	  * %R0<def> = A2_tfrsi 109
+	  * J2_jump <BB#7>, %PC<imp-def,dead>
+    Successors according to CFG: BB#7(?%)
+
+BB#3: derived from LLVM BB %3
+    Predecessors according to CFG: BB#1
+	BUNDLE %R0<imp-def>, %PC<imp-def,dead>
+	  * %R0<def> = A2_tfrsi 108
+	  * J2_jump <BB#7>, %PC<imp-def,dead>
+    Successors according to CFG: BB#7(?%)
+
+BB#4: derived from LLVM BB %4
+    Predecessors according to CFG: BB#1
+	BUNDLE %R0<imp-def>, %PC<imp-def,dead>
+	  * %R0<def> = A2_tfrsi 111
+	  * J2_jump <BB#7>, %PC<imp-def,dead>
+    Successors according to CFG: BB#7(?%)
+
+BB#5: derived from LLVM BB %5
+    Predecessors according to CFG: BB#1
+	BUNDLE %R0<imp-def>, %PC<imp-def,dead>
+	  * %R0<def> = A2_tfrsi 110
+	  * J2_jump <BB#7>, %PC<imp-def,dead>
+    Successors according to CFG: BB#7(?%)
+
+BB#6: derived from LLVM BB %6
+    Predecessors according to CFG: BB#0
+	BUNDLE %R29<imp-def>, %R30<imp-def>, %R0<imp-def>, %R29<imp-use>, %R31<imp-use>, %R30<imp-use>
+	  * S2_allocframe 0, %R29<imp-def>, %R30<imp-def>, %R29<imp-use>, %R31<imp-use>, %R30<imp-use>; mem:ST4[<unknown>]
+	  * %R0<def> = A2_tfrsi <ga:@.str>
+	BUNDLE %R2<imp-def,dead>, %R1<imp-def,dead>, %D0<imp-def,dead>, %D1<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use,kill>, ...
+	  * %R2<def> = A2_tfrsi <ga:@__FUNCTION__.unsigned_condition>
+	  * %R1<def> = A2_tfrsi 951
+	  * CALLv3nr <ga:@fancy_abort>, %D0<imp-def,dead>, %D1<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use,kill>, %R1<imp-use,kill,internal>, %R2<imp-use,kill,internal>, ...
+	L2_deallocframe %R29<imp-def>, %R30<imp-def>, %R31<imp-def>, %R30<imp-use>
+
+BB#7: derived from LLVM BB %7
+    Live Ins: %R0
+    Predecessors according to CFG: BB#1 BB#5 BB#4 BB#3 BB#2
+	JMPret %R31<kill>, %PC<imp-def,dead>, %R0<imp-use,kill>
+
+# End machine code for function unsigned_condition.
+
+# After Hexagon call frame information:
+# Machine code for function unsigned_condition: Post SSA
+Jump Tables:
+  jt#0:  BB#7 BB#7 BB#3 BB#2 BB#5 BB#4 BB#7 BB#7 BB#7 BB#7
+Function Live Ins: %R0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	BUNDLE %R1<imp-def>, %PC<imp-def>, %R0<imp-use>
+	  * %R1<def> = A2_addi %R0, -102
+	  * J4_cmpgtui_t_jumpnv_nt %R1<internal>, 9, <BB#6>, %PC<imp-def>
+    Successors according to CFG: BB#6(0x00000800 / 0x80000000 = 0.00%) BB#1(0x7ffff800 / 0x80000000 = 100.00%)
+
+BB#1: derived from LLVM BB %0
+    Live Ins: %R0 %R1
+    Predecessors according to CFG: BB#0
+	%R2<def> = A2_tfrsi <jt#0>
+	%R1<def> = L4_loadri_rr %R2<kill>, %R1<kill>, 2; mem:LD4[JumpTable]
+	J2_jumpr %R1<kill>, %PC<imp-def,dead>
+    Successors according to CFG: BB#7(0x4ccccccd / 0x80000000 = 60.00%) BB#3(0x0ccccccd / 0x80000000 = 10.00%) BB#2(0x0ccccccd / 0x80000000 = 10.00%) BB#5(0x0ccccccd / 0x80000000 = 10.00%) BB#4(0x0ccccccd / 0x80000000 = 10.00%)
+
+BB#2: derived from LLVM BB %2
+    Predecessors according to CFG: BB#1
+	BUNDLE %R0<imp-def>, %PC<imp-def,dead>
+	  * %R0<def> = A2_tfrsi 109
+	  * J2_jump <BB#7>, %PC<imp-def,dead>
+    Successors according to CFG: BB#7(?%)
+
+BB#3: derived from LLVM BB %3
+    Predecessors according to CFG: BB#1
+	BUNDLE %R0<imp-def>, %PC<imp-def,dead>
+	  * %R0<def> = A2_tfrsi 108
+	  * J2_jump <BB#7>, %PC<imp-def,dead>
+    Successors according to CFG: BB#7(?%)
+
+BB#4: derived from LLVM BB %4
+    Predecessors according to CFG: BB#1
+	BUNDLE %R0<imp-def>, %PC<imp-def,dead>
+	  * %R0<def> = A2_tfrsi 111
+	  * J2_jump <BB#7>, %PC<imp-def,dead>
+    Successors according to CFG: BB#7(?%)
+
+BB#5: derived from LLVM BB %5
+    Predecessors according to CFG: BB#1
+	BUNDLE %R0<imp-def>, %PC<imp-def,dead>
+	  * %R0<def> = A2_tfrsi 110
+	  * J2_jump <BB#7>, %PC<imp-def,dead>
+    Successors according to CFG: BB#7(?%)
+
+BB#6: derived from LLVM BB %6
+    Predecessors according to CFG: BB#0
+	BUNDLE %R29<imp-def>, %R30<imp-def>, %R0<imp-def>, %R29<imp-use>, %R31<imp-use>, %R30<imp-use>
+	  * S2_allocframe 0, %R29<imp-def>, %R30<imp-def>, %R29<imp-use>, %R31<imp-use>, %R30<imp-use>; mem:ST4[<unknown>]
+	  * %R0<def> = A2_tfrsi <ga:@.str>
+	BUNDLE %R2<imp-def,dead>, %R1<imp-def,dead>, %D0<imp-def,dead>, %D1<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use,kill>, ...
+	  * %R2<def> = A2_tfrsi <ga:@__FUNCTION__.unsigned_condition>
+	  * %R1<def> = A2_tfrsi 951
+	  * CALLv3nr <ga:@fancy_abort>, %D0<imp-def,dead>, %D1<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use,kill>, %R1<imp-use,kill,internal>, %R2<imp-use,kill,internal>, ...
+	L2_deallocframe %R29<imp-def>, %R30<imp-def>, %R31<imp-def>, %R30<imp-use>
+
+BB#7: derived from LLVM BB %7
+    Live Ins: %R0
+    Predecessors according to CFG: BB#1 BB#5 BB#4 BB#3 BB#2
+	JMPret %R31<kill>, %PC<imp-def,dead>, %R0<imp-use,kill>
+
+# End machine code for function unsigned_condition.
+
+# After Contiguously Lay Out Funclets:
+# Machine code for function unsigned_condition: Post SSA
+Jump Tables:
+  jt#0:  BB#7 BB#7 BB#3 BB#2 BB#5 BB#4 BB#7 BB#7 BB#7 BB#7
+Function Live Ins: %R0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	BUNDLE %R1<imp-def>, %PC<imp-def>, %R0<imp-use>
+	  * %R1<def> = A2_addi %R0, -102
+	  * J4_cmpgtui_t_jumpnv_nt %R1<internal>, 9, <BB#6>, %PC<imp-def>
+    Successors according to CFG: BB#6(0x00000800 / 0x80000000 = 0.00%) BB#1(0x7ffff800 / 0x80000000 = 100.00%)
+
+BB#1: derived from LLVM BB %0
+    Live Ins: %R0 %R1
+    Predecessors according to CFG: BB#0
+	%R2<def> = A2_tfrsi <jt#0>
+	%R1<def> = L4_loadri_rr %R2<kill>, %R1<kill>, 2; mem:LD4[JumpTable]
+	J2_jumpr %R1<kill>, %PC<imp-def,dead>
+    Successors according to CFG: BB#7(0x4ccccccd / 0x80000000 = 60.00%) BB#3(0x0ccccccd / 0x80000000 = 10.00%) BB#2(0x0ccccccd / 0x80000000 = 10.00%) BB#5(0x0ccccccd / 0x80000000 = 10.00%) BB#4(0x0ccccccd / 0x80000000 = 10.00%)
+
+BB#2: derived from LLVM BB %2
+    Predecessors according to CFG: BB#1
+	BUNDLE %R0<imp-def>, %PC<imp-def,dead>
+	  * %R0<def> = A2_tfrsi 109
+	  * J2_jump <BB#7>, %PC<imp-def,dead>
+    Successors according to CFG: BB#7(?%)
+
+BB#3: derived from LLVM BB %3
+    Predecessors according to CFG: BB#1
+	BUNDLE %R0<imp-def>, %PC<imp-def,dead>
+	  * %R0<def> = A2_tfrsi 108
+	  * J2_jump <BB#7>, %PC<imp-def,dead>
+    Successors according to CFG: BB#7(?%)
+
+BB#4: derived from LLVM BB %4
+    Predecessors according to CFG: BB#1
+	BUNDLE %R0<imp-def>, %PC<imp-def,dead>
+	  * %R0<def> = A2_tfrsi 111
+	  * J2_jump <BB#7>, %PC<imp-def,dead>
+    Successors according to CFG: BB#7(?%)
+
+BB#5: derived from LLVM BB %5
+    Predecessors according to CFG: BB#1
+	BUNDLE %R0<imp-def>, %PC<imp-def,dead>
+	  * %R0<def> = A2_tfrsi 110
+	  * J2_jump <BB#7>, %PC<imp-def,dead>
+    Successors according to CFG: BB#7(?%)
+
+BB#6: derived from LLVM BB %6
+    Predecessors according to CFG: BB#0
+	BUNDLE %R29<imp-def>, %R30<imp-def>, %R0<imp-def>, %R29<imp-use>, %R31<imp-use>, %R30<imp-use>
+	  * S2_allocframe 0, %R29<imp-def>, %R30<imp-def>, %R29<imp-use>, %R31<imp-use>, %R30<imp-use>; mem:ST4[<unknown>]
+	  * %R0<def> = A2_tfrsi <ga:@.str>
+	BUNDLE %R2<imp-def,dead>, %R1<imp-def,dead>, %D0<imp-def,dead>, %D1<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use,kill>, ...
+	  * %R2<def> = A2_tfrsi <ga:@__FUNCTION__.unsigned_condition>
+	  * %R1<def> = A2_tfrsi 951
+	  * CALLv3nr <ga:@fancy_abort>, %D0<imp-def,dead>, %D1<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use,kill>, %R1<imp-use,kill,internal>, %R2<imp-use,kill,internal>, ...
+	L2_deallocframe %R29<imp-def>, %R30<imp-def>, %R31<imp-def>, %R30<imp-use>
+
+BB#7: derived from LLVM BB %7
+    Live Ins: %R0
+    Predecessors according to CFG: BB#1 BB#5 BB#4 BB#3 BB#2
+	JMPret %R31<kill>, %PC<imp-def,dead>, %R0<imp-use,kill>
+
+# End machine code for function unsigned_condition.
+
+# After StackMap Liveness Analysis:
+# Machine code for function unsigned_condition: Post SSA
+Jump Tables:
+  jt#0:  BB#7 BB#7 BB#3 BB#2 BB#5 BB#4 BB#7 BB#7 BB#7 BB#7
+Function Live Ins: %R0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	BUNDLE %R1<imp-def>, %PC<imp-def>, %R0<imp-use>
+	  * %R1<def> = A2_addi %R0, -102
+	  * J4_cmpgtui_t_jumpnv_nt %R1<internal>, 9, <BB#6>, %PC<imp-def>
+    Successors according to CFG: BB#6(0x00000800 / 0x80000000 = 0.00%) BB#1(0x7ffff800 / 0x80000000 = 100.00%)
+
+BB#1: derived from LLVM BB %0
+    Live Ins: %R0 %R1
+    Predecessors according to CFG: BB#0
+	%R2<def> = A2_tfrsi <jt#0>
+	%R1<def> = L4_loadri_rr %R2<kill>, %R1<kill>, 2; mem:LD4[JumpTable]
+	J2_jumpr %R1<kill>, %PC<imp-def,dead>
+    Successors according to CFG: BB#7(0x4ccccccd / 0x80000000 = 60.00%) BB#3(0x0ccccccd / 0x80000000 = 10.00%) BB#2(0x0ccccccd / 0x80000000 = 10.00%) BB#5(0x0ccccccd / 0x80000000 = 10.00%) BB#4(0x0ccccccd / 0x80000000 = 10.00%)
+
+BB#2: derived from LLVM BB %2
+    Predecessors according to CFG: BB#1
+	BUNDLE %R0<imp-def>, %PC<imp-def,dead>
+	  * %R0<def> = A2_tfrsi 109
+	  * J2_jump <BB#7>, %PC<imp-def,dead>
+    Successors according to CFG: BB#7(?%)
+
+BB#3: derived from LLVM BB %3
+    Predecessors according to CFG: BB#1
+	BUNDLE %R0<imp-def>, %PC<imp-def,dead>
+	  * %R0<def> = A2_tfrsi 108
+	  * J2_jump <BB#7>, %PC<imp-def,dead>
+    Successors according to CFG: BB#7(?%)
+
+BB#4: derived from LLVM BB %4
+    Predecessors according to CFG: BB#1
+	BUNDLE %R0<imp-def>, %PC<imp-def,dead>
+	  * %R0<def> = A2_tfrsi 111
+	  * J2_jump <BB#7>, %PC<imp-def,dead>
+    Successors according to CFG: BB#7(?%)
+
+BB#5: derived from LLVM BB %5
+    Predecessors according to CFG: BB#1
+	BUNDLE %R0<imp-def>, %PC<imp-def,dead>
+	  * %R0<def> = A2_tfrsi 110
+	  * J2_jump <BB#7>, %PC<imp-def,dead>
+    Successors according to CFG: BB#7(?%)
+
+BB#6: derived from LLVM BB %6
+    Predecessors according to CFG: BB#0
+	BUNDLE %R29<imp-def>, %R30<imp-def>, %R0<imp-def>, %R29<imp-use>, %R31<imp-use>, %R30<imp-use>
+	  * S2_allocframe 0, %R29<imp-def>, %R30<imp-def>, %R29<imp-use>, %R31<imp-use>, %R30<imp-use>; mem:ST4[<unknown>]
+	  * %R0<def> = A2_tfrsi <ga:@.str>
+	BUNDLE %R2<imp-def,dead>, %R1<imp-def,dead>, %D0<imp-def,dead>, %D1<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use,kill>, ...
+	  * %R2<def> = A2_tfrsi <ga:@__FUNCTION__.unsigned_condition>
+	  * %R1<def> = A2_tfrsi 951
+	  * CALLv3nr <ga:@fancy_abort>, %D0<imp-def,dead>, %D1<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use,kill>, %R1<imp-use,kill,internal>, %R2<imp-use,kill,internal>, ...
+	L2_deallocframe %R29<imp-def>, %R30<imp-def>, %R31<imp-def>, %R30<imp-use>
+
+BB#7: derived from LLVM BB %7
+    Live Ins: %R0
+    Predecessors according to CFG: BB#1 BB#5 BB#4 BB#3 BB#2
+	JMPret %R31<kill>, %PC<imp-def,dead>, %R0<imp-use,kill>
+
+# End machine code for function unsigned_condition.
+
+# After Live DEBUG_VALUE analysis:
+# Machine code for function unsigned_condition: Post SSA
+Jump Tables:
+  jt#0:  BB#7 BB#7 BB#3 BB#2 BB#5 BB#4 BB#7 BB#7 BB#7 BB#7
+Function Live Ins: %R0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	BUNDLE %R1<imp-def>, %PC<imp-def>, %R0<imp-use>
+	  * %R1<def> = A2_addi %R0, -102
+	  * J4_cmpgtui_t_jumpnv_nt %R1<internal>, 9, <BB#6>, %PC<imp-def>
+    Successors according to CFG: BB#6(0x00000800 / 0x80000000 = 0.00%) BB#1(0x7ffff800 / 0x80000000 = 100.00%)
+
+BB#1: derived from LLVM BB %0
+    Live Ins: %R0 %R1
+    Predecessors according to CFG: BB#0
+	%R2<def> = A2_tfrsi <jt#0>
+	%R1<def> = L4_loadri_rr %R2<kill>, %R1<kill>, 2; mem:LD4[JumpTable]
+	J2_jumpr %R1<kill>, %PC<imp-def,dead>
+    Successors according to CFG: BB#7(0x4ccccccd / 0x80000000 = 60.00%) BB#3(0x0ccccccd / 0x80000000 = 10.00%) BB#2(0x0ccccccd / 0x80000000 = 10.00%) BB#5(0x0ccccccd / 0x80000000 = 10.00%) BB#4(0x0ccccccd / 0x80000000 = 10.00%)
+
+BB#2: derived from LLVM BB %2
+    Predecessors according to CFG: BB#1
+	BUNDLE %R0<imp-def>, %PC<imp-def,dead>
+	  * %R0<def> = A2_tfrsi 109
+	  * J2_jump <BB#7>, %PC<imp-def,dead>
+    Successors according to CFG: BB#7(?%)
+
+BB#3: derived from LLVM BB %3
+    Predecessors according to CFG: BB#1
+	BUNDLE %R0<imp-def>, %PC<imp-def,dead>
+	  * %R0<def> = A2_tfrsi 108
+	  * J2_jump <BB#7>, %PC<imp-def,dead>
+    Successors according to CFG: BB#7(?%)
+
+BB#4: derived from LLVM BB %4
+    Predecessors according to CFG: BB#1
+	BUNDLE %R0<imp-def>, %PC<imp-def,dead>
+	  * %R0<def> = A2_tfrsi 111
+	  * J2_jump <BB#7>, %PC<imp-def,dead>
+    Successors according to CFG: BB#7(?%)
+
+BB#5: derived from LLVM BB %5
+    Predecessors according to CFG: BB#1
+	BUNDLE %R0<imp-def>, %PC<imp-def,dead>
+	  * %R0<def> = A2_tfrsi 110
+	  * J2_jump <BB#7>, %PC<imp-def,dead>
+    Successors according to CFG: BB#7(?%)
+
+BB#6: derived from LLVM BB %6
+    Predecessors according to CFG: BB#0
+	BUNDLE %R29<imp-def>, %R30<imp-def>, %R0<imp-def>, %R29<imp-use>, %R31<imp-use>, %R30<imp-use>
+	  * S2_allocframe 0, %R29<imp-def>, %R30<imp-def>, %R29<imp-use>, %R31<imp-use>, %R30<imp-use>; mem:ST4[<unknown>]
+	  * %R0<def> = A2_tfrsi <ga:@.str>
+	BUNDLE %R2<imp-def,dead>, %R1<imp-def,dead>, %D0<imp-def,dead>, %D1<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use,kill>, ...
+	  * %R2<def> = A2_tfrsi <ga:@__FUNCTION__.unsigned_condition>
+	  * %R1<def> = A2_tfrsi 951
+	  * CALLv3nr <ga:@fancy_abort>, %D0<imp-def,dead>, %D1<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use,kill>, %R1<imp-use,kill,internal>, %R2<imp-use,kill,internal>, ...
+	L2_deallocframe %R29<imp-def>, %R30<imp-def>, %R31<imp-def>, %R30<imp-use>
+
+BB#7: derived from LLVM BB %7
+    Live Ins: %R0
+    Predecessors according to CFG: BB#1 BB#5 BB#4 BB#3 BB#2
+	JMPret %R31<kill>, %PC<imp-def,dead>, %R0<imp-use,kill>
+
+# End machine code for function unsigned_condition.
+

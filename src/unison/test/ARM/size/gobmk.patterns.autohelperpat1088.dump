@@ -1,0 +1,1634 @@
+# After Instruction Selection:
+# Machine code for function autohelperpat1088: SSA
+Function Live Ins: %R0 in %vreg0, %R1 in %vreg1, %R2 in %vreg2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R2
+	%vreg2<def> = COPY %R2; GPR:%vreg2
+	%vreg1<def> = COPY %R1; rGPR:%vreg1
+	%vreg0<def> = COPY %R0; rGPR:%vreg0
+	%vreg4<def> = t2MOVi32imm <ga:@transformation>; rGPR:%vreg4
+	%vreg5<def> = t2ADDrs %vreg4<kill>, %vreg0, 18, pred:14, pred:%noreg, opt:%noreg; GPRnopc:%vreg5 rGPR:%vreg4,%vreg0
+	%vreg6<def> = t2MOVi16 21856, pred:14, pred:%noreg; rGPR:%vreg6
+	%vreg7<def> = t2LDRs %vreg5, %vreg6<kill>, 0, pred:14, pred:%noreg; mem:LD4[%4] GPRnopc:%vreg7,%vreg5 rGPR:%vreg6
+	%vreg8<def> = t2MOVi 23040, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg8
+	%vreg9<def> = t2LDRs %vreg5, %vreg8<kill>, 0, pred:14, pred:%noreg; mem:LD4[%1] GPRnopc:%vreg9,%vreg5 rGPR:%vreg8
+	%vreg10<def> = t2ADDrr %vreg7<kill>, %vreg1, pred:14, pred:%noreg, opt:%noreg; GPRnopc:%vreg10,%vreg7 rGPR:%vreg1
+	ADJCALLSTACKDOWN 4, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg11<def> = COPY %SP; GPR:%vreg11
+	t2STRi12 %vreg10<kill>, %vreg11, 0, pred:14, pred:%noreg; mem:ST4[Stack] GPRnopc:%vreg10 GPR:%vreg11
+	%vreg12<def> = t2ADDrr %vreg9<kill>, %vreg1, pred:14, pred:%noreg, opt:%noreg; GPRnopc:%vreg12,%vreg9 rGPR:%vreg1
+	%vreg13<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg13
+	%vreg14<def> = t2MOVi 1, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg14
+	%R0<def> = COPY %vreg2; GPR:%vreg2
+	%R1<def> = COPY %vreg13; rGPR:%vreg13
+	%R2<def> = COPY %vreg14; rGPR:%vreg14
+	%R3<def> = COPY %vreg12; GPRnopc:%vreg12
+	tBL pred:14, pred:%noreg, <ga:@play_attack_defend_n>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, %R3<imp-use>, %SP<imp-def>, %R0<imp-def>, ...
+	ADJCALLSTACKUP 4, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg15<def> = COPY %R0; GPRnopc:%vreg15
+	t2CMPri %vreg15, 0, pred:14, pred:%noreg, %CPSR<imp-def>; GPRnopc:%vreg15
+	%vreg16<def,tied1> = t2MOVCCi %vreg13<tied0>, 1, pred:0, pred:%CPSR; rGPR:%vreg16,%vreg13
+	%R0<def> = COPY %vreg16; rGPR:%vreg16
+	tBX_RET pred:14, pred:%noreg, %R0<imp-use>
+
+# End machine code for function autohelperpat1088.
+
+# After Expand ISel Pseudo-instructions:
+# Machine code for function autohelperpat1088: SSA
+Function Live Ins: %R0 in %vreg0, %R1 in %vreg1, %R2 in %vreg2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R2
+	%vreg2<def> = COPY %R2; GPR:%vreg2
+	%vreg1<def> = COPY %R1; rGPR:%vreg1
+	%vreg0<def> = COPY %R0; rGPR:%vreg0
+	%vreg4<def> = t2MOVi32imm <ga:@transformation>; rGPR:%vreg4
+	%vreg5<def> = t2ADDrs %vreg4<kill>, %vreg0, 18, pred:14, pred:%noreg, opt:%noreg; GPRnopc:%vreg5 rGPR:%vreg4,%vreg0
+	%vreg6<def> = t2MOVi16 21856, pred:14, pred:%noreg; rGPR:%vreg6
+	%vreg7<def> = t2LDRs %vreg5, %vreg6<kill>, 0, pred:14, pred:%noreg; mem:LD4[%4] GPRnopc:%vreg7,%vreg5 rGPR:%vreg6
+	%vreg8<def> = t2MOVi 23040, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg8
+	%vreg9<def> = t2LDRs %vreg5, %vreg8<kill>, 0, pred:14, pred:%noreg; mem:LD4[%1] GPRnopc:%vreg9,%vreg5 rGPR:%vreg8
+	%vreg10<def> = t2ADDrr %vreg7<kill>, %vreg1, pred:14, pred:%noreg, opt:%noreg; GPRnopc:%vreg10,%vreg7 rGPR:%vreg1
+	ADJCALLSTACKDOWN 4, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg11<def> = COPY %SP; GPR:%vreg11
+	t2STRi12 %vreg10<kill>, %vreg11, 0, pred:14, pred:%noreg; mem:ST4[Stack] GPRnopc:%vreg10 GPR:%vreg11
+	%vreg12<def> = t2ADDrr %vreg9<kill>, %vreg1, pred:14, pred:%noreg, opt:%noreg; GPRnopc:%vreg12,%vreg9 rGPR:%vreg1
+	%vreg13<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg13
+	%vreg14<def> = t2MOVi 1, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg14
+	%R0<def> = COPY %vreg2; GPR:%vreg2
+	%R1<def> = COPY %vreg13; rGPR:%vreg13
+	%R2<def> = COPY %vreg14; rGPR:%vreg14
+	%R3<def> = COPY %vreg12; GPRnopc:%vreg12
+	tBL pred:14, pred:%noreg, <ga:@play_attack_defend_n>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, %R3<imp-use>, %SP<imp-def>, %R0<imp-def>, ...
+	ADJCALLSTACKUP 4, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg15<def> = COPY %R0; GPRnopc:%vreg15
+	t2CMPri %vreg15, 0, pred:14, pred:%noreg, %CPSR<imp-def>; GPRnopc:%vreg15
+	%vreg16<def,tied1> = t2MOVCCi %vreg13<tied0>, 1, pred:0, pred:%CPSR; rGPR:%vreg16,%vreg13
+	%R0<def> = COPY %vreg16; rGPR:%vreg16
+	tBX_RET pred:14, pred:%noreg, %R0<imp-use>
+
+# End machine code for function autohelperpat1088.
+
+# After Tail Duplication:
+# Machine code for function autohelperpat1088: SSA
+Function Live Ins: %R0 in %vreg0, %R1 in %vreg1, %R2 in %vreg2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R2
+	%vreg2<def> = COPY %R2; GPR:%vreg2
+	%vreg1<def> = COPY %R1; rGPR:%vreg1
+	%vreg0<def> = COPY %R0; rGPR:%vreg0
+	%vreg4<def> = t2MOVi32imm <ga:@transformation>; rGPR:%vreg4
+	%vreg5<def> = t2ADDrs %vreg4<kill>, %vreg0, 18, pred:14, pred:%noreg, opt:%noreg; GPRnopc:%vreg5 rGPR:%vreg4,%vreg0
+	%vreg6<def> = t2MOVi16 21856, pred:14, pred:%noreg; rGPR:%vreg6
+	%vreg7<def> = t2LDRs %vreg5, %vreg6<kill>, 0, pred:14, pred:%noreg; mem:LD4[%4] GPRnopc:%vreg7,%vreg5 rGPR:%vreg6
+	%vreg8<def> = t2MOVi 23040, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg8
+	%vreg9<def> = t2LDRs %vreg5, %vreg8<kill>, 0, pred:14, pred:%noreg; mem:LD4[%1] GPRnopc:%vreg9,%vreg5 rGPR:%vreg8
+	%vreg10<def> = t2ADDrr %vreg7<kill>, %vreg1, pred:14, pred:%noreg, opt:%noreg; GPRnopc:%vreg10,%vreg7 rGPR:%vreg1
+	ADJCALLSTACKDOWN 4, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg11<def> = COPY %SP; GPR:%vreg11
+	t2STRi12 %vreg10<kill>, %vreg11, 0, pred:14, pred:%noreg; mem:ST4[Stack] GPRnopc:%vreg10 GPR:%vreg11
+	%vreg12<def> = t2ADDrr %vreg9<kill>, %vreg1, pred:14, pred:%noreg, opt:%noreg; GPRnopc:%vreg12,%vreg9 rGPR:%vreg1
+	%vreg13<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg13
+	%vreg14<def> = t2MOVi 1, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg14
+	%R0<def> = COPY %vreg2; GPR:%vreg2
+	%R1<def> = COPY %vreg13; rGPR:%vreg13
+	%R2<def> = COPY %vreg14; rGPR:%vreg14
+	%R3<def> = COPY %vreg12; GPRnopc:%vreg12
+	tBL pred:14, pred:%noreg, <ga:@play_attack_defend_n>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, %R3<imp-use>, %SP<imp-def>, %R0<imp-def>, ...
+	ADJCALLSTACKUP 4, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg15<def> = COPY %R0; GPRnopc:%vreg15
+	t2CMPri %vreg15, 0, pred:14, pred:%noreg, %CPSR<imp-def>; GPRnopc:%vreg15
+	%vreg16<def,tied1> = t2MOVCCi %vreg13<tied0>, 1, pred:0, pred:%CPSR; rGPR:%vreg16,%vreg13
+	%R0<def> = COPY %vreg16; rGPR:%vreg16
+	tBX_RET pred:14, pred:%noreg, %R0<imp-use>
+
+# End machine code for function autohelperpat1088.
+
+# After Optimize machine instruction PHIs:
+# Machine code for function autohelperpat1088: SSA
+Function Live Ins: %R0 in %vreg0, %R1 in %vreg1, %R2 in %vreg2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R2
+	%vreg2<def> = COPY %R2; GPR:%vreg2
+	%vreg1<def> = COPY %R1; rGPR:%vreg1
+	%vreg0<def> = COPY %R0; rGPR:%vreg0
+	%vreg4<def> = t2MOVi32imm <ga:@transformation>; rGPR:%vreg4
+	%vreg5<def> = t2ADDrs %vreg4<kill>, %vreg0, 18, pred:14, pred:%noreg, opt:%noreg; GPRnopc:%vreg5 rGPR:%vreg4,%vreg0
+	%vreg6<def> = t2MOVi16 21856, pred:14, pred:%noreg; rGPR:%vreg6
+	%vreg7<def> = t2LDRs %vreg5, %vreg6<kill>, 0, pred:14, pred:%noreg; mem:LD4[%4] GPRnopc:%vreg7,%vreg5 rGPR:%vreg6
+	%vreg8<def> = t2MOVi 23040, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg8
+	%vreg9<def> = t2LDRs %vreg5, %vreg8<kill>, 0, pred:14, pred:%noreg; mem:LD4[%1] GPRnopc:%vreg9,%vreg5 rGPR:%vreg8
+	%vreg10<def> = t2ADDrr %vreg7<kill>, %vreg1, pred:14, pred:%noreg, opt:%noreg; GPRnopc:%vreg10,%vreg7 rGPR:%vreg1
+	ADJCALLSTACKDOWN 4, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg11<def> = COPY %SP; GPR:%vreg11
+	t2STRi12 %vreg10<kill>, %vreg11, 0, pred:14, pred:%noreg; mem:ST4[Stack] GPRnopc:%vreg10 GPR:%vreg11
+	%vreg12<def> = t2ADDrr %vreg9<kill>, %vreg1, pred:14, pred:%noreg, opt:%noreg; GPRnopc:%vreg12,%vreg9 rGPR:%vreg1
+	%vreg13<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg13
+	%vreg14<def> = t2MOVi 1, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg14
+	%R0<def> = COPY %vreg2; GPR:%vreg2
+	%R1<def> = COPY %vreg13; rGPR:%vreg13
+	%R2<def> = COPY %vreg14; rGPR:%vreg14
+	%R3<def> = COPY %vreg12; GPRnopc:%vreg12
+	tBL pred:14, pred:%noreg, <ga:@play_attack_defend_n>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, %R3<imp-use>, %SP<imp-def>, %R0<imp-def>, ...
+	ADJCALLSTACKUP 4, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg15<def> = COPY %R0; GPRnopc:%vreg15
+	t2CMPri %vreg15, 0, pred:14, pred:%noreg, %CPSR<imp-def>; GPRnopc:%vreg15
+	%vreg16<def,tied1> = t2MOVCCi %vreg13<tied0>, 1, pred:0, pred:%CPSR; rGPR:%vreg16,%vreg13
+	%R0<def> = COPY %vreg16; rGPR:%vreg16
+	tBX_RET pred:14, pred:%noreg, %R0<imp-use>
+
+# End machine code for function autohelperpat1088.
+
+# After Merge disjoint stack slots:
+# Machine code for function autohelperpat1088: SSA
+Function Live Ins: %R0 in %vreg0, %R1 in %vreg1, %R2 in %vreg2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R2
+	%vreg2<def> = COPY %R2; GPR:%vreg2
+	%vreg1<def> = COPY %R1; rGPR:%vreg1
+	%vreg0<def> = COPY %R0; rGPR:%vreg0
+	%vreg4<def> = t2MOVi32imm <ga:@transformation>; rGPR:%vreg4
+	%vreg5<def> = t2ADDrs %vreg4<kill>, %vreg0, 18, pred:14, pred:%noreg, opt:%noreg; GPRnopc:%vreg5 rGPR:%vreg4,%vreg0
+	%vreg6<def> = t2MOVi16 21856, pred:14, pred:%noreg; rGPR:%vreg6
+	%vreg7<def> = t2LDRs %vreg5, %vreg6<kill>, 0, pred:14, pred:%noreg; mem:LD4[%4] GPRnopc:%vreg7,%vreg5 rGPR:%vreg6
+	%vreg8<def> = t2MOVi 23040, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg8
+	%vreg9<def> = t2LDRs %vreg5, %vreg8<kill>, 0, pred:14, pred:%noreg; mem:LD4[%1] GPRnopc:%vreg9,%vreg5 rGPR:%vreg8
+	%vreg10<def> = t2ADDrr %vreg7<kill>, %vreg1, pred:14, pred:%noreg, opt:%noreg; GPRnopc:%vreg10,%vreg7 rGPR:%vreg1
+	ADJCALLSTACKDOWN 4, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg11<def> = COPY %SP; GPR:%vreg11
+	t2STRi12 %vreg10<kill>, %vreg11, 0, pred:14, pred:%noreg; mem:ST4[Stack] GPRnopc:%vreg10 GPR:%vreg11
+	%vreg12<def> = t2ADDrr %vreg9<kill>, %vreg1, pred:14, pred:%noreg, opt:%noreg; GPRnopc:%vreg12,%vreg9 rGPR:%vreg1
+	%vreg13<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg13
+	%vreg14<def> = t2MOVi 1, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg14
+	%R0<def> = COPY %vreg2; GPR:%vreg2
+	%R1<def> = COPY %vreg13; rGPR:%vreg13
+	%R2<def> = COPY %vreg14; rGPR:%vreg14
+	%R3<def> = COPY %vreg12; GPRnopc:%vreg12
+	tBL pred:14, pred:%noreg, <ga:@play_attack_defend_n>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, %R3<imp-use>, %SP<imp-def>, %R0<imp-def>, ...
+	ADJCALLSTACKUP 4, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg15<def> = COPY %R0; GPRnopc:%vreg15
+	t2CMPri %vreg15, 0, pred:14, pred:%noreg, %CPSR<imp-def>; GPRnopc:%vreg15
+	%vreg16<def,tied1> = t2MOVCCi %vreg13<tied0>, 1, pred:0, pred:%CPSR; rGPR:%vreg16,%vreg13
+	%R0<def> = COPY %vreg16; rGPR:%vreg16
+	tBX_RET pred:14, pred:%noreg, %R0<imp-use>
+
+# End machine code for function autohelperpat1088.
+
+# After Local Stack Slot Allocation:
+# Machine code for function autohelperpat1088: SSA
+Function Live Ins: %R0 in %vreg0, %R1 in %vreg1, %R2 in %vreg2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R2
+	%vreg2<def> = COPY %R2; GPR:%vreg2
+	%vreg1<def> = COPY %R1; rGPR:%vreg1
+	%vreg0<def> = COPY %R0; rGPR:%vreg0
+	%vreg4<def> = t2MOVi32imm <ga:@transformation>; rGPR:%vreg4
+	%vreg5<def> = t2ADDrs %vreg4<kill>, %vreg0, 18, pred:14, pred:%noreg, opt:%noreg; GPRnopc:%vreg5 rGPR:%vreg4,%vreg0
+	%vreg6<def> = t2MOVi16 21856, pred:14, pred:%noreg; rGPR:%vreg6
+	%vreg7<def> = t2LDRs %vreg5, %vreg6<kill>, 0, pred:14, pred:%noreg; mem:LD4[%4] GPRnopc:%vreg7,%vreg5 rGPR:%vreg6
+	%vreg8<def> = t2MOVi 23040, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg8
+	%vreg9<def> = t2LDRs %vreg5, %vreg8<kill>, 0, pred:14, pred:%noreg; mem:LD4[%1] GPRnopc:%vreg9,%vreg5 rGPR:%vreg8
+	%vreg10<def> = t2ADDrr %vreg7<kill>, %vreg1, pred:14, pred:%noreg, opt:%noreg; GPRnopc:%vreg10,%vreg7 rGPR:%vreg1
+	ADJCALLSTACKDOWN 4, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg11<def> = COPY %SP; GPR:%vreg11
+	t2STRi12 %vreg10<kill>, %vreg11, 0, pred:14, pred:%noreg; mem:ST4[Stack] GPRnopc:%vreg10 GPR:%vreg11
+	%vreg12<def> = t2ADDrr %vreg9<kill>, %vreg1, pred:14, pred:%noreg, opt:%noreg; GPRnopc:%vreg12,%vreg9 rGPR:%vreg1
+	%vreg13<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg13
+	%vreg14<def> = t2MOVi 1, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg14
+	%R0<def> = COPY %vreg2; GPR:%vreg2
+	%R1<def> = COPY %vreg13; rGPR:%vreg13
+	%R2<def> = COPY %vreg14; rGPR:%vreg14
+	%R3<def> = COPY %vreg12; GPRnopc:%vreg12
+	tBL pred:14, pred:%noreg, <ga:@play_attack_defend_n>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, %R3<imp-use>, %SP<imp-def>, %R0<imp-def>, ...
+	ADJCALLSTACKUP 4, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg15<def> = COPY %R0; GPRnopc:%vreg15
+	t2CMPri %vreg15, 0, pred:14, pred:%noreg, %CPSR<imp-def>; GPRnopc:%vreg15
+	%vreg16<def,tied1> = t2MOVCCi %vreg13<tied0>, 1, pred:0, pred:%CPSR; rGPR:%vreg16,%vreg13
+	%R0<def> = COPY %vreg16; rGPR:%vreg16
+	tBX_RET pred:14, pred:%noreg, %R0<imp-use>
+
+# End machine code for function autohelperpat1088.
+
+# After Remove dead machine instructions:
+# Machine code for function autohelperpat1088: SSA
+Function Live Ins: %R0 in %vreg0, %R1 in %vreg1, %R2 in %vreg2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R2
+	%vreg2<def> = COPY %R2; GPR:%vreg2
+	%vreg1<def> = COPY %R1; rGPR:%vreg1
+	%vreg0<def> = COPY %R0; rGPR:%vreg0
+	%vreg4<def> = t2MOVi32imm <ga:@transformation>; rGPR:%vreg4
+	%vreg5<def> = t2ADDrs %vreg4<kill>, %vreg0, 18, pred:14, pred:%noreg, opt:%noreg; GPRnopc:%vreg5 rGPR:%vreg4,%vreg0
+	%vreg6<def> = t2MOVi16 21856, pred:14, pred:%noreg; rGPR:%vreg6
+	%vreg7<def> = t2LDRs %vreg5, %vreg6<kill>, 0, pred:14, pred:%noreg; mem:LD4[%4] GPRnopc:%vreg7,%vreg5 rGPR:%vreg6
+	%vreg8<def> = t2MOVi 23040, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg8
+	%vreg9<def> = t2LDRs %vreg5, %vreg8<kill>, 0, pred:14, pred:%noreg; mem:LD4[%1] GPRnopc:%vreg9,%vreg5 rGPR:%vreg8
+	%vreg10<def> = t2ADDrr %vreg7<kill>, %vreg1, pred:14, pred:%noreg, opt:%noreg; GPRnopc:%vreg10,%vreg7 rGPR:%vreg1
+	ADJCALLSTACKDOWN 4, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg11<def> = COPY %SP; GPR:%vreg11
+	t2STRi12 %vreg10<kill>, %vreg11, 0, pred:14, pred:%noreg; mem:ST4[Stack] GPRnopc:%vreg10 GPR:%vreg11
+	%vreg12<def> = t2ADDrr %vreg9<kill>, %vreg1, pred:14, pred:%noreg, opt:%noreg; GPRnopc:%vreg12,%vreg9 rGPR:%vreg1
+	%vreg13<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg13
+	%vreg14<def> = t2MOVi 1, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg14
+	%R0<def> = COPY %vreg2; GPR:%vreg2
+	%R1<def> = COPY %vreg13; rGPR:%vreg13
+	%R2<def> = COPY %vreg14; rGPR:%vreg14
+	%R3<def> = COPY %vreg12; GPRnopc:%vreg12
+	tBL pred:14, pred:%noreg, <ga:@play_attack_defend_n>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, %R3<imp-use>, %SP<imp-def>, %R0<imp-def>, ...
+	ADJCALLSTACKUP 4, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg15<def> = COPY %R0; GPRnopc:%vreg15
+	t2CMPri %vreg15, 0, pred:14, pred:%noreg, %CPSR<imp-def>; GPRnopc:%vreg15
+	%vreg16<def,tied1> = t2MOVCCi %vreg13<tied0>, 1, pred:0, pred:%CPSR; rGPR:%vreg16,%vreg13
+	%R0<def> = COPY %vreg16; rGPR:%vreg16
+	tBX_RET pred:14, pred:%noreg, %R0<imp-use>
+
+# End machine code for function autohelperpat1088.
+
+# After Machine Loop Invariant Code Motion:
+# Machine code for function autohelperpat1088: SSA
+Function Live Ins: %R0 in %vreg0, %R1 in %vreg1, %R2 in %vreg2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R2
+	%vreg2<def> = COPY %R2; GPR:%vreg2
+	%vreg1<def> = COPY %R1; rGPR:%vreg1
+	%vreg0<def> = COPY %R0; rGPR:%vreg0
+	%vreg4<def> = t2MOVi32imm <ga:@transformation>; rGPR:%vreg4
+	%vreg5<def> = t2ADDrs %vreg4<kill>, %vreg0, 18, pred:14, pred:%noreg, opt:%noreg; GPRnopc:%vreg5 rGPR:%vreg4,%vreg0
+	%vreg6<def> = t2MOVi16 21856, pred:14, pred:%noreg; rGPR:%vreg6
+	%vreg7<def> = t2LDRs %vreg5, %vreg6<kill>, 0, pred:14, pred:%noreg; mem:LD4[%4] GPRnopc:%vreg7,%vreg5 rGPR:%vreg6
+	%vreg8<def> = t2MOVi 23040, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg8
+	%vreg9<def> = t2LDRs %vreg5, %vreg8<kill>, 0, pred:14, pred:%noreg; mem:LD4[%1] GPRnopc:%vreg9,%vreg5 rGPR:%vreg8
+	%vreg10<def> = t2ADDrr %vreg7<kill>, %vreg1, pred:14, pred:%noreg, opt:%noreg; GPRnopc:%vreg10,%vreg7 rGPR:%vreg1
+	ADJCALLSTACKDOWN 4, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg11<def> = COPY %SP; GPR:%vreg11
+	t2STRi12 %vreg10<kill>, %vreg11, 0, pred:14, pred:%noreg; mem:ST4[Stack] GPRnopc:%vreg10 GPR:%vreg11
+	%vreg12<def> = t2ADDrr %vreg9<kill>, %vreg1, pred:14, pred:%noreg, opt:%noreg; GPRnopc:%vreg12,%vreg9 rGPR:%vreg1
+	%vreg13<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg13
+	%vreg14<def> = t2MOVi 1, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg14
+	%R0<def> = COPY %vreg2; GPR:%vreg2
+	%R1<def> = COPY %vreg13; rGPR:%vreg13
+	%R2<def> = COPY %vreg14; rGPR:%vreg14
+	%R3<def> = COPY %vreg12; GPRnopc:%vreg12
+	tBL pred:14, pred:%noreg, <ga:@play_attack_defend_n>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, %R3<imp-use>, %SP<imp-def>, %R0<imp-def>, ...
+	ADJCALLSTACKUP 4, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg15<def> = COPY %R0; GPRnopc:%vreg15
+	t2CMPri %vreg15, 0, pred:14, pred:%noreg, %CPSR<imp-def>; GPRnopc:%vreg15
+	%vreg16<def,tied1> = t2MOVCCi %vreg13<tied0>, 1, pred:0, pred:%CPSR; rGPR:%vreg16,%vreg13
+	%R0<def> = COPY %vreg16; rGPR:%vreg16
+	tBX_RET pred:14, pred:%noreg, %R0<imp-use>
+
+# End machine code for function autohelperpat1088.
+
+# After Machine Common Subexpression Elimination:
+# Machine code for function autohelperpat1088: SSA
+Function Live Ins: %R0 in %vreg0, %R1 in %vreg1, %R2 in %vreg2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R2
+	%vreg2<def> = COPY %R2; GPR:%vreg2
+	%vreg1<def> = COPY %R1; rGPR:%vreg1
+	%vreg0<def> = COPY %R0; rGPR:%vreg0
+	%vreg4<def> = t2MOVi32imm <ga:@transformation>; rGPR:%vreg4
+	%vreg5<def> = t2ADDrs %vreg4<kill>, %vreg0, 18, pred:14, pred:%noreg, opt:%noreg; GPRnopc:%vreg5 rGPR:%vreg4,%vreg0
+	%vreg6<def> = t2MOVi16 21856, pred:14, pred:%noreg; rGPR:%vreg6
+	%vreg7<def> = t2LDRs %vreg5, %vreg6<kill>, 0, pred:14, pred:%noreg; mem:LD4[%4] GPRnopc:%vreg7,%vreg5 rGPR:%vreg6
+	%vreg8<def> = t2MOVi 23040, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg8
+	%vreg9<def> = t2LDRs %vreg5, %vreg8<kill>, 0, pred:14, pred:%noreg; mem:LD4[%1] GPRnopc:%vreg9,%vreg5 rGPR:%vreg8
+	%vreg10<def> = t2ADDrr %vreg7<kill>, %vreg1, pred:14, pred:%noreg, opt:%noreg; GPRnopc:%vreg10,%vreg7 rGPR:%vreg1
+	ADJCALLSTACKDOWN 4, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg11<def> = COPY %SP; GPR:%vreg11
+	t2STRi12 %vreg10<kill>, %vreg11, 0, pred:14, pred:%noreg; mem:ST4[Stack] GPRnopc:%vreg10 GPR:%vreg11
+	%vreg12<def> = t2ADDrr %vreg9<kill>, %vreg1, pred:14, pred:%noreg, opt:%noreg; GPRnopc:%vreg12,%vreg9 rGPR:%vreg1
+	%vreg13<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg13
+	%vreg14<def> = t2MOVi 1, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg14
+	%R0<def> = COPY %vreg2; GPR:%vreg2
+	%R1<def> = COPY %vreg13; rGPR:%vreg13
+	%R2<def> = COPY %vreg14; rGPR:%vreg14
+	%R3<def> = COPY %vreg12; GPRnopc:%vreg12
+	tBL pred:14, pred:%noreg, <ga:@play_attack_defend_n>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, %R3<imp-use>, %SP<imp-def>, %R0<imp-def>, ...
+	ADJCALLSTACKUP 4, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg15<def> = COPY %R0; GPRnopc:%vreg15
+	t2CMPri %vreg15, 0, pred:14, pred:%noreg, %CPSR<imp-def>; GPRnopc:%vreg15
+	%vreg16<def,tied1> = t2MOVCCi %vreg13<tied0>, 1, pred:0, pred:%CPSR; rGPR:%vreg16,%vreg13
+	%R0<def> = COPY %vreg16; rGPR:%vreg16
+	tBX_RET pred:14, pred:%noreg, %R0<imp-use>
+
+# End machine code for function autohelperpat1088.
+
+# After Machine code sinking:
+# Machine code for function autohelperpat1088: SSA
+Function Live Ins: %R0 in %vreg0, %R1 in %vreg1, %R2 in %vreg2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R2
+	%vreg2<def> = COPY %R2; GPR:%vreg2
+	%vreg1<def> = COPY %R1; rGPR:%vreg1
+	%vreg0<def> = COPY %R0; rGPR:%vreg0
+	%vreg4<def> = t2MOVi32imm <ga:@transformation>; rGPR:%vreg4
+	%vreg5<def> = t2ADDrs %vreg4<kill>, %vreg0, 18, pred:14, pred:%noreg, opt:%noreg; GPRnopc:%vreg5 rGPR:%vreg4,%vreg0
+	%vreg6<def> = t2MOVi16 21856, pred:14, pred:%noreg; rGPR:%vreg6
+	%vreg7<def> = t2LDRs %vreg5, %vreg6<kill>, 0, pred:14, pred:%noreg; mem:LD4[%4] GPRnopc:%vreg7,%vreg5 rGPR:%vreg6
+	%vreg8<def> = t2MOVi 23040, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg8
+	%vreg9<def> = t2LDRs %vreg5, %vreg8<kill>, 0, pred:14, pred:%noreg; mem:LD4[%1] GPRnopc:%vreg9,%vreg5 rGPR:%vreg8
+	%vreg10<def> = t2ADDrr %vreg7<kill>, %vreg1, pred:14, pred:%noreg, opt:%noreg; GPRnopc:%vreg10,%vreg7 rGPR:%vreg1
+	ADJCALLSTACKDOWN 4, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg11<def> = COPY %SP; GPR:%vreg11
+	t2STRi12 %vreg10<kill>, %vreg11, 0, pred:14, pred:%noreg; mem:ST4[Stack] GPRnopc:%vreg10 GPR:%vreg11
+	%vreg12<def> = t2ADDrr %vreg9<kill>, %vreg1, pred:14, pred:%noreg, opt:%noreg; GPRnopc:%vreg12,%vreg9 rGPR:%vreg1
+	%vreg13<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg13
+	%vreg14<def> = t2MOVi 1, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg14
+	%R0<def> = COPY %vreg2; GPR:%vreg2
+	%R1<def> = COPY %vreg13; rGPR:%vreg13
+	%R2<def> = COPY %vreg14; rGPR:%vreg14
+	%R3<def> = COPY %vreg12; GPRnopc:%vreg12
+	tBL pred:14, pred:%noreg, <ga:@play_attack_defend_n>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, %R3<imp-use>, %SP<imp-def>, %R0<imp-def>, ...
+	ADJCALLSTACKUP 4, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg15<def> = COPY %R0; GPRnopc:%vreg15
+	t2CMPri %vreg15, 0, pred:14, pred:%noreg, %CPSR<imp-def>; GPRnopc:%vreg15
+	%vreg16<def,tied1> = t2MOVCCi %vreg13<tied0>, 1, pred:0, pred:%CPSR; rGPR:%vreg16,%vreg13
+	%R0<def> = COPY %vreg16; rGPR:%vreg16
+	tBX_RET pred:14, pred:%noreg, %R0<imp-use>
+
+# End machine code for function autohelperpat1088.
+
+# After Peephole Optimizations:
+# Machine code for function autohelperpat1088: SSA
+Function Live Ins: %R0 in %vreg0, %R1 in %vreg1, %R2 in %vreg2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R2
+	%vreg2<def> = COPY %R2; GPR:%vreg2
+	%vreg1<def> = COPY %R1; rGPR:%vreg1
+	%vreg0<def> = COPY %R0; rGPR:%vreg0
+	%vreg4<def> = t2MOVi32imm <ga:@transformation>; rGPR:%vreg4
+	%vreg5<def> = t2ADDrs %vreg4<kill>, %vreg0, 18, pred:14, pred:%noreg, opt:%noreg; GPRnopc:%vreg5 rGPR:%vreg4,%vreg0
+	%vreg6<def> = t2MOVi16 21856, pred:14, pred:%noreg; rGPR:%vreg6
+	%vreg7<def> = t2LDRs %vreg5, %vreg6<kill>, 0, pred:14, pred:%noreg; mem:LD4[%4] GPRnopc:%vreg7,%vreg5 rGPR:%vreg6
+	%vreg8<def> = t2MOVi 23040, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg8
+	%vreg9<def> = t2LDRs %vreg5, %vreg8<kill>, 0, pred:14, pred:%noreg; mem:LD4[%1] GPRnopc:%vreg9,%vreg5 rGPR:%vreg8
+	%vreg10<def> = t2ADDrr %vreg7<kill>, %vreg1, pred:14, pred:%noreg, opt:%noreg; GPRnopc:%vreg10,%vreg7 rGPR:%vreg1
+	ADJCALLSTACKDOWN 4, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg11<def> = COPY %SP; GPR:%vreg11
+	t2STRi12 %vreg10<kill>, %vreg11, 0, pred:14, pred:%noreg; mem:ST4[Stack] GPRnopc:%vreg10 GPR:%vreg11
+	%vreg12<def> = t2ADDrr %vreg9<kill>, %vreg1, pred:14, pred:%noreg, opt:%noreg; GPRnopc:%vreg12,%vreg9 rGPR:%vreg1
+	%vreg13<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg13
+	%vreg14<def> = t2MOVi 1, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg14
+	%R0<def> = COPY %vreg2; GPR:%vreg2
+	%R1<def> = COPY %vreg13; rGPR:%vreg13
+	%R2<def> = COPY %vreg14; rGPR:%vreg14
+	%R3<def> = COPY %vreg12; GPRnopc:%vreg12
+	tBL pred:14, pred:%noreg, <ga:@play_attack_defend_n>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, %R3<imp-use>, %SP<imp-def>, %R0<imp-def>, ...
+	ADJCALLSTACKUP 4, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg15<def> = COPY %R0; GPRnopc:%vreg15
+	t2CMPri %vreg15, 0, pred:14, pred:%noreg, %CPSR<imp-def>; GPRnopc:%vreg15
+	%vreg16<def,tied1> = t2MOVCCi %vreg13<tied0>, 1, pred:0, pred:%CPSR; rGPR:%vreg16,%vreg13
+	%R0<def> = COPY %vreg16; rGPR:%vreg16
+	tBX_RET pred:14, pred:%noreg, %R0<imp-use>
+
+# End machine code for function autohelperpat1088.
+
+# After Remove dead machine instructions:
+# Machine code for function autohelperpat1088: SSA
+Function Live Ins: %R0 in %vreg0, %R1 in %vreg1, %R2 in %vreg2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R2
+	%vreg2<def> = COPY %R2; GPR:%vreg2
+	%vreg1<def> = COPY %R1; rGPR:%vreg1
+	%vreg0<def> = COPY %R0; rGPR:%vreg0
+	%vreg4<def> = t2MOVi32imm <ga:@transformation>; rGPR:%vreg4
+	%vreg5<def> = t2ADDrs %vreg4<kill>, %vreg0, 18, pred:14, pred:%noreg, opt:%noreg; GPRnopc:%vreg5 rGPR:%vreg4,%vreg0
+	%vreg6<def> = t2MOVi16 21856, pred:14, pred:%noreg; rGPR:%vreg6
+	%vreg7<def> = t2LDRs %vreg5, %vreg6<kill>, 0, pred:14, pred:%noreg; mem:LD4[%4] GPRnopc:%vreg7,%vreg5 rGPR:%vreg6
+	%vreg8<def> = t2MOVi 23040, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg8
+	%vreg9<def> = t2LDRs %vreg5, %vreg8<kill>, 0, pred:14, pred:%noreg; mem:LD4[%1] GPRnopc:%vreg9,%vreg5 rGPR:%vreg8
+	%vreg10<def> = t2ADDrr %vreg7<kill>, %vreg1, pred:14, pred:%noreg, opt:%noreg; GPRnopc:%vreg10,%vreg7 rGPR:%vreg1
+	ADJCALLSTACKDOWN 4, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg11<def> = COPY %SP; GPR:%vreg11
+	t2STRi12 %vreg10<kill>, %vreg11, 0, pred:14, pred:%noreg; mem:ST4[Stack] GPRnopc:%vreg10 GPR:%vreg11
+	%vreg12<def> = t2ADDrr %vreg9<kill>, %vreg1, pred:14, pred:%noreg, opt:%noreg; GPRnopc:%vreg12,%vreg9 rGPR:%vreg1
+	%vreg13<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg13
+	%vreg14<def> = t2MOVi 1, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg14
+	%R0<def> = COPY %vreg2; GPR:%vreg2
+	%R1<def> = COPY %vreg13; rGPR:%vreg13
+	%R2<def> = COPY %vreg14; rGPR:%vreg14
+	%R3<def> = COPY %vreg12; GPRnopc:%vreg12
+	tBL pred:14, pred:%noreg, <ga:@play_attack_defend_n>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, %R3<imp-use>, %SP<imp-def>, %R0<imp-def>, ...
+	ADJCALLSTACKUP 4, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg15<def> = COPY %R0; GPRnopc:%vreg15
+	t2CMPri %vreg15, 0, pred:14, pred:%noreg, %CPSR<imp-def>; GPRnopc:%vreg15
+	%vreg16<def,tied1> = t2MOVCCi %vreg13<tied0>, 1, pred:0, pred:%CPSR; rGPR:%vreg16,%vreg13
+	%R0<def> = COPY %vreg16; rGPR:%vreg16
+	tBX_RET pred:14, pred:%noreg, %R0<imp-use>
+
+# End machine code for function autohelperpat1088.
+
+# After ARM MLA / MLS expansion pass:
+# Machine code for function autohelperpat1088: SSA
+Function Live Ins: %R0 in %vreg0, %R1 in %vreg1, %R2 in %vreg2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R2
+	%vreg2<def> = COPY %R2; GPR:%vreg2
+	%vreg1<def> = COPY %R1; rGPR:%vreg1
+	%vreg0<def> = COPY %R0; rGPR:%vreg0
+	%vreg4<def> = t2MOVi32imm <ga:@transformation>; rGPR:%vreg4
+	%vreg5<def> = t2ADDrs %vreg4<kill>, %vreg0, 18, pred:14, pred:%noreg, opt:%noreg; GPRnopc:%vreg5 rGPR:%vreg4,%vreg0
+	%vreg6<def> = t2MOVi16 21856, pred:14, pred:%noreg; rGPR:%vreg6
+	%vreg7<def> = t2LDRs %vreg5, %vreg6<kill>, 0, pred:14, pred:%noreg; mem:LD4[%4] GPRnopc:%vreg7,%vreg5 rGPR:%vreg6
+	%vreg8<def> = t2MOVi 23040, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg8
+	%vreg9<def> = t2LDRs %vreg5, %vreg8<kill>, 0, pred:14, pred:%noreg; mem:LD4[%1] GPRnopc:%vreg9,%vreg5 rGPR:%vreg8
+	%vreg10<def> = t2ADDrr %vreg7<kill>, %vreg1, pred:14, pred:%noreg, opt:%noreg; GPRnopc:%vreg10,%vreg7 rGPR:%vreg1
+	ADJCALLSTACKDOWN 4, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg11<def> = COPY %SP; GPR:%vreg11
+	t2STRi12 %vreg10<kill>, %vreg11, 0, pred:14, pred:%noreg; mem:ST4[Stack] GPRnopc:%vreg10 GPR:%vreg11
+	%vreg12<def> = t2ADDrr %vreg9<kill>, %vreg1, pred:14, pred:%noreg, opt:%noreg; GPRnopc:%vreg12,%vreg9 rGPR:%vreg1
+	%vreg13<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg13
+	%vreg14<def> = t2MOVi 1, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg14
+	%R0<def> = COPY %vreg2; GPR:%vreg2
+	%R1<def> = COPY %vreg13; rGPR:%vreg13
+	%R2<def> = COPY %vreg14; rGPR:%vreg14
+	%R3<def> = COPY %vreg12; GPRnopc:%vreg12
+	tBL pred:14, pred:%noreg, <ga:@play_attack_defend_n>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, %R3<imp-use>, %SP<imp-def>, %R0<imp-def>, ...
+	ADJCALLSTACKUP 4, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg15<def> = COPY %R0; GPRnopc:%vreg15
+	t2CMPri %vreg15, 0, pred:14, pred:%noreg, %CPSR<imp-def>; GPRnopc:%vreg15
+	%vreg16<def,tied1> = t2MOVCCi %vreg13<tied0>, 1, pred:0, pred:%CPSR; rGPR:%vreg16,%vreg13
+	%R0<def> = COPY %vreg16; rGPR:%vreg16
+	tBX_RET pred:14, pred:%noreg, %R0<imp-use>
+
+# End machine code for function autohelperpat1088.
+
+# After ARM pre- register allocation load / store optimization pass:
+# Machine code for function autohelperpat1088: SSA
+Function Live Ins: %R0 in %vreg0, %R1 in %vreg1, %R2 in %vreg2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R2
+	%vreg2<def> = COPY %R2; GPR:%vreg2
+	%vreg1<def> = COPY %R1; rGPR:%vreg1
+	%vreg0<def> = COPY %R0; rGPR:%vreg0
+	%vreg4<def> = t2MOVi32imm <ga:@transformation>; rGPR:%vreg4
+	%vreg5<def> = t2ADDrs %vreg4<kill>, %vreg0, 18, pred:14, pred:%noreg, opt:%noreg; GPRnopc:%vreg5 rGPR:%vreg4,%vreg0
+	%vreg6<def> = t2MOVi16 21856, pred:14, pred:%noreg; rGPR:%vreg6
+	%vreg7<def> = t2LDRs %vreg5, %vreg6<kill>, 0, pred:14, pred:%noreg; mem:LD4[%4] GPRnopc:%vreg7,%vreg5 rGPR:%vreg6
+	%vreg8<def> = t2MOVi 23040, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg8
+	%vreg9<def> = t2LDRs %vreg5, %vreg8<kill>, 0, pred:14, pred:%noreg; mem:LD4[%1] GPRnopc:%vreg9,%vreg5 rGPR:%vreg8
+	%vreg10<def> = t2ADDrr %vreg7<kill>, %vreg1, pred:14, pred:%noreg, opt:%noreg; GPRnopc:%vreg10,%vreg7 rGPR:%vreg1
+	ADJCALLSTACKDOWN 4, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg11<def> = COPY %SP; GPR:%vreg11
+	t2STRi12 %vreg10<kill>, %vreg11, 0, pred:14, pred:%noreg; mem:ST4[Stack] GPRnopc:%vreg10 GPR:%vreg11
+	%vreg12<def> = t2ADDrr %vreg9<kill>, %vreg1, pred:14, pred:%noreg, opt:%noreg; GPRnopc:%vreg12,%vreg9 rGPR:%vreg1
+	%vreg13<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg13
+	%vreg14<def> = t2MOVi 1, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg14
+	%R0<def> = COPY %vreg2; GPR:%vreg2
+	%R1<def> = COPY %vreg13; rGPR:%vreg13
+	%R2<def> = COPY %vreg14; rGPR:%vreg14
+	%R3<def> = COPY %vreg12; GPRnopc:%vreg12
+	tBL pred:14, pred:%noreg, <ga:@play_attack_defend_n>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, %R3<imp-use>, %SP<imp-def>, %R0<imp-def>, ...
+	ADJCALLSTACKUP 4, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg15<def> = COPY %R0; GPRnopc:%vreg15
+	t2CMPri %vreg15, 0, pred:14, pred:%noreg, %CPSR<imp-def>; GPRnopc:%vreg15
+	%vreg16<def,tied1> = t2MOVCCi %vreg13<tied0>, 1, pred:0, pred:%CPSR; rGPR:%vreg16,%vreg13
+	%R0<def> = COPY %vreg16; rGPR:%vreg16
+	tBX_RET pred:14, pred:%noreg, %R0<imp-use>
+
+# End machine code for function autohelperpat1088.
+
+# After ARM A15 S->D optimizer:
+# Machine code for function autohelperpat1088: SSA
+Function Live Ins: %R0 in %vreg0, %R1 in %vreg1, %R2 in %vreg2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R2
+	%vreg2<def> = COPY %R2; GPR:%vreg2
+	%vreg1<def> = COPY %R1; rGPR:%vreg1
+	%vreg0<def> = COPY %R0; rGPR:%vreg0
+	%vreg4<def> = t2MOVi32imm <ga:@transformation>; rGPR:%vreg4
+	%vreg5<def> = t2ADDrs %vreg4<kill>, %vreg0, 18, pred:14, pred:%noreg, opt:%noreg; GPRnopc:%vreg5 rGPR:%vreg4,%vreg0
+	%vreg6<def> = t2MOVi16 21856, pred:14, pred:%noreg; rGPR:%vreg6
+	%vreg7<def> = t2LDRs %vreg5, %vreg6<kill>, 0, pred:14, pred:%noreg; mem:LD4[%4] GPRnopc:%vreg7,%vreg5 rGPR:%vreg6
+	%vreg8<def> = t2MOVi 23040, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg8
+	%vreg9<def> = t2LDRs %vreg5, %vreg8<kill>, 0, pred:14, pred:%noreg; mem:LD4[%1] GPRnopc:%vreg9,%vreg5 rGPR:%vreg8
+	%vreg10<def> = t2ADDrr %vreg7<kill>, %vreg1, pred:14, pred:%noreg, opt:%noreg; GPRnopc:%vreg10,%vreg7 rGPR:%vreg1
+	ADJCALLSTACKDOWN 4, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg11<def> = COPY %SP; GPR:%vreg11
+	t2STRi12 %vreg10<kill>, %vreg11, 0, pred:14, pred:%noreg; mem:ST4[Stack] GPRnopc:%vreg10 GPR:%vreg11
+	%vreg12<def> = t2ADDrr %vreg9<kill>, %vreg1, pred:14, pred:%noreg, opt:%noreg; GPRnopc:%vreg12,%vreg9 rGPR:%vreg1
+	%vreg13<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg13
+	%vreg14<def> = t2MOVi 1, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg14
+	%R0<def> = COPY %vreg2; GPR:%vreg2
+	%R1<def> = COPY %vreg13; rGPR:%vreg13
+	%R2<def> = COPY %vreg14; rGPR:%vreg14
+	%R3<def> = COPY %vreg12; GPRnopc:%vreg12
+	tBL pred:14, pred:%noreg, <ga:@play_attack_defend_n>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, %R3<imp-use>, %SP<imp-def>, %R0<imp-def>, ...
+	ADJCALLSTACKUP 4, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg15<def> = COPY %R0; GPRnopc:%vreg15
+	t2CMPri %vreg15, 0, pred:14, pred:%noreg, %CPSR<imp-def>; GPRnopc:%vreg15
+	%vreg16<def,tied1> = t2MOVCCi %vreg13<tied0>, 1, pred:0, pred:%CPSR; rGPR:%vreg16,%vreg13
+	%R0<def> = COPY %vreg16; rGPR:%vreg16
+	tBX_RET pred:14, pred:%noreg, %R0<imp-use>
+
+# End machine code for function autohelperpat1088.
+
+# After Process Implicit Definitions:
+# Machine code for function autohelperpat1088: SSA
+Function Live Ins: %R0 in %vreg0, %R1 in %vreg1, %R2 in %vreg2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R2
+	%vreg2<def> = COPY %R2; GPR:%vreg2
+	%vreg1<def> = COPY %R1; rGPR:%vreg1
+	%vreg0<def> = COPY %R0; rGPR:%vreg0
+	%vreg4<def> = t2MOVi32imm <ga:@transformation>; rGPR:%vreg4
+	%vreg5<def> = t2ADDrs %vreg4<kill>, %vreg0, 18, pred:14, pred:%noreg, opt:%noreg; GPRnopc:%vreg5 rGPR:%vreg4,%vreg0
+	%vreg6<def> = t2MOVi16 21856, pred:14, pred:%noreg; rGPR:%vreg6
+	%vreg7<def> = t2LDRs %vreg5, %vreg6<kill>, 0, pred:14, pred:%noreg; mem:LD4[%4] GPRnopc:%vreg7,%vreg5 rGPR:%vreg6
+	%vreg8<def> = t2MOVi 23040, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg8
+	%vreg9<def> = t2LDRs %vreg5, %vreg8<kill>, 0, pred:14, pred:%noreg; mem:LD4[%1] GPRnopc:%vreg9,%vreg5 rGPR:%vreg8
+	%vreg10<def> = t2ADDrr %vreg7<kill>, %vreg1, pred:14, pred:%noreg, opt:%noreg; GPRnopc:%vreg10,%vreg7 rGPR:%vreg1
+	ADJCALLSTACKDOWN 4, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg11<def> = COPY %SP; GPR:%vreg11
+	t2STRi12 %vreg10<kill>, %vreg11, 0, pred:14, pred:%noreg; mem:ST4[Stack] GPRnopc:%vreg10 GPR:%vreg11
+	%vreg12<def> = t2ADDrr %vreg9<kill>, %vreg1, pred:14, pred:%noreg, opt:%noreg; GPRnopc:%vreg12,%vreg9 rGPR:%vreg1
+	%vreg13<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg13
+	%vreg14<def> = t2MOVi 1, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg14
+	%R0<def> = COPY %vreg2; GPR:%vreg2
+	%R1<def> = COPY %vreg13; rGPR:%vreg13
+	%R2<def> = COPY %vreg14; rGPR:%vreg14
+	%R3<def> = COPY %vreg12; GPRnopc:%vreg12
+	tBL pred:14, pred:%noreg, <ga:@play_attack_defend_n>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, %R3<imp-use>, %SP<imp-def>, %R0<imp-def>, ...
+	ADJCALLSTACKUP 4, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg15<def> = COPY %R0; GPRnopc:%vreg15
+	t2CMPri %vreg15, 0, pred:14, pred:%noreg, %CPSR<imp-def>; GPRnopc:%vreg15
+	%vreg16<def,tied1> = t2MOVCCi %vreg13<tied0>, 1, pred:0, pred:%CPSR; rGPR:%vreg16,%vreg13
+	%R0<def> = COPY %vreg16; rGPR:%vreg16
+	tBX_RET pred:14, pred:%noreg, %R0<imp-use>
+
+# End machine code for function autohelperpat1088.
+
+# After Live Variable Analysis:
+# Machine code for function autohelperpat1088: SSA
+Function Live Ins: %R0 in %vreg0, %R1 in %vreg1, %R2 in %vreg2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R2
+	%vreg2<def> = COPY %R2<kill>; GPR:%vreg2
+	%vreg1<def> = COPY %R1<kill>; rGPR:%vreg1
+	%vreg0<def> = COPY %R0<kill>; rGPR:%vreg0
+	%vreg4<def> = t2MOVi32imm <ga:@transformation>; rGPR:%vreg4
+	%vreg5<def> = t2ADDrs %vreg4<kill>, %vreg0<kill>, 18, pred:14, pred:%noreg, opt:%noreg; GPRnopc:%vreg5 rGPR:%vreg4,%vreg0
+	%vreg6<def> = t2MOVi16 21856, pred:14, pred:%noreg; rGPR:%vreg6
+	%vreg7<def> = t2LDRs %vreg5, %vreg6<kill>, 0, pred:14, pred:%noreg; mem:LD4[%4] GPRnopc:%vreg7,%vreg5 rGPR:%vreg6
+	%vreg8<def> = t2MOVi 23040, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg8
+	%vreg9<def> = t2LDRs %vreg5<kill>, %vreg8<kill>, 0, pred:14, pred:%noreg; mem:LD4[%1] GPRnopc:%vreg9,%vreg5 rGPR:%vreg8
+	%vreg10<def> = t2ADDrr %vreg7<kill>, %vreg1, pred:14, pred:%noreg, opt:%noreg; GPRnopc:%vreg10,%vreg7 rGPR:%vreg1
+	ADJCALLSTACKDOWN 4, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg11<def> = COPY %SP; GPR:%vreg11
+	t2STRi12 %vreg10<kill>, %vreg11<kill>, 0, pred:14, pred:%noreg; mem:ST4[Stack] GPRnopc:%vreg10 GPR:%vreg11
+	%vreg12<def> = t2ADDrr %vreg9<kill>, %vreg1<kill>, pred:14, pred:%noreg, opt:%noreg; GPRnopc:%vreg12,%vreg9 rGPR:%vreg1
+	%vreg13<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg13
+	%vreg14<def> = t2MOVi 1, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg14
+	%R0<def> = COPY %vreg2<kill>; GPR:%vreg2
+	%R1<def> = COPY %vreg13; rGPR:%vreg13
+	%R2<def> = COPY %vreg14<kill>; rGPR:%vreg14
+	%R3<def> = COPY %vreg12<kill>; GPRnopc:%vreg12
+	tBL pred:14, pred:%noreg, <ga:@play_attack_defend_n>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use,kill>, %R1<imp-use,kill>, %R2<imp-use,kill>, %R3<imp-use,kill>, %SP<imp-def>, %R0<imp-def>, ...
+	ADJCALLSTACKUP 4, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg15<def> = COPY %R0<kill>; GPRnopc:%vreg15
+	t2CMPri %vreg15<kill>, 0, pred:14, pred:%noreg, %CPSR<imp-def>; GPRnopc:%vreg15
+	%vreg16<def,tied1> = t2MOVCCi %vreg13<kill,tied0>, 1, pred:0, pred:%CPSR<kill>; rGPR:%vreg16,%vreg13
+	%R0<def> = COPY %vreg16<kill>; rGPR:%vreg16
+	tBX_RET pred:14, pred:%noreg, %R0<imp-use,kill>
+
+# End machine code for function autohelperpat1088.
+
+# After Machine Natural Loop Construction:
+# Machine code for function autohelperpat1088: SSA
+Function Live Ins: %R0 in %vreg0, %R1 in %vreg1, %R2 in %vreg2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R2
+	%vreg2<def> = COPY %R2<kill>; GPR:%vreg2
+	%vreg1<def> = COPY %R1<kill>; rGPR:%vreg1
+	%vreg0<def> = COPY %R0<kill>; rGPR:%vreg0
+	%vreg4<def> = t2MOVi32imm <ga:@transformation>; rGPR:%vreg4
+	%vreg5<def> = t2ADDrs %vreg4<kill>, %vreg0<kill>, 18, pred:14, pred:%noreg, opt:%noreg; GPRnopc:%vreg5 rGPR:%vreg4,%vreg0
+	%vreg6<def> = t2MOVi16 21856, pred:14, pred:%noreg; rGPR:%vreg6
+	%vreg7<def> = t2LDRs %vreg5, %vreg6<kill>, 0, pred:14, pred:%noreg; mem:LD4[%4] GPRnopc:%vreg7,%vreg5 rGPR:%vreg6
+	%vreg8<def> = t2MOVi 23040, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg8
+	%vreg9<def> = t2LDRs %vreg5<kill>, %vreg8<kill>, 0, pred:14, pred:%noreg; mem:LD4[%1] GPRnopc:%vreg9,%vreg5 rGPR:%vreg8
+	%vreg10<def> = t2ADDrr %vreg7<kill>, %vreg1, pred:14, pred:%noreg, opt:%noreg; GPRnopc:%vreg10,%vreg7 rGPR:%vreg1
+	ADJCALLSTACKDOWN 4, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg11<def> = COPY %SP; GPR:%vreg11
+	t2STRi12 %vreg10<kill>, %vreg11<kill>, 0, pred:14, pred:%noreg; mem:ST4[Stack] GPRnopc:%vreg10 GPR:%vreg11
+	%vreg12<def> = t2ADDrr %vreg9<kill>, %vreg1<kill>, pred:14, pred:%noreg, opt:%noreg; GPRnopc:%vreg12,%vreg9 rGPR:%vreg1
+	%vreg13<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg13
+	%vreg14<def> = t2MOVi 1, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg14
+	%R0<def> = COPY %vreg2<kill>; GPR:%vreg2
+	%R1<def> = COPY %vreg13; rGPR:%vreg13
+	%R2<def> = COPY %vreg14<kill>; rGPR:%vreg14
+	%R3<def> = COPY %vreg12<kill>; GPRnopc:%vreg12
+	tBL pred:14, pred:%noreg, <ga:@play_attack_defend_n>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use,kill>, %R1<imp-use,kill>, %R2<imp-use,kill>, %R3<imp-use,kill>, %SP<imp-def>, %R0<imp-def>, ...
+	ADJCALLSTACKUP 4, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg15<def> = COPY %R0<kill>; GPRnopc:%vreg15
+	t2CMPri %vreg15<kill>, 0, pred:14, pred:%noreg, %CPSR<imp-def>; GPRnopc:%vreg15
+	%vreg16<def,tied1> = t2MOVCCi %vreg13<kill,tied0>, 1, pred:0, pred:%CPSR<kill>; rGPR:%vreg16,%vreg13
+	%R0<def> = COPY %vreg16<kill>; rGPR:%vreg16
+	tBX_RET pred:14, pred:%noreg, %R0<imp-use,kill>
+
+# End machine code for function autohelperpat1088.
+
+# After Eliminate PHI nodes for register allocation:
+# Machine code for function autohelperpat1088: Post SSA
+Function Live Ins: %R0 in %vreg0, %R1 in %vreg1, %R2 in %vreg2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R2
+	%vreg2<def> = COPY %R2<kill>; GPR:%vreg2
+	%vreg1<def> = COPY %R1<kill>; rGPR:%vreg1
+	%vreg0<def> = COPY %R0<kill>; rGPR:%vreg0
+	%vreg4<def> = t2MOVi32imm <ga:@transformation>; rGPR:%vreg4
+	%vreg5<def> = t2ADDrs %vreg4<kill>, %vreg0<kill>, 18, pred:14, pred:%noreg, opt:%noreg; GPRnopc:%vreg5 rGPR:%vreg4,%vreg0
+	%vreg6<def> = t2MOVi16 21856, pred:14, pred:%noreg; rGPR:%vreg6
+	%vreg7<def> = t2LDRs %vreg5, %vreg6<kill>, 0, pred:14, pred:%noreg; mem:LD4[%4] GPRnopc:%vreg7,%vreg5 rGPR:%vreg6
+	%vreg8<def> = t2MOVi 23040, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg8
+	%vreg9<def> = t2LDRs %vreg5<kill>, %vreg8<kill>, 0, pred:14, pred:%noreg; mem:LD4[%1] GPRnopc:%vreg9,%vreg5 rGPR:%vreg8
+	%vreg10<def> = t2ADDrr %vreg7<kill>, %vreg1, pred:14, pred:%noreg, opt:%noreg; GPRnopc:%vreg10,%vreg7 rGPR:%vreg1
+	ADJCALLSTACKDOWN 4, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg11<def> = COPY %SP; GPR:%vreg11
+	t2STRi12 %vreg10<kill>, %vreg11<kill>, 0, pred:14, pred:%noreg; mem:ST4[Stack] GPRnopc:%vreg10 GPR:%vreg11
+	%vreg12<def> = t2ADDrr %vreg9<kill>, %vreg1<kill>, pred:14, pred:%noreg, opt:%noreg; GPRnopc:%vreg12,%vreg9 rGPR:%vreg1
+	%vreg13<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg13
+	%vreg14<def> = t2MOVi 1, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg14
+	%R0<def> = COPY %vreg2<kill>; GPR:%vreg2
+	%R1<def> = COPY %vreg13; rGPR:%vreg13
+	%R2<def> = COPY %vreg14<kill>; rGPR:%vreg14
+	%R3<def> = COPY %vreg12<kill>; GPRnopc:%vreg12
+	tBL pred:14, pred:%noreg, <ga:@play_attack_defend_n>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use,kill>, %R1<imp-use,kill>, %R2<imp-use,kill>, %R3<imp-use,kill>, %SP<imp-def>, %R0<imp-def>, ...
+	ADJCALLSTACKUP 4, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg15<def> = COPY %R0<kill>; GPRnopc:%vreg15
+	t2CMPri %vreg15<kill>, 0, pred:14, pred:%noreg, %CPSR<imp-def>; GPRnopc:%vreg15
+	%vreg16<def,tied1> = t2MOVCCi %vreg13<kill,tied0>, 1, pred:0, pred:%CPSR<kill>; rGPR:%vreg16,%vreg13
+	%R0<def> = COPY %vreg16<kill>; rGPR:%vreg16
+	tBX_RET pred:14, pred:%noreg, %R0<imp-use,kill>
+
+# End machine code for function autohelperpat1088.
+
+# After Two-Address instruction pass:
+# Machine code for function autohelperpat1088: Post SSA
+Function Live Ins: %R0 in %vreg0, %R1 in %vreg1, %R2 in %vreg2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R2
+	%vreg2<def> = COPY %R2<kill>; GPR:%vreg2
+	%vreg1<def> = COPY %R1<kill>; rGPR:%vreg1
+	%vreg0<def> = COPY %R0<kill>; rGPR:%vreg0
+	%vreg4<def> = t2MOVi32imm <ga:@transformation>; rGPR:%vreg4
+	%vreg5<def> = t2ADDrs %vreg4<kill>, %vreg0<kill>, 18, pred:14, pred:%noreg, opt:%noreg; GPRnopc:%vreg5 rGPR:%vreg4,%vreg0
+	%vreg6<def> = t2MOVi16 21856, pred:14, pred:%noreg; rGPR:%vreg6
+	%vreg7<def> = t2LDRs %vreg5, %vreg6<kill>, 0, pred:14, pred:%noreg; mem:LD4[%4] GPRnopc:%vreg7,%vreg5 rGPR:%vreg6
+	%vreg8<def> = t2MOVi 23040, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg8
+	%vreg9<def> = t2LDRs %vreg5<kill>, %vreg8<kill>, 0, pred:14, pred:%noreg; mem:LD4[%1] GPRnopc:%vreg9,%vreg5 rGPR:%vreg8
+	%vreg10<def> = t2ADDrr %vreg7<kill>, %vreg1, pred:14, pred:%noreg, opt:%noreg; GPRnopc:%vreg10,%vreg7 rGPR:%vreg1
+	ADJCALLSTACKDOWN 4, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg11<def> = COPY %SP; GPR:%vreg11
+	t2STRi12 %vreg10<kill>, %vreg11<kill>, 0, pred:14, pred:%noreg; mem:ST4[Stack] GPRnopc:%vreg10 GPR:%vreg11
+	%vreg12<def> = t2ADDrr %vreg9<kill>, %vreg1<kill>, pred:14, pred:%noreg, opt:%noreg; GPRnopc:%vreg12,%vreg9 rGPR:%vreg1
+	%vreg13<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg13
+	%vreg14<def> = t2MOVi 1, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg14
+	%R0<def> = COPY %vreg2<kill>; GPR:%vreg2
+	%R1<def> = COPY %vreg13; rGPR:%vreg13
+	%R2<def> = COPY %vreg14<kill>; rGPR:%vreg14
+	%R3<def> = COPY %vreg12<kill>; GPRnopc:%vreg12
+	tBL pred:14, pred:%noreg, <ga:@play_attack_defend_n>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use,kill>, %R1<imp-use,kill>, %R2<imp-use,kill>, %R3<imp-use,kill>, %SP<imp-def>, %R0<imp-def>, ...
+	ADJCALLSTACKUP 4, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg15<def> = COPY %R0<kill>; GPRnopc:%vreg15
+	t2CMPri %vreg15<kill>, 0, pred:14, pred:%noreg, %CPSR<imp-def>; GPRnopc:%vreg15
+	%vreg16<def> = COPY %vreg13<kill>; rGPR:%vreg16,%vreg13
+	%vreg16<def,tied1> = t2MOVCCi %vreg16<tied0>, 1, pred:0, pred:%CPSR<kill>; rGPR:%vreg16
+	%R0<def> = COPY %vreg16<kill>; rGPR:%vreg16
+	tBX_RET pred:14, pred:%noreg, %R0<imp-use,kill>
+
+# End machine code for function autohelperpat1088.
+
+# After Simple Register Coalescing:
+# Machine code for function autohelperpat1088: Post SSA
+Function Live Ins: %R0 in %vreg0, %R1 in %vreg1, %R2 in %vreg2
+
+0B	BB#0: derived from LLVM BB %0
+	    Live Ins: %R0 %R1 %R2
+16B		%vreg2<def> = COPY %R2; GPR:%vreg2
+32B		%vreg1<def> = COPY %R1; rGPR:%vreg1
+48B		%vreg0<def> = COPY %R0; rGPR:%vreg0
+64B		%vreg4<def> = t2MOVi32imm <ga:@transformation>; rGPR:%vreg4
+80B		%vreg5<def> = t2ADDrs %vreg4, %vreg0, 18, pred:14, pred:%noreg, opt:%noreg; GPRnopc:%vreg5 rGPR:%vreg4,%vreg0
+96B		%vreg6<def> = t2MOVi16 21856, pred:14, pred:%noreg; rGPR:%vreg6
+112B		%vreg7<def> = t2LDRs %vreg5, %vreg6, 0, pred:14, pred:%noreg; mem:LD4[%4] GPRnopc:%vreg7,%vreg5 rGPR:%vreg6
+128B		%vreg8<def> = t2MOVi 23040, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg8
+144B		%vreg9<def> = t2LDRs %vreg5, %vreg8, 0, pred:14, pred:%noreg; mem:LD4[%1] GPRnopc:%vreg9,%vreg5 rGPR:%vreg8
+160B		%vreg10<def> = t2ADDrr %vreg7, %vreg1, pred:14, pred:%noreg, opt:%noreg; GPRnopc:%vreg10,%vreg7 rGPR:%vreg1
+176B		ADJCALLSTACKDOWN 4, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+208B		t2STRi12 %vreg10, %SP, 0, pred:14, pred:%noreg; mem:ST4[Stack] GPRnopc:%vreg10
+224B		%vreg12<def> = t2ADDrr %vreg9, %vreg1, pred:14, pred:%noreg, opt:%noreg; GPRnopc:%vreg12,%vreg9 rGPR:%vreg1
+240B		%vreg16<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg16
+272B		%R0<def> = COPY %vreg2; GPR:%vreg2
+288B		%R1<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg
+304B		%R2<def> = t2MOVi 1, pred:14, pred:%noreg, opt:%noreg
+320B		%R3<def> = COPY %vreg12; GPRnopc:%vreg12
+336B		tBL pred:14, pred:%noreg, <ga:@play_attack_defend_n>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, %R3<imp-use,kill>, %SP<imp-def>, %R0<imp-def>, ...
+352B		ADJCALLSTACKUP 4, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+368B		%vreg15<def> = COPY %R0; GPRnopc:%vreg15
+384B		t2CMPri %vreg15, 0, pred:14, pred:%noreg, %CPSR<imp-def>; GPRnopc:%vreg15
+416B		%vreg16<def,tied1> = t2MOVCCi %vreg16<tied0>, 1, pred:0, pred:%CPSR<kill>; rGPR:%vreg16
+432B		%R0<def> = COPY %vreg16; rGPR:%vreg16
+448B		tBX_RET pred:14, pred:%noreg, %R0<imp-use>
+
+# End machine code for function autohelperpat1088.
+
+# After Machine Instruction Scheduler:
+# Machine code for function autohelperpat1088: Post SSA
+Function Live Ins: %R0 in %vreg0, %R1 in %vreg1, %R2 in %vreg2
+
+0B	BB#0: derived from LLVM BB %0
+	    Live Ins: %R0 %R1 %R2
+16B		%vreg2<def> = COPY %R2; GPR:%vreg2
+32B		%vreg1<def> = COPY %R1; rGPR:%vreg1
+48B		%vreg0<def> = COPY %R0; rGPR:%vreg0
+64B		%vreg4<def> = t2MOVi32imm <ga:@transformation>; rGPR:%vreg4
+80B		%vreg5<def> = t2ADDrs %vreg4, %vreg0, 18, pred:14, pred:%noreg, opt:%noreg; GPRnopc:%vreg5 rGPR:%vreg4,%vreg0
+96B		%vreg6<def> = t2MOVi16 21856, pred:14, pred:%noreg; rGPR:%vreg6
+112B		%vreg7<def> = t2LDRs %vreg5, %vreg6, 0, pred:14, pred:%noreg; mem:LD4[%4] GPRnopc:%vreg7,%vreg5 rGPR:%vreg6
+128B		%vreg8<def> = t2MOVi 23040, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg8
+144B		%vreg9<def> = t2LDRs %vreg5, %vreg8, 0, pred:14, pred:%noreg; mem:LD4[%1] GPRnopc:%vreg9,%vreg5 rGPR:%vreg8
+160B		%vreg10<def> = t2ADDrr %vreg7, %vreg1, pred:14, pred:%noreg, opt:%noreg; GPRnopc:%vreg10,%vreg7 rGPR:%vreg1
+176B		ADJCALLSTACKDOWN 4, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+208B		t2STRi12 %vreg10, %SP, 0, pred:14, pred:%noreg; mem:ST4[Stack] GPRnopc:%vreg10
+224B		%vreg12<def> = t2ADDrr %vreg9, %vreg1, pred:14, pred:%noreg, opt:%noreg; GPRnopc:%vreg12,%vreg9 rGPR:%vreg1
+240B		%vreg16<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg16
+272B		%R0<def> = COPY %vreg2; GPR:%vreg2
+288B		%R1<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg
+304B		%R2<def> = t2MOVi 1, pred:14, pred:%noreg, opt:%noreg
+320B		%R3<def> = COPY %vreg12; GPRnopc:%vreg12
+336B		tBL pred:14, pred:%noreg, <ga:@play_attack_defend_n>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, %R3<imp-use,kill>, %SP<imp-def>, %R0<imp-def>, ...
+352B		ADJCALLSTACKUP 4, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+368B		%vreg15<def> = COPY %R0; GPRnopc:%vreg15
+384B		t2CMPri %vreg15, 0, pred:14, pred:%noreg, %CPSR<imp-def>; GPRnopc:%vreg15
+416B		%vreg16<def,tied1> = t2MOVCCi %vreg16<tied0>, 1, pred:0, pred:%CPSR<kill>; rGPR:%vreg16
+432B		%R0<def> = COPY %vreg16; rGPR:%vreg16
+448B		tBX_RET pred:14, pred:%noreg, %R0<imp-use>
+
+# End machine code for function autohelperpat1088.
+
+# After Greedy Register Allocator:
+# Machine code for function autohelperpat1088: Post SSA
+Function Live Ins: %R0 in %vreg0, %R1 in %vreg1, %R2 in %vreg2
+
+0B	BB#0: derived from LLVM BB %0
+	    Live Ins: %R0 %R1 %R2
+16B		%vreg2<def> = COPY %R2; GPR:%vreg2
+32B		%vreg1<def> = COPY %R1; rGPR:%vreg1
+48B		%vreg0<def> = COPY %R0; rGPR:%vreg0
+64B		%vreg4<def> = t2MOVi32imm <ga:@transformation>; rGPR:%vreg4
+80B		%vreg5<def> = t2ADDrs %vreg4, %vreg0, 18, pred:14, pred:%noreg, opt:%noreg; GPRnopc:%vreg5 rGPR:%vreg4,%vreg0
+96B		%vreg6<def> = t2MOVi16 21856, pred:14, pred:%noreg; rGPR:%vreg6
+112B		%vreg7<def> = t2LDRs %vreg5, %vreg6, 0, pred:14, pred:%noreg; mem:LD4[%4] GPRnopc:%vreg7,%vreg5 rGPR:%vreg6
+128B		%vreg8<def> = t2MOVi 23040, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg8
+144B		%vreg9<def> = t2LDRs %vreg5, %vreg8, 0, pred:14, pred:%noreg; mem:LD4[%1] GPRnopc:%vreg9,%vreg5 rGPR:%vreg8
+160B		%vreg10<def> = t2ADDrr %vreg7, %vreg1, pred:14, pred:%noreg, opt:%noreg; GPRnopc:%vreg10,%vreg7 rGPR:%vreg1
+176B		ADJCALLSTACKDOWN 4, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+208B		t2STRi12 %vreg10, %SP, 0, pred:14, pred:%noreg; mem:ST4[Stack] GPRnopc:%vreg10
+224B		%vreg12<def> = t2ADDrr %vreg9, %vreg1, pred:14, pred:%noreg, opt:%noreg; GPRnopc:%vreg12,%vreg9 rGPR:%vreg1
+240B		%vreg16<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg16
+272B		%R0<def> = COPY %vreg2; GPR:%vreg2
+288B		%R1<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg
+304B		%R2<def> = t2MOVi 1, pred:14, pred:%noreg, opt:%noreg
+320B		%R3<def> = COPY %vreg12; GPRnopc:%vreg12
+336B		tBL pred:14, pred:%noreg, <ga:@play_attack_defend_n>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, %R3<imp-use>, %SP<imp-def>, %R0<imp-def>, ...
+352B		ADJCALLSTACKUP 4, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+368B		%vreg15<def> = COPY %R0; GPRnopc:%vreg15
+384B		t2CMPri %vreg15, 0, pred:14, pred:%noreg, %CPSR<imp-def>; GPRnopc:%vreg15
+416B		%vreg16<def,tied1> = t2MOVCCi %vreg16<tied0>, 1, pred:0, pred:%CPSR<kill>; rGPR:%vreg16
+432B		%R0<def> = COPY %vreg16; rGPR:%vreg16
+448B		tBX_RET pred:14, pred:%noreg, %R0<imp-use>
+
+# End machine code for function autohelperpat1088.
+
+# After Virtual Register Rewriter:
+# Machine code for function autohelperpat1088: Post SSA
+Function Live Ins: %R0, %R1, %R2
+
+0B	BB#0: derived from LLVM BB %0
+	    Live Ins: %R0 %R1 %R2
+64B		%R3<def> = t2MOVi32imm <ga:@transformation>
+80B		%R0<def> = t2ADDrs %R3<kill>, %R0<kill>, 18, pred:14, pred:%noreg, opt:%noreg
+96B		%R3<def> = t2MOVi16 21856, pred:14, pred:%noreg
+112B		%R3<def> = t2LDRs %R0, %R3<kill>, 0, pred:14, pred:%noreg; mem:LD4[%4]
+128B		%R4<def> = t2MOVi 23040, pred:14, pred:%noreg, opt:%noreg
+144B		%R0<def> = t2LDRs %R0<kill>, %R4<kill>, 0, pred:14, pred:%noreg; mem:LD4[%1]
+160B		%R3<def> = t2ADDrr %R3<kill>, %R1, pred:14, pred:%noreg, opt:%noreg
+176B		ADJCALLSTACKDOWN 4, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+208B		t2STRi12 %R3<kill>, %SP, 0, pred:14, pred:%noreg; mem:ST4[Stack]
+224B		%R3<def> = t2ADDrr %R0<kill>, %R1<kill>, pred:14, pred:%noreg, opt:%noreg
+240B		%R4<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg
+272B		%R0<def> = COPY %R2<kill>
+288B		%R1<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg
+304B		%R2<def> = t2MOVi 1, pred:14, pred:%noreg, opt:%noreg
+336B		tBL pred:14, pred:%noreg, <ga:@play_attack_defend_n>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, %R3<imp-use>, %SP<imp-def>, %R0<imp-def>, ...
+352B		ADJCALLSTACKUP 4, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+384B		t2CMPri %R0<kill>, 0, pred:14, pred:%noreg, %CPSR<imp-def>
+416B		%R4<def,tied1> = t2MOVCCi %R4<kill,tied0>, 1, pred:0, pred:%CPSR<kill>
+432B		%R0<def> = COPY %R4<kill>
+448B		tBX_RET pred:14, pred:%noreg, %R0<imp-use>
+
+# End machine code for function autohelperpat1088.
+
+# After Stack Slot Coloring:
+# Machine code for function autohelperpat1088: Post SSA
+Function Live Ins: %R0, %R1, %R2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R2
+	%R3<def> = t2MOVi32imm <ga:@transformation>
+	%R0<def> = t2ADDrs %R3<kill>, %R0<kill>, 18, pred:14, pred:%noreg, opt:%noreg
+	%R3<def> = t2MOVi16 21856, pred:14, pred:%noreg
+	%R3<def> = t2LDRs %R0, %R3<kill>, 0, pred:14, pred:%noreg; mem:LD4[%4]
+	%R4<def> = t2MOVi 23040, pred:14, pred:%noreg, opt:%noreg
+	%R0<def> = t2LDRs %R0<kill>, %R4<kill>, 0, pred:14, pred:%noreg; mem:LD4[%1]
+	%R3<def> = t2ADDrr %R3<kill>, %R1, pred:14, pred:%noreg, opt:%noreg
+	ADJCALLSTACKDOWN 4, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	t2STRi12 %R3<kill>, %SP, 0, pred:14, pred:%noreg; mem:ST4[Stack]
+	%R3<def> = t2ADDrr %R0<kill>, %R1<kill>, pred:14, pred:%noreg, opt:%noreg
+	%R4<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg
+	%R0<def> = COPY %R2<kill>
+	%R1<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg
+	%R2<def> = t2MOVi 1, pred:14, pred:%noreg, opt:%noreg
+	tBL pred:14, pred:%noreg, <ga:@play_attack_defend_n>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, %R3<imp-use>, %SP<imp-def>, %R0<imp-def>, ...
+	ADJCALLSTACKUP 4, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	t2CMPri %R0<kill>, 0, pred:14, pred:%noreg, %CPSR<imp-def>
+	%R4<def,tied1> = t2MOVCCi %R4<kill,tied0>, 1, pred:0, pred:%CPSR<kill>
+	%R0<def> = COPY %R4<kill>
+	tBX_RET pred:14, pred:%noreg, %R0<imp-use>
+
+# End machine code for function autohelperpat1088.
+
+# After Machine Loop Invariant Code Motion:
+# Machine code for function autohelperpat1088: Post SSA
+Function Live Ins: %R0, %R1, %R2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R2
+	%R3<def> = t2MOVi32imm <ga:@transformation>
+	%R0<def> = t2ADDrs %R3<kill>, %R0<kill>, 18, pred:14, pred:%noreg, opt:%noreg
+	%R3<def> = t2MOVi16 21856, pred:14, pred:%noreg
+	%R3<def> = t2LDRs %R0, %R3<kill>, 0, pred:14, pred:%noreg; mem:LD4[%4]
+	%R4<def> = t2MOVi 23040, pred:14, pred:%noreg, opt:%noreg
+	%R0<def> = t2LDRs %R0<kill>, %R4<kill>, 0, pred:14, pred:%noreg; mem:LD4[%1]
+	%R3<def> = t2ADDrr %R3<kill>, %R1, pred:14, pred:%noreg, opt:%noreg
+	ADJCALLSTACKDOWN 4, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	t2STRi12 %R3<kill>, %SP, 0, pred:14, pred:%noreg; mem:ST4[Stack]
+	%R3<def> = t2ADDrr %R0<kill>, %R1<kill>, pred:14, pred:%noreg, opt:%noreg
+	%R4<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg
+	%R0<def> = COPY %R2<kill>
+	%R1<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg
+	%R2<def> = t2MOVi 1, pred:14, pred:%noreg, opt:%noreg
+	tBL pred:14, pred:%noreg, <ga:@play_attack_defend_n>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, %R3<imp-use>, %SP<imp-def>, %R0<imp-def>, ...
+	ADJCALLSTACKUP 4, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	t2CMPri %R0<kill>, 0, pred:14, pred:%noreg, %CPSR<imp-def>
+	%R4<def,tied1> = t2MOVCCi %R4<kill,tied0>, 1, pred:0, pred:%CPSR<kill>
+	%R0<def> = COPY %R4<kill>
+	tBX_RET pred:14, pred:%noreg, %R0<imp-use>
+
+# End machine code for function autohelperpat1088.
+
+# After Shrink Wrapping analysis:
+# Machine code for function autohelperpat1088: Post SSA
+Function Live Ins: %R0, %R1, %R2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R2
+	%R3<def> = t2MOVi32imm <ga:@transformation>
+	%R0<def> = t2ADDrs %R3<kill>, %R0<kill>, 18, pred:14, pred:%noreg, opt:%noreg
+	%R3<def> = t2MOVi16 21856, pred:14, pred:%noreg
+	%R3<def> = t2LDRs %R0, %R3<kill>, 0, pred:14, pred:%noreg; mem:LD4[%4]
+	%R4<def> = t2MOVi 23040, pred:14, pred:%noreg, opt:%noreg
+	%R0<def> = t2LDRs %R0<kill>, %R4<kill>, 0, pred:14, pred:%noreg; mem:LD4[%1]
+	%R3<def> = t2ADDrr %R3<kill>, %R1, pred:14, pred:%noreg, opt:%noreg
+	ADJCALLSTACKDOWN 4, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	t2STRi12 %R3<kill>, %SP, 0, pred:14, pred:%noreg; mem:ST4[Stack]
+	%R3<def> = t2ADDrr %R0<kill>, %R1<kill>, pred:14, pred:%noreg, opt:%noreg
+	%R4<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg
+	%R0<def> = COPY %R2<kill>
+	%R1<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg
+	%R2<def> = t2MOVi 1, pred:14, pred:%noreg, opt:%noreg
+	tBL pred:14, pred:%noreg, <ga:@play_attack_defend_n>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, %R3<imp-use>, %SP<imp-def>, %R0<imp-def>, ...
+	ADJCALLSTACKUP 4, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	t2CMPri %R0<kill>, 0, pred:14, pred:%noreg, %CPSR<imp-def>
+	%R4<def,tied1> = t2MOVCCi %R4<kill,tied0>, 1, pred:0, pred:%CPSR<kill>
+	%R0<def> = COPY %R4<kill>
+	tBX_RET pred:14, pred:%noreg, %R0<imp-use>
+
+# End machine code for function autohelperpat1088.
+
+# After Prologue/Epilogue Insertion & Frame Finalization:
+# Machine code for function autohelperpat1088: Post SSA
+Frame Objects:
+  fi#0: size=4, align=4, at location [SP-4]
+  fi#1: size=4, align=4, at location [SP-8]
+  fi#2: size=4, align=4, at location [SP-12]
+  fi#3: size=4, align=4, at location [SP-16]
+Function Live Ins: %R0, %R1, %R2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R2 %R4 %R6 %R7 %LR
+	%SP<def,tied1> = t2STMDB_UPD %SP<tied0>, pred:14, pred:%noreg, %R4<kill>, %R6<kill>, %R7<kill>, %LR<kill>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%R7<def> = t2ADDri %SP<kill>, 8, pred:14, pred:%noreg, opt:%noreg; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%SP<def,tied1> = tSUBspi %SP<tied0>, 2, pred:14, pred:%noreg; flags: FrameSetup
+	%R3<def> = t2MOVi32imm <ga:@transformation>
+	%R0<def> = t2ADDrs %R3<kill>, %R0<kill>, 18, pred:14, pred:%noreg, opt:%noreg
+	%R3<def> = t2MOVi16 21856, pred:14, pred:%noreg
+	%R3<def> = t2LDRs %R0, %R3<kill>, 0, pred:14, pred:%noreg; mem:LD4[%4]
+	%R4<def> = t2MOVi 23040, pred:14, pred:%noreg, opt:%noreg
+	%R0<def> = t2LDRs %R0<kill>, %R4<kill>, 0, pred:14, pred:%noreg; mem:LD4[%1]
+	%R3<def> = t2ADDrr %R3<kill>, %R1, pred:14, pred:%noreg, opt:%noreg
+	t2STRi12 %R3<kill>, %SP, 0, pred:14, pred:%noreg; mem:ST4[Stack]
+	%R3<def> = t2ADDrr %R0<kill>, %R1<kill>, pred:14, pred:%noreg, opt:%noreg
+	%R4<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg
+	%R0<def> = COPY %R2<kill>
+	%R1<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg
+	%R2<def> = t2MOVi 1, pred:14, pred:%noreg, opt:%noreg
+	tBL pred:14, pred:%noreg, <ga:@play_attack_defend_n>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %LR<imp-def,dead>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, %R3<imp-use>, %SP<imp-def>, %R0<imp-def>
+	t2CMPri %R0<kill>, 0, pred:14, pred:%noreg, %CPSR<imp-def>
+	%R4<def,tied1> = t2MOVCCi %R4<kill,tied0>, 1, pred:0, pred:%CPSR<kill>
+	%R0<def> = COPY %R4<kill>
+	%SP<def,tied1> = tADDspi %SP<tied0>, 2, pred:14, pred:%noreg
+	%SP<def,tied1> = t2LDMIA_RET %SP<tied0>, pred:14, pred:%noreg, %R4<def>, %R6<def>, %R7<def>, %PC<def>, %R0<imp-use>
+
+# End machine code for function autohelperpat1088.
+
+# After Machine Copy Propagation Pass:
+# Machine code for function autohelperpat1088: Post SSA
+Frame Objects:
+  fi#0: size=4, align=4, at location [SP-4]
+  fi#1: size=4, align=4, at location [SP-8]
+  fi#2: size=4, align=4, at location [SP-12]
+  fi#3: size=4, align=4, at location [SP-16]
+Function Live Ins: %R0, %R1, %R2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R2 %R4 %R6 %R7 %LR
+	%SP<def,tied1> = t2STMDB_UPD %SP<tied0>, pred:14, pred:%noreg, %R4<kill>, %R6<kill>, %R7<kill>, %LR<kill>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%R7<def> = t2ADDri %SP<kill>, 8, pred:14, pred:%noreg, opt:%noreg; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%SP<def,tied1> = tSUBspi %SP<tied0>, 2, pred:14, pred:%noreg; flags: FrameSetup
+	%R3<def> = t2MOVi32imm <ga:@transformation>
+	%R0<def> = t2ADDrs %R3<kill>, %R0<kill>, 18, pred:14, pred:%noreg, opt:%noreg
+	%R3<def> = t2MOVi16 21856, pred:14, pred:%noreg
+	%R3<def> = t2LDRs %R0, %R3<kill>, 0, pred:14, pred:%noreg; mem:LD4[%4]
+	%R4<def> = t2MOVi 23040, pred:14, pred:%noreg, opt:%noreg
+	%R0<def> = t2LDRs %R0<kill>, %R4<kill>, 0, pred:14, pred:%noreg; mem:LD4[%1]
+	%R3<def> = t2ADDrr %R3<kill>, %R1, pred:14, pred:%noreg, opt:%noreg
+	t2STRi12 %R3<kill>, %SP, 0, pred:14, pred:%noreg; mem:ST4[Stack]
+	%R3<def> = t2ADDrr %R0<kill>, %R1<kill>, pred:14, pred:%noreg, opt:%noreg
+	%R4<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg
+	%R0<def> = COPY %R2<kill>
+	%R1<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg
+	%R2<def> = t2MOVi 1, pred:14, pred:%noreg, opt:%noreg
+	tBL pred:14, pred:%noreg, <ga:@play_attack_defend_n>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %LR<imp-def,dead>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, %R3<imp-use>, %SP<imp-def>, %R0<imp-def>
+	t2CMPri %R0<kill>, 0, pred:14, pred:%noreg, %CPSR<imp-def>
+	%R4<def,tied1> = t2MOVCCi %R4<kill,tied0>, 1, pred:0, pred:%CPSR<kill>
+	%R0<def> = COPY %R4<kill>
+	%SP<def,tied1> = tADDspi %SP<tied0>, 2, pred:14, pred:%noreg
+	%SP<def,tied1> = t2LDMIA_RET %SP<tied0>, pred:14, pred:%noreg, %R4<def>, %R6<def>, %R7<def>, %PC<def>, %R0<imp-use>
+
+# End machine code for function autohelperpat1088.
+
+# After Post-RA pseudo instruction expansion pass:
+# Machine code for function autohelperpat1088: Post SSA
+Frame Objects:
+  fi#0: size=4, align=4, at location [SP-4]
+  fi#1: size=4, align=4, at location [SP-8]
+  fi#2: size=4, align=4, at location [SP-12]
+  fi#3: size=4, align=4, at location [SP-16]
+Function Live Ins: %R0, %R1, %R2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R2 %R4 %R6 %R7 %LR
+	%SP<def,tied1> = t2STMDB_UPD %SP<tied0>, pred:14, pred:%noreg, %R4<kill>, %R6<kill>, %R7<kill>, %LR<kill>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%R7<def> = t2ADDri %SP<kill>, 8, pred:14, pred:%noreg, opt:%noreg; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%SP<def,tied1> = tSUBspi %SP<tied0>, 2, pred:14, pred:%noreg; flags: FrameSetup
+	%R3<def> = t2MOVi32imm <ga:@transformation>
+	%R0<def> = t2ADDrs %R3<kill>, %R0<kill>, 18, pred:14, pred:%noreg, opt:%noreg
+	%R3<def> = t2MOVi16 21856, pred:14, pred:%noreg
+	%R3<def> = t2LDRs %R0, %R3<kill>, 0, pred:14, pred:%noreg; mem:LD4[%4]
+	%R4<def> = t2MOVi 23040, pred:14, pred:%noreg, opt:%noreg
+	%R0<def> = t2LDRs %R0<kill>, %R4<kill>, 0, pred:14, pred:%noreg; mem:LD4[%1]
+	%R3<def> = t2ADDrr %R3<kill>, %R1, pred:14, pred:%noreg, opt:%noreg
+	t2STRi12 %R3<kill>, %SP, 0, pred:14, pred:%noreg; mem:ST4[Stack]
+	%R3<def> = t2ADDrr %R0<kill>, %R1<kill>, pred:14, pred:%noreg, opt:%noreg
+	%R4<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg
+	%R0<def> = tMOVr %R2<kill>, pred:14, pred:%noreg
+	%R1<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg
+	%R2<def> = t2MOVi 1, pred:14, pred:%noreg, opt:%noreg
+	tBL pred:14, pred:%noreg, <ga:@play_attack_defend_n>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %LR<imp-def,dead>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, %R3<imp-use>, %SP<imp-def>, %R0<imp-def>
+	t2CMPri %R0<kill>, 0, pred:14, pred:%noreg, %CPSR<imp-def>
+	%R4<def,tied1> = t2MOVCCi %R4<kill,tied0>, 1, pred:0, pred:%CPSR<kill>
+	%R0<def> = tMOVr %R4<kill>, pred:14, pred:%noreg
+	%SP<def,tied1> = tADDspi %SP<tied0>, 2, pred:14, pred:%noreg
+	%SP<def,tied1> = t2LDMIA_RET %SP<tied0>, pred:14, pred:%noreg, %R4<def>, %R6<def>, %R7<def>, %PC<def>, %R0<imp-use>
+
+# End machine code for function autohelperpat1088.
+
+# After ARM load / store optimization pass:
+# Machine code for function autohelperpat1088: Post SSA
+Frame Objects:
+  fi#0: size=4, align=4, at location [SP-4]
+  fi#1: size=4, align=4, at location [SP-8]
+  fi#2: size=4, align=4, at location [SP-12]
+  fi#3: size=4, align=4, at location [SP-16]
+Function Live Ins: %R0, %R1, %R2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R2 %R4 %R6 %R7 %LR
+	%SP<def,tied1> = t2STMDB_UPD %SP<tied0>, pred:14, pred:%noreg, %R4<kill>, %R6<kill>, %R7<kill>, %LR<kill>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%R7<def> = t2ADDri %SP<kill>, 8, pred:14, pred:%noreg, opt:%noreg; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%SP<def,tied1> = tSUBspi %SP<tied0>, 2, pred:14, pred:%noreg; flags: FrameSetup
+	%R3<def> = t2MOVi32imm <ga:@transformation>
+	%R0<def> = t2ADDrs %R3<kill>, %R0<kill>, 18, pred:14, pred:%noreg, opt:%noreg
+	%R3<def> = t2MOVi16 21856, pred:14, pred:%noreg
+	%R3<def> = t2LDRs %R0, %R3<kill>, 0, pred:14, pred:%noreg; mem:LD4[%4]
+	%R4<def> = t2MOVi 23040, pred:14, pred:%noreg, opt:%noreg
+	%R0<def> = t2LDRs %R0<kill>, %R4<kill>, 0, pred:14, pred:%noreg; mem:LD4[%1]
+	%R3<def> = t2ADDrr %R3<kill>, %R1, pred:14, pred:%noreg, opt:%noreg
+	t2STRi12 %R3<kill>, %SP, 0, pred:14, pred:%noreg; mem:ST4[Stack]
+	%R3<def> = t2ADDrr %R0<kill>, %R1<kill>, pred:14, pred:%noreg, opt:%noreg
+	%R4<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg
+	%R0<def> = tMOVr %R2<kill>, pred:14, pred:%noreg
+	%R1<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg
+	%R2<def> = t2MOVi 1, pred:14, pred:%noreg, opt:%noreg
+	tBL pred:14, pred:%noreg, <ga:@play_attack_defend_n>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %LR<imp-def,dead>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, %R3<imp-use>, %SP<imp-def>, %R0<imp-def>
+	t2CMPri %R0<kill>, 0, pred:14, pred:%noreg, %CPSR<imp-def>
+	%R4<def,tied1> = t2MOVCCi %R4<kill,tied0>, 1, pred:0, pred:%CPSR<kill>
+	%R0<def> = tMOVr %R4<kill>, pred:14, pred:%noreg
+	%SP<def,tied1> = tADDspi %SP<tied0>, 2, pred:14, pred:%noreg
+	%SP<def,tied1> = t2LDMIA_RET %SP<tied0>, pred:14, pred:%noreg, %R4<def>, %R6<def>, %R7<def>, %PC<def>, %R0<imp-use>
+
+# End machine code for function autohelperpat1088.
+
+# After Execution dependency fix:
+# Machine code for function autohelperpat1088: Post SSA
+Frame Objects:
+  fi#0: size=4, align=4, at location [SP-4]
+  fi#1: size=4, align=4, at location [SP-8]
+  fi#2: size=4, align=4, at location [SP-12]
+  fi#3: size=4, align=4, at location [SP-16]
+Function Live Ins: %R0, %R1, %R2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R2 %R4 %R6 %R7 %LR
+	%SP<def,tied1> = t2STMDB_UPD %SP<tied0>, pred:14, pred:%noreg, %R4<kill>, %R6<kill>, %R7<kill>, %LR<kill>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%R7<def> = t2ADDri %SP<kill>, 8, pred:14, pred:%noreg, opt:%noreg; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%SP<def,tied1> = tSUBspi %SP<tied0>, 2, pred:14, pred:%noreg; flags: FrameSetup
+	%R3<def> = t2MOVi32imm <ga:@transformation>
+	%R0<def> = t2ADDrs %R3<kill>, %R0<kill>, 18, pred:14, pred:%noreg, opt:%noreg
+	%R3<def> = t2MOVi16 21856, pred:14, pred:%noreg
+	%R3<def> = t2LDRs %R0, %R3<kill>, 0, pred:14, pred:%noreg; mem:LD4[%4]
+	%R4<def> = t2MOVi 23040, pred:14, pred:%noreg, opt:%noreg
+	%R0<def> = t2LDRs %R0<kill>, %R4<kill>, 0, pred:14, pred:%noreg; mem:LD4[%1]
+	%R3<def> = t2ADDrr %R3<kill>, %R1, pred:14, pred:%noreg, opt:%noreg
+	t2STRi12 %R3<kill>, %SP, 0, pred:14, pred:%noreg; mem:ST4[Stack]
+	%R3<def> = t2ADDrr %R0<kill>, %R1<kill>, pred:14, pred:%noreg, opt:%noreg
+	%R4<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg
+	%R0<def> = tMOVr %R2<kill>, pred:14, pred:%noreg
+	%R1<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg
+	%R2<def> = t2MOVi 1, pred:14, pred:%noreg, opt:%noreg
+	tBL pred:14, pred:%noreg, <ga:@play_attack_defend_n>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %LR<imp-def,dead>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, %R3<imp-use>, %SP<imp-def>, %R0<imp-def>
+	t2CMPri %R0<kill>, 0, pred:14, pred:%noreg, %CPSR<imp-def>
+	%R4<def,tied1> = t2MOVCCi %R4<kill,tied0>, 1, pred:0, pred:%CPSR<kill>
+	%R0<def> = tMOVr %R4<kill>, pred:14, pred:%noreg
+	%SP<def,tied1> = tADDspi %SP<tied0>, 2, pred:14, pred:%noreg
+	%SP<def,tied1> = t2LDMIA_RET %SP<tied0>, pred:14, pred:%noreg, %R4<def>, %R6<def>, %R7<def>, %PC<def>, %R0<imp-use>
+
+# End machine code for function autohelperpat1088.
+
+# After ARM pseudo instruction expansion pass:
+# Machine code for function autohelperpat1088: Post SSA
+Frame Objects:
+  fi#0: size=4, align=4, at location [SP-4]
+  fi#1: size=4, align=4, at location [SP-8]
+  fi#2: size=4, align=4, at location [SP-12]
+  fi#3: size=4, align=4, at location [SP-16]
+Function Live Ins: %R0, %R1, %R2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R2 %R4 %R6 %R7 %LR
+	%SP<def,tied1> = t2STMDB_UPD %SP<tied0>, pred:14, pred:%noreg, %R4<kill>, %R6<kill>, %R7<kill>, %LR<kill>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%R7<def> = t2ADDri %SP<kill>, 8, pred:14, pred:%noreg, opt:%noreg; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%SP<def,tied1> = tSUBspi %SP<tied0>, 2, pred:14, pred:%noreg; flags: FrameSetup
+	%R3<def> = t2MOVi16 <ga:@transformation>[TF=1], pred:14, pred:%noreg
+	%R3<def,tied1> = t2MOVTi16 %R3<tied0>, <ga:@transformation>[TF=2], pred:14, pred:%noreg
+	%R0<def> = t2ADDrs %R3<kill>, %R0<kill>, 18, pred:14, pred:%noreg, opt:%noreg
+	%R3<def> = t2MOVi16 21856, pred:14, pred:%noreg
+	%R3<def> = t2LDRs %R0, %R3<kill>, 0, pred:14, pred:%noreg; mem:LD4[%4]
+	%R4<def> = t2MOVi 23040, pred:14, pred:%noreg, opt:%noreg
+	%R0<def> = t2LDRs %R0<kill>, %R4<kill>, 0, pred:14, pred:%noreg; mem:LD4[%1]
+	%R3<def> = t2ADDrr %R3<kill>, %R1, pred:14, pred:%noreg, opt:%noreg
+	t2STRi12 %R3<kill>, %SP, 0, pred:14, pred:%noreg; mem:ST4[Stack]
+	%R3<def> = t2ADDrr %R0<kill>, %R1<kill>, pred:14, pred:%noreg, opt:%noreg
+	%R4<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg
+	%R0<def> = tMOVr %R2<kill>, pred:14, pred:%noreg
+	%R1<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg
+	%R2<def> = t2MOVi 1, pred:14, pred:%noreg, opt:%noreg
+	tBL pred:14, pred:%noreg, <ga:@play_attack_defend_n>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %LR<imp-def,dead>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, %R3<imp-use>, %SP<imp-def>, %R0<imp-def>
+	t2CMPri %R0<kill>, 0, pred:14, pred:%noreg, %CPSR<imp-def>
+	%R4<def> = t2MOVi 1, pred:0, pred:%CPSR<kill>, opt:%noreg
+	%R0<def> = tMOVr %R4<kill>, pred:14, pred:%noreg
+	%SP<def,tied1> = tADDspi %SP<tied0>, 2, pred:14, pred:%noreg
+	%SP<def,tied1> = t2LDMIA_RET %SP<tied0>, pred:14, pred:%noreg, %R4<def>, %R6<def>, %R7<def>, %PC<def>, %R0<imp-use>
+
+# End machine code for function autohelperpat1088.
+
+# After Thumb2 instruction size reduction pass:
+# Machine code for function autohelperpat1088: Post SSA
+Frame Objects:
+  fi#0: size=4, align=4, at location [SP-4]
+  fi#1: size=4, align=4, at location [SP-8]
+  fi#2: size=4, align=4, at location [SP-12]
+  fi#3: size=4, align=4, at location [SP-16]
+Function Live Ins: %R0, %R1, %R2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R2 %R4 %R6 %R7 %LR
+	%SP<def,tied1> = t2STMDB_UPD %SP<tied0>, pred:14, pred:%noreg, %R4<kill>, %R6<kill>, %R7<kill>, %LR<kill>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%R7<def> = t2ADDri %SP<kill>, 8, pred:14, pred:%noreg, opt:%noreg; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%SP<def,tied1> = tSUBspi %SP<tied0>, 2, pred:14, pred:%noreg; flags: FrameSetup
+	%R3<def> = t2MOVi16 <ga:@transformation>[TF=1], pred:14, pred:%noreg
+	%R3<def,tied1> = t2MOVTi16 %R3<tied0>, <ga:@transformation>[TF=2], pred:14, pred:%noreg
+	%R0<def> = t2ADDrs %R3<kill>, %R0<kill>, 18, pred:14, pred:%noreg, opt:%noreg
+	%R3<def> = t2MOVi16 21856, pred:14, pred:%noreg
+	%R3<def> = t2LDRs %R0, %R3<kill>, 0, pred:14, pred:%noreg; mem:LD4[%4]
+	%R4<def> = t2MOVi 23040, pred:14, pred:%noreg, opt:%noreg
+	%R0<def> = t2LDRs %R0<kill>, %R4<kill>, 0, pred:14, pred:%noreg; mem:LD4[%1]
+	%R3<def> = t2ADDrr %R3<kill>, %R1, pred:14, pred:%noreg, opt:%noreg
+	t2STRi12 %R3<kill>, %SP, 0, pred:14, pred:%noreg; mem:ST4[Stack]
+	%R3<def> = t2ADDrr %R0<kill>, %R1<kill>, pred:14, pred:%noreg, opt:%noreg
+	%R4<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg
+	%R0<def> = tMOVr %R2<kill>, pred:14, pred:%noreg
+	%R1<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg
+	%R2<def> = t2MOVi 1, pred:14, pred:%noreg, opt:%noreg
+	tBL pred:14, pred:%noreg, <ga:@play_attack_defend_n>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %LR<imp-def,dead>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, %R3<imp-use>, %SP<imp-def>, %R0<imp-def>
+	t2CMPri %R0<kill>, 0, pred:14, pred:%noreg, %CPSR<imp-def>
+	%R4<def> = t2MOVi 1, pred:0, pred:%CPSR<kill>, opt:%noreg
+	%R0<def> = tMOVr %R4<kill>, pred:14, pred:%noreg
+	%SP<def,tied1> = tADDspi %SP<tied0>, 2, pred:14, pred:%noreg
+	%SP<def,tied1> = t2LDMIA_RET %SP<tied0>, pred:14, pred:%noreg, %R4<def>, %R6<def>, %R7<def>, %PC<def>, %R0<imp-use>
+
+# End machine code for function autohelperpat1088.
+
+# After Thumb IT blocks insertion pass:
+# Machine code for function autohelperpat1088: Post SSA
+Frame Objects:
+  fi#0: size=4, align=4, at location [SP-4]
+  fi#1: size=4, align=4, at location [SP-8]
+  fi#2: size=4, align=4, at location [SP-12]
+  fi#3: size=4, align=4, at location [SP-16]
+Function Live Ins: %R0, %R1, %R2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R2 %R4 %R6 %R7 %LR
+	%SP<def,tied1> = t2STMDB_UPD %SP<tied0>, pred:14, pred:%noreg, %R4<kill>, %R6<kill>, %R7<kill>, %LR<kill>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%R7<def> = t2ADDri %SP<kill>, 8, pred:14, pred:%noreg, opt:%noreg; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%SP<def,tied1> = tSUBspi %SP<tied0>, 2, pred:14, pred:%noreg; flags: FrameSetup
+	%R3<def> = t2MOVi16 <ga:@transformation>[TF=1], pred:14, pred:%noreg
+	%R3<def,tied1> = t2MOVTi16 %R3<tied0>, <ga:@transformation>[TF=2], pred:14, pred:%noreg
+	%R0<def> = t2ADDrs %R3<kill>, %R0<kill>, 18, pred:14, pred:%noreg, opt:%noreg
+	%R3<def> = t2MOVi16 21856, pred:14, pred:%noreg
+	%R3<def> = t2LDRs %R0, %R3<kill>, 0, pred:14, pred:%noreg; mem:LD4[%4]
+	%R4<def> = t2MOVi 23040, pred:14, pred:%noreg, opt:%noreg
+	%R0<def> = t2LDRs %R0<kill>, %R4<kill>, 0, pred:14, pred:%noreg; mem:LD4[%1]
+	%R3<def> = t2ADDrr %R3<kill>, %R1, pred:14, pred:%noreg, opt:%noreg
+	t2STRi12 %R3<kill>, %SP, 0, pred:14, pred:%noreg; mem:ST4[Stack]
+	%R3<def> = t2ADDrr %R0<kill>, %R1<kill>, pred:14, pred:%noreg, opt:%noreg
+	%R4<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg
+	%R0<def> = tMOVr %R2<kill>, pred:14, pred:%noreg
+	%R1<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg
+	%R2<def> = t2MOVi 1, pred:14, pred:%noreg, opt:%noreg
+	tBL pred:14, pred:%noreg, <ga:@play_attack_defend_n>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %LR<imp-def,dead>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, %R3<imp-use>, %SP<imp-def>, %R0<imp-def>
+	t2CMPri %R0<kill>, 0, pred:14, pred:%noreg, %CPSR<imp-def>
+	BUNDLE %ITSTATE<imp-def,dead>, %R4<imp-def>, %CPSR<imp-use,kill>
+	  * t2IT 0, 8, %ITSTATE<imp-def>
+	  * %R4<def> = t2MOVi 1, pred:0, pred:%CPSR<kill>, opt:%noreg, %ITSTATE<imp-use,kill,internal>
+	%R0<def> = tMOVr %R4<kill>, pred:14, pred:%noreg
+	%SP<def,tied1> = tADDspi %SP<tied0>, 2, pred:14, pred:%noreg
+	%SP<def,tied1> = t2LDMIA_RET %SP<tied0>, pred:14, pred:%noreg, %R4<def>, %R6<def>, %R7<def>, %PC<def>, %R0<imp-use>
+
+# End machine code for function autohelperpat1088.
+
+# After Analyze Machine Code For Garbage Collection:
+# Machine code for function autohelperpat1088: Post SSA
+Frame Objects:
+  fi#0: size=4, align=4, at location [SP-4]
+  fi#1: size=4, align=4, at location [SP-8]
+  fi#2: size=4, align=4, at location [SP-12]
+  fi#3: size=4, align=4, at location [SP-16]
+Function Live Ins: %R0, %R1, %R2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R2 %R4 %R6 %R7 %LR
+	%SP<def,tied1> = t2STMDB_UPD %SP<tied0>, pred:14, pred:%noreg, %R4<kill>, %R6<kill>, %R7<kill>, %LR<kill>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%R7<def> = t2ADDri %SP<kill>, 8, pred:14, pred:%noreg, opt:%noreg; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%SP<def,tied1> = tSUBspi %SP<tied0>, 2, pred:14, pred:%noreg; flags: FrameSetup
+	%R3<def> = t2MOVi16 <ga:@transformation>[TF=1], pred:14, pred:%noreg
+	%R3<def,tied1> = t2MOVTi16 %R3<tied0>, <ga:@transformation>[TF=2], pred:14, pred:%noreg
+	%R0<def> = t2ADDrs %R3<kill>, %R0<kill>, 18, pred:14, pred:%noreg, opt:%noreg
+	%R3<def> = t2MOVi16 21856, pred:14, pred:%noreg
+	%R3<def> = t2LDRs %R0, %R3<kill>, 0, pred:14, pred:%noreg; mem:LD4[%4]
+	%R4<def> = t2MOVi 23040, pred:14, pred:%noreg, opt:%noreg
+	%R0<def> = t2LDRs %R0<kill>, %R4<kill>, 0, pred:14, pred:%noreg; mem:LD4[%1]
+	%R3<def> = t2ADDrr %R3<kill>, %R1, pred:14, pred:%noreg, opt:%noreg
+	t2STRi12 %R3<kill>, %SP, 0, pred:14, pred:%noreg; mem:ST4[Stack]
+	%R3<def> = t2ADDrr %R0<kill>, %R1<kill>, pred:14, pred:%noreg, opt:%noreg
+	%R4<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg
+	%R0<def> = tMOVr %R2<kill>, pred:14, pred:%noreg
+	%R1<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg
+	%R2<def> = t2MOVi 1, pred:14, pred:%noreg, opt:%noreg
+	tBL pred:14, pred:%noreg, <ga:@play_attack_defend_n>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %LR<imp-def,dead>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, %R3<imp-use>, %SP<imp-def>, %R0<imp-def>
+	t2CMPri %R0<kill>, 0, pred:14, pred:%noreg, %CPSR<imp-def>
+	BUNDLE %ITSTATE<imp-def,dead>, %R4<imp-def>, %CPSR<imp-use,kill>
+	  * t2IT 0, 8, %ITSTATE<imp-def>
+	  * %R4<def> = t2MOVi 1, pred:0, pred:%CPSR<kill>, opt:%noreg, %ITSTATE<imp-use,kill,internal>
+	%R0<def> = tMOVr %R4<kill>, pred:14, pred:%noreg
+	%SP<def,tied1> = tADDspi %SP<tied0>, 2, pred:14, pred:%noreg
+	%SP<def,tied1> = t2LDMIA_RET %SP<tied0>, pred:14, pred:%noreg, %R4<def>, %R6<def>, %R7<def>, %PC<def>, %R0<imp-use>
+
+# End machine code for function autohelperpat1088.
+
+# After Thumb2 instruction size reduction pass:
+# Machine code for function autohelperpat1088: Post SSA
+Frame Objects:
+  fi#0: size=4, align=4, at location [SP-4]
+  fi#1: size=4, align=4, at location [SP-8]
+  fi#2: size=4, align=4, at location [SP-12]
+  fi#3: size=4, align=4, at location [SP-16]
+Function Live Ins: %R0, %R1, %R2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R2 %R4 %R6 %R7 %LR
+	tPUSH pred:14, pred:%noreg, %R4<kill>, %R6<kill>, %R7<kill>, %LR<kill>, %SP<imp-def>, %SP<imp-use>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%R7<def> = tADDrSPi %SP<kill>, 2, pred:14, pred:%noreg; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%SP<def,tied1> = tSUBspi %SP<tied0>, 2, pred:14, pred:%noreg; flags: FrameSetup
+	%R3<def> = t2MOVi16 <ga:@transformation>[TF=1], pred:14, pred:%noreg
+	%R3<def,tied1> = t2MOVTi16 %R3<tied0>, <ga:@transformation>[TF=2], pred:14, pred:%noreg
+	%R0<def> = t2ADDrs %R3<kill>, %R0<kill>, 18, pred:14, pred:%noreg, opt:%noreg
+	%R3<def> = t2MOVi16 21856, pred:14, pred:%noreg
+	%R3<def> = tLDRr %R0, %R3<kill>, pred:14, pred:%noreg; mem:LD4[%4]
+	%R4<def> = t2MOVi 23040, pred:14, pred:%noreg, opt:%noreg
+	%R0<def> = tLDRr %R0<kill>, %R4<kill>, pred:14, pred:%noreg; mem:LD4[%1]
+	%R3<def,tied1> = tADDhirr %R3<kill,tied0>, %R1, pred:14, pred:%noreg
+	tSTRspi %R3<kill>, %SP, 0, pred:14, pred:%noreg; mem:ST4[Stack]
+	%R3<def>, %CPSR<def,dead> = tADDrr %R0<kill>, %R1<kill>, pred:14, pred:%noreg
+	%R4<def>, %CPSR<def,dead> = tMOVi8 0, pred:14, pred:%noreg
+	%R0<def> = tMOVr %R2<kill>, pred:14, pred:%noreg
+	%R1<def>, %CPSR<def,dead> = tMOVi8 0, pred:14, pred:%noreg
+	%R2<def>, %CPSR<def,dead> = tMOVi8 1, pred:14, pred:%noreg
+	tBL pred:14, pred:%noreg, <ga:@play_attack_defend_n>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %LR<imp-def,dead>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, %R3<imp-use>, %SP<imp-def>, %R0<imp-def>
+	tCMPi8 %R0<kill>, 0, pred:14, pred:%noreg, %CPSR<imp-def>
+	BUNDLE %ITSTATE<imp-def,dead>, %R4<imp-def>, %CPSR<imp-use,kill>
+	  * t2IT 0, 8, %ITSTATE<imp-def>
+	  * %R4<def> = tMOVi8 opt:%noreg, 1, pred:0, pred:%CPSR<kill>, %ITSTATE<imp-use,kill,internal>
+	%R0<def> = tMOVr %R4<kill>, pred:14, pred:%noreg
+	%SP<def,tied1> = tADDspi %SP<tied0>, 2, pred:14, pred:%noreg
+	tPOP_RET pred:14, pred:%noreg, %R4<def>, %R6<def>, %R7<def>, %PC<def>, %R0<imp-use>
+
+# End machine code for function autohelperpat1088.
+
+# After Unpack machine instruction bundles:
+# Machine code for function autohelperpat1088: Post SSA
+Frame Objects:
+  fi#0: size=4, align=4, at location [SP-4]
+  fi#1: size=4, align=4, at location [SP-8]
+  fi#2: size=4, align=4, at location [SP-12]
+  fi#3: size=4, align=4, at location [SP-16]
+Function Live Ins: %R0, %R1, %R2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R2 %R4 %R6 %R7 %LR
+	tPUSH pred:14, pred:%noreg, %R4<kill>, %R6<kill>, %R7<kill>, %LR<kill>, %SP<imp-def>, %SP<imp-use>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%R7<def> = tADDrSPi %SP<kill>, 2, pred:14, pred:%noreg; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%SP<def,tied1> = tSUBspi %SP<tied0>, 2, pred:14, pred:%noreg; flags: FrameSetup
+	%R3<def> = t2MOVi16 <ga:@transformation>[TF=1], pred:14, pred:%noreg
+	%R3<def,tied1> = t2MOVTi16 %R3<tied0>, <ga:@transformation>[TF=2], pred:14, pred:%noreg
+	%R0<def> = t2ADDrs %R3<kill>, %R0<kill>, 18, pred:14, pred:%noreg, opt:%noreg
+	%R3<def> = t2MOVi16 21856, pred:14, pred:%noreg
+	%R3<def> = tLDRr %R0, %R3<kill>, pred:14, pred:%noreg; mem:LD4[%4]
+	%R4<def> = t2MOVi 23040, pred:14, pred:%noreg, opt:%noreg
+	%R0<def> = tLDRr %R0<kill>, %R4<kill>, pred:14, pred:%noreg; mem:LD4[%1]
+	%R3<def,tied1> = tADDhirr %R3<kill,tied0>, %R1, pred:14, pred:%noreg
+	tSTRspi %R3<kill>, %SP, 0, pred:14, pred:%noreg; mem:ST4[Stack]
+	%R3<def>, %CPSR<def,dead> = tADDrr %R0<kill>, %R1<kill>, pred:14, pred:%noreg
+	%R4<def>, %CPSR<def,dead> = tMOVi8 0, pred:14, pred:%noreg
+	%R0<def> = tMOVr %R2<kill>, pred:14, pred:%noreg
+	%R1<def>, %CPSR<def,dead> = tMOVi8 0, pred:14, pred:%noreg
+	%R2<def>, %CPSR<def,dead> = tMOVi8 1, pred:14, pred:%noreg
+	tBL pred:14, pred:%noreg, <ga:@play_attack_defend_n>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %LR<imp-def,dead>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, %R3<imp-use>, %SP<imp-def>, %R0<imp-def>
+	tCMPi8 %R0<kill>, 0, pred:14, pred:%noreg, %CPSR<imp-def>
+	t2IT 0, 8, %ITSTATE<imp-def>
+	%R4<def> = tMOVi8 opt:%noreg, 1, pred:0, pred:%CPSR<kill>, %ITSTATE<imp-use,kill>
+	%R0<def> = tMOVr %R4<kill>, pred:14, pred:%noreg
+	%SP<def,tied1> = tADDspi %SP<tied0>, 2, pred:14, pred:%noreg
+	tPOP_RET pred:14, pred:%noreg, %R4<def>, %R6<def>, %R7<def>, %PC<def>, %R0<imp-use>
+
+# End machine code for function autohelperpat1088.
+
+# After optimise barriers pass:
+# Machine code for function autohelperpat1088: Post SSA
+Frame Objects:
+  fi#0: size=4, align=4, at location [SP-4]
+  fi#1: size=4, align=4, at location [SP-8]
+  fi#2: size=4, align=4, at location [SP-12]
+  fi#3: size=4, align=4, at location [SP-16]
+Function Live Ins: %R0, %R1, %R2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R2 %R4 %R6 %R7 %LR
+	tPUSH pred:14, pred:%noreg, %R4<kill>, %R6<kill>, %R7<kill>, %LR<kill>, %SP<imp-def>, %SP<imp-use>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%R7<def> = tADDrSPi %SP<kill>, 2, pred:14, pred:%noreg; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%SP<def,tied1> = tSUBspi %SP<tied0>, 2, pred:14, pred:%noreg; flags: FrameSetup
+	%R3<def> = t2MOVi16 <ga:@transformation>[TF=1], pred:14, pred:%noreg
+	%R3<def,tied1> = t2MOVTi16 %R3<tied0>, <ga:@transformation>[TF=2], pred:14, pred:%noreg
+	%R0<def> = t2ADDrs %R3<kill>, %R0<kill>, 18, pred:14, pred:%noreg, opt:%noreg
+	%R3<def> = t2MOVi16 21856, pred:14, pred:%noreg
+	%R3<def> = tLDRr %R0, %R3<kill>, pred:14, pred:%noreg; mem:LD4[%4]
+	%R4<def> = t2MOVi 23040, pred:14, pred:%noreg, opt:%noreg
+	%R0<def> = tLDRr %R0<kill>, %R4<kill>, pred:14, pred:%noreg; mem:LD4[%1]
+	%R3<def,tied1> = tADDhirr %R3<kill,tied0>, %R1, pred:14, pred:%noreg
+	tSTRspi %R3<kill>, %SP, 0, pred:14, pred:%noreg; mem:ST4[Stack]
+	%R3<def>, %CPSR<def,dead> = tADDrr %R0<kill>, %R1<kill>, pred:14, pred:%noreg
+	%R4<def>, %CPSR<def,dead> = tMOVi8 0, pred:14, pred:%noreg
+	%R0<def> = tMOVr %R2<kill>, pred:14, pred:%noreg
+	%R1<def>, %CPSR<def,dead> = tMOVi8 0, pred:14, pred:%noreg
+	%R2<def>, %CPSR<def,dead> = tMOVi8 1, pred:14, pred:%noreg
+	tBL pred:14, pred:%noreg, <ga:@play_attack_defend_n>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %LR<imp-def,dead>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, %R3<imp-use>, %SP<imp-def>, %R0<imp-def>
+	tCMPi8 %R0<kill>, 0, pred:14, pred:%noreg, %CPSR<imp-def>
+	t2IT 0, 8, %ITSTATE<imp-def>
+	%R4<def> = tMOVi8 opt:%noreg, 1, pred:0, pred:%CPSR<kill>, %ITSTATE<imp-use,kill>
+	%R0<def> = tMOVr %R4<kill>, pred:14, pred:%noreg
+	%SP<def,tied1> = tADDspi %SP<tied0>, 2, pred:14, pred:%noreg
+	tPOP_RET pred:14, pred:%noreg, %R4<def>, %R6<def>, %R7<def>, %PC<def>, %R0<imp-use>
+
+# End machine code for function autohelperpat1088.
+
+# After ARM constant island placement and branch shortening pass:
+# Machine code for function autohelperpat1088: Post SSA, not tracking liveness
+Frame Objects:
+  fi#0: size=4, align=4, at location [SP-4]
+  fi#1: size=4, align=4, at location [SP-8]
+  fi#2: size=4, align=4, at location [SP-12]
+  fi#3: size=4, align=4, at location [SP-16]
+Function Live Ins: %R0, %R1, %R2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R2 %R4 %R6 %R7 %LR
+	tPUSH pred:14, pred:%noreg, %R4<kill>, %R6<kill>, %R7<kill>, %LR<kill>, %SP<imp-def>, %SP<imp-use>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%R7<def> = tADDrSPi %SP<kill>, 2, pred:14, pred:%noreg; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%SP<def,tied1> = tSUBspi %SP<tied0>, 2, pred:14, pred:%noreg; flags: FrameSetup
+	%R3<def> = t2MOVi16 <ga:@transformation>[TF=1], pred:14, pred:%noreg
+	%R3<def,tied1> = t2MOVTi16 %R3<tied0>, <ga:@transformation>[TF=2], pred:14, pred:%noreg
+	%R0<def> = t2ADDrs %R3<kill>, %R0<kill>, 18, pred:14, pred:%noreg, opt:%noreg
+	%R3<def> = t2MOVi16 21856, pred:14, pred:%noreg
+	%R3<def> = tLDRr %R0, %R3<kill>, pred:14, pred:%noreg; mem:LD4[%4]
+	%R4<def> = t2MOVi 23040, pred:14, pred:%noreg, opt:%noreg
+	%R0<def> = tLDRr %R0<kill>, %R4<kill>, pred:14, pred:%noreg; mem:LD4[%1]
+	%R3<def,tied1> = tADDhirr %R3<kill,tied0>, %R1, pred:14, pred:%noreg
+	tSTRspi %R3<kill>, %SP, 0, pred:14, pred:%noreg; mem:ST4[Stack]
+	%R3<def>, %CPSR<def,dead> = tADDrr %R0<kill>, %R1<kill>, pred:14, pred:%noreg
+	%R4<def>, %CPSR<def,dead> = tMOVi8 0, pred:14, pred:%noreg
+	%R0<def> = tMOVr %R2<kill>, pred:14, pred:%noreg
+	%R1<def>, %CPSR<def,dead> = tMOVi8 0, pred:14, pred:%noreg
+	%R2<def>, %CPSR<def,dead> = tMOVi8 1, pred:14, pred:%noreg
+	tBL pred:14, pred:%noreg, <ga:@play_attack_defend_n>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %LR<imp-def,dead>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, %R3<imp-use>, %SP<imp-def>, %R0<imp-def>
+	tCMPi8 %R0<kill>, 0, pred:14, pred:%noreg, %CPSR<imp-def>
+	t2IT 0, 8, %ITSTATE<imp-def>
+	%R4<def> = tMOVi8 opt:%noreg, 1, pred:0, pred:%CPSR<kill>, %ITSTATE<imp-use,kill>
+	%R0<def> = tMOVr %R4<kill>, pred:14, pred:%noreg
+	%SP<def,tied1> = tADDspi %SP<tied0>, 2, pred:14, pred:%noreg
+	tPOP_RET pred:14, pred:%noreg, %R4<def>, %R6<def>, %R7<def>, %PC<def>, %R0<imp-use>
+
+# End machine code for function autohelperpat1088.
+
+# After Contiguously Lay Out Funclets:
+# Machine code for function autohelperpat1088: Post SSA, not tracking liveness
+Frame Objects:
+  fi#0: size=4, align=4, at location [SP-4]
+  fi#1: size=4, align=4, at location [SP-8]
+  fi#2: size=4, align=4, at location [SP-12]
+  fi#3: size=4, align=4, at location [SP-16]
+Function Live Ins: %R0, %R1, %R2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R2 %R4 %R6 %R7 %LR
+	tPUSH pred:14, pred:%noreg, %R4<kill>, %R6<kill>, %R7<kill>, %LR<kill>, %SP<imp-def>, %SP<imp-use>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%R7<def> = tADDrSPi %SP<kill>, 2, pred:14, pred:%noreg; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%SP<def,tied1> = tSUBspi %SP<tied0>, 2, pred:14, pred:%noreg; flags: FrameSetup
+	%R3<def> = t2MOVi16 <ga:@transformation>[TF=1], pred:14, pred:%noreg
+	%R3<def,tied1> = t2MOVTi16 %R3<tied0>, <ga:@transformation>[TF=2], pred:14, pred:%noreg
+	%R0<def> = t2ADDrs %R3<kill>, %R0<kill>, 18, pred:14, pred:%noreg, opt:%noreg
+	%R3<def> = t2MOVi16 21856, pred:14, pred:%noreg
+	%R3<def> = tLDRr %R0, %R3<kill>, pred:14, pred:%noreg; mem:LD4[%4]
+	%R4<def> = t2MOVi 23040, pred:14, pred:%noreg, opt:%noreg
+	%R0<def> = tLDRr %R0<kill>, %R4<kill>, pred:14, pred:%noreg; mem:LD4[%1]
+	%R3<def,tied1> = tADDhirr %R3<kill,tied0>, %R1, pred:14, pred:%noreg
+	tSTRspi %R3<kill>, %SP, 0, pred:14, pred:%noreg; mem:ST4[Stack]
+	%R3<def>, %CPSR<def,dead> = tADDrr %R0<kill>, %R1<kill>, pred:14, pred:%noreg
+	%R4<def>, %CPSR<def,dead> = tMOVi8 0, pred:14, pred:%noreg
+	%R0<def> = tMOVr %R2<kill>, pred:14, pred:%noreg
+	%R1<def>, %CPSR<def,dead> = tMOVi8 0, pred:14, pred:%noreg
+	%R2<def>, %CPSR<def,dead> = tMOVi8 1, pred:14, pred:%noreg
+	tBL pred:14, pred:%noreg, <ga:@play_attack_defend_n>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %LR<imp-def,dead>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, %R3<imp-use>, %SP<imp-def>, %R0<imp-def>
+	tCMPi8 %R0<kill>, 0, pred:14, pred:%noreg, %CPSR<imp-def>
+	t2IT 0, 8, %ITSTATE<imp-def>
+	%R4<def> = tMOVi8 opt:%noreg, 1, pred:0, pred:%CPSR<kill>, %ITSTATE<imp-use,kill>
+	%R0<def> = tMOVr %R4<kill>, pred:14, pred:%noreg
+	%SP<def,tied1> = tADDspi %SP<tied0>, 2, pred:14, pred:%noreg
+	tPOP_RET pred:14, pred:%noreg, %R4<def>, %R6<def>, %R7<def>, %PC<def>, %R0<imp-use>
+
+# End machine code for function autohelperpat1088.
+
+# After StackMap Liveness Analysis:
+# Machine code for function autohelperpat1088: Post SSA, not tracking liveness
+Frame Objects:
+  fi#0: size=4, align=4, at location [SP-4]
+  fi#1: size=4, align=4, at location [SP-8]
+  fi#2: size=4, align=4, at location [SP-12]
+  fi#3: size=4, align=4, at location [SP-16]
+Function Live Ins: %R0, %R1, %R2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R2 %R4 %R6 %R7 %LR
+	tPUSH pred:14, pred:%noreg, %R4<kill>, %R6<kill>, %R7<kill>, %LR<kill>, %SP<imp-def>, %SP<imp-use>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%R7<def> = tADDrSPi %SP<kill>, 2, pred:14, pred:%noreg; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%SP<def,tied1> = tSUBspi %SP<tied0>, 2, pred:14, pred:%noreg; flags: FrameSetup
+	%R3<def> = t2MOVi16 <ga:@transformation>[TF=1], pred:14, pred:%noreg
+	%R3<def,tied1> = t2MOVTi16 %R3<tied0>, <ga:@transformation>[TF=2], pred:14, pred:%noreg
+	%R0<def> = t2ADDrs %R3<kill>, %R0<kill>, 18, pred:14, pred:%noreg, opt:%noreg
+	%R3<def> = t2MOVi16 21856, pred:14, pred:%noreg
+	%R3<def> = tLDRr %R0, %R3<kill>, pred:14, pred:%noreg; mem:LD4[%4]
+	%R4<def> = t2MOVi 23040, pred:14, pred:%noreg, opt:%noreg
+	%R0<def> = tLDRr %R0<kill>, %R4<kill>, pred:14, pred:%noreg; mem:LD4[%1]
+	%R3<def,tied1> = tADDhirr %R3<kill,tied0>, %R1, pred:14, pred:%noreg
+	tSTRspi %R3<kill>, %SP, 0, pred:14, pred:%noreg; mem:ST4[Stack]
+	%R3<def>, %CPSR<def,dead> = tADDrr %R0<kill>, %R1<kill>, pred:14, pred:%noreg
+	%R4<def>, %CPSR<def,dead> = tMOVi8 0, pred:14, pred:%noreg
+	%R0<def> = tMOVr %R2<kill>, pred:14, pred:%noreg
+	%R1<def>, %CPSR<def,dead> = tMOVi8 0, pred:14, pred:%noreg
+	%R2<def>, %CPSR<def,dead> = tMOVi8 1, pred:14, pred:%noreg
+	tBL pred:14, pred:%noreg, <ga:@play_attack_defend_n>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %LR<imp-def,dead>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, %R3<imp-use>, %SP<imp-def>, %R0<imp-def>
+	tCMPi8 %R0<kill>, 0, pred:14, pred:%noreg, %CPSR<imp-def>
+	t2IT 0, 8, %ITSTATE<imp-def>
+	%R4<def> = tMOVi8 opt:%noreg, 1, pred:0, pred:%CPSR<kill>, %ITSTATE<imp-use,kill>
+	%R0<def> = tMOVr %R4<kill>, pred:14, pred:%noreg
+	%SP<def,tied1> = tADDspi %SP<tied0>, 2, pred:14, pred:%noreg
+	tPOP_RET pred:14, pred:%noreg, %R4<def>, %R6<def>, %R7<def>, %PC<def>, %R0<imp-use>
+
+# End machine code for function autohelperpat1088.
+
+# After Live DEBUG_VALUE analysis:
+# Machine code for function autohelperpat1088: Post SSA, not tracking liveness
+Frame Objects:
+  fi#0: size=4, align=4, at location [SP-4]
+  fi#1: size=4, align=4, at location [SP-8]
+  fi#2: size=4, align=4, at location [SP-12]
+  fi#3: size=4, align=4, at location [SP-16]
+Function Live Ins: %R0, %R1, %R2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1 %R2 %R4 %R6 %R7 %LR
+	tPUSH pred:14, pred:%noreg, %R4<kill>, %R6<kill>, %R7<kill>, %LR<kill>, %SP<imp-def>, %SP<imp-use>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%R7<def> = tADDrSPi %SP<kill>, 2, pred:14, pred:%noreg; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%SP<def,tied1> = tSUBspi %SP<tied0>, 2, pred:14, pred:%noreg; flags: FrameSetup
+	%R3<def> = t2MOVi16 <ga:@transformation>[TF=1], pred:14, pred:%noreg
+	%R3<def,tied1> = t2MOVTi16 %R3<tied0>, <ga:@transformation>[TF=2], pred:14, pred:%noreg
+	%R0<def> = t2ADDrs %R3<kill>, %R0<kill>, 18, pred:14, pred:%noreg, opt:%noreg
+	%R3<def> = t2MOVi16 21856, pred:14, pred:%noreg
+	%R3<def> = tLDRr %R0, %R3<kill>, pred:14, pred:%noreg; mem:LD4[%4]
+	%R4<def> = t2MOVi 23040, pred:14, pred:%noreg, opt:%noreg
+	%R0<def> = tLDRr %R0<kill>, %R4<kill>, pred:14, pred:%noreg; mem:LD4[%1]
+	%R3<def,tied1> = tADDhirr %R3<kill,tied0>, %R1, pred:14, pred:%noreg
+	tSTRspi %R3<kill>, %SP, 0, pred:14, pred:%noreg; mem:ST4[Stack]
+	%R3<def>, %CPSR<def,dead> = tADDrr %R0<kill>, %R1<kill>, pred:14, pred:%noreg
+	%R4<def>, %CPSR<def,dead> = tMOVi8 0, pred:14, pred:%noreg
+	%R0<def> = tMOVr %R2<kill>, pred:14, pred:%noreg
+	%R1<def>, %CPSR<def,dead> = tMOVi8 0, pred:14, pred:%noreg
+	%R2<def>, %CPSR<def,dead> = tMOVi8 1, pred:14, pred:%noreg
+	tBL pred:14, pred:%noreg, <ga:@play_attack_defend_n>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %LR<imp-def,dead>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, %R3<imp-use>, %SP<imp-def>, %R0<imp-def>
+	tCMPi8 %R0<kill>, 0, pred:14, pred:%noreg, %CPSR<imp-def>
+	t2IT 0, 8, %ITSTATE<imp-def>
+	%R4<def> = tMOVi8 opt:%noreg, 1, pred:0, pred:%CPSR<kill>, %ITSTATE<imp-use,kill>
+	%R0<def> = tMOVr %R4<kill>, pred:14, pred:%noreg
+	%SP<def,tied1> = tADDspi %SP<tied0>, 2, pred:14, pred:%noreg
+	tPOP_RET pred:14, pred:%noreg, %R4<def>, %R6<def>, %R7<def>, %PC<def>, %R0<imp-use>
+
+# End machine code for function autohelperpat1088.
+

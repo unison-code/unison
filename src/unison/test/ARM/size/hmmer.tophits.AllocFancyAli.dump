@@ -1,0 +1,1228 @@
+# After Instruction Selection:
+# Machine code for function AllocFancyAli: SSA
+
+BB#0: derived from LLVM BB %0
+	ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg0<def> = t2MOVi32imm <ga:@.str>; rGPR:%vreg0
+	%vreg1<def> = t2MOVi 117, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg1
+	%vreg2<def> = t2MOVi 40, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg2
+	%R0<def> = COPY %vreg0; rGPR:%vreg0
+	%R1<def> = COPY %vreg1; rGPR:%vreg1
+	%R2<def> = COPY %vreg2; rGPR:%vreg2
+	tBL pred:14, pred:%noreg, <ga:@sre_malloc>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, %SP<imp-def>, %R0<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg3<def> = COPY %R0; GPR:%vreg3
+	%vreg4<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg4
+	t2STRi12 %vreg4, %vreg3, 16, pred:14, pred:%noreg; mem:ST4[%1+16] rGPR:%vreg4 GPR:%vreg3
+	t2STRi12 %vreg4, %vreg3, 12, pred:14, pred:%noreg; mem:ST4[%1+12] rGPR:%vreg4 GPR:%vreg3
+	t2STRi12 %vreg4, %vreg3, 8, pred:14, pred:%noreg; mem:ST4[%1+8] rGPR:%vreg4 GPR:%vreg3
+	t2STRi12 %vreg4, %vreg3, 4, pred:14, pred:%noreg; mem:ST4[%1+4] rGPR:%vreg4 GPR:%vreg3
+	t2STRi12 %vreg4, %vreg3, 0, pred:14, pred:%noreg; mem:ST4[%1] rGPR:%vreg4 GPR:%vreg3
+	t2STRi12 %vreg4, %vreg3, 36, pred:14, pred:%noreg; mem:ST4[%3+12] rGPR:%vreg4 GPR:%vreg3
+	t2STRi12 %vreg4, %vreg3, 32, pred:14, pred:%noreg; mem:ST4[%3+8] rGPR:%vreg4 GPR:%vreg3
+	t2STRi12 %vreg4, %vreg3, 28, pred:14, pred:%noreg; mem:ST4[%3+4] rGPR:%vreg4 GPR:%vreg3
+	t2STRi12 %vreg4, %vreg3, 24, pred:14, pred:%noreg; mem:ST4[%3] rGPR:%vreg4 GPR:%vreg3
+	%R0<def> = COPY %vreg3; GPR:%vreg3
+	tBX_RET pred:14, pred:%noreg, %R0<imp-use>
+
+# End machine code for function AllocFancyAli.
+
+# After Expand ISel Pseudo-instructions:
+# Machine code for function AllocFancyAli: SSA
+
+BB#0: derived from LLVM BB %0
+	ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg0<def> = t2MOVi32imm <ga:@.str>; rGPR:%vreg0
+	%vreg1<def> = t2MOVi 117, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg1
+	%vreg2<def> = t2MOVi 40, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg2
+	%R0<def> = COPY %vreg0; rGPR:%vreg0
+	%R1<def> = COPY %vreg1; rGPR:%vreg1
+	%R2<def> = COPY %vreg2; rGPR:%vreg2
+	tBL pred:14, pred:%noreg, <ga:@sre_malloc>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, %SP<imp-def>, %R0<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg3<def> = COPY %R0; GPR:%vreg3
+	%vreg4<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg4
+	t2STRi12 %vreg4, %vreg3, 16, pred:14, pred:%noreg; mem:ST4[%1+16] rGPR:%vreg4 GPR:%vreg3
+	t2STRi12 %vreg4, %vreg3, 12, pred:14, pred:%noreg; mem:ST4[%1+12] rGPR:%vreg4 GPR:%vreg3
+	t2STRi12 %vreg4, %vreg3, 8, pred:14, pred:%noreg; mem:ST4[%1+8] rGPR:%vreg4 GPR:%vreg3
+	t2STRi12 %vreg4, %vreg3, 4, pred:14, pred:%noreg; mem:ST4[%1+4] rGPR:%vreg4 GPR:%vreg3
+	t2STRi12 %vreg4, %vreg3, 0, pred:14, pred:%noreg; mem:ST4[%1] rGPR:%vreg4 GPR:%vreg3
+	t2STRi12 %vreg4, %vreg3, 36, pred:14, pred:%noreg; mem:ST4[%3+12] rGPR:%vreg4 GPR:%vreg3
+	t2STRi12 %vreg4, %vreg3, 32, pred:14, pred:%noreg; mem:ST4[%3+8] rGPR:%vreg4 GPR:%vreg3
+	t2STRi12 %vreg4, %vreg3, 28, pred:14, pred:%noreg; mem:ST4[%3+4] rGPR:%vreg4 GPR:%vreg3
+	t2STRi12 %vreg4, %vreg3, 24, pred:14, pred:%noreg; mem:ST4[%3] rGPR:%vreg4 GPR:%vreg3
+	%R0<def> = COPY %vreg3; GPR:%vreg3
+	tBX_RET pred:14, pred:%noreg, %R0<imp-use>
+
+# End machine code for function AllocFancyAli.
+
+# After Tail Duplication:
+# Machine code for function AllocFancyAli: SSA
+
+BB#0: derived from LLVM BB %0
+	ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg0<def> = t2MOVi32imm <ga:@.str>; rGPR:%vreg0
+	%vreg1<def> = t2MOVi 117, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg1
+	%vreg2<def> = t2MOVi 40, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg2
+	%R0<def> = COPY %vreg0; rGPR:%vreg0
+	%R1<def> = COPY %vreg1; rGPR:%vreg1
+	%R2<def> = COPY %vreg2; rGPR:%vreg2
+	tBL pred:14, pred:%noreg, <ga:@sre_malloc>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, %SP<imp-def>, %R0<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg3<def> = COPY %R0; GPR:%vreg3
+	%vreg4<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg4
+	t2STRi12 %vreg4, %vreg3, 16, pred:14, pred:%noreg; mem:ST4[%1+16] rGPR:%vreg4 GPR:%vreg3
+	t2STRi12 %vreg4, %vreg3, 12, pred:14, pred:%noreg; mem:ST4[%1+12] rGPR:%vreg4 GPR:%vreg3
+	t2STRi12 %vreg4, %vreg3, 8, pred:14, pred:%noreg; mem:ST4[%1+8] rGPR:%vreg4 GPR:%vreg3
+	t2STRi12 %vreg4, %vreg3, 4, pred:14, pred:%noreg; mem:ST4[%1+4] rGPR:%vreg4 GPR:%vreg3
+	t2STRi12 %vreg4, %vreg3, 0, pred:14, pred:%noreg; mem:ST4[%1] rGPR:%vreg4 GPR:%vreg3
+	t2STRi12 %vreg4, %vreg3, 36, pred:14, pred:%noreg; mem:ST4[%3+12] rGPR:%vreg4 GPR:%vreg3
+	t2STRi12 %vreg4, %vreg3, 32, pred:14, pred:%noreg; mem:ST4[%3+8] rGPR:%vreg4 GPR:%vreg3
+	t2STRi12 %vreg4, %vreg3, 28, pred:14, pred:%noreg; mem:ST4[%3+4] rGPR:%vreg4 GPR:%vreg3
+	t2STRi12 %vreg4, %vreg3, 24, pred:14, pred:%noreg; mem:ST4[%3] rGPR:%vreg4 GPR:%vreg3
+	%R0<def> = COPY %vreg3; GPR:%vreg3
+	tBX_RET pred:14, pred:%noreg, %R0<imp-use>
+
+# End machine code for function AllocFancyAli.
+
+# After Optimize machine instruction PHIs:
+# Machine code for function AllocFancyAli: SSA
+
+BB#0: derived from LLVM BB %0
+	ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg0<def> = t2MOVi32imm <ga:@.str>; rGPR:%vreg0
+	%vreg1<def> = t2MOVi 117, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg1
+	%vreg2<def> = t2MOVi 40, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg2
+	%R0<def> = COPY %vreg0; rGPR:%vreg0
+	%R1<def> = COPY %vreg1; rGPR:%vreg1
+	%R2<def> = COPY %vreg2; rGPR:%vreg2
+	tBL pred:14, pred:%noreg, <ga:@sre_malloc>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, %SP<imp-def>, %R0<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg3<def> = COPY %R0; GPR:%vreg3
+	%vreg4<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg4
+	t2STRi12 %vreg4, %vreg3, 16, pred:14, pred:%noreg; mem:ST4[%1+16] rGPR:%vreg4 GPR:%vreg3
+	t2STRi12 %vreg4, %vreg3, 12, pred:14, pred:%noreg; mem:ST4[%1+12] rGPR:%vreg4 GPR:%vreg3
+	t2STRi12 %vreg4, %vreg3, 8, pred:14, pred:%noreg; mem:ST4[%1+8] rGPR:%vreg4 GPR:%vreg3
+	t2STRi12 %vreg4, %vreg3, 4, pred:14, pred:%noreg; mem:ST4[%1+4] rGPR:%vreg4 GPR:%vreg3
+	t2STRi12 %vreg4, %vreg3, 0, pred:14, pred:%noreg; mem:ST4[%1] rGPR:%vreg4 GPR:%vreg3
+	t2STRi12 %vreg4, %vreg3, 36, pred:14, pred:%noreg; mem:ST4[%3+12] rGPR:%vreg4 GPR:%vreg3
+	t2STRi12 %vreg4, %vreg3, 32, pred:14, pred:%noreg; mem:ST4[%3+8] rGPR:%vreg4 GPR:%vreg3
+	t2STRi12 %vreg4, %vreg3, 28, pred:14, pred:%noreg; mem:ST4[%3+4] rGPR:%vreg4 GPR:%vreg3
+	t2STRi12 %vreg4, %vreg3, 24, pred:14, pred:%noreg; mem:ST4[%3] rGPR:%vreg4 GPR:%vreg3
+	%R0<def> = COPY %vreg3; GPR:%vreg3
+	tBX_RET pred:14, pred:%noreg, %R0<imp-use>
+
+# End machine code for function AllocFancyAli.
+
+# After Merge disjoint stack slots:
+# Machine code for function AllocFancyAli: SSA
+
+BB#0: derived from LLVM BB %0
+	ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg0<def> = t2MOVi32imm <ga:@.str>; rGPR:%vreg0
+	%vreg1<def> = t2MOVi 117, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg1
+	%vreg2<def> = t2MOVi 40, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg2
+	%R0<def> = COPY %vreg0; rGPR:%vreg0
+	%R1<def> = COPY %vreg1; rGPR:%vreg1
+	%R2<def> = COPY %vreg2; rGPR:%vreg2
+	tBL pred:14, pred:%noreg, <ga:@sre_malloc>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, %SP<imp-def>, %R0<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg3<def> = COPY %R0; GPR:%vreg3
+	%vreg4<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg4
+	t2STRi12 %vreg4, %vreg3, 16, pred:14, pred:%noreg; mem:ST4[%1+16] rGPR:%vreg4 GPR:%vreg3
+	t2STRi12 %vreg4, %vreg3, 12, pred:14, pred:%noreg; mem:ST4[%1+12] rGPR:%vreg4 GPR:%vreg3
+	t2STRi12 %vreg4, %vreg3, 8, pred:14, pred:%noreg; mem:ST4[%1+8] rGPR:%vreg4 GPR:%vreg3
+	t2STRi12 %vreg4, %vreg3, 4, pred:14, pred:%noreg; mem:ST4[%1+4] rGPR:%vreg4 GPR:%vreg3
+	t2STRi12 %vreg4, %vreg3, 0, pred:14, pred:%noreg; mem:ST4[%1] rGPR:%vreg4 GPR:%vreg3
+	t2STRi12 %vreg4, %vreg3, 36, pred:14, pred:%noreg; mem:ST4[%3+12] rGPR:%vreg4 GPR:%vreg3
+	t2STRi12 %vreg4, %vreg3, 32, pred:14, pred:%noreg; mem:ST4[%3+8] rGPR:%vreg4 GPR:%vreg3
+	t2STRi12 %vreg4, %vreg3, 28, pred:14, pred:%noreg; mem:ST4[%3+4] rGPR:%vreg4 GPR:%vreg3
+	t2STRi12 %vreg4, %vreg3, 24, pred:14, pred:%noreg; mem:ST4[%3] rGPR:%vreg4 GPR:%vreg3
+	%R0<def> = COPY %vreg3; GPR:%vreg3
+	tBX_RET pred:14, pred:%noreg, %R0<imp-use>
+
+# End machine code for function AllocFancyAli.
+
+# After Local Stack Slot Allocation:
+# Machine code for function AllocFancyAli: SSA
+
+BB#0: derived from LLVM BB %0
+	ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg0<def> = t2MOVi32imm <ga:@.str>; rGPR:%vreg0
+	%vreg1<def> = t2MOVi 117, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg1
+	%vreg2<def> = t2MOVi 40, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg2
+	%R0<def> = COPY %vreg0; rGPR:%vreg0
+	%R1<def> = COPY %vreg1; rGPR:%vreg1
+	%R2<def> = COPY %vreg2; rGPR:%vreg2
+	tBL pred:14, pred:%noreg, <ga:@sre_malloc>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, %SP<imp-def>, %R0<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg3<def> = COPY %R0; GPR:%vreg3
+	%vreg4<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg4
+	t2STRi12 %vreg4, %vreg3, 16, pred:14, pred:%noreg; mem:ST4[%1+16] rGPR:%vreg4 GPR:%vreg3
+	t2STRi12 %vreg4, %vreg3, 12, pred:14, pred:%noreg; mem:ST4[%1+12] rGPR:%vreg4 GPR:%vreg3
+	t2STRi12 %vreg4, %vreg3, 8, pred:14, pred:%noreg; mem:ST4[%1+8] rGPR:%vreg4 GPR:%vreg3
+	t2STRi12 %vreg4, %vreg3, 4, pred:14, pred:%noreg; mem:ST4[%1+4] rGPR:%vreg4 GPR:%vreg3
+	t2STRi12 %vreg4, %vreg3, 0, pred:14, pred:%noreg; mem:ST4[%1] rGPR:%vreg4 GPR:%vreg3
+	t2STRi12 %vreg4, %vreg3, 36, pred:14, pred:%noreg; mem:ST4[%3+12] rGPR:%vreg4 GPR:%vreg3
+	t2STRi12 %vreg4, %vreg3, 32, pred:14, pred:%noreg; mem:ST4[%3+8] rGPR:%vreg4 GPR:%vreg3
+	t2STRi12 %vreg4, %vreg3, 28, pred:14, pred:%noreg; mem:ST4[%3+4] rGPR:%vreg4 GPR:%vreg3
+	t2STRi12 %vreg4, %vreg3, 24, pred:14, pred:%noreg; mem:ST4[%3] rGPR:%vreg4 GPR:%vreg3
+	%R0<def> = COPY %vreg3; GPR:%vreg3
+	tBX_RET pred:14, pred:%noreg, %R0<imp-use>
+
+# End machine code for function AllocFancyAli.
+
+# After Remove dead machine instructions:
+# Machine code for function AllocFancyAli: SSA
+
+BB#0: derived from LLVM BB %0
+	ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg0<def> = t2MOVi32imm <ga:@.str>; rGPR:%vreg0
+	%vreg1<def> = t2MOVi 117, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg1
+	%vreg2<def> = t2MOVi 40, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg2
+	%R0<def> = COPY %vreg0; rGPR:%vreg0
+	%R1<def> = COPY %vreg1; rGPR:%vreg1
+	%R2<def> = COPY %vreg2; rGPR:%vreg2
+	tBL pred:14, pred:%noreg, <ga:@sre_malloc>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, %SP<imp-def>, %R0<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg3<def> = COPY %R0; GPR:%vreg3
+	%vreg4<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg4
+	t2STRi12 %vreg4, %vreg3, 16, pred:14, pred:%noreg; mem:ST4[%1+16] rGPR:%vreg4 GPR:%vreg3
+	t2STRi12 %vreg4, %vreg3, 12, pred:14, pred:%noreg; mem:ST4[%1+12] rGPR:%vreg4 GPR:%vreg3
+	t2STRi12 %vreg4, %vreg3, 8, pred:14, pred:%noreg; mem:ST4[%1+8] rGPR:%vreg4 GPR:%vreg3
+	t2STRi12 %vreg4, %vreg3, 4, pred:14, pred:%noreg; mem:ST4[%1+4] rGPR:%vreg4 GPR:%vreg3
+	t2STRi12 %vreg4, %vreg3, 0, pred:14, pred:%noreg; mem:ST4[%1] rGPR:%vreg4 GPR:%vreg3
+	t2STRi12 %vreg4, %vreg3, 36, pred:14, pred:%noreg; mem:ST4[%3+12] rGPR:%vreg4 GPR:%vreg3
+	t2STRi12 %vreg4, %vreg3, 32, pred:14, pred:%noreg; mem:ST4[%3+8] rGPR:%vreg4 GPR:%vreg3
+	t2STRi12 %vreg4, %vreg3, 28, pred:14, pred:%noreg; mem:ST4[%3+4] rGPR:%vreg4 GPR:%vreg3
+	t2STRi12 %vreg4, %vreg3, 24, pred:14, pred:%noreg; mem:ST4[%3] rGPR:%vreg4 GPR:%vreg3
+	%R0<def> = COPY %vreg3; GPR:%vreg3
+	tBX_RET pred:14, pred:%noreg, %R0<imp-use>
+
+# End machine code for function AllocFancyAli.
+
+# After Machine Loop Invariant Code Motion:
+# Machine code for function AllocFancyAli: SSA
+
+BB#0: derived from LLVM BB %0
+	ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg0<def> = t2MOVi32imm <ga:@.str>; rGPR:%vreg0
+	%vreg1<def> = t2MOVi 117, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg1
+	%vreg2<def> = t2MOVi 40, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg2
+	%R0<def> = COPY %vreg0; rGPR:%vreg0
+	%R1<def> = COPY %vreg1; rGPR:%vreg1
+	%R2<def> = COPY %vreg2; rGPR:%vreg2
+	tBL pred:14, pred:%noreg, <ga:@sre_malloc>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, %SP<imp-def>, %R0<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg3<def> = COPY %R0; GPR:%vreg3
+	%vreg4<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg4
+	t2STRi12 %vreg4, %vreg3, 16, pred:14, pred:%noreg; mem:ST4[%1+16] rGPR:%vreg4 GPR:%vreg3
+	t2STRi12 %vreg4, %vreg3, 12, pred:14, pred:%noreg; mem:ST4[%1+12] rGPR:%vreg4 GPR:%vreg3
+	t2STRi12 %vreg4, %vreg3, 8, pred:14, pred:%noreg; mem:ST4[%1+8] rGPR:%vreg4 GPR:%vreg3
+	t2STRi12 %vreg4, %vreg3, 4, pred:14, pred:%noreg; mem:ST4[%1+4] rGPR:%vreg4 GPR:%vreg3
+	t2STRi12 %vreg4, %vreg3, 0, pred:14, pred:%noreg; mem:ST4[%1] rGPR:%vreg4 GPR:%vreg3
+	t2STRi12 %vreg4, %vreg3, 36, pred:14, pred:%noreg; mem:ST4[%3+12] rGPR:%vreg4 GPR:%vreg3
+	t2STRi12 %vreg4, %vreg3, 32, pred:14, pred:%noreg; mem:ST4[%3+8] rGPR:%vreg4 GPR:%vreg3
+	t2STRi12 %vreg4, %vreg3, 28, pred:14, pred:%noreg; mem:ST4[%3+4] rGPR:%vreg4 GPR:%vreg3
+	t2STRi12 %vreg4, %vreg3, 24, pred:14, pred:%noreg; mem:ST4[%3] rGPR:%vreg4 GPR:%vreg3
+	%R0<def> = COPY %vreg3; GPR:%vreg3
+	tBX_RET pred:14, pred:%noreg, %R0<imp-use>
+
+# End machine code for function AllocFancyAli.
+
+# After Machine Common Subexpression Elimination:
+# Machine code for function AllocFancyAli: SSA
+
+BB#0: derived from LLVM BB %0
+	ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg0<def> = t2MOVi32imm <ga:@.str>; rGPR:%vreg0
+	%vreg1<def> = t2MOVi 117, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg1
+	%vreg2<def> = t2MOVi 40, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg2
+	%R0<def> = COPY %vreg0; rGPR:%vreg0
+	%R1<def> = COPY %vreg1; rGPR:%vreg1
+	%R2<def> = COPY %vreg2; rGPR:%vreg2
+	tBL pred:14, pred:%noreg, <ga:@sre_malloc>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, %SP<imp-def>, %R0<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg3<def> = COPY %R0; GPR:%vreg3
+	%vreg4<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg4
+	t2STRi12 %vreg4, %vreg3, 16, pred:14, pred:%noreg; mem:ST4[%1+16] rGPR:%vreg4 GPR:%vreg3
+	t2STRi12 %vreg4, %vreg3, 12, pred:14, pred:%noreg; mem:ST4[%1+12] rGPR:%vreg4 GPR:%vreg3
+	t2STRi12 %vreg4, %vreg3, 8, pred:14, pred:%noreg; mem:ST4[%1+8] rGPR:%vreg4 GPR:%vreg3
+	t2STRi12 %vreg4, %vreg3, 4, pred:14, pred:%noreg; mem:ST4[%1+4] rGPR:%vreg4 GPR:%vreg3
+	t2STRi12 %vreg4, %vreg3, 0, pred:14, pred:%noreg; mem:ST4[%1] rGPR:%vreg4 GPR:%vreg3
+	t2STRi12 %vreg4, %vreg3, 36, pred:14, pred:%noreg; mem:ST4[%3+12] rGPR:%vreg4 GPR:%vreg3
+	t2STRi12 %vreg4, %vreg3, 32, pred:14, pred:%noreg; mem:ST4[%3+8] rGPR:%vreg4 GPR:%vreg3
+	t2STRi12 %vreg4, %vreg3, 28, pred:14, pred:%noreg; mem:ST4[%3+4] rGPR:%vreg4 GPR:%vreg3
+	t2STRi12 %vreg4, %vreg3, 24, pred:14, pred:%noreg; mem:ST4[%3] rGPR:%vreg4 GPR:%vreg3
+	%R0<def> = COPY %vreg3; GPR:%vreg3
+	tBX_RET pred:14, pred:%noreg, %R0<imp-use>
+
+# End machine code for function AllocFancyAli.
+
+# After Machine code sinking:
+# Machine code for function AllocFancyAli: SSA
+
+BB#0: derived from LLVM BB %0
+	ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg0<def> = t2MOVi32imm <ga:@.str>; rGPR:%vreg0
+	%vreg1<def> = t2MOVi 117, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg1
+	%vreg2<def> = t2MOVi 40, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg2
+	%R0<def> = COPY %vreg0; rGPR:%vreg0
+	%R1<def> = COPY %vreg1; rGPR:%vreg1
+	%R2<def> = COPY %vreg2; rGPR:%vreg2
+	tBL pred:14, pred:%noreg, <ga:@sre_malloc>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, %SP<imp-def>, %R0<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg3<def> = COPY %R0; GPR:%vreg3
+	%vreg4<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg4
+	t2STRi12 %vreg4, %vreg3, 16, pred:14, pred:%noreg; mem:ST4[%1+16] rGPR:%vreg4 GPR:%vreg3
+	t2STRi12 %vreg4, %vreg3, 12, pred:14, pred:%noreg; mem:ST4[%1+12] rGPR:%vreg4 GPR:%vreg3
+	t2STRi12 %vreg4, %vreg3, 8, pred:14, pred:%noreg; mem:ST4[%1+8] rGPR:%vreg4 GPR:%vreg3
+	t2STRi12 %vreg4, %vreg3, 4, pred:14, pred:%noreg; mem:ST4[%1+4] rGPR:%vreg4 GPR:%vreg3
+	t2STRi12 %vreg4, %vreg3, 0, pred:14, pred:%noreg; mem:ST4[%1] rGPR:%vreg4 GPR:%vreg3
+	t2STRi12 %vreg4, %vreg3, 36, pred:14, pred:%noreg; mem:ST4[%3+12] rGPR:%vreg4 GPR:%vreg3
+	t2STRi12 %vreg4, %vreg3, 32, pred:14, pred:%noreg; mem:ST4[%3+8] rGPR:%vreg4 GPR:%vreg3
+	t2STRi12 %vreg4, %vreg3, 28, pred:14, pred:%noreg; mem:ST4[%3+4] rGPR:%vreg4 GPR:%vreg3
+	t2STRi12 %vreg4, %vreg3, 24, pred:14, pred:%noreg; mem:ST4[%3] rGPR:%vreg4 GPR:%vreg3
+	%R0<def> = COPY %vreg3; GPR:%vreg3
+	tBX_RET pred:14, pred:%noreg, %R0<imp-use>
+
+# End machine code for function AllocFancyAli.
+
+# After Peephole Optimizations:
+# Machine code for function AllocFancyAli: SSA
+
+BB#0: derived from LLVM BB %0
+	ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg0<def> = t2MOVi32imm <ga:@.str>; rGPR:%vreg0
+	%vreg1<def> = t2MOVi 117, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg1
+	%vreg2<def> = t2MOVi 40, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg2
+	%R0<def> = COPY %vreg0; rGPR:%vreg0
+	%R1<def> = COPY %vreg1; rGPR:%vreg1
+	%R2<def> = COPY %vreg2; rGPR:%vreg2
+	tBL pred:14, pred:%noreg, <ga:@sre_malloc>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, %SP<imp-def>, %R0<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg3<def> = COPY %R0; GPR:%vreg3
+	%vreg4<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg4
+	t2STRi12 %vreg4, %vreg3, 16, pred:14, pred:%noreg; mem:ST4[%1+16] rGPR:%vreg4 GPR:%vreg3
+	t2STRi12 %vreg4, %vreg3, 12, pred:14, pred:%noreg; mem:ST4[%1+12] rGPR:%vreg4 GPR:%vreg3
+	t2STRi12 %vreg4, %vreg3, 8, pred:14, pred:%noreg; mem:ST4[%1+8] rGPR:%vreg4 GPR:%vreg3
+	t2STRi12 %vreg4, %vreg3, 4, pred:14, pred:%noreg; mem:ST4[%1+4] rGPR:%vreg4 GPR:%vreg3
+	t2STRi12 %vreg4, %vreg3, 0, pred:14, pred:%noreg; mem:ST4[%1] rGPR:%vreg4 GPR:%vreg3
+	t2STRi12 %vreg4, %vreg3, 36, pred:14, pred:%noreg; mem:ST4[%3+12] rGPR:%vreg4 GPR:%vreg3
+	t2STRi12 %vreg4, %vreg3, 32, pred:14, pred:%noreg; mem:ST4[%3+8] rGPR:%vreg4 GPR:%vreg3
+	t2STRi12 %vreg4, %vreg3, 28, pred:14, pred:%noreg; mem:ST4[%3+4] rGPR:%vreg4 GPR:%vreg3
+	t2STRi12 %vreg4, %vreg3, 24, pred:14, pred:%noreg; mem:ST4[%3] rGPR:%vreg4 GPR:%vreg3
+	%R0<def> = COPY %vreg3; GPR:%vreg3
+	tBX_RET pred:14, pred:%noreg, %R0<imp-use>
+
+# End machine code for function AllocFancyAli.
+
+# After Remove dead machine instructions:
+# Machine code for function AllocFancyAli: SSA
+
+BB#0: derived from LLVM BB %0
+	ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg0<def> = t2MOVi32imm <ga:@.str>; rGPR:%vreg0
+	%vreg1<def> = t2MOVi 117, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg1
+	%vreg2<def> = t2MOVi 40, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg2
+	%R0<def> = COPY %vreg0; rGPR:%vreg0
+	%R1<def> = COPY %vreg1; rGPR:%vreg1
+	%R2<def> = COPY %vreg2; rGPR:%vreg2
+	tBL pred:14, pred:%noreg, <ga:@sre_malloc>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, %SP<imp-def>, %R0<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg3<def> = COPY %R0; GPR:%vreg3
+	%vreg4<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg4
+	t2STRi12 %vreg4, %vreg3, 16, pred:14, pred:%noreg; mem:ST4[%1+16] rGPR:%vreg4 GPR:%vreg3
+	t2STRi12 %vreg4, %vreg3, 12, pred:14, pred:%noreg; mem:ST4[%1+12] rGPR:%vreg4 GPR:%vreg3
+	t2STRi12 %vreg4, %vreg3, 8, pred:14, pred:%noreg; mem:ST4[%1+8] rGPR:%vreg4 GPR:%vreg3
+	t2STRi12 %vreg4, %vreg3, 4, pred:14, pred:%noreg; mem:ST4[%1+4] rGPR:%vreg4 GPR:%vreg3
+	t2STRi12 %vreg4, %vreg3, 0, pred:14, pred:%noreg; mem:ST4[%1] rGPR:%vreg4 GPR:%vreg3
+	t2STRi12 %vreg4, %vreg3, 36, pred:14, pred:%noreg; mem:ST4[%3+12] rGPR:%vreg4 GPR:%vreg3
+	t2STRi12 %vreg4, %vreg3, 32, pred:14, pred:%noreg; mem:ST4[%3+8] rGPR:%vreg4 GPR:%vreg3
+	t2STRi12 %vreg4, %vreg3, 28, pred:14, pred:%noreg; mem:ST4[%3+4] rGPR:%vreg4 GPR:%vreg3
+	t2STRi12 %vreg4, %vreg3, 24, pred:14, pred:%noreg; mem:ST4[%3] rGPR:%vreg4 GPR:%vreg3
+	%R0<def> = COPY %vreg3; GPR:%vreg3
+	tBX_RET pred:14, pred:%noreg, %R0<imp-use>
+
+# End machine code for function AllocFancyAli.
+
+# After ARM MLA / MLS expansion pass:
+# Machine code for function AllocFancyAli: SSA
+
+BB#0: derived from LLVM BB %0
+	ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg0<def> = t2MOVi32imm <ga:@.str>; rGPR:%vreg0
+	%vreg1<def> = t2MOVi 117, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg1
+	%vreg2<def> = t2MOVi 40, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg2
+	%R0<def> = COPY %vreg0; rGPR:%vreg0
+	%R1<def> = COPY %vreg1; rGPR:%vreg1
+	%R2<def> = COPY %vreg2; rGPR:%vreg2
+	tBL pred:14, pred:%noreg, <ga:@sre_malloc>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, %SP<imp-def>, %R0<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg3<def> = COPY %R0; GPR:%vreg3
+	%vreg4<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg4
+	t2STRi12 %vreg4, %vreg3, 16, pred:14, pred:%noreg; mem:ST4[%1+16] rGPR:%vreg4 GPR:%vreg3
+	t2STRi12 %vreg4, %vreg3, 12, pred:14, pred:%noreg; mem:ST4[%1+12] rGPR:%vreg4 GPR:%vreg3
+	t2STRi12 %vreg4, %vreg3, 8, pred:14, pred:%noreg; mem:ST4[%1+8] rGPR:%vreg4 GPR:%vreg3
+	t2STRi12 %vreg4, %vreg3, 4, pred:14, pred:%noreg; mem:ST4[%1+4] rGPR:%vreg4 GPR:%vreg3
+	t2STRi12 %vreg4, %vreg3, 0, pred:14, pred:%noreg; mem:ST4[%1] rGPR:%vreg4 GPR:%vreg3
+	t2STRi12 %vreg4, %vreg3, 36, pred:14, pred:%noreg; mem:ST4[%3+12] rGPR:%vreg4 GPR:%vreg3
+	t2STRi12 %vreg4, %vreg3, 32, pred:14, pred:%noreg; mem:ST4[%3+8] rGPR:%vreg4 GPR:%vreg3
+	t2STRi12 %vreg4, %vreg3, 28, pred:14, pred:%noreg; mem:ST4[%3+4] rGPR:%vreg4 GPR:%vreg3
+	t2STRi12 %vreg4, %vreg3, 24, pred:14, pred:%noreg; mem:ST4[%3] rGPR:%vreg4 GPR:%vreg3
+	%R0<def> = COPY %vreg3; GPR:%vreg3
+	tBX_RET pred:14, pred:%noreg, %R0<imp-use>
+
+# End machine code for function AllocFancyAli.
+
+# After ARM pre- register allocation load / store optimization pass:
+# Machine code for function AllocFancyAli: SSA
+
+BB#0: derived from LLVM BB %0
+	ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg0<def> = t2MOVi32imm <ga:@.str>; rGPR:%vreg0
+	%vreg1<def> = t2MOVi 117, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg1
+	%vreg2<def> = t2MOVi 40, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg2
+	%R0<def> = COPY %vreg0; rGPR:%vreg0
+	%R1<def> = COPY %vreg1; rGPR:%vreg1
+	%R2<def> = COPY %vreg2; rGPR:%vreg2
+	tBL pred:14, pred:%noreg, <ga:@sre_malloc>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, %SP<imp-def>, %R0<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg3<def> = COPY %R0; GPR:%vreg3
+	%vreg4<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg4
+	t2STRi12 %vreg4, %vreg3, 16, pred:14, pred:%noreg; mem:ST4[%1+16] rGPR:%vreg4 GPR:%vreg3
+	t2STRi12 %vreg4, %vreg3, 12, pred:14, pred:%noreg; mem:ST4[%1+12] rGPR:%vreg4 GPR:%vreg3
+	t2STRi12 %vreg4, %vreg3, 8, pred:14, pred:%noreg; mem:ST4[%1+8] rGPR:%vreg4 GPR:%vreg3
+	t2STRi12 %vreg4, %vreg3, 4, pred:14, pred:%noreg; mem:ST4[%1+4] rGPR:%vreg4 GPR:%vreg3
+	t2STRi12 %vreg4, %vreg3, 0, pred:14, pred:%noreg; mem:ST4[%1] rGPR:%vreg4 GPR:%vreg3
+	t2STRi12 %vreg4, %vreg3, 24, pred:14, pred:%noreg; mem:ST4[%3] rGPR:%vreg4 GPR:%vreg3
+	t2STRi12 %vreg4, %vreg3, 28, pred:14, pred:%noreg; mem:ST4[%3+4] rGPR:%vreg4 GPR:%vreg3
+	t2STRi12 %vreg4, %vreg3, 32, pred:14, pred:%noreg; mem:ST4[%3+8] rGPR:%vreg4 GPR:%vreg3
+	t2STRi12 %vreg4, %vreg3, 36, pred:14, pred:%noreg; mem:ST4[%3+12] rGPR:%vreg4 GPR:%vreg3
+	%R0<def> = COPY %vreg3; GPR:%vreg3
+	tBX_RET pred:14, pred:%noreg, %R0<imp-use>
+
+# End machine code for function AllocFancyAli.
+
+# After ARM A15 S->D optimizer:
+# Machine code for function AllocFancyAli: SSA
+
+BB#0: derived from LLVM BB %0
+	ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg0<def> = t2MOVi32imm <ga:@.str>; rGPR:%vreg0
+	%vreg1<def> = t2MOVi 117, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg1
+	%vreg2<def> = t2MOVi 40, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg2
+	%R0<def> = COPY %vreg0; rGPR:%vreg0
+	%R1<def> = COPY %vreg1; rGPR:%vreg1
+	%R2<def> = COPY %vreg2; rGPR:%vreg2
+	tBL pred:14, pred:%noreg, <ga:@sre_malloc>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, %SP<imp-def>, %R0<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg3<def> = COPY %R0; GPR:%vreg3
+	%vreg4<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg4
+	t2STRi12 %vreg4, %vreg3, 16, pred:14, pred:%noreg; mem:ST4[%1+16] rGPR:%vreg4 GPR:%vreg3
+	t2STRi12 %vreg4, %vreg3, 12, pred:14, pred:%noreg; mem:ST4[%1+12] rGPR:%vreg4 GPR:%vreg3
+	t2STRi12 %vreg4, %vreg3, 8, pred:14, pred:%noreg; mem:ST4[%1+8] rGPR:%vreg4 GPR:%vreg3
+	t2STRi12 %vreg4, %vreg3, 4, pred:14, pred:%noreg; mem:ST4[%1+4] rGPR:%vreg4 GPR:%vreg3
+	t2STRi12 %vreg4, %vreg3, 0, pred:14, pred:%noreg; mem:ST4[%1] rGPR:%vreg4 GPR:%vreg3
+	t2STRi12 %vreg4, %vreg3, 24, pred:14, pred:%noreg; mem:ST4[%3] rGPR:%vreg4 GPR:%vreg3
+	t2STRi12 %vreg4, %vreg3, 28, pred:14, pred:%noreg; mem:ST4[%3+4] rGPR:%vreg4 GPR:%vreg3
+	t2STRi12 %vreg4, %vreg3, 32, pred:14, pred:%noreg; mem:ST4[%3+8] rGPR:%vreg4 GPR:%vreg3
+	t2STRi12 %vreg4, %vreg3, 36, pred:14, pred:%noreg; mem:ST4[%3+12] rGPR:%vreg4 GPR:%vreg3
+	%R0<def> = COPY %vreg3; GPR:%vreg3
+	tBX_RET pred:14, pred:%noreg, %R0<imp-use>
+
+# End machine code for function AllocFancyAli.
+
+# After Process Implicit Definitions:
+# Machine code for function AllocFancyAli: SSA
+
+BB#0: derived from LLVM BB %0
+	ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg0<def> = t2MOVi32imm <ga:@.str>; rGPR:%vreg0
+	%vreg1<def> = t2MOVi 117, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg1
+	%vreg2<def> = t2MOVi 40, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg2
+	%R0<def> = COPY %vreg0; rGPR:%vreg0
+	%R1<def> = COPY %vreg1; rGPR:%vreg1
+	%R2<def> = COPY %vreg2; rGPR:%vreg2
+	tBL pred:14, pred:%noreg, <ga:@sre_malloc>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, %SP<imp-def>, %R0<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg3<def> = COPY %R0; GPR:%vreg3
+	%vreg4<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg4
+	t2STRi12 %vreg4, %vreg3, 16, pred:14, pred:%noreg; mem:ST4[%1+16] rGPR:%vreg4 GPR:%vreg3
+	t2STRi12 %vreg4, %vreg3, 12, pred:14, pred:%noreg; mem:ST4[%1+12] rGPR:%vreg4 GPR:%vreg3
+	t2STRi12 %vreg4, %vreg3, 8, pred:14, pred:%noreg; mem:ST4[%1+8] rGPR:%vreg4 GPR:%vreg3
+	t2STRi12 %vreg4, %vreg3, 4, pred:14, pred:%noreg; mem:ST4[%1+4] rGPR:%vreg4 GPR:%vreg3
+	t2STRi12 %vreg4, %vreg3, 0, pred:14, pred:%noreg; mem:ST4[%1] rGPR:%vreg4 GPR:%vreg3
+	t2STRi12 %vreg4, %vreg3, 24, pred:14, pred:%noreg; mem:ST4[%3] rGPR:%vreg4 GPR:%vreg3
+	t2STRi12 %vreg4, %vreg3, 28, pred:14, pred:%noreg; mem:ST4[%3+4] rGPR:%vreg4 GPR:%vreg3
+	t2STRi12 %vreg4, %vreg3, 32, pred:14, pred:%noreg; mem:ST4[%3+8] rGPR:%vreg4 GPR:%vreg3
+	t2STRi12 %vreg4, %vreg3, 36, pred:14, pred:%noreg; mem:ST4[%3+12] rGPR:%vreg4 GPR:%vreg3
+	%R0<def> = COPY %vreg3; GPR:%vreg3
+	tBX_RET pred:14, pred:%noreg, %R0<imp-use>
+
+# End machine code for function AllocFancyAli.
+
+# After Live Variable Analysis:
+# Machine code for function AllocFancyAli: SSA
+
+BB#0: derived from LLVM BB %0
+	ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg0<def> = t2MOVi32imm <ga:@.str>; rGPR:%vreg0
+	%vreg1<def> = t2MOVi 117, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg1
+	%vreg2<def> = t2MOVi 40, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg2
+	%R0<def> = COPY %vreg0<kill>; rGPR:%vreg0
+	%R1<def> = COPY %vreg1<kill>; rGPR:%vreg1
+	%R2<def> = COPY %vreg2<kill>; rGPR:%vreg2
+	tBL pred:14, pred:%noreg, <ga:@sre_malloc>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use,kill>, %R1<imp-use,kill>, %R2<imp-use,kill>, %SP<imp-def>, %R0<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg3<def> = COPY %R0<kill>; GPR:%vreg3
+	%vreg4<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg4
+	t2STRi12 %vreg4, %vreg3, 16, pred:14, pred:%noreg; mem:ST4[%1+16] rGPR:%vreg4 GPR:%vreg3
+	t2STRi12 %vreg4, %vreg3, 12, pred:14, pred:%noreg; mem:ST4[%1+12] rGPR:%vreg4 GPR:%vreg3
+	t2STRi12 %vreg4, %vreg3, 8, pred:14, pred:%noreg; mem:ST4[%1+8] rGPR:%vreg4 GPR:%vreg3
+	t2STRi12 %vreg4, %vreg3, 4, pred:14, pred:%noreg; mem:ST4[%1+4] rGPR:%vreg4 GPR:%vreg3
+	t2STRi12 %vreg4, %vreg3, 0, pred:14, pred:%noreg; mem:ST4[%1] rGPR:%vreg4 GPR:%vreg3
+	t2STRi12 %vreg4, %vreg3, 24, pred:14, pred:%noreg; mem:ST4[%3] rGPR:%vreg4 GPR:%vreg3
+	t2STRi12 %vreg4, %vreg3, 28, pred:14, pred:%noreg; mem:ST4[%3+4] rGPR:%vreg4 GPR:%vreg3
+	t2STRi12 %vreg4, %vreg3, 32, pred:14, pred:%noreg; mem:ST4[%3+8] rGPR:%vreg4 GPR:%vreg3
+	t2STRi12 %vreg4<kill>, %vreg3, 36, pred:14, pred:%noreg; mem:ST4[%3+12] rGPR:%vreg4 GPR:%vreg3
+	%R0<def> = COPY %vreg3<kill>; GPR:%vreg3
+	tBX_RET pred:14, pred:%noreg, %R0<imp-use,kill>
+
+# End machine code for function AllocFancyAli.
+
+# After Machine Natural Loop Construction:
+# Machine code for function AllocFancyAli: SSA
+
+BB#0: derived from LLVM BB %0
+	ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg0<def> = t2MOVi32imm <ga:@.str>; rGPR:%vreg0
+	%vreg1<def> = t2MOVi 117, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg1
+	%vreg2<def> = t2MOVi 40, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg2
+	%R0<def> = COPY %vreg0<kill>; rGPR:%vreg0
+	%R1<def> = COPY %vreg1<kill>; rGPR:%vreg1
+	%R2<def> = COPY %vreg2<kill>; rGPR:%vreg2
+	tBL pred:14, pred:%noreg, <ga:@sre_malloc>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use,kill>, %R1<imp-use,kill>, %R2<imp-use,kill>, %SP<imp-def>, %R0<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg3<def> = COPY %R0<kill>; GPR:%vreg3
+	%vreg4<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg4
+	t2STRi12 %vreg4, %vreg3, 16, pred:14, pred:%noreg; mem:ST4[%1+16] rGPR:%vreg4 GPR:%vreg3
+	t2STRi12 %vreg4, %vreg3, 12, pred:14, pred:%noreg; mem:ST4[%1+12] rGPR:%vreg4 GPR:%vreg3
+	t2STRi12 %vreg4, %vreg3, 8, pred:14, pred:%noreg; mem:ST4[%1+8] rGPR:%vreg4 GPR:%vreg3
+	t2STRi12 %vreg4, %vreg3, 4, pred:14, pred:%noreg; mem:ST4[%1+4] rGPR:%vreg4 GPR:%vreg3
+	t2STRi12 %vreg4, %vreg3, 0, pred:14, pred:%noreg; mem:ST4[%1] rGPR:%vreg4 GPR:%vreg3
+	t2STRi12 %vreg4, %vreg3, 24, pred:14, pred:%noreg; mem:ST4[%3] rGPR:%vreg4 GPR:%vreg3
+	t2STRi12 %vreg4, %vreg3, 28, pred:14, pred:%noreg; mem:ST4[%3+4] rGPR:%vreg4 GPR:%vreg3
+	t2STRi12 %vreg4, %vreg3, 32, pred:14, pred:%noreg; mem:ST4[%3+8] rGPR:%vreg4 GPR:%vreg3
+	t2STRi12 %vreg4<kill>, %vreg3, 36, pred:14, pred:%noreg; mem:ST4[%3+12] rGPR:%vreg4 GPR:%vreg3
+	%R0<def> = COPY %vreg3<kill>; GPR:%vreg3
+	tBX_RET pred:14, pred:%noreg, %R0<imp-use,kill>
+
+# End machine code for function AllocFancyAli.
+
+# After Eliminate PHI nodes for register allocation:
+# Machine code for function AllocFancyAli: Post SSA
+
+BB#0: derived from LLVM BB %0
+	ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg0<def> = t2MOVi32imm <ga:@.str>; rGPR:%vreg0
+	%vreg1<def> = t2MOVi 117, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg1
+	%vreg2<def> = t2MOVi 40, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg2
+	%R0<def> = COPY %vreg0<kill>; rGPR:%vreg0
+	%R1<def> = COPY %vreg1<kill>; rGPR:%vreg1
+	%R2<def> = COPY %vreg2<kill>; rGPR:%vreg2
+	tBL pred:14, pred:%noreg, <ga:@sre_malloc>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use,kill>, %R1<imp-use,kill>, %R2<imp-use,kill>, %SP<imp-def>, %R0<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg3<def> = COPY %R0<kill>; GPR:%vreg3
+	%vreg4<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg4
+	t2STRi12 %vreg4, %vreg3, 16, pred:14, pred:%noreg; mem:ST4[%1+16] rGPR:%vreg4 GPR:%vreg3
+	t2STRi12 %vreg4, %vreg3, 12, pred:14, pred:%noreg; mem:ST4[%1+12] rGPR:%vreg4 GPR:%vreg3
+	t2STRi12 %vreg4, %vreg3, 8, pred:14, pred:%noreg; mem:ST4[%1+8] rGPR:%vreg4 GPR:%vreg3
+	t2STRi12 %vreg4, %vreg3, 4, pred:14, pred:%noreg; mem:ST4[%1+4] rGPR:%vreg4 GPR:%vreg3
+	t2STRi12 %vreg4, %vreg3, 0, pred:14, pred:%noreg; mem:ST4[%1] rGPR:%vreg4 GPR:%vreg3
+	t2STRi12 %vreg4, %vreg3, 24, pred:14, pred:%noreg; mem:ST4[%3] rGPR:%vreg4 GPR:%vreg3
+	t2STRi12 %vreg4, %vreg3, 28, pred:14, pred:%noreg; mem:ST4[%3+4] rGPR:%vreg4 GPR:%vreg3
+	t2STRi12 %vreg4, %vreg3, 32, pred:14, pred:%noreg; mem:ST4[%3+8] rGPR:%vreg4 GPR:%vreg3
+	t2STRi12 %vreg4<kill>, %vreg3, 36, pred:14, pred:%noreg; mem:ST4[%3+12] rGPR:%vreg4 GPR:%vreg3
+	%R0<def> = COPY %vreg3<kill>; GPR:%vreg3
+	tBX_RET pred:14, pred:%noreg, %R0<imp-use,kill>
+
+# End machine code for function AllocFancyAli.
+
+# After Two-Address instruction pass:
+# Machine code for function AllocFancyAli: Post SSA
+
+BB#0: derived from LLVM BB %0
+	ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg0<def> = t2MOVi32imm <ga:@.str>; rGPR:%vreg0
+	%vreg1<def> = t2MOVi 117, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg1
+	%vreg2<def> = t2MOVi 40, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg2
+	%R0<def> = COPY %vreg0<kill>; rGPR:%vreg0
+	%R1<def> = COPY %vreg1<kill>; rGPR:%vreg1
+	%R2<def> = COPY %vreg2<kill>; rGPR:%vreg2
+	tBL pred:14, pred:%noreg, <ga:@sre_malloc>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use,kill>, %R1<imp-use,kill>, %R2<imp-use,kill>, %SP<imp-def>, %R0<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg3<def> = COPY %R0<kill>; GPR:%vreg3
+	%vreg4<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg4
+	t2STRi12 %vreg4, %vreg3, 16, pred:14, pred:%noreg; mem:ST4[%1+16] rGPR:%vreg4 GPR:%vreg3
+	t2STRi12 %vreg4, %vreg3, 12, pred:14, pred:%noreg; mem:ST4[%1+12] rGPR:%vreg4 GPR:%vreg3
+	t2STRi12 %vreg4, %vreg3, 8, pred:14, pred:%noreg; mem:ST4[%1+8] rGPR:%vreg4 GPR:%vreg3
+	t2STRi12 %vreg4, %vreg3, 4, pred:14, pred:%noreg; mem:ST4[%1+4] rGPR:%vreg4 GPR:%vreg3
+	t2STRi12 %vreg4, %vreg3, 0, pred:14, pred:%noreg; mem:ST4[%1] rGPR:%vreg4 GPR:%vreg3
+	t2STRi12 %vreg4, %vreg3, 24, pred:14, pred:%noreg; mem:ST4[%3] rGPR:%vreg4 GPR:%vreg3
+	t2STRi12 %vreg4, %vreg3, 28, pred:14, pred:%noreg; mem:ST4[%3+4] rGPR:%vreg4 GPR:%vreg3
+	t2STRi12 %vreg4, %vreg3, 32, pred:14, pred:%noreg; mem:ST4[%3+8] rGPR:%vreg4 GPR:%vreg3
+	t2STRi12 %vreg4<kill>, %vreg3, 36, pred:14, pred:%noreg; mem:ST4[%3+12] rGPR:%vreg4 GPR:%vreg3
+	%R0<def> = COPY %vreg3<kill>; GPR:%vreg3
+	tBX_RET pred:14, pred:%noreg, %R0<imp-use,kill>
+
+# End machine code for function AllocFancyAli.
+
+# After Simple Register Coalescing:
+# Machine code for function AllocFancyAli: Post SSA
+
+0B	BB#0: derived from LLVM BB %0
+16B		ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+32B		%vreg0<def> = t2MOVi32imm <ga:@.str>; rGPR:%vreg0
+80B		%R0<def> = COPY %vreg0; rGPR:%vreg0
+96B		%R1<def> = t2MOVi 117, pred:14, pred:%noreg, opt:%noreg
+112B		%R2<def> = t2MOVi 40, pred:14, pred:%noreg, opt:%noreg
+128B		tBL pred:14, pred:%noreg, <ga:@sre_malloc>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use,kill>, %R1<imp-use,kill>, %R2<imp-use,kill>, %SP<imp-def>, %R0<imp-def>, ...
+144B		ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+160B		%vreg3<def> = COPY %R0<kill>; GPR:%vreg3
+176B		%vreg4<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg4
+192B		t2STRi12 %vreg4, %vreg3, 16, pred:14, pred:%noreg; mem:ST4[%1+16] rGPR:%vreg4 GPR:%vreg3
+208B		t2STRi12 %vreg4, %vreg3, 12, pred:14, pred:%noreg; mem:ST4[%1+12] rGPR:%vreg4 GPR:%vreg3
+224B		t2STRi12 %vreg4, %vreg3, 8, pred:14, pred:%noreg; mem:ST4[%1+8] rGPR:%vreg4 GPR:%vreg3
+240B		t2STRi12 %vreg4, %vreg3, 4, pred:14, pred:%noreg; mem:ST4[%1+4] rGPR:%vreg4 GPR:%vreg3
+256B		t2STRi12 %vreg4, %vreg3, 0, pred:14, pred:%noreg; mem:ST4[%1] rGPR:%vreg4 GPR:%vreg3
+272B		t2STRi12 %vreg4, %vreg3, 24, pred:14, pred:%noreg; mem:ST4[%3] rGPR:%vreg4 GPR:%vreg3
+288B		t2STRi12 %vreg4, %vreg3, 28, pred:14, pred:%noreg; mem:ST4[%3+4] rGPR:%vreg4 GPR:%vreg3
+304B		t2STRi12 %vreg4, %vreg3, 32, pred:14, pred:%noreg; mem:ST4[%3+8] rGPR:%vreg4 GPR:%vreg3
+320B		t2STRi12 %vreg4, %vreg3, 36, pred:14, pred:%noreg; mem:ST4[%3+12] rGPR:%vreg4 GPR:%vreg3
+336B		%R0<def> = COPY %vreg3; GPR:%vreg3
+352B		tBX_RET pred:14, pred:%noreg, %R0<imp-use,kill>
+
+# End machine code for function AllocFancyAli.
+
+# After Machine Instruction Scheduler:
+# Machine code for function AllocFancyAli: Post SSA
+
+0B	BB#0: derived from LLVM BB %0
+16B		ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+32B		%vreg0<def> = t2MOVi32imm <ga:@.str>; rGPR:%vreg0
+80B		%R0<def> = COPY %vreg0; rGPR:%vreg0
+96B		%R1<def> = t2MOVi 117, pred:14, pred:%noreg, opt:%noreg
+112B		%R2<def> = t2MOVi 40, pred:14, pred:%noreg, opt:%noreg
+128B		tBL pred:14, pred:%noreg, <ga:@sre_malloc>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use,kill>, %R1<imp-use,kill>, %R2<imp-use,kill>, %SP<imp-def>, %R0<imp-def>, ...
+144B		ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+160B		%vreg3<def> = COPY %R0<kill>; GPR:%vreg3
+176B		%vreg4<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg4
+192B		t2STRi12 %vreg4, %vreg3, 16, pred:14, pred:%noreg; mem:ST4[%1+16] rGPR:%vreg4 GPR:%vreg3
+208B		t2STRi12 %vreg4, %vreg3, 12, pred:14, pred:%noreg; mem:ST4[%1+12] rGPR:%vreg4 GPR:%vreg3
+224B		t2STRi12 %vreg4, %vreg3, 8, pred:14, pred:%noreg; mem:ST4[%1+8] rGPR:%vreg4 GPR:%vreg3
+240B		t2STRi12 %vreg4, %vreg3, 4, pred:14, pred:%noreg; mem:ST4[%1+4] rGPR:%vreg4 GPR:%vreg3
+256B		t2STRi12 %vreg4, %vreg3, 0, pred:14, pred:%noreg; mem:ST4[%1] rGPR:%vreg4 GPR:%vreg3
+272B		t2STRi12 %vreg4, %vreg3, 24, pred:14, pred:%noreg; mem:ST4[%3] rGPR:%vreg4 GPR:%vreg3
+288B		t2STRi12 %vreg4, %vreg3, 28, pred:14, pred:%noreg; mem:ST4[%3+4] rGPR:%vreg4 GPR:%vreg3
+304B		t2STRi12 %vreg4, %vreg3, 32, pred:14, pred:%noreg; mem:ST4[%3+8] rGPR:%vreg4 GPR:%vreg3
+320B		t2STRi12 %vreg4, %vreg3, 36, pred:14, pred:%noreg; mem:ST4[%3+12] rGPR:%vreg4 GPR:%vreg3
+336B		%R0<def> = COPY %vreg3; GPR:%vreg3
+352B		tBX_RET pred:14, pred:%noreg, %R0<imp-use,kill>
+
+# End machine code for function AllocFancyAli.
+
+# After Greedy Register Allocator:
+# Machine code for function AllocFancyAli: Post SSA
+
+0B	BB#0: derived from LLVM BB %0
+16B		ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+32B		%vreg0<def> = t2MOVi32imm <ga:@.str>; rGPR:%vreg0
+80B		%R0<def> = COPY %vreg0; rGPR:%vreg0
+96B		%R1<def> = t2MOVi 117, pred:14, pred:%noreg, opt:%noreg
+112B		%R2<def> = t2MOVi 40, pred:14, pred:%noreg, opt:%noreg
+128B		tBL pred:14, pred:%noreg, <ga:@sre_malloc>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use,kill>, %SP<imp-def>, %R0<imp-def>, ...
+144B		ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+160B		%vreg3<def> = COPY %R0; GPR:%vreg3
+176B		%vreg4<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg4
+192B		t2STRi12 %vreg4, %vreg3, 16, pred:14, pred:%noreg; mem:ST4[%1+16] rGPR:%vreg4 GPR:%vreg3
+208B		t2STRi12 %vreg4, %vreg3, 12, pred:14, pred:%noreg; mem:ST4[%1+12] rGPR:%vreg4 GPR:%vreg3
+224B		t2STRi12 %vreg4, %vreg3, 8, pred:14, pred:%noreg; mem:ST4[%1+8] rGPR:%vreg4 GPR:%vreg3
+240B		t2STRi12 %vreg4, %vreg3, 4, pred:14, pred:%noreg; mem:ST4[%1+4] rGPR:%vreg4 GPR:%vreg3
+256B		t2STRi12 %vreg4, %vreg3, 0, pred:14, pred:%noreg; mem:ST4[%1] rGPR:%vreg4 GPR:%vreg3
+272B		t2STRi12 %vreg4, %vreg3, 24, pred:14, pred:%noreg; mem:ST4[%3] rGPR:%vreg4 GPR:%vreg3
+288B		t2STRi12 %vreg4, %vreg3, 28, pred:14, pred:%noreg; mem:ST4[%3+4] rGPR:%vreg4 GPR:%vreg3
+304B		t2STRi12 %vreg4, %vreg3, 32, pred:14, pred:%noreg; mem:ST4[%3+8] rGPR:%vreg4 GPR:%vreg3
+320B		t2STRi12 %vreg4, %vreg3, 36, pred:14, pred:%noreg; mem:ST4[%3+12] rGPR:%vreg4 GPR:%vreg3
+336B		%R0<def> = COPY %vreg3; GPR:%vreg3
+352B		tBX_RET pred:14, pred:%noreg, %R0<imp-use>
+
+# End machine code for function AllocFancyAli.
+
+# After Virtual Register Rewriter:
+# Machine code for function AllocFancyAli: Post SSA
+
+0B	BB#0: derived from LLVM BB %0
+16B		ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+32B		%R0<def> = t2MOVi32imm <ga:@.str>
+96B		%R1<def> = t2MOVi 117, pred:14, pred:%noreg, opt:%noreg
+112B		%R2<def> = t2MOVi 40, pred:14, pred:%noreg, opt:%noreg
+128B		tBL pred:14, pred:%noreg, <ga:@sre_malloc>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use,kill>, %SP<imp-def>, %R0<imp-def>, ...
+144B		ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+176B		%R1<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg
+192B		t2STRi12 %R1, %R0, 16, pred:14, pred:%noreg; mem:ST4[%1+16]
+208B		t2STRi12 %R1, %R0, 12, pred:14, pred:%noreg; mem:ST4[%1+12]
+224B		t2STRi12 %R1, %R0, 8, pred:14, pred:%noreg; mem:ST4[%1+8]
+240B		t2STRi12 %R1, %R0, 4, pred:14, pred:%noreg; mem:ST4[%1+4]
+256B		t2STRi12 %R1, %R0, 0, pred:14, pred:%noreg; mem:ST4[%1]
+272B		t2STRi12 %R1, %R0, 24, pred:14, pred:%noreg; mem:ST4[%3]
+288B		t2STRi12 %R1, %R0, 28, pred:14, pred:%noreg; mem:ST4[%3+4]
+304B		t2STRi12 %R1, %R0, 32, pred:14, pred:%noreg; mem:ST4[%3+8]
+320B		t2STRi12 %R1<kill>, %R0, 36, pred:14, pred:%noreg; mem:ST4[%3+12]
+352B		tBX_RET pred:14, pred:%noreg, %R0<imp-use>
+
+# End machine code for function AllocFancyAli.
+
+# After Stack Slot Coloring:
+# Machine code for function AllocFancyAli: Post SSA
+
+BB#0: derived from LLVM BB %0
+	ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%R0<def> = t2MOVi32imm <ga:@.str>
+	%R1<def> = t2MOVi 117, pred:14, pred:%noreg, opt:%noreg
+	%R2<def> = t2MOVi 40, pred:14, pred:%noreg, opt:%noreg
+	tBL pred:14, pred:%noreg, <ga:@sre_malloc>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use,kill>, %SP<imp-def>, %R0<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%R1<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg
+	t2STRi12 %R1, %R0, 16, pred:14, pred:%noreg; mem:ST4[%1+16]
+	t2STRi12 %R1, %R0, 12, pred:14, pred:%noreg; mem:ST4[%1+12]
+	t2STRi12 %R1, %R0, 8, pred:14, pred:%noreg; mem:ST4[%1+8]
+	t2STRi12 %R1, %R0, 4, pred:14, pred:%noreg; mem:ST4[%1+4]
+	t2STRi12 %R1, %R0, 0, pred:14, pred:%noreg; mem:ST4[%1]
+	t2STRi12 %R1, %R0, 24, pred:14, pred:%noreg; mem:ST4[%3]
+	t2STRi12 %R1, %R0, 28, pred:14, pred:%noreg; mem:ST4[%3+4]
+	t2STRi12 %R1, %R0, 32, pred:14, pred:%noreg; mem:ST4[%3+8]
+	t2STRi12 %R1<kill>, %R0, 36, pred:14, pred:%noreg; mem:ST4[%3+12]
+	tBX_RET pred:14, pred:%noreg, %R0<imp-use>
+
+# End machine code for function AllocFancyAli.
+
+# After Machine Loop Invariant Code Motion:
+# Machine code for function AllocFancyAli: Post SSA
+
+BB#0: derived from LLVM BB %0
+	ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%R0<def> = t2MOVi32imm <ga:@.str>
+	%R1<def> = t2MOVi 117, pred:14, pred:%noreg, opt:%noreg
+	%R2<def> = t2MOVi 40, pred:14, pred:%noreg, opt:%noreg
+	tBL pred:14, pred:%noreg, <ga:@sre_malloc>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use,kill>, %SP<imp-def>, %R0<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%R1<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg
+	t2STRi12 %R1, %R0, 16, pred:14, pred:%noreg; mem:ST4[%1+16]
+	t2STRi12 %R1, %R0, 12, pred:14, pred:%noreg; mem:ST4[%1+12]
+	t2STRi12 %R1, %R0, 8, pred:14, pred:%noreg; mem:ST4[%1+8]
+	t2STRi12 %R1, %R0, 4, pred:14, pred:%noreg; mem:ST4[%1+4]
+	t2STRi12 %R1, %R0, 0, pred:14, pred:%noreg; mem:ST4[%1]
+	t2STRi12 %R1, %R0, 24, pred:14, pred:%noreg; mem:ST4[%3]
+	t2STRi12 %R1, %R0, 28, pred:14, pred:%noreg; mem:ST4[%3+4]
+	t2STRi12 %R1, %R0, 32, pred:14, pred:%noreg; mem:ST4[%3+8]
+	t2STRi12 %R1<kill>, %R0, 36, pred:14, pred:%noreg; mem:ST4[%3+12]
+	tBX_RET pred:14, pred:%noreg, %R0<imp-use>
+
+# End machine code for function AllocFancyAli.
+
+# After Shrink Wrapping analysis:
+# Machine code for function AllocFancyAli: Post SSA
+
+BB#0: derived from LLVM BB %0
+	ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%R0<def> = t2MOVi32imm <ga:@.str>
+	%R1<def> = t2MOVi 117, pred:14, pred:%noreg, opt:%noreg
+	%R2<def> = t2MOVi 40, pred:14, pred:%noreg, opt:%noreg
+	tBL pred:14, pred:%noreg, <ga:@sre_malloc>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use,kill>, %SP<imp-def>, %R0<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%R1<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg
+	t2STRi12 %R1, %R0, 16, pred:14, pred:%noreg; mem:ST4[%1+16]
+	t2STRi12 %R1, %R0, 12, pred:14, pred:%noreg; mem:ST4[%1+12]
+	t2STRi12 %R1, %R0, 8, pred:14, pred:%noreg; mem:ST4[%1+8]
+	t2STRi12 %R1, %R0, 4, pred:14, pred:%noreg; mem:ST4[%1+4]
+	t2STRi12 %R1, %R0, 0, pred:14, pred:%noreg; mem:ST4[%1]
+	t2STRi12 %R1, %R0, 24, pred:14, pred:%noreg; mem:ST4[%3]
+	t2STRi12 %R1, %R0, 28, pred:14, pred:%noreg; mem:ST4[%3+4]
+	t2STRi12 %R1, %R0, 32, pred:14, pred:%noreg; mem:ST4[%3+8]
+	t2STRi12 %R1<kill>, %R0, 36, pred:14, pred:%noreg; mem:ST4[%3+12]
+	tBX_RET pred:14, pred:%noreg, %R0<imp-use>
+
+# End machine code for function AllocFancyAli.
+
+# After Prologue/Epilogue Insertion & Frame Finalization:
+# Machine code for function AllocFancyAli: Post SSA
+Frame Objects:
+  fi#0: size=4, align=4, at location [SP-4]
+  fi#1: size=4, align=4, at location [SP-8]
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R7 %LR
+	%SP<def,tied1> = t2STMDB_UPD %SP<tied0>, pred:14, pred:%noreg, %R7<kill>, %LR<kill>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%R7<def> = tMOVr %SP<kill>, pred:14, pred:%noreg; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%R0<def> = t2MOVi32imm <ga:@.str>
+	%R1<def> = t2MOVi 117, pred:14, pred:%noreg, opt:%noreg
+	%R2<def> = t2MOVi 40, pred:14, pred:%noreg, opt:%noreg
+	tBL pred:14, pred:%noreg, <ga:@sre_malloc>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %LR<imp-def,dead>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use,kill>, %SP<imp-def>, %R0<imp-def>
+	%R1<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg
+	t2STRi12 %R1, %R0, 16, pred:14, pred:%noreg; mem:ST4[%1+16]
+	t2STRi12 %R1, %R0, 12, pred:14, pred:%noreg; mem:ST4[%1+12]
+	t2STRi12 %R1, %R0, 8, pred:14, pred:%noreg; mem:ST4[%1+8]
+	t2STRi12 %R1, %R0, 4, pred:14, pred:%noreg; mem:ST4[%1+4]
+	t2STRi12 %R1, %R0, 0, pred:14, pred:%noreg; mem:ST4[%1]
+	t2STRi12 %R1, %R0, 24, pred:14, pred:%noreg; mem:ST4[%3]
+	t2STRi12 %R1, %R0, 28, pred:14, pred:%noreg; mem:ST4[%3+4]
+	t2STRi12 %R1, %R0, 32, pred:14, pred:%noreg; mem:ST4[%3+8]
+	t2STRi12 %R1<kill>, %R0, 36, pred:14, pred:%noreg; mem:ST4[%3+12]
+	%SP<def,tied1> = t2LDMIA_RET %SP<tied0>, pred:14, pred:%noreg, %R7<def>, %PC<def>, %R0<imp-use>
+
+# End machine code for function AllocFancyAli.
+
+# After Machine Copy Propagation Pass:
+# Machine code for function AllocFancyAli: Post SSA
+Frame Objects:
+  fi#0: size=4, align=4, at location [SP-4]
+  fi#1: size=4, align=4, at location [SP-8]
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R7 %LR
+	%SP<def,tied1> = t2STMDB_UPD %SP<tied0>, pred:14, pred:%noreg, %R7<kill>, %LR<kill>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%R7<def> = tMOVr %SP<kill>, pred:14, pred:%noreg; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%R0<def> = t2MOVi32imm <ga:@.str>
+	%R1<def> = t2MOVi 117, pred:14, pred:%noreg, opt:%noreg
+	%R2<def> = t2MOVi 40, pred:14, pred:%noreg, opt:%noreg
+	tBL pred:14, pred:%noreg, <ga:@sre_malloc>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %LR<imp-def,dead>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use,kill>, %SP<imp-def>, %R0<imp-def>
+	%R1<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg
+	t2STRi12 %R1, %R0, 16, pred:14, pred:%noreg; mem:ST4[%1+16]
+	t2STRi12 %R1, %R0, 12, pred:14, pred:%noreg; mem:ST4[%1+12]
+	t2STRi12 %R1, %R0, 8, pred:14, pred:%noreg; mem:ST4[%1+8]
+	t2STRi12 %R1, %R0, 4, pred:14, pred:%noreg; mem:ST4[%1+4]
+	t2STRi12 %R1, %R0, 0, pred:14, pred:%noreg; mem:ST4[%1]
+	t2STRi12 %R1, %R0, 24, pred:14, pred:%noreg; mem:ST4[%3]
+	t2STRi12 %R1, %R0, 28, pred:14, pred:%noreg; mem:ST4[%3+4]
+	t2STRi12 %R1, %R0, 32, pred:14, pred:%noreg; mem:ST4[%3+8]
+	t2STRi12 %R1<kill>, %R0, 36, pred:14, pred:%noreg; mem:ST4[%3+12]
+	%SP<def,tied1> = t2LDMIA_RET %SP<tied0>, pred:14, pred:%noreg, %R7<def>, %PC<def>, %R0<imp-use>
+
+# End machine code for function AllocFancyAli.
+
+# After Post-RA pseudo instruction expansion pass:
+# Machine code for function AllocFancyAli: Post SSA
+Frame Objects:
+  fi#0: size=4, align=4, at location [SP-4]
+  fi#1: size=4, align=4, at location [SP-8]
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R7 %LR
+	%SP<def,tied1> = t2STMDB_UPD %SP<tied0>, pred:14, pred:%noreg, %R7<kill>, %LR<kill>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%R7<def> = tMOVr %SP<kill>, pred:14, pred:%noreg; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%R0<def> = t2MOVi32imm <ga:@.str>
+	%R1<def> = t2MOVi 117, pred:14, pred:%noreg, opt:%noreg
+	%R2<def> = t2MOVi 40, pred:14, pred:%noreg, opt:%noreg
+	tBL pred:14, pred:%noreg, <ga:@sre_malloc>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %LR<imp-def,dead>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use,kill>, %SP<imp-def>, %R0<imp-def>
+	%R1<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg
+	t2STRi12 %R1, %R0, 16, pred:14, pred:%noreg; mem:ST4[%1+16]
+	t2STRi12 %R1, %R0, 12, pred:14, pred:%noreg; mem:ST4[%1+12]
+	t2STRi12 %R1, %R0, 8, pred:14, pred:%noreg; mem:ST4[%1+8]
+	t2STRi12 %R1, %R0, 4, pred:14, pred:%noreg; mem:ST4[%1+4]
+	t2STRi12 %R1, %R0, 0, pred:14, pred:%noreg; mem:ST4[%1]
+	t2STRi12 %R1, %R0, 24, pred:14, pred:%noreg; mem:ST4[%3]
+	t2STRi12 %R1, %R0, 28, pred:14, pred:%noreg; mem:ST4[%3+4]
+	t2STRi12 %R1, %R0, 32, pred:14, pred:%noreg; mem:ST4[%3+8]
+	t2STRi12 %R1<kill>, %R0, 36, pred:14, pred:%noreg; mem:ST4[%3+12]
+	%SP<def,tied1> = t2LDMIA_RET %SP<tied0>, pred:14, pred:%noreg, %R7<def>, %PC<def>, %R0<imp-use>
+
+# End machine code for function AllocFancyAli.
+
+# After ARM load / store optimization pass:
+# Machine code for function AllocFancyAli: Post SSA
+Frame Objects:
+  fi#0: size=4, align=4, at location [SP-4]
+  fi#1: size=4, align=4, at location [SP-8]
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R7 %LR
+	%SP<def,tied1> = t2STMDB_UPD %SP<tied0>, pred:14, pred:%noreg, %R7<kill>, %LR<kill>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%R7<def> = tMOVr %SP<kill>, pred:14, pred:%noreg; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%R0<def> = t2MOVi32imm <ga:@.str>
+	%R1<def> = t2MOVi 117, pred:14, pred:%noreg, opt:%noreg
+	%R2<def> = t2MOVi 40, pred:14, pred:%noreg, opt:%noreg
+	tBL pred:14, pred:%noreg, <ga:@sre_malloc>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %LR<imp-def,dead>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use,kill>, %SP<imp-def>, %R0<imp-def>
+	%R1<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg
+	t2STRi12 %R1, %R0, 16, pred:14, pred:%noreg; mem:ST4[%1+16]
+	t2STRDi8 %R1, %R1, %R0, 8, pred:14, pred:%noreg
+	t2STRDi8 %R1, %R1, %R0, 0, pred:14, pred:%noreg
+	t2STRDi8 %R1, %R1, %R0, 24, pred:14, pred:%noreg
+	t2STRDi8 %R1, %R1<kill>, %R0, 32, pred:14, pred:%noreg
+	%SP<def,tied1> = t2LDMIA_RET %SP<tied0>, pred:14, pred:%noreg, %R7<def>, %PC<def>, %R0<imp-use>
+
+# End machine code for function AllocFancyAli.
+
+# After Execution dependency fix:
+# Machine code for function AllocFancyAli: Post SSA
+Frame Objects:
+  fi#0: size=4, align=4, at location [SP-4]
+  fi#1: size=4, align=4, at location [SP-8]
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R7 %LR
+	%SP<def,tied1> = t2STMDB_UPD %SP<tied0>, pred:14, pred:%noreg, %R7<kill>, %LR<kill>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%R7<def> = tMOVr %SP<kill>, pred:14, pred:%noreg; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%R0<def> = t2MOVi32imm <ga:@.str>
+	%R1<def> = t2MOVi 117, pred:14, pred:%noreg, opt:%noreg
+	%R2<def> = t2MOVi 40, pred:14, pred:%noreg, opt:%noreg
+	tBL pred:14, pred:%noreg, <ga:@sre_malloc>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %LR<imp-def,dead>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use,kill>, %SP<imp-def>, %R0<imp-def>
+	%R1<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg
+	t2STRi12 %R1, %R0, 16, pred:14, pred:%noreg; mem:ST4[%1+16]
+	t2STRDi8 %R1, %R1, %R0, 8, pred:14, pred:%noreg
+	t2STRDi8 %R1, %R1, %R0, 0, pred:14, pred:%noreg
+	t2STRDi8 %R1, %R1, %R0, 24, pred:14, pred:%noreg
+	t2STRDi8 %R1, %R1<kill>, %R0, 32, pred:14, pred:%noreg
+	%SP<def,tied1> = t2LDMIA_RET %SP<tied0>, pred:14, pred:%noreg, %R7<def>, %PC<def>, %R0<imp-use>
+
+# End machine code for function AllocFancyAli.
+
+# After ARM pseudo instruction expansion pass:
+# Machine code for function AllocFancyAli: Post SSA
+Frame Objects:
+  fi#0: size=4, align=4, at location [SP-4]
+  fi#1: size=4, align=4, at location [SP-8]
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R7 %LR
+	%SP<def,tied1> = t2STMDB_UPD %SP<tied0>, pred:14, pred:%noreg, %R7<kill>, %LR<kill>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%R7<def> = tMOVr %SP<kill>, pred:14, pred:%noreg; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%R0<def> = t2MOVi16 <ga:@.str>[TF=1], pred:14, pred:%noreg
+	%R0<def,tied1> = t2MOVTi16 %R0<tied0>, <ga:@.str>[TF=2], pred:14, pred:%noreg
+	%R1<def> = t2MOVi 117, pred:14, pred:%noreg, opt:%noreg
+	%R2<def> = t2MOVi 40, pred:14, pred:%noreg, opt:%noreg
+	tBL pred:14, pred:%noreg, <ga:@sre_malloc>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %LR<imp-def,dead>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use,kill>, %SP<imp-def>, %R0<imp-def>
+	%R1<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg
+	t2STRi12 %R1, %R0, 16, pred:14, pred:%noreg; mem:ST4[%1+16]
+	t2STRDi8 %R1, %R1, %R0, 8, pred:14, pred:%noreg
+	t2STRDi8 %R1, %R1, %R0, 0, pred:14, pred:%noreg
+	t2STRDi8 %R1, %R1, %R0, 24, pred:14, pred:%noreg
+	t2STRDi8 %R1, %R1<kill>, %R0, 32, pred:14, pred:%noreg
+	%SP<def,tied1> = t2LDMIA_RET %SP<tied0>, pred:14, pred:%noreg, %R7<def>, %PC<def>, %R0<imp-use>
+
+# End machine code for function AllocFancyAli.
+
+# After Thumb2 instruction size reduction pass:
+# Machine code for function AllocFancyAli: Post SSA
+Frame Objects:
+  fi#0: size=4, align=4, at location [SP-4]
+  fi#1: size=4, align=4, at location [SP-8]
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R7 %LR
+	%SP<def,tied1> = t2STMDB_UPD %SP<tied0>, pred:14, pred:%noreg, %R7<kill>, %LR<kill>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%R7<def> = tMOVr %SP<kill>, pred:14, pred:%noreg; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%R0<def> = t2MOVi16 <ga:@.str>[TF=1], pred:14, pred:%noreg
+	%R0<def,tied1> = t2MOVTi16 %R0<tied0>, <ga:@.str>[TF=2], pred:14, pred:%noreg
+	%R1<def> = t2MOVi 117, pred:14, pred:%noreg, opt:%noreg
+	%R2<def> = t2MOVi 40, pred:14, pred:%noreg, opt:%noreg
+	tBL pred:14, pred:%noreg, <ga:@sre_malloc>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %LR<imp-def,dead>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use,kill>, %SP<imp-def>, %R0<imp-def>
+	%R1<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg
+	t2STRi12 %R1, %R0, 16, pred:14, pred:%noreg; mem:ST4[%1+16]
+	t2STRDi8 %R1, %R1, %R0, 8, pred:14, pred:%noreg
+	t2STRDi8 %R1, %R1, %R0, 0, pred:14, pred:%noreg
+	t2STRDi8 %R1, %R1, %R0, 24, pred:14, pred:%noreg
+	t2STRDi8 %R1, %R1<kill>, %R0, 32, pred:14, pred:%noreg
+	%SP<def,tied1> = t2LDMIA_RET %SP<tied0>, pred:14, pred:%noreg, %R7<def>, %PC<def>, %R0<imp-use>
+
+# End machine code for function AllocFancyAli.
+
+# After Thumb IT blocks insertion pass:
+# Machine code for function AllocFancyAli: Post SSA
+Frame Objects:
+  fi#0: size=4, align=4, at location [SP-4]
+  fi#1: size=4, align=4, at location [SP-8]
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R7 %LR
+	%SP<def,tied1> = t2STMDB_UPD %SP<tied0>, pred:14, pred:%noreg, %R7<kill>, %LR<kill>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%R7<def> = tMOVr %SP<kill>, pred:14, pred:%noreg; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%R0<def> = t2MOVi16 <ga:@.str>[TF=1], pred:14, pred:%noreg
+	%R0<def,tied1> = t2MOVTi16 %R0<tied0>, <ga:@.str>[TF=2], pred:14, pred:%noreg
+	%R1<def> = t2MOVi 117, pred:14, pred:%noreg, opt:%noreg
+	%R2<def> = t2MOVi 40, pred:14, pred:%noreg, opt:%noreg
+	tBL pred:14, pred:%noreg, <ga:@sre_malloc>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %LR<imp-def,dead>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use,kill>, %SP<imp-def>, %R0<imp-def>
+	%R1<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg
+	t2STRi12 %R1, %R0, 16, pred:14, pred:%noreg; mem:ST4[%1+16]
+	t2STRDi8 %R1, %R1, %R0, 8, pred:14, pred:%noreg
+	t2STRDi8 %R1, %R1, %R0, 0, pred:14, pred:%noreg
+	t2STRDi8 %R1, %R1, %R0, 24, pred:14, pred:%noreg
+	t2STRDi8 %R1, %R1<kill>, %R0, 32, pred:14, pred:%noreg
+	%SP<def,tied1> = t2LDMIA_RET %SP<tied0>, pred:14, pred:%noreg, %R7<def>, %PC<def>, %R0<imp-use>
+
+# End machine code for function AllocFancyAli.
+
+# After Analyze Machine Code For Garbage Collection:
+# Machine code for function AllocFancyAli: Post SSA
+Frame Objects:
+  fi#0: size=4, align=4, at location [SP-4]
+  fi#1: size=4, align=4, at location [SP-8]
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R7 %LR
+	%SP<def,tied1> = t2STMDB_UPD %SP<tied0>, pred:14, pred:%noreg, %R7<kill>, %LR<kill>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%R7<def> = tMOVr %SP<kill>, pred:14, pred:%noreg; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%R0<def> = t2MOVi16 <ga:@.str>[TF=1], pred:14, pred:%noreg
+	%R0<def,tied1> = t2MOVTi16 %R0<tied0>, <ga:@.str>[TF=2], pred:14, pred:%noreg
+	%R1<def> = t2MOVi 117, pred:14, pred:%noreg, opt:%noreg
+	%R2<def> = t2MOVi 40, pred:14, pred:%noreg, opt:%noreg
+	tBL pred:14, pred:%noreg, <ga:@sre_malloc>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %LR<imp-def,dead>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use,kill>, %SP<imp-def>, %R0<imp-def>
+	%R1<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg
+	t2STRi12 %R1, %R0, 16, pred:14, pred:%noreg; mem:ST4[%1+16]
+	t2STRDi8 %R1, %R1, %R0, 8, pred:14, pred:%noreg
+	t2STRDi8 %R1, %R1, %R0, 0, pred:14, pred:%noreg
+	t2STRDi8 %R1, %R1, %R0, 24, pred:14, pred:%noreg
+	t2STRDi8 %R1, %R1<kill>, %R0, 32, pred:14, pred:%noreg
+	%SP<def,tied1> = t2LDMIA_RET %SP<tied0>, pred:14, pred:%noreg, %R7<def>, %PC<def>, %R0<imp-use>
+
+# End machine code for function AllocFancyAli.
+
+# After Thumb2 instruction size reduction pass:
+# Machine code for function AllocFancyAli: Post SSA
+Frame Objects:
+  fi#0: size=4, align=4, at location [SP-4]
+  fi#1: size=4, align=4, at location [SP-8]
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R7 %LR
+	tPUSH pred:14, pred:%noreg, %R7<kill>, %LR<kill>, %SP<imp-def>, %SP<imp-use>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%R7<def> = tMOVr %SP<kill>, pred:14, pred:%noreg; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%R0<def> = t2MOVi16 <ga:@.str>[TF=1], pred:14, pred:%noreg
+	%R0<def,tied1> = t2MOVTi16 %R0<tied0>, <ga:@.str>[TF=2], pred:14, pred:%noreg
+	%R1<def>, %CPSR<def,dead> = tMOVi8 117, pred:14, pred:%noreg
+	%R2<def>, %CPSR<def,dead> = tMOVi8 40, pred:14, pred:%noreg
+	tBL pred:14, pred:%noreg, <ga:@sre_malloc>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %LR<imp-def,dead>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use,kill>, %SP<imp-def>, %R0<imp-def>
+	%R1<def>, %CPSR<def,dead> = tMOVi8 0, pred:14, pred:%noreg
+	tSTRi %R1, %R0, 4, pred:14, pred:%noreg; mem:ST4[%1+16]
+	t2STRDi8 %R1, %R1, %R0, 8, pred:14, pred:%noreg
+	t2STRDi8 %R1, %R1, %R0, 0, pred:14, pred:%noreg
+	t2STRDi8 %R1, %R1, %R0, 24, pred:14, pred:%noreg
+	t2STRDi8 %R1, %R1<kill>, %R0, 32, pred:14, pred:%noreg
+	tPOP_RET pred:14, pred:%noreg, %R7<def>, %PC<def>, %R0<imp-use>
+
+# End machine code for function AllocFancyAli.
+
+# After Unpack machine instruction bundles:
+# Machine code for function AllocFancyAli: Post SSA
+Frame Objects:
+  fi#0: size=4, align=4, at location [SP-4]
+  fi#1: size=4, align=4, at location [SP-8]
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R7 %LR
+	tPUSH pred:14, pred:%noreg, %R7<kill>, %LR<kill>, %SP<imp-def>, %SP<imp-use>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%R7<def> = tMOVr %SP<kill>, pred:14, pred:%noreg; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%R0<def> = t2MOVi16 <ga:@.str>[TF=1], pred:14, pred:%noreg
+	%R0<def,tied1> = t2MOVTi16 %R0<tied0>, <ga:@.str>[TF=2], pred:14, pred:%noreg
+	%R1<def>, %CPSR<def,dead> = tMOVi8 117, pred:14, pred:%noreg
+	%R2<def>, %CPSR<def,dead> = tMOVi8 40, pred:14, pred:%noreg
+	tBL pred:14, pred:%noreg, <ga:@sre_malloc>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %LR<imp-def,dead>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use,kill>, %SP<imp-def>, %R0<imp-def>
+	%R1<def>, %CPSR<def,dead> = tMOVi8 0, pred:14, pred:%noreg
+	tSTRi %R1, %R0, 4, pred:14, pred:%noreg; mem:ST4[%1+16]
+	t2STRDi8 %R1, %R1, %R0, 8, pred:14, pred:%noreg
+	t2STRDi8 %R1, %R1, %R0, 0, pred:14, pred:%noreg
+	t2STRDi8 %R1, %R1, %R0, 24, pred:14, pred:%noreg
+	t2STRDi8 %R1, %R1<kill>, %R0, 32, pred:14, pred:%noreg
+	tPOP_RET pred:14, pred:%noreg, %R7<def>, %PC<def>, %R0<imp-use>
+
+# End machine code for function AllocFancyAli.
+
+# After optimise barriers pass:
+# Machine code for function AllocFancyAli: Post SSA
+Frame Objects:
+  fi#0: size=4, align=4, at location [SP-4]
+  fi#1: size=4, align=4, at location [SP-8]
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R7 %LR
+	tPUSH pred:14, pred:%noreg, %R7<kill>, %LR<kill>, %SP<imp-def>, %SP<imp-use>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%R7<def> = tMOVr %SP<kill>, pred:14, pred:%noreg; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%R0<def> = t2MOVi16 <ga:@.str>[TF=1], pred:14, pred:%noreg
+	%R0<def,tied1> = t2MOVTi16 %R0<tied0>, <ga:@.str>[TF=2], pred:14, pred:%noreg
+	%R1<def>, %CPSR<def,dead> = tMOVi8 117, pred:14, pred:%noreg
+	%R2<def>, %CPSR<def,dead> = tMOVi8 40, pred:14, pred:%noreg
+	tBL pred:14, pred:%noreg, <ga:@sre_malloc>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %LR<imp-def,dead>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use,kill>, %SP<imp-def>, %R0<imp-def>
+	%R1<def>, %CPSR<def,dead> = tMOVi8 0, pred:14, pred:%noreg
+	tSTRi %R1, %R0, 4, pred:14, pred:%noreg; mem:ST4[%1+16]
+	t2STRDi8 %R1, %R1, %R0, 8, pred:14, pred:%noreg
+	t2STRDi8 %R1, %R1, %R0, 0, pred:14, pred:%noreg
+	t2STRDi8 %R1, %R1, %R0, 24, pred:14, pred:%noreg
+	t2STRDi8 %R1, %R1<kill>, %R0, 32, pred:14, pred:%noreg
+	tPOP_RET pred:14, pred:%noreg, %R7<def>, %PC<def>, %R0<imp-use>
+
+# End machine code for function AllocFancyAli.
+
+# After ARM constant island placement and branch shortening pass:
+# Machine code for function AllocFancyAli: Post SSA, not tracking liveness
+Frame Objects:
+  fi#0: size=4, align=4, at location [SP-4]
+  fi#1: size=4, align=4, at location [SP-8]
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R7 %LR
+	tPUSH pred:14, pred:%noreg, %R7<kill>, %LR<kill>, %SP<imp-def>, %SP<imp-use>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%R7<def> = tMOVr %SP<kill>, pred:14, pred:%noreg; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%R0<def> = t2MOVi16 <ga:@.str>[TF=1], pred:14, pred:%noreg
+	%R0<def,tied1> = t2MOVTi16 %R0<tied0>, <ga:@.str>[TF=2], pred:14, pred:%noreg
+	%R1<def>, %CPSR<def,dead> = tMOVi8 117, pred:14, pred:%noreg
+	%R2<def>, %CPSR<def,dead> = tMOVi8 40, pred:14, pred:%noreg
+	tBL pred:14, pred:%noreg, <ga:@sre_malloc>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %LR<imp-def,dead>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use,kill>, %SP<imp-def>, %R0<imp-def>
+	%R1<def>, %CPSR<def,dead> = tMOVi8 0, pred:14, pred:%noreg
+	tSTRi %R1, %R0, 4, pred:14, pred:%noreg; mem:ST4[%1+16]
+	t2STRDi8 %R1, %R1, %R0, 8, pred:14, pred:%noreg
+	t2STRDi8 %R1, %R1, %R0, 0, pred:14, pred:%noreg
+	t2STRDi8 %R1, %R1, %R0, 24, pred:14, pred:%noreg
+	t2STRDi8 %R1, %R1<kill>, %R0, 32, pred:14, pred:%noreg
+	tPOP_RET pred:14, pred:%noreg, %R7<def>, %PC<def>, %R0<imp-use>
+
+# End machine code for function AllocFancyAli.
+
+# After Contiguously Lay Out Funclets:
+# Machine code for function AllocFancyAli: Post SSA, not tracking liveness
+Frame Objects:
+  fi#0: size=4, align=4, at location [SP-4]
+  fi#1: size=4, align=4, at location [SP-8]
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R7 %LR
+	tPUSH pred:14, pred:%noreg, %R7<kill>, %LR<kill>, %SP<imp-def>, %SP<imp-use>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%R7<def> = tMOVr %SP<kill>, pred:14, pred:%noreg; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%R0<def> = t2MOVi16 <ga:@.str>[TF=1], pred:14, pred:%noreg
+	%R0<def,tied1> = t2MOVTi16 %R0<tied0>, <ga:@.str>[TF=2], pred:14, pred:%noreg
+	%R1<def>, %CPSR<def,dead> = tMOVi8 117, pred:14, pred:%noreg
+	%R2<def>, %CPSR<def,dead> = tMOVi8 40, pred:14, pred:%noreg
+	tBL pred:14, pred:%noreg, <ga:@sre_malloc>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %LR<imp-def,dead>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use,kill>, %SP<imp-def>, %R0<imp-def>
+	%R1<def>, %CPSR<def,dead> = tMOVi8 0, pred:14, pred:%noreg
+	tSTRi %R1, %R0, 4, pred:14, pred:%noreg; mem:ST4[%1+16]
+	t2STRDi8 %R1, %R1, %R0, 8, pred:14, pred:%noreg
+	t2STRDi8 %R1, %R1, %R0, 0, pred:14, pred:%noreg
+	t2STRDi8 %R1, %R1, %R0, 24, pred:14, pred:%noreg
+	t2STRDi8 %R1, %R1<kill>, %R0, 32, pred:14, pred:%noreg
+	tPOP_RET pred:14, pred:%noreg, %R7<def>, %PC<def>, %R0<imp-use>
+
+# End machine code for function AllocFancyAli.
+
+# After StackMap Liveness Analysis:
+# Machine code for function AllocFancyAli: Post SSA, not tracking liveness
+Frame Objects:
+  fi#0: size=4, align=4, at location [SP-4]
+  fi#1: size=4, align=4, at location [SP-8]
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R7 %LR
+	tPUSH pred:14, pred:%noreg, %R7<kill>, %LR<kill>, %SP<imp-def>, %SP<imp-use>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%R7<def> = tMOVr %SP<kill>, pred:14, pred:%noreg; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%R0<def> = t2MOVi16 <ga:@.str>[TF=1], pred:14, pred:%noreg
+	%R0<def,tied1> = t2MOVTi16 %R0<tied0>, <ga:@.str>[TF=2], pred:14, pred:%noreg
+	%R1<def>, %CPSR<def,dead> = tMOVi8 117, pred:14, pred:%noreg
+	%R2<def>, %CPSR<def,dead> = tMOVi8 40, pred:14, pred:%noreg
+	tBL pred:14, pred:%noreg, <ga:@sre_malloc>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %LR<imp-def,dead>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use,kill>, %SP<imp-def>, %R0<imp-def>
+	%R1<def>, %CPSR<def,dead> = tMOVi8 0, pred:14, pred:%noreg
+	tSTRi %R1, %R0, 4, pred:14, pred:%noreg; mem:ST4[%1+16]
+	t2STRDi8 %R1, %R1, %R0, 8, pred:14, pred:%noreg
+	t2STRDi8 %R1, %R1, %R0, 0, pred:14, pred:%noreg
+	t2STRDi8 %R1, %R1, %R0, 24, pred:14, pred:%noreg
+	t2STRDi8 %R1, %R1<kill>, %R0, 32, pred:14, pred:%noreg
+	tPOP_RET pred:14, pred:%noreg, %R7<def>, %PC<def>, %R0<imp-use>
+
+# End machine code for function AllocFancyAli.
+
+# After Live DEBUG_VALUE analysis:
+# Machine code for function AllocFancyAli: Post SSA, not tracking liveness
+Frame Objects:
+  fi#0: size=4, align=4, at location [SP-4]
+  fi#1: size=4, align=4, at location [SP-8]
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R7 %LR
+	tPUSH pred:14, pred:%noreg, %R7<kill>, %LR<kill>, %SP<imp-def>, %SP<imp-use>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%R7<def> = tMOVr %SP<kill>, pred:14, pred:%noreg; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%R0<def> = t2MOVi16 <ga:@.str>[TF=1], pred:14, pred:%noreg
+	%R0<def,tied1> = t2MOVTi16 %R0<tied0>, <ga:@.str>[TF=2], pred:14, pred:%noreg
+	%R1<def>, %CPSR<def,dead> = tMOVi8 117, pred:14, pred:%noreg
+	%R2<def>, %CPSR<def,dead> = tMOVi8 40, pred:14, pred:%noreg
+	tBL pred:14, pred:%noreg, <ga:@sre_malloc>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %LR<imp-def,dead>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use,kill>, %SP<imp-def>, %R0<imp-def>
+	%R1<def>, %CPSR<def,dead> = tMOVi8 0, pred:14, pred:%noreg
+	tSTRi %R1, %R0, 4, pred:14, pred:%noreg; mem:ST4[%1+16]
+	t2STRDi8 %R1, %R1, %R0, 8, pred:14, pred:%noreg
+	t2STRDi8 %R1, %R1, %R0, 0, pred:14, pred:%noreg
+	t2STRDi8 %R1, %R1, %R0, 24, pred:14, pred:%noreg
+	t2STRDi8 %R1, %R1<kill>, %R0, 32, pred:14, pred:%noreg
+	tPOP_RET pred:14, pred:%noreg, %R7<def>, %PC<def>, %R0<imp-use>
+
+# End machine code for function AllocFancyAli.
+

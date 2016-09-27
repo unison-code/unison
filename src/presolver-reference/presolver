@@ -1,0 +1,19 @@
+#!/bin/bash
+# assuming current directory is .. i.e. .../src
+BASENAME=$(basename $1 .json)
+JSONNAME=$1
+OUTJSON=$BASENAME.ext.json
+shift
+case "$1" in
+      -o)
+	OUTJSON=$2
+esac
+echo "presolve('$JSONNAME')." | sicstus -f --nologo --noinfo -l presolver-reference/presolver.pl -- $*
+# If presolver timed out, just pass through the original .json file
+if [ ! -f $OUTJSON ]; then
+    cp $JSONNAME $OUTJSON
+fi
+# Normalize format so that it becomes easier to compare to original .json file
+mv $OUTJSON $BASENAME.temp
+cat $BASENAME.temp | aeson-pretty > $OUTJSON
+rm $BASENAME.temp

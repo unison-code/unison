@@ -1,0 +1,1107 @@
+# After Instruction Selection:
+# Machine code for function AllocFancyAli: SSA
+
+BB#0: derived from LLVM BB %0
+	ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	%vreg0<def> = A2_tfrsi <ga:@.str>; IntRegs:%vreg0
+	%vreg1<def> = A2_tfrsi 117; IntRegs:%vreg1
+	%vreg2<def> = A2_tfrsi 40; IntRegs:%vreg2
+	%R0<def> = COPY %vreg0; IntRegs:%vreg0
+	%R1<def> = COPY %vreg1; IntRegs:%vreg1
+	%R2<def> = COPY %vreg2; IntRegs:%vreg2
+	J2_call <ga:@sre_malloc>, %D0<imp-def>, %D1<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, ...
+	ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	%vreg3<def> = COPY %R0; IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 16, 0; mem:ST4[%1+16] IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 12, 0; mem:ST4[%1+12] IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 8, 0; mem:ST4[%1+8] IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 4, 0; mem:ST4[%1+4] IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 0, 0; mem:ST4[%1] IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 36, 0; mem:ST4[%cgep+12] IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 32, 0; mem:ST4[%cgep+8] IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 28, 0; mem:ST4[%cgep+4] IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 24, 0; mem:ST4[%cgep] IntRegs:%vreg3
+	%R0<def> = COPY %vreg3; IntRegs:%vreg3
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function AllocFancyAli.
+
+# After Expand ISel Pseudo-instructions:
+# Machine code for function AllocFancyAli: SSA
+
+BB#0: derived from LLVM BB %0
+	ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	%vreg0<def> = A2_tfrsi <ga:@.str>; IntRegs:%vreg0
+	%vreg1<def> = A2_tfrsi 117; IntRegs:%vreg1
+	%vreg2<def> = A2_tfrsi 40; IntRegs:%vreg2
+	%R0<def> = COPY %vreg0; IntRegs:%vreg0
+	%R1<def> = COPY %vreg1; IntRegs:%vreg1
+	%R2<def> = COPY %vreg2; IntRegs:%vreg2
+	J2_call <ga:@sre_malloc>, %D0<imp-def>, %D1<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, ...
+	ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	%vreg3<def> = COPY %R0; IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 16, 0; mem:ST4[%1+16] IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 12, 0; mem:ST4[%1+12] IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 8, 0; mem:ST4[%1+8] IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 4, 0; mem:ST4[%1+4] IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 0, 0; mem:ST4[%1] IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 36, 0; mem:ST4[%cgep+12] IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 32, 0; mem:ST4[%cgep+8] IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 28, 0; mem:ST4[%cgep+4] IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 24, 0; mem:ST4[%cgep] IntRegs:%vreg3
+	%R0<def> = COPY %vreg3; IntRegs:%vreg3
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function AllocFancyAli.
+
+# After Tail Duplication:
+# Machine code for function AllocFancyAli: SSA
+
+BB#0: derived from LLVM BB %0
+	ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	%vreg0<def> = A2_tfrsi <ga:@.str>; IntRegs:%vreg0
+	%vreg1<def> = A2_tfrsi 117; IntRegs:%vreg1
+	%vreg2<def> = A2_tfrsi 40; IntRegs:%vreg2
+	%R0<def> = COPY %vreg0; IntRegs:%vreg0
+	%R1<def> = COPY %vreg1; IntRegs:%vreg1
+	%R2<def> = COPY %vreg2; IntRegs:%vreg2
+	J2_call <ga:@sre_malloc>, %D0<imp-def>, %D1<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, ...
+	ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	%vreg3<def> = COPY %R0; IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 16, 0; mem:ST4[%1+16] IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 12, 0; mem:ST4[%1+12] IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 8, 0; mem:ST4[%1+8] IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 4, 0; mem:ST4[%1+4] IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 0, 0; mem:ST4[%1] IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 36, 0; mem:ST4[%cgep+12] IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 32, 0; mem:ST4[%cgep+8] IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 28, 0; mem:ST4[%cgep+4] IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 24, 0; mem:ST4[%cgep] IntRegs:%vreg3
+	%R0<def> = COPY %vreg3; IntRegs:%vreg3
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function AllocFancyAli.
+
+# After Optimize machine instruction PHIs:
+# Machine code for function AllocFancyAli: SSA
+
+BB#0: derived from LLVM BB %0
+	ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	%vreg0<def> = A2_tfrsi <ga:@.str>; IntRegs:%vreg0
+	%vreg1<def> = A2_tfrsi 117; IntRegs:%vreg1
+	%vreg2<def> = A2_tfrsi 40; IntRegs:%vreg2
+	%R0<def> = COPY %vreg0; IntRegs:%vreg0
+	%R1<def> = COPY %vreg1; IntRegs:%vreg1
+	%R2<def> = COPY %vreg2; IntRegs:%vreg2
+	J2_call <ga:@sre_malloc>, %D0<imp-def>, %D1<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, ...
+	ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	%vreg3<def> = COPY %R0; IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 16, 0; mem:ST4[%1+16] IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 12, 0; mem:ST4[%1+12] IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 8, 0; mem:ST4[%1+8] IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 4, 0; mem:ST4[%1+4] IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 0, 0; mem:ST4[%1] IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 36, 0; mem:ST4[%cgep+12] IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 32, 0; mem:ST4[%cgep+8] IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 28, 0; mem:ST4[%cgep+4] IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 24, 0; mem:ST4[%cgep] IntRegs:%vreg3
+	%R0<def> = COPY %vreg3; IntRegs:%vreg3
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function AllocFancyAli.
+
+# After Merge disjoint stack slots:
+# Machine code for function AllocFancyAli: SSA
+
+BB#0: derived from LLVM BB %0
+	ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	%vreg0<def> = A2_tfrsi <ga:@.str>; IntRegs:%vreg0
+	%vreg1<def> = A2_tfrsi 117; IntRegs:%vreg1
+	%vreg2<def> = A2_tfrsi 40; IntRegs:%vreg2
+	%R0<def> = COPY %vreg0; IntRegs:%vreg0
+	%R1<def> = COPY %vreg1; IntRegs:%vreg1
+	%R2<def> = COPY %vreg2; IntRegs:%vreg2
+	J2_call <ga:@sre_malloc>, %D0<imp-def>, %D1<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, ...
+	ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	%vreg3<def> = COPY %R0; IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 16, 0; mem:ST4[%1+16] IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 12, 0; mem:ST4[%1+12] IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 8, 0; mem:ST4[%1+8] IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 4, 0; mem:ST4[%1+4] IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 0, 0; mem:ST4[%1] IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 36, 0; mem:ST4[%cgep+12] IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 32, 0; mem:ST4[%cgep+8] IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 28, 0; mem:ST4[%cgep+4] IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 24, 0; mem:ST4[%cgep] IntRegs:%vreg3
+	%R0<def> = COPY %vreg3; IntRegs:%vreg3
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function AllocFancyAli.
+
+# After Local Stack Slot Allocation:
+# Machine code for function AllocFancyAli: SSA
+
+BB#0: derived from LLVM BB %0
+	ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	%vreg0<def> = A2_tfrsi <ga:@.str>; IntRegs:%vreg0
+	%vreg1<def> = A2_tfrsi 117; IntRegs:%vreg1
+	%vreg2<def> = A2_tfrsi 40; IntRegs:%vreg2
+	%R0<def> = COPY %vreg0; IntRegs:%vreg0
+	%R1<def> = COPY %vreg1; IntRegs:%vreg1
+	%R2<def> = COPY %vreg2; IntRegs:%vreg2
+	J2_call <ga:@sre_malloc>, %D0<imp-def>, %D1<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, ...
+	ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	%vreg3<def> = COPY %R0; IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 16, 0; mem:ST4[%1+16] IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 12, 0; mem:ST4[%1+12] IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 8, 0; mem:ST4[%1+8] IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 4, 0; mem:ST4[%1+4] IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 0, 0; mem:ST4[%1] IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 36, 0; mem:ST4[%cgep+12] IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 32, 0; mem:ST4[%cgep+8] IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 28, 0; mem:ST4[%cgep+4] IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 24, 0; mem:ST4[%cgep] IntRegs:%vreg3
+	%R0<def> = COPY %vreg3; IntRegs:%vreg3
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function AllocFancyAli.
+
+# After Remove dead machine instructions:
+# Machine code for function AllocFancyAli: SSA
+
+BB#0: derived from LLVM BB %0
+	ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	%vreg0<def> = A2_tfrsi <ga:@.str>; IntRegs:%vreg0
+	%vreg1<def> = A2_tfrsi 117; IntRegs:%vreg1
+	%vreg2<def> = A2_tfrsi 40; IntRegs:%vreg2
+	%R0<def> = COPY %vreg0; IntRegs:%vreg0
+	%R1<def> = COPY %vreg1; IntRegs:%vreg1
+	%R2<def> = COPY %vreg2; IntRegs:%vreg2
+	J2_call <ga:@sre_malloc>, %D0<imp-def>, %D1<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, ...
+	ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	%vreg3<def> = COPY %R0; IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 16, 0; mem:ST4[%1+16] IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 12, 0; mem:ST4[%1+12] IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 8, 0; mem:ST4[%1+8] IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 4, 0; mem:ST4[%1+4] IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 0, 0; mem:ST4[%1] IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 36, 0; mem:ST4[%cgep+12] IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 32, 0; mem:ST4[%cgep+8] IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 28, 0; mem:ST4[%cgep+4] IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 24, 0; mem:ST4[%cgep] IntRegs:%vreg3
+	%R0<def> = COPY %vreg3; IntRegs:%vreg3
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function AllocFancyAli.
+
+# After Machine Loop Invariant Code Motion:
+# Machine code for function AllocFancyAli: SSA
+
+BB#0: derived from LLVM BB %0
+	ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	%vreg0<def> = A2_tfrsi <ga:@.str>; IntRegs:%vreg0
+	%vreg1<def> = A2_tfrsi 117; IntRegs:%vreg1
+	%vreg2<def> = A2_tfrsi 40; IntRegs:%vreg2
+	%R0<def> = COPY %vreg0; IntRegs:%vreg0
+	%R1<def> = COPY %vreg1; IntRegs:%vreg1
+	%R2<def> = COPY %vreg2; IntRegs:%vreg2
+	J2_call <ga:@sre_malloc>, %D0<imp-def>, %D1<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, ...
+	ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	%vreg3<def> = COPY %R0; IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 16, 0; mem:ST4[%1+16] IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 12, 0; mem:ST4[%1+12] IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 8, 0; mem:ST4[%1+8] IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 4, 0; mem:ST4[%1+4] IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 0, 0; mem:ST4[%1] IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 36, 0; mem:ST4[%cgep+12] IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 32, 0; mem:ST4[%cgep+8] IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 28, 0; mem:ST4[%cgep+4] IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 24, 0; mem:ST4[%cgep] IntRegs:%vreg3
+	%R0<def> = COPY %vreg3; IntRegs:%vreg3
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function AllocFancyAli.
+
+# After Machine Common Subexpression Elimination:
+# Machine code for function AllocFancyAli: SSA
+
+BB#0: derived from LLVM BB %0
+	ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	%vreg0<def> = A2_tfrsi <ga:@.str>; IntRegs:%vreg0
+	%vreg1<def> = A2_tfrsi 117; IntRegs:%vreg1
+	%vreg2<def> = A2_tfrsi 40; IntRegs:%vreg2
+	%R0<def> = COPY %vreg0; IntRegs:%vreg0
+	%R1<def> = COPY %vreg1; IntRegs:%vreg1
+	%R2<def> = COPY %vreg2; IntRegs:%vreg2
+	J2_call <ga:@sre_malloc>, %D0<imp-def>, %D1<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, ...
+	ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	%vreg3<def> = COPY %R0; IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 16, 0; mem:ST4[%1+16] IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 12, 0; mem:ST4[%1+12] IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 8, 0; mem:ST4[%1+8] IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 4, 0; mem:ST4[%1+4] IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 0, 0; mem:ST4[%1] IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 36, 0; mem:ST4[%cgep+12] IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 32, 0; mem:ST4[%cgep+8] IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 28, 0; mem:ST4[%cgep+4] IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 24, 0; mem:ST4[%cgep] IntRegs:%vreg3
+	%R0<def> = COPY %vreg3; IntRegs:%vreg3
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function AllocFancyAli.
+
+# After Machine code sinking:
+# Machine code for function AllocFancyAli: SSA
+
+BB#0: derived from LLVM BB %0
+	ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	%vreg0<def> = A2_tfrsi <ga:@.str>; IntRegs:%vreg0
+	%vreg1<def> = A2_tfrsi 117; IntRegs:%vreg1
+	%vreg2<def> = A2_tfrsi 40; IntRegs:%vreg2
+	%R0<def> = COPY %vreg0; IntRegs:%vreg0
+	%R1<def> = COPY %vreg1; IntRegs:%vreg1
+	%R2<def> = COPY %vreg2; IntRegs:%vreg2
+	J2_call <ga:@sre_malloc>, %D0<imp-def>, %D1<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, ...
+	ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	%vreg3<def> = COPY %R0; IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 16, 0; mem:ST4[%1+16] IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 12, 0; mem:ST4[%1+12] IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 8, 0; mem:ST4[%1+8] IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 4, 0; mem:ST4[%1+4] IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 0, 0; mem:ST4[%1] IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 36, 0; mem:ST4[%cgep+12] IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 32, 0; mem:ST4[%cgep+8] IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 28, 0; mem:ST4[%cgep+4] IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 24, 0; mem:ST4[%cgep] IntRegs:%vreg3
+	%R0<def> = COPY %vreg3; IntRegs:%vreg3
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function AllocFancyAli.
+
+# After Peephole Optimizations:
+# Machine code for function AllocFancyAli: SSA
+
+BB#0: derived from LLVM BB %0
+	ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	%vreg0<def> = A2_tfrsi <ga:@.str>; IntRegs:%vreg0
+	%vreg1<def> = A2_tfrsi 117; IntRegs:%vreg1
+	%vreg2<def> = A2_tfrsi 40; IntRegs:%vreg2
+	%R0<def> = COPY %vreg0; IntRegs:%vreg0
+	%R1<def> = COPY %vreg1; IntRegs:%vreg1
+	%R2<def> = COPY %vreg2; IntRegs:%vreg2
+	J2_call <ga:@sre_malloc>, %D0<imp-def>, %D1<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, ...
+	ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	%vreg3<def> = COPY %R0; IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 16, 0; mem:ST4[%1+16] IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 12, 0; mem:ST4[%1+12] IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 8, 0; mem:ST4[%1+8] IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 4, 0; mem:ST4[%1+4] IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 0, 0; mem:ST4[%1] IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 36, 0; mem:ST4[%cgep+12] IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 32, 0; mem:ST4[%cgep+8] IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 28, 0; mem:ST4[%cgep+4] IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 24, 0; mem:ST4[%cgep] IntRegs:%vreg3
+	%R0<def> = COPY %vreg3; IntRegs:%vreg3
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function AllocFancyAli.
+
+# After Remove dead machine instructions:
+# Machine code for function AllocFancyAli: SSA
+
+BB#0: derived from LLVM BB %0
+	ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	%vreg0<def> = A2_tfrsi <ga:@.str>; IntRegs:%vreg0
+	%vreg1<def> = A2_tfrsi 117; IntRegs:%vreg1
+	%vreg2<def> = A2_tfrsi 40; IntRegs:%vreg2
+	%R0<def> = COPY %vreg0; IntRegs:%vreg0
+	%R1<def> = COPY %vreg1; IntRegs:%vreg1
+	%R2<def> = COPY %vreg2; IntRegs:%vreg2
+	J2_call <ga:@sre_malloc>, %D0<imp-def>, %D1<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, ...
+	ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	%vreg3<def> = COPY %R0; IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 16, 0; mem:ST4[%1+16] IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 12, 0; mem:ST4[%1+12] IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 8, 0; mem:ST4[%1+8] IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 4, 0; mem:ST4[%1+4] IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 0, 0; mem:ST4[%1] IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 36, 0; mem:ST4[%cgep+12] IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 32, 0; mem:ST4[%cgep+8] IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 28, 0; mem:ST4[%cgep+4] IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 24, 0; mem:ST4[%cgep] IntRegs:%vreg3
+	%R0<def> = COPY %vreg3; IntRegs:%vreg3
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function AllocFancyAli.
+
+# After Hexagon Store Widening:
+# Machine code for function AllocFancyAli: SSA
+
+BB#0: derived from LLVM BB %0
+	ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	%vreg0<def> = A2_tfrsi <ga:@.str>; IntRegs:%vreg0
+	%vreg1<def> = A2_tfrsi 117; IntRegs:%vreg1
+	%vreg2<def> = A2_tfrsi 40; IntRegs:%vreg2
+	%R0<def> = COPY %vreg0; IntRegs:%vreg0
+	%R1<def> = COPY %vreg1; IntRegs:%vreg1
+	%R2<def> = COPY %vreg2; IntRegs:%vreg2
+	J2_call <ga:@sre_malloc>, %D0<imp-def>, %D1<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, ...
+	ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	%vreg3<def> = COPY %R0; IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 16, 0; mem:ST4[%1+16] IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 12, 0; mem:ST4[%1+12] IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 8, 0; mem:ST4[%1+8] IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 4, 0; mem:ST4[%1+4] IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 0, 0; mem:ST4[%1] IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 36, 0; mem:ST4[%cgep+12] IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 32, 0; mem:ST4[%cgep+8] IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 28, 0; mem:ST4[%cgep+4] IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 24, 0; mem:ST4[%cgep] IntRegs:%vreg3
+	%R0<def> = COPY %vreg3; IntRegs:%vreg3
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function AllocFancyAli.
+
+# After Hexagon Hardware Loops:
+# Machine code for function AllocFancyAli: SSA
+
+BB#0: derived from LLVM BB %0
+	ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	%vreg0<def> = A2_tfrsi <ga:@.str>; IntRegs:%vreg0
+	%vreg1<def> = A2_tfrsi 117; IntRegs:%vreg1
+	%vreg2<def> = A2_tfrsi 40; IntRegs:%vreg2
+	%R0<def> = COPY %vreg0; IntRegs:%vreg0
+	%R1<def> = COPY %vreg1; IntRegs:%vreg1
+	%R2<def> = COPY %vreg2; IntRegs:%vreg2
+	J2_call <ga:@sre_malloc>, %D0<imp-def>, %D1<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, ...
+	ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	%vreg3<def> = COPY %R0; IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 16, 0; mem:ST4[%1+16] IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 12, 0; mem:ST4[%1+12] IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 8, 0; mem:ST4[%1+8] IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 4, 0; mem:ST4[%1+4] IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 0, 0; mem:ST4[%1] IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 36, 0; mem:ST4[%cgep+12] IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 32, 0; mem:ST4[%cgep+8] IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 28, 0; mem:ST4[%cgep+4] IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 24, 0; mem:ST4[%cgep] IntRegs:%vreg3
+	%R0<def> = COPY %vreg3; IntRegs:%vreg3
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function AllocFancyAli.
+
+# After Process Implicit Definitions:
+# Machine code for function AllocFancyAli: SSA
+
+BB#0: derived from LLVM BB %0
+	ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	%vreg0<def> = A2_tfrsi <ga:@.str>; IntRegs:%vreg0
+	%vreg1<def> = A2_tfrsi 117; IntRegs:%vreg1
+	%vreg2<def> = A2_tfrsi 40; IntRegs:%vreg2
+	%R0<def> = COPY %vreg0; IntRegs:%vreg0
+	%R1<def> = COPY %vreg1; IntRegs:%vreg1
+	%R2<def> = COPY %vreg2; IntRegs:%vreg2
+	J2_call <ga:@sre_malloc>, %D0<imp-def>, %D1<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, ...
+	ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	%vreg3<def> = COPY %R0; IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 16, 0; mem:ST4[%1+16] IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 12, 0; mem:ST4[%1+12] IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 8, 0; mem:ST4[%1+8] IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 4, 0; mem:ST4[%1+4] IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 0, 0; mem:ST4[%1] IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 36, 0; mem:ST4[%cgep+12] IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 32, 0; mem:ST4[%cgep+8] IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 28, 0; mem:ST4[%cgep+4] IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 24, 0; mem:ST4[%cgep] IntRegs:%vreg3
+	%R0<def> = COPY %vreg3; IntRegs:%vreg3
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function AllocFancyAli.
+
+# After Live Variable Analysis:
+# Machine code for function AllocFancyAli: SSA
+
+BB#0: derived from LLVM BB %0
+	ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	%vreg0<def> = A2_tfrsi <ga:@.str>; IntRegs:%vreg0
+	%vreg1<def> = A2_tfrsi 117; IntRegs:%vreg1
+	%vreg2<def> = A2_tfrsi 40; IntRegs:%vreg2
+	%R0<def> = COPY %vreg0<kill>; IntRegs:%vreg0
+	%R1<def> = COPY %vreg1<kill>; IntRegs:%vreg1
+	%R2<def> = COPY %vreg2<kill>; IntRegs:%vreg2
+	J2_call <ga:@sre_malloc>, %D0<imp-def,dead>, %D1<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use,kill>, %R1<imp-use,kill>, %R2<imp-use,kill>, %R0<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	%vreg3<def> = COPY %R0<kill>; IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 16, 0; mem:ST4[%1+16] IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 12, 0; mem:ST4[%1+12] IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 8, 0; mem:ST4[%1+8] IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 4, 0; mem:ST4[%1+4] IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 0, 0; mem:ST4[%1] IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 36, 0; mem:ST4[%cgep+12] IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 32, 0; mem:ST4[%cgep+8] IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 28, 0; mem:ST4[%cgep+4] IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 24, 0; mem:ST4[%cgep] IntRegs:%vreg3
+	%R0<def> = COPY %vreg3<kill>; IntRegs:%vreg3
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use,kill>
+
+# End machine code for function AllocFancyAli.
+
+# After Machine Natural Loop Construction:
+# Machine code for function AllocFancyAli: SSA
+
+BB#0: derived from LLVM BB %0
+	ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	%vreg0<def> = A2_tfrsi <ga:@.str>; IntRegs:%vreg0
+	%vreg1<def> = A2_tfrsi 117; IntRegs:%vreg1
+	%vreg2<def> = A2_tfrsi 40; IntRegs:%vreg2
+	%R0<def> = COPY %vreg0<kill>; IntRegs:%vreg0
+	%R1<def> = COPY %vreg1<kill>; IntRegs:%vreg1
+	%R2<def> = COPY %vreg2<kill>; IntRegs:%vreg2
+	J2_call <ga:@sre_malloc>, %D0<imp-def,dead>, %D1<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use,kill>, %R1<imp-use,kill>, %R2<imp-use,kill>, %R0<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	%vreg3<def> = COPY %R0<kill>; IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 16, 0; mem:ST4[%1+16] IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 12, 0; mem:ST4[%1+12] IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 8, 0; mem:ST4[%1+8] IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 4, 0; mem:ST4[%1+4] IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 0, 0; mem:ST4[%1] IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 36, 0; mem:ST4[%cgep+12] IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 32, 0; mem:ST4[%cgep+8] IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 28, 0; mem:ST4[%cgep+4] IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 24, 0; mem:ST4[%cgep] IntRegs:%vreg3
+	%R0<def> = COPY %vreg3<kill>; IntRegs:%vreg3
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use,kill>
+
+# End machine code for function AllocFancyAli.
+
+# After Eliminate PHI nodes for register allocation:
+# Machine code for function AllocFancyAli: Post SSA
+
+BB#0: derived from LLVM BB %0
+	ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	%vreg0<def> = A2_tfrsi <ga:@.str>; IntRegs:%vreg0
+	%vreg1<def> = A2_tfrsi 117; IntRegs:%vreg1
+	%vreg2<def> = A2_tfrsi 40; IntRegs:%vreg2
+	%R0<def> = COPY %vreg0<kill>; IntRegs:%vreg0
+	%R1<def> = COPY %vreg1<kill>; IntRegs:%vreg1
+	%R2<def> = COPY %vreg2<kill>; IntRegs:%vreg2
+	J2_call <ga:@sre_malloc>, %D0<imp-def,dead>, %D1<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use,kill>, %R1<imp-use,kill>, %R2<imp-use,kill>, %R0<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	%vreg3<def> = COPY %R0<kill>; IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 16, 0; mem:ST4[%1+16] IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 12, 0; mem:ST4[%1+12] IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 8, 0; mem:ST4[%1+8] IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 4, 0; mem:ST4[%1+4] IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 0, 0; mem:ST4[%1] IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 36, 0; mem:ST4[%cgep+12] IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 32, 0; mem:ST4[%cgep+8] IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 28, 0; mem:ST4[%cgep+4] IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 24, 0; mem:ST4[%cgep] IntRegs:%vreg3
+	%R0<def> = COPY %vreg3<kill>; IntRegs:%vreg3
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use,kill>
+
+# End machine code for function AllocFancyAli.
+
+# After Two-Address instruction pass:
+# Machine code for function AllocFancyAli: Post SSA
+
+BB#0: derived from LLVM BB %0
+	ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	%vreg0<def> = A2_tfrsi <ga:@.str>; IntRegs:%vreg0
+	%vreg1<def> = A2_tfrsi 117; IntRegs:%vreg1
+	%vreg2<def> = A2_tfrsi 40; IntRegs:%vreg2
+	%R0<def> = COPY %vreg0<kill>; IntRegs:%vreg0
+	%R1<def> = COPY %vreg1<kill>; IntRegs:%vreg1
+	%R2<def> = COPY %vreg2<kill>; IntRegs:%vreg2
+	J2_call <ga:@sre_malloc>, %D0<imp-def,dead>, %D1<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use,kill>, %R1<imp-use,kill>, %R2<imp-use,kill>, %R0<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	%vreg3<def> = COPY %R0<kill>; IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 16, 0; mem:ST4[%1+16] IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 12, 0; mem:ST4[%1+12] IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 8, 0; mem:ST4[%1+8] IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 4, 0; mem:ST4[%1+4] IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 0, 0; mem:ST4[%1] IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 36, 0; mem:ST4[%cgep+12] IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 32, 0; mem:ST4[%cgep+8] IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 28, 0; mem:ST4[%cgep+4] IntRegs:%vreg3
+	S4_storeiri_io %vreg3, 24, 0; mem:ST4[%cgep] IntRegs:%vreg3
+	%R0<def> = COPY %vreg3<kill>; IntRegs:%vreg3
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use,kill>
+
+# End machine code for function AllocFancyAli.
+
+# After Simple Register Coalescing:
+# Machine code for function AllocFancyAli: Post SSA
+
+0B	BB#0: derived from LLVM BB %0
+16B		ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+80B		%R0<def> = A2_tfrsi <ga:@.str>
+96B		%R1<def> = A2_tfrsi 117
+112B		%R2<def> = A2_tfrsi 40
+128B		J2_call <ga:@sre_malloc>, %D0<imp-def,dead>, %D1<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use,kill>, %R1<imp-use,kill>, %R2<imp-use,kill>, %R0<imp-def>, ...
+144B		ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+160B		%vreg3<def> = COPY %R0<kill>; IntRegs:%vreg3
+176B		S4_storeiri_io %vreg3, 16, 0; mem:ST4[%1+16] IntRegs:%vreg3
+192B		S4_storeiri_io %vreg3, 12, 0; mem:ST4[%1+12] IntRegs:%vreg3
+208B		S4_storeiri_io %vreg3, 8, 0; mem:ST4[%1+8] IntRegs:%vreg3
+224B		S4_storeiri_io %vreg3, 4, 0; mem:ST4[%1+4] IntRegs:%vreg3
+240B		S4_storeiri_io %vreg3, 0, 0; mem:ST4[%1] IntRegs:%vreg3
+256B		S4_storeiri_io %vreg3, 36, 0; mem:ST4[%cgep+12] IntRegs:%vreg3
+272B		S4_storeiri_io %vreg3, 32, 0; mem:ST4[%cgep+8] IntRegs:%vreg3
+288B		S4_storeiri_io %vreg3, 28, 0; mem:ST4[%cgep+4] IntRegs:%vreg3
+304B		S4_storeiri_io %vreg3, 24, 0; mem:ST4[%cgep] IntRegs:%vreg3
+320B		%R0<def> = COPY %vreg3; IntRegs:%vreg3
+336B		JMPret %R31, %PC<imp-def,dead>, %R0<imp-use,kill>
+
+# End machine code for function AllocFancyAli.
+
+# After Hexagon Expand Condsets:
+# Machine code for function AllocFancyAli: Post SSA
+
+0B	BB#0: derived from LLVM BB %0
+16B		ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+80B		%R0<def> = A2_tfrsi <ga:@.str>
+96B		%R1<def> = A2_tfrsi 117
+112B		%R2<def> = A2_tfrsi 40
+128B		J2_call <ga:@sre_malloc>, %D0<imp-def,dead>, %D1<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use,kill>, %R1<imp-use,kill>, %R2<imp-use,kill>, %R0<imp-def>, ...
+144B		ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+160B		%vreg3<def> = COPY %R0<kill>; IntRegs:%vreg3
+176B		S4_storeiri_io %vreg3, 16, 0; mem:ST4[%1+16] IntRegs:%vreg3
+192B		S4_storeiri_io %vreg3, 12, 0; mem:ST4[%1+12] IntRegs:%vreg3
+208B		S4_storeiri_io %vreg3, 8, 0; mem:ST4[%1+8] IntRegs:%vreg3
+224B		S4_storeiri_io %vreg3, 4, 0; mem:ST4[%1+4] IntRegs:%vreg3
+240B		S4_storeiri_io %vreg3, 0, 0; mem:ST4[%1] IntRegs:%vreg3
+256B		S4_storeiri_io %vreg3, 36, 0; mem:ST4[%cgep+12] IntRegs:%vreg3
+272B		S4_storeiri_io %vreg3, 32, 0; mem:ST4[%cgep+8] IntRegs:%vreg3
+288B		S4_storeiri_io %vreg3, 28, 0; mem:ST4[%cgep+4] IntRegs:%vreg3
+304B		S4_storeiri_io %vreg3, 24, 0; mem:ST4[%cgep] IntRegs:%vreg3
+320B		%R0<def> = COPY %vreg3; IntRegs:%vreg3
+336B		JMPret %R31, %PC<imp-def,dead>, %R0<imp-use,kill>
+
+# End machine code for function AllocFancyAli.
+
+# After Machine Instruction Scheduler:
+# Machine code for function AllocFancyAli: Post SSA
+
+0B	BB#0: derived from LLVM BB %0
+8B		%R0<def> = A2_tfrsi <ga:@.str>
+12B		%R2<def> = A2_tfrsi 40
+20B		%R1<def> = A2_tfrsi 117
+28B		ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+128B		J2_call <ga:@sre_malloc>, %D0<imp-def,dead>, %D1<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, %R0<imp-def>, ...
+136B		%vreg3<def> = COPY %R0; IntRegs:%vreg3
+144B		ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+152B		%R0<def> = COPY %vreg3; IntRegs:%vreg3
+156B		S4_storeiri_io %vreg3, 8, 0; mem:ST4[%1+8] IntRegs:%vreg3
+164B		S4_storeiri_io %vreg3, 4, 0; mem:ST4[%1+4] IntRegs:%vreg3
+288B		S4_storeiri_io %vreg3, 28, 0; mem:ST4[%cgep+4] IntRegs:%vreg3
+296B		S4_storeiri_io %vreg3, 32, 0; mem:ST4[%cgep+8] IntRegs:%vreg3
+304B		S4_storeiri_io %vreg3, 36, 0; mem:ST4[%cgep+12] IntRegs:%vreg3
+312B		S4_storeiri_io %vreg3, 0, 0; mem:ST4[%1] IntRegs:%vreg3
+320B		S4_storeiri_io %vreg3, 12, 0; mem:ST4[%1+12] IntRegs:%vreg3
+328B		S4_storeiri_io %vreg3, 16, 0; mem:ST4[%1+16] IntRegs:%vreg3
+336B		S4_storeiri_io %vreg3, 24, 0; mem:ST4[%cgep] IntRegs:%vreg3
+352B		JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function AllocFancyAli.
+
+# After Greedy Register Allocator:
+# Machine code for function AllocFancyAli: Post SSA
+
+0B	BB#0: derived from LLVM BB %0
+8B		%R0<def> = A2_tfrsi <ga:@.str>
+12B		%R2<def> = A2_tfrsi 40
+20B		%R1<def> = A2_tfrsi 117
+28B		ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+128B		J2_call <ga:@sre_malloc>, %D0<imp-def,dead>, %D1<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, %R0<imp-def>, ...
+136B		%vreg3<def> = COPY %R0; IntRegs:%vreg3
+144B		ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+152B		%R0<def> = COPY %vreg3; IntRegs:%vreg3
+156B		S4_storeiri_io %vreg3, 8, 0; mem:ST4[%1+8] IntRegs:%vreg3
+164B		S4_storeiri_io %vreg3, 4, 0; mem:ST4[%1+4] IntRegs:%vreg3
+288B		S4_storeiri_io %vreg3, 28, 0; mem:ST4[%cgep+4] IntRegs:%vreg3
+296B		S4_storeiri_io %vreg3, 32, 0; mem:ST4[%cgep+8] IntRegs:%vreg3
+304B		S4_storeiri_io %vreg3, 36, 0; mem:ST4[%cgep+12] IntRegs:%vreg3
+312B		S4_storeiri_io %vreg3, 0, 0; mem:ST4[%1] IntRegs:%vreg3
+320B		S4_storeiri_io %vreg3, 12, 0; mem:ST4[%1+12] IntRegs:%vreg3
+328B		S4_storeiri_io %vreg3, 16, 0; mem:ST4[%1+16] IntRegs:%vreg3
+336B		S4_storeiri_io %vreg3, 24, 0; mem:ST4[%cgep] IntRegs:%vreg3
+352B		JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function AllocFancyAli.
+
+# After Virtual Register Rewriter:
+# Machine code for function AllocFancyAli: Post SSA
+
+0B	BB#0: derived from LLVM BB %0
+8B		%R0<def> = A2_tfrsi <ga:@.str>
+12B		%R2<def> = A2_tfrsi 40
+20B		%R1<def> = A2_tfrsi 117
+28B		ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+128B		J2_call <ga:@sre_malloc>, %D0<imp-def,dead>, %D1<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, %R0<imp-def>, ...
+144B		ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+156B		S4_storeiri_io %R0, 8, 0; mem:ST4[%1+8]
+164B		S4_storeiri_io %R0, 4, 0; mem:ST4[%1+4]
+288B		S4_storeiri_io %R0, 28, 0; mem:ST4[%cgep+4]
+296B		S4_storeiri_io %R0, 32, 0; mem:ST4[%cgep+8]
+304B		S4_storeiri_io %R0, 36, 0; mem:ST4[%cgep+12]
+312B		S4_storeiri_io %R0, 0, 0; mem:ST4[%1]
+320B		S4_storeiri_io %R0, 12, 0; mem:ST4[%1+12]
+328B		S4_storeiri_io %R0, 16, 0; mem:ST4[%1+16]
+336B		S4_storeiri_io %R0, 24, 0; mem:ST4[%cgep]
+352B		JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function AllocFancyAli.
+
+# After Stack Slot Coloring:
+# Machine code for function AllocFancyAli: Post SSA
+
+BB#0: derived from LLVM BB %0
+	%R0<def> = A2_tfrsi <ga:@.str>
+	%R2<def> = A2_tfrsi 40
+	%R1<def> = A2_tfrsi 117
+	ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	J2_call <ga:@sre_malloc>, %D0<imp-def,dead>, %D1<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, %R0<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	S4_storeiri_io %R0, 8, 0; mem:ST4[%1+8]
+	S4_storeiri_io %R0, 4, 0; mem:ST4[%1+4]
+	S4_storeiri_io %R0, 28, 0; mem:ST4[%cgep+4]
+	S4_storeiri_io %R0, 32, 0; mem:ST4[%cgep+8]
+	S4_storeiri_io %R0, 36, 0; mem:ST4[%cgep+12]
+	S4_storeiri_io %R0, 0, 0; mem:ST4[%1]
+	S4_storeiri_io %R0, 12, 0; mem:ST4[%1+12]
+	S4_storeiri_io %R0, 16, 0; mem:ST4[%1+16]
+	S4_storeiri_io %R0, 24, 0; mem:ST4[%cgep]
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function AllocFancyAli.
+
+# After Machine Loop Invariant Code Motion:
+# Machine code for function AllocFancyAli: Post SSA
+
+BB#0: derived from LLVM BB %0
+	%R0<def> = A2_tfrsi <ga:@.str>
+	%R2<def> = A2_tfrsi 40
+	%R1<def> = A2_tfrsi 117
+	ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	J2_call <ga:@sre_malloc>, %D0<imp-def,dead>, %D1<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, %R0<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	S4_storeiri_io %R0, 8, 0; mem:ST4[%1+8]
+	S4_storeiri_io %R0, 4, 0; mem:ST4[%1+4]
+	S4_storeiri_io %R0, 28, 0; mem:ST4[%cgep+4]
+	S4_storeiri_io %R0, 32, 0; mem:ST4[%cgep+8]
+	S4_storeiri_io %R0, 36, 0; mem:ST4[%cgep+12]
+	S4_storeiri_io %R0, 0, 0; mem:ST4[%1]
+	S4_storeiri_io %R0, 12, 0; mem:ST4[%1+12]
+	S4_storeiri_io %R0, 16, 0; mem:ST4[%1+16]
+	S4_storeiri_io %R0, 24, 0; mem:ST4[%cgep]
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function AllocFancyAli.
+
+# After Hexagon RDF optimizations:
+# Machine code for function AllocFancyAli: Post SSA
+
+BB#0: derived from LLVM BB %0
+	%R0<def> = A2_tfrsi <ga:@.str>
+	%R2<def> = A2_tfrsi 40
+	%R1<def> = A2_tfrsi 117
+	ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	J2_call <ga:@sre_malloc>, %D0<imp-def,dead>, %D1<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, %R0<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	S4_storeiri_io %R0, 8, 0; mem:ST4[%1+8]
+	S4_storeiri_io %R0, 4, 0; mem:ST4[%1+4]
+	S4_storeiri_io %R0, 28, 0; mem:ST4[%cgep+4]
+	S4_storeiri_io %R0, 32, 0; mem:ST4[%cgep+8]
+	S4_storeiri_io %R0, 36, 0; mem:ST4[%cgep+12]
+	S4_storeiri_io %R0, 0, 0; mem:ST4[%1]
+	S4_storeiri_io %R0, 12, 0; mem:ST4[%1+12]
+	S4_storeiri_io %R0, 16, 0; mem:ST4[%1+16]
+	S4_storeiri_io %R0, 24, 0; mem:ST4[%cgep]
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function AllocFancyAli.
+
+# After Shrink Wrapping analysis:
+# Machine code for function AllocFancyAli: Post SSA
+
+BB#0: derived from LLVM BB %0
+	%R0<def> = A2_tfrsi <ga:@.str>
+	%R2<def> = A2_tfrsi 40
+	%R1<def> = A2_tfrsi 117
+	ADJCALLSTACKDOWN 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-use>, %R30<imp-use>, %R29<imp-use>
+	J2_call <ga:@sre_malloc>, %D0<imp-def,dead>, %D1<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, %R0<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, %R29<imp-def,dead>, %R30<imp-def,dead>, %R31<imp-def,dead>, %R29<imp-use>
+	S4_storeiri_io %R0, 8, 0; mem:ST4[%1+8]
+	S4_storeiri_io %R0, 4, 0; mem:ST4[%1+4]
+	S4_storeiri_io %R0, 28, 0; mem:ST4[%cgep+4]
+	S4_storeiri_io %R0, 32, 0; mem:ST4[%cgep+8]
+	S4_storeiri_io %R0, 36, 0; mem:ST4[%cgep+12]
+	S4_storeiri_io %R0, 0, 0; mem:ST4[%1]
+	S4_storeiri_io %R0, 12, 0; mem:ST4[%1+12]
+	S4_storeiri_io %R0, 16, 0; mem:ST4[%1+16]
+	S4_storeiri_io %R0, 24, 0; mem:ST4[%cgep]
+	JMPret %R31, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function AllocFancyAli.
+
+# After Prologue/Epilogue Insertion & Frame Finalization:
+# Machine code for function AllocFancyAli: Post SSA
+
+BB#0: derived from LLVM BB %0
+	S2_allocframe 0, %R29<imp-def>, %R30<imp-def>, %R29<imp-use>, %R31<imp-use>, %R30<imp-use>; mem:ST4[<unknown>]
+	%R0<def> = A2_tfrsi <ga:@.str>
+	%R2<def> = A2_tfrsi 40
+	%R1<def> = A2_tfrsi 117
+	J2_call <ga:@sre_malloc>, %D0<imp-def,dead>, %D1<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, %R0<imp-def>, ...
+	S4_storeiri_io %R0, 8, 0; mem:ST4[%1+8]
+	S4_storeiri_io %R0, 4, 0; mem:ST4[%1+4]
+	S4_storeiri_io %R0, 28, 0; mem:ST4[%cgep+4]
+	S4_storeiri_io %R0, 32, 0; mem:ST4[%cgep+8]
+	S4_storeiri_io %R0, 36, 0; mem:ST4[%cgep+12]
+	S4_storeiri_io %R0, 0, 0; mem:ST4[%1]
+	S4_storeiri_io %R0, 12, 0; mem:ST4[%1+12]
+	S4_storeiri_io %R0, 16, 0; mem:ST4[%1+16]
+	S4_storeiri_io %R0, 24, 0; mem:ST4[%cgep]
+	L4_return %R29<imp-def>, %R30<imp-def>, %R31<imp-def>, %PC<imp-def>, %R30<imp-use>, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function AllocFancyAli.
+
+# After Machine Copy Propagation Pass:
+# Machine code for function AllocFancyAli: Post SSA
+
+BB#0: derived from LLVM BB %0
+	S2_allocframe 0, %R29<imp-def>, %R30<imp-def>, %R29<imp-use>, %R31<imp-use>, %R30<imp-use>; mem:ST4[<unknown>]
+	%R0<def> = A2_tfrsi <ga:@.str>
+	%R2<def> = A2_tfrsi 40
+	%R1<def> = A2_tfrsi 117
+	J2_call <ga:@sre_malloc>, %D0<imp-def,dead>, %D1<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, %R0<imp-def>, ...
+	S4_storeiri_io %R0, 8, 0; mem:ST4[%1+8]
+	S4_storeiri_io %R0, 4, 0; mem:ST4[%1+4]
+	S4_storeiri_io %R0, 28, 0; mem:ST4[%cgep+4]
+	S4_storeiri_io %R0, 32, 0; mem:ST4[%cgep+8]
+	S4_storeiri_io %R0, 36, 0; mem:ST4[%cgep+12]
+	S4_storeiri_io %R0, 0, 0; mem:ST4[%1]
+	S4_storeiri_io %R0, 12, 0; mem:ST4[%1+12]
+	S4_storeiri_io %R0, 16, 0; mem:ST4[%1+16]
+	S4_storeiri_io %R0, 24, 0; mem:ST4[%cgep]
+	L4_return %R29<imp-def>, %R30<imp-def>, %R31<imp-def>, %PC<imp-def>, %R30<imp-use>, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function AllocFancyAli.
+
+# After Post-RA pseudo instruction expansion pass:
+# Machine code for function AllocFancyAli: Post SSA
+
+BB#0: derived from LLVM BB %0
+	S2_allocframe 0, %R29<imp-def>, %R30<imp-def>, %R29<imp-use>, %R31<imp-use>, %R30<imp-use>; mem:ST4[<unknown>]
+	%R0<def> = A2_tfrsi <ga:@.str>
+	%R2<def> = A2_tfrsi 40
+	%R1<def> = A2_tfrsi 117
+	J2_call <ga:@sre_malloc>, %D0<imp-def,dead>, %D1<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, %R0<imp-def>, ...
+	S4_storeiri_io %R0, 8, 0; mem:ST4[%1+8]
+	S4_storeiri_io %R0, 4, 0; mem:ST4[%1+4]
+	S4_storeiri_io %R0, 28, 0; mem:ST4[%cgep+4]
+	S4_storeiri_io %R0, 32, 0; mem:ST4[%cgep+8]
+	S4_storeiri_io %R0, 36, 0; mem:ST4[%cgep+12]
+	S4_storeiri_io %R0, 0, 0; mem:ST4[%1]
+	S4_storeiri_io %R0, 12, 0; mem:ST4[%1+12]
+	S4_storeiri_io %R0, 16, 0; mem:ST4[%1+16]
+	S4_storeiri_io %R0, 24, 0; mem:ST4[%cgep]
+	L4_return %R29<imp-def>, %R30<imp-def>, %R31<imp-def>, %PC<imp-def>, %R30<imp-use>, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function AllocFancyAli.
+
+# After Hexagon Copy-To-Combine Pass:
+# Machine code for function AllocFancyAli: Post SSA
+
+BB#0: derived from LLVM BB %0
+	S2_allocframe 0, %R29<imp-def>, %R30<imp-def>, %R29<imp-use>, %R31<imp-use>, %R30<imp-use>; mem:ST4[<unknown>]
+	%R0<def> = A2_tfrsi <ga:@.str>
+	%R2<def> = A2_tfrsi 40
+	%R1<def> = A2_tfrsi 117
+	J2_call <ga:@sre_malloc>, %D0<imp-def,dead>, %D1<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, %R0<imp-def>, ...
+	S4_storeiri_io %R0, 8, 0; mem:ST4[%1+8]
+	S4_storeiri_io %R0, 4, 0; mem:ST4[%1+4]
+	S4_storeiri_io %R0, 28, 0; mem:ST4[%cgep+4]
+	S4_storeiri_io %R0, 32, 0; mem:ST4[%cgep+8]
+	S4_storeiri_io %R0, 36, 0; mem:ST4[%cgep+12]
+	S4_storeiri_io %R0, 0, 0; mem:ST4[%1]
+	S4_storeiri_io %R0, 12, 0; mem:ST4[%1+12]
+	S4_storeiri_io %R0, 16, 0; mem:ST4[%1+16]
+	S4_storeiri_io %R0, 24, 0; mem:ST4[%cgep]
+	L4_return %R29<imp-def>, %R30<imp-def>, %R31<imp-def>, %PC<imp-def>, %R30<imp-use>, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function AllocFancyAli.
+
+# After Hexagon Split Const32s and Const64s:
+# Machine code for function AllocFancyAli: Post SSA
+
+BB#0: derived from LLVM BB %0
+	S2_allocframe 0, %R29<imp-def>, %R30<imp-def>, %R29<imp-use>, %R31<imp-use>, %R30<imp-use>; mem:ST4[<unknown>]
+	%R0<def> = A2_tfrsi <ga:@.str>
+	%R2<def> = A2_tfrsi 40
+	%R1<def> = A2_tfrsi 117
+	J2_call <ga:@sre_malloc>, %D0<imp-def,dead>, %D1<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, %R0<imp-def>, ...
+	S4_storeiri_io %R0, 8, 0; mem:ST4[%1+8]
+	S4_storeiri_io %R0, 4, 0; mem:ST4[%1+4]
+	S4_storeiri_io %R0, 28, 0; mem:ST4[%cgep+4]
+	S4_storeiri_io %R0, 32, 0; mem:ST4[%cgep+8]
+	S4_storeiri_io %R0, 36, 0; mem:ST4[%cgep+12]
+	S4_storeiri_io %R0, 0, 0; mem:ST4[%1]
+	S4_storeiri_io %R0, 12, 0; mem:ST4[%1+12]
+	S4_storeiri_io %R0, 16, 0; mem:ST4[%1+16]
+	S4_storeiri_io %R0, 24, 0; mem:ST4[%cgep]
+	L4_return %R29<imp-def>, %R30<imp-def>, %R31<imp-def>, %PC<imp-def>, %R30<imp-use>, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function AllocFancyAli.
+
+# After Analyze Machine Code For Garbage Collection:
+# Machine code for function AllocFancyAli: Post SSA
+
+BB#0: derived from LLVM BB %0
+	S2_allocframe 0, %R29<imp-def>, %R30<imp-def>, %R29<imp-use>, %R31<imp-use>, %R30<imp-use>; mem:ST4[<unknown>]
+	%R0<def> = A2_tfrsi <ga:@.str>
+	%R2<def> = A2_tfrsi 40
+	%R1<def> = A2_tfrsi 117
+	J2_call <ga:@sre_malloc>, %D0<imp-def,dead>, %D1<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, %R0<imp-def>, ...
+	S4_storeiri_io %R0, 8, 0; mem:ST4[%1+8]
+	S4_storeiri_io %R0, 4, 0; mem:ST4[%1+4]
+	S4_storeiri_io %R0, 28, 0; mem:ST4[%cgep+4]
+	S4_storeiri_io %R0, 32, 0; mem:ST4[%cgep+8]
+	S4_storeiri_io %R0, 36, 0; mem:ST4[%cgep+12]
+	S4_storeiri_io %R0, 0, 0; mem:ST4[%1]
+	S4_storeiri_io %R0, 12, 0; mem:ST4[%1+12]
+	S4_storeiri_io %R0, 16, 0; mem:ST4[%1+16]
+	S4_storeiri_io %R0, 24, 0; mem:ST4[%cgep]
+	L4_return %R29<imp-def>, %R30<imp-def>, %R31<imp-def>, %PC<imp-def>, %R30<imp-use>, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function AllocFancyAli.
+
+# After Hexagon NewValueJump:
+# Machine code for function AllocFancyAli: Post SSA
+
+BB#0: derived from LLVM BB %0
+	S2_allocframe 0, %R29<imp-def>, %R30<imp-def>, %R29<imp-use>, %R31<imp-use>, %R30<imp-use>; mem:ST4[<unknown>]
+	%R0<def> = A2_tfrsi <ga:@.str>
+	%R2<def> = A2_tfrsi 40
+	%R1<def> = A2_tfrsi 117
+	J2_call <ga:@sre_malloc>, %D0<imp-def,dead>, %D1<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, %R0<imp-def>, ...
+	S4_storeiri_io %R0, 8, 0; mem:ST4[%1+8]
+	S4_storeiri_io %R0, 4, 0; mem:ST4[%1+4]
+	S4_storeiri_io %R0, 28, 0; mem:ST4[%cgep+4]
+	S4_storeiri_io %R0, 32, 0; mem:ST4[%cgep+8]
+	S4_storeiri_io %R0, 36, 0; mem:ST4[%cgep+12]
+	S4_storeiri_io %R0, 0, 0; mem:ST4[%1]
+	S4_storeiri_io %R0, 12, 0; mem:ST4[%1+12]
+	S4_storeiri_io %R0, 16, 0; mem:ST4[%1+16]
+	S4_storeiri_io %R0, 24, 0; mem:ST4[%cgep]
+	L4_return %R29<imp-def>, %R30<imp-def>, %R31<imp-def>, %PC<imp-def>, %R30<imp-use>, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function AllocFancyAli.
+
+# After Hexagon Expand Predicate Spill Code:
+# Machine code for function AllocFancyAli: Post SSA
+
+BB#0: derived from LLVM BB %0
+	S2_allocframe 0, %R29<imp-def>, %R30<imp-def>, %R29<imp-use>, %R31<imp-use>, %R30<imp-use>; mem:ST4[<unknown>]
+	%R0<def> = A2_tfrsi <ga:@.str>
+	%R2<def> = A2_tfrsi 40
+	%R1<def> = A2_tfrsi 117
+	J2_call <ga:@sre_malloc>, %D0<imp-def,dead>, %D1<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, %R0<imp-def>, ...
+	S4_storeiri_io %R0, 8, 0; mem:ST4[%1+8]
+	S4_storeiri_io %R0, 4, 0; mem:ST4[%1+4]
+	S4_storeiri_io %R0, 28, 0; mem:ST4[%cgep+4]
+	S4_storeiri_io %R0, 32, 0; mem:ST4[%cgep+8]
+	S4_storeiri_io %R0, 36, 0; mem:ST4[%cgep+12]
+	S4_storeiri_io %R0, 0, 0; mem:ST4[%1]
+	S4_storeiri_io %R0, 12, 0; mem:ST4[%1+12]
+	S4_storeiri_io %R0, 16, 0; mem:ST4[%1+16]
+	S4_storeiri_io %R0, 24, 0; mem:ST4[%cgep]
+	L4_return %R29<imp-def>, %R30<imp-def>, %R31<imp-def>, %PC<imp-def>, %R30<imp-use>, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function AllocFancyAli.
+
+# After Hexagon Hardware Loop Fixup:
+# Machine code for function AllocFancyAli: Post SSA
+
+BB#0: derived from LLVM BB %0
+	S2_allocframe 0, %R29<imp-def>, %R30<imp-def>, %R29<imp-use>, %R31<imp-use>, %R30<imp-use>; mem:ST4[<unknown>]
+	%R0<def> = A2_tfrsi <ga:@.str>
+	%R2<def> = A2_tfrsi 40
+	%R1<def> = A2_tfrsi 117
+	J2_call <ga:@sre_malloc>, %D0<imp-def,dead>, %D1<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, %R0<imp-def>, ...
+	S4_storeiri_io %R0, 8, 0; mem:ST4[%1+8]
+	S4_storeiri_io %R0, 4, 0; mem:ST4[%1+4]
+	S4_storeiri_io %R0, 28, 0; mem:ST4[%cgep+4]
+	S4_storeiri_io %R0, 32, 0; mem:ST4[%cgep+8]
+	S4_storeiri_io %R0, 36, 0; mem:ST4[%cgep+12]
+	S4_storeiri_io %R0, 0, 0; mem:ST4[%1]
+	S4_storeiri_io %R0, 12, 0; mem:ST4[%1+12]
+	S4_storeiri_io %R0, 16, 0; mem:ST4[%1+16]
+	S4_storeiri_io %R0, 24, 0; mem:ST4[%cgep]
+	L4_return %R29<imp-def>, %R30<imp-def>, %R31<imp-def>, %PC<imp-def>, %R30<imp-use>, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function AllocFancyAli.
+
+# After Hexagon generate mux instructions:
+# Machine code for function AllocFancyAli: Post SSA
+
+BB#0: derived from LLVM BB %0
+	S2_allocframe 0, %R29<imp-def>, %R30<imp-def>, %R29<imp-use>, %R31<imp-use>, %R30<imp-use>; mem:ST4[<unknown>]
+	%R0<def> = A2_tfrsi <ga:@.str>
+	%R2<def> = A2_tfrsi 40
+	%R1<def> = A2_tfrsi 117
+	J2_call <ga:@sre_malloc>, %D0<imp-def,dead>, %D1<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use>, %R1<imp-use>, %R2<imp-use>, %R0<imp-def>, ...
+	S4_storeiri_io %R0, 8, 0; mem:ST4[%1+8]
+	S4_storeiri_io %R0, 4, 0; mem:ST4[%1+4]
+	S4_storeiri_io %R0, 28, 0; mem:ST4[%cgep+4]
+	S4_storeiri_io %R0, 32, 0; mem:ST4[%cgep+8]
+	S4_storeiri_io %R0, 36, 0; mem:ST4[%cgep+12]
+	S4_storeiri_io %R0, 0, 0; mem:ST4[%1]
+	S4_storeiri_io %R0, 12, 0; mem:ST4[%1+12]
+	S4_storeiri_io %R0, 16, 0; mem:ST4[%1+16]
+	S4_storeiri_io %R0, 24, 0; mem:ST4[%cgep]
+	L4_return %R29<imp-def>, %R30<imp-def>, %R31<imp-def>, %PC<imp-def>, %R30<imp-use>, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function AllocFancyAli.
+
+# After Hexagon Packetizer:
+# Machine code for function AllocFancyAli: Post SSA
+
+BB#0: derived from LLVM BB %0
+	BUNDLE %R29<imp-def>, %R30<imp-def>, %R0<imp-def>, %R2<imp-def>, %R29<imp-use>, %R31<imp-use>, %R30<imp-use>
+	  * S2_allocframe 0, %R29<imp-def>, %R30<imp-def>, %R29<imp-use>, %R31<imp-use>, %R30<imp-use>; mem:ST4[<unknown>]
+	  * %R0<def> = A2_tfrsi <ga:@.str>
+	  * %R2<def> = A2_tfrsi 40
+	BUNDLE %R1<imp-def>, %D0<imp-def,dead>, %D1<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-def>, %R0<imp-use>, %R2<imp-use>, ...
+	  * %R1<def> = A2_tfrsi 117
+	  * J2_call <ga:@sre_malloc>, %D0<imp-def,dead>, %D1<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use>, %R1<imp-use,internal>, %R2<imp-use>, %R0<imp-def>, ...
+	BUNDLE %R0<imp-use>
+	  * S4_storeiri_io %R0, 8, 0; mem:ST4[%1+8]
+	  * S4_storeiri_io %R0, 4, 0; mem:ST4[%1+4]
+	BUNDLE %R0<imp-use>
+	  * S4_storeiri_io %R0, 28, 0; mem:ST4[%cgep+4]
+	  * S4_storeiri_io %R0, 32, 0; mem:ST4[%cgep+8]
+	BUNDLE %R0<imp-use>
+	  * S4_storeiri_io %R0, 36, 0; mem:ST4[%cgep+12]
+	  * S4_storeiri_io %R0, 0, 0; mem:ST4[%1]
+	BUNDLE %R0<imp-use>
+	  * S4_storeiri_io %R0, 12, 0; mem:ST4[%1+12]
+	  * S4_storeiri_io %R0, 16, 0; mem:ST4[%1+16]
+	S4_storeiri_io %R0, 24, 0; mem:ST4[%cgep]
+	L4_return %R29<imp-def>, %R30<imp-def>, %R31<imp-def>, %PC<imp-def>, %R30<imp-use>, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function AllocFancyAli.
+
+# After Hexagon call frame information:
+# Machine code for function AllocFancyAli: Post SSA
+
+BB#0: derived from LLVM BB %0
+	BUNDLE %R29<imp-def>, %R30<imp-def>, %R0<imp-def>, %R2<imp-def>, %R29<imp-use>, %R31<imp-use>, %R30<imp-use>
+	  * S2_allocframe 0, %R29<imp-def>, %R30<imp-def>, %R29<imp-use>, %R31<imp-use>, %R30<imp-use>; mem:ST4[<unknown>]
+	  * %R0<def> = A2_tfrsi <ga:@.str>
+	  * %R2<def> = A2_tfrsi 40
+	BUNDLE %R1<imp-def>, %D0<imp-def,dead>, %D1<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-def>, %R0<imp-use>, %R2<imp-use>, ...
+	  * %R1<def> = A2_tfrsi 117
+	  * J2_call <ga:@sre_malloc>, %D0<imp-def,dead>, %D1<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use>, %R1<imp-use,internal>, %R2<imp-use>, %R0<imp-def>, ...
+	BUNDLE %R0<imp-use>
+	  * S4_storeiri_io %R0, 8, 0; mem:ST4[%1+8]
+	  * S4_storeiri_io %R0, 4, 0; mem:ST4[%1+4]
+	BUNDLE %R0<imp-use>
+	  * S4_storeiri_io %R0, 28, 0; mem:ST4[%cgep+4]
+	  * S4_storeiri_io %R0, 32, 0; mem:ST4[%cgep+8]
+	BUNDLE %R0<imp-use>
+	  * S4_storeiri_io %R0, 36, 0; mem:ST4[%cgep+12]
+	  * S4_storeiri_io %R0, 0, 0; mem:ST4[%1]
+	BUNDLE %R0<imp-use>
+	  * S4_storeiri_io %R0, 12, 0; mem:ST4[%1+12]
+	  * S4_storeiri_io %R0, 16, 0; mem:ST4[%1+16]
+	S4_storeiri_io %R0, 24, 0; mem:ST4[%cgep]
+	L4_return %R29<imp-def>, %R30<imp-def>, %R31<imp-def>, %PC<imp-def>, %R30<imp-use>, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function AllocFancyAli.
+
+# After Contiguously Lay Out Funclets:
+# Machine code for function AllocFancyAli: Post SSA
+
+BB#0: derived from LLVM BB %0
+	BUNDLE %R29<imp-def>, %R30<imp-def>, %R0<imp-def>, %R2<imp-def>, %R29<imp-use>, %R31<imp-use>, %R30<imp-use>
+	  * S2_allocframe 0, %R29<imp-def>, %R30<imp-def>, %R29<imp-use>, %R31<imp-use>, %R30<imp-use>; mem:ST4[<unknown>]
+	  * %R0<def> = A2_tfrsi <ga:@.str>
+	  * %R2<def> = A2_tfrsi 40
+	BUNDLE %R1<imp-def>, %D0<imp-def,dead>, %D1<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-def>, %R0<imp-use>, %R2<imp-use>, ...
+	  * %R1<def> = A2_tfrsi 117
+	  * J2_call <ga:@sre_malloc>, %D0<imp-def,dead>, %D1<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use>, %R1<imp-use,internal>, %R2<imp-use>, %R0<imp-def>, ...
+	BUNDLE %R0<imp-use>
+	  * S4_storeiri_io %R0, 8, 0; mem:ST4[%1+8]
+	  * S4_storeiri_io %R0, 4, 0; mem:ST4[%1+4]
+	BUNDLE %R0<imp-use>
+	  * S4_storeiri_io %R0, 28, 0; mem:ST4[%cgep+4]
+	  * S4_storeiri_io %R0, 32, 0; mem:ST4[%cgep+8]
+	BUNDLE %R0<imp-use>
+	  * S4_storeiri_io %R0, 36, 0; mem:ST4[%cgep+12]
+	  * S4_storeiri_io %R0, 0, 0; mem:ST4[%1]
+	BUNDLE %R0<imp-use>
+	  * S4_storeiri_io %R0, 12, 0; mem:ST4[%1+12]
+	  * S4_storeiri_io %R0, 16, 0; mem:ST4[%1+16]
+	S4_storeiri_io %R0, 24, 0; mem:ST4[%cgep]
+	L4_return %R29<imp-def>, %R30<imp-def>, %R31<imp-def>, %PC<imp-def>, %R30<imp-use>, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function AllocFancyAli.
+
+# After StackMap Liveness Analysis:
+# Machine code for function AllocFancyAli: Post SSA
+
+BB#0: derived from LLVM BB %0
+	BUNDLE %R29<imp-def>, %R30<imp-def>, %R0<imp-def>, %R2<imp-def>, %R29<imp-use>, %R31<imp-use>, %R30<imp-use>
+	  * S2_allocframe 0, %R29<imp-def>, %R30<imp-def>, %R29<imp-use>, %R31<imp-use>, %R30<imp-use>; mem:ST4[<unknown>]
+	  * %R0<def> = A2_tfrsi <ga:@.str>
+	  * %R2<def> = A2_tfrsi 40
+	BUNDLE %R1<imp-def>, %D0<imp-def,dead>, %D1<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-def>, %R0<imp-use>, %R2<imp-use>, ...
+	  * %R1<def> = A2_tfrsi 117
+	  * J2_call <ga:@sre_malloc>, %D0<imp-def,dead>, %D1<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use>, %R1<imp-use,internal>, %R2<imp-use>, %R0<imp-def>, ...
+	BUNDLE %R0<imp-use>
+	  * S4_storeiri_io %R0, 8, 0; mem:ST4[%1+8]
+	  * S4_storeiri_io %R0, 4, 0; mem:ST4[%1+4]
+	BUNDLE %R0<imp-use>
+	  * S4_storeiri_io %R0, 28, 0; mem:ST4[%cgep+4]
+	  * S4_storeiri_io %R0, 32, 0; mem:ST4[%cgep+8]
+	BUNDLE %R0<imp-use>
+	  * S4_storeiri_io %R0, 36, 0; mem:ST4[%cgep+12]
+	  * S4_storeiri_io %R0, 0, 0; mem:ST4[%1]
+	BUNDLE %R0<imp-use>
+	  * S4_storeiri_io %R0, 12, 0; mem:ST4[%1+12]
+	  * S4_storeiri_io %R0, 16, 0; mem:ST4[%1+16]
+	S4_storeiri_io %R0, 24, 0; mem:ST4[%cgep]
+	L4_return %R29<imp-def>, %R30<imp-def>, %R31<imp-def>, %PC<imp-def>, %R30<imp-use>, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function AllocFancyAli.
+
+# After Live DEBUG_VALUE analysis:
+# Machine code for function AllocFancyAli: Post SSA
+
+BB#0: derived from LLVM BB %0
+	BUNDLE %R29<imp-def>, %R30<imp-def>, %R0<imp-def>, %R2<imp-def>, %R29<imp-use>, %R31<imp-use>, %R30<imp-use>
+	  * S2_allocframe 0, %R29<imp-def>, %R30<imp-def>, %R29<imp-use>, %R31<imp-use>, %R30<imp-use>; mem:ST4[<unknown>]
+	  * %R0<def> = A2_tfrsi <ga:@.str>
+	  * %R2<def> = A2_tfrsi 40
+	BUNDLE %R1<imp-def>, %D0<imp-def,dead>, %D1<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-def>, %R0<imp-use>, %R2<imp-use>, ...
+	  * %R1<def> = A2_tfrsi 117
+	  * J2_call <ga:@sre_malloc>, %D0<imp-def,dead>, %D1<imp-def,dead>, %R31<imp-def,dead>, %R0<imp-use>, %R1<imp-use,internal>, %R2<imp-use>, %R0<imp-def>, ...
+	BUNDLE %R0<imp-use>
+	  * S4_storeiri_io %R0, 8, 0; mem:ST4[%1+8]
+	  * S4_storeiri_io %R0, 4, 0; mem:ST4[%1+4]
+	BUNDLE %R0<imp-use>
+	  * S4_storeiri_io %R0, 28, 0; mem:ST4[%cgep+4]
+	  * S4_storeiri_io %R0, 32, 0; mem:ST4[%cgep+8]
+	BUNDLE %R0<imp-use>
+	  * S4_storeiri_io %R0, 36, 0; mem:ST4[%cgep+12]
+	  * S4_storeiri_io %R0, 0, 0; mem:ST4[%1]
+	BUNDLE %R0<imp-use>
+	  * S4_storeiri_io %R0, 12, 0; mem:ST4[%1+12]
+	  * S4_storeiri_io %R0, 16, 0; mem:ST4[%1+16]
+	S4_storeiri_io %R0, 24, 0; mem:ST4[%cgep]
+	L4_return %R29<imp-def>, %R30<imp-def>, %R31<imp-def>, %PC<imp-def>, %R30<imp-use>, %PC<imp-def,dead>, %R0<imp-use>
+
+# End machine code for function AllocFancyAli.
+

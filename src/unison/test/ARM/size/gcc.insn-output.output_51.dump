@@ -1,0 +1,2024 @@
+# After Instruction Selection:
+# Machine code for function output_51: SSA
+Function Live Ins: %R1 in %vreg3
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R1
+	%vreg3<def> = COPY %R1; GPR:%vreg3
+	ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%R0<def> = COPY %vreg3; GPR:%vreg3
+	tBL pred:14, pred:%noreg, <ga:@get_attr_type>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %SP<imp-def>, %R0<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg5<def> = COPY %R0; GPRnopc:%vreg5
+	%vreg6<def> = t2MOVi32imm <ga:@.str.2014>; rGPR:%vreg6
+	%vreg4<def> = COPY %vreg6; GPR:%vreg4 rGPR:%vreg6
+	t2CMPri %vreg5, 8, pred:14, pred:%noreg, %CPSR<imp-def>; GPRnopc:%vreg5
+	t2Bcc <BB#2>, pred:0, pred:%CPSR
+	t2B <BB#1>, pred:14, pred:%noreg
+    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#1(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %2
+    Predecessors according to CFG: BB#0
+	ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%R0<def> = COPY %vreg3; GPR:%vreg3
+	tBL pred:14, pred:%noreg, <ga:@get_attr_mode>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %SP<imp-def>, %R0<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg7<def> = COPY %R0; GPRnopc:%vreg7
+	%vreg8<def> = t2MOVi32imm <ga:@.str.2015>; rGPR:%vreg8
+	%vreg9<def> = t2MOVi32imm <ga:@.str.75>; rGPR:%vreg9
+	t2CMPri %vreg7, 4, pred:14, pred:%noreg, %CPSR<imp-def>; GPRnopc:%vreg7
+	%vreg10<def,tied1> = t2MOVCCr %vreg9<tied0>, %vreg8<kill>, pred:0, pred:%CPSR; rGPR:%vreg10,%vreg9,%vreg8
+	%vreg0<def> = COPY %vreg10; GPR:%vreg0 rGPR:%vreg10
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %5
+    Predecessors according to CFG: BB#0 BB#1
+	%vreg1<def> = PHI %vreg4, <BB#0>, %vreg0, <BB#1>; GPR:%vreg1,%vreg4,%vreg0
+	%R0<def> = COPY %vreg1; GPR:%vreg1
+	tBX_RET pred:14, pred:%noreg, %R0<imp-use>
+
+# End machine code for function output_51.
+
+# After Expand ISel Pseudo-instructions:
+# Machine code for function output_51: SSA
+Function Live Ins: %R1 in %vreg3
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R1
+	%vreg3<def> = COPY %R1; GPR:%vreg3
+	ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%R0<def> = COPY %vreg3; GPR:%vreg3
+	tBL pred:14, pred:%noreg, <ga:@get_attr_type>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %SP<imp-def>, %R0<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg5<def> = COPY %R0; GPRnopc:%vreg5
+	%vreg6<def> = t2MOVi32imm <ga:@.str.2014>; rGPR:%vreg6
+	%vreg4<def> = COPY %vreg6; GPR:%vreg4 rGPR:%vreg6
+	t2CMPri %vreg5, 8, pred:14, pred:%noreg, %CPSR<imp-def>; GPRnopc:%vreg5
+	t2Bcc <BB#2>, pred:0, pred:%CPSR
+	t2B <BB#1>, pred:14, pred:%noreg
+    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#1(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %2
+    Predecessors according to CFG: BB#0
+	ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%R0<def> = COPY %vreg3; GPR:%vreg3
+	tBL pred:14, pred:%noreg, <ga:@get_attr_mode>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %SP<imp-def>, %R0<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg7<def> = COPY %R0; GPRnopc:%vreg7
+	%vreg8<def> = t2MOVi32imm <ga:@.str.2015>; rGPR:%vreg8
+	%vreg9<def> = t2MOVi32imm <ga:@.str.75>; rGPR:%vreg9
+	t2CMPri %vreg7, 4, pred:14, pred:%noreg, %CPSR<imp-def>; GPRnopc:%vreg7
+	%vreg10<def,tied1> = t2MOVCCr %vreg9<tied0>, %vreg8<kill>, pred:0, pred:%CPSR; rGPR:%vreg10,%vreg9,%vreg8
+	%vreg0<def> = COPY %vreg10; GPR:%vreg0 rGPR:%vreg10
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %5
+    Predecessors according to CFG: BB#0 BB#1
+	%vreg1<def> = PHI %vreg4, <BB#0>, %vreg0, <BB#1>; GPR:%vreg1,%vreg4,%vreg0
+	%R0<def> = COPY %vreg1; GPR:%vreg1
+	tBX_RET pred:14, pred:%noreg, %R0<imp-use>
+
+# End machine code for function output_51.
+
+# After Tail Duplication:
+# Machine code for function output_51: SSA
+Function Live Ins: %R1 in %vreg3
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R1
+	%vreg3<def> = COPY %R1; GPR:%vreg3
+	ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%R0<def> = COPY %vreg3; GPR:%vreg3
+	tBL pred:14, pred:%noreg, <ga:@get_attr_type>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %SP<imp-def>, %R0<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg5<def> = COPY %R0; GPRnopc:%vreg5
+	%vreg6<def> = t2MOVi32imm <ga:@.str.2014>; rGPR:%vreg6
+	%vreg4<def> = COPY %vreg6; GPR:%vreg4 rGPR:%vreg6
+	t2CMPri %vreg5, 8, pred:14, pred:%noreg, %CPSR<imp-def>; GPRnopc:%vreg5
+	t2Bcc <BB#2>, pred:0, pred:%CPSR
+	t2B <BB#1>, pred:14, pred:%noreg
+    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#1(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %2
+    Predecessors according to CFG: BB#0
+	ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%R0<def> = COPY %vreg3; GPR:%vreg3
+	tBL pred:14, pred:%noreg, <ga:@get_attr_mode>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %SP<imp-def>, %R0<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg7<def> = COPY %R0; GPRnopc:%vreg7
+	%vreg8<def> = t2MOVi32imm <ga:@.str.2015>; rGPR:%vreg8
+	%vreg9<def> = t2MOVi32imm <ga:@.str.75>; rGPR:%vreg9
+	t2CMPri %vreg7, 4, pred:14, pred:%noreg, %CPSR<imp-def>; GPRnopc:%vreg7
+	%vreg10<def,tied1> = t2MOVCCr %vreg9<tied0>, %vreg8<kill>, pred:0, pred:%CPSR; rGPR:%vreg10,%vreg9,%vreg8
+	%vreg0<def> = COPY %vreg10; GPR:%vreg0 rGPR:%vreg10
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %5
+    Predecessors according to CFG: BB#0 BB#1
+	%vreg1<def> = PHI %vreg4, <BB#0>, %vreg0, <BB#1>; GPR:%vreg1,%vreg4,%vreg0
+	%R0<def> = COPY %vreg1; GPR:%vreg1
+	tBX_RET pred:14, pred:%noreg, %R0<imp-use>
+
+# End machine code for function output_51.
+
+# After Optimize machine instruction PHIs:
+# Machine code for function output_51: SSA
+Function Live Ins: %R1 in %vreg3
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R1
+	%vreg3<def> = COPY %R1; GPR:%vreg3
+	ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%R0<def> = COPY %vreg3; GPR:%vreg3
+	tBL pred:14, pred:%noreg, <ga:@get_attr_type>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %SP<imp-def>, %R0<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg5<def> = COPY %R0; GPRnopc:%vreg5
+	%vreg6<def> = t2MOVi32imm <ga:@.str.2014>; rGPR:%vreg6
+	%vreg4<def> = COPY %vreg6; GPR:%vreg4 rGPR:%vreg6
+	t2CMPri %vreg5, 8, pred:14, pred:%noreg, %CPSR<imp-def>; GPRnopc:%vreg5
+	t2Bcc <BB#2>, pred:0, pred:%CPSR
+	t2B <BB#1>, pred:14, pred:%noreg
+    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#1(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %2
+    Predecessors according to CFG: BB#0
+	ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%R0<def> = COPY %vreg3; GPR:%vreg3
+	tBL pred:14, pred:%noreg, <ga:@get_attr_mode>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %SP<imp-def>, %R0<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg7<def> = COPY %R0; GPRnopc:%vreg7
+	%vreg8<def> = t2MOVi32imm <ga:@.str.2015>; rGPR:%vreg8
+	%vreg9<def> = t2MOVi32imm <ga:@.str.75>; rGPR:%vreg9
+	t2CMPri %vreg7, 4, pred:14, pred:%noreg, %CPSR<imp-def>; GPRnopc:%vreg7
+	%vreg10<def,tied1> = t2MOVCCr %vreg9<tied0>, %vreg8<kill>, pred:0, pred:%CPSR; rGPR:%vreg10,%vreg9,%vreg8
+	%vreg0<def> = COPY %vreg10; GPR:%vreg0 rGPR:%vreg10
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %5
+    Predecessors according to CFG: BB#0 BB#1
+	%vreg1<def> = PHI %vreg4, <BB#0>, %vreg0, <BB#1>; GPR:%vreg1,%vreg4,%vreg0
+	%R0<def> = COPY %vreg1; GPR:%vreg1
+	tBX_RET pred:14, pred:%noreg, %R0<imp-use>
+
+# End machine code for function output_51.
+
+# After Merge disjoint stack slots:
+# Machine code for function output_51: SSA
+Function Live Ins: %R1 in %vreg3
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R1
+	%vreg3<def> = COPY %R1; GPR:%vreg3
+	ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%R0<def> = COPY %vreg3; GPR:%vreg3
+	tBL pred:14, pred:%noreg, <ga:@get_attr_type>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %SP<imp-def>, %R0<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg5<def> = COPY %R0; GPRnopc:%vreg5
+	%vreg6<def> = t2MOVi32imm <ga:@.str.2014>; rGPR:%vreg6
+	%vreg4<def> = COPY %vreg6; GPR:%vreg4 rGPR:%vreg6
+	t2CMPri %vreg5, 8, pred:14, pred:%noreg, %CPSR<imp-def>; GPRnopc:%vreg5
+	t2Bcc <BB#2>, pred:0, pred:%CPSR
+	t2B <BB#1>, pred:14, pred:%noreg
+    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#1(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %2
+    Predecessors according to CFG: BB#0
+	ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%R0<def> = COPY %vreg3; GPR:%vreg3
+	tBL pred:14, pred:%noreg, <ga:@get_attr_mode>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %SP<imp-def>, %R0<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg7<def> = COPY %R0; GPRnopc:%vreg7
+	%vreg8<def> = t2MOVi32imm <ga:@.str.2015>; rGPR:%vreg8
+	%vreg9<def> = t2MOVi32imm <ga:@.str.75>; rGPR:%vreg9
+	t2CMPri %vreg7, 4, pred:14, pred:%noreg, %CPSR<imp-def>; GPRnopc:%vreg7
+	%vreg10<def,tied1> = t2MOVCCr %vreg9<tied0>, %vreg8<kill>, pred:0, pred:%CPSR; rGPR:%vreg10,%vreg9,%vreg8
+	%vreg0<def> = COPY %vreg10; GPR:%vreg0 rGPR:%vreg10
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %5
+    Predecessors according to CFG: BB#0 BB#1
+	%vreg1<def> = PHI %vreg4, <BB#0>, %vreg0, <BB#1>; GPR:%vreg1,%vreg4,%vreg0
+	%R0<def> = COPY %vreg1; GPR:%vreg1
+	tBX_RET pred:14, pred:%noreg, %R0<imp-use>
+
+# End machine code for function output_51.
+
+# After Local Stack Slot Allocation:
+# Machine code for function output_51: SSA
+Function Live Ins: %R1 in %vreg3
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R1
+	%vreg3<def> = COPY %R1; GPR:%vreg3
+	ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%R0<def> = COPY %vreg3; GPR:%vreg3
+	tBL pred:14, pred:%noreg, <ga:@get_attr_type>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %SP<imp-def>, %R0<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg5<def> = COPY %R0; GPRnopc:%vreg5
+	%vreg6<def> = t2MOVi32imm <ga:@.str.2014>; rGPR:%vreg6
+	%vreg4<def> = COPY %vreg6; GPR:%vreg4 rGPR:%vreg6
+	t2CMPri %vreg5, 8, pred:14, pred:%noreg, %CPSR<imp-def>; GPRnopc:%vreg5
+	t2Bcc <BB#2>, pred:0, pred:%CPSR
+	t2B <BB#1>, pred:14, pred:%noreg
+    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#1(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %2
+    Predecessors according to CFG: BB#0
+	ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%R0<def> = COPY %vreg3; GPR:%vreg3
+	tBL pred:14, pred:%noreg, <ga:@get_attr_mode>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %SP<imp-def>, %R0<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg7<def> = COPY %R0; GPRnopc:%vreg7
+	%vreg8<def> = t2MOVi32imm <ga:@.str.2015>; rGPR:%vreg8
+	%vreg9<def> = t2MOVi32imm <ga:@.str.75>; rGPR:%vreg9
+	t2CMPri %vreg7, 4, pred:14, pred:%noreg, %CPSR<imp-def>; GPRnopc:%vreg7
+	%vreg10<def,tied1> = t2MOVCCr %vreg9<tied0>, %vreg8<kill>, pred:0, pred:%CPSR; rGPR:%vreg10,%vreg9,%vreg8
+	%vreg0<def> = COPY %vreg10; GPR:%vreg0 rGPR:%vreg10
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %5
+    Predecessors according to CFG: BB#0 BB#1
+	%vreg1<def> = PHI %vreg4, <BB#0>, %vreg0, <BB#1>; GPR:%vreg1,%vreg4,%vreg0
+	%R0<def> = COPY %vreg1; GPR:%vreg1
+	tBX_RET pred:14, pred:%noreg, %R0<imp-use>
+
+# End machine code for function output_51.
+
+# After Remove dead machine instructions:
+# Machine code for function output_51: SSA
+Function Live Ins: %R1 in %vreg3
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R1
+	%vreg3<def> = COPY %R1; GPR:%vreg3
+	ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%R0<def> = COPY %vreg3; GPR:%vreg3
+	tBL pred:14, pred:%noreg, <ga:@get_attr_type>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %SP<imp-def>, %R0<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg5<def> = COPY %R0; GPRnopc:%vreg5
+	%vreg6<def> = t2MOVi32imm <ga:@.str.2014>; rGPR:%vreg6
+	%vreg4<def> = COPY %vreg6; GPR:%vreg4 rGPR:%vreg6
+	t2CMPri %vreg5, 8, pred:14, pred:%noreg, %CPSR<imp-def>; GPRnopc:%vreg5
+	t2Bcc <BB#2>, pred:0, pred:%CPSR
+	t2B <BB#1>, pred:14, pred:%noreg
+    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#1(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %2
+    Predecessors according to CFG: BB#0
+	ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%R0<def> = COPY %vreg3; GPR:%vreg3
+	tBL pred:14, pred:%noreg, <ga:@get_attr_mode>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %SP<imp-def>, %R0<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg7<def> = COPY %R0; GPRnopc:%vreg7
+	%vreg8<def> = t2MOVi32imm <ga:@.str.2015>; rGPR:%vreg8
+	%vreg9<def> = t2MOVi32imm <ga:@.str.75>; rGPR:%vreg9
+	t2CMPri %vreg7, 4, pred:14, pred:%noreg, %CPSR<imp-def>; GPRnopc:%vreg7
+	%vreg10<def,tied1> = t2MOVCCr %vreg9<tied0>, %vreg8<kill>, pred:0, pred:%CPSR; rGPR:%vreg10,%vreg9,%vreg8
+	%vreg0<def> = COPY %vreg10; GPR:%vreg0 rGPR:%vreg10
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %5
+    Predecessors according to CFG: BB#0 BB#1
+	%vreg1<def> = PHI %vreg4, <BB#0>, %vreg0, <BB#1>; GPR:%vreg1,%vreg4,%vreg0
+	%R0<def> = COPY %vreg1; GPR:%vreg1
+	tBX_RET pred:14, pred:%noreg, %R0<imp-use>
+
+# End machine code for function output_51.
+
+# After Machine Loop Invariant Code Motion:
+# Machine code for function output_51: SSA
+Function Live Ins: %R1 in %vreg3
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R1
+	%vreg3<def> = COPY %R1; GPR:%vreg3
+	ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%R0<def> = COPY %vreg3; GPR:%vreg3
+	tBL pred:14, pred:%noreg, <ga:@get_attr_type>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %SP<imp-def>, %R0<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg5<def> = COPY %R0; GPRnopc:%vreg5
+	%vreg6<def> = t2MOVi32imm <ga:@.str.2014>; rGPR:%vreg6
+	%vreg4<def> = COPY %vreg6; GPR:%vreg4 rGPR:%vreg6
+	t2CMPri %vreg5, 8, pred:14, pred:%noreg, %CPSR<imp-def>; GPRnopc:%vreg5
+	t2Bcc <BB#2>, pred:0, pred:%CPSR
+	t2B <BB#1>, pred:14, pred:%noreg
+    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#1(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %2
+    Predecessors according to CFG: BB#0
+	ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%R0<def> = COPY %vreg3; GPR:%vreg3
+	tBL pred:14, pred:%noreg, <ga:@get_attr_mode>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %SP<imp-def>, %R0<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg7<def> = COPY %R0; GPRnopc:%vreg7
+	%vreg8<def> = t2MOVi32imm <ga:@.str.2015>; rGPR:%vreg8
+	%vreg9<def> = t2MOVi32imm <ga:@.str.75>; rGPR:%vreg9
+	t2CMPri %vreg7, 4, pred:14, pred:%noreg, %CPSR<imp-def>; GPRnopc:%vreg7
+	%vreg10<def,tied1> = t2MOVCCr %vreg9<tied0>, %vreg8<kill>, pred:0, pred:%CPSR; rGPR:%vreg10,%vreg9,%vreg8
+	%vreg0<def> = COPY %vreg10; GPR:%vreg0 rGPR:%vreg10
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %5
+    Predecessors according to CFG: BB#0 BB#1
+	%vreg1<def> = PHI %vreg4, <BB#0>, %vreg0, <BB#1>; GPR:%vreg1,%vreg4,%vreg0
+	%R0<def> = COPY %vreg1; GPR:%vreg1
+	tBX_RET pred:14, pred:%noreg, %R0<imp-use>
+
+# End machine code for function output_51.
+
+# After Machine Common Subexpression Elimination:
+# Machine code for function output_51: SSA
+Function Live Ins: %R1 in %vreg3
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R1
+	%vreg3<def> = COPY %R1; GPR:%vreg3
+	ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%R0<def> = COPY %vreg3; GPR:%vreg3
+	tBL pred:14, pred:%noreg, <ga:@get_attr_type>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %SP<imp-def>, %R0<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg5<def> = COPY %R0; GPRnopc:%vreg5
+	%vreg6<def> = t2MOVi32imm <ga:@.str.2014>; rGPR:%vreg6
+	%vreg4<def> = COPY %vreg6; GPR:%vreg4 rGPR:%vreg6
+	t2CMPri %vreg5, 8, pred:14, pred:%noreg, %CPSR<imp-def>; GPRnopc:%vreg5
+	t2Bcc <BB#2>, pred:0, pred:%CPSR
+	t2B <BB#1>, pred:14, pred:%noreg
+    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#1(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %2
+    Predecessors according to CFG: BB#0
+	ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%R0<def> = COPY %vreg3; GPR:%vreg3
+	tBL pred:14, pred:%noreg, <ga:@get_attr_mode>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %SP<imp-def>, %R0<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg7<def> = COPY %R0; GPRnopc:%vreg7
+	%vreg8<def> = t2MOVi32imm <ga:@.str.2015>; rGPR:%vreg8
+	%vreg9<def> = t2MOVi32imm <ga:@.str.75>; rGPR:%vreg9
+	t2CMPri %vreg7, 4, pred:14, pred:%noreg, %CPSR<imp-def>; GPRnopc:%vreg7
+	%vreg10<def,tied1> = t2MOVCCr %vreg9<tied0>, %vreg8<kill>, pred:0, pred:%CPSR; rGPR:%vreg10,%vreg9,%vreg8
+	%vreg0<def> = COPY %vreg10; GPR:%vreg0 rGPR:%vreg10
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %5
+    Predecessors according to CFG: BB#0 BB#1
+	%vreg1<def> = PHI %vreg4, <BB#0>, %vreg0, <BB#1>; GPR:%vreg1,%vreg4,%vreg0
+	%R0<def> = COPY %vreg1; GPR:%vreg1
+	tBX_RET pred:14, pred:%noreg, %R0<imp-use>
+
+# End machine code for function output_51.
+
+# After Machine code sinking:
+# Machine code for function output_51: SSA
+Function Live Ins: %R1 in %vreg3
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R1
+	%vreg3<def> = COPY %R1; GPR:%vreg3
+	ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%R0<def> = COPY %vreg3; GPR:%vreg3
+	tBL pred:14, pred:%noreg, <ga:@get_attr_type>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %SP<imp-def>, %R0<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg5<def> = COPY %R0; GPRnopc:%vreg5
+	t2CMPri %vreg5, 8, pred:14, pred:%noreg, %CPSR<imp-def>; GPRnopc:%vreg5
+	t2Bcc <BB#1>, pred:1, pred:%CPSR
+    Successors according to CFG: BB#3(0x40000000 / 0x80000000 = 50.00%) BB#1(0x40000000 / 0x80000000 = 50.00%)
+
+BB#3: 
+    Predecessors according to CFG: BB#0
+	%vreg6<def> = t2MOVi32imm <ga:@.str.2014>; rGPR:%vreg6
+	%vreg4<def> = COPY %vreg6; GPR:%vreg4 rGPR:%vreg6
+	t2B <BB#2>, pred:14, pred:%noreg
+    Successors according to CFG: BB#2(?%)
+
+BB#1: derived from LLVM BB %2
+    Predecessors according to CFG: BB#0
+	ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%R0<def> = COPY %vreg3; GPR:%vreg3
+	tBL pred:14, pred:%noreg, <ga:@get_attr_mode>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %SP<imp-def>, %R0<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg7<def> = COPY %R0; GPRnopc:%vreg7
+	%vreg8<def> = t2MOVi32imm <ga:@.str.2015>; rGPR:%vreg8
+	%vreg9<def> = t2MOVi32imm <ga:@.str.75>; rGPR:%vreg9
+	t2CMPri %vreg7, 4, pred:14, pred:%noreg, %CPSR<imp-def>; GPRnopc:%vreg7
+	%vreg10<def,tied1> = t2MOVCCr %vreg9<tied0>, %vreg8<kill>, pred:0, pred:%CPSR; rGPR:%vreg10,%vreg9,%vreg8
+	%vreg0<def> = COPY %vreg10; GPR:%vreg0 rGPR:%vreg10
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %5
+    Predecessors according to CFG: BB#1 BB#3
+	%vreg1<def> = PHI %vreg4, <BB#3>, %vreg0, <BB#1>; GPR:%vreg1,%vreg4,%vreg0
+	%R0<def> = COPY %vreg1; GPR:%vreg1
+	tBX_RET pred:14, pred:%noreg, %R0<imp-use>
+
+# End machine code for function output_51.
+
+# After Peephole Optimizations:
+# Machine code for function output_51: SSA
+Function Live Ins: %R1 in %vreg3
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R1
+	%vreg3<def> = COPY %R1; GPR:%vreg3
+	ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%R0<def> = COPY %vreg3; GPR:%vreg3
+	tBL pred:14, pred:%noreg, <ga:@get_attr_type>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %SP<imp-def>, %R0<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg5<def> = COPY %R0; GPRnopc:%vreg5
+	t2CMPri %vreg5, 8, pred:14, pred:%noreg, %CPSR<imp-def>; GPRnopc:%vreg5
+	t2Bcc <BB#1>, pred:1, pred:%CPSR
+    Successors according to CFG: BB#3(0x40000000 / 0x80000000 = 50.00%) BB#1(0x40000000 / 0x80000000 = 50.00%)
+
+BB#3: 
+    Predecessors according to CFG: BB#0
+	%vreg6<def> = t2MOVi32imm <ga:@.str.2014>; rGPR:%vreg6
+	%vreg4<def> = COPY %vreg6; GPR:%vreg4 rGPR:%vreg6
+	t2B <BB#2>, pred:14, pred:%noreg
+    Successors according to CFG: BB#2(?%)
+
+BB#1: derived from LLVM BB %2
+    Predecessors according to CFG: BB#0
+	ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%R0<def> = COPY %vreg3; GPR:%vreg3
+	tBL pred:14, pred:%noreg, <ga:@get_attr_mode>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %SP<imp-def>, %R0<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg7<def> = COPY %R0; GPRnopc:%vreg7
+	%vreg8<def> = t2MOVi32imm <ga:@.str.2015>; rGPR:%vreg8
+	%vreg9<def> = t2MOVi32imm <ga:@.str.75>; rGPR:%vreg9
+	t2CMPri %vreg7, 4, pred:14, pred:%noreg, %CPSR<imp-def>; GPRnopc:%vreg7
+	%vreg10<def,tied1> = t2MOVCCr %vreg9<tied0>, %vreg8<kill>, pred:0, pred:%CPSR; rGPR:%vreg10,%vreg9,%vreg8
+	%vreg0<def> = COPY %vreg10; GPR:%vreg0 rGPR:%vreg10
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %5
+    Predecessors according to CFG: BB#1 BB#3
+	%vreg1<def> = PHI %vreg4, <BB#3>, %vreg0, <BB#1>; GPR:%vreg1,%vreg4,%vreg0
+	%R0<def> = COPY %vreg1; GPR:%vreg1
+	tBX_RET pred:14, pred:%noreg, %R0<imp-use>
+
+# End machine code for function output_51.
+
+# After Remove dead machine instructions:
+# Machine code for function output_51: SSA
+Function Live Ins: %R1 in %vreg3
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R1
+	%vreg3<def> = COPY %R1; GPR:%vreg3
+	ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%R0<def> = COPY %vreg3; GPR:%vreg3
+	tBL pred:14, pred:%noreg, <ga:@get_attr_type>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %SP<imp-def>, %R0<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg5<def> = COPY %R0; GPRnopc:%vreg5
+	t2CMPri %vreg5, 8, pred:14, pred:%noreg, %CPSR<imp-def>; GPRnopc:%vreg5
+	t2Bcc <BB#1>, pred:1, pred:%CPSR
+    Successors according to CFG: BB#3(0x40000000 / 0x80000000 = 50.00%) BB#1(0x40000000 / 0x80000000 = 50.00%)
+
+BB#3: 
+    Predecessors according to CFG: BB#0
+	%vreg6<def> = t2MOVi32imm <ga:@.str.2014>; rGPR:%vreg6
+	%vreg4<def> = COPY %vreg6; GPR:%vreg4 rGPR:%vreg6
+	t2B <BB#2>, pred:14, pred:%noreg
+    Successors according to CFG: BB#2(?%)
+
+BB#1: derived from LLVM BB %2
+    Predecessors according to CFG: BB#0
+	ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%R0<def> = COPY %vreg3; GPR:%vreg3
+	tBL pred:14, pred:%noreg, <ga:@get_attr_mode>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %SP<imp-def>, %R0<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg7<def> = COPY %R0; GPRnopc:%vreg7
+	%vreg8<def> = t2MOVi32imm <ga:@.str.2015>; rGPR:%vreg8
+	%vreg9<def> = t2MOVi32imm <ga:@.str.75>; rGPR:%vreg9
+	t2CMPri %vreg7, 4, pred:14, pred:%noreg, %CPSR<imp-def>; GPRnopc:%vreg7
+	%vreg10<def,tied1> = t2MOVCCr %vreg9<tied0>, %vreg8<kill>, pred:0, pred:%CPSR; rGPR:%vreg10,%vreg9,%vreg8
+	%vreg0<def> = COPY %vreg10; GPR:%vreg0 rGPR:%vreg10
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %5
+    Predecessors according to CFG: BB#1 BB#3
+	%vreg1<def> = PHI %vreg4, <BB#3>, %vreg0, <BB#1>; GPR:%vreg1,%vreg4,%vreg0
+	%R0<def> = COPY %vreg1; GPR:%vreg1
+	tBX_RET pred:14, pred:%noreg, %R0<imp-use>
+
+# End machine code for function output_51.
+
+# After ARM MLA / MLS expansion pass:
+# Machine code for function output_51: SSA
+Function Live Ins: %R1 in %vreg3
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R1
+	%vreg3<def> = COPY %R1; GPR:%vreg3
+	ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%R0<def> = COPY %vreg3; GPR:%vreg3
+	tBL pred:14, pred:%noreg, <ga:@get_attr_type>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %SP<imp-def>, %R0<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg5<def> = COPY %R0; GPRnopc:%vreg5
+	t2CMPri %vreg5, 8, pred:14, pred:%noreg, %CPSR<imp-def>; GPRnopc:%vreg5
+	t2Bcc <BB#1>, pred:1, pred:%CPSR
+    Successors according to CFG: BB#3(0x40000000 / 0x80000000 = 50.00%) BB#1(0x40000000 / 0x80000000 = 50.00%)
+
+BB#3: 
+    Predecessors according to CFG: BB#0
+	%vreg6<def> = t2MOVi32imm <ga:@.str.2014>; rGPR:%vreg6
+	%vreg4<def> = COPY %vreg6; GPR:%vreg4 rGPR:%vreg6
+	t2B <BB#2>, pred:14, pred:%noreg
+    Successors according to CFG: BB#2(?%)
+
+BB#1: derived from LLVM BB %2
+    Predecessors according to CFG: BB#0
+	ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%R0<def> = COPY %vreg3; GPR:%vreg3
+	tBL pred:14, pred:%noreg, <ga:@get_attr_mode>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %SP<imp-def>, %R0<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg7<def> = COPY %R0; GPRnopc:%vreg7
+	%vreg8<def> = t2MOVi32imm <ga:@.str.2015>; rGPR:%vreg8
+	%vreg9<def> = t2MOVi32imm <ga:@.str.75>; rGPR:%vreg9
+	t2CMPri %vreg7, 4, pred:14, pred:%noreg, %CPSR<imp-def>; GPRnopc:%vreg7
+	%vreg10<def,tied1> = t2MOVCCr %vreg9<tied0>, %vreg8<kill>, pred:0, pred:%CPSR; rGPR:%vreg10,%vreg9,%vreg8
+	%vreg0<def> = COPY %vreg10; GPR:%vreg0 rGPR:%vreg10
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %5
+    Predecessors according to CFG: BB#1 BB#3
+	%vreg1<def> = PHI %vreg4, <BB#3>, %vreg0, <BB#1>; GPR:%vreg1,%vreg4,%vreg0
+	%R0<def> = COPY %vreg1; GPR:%vreg1
+	tBX_RET pred:14, pred:%noreg, %R0<imp-use>
+
+# End machine code for function output_51.
+
+# After ARM pre- register allocation load / store optimization pass:
+# Machine code for function output_51: SSA
+Function Live Ins: %R1 in %vreg3
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R1
+	%vreg3<def> = COPY %R1; GPR:%vreg3
+	ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%R0<def> = COPY %vreg3; GPR:%vreg3
+	tBL pred:14, pred:%noreg, <ga:@get_attr_type>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %SP<imp-def>, %R0<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg5<def> = COPY %R0; GPRnopc:%vreg5
+	t2CMPri %vreg5, 8, pred:14, pred:%noreg, %CPSR<imp-def>; GPRnopc:%vreg5
+	t2Bcc <BB#1>, pred:1, pred:%CPSR
+    Successors according to CFG: BB#3(0x40000000 / 0x80000000 = 50.00%) BB#1(0x40000000 / 0x80000000 = 50.00%)
+
+BB#3: 
+    Predecessors according to CFG: BB#0
+	%vreg6<def> = t2MOVi32imm <ga:@.str.2014>; rGPR:%vreg6
+	%vreg4<def> = COPY %vreg6; GPR:%vreg4 rGPR:%vreg6
+	t2B <BB#2>, pred:14, pred:%noreg
+    Successors according to CFG: BB#2(?%)
+
+BB#1: derived from LLVM BB %2
+    Predecessors according to CFG: BB#0
+	ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%R0<def> = COPY %vreg3; GPR:%vreg3
+	tBL pred:14, pred:%noreg, <ga:@get_attr_mode>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %SP<imp-def>, %R0<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg7<def> = COPY %R0; GPRnopc:%vreg7
+	%vreg8<def> = t2MOVi32imm <ga:@.str.2015>; rGPR:%vreg8
+	%vreg9<def> = t2MOVi32imm <ga:@.str.75>; rGPR:%vreg9
+	t2CMPri %vreg7, 4, pred:14, pred:%noreg, %CPSR<imp-def>; GPRnopc:%vreg7
+	%vreg10<def,tied1> = t2MOVCCr %vreg9<tied0>, %vreg8<kill>, pred:0, pred:%CPSR; rGPR:%vreg10,%vreg9,%vreg8
+	%vreg0<def> = COPY %vreg10; GPR:%vreg0 rGPR:%vreg10
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %5
+    Predecessors according to CFG: BB#1 BB#3
+	%vreg1<def> = PHI %vreg4, <BB#3>, %vreg0, <BB#1>; GPR:%vreg1,%vreg4,%vreg0
+	%R0<def> = COPY %vreg1; GPR:%vreg1
+	tBX_RET pred:14, pred:%noreg, %R0<imp-use>
+
+# End machine code for function output_51.
+
+# After ARM A15 S->D optimizer:
+# Machine code for function output_51: SSA
+Function Live Ins: %R1 in %vreg3
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R1
+	%vreg3<def> = COPY %R1; GPR:%vreg3
+	ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%R0<def> = COPY %vreg3; GPR:%vreg3
+	tBL pred:14, pred:%noreg, <ga:@get_attr_type>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %SP<imp-def>, %R0<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg5<def> = COPY %R0; GPRnopc:%vreg5
+	t2CMPri %vreg5, 8, pred:14, pred:%noreg, %CPSR<imp-def>; GPRnopc:%vreg5
+	t2Bcc <BB#1>, pred:1, pred:%CPSR
+    Successors according to CFG: BB#3(0x40000000 / 0x80000000 = 50.00%) BB#1(0x40000000 / 0x80000000 = 50.00%)
+
+BB#3: 
+    Predecessors according to CFG: BB#0
+	%vreg6<def> = t2MOVi32imm <ga:@.str.2014>; rGPR:%vreg6
+	%vreg4<def> = COPY %vreg6; GPR:%vreg4 rGPR:%vreg6
+	t2B <BB#2>, pred:14, pred:%noreg
+    Successors according to CFG: BB#2(?%)
+
+BB#1: derived from LLVM BB %2
+    Predecessors according to CFG: BB#0
+	ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%R0<def> = COPY %vreg3; GPR:%vreg3
+	tBL pred:14, pred:%noreg, <ga:@get_attr_mode>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %SP<imp-def>, %R0<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg7<def> = COPY %R0; GPRnopc:%vreg7
+	%vreg8<def> = t2MOVi32imm <ga:@.str.2015>; rGPR:%vreg8
+	%vreg9<def> = t2MOVi32imm <ga:@.str.75>; rGPR:%vreg9
+	t2CMPri %vreg7, 4, pred:14, pred:%noreg, %CPSR<imp-def>; GPRnopc:%vreg7
+	%vreg10<def,tied1> = t2MOVCCr %vreg9<tied0>, %vreg8<kill>, pred:0, pred:%CPSR; rGPR:%vreg10,%vreg9,%vreg8
+	%vreg0<def> = COPY %vreg10; GPR:%vreg0 rGPR:%vreg10
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %5
+    Predecessors according to CFG: BB#1 BB#3
+	%vreg1<def> = PHI %vreg4, <BB#3>, %vreg0, <BB#1>; GPR:%vreg1,%vreg4,%vreg0
+	%R0<def> = COPY %vreg1; GPR:%vreg1
+	tBX_RET pred:14, pred:%noreg, %R0<imp-use>
+
+# End machine code for function output_51.
+
+# After Process Implicit Definitions:
+# Machine code for function output_51: SSA
+Function Live Ins: %R1 in %vreg3
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R1
+	%vreg3<def> = COPY %R1; GPR:%vreg3
+	ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%R0<def> = COPY %vreg3; GPR:%vreg3
+	tBL pred:14, pred:%noreg, <ga:@get_attr_type>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %SP<imp-def>, %R0<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg5<def> = COPY %R0; GPRnopc:%vreg5
+	t2CMPri %vreg5, 8, pred:14, pred:%noreg, %CPSR<imp-def>; GPRnopc:%vreg5
+	t2Bcc <BB#1>, pred:1, pred:%CPSR
+    Successors according to CFG: BB#3(0x40000000 / 0x80000000 = 50.00%) BB#1(0x40000000 / 0x80000000 = 50.00%)
+
+BB#3: 
+    Predecessors according to CFG: BB#0
+	%vreg6<def> = t2MOVi32imm <ga:@.str.2014>; rGPR:%vreg6
+	%vreg4<def> = COPY %vreg6; GPR:%vreg4 rGPR:%vreg6
+	t2B <BB#2>, pred:14, pred:%noreg
+    Successors according to CFG: BB#2(?%)
+
+BB#1: derived from LLVM BB %2
+    Predecessors according to CFG: BB#0
+	ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%R0<def> = COPY %vreg3; GPR:%vreg3
+	tBL pred:14, pred:%noreg, <ga:@get_attr_mode>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %SP<imp-def>, %R0<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg7<def> = COPY %R0; GPRnopc:%vreg7
+	%vreg8<def> = t2MOVi32imm <ga:@.str.2015>; rGPR:%vreg8
+	%vreg9<def> = t2MOVi32imm <ga:@.str.75>; rGPR:%vreg9
+	t2CMPri %vreg7, 4, pred:14, pred:%noreg, %CPSR<imp-def>; GPRnopc:%vreg7
+	%vreg10<def,tied1> = t2MOVCCr %vreg9<tied0>, %vreg8<kill>, pred:0, pred:%CPSR; rGPR:%vreg10,%vreg9,%vreg8
+	%vreg0<def> = COPY %vreg10; GPR:%vreg0 rGPR:%vreg10
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %5
+    Predecessors according to CFG: BB#1 BB#3
+	%vreg1<def> = PHI %vreg4, <BB#3>, %vreg0, <BB#1>; GPR:%vreg1,%vreg4,%vreg0
+	%R0<def> = COPY %vreg1; GPR:%vreg1
+	tBX_RET pred:14, pred:%noreg, %R0<imp-use>
+
+# End machine code for function output_51.
+
+# After Live Variable Analysis:
+# Machine code for function output_51: SSA
+Function Live Ins: %R1 in %vreg3
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R1
+	%vreg3<def> = COPY %R1<kill>; GPR:%vreg3
+	ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%R0<def> = COPY %vreg3; GPR:%vreg3
+	tBL pred:14, pred:%noreg, <ga:@get_attr_type>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use,kill>, %SP<imp-def>, %R0<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg5<def> = COPY %R0<kill>; GPRnopc:%vreg5
+	t2CMPri %vreg5<kill>, 8, pred:14, pred:%noreg, %CPSR<imp-def>; GPRnopc:%vreg5
+	t2Bcc <BB#2>, pred:1, pred:%CPSR<kill>
+    Successors according to CFG: BB#1(0x40000000 / 0x80000000 = 50.00%) BB#2(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: 
+    Predecessors according to CFG: BB#0
+	%vreg6<def> = t2MOVi32imm <ga:@.str.2014>; rGPR:%vreg6
+	%vreg4<def> = COPY %vreg6<kill>; GPR:%vreg4 rGPR:%vreg6
+	t2B <BB#3>, pred:14, pred:%noreg
+    Successors according to CFG: BB#3(?%)
+
+BB#2: derived from LLVM BB %2
+    Predecessors according to CFG: BB#0
+	ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%R0<def> = COPY %vreg3<kill>; GPR:%vreg3
+	tBL pred:14, pred:%noreg, <ga:@get_attr_mode>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use,kill>, %SP<imp-def>, %R0<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg7<def> = COPY %R0<kill>; GPRnopc:%vreg7
+	%vreg8<def> = t2MOVi32imm <ga:@.str.2015>; rGPR:%vreg8
+	%vreg9<def> = t2MOVi32imm <ga:@.str.75>; rGPR:%vreg9
+	t2CMPri %vreg7<kill>, 4, pred:14, pred:%noreg, %CPSR<imp-def>; GPRnopc:%vreg7
+	%vreg10<def,tied1> = t2MOVCCr %vreg9<kill,tied0>, %vreg8<kill>, pred:0, pred:%CPSR<kill>; rGPR:%vreg10,%vreg9,%vreg8
+	%vreg0<def> = COPY %vreg10<kill>; GPR:%vreg0 rGPR:%vreg10
+    Successors according to CFG: BB#3(?%)
+
+BB#3: derived from LLVM BB %5
+    Predecessors according to CFG: BB#2 BB#1
+	%vreg1<def> = PHI %vreg4, <BB#1>, %vreg0, <BB#2>; GPR:%vreg1,%vreg4,%vreg0
+	%R0<def> = COPY %vreg1<kill>; GPR:%vreg1
+	tBX_RET pred:14, pred:%noreg, %R0<imp-use,kill>
+
+# End machine code for function output_51.
+
+# After Machine Natural Loop Construction:
+# Machine code for function output_51: SSA
+Function Live Ins: %R1 in %vreg3
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R1
+	%vreg3<def> = COPY %R1<kill>; GPR:%vreg3
+	ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%R0<def> = COPY %vreg3; GPR:%vreg3
+	tBL pred:14, pred:%noreg, <ga:@get_attr_type>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use,kill>, %SP<imp-def>, %R0<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg5<def> = COPY %R0<kill>; GPRnopc:%vreg5
+	t2CMPri %vreg5<kill>, 8, pred:14, pred:%noreg, %CPSR<imp-def>; GPRnopc:%vreg5
+	t2Bcc <BB#2>, pred:1, pred:%CPSR<kill>
+    Successors according to CFG: BB#1(0x40000000 / 0x80000000 = 50.00%) BB#2(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: 
+    Predecessors according to CFG: BB#0
+	%vreg6<def> = t2MOVi32imm <ga:@.str.2014>; rGPR:%vreg6
+	%vreg4<def> = COPY %vreg6<kill>; GPR:%vreg4 rGPR:%vreg6
+	t2B <BB#3>, pred:14, pred:%noreg
+    Successors according to CFG: BB#3(?%)
+
+BB#2: derived from LLVM BB %2
+    Predecessors according to CFG: BB#0
+	ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%R0<def> = COPY %vreg3<kill>; GPR:%vreg3
+	tBL pred:14, pred:%noreg, <ga:@get_attr_mode>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use,kill>, %SP<imp-def>, %R0<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg7<def> = COPY %R0<kill>; GPRnopc:%vreg7
+	%vreg8<def> = t2MOVi32imm <ga:@.str.2015>; rGPR:%vreg8
+	%vreg9<def> = t2MOVi32imm <ga:@.str.75>; rGPR:%vreg9
+	t2CMPri %vreg7<kill>, 4, pred:14, pred:%noreg, %CPSR<imp-def>; GPRnopc:%vreg7
+	%vreg10<def,tied1> = t2MOVCCr %vreg9<kill,tied0>, %vreg8<kill>, pred:0, pred:%CPSR<kill>; rGPR:%vreg10,%vreg9,%vreg8
+	%vreg0<def> = COPY %vreg10<kill>; GPR:%vreg0 rGPR:%vreg10
+    Successors according to CFG: BB#3(?%)
+
+BB#3: derived from LLVM BB %5
+    Predecessors according to CFG: BB#2 BB#1
+	%vreg1<def> = PHI %vreg4, <BB#1>, %vreg0, <BB#2>; GPR:%vreg1,%vreg4,%vreg0
+	%R0<def> = COPY %vreg1<kill>; GPR:%vreg1
+	tBX_RET pred:14, pred:%noreg, %R0<imp-use,kill>
+
+# End machine code for function output_51.
+
+# After Eliminate PHI nodes for register allocation:
+# Machine code for function output_51: Post SSA
+Function Live Ins: %R1 in %vreg3
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R1
+	%vreg3<def> = COPY %R1<kill>; GPR:%vreg3
+	ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%R0<def> = COPY %vreg3; GPR:%vreg3
+	tBL pred:14, pred:%noreg, <ga:@get_attr_type>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use,kill>, %SP<imp-def>, %R0<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg5<def> = COPY %R0<kill>; GPRnopc:%vreg5
+	t2CMPri %vreg5<kill>, 8, pred:14, pred:%noreg, %CPSR<imp-def>; GPRnopc:%vreg5
+	t2Bcc <BB#2>, pred:1, pred:%CPSR<kill>
+    Successors according to CFG: BB#1(0x40000000 / 0x80000000 = 50.00%) BB#2(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: 
+    Predecessors according to CFG: BB#0
+	%vreg6<def> = t2MOVi32imm <ga:@.str.2014>; rGPR:%vreg6
+	%vreg4<def> = COPY %vreg6<kill>; GPR:%vreg4 rGPR:%vreg6
+	%vreg11<def> = COPY %vreg4<kill>; GPR:%vreg11,%vreg4
+	t2B <BB#3>, pred:14, pred:%noreg
+    Successors according to CFG: BB#3(?%)
+
+BB#2: derived from LLVM BB %2
+    Predecessors according to CFG: BB#0
+	ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%R0<def> = COPY %vreg3<kill>; GPR:%vreg3
+	tBL pred:14, pred:%noreg, <ga:@get_attr_mode>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use,kill>, %SP<imp-def>, %R0<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg7<def> = COPY %R0<kill>; GPRnopc:%vreg7
+	%vreg8<def> = t2MOVi32imm <ga:@.str.2015>; rGPR:%vreg8
+	%vreg9<def> = t2MOVi32imm <ga:@.str.75>; rGPR:%vreg9
+	t2CMPri %vreg7<kill>, 4, pred:14, pred:%noreg, %CPSR<imp-def>; GPRnopc:%vreg7
+	%vreg10<def,tied1> = t2MOVCCr %vreg9<kill,tied0>, %vreg8<kill>, pred:0, pred:%CPSR<kill>; rGPR:%vreg10,%vreg9,%vreg8
+	%vreg0<def> = COPY %vreg10<kill>; GPR:%vreg0 rGPR:%vreg10
+	%vreg11<def> = COPY %vreg0<kill>; GPR:%vreg11,%vreg0
+    Successors according to CFG: BB#3(?%)
+
+BB#3: derived from LLVM BB %5
+    Predecessors according to CFG: BB#2 BB#1
+	%vreg1<def> = COPY %vreg11<kill>; GPR:%vreg1,%vreg11
+	%R0<def> = COPY %vreg1<kill>; GPR:%vreg1
+	tBX_RET pred:14, pred:%noreg, %R0<imp-use,kill>
+
+# End machine code for function output_51.
+
+# After Two-Address instruction pass:
+# Machine code for function output_51: Post SSA
+Function Live Ins: %R1 in %vreg3
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R1
+	%vreg3<def> = COPY %R1<kill>; GPR:%vreg3
+	ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%R0<def> = COPY %vreg3; GPR:%vreg3
+	tBL pred:14, pred:%noreg, <ga:@get_attr_type>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use,kill>, %SP<imp-def>, %R0<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg5<def> = COPY %R0<kill>; GPRnopc:%vreg5
+	t2CMPri %vreg5<kill>, 8, pred:14, pred:%noreg, %CPSR<imp-def>; GPRnopc:%vreg5
+	t2Bcc <BB#2>, pred:1, pred:%CPSR<kill>
+    Successors according to CFG: BB#1(0x40000000 / 0x80000000 = 50.00%) BB#2(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: 
+    Predecessors according to CFG: BB#0
+	%vreg6<def> = t2MOVi32imm <ga:@.str.2014>; rGPR:%vreg6
+	%vreg4<def> = COPY %vreg6<kill>; GPR:%vreg4 rGPR:%vreg6
+	%vreg11<def> = COPY %vreg4<kill>; GPR:%vreg11,%vreg4
+	t2B <BB#3>, pred:14, pred:%noreg
+    Successors according to CFG: BB#3(?%)
+
+BB#2: derived from LLVM BB %2
+    Predecessors according to CFG: BB#0
+	ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%R0<def> = COPY %vreg3<kill>; GPR:%vreg3
+	tBL pred:14, pred:%noreg, <ga:@get_attr_mode>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use,kill>, %SP<imp-def>, %R0<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%vreg7<def> = COPY %R0<kill>; GPRnopc:%vreg7
+	%vreg8<def> = t2MOVi32imm <ga:@.str.2015>; rGPR:%vreg8
+	%vreg9<def> = t2MOVi32imm <ga:@.str.75>; rGPR:%vreg9
+	t2CMPri %vreg7<kill>, 4, pred:14, pred:%noreg, %CPSR<imp-def>; GPRnopc:%vreg7
+	%vreg10<def> = COPY %vreg9<kill>; rGPR:%vreg10,%vreg9
+	%vreg10<def,tied1> = t2MOVCCr %vreg10<tied0>, %vreg8<kill>, pred:0, pred:%CPSR<kill>; rGPR:%vreg10,%vreg8
+	%vreg0<def> = COPY %vreg10<kill>; GPR:%vreg0 rGPR:%vreg10
+	%vreg11<def> = COPY %vreg0<kill>; GPR:%vreg11,%vreg0
+    Successors according to CFG: BB#3(?%)
+
+BB#3: derived from LLVM BB %5
+    Predecessors according to CFG: BB#2 BB#1
+	%vreg1<def> = COPY %vreg11<kill>; GPR:%vreg1,%vreg11
+	%R0<def> = COPY %vreg1<kill>; GPR:%vreg1
+	tBX_RET pred:14, pred:%noreg, %R0<imp-use,kill>
+
+# End machine code for function output_51.
+
+# After Simple Register Coalescing:
+# Machine code for function output_51: Post SSA
+Function Live Ins: %R1 in %vreg3
+
+0B	BB#0: derived from LLVM BB %0
+	    Live Ins: %R1
+16B		%vreg3<def> = COPY %R1; GPR:%vreg3
+32B		ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+48B		%R0<def> = COPY %vreg3; GPR:%vreg3
+64B		tBL pred:14, pred:%noreg, <ga:@get_attr_type>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use,kill>, %SP<imp-def>, %R0<imp-def>, ...
+80B		ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+96B		%vreg5<def> = COPY %R0<kill>; GPRnopc:%vreg5
+112B		t2CMPri %vreg5, 8, pred:14, pred:%noreg, %CPSR<imp-def>; GPRnopc:%vreg5
+128B		t2Bcc <BB#2>, pred:1, pred:%CPSR<kill>
+	    Successors according to CFG: BB#1(0x40000000 / 0x80000000 = 50.00%) BB#2(0x40000000 / 0x80000000 = 50.00%)
+
+144B	BB#1: 
+	    Predecessors according to CFG: BB#0
+160B		%vreg11<def> = t2MOVi32imm <ga:@.str.2014>; rGPR:%vreg11
+208B		t2B <BB#3>, pred:14, pred:%noreg
+	    Successors according to CFG: BB#3(?%)
+
+224B	BB#2: derived from LLVM BB %2
+	    Predecessors according to CFG: BB#0
+240B		ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+256B		%R0<def> = COPY %vreg3; GPR:%vreg3
+272B		tBL pred:14, pred:%noreg, <ga:@get_attr_mode>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use,kill>, %SP<imp-def>, %R0<imp-def>, ...
+288B		ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+304B		%vreg7<def> = COPY %R0<kill>; GPRnopc:%vreg7
+320B		%vreg8<def> = t2MOVi32imm <ga:@.str.2015>; rGPR:%vreg8
+336B		%vreg11<def> = t2MOVi32imm <ga:@.str.75>; rGPR:%vreg11
+352B		t2CMPri %vreg7, 4, pred:14, pred:%noreg, %CPSR<imp-def>; GPRnopc:%vreg7
+384B		%vreg11<def,tied1> = t2MOVCCr %vreg11<tied0>, %vreg8, pred:0, pred:%CPSR<kill>; rGPR:%vreg11,%vreg8
+	    Successors according to CFG: BB#3(?%)
+
+432B	BB#3: derived from LLVM BB %5
+	    Predecessors according to CFG: BB#2 BB#1
+464B		%R0<def> = COPY %vreg11; rGPR:%vreg11
+480B		tBX_RET pred:14, pred:%noreg, %R0<imp-use,kill>
+
+# End machine code for function output_51.
+
+# After Machine Instruction Scheduler:
+# Machine code for function output_51: Post SSA
+Function Live Ins: %R1 in %vreg3
+
+0B	BB#0: derived from LLVM BB %0
+	    Live Ins: %R1
+16B		%vreg3<def> = COPY %R1; GPR:%vreg3
+32B		ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+48B		%R0<def> = COPY %vreg3; GPR:%vreg3
+64B		tBL pred:14, pred:%noreg, <ga:@get_attr_type>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use,kill>, %SP<imp-def>, %R0<imp-def>, ...
+80B		ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+96B		%vreg5<def> = COPY %R0<kill>; GPRnopc:%vreg5
+112B		t2CMPri %vreg5, 8, pred:14, pred:%noreg, %CPSR<imp-def>; GPRnopc:%vreg5
+128B		t2Bcc <BB#2>, pred:1, pred:%CPSR<kill>
+	    Successors according to CFG: BB#1(0x40000000 / 0x80000000 = 50.00%) BB#2(0x40000000 / 0x80000000 = 50.00%)
+
+144B	BB#1: 
+	    Predecessors according to CFG: BB#0
+160B		%vreg11<def> = t2MOVi32imm <ga:@.str.2014>; rGPR:%vreg11
+208B		t2B <BB#3>, pred:14, pred:%noreg
+	    Successors according to CFG: BB#3(?%)
+
+224B	BB#2: derived from LLVM BB %2
+	    Predecessors according to CFG: BB#0
+240B		ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+256B		%R0<def> = COPY %vreg3; GPR:%vreg3
+272B		tBL pred:14, pred:%noreg, <ga:@get_attr_mode>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use,kill>, %SP<imp-def>, %R0<imp-def>, ...
+288B		ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+304B		%vreg7<def> = COPY %R0<kill>; GPRnopc:%vreg7
+320B		%vreg8<def> = t2MOVi32imm <ga:@.str.2015>; rGPR:%vreg8
+336B		%vreg11<def> = t2MOVi32imm <ga:@.str.75>; rGPR:%vreg11
+352B		t2CMPri %vreg7, 4, pred:14, pred:%noreg, %CPSR<imp-def>; GPRnopc:%vreg7
+384B		%vreg11<def,tied1> = t2MOVCCr %vreg11<tied0>, %vreg8, pred:0, pred:%CPSR<kill>; rGPR:%vreg11,%vreg8
+	    Successors according to CFG: BB#3(?%)
+
+432B	BB#3: derived from LLVM BB %5
+	    Predecessors according to CFG: BB#2 BB#1
+464B		%R0<def> = COPY %vreg11; rGPR:%vreg11
+480B		tBX_RET pred:14, pred:%noreg, %R0<imp-use,kill>
+
+# End machine code for function output_51.
+
+# After Greedy Register Allocator:
+# Machine code for function output_51: Post SSA
+Function Live Ins: %R1 in %vreg3
+
+0B	BB#0: derived from LLVM BB %0
+	    Live Ins: %R1
+16B		%vreg3<def> = COPY %R1; GPR:%vreg3
+32B		ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+48B		%R0<def> = COPY %vreg3; GPR:%vreg3
+64B		tBL pred:14, pred:%noreg, <ga:@get_attr_type>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %SP<imp-def>, %R0<imp-def>, ...
+80B		ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+96B		%vreg5<def> = COPY %R0; GPRnopc:%vreg5
+112B		t2CMPri %vreg5, 8, pred:14, pred:%noreg, %CPSR<imp-def>; GPRnopc:%vreg5
+128B		t2Bcc <BB#2>, pred:1, pred:%CPSR<kill>
+	    Successors according to CFG: BB#1(0x40000000 / 0x80000000 = 50.00%) BB#2(0x40000000 / 0x80000000 = 50.00%)
+
+144B	BB#1: 
+	    Predecessors according to CFG: BB#0
+160B		%vreg11<def> = t2MOVi32imm <ga:@.str.2014>; rGPR:%vreg11
+208B		t2B <BB#3>, pred:14, pred:%noreg
+	    Successors according to CFG: BB#3(?%)
+
+224B	BB#2: derived from LLVM BB %2
+	    Predecessors according to CFG: BB#0
+240B		ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+256B		%R0<def> = COPY %vreg3; GPR:%vreg3
+272B		tBL pred:14, pred:%noreg, <ga:@get_attr_mode>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %SP<imp-def>, %R0<imp-def>, ...
+288B		ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+304B		%vreg7<def> = COPY %R0; GPRnopc:%vreg7
+320B		%vreg8<def> = t2MOVi32imm <ga:@.str.2015>; rGPR:%vreg8
+336B		%vreg11<def> = t2MOVi32imm <ga:@.str.75>; rGPR:%vreg11
+352B		t2CMPri %vreg7, 4, pred:14, pred:%noreg, %CPSR<imp-def>; GPRnopc:%vreg7
+384B		%vreg11<def,tied1> = t2MOVCCr %vreg11<tied0>, %vreg8, pred:0, pred:%CPSR<kill>; rGPR:%vreg11,%vreg8
+	    Successors according to CFG: BB#3(?%)
+
+432B	BB#3: derived from LLVM BB %5
+	    Predecessors according to CFG: BB#2 BB#1
+464B		%R0<def> = COPY %vreg11; rGPR:%vreg11
+480B		tBX_RET pred:14, pred:%noreg, %R0<imp-use>
+
+# End machine code for function output_51.
+
+# After Virtual Register Rewriter:
+# Machine code for function output_51: Post SSA
+Function Live Ins: %R1
+
+0B	BB#0: derived from LLVM BB %0
+	    Live Ins: %R1
+16B		%R4<def> = COPY %R1
+32B		ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+48B		%R0<def> = COPY %R4
+64B		tBL pred:14, pred:%noreg, <ga:@get_attr_type>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %SP<imp-def>, %R0<imp-def>, ...
+80B		ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+112B		t2CMPri %R0<kill>, 8, pred:14, pred:%noreg, %CPSR<imp-def>
+128B		t2Bcc <BB#2>, pred:1, pred:%CPSR<kill>
+	    Successors according to CFG: BB#1(0x40000000 / 0x80000000 = 50.00%) BB#2(0x40000000 / 0x80000000 = 50.00%)
+
+144B	BB#1: 
+	    Predecessors according to CFG: BB#0
+160B		%R0<def> = t2MOVi32imm <ga:@.str.2014>
+208B		t2B <BB#3>, pred:14, pred:%noreg
+	    Successors according to CFG: BB#3(?%)
+
+224B	BB#2: derived from LLVM BB %2
+	    Live Ins: %R4
+	    Predecessors according to CFG: BB#0
+240B		ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+256B		%R0<def> = COPY %R4<kill>
+272B		tBL pred:14, pred:%noreg, <ga:@get_attr_mode>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %SP<imp-def>, %R0<imp-def>, ...
+288B		ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+304B		%R1<def> = COPY %R0
+320B		%R2<def> = t2MOVi32imm <ga:@.str.2015>
+336B		%R0<def> = t2MOVi32imm <ga:@.str.75>
+352B		t2CMPri %R1<kill>, 4, pred:14, pred:%noreg, %CPSR<imp-def>
+384B		%R0<def,tied1> = t2MOVCCr %R0<kill,tied0>, %R2<kill>, pred:0, pred:%CPSR<kill>
+	    Successors according to CFG: BB#3(?%)
+
+432B	BB#3: derived from LLVM BB %5
+	    Live Ins: %R0
+	    Predecessors according to CFG: BB#2 BB#1
+480B		tBX_RET pred:14, pred:%noreg, %R0<imp-use>
+
+# End machine code for function output_51.
+
+# After Stack Slot Coloring:
+# Machine code for function output_51: Post SSA
+Function Live Ins: %R1
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R1
+	%R4<def> = COPY %R1
+	ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%R0<def> = COPY %R4
+	tBL pred:14, pred:%noreg, <ga:@get_attr_type>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %SP<imp-def>, %R0<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	t2CMPri %R0<kill>, 8, pred:14, pred:%noreg, %CPSR<imp-def>
+	t2Bcc <BB#2>, pred:1, pred:%CPSR<kill>
+    Successors according to CFG: BB#1(0x40000000 / 0x80000000 = 50.00%) BB#2(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: 
+    Predecessors according to CFG: BB#0
+	%R0<def> = t2MOVi32imm <ga:@.str.2014>
+	t2B <BB#3>, pred:14, pred:%noreg
+    Successors according to CFG: BB#3(?%)
+
+BB#2: derived from LLVM BB %2
+    Live Ins: %R4
+    Predecessors according to CFG: BB#0
+	ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%R0<def> = COPY %R4<kill>
+	tBL pred:14, pred:%noreg, <ga:@get_attr_mode>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %SP<imp-def>, %R0<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%R1<def> = COPY %R0
+	%R2<def> = t2MOVi32imm <ga:@.str.2015>
+	%R0<def> = t2MOVi32imm <ga:@.str.75>
+	t2CMPri %R1<kill>, 4, pred:14, pred:%noreg, %CPSR<imp-def>
+	%R0<def,tied1> = t2MOVCCr %R0<kill,tied0>, %R2<kill>, pred:0, pred:%CPSR<kill>
+    Successors according to CFG: BB#3(?%)
+
+BB#3: derived from LLVM BB %5
+    Live Ins: %R0
+    Predecessors according to CFG: BB#2 BB#1
+	tBX_RET pred:14, pred:%noreg, %R0<imp-use>
+
+# End machine code for function output_51.
+
+# After Machine Loop Invariant Code Motion:
+# Machine code for function output_51: Post SSA
+Function Live Ins: %R1
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R1
+	%R4<def> = COPY %R1
+	ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%R0<def> = COPY %R4
+	tBL pred:14, pred:%noreg, <ga:@get_attr_type>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %SP<imp-def>, %R0<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	t2CMPri %R0<kill>, 8, pred:14, pred:%noreg, %CPSR<imp-def>
+	t2Bcc <BB#2>, pred:1, pred:%CPSR<kill>
+    Successors according to CFG: BB#1(0x40000000 / 0x80000000 = 50.00%) BB#2(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: 
+    Predecessors according to CFG: BB#0
+	%R0<def> = t2MOVi32imm <ga:@.str.2014>
+	t2B <BB#3>, pred:14, pred:%noreg
+    Successors according to CFG: BB#3(?%)
+
+BB#2: derived from LLVM BB %2
+    Live Ins: %R4
+    Predecessors according to CFG: BB#0
+	ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%R0<def> = COPY %R4<kill>
+	tBL pred:14, pred:%noreg, <ga:@get_attr_mode>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %SP<imp-def>, %R0<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%R1<def> = COPY %R0
+	%R2<def> = t2MOVi32imm <ga:@.str.2015>
+	%R0<def> = t2MOVi32imm <ga:@.str.75>
+	t2CMPri %R1<kill>, 4, pred:14, pred:%noreg, %CPSR<imp-def>
+	%R0<def,tied1> = t2MOVCCr %R0<kill,tied0>, %R2<kill>, pred:0, pred:%CPSR<kill>
+    Successors according to CFG: BB#3(?%)
+
+BB#3: derived from LLVM BB %5
+    Live Ins: %R0
+    Predecessors according to CFG: BB#2 BB#1
+	tBX_RET pred:14, pred:%noreg, %R0<imp-use>
+
+# End machine code for function output_51.
+
+# After Shrink Wrapping analysis:
+# Machine code for function output_51: Post SSA
+Function Live Ins: %R1
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R1
+	%R4<def> = COPY %R1
+	ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%R0<def> = COPY %R4
+	tBL pred:14, pred:%noreg, <ga:@get_attr_type>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %SP<imp-def>, %R0<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	t2CMPri %R0<kill>, 8, pred:14, pred:%noreg, %CPSR<imp-def>
+	t2Bcc <BB#2>, pred:1, pred:%CPSR<kill>
+    Successors according to CFG: BB#1(0x40000000 / 0x80000000 = 50.00%) BB#2(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: 
+    Predecessors according to CFG: BB#0
+	%R0<def> = t2MOVi32imm <ga:@.str.2014>
+	t2B <BB#3>, pred:14, pred:%noreg
+    Successors according to CFG: BB#3(?%)
+
+BB#2: derived from LLVM BB %2
+    Live Ins: %R4
+    Predecessors according to CFG: BB#0
+	ADJCALLSTACKDOWN 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%R0<def> = COPY %R4<kill>
+	tBL pred:14, pred:%noreg, <ga:@get_attr_mode>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %SP<imp-use>, %R0<imp-use>, %SP<imp-def>, %R0<imp-def>, ...
+	ADJCALLSTACKUP 0, 0, pred:14, pred:%noreg, %SP<imp-def,dead>, %SP<imp-use>
+	%R1<def> = COPY %R0
+	%R2<def> = t2MOVi32imm <ga:@.str.2015>
+	%R0<def> = t2MOVi32imm <ga:@.str.75>
+	t2CMPri %R1<kill>, 4, pred:14, pred:%noreg, %CPSR<imp-def>
+	%R0<def,tied1> = t2MOVCCr %R0<kill,tied0>, %R2<kill>, pred:0, pred:%CPSR<kill>
+    Successors according to CFG: BB#3(?%)
+
+BB#3: derived from LLVM BB %5
+    Live Ins: %R0
+    Predecessors according to CFG: BB#2 BB#1
+	tBX_RET pred:14, pred:%noreg, %R0<imp-use>
+
+# End machine code for function output_51.
+
+# After Prologue/Epilogue Insertion & Frame Finalization:
+# Machine code for function output_51: Post SSA
+Frame Objects:
+  fi#0: size=4, align=4, at location [SP-4]
+  fi#1: size=4, align=4, at location [SP-8]
+  fi#2: size=4, align=4, at location [SP-12]
+  fi#3: size=4, align=4, at location [SP-16]
+Function Live Ins: %R1
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R1 %R4 %R6 %R7 %LR
+	%SP<def,tied1> = t2STMDB_UPD %SP<tied0>, pred:14, pred:%noreg, %R4<kill>, %R6<kill>, %R7<kill>, %LR<kill>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%R7<def> = t2ADDri %SP<kill>, 8, pred:14, pred:%noreg, opt:%noreg; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%R4<def> = COPY %R1
+	%R0<def> = COPY %R4
+	tBL pred:14, pred:%noreg, <ga:@get_attr_type>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %LR<imp-def,dead>, %SP<imp-use>, %R0<imp-use>, %SP<imp-def>, %R0<imp-def>
+	t2CMPri %R0<kill>, 8, pred:14, pred:%noreg, %CPSR<imp-def>
+	t2Bcc <BB#2>, pred:1, pred:%CPSR<kill>
+    Successors according to CFG: BB#1(0x40000000 / 0x80000000 = 50.00%) BB#2(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: 
+    Predecessors according to CFG: BB#0
+	%R0<def> = t2MOVi32imm <ga:@.str.2014>
+	t2B <BB#3>, pred:14, pred:%noreg
+    Successors according to CFG: BB#3(?%)
+
+BB#2: derived from LLVM BB %2
+    Live Ins: %R4
+    Predecessors according to CFG: BB#0
+	%R0<def> = COPY %R4<kill>
+	tBL pred:14, pred:%noreg, <ga:@get_attr_mode>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %LR<imp-def,dead>, %SP<imp-use>, %R0<imp-use>, %SP<imp-def>, %R0<imp-def>
+	%R1<def> = COPY %R0
+	%R2<def> = t2MOVi32imm <ga:@.str.2015>
+	%R0<def> = t2MOVi32imm <ga:@.str.75>
+	t2CMPri %R1<kill>, 4, pred:14, pred:%noreg, %CPSR<imp-def>
+	%R0<def,tied1> = t2MOVCCr %R0<kill,tied0>, %R2<kill>, pred:0, pred:%CPSR<kill>
+    Successors according to CFG: BB#3(?%)
+
+BB#3: derived from LLVM BB %5
+    Live Ins: %R0
+    Predecessors according to CFG: BB#2 BB#1
+	%SP<def,tied1> = t2LDMIA_RET %SP<tied0>, pred:14, pred:%noreg, %R4<def>, %R6<def>, %R7<def>, %PC<def>, %R0<imp-use>
+
+# End machine code for function output_51.
+
+# After Machine Copy Propagation Pass:
+# Machine code for function output_51: Post SSA
+Frame Objects:
+  fi#0: size=4, align=4, at location [SP-4]
+  fi#1: size=4, align=4, at location [SP-8]
+  fi#2: size=4, align=4, at location [SP-12]
+  fi#3: size=4, align=4, at location [SP-16]
+Function Live Ins: %R1
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R1 %R4 %R6 %R7 %LR
+	%SP<def,tied1> = t2STMDB_UPD %SP<tied0>, pred:14, pred:%noreg, %R4<kill>, %R6<kill>, %R7<kill>, %LR<kill>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%R7<def> = t2ADDri %SP<kill>, 8, pred:14, pred:%noreg, opt:%noreg; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%R4<def> = COPY %R1
+	%R0<def> = COPY %R4
+	tBL pred:14, pred:%noreg, <ga:@get_attr_type>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %LR<imp-def,dead>, %SP<imp-use>, %R0<imp-use>, %SP<imp-def>, %R0<imp-def>
+	t2CMPri %R0<kill>, 8, pred:14, pred:%noreg, %CPSR<imp-def>
+	t2Bcc <BB#2>, pred:1, pred:%CPSR<kill>
+    Successors according to CFG: BB#1(0x40000000 / 0x80000000 = 50.00%) BB#2(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: 
+    Predecessors according to CFG: BB#0
+	%R0<def> = t2MOVi32imm <ga:@.str.2014>
+	t2B <BB#3>, pred:14, pred:%noreg
+    Successors according to CFG: BB#3(?%)
+
+BB#2: derived from LLVM BB %2
+    Live Ins: %R4
+    Predecessors according to CFG: BB#0
+	%R0<def> = COPY %R4<kill>
+	tBL pred:14, pred:%noreg, <ga:@get_attr_mode>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %LR<imp-def,dead>, %SP<imp-use>, %R0<imp-use>, %SP<imp-def>, %R0<imp-def>
+	%R1<def> = COPY %R0
+	%R2<def> = t2MOVi32imm <ga:@.str.2015>
+	%R0<def> = t2MOVi32imm <ga:@.str.75>
+	t2CMPri %R1<kill>, 4, pred:14, pred:%noreg, %CPSR<imp-def>
+	%R0<def,tied1> = t2MOVCCr %R0<kill,tied0>, %R2<kill>, pred:0, pred:%CPSR<kill>
+    Successors according to CFG: BB#3(?%)
+
+BB#3: derived from LLVM BB %5
+    Live Ins: %R0
+    Predecessors according to CFG: BB#2 BB#1
+	%SP<def,tied1> = t2LDMIA_RET %SP<tied0>, pred:14, pred:%noreg, %R4<def>, %R6<def>, %R7<def>, %PC<def>, %R0<imp-use>
+
+# End machine code for function output_51.
+
+# After Post-RA pseudo instruction expansion pass:
+# Machine code for function output_51: Post SSA
+Frame Objects:
+  fi#0: size=4, align=4, at location [SP-4]
+  fi#1: size=4, align=4, at location [SP-8]
+  fi#2: size=4, align=4, at location [SP-12]
+  fi#3: size=4, align=4, at location [SP-16]
+Function Live Ins: %R1
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R1 %R4 %R6 %R7 %LR
+	%SP<def,tied1> = t2STMDB_UPD %SP<tied0>, pred:14, pred:%noreg, %R4<kill>, %R6<kill>, %R7<kill>, %LR<kill>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%R7<def> = t2ADDri %SP<kill>, 8, pred:14, pred:%noreg, opt:%noreg; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%R4<def> = tMOVr %R1, pred:14, pred:%noreg
+	%R0<def> = tMOVr %R4, pred:14, pred:%noreg
+	tBL pred:14, pred:%noreg, <ga:@get_attr_type>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %LR<imp-def,dead>, %SP<imp-use>, %R0<imp-use>, %SP<imp-def>, %R0<imp-def>
+	t2CMPri %R0<kill>, 8, pred:14, pred:%noreg, %CPSR<imp-def>
+	t2Bcc <BB#2>, pred:1, pred:%CPSR<kill>
+    Successors according to CFG: BB#1(0x40000000 / 0x80000000 = 50.00%) BB#2(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: 
+    Predecessors according to CFG: BB#0
+	%R0<def> = t2MOVi32imm <ga:@.str.2014>
+	t2B <BB#3>, pred:14, pred:%noreg
+    Successors according to CFG: BB#3(?%)
+
+BB#2: derived from LLVM BB %2
+    Live Ins: %R4
+    Predecessors according to CFG: BB#0
+	%R0<def> = tMOVr %R4<kill>, pred:14, pred:%noreg
+	tBL pred:14, pred:%noreg, <ga:@get_attr_mode>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %LR<imp-def,dead>, %SP<imp-use>, %R0<imp-use>, %SP<imp-def>, %R0<imp-def>
+	%R1<def> = tMOVr %R0, pred:14, pred:%noreg
+	%R2<def> = t2MOVi32imm <ga:@.str.2015>
+	%R0<def> = t2MOVi32imm <ga:@.str.75>
+	t2CMPri %R1<kill>, 4, pred:14, pred:%noreg, %CPSR<imp-def>
+	%R0<def,tied1> = t2MOVCCr %R0<kill,tied0>, %R2<kill>, pred:0, pred:%CPSR<kill>
+    Successors according to CFG: BB#3(?%)
+
+BB#3: derived from LLVM BB %5
+    Live Ins: %R0
+    Predecessors according to CFG: BB#2 BB#1
+	%SP<def,tied1> = t2LDMIA_RET %SP<tied0>, pred:14, pred:%noreg, %R4<def>, %R6<def>, %R7<def>, %PC<def>, %R0<imp-use>
+
+# End machine code for function output_51.
+
+# After ARM load / store optimization pass:
+# Machine code for function output_51: Post SSA
+Frame Objects:
+  fi#0: size=4, align=4, at location [SP-4]
+  fi#1: size=4, align=4, at location [SP-8]
+  fi#2: size=4, align=4, at location [SP-12]
+  fi#3: size=4, align=4, at location [SP-16]
+Function Live Ins: %R1
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R1 %R4 %R6 %R7 %LR
+	%SP<def,tied1> = t2STMDB_UPD %SP<tied0>, pred:14, pred:%noreg, %R4<kill>, %R6<kill>, %R7<kill>, %LR<kill>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%R7<def> = t2ADDri %SP<kill>, 8, pred:14, pred:%noreg, opt:%noreg; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%R4<def> = tMOVr %R1, pred:14, pred:%noreg
+	%R0<def> = tMOVr %R4, pred:14, pred:%noreg
+	tBL pred:14, pred:%noreg, <ga:@get_attr_type>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %LR<imp-def,dead>, %SP<imp-use>, %R0<imp-use>, %SP<imp-def>, %R0<imp-def>
+	t2CMPri %R0<kill>, 8, pred:14, pred:%noreg, %CPSR<imp-def>
+	t2Bcc <BB#2>, pred:1, pred:%CPSR<kill>
+    Successors according to CFG: BB#1(0x40000000 / 0x80000000 = 50.00%) BB#2(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: 
+    Predecessors according to CFG: BB#0
+	%R0<def> = t2MOVi32imm <ga:@.str.2014>
+	t2B <BB#3>, pred:14, pred:%noreg
+    Successors according to CFG: BB#3(?%)
+
+BB#2: derived from LLVM BB %2
+    Live Ins: %R4
+    Predecessors according to CFG: BB#0
+	%R0<def> = tMOVr %R4<kill>, pred:14, pred:%noreg
+	tBL pred:14, pred:%noreg, <ga:@get_attr_mode>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %LR<imp-def,dead>, %SP<imp-use>, %R0<imp-use>, %SP<imp-def>, %R0<imp-def>
+	%R1<def> = tMOVr %R0, pred:14, pred:%noreg
+	%R2<def> = t2MOVi32imm <ga:@.str.2015>
+	%R0<def> = t2MOVi32imm <ga:@.str.75>
+	t2CMPri %R1<kill>, 4, pred:14, pred:%noreg, %CPSR<imp-def>
+	%R0<def,tied1> = t2MOVCCr %R0<kill,tied0>, %R2<kill>, pred:0, pred:%CPSR<kill>
+    Successors according to CFG: BB#3(?%)
+
+BB#3: derived from LLVM BB %5
+    Live Ins: %R0
+    Predecessors according to CFG: BB#2 BB#1
+	%SP<def,tied1> = t2LDMIA_RET %SP<tied0>, pred:14, pred:%noreg, %R4<def>, %R6<def>, %R7<def>, %PC<def>, %R0<imp-use>
+
+# End machine code for function output_51.
+
+# After Execution dependency fix:
+# Machine code for function output_51: Post SSA
+Frame Objects:
+  fi#0: size=4, align=4, at location [SP-4]
+  fi#1: size=4, align=4, at location [SP-8]
+  fi#2: size=4, align=4, at location [SP-12]
+  fi#3: size=4, align=4, at location [SP-16]
+Function Live Ins: %R1
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R1 %R4 %R6 %R7 %LR
+	%SP<def,tied1> = t2STMDB_UPD %SP<tied0>, pred:14, pred:%noreg, %R4<kill>, %R6<kill>, %R7<kill>, %LR<kill>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%R7<def> = t2ADDri %SP<kill>, 8, pred:14, pred:%noreg, opt:%noreg; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%R4<def> = tMOVr %R1, pred:14, pred:%noreg
+	%R0<def> = tMOVr %R4, pred:14, pred:%noreg
+	tBL pred:14, pred:%noreg, <ga:@get_attr_type>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %LR<imp-def,dead>, %SP<imp-use>, %R0<imp-use>, %SP<imp-def>, %R0<imp-def>
+	t2CMPri %R0<kill>, 8, pred:14, pred:%noreg, %CPSR<imp-def>
+	t2Bcc <BB#2>, pred:1, pred:%CPSR<kill>
+    Successors according to CFG: BB#1(0x40000000 / 0x80000000 = 50.00%) BB#2(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: 
+    Predecessors according to CFG: BB#0
+	%R0<def> = t2MOVi32imm <ga:@.str.2014>
+	t2B <BB#3>, pred:14, pred:%noreg
+    Successors according to CFG: BB#3(?%)
+
+BB#2: derived from LLVM BB %2
+    Live Ins: %R4
+    Predecessors according to CFG: BB#0
+	%R0<def> = tMOVr %R4<kill>, pred:14, pred:%noreg
+	tBL pred:14, pred:%noreg, <ga:@get_attr_mode>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %LR<imp-def,dead>, %SP<imp-use>, %R0<imp-use>, %SP<imp-def>, %R0<imp-def>
+	%R1<def> = tMOVr %R0, pred:14, pred:%noreg
+	%R2<def> = t2MOVi32imm <ga:@.str.2015>
+	%R0<def> = t2MOVi32imm <ga:@.str.75>
+	t2CMPri %R1<kill>, 4, pred:14, pred:%noreg, %CPSR<imp-def>
+	%R0<def,tied1> = t2MOVCCr %R0<kill,tied0>, %R2<kill>, pred:0, pred:%CPSR<kill>
+    Successors according to CFG: BB#3(?%)
+
+BB#3: derived from LLVM BB %5
+    Live Ins: %R0
+    Predecessors according to CFG: BB#2 BB#1
+	%SP<def,tied1> = t2LDMIA_RET %SP<tied0>, pred:14, pred:%noreg, %R4<def>, %R6<def>, %R7<def>, %PC<def>, %R0<imp-use>
+
+# End machine code for function output_51.
+
+# After ARM pseudo instruction expansion pass:
+# Machine code for function output_51: Post SSA
+Frame Objects:
+  fi#0: size=4, align=4, at location [SP-4]
+  fi#1: size=4, align=4, at location [SP-8]
+  fi#2: size=4, align=4, at location [SP-12]
+  fi#3: size=4, align=4, at location [SP-16]
+Function Live Ins: %R1
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R1 %R4 %R6 %R7 %LR
+	%SP<def,tied1> = t2STMDB_UPD %SP<tied0>, pred:14, pred:%noreg, %R4<kill>, %R6<kill>, %R7<kill>, %LR<kill>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%R7<def> = t2ADDri %SP<kill>, 8, pred:14, pred:%noreg, opt:%noreg; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%R4<def> = tMOVr %R1, pred:14, pred:%noreg
+	%R0<def> = tMOVr %R4, pred:14, pred:%noreg
+	tBL pred:14, pred:%noreg, <ga:@get_attr_type>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %LR<imp-def,dead>, %SP<imp-use>, %R0<imp-use>, %SP<imp-def>, %R0<imp-def>
+	t2CMPri %R0<kill>, 8, pred:14, pred:%noreg, %CPSR<imp-def>
+	t2Bcc <BB#2>, pred:1, pred:%CPSR<kill>
+    Successors according to CFG: BB#1(0x40000000 / 0x80000000 = 50.00%) BB#2(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: 
+    Predecessors according to CFG: BB#0
+	%R0<def> = t2MOVi16 <ga:@.str.2014>[TF=1], pred:14, pred:%noreg
+	%R0<def,tied1> = t2MOVTi16 %R0<tied0>, <ga:@.str.2014>[TF=2], pred:14, pred:%noreg
+	t2B <BB#3>, pred:14, pred:%noreg
+    Successors according to CFG: BB#3(?%)
+
+BB#2: derived from LLVM BB %2
+    Live Ins: %R4
+    Predecessors according to CFG: BB#0
+	%R0<def> = tMOVr %R4<kill>, pred:14, pred:%noreg
+	tBL pred:14, pred:%noreg, <ga:@get_attr_mode>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %LR<imp-def,dead>, %SP<imp-use>, %R0<imp-use>, %SP<imp-def>, %R0<imp-def>
+	%R1<def> = tMOVr %R0, pred:14, pred:%noreg
+	%R2<def> = t2MOVi16 <ga:@.str.2015>[TF=1], pred:14, pred:%noreg
+	%R2<def,tied1> = t2MOVTi16 %R2<tied0>, <ga:@.str.2015>[TF=2], pred:14, pred:%noreg
+	%R0<def> = t2MOVi16 <ga:@.str.75>[TF=1], pred:14, pred:%noreg
+	%R0<def,tied1> = t2MOVTi16 %R0<tied0>, <ga:@.str.75>[TF=2], pred:14, pred:%noreg
+	t2CMPri %R1<kill>, 4, pred:14, pred:%noreg, %CPSR<imp-def>
+	%R0<def> = t2MOVr %R2<kill>, pred:0, pred:%CPSR<kill>, opt:%noreg
+    Successors according to CFG: BB#3(?%)
+
+BB#3: derived from LLVM BB %5
+    Live Ins: %R0
+    Predecessors according to CFG: BB#2 BB#1
+	%SP<def,tied1> = t2LDMIA_RET %SP<tied0>, pred:14, pred:%noreg, %R4<def>, %R6<def>, %R7<def>, %PC<def>, %R0<imp-use>
+
+# End machine code for function output_51.
+
+# After Thumb2 instruction size reduction pass:
+# Machine code for function output_51: Post SSA
+Frame Objects:
+  fi#0: size=4, align=4, at location [SP-4]
+  fi#1: size=4, align=4, at location [SP-8]
+  fi#2: size=4, align=4, at location [SP-12]
+  fi#3: size=4, align=4, at location [SP-16]
+Function Live Ins: %R1
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R1 %R4 %R6 %R7 %LR
+	%SP<def,tied1> = t2STMDB_UPD %SP<tied0>, pred:14, pred:%noreg, %R4<kill>, %R6<kill>, %R7<kill>, %LR<kill>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%R7<def> = t2ADDri %SP<kill>, 8, pred:14, pred:%noreg, opt:%noreg; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%R4<def> = tMOVr %R1, pred:14, pred:%noreg
+	%R0<def> = tMOVr %R4, pred:14, pred:%noreg
+	tBL pred:14, pred:%noreg, <ga:@get_attr_type>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %LR<imp-def,dead>, %SP<imp-use>, %R0<imp-use>, %SP<imp-def>, %R0<imp-def>
+	t2CMPri %R0<kill>, 8, pred:14, pred:%noreg, %CPSR<imp-def>
+	t2Bcc <BB#2>, pred:1, pred:%CPSR<kill>
+    Successors according to CFG: BB#1(0x40000000 / 0x80000000 = 50.00%) BB#2(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: 
+    Predecessors according to CFG: BB#0
+	%R0<def> = t2MOVi16 <ga:@.str.2014>[TF=1], pred:14, pred:%noreg
+	%R0<def,tied1> = t2MOVTi16 %R0<tied0>, <ga:@.str.2014>[TF=2], pred:14, pred:%noreg
+	t2B <BB#3>, pred:14, pred:%noreg
+    Successors according to CFG: BB#3(?%)
+
+BB#2: derived from LLVM BB %2
+    Live Ins: %R4
+    Predecessors according to CFG: BB#0
+	%R0<def> = tMOVr %R4<kill>, pred:14, pred:%noreg
+	tBL pred:14, pred:%noreg, <ga:@get_attr_mode>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %LR<imp-def,dead>, %SP<imp-use>, %R0<imp-use>, %SP<imp-def>, %R0<imp-def>
+	%R1<def> = tMOVr %R0, pred:14, pred:%noreg
+	%R2<def> = t2MOVi16 <ga:@.str.2015>[TF=1], pred:14, pred:%noreg
+	%R2<def,tied1> = t2MOVTi16 %R2<tied0>, <ga:@.str.2015>[TF=2], pred:14, pred:%noreg
+	%R0<def> = t2MOVi16 <ga:@.str.75>[TF=1], pred:14, pred:%noreg
+	%R0<def,tied1> = t2MOVTi16 %R0<tied0>, <ga:@.str.75>[TF=2], pred:14, pred:%noreg
+	t2CMPri %R1<kill>, 4, pred:14, pred:%noreg, %CPSR<imp-def>
+	%R0<def> = t2MOVr %R2<kill>, pred:0, pred:%CPSR<kill>, opt:%noreg
+    Successors according to CFG: BB#3(?%)
+
+BB#3: derived from LLVM BB %5
+    Live Ins: %R0
+    Predecessors according to CFG: BB#2 BB#1
+	%SP<def,tied1> = t2LDMIA_RET %SP<tied0>, pred:14, pred:%noreg, %R4<def>, %R6<def>, %R7<def>, %PC<def>, %R0<imp-use>
+
+# End machine code for function output_51.
+
+# After Thumb IT blocks insertion pass:
+# Machine code for function output_51: Post SSA
+Frame Objects:
+  fi#0: size=4, align=4, at location [SP-4]
+  fi#1: size=4, align=4, at location [SP-8]
+  fi#2: size=4, align=4, at location [SP-12]
+  fi#3: size=4, align=4, at location [SP-16]
+Function Live Ins: %R1
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R1 %R4 %R6 %R7 %LR
+	%SP<def,tied1> = t2STMDB_UPD %SP<tied0>, pred:14, pred:%noreg, %R4<kill>, %R6<kill>, %R7<kill>, %LR<kill>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%R7<def> = t2ADDri %SP<kill>, 8, pred:14, pred:%noreg, opt:%noreg; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%R4<def> = tMOVr %R1, pred:14, pred:%noreg
+	%R0<def> = tMOVr %R4, pred:14, pred:%noreg
+	tBL pred:14, pred:%noreg, <ga:@get_attr_type>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %LR<imp-def,dead>, %SP<imp-use>, %R0<imp-use>, %SP<imp-def>, %R0<imp-def>
+	t2CMPri %R0<kill>, 8, pred:14, pred:%noreg, %CPSR<imp-def>
+	t2Bcc <BB#2>, pred:1, pred:%CPSR<kill>
+    Successors according to CFG: BB#1(0x40000000 / 0x80000000 = 50.00%) BB#2(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: 
+    Predecessors according to CFG: BB#0
+	%R0<def> = t2MOVi16 <ga:@.str.2014>[TF=1], pred:14, pred:%noreg
+	%R0<def,tied1> = t2MOVTi16 %R0<tied0>, <ga:@.str.2014>[TF=2], pred:14, pred:%noreg
+	t2B <BB#3>, pred:14, pred:%noreg
+    Successors according to CFG: BB#3(?%)
+
+BB#2: derived from LLVM BB %2
+    Live Ins: %R4
+    Predecessors according to CFG: BB#0
+	%R0<def> = tMOVr %R4<kill>, pred:14, pred:%noreg
+	tBL pred:14, pred:%noreg, <ga:@get_attr_mode>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %LR<imp-def,dead>, %SP<imp-use>, %R0<imp-use>, %SP<imp-def>, %R0<imp-def>
+	%R1<def> = tMOVr %R0, pred:14, pred:%noreg
+	%R2<def> = t2MOVi16 <ga:@.str.2015>[TF=1], pred:14, pred:%noreg
+	%R2<def,tied1> = t2MOVTi16 %R2<tied0>, <ga:@.str.2015>[TF=2], pred:14, pred:%noreg
+	%R0<def> = t2MOVi16 <ga:@.str.75>[TF=1], pred:14, pred:%noreg
+	%R0<def,tied1> = t2MOVTi16 %R0<tied0>, <ga:@.str.75>[TF=2], pred:14, pred:%noreg
+	t2CMPri %R1<kill>, 4, pred:14, pred:%noreg, %CPSR<imp-def>
+	BUNDLE %ITSTATE<imp-def,dead>, %R0<imp-def>, %R2<imp-use,kill>, %CPSR<imp-use,kill>
+	  * t2IT 0, 8, %ITSTATE<imp-def>
+	  * %R0<def> = t2MOVr %R2<kill>, pred:0, pred:%CPSR<kill>, opt:%noreg, %ITSTATE<imp-use,kill,internal>
+    Successors according to CFG: BB#3(?%)
+
+BB#3: derived from LLVM BB %5
+    Live Ins: %R0
+    Predecessors according to CFG: BB#2 BB#1
+	%SP<def,tied1> = t2LDMIA_RET %SP<tied0>, pred:14, pred:%noreg, %R4<def>, %R6<def>, %R7<def>, %PC<def>, %R0<imp-use>
+
+# End machine code for function output_51.
+
+# After Analyze Machine Code For Garbage Collection:
+# Machine code for function output_51: Post SSA
+Frame Objects:
+  fi#0: size=4, align=4, at location [SP-4]
+  fi#1: size=4, align=4, at location [SP-8]
+  fi#2: size=4, align=4, at location [SP-12]
+  fi#3: size=4, align=4, at location [SP-16]
+Function Live Ins: %R1
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R1 %R4 %R6 %R7 %LR
+	%SP<def,tied1> = t2STMDB_UPD %SP<tied0>, pred:14, pred:%noreg, %R4<kill>, %R6<kill>, %R7<kill>, %LR<kill>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%R7<def> = t2ADDri %SP<kill>, 8, pred:14, pred:%noreg, opt:%noreg; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%R4<def> = tMOVr %R1, pred:14, pred:%noreg
+	%R0<def> = tMOVr %R4, pred:14, pred:%noreg
+	tBL pred:14, pred:%noreg, <ga:@get_attr_type>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %LR<imp-def,dead>, %SP<imp-use>, %R0<imp-use>, %SP<imp-def>, %R0<imp-def>
+	t2CMPri %R0<kill>, 8, pred:14, pred:%noreg, %CPSR<imp-def>
+	t2Bcc <BB#2>, pred:1, pred:%CPSR<kill>
+    Successors according to CFG: BB#1(0x40000000 / 0x80000000 = 50.00%) BB#2(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: 
+    Predecessors according to CFG: BB#0
+	%R0<def> = t2MOVi16 <ga:@.str.2014>[TF=1], pred:14, pred:%noreg
+	%R0<def,tied1> = t2MOVTi16 %R0<tied0>, <ga:@.str.2014>[TF=2], pred:14, pred:%noreg
+	t2B <BB#3>, pred:14, pred:%noreg
+    Successors according to CFG: BB#3(?%)
+
+BB#2: derived from LLVM BB %2
+    Live Ins: %R4
+    Predecessors according to CFG: BB#0
+	%R0<def> = tMOVr %R4<kill>, pred:14, pred:%noreg
+	tBL pred:14, pred:%noreg, <ga:@get_attr_mode>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %LR<imp-def,dead>, %SP<imp-use>, %R0<imp-use>, %SP<imp-def>, %R0<imp-def>
+	%R1<def> = tMOVr %R0, pred:14, pred:%noreg
+	%R2<def> = t2MOVi16 <ga:@.str.2015>[TF=1], pred:14, pred:%noreg
+	%R2<def,tied1> = t2MOVTi16 %R2<tied0>, <ga:@.str.2015>[TF=2], pred:14, pred:%noreg
+	%R0<def> = t2MOVi16 <ga:@.str.75>[TF=1], pred:14, pred:%noreg
+	%R0<def,tied1> = t2MOVTi16 %R0<tied0>, <ga:@.str.75>[TF=2], pred:14, pred:%noreg
+	t2CMPri %R1<kill>, 4, pred:14, pred:%noreg, %CPSR<imp-def>
+	BUNDLE %ITSTATE<imp-def,dead>, %R0<imp-def>, %R2<imp-use,kill>, %CPSR<imp-use,kill>
+	  * t2IT 0, 8, %ITSTATE<imp-def>
+	  * %R0<def> = t2MOVr %R2<kill>, pred:0, pred:%CPSR<kill>, opt:%noreg, %ITSTATE<imp-use,kill,internal>
+    Successors according to CFG: BB#3(?%)
+
+BB#3: derived from LLVM BB %5
+    Live Ins: %R0
+    Predecessors according to CFG: BB#2 BB#1
+	%SP<def,tied1> = t2LDMIA_RET %SP<tied0>, pred:14, pred:%noreg, %R4<def>, %R6<def>, %R7<def>, %PC<def>, %R0<imp-use>
+
+# End machine code for function output_51.
+
+# After Thumb2 instruction size reduction pass:
+# Machine code for function output_51: Post SSA
+Frame Objects:
+  fi#0: size=4, align=4, at location [SP-4]
+  fi#1: size=4, align=4, at location [SP-8]
+  fi#2: size=4, align=4, at location [SP-12]
+  fi#3: size=4, align=4, at location [SP-16]
+Function Live Ins: %R1
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R1 %R4 %R6 %R7 %LR
+	tPUSH pred:14, pred:%noreg, %R4<kill>, %R6<kill>, %R7<kill>, %LR<kill>, %SP<imp-def>, %SP<imp-use>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%R7<def> = tADDrSPi %SP<kill>, 2, pred:14, pred:%noreg; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%R4<def> = tMOVr %R1, pred:14, pred:%noreg
+	%R0<def> = tMOVr %R4, pred:14, pred:%noreg
+	tBL pred:14, pred:%noreg, <ga:@get_attr_type>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %LR<imp-def,dead>, %SP<imp-use>, %R0<imp-use>, %SP<imp-def>, %R0<imp-def>
+	tCMPi8 %R0<kill>, 8, pred:14, pred:%noreg, %CPSR<imp-def>
+	t2Bcc <BB#2>, pred:1, pred:%CPSR<kill>
+    Successors according to CFG: BB#1(0x40000000 / 0x80000000 = 50.00%) BB#2(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: 
+    Predecessors according to CFG: BB#0
+	%R0<def> = t2MOVi16 <ga:@.str.2014>[TF=1], pred:14, pred:%noreg
+	%R0<def,tied1> = t2MOVTi16 %R0<tied0>, <ga:@.str.2014>[TF=2], pred:14, pred:%noreg
+	t2B <BB#3>, pred:14, pred:%noreg
+    Successors according to CFG: BB#3(?%)
+
+BB#2: derived from LLVM BB %2
+    Live Ins: %R4
+    Predecessors according to CFG: BB#0
+	%R0<def> = tMOVr %R4<kill>, pred:14, pred:%noreg
+	tBL pred:14, pred:%noreg, <ga:@get_attr_mode>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %LR<imp-def,dead>, %SP<imp-use>, %R0<imp-use>, %SP<imp-def>, %R0<imp-def>
+	%R1<def> = tMOVr %R0, pred:14, pred:%noreg
+	%R2<def> = t2MOVi16 <ga:@.str.2015>[TF=1], pred:14, pred:%noreg
+	%R2<def,tied1> = t2MOVTi16 %R2<tied0>, <ga:@.str.2015>[TF=2], pred:14, pred:%noreg
+	%R0<def> = t2MOVi16 <ga:@.str.75>[TF=1], pred:14, pred:%noreg
+	%R0<def,tied1> = t2MOVTi16 %R0<tied0>, <ga:@.str.75>[TF=2], pred:14, pred:%noreg
+	tCMPi8 %R1<kill>, 4, pred:14, pred:%noreg, %CPSR<imp-def>
+	BUNDLE %ITSTATE<imp-def,dead>, %R0<imp-def>, %R2<imp-use,kill>, %CPSR<imp-use,kill>
+	  * t2IT 0, 8, %ITSTATE<imp-def>
+	  * %R0<def> = tMOVr %R2<kill>, pred:0, pred:%CPSR<kill>, %ITSTATE<imp-use,kill,internal>
+    Successors according to CFG: BB#3(?%)
+
+BB#3: derived from LLVM BB %5
+    Live Ins: %R0
+    Predecessors according to CFG: BB#2 BB#1
+	tPOP_RET pred:14, pred:%noreg, %R4<def>, %R6<def>, %R7<def>, %PC<def>, %R0<imp-use>
+
+# End machine code for function output_51.
+
+# After Unpack machine instruction bundles:
+# Machine code for function output_51: Post SSA
+Frame Objects:
+  fi#0: size=4, align=4, at location [SP-4]
+  fi#1: size=4, align=4, at location [SP-8]
+  fi#2: size=4, align=4, at location [SP-12]
+  fi#3: size=4, align=4, at location [SP-16]
+Function Live Ins: %R1
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R1 %R4 %R6 %R7 %LR
+	tPUSH pred:14, pred:%noreg, %R4<kill>, %R6<kill>, %R7<kill>, %LR<kill>, %SP<imp-def>, %SP<imp-use>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%R7<def> = tADDrSPi %SP<kill>, 2, pred:14, pred:%noreg; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%R4<def> = tMOVr %R1, pred:14, pred:%noreg
+	%R0<def> = tMOVr %R4, pred:14, pred:%noreg
+	tBL pred:14, pred:%noreg, <ga:@get_attr_type>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %LR<imp-def,dead>, %SP<imp-use>, %R0<imp-use>, %SP<imp-def>, %R0<imp-def>
+	tCMPi8 %R0<kill>, 8, pred:14, pred:%noreg, %CPSR<imp-def>
+	t2Bcc <BB#2>, pred:1, pred:%CPSR<kill>
+    Successors according to CFG: BB#1(0x40000000 / 0x80000000 = 50.00%) BB#2(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: 
+    Predecessors according to CFG: BB#0
+	%R0<def> = t2MOVi16 <ga:@.str.2014>[TF=1], pred:14, pred:%noreg
+	%R0<def,tied1> = t2MOVTi16 %R0<tied0>, <ga:@.str.2014>[TF=2], pred:14, pred:%noreg
+	t2B <BB#3>, pred:14, pred:%noreg
+    Successors according to CFG: BB#3(?%)
+
+BB#2: derived from LLVM BB %2
+    Live Ins: %R4
+    Predecessors according to CFG: BB#0
+	%R0<def> = tMOVr %R4<kill>, pred:14, pred:%noreg
+	tBL pred:14, pred:%noreg, <ga:@get_attr_mode>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %LR<imp-def,dead>, %SP<imp-use>, %R0<imp-use>, %SP<imp-def>, %R0<imp-def>
+	%R1<def> = tMOVr %R0, pred:14, pred:%noreg
+	%R2<def> = t2MOVi16 <ga:@.str.2015>[TF=1], pred:14, pred:%noreg
+	%R2<def,tied1> = t2MOVTi16 %R2<tied0>, <ga:@.str.2015>[TF=2], pred:14, pred:%noreg
+	%R0<def> = t2MOVi16 <ga:@.str.75>[TF=1], pred:14, pred:%noreg
+	%R0<def,tied1> = t2MOVTi16 %R0<tied0>, <ga:@.str.75>[TF=2], pred:14, pred:%noreg
+	tCMPi8 %R1<kill>, 4, pred:14, pred:%noreg, %CPSR<imp-def>
+	t2IT 0, 8, %ITSTATE<imp-def>
+	%R0<def> = tMOVr %R2<kill>, pred:0, pred:%CPSR<kill>, %ITSTATE<imp-use,kill>
+    Successors according to CFG: BB#3(?%)
+
+BB#3: derived from LLVM BB %5
+    Live Ins: %R0
+    Predecessors according to CFG: BB#2 BB#1
+	tPOP_RET pred:14, pred:%noreg, %R4<def>, %R6<def>, %R7<def>, %PC<def>, %R0<imp-use>
+
+# End machine code for function output_51.
+
+# After optimise barriers pass:
+# Machine code for function output_51: Post SSA
+Frame Objects:
+  fi#0: size=4, align=4, at location [SP-4]
+  fi#1: size=4, align=4, at location [SP-8]
+  fi#2: size=4, align=4, at location [SP-12]
+  fi#3: size=4, align=4, at location [SP-16]
+Function Live Ins: %R1
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R1 %R4 %R6 %R7 %LR
+	tPUSH pred:14, pred:%noreg, %R4<kill>, %R6<kill>, %R7<kill>, %LR<kill>, %SP<imp-def>, %SP<imp-use>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%R7<def> = tADDrSPi %SP<kill>, 2, pred:14, pred:%noreg; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%R4<def> = tMOVr %R1, pred:14, pred:%noreg
+	%R0<def> = tMOVr %R4, pred:14, pred:%noreg
+	tBL pred:14, pred:%noreg, <ga:@get_attr_type>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %LR<imp-def,dead>, %SP<imp-use>, %R0<imp-use>, %SP<imp-def>, %R0<imp-def>
+	tCMPi8 %R0<kill>, 8, pred:14, pred:%noreg, %CPSR<imp-def>
+	t2Bcc <BB#2>, pred:1, pred:%CPSR<kill>
+    Successors according to CFG: BB#1(0x40000000 / 0x80000000 = 50.00%) BB#2(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: 
+    Predecessors according to CFG: BB#0
+	%R0<def> = t2MOVi16 <ga:@.str.2014>[TF=1], pred:14, pred:%noreg
+	%R0<def,tied1> = t2MOVTi16 %R0<tied0>, <ga:@.str.2014>[TF=2], pred:14, pred:%noreg
+	t2B <BB#3>, pred:14, pred:%noreg
+    Successors according to CFG: BB#3(?%)
+
+BB#2: derived from LLVM BB %2
+    Live Ins: %R4
+    Predecessors according to CFG: BB#0
+	%R0<def> = tMOVr %R4<kill>, pred:14, pred:%noreg
+	tBL pred:14, pred:%noreg, <ga:@get_attr_mode>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %LR<imp-def,dead>, %SP<imp-use>, %R0<imp-use>, %SP<imp-def>, %R0<imp-def>
+	%R1<def> = tMOVr %R0, pred:14, pred:%noreg
+	%R2<def> = t2MOVi16 <ga:@.str.2015>[TF=1], pred:14, pred:%noreg
+	%R2<def,tied1> = t2MOVTi16 %R2<tied0>, <ga:@.str.2015>[TF=2], pred:14, pred:%noreg
+	%R0<def> = t2MOVi16 <ga:@.str.75>[TF=1], pred:14, pred:%noreg
+	%R0<def,tied1> = t2MOVTi16 %R0<tied0>, <ga:@.str.75>[TF=2], pred:14, pred:%noreg
+	tCMPi8 %R1<kill>, 4, pred:14, pred:%noreg, %CPSR<imp-def>
+	t2IT 0, 8, %ITSTATE<imp-def>
+	%R0<def> = tMOVr %R2<kill>, pred:0, pred:%CPSR<kill>, %ITSTATE<imp-use,kill>
+    Successors according to CFG: BB#3(?%)
+
+BB#3: derived from LLVM BB %5
+    Live Ins: %R0
+    Predecessors according to CFG: BB#2 BB#1
+	tPOP_RET pred:14, pred:%noreg, %R4<def>, %R6<def>, %R7<def>, %PC<def>, %R0<imp-use>
+
+# End machine code for function output_51.
+
+# After ARM constant island placement and branch shortening pass:
+# Machine code for function output_51: Post SSA, not tracking liveness
+Frame Objects:
+  fi#0: size=4, align=4, at location [SP-4]
+  fi#1: size=4, align=4, at location [SP-8]
+  fi#2: size=4, align=4, at location [SP-12]
+  fi#3: size=4, align=4, at location [SP-16]
+Function Live Ins: %R1
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R1 %R4 %R6 %R7 %LR
+	tPUSH pred:14, pred:%noreg, %R4<kill>, %R6<kill>, %R7<kill>, %LR<kill>, %SP<imp-def>, %SP<imp-use>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%R7<def> = tADDrSPi %SP<kill>, 2, pred:14, pred:%noreg; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%R4<def> = tMOVr %R1, pred:14, pred:%noreg
+	%R0<def> = tMOVr %R4, pred:14, pred:%noreg
+	tBL pred:14, pred:%noreg, <ga:@get_attr_type>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %LR<imp-def,dead>, %SP<imp-use>, %R0<imp-use>, %SP<imp-def>, %R0<imp-def>
+	tCMPi8 %R0<kill>, 8, pred:14, pred:%noreg, %CPSR<imp-def>
+	t2Bcc <BB#2>, pred:1, pred:%CPSR<kill>
+    Successors according to CFG: BB#1(0x40000000 / 0x80000000 = 50.00%) BB#2(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: 
+    Predecessors according to CFG: BB#0
+	%R0<def> = t2MOVi16 <ga:@.str.2014>[TF=1], pred:14, pred:%noreg
+	%R0<def,tied1> = t2MOVTi16 %R0<tied0>, <ga:@.str.2014>[TF=2], pred:14, pred:%noreg
+	t2B <BB#3>, pred:14, pred:%noreg
+    Successors according to CFG: BB#3(?%)
+
+BB#2: derived from LLVM BB %2
+    Live Ins: %R4
+    Predecessors according to CFG: BB#0
+	%R0<def> = tMOVr %R4<kill>, pred:14, pred:%noreg
+	tBL pred:14, pred:%noreg, <ga:@get_attr_mode>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %LR<imp-def,dead>, %SP<imp-use>, %R0<imp-use>, %SP<imp-def>, %R0<imp-def>
+	%R1<def> = tMOVr %R0, pred:14, pred:%noreg
+	%R2<def> = t2MOVi16 <ga:@.str.2015>[TF=1], pred:14, pred:%noreg
+	%R2<def,tied1> = t2MOVTi16 %R2<tied0>, <ga:@.str.2015>[TF=2], pred:14, pred:%noreg
+	%R0<def> = t2MOVi16 <ga:@.str.75>[TF=1], pred:14, pred:%noreg
+	%R0<def,tied1> = t2MOVTi16 %R0<tied0>, <ga:@.str.75>[TF=2], pred:14, pred:%noreg
+	tCMPi8 %R1<kill>, 4, pred:14, pred:%noreg, %CPSR<imp-def>
+	t2IT 0, 8, %ITSTATE<imp-def>
+	%R0<def> = tMOVr %R2<kill>, pred:0, pred:%CPSR<kill>, %ITSTATE<imp-use,kill>
+    Successors according to CFG: BB#3(?%)
+
+BB#3: derived from LLVM BB %5
+    Live Ins: %R0
+    Predecessors according to CFG: BB#2 BB#1
+	tPOP_RET pred:14, pred:%noreg, %R4<def>, %R6<def>, %R7<def>, %PC<def>, %R0<imp-use>
+
+# End machine code for function output_51.
+
+# After Contiguously Lay Out Funclets:
+# Machine code for function output_51: Post SSA, not tracking liveness
+Frame Objects:
+  fi#0: size=4, align=4, at location [SP-4]
+  fi#1: size=4, align=4, at location [SP-8]
+  fi#2: size=4, align=4, at location [SP-12]
+  fi#3: size=4, align=4, at location [SP-16]
+Function Live Ins: %R1
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R1 %R4 %R6 %R7 %LR
+	tPUSH pred:14, pred:%noreg, %R4<kill>, %R6<kill>, %R7<kill>, %LR<kill>, %SP<imp-def>, %SP<imp-use>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%R7<def> = tADDrSPi %SP<kill>, 2, pred:14, pred:%noreg; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%R4<def> = tMOVr %R1, pred:14, pred:%noreg
+	%R0<def> = tMOVr %R4, pred:14, pred:%noreg
+	tBL pred:14, pred:%noreg, <ga:@get_attr_type>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %LR<imp-def,dead>, %SP<imp-use>, %R0<imp-use>, %SP<imp-def>, %R0<imp-def>
+	tCMPi8 %R0<kill>, 8, pred:14, pred:%noreg, %CPSR<imp-def>
+	t2Bcc <BB#2>, pred:1, pred:%CPSR<kill>
+    Successors according to CFG: BB#1(0x40000000 / 0x80000000 = 50.00%) BB#2(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: 
+    Predecessors according to CFG: BB#0
+	%R0<def> = t2MOVi16 <ga:@.str.2014>[TF=1], pred:14, pred:%noreg
+	%R0<def,tied1> = t2MOVTi16 %R0<tied0>, <ga:@.str.2014>[TF=2], pred:14, pred:%noreg
+	t2B <BB#3>, pred:14, pred:%noreg
+    Successors according to CFG: BB#3(?%)
+
+BB#2: derived from LLVM BB %2
+    Live Ins: %R4
+    Predecessors according to CFG: BB#0
+	%R0<def> = tMOVr %R4<kill>, pred:14, pred:%noreg
+	tBL pred:14, pred:%noreg, <ga:@get_attr_mode>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %LR<imp-def,dead>, %SP<imp-use>, %R0<imp-use>, %SP<imp-def>, %R0<imp-def>
+	%R1<def> = tMOVr %R0, pred:14, pred:%noreg
+	%R2<def> = t2MOVi16 <ga:@.str.2015>[TF=1], pred:14, pred:%noreg
+	%R2<def,tied1> = t2MOVTi16 %R2<tied0>, <ga:@.str.2015>[TF=2], pred:14, pred:%noreg
+	%R0<def> = t2MOVi16 <ga:@.str.75>[TF=1], pred:14, pred:%noreg
+	%R0<def,tied1> = t2MOVTi16 %R0<tied0>, <ga:@.str.75>[TF=2], pred:14, pred:%noreg
+	tCMPi8 %R1<kill>, 4, pred:14, pred:%noreg, %CPSR<imp-def>
+	t2IT 0, 8, %ITSTATE<imp-def>
+	%R0<def> = tMOVr %R2<kill>, pred:0, pred:%CPSR<kill>, %ITSTATE<imp-use,kill>
+    Successors according to CFG: BB#3(?%)
+
+BB#3: derived from LLVM BB %5
+    Live Ins: %R0
+    Predecessors according to CFG: BB#2 BB#1
+	tPOP_RET pred:14, pred:%noreg, %R4<def>, %R6<def>, %R7<def>, %PC<def>, %R0<imp-use>
+
+# End machine code for function output_51.
+
+# After StackMap Liveness Analysis:
+# Machine code for function output_51: Post SSA, not tracking liveness
+Frame Objects:
+  fi#0: size=4, align=4, at location [SP-4]
+  fi#1: size=4, align=4, at location [SP-8]
+  fi#2: size=4, align=4, at location [SP-12]
+  fi#3: size=4, align=4, at location [SP-16]
+Function Live Ins: %R1
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R1 %R4 %R6 %R7 %LR
+	tPUSH pred:14, pred:%noreg, %R4<kill>, %R6<kill>, %R7<kill>, %LR<kill>, %SP<imp-def>, %SP<imp-use>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%R7<def> = tADDrSPi %SP<kill>, 2, pred:14, pred:%noreg; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%R4<def> = tMOVr %R1, pred:14, pred:%noreg
+	%R0<def> = tMOVr %R4, pred:14, pred:%noreg
+	tBL pred:14, pred:%noreg, <ga:@get_attr_type>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %LR<imp-def,dead>, %SP<imp-use>, %R0<imp-use>, %SP<imp-def>, %R0<imp-def>
+	tCMPi8 %R0<kill>, 8, pred:14, pred:%noreg, %CPSR<imp-def>
+	t2Bcc <BB#2>, pred:1, pred:%CPSR<kill>
+    Successors according to CFG: BB#1(0x40000000 / 0x80000000 = 50.00%) BB#2(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: 
+    Predecessors according to CFG: BB#0
+	%R0<def> = t2MOVi16 <ga:@.str.2014>[TF=1], pred:14, pred:%noreg
+	%R0<def,tied1> = t2MOVTi16 %R0<tied0>, <ga:@.str.2014>[TF=2], pred:14, pred:%noreg
+	t2B <BB#3>, pred:14, pred:%noreg
+    Successors according to CFG: BB#3(?%)
+
+BB#2: derived from LLVM BB %2
+    Live Ins: %R4
+    Predecessors according to CFG: BB#0
+	%R0<def> = tMOVr %R4<kill>, pred:14, pred:%noreg
+	tBL pred:14, pred:%noreg, <ga:@get_attr_mode>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %LR<imp-def,dead>, %SP<imp-use>, %R0<imp-use>, %SP<imp-def>, %R0<imp-def>
+	%R1<def> = tMOVr %R0, pred:14, pred:%noreg
+	%R2<def> = t2MOVi16 <ga:@.str.2015>[TF=1], pred:14, pred:%noreg
+	%R2<def,tied1> = t2MOVTi16 %R2<tied0>, <ga:@.str.2015>[TF=2], pred:14, pred:%noreg
+	%R0<def> = t2MOVi16 <ga:@.str.75>[TF=1], pred:14, pred:%noreg
+	%R0<def,tied1> = t2MOVTi16 %R0<tied0>, <ga:@.str.75>[TF=2], pred:14, pred:%noreg
+	tCMPi8 %R1<kill>, 4, pred:14, pred:%noreg, %CPSR<imp-def>
+	t2IT 0, 8, %ITSTATE<imp-def>
+	%R0<def> = tMOVr %R2<kill>, pred:0, pred:%CPSR<kill>, %ITSTATE<imp-use,kill>
+    Successors according to CFG: BB#3(?%)
+
+BB#3: derived from LLVM BB %5
+    Live Ins: %R0
+    Predecessors according to CFG: BB#2 BB#1
+	tPOP_RET pred:14, pred:%noreg, %R4<def>, %R6<def>, %R7<def>, %PC<def>, %R0<imp-use>
+
+# End machine code for function output_51.
+
+# After Live DEBUG_VALUE analysis:
+# Machine code for function output_51: Post SSA, not tracking liveness
+Frame Objects:
+  fi#0: size=4, align=4, at location [SP-4]
+  fi#1: size=4, align=4, at location [SP-8]
+  fi#2: size=4, align=4, at location [SP-12]
+  fi#3: size=4, align=4, at location [SP-16]
+Function Live Ins: %R1
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R1 %R4 %R6 %R7 %LR
+	tPUSH pred:14, pred:%noreg, %R4<kill>, %R6<kill>, %R7<kill>, %LR<kill>, %SP<imp-def>, %SP<imp-use>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%R7<def> = tADDrSPi %SP<kill>, 2, pred:14, pred:%noreg; flags: FrameSetup
+	CFI_INSTRUCTION <call frame instruction>; flags: FrameSetup
+	%R4<def> = tMOVr %R1, pred:14, pred:%noreg
+	%R0<def> = tMOVr %R4, pred:14, pred:%noreg
+	tBL pred:14, pred:%noreg, <ga:@get_attr_type>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %LR<imp-def,dead>, %SP<imp-use>, %R0<imp-use>, %SP<imp-def>, %R0<imp-def>
+	tCMPi8 %R0<kill>, 8, pred:14, pred:%noreg, %CPSR<imp-def>
+	t2Bcc <BB#2>, pred:1, pred:%CPSR<kill>
+    Successors according to CFG: BB#1(0x40000000 / 0x80000000 = 50.00%) BB#2(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: 
+    Predecessors according to CFG: BB#0
+	%R0<def> = t2MOVi16 <ga:@.str.2014>[TF=1], pred:14, pred:%noreg
+	%R0<def,tied1> = t2MOVTi16 %R0<tied0>, <ga:@.str.2014>[TF=2], pred:14, pred:%noreg
+	t2B <BB#3>, pred:14, pred:%noreg
+    Successors according to CFG: BB#3(?%)
+
+BB#2: derived from LLVM BB %2
+    Live Ins: %R4
+    Predecessors according to CFG: BB#0
+	%R0<def> = tMOVr %R4<kill>, pred:14, pred:%noreg
+	tBL pred:14, pred:%noreg, <ga:@get_attr_mode>, <regmask %LR %D8 %D9 %D10 %D11 %D12 %D13 %D14 %D15 %Q4 %Q5 %Q6 %Q7 %R4 %R5 %R6 %R7 %R8 %R9 %R10 %R11 %S16 %S17 %S18 %S19 %S20 %S21 %S22 %S23 %S24 %S25 %S26 %S27 %S28 %S29 %S30 %S31 %D8_D10 %D9_D11 %D10_D12 %D11_D13 %D12_D14 %D13_D15 %Q4_Q5 %Q5_Q6 %Q6_Q7 %Q4_Q5_Q6_Q7 %R4_R5 %R6_R7 %R8_R9 %R10_R11 %D8_D9_D10 %D9_D10_D11 %D10_D11_D12 %D11_D12_D13 %D12_D13_D14 %D13_D14_D15 %D8_D10_D12 %D9_D11_D13 %D10_D12_D14 %D11_D13_D15 %D8_D10_D12_D14 %D9_D11_D13_D15 %D9_D10 %D11_D12 %D13_D14 %D9_D10_D11_D12 %D11_D12_D13_D14>, %LR<imp-def,dead>, %SP<imp-use>, %R0<imp-use>, %SP<imp-def>, %R0<imp-def>
+	%R1<def> = tMOVr %R0, pred:14, pred:%noreg
+	%R2<def> = t2MOVi16 <ga:@.str.2015>[TF=1], pred:14, pred:%noreg
+	%R2<def,tied1> = t2MOVTi16 %R2<tied0>, <ga:@.str.2015>[TF=2], pred:14, pred:%noreg
+	%R0<def> = t2MOVi16 <ga:@.str.75>[TF=1], pred:14, pred:%noreg
+	%R0<def,tied1> = t2MOVTi16 %R0<tied0>, <ga:@.str.75>[TF=2], pred:14, pred:%noreg
+	tCMPi8 %R1<kill>, 4, pred:14, pred:%noreg, %CPSR<imp-def>
+	t2IT 0, 8, %ITSTATE<imp-def>
+	%R0<def> = tMOVr %R2<kill>, pred:0, pred:%CPSR<kill>, %ITSTATE<imp-use,kill>
+    Successors according to CFG: BB#3(?%)
+
+BB#3: derived from LLVM BB %5
+    Live Ins: %R0
+    Predecessors according to CFG: BB#2 BB#1
+	tPOP_RET pred:14, pred:%noreg, %R4<def>, %R6<def>, %R7<def>, %PC<def>, %R0<imp-use>
+
+# End machine code for function output_51.
+

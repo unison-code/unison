@@ -1,0 +1,1674 @@
+# After Instruction Selection:
+# Machine code for function get_frame_alias_set: SSA
+Function Live Ins: %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %T9 %V0
+	%vreg4<def> = ADDu %V0, %T9; GPR32:%vreg4
+	%vreg5<def> = LW %vreg4, <ga:@get_frame_alias_set.set>[TF=1]; mem:LD4[GOT] GPR32:%vreg5,%vreg4
+	%vreg0<def> = LW %vreg5<kill>, 0; mem:LD4[@get_frame_alias_set.set] GPR32:%vreg0,%vreg5
+	%vreg6<def> = ADDiu %ZERO, -1; GPR32:%vreg6
+	BNE %vreg0, %vreg6<kill>, <BB#4>, %AT<imp-def,dead>; GPR32:%vreg0,%vreg6
+	B <BB#1>, %AT<imp-def,dead>
+    Successors according to CFG: BB#1(0x30000000 / 0x80000000 = 37.50%) BB#4(0x50000000 / 0x80000000 = 62.50%)
+
+BB#1: derived from LLVM BB %3
+    Predecessors according to CFG: BB#0
+	%vreg8<def> = LW %vreg4, <ga:@flag_strict_aliasing>[TF=1]; mem:LD4[GOT] GPR32:%vreg8,%vreg4
+	%vreg9<def> = LW %vreg8<kill>, 0; mem:LD4[@flag_strict_aliasing] GPR32:%vreg9,%vreg8
+	%vreg7<def> = ADDiu %ZERO, 0; GPR32:%vreg7
+	BEQ %vreg9<kill>, %ZERO, <BB#3>, %AT<imp-def,dead>; GPR32:%vreg9
+	B <BB#2>, %AT<imp-def,dead>
+    Successors according to CFG: BB#3(0x30000000 / 0x80000000 = 37.50%) BB#2(0x50000000 / 0x80000000 = 62.50%)
+
+BB#2: derived from LLVM BB %6
+    Predecessors according to CFG: BB#1
+	%vreg10<def> = LW %vreg4, <ga:@new_alias_set.last_alias_set>[TF=1]; mem:LD4[GOT] GPR32:%vreg10,%vreg4
+	%vreg11<def> = LW %vreg10, 0; mem:LD4[@new_alias_set.last_alias_set] GPR32:%vreg11,%vreg10
+	%vreg1<def> = ADDiu %vreg11<kill>, 1; GPR32:%vreg1,%vreg11
+	SW %vreg1, %vreg10, 0; mem:ST4[@new_alias_set.last_alias_set] GPR32:%vreg1,%vreg10
+    Successors according to CFG: BB#3(?%)
+
+BB#3: derived from LLVM BB %new_alias_set.exit
+    Predecessors according to CFG: BB#1 BB#2
+	%vreg2<def> = PHI %vreg7, <BB#1>, %vreg1, <BB#2>; GPR32:%vreg2,%vreg7,%vreg1
+	%vreg12<def> = LW %vreg4, <ga:@get_frame_alias_set.set>[TF=1]; mem:LD4[GOT] GPR32:%vreg12,%vreg4
+	SW %vreg2, %vreg12<kill>, 0; mem:ST4[@get_frame_alias_set.set] GPR32:%vreg2,%vreg12
+    Successors according to CFG: BB#4(?%)
+
+BB#4: derived from LLVM BB %9
+    Predecessors according to CFG: BB#0 BB#3
+	%vreg3<def> = PHI %vreg0, <BB#0>, %vreg2, <BB#3>; GPR32:%vreg3,%vreg0,%vreg2
+	%V0<def> = COPY %vreg3; GPR32:%vreg3
+	RetRA %V0<imp-use>
+
+# End machine code for function get_frame_alias_set.
+
+# After Expand ISel Pseudo-instructions:
+# Machine code for function get_frame_alias_set: SSA
+Function Live Ins: %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %T9 %V0
+	%vreg4<def> = ADDu %V0, %T9; GPR32:%vreg4
+	%vreg5<def> = LW %vreg4, <ga:@get_frame_alias_set.set>[TF=1]; mem:LD4[GOT] GPR32:%vreg5,%vreg4
+	%vreg0<def> = LW %vreg5<kill>, 0; mem:LD4[@get_frame_alias_set.set] GPR32:%vreg0,%vreg5
+	%vreg6<def> = ADDiu %ZERO, -1; GPR32:%vreg6
+	BNE %vreg0, %vreg6<kill>, <BB#4>, %AT<imp-def,dead>; GPR32:%vreg0,%vreg6
+	B <BB#1>, %AT<imp-def,dead>
+    Successors according to CFG: BB#1(0x30000000 / 0x80000000 = 37.50%) BB#4(0x50000000 / 0x80000000 = 62.50%)
+
+BB#1: derived from LLVM BB %3
+    Predecessors according to CFG: BB#0
+	%vreg8<def> = LW %vreg4, <ga:@flag_strict_aliasing>[TF=1]; mem:LD4[GOT] GPR32:%vreg8,%vreg4
+	%vreg9<def> = LW %vreg8<kill>, 0; mem:LD4[@flag_strict_aliasing] GPR32:%vreg9,%vreg8
+	%vreg7<def> = ADDiu %ZERO, 0; GPR32:%vreg7
+	BEQ %vreg9<kill>, %ZERO, <BB#3>, %AT<imp-def,dead>; GPR32:%vreg9
+	B <BB#2>, %AT<imp-def,dead>
+    Successors according to CFG: BB#3(0x30000000 / 0x80000000 = 37.50%) BB#2(0x50000000 / 0x80000000 = 62.50%)
+
+BB#2: derived from LLVM BB %6
+    Predecessors according to CFG: BB#1
+	%vreg10<def> = LW %vreg4, <ga:@new_alias_set.last_alias_set>[TF=1]; mem:LD4[GOT] GPR32:%vreg10,%vreg4
+	%vreg11<def> = LW %vreg10, 0; mem:LD4[@new_alias_set.last_alias_set] GPR32:%vreg11,%vreg10
+	%vreg1<def> = ADDiu %vreg11<kill>, 1; GPR32:%vreg1,%vreg11
+	SW %vreg1, %vreg10, 0; mem:ST4[@new_alias_set.last_alias_set] GPR32:%vreg1,%vreg10
+    Successors according to CFG: BB#3(?%)
+
+BB#3: derived from LLVM BB %new_alias_set.exit
+    Predecessors according to CFG: BB#1 BB#2
+	%vreg2<def> = PHI %vreg7, <BB#1>, %vreg1, <BB#2>; GPR32:%vreg2,%vreg7,%vreg1
+	%vreg12<def> = LW %vreg4, <ga:@get_frame_alias_set.set>[TF=1]; mem:LD4[GOT] GPR32:%vreg12,%vreg4
+	SW %vreg2, %vreg12<kill>, 0; mem:ST4[@get_frame_alias_set.set] GPR32:%vreg2,%vreg12
+    Successors according to CFG: BB#4(?%)
+
+BB#4: derived from LLVM BB %9
+    Predecessors according to CFG: BB#0 BB#3
+	%vreg3<def> = PHI %vreg0, <BB#0>, %vreg2, <BB#3>; GPR32:%vreg3,%vreg0,%vreg2
+	%V0<def> = COPY %vreg3; GPR32:%vreg3
+	RetRA %V0<imp-use>
+
+# End machine code for function get_frame_alias_set.
+
+# After Mips OptimizePICCall:
+# Machine code for function get_frame_alias_set: SSA
+Function Live Ins: %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %T9 %V0
+	%vreg4<def> = ADDu %V0, %T9; GPR32:%vreg4
+	%vreg5<def> = LW %vreg4, <ga:@get_frame_alias_set.set>[TF=1]; mem:LD4[GOT] GPR32:%vreg5,%vreg4
+	%vreg0<def> = LW %vreg5<kill>, 0; mem:LD4[@get_frame_alias_set.set] GPR32:%vreg0,%vreg5
+	%vreg6<def> = ADDiu %ZERO, -1; GPR32:%vreg6
+	BNE %vreg0, %vreg6<kill>, <BB#4>, %AT<imp-def,dead>; GPR32:%vreg0,%vreg6
+	B <BB#1>, %AT<imp-def,dead>
+    Successors according to CFG: BB#1(0x30000000 / 0x80000000 = 37.50%) BB#4(0x50000000 / 0x80000000 = 62.50%)
+
+BB#1: derived from LLVM BB %3
+    Predecessors according to CFG: BB#0
+	%vreg8<def> = LW %vreg4, <ga:@flag_strict_aliasing>[TF=1]; mem:LD4[GOT] GPR32:%vreg8,%vreg4
+	%vreg9<def> = LW %vreg8<kill>, 0; mem:LD4[@flag_strict_aliasing] GPR32:%vreg9,%vreg8
+	%vreg7<def> = ADDiu %ZERO, 0; GPR32:%vreg7
+	BEQ %vreg9<kill>, %ZERO, <BB#3>, %AT<imp-def,dead>; GPR32:%vreg9
+	B <BB#2>, %AT<imp-def,dead>
+    Successors according to CFG: BB#3(0x30000000 / 0x80000000 = 37.50%) BB#2(0x50000000 / 0x80000000 = 62.50%)
+
+BB#2: derived from LLVM BB %6
+    Predecessors according to CFG: BB#1
+	%vreg10<def> = LW %vreg4, <ga:@new_alias_set.last_alias_set>[TF=1]; mem:LD4[GOT] GPR32:%vreg10,%vreg4
+	%vreg11<def> = LW %vreg10, 0; mem:LD4[@new_alias_set.last_alias_set] GPR32:%vreg11,%vreg10
+	%vreg1<def> = ADDiu %vreg11<kill>, 1; GPR32:%vreg1,%vreg11
+	SW %vreg1, %vreg10, 0; mem:ST4[@new_alias_set.last_alias_set] GPR32:%vreg1,%vreg10
+    Successors according to CFG: BB#3(?%)
+
+BB#3: derived from LLVM BB %new_alias_set.exit
+    Predecessors according to CFG: BB#1 BB#2
+	%vreg2<def> = PHI %vreg7, <BB#1>, %vreg1, <BB#2>; GPR32:%vreg2,%vreg7,%vreg1
+	%vreg12<def> = LW %vreg4, <ga:@get_frame_alias_set.set>[TF=1]; mem:LD4[GOT] GPR32:%vreg12,%vreg4
+	SW %vreg2, %vreg12<kill>, 0; mem:ST4[@get_frame_alias_set.set] GPR32:%vreg2,%vreg12
+    Successors according to CFG: BB#4(?%)
+
+BB#4: derived from LLVM BB %9
+    Predecessors according to CFG: BB#0 BB#3
+	%vreg3<def> = PHI %vreg0, <BB#0>, %vreg2, <BB#3>; GPR32:%vreg3,%vreg0,%vreg2
+	%V0<def> = COPY %vreg3; GPR32:%vreg3
+	RetRA %V0<imp-use>
+
+# End machine code for function get_frame_alias_set.
+
+# After Tail Duplication:
+# Machine code for function get_frame_alias_set: SSA
+Function Live Ins: %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %T9 %V0
+	%vreg4<def> = ADDu %V0, %T9; GPR32:%vreg4
+	%vreg5<def> = LW %vreg4, <ga:@get_frame_alias_set.set>[TF=1]; mem:LD4[GOT] GPR32:%vreg5,%vreg4
+	%vreg0<def> = LW %vreg5<kill>, 0; mem:LD4[@get_frame_alias_set.set] GPR32:%vreg0,%vreg5
+	%vreg6<def> = ADDiu %ZERO, -1; GPR32:%vreg6
+	BNE %vreg0, %vreg6<kill>, <BB#4>, %AT<imp-def,dead>; GPR32:%vreg0,%vreg6
+	B <BB#1>, %AT<imp-def,dead>
+    Successors according to CFG: BB#1(0x30000000 / 0x80000000 = 37.50%) BB#4(0x50000000 / 0x80000000 = 62.50%)
+
+BB#1: derived from LLVM BB %3
+    Predecessors according to CFG: BB#0
+	%vreg8<def> = LW %vreg4, <ga:@flag_strict_aliasing>[TF=1]; mem:LD4[GOT] GPR32:%vreg8,%vreg4
+	%vreg9<def> = LW %vreg8<kill>, 0; mem:LD4[@flag_strict_aliasing] GPR32:%vreg9,%vreg8
+	%vreg7<def> = ADDiu %ZERO, 0; GPR32:%vreg7
+	BEQ %vreg9<kill>, %ZERO, <BB#3>, %AT<imp-def,dead>; GPR32:%vreg9
+	B <BB#2>, %AT<imp-def,dead>
+    Successors according to CFG: BB#3(0x30000000 / 0x80000000 = 37.50%) BB#2(0x50000000 / 0x80000000 = 62.50%)
+
+BB#2: derived from LLVM BB %6
+    Predecessors according to CFG: BB#1
+	%vreg10<def> = LW %vreg4, <ga:@new_alias_set.last_alias_set>[TF=1]; mem:LD4[GOT] GPR32:%vreg10,%vreg4
+	%vreg11<def> = LW %vreg10, 0; mem:LD4[@new_alias_set.last_alias_set] GPR32:%vreg11,%vreg10
+	%vreg1<def> = ADDiu %vreg11<kill>, 1; GPR32:%vreg1,%vreg11
+	SW %vreg1, %vreg10, 0; mem:ST4[@new_alias_set.last_alias_set] GPR32:%vreg1,%vreg10
+    Successors according to CFG: BB#3(?%)
+
+BB#3: derived from LLVM BB %new_alias_set.exit
+    Predecessors according to CFG: BB#1 BB#2
+	%vreg2<def> = PHI %vreg7, <BB#1>, %vreg1, <BB#2>; GPR32:%vreg2,%vreg7,%vreg1
+	%vreg12<def> = LW %vreg4, <ga:@get_frame_alias_set.set>[TF=1]; mem:LD4[GOT] GPR32:%vreg12,%vreg4
+	SW %vreg2, %vreg12<kill>, 0; mem:ST4[@get_frame_alias_set.set] GPR32:%vreg2,%vreg12
+    Successors according to CFG: BB#4(?%)
+
+BB#4: derived from LLVM BB %9
+    Predecessors according to CFG: BB#0 BB#3
+	%vreg3<def> = PHI %vreg0, <BB#0>, %vreg2, <BB#3>; GPR32:%vreg3,%vreg0,%vreg2
+	%V0<def> = COPY %vreg3; GPR32:%vreg3
+	RetRA %V0<imp-use>
+
+# End machine code for function get_frame_alias_set.
+
+# After Optimize machine instruction PHIs:
+# Machine code for function get_frame_alias_set: SSA
+Function Live Ins: %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %T9 %V0
+	%vreg4<def> = ADDu %V0, %T9; GPR32:%vreg4
+	%vreg5<def> = LW %vreg4, <ga:@get_frame_alias_set.set>[TF=1]; mem:LD4[GOT] GPR32:%vreg5,%vreg4
+	%vreg0<def> = LW %vreg5<kill>, 0; mem:LD4[@get_frame_alias_set.set] GPR32:%vreg0,%vreg5
+	%vreg6<def> = ADDiu %ZERO, -1; GPR32:%vreg6
+	BNE %vreg0, %vreg6<kill>, <BB#4>, %AT<imp-def,dead>; GPR32:%vreg0,%vreg6
+	B <BB#1>, %AT<imp-def,dead>
+    Successors according to CFG: BB#1(0x30000000 / 0x80000000 = 37.50%) BB#4(0x50000000 / 0x80000000 = 62.50%)
+
+BB#1: derived from LLVM BB %3
+    Predecessors according to CFG: BB#0
+	%vreg8<def> = LW %vreg4, <ga:@flag_strict_aliasing>[TF=1]; mem:LD4[GOT] GPR32:%vreg8,%vreg4
+	%vreg9<def> = LW %vreg8<kill>, 0; mem:LD4[@flag_strict_aliasing] GPR32:%vreg9,%vreg8
+	%vreg7<def> = ADDiu %ZERO, 0; GPR32:%vreg7
+	BEQ %vreg9<kill>, %ZERO, <BB#3>, %AT<imp-def,dead>; GPR32:%vreg9
+	B <BB#2>, %AT<imp-def,dead>
+    Successors according to CFG: BB#3(0x30000000 / 0x80000000 = 37.50%) BB#2(0x50000000 / 0x80000000 = 62.50%)
+
+BB#2: derived from LLVM BB %6
+    Predecessors according to CFG: BB#1
+	%vreg10<def> = LW %vreg4, <ga:@new_alias_set.last_alias_set>[TF=1]; mem:LD4[GOT] GPR32:%vreg10,%vreg4
+	%vreg11<def> = LW %vreg10, 0; mem:LD4[@new_alias_set.last_alias_set] GPR32:%vreg11,%vreg10
+	%vreg1<def> = ADDiu %vreg11<kill>, 1; GPR32:%vreg1,%vreg11
+	SW %vreg1, %vreg10, 0; mem:ST4[@new_alias_set.last_alias_set] GPR32:%vreg1,%vreg10
+    Successors according to CFG: BB#3(?%)
+
+BB#3: derived from LLVM BB %new_alias_set.exit
+    Predecessors according to CFG: BB#1 BB#2
+	%vreg2<def> = PHI %vreg7, <BB#1>, %vreg1, <BB#2>; GPR32:%vreg2,%vreg7,%vreg1
+	%vreg12<def> = LW %vreg4, <ga:@get_frame_alias_set.set>[TF=1]; mem:LD4[GOT] GPR32:%vreg12,%vreg4
+	SW %vreg2, %vreg12<kill>, 0; mem:ST4[@get_frame_alias_set.set] GPR32:%vreg2,%vreg12
+    Successors according to CFG: BB#4(?%)
+
+BB#4: derived from LLVM BB %9
+    Predecessors according to CFG: BB#0 BB#3
+	%vreg3<def> = PHI %vreg0, <BB#0>, %vreg2, <BB#3>; GPR32:%vreg3,%vreg0,%vreg2
+	%V0<def> = COPY %vreg3; GPR32:%vreg3
+	RetRA %V0<imp-use>
+
+# End machine code for function get_frame_alias_set.
+
+# After Merge disjoint stack slots:
+# Machine code for function get_frame_alias_set: SSA
+Function Live Ins: %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %T9 %V0
+	%vreg4<def> = ADDu %V0, %T9; GPR32:%vreg4
+	%vreg5<def> = LW %vreg4, <ga:@get_frame_alias_set.set>[TF=1]; mem:LD4[GOT] GPR32:%vreg5,%vreg4
+	%vreg0<def> = LW %vreg5<kill>, 0; mem:LD4[@get_frame_alias_set.set] GPR32:%vreg0,%vreg5
+	%vreg6<def> = ADDiu %ZERO, -1; GPR32:%vreg6
+	BNE %vreg0, %vreg6<kill>, <BB#4>, %AT<imp-def,dead>; GPR32:%vreg0,%vreg6
+	B <BB#1>, %AT<imp-def,dead>
+    Successors according to CFG: BB#1(0x30000000 / 0x80000000 = 37.50%) BB#4(0x50000000 / 0x80000000 = 62.50%)
+
+BB#1: derived from LLVM BB %3
+    Predecessors according to CFG: BB#0
+	%vreg8<def> = LW %vreg4, <ga:@flag_strict_aliasing>[TF=1]; mem:LD4[GOT] GPR32:%vreg8,%vreg4
+	%vreg9<def> = LW %vreg8<kill>, 0; mem:LD4[@flag_strict_aliasing] GPR32:%vreg9,%vreg8
+	%vreg7<def> = ADDiu %ZERO, 0; GPR32:%vreg7
+	BEQ %vreg9<kill>, %ZERO, <BB#3>, %AT<imp-def,dead>; GPR32:%vreg9
+	B <BB#2>, %AT<imp-def,dead>
+    Successors according to CFG: BB#3(0x30000000 / 0x80000000 = 37.50%) BB#2(0x50000000 / 0x80000000 = 62.50%)
+
+BB#2: derived from LLVM BB %6
+    Predecessors according to CFG: BB#1
+	%vreg10<def> = LW %vreg4, <ga:@new_alias_set.last_alias_set>[TF=1]; mem:LD4[GOT] GPR32:%vreg10,%vreg4
+	%vreg11<def> = LW %vreg10, 0; mem:LD4[@new_alias_set.last_alias_set] GPR32:%vreg11,%vreg10
+	%vreg1<def> = ADDiu %vreg11<kill>, 1; GPR32:%vreg1,%vreg11
+	SW %vreg1, %vreg10, 0; mem:ST4[@new_alias_set.last_alias_set] GPR32:%vreg1,%vreg10
+    Successors according to CFG: BB#3(?%)
+
+BB#3: derived from LLVM BB %new_alias_set.exit
+    Predecessors according to CFG: BB#1 BB#2
+	%vreg2<def> = PHI %vreg7, <BB#1>, %vreg1, <BB#2>; GPR32:%vreg2,%vreg7,%vreg1
+	%vreg12<def> = LW %vreg4, <ga:@get_frame_alias_set.set>[TF=1]; mem:LD4[GOT] GPR32:%vreg12,%vreg4
+	SW %vreg2, %vreg12<kill>, 0; mem:ST4[@get_frame_alias_set.set] GPR32:%vreg2,%vreg12
+    Successors according to CFG: BB#4(?%)
+
+BB#4: derived from LLVM BB %9
+    Predecessors according to CFG: BB#0 BB#3
+	%vreg3<def> = PHI %vreg0, <BB#0>, %vreg2, <BB#3>; GPR32:%vreg3,%vreg0,%vreg2
+	%V0<def> = COPY %vreg3; GPR32:%vreg3
+	RetRA %V0<imp-use>
+
+# End machine code for function get_frame_alias_set.
+
+# After Local Stack Slot Allocation:
+# Machine code for function get_frame_alias_set: SSA
+Function Live Ins: %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %T9 %V0
+	%vreg4<def> = ADDu %V0, %T9; GPR32:%vreg4
+	%vreg5<def> = LW %vreg4, <ga:@get_frame_alias_set.set>[TF=1]; mem:LD4[GOT] GPR32:%vreg5,%vreg4
+	%vreg0<def> = LW %vreg5<kill>, 0; mem:LD4[@get_frame_alias_set.set] GPR32:%vreg0,%vreg5
+	%vreg6<def> = ADDiu %ZERO, -1; GPR32:%vreg6
+	BNE %vreg0, %vreg6<kill>, <BB#4>, %AT<imp-def,dead>; GPR32:%vreg0,%vreg6
+	B <BB#1>, %AT<imp-def,dead>
+    Successors according to CFG: BB#1(0x30000000 / 0x80000000 = 37.50%) BB#4(0x50000000 / 0x80000000 = 62.50%)
+
+BB#1: derived from LLVM BB %3
+    Predecessors according to CFG: BB#0
+	%vreg8<def> = LW %vreg4, <ga:@flag_strict_aliasing>[TF=1]; mem:LD4[GOT] GPR32:%vreg8,%vreg4
+	%vreg9<def> = LW %vreg8<kill>, 0; mem:LD4[@flag_strict_aliasing] GPR32:%vreg9,%vreg8
+	%vreg7<def> = ADDiu %ZERO, 0; GPR32:%vreg7
+	BEQ %vreg9<kill>, %ZERO, <BB#3>, %AT<imp-def,dead>; GPR32:%vreg9
+	B <BB#2>, %AT<imp-def,dead>
+    Successors according to CFG: BB#3(0x30000000 / 0x80000000 = 37.50%) BB#2(0x50000000 / 0x80000000 = 62.50%)
+
+BB#2: derived from LLVM BB %6
+    Predecessors according to CFG: BB#1
+	%vreg10<def> = LW %vreg4, <ga:@new_alias_set.last_alias_set>[TF=1]; mem:LD4[GOT] GPR32:%vreg10,%vreg4
+	%vreg11<def> = LW %vreg10, 0; mem:LD4[@new_alias_set.last_alias_set] GPR32:%vreg11,%vreg10
+	%vreg1<def> = ADDiu %vreg11<kill>, 1; GPR32:%vreg1,%vreg11
+	SW %vreg1, %vreg10, 0; mem:ST4[@new_alias_set.last_alias_set] GPR32:%vreg1,%vreg10
+    Successors according to CFG: BB#3(?%)
+
+BB#3: derived from LLVM BB %new_alias_set.exit
+    Predecessors according to CFG: BB#1 BB#2
+	%vreg2<def> = PHI %vreg7, <BB#1>, %vreg1, <BB#2>; GPR32:%vreg2,%vreg7,%vreg1
+	%vreg12<def> = LW %vreg4, <ga:@get_frame_alias_set.set>[TF=1]; mem:LD4[GOT] GPR32:%vreg12,%vreg4
+	SW %vreg2, %vreg12<kill>, 0; mem:ST4[@get_frame_alias_set.set] GPR32:%vreg2,%vreg12
+    Successors according to CFG: BB#4(?%)
+
+BB#4: derived from LLVM BB %9
+    Predecessors according to CFG: BB#0 BB#3
+	%vreg3<def> = PHI %vreg0, <BB#0>, %vreg2, <BB#3>; GPR32:%vreg3,%vreg0,%vreg2
+	%V0<def> = COPY %vreg3; GPR32:%vreg3
+	RetRA %V0<imp-use>
+
+# End machine code for function get_frame_alias_set.
+
+# After Remove dead machine instructions:
+# Machine code for function get_frame_alias_set: SSA
+Function Live Ins: %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %T9 %V0
+	%vreg4<def> = ADDu %V0, %T9; GPR32:%vreg4
+	%vreg5<def> = LW %vreg4, <ga:@get_frame_alias_set.set>[TF=1]; mem:LD4[GOT] GPR32:%vreg5,%vreg4
+	%vreg0<def> = LW %vreg5<kill>, 0; mem:LD4[@get_frame_alias_set.set] GPR32:%vreg0,%vreg5
+	%vreg6<def> = ADDiu %ZERO, -1; GPR32:%vreg6
+	BNE %vreg0, %vreg6<kill>, <BB#4>, %AT<imp-def,dead>; GPR32:%vreg0,%vreg6
+	B <BB#1>, %AT<imp-def,dead>
+    Successors according to CFG: BB#1(0x30000000 / 0x80000000 = 37.50%) BB#4(0x50000000 / 0x80000000 = 62.50%)
+
+BB#1: derived from LLVM BB %3
+    Predecessors according to CFG: BB#0
+	%vreg8<def> = LW %vreg4, <ga:@flag_strict_aliasing>[TF=1]; mem:LD4[GOT] GPR32:%vreg8,%vreg4
+	%vreg9<def> = LW %vreg8<kill>, 0; mem:LD4[@flag_strict_aliasing] GPR32:%vreg9,%vreg8
+	%vreg7<def> = ADDiu %ZERO, 0; GPR32:%vreg7
+	BEQ %vreg9<kill>, %ZERO, <BB#3>, %AT<imp-def,dead>; GPR32:%vreg9
+	B <BB#2>, %AT<imp-def,dead>
+    Successors according to CFG: BB#3(0x30000000 / 0x80000000 = 37.50%) BB#2(0x50000000 / 0x80000000 = 62.50%)
+
+BB#2: derived from LLVM BB %6
+    Predecessors according to CFG: BB#1
+	%vreg10<def> = LW %vreg4, <ga:@new_alias_set.last_alias_set>[TF=1]; mem:LD4[GOT] GPR32:%vreg10,%vreg4
+	%vreg11<def> = LW %vreg10, 0; mem:LD4[@new_alias_set.last_alias_set] GPR32:%vreg11,%vreg10
+	%vreg1<def> = ADDiu %vreg11<kill>, 1; GPR32:%vreg1,%vreg11
+	SW %vreg1, %vreg10, 0; mem:ST4[@new_alias_set.last_alias_set] GPR32:%vreg1,%vreg10
+    Successors according to CFG: BB#3(?%)
+
+BB#3: derived from LLVM BB %new_alias_set.exit
+    Predecessors according to CFG: BB#1 BB#2
+	%vreg2<def> = PHI %vreg7, <BB#1>, %vreg1, <BB#2>; GPR32:%vreg2,%vreg7,%vreg1
+	%vreg12<def> = LW %vreg4, <ga:@get_frame_alias_set.set>[TF=1]; mem:LD4[GOT] GPR32:%vreg12,%vreg4
+	SW %vreg2, %vreg12<kill>, 0; mem:ST4[@get_frame_alias_set.set] GPR32:%vreg2,%vreg12
+    Successors according to CFG: BB#4(?%)
+
+BB#4: derived from LLVM BB %9
+    Predecessors according to CFG: BB#0 BB#3
+	%vreg3<def> = PHI %vreg0, <BB#0>, %vreg2, <BB#3>; GPR32:%vreg3,%vreg0,%vreg2
+	%V0<def> = COPY %vreg3; GPR32:%vreg3
+	RetRA %V0<imp-use>
+
+# End machine code for function get_frame_alias_set.
+
+# After Machine Loop Invariant Code Motion:
+# Machine code for function get_frame_alias_set: SSA
+Function Live Ins: %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %T9 %V0
+	%vreg4<def> = ADDu %V0, %T9; GPR32:%vreg4
+	%vreg5<def> = LW %vreg4, <ga:@get_frame_alias_set.set>[TF=1]; mem:LD4[GOT] GPR32:%vreg5,%vreg4
+	%vreg0<def> = LW %vreg5<kill>, 0; mem:LD4[@get_frame_alias_set.set] GPR32:%vreg0,%vreg5
+	%vreg6<def> = ADDiu %ZERO, -1; GPR32:%vreg6
+	BNE %vreg0, %vreg6<kill>, <BB#4>, %AT<imp-def,dead>; GPR32:%vreg0,%vreg6
+	B <BB#1>, %AT<imp-def,dead>
+    Successors according to CFG: BB#1(0x30000000 / 0x80000000 = 37.50%) BB#4(0x50000000 / 0x80000000 = 62.50%)
+
+BB#1: derived from LLVM BB %3
+    Predecessors according to CFG: BB#0
+	%vreg8<def> = LW %vreg4, <ga:@flag_strict_aliasing>[TF=1]; mem:LD4[GOT] GPR32:%vreg8,%vreg4
+	%vreg9<def> = LW %vreg8<kill>, 0; mem:LD4[@flag_strict_aliasing] GPR32:%vreg9,%vreg8
+	%vreg7<def> = ADDiu %ZERO, 0; GPR32:%vreg7
+	BEQ %vreg9<kill>, %ZERO, <BB#3>, %AT<imp-def,dead>; GPR32:%vreg9
+	B <BB#2>, %AT<imp-def,dead>
+    Successors according to CFG: BB#3(0x30000000 / 0x80000000 = 37.50%) BB#2(0x50000000 / 0x80000000 = 62.50%)
+
+BB#2: derived from LLVM BB %6
+    Predecessors according to CFG: BB#1
+	%vreg10<def> = LW %vreg4, <ga:@new_alias_set.last_alias_set>[TF=1]; mem:LD4[GOT] GPR32:%vreg10,%vreg4
+	%vreg11<def> = LW %vreg10, 0; mem:LD4[@new_alias_set.last_alias_set] GPR32:%vreg11,%vreg10
+	%vreg1<def> = ADDiu %vreg11<kill>, 1; GPR32:%vreg1,%vreg11
+	SW %vreg1, %vreg10, 0; mem:ST4[@new_alias_set.last_alias_set] GPR32:%vreg1,%vreg10
+    Successors according to CFG: BB#3(?%)
+
+BB#3: derived from LLVM BB %new_alias_set.exit
+    Predecessors according to CFG: BB#1 BB#2
+	%vreg2<def> = PHI %vreg7, <BB#1>, %vreg1, <BB#2>; GPR32:%vreg2,%vreg7,%vreg1
+	%vreg12<def> = LW %vreg4, <ga:@get_frame_alias_set.set>[TF=1]; mem:LD4[GOT] GPR32:%vreg12,%vreg4
+	SW %vreg2, %vreg12<kill>, 0; mem:ST4[@get_frame_alias_set.set] GPR32:%vreg2,%vreg12
+    Successors according to CFG: BB#4(?%)
+
+BB#4: derived from LLVM BB %9
+    Predecessors according to CFG: BB#0 BB#3
+	%vreg3<def> = PHI %vreg0, <BB#0>, %vreg2, <BB#3>; GPR32:%vreg3,%vreg0,%vreg2
+	%V0<def> = COPY %vreg3; GPR32:%vreg3
+	RetRA %V0<imp-use>
+
+# End machine code for function get_frame_alias_set.
+
+# After Machine Common Subexpression Elimination:
+# Machine code for function get_frame_alias_set: SSA
+Function Live Ins: %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %T9 %V0
+	%vreg4<def> = ADDu %V0, %T9; GPR32:%vreg4
+	%vreg5<def> = LW %vreg4, <ga:@get_frame_alias_set.set>[TF=1]; mem:LD4[GOT] GPR32:%vreg5,%vreg4
+	%vreg0<def> = LW %vreg5, 0; mem:LD4[@get_frame_alias_set.set] GPR32:%vreg0,%vreg5
+	%vreg6<def> = ADDiu %ZERO, -1; GPR32:%vreg6
+	BNE %vreg0, %vreg6<kill>, <BB#4>, %AT<imp-def,dead>; GPR32:%vreg0,%vreg6
+	B <BB#1>, %AT<imp-def,dead>
+    Successors according to CFG: BB#1(0x30000000 / 0x80000000 = 37.50%) BB#4(0x50000000 / 0x80000000 = 62.50%)
+
+BB#1: derived from LLVM BB %3
+    Predecessors according to CFG: BB#0
+	%vreg8<def> = LW %vreg4, <ga:@flag_strict_aliasing>[TF=1]; mem:LD4[GOT] GPR32:%vreg8,%vreg4
+	%vreg9<def> = LW %vreg8<kill>, 0; mem:LD4[@flag_strict_aliasing] GPR32:%vreg9,%vreg8
+	%vreg7<def> = ADDiu %ZERO, 0; GPR32:%vreg7
+	BEQ %vreg9<kill>, %ZERO, <BB#3>, %AT<imp-def,dead>; GPR32:%vreg9
+	B <BB#2>, %AT<imp-def,dead>
+    Successors according to CFG: BB#3(0x30000000 / 0x80000000 = 37.50%) BB#2(0x50000000 / 0x80000000 = 62.50%)
+
+BB#2: derived from LLVM BB %6
+    Predecessors according to CFG: BB#1
+	%vreg10<def> = LW %vreg4, <ga:@new_alias_set.last_alias_set>[TF=1]; mem:LD4[GOT] GPR32:%vreg10,%vreg4
+	%vreg11<def> = LW %vreg10, 0; mem:LD4[@new_alias_set.last_alias_set] GPR32:%vreg11,%vreg10
+	%vreg1<def> = ADDiu %vreg11<kill>, 1; GPR32:%vreg1,%vreg11
+	SW %vreg1, %vreg10, 0; mem:ST4[@new_alias_set.last_alias_set] GPR32:%vreg1,%vreg10
+    Successors according to CFG: BB#3(?%)
+
+BB#3: derived from LLVM BB %new_alias_set.exit
+    Predecessors according to CFG: BB#1 BB#2
+	%vreg2<def> = PHI %vreg7, <BB#1>, %vreg1, <BB#2>; GPR32:%vreg2,%vreg7,%vreg1
+	SW %vreg2, %vreg5, 0; mem:ST4[@get_frame_alias_set.set] GPR32:%vreg2,%vreg5
+    Successors according to CFG: BB#4(?%)
+
+BB#4: derived from LLVM BB %9
+    Predecessors according to CFG: BB#0 BB#3
+	%vreg3<def> = PHI %vreg0, <BB#0>, %vreg2, <BB#3>; GPR32:%vreg3,%vreg0,%vreg2
+	%V0<def> = COPY %vreg3; GPR32:%vreg3
+	RetRA %V0<imp-use>
+
+# End machine code for function get_frame_alias_set.
+
+# After Machine code sinking:
+# Machine code for function get_frame_alias_set: SSA
+Function Live Ins: %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %T9 %V0
+	%vreg4<def> = ADDu %V0, %T9; GPR32:%vreg4
+	%vreg5<def> = LW %vreg4, <ga:@get_frame_alias_set.set>[TF=1]; mem:LD4[GOT] GPR32:%vreg5,%vreg4
+	%vreg0<def> = LW %vreg5, 0; mem:LD4[@get_frame_alias_set.set] GPR32:%vreg0,%vreg5
+	%vreg6<def> = ADDiu %ZERO, -1; GPR32:%vreg6
+	BNE %vreg0, %vreg6<kill>, <BB#4>, %AT<imp-def,dead>; GPR32:%vreg0,%vreg6
+	B <BB#1>, %AT<imp-def,dead>
+    Successors according to CFG: BB#1(0x30000000 / 0x80000000 = 37.50%) BB#4(0x50000000 / 0x80000000 = 62.50%)
+
+BB#1: derived from LLVM BB %3
+    Predecessors according to CFG: BB#0
+	%vreg8<def> = LW %vreg4, <ga:@flag_strict_aliasing>[TF=1]; mem:LD4[GOT] GPR32:%vreg8,%vreg4
+	%vreg9<def> = LW %vreg8<kill>, 0; mem:LD4[@flag_strict_aliasing] GPR32:%vreg9,%vreg8
+	%vreg7<def> = ADDiu %ZERO, 0; GPR32:%vreg7
+	BEQ %vreg9<kill>, %ZERO, <BB#3>, %AT<imp-def,dead>; GPR32:%vreg9
+	B <BB#2>, %AT<imp-def,dead>
+    Successors according to CFG: BB#3(0x30000000 / 0x80000000 = 37.50%) BB#2(0x50000000 / 0x80000000 = 62.50%)
+
+BB#2: derived from LLVM BB %6
+    Predecessors according to CFG: BB#1
+	%vreg10<def> = LW %vreg4, <ga:@new_alias_set.last_alias_set>[TF=1]; mem:LD4[GOT] GPR32:%vreg10,%vreg4
+	%vreg11<def> = LW %vreg10, 0; mem:LD4[@new_alias_set.last_alias_set] GPR32:%vreg11,%vreg10
+	%vreg1<def> = ADDiu %vreg11<kill>, 1; GPR32:%vreg1,%vreg11
+	SW %vreg1, %vreg10, 0; mem:ST4[@new_alias_set.last_alias_set] GPR32:%vreg1,%vreg10
+    Successors according to CFG: BB#3(?%)
+
+BB#3: derived from LLVM BB %new_alias_set.exit
+    Predecessors according to CFG: BB#1 BB#2
+	%vreg2<def> = PHI %vreg7, <BB#1>, %vreg1, <BB#2>; GPR32:%vreg2,%vreg7,%vreg1
+	SW %vreg2, %vreg5, 0; mem:ST4[@get_frame_alias_set.set] GPR32:%vreg2,%vreg5
+    Successors according to CFG: BB#4(?%)
+
+BB#4: derived from LLVM BB %9
+    Predecessors according to CFG: BB#0 BB#3
+	%vreg3<def> = PHI %vreg0, <BB#0>, %vreg2, <BB#3>; GPR32:%vreg3,%vreg0,%vreg2
+	%V0<def> = COPY %vreg3; GPR32:%vreg3
+	RetRA %V0<imp-use>
+
+# End machine code for function get_frame_alias_set.
+
+# After Peephole Optimizations:
+# Machine code for function get_frame_alias_set: SSA
+Function Live Ins: %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %T9 %V0
+	%vreg4<def> = ADDu %V0, %T9; GPR32:%vreg4
+	%vreg5<def> = LW %vreg4, <ga:@get_frame_alias_set.set>[TF=1]; mem:LD4[GOT] GPR32:%vreg5,%vreg4
+	%vreg0<def> = LW %vreg5, 0; mem:LD4[@get_frame_alias_set.set] GPR32:%vreg0,%vreg5
+	%vreg6<def> = ADDiu %ZERO, -1; GPR32:%vreg6
+	BNE %vreg0, %vreg6<kill>, <BB#4>, %AT<imp-def,dead>; GPR32:%vreg0,%vreg6
+	B <BB#1>, %AT<imp-def,dead>
+    Successors according to CFG: BB#1(0x30000000 / 0x80000000 = 37.50%) BB#4(0x50000000 / 0x80000000 = 62.50%)
+
+BB#1: derived from LLVM BB %3
+    Predecessors according to CFG: BB#0
+	%vreg8<def> = LW %vreg4, <ga:@flag_strict_aliasing>[TF=1]; mem:LD4[GOT] GPR32:%vreg8,%vreg4
+	%vreg9<def> = LW %vreg8<kill>, 0; mem:LD4[@flag_strict_aliasing] GPR32:%vreg9,%vreg8
+	%vreg7<def> = ADDiu %ZERO, 0; GPR32:%vreg7
+	BEQ %vreg9<kill>, %ZERO, <BB#3>, %AT<imp-def,dead>; GPR32:%vreg9
+	B <BB#2>, %AT<imp-def,dead>
+    Successors according to CFG: BB#3(0x30000000 / 0x80000000 = 37.50%) BB#2(0x50000000 / 0x80000000 = 62.50%)
+
+BB#2: derived from LLVM BB %6
+    Predecessors according to CFG: BB#1
+	%vreg10<def> = LW %vreg4, <ga:@new_alias_set.last_alias_set>[TF=1]; mem:LD4[GOT] GPR32:%vreg10,%vreg4
+	%vreg11<def> = LW %vreg10, 0; mem:LD4[@new_alias_set.last_alias_set] GPR32:%vreg11,%vreg10
+	%vreg1<def> = ADDiu %vreg11<kill>, 1; GPR32:%vreg1,%vreg11
+	SW %vreg1, %vreg10, 0; mem:ST4[@new_alias_set.last_alias_set] GPR32:%vreg1,%vreg10
+    Successors according to CFG: BB#3(?%)
+
+BB#3: derived from LLVM BB %new_alias_set.exit
+    Predecessors according to CFG: BB#1 BB#2
+	%vreg2<def> = PHI %vreg7, <BB#1>, %vreg1, <BB#2>; GPR32:%vreg2,%vreg7,%vreg1
+	SW %vreg2, %vreg5, 0; mem:ST4[@get_frame_alias_set.set] GPR32:%vreg2,%vreg5
+    Successors according to CFG: BB#4(?%)
+
+BB#4: derived from LLVM BB %9
+    Predecessors according to CFG: BB#0 BB#3
+	%vreg3<def> = PHI %vreg0, <BB#0>, %vreg2, <BB#3>; GPR32:%vreg3,%vreg0,%vreg2
+	%V0<def> = COPY %vreg3; GPR32:%vreg3
+	RetRA %V0<imp-use>
+
+# End machine code for function get_frame_alias_set.
+
+# After Remove dead machine instructions:
+# Machine code for function get_frame_alias_set: SSA
+Function Live Ins: %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %T9 %V0
+	%vreg4<def> = ADDu %V0, %T9; GPR32:%vreg4
+	%vreg5<def> = LW %vreg4, <ga:@get_frame_alias_set.set>[TF=1]; mem:LD4[GOT] GPR32:%vreg5,%vreg4
+	%vreg0<def> = LW %vreg5, 0; mem:LD4[@get_frame_alias_set.set] GPR32:%vreg0,%vreg5
+	%vreg6<def> = ADDiu %ZERO, -1; GPR32:%vreg6
+	BNE %vreg0, %vreg6<kill>, <BB#4>, %AT<imp-def,dead>; GPR32:%vreg0,%vreg6
+	B <BB#1>, %AT<imp-def,dead>
+    Successors according to CFG: BB#1(0x30000000 / 0x80000000 = 37.50%) BB#4(0x50000000 / 0x80000000 = 62.50%)
+
+BB#1: derived from LLVM BB %3
+    Predecessors according to CFG: BB#0
+	%vreg8<def> = LW %vreg4, <ga:@flag_strict_aliasing>[TF=1]; mem:LD4[GOT] GPR32:%vreg8,%vreg4
+	%vreg9<def> = LW %vreg8<kill>, 0; mem:LD4[@flag_strict_aliasing] GPR32:%vreg9,%vreg8
+	%vreg7<def> = ADDiu %ZERO, 0; GPR32:%vreg7
+	BEQ %vreg9<kill>, %ZERO, <BB#3>, %AT<imp-def,dead>; GPR32:%vreg9
+	B <BB#2>, %AT<imp-def,dead>
+    Successors according to CFG: BB#3(0x30000000 / 0x80000000 = 37.50%) BB#2(0x50000000 / 0x80000000 = 62.50%)
+
+BB#2: derived from LLVM BB %6
+    Predecessors according to CFG: BB#1
+	%vreg10<def> = LW %vreg4, <ga:@new_alias_set.last_alias_set>[TF=1]; mem:LD4[GOT] GPR32:%vreg10,%vreg4
+	%vreg11<def> = LW %vreg10, 0; mem:LD4[@new_alias_set.last_alias_set] GPR32:%vreg11,%vreg10
+	%vreg1<def> = ADDiu %vreg11<kill>, 1; GPR32:%vreg1,%vreg11
+	SW %vreg1, %vreg10, 0; mem:ST4[@new_alias_set.last_alias_set] GPR32:%vreg1,%vreg10
+    Successors according to CFG: BB#3(?%)
+
+BB#3: derived from LLVM BB %new_alias_set.exit
+    Predecessors according to CFG: BB#1 BB#2
+	%vreg2<def> = PHI %vreg7, <BB#1>, %vreg1, <BB#2>; GPR32:%vreg2,%vreg7,%vreg1
+	SW %vreg2, %vreg5, 0; mem:ST4[@get_frame_alias_set.set] GPR32:%vreg2,%vreg5
+    Successors according to CFG: BB#4(?%)
+
+BB#4: derived from LLVM BB %9
+    Predecessors according to CFG: BB#0 BB#3
+	%vreg3<def> = PHI %vreg0, <BB#0>, %vreg2, <BB#3>; GPR32:%vreg3,%vreg0,%vreg2
+	%V0<def> = COPY %vreg3; GPR32:%vreg3
+	RetRA %V0<imp-use>
+
+# End machine code for function get_frame_alias_set.
+
+# After Process Implicit Definitions:
+# Machine code for function get_frame_alias_set: SSA
+Function Live Ins: %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %T9 %V0
+	%vreg4<def> = ADDu %V0, %T9; GPR32:%vreg4
+	%vreg5<def> = LW %vreg4, <ga:@get_frame_alias_set.set>[TF=1]; mem:LD4[GOT] GPR32:%vreg5,%vreg4
+	%vreg0<def> = LW %vreg5, 0; mem:LD4[@get_frame_alias_set.set] GPR32:%vreg0,%vreg5
+	%vreg6<def> = ADDiu %ZERO, -1; GPR32:%vreg6
+	BNE %vreg0, %vreg6<kill>, <BB#4>, %AT<imp-def,dead>; GPR32:%vreg0,%vreg6
+	B <BB#1>, %AT<imp-def,dead>
+    Successors according to CFG: BB#1(0x30000000 / 0x80000000 = 37.50%) BB#4(0x50000000 / 0x80000000 = 62.50%)
+
+BB#1: derived from LLVM BB %3
+    Predecessors according to CFG: BB#0
+	%vreg8<def> = LW %vreg4, <ga:@flag_strict_aliasing>[TF=1]; mem:LD4[GOT] GPR32:%vreg8,%vreg4
+	%vreg9<def> = LW %vreg8<kill>, 0; mem:LD4[@flag_strict_aliasing] GPR32:%vreg9,%vreg8
+	%vreg7<def> = ADDiu %ZERO, 0; GPR32:%vreg7
+	BEQ %vreg9<kill>, %ZERO, <BB#3>, %AT<imp-def,dead>; GPR32:%vreg9
+	B <BB#2>, %AT<imp-def,dead>
+    Successors according to CFG: BB#3(0x30000000 / 0x80000000 = 37.50%) BB#2(0x50000000 / 0x80000000 = 62.50%)
+
+BB#2: derived from LLVM BB %6
+    Predecessors according to CFG: BB#1
+	%vreg10<def> = LW %vreg4, <ga:@new_alias_set.last_alias_set>[TF=1]; mem:LD4[GOT] GPR32:%vreg10,%vreg4
+	%vreg11<def> = LW %vreg10, 0; mem:LD4[@new_alias_set.last_alias_set] GPR32:%vreg11,%vreg10
+	%vreg1<def> = ADDiu %vreg11<kill>, 1; GPR32:%vreg1,%vreg11
+	SW %vreg1, %vreg10, 0; mem:ST4[@new_alias_set.last_alias_set] GPR32:%vreg1,%vreg10
+    Successors according to CFG: BB#3(?%)
+
+BB#3: derived from LLVM BB %new_alias_set.exit
+    Predecessors according to CFG: BB#1 BB#2
+	%vreg2<def> = PHI %vreg7, <BB#1>, %vreg1, <BB#2>; GPR32:%vreg2,%vreg7,%vreg1
+	SW %vreg2, %vreg5, 0; mem:ST4[@get_frame_alias_set.set] GPR32:%vreg2,%vreg5
+    Successors according to CFG: BB#4(?%)
+
+BB#4: derived from LLVM BB %9
+    Predecessors according to CFG: BB#0 BB#3
+	%vreg3<def> = PHI %vreg0, <BB#0>, %vreg2, <BB#3>; GPR32:%vreg3,%vreg0,%vreg2
+	%V0<def> = COPY %vreg3; GPR32:%vreg3
+	RetRA %V0<imp-use>
+
+# End machine code for function get_frame_alias_set.
+
+# After Live Variable Analysis:
+# Machine code for function get_frame_alias_set: SSA
+Function Live Ins: %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %T9 %V0
+	%vreg4<def> = ADDu %V0<kill>, %T9<kill>; GPR32:%vreg4
+	%vreg5<def> = LW %vreg4, <ga:@get_frame_alias_set.set>[TF=1]; mem:LD4[GOT] GPR32:%vreg5,%vreg4
+	%vreg0<def> = LW %vreg5, 0; mem:LD4[@get_frame_alias_set.set] GPR32:%vreg0,%vreg5
+	%vreg6<def> = ADDiu %ZERO, -1; GPR32:%vreg6
+	BNE %vreg0, %vreg6<kill>, <BB#4>, %AT<imp-def,dead>; GPR32:%vreg0,%vreg6
+	B <BB#1>, %AT<imp-def,dead>
+    Successors according to CFG: BB#1(0x30000000 / 0x80000000 = 37.50%) BB#4(0x50000000 / 0x80000000 = 62.50%)
+
+BB#1: derived from LLVM BB %3
+    Predecessors according to CFG: BB#0
+	%vreg8<def> = LW %vreg4, <ga:@flag_strict_aliasing>[TF=1]; mem:LD4[GOT] GPR32:%vreg8,%vreg4
+	%vreg9<def> = LW %vreg8<kill>, 0; mem:LD4[@flag_strict_aliasing] GPR32:%vreg9,%vreg8
+	%vreg7<def> = ADDiu %ZERO, 0; GPR32:%vreg7
+	BEQ %vreg9<kill>, %ZERO, <BB#3>, %AT<imp-def,dead>; GPR32:%vreg9
+	B <BB#2>, %AT<imp-def,dead>
+    Successors according to CFG: BB#3(0x30000000 / 0x80000000 = 37.50%) BB#2(0x50000000 / 0x80000000 = 62.50%)
+
+BB#2: derived from LLVM BB %6
+    Predecessors according to CFG: BB#1
+	%vreg10<def> = LW %vreg4<kill>, <ga:@new_alias_set.last_alias_set>[TF=1]; mem:LD4[GOT] GPR32:%vreg10,%vreg4
+	%vreg11<def> = LW %vreg10, 0; mem:LD4[@new_alias_set.last_alias_set] GPR32:%vreg11,%vreg10
+	%vreg1<def> = ADDiu %vreg11<kill>, 1; GPR32:%vreg1,%vreg11
+	SW %vreg1, %vreg10<kill>, 0; mem:ST4[@new_alias_set.last_alias_set] GPR32:%vreg1,%vreg10
+    Successors according to CFG: BB#3(?%)
+
+BB#3: derived from LLVM BB %new_alias_set.exit
+    Predecessors according to CFG: BB#1 BB#2
+	%vreg2<def> = PHI %vreg7, <BB#1>, %vreg1, <BB#2>; GPR32:%vreg2,%vreg7,%vreg1
+	SW %vreg2, %vreg5<kill>, 0; mem:ST4[@get_frame_alias_set.set] GPR32:%vreg2,%vreg5
+    Successors according to CFG: BB#4(?%)
+
+BB#4: derived from LLVM BB %9
+    Predecessors according to CFG: BB#0 BB#3
+	%vreg3<def> = PHI %vreg0, <BB#0>, %vreg2, <BB#3>; GPR32:%vreg3,%vreg0,%vreg2
+	%V0<def> = COPY %vreg3<kill>; GPR32:%vreg3
+	RetRA %V0<imp-use,kill>
+
+# End machine code for function get_frame_alias_set.
+
+# After Machine Natural Loop Construction:
+# Machine code for function get_frame_alias_set: SSA
+Function Live Ins: %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %T9 %V0
+	%vreg4<def> = ADDu %V0<kill>, %T9<kill>; GPR32:%vreg4
+	%vreg5<def> = LW %vreg4, <ga:@get_frame_alias_set.set>[TF=1]; mem:LD4[GOT] GPR32:%vreg5,%vreg4
+	%vreg0<def> = LW %vreg5, 0; mem:LD4[@get_frame_alias_set.set] GPR32:%vreg0,%vreg5
+	%vreg6<def> = ADDiu %ZERO, -1; GPR32:%vreg6
+	BNE %vreg0, %vreg6<kill>, <BB#4>, %AT<imp-def,dead>; GPR32:%vreg0,%vreg6
+	B <BB#1>, %AT<imp-def,dead>
+    Successors according to CFG: BB#1(0x30000000 / 0x80000000 = 37.50%) BB#4(0x50000000 / 0x80000000 = 62.50%)
+
+BB#1: derived from LLVM BB %3
+    Predecessors according to CFG: BB#0
+	%vreg8<def> = LW %vreg4, <ga:@flag_strict_aliasing>[TF=1]; mem:LD4[GOT] GPR32:%vreg8,%vreg4
+	%vreg9<def> = LW %vreg8<kill>, 0; mem:LD4[@flag_strict_aliasing] GPR32:%vreg9,%vreg8
+	%vreg7<def> = ADDiu %ZERO, 0; GPR32:%vreg7
+	BEQ %vreg9<kill>, %ZERO, <BB#3>, %AT<imp-def,dead>; GPR32:%vreg9
+	B <BB#2>, %AT<imp-def,dead>
+    Successors according to CFG: BB#3(0x30000000 / 0x80000000 = 37.50%) BB#2(0x50000000 / 0x80000000 = 62.50%)
+
+BB#2: derived from LLVM BB %6
+    Predecessors according to CFG: BB#1
+	%vreg10<def> = LW %vreg4<kill>, <ga:@new_alias_set.last_alias_set>[TF=1]; mem:LD4[GOT] GPR32:%vreg10,%vreg4
+	%vreg11<def> = LW %vreg10, 0; mem:LD4[@new_alias_set.last_alias_set] GPR32:%vreg11,%vreg10
+	%vreg1<def> = ADDiu %vreg11<kill>, 1; GPR32:%vreg1,%vreg11
+	SW %vreg1, %vreg10<kill>, 0; mem:ST4[@new_alias_set.last_alias_set] GPR32:%vreg1,%vreg10
+    Successors according to CFG: BB#3(?%)
+
+BB#3: derived from LLVM BB %new_alias_set.exit
+    Predecessors according to CFG: BB#1 BB#2
+	%vreg2<def> = PHI %vreg7, <BB#1>, %vreg1, <BB#2>; GPR32:%vreg2,%vreg7,%vreg1
+	SW %vreg2, %vreg5<kill>, 0; mem:ST4[@get_frame_alias_set.set] GPR32:%vreg2,%vreg5
+    Successors according to CFG: BB#4(?%)
+
+BB#4: derived from LLVM BB %9
+    Predecessors according to CFG: BB#0 BB#3
+	%vreg3<def> = PHI %vreg0, <BB#0>, %vreg2, <BB#3>; GPR32:%vreg3,%vreg0,%vreg2
+	%V0<def> = COPY %vreg3<kill>; GPR32:%vreg3
+	RetRA %V0<imp-use,kill>
+
+# End machine code for function get_frame_alias_set.
+
+# After Eliminate PHI nodes for register allocation:
+# Machine code for function get_frame_alias_set: Post SSA
+Function Live Ins: %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %T9 %V0
+	%vreg4<def> = ADDu %V0<kill>, %T9<kill>; GPR32:%vreg4
+	%vreg5<def> = LW %vreg4, <ga:@get_frame_alias_set.set>[TF=1]; mem:LD4[GOT] GPR32:%vreg5,%vreg4
+	%vreg0<def> = LW %vreg5, 0; mem:LD4[@get_frame_alias_set.set] GPR32:%vreg0,%vreg5
+	%vreg6<def> = ADDiu %ZERO, -1; GPR32:%vreg6
+	%vreg16<def> = COPY %vreg0; GPR32:%vreg16,%vreg0
+	BNE %vreg0<kill>, %vreg6<kill>, <BB#4>, %AT<imp-def,dead>; GPR32:%vreg0,%vreg6
+	B <BB#1>, %AT<imp-def,dead>
+    Successors according to CFG: BB#1(0x30000000 / 0x80000000 = 37.50%) BB#4(0x50000000 / 0x80000000 = 62.50%)
+
+BB#1: derived from LLVM BB %3
+    Predecessors according to CFG: BB#0
+	%vreg8<def> = LW %vreg4, <ga:@flag_strict_aliasing>[TF=1]; mem:LD4[GOT] GPR32:%vreg8,%vreg4
+	%vreg9<def> = LW %vreg8<kill>, 0; mem:LD4[@flag_strict_aliasing] GPR32:%vreg9,%vreg8
+	%vreg7<def> = ADDiu %ZERO, 0; GPR32:%vreg7
+	%vreg15<def> = COPY %vreg7<kill>; GPR32:%vreg15,%vreg7
+	BEQ %vreg9<kill>, %ZERO, <BB#3>, %AT<imp-def,dead>; GPR32:%vreg9
+	B <BB#2>, %AT<imp-def,dead>
+    Successors according to CFG: BB#3(0x30000000 / 0x80000000 = 37.50%) BB#2(0x50000000 / 0x80000000 = 62.50%)
+
+BB#2: derived from LLVM BB %6
+    Predecessors according to CFG: BB#1
+	%vreg10<def> = LW %vreg4<kill>, <ga:@new_alias_set.last_alias_set>[TF=1]; mem:LD4[GOT] GPR32:%vreg10,%vreg4
+	%vreg11<def> = LW %vreg10, 0; mem:LD4[@new_alias_set.last_alias_set] GPR32:%vreg11,%vreg10
+	%vreg1<def> = ADDiu %vreg11<kill>, 1; GPR32:%vreg1,%vreg11
+	SW %vreg1, %vreg10<kill>, 0; mem:ST4[@new_alias_set.last_alias_set] GPR32:%vreg1,%vreg10
+	%vreg15<def> = COPY %vreg1<kill>; GPR32:%vreg15,%vreg1
+    Successors according to CFG: BB#3(?%)
+
+BB#3: derived from LLVM BB %new_alias_set.exit
+    Predecessors according to CFG: BB#1 BB#2
+	%vreg2<def> = COPY %vreg15<kill>; GPR32:%vreg2,%vreg15
+	SW %vreg2, %vreg5<kill>, 0; mem:ST4[@get_frame_alias_set.set] GPR32:%vreg2,%vreg5
+	%vreg16<def> = COPY %vreg2<kill>; GPR32:%vreg16,%vreg2
+    Successors according to CFG: BB#4(?%)
+
+BB#4: derived from LLVM BB %9
+    Predecessors according to CFG: BB#0 BB#3
+	%vreg3<def> = COPY %vreg16<kill>; GPR32:%vreg3,%vreg16
+	%V0<def> = COPY %vreg3<kill>; GPR32:%vreg3
+	RetRA %V0<imp-use,kill>
+
+# End machine code for function get_frame_alias_set.
+
+# After Two-Address instruction pass:
+# Machine code for function get_frame_alias_set: Post SSA
+Function Live Ins: %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %T9 %V0
+	%vreg4<def> = ADDu %V0<kill>, %T9<kill>; GPR32:%vreg4
+	%vreg5<def> = LW %vreg4, <ga:@get_frame_alias_set.set>[TF=1]; mem:LD4[GOT] GPR32:%vreg5,%vreg4
+	%vreg0<def> = LW %vreg5, 0; mem:LD4[@get_frame_alias_set.set] GPR32:%vreg0,%vreg5
+	%vreg6<def> = ADDiu %ZERO, -1; GPR32:%vreg6
+	%vreg16<def> = COPY %vreg0; GPR32:%vreg16,%vreg0
+	BNE %vreg0<kill>, %vreg6<kill>, <BB#4>, %AT<imp-def,dead>; GPR32:%vreg0,%vreg6
+	B <BB#1>, %AT<imp-def,dead>
+    Successors according to CFG: BB#1(0x30000000 / 0x80000000 = 37.50%) BB#4(0x50000000 / 0x80000000 = 62.50%)
+
+BB#1: derived from LLVM BB %3
+    Predecessors according to CFG: BB#0
+	%vreg8<def> = LW %vreg4, <ga:@flag_strict_aliasing>[TF=1]; mem:LD4[GOT] GPR32:%vreg8,%vreg4
+	%vreg9<def> = LW %vreg8<kill>, 0; mem:LD4[@flag_strict_aliasing] GPR32:%vreg9,%vreg8
+	%vreg7<def> = ADDiu %ZERO, 0; GPR32:%vreg7
+	%vreg15<def> = COPY %vreg7<kill>; GPR32:%vreg15,%vreg7
+	BEQ %vreg9<kill>, %ZERO, <BB#3>, %AT<imp-def,dead>; GPR32:%vreg9
+	B <BB#2>, %AT<imp-def,dead>
+    Successors according to CFG: BB#3(0x30000000 / 0x80000000 = 37.50%) BB#2(0x50000000 / 0x80000000 = 62.50%)
+
+BB#2: derived from LLVM BB %6
+    Predecessors according to CFG: BB#1
+	%vreg10<def> = LW %vreg4<kill>, <ga:@new_alias_set.last_alias_set>[TF=1]; mem:LD4[GOT] GPR32:%vreg10,%vreg4
+	%vreg11<def> = LW %vreg10, 0; mem:LD4[@new_alias_set.last_alias_set] GPR32:%vreg11,%vreg10
+	%vreg1<def> = ADDiu %vreg11<kill>, 1; GPR32:%vreg1,%vreg11
+	SW %vreg1, %vreg10<kill>, 0; mem:ST4[@new_alias_set.last_alias_set] GPR32:%vreg1,%vreg10
+	%vreg15<def> = COPY %vreg1<kill>; GPR32:%vreg15,%vreg1
+    Successors according to CFG: BB#3(?%)
+
+BB#3: derived from LLVM BB %new_alias_set.exit
+    Predecessors according to CFG: BB#1 BB#2
+	%vreg2<def> = COPY %vreg15<kill>; GPR32:%vreg2,%vreg15
+	SW %vreg2, %vreg5<kill>, 0; mem:ST4[@get_frame_alias_set.set] GPR32:%vreg2,%vreg5
+	%vreg16<def> = COPY %vreg2<kill>; GPR32:%vreg16,%vreg2
+    Successors according to CFG: BB#4(?%)
+
+BB#4: derived from LLVM BB %9
+    Predecessors according to CFG: BB#0 BB#3
+	%vreg3<def> = COPY %vreg16<kill>; GPR32:%vreg3,%vreg16
+	%V0<def> = COPY %vreg3<kill>; GPR32:%vreg3
+	RetRA %V0<imp-use,kill>
+
+# End machine code for function get_frame_alias_set.
+
+# After Simple Register Coalescing:
+# Machine code for function get_frame_alias_set: Post SSA
+Function Live Ins: %T9, %V0
+
+0B	BB#0: derived from LLVM BB %0
+	    Live Ins: %T9 %V0
+16B		%vreg4<def> = ADDu %V0, %T9; GPR32:%vreg4
+32B		%vreg5<def> = LW %vreg4, <ga:@get_frame_alias_set.set>[TF=1]; mem:LD4[GOT] GPR32:%vreg5,%vreg4
+48B		%vreg16<def> = LW %vreg5, 0; mem:LD4[@get_frame_alias_set.set] GPR32:%vreg16,%vreg5
+64B		%vreg6<def> = ADDiu %ZERO, -1; GPR32:%vreg6
+96B		BNE %vreg16, %vreg6, <BB#4>, %AT<imp-def,dead>; GPR32:%vreg16,%vreg6
+112B		B <BB#1>, %AT<imp-def,dead>
+	    Successors according to CFG: BB#1(0x30000000 / 0x80000000 = 37.50%) BB#4(0x50000000 / 0x80000000 = 62.50%)
+
+128B	BB#1: derived from LLVM BB %3
+	    Predecessors according to CFG: BB#0
+144B		%vreg8<def> = LW %vreg4, <ga:@flag_strict_aliasing>[TF=1]; mem:LD4[GOT] GPR32:%vreg8,%vreg4
+160B		%vreg9<def> = LW %vreg8, 0; mem:LD4[@flag_strict_aliasing] GPR32:%vreg9,%vreg8
+176B		%vreg16<def> = ADDiu %ZERO, 0; GPR32:%vreg16
+208B		BEQ %vreg9, %ZERO, <BB#3>, %AT<imp-def,dead>; GPR32:%vreg9
+224B		B <BB#2>, %AT<imp-def,dead>
+	    Successors according to CFG: BB#3(0x30000000 / 0x80000000 = 37.50%) BB#2(0x50000000 / 0x80000000 = 62.50%)
+
+240B	BB#2: derived from LLVM BB %6
+	    Predecessors according to CFG: BB#1
+256B		%vreg10<def> = LW %vreg4, <ga:@new_alias_set.last_alias_set>[TF=1]; mem:LD4[GOT] GPR32:%vreg10,%vreg4
+272B		%vreg11<def> = LW %vreg10, 0; mem:LD4[@new_alias_set.last_alias_set] GPR32:%vreg11,%vreg10
+288B		%vreg16<def> = ADDiu %vreg11, 1; GPR32:%vreg16,%vreg11
+304B		SW %vreg16, %vreg10, 0; mem:ST4[@new_alias_set.last_alias_set] GPR32:%vreg16,%vreg10
+	    Successors according to CFG: BB#3(?%)
+
+336B	BB#3: derived from LLVM BB %new_alias_set.exit
+	    Predecessors according to CFG: BB#1 BB#2
+368B		SW %vreg16, %vreg5, 0; mem:ST4[@get_frame_alias_set.set] GPR32:%vreg16,%vreg5
+	    Successors according to CFG: BB#4(?%)
+
+400B	BB#4: derived from LLVM BB %9
+	    Predecessors according to CFG: BB#0 BB#3
+432B		%V0<def> = COPY %vreg16; GPR32:%vreg16
+448B		RetRA %V0<imp-use>
+
+# End machine code for function get_frame_alias_set.
+
+# After Machine Instruction Scheduler:
+# Machine code for function get_frame_alias_set: Post SSA
+Function Live Ins: %T9, %V0
+
+0B	BB#0: derived from LLVM BB %0
+	    Live Ins: %T9 %V0
+16B		%vreg4<def> = ADDu %V0, %T9; GPR32:%vreg4
+32B		%vreg5<def> = LW %vreg4, <ga:@get_frame_alias_set.set>[TF=1]; mem:LD4[GOT] GPR32:%vreg5,%vreg4
+48B		%vreg16<def> = LW %vreg5, 0; mem:LD4[@get_frame_alias_set.set] GPR32:%vreg16,%vreg5
+64B		%vreg6<def> = ADDiu %ZERO, -1; GPR32:%vreg6
+96B		BNE %vreg16, %vreg6, <BB#4>, %AT<imp-def,dead>; GPR32:%vreg16,%vreg6
+112B		B <BB#1>, %AT<imp-def,dead>
+	    Successors according to CFG: BB#1(0x30000000 / 0x80000000 = 37.50%) BB#4(0x50000000 / 0x80000000 = 62.50%)
+
+128B	BB#1: derived from LLVM BB %3
+	    Predecessors according to CFG: BB#0
+144B		%vreg8<def> = LW %vreg4, <ga:@flag_strict_aliasing>[TF=1]; mem:LD4[GOT] GPR32:%vreg8,%vreg4
+160B		%vreg9<def> = LW %vreg8, 0; mem:LD4[@flag_strict_aliasing] GPR32:%vreg9,%vreg8
+176B		%vreg16<def> = ADDiu %ZERO, 0; GPR32:%vreg16
+208B		BEQ %vreg9, %ZERO, <BB#3>, %AT<imp-def,dead>; GPR32:%vreg9
+224B		B <BB#2>, %AT<imp-def,dead>
+	    Successors according to CFG: BB#3(0x30000000 / 0x80000000 = 37.50%) BB#2(0x50000000 / 0x80000000 = 62.50%)
+
+240B	BB#2: derived from LLVM BB %6
+	    Predecessors according to CFG: BB#1
+256B		%vreg10<def> = LW %vreg4, <ga:@new_alias_set.last_alias_set>[TF=1]; mem:LD4[GOT] GPR32:%vreg10,%vreg4
+272B		%vreg11<def> = LW %vreg10, 0; mem:LD4[@new_alias_set.last_alias_set] GPR32:%vreg11,%vreg10
+288B		%vreg16<def> = ADDiu %vreg11, 1; GPR32:%vreg16,%vreg11
+304B		SW %vreg16, %vreg10, 0; mem:ST4[@new_alias_set.last_alias_set] GPR32:%vreg16,%vreg10
+	    Successors according to CFG: BB#3(?%)
+
+336B	BB#3: derived from LLVM BB %new_alias_set.exit
+	    Predecessors according to CFG: BB#1 BB#2
+368B		SW %vreg16, %vreg5, 0; mem:ST4[@get_frame_alias_set.set] GPR32:%vreg16,%vreg5
+	    Successors according to CFG: BB#4(?%)
+
+400B	BB#4: derived from LLVM BB %9
+	    Predecessors according to CFG: BB#0 BB#3
+432B		%V0<def> = COPY %vreg16; GPR32:%vreg16
+448B		RetRA %V0<imp-use>
+
+# End machine code for function get_frame_alias_set.
+
+# After Greedy Register Allocator:
+# Machine code for function get_frame_alias_set: Post SSA
+Function Live Ins: %T9, %V0
+
+0B	BB#0: derived from LLVM BB %0
+	    Live Ins: %T9 %V0
+16B		%vreg4<def> = ADDu %V0, %T9; GPR32:%vreg4
+32B		%vreg5<def> = LW %vreg4, <ga:@get_frame_alias_set.set>[TF=1]; mem:LD4[GOT] GPR32:%vreg5,%vreg4
+48B		%vreg16<def> = LW %vreg5, 0; mem:LD4[@get_frame_alias_set.set] GPR32:%vreg16,%vreg5
+64B		%vreg6<def> = ADDiu %ZERO, -1; GPR32:%vreg6
+96B		BNE %vreg16, %vreg6, <BB#4>, %AT<imp-def,dead>; GPR32:%vreg16,%vreg6
+112B		B <BB#1>, %AT<imp-def,dead>
+	    Successors according to CFG: BB#1(0x30000000 / 0x80000000 = 37.50%) BB#4(0x50000000 / 0x80000000 = 62.50%)
+
+128B	BB#1: derived from LLVM BB %3
+	    Predecessors according to CFG: BB#0
+144B		%vreg8<def> = LW %vreg4, <ga:@flag_strict_aliasing>[TF=1]; mem:LD4[GOT] GPR32:%vreg8,%vreg4
+160B		%vreg9<def> = LW %vreg8, 0; mem:LD4[@flag_strict_aliasing] GPR32:%vreg9,%vreg8
+176B		%vreg16<def> = ADDiu %ZERO, 0; GPR32:%vreg16
+208B		BEQ %vreg9, %ZERO, <BB#3>, %AT<imp-def,dead>; GPR32:%vreg9
+224B		B <BB#2>, %AT<imp-def,dead>
+	    Successors according to CFG: BB#3(0x30000000 / 0x80000000 = 37.50%) BB#2(0x50000000 / 0x80000000 = 62.50%)
+
+240B	BB#2: derived from LLVM BB %6
+	    Predecessors according to CFG: BB#1
+256B		%vreg10<def> = LW %vreg4, <ga:@new_alias_set.last_alias_set>[TF=1]; mem:LD4[GOT] GPR32:%vreg10,%vreg4
+272B		%vreg11<def> = LW %vreg10, 0; mem:LD4[@new_alias_set.last_alias_set] GPR32:%vreg11,%vreg10
+288B		%vreg16<def> = ADDiu %vreg11, 1; GPR32:%vreg16,%vreg11
+304B		SW %vreg16, %vreg10, 0; mem:ST4[@new_alias_set.last_alias_set] GPR32:%vreg16,%vreg10
+	    Successors according to CFG: BB#3(?%)
+
+336B	BB#3: derived from LLVM BB %new_alias_set.exit
+	    Predecessors according to CFG: BB#1 BB#2
+368B		SW %vreg16, %vreg5, 0; mem:ST4[@get_frame_alias_set.set] GPR32:%vreg16,%vreg5
+	    Successors according to CFG: BB#4(?%)
+
+400B	BB#4: derived from LLVM BB %9
+	    Predecessors according to CFG: BB#0 BB#3
+432B		%V0<def> = COPY %vreg16; GPR32:%vreg16
+448B		RetRA %V0<imp-use>
+
+# End machine code for function get_frame_alias_set.
+
+# After Virtual Register Rewriter:
+# Machine code for function get_frame_alias_set: Post SSA
+Function Live Ins: %T9, %V0
+
+0B	BB#0: derived from LLVM BB %0
+	    Live Ins: %T9 %V0
+16B		%A0<def> = ADDu %V0, %T9
+32B		%V1<def> = LW %A0, <ga:@get_frame_alias_set.set>[TF=1]; mem:LD4[GOT]
+48B		%V0<def> = LW %V1, 0; mem:LD4[@get_frame_alias_set.set]
+64B		%AT<def> = ADDiu %ZERO, -1
+96B		BNE %V0, %AT<kill>, <BB#4>, %AT<imp-def,dead>
+112B		B <BB#1>, %AT<imp-def,dead>
+	    Successors according to CFG: BB#1(0x30000000 / 0x80000000 = 37.50%) BB#4(0x50000000 / 0x80000000 = 62.50%)
+
+128B	BB#1: derived from LLVM BB %3
+	    Live Ins: %A0 %V1
+	    Predecessors according to CFG: BB#0
+144B		%AT<def> = LW %A0, <ga:@flag_strict_aliasing>[TF=1]; mem:LD4[GOT]
+160B		%AT<def> = LW %AT<kill>, 0; mem:LD4[@flag_strict_aliasing]
+176B		%V0<def> = ADDiu %ZERO, 0
+208B		BEQ %AT<kill>, %ZERO, <BB#3>, %AT<imp-def,dead>
+224B		B <BB#2>, %AT<imp-def,dead>
+	    Successors according to CFG: BB#3(0x30000000 / 0x80000000 = 37.50%) BB#2(0x50000000 / 0x80000000 = 62.50%)
+
+240B	BB#2: derived from LLVM BB %6
+	    Live Ins: %A0 %V1
+	    Predecessors according to CFG: BB#1
+256B		%AT<def> = LW %A0<kill>, <ga:@new_alias_set.last_alias_set>[TF=1]; mem:LD4[GOT]
+272B		%V0<def> = LW %AT, 0; mem:LD4[@new_alias_set.last_alias_set]
+288B		%V0<def> = ADDiu %V0<kill>, 1
+304B		SW %V0, %AT<kill>, 0; mem:ST4[@new_alias_set.last_alias_set]
+	    Successors according to CFG: BB#3(?%)
+
+336B	BB#3: derived from LLVM BB %new_alias_set.exit
+	    Live Ins: %V0 %V1
+	    Predecessors according to CFG: BB#1 BB#2
+368B		SW %V0, %V1<kill>, 0; mem:ST4[@get_frame_alias_set.set]
+	    Successors according to CFG: BB#4(?%)
+
+400B	BB#4: derived from LLVM BB %9
+	    Live Ins: %V0
+	    Predecessors according to CFG: BB#0 BB#3
+448B		RetRA %V0<imp-use>
+
+# End machine code for function get_frame_alias_set.
+
+# After Stack Slot Coloring:
+# Machine code for function get_frame_alias_set: Post SSA
+Function Live Ins: %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %T9 %V0
+	%A0<def> = ADDu %V0, %T9
+	%V1<def> = LW %A0, <ga:@get_frame_alias_set.set>[TF=1]; mem:LD4[GOT]
+	%V0<def> = LW %V1, 0; mem:LD4[@get_frame_alias_set.set]
+	%AT<def> = ADDiu %ZERO, -1
+	BNE %V0, %AT<kill>, <BB#4>, %AT<imp-def,dead>
+	B <BB#1>, %AT<imp-def,dead>
+    Successors according to CFG: BB#1(0x30000000 / 0x80000000 = 37.50%) BB#4(0x50000000 / 0x80000000 = 62.50%)
+
+BB#1: derived from LLVM BB %3
+    Live Ins: %A0 %V1
+    Predecessors according to CFG: BB#0
+	%AT<def> = LW %A0, <ga:@flag_strict_aliasing>[TF=1]; mem:LD4[GOT]
+	%AT<def> = LW %AT<kill>, 0; mem:LD4[@flag_strict_aliasing]
+	%V0<def> = ADDiu %ZERO, 0
+	BEQ %AT<kill>, %ZERO, <BB#3>, %AT<imp-def,dead>
+	B <BB#2>, %AT<imp-def,dead>
+    Successors according to CFG: BB#3(0x30000000 / 0x80000000 = 37.50%) BB#2(0x50000000 / 0x80000000 = 62.50%)
+
+BB#2: derived from LLVM BB %6
+    Live Ins: %A0 %V1
+    Predecessors according to CFG: BB#1
+	%AT<def> = LW %A0<kill>, <ga:@new_alias_set.last_alias_set>[TF=1]; mem:LD4[GOT]
+	%V0<def> = LW %AT, 0; mem:LD4[@new_alias_set.last_alias_set]
+	%V0<def> = ADDiu %V0<kill>, 1
+	SW %V0, %AT<kill>, 0; mem:ST4[@new_alias_set.last_alias_set]
+    Successors according to CFG: BB#3(?%)
+
+BB#3: derived from LLVM BB %new_alias_set.exit
+    Live Ins: %V0 %V1
+    Predecessors according to CFG: BB#1 BB#2
+	SW %V0, %V1<kill>, 0; mem:ST4[@get_frame_alias_set.set]
+    Successors according to CFG: BB#4(?%)
+
+BB#4: derived from LLVM BB %9
+    Live Ins: %V0
+    Predecessors according to CFG: BB#0 BB#3
+	RetRA %V0<imp-use>
+
+# End machine code for function get_frame_alias_set.
+
+# After Machine Loop Invariant Code Motion:
+# Machine code for function get_frame_alias_set: Post SSA
+Function Live Ins: %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %T9 %V0
+	%A0<def> = ADDu %V0, %T9
+	%V1<def> = LW %A0, <ga:@get_frame_alias_set.set>[TF=1]; mem:LD4[GOT]
+	%V0<def> = LW %V1, 0; mem:LD4[@get_frame_alias_set.set]
+	%AT<def> = ADDiu %ZERO, -1
+	BNE %V0, %AT<kill>, <BB#4>, %AT<imp-def,dead>
+	B <BB#1>, %AT<imp-def,dead>
+    Successors according to CFG: BB#1(0x30000000 / 0x80000000 = 37.50%) BB#4(0x50000000 / 0x80000000 = 62.50%)
+
+BB#1: derived from LLVM BB %3
+    Live Ins: %A0 %V1
+    Predecessors according to CFG: BB#0
+	%AT<def> = LW %A0, <ga:@flag_strict_aliasing>[TF=1]; mem:LD4[GOT]
+	%AT<def> = LW %AT<kill>, 0; mem:LD4[@flag_strict_aliasing]
+	%V0<def> = ADDiu %ZERO, 0
+	BEQ %AT<kill>, %ZERO, <BB#3>, %AT<imp-def,dead>
+	B <BB#2>, %AT<imp-def,dead>
+    Successors according to CFG: BB#3(0x30000000 / 0x80000000 = 37.50%) BB#2(0x50000000 / 0x80000000 = 62.50%)
+
+BB#2: derived from LLVM BB %6
+    Live Ins: %A0 %V1
+    Predecessors according to CFG: BB#1
+	%AT<def> = LW %A0<kill>, <ga:@new_alias_set.last_alias_set>[TF=1]; mem:LD4[GOT]
+	%V0<def> = LW %AT, 0; mem:LD4[@new_alias_set.last_alias_set]
+	%V0<def> = ADDiu %V0<kill>, 1
+	SW %V0, %AT<kill>, 0; mem:ST4[@new_alias_set.last_alias_set]
+    Successors according to CFG: BB#3(?%)
+
+BB#3: derived from LLVM BB %new_alias_set.exit
+    Live Ins: %V0 %V1
+    Predecessors according to CFG: BB#1 BB#2
+	SW %V0, %V1<kill>, 0; mem:ST4[@get_frame_alias_set.set]
+    Successors according to CFG: BB#4(?%)
+
+BB#4: derived from LLVM BB %9
+    Live Ins: %V0
+    Predecessors according to CFG: BB#0 BB#3
+	RetRA %V0<imp-use>
+
+# End machine code for function get_frame_alias_set.
+
+# After Shrink Wrapping analysis:
+# Machine code for function get_frame_alias_set: Post SSA
+Function Live Ins: %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %T9 %V0
+	%A0<def> = ADDu %V0, %T9
+	%V1<def> = LW %A0, <ga:@get_frame_alias_set.set>[TF=1]; mem:LD4[GOT]
+	%V0<def> = LW %V1, 0; mem:LD4[@get_frame_alias_set.set]
+	%AT<def> = ADDiu %ZERO, -1
+	BNE %V0, %AT<kill>, <BB#4>, %AT<imp-def,dead>
+	B <BB#1>, %AT<imp-def,dead>
+    Successors according to CFG: BB#1(0x30000000 / 0x80000000 = 37.50%) BB#4(0x50000000 / 0x80000000 = 62.50%)
+
+BB#1: derived from LLVM BB %3
+    Live Ins: %A0 %V1
+    Predecessors according to CFG: BB#0
+	%AT<def> = LW %A0, <ga:@flag_strict_aliasing>[TF=1]; mem:LD4[GOT]
+	%AT<def> = LW %AT<kill>, 0; mem:LD4[@flag_strict_aliasing]
+	%V0<def> = ADDiu %ZERO, 0
+	BEQ %AT<kill>, %ZERO, <BB#3>, %AT<imp-def,dead>
+	B <BB#2>, %AT<imp-def,dead>
+    Successors according to CFG: BB#3(0x30000000 / 0x80000000 = 37.50%) BB#2(0x50000000 / 0x80000000 = 62.50%)
+
+BB#2: derived from LLVM BB %6
+    Live Ins: %A0 %V1
+    Predecessors according to CFG: BB#1
+	%AT<def> = LW %A0<kill>, <ga:@new_alias_set.last_alias_set>[TF=1]; mem:LD4[GOT]
+	%V0<def> = LW %AT, 0; mem:LD4[@new_alias_set.last_alias_set]
+	%V0<def> = ADDiu %V0<kill>, 1
+	SW %V0, %AT<kill>, 0; mem:ST4[@new_alias_set.last_alias_set]
+    Successors according to CFG: BB#3(?%)
+
+BB#3: derived from LLVM BB %new_alias_set.exit
+    Live Ins: %V0 %V1
+    Predecessors according to CFG: BB#1 BB#2
+	SW %V0, %V1<kill>, 0; mem:ST4[@get_frame_alias_set.set]
+    Successors according to CFG: BB#4(?%)
+
+BB#4: derived from LLVM BB %9
+    Live Ins: %V0
+    Predecessors according to CFG: BB#0 BB#3
+	RetRA %V0<imp-use>
+
+# End machine code for function get_frame_alias_set.
+
+# After Prologue/Epilogue Insertion & Frame Finalization:
+# Machine code for function get_frame_alias_set: Post SSA
+Function Live Ins: %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %T9 %V0
+	%A0<def> = ADDu %V0, %T9
+	%V1<def> = LW %A0, <ga:@get_frame_alias_set.set>[TF=1]; mem:LD4[GOT]
+	%V0<def> = LW %V1, 0; mem:LD4[@get_frame_alias_set.set]
+	%AT<def> = ADDiu %ZERO, -1
+	BNE %V0, %AT<kill>, <BB#4>, %AT<imp-def,dead>
+	B <BB#1>, %AT<imp-def,dead>
+    Successors according to CFG: BB#1(0x30000000 / 0x80000000 = 37.50%) BB#4(0x50000000 / 0x80000000 = 62.50%)
+
+BB#1: derived from LLVM BB %3
+    Live Ins: %A0 %V1
+    Predecessors according to CFG: BB#0
+	%AT<def> = LW %A0, <ga:@flag_strict_aliasing>[TF=1]; mem:LD4[GOT]
+	%AT<def> = LW %AT<kill>, 0; mem:LD4[@flag_strict_aliasing]
+	%V0<def> = ADDiu %ZERO, 0
+	BEQ %AT<kill>, %ZERO, <BB#3>, %AT<imp-def,dead>
+	B <BB#2>, %AT<imp-def,dead>
+    Successors according to CFG: BB#3(0x30000000 / 0x80000000 = 37.50%) BB#2(0x50000000 / 0x80000000 = 62.50%)
+
+BB#2: derived from LLVM BB %6
+    Live Ins: %A0 %V1
+    Predecessors according to CFG: BB#1
+	%AT<def> = LW %A0<kill>, <ga:@new_alias_set.last_alias_set>[TF=1]; mem:LD4[GOT]
+	%V0<def> = LW %AT, 0; mem:LD4[@new_alias_set.last_alias_set]
+	%V0<def> = ADDiu %V0<kill>, 1
+	SW %V0, %AT<kill>, 0; mem:ST4[@new_alias_set.last_alias_set]
+    Successors according to CFG: BB#3(?%)
+
+BB#3: derived from LLVM BB %new_alias_set.exit
+    Live Ins: %V0 %V1
+    Predecessors according to CFG: BB#1 BB#2
+	SW %V0, %V1<kill>, 0; mem:ST4[@get_frame_alias_set.set]
+    Successors according to CFG: BB#4(?%)
+
+BB#4: derived from LLVM BB %9
+    Live Ins: %V0
+    Predecessors according to CFG: BB#0 BB#3
+	RetRA %V0<imp-use>
+
+# End machine code for function get_frame_alias_set.
+
+# After Machine Copy Propagation Pass:
+# Machine code for function get_frame_alias_set: Post SSA
+Function Live Ins: %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %T9 %V0
+	%A0<def> = ADDu %V0, %T9
+	%V1<def> = LW %A0, <ga:@get_frame_alias_set.set>[TF=1]; mem:LD4[GOT]
+	%V0<def> = LW %V1, 0; mem:LD4[@get_frame_alias_set.set]
+	%AT<def> = ADDiu %ZERO, -1
+	BNE %V0, %AT<kill>, <BB#4>, %AT<imp-def,dead>
+	B <BB#1>, %AT<imp-def,dead>
+    Successors according to CFG: BB#1(0x30000000 / 0x80000000 = 37.50%) BB#4(0x50000000 / 0x80000000 = 62.50%)
+
+BB#1: derived from LLVM BB %3
+    Live Ins: %A0 %V1
+    Predecessors according to CFG: BB#0
+	%AT<def> = LW %A0, <ga:@flag_strict_aliasing>[TF=1]; mem:LD4[GOT]
+	%AT<def> = LW %AT<kill>, 0; mem:LD4[@flag_strict_aliasing]
+	%V0<def> = ADDiu %ZERO, 0
+	BEQ %AT<kill>, %ZERO, <BB#3>, %AT<imp-def,dead>
+	B <BB#2>, %AT<imp-def,dead>
+    Successors according to CFG: BB#3(0x30000000 / 0x80000000 = 37.50%) BB#2(0x50000000 / 0x80000000 = 62.50%)
+
+BB#2: derived from LLVM BB %6
+    Live Ins: %A0 %V1
+    Predecessors according to CFG: BB#1
+	%AT<def> = LW %A0<kill>, <ga:@new_alias_set.last_alias_set>[TF=1]; mem:LD4[GOT]
+	%V0<def> = LW %AT, 0; mem:LD4[@new_alias_set.last_alias_set]
+	%V0<def> = ADDiu %V0<kill>, 1
+	SW %V0, %AT<kill>, 0; mem:ST4[@new_alias_set.last_alias_set]
+    Successors according to CFG: BB#3(?%)
+
+BB#3: derived from LLVM BB %new_alias_set.exit
+    Live Ins: %V0 %V1
+    Predecessors according to CFG: BB#1 BB#2
+	SW %V0, %V1<kill>, 0; mem:ST4[@get_frame_alias_set.set]
+    Successors according to CFG: BB#4(?%)
+
+BB#4: derived from LLVM BB %9
+    Live Ins: %V0
+    Predecessors according to CFG: BB#0 BB#3
+	RetRA %V0<imp-use>
+
+# End machine code for function get_frame_alias_set.
+
+# After Post-RA pseudo instruction expansion pass:
+# Machine code for function get_frame_alias_set: Post SSA
+Function Live Ins: %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %T9 %V0
+	%A0<def> = ADDu %V0, %T9
+	%V1<def> = LW %A0, <ga:@get_frame_alias_set.set>[TF=1]; mem:LD4[GOT]
+	%V0<def> = LW %V1, 0; mem:LD4[@get_frame_alias_set.set]
+	%AT<def> = ADDiu %ZERO, -1
+	BNE %V0, %AT<kill>, <BB#4>, %AT<imp-def,dead>
+	B <BB#1>, %AT<imp-def,dead>
+    Successors according to CFG: BB#1(0x30000000 / 0x80000000 = 37.50%) BB#4(0x50000000 / 0x80000000 = 62.50%)
+
+BB#1: derived from LLVM BB %3
+    Live Ins: %A0 %V1
+    Predecessors according to CFG: BB#0
+	%AT<def> = LW %A0, <ga:@flag_strict_aliasing>[TF=1]; mem:LD4[GOT]
+	%AT<def> = LW %AT<kill>, 0; mem:LD4[@flag_strict_aliasing]
+	%V0<def> = ADDiu %ZERO, 0
+	BEQ %AT<kill>, %ZERO, <BB#3>, %AT<imp-def,dead>
+	B <BB#2>, %AT<imp-def,dead>
+    Successors according to CFG: BB#3(0x30000000 / 0x80000000 = 37.50%) BB#2(0x50000000 / 0x80000000 = 62.50%)
+
+BB#2: derived from LLVM BB %6
+    Live Ins: %A0 %V1
+    Predecessors according to CFG: BB#1
+	%AT<def> = LW %A0<kill>, <ga:@new_alias_set.last_alias_set>[TF=1]; mem:LD4[GOT]
+	%V0<def> = LW %AT, 0; mem:LD4[@new_alias_set.last_alias_set]
+	%V0<def> = ADDiu %V0<kill>, 1
+	SW %V0, %AT<kill>, 0; mem:ST4[@new_alias_set.last_alias_set]
+    Successors according to CFG: BB#3(?%)
+
+BB#3: derived from LLVM BB %new_alias_set.exit
+    Live Ins: %V0 %V1
+    Predecessors according to CFG: BB#1 BB#2
+	SW %V0, %V1<kill>, 0; mem:ST4[@get_frame_alias_set.set]
+    Successors according to CFG: BB#4(?%)
+
+BB#4: derived from LLVM BB %9
+    Live Ins: %V0
+    Predecessors according to CFG: BB#0 BB#3
+	PseudoReturn %RA
+
+# End machine code for function get_frame_alias_set.
+
+# After Analyze Machine Code For Garbage Collection:
+# Machine code for function get_frame_alias_set: Post SSA
+Function Live Ins: %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %T9 %V0
+	%A0<def> = ADDu %V0, %T9
+	%V1<def> = LW %A0, <ga:@get_frame_alias_set.set>[TF=1]; mem:LD4[GOT]
+	%V0<def> = LW %V1, 0; mem:LD4[@get_frame_alias_set.set]
+	%AT<def> = ADDiu %ZERO, -1
+	BNE %V0, %AT<kill>, <BB#4>, %AT<imp-def,dead>
+	B <BB#1>, %AT<imp-def,dead>
+    Successors according to CFG: BB#1(0x30000000 / 0x80000000 = 37.50%) BB#4(0x50000000 / 0x80000000 = 62.50%)
+
+BB#1: derived from LLVM BB %3
+    Live Ins: %A0 %V1
+    Predecessors according to CFG: BB#0
+	%AT<def> = LW %A0, <ga:@flag_strict_aliasing>[TF=1]; mem:LD4[GOT]
+	%AT<def> = LW %AT<kill>, 0; mem:LD4[@flag_strict_aliasing]
+	%V0<def> = ADDiu %ZERO, 0
+	BEQ %AT<kill>, %ZERO, <BB#3>, %AT<imp-def,dead>
+	B <BB#2>, %AT<imp-def,dead>
+    Successors according to CFG: BB#3(0x30000000 / 0x80000000 = 37.50%) BB#2(0x50000000 / 0x80000000 = 62.50%)
+
+BB#2: derived from LLVM BB %6
+    Live Ins: %A0 %V1
+    Predecessors according to CFG: BB#1
+	%AT<def> = LW %A0<kill>, <ga:@new_alias_set.last_alias_set>[TF=1]; mem:LD4[GOT]
+	%V0<def> = LW %AT, 0; mem:LD4[@new_alias_set.last_alias_set]
+	%V0<def> = ADDiu %V0<kill>, 1
+	SW %V0, %AT<kill>, 0; mem:ST4[@new_alias_set.last_alias_set]
+    Successors according to CFG: BB#3(?%)
+
+BB#3: derived from LLVM BB %new_alias_set.exit
+    Live Ins: %V0 %V1
+    Predecessors according to CFG: BB#1 BB#2
+	SW %V0, %V1<kill>, 0; mem:ST4[@get_frame_alias_set.set]
+    Successors according to CFG: BB#4(?%)
+
+BB#4: derived from LLVM BB %9
+    Live Ins: %V0
+    Predecessors according to CFG: BB#0 BB#3
+	PseudoReturn %RA
+
+# End machine code for function get_frame_alias_set.
+
+# After Mips Delay Slot Filler:
+# Machine code for function get_frame_alias_set: Post SSA, not tracking liveness
+Function Live Ins: %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %T9 %V0
+	%A0<def> = ADDu %V0, %T9
+	%V1<def> = LW %A0, <ga:@get_frame_alias_set.set>[TF=1]; mem:LD4[GOT]
+	%V0<def> = LW %V1, 0; mem:LD4[@get_frame_alias_set.set]
+	%AT<def> = ADDiu %ZERO, -1
+	BNE %V0, %AT<kill>, <BB#4>, %AT<imp-def,dead>
+	  * NOP
+	B <BB#1>, %AT<imp-def,dead>
+	  * NOP
+    Successors according to CFG: BB#1(0x30000000 / 0x80000000 = 37.50%) BB#4(0x50000000 / 0x80000000 = 62.50%)
+
+BB#1: derived from LLVM BB %3
+    Live Ins: %A0 %V1
+    Predecessors according to CFG: BB#0
+	%AT<def> = LW %A0, <ga:@flag_strict_aliasing>[TF=1]; mem:LD4[GOT]
+	%AT<def> = LW %AT<kill>, 0; mem:LD4[@flag_strict_aliasing]
+	BEQ %AT<kill>, %ZERO, <BB#3>, %AT<imp-def,dead>
+	  * %V0<def> = ADDiu %ZERO, 0
+	B <BB#2>, %AT<imp-def,dead>
+	  * NOP
+    Successors according to CFG: BB#3(0x30000000 / 0x80000000 = 37.50%) BB#2(0x50000000 / 0x80000000 = 62.50%)
+
+BB#2: derived from LLVM BB %6
+    Live Ins: %A0 %V1
+    Predecessors according to CFG: BB#1
+	%AT<def> = LW %A0<kill>, <ga:@new_alias_set.last_alias_set>[TF=1]; mem:LD4[GOT]
+	%V0<def> = LW %AT, 0; mem:LD4[@new_alias_set.last_alias_set]
+	%V0<def> = ADDiu %V0<kill>, 1
+	SW %V0, %AT<kill>, 0; mem:ST4[@new_alias_set.last_alias_set]
+    Successors according to CFG: BB#3(?%)
+
+BB#3: derived from LLVM BB %new_alias_set.exit
+    Live Ins: %V0 %V1
+    Predecessors according to CFG: BB#1 BB#2
+	SW %V0, %V1<kill>, 0; mem:ST4[@get_frame_alias_set.set]
+    Successors according to CFG: BB#4(?%)
+
+BB#4: derived from LLVM BB %9
+    Live Ins: %V0
+    Predecessors according to CFG: BB#0 BB#3
+	PseudoReturn %RA
+	  * NOP
+
+# End machine code for function get_frame_alias_set.
+
+# After Mips Long Branch:
+# Machine code for function get_frame_alias_set: Post SSA, not tracking liveness
+Function Live Ins: %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %T9
+	%V0<def> = LUi <es:_gp_disp>[TF=5]
+	%V0<def> = ADDiu %V0, <es:_gp_disp>[TF=6]
+	%A0<def> = ADDu %V0, %T9
+	%V1<def> = LW %A0, <ga:@get_frame_alias_set.set>[TF=1]; mem:LD4[GOT]
+	%V0<def> = LW %V1, 0; mem:LD4[@get_frame_alias_set.set]
+	%AT<def> = ADDiu %ZERO, -1
+	BNE %V0, %AT<kill>, <BB#6>, %AT<imp-def,dead>
+	  * NOP
+    Successors according to CFG: BB#1(?%) BB#6(?%)
+
+BB#1: derived from LLVM BB %0
+    Predecessors according to CFG: BB#0
+	B <BB#2>, %AT<imp-def,dead>
+	  * NOP
+    Successors according to CFG: BB#2(0x80000000 / 0x80000000 = 100.00%)
+
+BB#2: derived from LLVM BB %3
+    Live Ins: %A0 %V1
+    Predecessors according to CFG: BB#1
+	%AT<def> = LW %A0, <ga:@flag_strict_aliasing>[TF=1]; mem:LD4[GOT]
+	%AT<def> = LW %AT<kill>, 0; mem:LD4[@flag_strict_aliasing]
+	BEQ %AT<kill>, %ZERO, <BB#5>, %AT<imp-def,dead>
+	  * %V0<def> = ADDiu %ZERO, 0
+    Successors according to CFG: BB#3(?%) BB#5(?%)
+
+BB#3: derived from LLVM BB %3
+    Predecessors according to CFG: BB#2
+	B <BB#4>, %AT<imp-def,dead>
+	  * NOP
+    Successors according to CFG: BB#4(0x80000000 / 0x80000000 = 100.00%)
+
+BB#4: derived from LLVM BB %6
+    Live Ins: %A0 %V1
+    Predecessors according to CFG: BB#3
+	%AT<def> = LW %A0<kill>, <ga:@new_alias_set.last_alias_set>[TF=1]; mem:LD4[GOT]
+	%V0<def> = LW %AT, 0; mem:LD4[@new_alias_set.last_alias_set]
+	%V0<def> = ADDiu %V0<kill>, 1
+	SW %V0, %AT<kill>, 0; mem:ST4[@new_alias_set.last_alias_set]
+    Successors according to CFG: BB#5(?%)
+
+BB#5: derived from LLVM BB %new_alias_set.exit
+    Live Ins: %V0 %V1
+    Predecessors according to CFG: BB#4 BB#2
+	SW %V0, %V1<kill>, 0; mem:ST4[@get_frame_alias_set.set]
+    Successors according to CFG: BB#6(?%)
+
+BB#6: derived from LLVM BB %9
+    Live Ins: %V0
+    Predecessors according to CFG: BB#5 BB#0
+	PseudoReturn %RA
+	  * NOP
+
+# End machine code for function get_frame_alias_set.
+
+# After Mips Constant Islands:
+# Machine code for function get_frame_alias_set: Post SSA, not tracking liveness
+Function Live Ins: %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %T9
+	%V0<def> = LUi <es:_gp_disp>[TF=5]
+	%V0<def> = ADDiu %V0, <es:_gp_disp>[TF=6]
+	%A0<def> = ADDu %V0, %T9
+	%V1<def> = LW %A0, <ga:@get_frame_alias_set.set>[TF=1]; mem:LD4[GOT]
+	%V0<def> = LW %V1, 0; mem:LD4[@get_frame_alias_set.set]
+	%AT<def> = ADDiu %ZERO, -1
+	BNE %V0, %AT<kill>, <BB#6>, %AT<imp-def,dead>
+	  * NOP
+    Successors according to CFG: BB#1(?%) BB#6(?%)
+
+BB#1: derived from LLVM BB %0
+    Predecessors according to CFG: BB#0
+	B <BB#2>, %AT<imp-def,dead>
+	  * NOP
+    Successors according to CFG: BB#2(0x80000000 / 0x80000000 = 100.00%)
+
+BB#2: derived from LLVM BB %3
+    Live Ins: %A0 %V1
+    Predecessors according to CFG: BB#1
+	%AT<def> = LW %A0, <ga:@flag_strict_aliasing>[TF=1]; mem:LD4[GOT]
+	%AT<def> = LW %AT<kill>, 0; mem:LD4[@flag_strict_aliasing]
+	BEQ %AT<kill>, %ZERO, <BB#5>, %AT<imp-def,dead>
+	  * %V0<def> = ADDiu %ZERO, 0
+    Successors according to CFG: BB#3(?%) BB#5(?%)
+
+BB#3: derived from LLVM BB %3
+    Predecessors according to CFG: BB#2
+	B <BB#4>, %AT<imp-def,dead>
+	  * NOP
+    Successors according to CFG: BB#4(0x80000000 / 0x80000000 = 100.00%)
+
+BB#4: derived from LLVM BB %6
+    Live Ins: %A0 %V1
+    Predecessors according to CFG: BB#3
+	%AT<def> = LW %A0<kill>, <ga:@new_alias_set.last_alias_set>[TF=1]; mem:LD4[GOT]
+	%V0<def> = LW %AT, 0; mem:LD4[@new_alias_set.last_alias_set]
+	%V0<def> = ADDiu %V0<kill>, 1
+	SW %V0, %AT<kill>, 0; mem:ST4[@new_alias_set.last_alias_set]
+    Successors according to CFG: BB#5(?%)
+
+BB#5: derived from LLVM BB %new_alias_set.exit
+    Live Ins: %V0 %V1
+    Predecessors according to CFG: BB#4 BB#2
+	SW %V0, %V1<kill>, 0; mem:ST4[@get_frame_alias_set.set]
+    Successors according to CFG: BB#6(?%)
+
+BB#6: derived from LLVM BB %9
+    Live Ins: %V0
+    Predecessors according to CFG: BB#5 BB#0
+	PseudoReturn %RA
+	  * NOP
+
+# End machine code for function get_frame_alias_set.
+
+# After Contiguously Lay Out Funclets:
+# Machine code for function get_frame_alias_set: Post SSA, not tracking liveness
+Function Live Ins: %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %T9
+	%V0<def> = LUi <es:_gp_disp>[TF=5]
+	%V0<def> = ADDiu %V0, <es:_gp_disp>[TF=6]
+	%A0<def> = ADDu %V0, %T9
+	%V1<def> = LW %A0, <ga:@get_frame_alias_set.set>[TF=1]; mem:LD4[GOT]
+	%V0<def> = LW %V1, 0; mem:LD4[@get_frame_alias_set.set]
+	%AT<def> = ADDiu %ZERO, -1
+	BNE %V0, %AT<kill>, <BB#6>, %AT<imp-def,dead>
+	  * NOP
+    Successors according to CFG: BB#1(?%) BB#6(?%)
+
+BB#1: derived from LLVM BB %0
+    Predecessors according to CFG: BB#0
+	B <BB#2>, %AT<imp-def,dead>
+	  * NOP
+    Successors according to CFG: BB#2(0x80000000 / 0x80000000 = 100.00%)
+
+BB#2: derived from LLVM BB %3
+    Live Ins: %A0 %V1
+    Predecessors according to CFG: BB#1
+	%AT<def> = LW %A0, <ga:@flag_strict_aliasing>[TF=1]; mem:LD4[GOT]
+	%AT<def> = LW %AT<kill>, 0; mem:LD4[@flag_strict_aliasing]
+	BEQ %AT<kill>, %ZERO, <BB#5>, %AT<imp-def,dead>
+	  * %V0<def> = ADDiu %ZERO, 0
+    Successors according to CFG: BB#3(?%) BB#5(?%)
+
+BB#3: derived from LLVM BB %3
+    Predecessors according to CFG: BB#2
+	B <BB#4>, %AT<imp-def,dead>
+	  * NOP
+    Successors according to CFG: BB#4(0x80000000 / 0x80000000 = 100.00%)
+
+BB#4: derived from LLVM BB %6
+    Live Ins: %A0 %V1
+    Predecessors according to CFG: BB#3
+	%AT<def> = LW %A0<kill>, <ga:@new_alias_set.last_alias_set>[TF=1]; mem:LD4[GOT]
+	%V0<def> = LW %AT, 0; mem:LD4[@new_alias_set.last_alias_set]
+	%V0<def> = ADDiu %V0<kill>, 1
+	SW %V0, %AT<kill>, 0; mem:ST4[@new_alias_set.last_alias_set]
+    Successors according to CFG: BB#5(?%)
+
+BB#5: derived from LLVM BB %new_alias_set.exit
+    Live Ins: %V0 %V1
+    Predecessors according to CFG: BB#4 BB#2
+	SW %V0, %V1<kill>, 0; mem:ST4[@get_frame_alias_set.set]
+    Successors according to CFG: BB#6(?%)
+
+BB#6: derived from LLVM BB %9
+    Live Ins: %V0
+    Predecessors according to CFG: BB#5 BB#0
+	PseudoReturn %RA
+	  * NOP
+
+# End machine code for function get_frame_alias_set.
+
+# After StackMap Liveness Analysis:
+# Machine code for function get_frame_alias_set: Post SSA, not tracking liveness
+Function Live Ins: %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %T9
+	%V0<def> = LUi <es:_gp_disp>[TF=5]
+	%V0<def> = ADDiu %V0, <es:_gp_disp>[TF=6]
+	%A0<def> = ADDu %V0, %T9
+	%V1<def> = LW %A0, <ga:@get_frame_alias_set.set>[TF=1]; mem:LD4[GOT]
+	%V0<def> = LW %V1, 0; mem:LD4[@get_frame_alias_set.set]
+	%AT<def> = ADDiu %ZERO, -1
+	BNE %V0, %AT<kill>, <BB#6>, %AT<imp-def,dead>
+	  * NOP
+    Successors according to CFG: BB#1(?%) BB#6(?%)
+
+BB#1: derived from LLVM BB %0
+    Predecessors according to CFG: BB#0
+	B <BB#2>, %AT<imp-def,dead>
+	  * NOP
+    Successors according to CFG: BB#2(0x80000000 / 0x80000000 = 100.00%)
+
+BB#2: derived from LLVM BB %3
+    Live Ins: %A0 %V1
+    Predecessors according to CFG: BB#1
+	%AT<def> = LW %A0, <ga:@flag_strict_aliasing>[TF=1]; mem:LD4[GOT]
+	%AT<def> = LW %AT<kill>, 0; mem:LD4[@flag_strict_aliasing]
+	BEQ %AT<kill>, %ZERO, <BB#5>, %AT<imp-def,dead>
+	  * %V0<def> = ADDiu %ZERO, 0
+    Successors according to CFG: BB#3(?%) BB#5(?%)
+
+BB#3: derived from LLVM BB %3
+    Predecessors according to CFG: BB#2
+	B <BB#4>, %AT<imp-def,dead>
+	  * NOP
+    Successors according to CFG: BB#4(0x80000000 / 0x80000000 = 100.00%)
+
+BB#4: derived from LLVM BB %6
+    Live Ins: %A0 %V1
+    Predecessors according to CFG: BB#3
+	%AT<def> = LW %A0<kill>, <ga:@new_alias_set.last_alias_set>[TF=1]; mem:LD4[GOT]
+	%V0<def> = LW %AT, 0; mem:LD4[@new_alias_set.last_alias_set]
+	%V0<def> = ADDiu %V0<kill>, 1
+	SW %V0, %AT<kill>, 0; mem:ST4[@new_alias_set.last_alias_set]
+    Successors according to CFG: BB#5(?%)
+
+BB#5: derived from LLVM BB %new_alias_set.exit
+    Live Ins: %V0 %V1
+    Predecessors according to CFG: BB#4 BB#2
+	SW %V0, %V1<kill>, 0; mem:ST4[@get_frame_alias_set.set]
+    Successors according to CFG: BB#6(?%)
+
+BB#6: derived from LLVM BB %9
+    Live Ins: %V0
+    Predecessors according to CFG: BB#5 BB#0
+	PseudoReturn %RA
+	  * NOP
+
+# End machine code for function get_frame_alias_set.
+
+# After Live DEBUG_VALUE analysis:
+# Machine code for function get_frame_alias_set: Post SSA, not tracking liveness
+Function Live Ins: %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %T9
+	%V0<def> = LUi <es:_gp_disp>[TF=5]
+	%V0<def> = ADDiu %V0, <es:_gp_disp>[TF=6]
+	%A0<def> = ADDu %V0, %T9
+	%V1<def> = LW %A0, <ga:@get_frame_alias_set.set>[TF=1]; mem:LD4[GOT]
+	%V0<def> = LW %V1, 0; mem:LD4[@get_frame_alias_set.set]
+	%AT<def> = ADDiu %ZERO, -1
+	BNE %V0, %AT<kill>, <BB#6>, %AT<imp-def,dead>
+	  * NOP
+    Successors according to CFG: BB#1(?%) BB#6(?%)
+
+BB#1: derived from LLVM BB %0
+    Predecessors according to CFG: BB#0
+	B <BB#2>, %AT<imp-def,dead>
+	  * NOP
+    Successors according to CFG: BB#2(0x80000000 / 0x80000000 = 100.00%)
+
+BB#2: derived from LLVM BB %3
+    Live Ins: %A0 %V1
+    Predecessors according to CFG: BB#1
+	%AT<def> = LW %A0, <ga:@flag_strict_aliasing>[TF=1]; mem:LD4[GOT]
+	%AT<def> = LW %AT<kill>, 0; mem:LD4[@flag_strict_aliasing]
+	BEQ %AT<kill>, %ZERO, <BB#5>, %AT<imp-def,dead>
+	  * %V0<def> = ADDiu %ZERO, 0
+    Successors according to CFG: BB#3(?%) BB#5(?%)
+
+BB#3: derived from LLVM BB %3
+    Predecessors according to CFG: BB#2
+	B <BB#4>, %AT<imp-def,dead>
+	  * NOP
+    Successors according to CFG: BB#4(0x80000000 / 0x80000000 = 100.00%)
+
+BB#4: derived from LLVM BB %6
+    Live Ins: %A0 %V1
+    Predecessors according to CFG: BB#3
+	%AT<def> = LW %A0<kill>, <ga:@new_alias_set.last_alias_set>[TF=1]; mem:LD4[GOT]
+	%V0<def> = LW %AT, 0; mem:LD4[@new_alias_set.last_alias_set]
+	%V0<def> = ADDiu %V0<kill>, 1
+	SW %V0, %AT<kill>, 0; mem:ST4[@new_alias_set.last_alias_set]
+    Successors according to CFG: BB#5(?%)
+
+BB#5: derived from LLVM BB %new_alias_set.exit
+    Live Ins: %V0 %V1
+    Predecessors according to CFG: BB#4 BB#2
+	SW %V0, %V1<kill>, 0; mem:ST4[@get_frame_alias_set.set]
+    Successors according to CFG: BB#6(?%)
+
+BB#6: derived from LLVM BB %9
+    Live Ins: %V0
+    Predecessors according to CFG: BB#5 BB#0
+	PseudoReturn %RA
+	  * NOP
+
+# End machine code for function get_frame_alias_set.
+

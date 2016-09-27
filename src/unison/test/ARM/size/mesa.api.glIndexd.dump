@@ -1,0 +1,791 @@
+# After Instruction Selection:
+# Machine code for function glIndexd: SSA
+Function Live Ins: %R0 in %vreg0, %R1 in %vreg1
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1
+	%vreg1<def> = COPY %R1; GPR:%vreg1
+	%vreg0<def> = COPY %R0; GPR:%vreg0
+	%vreg2<def> = VMOVDRR %vreg0, %vreg1, pred:14, pred:%noreg; DPR:%vreg2 GPR:%vreg0,%vreg1
+	%vreg3<def> = VCVTSD %vreg2<kill>, pred:14, pred:%noreg; SPR:%vreg3 DPR:%vreg2
+	%vreg4<def> = VMOVRS %vreg3<kill>, pred:14, pred:%noreg; GPR:%vreg4 SPR:%vreg3
+	%vreg5<def> = t2MOVi32imm <ga:@CC>; rGPR:%vreg5
+	%vreg6<def> = t2LDRi12 %vreg5<kill>, 0, pred:14, pred:%noreg; mem:LD4[@CC](tbaa=!4) GPR:%vreg6 rGPR:%vreg5
+	%vreg7<def> = t2LDRi12 %vreg6, 380, pred:14, pred:%noreg; mem:LD4[%2](tbaa=!8) tcGPR:%vreg7 GPR:%vreg6
+	%R0<def> = COPY %vreg6; GPR:%vreg6
+	%R1<def> = COPY %vreg4; GPR:%vreg4
+	TCRETURNri %vreg7<kill>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>; tcGPR:%vreg7
+
+# End machine code for function glIndexd.
+
+# After Expand ISel Pseudo-instructions:
+# Machine code for function glIndexd: SSA
+Function Live Ins: %R0 in %vreg0, %R1 in %vreg1
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1
+	%vreg1<def> = COPY %R1; GPR:%vreg1
+	%vreg0<def> = COPY %R0; GPR:%vreg0
+	%vreg2<def> = VMOVDRR %vreg0, %vreg1, pred:14, pred:%noreg; DPR:%vreg2 GPR:%vreg0,%vreg1
+	%vreg3<def> = VCVTSD %vreg2<kill>, pred:14, pred:%noreg; SPR:%vreg3 DPR:%vreg2
+	%vreg4<def> = VMOVRS %vreg3<kill>, pred:14, pred:%noreg; GPR:%vreg4 SPR:%vreg3
+	%vreg5<def> = t2MOVi32imm <ga:@CC>; rGPR:%vreg5
+	%vreg6<def> = t2LDRi12 %vreg5<kill>, 0, pred:14, pred:%noreg; mem:LD4[@CC](tbaa=!4) GPR:%vreg6 rGPR:%vreg5
+	%vreg7<def> = t2LDRi12 %vreg6, 380, pred:14, pred:%noreg; mem:LD4[%2](tbaa=!8) tcGPR:%vreg7 GPR:%vreg6
+	%R0<def> = COPY %vreg6; GPR:%vreg6
+	%R1<def> = COPY %vreg4; GPR:%vreg4
+	TCRETURNri %vreg7<kill>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>; tcGPR:%vreg7
+
+# End machine code for function glIndexd.
+
+# After Tail Duplication:
+# Machine code for function glIndexd: SSA
+Function Live Ins: %R0 in %vreg0, %R1 in %vreg1
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1
+	%vreg1<def> = COPY %R1; GPR:%vreg1
+	%vreg0<def> = COPY %R0; GPR:%vreg0
+	%vreg2<def> = VMOVDRR %vreg0, %vreg1, pred:14, pred:%noreg; DPR:%vreg2 GPR:%vreg0,%vreg1
+	%vreg3<def> = VCVTSD %vreg2<kill>, pred:14, pred:%noreg; SPR:%vreg3 DPR:%vreg2
+	%vreg4<def> = VMOVRS %vreg3<kill>, pred:14, pred:%noreg; GPR:%vreg4 SPR:%vreg3
+	%vreg5<def> = t2MOVi32imm <ga:@CC>; rGPR:%vreg5
+	%vreg6<def> = t2LDRi12 %vreg5<kill>, 0, pred:14, pred:%noreg; mem:LD4[@CC](tbaa=!4) GPR:%vreg6 rGPR:%vreg5
+	%vreg7<def> = t2LDRi12 %vreg6, 380, pred:14, pred:%noreg; mem:LD4[%2](tbaa=!8) tcGPR:%vreg7 GPR:%vreg6
+	%R0<def> = COPY %vreg6; GPR:%vreg6
+	%R1<def> = COPY %vreg4; GPR:%vreg4
+	TCRETURNri %vreg7<kill>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>; tcGPR:%vreg7
+
+# End machine code for function glIndexd.
+
+# After Optimize machine instruction PHIs:
+# Machine code for function glIndexd: SSA
+Function Live Ins: %R0 in %vreg0, %R1 in %vreg1
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1
+	%vreg1<def> = COPY %R1; GPR:%vreg1
+	%vreg0<def> = COPY %R0; GPR:%vreg0
+	%vreg2<def> = VMOVDRR %vreg0, %vreg1, pred:14, pred:%noreg; DPR:%vreg2 GPR:%vreg0,%vreg1
+	%vreg3<def> = VCVTSD %vreg2<kill>, pred:14, pred:%noreg; SPR:%vreg3 DPR:%vreg2
+	%vreg4<def> = VMOVRS %vreg3<kill>, pred:14, pred:%noreg; GPR:%vreg4 SPR:%vreg3
+	%vreg5<def> = t2MOVi32imm <ga:@CC>; rGPR:%vreg5
+	%vreg6<def> = t2LDRi12 %vreg5<kill>, 0, pred:14, pred:%noreg; mem:LD4[@CC](tbaa=!4) GPR:%vreg6 rGPR:%vreg5
+	%vreg7<def> = t2LDRi12 %vreg6, 380, pred:14, pred:%noreg; mem:LD4[%2](tbaa=!8) tcGPR:%vreg7 GPR:%vreg6
+	%R0<def> = COPY %vreg6; GPR:%vreg6
+	%R1<def> = COPY %vreg4; GPR:%vreg4
+	TCRETURNri %vreg7<kill>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>; tcGPR:%vreg7
+
+# End machine code for function glIndexd.
+
+# After Merge disjoint stack slots:
+# Machine code for function glIndexd: SSA
+Function Live Ins: %R0 in %vreg0, %R1 in %vreg1
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1
+	%vreg1<def> = COPY %R1; GPR:%vreg1
+	%vreg0<def> = COPY %R0; GPR:%vreg0
+	%vreg2<def> = VMOVDRR %vreg0, %vreg1, pred:14, pred:%noreg; DPR:%vreg2 GPR:%vreg0,%vreg1
+	%vreg3<def> = VCVTSD %vreg2<kill>, pred:14, pred:%noreg; SPR:%vreg3 DPR:%vreg2
+	%vreg4<def> = VMOVRS %vreg3<kill>, pred:14, pred:%noreg; GPR:%vreg4 SPR:%vreg3
+	%vreg5<def> = t2MOVi32imm <ga:@CC>; rGPR:%vreg5
+	%vreg6<def> = t2LDRi12 %vreg5<kill>, 0, pred:14, pred:%noreg; mem:LD4[@CC](tbaa=!4) GPR:%vreg6 rGPR:%vreg5
+	%vreg7<def> = t2LDRi12 %vreg6, 380, pred:14, pred:%noreg; mem:LD4[%2](tbaa=!8) tcGPR:%vreg7 GPR:%vreg6
+	%R0<def> = COPY %vreg6; GPR:%vreg6
+	%R1<def> = COPY %vreg4; GPR:%vreg4
+	TCRETURNri %vreg7<kill>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>; tcGPR:%vreg7
+
+# End machine code for function glIndexd.
+
+# After Local Stack Slot Allocation:
+# Machine code for function glIndexd: SSA
+Function Live Ins: %R0 in %vreg0, %R1 in %vreg1
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1
+	%vreg1<def> = COPY %R1; GPR:%vreg1
+	%vreg0<def> = COPY %R0; GPR:%vreg0
+	%vreg2<def> = VMOVDRR %vreg0, %vreg1, pred:14, pred:%noreg; DPR:%vreg2 GPR:%vreg0,%vreg1
+	%vreg3<def> = VCVTSD %vreg2<kill>, pred:14, pred:%noreg; SPR:%vreg3 DPR:%vreg2
+	%vreg4<def> = VMOVRS %vreg3<kill>, pred:14, pred:%noreg; GPR:%vreg4 SPR:%vreg3
+	%vreg5<def> = t2MOVi32imm <ga:@CC>; rGPR:%vreg5
+	%vreg6<def> = t2LDRi12 %vreg5<kill>, 0, pred:14, pred:%noreg; mem:LD4[@CC](tbaa=!4) GPR:%vreg6 rGPR:%vreg5
+	%vreg7<def> = t2LDRi12 %vreg6, 380, pred:14, pred:%noreg; mem:LD4[%2](tbaa=!8) tcGPR:%vreg7 GPR:%vreg6
+	%R0<def> = COPY %vreg6; GPR:%vreg6
+	%R1<def> = COPY %vreg4; GPR:%vreg4
+	TCRETURNri %vreg7<kill>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>; tcGPR:%vreg7
+
+# End machine code for function glIndexd.
+
+# After Remove dead machine instructions:
+# Machine code for function glIndexd: SSA
+Function Live Ins: %R0 in %vreg0, %R1 in %vreg1
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1
+	%vreg1<def> = COPY %R1; GPR:%vreg1
+	%vreg0<def> = COPY %R0; GPR:%vreg0
+	%vreg2<def> = VMOVDRR %vreg0, %vreg1, pred:14, pred:%noreg; DPR:%vreg2 GPR:%vreg0,%vreg1
+	%vreg3<def> = VCVTSD %vreg2<kill>, pred:14, pred:%noreg; SPR:%vreg3 DPR:%vreg2
+	%vreg4<def> = VMOVRS %vreg3<kill>, pred:14, pred:%noreg; GPR:%vreg4 SPR:%vreg3
+	%vreg5<def> = t2MOVi32imm <ga:@CC>; rGPR:%vreg5
+	%vreg6<def> = t2LDRi12 %vreg5<kill>, 0, pred:14, pred:%noreg; mem:LD4[@CC](tbaa=!4) GPR:%vreg6 rGPR:%vreg5
+	%vreg7<def> = t2LDRi12 %vreg6, 380, pred:14, pred:%noreg; mem:LD4[%2](tbaa=!8) tcGPR:%vreg7 GPR:%vreg6
+	%R0<def> = COPY %vreg6; GPR:%vreg6
+	%R1<def> = COPY %vreg4; GPR:%vreg4
+	TCRETURNri %vreg7<kill>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>; tcGPR:%vreg7
+
+# End machine code for function glIndexd.
+
+# After Machine Loop Invariant Code Motion:
+# Machine code for function glIndexd: SSA
+Function Live Ins: %R0 in %vreg0, %R1 in %vreg1
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1
+	%vreg1<def> = COPY %R1; GPR:%vreg1
+	%vreg0<def> = COPY %R0; GPR:%vreg0
+	%vreg2<def> = VMOVDRR %vreg0, %vreg1, pred:14, pred:%noreg; DPR:%vreg2 GPR:%vreg0,%vreg1
+	%vreg3<def> = VCVTSD %vreg2<kill>, pred:14, pred:%noreg; SPR:%vreg3 DPR:%vreg2
+	%vreg4<def> = VMOVRS %vreg3<kill>, pred:14, pred:%noreg; GPR:%vreg4 SPR:%vreg3
+	%vreg5<def> = t2MOVi32imm <ga:@CC>; rGPR:%vreg5
+	%vreg6<def> = t2LDRi12 %vreg5<kill>, 0, pred:14, pred:%noreg; mem:LD4[@CC](tbaa=!4) GPR:%vreg6 rGPR:%vreg5
+	%vreg7<def> = t2LDRi12 %vreg6, 380, pred:14, pred:%noreg; mem:LD4[%2](tbaa=!8) tcGPR:%vreg7 GPR:%vreg6
+	%R0<def> = COPY %vreg6; GPR:%vreg6
+	%R1<def> = COPY %vreg4; GPR:%vreg4
+	TCRETURNri %vreg7<kill>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>; tcGPR:%vreg7
+
+# End machine code for function glIndexd.
+
+# After Machine Common Subexpression Elimination:
+# Machine code for function glIndexd: SSA
+Function Live Ins: %R0 in %vreg0, %R1 in %vreg1
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1
+	%vreg1<def> = COPY %R1; GPR:%vreg1
+	%vreg0<def> = COPY %R0; GPR:%vreg0
+	%vreg2<def> = VMOVDRR %vreg0, %vreg1, pred:14, pred:%noreg; DPR:%vreg2 GPR:%vreg0,%vreg1
+	%vreg3<def> = VCVTSD %vreg2<kill>, pred:14, pred:%noreg; SPR:%vreg3 DPR:%vreg2
+	%vreg4<def> = VMOVRS %vreg3<kill>, pred:14, pred:%noreg; GPR:%vreg4 SPR:%vreg3
+	%vreg5<def> = t2MOVi32imm <ga:@CC>; rGPR:%vreg5
+	%vreg6<def> = t2LDRi12 %vreg5<kill>, 0, pred:14, pred:%noreg; mem:LD4[@CC](tbaa=!4) GPR:%vreg6 rGPR:%vreg5
+	%vreg7<def> = t2LDRi12 %vreg6, 380, pred:14, pred:%noreg; mem:LD4[%2](tbaa=!8) tcGPR:%vreg7 GPR:%vreg6
+	%R0<def> = COPY %vreg6; GPR:%vreg6
+	%R1<def> = COPY %vreg4; GPR:%vreg4
+	TCRETURNri %vreg7<kill>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>; tcGPR:%vreg7
+
+# End machine code for function glIndexd.
+
+# After Machine code sinking:
+# Machine code for function glIndexd: SSA
+Function Live Ins: %R0 in %vreg0, %R1 in %vreg1
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1
+	%vreg1<def> = COPY %R1; GPR:%vreg1
+	%vreg0<def> = COPY %R0; GPR:%vreg0
+	%vreg2<def> = VMOVDRR %vreg0, %vreg1, pred:14, pred:%noreg; DPR:%vreg2 GPR:%vreg0,%vreg1
+	%vreg3<def> = VCVTSD %vreg2<kill>, pred:14, pred:%noreg; SPR:%vreg3 DPR:%vreg2
+	%vreg4<def> = VMOVRS %vreg3<kill>, pred:14, pred:%noreg; GPR:%vreg4 SPR:%vreg3
+	%vreg5<def> = t2MOVi32imm <ga:@CC>; rGPR:%vreg5
+	%vreg6<def> = t2LDRi12 %vreg5<kill>, 0, pred:14, pred:%noreg; mem:LD4[@CC](tbaa=!4) GPR:%vreg6 rGPR:%vreg5
+	%vreg7<def> = t2LDRi12 %vreg6, 380, pred:14, pred:%noreg; mem:LD4[%2](tbaa=!8) tcGPR:%vreg7 GPR:%vreg6
+	%R0<def> = COPY %vreg6; GPR:%vreg6
+	%R1<def> = COPY %vreg4; GPR:%vreg4
+	TCRETURNri %vreg7<kill>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>; tcGPR:%vreg7
+
+# End machine code for function glIndexd.
+
+# After Peephole Optimizations:
+# Machine code for function glIndexd: SSA
+Function Live Ins: %R0 in %vreg0, %R1 in %vreg1
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1
+	%vreg1<def> = COPY %R1; GPR:%vreg1
+	%vreg0<def> = COPY %R0; GPR:%vreg0
+	%vreg2<def> = VMOVDRR %vreg0, %vreg1, pred:14, pred:%noreg; DPR:%vreg2 GPR:%vreg0,%vreg1
+	%vreg3<def> = VCVTSD %vreg2<kill>, pred:14, pred:%noreg; SPR:%vreg3 DPR:%vreg2
+	%vreg4<def> = VMOVRS %vreg3<kill>, pred:14, pred:%noreg; GPR:%vreg4 SPR:%vreg3
+	%vreg5<def> = t2MOVi32imm <ga:@CC>; rGPR:%vreg5
+	%vreg6<def> = t2LDRi12 %vreg5<kill>, 0, pred:14, pred:%noreg; mem:LD4[@CC](tbaa=!4) GPR:%vreg6 rGPR:%vreg5
+	%vreg7<def> = t2LDRi12 %vreg6, 380, pred:14, pred:%noreg; mem:LD4[%2](tbaa=!8) tcGPR:%vreg7 GPR:%vreg6
+	%R0<def> = COPY %vreg6; GPR:%vreg6
+	%R1<def> = COPY %vreg4; GPR:%vreg4
+	TCRETURNri %vreg7<kill>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>; tcGPR:%vreg7
+
+# End machine code for function glIndexd.
+
+# After Remove dead machine instructions:
+# Machine code for function glIndexd: SSA
+Function Live Ins: %R0 in %vreg0, %R1 in %vreg1
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1
+	%vreg1<def> = COPY %R1; GPR:%vreg1
+	%vreg0<def> = COPY %R0; GPR:%vreg0
+	%vreg2<def> = VMOVDRR %vreg0, %vreg1, pred:14, pred:%noreg; DPR:%vreg2 GPR:%vreg0,%vreg1
+	%vreg3<def> = VCVTSD %vreg2<kill>, pred:14, pred:%noreg; SPR:%vreg3 DPR:%vreg2
+	%vreg4<def> = VMOVRS %vreg3<kill>, pred:14, pred:%noreg; GPR:%vreg4 SPR:%vreg3
+	%vreg5<def> = t2MOVi32imm <ga:@CC>; rGPR:%vreg5
+	%vreg6<def> = t2LDRi12 %vreg5<kill>, 0, pred:14, pred:%noreg; mem:LD4[@CC](tbaa=!4) GPR:%vreg6 rGPR:%vreg5
+	%vreg7<def> = t2LDRi12 %vreg6, 380, pred:14, pred:%noreg; mem:LD4[%2](tbaa=!8) tcGPR:%vreg7 GPR:%vreg6
+	%R0<def> = COPY %vreg6; GPR:%vreg6
+	%R1<def> = COPY %vreg4; GPR:%vreg4
+	TCRETURNri %vreg7<kill>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>; tcGPR:%vreg7
+
+# End machine code for function glIndexd.
+
+# After ARM MLA / MLS expansion pass:
+# Machine code for function glIndexd: SSA
+Function Live Ins: %R0 in %vreg0, %R1 in %vreg1
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1
+	%vreg1<def> = COPY %R1; GPR:%vreg1
+	%vreg0<def> = COPY %R0; GPR:%vreg0
+	%vreg2<def> = VMOVDRR %vreg0, %vreg1, pred:14, pred:%noreg; DPR:%vreg2 GPR:%vreg0,%vreg1
+	%vreg3<def> = VCVTSD %vreg2<kill>, pred:14, pred:%noreg; SPR:%vreg3 DPR:%vreg2
+	%vreg4<def> = VMOVRS %vreg3<kill>, pred:14, pred:%noreg; GPR:%vreg4 SPR:%vreg3
+	%vreg5<def> = t2MOVi32imm <ga:@CC>; rGPR:%vreg5
+	%vreg6<def> = t2LDRi12 %vreg5<kill>, 0, pred:14, pred:%noreg; mem:LD4[@CC](tbaa=!4) GPR:%vreg6 rGPR:%vreg5
+	%vreg7<def> = t2LDRi12 %vreg6, 380, pred:14, pred:%noreg; mem:LD4[%2](tbaa=!8) tcGPR:%vreg7 GPR:%vreg6
+	%R0<def> = COPY %vreg6; GPR:%vreg6
+	%R1<def> = COPY %vreg4; GPR:%vreg4
+	TCRETURNri %vreg7<kill>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>; tcGPR:%vreg7
+
+# End machine code for function glIndexd.
+
+# After ARM pre- register allocation load / store optimization pass:
+# Machine code for function glIndexd: SSA
+Function Live Ins: %R0 in %vreg0, %R1 in %vreg1
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1
+	%vreg1<def> = COPY %R1; GPR:%vreg1
+	%vreg0<def> = COPY %R0; GPR:%vreg0
+	%vreg2<def> = VMOVDRR %vreg0, %vreg1, pred:14, pred:%noreg; DPR:%vreg2 GPR:%vreg0,%vreg1
+	%vreg3<def> = VCVTSD %vreg2<kill>, pred:14, pred:%noreg; SPR:%vreg3 DPR:%vreg2
+	%vreg4<def> = VMOVRS %vreg3<kill>, pred:14, pred:%noreg; GPR:%vreg4 SPR:%vreg3
+	%vreg5<def> = t2MOVi32imm <ga:@CC>; rGPR:%vreg5
+	%vreg6<def> = t2LDRi12 %vreg5<kill>, 0, pred:14, pred:%noreg; mem:LD4[@CC](tbaa=!4) GPR:%vreg6 rGPR:%vreg5
+	%vreg7<def> = t2LDRi12 %vreg6, 380, pred:14, pred:%noreg; mem:LD4[%2](tbaa=!8) tcGPR:%vreg7 GPR:%vreg6
+	%R0<def> = COPY %vreg6; GPR:%vreg6
+	%R1<def> = COPY %vreg4; GPR:%vreg4
+	TCRETURNri %vreg7<kill>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>; tcGPR:%vreg7
+
+# End machine code for function glIndexd.
+
+# After ARM A15 S->D optimizer:
+# Machine code for function glIndexd: SSA
+Function Live Ins: %R0 in %vreg0, %R1 in %vreg1
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1
+	%vreg1<def> = COPY %R1; GPR:%vreg1
+	%vreg0<def> = COPY %R0; GPR:%vreg0
+	%vreg2<def> = VMOVDRR %vreg0, %vreg1, pred:14, pred:%noreg; DPR:%vreg2 GPR:%vreg0,%vreg1
+	%vreg3<def> = VCVTSD %vreg2<kill>, pred:14, pred:%noreg; SPR:%vreg3 DPR:%vreg2
+	%vreg4<def> = VMOVRS %vreg3<kill>, pred:14, pred:%noreg; GPR:%vreg4 SPR:%vreg3
+	%vreg5<def> = t2MOVi32imm <ga:@CC>; rGPR:%vreg5
+	%vreg6<def> = t2LDRi12 %vreg5<kill>, 0, pred:14, pred:%noreg; mem:LD4[@CC](tbaa=!4) GPR:%vreg6 rGPR:%vreg5
+	%vreg7<def> = t2LDRi12 %vreg6, 380, pred:14, pred:%noreg; mem:LD4[%2](tbaa=!8) tcGPR:%vreg7 GPR:%vreg6
+	%R0<def> = COPY %vreg6; GPR:%vreg6
+	%R1<def> = COPY %vreg4; GPR:%vreg4
+	TCRETURNri %vreg7<kill>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>; tcGPR:%vreg7
+
+# End machine code for function glIndexd.
+
+# After Process Implicit Definitions:
+# Machine code for function glIndexd: SSA
+Function Live Ins: %R0 in %vreg0, %R1 in %vreg1
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1
+	%vreg1<def> = COPY %R1; GPR:%vreg1
+	%vreg0<def> = COPY %R0; GPR:%vreg0
+	%vreg2<def> = VMOVDRR %vreg0, %vreg1, pred:14, pred:%noreg; DPR:%vreg2 GPR:%vreg0,%vreg1
+	%vreg3<def> = VCVTSD %vreg2<kill>, pred:14, pred:%noreg; SPR:%vreg3 DPR:%vreg2
+	%vreg4<def> = VMOVRS %vreg3<kill>, pred:14, pred:%noreg; GPR:%vreg4 SPR:%vreg3
+	%vreg5<def> = t2MOVi32imm <ga:@CC>; rGPR:%vreg5
+	%vreg6<def> = t2LDRi12 %vreg5<kill>, 0, pred:14, pred:%noreg; mem:LD4[@CC](tbaa=!4) GPR:%vreg6 rGPR:%vreg5
+	%vreg7<def> = t2LDRi12 %vreg6, 380, pred:14, pred:%noreg; mem:LD4[%2](tbaa=!8) tcGPR:%vreg7 GPR:%vreg6
+	%R0<def> = COPY %vreg6; GPR:%vreg6
+	%R1<def> = COPY %vreg4; GPR:%vreg4
+	TCRETURNri %vreg7<kill>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>; tcGPR:%vreg7
+
+# End machine code for function glIndexd.
+
+# After Live Variable Analysis:
+# Machine code for function glIndexd: SSA
+Function Live Ins: %R0 in %vreg0, %R1 in %vreg1
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1
+	%vreg1<def> = COPY %R1<kill>; GPR:%vreg1
+	%vreg0<def> = COPY %R0<kill>; GPR:%vreg0
+	%vreg2<def> = VMOVDRR %vreg0<kill>, %vreg1<kill>, pred:14, pred:%noreg; DPR:%vreg2 GPR:%vreg0,%vreg1
+	%vreg3<def> = VCVTSD %vreg2<kill>, pred:14, pred:%noreg; SPR:%vreg3 DPR:%vreg2
+	%vreg4<def> = VMOVRS %vreg3<kill>, pred:14, pred:%noreg; GPR:%vreg4 SPR:%vreg3
+	%vreg5<def> = t2MOVi32imm <ga:@CC>; rGPR:%vreg5
+	%vreg6<def> = t2LDRi12 %vreg5<kill>, 0, pred:14, pred:%noreg; mem:LD4[@CC](tbaa=!4) GPR:%vreg6 rGPR:%vreg5
+	%vreg7<def> = t2LDRi12 %vreg6, 380, pred:14, pred:%noreg; mem:LD4[%2](tbaa=!8) tcGPR:%vreg7 GPR:%vreg6
+	%R0<def> = COPY %vreg6<kill>; GPR:%vreg6
+	%R1<def> = COPY %vreg4<kill>; GPR:%vreg4
+	TCRETURNri %vreg7<kill>, %SP<imp-use>, %R0<imp-use,kill>, %R1<imp-use,kill>; tcGPR:%vreg7
+
+# End machine code for function glIndexd.
+
+# After Machine Natural Loop Construction:
+# Machine code for function glIndexd: SSA
+Function Live Ins: %R0 in %vreg0, %R1 in %vreg1
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1
+	%vreg1<def> = COPY %R1<kill>; GPR:%vreg1
+	%vreg0<def> = COPY %R0<kill>; GPR:%vreg0
+	%vreg2<def> = VMOVDRR %vreg0<kill>, %vreg1<kill>, pred:14, pred:%noreg; DPR:%vreg2 GPR:%vreg0,%vreg1
+	%vreg3<def> = VCVTSD %vreg2<kill>, pred:14, pred:%noreg; SPR:%vreg3 DPR:%vreg2
+	%vreg4<def> = VMOVRS %vreg3<kill>, pred:14, pred:%noreg; GPR:%vreg4 SPR:%vreg3
+	%vreg5<def> = t2MOVi32imm <ga:@CC>; rGPR:%vreg5
+	%vreg6<def> = t2LDRi12 %vreg5<kill>, 0, pred:14, pred:%noreg; mem:LD4[@CC](tbaa=!4) GPR:%vreg6 rGPR:%vreg5
+	%vreg7<def> = t2LDRi12 %vreg6, 380, pred:14, pred:%noreg; mem:LD4[%2](tbaa=!8) tcGPR:%vreg7 GPR:%vreg6
+	%R0<def> = COPY %vreg6<kill>; GPR:%vreg6
+	%R1<def> = COPY %vreg4<kill>; GPR:%vreg4
+	TCRETURNri %vreg7<kill>, %SP<imp-use>, %R0<imp-use,kill>, %R1<imp-use,kill>; tcGPR:%vreg7
+
+# End machine code for function glIndexd.
+
+# After Eliminate PHI nodes for register allocation:
+# Machine code for function glIndexd: Post SSA
+Function Live Ins: %R0 in %vreg0, %R1 in %vreg1
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1
+	%vreg1<def> = COPY %R1<kill>; GPR:%vreg1
+	%vreg0<def> = COPY %R0<kill>; GPR:%vreg0
+	%vreg2<def> = VMOVDRR %vreg0<kill>, %vreg1<kill>, pred:14, pred:%noreg; DPR:%vreg2 GPR:%vreg0,%vreg1
+	%vreg3<def> = VCVTSD %vreg2<kill>, pred:14, pred:%noreg; SPR:%vreg3 DPR:%vreg2
+	%vreg4<def> = VMOVRS %vreg3<kill>, pred:14, pred:%noreg; GPR:%vreg4 SPR:%vreg3
+	%vreg5<def> = t2MOVi32imm <ga:@CC>; rGPR:%vreg5
+	%vreg6<def> = t2LDRi12 %vreg5<kill>, 0, pred:14, pred:%noreg; mem:LD4[@CC](tbaa=!4) GPR:%vreg6 rGPR:%vreg5
+	%vreg7<def> = t2LDRi12 %vreg6, 380, pred:14, pred:%noreg; mem:LD4[%2](tbaa=!8) tcGPR:%vreg7 GPR:%vreg6
+	%R0<def> = COPY %vreg6<kill>; GPR:%vreg6
+	%R1<def> = COPY %vreg4<kill>; GPR:%vreg4
+	TCRETURNri %vreg7<kill>, %SP<imp-use>, %R0<imp-use,kill>, %R1<imp-use,kill>; tcGPR:%vreg7
+
+# End machine code for function glIndexd.
+
+# After Two-Address instruction pass:
+# Machine code for function glIndexd: Post SSA
+Function Live Ins: %R0 in %vreg0, %R1 in %vreg1
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1
+	%vreg1<def> = COPY %R1<kill>; GPR:%vreg1
+	%vreg0<def> = COPY %R0<kill>; GPR:%vreg0
+	%vreg2<def> = VMOVDRR %vreg0<kill>, %vreg1<kill>, pred:14, pred:%noreg; DPR:%vreg2 GPR:%vreg0,%vreg1
+	%vreg3<def> = VCVTSD %vreg2<kill>, pred:14, pred:%noreg; SPR:%vreg3 DPR:%vreg2
+	%vreg4<def> = VMOVRS %vreg3<kill>, pred:14, pred:%noreg; GPR:%vreg4 SPR:%vreg3
+	%vreg5<def> = t2MOVi32imm <ga:@CC>; rGPR:%vreg5
+	%vreg6<def> = t2LDRi12 %vreg5<kill>, 0, pred:14, pred:%noreg; mem:LD4[@CC](tbaa=!4) GPR:%vreg6 rGPR:%vreg5
+	%vreg7<def> = t2LDRi12 %vreg6, 380, pred:14, pred:%noreg; mem:LD4[%2](tbaa=!8) tcGPR:%vreg7 GPR:%vreg6
+	%R0<def> = COPY %vreg6<kill>; GPR:%vreg6
+	%R1<def> = COPY %vreg4<kill>; GPR:%vreg4
+	TCRETURNri %vreg7<kill>, %SP<imp-use>, %R0<imp-use,kill>, %R1<imp-use,kill>; tcGPR:%vreg7
+
+# End machine code for function glIndexd.
+
+# After Simple Register Coalescing:
+# Machine code for function glIndexd: Post SSA
+Function Live Ins: %R0 in %vreg0, %R1 in %vreg1
+
+0B	BB#0: derived from LLVM BB %0
+	    Live Ins: %R0 %R1
+16B		%vreg1<def> = COPY %R1; GPR:%vreg1
+32B		%vreg0<def> = COPY %R0; GPR:%vreg0
+48B		%vreg2<def> = VMOVDRR %vreg0, %vreg1, pred:14, pred:%noreg; DPR:%vreg2 GPR:%vreg0,%vreg1
+64B		%vreg3<def> = VCVTSD %vreg2, pred:14, pred:%noreg; SPR:%vreg3 DPR:%vreg2
+80B		%vreg4<def> = VMOVRS %vreg3, pred:14, pred:%noreg; GPR:%vreg4 SPR:%vreg3
+96B		%vreg5<def> = t2MOVi32imm <ga:@CC>; rGPR:%vreg5
+112B		%vreg6<def> = t2LDRi12 %vreg5, 0, pred:14, pred:%noreg; mem:LD4[@CC](tbaa=!4) GPR:%vreg6 rGPR:%vreg5
+128B		%vreg7<def> = t2LDRi12 %vreg6, 380, pred:14, pred:%noreg; mem:LD4[%2](tbaa=!8) tcGPR:%vreg7 GPR:%vreg6
+144B		%R0<def> = COPY %vreg6; GPR:%vreg6
+160B		%R1<def> = COPY %vreg4; GPR:%vreg4
+176B		TCRETURNri %vreg7, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>; tcGPR:%vreg7
+
+# End machine code for function glIndexd.
+
+# After Machine Instruction Scheduler:
+# Machine code for function glIndexd: Post SSA
+Function Live Ins: %R0 in %vreg0, %R1 in %vreg1
+
+0B	BB#0: derived from LLVM BB %0
+	    Live Ins: %R0 %R1
+16B		%vreg1<def> = COPY %R1; GPR:%vreg1
+32B		%vreg0<def> = COPY %R0; GPR:%vreg0
+48B		%vreg2<def> = VMOVDRR %vreg0, %vreg1, pred:14, pred:%noreg; DPR:%vreg2 GPR:%vreg0,%vreg1
+64B		%vreg3<def> = VCVTSD %vreg2, pred:14, pred:%noreg; SPR:%vreg3 DPR:%vreg2
+80B		%vreg4<def> = VMOVRS %vreg3, pred:14, pred:%noreg; GPR:%vreg4 SPR:%vreg3
+96B		%vreg5<def> = t2MOVi32imm <ga:@CC>; rGPR:%vreg5
+112B		%vreg6<def> = t2LDRi12 %vreg5, 0, pred:14, pred:%noreg; mem:LD4[@CC](tbaa=!4) GPR:%vreg6 rGPR:%vreg5
+128B		%vreg7<def> = t2LDRi12 %vreg6, 380, pred:14, pred:%noreg; mem:LD4[%2](tbaa=!8) tcGPR:%vreg7 GPR:%vreg6
+144B		%R0<def> = COPY %vreg6; GPR:%vreg6
+160B		%R1<def> = COPY %vreg4; GPR:%vreg4
+176B		TCRETURNri %vreg7, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>; tcGPR:%vreg7
+
+# End machine code for function glIndexd.
+
+# After Greedy Register Allocator:
+# Machine code for function glIndexd: Post SSA
+Function Live Ins: %R0 in %vreg0, %R1 in %vreg1
+
+0B	BB#0: derived from LLVM BB %0
+	    Live Ins: %R0 %R1
+16B		%vreg1<def> = COPY %R1; GPR:%vreg1
+32B		%vreg0<def> = COPY %R0; GPR:%vreg0
+48B		%vreg2<def> = VMOVDRR %vreg0, %vreg1, pred:14, pred:%noreg; DPR:%vreg2 GPR:%vreg0,%vreg1
+64B		%vreg3<def> = VCVTSD %vreg2, pred:14, pred:%noreg; SPR:%vreg3 DPR:%vreg2
+80B		%vreg4<def> = VMOVRS %vreg3, pred:14, pred:%noreg; GPR:%vreg4 SPR:%vreg3
+96B		%vreg5<def> = t2MOVi32imm <ga:@CC>; rGPR:%vreg5
+112B		%vreg6<def> = t2LDRi12 %vreg5, 0, pred:14, pred:%noreg; mem:LD4[@CC](tbaa=!4) GPR:%vreg6 rGPR:%vreg5
+128B		%vreg7<def> = t2LDRi12 %vreg6, 380, pred:14, pred:%noreg; mem:LD4[%2](tbaa=!8) tcGPR:%vreg7 GPR:%vreg6
+144B		%R0<def> = COPY %vreg6; GPR:%vreg6
+160B		%R1<def> = COPY %vreg4; GPR:%vreg4
+176B		TCRETURNri %vreg7, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>; tcGPR:%vreg7
+
+# End machine code for function glIndexd.
+
+# After Virtual Register Rewriter:
+# Machine code for function glIndexd: Post SSA
+Function Live Ins: %R0, %R1
+
+0B	BB#0: derived from LLVM BB %0
+	    Live Ins: %R0 %R1
+48B		%D0<def> = VMOVDRR %R0<kill>, %R1<kill>, pred:14, pred:%noreg
+64B		%S0<def> = VCVTSD %D0<kill>, pred:14, pred:%noreg
+80B		%R1<def> = VMOVRS %S0<kill>, pred:14, pred:%noreg
+96B		%R0<def> = t2MOVi32imm <ga:@CC>
+112B		%R0<def> = t2LDRi12 %R0<kill>, 0, pred:14, pred:%noreg; mem:LD4[@CC](tbaa=!4)
+128B		%R2<def> = t2LDRi12 %R0, 380, pred:14, pred:%noreg; mem:LD4[%2](tbaa=!8)
+176B		TCRETURNri %R2<kill>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>
+
+# End machine code for function glIndexd.
+
+# After Stack Slot Coloring:
+# Machine code for function glIndexd: Post SSA
+Function Live Ins: %R0, %R1
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1
+	%D0<def> = VMOVDRR %R0<kill>, %R1<kill>, pred:14, pred:%noreg
+	%S0<def> = VCVTSD %D0<kill>, pred:14, pred:%noreg
+	%R1<def> = VMOVRS %S0<kill>, pred:14, pred:%noreg
+	%R0<def> = t2MOVi32imm <ga:@CC>
+	%R0<def> = t2LDRi12 %R0<kill>, 0, pred:14, pred:%noreg; mem:LD4[@CC](tbaa=!4)
+	%R2<def> = t2LDRi12 %R0, 380, pred:14, pred:%noreg; mem:LD4[%2](tbaa=!8)
+	TCRETURNri %R2<kill>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>
+
+# End machine code for function glIndexd.
+
+# After Machine Loop Invariant Code Motion:
+# Machine code for function glIndexd: Post SSA
+Function Live Ins: %R0, %R1
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1
+	%D0<def> = VMOVDRR %R0<kill>, %R1<kill>, pred:14, pred:%noreg
+	%S0<def> = VCVTSD %D0<kill>, pred:14, pred:%noreg
+	%R1<def> = VMOVRS %S0<kill>, pred:14, pred:%noreg
+	%R0<def> = t2MOVi32imm <ga:@CC>
+	%R0<def> = t2LDRi12 %R0<kill>, 0, pred:14, pred:%noreg; mem:LD4[@CC](tbaa=!4)
+	%R2<def> = t2LDRi12 %R0, 380, pred:14, pred:%noreg; mem:LD4[%2](tbaa=!8)
+	TCRETURNri %R2<kill>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>
+
+# End machine code for function glIndexd.
+
+# After Shrink Wrapping analysis:
+# Machine code for function glIndexd: Post SSA
+Function Live Ins: %R0, %R1
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1
+	%D0<def> = VMOVDRR %R0<kill>, %R1<kill>, pred:14, pred:%noreg
+	%S0<def> = VCVTSD %D0<kill>, pred:14, pred:%noreg
+	%R1<def> = VMOVRS %S0<kill>, pred:14, pred:%noreg
+	%R0<def> = t2MOVi32imm <ga:@CC>
+	%R0<def> = t2LDRi12 %R0<kill>, 0, pred:14, pred:%noreg; mem:LD4[@CC](tbaa=!4)
+	%R2<def> = t2LDRi12 %R0, 380, pred:14, pred:%noreg; mem:LD4[%2](tbaa=!8)
+	TCRETURNri %R2<kill>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>
+
+# End machine code for function glIndexd.
+
+# After Prologue/Epilogue Insertion & Frame Finalization:
+# Machine code for function glIndexd: Post SSA
+Function Live Ins: %R0, %R1
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1
+	%D0<def> = VMOVDRR %R0<kill>, %R1<kill>, pred:14, pred:%noreg
+	%S0<def> = VCVTSD %D0<kill>, pred:14, pred:%noreg
+	%R1<def> = VMOVRS %S0<kill>, pred:14, pred:%noreg
+	%R0<def> = t2MOVi32imm <ga:@CC>
+	%R0<def> = t2LDRi12 %R0<kill>, 0, pred:14, pred:%noreg; mem:LD4[@CC](tbaa=!4)
+	%R2<def> = t2LDRi12 %R0, 380, pred:14, pred:%noreg; mem:LD4[%2](tbaa=!8)
+	TCRETURNri %R2<kill>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>
+
+# End machine code for function glIndexd.
+
+# After Machine Copy Propagation Pass:
+# Machine code for function glIndexd: Post SSA
+Function Live Ins: %R0, %R1
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1
+	%D0<def> = VMOVDRR %R0<kill>, %R1<kill>, pred:14, pred:%noreg
+	%S0<def> = VCVTSD %D0<kill>, pred:14, pred:%noreg
+	%R1<def> = VMOVRS %S0<kill>, pred:14, pred:%noreg
+	%R0<def> = t2MOVi32imm <ga:@CC>
+	%R0<def> = t2LDRi12 %R0<kill>, 0, pred:14, pred:%noreg; mem:LD4[@CC](tbaa=!4)
+	%R2<def> = t2LDRi12 %R0, 380, pred:14, pred:%noreg; mem:LD4[%2](tbaa=!8)
+	TCRETURNri %R2<kill>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>
+
+# End machine code for function glIndexd.
+
+# After Post-RA pseudo instruction expansion pass:
+# Machine code for function glIndexd: Post SSA
+Function Live Ins: %R0, %R1
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1
+	%D0<def> = VMOVDRR %R0<kill>, %R1<kill>, pred:14, pred:%noreg
+	%S0<def> = VCVTSD %D0<kill>, pred:14, pred:%noreg
+	%R1<def> = VMOVRS %S0<kill>, pred:14, pred:%noreg
+	%R0<def> = t2MOVi32imm <ga:@CC>
+	%R0<def> = t2LDRi12 %R0<kill>, 0, pred:14, pred:%noreg; mem:LD4[@CC](tbaa=!4)
+	%R2<def> = t2LDRi12 %R0, 380, pred:14, pred:%noreg; mem:LD4[%2](tbaa=!8)
+	TCRETURNri %R2<kill>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>
+
+# End machine code for function glIndexd.
+
+# After ARM load / store optimization pass:
+# Machine code for function glIndexd: Post SSA
+Function Live Ins: %R0, %R1
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1
+	%D0<def> = VMOVDRR %R0<kill>, %R1<kill>, pred:14, pred:%noreg
+	%S0<def> = VCVTSD %D0<kill>, pred:14, pred:%noreg
+	%R1<def> = VMOVRS %S0<kill>, pred:14, pred:%noreg
+	%R0<def> = t2MOVi32imm <ga:@CC>
+	%R0<def> = t2LDRi12 %R0<kill>, 0, pred:14, pred:%noreg; mem:LD4[@CC](tbaa=!4)
+	%R2<def> = t2LDRi12 %R0, 380, pred:14, pred:%noreg; mem:LD4[%2](tbaa=!8)
+	TCRETURNri %R2<kill>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>
+
+# End machine code for function glIndexd.
+
+# After Execution dependency fix:
+# Machine code for function glIndexd: Post SSA
+Function Live Ins: %R0, %R1
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1
+	%D0<def> = VMOVDRR %R0<kill>, %R1<kill>, pred:14, pred:%noreg
+	%S0<def> = VCVTSD %D0<kill>, pred:14, pred:%noreg
+	%R1<def> = VMOVRS %S0<kill>, pred:14, pred:%noreg
+	%R0<def> = t2MOVi32imm <ga:@CC>
+	%R0<def> = t2LDRi12 %R0<kill>, 0, pred:14, pred:%noreg; mem:LD4[@CC](tbaa=!4)
+	%R2<def> = t2LDRi12 %R0, 380, pred:14, pred:%noreg; mem:LD4[%2](tbaa=!8)
+	TCRETURNri %R2<kill>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>
+
+# End machine code for function glIndexd.
+
+# After ARM pseudo instruction expansion pass:
+# Machine code for function glIndexd: Post SSA
+Function Live Ins: %R0, %R1
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1
+	%D0<def> = VMOVDRR %R0<kill>, %R1<kill>, pred:14, pred:%noreg
+	%S0<def> = VCVTSD %D0<kill>, pred:14, pred:%noreg
+	%R1<def> = VMOVRS %S0<kill>, pred:14, pred:%noreg
+	%R0<def> = t2MOVi16 <ga:@CC>[TF=1], pred:14, pred:%noreg
+	%R0<def,tied1> = t2MOVTi16 %R0<tied0>, <ga:@CC>[TF=2], pred:14, pred:%noreg
+	%R0<def> = t2LDRi12 %R0<kill>, 0, pred:14, pred:%noreg; mem:LD4[@CC](tbaa=!4)
+	%R2<def> = t2LDRi12 %R0, 380, pred:14, pred:%noreg; mem:LD4[%2](tbaa=!8)
+	tTAILJMPr %R2<kill>, %SP<imp-use>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>
+
+# End machine code for function glIndexd.
+
+# After Thumb2 instruction size reduction pass:
+# Machine code for function glIndexd: Post SSA
+Function Live Ins: %R0, %R1
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1
+	%D0<def> = VMOVDRR %R0<kill>, %R1<kill>, pred:14, pred:%noreg
+	%S0<def> = VCVTSD %D0<kill>, pred:14, pred:%noreg
+	%R1<def> = VMOVRS %S0<kill>, pred:14, pred:%noreg
+	%R0<def> = t2MOVi16 <ga:@CC>[TF=1], pred:14, pred:%noreg
+	%R0<def,tied1> = t2MOVTi16 %R0<tied0>, <ga:@CC>[TF=2], pred:14, pred:%noreg
+	%R0<def> = t2LDRi12 %R0<kill>, 0, pred:14, pred:%noreg; mem:LD4[@CC](tbaa=!4)
+	%R2<def> = t2LDRi12 %R0, 380, pred:14, pred:%noreg; mem:LD4[%2](tbaa=!8)
+	tTAILJMPr %R2<kill>, %SP<imp-use>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>
+
+# End machine code for function glIndexd.
+
+# After Thumb IT blocks insertion pass:
+# Machine code for function glIndexd: Post SSA
+Function Live Ins: %R0, %R1
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1
+	%D0<def> = VMOVDRR %R0<kill>, %R1<kill>, pred:14, pred:%noreg
+	%S0<def> = VCVTSD %D0<kill>, pred:14, pred:%noreg
+	%R1<def> = VMOVRS %S0<kill>, pred:14, pred:%noreg
+	%R0<def> = t2MOVi16 <ga:@CC>[TF=1], pred:14, pred:%noreg
+	%R0<def,tied1> = t2MOVTi16 %R0<tied0>, <ga:@CC>[TF=2], pred:14, pred:%noreg
+	%R0<def> = t2LDRi12 %R0<kill>, 0, pred:14, pred:%noreg; mem:LD4[@CC](tbaa=!4)
+	%R2<def> = t2LDRi12 %R0, 380, pred:14, pred:%noreg; mem:LD4[%2](tbaa=!8)
+	tTAILJMPr %R2<kill>, %SP<imp-use>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>
+
+# End machine code for function glIndexd.
+
+# After Analyze Machine Code For Garbage Collection:
+# Machine code for function glIndexd: Post SSA
+Function Live Ins: %R0, %R1
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1
+	%D0<def> = VMOVDRR %R0<kill>, %R1<kill>, pred:14, pred:%noreg
+	%S0<def> = VCVTSD %D0<kill>, pred:14, pred:%noreg
+	%R1<def> = VMOVRS %S0<kill>, pred:14, pred:%noreg
+	%R0<def> = t2MOVi16 <ga:@CC>[TF=1], pred:14, pred:%noreg
+	%R0<def,tied1> = t2MOVTi16 %R0<tied0>, <ga:@CC>[TF=2], pred:14, pred:%noreg
+	%R0<def> = t2LDRi12 %R0<kill>, 0, pred:14, pred:%noreg; mem:LD4[@CC](tbaa=!4)
+	%R2<def> = t2LDRi12 %R0, 380, pred:14, pred:%noreg; mem:LD4[%2](tbaa=!8)
+	tTAILJMPr %R2<kill>, %SP<imp-use>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>
+
+# End machine code for function glIndexd.
+
+# After Thumb2 instruction size reduction pass:
+# Machine code for function glIndexd: Post SSA
+Function Live Ins: %R0, %R1
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1
+	%D0<def> = VMOVDRR %R0<kill>, %R1<kill>, pred:14, pred:%noreg
+	%S0<def> = VCVTSD %D0<kill>, pred:14, pred:%noreg
+	%R1<def> = VMOVRS %S0<kill>, pred:14, pred:%noreg
+	%R0<def> = t2MOVi16 <ga:@CC>[TF=1], pred:14, pred:%noreg
+	%R0<def,tied1> = t2MOVTi16 %R0<tied0>, <ga:@CC>[TF=2], pred:14, pred:%noreg
+	%R0<def> = tLDRi %R0<kill>, 0, pred:14, pred:%noreg; mem:LD4[@CC](tbaa=!4)
+	%R2<def> = t2LDRi12 %R0, 380, pred:14, pred:%noreg; mem:LD4[%2](tbaa=!8)
+	tTAILJMPr %R2<kill>, %SP<imp-use>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>
+
+# End machine code for function glIndexd.
+
+# After Unpack machine instruction bundles:
+# Machine code for function glIndexd: Post SSA
+Function Live Ins: %R0, %R1
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1
+	%D0<def> = VMOVDRR %R0<kill>, %R1<kill>, pred:14, pred:%noreg
+	%S0<def> = VCVTSD %D0<kill>, pred:14, pred:%noreg
+	%R1<def> = VMOVRS %S0<kill>, pred:14, pred:%noreg
+	%R0<def> = t2MOVi16 <ga:@CC>[TF=1], pred:14, pred:%noreg
+	%R0<def,tied1> = t2MOVTi16 %R0<tied0>, <ga:@CC>[TF=2], pred:14, pred:%noreg
+	%R0<def> = tLDRi %R0<kill>, 0, pred:14, pred:%noreg; mem:LD4[@CC](tbaa=!4)
+	%R2<def> = t2LDRi12 %R0, 380, pred:14, pred:%noreg; mem:LD4[%2](tbaa=!8)
+	tTAILJMPr %R2<kill>, %SP<imp-use>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>
+
+# End machine code for function glIndexd.
+
+# After optimise barriers pass:
+# Machine code for function glIndexd: Post SSA
+Function Live Ins: %R0, %R1
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1
+	%D0<def> = VMOVDRR %R0<kill>, %R1<kill>, pred:14, pred:%noreg
+	%S0<def> = VCVTSD %D0<kill>, pred:14, pred:%noreg
+	%R1<def> = VMOVRS %S0<kill>, pred:14, pred:%noreg
+	%R0<def> = t2MOVi16 <ga:@CC>[TF=1], pred:14, pred:%noreg
+	%R0<def,tied1> = t2MOVTi16 %R0<tied0>, <ga:@CC>[TF=2], pred:14, pred:%noreg
+	%R0<def> = tLDRi %R0<kill>, 0, pred:14, pred:%noreg; mem:LD4[@CC](tbaa=!4)
+	%R2<def> = t2LDRi12 %R0, 380, pred:14, pred:%noreg; mem:LD4[%2](tbaa=!8)
+	tTAILJMPr %R2<kill>, %SP<imp-use>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>
+
+# End machine code for function glIndexd.
+
+# After ARM constant island placement and branch shortening pass:
+# Machine code for function glIndexd: Post SSA, not tracking liveness
+Function Live Ins: %R0, %R1
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1
+	%D0<def> = VMOVDRR %R0<kill>, %R1<kill>, pred:14, pred:%noreg
+	%S0<def> = VCVTSD %D0<kill>, pred:14, pred:%noreg
+	%R1<def> = VMOVRS %S0<kill>, pred:14, pred:%noreg
+	%R0<def> = t2MOVi16 <ga:@CC>[TF=1], pred:14, pred:%noreg
+	%R0<def,tied1> = t2MOVTi16 %R0<tied0>, <ga:@CC>[TF=2], pred:14, pred:%noreg
+	%R0<def> = tLDRi %R0<kill>, 0, pred:14, pred:%noreg; mem:LD4[@CC](tbaa=!4)
+	%R2<def> = t2LDRi12 %R0, 380, pred:14, pred:%noreg; mem:LD4[%2](tbaa=!8)
+	tTAILJMPr %R2<kill>, %SP<imp-use>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>
+
+# End machine code for function glIndexd.
+
+# After Contiguously Lay Out Funclets:
+# Machine code for function glIndexd: Post SSA, not tracking liveness
+Function Live Ins: %R0, %R1
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1
+	%D0<def> = VMOVDRR %R0<kill>, %R1<kill>, pred:14, pred:%noreg
+	%S0<def> = VCVTSD %D0<kill>, pred:14, pred:%noreg
+	%R1<def> = VMOVRS %S0<kill>, pred:14, pred:%noreg
+	%R0<def> = t2MOVi16 <ga:@CC>[TF=1], pred:14, pred:%noreg
+	%R0<def,tied1> = t2MOVTi16 %R0<tied0>, <ga:@CC>[TF=2], pred:14, pred:%noreg
+	%R0<def> = tLDRi %R0<kill>, 0, pred:14, pred:%noreg; mem:LD4[@CC](tbaa=!4)
+	%R2<def> = t2LDRi12 %R0, 380, pred:14, pred:%noreg; mem:LD4[%2](tbaa=!8)
+	tTAILJMPr %R2<kill>, %SP<imp-use>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>
+
+# End machine code for function glIndexd.
+
+# After StackMap Liveness Analysis:
+# Machine code for function glIndexd: Post SSA, not tracking liveness
+Function Live Ins: %R0, %R1
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1
+	%D0<def> = VMOVDRR %R0<kill>, %R1<kill>, pred:14, pred:%noreg
+	%S0<def> = VCVTSD %D0<kill>, pred:14, pred:%noreg
+	%R1<def> = VMOVRS %S0<kill>, pred:14, pred:%noreg
+	%R0<def> = t2MOVi16 <ga:@CC>[TF=1], pred:14, pred:%noreg
+	%R0<def,tied1> = t2MOVTi16 %R0<tied0>, <ga:@CC>[TF=2], pred:14, pred:%noreg
+	%R0<def> = tLDRi %R0<kill>, 0, pred:14, pred:%noreg; mem:LD4[@CC](tbaa=!4)
+	%R2<def> = t2LDRi12 %R0, 380, pred:14, pred:%noreg; mem:LD4[%2](tbaa=!8)
+	tTAILJMPr %R2<kill>, %SP<imp-use>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>
+
+# End machine code for function glIndexd.
+
+# After Live DEBUG_VALUE analysis:
+# Machine code for function glIndexd: Post SSA, not tracking liveness
+Function Live Ins: %R0, %R1
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0 %R1
+	%D0<def> = VMOVDRR %R0<kill>, %R1<kill>, pred:14, pred:%noreg
+	%S0<def> = VCVTSD %D0<kill>, pred:14, pred:%noreg
+	%R1<def> = VMOVRS %S0<kill>, pred:14, pred:%noreg
+	%R0<def> = t2MOVi16 <ga:@CC>[TF=1], pred:14, pred:%noreg
+	%R0<def,tied1> = t2MOVTi16 %R0<tied0>, <ga:@CC>[TF=2], pred:14, pred:%noreg
+	%R0<def> = tLDRi %R0<kill>, 0, pred:14, pred:%noreg; mem:LD4[@CC](tbaa=!4)
+	%R2<def> = t2LDRi12 %R0, 380, pred:14, pred:%noreg; mem:LD4[%2](tbaa=!8)
+	tTAILJMPr %R2<kill>, %SP<imp-use>, %SP<imp-use>, %R0<imp-use>, %R1<imp-use>
+
+# End machine code for function glIndexd.
+

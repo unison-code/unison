@@ -1,0 +1,933 @@
+# After Instruction Selection:
+# Machine code for function symbol2uvlc: SSA
+Function Live Ins: %R0 in %vreg0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%vreg0<def> = COPY %R0; GPR:%vreg0
+	%vreg1<def> = t2LDRi12 %vreg0, 12, pred:14, pred:%noreg; mem:LD4[%1] rGPR:%vreg1 GPR:%vreg0
+	%vreg2<def> = t2LDRi12 %vreg0, 16, pred:14, pred:%noreg; mem:LD4[%5] rGPR:%vreg2 GPR:%vreg0
+	%vreg3<def> = t2ADDrs %vreg1, %vreg1, 251, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg3,%vreg1,%vreg1
+	%vreg4<def> = t2ASRri %vreg3<kill>, 1, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg4,%vreg3
+	%vreg5<def> = t2MOVi 1, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg5
+	%vreg6<def> = t2LSLrr %vreg5<kill>, %vreg4<kill>, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg6,%vreg5,%vreg4
+	%vreg7<def> = t2SUBri %vreg6, 1, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg7,%vreg6
+	%vreg8<def> = t2ANDrr %vreg7<kill>, %vreg2<kill>, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg8,%vreg7,%vreg2
+	%vreg9<def> = t2ORRrr %vreg8<kill>, %vreg6, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg9,%vreg8,%vreg6
+	t2STRi12 %vreg9<kill>, %vreg0, 20, pred:14, pred:%noreg; mem:ST4[%10] rGPR:%vreg9 GPR:%vreg0
+	%vreg10<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg10
+	%R0<def> = COPY %vreg10; rGPR:%vreg10
+	tBX_RET pred:14, pred:%noreg, %R0<imp-use>
+
+# End machine code for function symbol2uvlc.
+
+# After Expand ISel Pseudo-instructions:
+# Machine code for function symbol2uvlc: SSA
+Function Live Ins: %R0 in %vreg0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%vreg0<def> = COPY %R0; GPR:%vreg0
+	%vreg1<def> = t2LDRi12 %vreg0, 12, pred:14, pred:%noreg; mem:LD4[%1] rGPR:%vreg1 GPR:%vreg0
+	%vreg2<def> = t2LDRi12 %vreg0, 16, pred:14, pred:%noreg; mem:LD4[%5] rGPR:%vreg2 GPR:%vreg0
+	%vreg3<def> = t2ADDrs %vreg1, %vreg1, 251, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg3,%vreg1,%vreg1
+	%vreg4<def> = t2ASRri %vreg3<kill>, 1, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg4,%vreg3
+	%vreg5<def> = t2MOVi 1, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg5
+	%vreg6<def> = t2LSLrr %vreg5<kill>, %vreg4<kill>, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg6,%vreg5,%vreg4
+	%vreg7<def> = t2SUBri %vreg6, 1, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg7,%vreg6
+	%vreg8<def> = t2ANDrr %vreg7<kill>, %vreg2<kill>, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg8,%vreg7,%vreg2
+	%vreg9<def> = t2ORRrr %vreg8<kill>, %vreg6, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg9,%vreg8,%vreg6
+	t2STRi12 %vreg9<kill>, %vreg0, 20, pred:14, pred:%noreg; mem:ST4[%10] rGPR:%vreg9 GPR:%vreg0
+	%vreg10<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg10
+	%R0<def> = COPY %vreg10; rGPR:%vreg10
+	tBX_RET pred:14, pred:%noreg, %R0<imp-use>
+
+# End machine code for function symbol2uvlc.
+
+# After Tail Duplication:
+# Machine code for function symbol2uvlc: SSA
+Function Live Ins: %R0 in %vreg0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%vreg0<def> = COPY %R0; GPR:%vreg0
+	%vreg1<def> = t2LDRi12 %vreg0, 12, pred:14, pred:%noreg; mem:LD4[%1] rGPR:%vreg1 GPR:%vreg0
+	%vreg2<def> = t2LDRi12 %vreg0, 16, pred:14, pred:%noreg; mem:LD4[%5] rGPR:%vreg2 GPR:%vreg0
+	%vreg3<def> = t2ADDrs %vreg1, %vreg1, 251, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg3,%vreg1,%vreg1
+	%vreg4<def> = t2ASRri %vreg3<kill>, 1, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg4,%vreg3
+	%vreg5<def> = t2MOVi 1, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg5
+	%vreg6<def> = t2LSLrr %vreg5<kill>, %vreg4<kill>, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg6,%vreg5,%vreg4
+	%vreg7<def> = t2SUBri %vreg6, 1, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg7,%vreg6
+	%vreg8<def> = t2ANDrr %vreg7<kill>, %vreg2<kill>, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg8,%vreg7,%vreg2
+	%vreg9<def> = t2ORRrr %vreg8<kill>, %vreg6, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg9,%vreg8,%vreg6
+	t2STRi12 %vreg9<kill>, %vreg0, 20, pred:14, pred:%noreg; mem:ST4[%10] rGPR:%vreg9 GPR:%vreg0
+	%vreg10<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg10
+	%R0<def> = COPY %vreg10; rGPR:%vreg10
+	tBX_RET pred:14, pred:%noreg, %R0<imp-use>
+
+# End machine code for function symbol2uvlc.
+
+# After Optimize machine instruction PHIs:
+# Machine code for function symbol2uvlc: SSA
+Function Live Ins: %R0 in %vreg0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%vreg0<def> = COPY %R0; GPR:%vreg0
+	%vreg1<def> = t2LDRi12 %vreg0, 12, pred:14, pred:%noreg; mem:LD4[%1] rGPR:%vreg1 GPR:%vreg0
+	%vreg2<def> = t2LDRi12 %vreg0, 16, pred:14, pred:%noreg; mem:LD4[%5] rGPR:%vreg2 GPR:%vreg0
+	%vreg3<def> = t2ADDrs %vreg1, %vreg1, 251, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg3,%vreg1,%vreg1
+	%vreg4<def> = t2ASRri %vreg3<kill>, 1, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg4,%vreg3
+	%vreg5<def> = t2MOVi 1, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg5
+	%vreg6<def> = t2LSLrr %vreg5<kill>, %vreg4<kill>, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg6,%vreg5,%vreg4
+	%vreg7<def> = t2SUBri %vreg6, 1, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg7,%vreg6
+	%vreg8<def> = t2ANDrr %vreg7<kill>, %vreg2<kill>, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg8,%vreg7,%vreg2
+	%vreg9<def> = t2ORRrr %vreg8<kill>, %vreg6, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg9,%vreg8,%vreg6
+	t2STRi12 %vreg9<kill>, %vreg0, 20, pred:14, pred:%noreg; mem:ST4[%10] rGPR:%vreg9 GPR:%vreg0
+	%vreg10<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg10
+	%R0<def> = COPY %vreg10; rGPR:%vreg10
+	tBX_RET pred:14, pred:%noreg, %R0<imp-use>
+
+# End machine code for function symbol2uvlc.
+
+# After Merge disjoint stack slots:
+# Machine code for function symbol2uvlc: SSA
+Function Live Ins: %R0 in %vreg0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%vreg0<def> = COPY %R0; GPR:%vreg0
+	%vreg1<def> = t2LDRi12 %vreg0, 12, pred:14, pred:%noreg; mem:LD4[%1] rGPR:%vreg1 GPR:%vreg0
+	%vreg2<def> = t2LDRi12 %vreg0, 16, pred:14, pred:%noreg; mem:LD4[%5] rGPR:%vreg2 GPR:%vreg0
+	%vreg3<def> = t2ADDrs %vreg1, %vreg1, 251, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg3,%vreg1,%vreg1
+	%vreg4<def> = t2ASRri %vreg3<kill>, 1, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg4,%vreg3
+	%vreg5<def> = t2MOVi 1, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg5
+	%vreg6<def> = t2LSLrr %vreg5<kill>, %vreg4<kill>, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg6,%vreg5,%vreg4
+	%vreg7<def> = t2SUBri %vreg6, 1, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg7,%vreg6
+	%vreg8<def> = t2ANDrr %vreg7<kill>, %vreg2<kill>, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg8,%vreg7,%vreg2
+	%vreg9<def> = t2ORRrr %vreg8<kill>, %vreg6, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg9,%vreg8,%vreg6
+	t2STRi12 %vreg9<kill>, %vreg0, 20, pred:14, pred:%noreg; mem:ST4[%10] rGPR:%vreg9 GPR:%vreg0
+	%vreg10<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg10
+	%R0<def> = COPY %vreg10; rGPR:%vreg10
+	tBX_RET pred:14, pred:%noreg, %R0<imp-use>
+
+# End machine code for function symbol2uvlc.
+
+# After Local Stack Slot Allocation:
+# Machine code for function symbol2uvlc: SSA
+Function Live Ins: %R0 in %vreg0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%vreg0<def> = COPY %R0; GPR:%vreg0
+	%vreg1<def> = t2LDRi12 %vreg0, 12, pred:14, pred:%noreg; mem:LD4[%1] rGPR:%vreg1 GPR:%vreg0
+	%vreg2<def> = t2LDRi12 %vreg0, 16, pred:14, pred:%noreg; mem:LD4[%5] rGPR:%vreg2 GPR:%vreg0
+	%vreg3<def> = t2ADDrs %vreg1, %vreg1, 251, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg3,%vreg1,%vreg1
+	%vreg4<def> = t2ASRri %vreg3<kill>, 1, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg4,%vreg3
+	%vreg5<def> = t2MOVi 1, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg5
+	%vreg6<def> = t2LSLrr %vreg5<kill>, %vreg4<kill>, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg6,%vreg5,%vreg4
+	%vreg7<def> = t2SUBri %vreg6, 1, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg7,%vreg6
+	%vreg8<def> = t2ANDrr %vreg7<kill>, %vreg2<kill>, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg8,%vreg7,%vreg2
+	%vreg9<def> = t2ORRrr %vreg8<kill>, %vreg6, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg9,%vreg8,%vreg6
+	t2STRi12 %vreg9<kill>, %vreg0, 20, pred:14, pred:%noreg; mem:ST4[%10] rGPR:%vreg9 GPR:%vreg0
+	%vreg10<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg10
+	%R0<def> = COPY %vreg10; rGPR:%vreg10
+	tBX_RET pred:14, pred:%noreg, %R0<imp-use>
+
+# End machine code for function symbol2uvlc.
+
+# After Remove dead machine instructions:
+# Machine code for function symbol2uvlc: SSA
+Function Live Ins: %R0 in %vreg0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%vreg0<def> = COPY %R0; GPR:%vreg0
+	%vreg1<def> = t2LDRi12 %vreg0, 12, pred:14, pred:%noreg; mem:LD4[%1] rGPR:%vreg1 GPR:%vreg0
+	%vreg2<def> = t2LDRi12 %vreg0, 16, pred:14, pred:%noreg; mem:LD4[%5] rGPR:%vreg2 GPR:%vreg0
+	%vreg3<def> = t2ADDrs %vreg1, %vreg1, 251, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg3,%vreg1,%vreg1
+	%vreg4<def> = t2ASRri %vreg3<kill>, 1, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg4,%vreg3
+	%vreg5<def> = t2MOVi 1, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg5
+	%vreg6<def> = t2LSLrr %vreg5<kill>, %vreg4<kill>, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg6,%vreg5,%vreg4
+	%vreg7<def> = t2SUBri %vreg6, 1, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg7,%vreg6
+	%vreg8<def> = t2ANDrr %vreg7<kill>, %vreg2<kill>, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg8,%vreg7,%vreg2
+	%vreg9<def> = t2ORRrr %vreg8<kill>, %vreg6, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg9,%vreg8,%vreg6
+	t2STRi12 %vreg9<kill>, %vreg0, 20, pred:14, pred:%noreg; mem:ST4[%10] rGPR:%vreg9 GPR:%vreg0
+	%vreg10<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg10
+	%R0<def> = COPY %vreg10; rGPR:%vreg10
+	tBX_RET pred:14, pred:%noreg, %R0<imp-use>
+
+# End machine code for function symbol2uvlc.
+
+# After Machine Loop Invariant Code Motion:
+# Machine code for function symbol2uvlc: SSA
+Function Live Ins: %R0 in %vreg0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%vreg0<def> = COPY %R0; GPR:%vreg0
+	%vreg1<def> = t2LDRi12 %vreg0, 12, pred:14, pred:%noreg; mem:LD4[%1] rGPR:%vreg1 GPR:%vreg0
+	%vreg2<def> = t2LDRi12 %vreg0, 16, pred:14, pred:%noreg; mem:LD4[%5] rGPR:%vreg2 GPR:%vreg0
+	%vreg3<def> = t2ADDrs %vreg1, %vreg1, 251, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg3,%vreg1,%vreg1
+	%vreg4<def> = t2ASRri %vreg3<kill>, 1, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg4,%vreg3
+	%vreg5<def> = t2MOVi 1, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg5
+	%vreg6<def> = t2LSLrr %vreg5<kill>, %vreg4<kill>, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg6,%vreg5,%vreg4
+	%vreg7<def> = t2SUBri %vreg6, 1, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg7,%vreg6
+	%vreg8<def> = t2ANDrr %vreg7<kill>, %vreg2<kill>, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg8,%vreg7,%vreg2
+	%vreg9<def> = t2ORRrr %vreg8<kill>, %vreg6, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg9,%vreg8,%vreg6
+	t2STRi12 %vreg9<kill>, %vreg0, 20, pred:14, pred:%noreg; mem:ST4[%10] rGPR:%vreg9 GPR:%vreg0
+	%vreg10<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg10
+	%R0<def> = COPY %vreg10; rGPR:%vreg10
+	tBX_RET pred:14, pred:%noreg, %R0<imp-use>
+
+# End machine code for function symbol2uvlc.
+
+# After Machine Common Subexpression Elimination:
+# Machine code for function symbol2uvlc: SSA
+Function Live Ins: %R0 in %vreg0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%vreg0<def> = COPY %R0; GPR:%vreg0
+	%vreg1<def> = t2LDRi12 %vreg0, 12, pred:14, pred:%noreg; mem:LD4[%1] rGPR:%vreg1 GPR:%vreg0
+	%vreg2<def> = t2LDRi12 %vreg0, 16, pred:14, pred:%noreg; mem:LD4[%5] rGPR:%vreg2 GPR:%vreg0
+	%vreg3<def> = t2ADDrs %vreg1, %vreg1, 251, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg3,%vreg1,%vreg1
+	%vreg4<def> = t2ASRri %vreg3<kill>, 1, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg4,%vreg3
+	%vreg5<def> = t2MOVi 1, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg5
+	%vreg6<def> = t2LSLrr %vreg5<kill>, %vreg4<kill>, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg6,%vreg5,%vreg4
+	%vreg7<def> = t2SUBri %vreg6, 1, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg7,%vreg6
+	%vreg8<def> = t2ANDrr %vreg7<kill>, %vreg2<kill>, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg8,%vreg7,%vreg2
+	%vreg9<def> = t2ORRrr %vreg8<kill>, %vreg6, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg9,%vreg8,%vreg6
+	t2STRi12 %vreg9<kill>, %vreg0, 20, pred:14, pred:%noreg; mem:ST4[%10] rGPR:%vreg9 GPR:%vreg0
+	%vreg10<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg10
+	%R0<def> = COPY %vreg10; rGPR:%vreg10
+	tBX_RET pred:14, pred:%noreg, %R0<imp-use>
+
+# End machine code for function symbol2uvlc.
+
+# After Machine code sinking:
+# Machine code for function symbol2uvlc: SSA
+Function Live Ins: %R0 in %vreg0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%vreg0<def> = COPY %R0; GPR:%vreg0
+	%vreg1<def> = t2LDRi12 %vreg0, 12, pred:14, pred:%noreg; mem:LD4[%1] rGPR:%vreg1 GPR:%vreg0
+	%vreg2<def> = t2LDRi12 %vreg0, 16, pred:14, pred:%noreg; mem:LD4[%5] rGPR:%vreg2 GPR:%vreg0
+	%vreg3<def> = t2ADDrs %vreg1, %vreg1, 251, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg3,%vreg1,%vreg1
+	%vreg4<def> = t2ASRri %vreg3<kill>, 1, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg4,%vreg3
+	%vreg5<def> = t2MOVi 1, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg5
+	%vreg6<def> = t2LSLrr %vreg5<kill>, %vreg4<kill>, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg6,%vreg5,%vreg4
+	%vreg7<def> = t2SUBri %vreg6, 1, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg7,%vreg6
+	%vreg8<def> = t2ANDrr %vreg7<kill>, %vreg2<kill>, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg8,%vreg7,%vreg2
+	%vreg9<def> = t2ORRrr %vreg8<kill>, %vreg6, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg9,%vreg8,%vreg6
+	t2STRi12 %vreg9<kill>, %vreg0, 20, pred:14, pred:%noreg; mem:ST4[%10] rGPR:%vreg9 GPR:%vreg0
+	%vreg10<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg10
+	%R0<def> = COPY %vreg10; rGPR:%vreg10
+	tBX_RET pred:14, pred:%noreg, %R0<imp-use>
+
+# End machine code for function symbol2uvlc.
+
+# After Peephole Optimizations:
+# Machine code for function symbol2uvlc: SSA
+Function Live Ins: %R0 in %vreg0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%vreg0<def> = COPY %R0; GPR:%vreg0
+	%vreg1<def> = t2LDRi12 %vreg0, 12, pred:14, pred:%noreg; mem:LD4[%1] rGPR:%vreg1 GPR:%vreg0
+	%vreg2<def> = t2LDRi12 %vreg0, 16, pred:14, pred:%noreg; mem:LD4[%5] rGPR:%vreg2 GPR:%vreg0
+	%vreg3<def> = t2ADDrs %vreg1, %vreg1, 251, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg3,%vreg1,%vreg1
+	%vreg4<def> = t2ASRri %vreg3<kill>, 1, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg4,%vreg3
+	%vreg5<def> = t2MOVi 1, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg5
+	%vreg6<def> = t2LSLrr %vreg5<kill>, %vreg4<kill>, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg6,%vreg5,%vreg4
+	%vreg7<def> = t2SUBri %vreg6, 1, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg7,%vreg6
+	%vreg8<def> = t2ANDrr %vreg7<kill>, %vreg2<kill>, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg8,%vreg7,%vreg2
+	%vreg9<def> = t2ORRrr %vreg8<kill>, %vreg6, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg9,%vreg8,%vreg6
+	t2STRi12 %vreg9<kill>, %vreg0, 20, pred:14, pred:%noreg; mem:ST4[%10] rGPR:%vreg9 GPR:%vreg0
+	%vreg10<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg10
+	%R0<def> = COPY %vreg10; rGPR:%vreg10
+	tBX_RET pred:14, pred:%noreg, %R0<imp-use>
+
+# End machine code for function symbol2uvlc.
+
+# After Remove dead machine instructions:
+# Machine code for function symbol2uvlc: SSA
+Function Live Ins: %R0 in %vreg0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%vreg0<def> = COPY %R0; GPR:%vreg0
+	%vreg1<def> = t2LDRi12 %vreg0, 12, pred:14, pred:%noreg; mem:LD4[%1] rGPR:%vreg1 GPR:%vreg0
+	%vreg2<def> = t2LDRi12 %vreg0, 16, pred:14, pred:%noreg; mem:LD4[%5] rGPR:%vreg2 GPR:%vreg0
+	%vreg3<def> = t2ADDrs %vreg1, %vreg1, 251, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg3,%vreg1,%vreg1
+	%vreg4<def> = t2ASRri %vreg3<kill>, 1, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg4,%vreg3
+	%vreg5<def> = t2MOVi 1, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg5
+	%vreg6<def> = t2LSLrr %vreg5<kill>, %vreg4<kill>, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg6,%vreg5,%vreg4
+	%vreg7<def> = t2SUBri %vreg6, 1, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg7,%vreg6
+	%vreg8<def> = t2ANDrr %vreg7<kill>, %vreg2<kill>, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg8,%vreg7,%vreg2
+	%vreg9<def> = t2ORRrr %vreg8<kill>, %vreg6, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg9,%vreg8,%vreg6
+	t2STRi12 %vreg9<kill>, %vreg0, 20, pred:14, pred:%noreg; mem:ST4[%10] rGPR:%vreg9 GPR:%vreg0
+	%vreg10<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg10
+	%R0<def> = COPY %vreg10; rGPR:%vreg10
+	tBX_RET pred:14, pred:%noreg, %R0<imp-use>
+
+# End machine code for function symbol2uvlc.
+
+# After ARM MLA / MLS expansion pass:
+# Machine code for function symbol2uvlc: SSA
+Function Live Ins: %R0 in %vreg0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%vreg0<def> = COPY %R0; GPR:%vreg0
+	%vreg1<def> = t2LDRi12 %vreg0, 12, pred:14, pred:%noreg; mem:LD4[%1] rGPR:%vreg1 GPR:%vreg0
+	%vreg2<def> = t2LDRi12 %vreg0, 16, pred:14, pred:%noreg; mem:LD4[%5] rGPR:%vreg2 GPR:%vreg0
+	%vreg3<def> = t2ADDrs %vreg1, %vreg1, 251, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg3,%vreg1,%vreg1
+	%vreg4<def> = t2ASRri %vreg3<kill>, 1, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg4,%vreg3
+	%vreg5<def> = t2MOVi 1, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg5
+	%vreg6<def> = t2LSLrr %vreg5<kill>, %vreg4<kill>, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg6,%vreg5,%vreg4
+	%vreg7<def> = t2SUBri %vreg6, 1, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg7,%vreg6
+	%vreg8<def> = t2ANDrr %vreg7<kill>, %vreg2<kill>, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg8,%vreg7,%vreg2
+	%vreg9<def> = t2ORRrr %vreg8<kill>, %vreg6, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg9,%vreg8,%vreg6
+	t2STRi12 %vreg9<kill>, %vreg0, 20, pred:14, pred:%noreg; mem:ST4[%10] rGPR:%vreg9 GPR:%vreg0
+	%vreg10<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg10
+	%R0<def> = COPY %vreg10; rGPR:%vreg10
+	tBX_RET pred:14, pred:%noreg, %R0<imp-use>
+
+# End machine code for function symbol2uvlc.
+
+# After ARM pre- register allocation load / store optimization pass:
+# Machine code for function symbol2uvlc: SSA
+Function Live Ins: %R0 in %vreg0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%vreg0<def> = COPY %R0; GPR:%vreg0
+	%vreg1<def> = t2LDRi12 %vreg0, 12, pred:14, pred:%noreg; mem:LD4[%1] rGPR:%vreg1 GPR:%vreg0
+	%vreg2<def> = t2LDRi12 %vreg0, 16, pred:14, pred:%noreg; mem:LD4[%5] rGPR:%vreg2 GPR:%vreg0
+	%vreg3<def> = t2ADDrs %vreg1, %vreg1, 251, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg3,%vreg1,%vreg1
+	%vreg4<def> = t2ASRri %vreg3<kill>, 1, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg4,%vreg3
+	%vreg5<def> = t2MOVi 1, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg5
+	%vreg6<def> = t2LSLrr %vreg5<kill>, %vreg4<kill>, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg6,%vreg5,%vreg4
+	%vreg7<def> = t2SUBri %vreg6, 1, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg7,%vreg6
+	%vreg8<def> = t2ANDrr %vreg7<kill>, %vreg2<kill>, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg8,%vreg7,%vreg2
+	%vreg9<def> = t2ORRrr %vreg8<kill>, %vreg6, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg9,%vreg8,%vreg6
+	t2STRi12 %vreg9<kill>, %vreg0, 20, pred:14, pred:%noreg; mem:ST4[%10] rGPR:%vreg9 GPR:%vreg0
+	%vreg10<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg10
+	%R0<def> = COPY %vreg10; rGPR:%vreg10
+	tBX_RET pred:14, pred:%noreg, %R0<imp-use>
+
+# End machine code for function symbol2uvlc.
+
+# After ARM A15 S->D optimizer:
+# Machine code for function symbol2uvlc: SSA
+Function Live Ins: %R0 in %vreg0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%vreg0<def> = COPY %R0; GPR:%vreg0
+	%vreg1<def> = t2LDRi12 %vreg0, 12, pred:14, pred:%noreg; mem:LD4[%1] rGPR:%vreg1 GPR:%vreg0
+	%vreg2<def> = t2LDRi12 %vreg0, 16, pred:14, pred:%noreg; mem:LD4[%5] rGPR:%vreg2 GPR:%vreg0
+	%vreg3<def> = t2ADDrs %vreg1, %vreg1, 251, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg3,%vreg1,%vreg1
+	%vreg4<def> = t2ASRri %vreg3<kill>, 1, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg4,%vreg3
+	%vreg5<def> = t2MOVi 1, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg5
+	%vreg6<def> = t2LSLrr %vreg5<kill>, %vreg4<kill>, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg6,%vreg5,%vreg4
+	%vreg7<def> = t2SUBri %vreg6, 1, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg7,%vreg6
+	%vreg8<def> = t2ANDrr %vreg7<kill>, %vreg2<kill>, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg8,%vreg7,%vreg2
+	%vreg9<def> = t2ORRrr %vreg8<kill>, %vreg6, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg9,%vreg8,%vreg6
+	t2STRi12 %vreg9<kill>, %vreg0, 20, pred:14, pred:%noreg; mem:ST4[%10] rGPR:%vreg9 GPR:%vreg0
+	%vreg10<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg10
+	%R0<def> = COPY %vreg10; rGPR:%vreg10
+	tBX_RET pred:14, pred:%noreg, %R0<imp-use>
+
+# End machine code for function symbol2uvlc.
+
+# After Process Implicit Definitions:
+# Machine code for function symbol2uvlc: SSA
+Function Live Ins: %R0 in %vreg0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%vreg0<def> = COPY %R0; GPR:%vreg0
+	%vreg1<def> = t2LDRi12 %vreg0, 12, pred:14, pred:%noreg; mem:LD4[%1] rGPR:%vreg1 GPR:%vreg0
+	%vreg2<def> = t2LDRi12 %vreg0, 16, pred:14, pred:%noreg; mem:LD4[%5] rGPR:%vreg2 GPR:%vreg0
+	%vreg3<def> = t2ADDrs %vreg1, %vreg1, 251, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg3,%vreg1,%vreg1
+	%vreg4<def> = t2ASRri %vreg3<kill>, 1, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg4,%vreg3
+	%vreg5<def> = t2MOVi 1, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg5
+	%vreg6<def> = t2LSLrr %vreg5<kill>, %vreg4<kill>, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg6,%vreg5,%vreg4
+	%vreg7<def> = t2SUBri %vreg6, 1, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg7,%vreg6
+	%vreg8<def> = t2ANDrr %vreg7<kill>, %vreg2<kill>, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg8,%vreg7,%vreg2
+	%vreg9<def> = t2ORRrr %vreg8<kill>, %vreg6, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg9,%vreg8,%vreg6
+	t2STRi12 %vreg9<kill>, %vreg0, 20, pred:14, pred:%noreg; mem:ST4[%10] rGPR:%vreg9 GPR:%vreg0
+	%vreg10<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg10
+	%R0<def> = COPY %vreg10; rGPR:%vreg10
+	tBX_RET pred:14, pred:%noreg, %R0<imp-use>
+
+# End machine code for function symbol2uvlc.
+
+# After Live Variable Analysis:
+# Machine code for function symbol2uvlc: SSA
+Function Live Ins: %R0 in %vreg0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%vreg0<def> = COPY %R0<kill>; GPR:%vreg0
+	%vreg1<def> = t2LDRi12 %vreg0, 12, pred:14, pred:%noreg; mem:LD4[%1] rGPR:%vreg1 GPR:%vreg0
+	%vreg2<def> = t2LDRi12 %vreg0, 16, pred:14, pred:%noreg; mem:LD4[%5] rGPR:%vreg2 GPR:%vreg0
+	%vreg3<def> = t2ADDrs %vreg1<kill>, %vreg1, 251, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg3,%vreg1,%vreg1
+	%vreg4<def> = t2ASRri %vreg3<kill>, 1, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg4,%vreg3
+	%vreg5<def> = t2MOVi 1, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg5
+	%vreg6<def> = t2LSLrr %vreg5<kill>, %vreg4<kill>, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg6,%vreg5,%vreg4
+	%vreg7<def> = t2SUBri %vreg6, 1, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg7,%vreg6
+	%vreg8<def> = t2ANDrr %vreg7<kill>, %vreg2<kill>, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg8,%vreg7,%vreg2
+	%vreg9<def> = t2ORRrr %vreg8<kill>, %vreg6<kill>, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg9,%vreg8,%vreg6
+	t2STRi12 %vreg9<kill>, %vreg0<kill>, 20, pred:14, pred:%noreg; mem:ST4[%10] rGPR:%vreg9 GPR:%vreg0
+	%vreg10<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg10
+	%R0<def> = COPY %vreg10<kill>; rGPR:%vreg10
+	tBX_RET pred:14, pred:%noreg, %R0<imp-use,kill>
+
+# End machine code for function symbol2uvlc.
+
+# After Machine Natural Loop Construction:
+# Machine code for function symbol2uvlc: SSA
+Function Live Ins: %R0 in %vreg0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%vreg0<def> = COPY %R0<kill>; GPR:%vreg0
+	%vreg1<def> = t2LDRi12 %vreg0, 12, pred:14, pred:%noreg; mem:LD4[%1] rGPR:%vreg1 GPR:%vreg0
+	%vreg2<def> = t2LDRi12 %vreg0, 16, pred:14, pred:%noreg; mem:LD4[%5] rGPR:%vreg2 GPR:%vreg0
+	%vreg3<def> = t2ADDrs %vreg1<kill>, %vreg1, 251, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg3,%vreg1,%vreg1
+	%vreg4<def> = t2ASRri %vreg3<kill>, 1, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg4,%vreg3
+	%vreg5<def> = t2MOVi 1, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg5
+	%vreg6<def> = t2LSLrr %vreg5<kill>, %vreg4<kill>, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg6,%vreg5,%vreg4
+	%vreg7<def> = t2SUBri %vreg6, 1, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg7,%vreg6
+	%vreg8<def> = t2ANDrr %vreg7<kill>, %vreg2<kill>, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg8,%vreg7,%vreg2
+	%vreg9<def> = t2ORRrr %vreg8<kill>, %vreg6<kill>, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg9,%vreg8,%vreg6
+	t2STRi12 %vreg9<kill>, %vreg0<kill>, 20, pred:14, pred:%noreg; mem:ST4[%10] rGPR:%vreg9 GPR:%vreg0
+	%vreg10<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg10
+	%R0<def> = COPY %vreg10<kill>; rGPR:%vreg10
+	tBX_RET pred:14, pred:%noreg, %R0<imp-use,kill>
+
+# End machine code for function symbol2uvlc.
+
+# After Eliminate PHI nodes for register allocation:
+# Machine code for function symbol2uvlc: Post SSA
+Function Live Ins: %R0 in %vreg0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%vreg0<def> = COPY %R0<kill>; GPR:%vreg0
+	%vreg1<def> = t2LDRi12 %vreg0, 12, pred:14, pred:%noreg; mem:LD4[%1] rGPR:%vreg1 GPR:%vreg0
+	%vreg2<def> = t2LDRi12 %vreg0, 16, pred:14, pred:%noreg; mem:LD4[%5] rGPR:%vreg2 GPR:%vreg0
+	%vreg3<def> = t2ADDrs %vreg1<kill>, %vreg1, 251, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg3,%vreg1,%vreg1
+	%vreg4<def> = t2ASRri %vreg3<kill>, 1, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg4,%vreg3
+	%vreg5<def> = t2MOVi 1, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg5
+	%vreg6<def> = t2LSLrr %vreg5<kill>, %vreg4<kill>, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg6,%vreg5,%vreg4
+	%vreg7<def> = t2SUBri %vreg6, 1, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg7,%vreg6
+	%vreg8<def> = t2ANDrr %vreg7<kill>, %vreg2<kill>, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg8,%vreg7,%vreg2
+	%vreg9<def> = t2ORRrr %vreg8<kill>, %vreg6<kill>, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg9,%vreg8,%vreg6
+	t2STRi12 %vreg9<kill>, %vreg0<kill>, 20, pred:14, pred:%noreg; mem:ST4[%10] rGPR:%vreg9 GPR:%vreg0
+	%vreg10<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg10
+	%R0<def> = COPY %vreg10<kill>; rGPR:%vreg10
+	tBX_RET pred:14, pred:%noreg, %R0<imp-use,kill>
+
+# End machine code for function symbol2uvlc.
+
+# After Two-Address instruction pass:
+# Machine code for function symbol2uvlc: Post SSA
+Function Live Ins: %R0 in %vreg0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%vreg0<def> = COPY %R0<kill>; GPR:%vreg0
+	%vreg1<def> = t2LDRi12 %vreg0, 12, pred:14, pred:%noreg; mem:LD4[%1] rGPR:%vreg1 GPR:%vreg0
+	%vreg2<def> = t2LDRi12 %vreg0, 16, pred:14, pred:%noreg; mem:LD4[%5] rGPR:%vreg2 GPR:%vreg0
+	%vreg3<def> = t2ADDrs %vreg1<kill>, %vreg1, 251, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg3,%vreg1,%vreg1
+	%vreg4<def> = t2ASRri %vreg3<kill>, 1, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg4,%vreg3
+	%vreg5<def> = t2MOVi 1, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg5
+	%vreg6<def> = t2LSLrr %vreg5<kill>, %vreg4<kill>, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg6,%vreg5,%vreg4
+	%vreg7<def> = t2SUBri %vreg6, 1, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg7,%vreg6
+	%vreg8<def> = t2ANDrr %vreg7<kill>, %vreg2<kill>, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg8,%vreg7,%vreg2
+	%vreg9<def> = t2ORRrr %vreg8<kill>, %vreg6<kill>, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg9,%vreg8,%vreg6
+	t2STRi12 %vreg9<kill>, %vreg0<kill>, 20, pred:14, pred:%noreg; mem:ST4[%10] rGPR:%vreg9 GPR:%vreg0
+	%vreg10<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg10
+	%R0<def> = COPY %vreg10<kill>; rGPR:%vreg10
+	tBX_RET pred:14, pred:%noreg, %R0<imp-use,kill>
+
+# End machine code for function symbol2uvlc.
+
+# After Simple Register Coalescing:
+# Machine code for function symbol2uvlc: Post SSA
+Function Live Ins: %R0 in %vreg0
+
+0B	BB#0: derived from LLVM BB %0
+	    Live Ins: %R0
+16B		%vreg0<def> = COPY %R0; GPR:%vreg0
+32B		%vreg1<def> = t2LDRi12 %vreg0, 12, pred:14, pred:%noreg; mem:LD4[%1] rGPR:%vreg1 GPR:%vreg0
+48B		%vreg2<def> = t2LDRi12 %vreg0, 16, pred:14, pred:%noreg; mem:LD4[%5] rGPR:%vreg2 GPR:%vreg0
+64B		%vreg3<def> = t2ADDrs %vreg1, %vreg1, 251, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg3,%vreg1,%vreg1
+80B		%vreg4<def> = t2ASRri %vreg3, 1, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg4,%vreg3
+96B		%vreg5<def> = t2MOVi 1, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg5
+112B		%vreg6<def> = t2LSLrr %vreg5, %vreg4, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg6,%vreg5,%vreg4
+128B		%vreg7<def> = t2SUBri %vreg6, 1, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg7,%vreg6
+144B		%vreg8<def> = t2ANDrr %vreg7, %vreg2, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg8,%vreg7,%vreg2
+160B		%vreg9<def> = t2ORRrr %vreg8, %vreg6, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg9,%vreg8,%vreg6
+176B		t2STRi12 %vreg9, %vreg0, 20, pred:14, pred:%noreg; mem:ST4[%10] rGPR:%vreg9 GPR:%vreg0
+208B		%R0<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg
+224B		tBX_RET pred:14, pred:%noreg, %R0<imp-use>
+
+# End machine code for function symbol2uvlc.
+
+# After Machine Instruction Scheduler:
+# Machine code for function symbol2uvlc: Post SSA
+Function Live Ins: %R0 in %vreg0
+
+0B	BB#0: derived from LLVM BB %0
+	    Live Ins: %R0
+16B		%vreg0<def> = COPY %R0; GPR:%vreg0
+32B		%vreg1<def> = t2LDRi12 %vreg0, 12, pred:14, pred:%noreg; mem:LD4[%1] rGPR:%vreg1 GPR:%vreg0
+48B		%vreg2<def> = t2LDRi12 %vreg0, 16, pred:14, pred:%noreg; mem:LD4[%5] rGPR:%vreg2 GPR:%vreg0
+64B		%vreg3<def> = t2ADDrs %vreg1, %vreg1, 251, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg3,%vreg1,%vreg1
+80B		%vreg4<def> = t2ASRri %vreg3, 1, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg4,%vreg3
+96B		%vreg5<def> = t2MOVi 1, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg5
+112B		%vreg6<def> = t2LSLrr %vreg5, %vreg4, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg6,%vreg5,%vreg4
+128B		%vreg7<def> = t2SUBri %vreg6, 1, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg7,%vreg6
+144B		%vreg8<def> = t2ANDrr %vreg7, %vreg2, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg8,%vreg7,%vreg2
+160B		%vreg9<def> = t2ORRrr %vreg8, %vreg6, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg9,%vreg8,%vreg6
+176B		t2STRi12 %vreg9, %vreg0, 20, pred:14, pred:%noreg; mem:ST4[%10] rGPR:%vreg9 GPR:%vreg0
+208B		%R0<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg
+224B		tBX_RET pred:14, pred:%noreg, %R0<imp-use>
+
+# End machine code for function symbol2uvlc.
+
+# After Greedy Register Allocator:
+# Machine code for function symbol2uvlc: Post SSA
+Function Live Ins: %R0 in %vreg0
+
+0B	BB#0: derived from LLVM BB %0
+	    Live Ins: %R0
+16B		%vreg0<def> = COPY %R0; GPR:%vreg0
+32B		%vreg1<def> = t2LDRi12 %vreg0, 12, pred:14, pred:%noreg; mem:LD4[%1] rGPR:%vreg1 GPR:%vreg0
+48B		%vreg2<def> = t2LDRi12 %vreg0, 16, pred:14, pred:%noreg; mem:LD4[%5] rGPR:%vreg2 GPR:%vreg0
+64B		%vreg3<def> = t2ADDrs %vreg1, %vreg1, 251, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg3,%vreg1,%vreg1
+80B		%vreg4<def> = t2ASRri %vreg3, 1, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg4,%vreg3
+96B		%vreg5<def> = t2MOVi 1, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg5
+112B		%vreg6<def> = t2LSLrr %vreg5, %vreg4, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg6,%vreg5,%vreg4
+128B		%vreg7<def> = t2SUBri %vreg6, 1, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg7,%vreg6
+144B		%vreg8<def> = t2ANDrr %vreg7, %vreg2, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg8,%vreg7,%vreg2
+160B		%vreg9<def> = t2ORRrr %vreg8, %vreg6, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg9,%vreg8,%vreg6
+176B		t2STRi12 %vreg9, %vreg0, 20, pred:14, pred:%noreg; mem:ST4[%10] rGPR:%vreg9 GPR:%vreg0
+208B		%R0<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg
+224B		tBX_RET pred:14, pred:%noreg, %R0<imp-use>
+
+# End machine code for function symbol2uvlc.
+
+# After Virtual Register Rewriter:
+# Machine code for function symbol2uvlc: Post SSA
+Function Live Ins: %R0
+
+0B	BB#0: derived from LLVM BB %0
+	    Live Ins: %R0
+32B		%R1<def> = t2LDRi12 %R0, 12, pred:14, pred:%noreg; mem:LD4[%1]
+48B		%R2<def> = t2LDRi12 %R0, 16, pred:14, pred:%noreg; mem:LD4[%5]
+64B		%R1<def> = t2ADDrs %R1<kill>, %R1, 251, pred:14, pred:%noreg, opt:%noreg
+80B		%R1<def> = t2ASRri %R1<kill>, 1, pred:14, pred:%noreg, opt:%noreg
+96B		%R3<def> = t2MOVi 1, pred:14, pred:%noreg, opt:%noreg
+112B		%R1<def> = t2LSLrr %R3<kill>, %R1<kill>, pred:14, pred:%noreg, opt:%noreg
+128B		%R3<def> = t2SUBri %R1, 1, pred:14, pred:%noreg, opt:%noreg
+144B		%R2<def> = t2ANDrr %R3<kill>, %R2<kill>, pred:14, pred:%noreg, opt:%noreg
+160B		%R1<def> = t2ORRrr %R2<kill>, %R1<kill>, pred:14, pred:%noreg, opt:%noreg
+176B		t2STRi12 %R1<kill>, %R0<kill>, 20, pred:14, pred:%noreg; mem:ST4[%10]
+208B		%R0<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg
+224B		tBX_RET pred:14, pred:%noreg, %R0<imp-use>
+
+# End machine code for function symbol2uvlc.
+
+# After Stack Slot Coloring:
+# Machine code for function symbol2uvlc: Post SSA
+Function Live Ins: %R0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%R1<def> = t2LDRi12 %R0, 12, pred:14, pred:%noreg; mem:LD4[%1]
+	%R2<def> = t2LDRi12 %R0, 16, pred:14, pred:%noreg; mem:LD4[%5]
+	%R1<def> = t2ADDrs %R1<kill>, %R1, 251, pred:14, pred:%noreg, opt:%noreg
+	%R1<def> = t2ASRri %R1<kill>, 1, pred:14, pred:%noreg, opt:%noreg
+	%R3<def> = t2MOVi 1, pred:14, pred:%noreg, opt:%noreg
+	%R1<def> = t2LSLrr %R3<kill>, %R1<kill>, pred:14, pred:%noreg, opt:%noreg
+	%R3<def> = t2SUBri %R1, 1, pred:14, pred:%noreg, opt:%noreg
+	%R2<def> = t2ANDrr %R3<kill>, %R2<kill>, pred:14, pred:%noreg, opt:%noreg
+	%R1<def> = t2ORRrr %R2<kill>, %R1<kill>, pred:14, pred:%noreg, opt:%noreg
+	t2STRi12 %R1<kill>, %R0<kill>, 20, pred:14, pred:%noreg; mem:ST4[%10]
+	%R0<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg
+	tBX_RET pred:14, pred:%noreg, %R0<imp-use>
+
+# End machine code for function symbol2uvlc.
+
+# After Machine Loop Invariant Code Motion:
+# Machine code for function symbol2uvlc: Post SSA
+Function Live Ins: %R0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%R1<def> = t2LDRi12 %R0, 12, pred:14, pred:%noreg; mem:LD4[%1]
+	%R2<def> = t2LDRi12 %R0, 16, pred:14, pred:%noreg; mem:LD4[%5]
+	%R1<def> = t2ADDrs %R1<kill>, %R1, 251, pred:14, pred:%noreg, opt:%noreg
+	%R1<def> = t2ASRri %R1<kill>, 1, pred:14, pred:%noreg, opt:%noreg
+	%R3<def> = t2MOVi 1, pred:14, pred:%noreg, opt:%noreg
+	%R1<def> = t2LSLrr %R3<kill>, %R1<kill>, pred:14, pred:%noreg, opt:%noreg
+	%R3<def> = t2SUBri %R1, 1, pred:14, pred:%noreg, opt:%noreg
+	%R2<def> = t2ANDrr %R3<kill>, %R2<kill>, pred:14, pred:%noreg, opt:%noreg
+	%R1<def> = t2ORRrr %R2<kill>, %R1<kill>, pred:14, pred:%noreg, opt:%noreg
+	t2STRi12 %R1<kill>, %R0<kill>, 20, pred:14, pred:%noreg; mem:ST4[%10]
+	%R0<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg
+	tBX_RET pred:14, pred:%noreg, %R0<imp-use>
+
+# End machine code for function symbol2uvlc.
+
+# After Shrink Wrapping analysis:
+# Machine code for function symbol2uvlc: Post SSA
+Function Live Ins: %R0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%R1<def> = t2LDRi12 %R0, 12, pred:14, pred:%noreg; mem:LD4[%1]
+	%R2<def> = t2LDRi12 %R0, 16, pred:14, pred:%noreg; mem:LD4[%5]
+	%R1<def> = t2ADDrs %R1<kill>, %R1, 251, pred:14, pred:%noreg, opt:%noreg
+	%R1<def> = t2ASRri %R1<kill>, 1, pred:14, pred:%noreg, opt:%noreg
+	%R3<def> = t2MOVi 1, pred:14, pred:%noreg, opt:%noreg
+	%R1<def> = t2LSLrr %R3<kill>, %R1<kill>, pred:14, pred:%noreg, opt:%noreg
+	%R3<def> = t2SUBri %R1, 1, pred:14, pred:%noreg, opt:%noreg
+	%R2<def> = t2ANDrr %R3<kill>, %R2<kill>, pred:14, pred:%noreg, opt:%noreg
+	%R1<def> = t2ORRrr %R2<kill>, %R1<kill>, pred:14, pred:%noreg, opt:%noreg
+	t2STRi12 %R1<kill>, %R0<kill>, 20, pred:14, pred:%noreg; mem:ST4[%10]
+	%R0<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg
+	tBX_RET pred:14, pred:%noreg, %R0<imp-use>
+
+# End machine code for function symbol2uvlc.
+
+# After Prologue/Epilogue Insertion & Frame Finalization:
+# Machine code for function symbol2uvlc: Post SSA
+Function Live Ins: %R0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%R1<def> = t2LDRi12 %R0, 12, pred:14, pred:%noreg; mem:LD4[%1]
+	%R2<def> = t2LDRi12 %R0, 16, pred:14, pred:%noreg; mem:LD4[%5]
+	%R1<def> = t2ADDrs %R1<kill>, %R1, 251, pred:14, pred:%noreg, opt:%noreg
+	%R1<def> = t2ASRri %R1<kill>, 1, pred:14, pred:%noreg, opt:%noreg
+	%R3<def> = t2MOVi 1, pred:14, pred:%noreg, opt:%noreg
+	%R1<def> = t2LSLrr %R3<kill>, %R1<kill>, pred:14, pred:%noreg, opt:%noreg
+	%R3<def> = t2SUBri %R1, 1, pred:14, pred:%noreg, opt:%noreg
+	%R2<def> = t2ANDrr %R3<kill>, %R2<kill>, pred:14, pred:%noreg, opt:%noreg
+	%R1<def> = t2ORRrr %R2<kill>, %R1<kill>, pred:14, pred:%noreg, opt:%noreg
+	t2STRi12 %R1<kill>, %R0<kill>, 20, pred:14, pred:%noreg; mem:ST4[%10]
+	%R0<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg
+	tBX_RET pred:14, pred:%noreg, %R0<imp-use>
+
+# End machine code for function symbol2uvlc.
+
+# After Machine Copy Propagation Pass:
+# Machine code for function symbol2uvlc: Post SSA
+Function Live Ins: %R0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%R1<def> = t2LDRi12 %R0, 12, pred:14, pred:%noreg; mem:LD4[%1]
+	%R2<def> = t2LDRi12 %R0, 16, pred:14, pred:%noreg; mem:LD4[%5]
+	%R1<def> = t2ADDrs %R1<kill>, %R1, 251, pred:14, pred:%noreg, opt:%noreg
+	%R1<def> = t2ASRri %R1<kill>, 1, pred:14, pred:%noreg, opt:%noreg
+	%R3<def> = t2MOVi 1, pred:14, pred:%noreg, opt:%noreg
+	%R1<def> = t2LSLrr %R3<kill>, %R1<kill>, pred:14, pred:%noreg, opt:%noreg
+	%R3<def> = t2SUBri %R1, 1, pred:14, pred:%noreg, opt:%noreg
+	%R2<def> = t2ANDrr %R3<kill>, %R2<kill>, pred:14, pred:%noreg, opt:%noreg
+	%R1<def> = t2ORRrr %R2<kill>, %R1<kill>, pred:14, pred:%noreg, opt:%noreg
+	t2STRi12 %R1<kill>, %R0<kill>, 20, pred:14, pred:%noreg; mem:ST4[%10]
+	%R0<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg
+	tBX_RET pred:14, pred:%noreg, %R0<imp-use>
+
+# End machine code for function symbol2uvlc.
+
+# After Post-RA pseudo instruction expansion pass:
+# Machine code for function symbol2uvlc: Post SSA
+Function Live Ins: %R0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%R1<def> = t2LDRi12 %R0, 12, pred:14, pred:%noreg; mem:LD4[%1]
+	%R2<def> = t2LDRi12 %R0, 16, pred:14, pred:%noreg; mem:LD4[%5]
+	%R1<def> = t2ADDrs %R1<kill>, %R1, 251, pred:14, pred:%noreg, opt:%noreg
+	%R1<def> = t2ASRri %R1<kill>, 1, pred:14, pred:%noreg, opt:%noreg
+	%R3<def> = t2MOVi 1, pred:14, pred:%noreg, opt:%noreg
+	%R1<def> = t2LSLrr %R3<kill>, %R1<kill>, pred:14, pred:%noreg, opt:%noreg
+	%R3<def> = t2SUBri %R1, 1, pred:14, pred:%noreg, opt:%noreg
+	%R2<def> = t2ANDrr %R3<kill>, %R2<kill>, pred:14, pred:%noreg, opt:%noreg
+	%R1<def> = t2ORRrr %R2<kill>, %R1<kill>, pred:14, pred:%noreg, opt:%noreg
+	t2STRi12 %R1<kill>, %R0<kill>, 20, pred:14, pred:%noreg; mem:ST4[%10]
+	%R0<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg
+	tBX_RET pred:14, pred:%noreg, %R0<imp-use>
+
+# End machine code for function symbol2uvlc.
+
+# After ARM load / store optimization pass:
+# Machine code for function symbol2uvlc: Post SSA
+Function Live Ins: %R0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%R1<def>, %R2<def> = t2LDRDi8 %R0, 12, pred:14, pred:%noreg
+	%R1<def> = t2ADDrs %R1<kill>, %R1, 251, pred:14, pred:%noreg, opt:%noreg
+	%R1<def> = t2ASRri %R1<kill>, 1, pred:14, pred:%noreg, opt:%noreg
+	%R3<def> = t2MOVi 1, pred:14, pred:%noreg, opt:%noreg
+	%R1<def> = t2LSLrr %R3<kill>, %R1<kill>, pred:14, pred:%noreg, opt:%noreg
+	%R3<def> = t2SUBri %R1, 1, pred:14, pred:%noreg, opt:%noreg
+	%R2<def> = t2ANDrr %R3<kill>, %R2<kill>, pred:14, pred:%noreg, opt:%noreg
+	%R1<def> = t2ORRrr %R2<kill>, %R1<kill>, pred:14, pred:%noreg, opt:%noreg
+	t2STRi12 %R1<kill>, %R0<kill>, 20, pred:14, pred:%noreg; mem:ST4[%10]
+	%R0<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg
+	tBX_RET pred:14, pred:%noreg, %R0<imp-use>
+
+# End machine code for function symbol2uvlc.
+
+# After Execution dependency fix:
+# Machine code for function symbol2uvlc: Post SSA
+Function Live Ins: %R0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%R1<def>, %R2<def> = t2LDRDi8 %R0, 12, pred:14, pred:%noreg
+	%R1<def> = t2ADDrs %R1<kill>, %R1, 251, pred:14, pred:%noreg, opt:%noreg
+	%R1<def> = t2ASRri %R1<kill>, 1, pred:14, pred:%noreg, opt:%noreg
+	%R3<def> = t2MOVi 1, pred:14, pred:%noreg, opt:%noreg
+	%R1<def> = t2LSLrr %R3<kill>, %R1<kill>, pred:14, pred:%noreg, opt:%noreg
+	%R3<def> = t2SUBri %R1, 1, pred:14, pred:%noreg, opt:%noreg
+	%R2<def> = t2ANDrr %R3<kill>, %R2<kill>, pred:14, pred:%noreg, opt:%noreg
+	%R1<def> = t2ORRrr %R2<kill>, %R1<kill>, pred:14, pred:%noreg, opt:%noreg
+	t2STRi12 %R1<kill>, %R0<kill>, 20, pred:14, pred:%noreg; mem:ST4[%10]
+	%R0<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg
+	tBX_RET pred:14, pred:%noreg, %R0<imp-use>
+
+# End machine code for function symbol2uvlc.
+
+# After ARM pseudo instruction expansion pass:
+# Machine code for function symbol2uvlc: Post SSA
+Function Live Ins: %R0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%R1<def>, %R2<def> = t2LDRDi8 %R0, 12, pred:14, pred:%noreg
+	%R1<def> = t2ADDrs %R1<kill>, %R1, 251, pred:14, pred:%noreg, opt:%noreg
+	%R1<def> = t2ASRri %R1<kill>, 1, pred:14, pred:%noreg, opt:%noreg
+	%R3<def> = t2MOVi 1, pred:14, pred:%noreg, opt:%noreg
+	%R1<def> = t2LSLrr %R3<kill>, %R1<kill>, pred:14, pred:%noreg, opt:%noreg
+	%R3<def> = t2SUBri %R1, 1, pred:14, pred:%noreg, opt:%noreg
+	%R2<def> = t2ANDrr %R3<kill>, %R2<kill>, pred:14, pred:%noreg, opt:%noreg
+	%R1<def> = t2ORRrr %R2<kill>, %R1<kill>, pred:14, pred:%noreg, opt:%noreg
+	t2STRi12 %R1<kill>, %R0<kill>, 20, pred:14, pred:%noreg; mem:ST4[%10]
+	%R0<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg
+	tBX_RET pred:14, pred:%noreg, %R0<imp-use>
+
+# End machine code for function symbol2uvlc.
+
+# After Thumb2 instruction size reduction pass:
+# Machine code for function symbol2uvlc: Post SSA
+Function Live Ins: %R0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%R1<def>, %R2<def> = t2LDRDi8 %R0, 12, pred:14, pred:%noreg
+	%R1<def> = t2ADDrs %R1<kill>, %R1, 251, pred:14, pred:%noreg, opt:%noreg
+	%R1<def> = t2ASRri %R1<kill>, 1, pred:14, pred:%noreg, opt:%noreg
+	%R3<def> = t2MOVi 1, pred:14, pred:%noreg, opt:%noreg
+	%R1<def> = t2LSLrr %R3<kill>, %R1<kill>, pred:14, pred:%noreg, opt:%noreg
+	%R3<def> = t2SUBri %R1, 1, pred:14, pred:%noreg, opt:%noreg
+	%R2<def> = t2ANDrr %R3<kill>, %R2<kill>, pred:14, pred:%noreg, opt:%noreg
+	%R1<def> = t2ORRrr %R2<kill>, %R1<kill>, pred:14, pred:%noreg, opt:%noreg
+	t2STRi12 %R1<kill>, %R0<kill>, 20, pred:14, pred:%noreg; mem:ST4[%10]
+	%R0<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg
+	tBX_RET pred:14, pred:%noreg, %R0<imp-use>
+
+# End machine code for function symbol2uvlc.
+
+# After Thumb IT blocks insertion pass:
+# Machine code for function symbol2uvlc: Post SSA
+Function Live Ins: %R0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%R1<def>, %R2<def> = t2LDRDi8 %R0, 12, pred:14, pred:%noreg
+	%R1<def> = t2ADDrs %R1<kill>, %R1, 251, pred:14, pred:%noreg, opt:%noreg
+	%R1<def> = t2ASRri %R1<kill>, 1, pred:14, pred:%noreg, opt:%noreg
+	%R3<def> = t2MOVi 1, pred:14, pred:%noreg, opt:%noreg
+	%R1<def> = t2LSLrr %R3<kill>, %R1<kill>, pred:14, pred:%noreg, opt:%noreg
+	%R3<def> = t2SUBri %R1, 1, pred:14, pred:%noreg, opt:%noreg
+	%R2<def> = t2ANDrr %R3<kill>, %R2<kill>, pred:14, pred:%noreg, opt:%noreg
+	%R1<def> = t2ORRrr %R2<kill>, %R1<kill>, pred:14, pred:%noreg, opt:%noreg
+	t2STRi12 %R1<kill>, %R0<kill>, 20, pred:14, pred:%noreg; mem:ST4[%10]
+	%R0<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg
+	tBX_RET pred:14, pred:%noreg, %R0<imp-use>
+
+# End machine code for function symbol2uvlc.
+
+# After Analyze Machine Code For Garbage Collection:
+# Machine code for function symbol2uvlc: Post SSA
+Function Live Ins: %R0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%R1<def>, %R2<def> = t2LDRDi8 %R0, 12, pred:14, pred:%noreg
+	%R1<def> = t2ADDrs %R1<kill>, %R1, 251, pred:14, pred:%noreg, opt:%noreg
+	%R1<def> = t2ASRri %R1<kill>, 1, pred:14, pred:%noreg, opt:%noreg
+	%R3<def> = t2MOVi 1, pred:14, pred:%noreg, opt:%noreg
+	%R1<def> = t2LSLrr %R3<kill>, %R1<kill>, pred:14, pred:%noreg, opt:%noreg
+	%R3<def> = t2SUBri %R1, 1, pred:14, pred:%noreg, opt:%noreg
+	%R2<def> = t2ANDrr %R3<kill>, %R2<kill>, pred:14, pred:%noreg, opt:%noreg
+	%R1<def> = t2ORRrr %R2<kill>, %R1<kill>, pred:14, pred:%noreg, opt:%noreg
+	t2STRi12 %R1<kill>, %R0<kill>, 20, pred:14, pred:%noreg; mem:ST4[%10]
+	%R0<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg
+	tBX_RET pred:14, pred:%noreg, %R0<imp-use>
+
+# End machine code for function symbol2uvlc.
+
+# After Thumb2 instruction size reduction pass:
+# Machine code for function symbol2uvlc: Post SSA
+Function Live Ins: %R0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%R1<def>, %R2<def> = t2LDRDi8 %R0, 12, pred:14, pred:%noreg
+	%R1<def> = t2ADDrs %R1<kill>, %R1, 251, pred:14, pred:%noreg, opt:%noreg
+	%R1<def>, %CPSR<def,dead> = tASRri %R1<kill>, 1, pred:14, pred:%noreg
+	%R3<def>, %CPSR<def,dead> = tMOVi8 1, pred:14, pred:%noreg
+	%R1<def> = t2LSLrr %R3<kill>, %R1<kill>, pred:14, pred:%noreg, opt:%noreg
+	%R3<def>, %CPSR<def,dead> = tSUBi3 %R1, 1, pred:14, pred:%noreg
+	%R2<def,tied2>, %CPSR<def,dead> = tAND %R2<kill,tied0>, %R3<kill>, pred:14, pred:%noreg
+	%R1<def,tied2>, %CPSR<def,dead> = tORR %R1<kill,tied0>, %R2<kill>, pred:14, pred:%noreg
+	tSTRi %R1<kill>, %R0<kill>, 5, pred:14, pred:%noreg; mem:ST4[%10]
+	%R0<def>, %CPSR<def,dead> = tMOVi8 0, pred:14, pred:%noreg
+	tBX_RET pred:14, pred:%noreg, %R0<imp-use>
+
+# End machine code for function symbol2uvlc.
+
+# After Unpack machine instruction bundles:
+# Machine code for function symbol2uvlc: Post SSA
+Function Live Ins: %R0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%R1<def>, %R2<def> = t2LDRDi8 %R0, 12, pred:14, pred:%noreg
+	%R1<def> = t2ADDrs %R1<kill>, %R1, 251, pred:14, pred:%noreg, opt:%noreg
+	%R1<def>, %CPSR<def,dead> = tASRri %R1<kill>, 1, pred:14, pred:%noreg
+	%R3<def>, %CPSR<def,dead> = tMOVi8 1, pred:14, pred:%noreg
+	%R1<def> = t2LSLrr %R3<kill>, %R1<kill>, pred:14, pred:%noreg, opt:%noreg
+	%R3<def>, %CPSR<def,dead> = tSUBi3 %R1, 1, pred:14, pred:%noreg
+	%R2<def,tied2>, %CPSR<def,dead> = tAND %R2<kill,tied0>, %R3<kill>, pred:14, pred:%noreg
+	%R1<def,tied2>, %CPSR<def,dead> = tORR %R1<kill,tied0>, %R2<kill>, pred:14, pred:%noreg
+	tSTRi %R1<kill>, %R0<kill>, 5, pred:14, pred:%noreg; mem:ST4[%10]
+	%R0<def>, %CPSR<def,dead> = tMOVi8 0, pred:14, pred:%noreg
+	tBX_RET pred:14, pred:%noreg, %R0<imp-use>
+
+# End machine code for function symbol2uvlc.
+
+# After optimise barriers pass:
+# Machine code for function symbol2uvlc: Post SSA
+Function Live Ins: %R0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%R1<def>, %R2<def> = t2LDRDi8 %R0, 12, pred:14, pred:%noreg
+	%R1<def> = t2ADDrs %R1<kill>, %R1, 251, pred:14, pred:%noreg, opt:%noreg
+	%R1<def>, %CPSR<def,dead> = tASRri %R1<kill>, 1, pred:14, pred:%noreg
+	%R3<def>, %CPSR<def,dead> = tMOVi8 1, pred:14, pred:%noreg
+	%R1<def> = t2LSLrr %R3<kill>, %R1<kill>, pred:14, pred:%noreg, opt:%noreg
+	%R3<def>, %CPSR<def,dead> = tSUBi3 %R1, 1, pred:14, pred:%noreg
+	%R2<def,tied2>, %CPSR<def,dead> = tAND %R2<kill,tied0>, %R3<kill>, pred:14, pred:%noreg
+	%R1<def,tied2>, %CPSR<def,dead> = tORR %R1<kill,tied0>, %R2<kill>, pred:14, pred:%noreg
+	tSTRi %R1<kill>, %R0<kill>, 5, pred:14, pred:%noreg; mem:ST4[%10]
+	%R0<def>, %CPSR<def,dead> = tMOVi8 0, pred:14, pred:%noreg
+	tBX_RET pred:14, pred:%noreg, %R0<imp-use>
+
+# End machine code for function symbol2uvlc.
+
+# After ARM constant island placement and branch shortening pass:
+# Machine code for function symbol2uvlc: Post SSA, not tracking liveness
+Function Live Ins: %R0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%R1<def>, %R2<def> = t2LDRDi8 %R0, 12, pred:14, pred:%noreg
+	%R1<def> = t2ADDrs %R1<kill>, %R1, 251, pred:14, pred:%noreg, opt:%noreg
+	%R1<def>, %CPSR<def,dead> = tASRri %R1<kill>, 1, pred:14, pred:%noreg
+	%R3<def>, %CPSR<def,dead> = tMOVi8 1, pred:14, pred:%noreg
+	%R1<def> = t2LSLrr %R3<kill>, %R1<kill>, pred:14, pred:%noreg, opt:%noreg
+	%R3<def>, %CPSR<def,dead> = tSUBi3 %R1, 1, pred:14, pred:%noreg
+	%R2<def,tied2>, %CPSR<def,dead> = tAND %R2<kill,tied0>, %R3<kill>, pred:14, pred:%noreg
+	%R1<def,tied2>, %CPSR<def,dead> = tORR %R1<kill,tied0>, %R2<kill>, pred:14, pred:%noreg
+	tSTRi %R1<kill>, %R0<kill>, 5, pred:14, pred:%noreg; mem:ST4[%10]
+	%R0<def>, %CPSR<def,dead> = tMOVi8 0, pred:14, pred:%noreg
+	tBX_RET pred:14, pred:%noreg, %R0<imp-use>
+
+# End machine code for function symbol2uvlc.
+
+# After Contiguously Lay Out Funclets:
+# Machine code for function symbol2uvlc: Post SSA, not tracking liveness
+Function Live Ins: %R0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%R1<def>, %R2<def> = t2LDRDi8 %R0, 12, pred:14, pred:%noreg
+	%R1<def> = t2ADDrs %R1<kill>, %R1, 251, pred:14, pred:%noreg, opt:%noreg
+	%R1<def>, %CPSR<def,dead> = tASRri %R1<kill>, 1, pred:14, pred:%noreg
+	%R3<def>, %CPSR<def,dead> = tMOVi8 1, pred:14, pred:%noreg
+	%R1<def> = t2LSLrr %R3<kill>, %R1<kill>, pred:14, pred:%noreg, opt:%noreg
+	%R3<def>, %CPSR<def,dead> = tSUBi3 %R1, 1, pred:14, pred:%noreg
+	%R2<def,tied2>, %CPSR<def,dead> = tAND %R2<kill,tied0>, %R3<kill>, pred:14, pred:%noreg
+	%R1<def,tied2>, %CPSR<def,dead> = tORR %R1<kill,tied0>, %R2<kill>, pred:14, pred:%noreg
+	tSTRi %R1<kill>, %R0<kill>, 5, pred:14, pred:%noreg; mem:ST4[%10]
+	%R0<def>, %CPSR<def,dead> = tMOVi8 0, pred:14, pred:%noreg
+	tBX_RET pred:14, pred:%noreg, %R0<imp-use>
+
+# End machine code for function symbol2uvlc.
+
+# After StackMap Liveness Analysis:
+# Machine code for function symbol2uvlc: Post SSA, not tracking liveness
+Function Live Ins: %R0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%R1<def>, %R2<def> = t2LDRDi8 %R0, 12, pred:14, pred:%noreg
+	%R1<def> = t2ADDrs %R1<kill>, %R1, 251, pred:14, pred:%noreg, opt:%noreg
+	%R1<def>, %CPSR<def,dead> = tASRri %R1<kill>, 1, pred:14, pred:%noreg
+	%R3<def>, %CPSR<def,dead> = tMOVi8 1, pred:14, pred:%noreg
+	%R1<def> = t2LSLrr %R3<kill>, %R1<kill>, pred:14, pred:%noreg, opt:%noreg
+	%R3<def>, %CPSR<def,dead> = tSUBi3 %R1, 1, pred:14, pred:%noreg
+	%R2<def,tied2>, %CPSR<def,dead> = tAND %R2<kill,tied0>, %R3<kill>, pred:14, pred:%noreg
+	%R1<def,tied2>, %CPSR<def,dead> = tORR %R1<kill,tied0>, %R2<kill>, pred:14, pred:%noreg
+	tSTRi %R1<kill>, %R0<kill>, 5, pred:14, pred:%noreg; mem:ST4[%10]
+	%R0<def>, %CPSR<def,dead> = tMOVi8 0, pred:14, pred:%noreg
+	tBX_RET pred:14, pred:%noreg, %R0<imp-use>
+
+# End machine code for function symbol2uvlc.
+
+# After Live DEBUG_VALUE analysis:
+# Machine code for function symbol2uvlc: Post SSA, not tracking liveness
+Function Live Ins: %R0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %R0
+	%R1<def>, %R2<def> = t2LDRDi8 %R0, 12, pred:14, pred:%noreg
+	%R1<def> = t2ADDrs %R1<kill>, %R1, 251, pred:14, pred:%noreg, opt:%noreg
+	%R1<def>, %CPSR<def,dead> = tASRri %R1<kill>, 1, pred:14, pred:%noreg
+	%R3<def>, %CPSR<def,dead> = tMOVi8 1, pred:14, pred:%noreg
+	%R1<def> = t2LSLrr %R3<kill>, %R1<kill>, pred:14, pred:%noreg, opt:%noreg
+	%R3<def>, %CPSR<def,dead> = tSUBi3 %R1, 1, pred:14, pred:%noreg
+	%R2<def,tied2>, %CPSR<def,dead> = tAND %R2<kill,tied0>, %R3<kill>, pred:14, pred:%noreg
+	%R1<def,tied2>, %CPSR<def,dead> = tORR %R1<kill,tied0>, %R2<kill>, pred:14, pred:%noreg
+	tSTRi %R1<kill>, %R0<kill>, 5, pred:14, pred:%noreg; mem:ST4[%10]
+	%R0<def>, %CPSR<def,dead> = tMOVi8 0, pred:14, pred:%noreg
+	tBX_RET pred:14, pred:%noreg, %R0<imp-use>
+
+# End machine code for function symbol2uvlc.
+

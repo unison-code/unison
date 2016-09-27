@@ -1,0 +1,131 @@
+---
+instruction-set:
+
+   - group: allInstructions
+     instructions:
+
+
+        - id:                 STORE
+          parent:             SW
+          type:               copy
+          operands:
+           - rd:              [register, def, m32]
+           - rt:              [register, use, GPR32Opnd]
+          uses:               [rt]
+          defines:            [rd]
+          affects:
+          affected-by:
+
+        - id:                 LOAD
+          parent:             LW
+          type:               copy
+          operands:
+           - rd:              [register, def, GPR32Opnd]
+           - rt:              [register, use, m32]
+          uses:               [rt]
+          defines:            [rd]
+          affects:
+          affected-by:
+
+        - id:                 MOVE
+          parent:             ADD
+          type:               copy
+          operands:
+           - rd:              [register, def, GPR32Opnd]
+           - rt:              [register, use, GPR32Opnd]
+          uses:               [rt]
+          defines:            [rd]
+          affects:
+          affected-by:
+
+        - id:                 STORE_D
+          parent:             SDC1
+          type:               copy
+          operands:
+           - rd:              [register, def, m64]
+           - rt:              [register, use, AFGR64Opnd]
+          uses:               [rt]
+          defines:            [rd]
+          affects:
+
+        - id:                 LOAD_D
+          parent:             LDC1
+          type:               copy
+          operands:
+           - rd:              [register, def, AFGR64Opnd]
+           - rt:              [register, use, m64]
+          uses:               [rt]
+          defines:            [rd]
+          affected-by:
+
+        - id:                 MOVE_D
+          parent:             FMOV_D32
+          type:               copy
+          operands:
+           - rd:              [register, def, AFGR64Opnd]
+           - rt:              [register, use, AFGR64Opnd]
+          uses:               [rt]
+          defines:            [rd]
+          affects:
+          affected-by:
+
+        - id:                 STORE_F
+          parent:             SWC1
+          type:               copy
+          operands:
+           - rd:              [register, def, m32]
+           - rt:              [register, use, FGR32Opnd]
+          uses:               [rt]
+          defines:            [rd]
+          affects:
+
+        - id:                 LOAD_F
+          parent:             LWC1
+          type:               copy
+          operands:
+           - rd:              [register, def, FGR32Opnd]
+           - rt:              [register, use, m32]
+          uses:               [rt]
+          defines:            [rd]
+          affected-by:
+
+        - id:                 MOVE_F
+          parent:             FMOV_S
+          type:               copy
+          operands:
+           - rd:              [register, def, FGR32Opnd]
+           - rt:              [register, use, FGR32Opnd]
+          uses:               [rt]
+          defines:            [rd]
+          affects:
+          affected-by:
+
+        - id:                 LW_fi
+          parent:             LW
+
+        - id:                 LHu_fi
+          parent:             LHu
+
+        - id:                 SW_fi
+          parent:             SW
+
+        - id:                 SB_fi
+          parent:             SB
+
+        - id:                 LDC1_fi
+          parent:             LDC1
+
+        - id:                 LBu_fi
+          parent:             LBu
+
+        - id:                 SH_fi
+          parent:             SH
+
+        - id:                 LH_fi
+          parent:             LH
+
+        - id:                 SWC1_fi
+          parent:             SWC1
+
+        - id:                 LWC1_fi
+          parent:             LWC1

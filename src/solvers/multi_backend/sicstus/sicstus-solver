@@ -1,0 +1,30 @@
+#!/bin/bash
+# assuming current directory is ../../.. i.e. .../src
+timeout=0
+obj='speed'
+while [ $# -gt  1 ]; do
+    opt="$1"
+    shift
+    case "${opt}" in
+      -o)
+	OUTJSON=$1
+	shift
+      ;;
+      --speed)
+	obj='speed'
+      ;;
+      --size)
+	obj='size'
+      ;;
+      -t)
+	timeout=`expr $1 / 1000`
+	shift
+      ;;
+    esac
+done
+if [ $timeout -gt 0 ]; then
+  ulimit -t $timeout
+fi
+BASENAME=$(basename $1 .ext.json)
+echo "json2pl('$BASENAME.ext.json',$obj)." | sicstus -f --nologo --noinfo -l solvers/multi_backend/sicstus/model2pl.pl
+echo top_down. | sicstus -f --nologo --noinfo -l $BASENAME.pl | solvers/multi_backend/common/outfilter.pl > ${OUTJSON}

@@ -1,0 +1,1866 @@
+# After Instruction Selection:
+# Machine code for function parms_set: SSA
+Function Live Ins: %A0 in %vreg3, %A2 in %vreg5
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %A0 %A2
+	%vreg5<def> = COPY %A2; GPR32:%vreg5
+	%vreg3<def> = COPY %A0; GPR32:%vreg3
+	%vreg6<def> = LW %vreg3, 0; mem:LD4[%1] GPR32:%vreg6,%vreg3
+	%vreg7<def> = LUi 65535; GPR32:%vreg7
+	%vreg8<def> = AND %vreg6<kill>, %vreg7<kill>; GPR32:%vreg8,%vreg6,%vreg7
+	%vreg9<def> = LUi 61; GPR32:%vreg9
+	BNE %vreg8<kill>, %vreg9<kill>, <BB#4>, %AT<imp-def,dead>; GPR32:%vreg8,%vreg9
+	B <BB#1>, %AT<imp-def,dead>
+    Successors according to CFG: BB#1(0x40000000 / 0x80000000 = 50.00%) BB#4(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %4
+    Predecessors according to CFG: BB#0
+	%vreg0<def> = LW %vreg3, 4; mem:LD4[%5] GPR32:%vreg0,%vreg3
+	%vreg10<def> = SLTiu %vreg0, 53; GPR32:%vreg10,%vreg0
+	BEQ %vreg10<kill>, %ZERO, <BB#4>, %AT<imp-def,dead>; GPR32:%vreg10
+	B <BB#2>, %AT<imp-def,dead>
+    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#4(0x40000000 / 0x80000000 = 50.00%)
+
+BB#2: derived from LLVM BB %8
+    Predecessors according to CFG: BB#1
+	%vreg11<def> = ADDiu %ZERO, 1; GPR32:%vreg11
+	%vreg2<def> = SLLV %vreg11<kill>, %vreg0; GPR32:%vreg2,%vreg11,%vreg0
+	%vreg1<def> = LW %vreg5, 4; mem:LD4[%10] GPR32:%vreg1,%vreg5
+	%vreg12<def> = AND %vreg1, %vreg2; GPR32:%vreg12,%vreg1,%vreg2
+	BEQ %vreg12<kill>, %ZERO, <BB#4>, %AT<imp-def,dead>; GPR32:%vreg12
+	B <BB#3>, %AT<imp-def,dead>
+    Successors according to CFG: BB#4(0x30000000 / 0x80000000 = 37.50%) BB#3(0x50000000 / 0x80000000 = 62.50%)
+
+BB#3: derived from LLVM BB %15
+    Predecessors according to CFG: BB#2
+	%vreg13<def> = NOR %vreg2, %ZERO; GPR32:%vreg13,%vreg2
+	%vreg14<def> = AND %vreg1, %vreg13<kill>; GPR32:%vreg14,%vreg1,%vreg13
+	SW %vreg14<kill>, %vreg5, 4; mem:ST4[%sunkaddr2] GPR32:%vreg14,%vreg5
+	%vreg15<def> = LW %vreg5, 0; mem:LD4[%18] GPR32:%vreg15,%vreg5
+	%vreg16<def> = ADDiu %vreg15<kill>, -1; GPR32:%vreg16,%vreg15
+	SW %vreg16<kill>, %vreg5, 0; mem:ST4[%18] GPR32:%vreg16,%vreg5
+    Successors according to CFG: BB#4(?%)
+
+BB#4: derived from LLVM BB %21
+    Predecessors according to CFG: BB#0 BB#1 BB#2 BB#3
+	RetRA
+
+# End machine code for function parms_set.
+
+# After Expand ISel Pseudo-instructions:
+# Machine code for function parms_set: SSA
+Function Live Ins: %A0 in %vreg3, %A2 in %vreg5
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %A0 %A2
+	%vreg5<def> = COPY %A2; GPR32:%vreg5
+	%vreg3<def> = COPY %A0; GPR32:%vreg3
+	%vreg6<def> = LW %vreg3, 0; mem:LD4[%1] GPR32:%vreg6,%vreg3
+	%vreg7<def> = LUi 65535; GPR32:%vreg7
+	%vreg8<def> = AND %vreg6<kill>, %vreg7<kill>; GPR32:%vreg8,%vreg6,%vreg7
+	%vreg9<def> = LUi 61; GPR32:%vreg9
+	BNE %vreg8<kill>, %vreg9<kill>, <BB#4>, %AT<imp-def,dead>; GPR32:%vreg8,%vreg9
+	B <BB#1>, %AT<imp-def,dead>
+    Successors according to CFG: BB#1(0x40000000 / 0x80000000 = 50.00%) BB#4(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %4
+    Predecessors according to CFG: BB#0
+	%vreg0<def> = LW %vreg3, 4; mem:LD4[%5] GPR32:%vreg0,%vreg3
+	%vreg10<def> = SLTiu %vreg0, 53; GPR32:%vreg10,%vreg0
+	BEQ %vreg10<kill>, %ZERO, <BB#4>, %AT<imp-def,dead>; GPR32:%vreg10
+	B <BB#2>, %AT<imp-def,dead>
+    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#4(0x40000000 / 0x80000000 = 50.00%)
+
+BB#2: derived from LLVM BB %8
+    Predecessors according to CFG: BB#1
+	%vreg11<def> = ADDiu %ZERO, 1; GPR32:%vreg11
+	%vreg2<def> = SLLV %vreg11<kill>, %vreg0; GPR32:%vreg2,%vreg11,%vreg0
+	%vreg1<def> = LW %vreg5, 4; mem:LD4[%10] GPR32:%vreg1,%vreg5
+	%vreg12<def> = AND %vreg1, %vreg2; GPR32:%vreg12,%vreg1,%vreg2
+	BEQ %vreg12<kill>, %ZERO, <BB#4>, %AT<imp-def,dead>; GPR32:%vreg12
+	B <BB#3>, %AT<imp-def,dead>
+    Successors according to CFG: BB#4(0x30000000 / 0x80000000 = 37.50%) BB#3(0x50000000 / 0x80000000 = 62.50%)
+
+BB#3: derived from LLVM BB %15
+    Predecessors according to CFG: BB#2
+	%vreg13<def> = NOR %vreg2, %ZERO; GPR32:%vreg13,%vreg2
+	%vreg14<def> = AND %vreg1, %vreg13<kill>; GPR32:%vreg14,%vreg1,%vreg13
+	SW %vreg14<kill>, %vreg5, 4; mem:ST4[%sunkaddr2] GPR32:%vreg14,%vreg5
+	%vreg15<def> = LW %vreg5, 0; mem:LD4[%18] GPR32:%vreg15,%vreg5
+	%vreg16<def> = ADDiu %vreg15<kill>, -1; GPR32:%vreg16,%vreg15
+	SW %vreg16<kill>, %vreg5, 0; mem:ST4[%18] GPR32:%vreg16,%vreg5
+    Successors according to CFG: BB#4(?%)
+
+BB#4: derived from LLVM BB %21
+    Predecessors according to CFG: BB#0 BB#1 BB#2 BB#3
+	RetRA
+
+# End machine code for function parms_set.
+
+# After Mips OptimizePICCall:
+# Machine code for function parms_set: SSA
+Function Live Ins: %A0 in %vreg3, %A2 in %vreg5
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %A0 %A2
+	%vreg5<def> = COPY %A2; GPR32:%vreg5
+	%vreg3<def> = COPY %A0; GPR32:%vreg3
+	%vreg6<def> = LW %vreg3, 0; mem:LD4[%1] GPR32:%vreg6,%vreg3
+	%vreg7<def> = LUi 65535; GPR32:%vreg7
+	%vreg8<def> = AND %vreg6<kill>, %vreg7<kill>; GPR32:%vreg8,%vreg6,%vreg7
+	%vreg9<def> = LUi 61; GPR32:%vreg9
+	BNE %vreg8<kill>, %vreg9<kill>, <BB#4>, %AT<imp-def,dead>; GPR32:%vreg8,%vreg9
+	B <BB#1>, %AT<imp-def,dead>
+    Successors according to CFG: BB#1(0x40000000 / 0x80000000 = 50.00%) BB#4(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %4
+    Predecessors according to CFG: BB#0
+	%vreg0<def> = LW %vreg3, 4; mem:LD4[%5] GPR32:%vreg0,%vreg3
+	%vreg10<def> = SLTiu %vreg0, 53; GPR32:%vreg10,%vreg0
+	BEQ %vreg10<kill>, %ZERO, <BB#4>, %AT<imp-def,dead>; GPR32:%vreg10
+	B <BB#2>, %AT<imp-def,dead>
+    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#4(0x40000000 / 0x80000000 = 50.00%)
+
+BB#2: derived from LLVM BB %8
+    Predecessors according to CFG: BB#1
+	%vreg11<def> = ADDiu %ZERO, 1; GPR32:%vreg11
+	%vreg2<def> = SLLV %vreg11<kill>, %vreg0; GPR32:%vreg2,%vreg11,%vreg0
+	%vreg1<def> = LW %vreg5, 4; mem:LD4[%10] GPR32:%vreg1,%vreg5
+	%vreg12<def> = AND %vreg1, %vreg2; GPR32:%vreg12,%vreg1,%vreg2
+	BEQ %vreg12<kill>, %ZERO, <BB#4>, %AT<imp-def,dead>; GPR32:%vreg12
+	B <BB#3>, %AT<imp-def,dead>
+    Successors according to CFG: BB#4(0x30000000 / 0x80000000 = 37.50%) BB#3(0x50000000 / 0x80000000 = 62.50%)
+
+BB#3: derived from LLVM BB %15
+    Predecessors according to CFG: BB#2
+	%vreg13<def> = NOR %vreg2, %ZERO; GPR32:%vreg13,%vreg2
+	%vreg14<def> = AND %vreg1, %vreg13<kill>; GPR32:%vreg14,%vreg1,%vreg13
+	SW %vreg14<kill>, %vreg5, 4; mem:ST4[%sunkaddr2] GPR32:%vreg14,%vreg5
+	%vreg15<def> = LW %vreg5, 0; mem:LD4[%18] GPR32:%vreg15,%vreg5
+	%vreg16<def> = ADDiu %vreg15<kill>, -1; GPR32:%vreg16,%vreg15
+	SW %vreg16<kill>, %vreg5, 0; mem:ST4[%18] GPR32:%vreg16,%vreg5
+    Successors according to CFG: BB#4(?%)
+
+BB#4: derived from LLVM BB %21
+    Predecessors according to CFG: BB#0 BB#1 BB#2 BB#3
+	RetRA
+
+# End machine code for function parms_set.
+
+# After Tail Duplication:
+# Machine code for function parms_set: SSA
+Function Live Ins: %A0 in %vreg3, %A2 in %vreg5
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %A0 %A2
+	%vreg5<def> = COPY %A2; GPR32:%vreg5
+	%vreg3<def> = COPY %A0; GPR32:%vreg3
+	%vreg6<def> = LW %vreg3, 0; mem:LD4[%1] GPR32:%vreg6,%vreg3
+	%vreg7<def> = LUi 65535; GPR32:%vreg7
+	%vreg8<def> = AND %vreg6<kill>, %vreg7<kill>; GPR32:%vreg8,%vreg6,%vreg7
+	%vreg9<def> = LUi 61; GPR32:%vreg9
+	BNE %vreg8<kill>, %vreg9<kill>, <BB#4>, %AT<imp-def,dead>; GPR32:%vreg8,%vreg9
+	B <BB#1>, %AT<imp-def,dead>
+    Successors according to CFG: BB#1(0x40000000 / 0x80000000 = 50.00%) BB#4(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %4
+    Predecessors according to CFG: BB#0
+	%vreg0<def> = LW %vreg3, 4; mem:LD4[%5] GPR32:%vreg0,%vreg3
+	%vreg10<def> = SLTiu %vreg0, 53; GPR32:%vreg10,%vreg0
+	BEQ %vreg10<kill>, %ZERO, <BB#4>, %AT<imp-def,dead>; GPR32:%vreg10
+	B <BB#2>, %AT<imp-def,dead>
+    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#4(0x40000000 / 0x80000000 = 50.00%)
+
+BB#2: derived from LLVM BB %8
+    Predecessors according to CFG: BB#1
+	%vreg11<def> = ADDiu %ZERO, 1; GPR32:%vreg11
+	%vreg2<def> = SLLV %vreg11<kill>, %vreg0; GPR32:%vreg2,%vreg11,%vreg0
+	%vreg1<def> = LW %vreg5, 4; mem:LD4[%10] GPR32:%vreg1,%vreg5
+	%vreg12<def> = AND %vreg1, %vreg2; GPR32:%vreg12,%vreg1,%vreg2
+	BEQ %vreg12<kill>, %ZERO, <BB#4>, %AT<imp-def,dead>; GPR32:%vreg12
+	B <BB#3>, %AT<imp-def,dead>
+    Successors according to CFG: BB#4(0x30000000 / 0x80000000 = 37.50%) BB#3(0x50000000 / 0x80000000 = 62.50%)
+
+BB#3: derived from LLVM BB %15
+    Predecessors according to CFG: BB#2
+	%vreg13<def> = NOR %vreg2, %ZERO; GPR32:%vreg13,%vreg2
+	%vreg14<def> = AND %vreg1, %vreg13<kill>; GPR32:%vreg14,%vreg1,%vreg13
+	SW %vreg14<kill>, %vreg5, 4; mem:ST4[%sunkaddr2] GPR32:%vreg14,%vreg5
+	%vreg15<def> = LW %vreg5, 0; mem:LD4[%18] GPR32:%vreg15,%vreg5
+	%vreg16<def> = ADDiu %vreg15<kill>, -1; GPR32:%vreg16,%vreg15
+	SW %vreg16<kill>, %vreg5, 0; mem:ST4[%18] GPR32:%vreg16,%vreg5
+    Successors according to CFG: BB#4(?%)
+
+BB#4: derived from LLVM BB %21
+    Predecessors according to CFG: BB#0 BB#1 BB#2 BB#3
+	RetRA
+
+# End machine code for function parms_set.
+
+# After Optimize machine instruction PHIs:
+# Machine code for function parms_set: SSA
+Function Live Ins: %A0 in %vreg3, %A2 in %vreg5
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %A0 %A2
+	%vreg5<def> = COPY %A2; GPR32:%vreg5
+	%vreg3<def> = COPY %A0; GPR32:%vreg3
+	%vreg6<def> = LW %vreg3, 0; mem:LD4[%1] GPR32:%vreg6,%vreg3
+	%vreg7<def> = LUi 65535; GPR32:%vreg7
+	%vreg8<def> = AND %vreg6<kill>, %vreg7<kill>; GPR32:%vreg8,%vreg6,%vreg7
+	%vreg9<def> = LUi 61; GPR32:%vreg9
+	BNE %vreg8<kill>, %vreg9<kill>, <BB#4>, %AT<imp-def,dead>; GPR32:%vreg8,%vreg9
+	B <BB#1>, %AT<imp-def,dead>
+    Successors according to CFG: BB#1(0x40000000 / 0x80000000 = 50.00%) BB#4(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %4
+    Predecessors according to CFG: BB#0
+	%vreg0<def> = LW %vreg3, 4; mem:LD4[%5] GPR32:%vreg0,%vreg3
+	%vreg10<def> = SLTiu %vreg0, 53; GPR32:%vreg10,%vreg0
+	BEQ %vreg10<kill>, %ZERO, <BB#4>, %AT<imp-def,dead>; GPR32:%vreg10
+	B <BB#2>, %AT<imp-def,dead>
+    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#4(0x40000000 / 0x80000000 = 50.00%)
+
+BB#2: derived from LLVM BB %8
+    Predecessors according to CFG: BB#1
+	%vreg11<def> = ADDiu %ZERO, 1; GPR32:%vreg11
+	%vreg2<def> = SLLV %vreg11<kill>, %vreg0; GPR32:%vreg2,%vreg11,%vreg0
+	%vreg1<def> = LW %vreg5, 4; mem:LD4[%10] GPR32:%vreg1,%vreg5
+	%vreg12<def> = AND %vreg1, %vreg2; GPR32:%vreg12,%vreg1,%vreg2
+	BEQ %vreg12<kill>, %ZERO, <BB#4>, %AT<imp-def,dead>; GPR32:%vreg12
+	B <BB#3>, %AT<imp-def,dead>
+    Successors according to CFG: BB#4(0x30000000 / 0x80000000 = 37.50%) BB#3(0x50000000 / 0x80000000 = 62.50%)
+
+BB#3: derived from LLVM BB %15
+    Predecessors according to CFG: BB#2
+	%vreg13<def> = NOR %vreg2, %ZERO; GPR32:%vreg13,%vreg2
+	%vreg14<def> = AND %vreg1, %vreg13<kill>; GPR32:%vreg14,%vreg1,%vreg13
+	SW %vreg14<kill>, %vreg5, 4; mem:ST4[%sunkaddr2] GPR32:%vreg14,%vreg5
+	%vreg15<def> = LW %vreg5, 0; mem:LD4[%18] GPR32:%vreg15,%vreg5
+	%vreg16<def> = ADDiu %vreg15<kill>, -1; GPR32:%vreg16,%vreg15
+	SW %vreg16<kill>, %vreg5, 0; mem:ST4[%18] GPR32:%vreg16,%vreg5
+    Successors according to CFG: BB#4(?%)
+
+BB#4: derived from LLVM BB %21
+    Predecessors according to CFG: BB#0 BB#1 BB#2 BB#3
+	RetRA
+
+# End machine code for function parms_set.
+
+# After Merge disjoint stack slots:
+# Machine code for function parms_set: SSA
+Function Live Ins: %A0 in %vreg3, %A2 in %vreg5
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %A0 %A2
+	%vreg5<def> = COPY %A2; GPR32:%vreg5
+	%vreg3<def> = COPY %A0; GPR32:%vreg3
+	%vreg6<def> = LW %vreg3, 0; mem:LD4[%1] GPR32:%vreg6,%vreg3
+	%vreg7<def> = LUi 65535; GPR32:%vreg7
+	%vreg8<def> = AND %vreg6<kill>, %vreg7<kill>; GPR32:%vreg8,%vreg6,%vreg7
+	%vreg9<def> = LUi 61; GPR32:%vreg9
+	BNE %vreg8<kill>, %vreg9<kill>, <BB#4>, %AT<imp-def,dead>; GPR32:%vreg8,%vreg9
+	B <BB#1>, %AT<imp-def,dead>
+    Successors according to CFG: BB#1(0x40000000 / 0x80000000 = 50.00%) BB#4(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %4
+    Predecessors according to CFG: BB#0
+	%vreg0<def> = LW %vreg3, 4; mem:LD4[%5] GPR32:%vreg0,%vreg3
+	%vreg10<def> = SLTiu %vreg0, 53; GPR32:%vreg10,%vreg0
+	BEQ %vreg10<kill>, %ZERO, <BB#4>, %AT<imp-def,dead>; GPR32:%vreg10
+	B <BB#2>, %AT<imp-def,dead>
+    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#4(0x40000000 / 0x80000000 = 50.00%)
+
+BB#2: derived from LLVM BB %8
+    Predecessors according to CFG: BB#1
+	%vreg11<def> = ADDiu %ZERO, 1; GPR32:%vreg11
+	%vreg2<def> = SLLV %vreg11<kill>, %vreg0; GPR32:%vreg2,%vreg11,%vreg0
+	%vreg1<def> = LW %vreg5, 4; mem:LD4[%10] GPR32:%vreg1,%vreg5
+	%vreg12<def> = AND %vreg1, %vreg2; GPR32:%vreg12,%vreg1,%vreg2
+	BEQ %vreg12<kill>, %ZERO, <BB#4>, %AT<imp-def,dead>; GPR32:%vreg12
+	B <BB#3>, %AT<imp-def,dead>
+    Successors according to CFG: BB#4(0x30000000 / 0x80000000 = 37.50%) BB#3(0x50000000 / 0x80000000 = 62.50%)
+
+BB#3: derived from LLVM BB %15
+    Predecessors according to CFG: BB#2
+	%vreg13<def> = NOR %vreg2, %ZERO; GPR32:%vreg13,%vreg2
+	%vreg14<def> = AND %vreg1, %vreg13<kill>; GPR32:%vreg14,%vreg1,%vreg13
+	SW %vreg14<kill>, %vreg5, 4; mem:ST4[%sunkaddr2] GPR32:%vreg14,%vreg5
+	%vreg15<def> = LW %vreg5, 0; mem:LD4[%18] GPR32:%vreg15,%vreg5
+	%vreg16<def> = ADDiu %vreg15<kill>, -1; GPR32:%vreg16,%vreg15
+	SW %vreg16<kill>, %vreg5, 0; mem:ST4[%18] GPR32:%vreg16,%vreg5
+    Successors according to CFG: BB#4(?%)
+
+BB#4: derived from LLVM BB %21
+    Predecessors according to CFG: BB#0 BB#1 BB#2 BB#3
+	RetRA
+
+# End machine code for function parms_set.
+
+# After Local Stack Slot Allocation:
+# Machine code for function parms_set: SSA
+Function Live Ins: %A0 in %vreg3, %A2 in %vreg5
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %A0 %A2
+	%vreg5<def> = COPY %A2; GPR32:%vreg5
+	%vreg3<def> = COPY %A0; GPR32:%vreg3
+	%vreg6<def> = LW %vreg3, 0; mem:LD4[%1] GPR32:%vreg6,%vreg3
+	%vreg7<def> = LUi 65535; GPR32:%vreg7
+	%vreg8<def> = AND %vreg6<kill>, %vreg7<kill>; GPR32:%vreg8,%vreg6,%vreg7
+	%vreg9<def> = LUi 61; GPR32:%vreg9
+	BNE %vreg8<kill>, %vreg9<kill>, <BB#4>, %AT<imp-def,dead>; GPR32:%vreg8,%vreg9
+	B <BB#1>, %AT<imp-def,dead>
+    Successors according to CFG: BB#1(0x40000000 / 0x80000000 = 50.00%) BB#4(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %4
+    Predecessors according to CFG: BB#0
+	%vreg0<def> = LW %vreg3, 4; mem:LD4[%5] GPR32:%vreg0,%vreg3
+	%vreg10<def> = SLTiu %vreg0, 53; GPR32:%vreg10,%vreg0
+	BEQ %vreg10<kill>, %ZERO, <BB#4>, %AT<imp-def,dead>; GPR32:%vreg10
+	B <BB#2>, %AT<imp-def,dead>
+    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#4(0x40000000 / 0x80000000 = 50.00%)
+
+BB#2: derived from LLVM BB %8
+    Predecessors according to CFG: BB#1
+	%vreg11<def> = ADDiu %ZERO, 1; GPR32:%vreg11
+	%vreg2<def> = SLLV %vreg11<kill>, %vreg0; GPR32:%vreg2,%vreg11,%vreg0
+	%vreg1<def> = LW %vreg5, 4; mem:LD4[%10] GPR32:%vreg1,%vreg5
+	%vreg12<def> = AND %vreg1, %vreg2; GPR32:%vreg12,%vreg1,%vreg2
+	BEQ %vreg12<kill>, %ZERO, <BB#4>, %AT<imp-def,dead>; GPR32:%vreg12
+	B <BB#3>, %AT<imp-def,dead>
+    Successors according to CFG: BB#4(0x30000000 / 0x80000000 = 37.50%) BB#3(0x50000000 / 0x80000000 = 62.50%)
+
+BB#3: derived from LLVM BB %15
+    Predecessors according to CFG: BB#2
+	%vreg13<def> = NOR %vreg2, %ZERO; GPR32:%vreg13,%vreg2
+	%vreg14<def> = AND %vreg1, %vreg13<kill>; GPR32:%vreg14,%vreg1,%vreg13
+	SW %vreg14<kill>, %vreg5, 4; mem:ST4[%sunkaddr2] GPR32:%vreg14,%vreg5
+	%vreg15<def> = LW %vreg5, 0; mem:LD4[%18] GPR32:%vreg15,%vreg5
+	%vreg16<def> = ADDiu %vreg15<kill>, -1; GPR32:%vreg16,%vreg15
+	SW %vreg16<kill>, %vreg5, 0; mem:ST4[%18] GPR32:%vreg16,%vreg5
+    Successors according to CFG: BB#4(?%)
+
+BB#4: derived from LLVM BB %21
+    Predecessors according to CFG: BB#0 BB#1 BB#2 BB#3
+	RetRA
+
+# End machine code for function parms_set.
+
+# After Remove dead machine instructions:
+# Machine code for function parms_set: SSA
+Function Live Ins: %A0 in %vreg3, %A2 in %vreg5
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %A0 %A2
+	%vreg5<def> = COPY %A2; GPR32:%vreg5
+	%vreg3<def> = COPY %A0; GPR32:%vreg3
+	%vreg6<def> = LW %vreg3, 0; mem:LD4[%1] GPR32:%vreg6,%vreg3
+	%vreg7<def> = LUi 65535; GPR32:%vreg7
+	%vreg8<def> = AND %vreg6<kill>, %vreg7<kill>; GPR32:%vreg8,%vreg6,%vreg7
+	%vreg9<def> = LUi 61; GPR32:%vreg9
+	BNE %vreg8<kill>, %vreg9<kill>, <BB#4>, %AT<imp-def,dead>; GPR32:%vreg8,%vreg9
+	B <BB#1>, %AT<imp-def,dead>
+    Successors according to CFG: BB#1(0x40000000 / 0x80000000 = 50.00%) BB#4(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %4
+    Predecessors according to CFG: BB#0
+	%vreg0<def> = LW %vreg3, 4; mem:LD4[%5] GPR32:%vreg0,%vreg3
+	%vreg10<def> = SLTiu %vreg0, 53; GPR32:%vreg10,%vreg0
+	BEQ %vreg10<kill>, %ZERO, <BB#4>, %AT<imp-def,dead>; GPR32:%vreg10
+	B <BB#2>, %AT<imp-def,dead>
+    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#4(0x40000000 / 0x80000000 = 50.00%)
+
+BB#2: derived from LLVM BB %8
+    Predecessors according to CFG: BB#1
+	%vreg11<def> = ADDiu %ZERO, 1; GPR32:%vreg11
+	%vreg2<def> = SLLV %vreg11<kill>, %vreg0; GPR32:%vreg2,%vreg11,%vreg0
+	%vreg1<def> = LW %vreg5, 4; mem:LD4[%10] GPR32:%vreg1,%vreg5
+	%vreg12<def> = AND %vreg1, %vreg2; GPR32:%vreg12,%vreg1,%vreg2
+	BEQ %vreg12<kill>, %ZERO, <BB#4>, %AT<imp-def,dead>; GPR32:%vreg12
+	B <BB#3>, %AT<imp-def,dead>
+    Successors according to CFG: BB#4(0x30000000 / 0x80000000 = 37.50%) BB#3(0x50000000 / 0x80000000 = 62.50%)
+
+BB#3: derived from LLVM BB %15
+    Predecessors according to CFG: BB#2
+	%vreg13<def> = NOR %vreg2, %ZERO; GPR32:%vreg13,%vreg2
+	%vreg14<def> = AND %vreg1, %vreg13<kill>; GPR32:%vreg14,%vreg1,%vreg13
+	SW %vreg14<kill>, %vreg5, 4; mem:ST4[%sunkaddr2] GPR32:%vreg14,%vreg5
+	%vreg15<def> = LW %vreg5, 0; mem:LD4[%18] GPR32:%vreg15,%vreg5
+	%vreg16<def> = ADDiu %vreg15<kill>, -1; GPR32:%vreg16,%vreg15
+	SW %vreg16<kill>, %vreg5, 0; mem:ST4[%18] GPR32:%vreg16,%vreg5
+    Successors according to CFG: BB#4(?%)
+
+BB#4: derived from LLVM BB %21
+    Predecessors according to CFG: BB#0 BB#1 BB#2 BB#3
+	RetRA
+
+# End machine code for function parms_set.
+
+# After Machine Loop Invariant Code Motion:
+# Machine code for function parms_set: SSA
+Function Live Ins: %A0 in %vreg3, %A2 in %vreg5
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %A0 %A2
+	%vreg5<def> = COPY %A2; GPR32:%vreg5
+	%vreg3<def> = COPY %A0; GPR32:%vreg3
+	%vreg6<def> = LW %vreg3, 0; mem:LD4[%1] GPR32:%vreg6,%vreg3
+	%vreg7<def> = LUi 65535; GPR32:%vreg7
+	%vreg8<def> = AND %vreg6<kill>, %vreg7<kill>; GPR32:%vreg8,%vreg6,%vreg7
+	%vreg9<def> = LUi 61; GPR32:%vreg9
+	BNE %vreg8<kill>, %vreg9<kill>, <BB#4>, %AT<imp-def,dead>; GPR32:%vreg8,%vreg9
+	B <BB#1>, %AT<imp-def,dead>
+    Successors according to CFG: BB#1(0x40000000 / 0x80000000 = 50.00%) BB#4(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %4
+    Predecessors according to CFG: BB#0
+	%vreg0<def> = LW %vreg3, 4; mem:LD4[%5] GPR32:%vreg0,%vreg3
+	%vreg10<def> = SLTiu %vreg0, 53; GPR32:%vreg10,%vreg0
+	BEQ %vreg10<kill>, %ZERO, <BB#4>, %AT<imp-def,dead>; GPR32:%vreg10
+	B <BB#2>, %AT<imp-def,dead>
+    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#4(0x40000000 / 0x80000000 = 50.00%)
+
+BB#2: derived from LLVM BB %8
+    Predecessors according to CFG: BB#1
+	%vreg11<def> = ADDiu %ZERO, 1; GPR32:%vreg11
+	%vreg2<def> = SLLV %vreg11<kill>, %vreg0; GPR32:%vreg2,%vreg11,%vreg0
+	%vreg1<def> = LW %vreg5, 4; mem:LD4[%10] GPR32:%vreg1,%vreg5
+	%vreg12<def> = AND %vreg1, %vreg2; GPR32:%vreg12,%vreg1,%vreg2
+	BEQ %vreg12<kill>, %ZERO, <BB#4>, %AT<imp-def,dead>; GPR32:%vreg12
+	B <BB#3>, %AT<imp-def,dead>
+    Successors according to CFG: BB#4(0x30000000 / 0x80000000 = 37.50%) BB#3(0x50000000 / 0x80000000 = 62.50%)
+
+BB#3: derived from LLVM BB %15
+    Predecessors according to CFG: BB#2
+	%vreg13<def> = NOR %vreg2, %ZERO; GPR32:%vreg13,%vreg2
+	%vreg14<def> = AND %vreg1, %vreg13<kill>; GPR32:%vreg14,%vreg1,%vreg13
+	SW %vreg14<kill>, %vreg5, 4; mem:ST4[%sunkaddr2] GPR32:%vreg14,%vreg5
+	%vreg15<def> = LW %vreg5, 0; mem:LD4[%18] GPR32:%vreg15,%vreg5
+	%vreg16<def> = ADDiu %vreg15<kill>, -1; GPR32:%vreg16,%vreg15
+	SW %vreg16<kill>, %vreg5, 0; mem:ST4[%18] GPR32:%vreg16,%vreg5
+    Successors according to CFG: BB#4(?%)
+
+BB#4: derived from LLVM BB %21
+    Predecessors according to CFG: BB#0 BB#1 BB#2 BB#3
+	RetRA
+
+# End machine code for function parms_set.
+
+# After Machine Common Subexpression Elimination:
+# Machine code for function parms_set: SSA
+Function Live Ins: %A0 in %vreg3, %A2 in %vreg5
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %A0 %A2
+	%vreg5<def> = COPY %A2; GPR32:%vreg5
+	%vreg3<def> = COPY %A0; GPR32:%vreg3
+	%vreg6<def> = LW %vreg3, 0; mem:LD4[%1] GPR32:%vreg6,%vreg3
+	%vreg7<def> = LUi 65535; GPR32:%vreg7
+	%vreg8<def> = AND %vreg6<kill>, %vreg7<kill>; GPR32:%vreg8,%vreg6,%vreg7
+	%vreg9<def> = LUi 61; GPR32:%vreg9
+	BNE %vreg8<kill>, %vreg9<kill>, <BB#4>, %AT<imp-def,dead>; GPR32:%vreg8,%vreg9
+	B <BB#1>, %AT<imp-def,dead>
+    Successors according to CFG: BB#1(0x40000000 / 0x80000000 = 50.00%) BB#4(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %4
+    Predecessors according to CFG: BB#0
+	%vreg0<def> = LW %vreg3, 4; mem:LD4[%5] GPR32:%vreg0,%vreg3
+	%vreg10<def> = SLTiu %vreg0, 53; GPR32:%vreg10,%vreg0
+	BEQ %vreg10<kill>, %ZERO, <BB#4>, %AT<imp-def,dead>; GPR32:%vreg10
+	B <BB#2>, %AT<imp-def,dead>
+    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#4(0x40000000 / 0x80000000 = 50.00%)
+
+BB#2: derived from LLVM BB %8
+    Predecessors according to CFG: BB#1
+	%vreg11<def> = ADDiu %ZERO, 1; GPR32:%vreg11
+	%vreg2<def> = SLLV %vreg11<kill>, %vreg0; GPR32:%vreg2,%vreg11,%vreg0
+	%vreg1<def> = LW %vreg5, 4; mem:LD4[%10] GPR32:%vreg1,%vreg5
+	%vreg12<def> = AND %vreg1, %vreg2; GPR32:%vreg12,%vreg1,%vreg2
+	BEQ %vreg12<kill>, %ZERO, <BB#4>, %AT<imp-def,dead>; GPR32:%vreg12
+	B <BB#3>, %AT<imp-def,dead>
+    Successors according to CFG: BB#4(0x30000000 / 0x80000000 = 37.50%) BB#3(0x50000000 / 0x80000000 = 62.50%)
+
+BB#3: derived from LLVM BB %15
+    Predecessors according to CFG: BB#2
+	%vreg13<def> = NOR %vreg2, %ZERO; GPR32:%vreg13,%vreg2
+	%vreg14<def> = AND %vreg1, %vreg13<kill>; GPR32:%vreg14,%vreg1,%vreg13
+	SW %vreg14<kill>, %vreg5, 4; mem:ST4[%sunkaddr2] GPR32:%vreg14,%vreg5
+	%vreg15<def> = LW %vreg5, 0; mem:LD4[%18] GPR32:%vreg15,%vreg5
+	%vreg16<def> = ADDiu %vreg15<kill>, -1; GPR32:%vreg16,%vreg15
+	SW %vreg16<kill>, %vreg5, 0; mem:ST4[%18] GPR32:%vreg16,%vreg5
+    Successors according to CFG: BB#4(?%)
+
+BB#4: derived from LLVM BB %21
+    Predecessors according to CFG: BB#0 BB#1 BB#2 BB#3
+	RetRA
+
+# End machine code for function parms_set.
+
+# After Machine code sinking:
+# Machine code for function parms_set: SSA
+Function Live Ins: %A0 in %vreg3, %A2 in %vreg5
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %A0 %A2
+	%vreg5<def> = COPY %A2; GPR32:%vreg5
+	%vreg3<def> = COPY %A0; GPR32:%vreg3
+	%vreg6<def> = LW %vreg3, 0; mem:LD4[%1] GPR32:%vreg6,%vreg3
+	%vreg7<def> = LUi 65535; GPR32:%vreg7
+	%vreg8<def> = AND %vreg6<kill>, %vreg7<kill>; GPR32:%vreg8,%vreg6,%vreg7
+	%vreg9<def> = LUi 61; GPR32:%vreg9
+	BNE %vreg8<kill>, %vreg9<kill>, <BB#4>, %AT<imp-def,dead>; GPR32:%vreg8,%vreg9
+	B <BB#1>, %AT<imp-def,dead>
+    Successors according to CFG: BB#1(0x40000000 / 0x80000000 = 50.00%) BB#4(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %4
+    Predecessors according to CFG: BB#0
+	%vreg0<def> = LW %vreg3, 4; mem:LD4[%5] GPR32:%vreg0,%vreg3
+	%vreg10<def> = SLTiu %vreg0, 53; GPR32:%vreg10,%vreg0
+	BEQ %vreg10<kill>, %ZERO, <BB#4>, %AT<imp-def,dead>; GPR32:%vreg10
+	B <BB#2>, %AT<imp-def,dead>
+    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#4(0x40000000 / 0x80000000 = 50.00%)
+
+BB#2: derived from LLVM BB %8
+    Predecessors according to CFG: BB#1
+	%vreg11<def> = ADDiu %ZERO, 1; GPR32:%vreg11
+	%vreg2<def> = SLLV %vreg11<kill>, %vreg0; GPR32:%vreg2,%vreg11,%vreg0
+	%vreg1<def> = LW %vreg5, 4; mem:LD4[%10] GPR32:%vreg1,%vreg5
+	%vreg12<def> = AND %vreg1, %vreg2; GPR32:%vreg12,%vreg1,%vreg2
+	BEQ %vreg12<kill>, %ZERO, <BB#4>, %AT<imp-def,dead>; GPR32:%vreg12
+	B <BB#3>, %AT<imp-def,dead>
+    Successors according to CFG: BB#4(0x30000000 / 0x80000000 = 37.50%) BB#3(0x50000000 / 0x80000000 = 62.50%)
+
+BB#3: derived from LLVM BB %15
+    Predecessors according to CFG: BB#2
+	%vreg13<def> = NOR %vreg2, %ZERO; GPR32:%vreg13,%vreg2
+	%vreg14<def> = AND %vreg1, %vreg13<kill>; GPR32:%vreg14,%vreg1,%vreg13
+	SW %vreg14<kill>, %vreg5, 4; mem:ST4[%sunkaddr2] GPR32:%vreg14,%vreg5
+	%vreg15<def> = LW %vreg5, 0; mem:LD4[%18] GPR32:%vreg15,%vreg5
+	%vreg16<def> = ADDiu %vreg15<kill>, -1; GPR32:%vreg16,%vreg15
+	SW %vreg16<kill>, %vreg5, 0; mem:ST4[%18] GPR32:%vreg16,%vreg5
+    Successors according to CFG: BB#4(?%)
+
+BB#4: derived from LLVM BB %21
+    Predecessors according to CFG: BB#0 BB#1 BB#2 BB#3
+	RetRA
+
+# End machine code for function parms_set.
+
+# After Peephole Optimizations:
+# Machine code for function parms_set: SSA
+Function Live Ins: %A0 in %vreg3, %A2 in %vreg5
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %A0 %A2
+	%vreg5<def> = COPY %A2; GPR32:%vreg5
+	%vreg3<def> = COPY %A0; GPR32:%vreg3
+	%vreg6<def> = LW %vreg3, 0; mem:LD4[%1] GPR32:%vreg6,%vreg3
+	%vreg7<def> = LUi 65535; GPR32:%vreg7
+	%vreg8<def> = AND %vreg6<kill>, %vreg7<kill>; GPR32:%vreg8,%vreg6,%vreg7
+	%vreg9<def> = LUi 61; GPR32:%vreg9
+	BNE %vreg8<kill>, %vreg9<kill>, <BB#4>, %AT<imp-def,dead>; GPR32:%vreg8,%vreg9
+	B <BB#1>, %AT<imp-def,dead>
+    Successors according to CFG: BB#1(0x40000000 / 0x80000000 = 50.00%) BB#4(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %4
+    Predecessors according to CFG: BB#0
+	%vreg0<def> = LW %vreg3, 4; mem:LD4[%5] GPR32:%vreg0,%vreg3
+	%vreg10<def> = SLTiu %vreg0, 53; GPR32:%vreg10,%vreg0
+	BEQ %vreg10<kill>, %ZERO, <BB#4>, %AT<imp-def,dead>; GPR32:%vreg10
+	B <BB#2>, %AT<imp-def,dead>
+    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#4(0x40000000 / 0x80000000 = 50.00%)
+
+BB#2: derived from LLVM BB %8
+    Predecessors according to CFG: BB#1
+	%vreg11<def> = ADDiu %ZERO, 1; GPR32:%vreg11
+	%vreg2<def> = SLLV %vreg11<kill>, %vreg0; GPR32:%vreg2,%vreg11,%vreg0
+	%vreg1<def> = LW %vreg5, 4; mem:LD4[%10] GPR32:%vreg1,%vreg5
+	%vreg12<def> = AND %vreg1, %vreg2; GPR32:%vreg12,%vreg1,%vreg2
+	BEQ %vreg12<kill>, %ZERO, <BB#4>, %AT<imp-def,dead>; GPR32:%vreg12
+	B <BB#3>, %AT<imp-def,dead>
+    Successors according to CFG: BB#4(0x30000000 / 0x80000000 = 37.50%) BB#3(0x50000000 / 0x80000000 = 62.50%)
+
+BB#3: derived from LLVM BB %15
+    Predecessors according to CFG: BB#2
+	%vreg13<def> = NOR %vreg2, %ZERO; GPR32:%vreg13,%vreg2
+	%vreg14<def> = AND %vreg1, %vreg13<kill>; GPR32:%vreg14,%vreg1,%vreg13
+	SW %vreg14<kill>, %vreg5, 4; mem:ST4[%sunkaddr2] GPR32:%vreg14,%vreg5
+	%vreg15<def> = LW %vreg5, 0; mem:LD4[%18] GPR32:%vreg15,%vreg5
+	%vreg16<def> = ADDiu %vreg15<kill>, -1; GPR32:%vreg16,%vreg15
+	SW %vreg16<kill>, %vreg5, 0; mem:ST4[%18] GPR32:%vreg16,%vreg5
+    Successors according to CFG: BB#4(?%)
+
+BB#4: derived from LLVM BB %21
+    Predecessors according to CFG: BB#0 BB#1 BB#2 BB#3
+	RetRA
+
+# End machine code for function parms_set.
+
+# After Remove dead machine instructions:
+# Machine code for function parms_set: SSA
+Function Live Ins: %A0 in %vreg3, %A2 in %vreg5
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %A0 %A2
+	%vreg5<def> = COPY %A2; GPR32:%vreg5
+	%vreg3<def> = COPY %A0; GPR32:%vreg3
+	%vreg6<def> = LW %vreg3, 0; mem:LD4[%1] GPR32:%vreg6,%vreg3
+	%vreg7<def> = LUi 65535; GPR32:%vreg7
+	%vreg8<def> = AND %vreg6<kill>, %vreg7<kill>; GPR32:%vreg8,%vreg6,%vreg7
+	%vreg9<def> = LUi 61; GPR32:%vreg9
+	BNE %vreg8<kill>, %vreg9<kill>, <BB#4>, %AT<imp-def,dead>; GPR32:%vreg8,%vreg9
+	B <BB#1>, %AT<imp-def,dead>
+    Successors according to CFG: BB#1(0x40000000 / 0x80000000 = 50.00%) BB#4(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %4
+    Predecessors according to CFG: BB#0
+	%vreg0<def> = LW %vreg3, 4; mem:LD4[%5] GPR32:%vreg0,%vreg3
+	%vreg10<def> = SLTiu %vreg0, 53; GPR32:%vreg10,%vreg0
+	BEQ %vreg10<kill>, %ZERO, <BB#4>, %AT<imp-def,dead>; GPR32:%vreg10
+	B <BB#2>, %AT<imp-def,dead>
+    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#4(0x40000000 / 0x80000000 = 50.00%)
+
+BB#2: derived from LLVM BB %8
+    Predecessors according to CFG: BB#1
+	%vreg11<def> = ADDiu %ZERO, 1; GPR32:%vreg11
+	%vreg2<def> = SLLV %vreg11<kill>, %vreg0; GPR32:%vreg2,%vreg11,%vreg0
+	%vreg1<def> = LW %vreg5, 4; mem:LD4[%10] GPR32:%vreg1,%vreg5
+	%vreg12<def> = AND %vreg1, %vreg2; GPR32:%vreg12,%vreg1,%vreg2
+	BEQ %vreg12<kill>, %ZERO, <BB#4>, %AT<imp-def,dead>; GPR32:%vreg12
+	B <BB#3>, %AT<imp-def,dead>
+    Successors according to CFG: BB#4(0x30000000 / 0x80000000 = 37.50%) BB#3(0x50000000 / 0x80000000 = 62.50%)
+
+BB#3: derived from LLVM BB %15
+    Predecessors according to CFG: BB#2
+	%vreg13<def> = NOR %vreg2, %ZERO; GPR32:%vreg13,%vreg2
+	%vreg14<def> = AND %vreg1, %vreg13<kill>; GPR32:%vreg14,%vreg1,%vreg13
+	SW %vreg14<kill>, %vreg5, 4; mem:ST4[%sunkaddr2] GPR32:%vreg14,%vreg5
+	%vreg15<def> = LW %vreg5, 0; mem:LD4[%18] GPR32:%vreg15,%vreg5
+	%vreg16<def> = ADDiu %vreg15<kill>, -1; GPR32:%vreg16,%vreg15
+	SW %vreg16<kill>, %vreg5, 0; mem:ST4[%18] GPR32:%vreg16,%vreg5
+    Successors according to CFG: BB#4(?%)
+
+BB#4: derived from LLVM BB %21
+    Predecessors according to CFG: BB#0 BB#1 BB#2 BB#3
+	RetRA
+
+# End machine code for function parms_set.
+
+# After Process Implicit Definitions:
+# Machine code for function parms_set: SSA
+Function Live Ins: %A0 in %vreg3, %A2 in %vreg5
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %A0 %A2
+	%vreg5<def> = COPY %A2; GPR32:%vreg5
+	%vreg3<def> = COPY %A0; GPR32:%vreg3
+	%vreg6<def> = LW %vreg3, 0; mem:LD4[%1] GPR32:%vreg6,%vreg3
+	%vreg7<def> = LUi 65535; GPR32:%vreg7
+	%vreg8<def> = AND %vreg6<kill>, %vreg7<kill>; GPR32:%vreg8,%vreg6,%vreg7
+	%vreg9<def> = LUi 61; GPR32:%vreg9
+	BNE %vreg8<kill>, %vreg9<kill>, <BB#4>, %AT<imp-def,dead>; GPR32:%vreg8,%vreg9
+	B <BB#1>, %AT<imp-def,dead>
+    Successors according to CFG: BB#1(0x40000000 / 0x80000000 = 50.00%) BB#4(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %4
+    Predecessors according to CFG: BB#0
+	%vreg0<def> = LW %vreg3, 4; mem:LD4[%5] GPR32:%vreg0,%vreg3
+	%vreg10<def> = SLTiu %vreg0, 53; GPR32:%vreg10,%vreg0
+	BEQ %vreg10<kill>, %ZERO, <BB#4>, %AT<imp-def,dead>; GPR32:%vreg10
+	B <BB#2>, %AT<imp-def,dead>
+    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#4(0x40000000 / 0x80000000 = 50.00%)
+
+BB#2: derived from LLVM BB %8
+    Predecessors according to CFG: BB#1
+	%vreg11<def> = ADDiu %ZERO, 1; GPR32:%vreg11
+	%vreg2<def> = SLLV %vreg11<kill>, %vreg0; GPR32:%vreg2,%vreg11,%vreg0
+	%vreg1<def> = LW %vreg5, 4; mem:LD4[%10] GPR32:%vreg1,%vreg5
+	%vreg12<def> = AND %vreg1, %vreg2; GPR32:%vreg12,%vreg1,%vreg2
+	BEQ %vreg12<kill>, %ZERO, <BB#4>, %AT<imp-def,dead>; GPR32:%vreg12
+	B <BB#3>, %AT<imp-def,dead>
+    Successors according to CFG: BB#4(0x30000000 / 0x80000000 = 37.50%) BB#3(0x50000000 / 0x80000000 = 62.50%)
+
+BB#3: derived from LLVM BB %15
+    Predecessors according to CFG: BB#2
+	%vreg13<def> = NOR %vreg2, %ZERO; GPR32:%vreg13,%vreg2
+	%vreg14<def> = AND %vreg1, %vreg13<kill>; GPR32:%vreg14,%vreg1,%vreg13
+	SW %vreg14<kill>, %vreg5, 4; mem:ST4[%sunkaddr2] GPR32:%vreg14,%vreg5
+	%vreg15<def> = LW %vreg5, 0; mem:LD4[%18] GPR32:%vreg15,%vreg5
+	%vreg16<def> = ADDiu %vreg15<kill>, -1; GPR32:%vreg16,%vreg15
+	SW %vreg16<kill>, %vreg5, 0; mem:ST4[%18] GPR32:%vreg16,%vreg5
+    Successors according to CFG: BB#4(?%)
+
+BB#4: derived from LLVM BB %21
+    Predecessors according to CFG: BB#0 BB#1 BB#2 BB#3
+	RetRA
+
+# End machine code for function parms_set.
+
+# After Live Variable Analysis:
+# Machine code for function parms_set: SSA
+Function Live Ins: %A0 in %vreg3, %A2 in %vreg5
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %A0 %A2
+	%vreg5<def> = COPY %A2<kill>; GPR32:%vreg5
+	%vreg3<def> = COPY %A0<kill>; GPR32:%vreg3
+	%vreg6<def> = LW %vreg3, 0; mem:LD4[%1] GPR32:%vreg6,%vreg3
+	%vreg7<def> = LUi 65535; GPR32:%vreg7
+	%vreg8<def> = AND %vreg6<kill>, %vreg7<kill>; GPR32:%vreg8,%vreg6,%vreg7
+	%vreg9<def> = LUi 61; GPR32:%vreg9
+	BNE %vreg8<kill>, %vreg9<kill>, <BB#4>, %AT<imp-def,dead>; GPR32:%vreg8,%vreg9
+	B <BB#1>, %AT<imp-def,dead>
+    Successors according to CFG: BB#1(0x40000000 / 0x80000000 = 50.00%) BB#4(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %4
+    Predecessors according to CFG: BB#0
+	%vreg0<def> = LW %vreg3<kill>, 4; mem:LD4[%5] GPR32:%vreg0,%vreg3
+	%vreg10<def> = SLTiu %vreg0, 53; GPR32:%vreg10,%vreg0
+	BEQ %vreg10<kill>, %ZERO, <BB#4>, %AT<imp-def,dead>; GPR32:%vreg10
+	B <BB#2>, %AT<imp-def,dead>
+    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#4(0x40000000 / 0x80000000 = 50.00%)
+
+BB#2: derived from LLVM BB %8
+    Predecessors according to CFG: BB#1
+	%vreg11<def> = ADDiu %ZERO, 1; GPR32:%vreg11
+	%vreg2<def> = SLLV %vreg11<kill>, %vreg0<kill>; GPR32:%vreg2,%vreg11,%vreg0
+	%vreg1<def> = LW %vreg5, 4; mem:LD4[%10] GPR32:%vreg1,%vreg5
+	%vreg12<def> = AND %vreg1, %vreg2; GPR32:%vreg12,%vreg1,%vreg2
+	BEQ %vreg12<kill>, %ZERO, <BB#4>, %AT<imp-def,dead>; GPR32:%vreg12
+	B <BB#3>, %AT<imp-def,dead>
+    Successors according to CFG: BB#4(0x30000000 / 0x80000000 = 37.50%) BB#3(0x50000000 / 0x80000000 = 62.50%)
+
+BB#3: derived from LLVM BB %15
+    Predecessors according to CFG: BB#2
+	%vreg13<def> = NOR %vreg2<kill>, %ZERO; GPR32:%vreg13,%vreg2
+	%vreg14<def> = AND %vreg1<kill>, %vreg13<kill>; GPR32:%vreg14,%vreg1,%vreg13
+	SW %vreg14<kill>, %vreg5, 4; mem:ST4[%sunkaddr2] GPR32:%vreg14,%vreg5
+	%vreg15<def> = LW %vreg5, 0; mem:LD4[%18] GPR32:%vreg15,%vreg5
+	%vreg16<def> = ADDiu %vreg15<kill>, -1; GPR32:%vreg16,%vreg15
+	SW %vreg16<kill>, %vreg5<kill>, 0; mem:ST4[%18] GPR32:%vreg16,%vreg5
+    Successors according to CFG: BB#4(?%)
+
+BB#4: derived from LLVM BB %21
+    Predecessors according to CFG: BB#0 BB#1 BB#2 BB#3
+	RetRA
+
+# End machine code for function parms_set.
+
+# After Machine Natural Loop Construction:
+# Machine code for function parms_set: SSA
+Function Live Ins: %A0 in %vreg3, %A2 in %vreg5
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %A0 %A2
+	%vreg5<def> = COPY %A2<kill>; GPR32:%vreg5
+	%vreg3<def> = COPY %A0<kill>; GPR32:%vreg3
+	%vreg6<def> = LW %vreg3, 0; mem:LD4[%1] GPR32:%vreg6,%vreg3
+	%vreg7<def> = LUi 65535; GPR32:%vreg7
+	%vreg8<def> = AND %vreg6<kill>, %vreg7<kill>; GPR32:%vreg8,%vreg6,%vreg7
+	%vreg9<def> = LUi 61; GPR32:%vreg9
+	BNE %vreg8<kill>, %vreg9<kill>, <BB#4>, %AT<imp-def,dead>; GPR32:%vreg8,%vreg9
+	B <BB#1>, %AT<imp-def,dead>
+    Successors according to CFG: BB#1(0x40000000 / 0x80000000 = 50.00%) BB#4(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %4
+    Predecessors according to CFG: BB#0
+	%vreg0<def> = LW %vreg3<kill>, 4; mem:LD4[%5] GPR32:%vreg0,%vreg3
+	%vreg10<def> = SLTiu %vreg0, 53; GPR32:%vreg10,%vreg0
+	BEQ %vreg10<kill>, %ZERO, <BB#4>, %AT<imp-def,dead>; GPR32:%vreg10
+	B <BB#2>, %AT<imp-def,dead>
+    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#4(0x40000000 / 0x80000000 = 50.00%)
+
+BB#2: derived from LLVM BB %8
+    Predecessors according to CFG: BB#1
+	%vreg11<def> = ADDiu %ZERO, 1; GPR32:%vreg11
+	%vreg2<def> = SLLV %vreg11<kill>, %vreg0<kill>; GPR32:%vreg2,%vreg11,%vreg0
+	%vreg1<def> = LW %vreg5, 4; mem:LD4[%10] GPR32:%vreg1,%vreg5
+	%vreg12<def> = AND %vreg1, %vreg2; GPR32:%vreg12,%vreg1,%vreg2
+	BEQ %vreg12<kill>, %ZERO, <BB#4>, %AT<imp-def,dead>; GPR32:%vreg12
+	B <BB#3>, %AT<imp-def,dead>
+    Successors according to CFG: BB#4(0x30000000 / 0x80000000 = 37.50%) BB#3(0x50000000 / 0x80000000 = 62.50%)
+
+BB#3: derived from LLVM BB %15
+    Predecessors according to CFG: BB#2
+	%vreg13<def> = NOR %vreg2<kill>, %ZERO; GPR32:%vreg13,%vreg2
+	%vreg14<def> = AND %vreg1<kill>, %vreg13<kill>; GPR32:%vreg14,%vreg1,%vreg13
+	SW %vreg14<kill>, %vreg5, 4; mem:ST4[%sunkaddr2] GPR32:%vreg14,%vreg5
+	%vreg15<def> = LW %vreg5, 0; mem:LD4[%18] GPR32:%vreg15,%vreg5
+	%vreg16<def> = ADDiu %vreg15<kill>, -1; GPR32:%vreg16,%vreg15
+	SW %vreg16<kill>, %vreg5<kill>, 0; mem:ST4[%18] GPR32:%vreg16,%vreg5
+    Successors according to CFG: BB#4(?%)
+
+BB#4: derived from LLVM BB %21
+    Predecessors according to CFG: BB#0 BB#1 BB#2 BB#3
+	RetRA
+
+# End machine code for function parms_set.
+
+# After Eliminate PHI nodes for register allocation:
+# Machine code for function parms_set: Post SSA
+Function Live Ins: %A0 in %vreg3, %A2 in %vreg5
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %A0 %A2
+	%vreg5<def> = COPY %A2<kill>; GPR32:%vreg5
+	%vreg3<def> = COPY %A0<kill>; GPR32:%vreg3
+	%vreg6<def> = LW %vreg3, 0; mem:LD4[%1] GPR32:%vreg6,%vreg3
+	%vreg7<def> = LUi 65535; GPR32:%vreg7
+	%vreg8<def> = AND %vreg6<kill>, %vreg7<kill>; GPR32:%vreg8,%vreg6,%vreg7
+	%vreg9<def> = LUi 61; GPR32:%vreg9
+	BNE %vreg8<kill>, %vreg9<kill>, <BB#4>, %AT<imp-def,dead>; GPR32:%vreg8,%vreg9
+	B <BB#1>, %AT<imp-def,dead>
+    Successors according to CFG: BB#1(0x40000000 / 0x80000000 = 50.00%) BB#4(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %4
+    Predecessors according to CFG: BB#0
+	%vreg0<def> = LW %vreg3<kill>, 4; mem:LD4[%5] GPR32:%vreg0,%vreg3
+	%vreg10<def> = SLTiu %vreg0, 53; GPR32:%vreg10,%vreg0
+	BEQ %vreg10<kill>, %ZERO, <BB#4>, %AT<imp-def,dead>; GPR32:%vreg10
+	B <BB#2>, %AT<imp-def,dead>
+    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#4(0x40000000 / 0x80000000 = 50.00%)
+
+BB#2: derived from LLVM BB %8
+    Predecessors according to CFG: BB#1
+	%vreg11<def> = ADDiu %ZERO, 1; GPR32:%vreg11
+	%vreg2<def> = SLLV %vreg11<kill>, %vreg0<kill>; GPR32:%vreg2,%vreg11,%vreg0
+	%vreg1<def> = LW %vreg5, 4; mem:LD4[%10] GPR32:%vreg1,%vreg5
+	%vreg12<def> = AND %vreg1, %vreg2; GPR32:%vreg12,%vreg1,%vreg2
+	BEQ %vreg12<kill>, %ZERO, <BB#4>, %AT<imp-def,dead>; GPR32:%vreg12
+	B <BB#3>, %AT<imp-def,dead>
+    Successors according to CFG: BB#4(0x30000000 / 0x80000000 = 37.50%) BB#3(0x50000000 / 0x80000000 = 62.50%)
+
+BB#3: derived from LLVM BB %15
+    Predecessors according to CFG: BB#2
+	%vreg13<def> = NOR %vreg2<kill>, %ZERO; GPR32:%vreg13,%vreg2
+	%vreg14<def> = AND %vreg1<kill>, %vreg13<kill>; GPR32:%vreg14,%vreg1,%vreg13
+	SW %vreg14<kill>, %vreg5, 4; mem:ST4[%sunkaddr2] GPR32:%vreg14,%vreg5
+	%vreg15<def> = LW %vreg5, 0; mem:LD4[%18] GPR32:%vreg15,%vreg5
+	%vreg16<def> = ADDiu %vreg15<kill>, -1; GPR32:%vreg16,%vreg15
+	SW %vreg16<kill>, %vreg5<kill>, 0; mem:ST4[%18] GPR32:%vreg16,%vreg5
+    Successors according to CFG: BB#4(?%)
+
+BB#4: derived from LLVM BB %21
+    Predecessors according to CFG: BB#0 BB#1 BB#2 BB#3
+	RetRA
+
+# End machine code for function parms_set.
+
+# After Two-Address instruction pass:
+# Machine code for function parms_set: Post SSA
+Function Live Ins: %A0 in %vreg3, %A2 in %vreg5
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %A0 %A2
+	%vreg5<def> = COPY %A2<kill>; GPR32:%vreg5
+	%vreg3<def> = COPY %A0<kill>; GPR32:%vreg3
+	%vreg6<def> = LW %vreg3, 0; mem:LD4[%1] GPR32:%vreg6,%vreg3
+	%vreg7<def> = LUi 65535; GPR32:%vreg7
+	%vreg8<def> = AND %vreg6<kill>, %vreg7<kill>; GPR32:%vreg8,%vreg6,%vreg7
+	%vreg9<def> = LUi 61; GPR32:%vreg9
+	BNE %vreg8<kill>, %vreg9<kill>, <BB#4>, %AT<imp-def,dead>; GPR32:%vreg8,%vreg9
+	B <BB#1>, %AT<imp-def,dead>
+    Successors according to CFG: BB#1(0x40000000 / 0x80000000 = 50.00%) BB#4(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %4
+    Predecessors according to CFG: BB#0
+	%vreg0<def> = LW %vreg3<kill>, 4; mem:LD4[%5] GPR32:%vreg0,%vreg3
+	%vreg10<def> = SLTiu %vreg0, 53; GPR32:%vreg10,%vreg0
+	BEQ %vreg10<kill>, %ZERO, <BB#4>, %AT<imp-def,dead>; GPR32:%vreg10
+	B <BB#2>, %AT<imp-def,dead>
+    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#4(0x40000000 / 0x80000000 = 50.00%)
+
+BB#2: derived from LLVM BB %8
+    Predecessors according to CFG: BB#1
+	%vreg11<def> = ADDiu %ZERO, 1; GPR32:%vreg11
+	%vreg2<def> = SLLV %vreg11<kill>, %vreg0<kill>; GPR32:%vreg2,%vreg11,%vreg0
+	%vreg1<def> = LW %vreg5, 4; mem:LD4[%10] GPR32:%vreg1,%vreg5
+	%vreg12<def> = AND %vreg1, %vreg2; GPR32:%vreg12,%vreg1,%vreg2
+	BEQ %vreg12<kill>, %ZERO, <BB#4>, %AT<imp-def,dead>; GPR32:%vreg12
+	B <BB#3>, %AT<imp-def,dead>
+    Successors according to CFG: BB#4(0x30000000 / 0x80000000 = 37.50%) BB#3(0x50000000 / 0x80000000 = 62.50%)
+
+BB#3: derived from LLVM BB %15
+    Predecessors according to CFG: BB#2
+	%vreg13<def> = NOR %vreg2<kill>, %ZERO; GPR32:%vreg13,%vreg2
+	%vreg14<def> = AND %vreg1<kill>, %vreg13<kill>; GPR32:%vreg14,%vreg1,%vreg13
+	SW %vreg14<kill>, %vreg5, 4; mem:ST4[%sunkaddr2] GPR32:%vreg14,%vreg5
+	%vreg15<def> = LW %vreg5, 0; mem:LD4[%18] GPR32:%vreg15,%vreg5
+	%vreg16<def> = ADDiu %vreg15<kill>, -1; GPR32:%vreg16,%vreg15
+	SW %vreg16<kill>, %vreg5<kill>, 0; mem:ST4[%18] GPR32:%vreg16,%vreg5
+    Successors according to CFG: BB#4(?%)
+
+BB#4: derived from LLVM BB %21
+    Predecessors according to CFG: BB#0 BB#1 BB#2 BB#3
+	RetRA
+
+# End machine code for function parms_set.
+
+# After Simple Register Coalescing:
+# Machine code for function parms_set: Post SSA
+Function Live Ins: %A0 in %vreg3, %A2 in %vreg5
+
+0B	BB#0: derived from LLVM BB %0
+	    Live Ins: %A0 %A2
+16B		%vreg5<def> = COPY %A2; GPR32:%vreg5
+32B		%vreg3<def> = COPY %A0; GPR32:%vreg3
+48B		%vreg6<def> = LW %vreg3, 0; mem:LD4[%1] GPR32:%vreg6,%vreg3
+64B		%vreg7<def> = LUi 65535; GPR32:%vreg7
+80B		%vreg8<def> = AND %vreg6, %vreg7; GPR32:%vreg8,%vreg6,%vreg7
+96B		%vreg9<def> = LUi 61; GPR32:%vreg9
+112B		BNE %vreg8, %vreg9, <BB#4>, %AT<imp-def,dead>; GPR32:%vreg8,%vreg9
+128B		B <BB#1>, %AT<imp-def,dead>
+	    Successors according to CFG: BB#1(0x40000000 / 0x80000000 = 50.00%) BB#4(0x40000000 / 0x80000000 = 50.00%)
+
+144B	BB#1: derived from LLVM BB %4
+	    Predecessors according to CFG: BB#0
+160B		%vreg0<def> = LW %vreg3, 4; mem:LD4[%5] GPR32:%vreg0,%vreg3
+176B		%vreg10<def> = SLTiu %vreg0, 53; GPR32:%vreg10,%vreg0
+192B		BEQ %vreg10, %ZERO, <BB#4>, %AT<imp-def,dead>; GPR32:%vreg10
+208B		B <BB#2>, %AT<imp-def,dead>
+	    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#4(0x40000000 / 0x80000000 = 50.00%)
+
+224B	BB#2: derived from LLVM BB %8
+	    Predecessors according to CFG: BB#1
+240B		%vreg11<def> = ADDiu %ZERO, 1; GPR32:%vreg11
+256B		%vreg2<def> = SLLV %vreg11, %vreg0; GPR32:%vreg2,%vreg11,%vreg0
+272B		%vreg1<def> = LW %vreg5, 4; mem:LD4[%10] GPR32:%vreg1,%vreg5
+288B		%vreg12<def> = AND %vreg1, %vreg2; GPR32:%vreg12,%vreg1,%vreg2
+304B		BEQ %vreg12, %ZERO, <BB#4>, %AT<imp-def,dead>; GPR32:%vreg12
+320B		B <BB#3>, %AT<imp-def,dead>
+	    Successors according to CFG: BB#4(0x30000000 / 0x80000000 = 37.50%) BB#3(0x50000000 / 0x80000000 = 62.50%)
+
+336B	BB#3: derived from LLVM BB %15
+	    Predecessors according to CFG: BB#2
+352B		%vreg13<def> = NOR %vreg2, %ZERO; GPR32:%vreg13,%vreg2
+368B		%vreg14<def> = AND %vreg1, %vreg13; GPR32:%vreg14,%vreg1,%vreg13
+384B		SW %vreg14, %vreg5, 4; mem:ST4[%sunkaddr2] GPR32:%vreg14,%vreg5
+400B		%vreg15<def> = LW %vreg5, 0; mem:LD4[%18] GPR32:%vreg15,%vreg5
+416B		%vreg16<def> = ADDiu %vreg15, -1; GPR32:%vreg16,%vreg15
+432B		SW %vreg16, %vreg5, 0; mem:ST4[%18] GPR32:%vreg16,%vreg5
+	    Successors according to CFG: BB#4(?%)
+
+448B	BB#4: derived from LLVM BB %21
+	    Predecessors according to CFG: BB#0 BB#1 BB#2 BB#3
+464B		RetRA
+
+# End machine code for function parms_set.
+
+# After Machine Instruction Scheduler:
+# Machine code for function parms_set: Post SSA
+Function Live Ins: %A0 in %vreg3, %A2 in %vreg5
+
+0B	BB#0: derived from LLVM BB %0
+	    Live Ins: %A0 %A2
+16B		%vreg5<def> = COPY %A2; GPR32:%vreg5
+32B		%vreg3<def> = COPY %A0; GPR32:%vreg3
+48B		%vreg6<def> = LW %vreg3, 0; mem:LD4[%1] GPR32:%vreg6,%vreg3
+64B		%vreg7<def> = LUi 65535; GPR32:%vreg7
+80B		%vreg8<def> = AND %vreg6, %vreg7; GPR32:%vreg8,%vreg6,%vreg7
+96B		%vreg9<def> = LUi 61; GPR32:%vreg9
+112B		BNE %vreg8, %vreg9, <BB#4>, %AT<imp-def,dead>; GPR32:%vreg8,%vreg9
+128B		B <BB#1>, %AT<imp-def,dead>
+	    Successors according to CFG: BB#1(0x40000000 / 0x80000000 = 50.00%) BB#4(0x40000000 / 0x80000000 = 50.00%)
+
+144B	BB#1: derived from LLVM BB %4
+	    Predecessors according to CFG: BB#0
+160B		%vreg0<def> = LW %vreg3, 4; mem:LD4[%5] GPR32:%vreg0,%vreg3
+176B		%vreg10<def> = SLTiu %vreg0, 53; GPR32:%vreg10,%vreg0
+192B		BEQ %vreg10, %ZERO, <BB#4>, %AT<imp-def,dead>; GPR32:%vreg10
+208B		B <BB#2>, %AT<imp-def,dead>
+	    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#4(0x40000000 / 0x80000000 = 50.00%)
+
+224B	BB#2: derived from LLVM BB %8
+	    Predecessors according to CFG: BB#1
+240B		%vreg11<def> = ADDiu %ZERO, 1; GPR32:%vreg11
+256B		%vreg2<def> = SLLV %vreg11, %vreg0; GPR32:%vreg2,%vreg11,%vreg0
+272B		%vreg1<def> = LW %vreg5, 4; mem:LD4[%10] GPR32:%vreg1,%vreg5
+288B		%vreg12<def> = AND %vreg1, %vreg2; GPR32:%vreg12,%vreg1,%vreg2
+304B		BEQ %vreg12, %ZERO, <BB#4>, %AT<imp-def,dead>; GPR32:%vreg12
+320B		B <BB#3>, %AT<imp-def,dead>
+	    Successors according to CFG: BB#4(0x30000000 / 0x80000000 = 37.50%) BB#3(0x50000000 / 0x80000000 = 62.50%)
+
+336B	BB#3: derived from LLVM BB %15
+	    Predecessors according to CFG: BB#2
+352B		%vreg13<def> = NOR %vreg2, %ZERO; GPR32:%vreg13,%vreg2
+368B		%vreg14<def> = AND %vreg1, %vreg13; GPR32:%vreg14,%vreg1,%vreg13
+384B		SW %vreg14, %vreg5, 4; mem:ST4[%sunkaddr2] GPR32:%vreg14,%vreg5
+400B		%vreg15<def> = LW %vreg5, 0; mem:LD4[%18] GPR32:%vreg15,%vreg5
+416B		%vreg16<def> = ADDiu %vreg15, -1; GPR32:%vreg16,%vreg15
+432B		SW %vreg16, %vreg5, 0; mem:ST4[%18] GPR32:%vreg16,%vreg5
+	    Successors according to CFG: BB#4(?%)
+
+448B	BB#4: derived from LLVM BB %21
+	    Predecessors according to CFG: BB#0 BB#1 BB#2 BB#3
+464B		RetRA
+
+# End machine code for function parms_set.
+
+# After Greedy Register Allocator:
+# Machine code for function parms_set: Post SSA
+Function Live Ins: %A0 in %vreg3, %A2 in %vreg5
+
+0B	BB#0: derived from LLVM BB %0
+	    Live Ins: %A0 %A2
+16B		%vreg5<def> = COPY %A2; GPR32:%vreg5
+32B		%vreg3<def> = COPY %A0; GPR32:%vreg3
+48B		%vreg6<def> = LW %vreg3, 0; mem:LD4[%1] GPR32:%vreg6,%vreg3
+64B		%vreg7<def> = LUi 65535; GPR32:%vreg7
+80B		%vreg8<def> = AND %vreg6, %vreg7; GPR32:%vreg8,%vreg6,%vreg7
+96B		%vreg9<def> = LUi 61; GPR32:%vreg9
+112B		BNE %vreg8, %vreg9, <BB#4>, %AT<imp-def,dead>; GPR32:%vreg8,%vreg9
+128B		B <BB#1>, %AT<imp-def,dead>
+	    Successors according to CFG: BB#1(0x40000000 / 0x80000000 = 50.00%) BB#4(0x40000000 / 0x80000000 = 50.00%)
+
+144B	BB#1: derived from LLVM BB %4
+	    Predecessors according to CFG: BB#0
+160B		%vreg0<def> = LW %vreg3, 4; mem:LD4[%5] GPR32:%vreg0,%vreg3
+176B		%vreg10<def> = SLTiu %vreg0, 53; GPR32:%vreg10,%vreg0
+192B		BEQ %vreg10, %ZERO, <BB#4>, %AT<imp-def,dead>; GPR32:%vreg10
+208B		B <BB#2>, %AT<imp-def,dead>
+	    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#4(0x40000000 / 0x80000000 = 50.00%)
+
+224B	BB#2: derived from LLVM BB %8
+	    Predecessors according to CFG: BB#1
+240B		%vreg11<def> = ADDiu %ZERO, 1; GPR32:%vreg11
+256B		%vreg2<def> = SLLV %vreg11, %vreg0; GPR32:%vreg2,%vreg11,%vreg0
+272B		%vreg1<def> = LW %vreg5, 4; mem:LD4[%10] GPR32:%vreg1,%vreg5
+288B		%vreg12<def> = AND %vreg1, %vreg2; GPR32:%vreg12,%vreg1,%vreg2
+304B		BEQ %vreg12, %ZERO, <BB#4>, %AT<imp-def,dead>; GPR32:%vreg12
+320B		B <BB#3>, %AT<imp-def,dead>
+	    Successors according to CFG: BB#4(0x30000000 / 0x80000000 = 37.50%) BB#3(0x50000000 / 0x80000000 = 62.50%)
+
+336B	BB#3: derived from LLVM BB %15
+	    Predecessors according to CFG: BB#2
+352B		%vreg13<def> = NOR %vreg2, %ZERO; GPR32:%vreg13,%vreg2
+368B		%vreg14<def> = AND %vreg1, %vreg13; GPR32:%vreg14,%vreg1,%vreg13
+384B		SW %vreg14, %vreg5, 4; mem:ST4[%sunkaddr2] GPR32:%vreg14,%vreg5
+400B		%vreg15<def> = LW %vreg5, 0; mem:LD4[%18] GPR32:%vreg15,%vreg5
+416B		%vreg16<def> = ADDiu %vreg15, -1; GPR32:%vreg16,%vreg15
+432B		SW %vreg16, %vreg5, 0; mem:ST4[%18] GPR32:%vreg16,%vreg5
+	    Successors according to CFG: BB#4(?%)
+
+448B	BB#4: derived from LLVM BB %21
+	    Predecessors according to CFG: BB#0 BB#1 BB#2 BB#3
+464B		RetRA
+
+# End machine code for function parms_set.
+
+# After Virtual Register Rewriter:
+# Machine code for function parms_set: Post SSA
+Function Live Ins: %A0, %A2
+
+0B	BB#0: derived from LLVM BB %0
+	    Live Ins: %A0 %A2
+48B		%AT<def> = LW %A0, 0; mem:LD4[%1]
+64B		%V0<def> = LUi 65535
+80B		%AT<def> = AND %AT<kill>, %V0<kill>
+96B		%V0<def> = LUi 61
+112B		BNE %AT<kill>, %V0<kill>, <BB#4>, %AT<imp-def,dead>
+128B		B <BB#1>, %AT<imp-def,dead>
+	    Successors according to CFG: BB#1(0x40000000 / 0x80000000 = 50.00%) BB#4(0x40000000 / 0x80000000 = 50.00%)
+
+144B	BB#1: derived from LLVM BB %4
+	    Live Ins: %A0 %A2
+	    Predecessors according to CFG: BB#0
+160B		%V0<def> = LW %A0<kill>, 4; mem:LD4[%5]
+176B		%AT<def> = SLTiu %V0, 53
+192B		BEQ %AT<kill>, %ZERO, <BB#4>, %AT<imp-def,dead>
+208B		B <BB#2>, %AT<imp-def,dead>
+	    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#4(0x40000000 / 0x80000000 = 50.00%)
+
+224B	BB#2: derived from LLVM BB %8
+	    Live Ins: %A2 %V0
+	    Predecessors according to CFG: BB#1
+240B		%AT<def> = ADDiu %ZERO, 1
+256B		%V1<def> = SLLV %AT<kill>, %V0<kill>
+272B		%V0<def> = LW %A2, 4; mem:LD4[%10]
+288B		%AT<def> = AND %V0, %V1
+304B		BEQ %AT<kill>, %ZERO, <BB#4>, %AT<imp-def,dead>
+320B		B <BB#3>, %AT<imp-def,dead>
+	    Successors according to CFG: BB#4(0x30000000 / 0x80000000 = 37.50%) BB#3(0x50000000 / 0x80000000 = 62.50%)
+
+336B	BB#3: derived from LLVM BB %15
+	    Live Ins: %A2 %V0 %V1
+	    Predecessors according to CFG: BB#2
+352B		%AT<def> = NOR %V1<kill>, %ZERO
+368B		%AT<def> = AND %V0<kill>, %AT<kill>
+384B		SW %AT<kill>, %A2, 4; mem:ST4[%sunkaddr2]
+400B		%AT<def> = LW %A2, 0; mem:LD4[%18]
+416B		%AT<def> = ADDiu %AT<kill>, -1
+432B		SW %AT<kill>, %A2<kill>, 0; mem:ST4[%18]
+	    Successors according to CFG: BB#4(?%)
+
+448B	BB#4: derived from LLVM BB %21
+	    Predecessors according to CFG: BB#0 BB#1 BB#2 BB#3
+464B		RetRA
+
+# End machine code for function parms_set.
+
+# After Stack Slot Coloring:
+# Machine code for function parms_set: Post SSA
+Function Live Ins: %A0, %A2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %A0 %A2
+	%AT<def> = LW %A0, 0; mem:LD4[%1]
+	%V0<def> = LUi 65535
+	%AT<def> = AND %AT<kill>, %V0<kill>
+	%V0<def> = LUi 61
+	BNE %AT<kill>, %V0<kill>, <BB#4>, %AT<imp-def,dead>
+	B <BB#1>, %AT<imp-def,dead>
+    Successors according to CFG: BB#1(0x40000000 / 0x80000000 = 50.00%) BB#4(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %4
+    Live Ins: %A0 %A2
+    Predecessors according to CFG: BB#0
+	%V0<def> = LW %A0<kill>, 4; mem:LD4[%5]
+	%AT<def> = SLTiu %V0, 53
+	BEQ %AT<kill>, %ZERO, <BB#4>, %AT<imp-def,dead>
+	B <BB#2>, %AT<imp-def,dead>
+    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#4(0x40000000 / 0x80000000 = 50.00%)
+
+BB#2: derived from LLVM BB %8
+    Live Ins: %A2 %V0
+    Predecessors according to CFG: BB#1
+	%AT<def> = ADDiu %ZERO, 1
+	%V1<def> = SLLV %AT<kill>, %V0<kill>
+	%V0<def> = LW %A2, 4; mem:LD4[%10]
+	%AT<def> = AND %V0, %V1
+	BEQ %AT<kill>, %ZERO, <BB#4>, %AT<imp-def,dead>
+	B <BB#3>, %AT<imp-def,dead>
+    Successors according to CFG: BB#4(0x30000000 / 0x80000000 = 37.50%) BB#3(0x50000000 / 0x80000000 = 62.50%)
+
+BB#3: derived from LLVM BB %15
+    Live Ins: %A2 %V0 %V1
+    Predecessors according to CFG: BB#2
+	%AT<def> = NOR %V1<kill>, %ZERO
+	%AT<def> = AND %V0<kill>, %AT<kill>
+	SW %AT<kill>, %A2, 4; mem:ST4[%sunkaddr2]
+	%AT<def> = LW %A2, 0; mem:LD4[%18]
+	%AT<def> = ADDiu %AT<kill>, -1
+	SW %AT<kill>, %A2<kill>, 0; mem:ST4[%18]
+    Successors according to CFG: BB#4(?%)
+
+BB#4: derived from LLVM BB %21
+    Predecessors according to CFG: BB#0 BB#1 BB#2 BB#3
+	RetRA
+
+# End machine code for function parms_set.
+
+# After Machine Loop Invariant Code Motion:
+# Machine code for function parms_set: Post SSA
+Function Live Ins: %A0, %A2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %A0 %A2
+	%AT<def> = LW %A0, 0; mem:LD4[%1]
+	%V0<def> = LUi 65535
+	%AT<def> = AND %AT<kill>, %V0<kill>
+	%V0<def> = LUi 61
+	BNE %AT<kill>, %V0<kill>, <BB#4>, %AT<imp-def,dead>
+	B <BB#1>, %AT<imp-def,dead>
+    Successors according to CFG: BB#1(0x40000000 / 0x80000000 = 50.00%) BB#4(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %4
+    Live Ins: %A0 %A2
+    Predecessors according to CFG: BB#0
+	%V0<def> = LW %A0<kill>, 4; mem:LD4[%5]
+	%AT<def> = SLTiu %V0, 53
+	BEQ %AT<kill>, %ZERO, <BB#4>, %AT<imp-def,dead>
+	B <BB#2>, %AT<imp-def,dead>
+    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#4(0x40000000 / 0x80000000 = 50.00%)
+
+BB#2: derived from LLVM BB %8
+    Live Ins: %A2 %V0
+    Predecessors according to CFG: BB#1
+	%AT<def> = ADDiu %ZERO, 1
+	%V1<def> = SLLV %AT<kill>, %V0<kill>
+	%V0<def> = LW %A2, 4; mem:LD4[%10]
+	%AT<def> = AND %V0, %V1
+	BEQ %AT<kill>, %ZERO, <BB#4>, %AT<imp-def,dead>
+	B <BB#3>, %AT<imp-def,dead>
+    Successors according to CFG: BB#4(0x30000000 / 0x80000000 = 37.50%) BB#3(0x50000000 / 0x80000000 = 62.50%)
+
+BB#3: derived from LLVM BB %15
+    Live Ins: %A2 %V0 %V1
+    Predecessors according to CFG: BB#2
+	%AT<def> = NOR %V1<kill>, %ZERO
+	%AT<def> = AND %V0<kill>, %AT<kill>
+	SW %AT<kill>, %A2, 4; mem:ST4[%sunkaddr2]
+	%AT<def> = LW %A2, 0; mem:LD4[%18]
+	%AT<def> = ADDiu %AT<kill>, -1
+	SW %AT<kill>, %A2<kill>, 0; mem:ST4[%18]
+    Successors according to CFG: BB#4(?%)
+
+BB#4: derived from LLVM BB %21
+    Predecessors according to CFG: BB#0 BB#1 BB#2 BB#3
+	RetRA
+
+# End machine code for function parms_set.
+
+# After Shrink Wrapping analysis:
+# Machine code for function parms_set: Post SSA
+Function Live Ins: %A0, %A2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %A0 %A2
+	%AT<def> = LW %A0, 0; mem:LD4[%1]
+	%V0<def> = LUi 65535
+	%AT<def> = AND %AT<kill>, %V0<kill>
+	%V0<def> = LUi 61
+	BNE %AT<kill>, %V0<kill>, <BB#4>, %AT<imp-def,dead>
+	B <BB#1>, %AT<imp-def,dead>
+    Successors according to CFG: BB#1(0x40000000 / 0x80000000 = 50.00%) BB#4(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %4
+    Live Ins: %A0 %A2
+    Predecessors according to CFG: BB#0
+	%V0<def> = LW %A0<kill>, 4; mem:LD4[%5]
+	%AT<def> = SLTiu %V0, 53
+	BEQ %AT<kill>, %ZERO, <BB#4>, %AT<imp-def,dead>
+	B <BB#2>, %AT<imp-def,dead>
+    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#4(0x40000000 / 0x80000000 = 50.00%)
+
+BB#2: derived from LLVM BB %8
+    Live Ins: %A2 %V0
+    Predecessors according to CFG: BB#1
+	%AT<def> = ADDiu %ZERO, 1
+	%V1<def> = SLLV %AT<kill>, %V0<kill>
+	%V0<def> = LW %A2, 4; mem:LD4[%10]
+	%AT<def> = AND %V0, %V1
+	BEQ %AT<kill>, %ZERO, <BB#4>, %AT<imp-def,dead>
+	B <BB#3>, %AT<imp-def,dead>
+    Successors according to CFG: BB#4(0x30000000 / 0x80000000 = 37.50%) BB#3(0x50000000 / 0x80000000 = 62.50%)
+
+BB#3: derived from LLVM BB %15
+    Live Ins: %A2 %V0 %V1
+    Predecessors according to CFG: BB#2
+	%AT<def> = NOR %V1<kill>, %ZERO
+	%AT<def> = AND %V0<kill>, %AT<kill>
+	SW %AT<kill>, %A2, 4; mem:ST4[%sunkaddr2]
+	%AT<def> = LW %A2, 0; mem:LD4[%18]
+	%AT<def> = ADDiu %AT<kill>, -1
+	SW %AT<kill>, %A2<kill>, 0; mem:ST4[%18]
+    Successors according to CFG: BB#4(?%)
+
+BB#4: derived from LLVM BB %21
+    Predecessors according to CFG: BB#0 BB#1 BB#2 BB#3
+	RetRA
+
+# End machine code for function parms_set.
+
+# After Prologue/Epilogue Insertion & Frame Finalization:
+# Machine code for function parms_set: Post SSA
+Function Live Ins: %A0, %A2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %A0 %A2
+	%AT<def> = LW %A0, 0; mem:LD4[%1]
+	%V0<def> = LUi 65535
+	%AT<def> = AND %AT<kill>, %V0<kill>
+	%V0<def> = LUi 61
+	BNE %AT<kill>, %V0<kill>, <BB#4>, %AT<imp-def,dead>
+	B <BB#1>, %AT<imp-def,dead>
+    Successors according to CFG: BB#1(0x40000000 / 0x80000000 = 50.00%) BB#4(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %4
+    Live Ins: %A0 %A2
+    Predecessors according to CFG: BB#0
+	%V0<def> = LW %A0<kill>, 4; mem:LD4[%5]
+	%AT<def> = SLTiu %V0, 53
+	BEQ %AT<kill>, %ZERO, <BB#4>, %AT<imp-def,dead>
+	B <BB#2>, %AT<imp-def,dead>
+    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#4(0x40000000 / 0x80000000 = 50.00%)
+
+BB#2: derived from LLVM BB %8
+    Live Ins: %A2 %V0
+    Predecessors according to CFG: BB#1
+	%AT<def> = ADDiu %ZERO, 1
+	%V1<def> = SLLV %AT<kill>, %V0<kill>
+	%V0<def> = LW %A2, 4; mem:LD4[%10]
+	%AT<def> = AND %V0, %V1
+	BEQ %AT<kill>, %ZERO, <BB#4>, %AT<imp-def,dead>
+	B <BB#3>, %AT<imp-def,dead>
+    Successors according to CFG: BB#4(0x30000000 / 0x80000000 = 37.50%) BB#3(0x50000000 / 0x80000000 = 62.50%)
+
+BB#3: derived from LLVM BB %15
+    Live Ins: %A2 %V0 %V1
+    Predecessors according to CFG: BB#2
+	%AT<def> = NOR %V1<kill>, %ZERO
+	%AT<def> = AND %V0<kill>, %AT<kill>
+	SW %AT<kill>, %A2, 4; mem:ST4[%sunkaddr2]
+	%AT<def> = LW %A2, 0; mem:LD4[%18]
+	%AT<def> = ADDiu %AT<kill>, -1
+	SW %AT<kill>, %A2<kill>, 0; mem:ST4[%18]
+    Successors according to CFG: BB#4(?%)
+
+BB#4: derived from LLVM BB %21
+    Predecessors according to CFG: BB#0 BB#1 BB#2 BB#3
+	RetRA
+
+# End machine code for function parms_set.
+
+# After Machine Copy Propagation Pass:
+# Machine code for function parms_set: Post SSA
+Function Live Ins: %A0, %A2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %A0 %A2
+	%AT<def> = LW %A0, 0; mem:LD4[%1]
+	%V0<def> = LUi 65535
+	%AT<def> = AND %AT<kill>, %V0<kill>
+	%V0<def> = LUi 61
+	BNE %AT<kill>, %V0<kill>, <BB#4>, %AT<imp-def,dead>
+	B <BB#1>, %AT<imp-def,dead>
+    Successors according to CFG: BB#1(0x40000000 / 0x80000000 = 50.00%) BB#4(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %4
+    Live Ins: %A0 %A2
+    Predecessors according to CFG: BB#0
+	%V0<def> = LW %A0<kill>, 4; mem:LD4[%5]
+	%AT<def> = SLTiu %V0, 53
+	BEQ %AT<kill>, %ZERO, <BB#4>, %AT<imp-def,dead>
+	B <BB#2>, %AT<imp-def,dead>
+    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#4(0x40000000 / 0x80000000 = 50.00%)
+
+BB#2: derived from LLVM BB %8
+    Live Ins: %A2 %V0
+    Predecessors according to CFG: BB#1
+	%AT<def> = ADDiu %ZERO, 1
+	%V1<def> = SLLV %AT<kill>, %V0<kill>
+	%V0<def> = LW %A2, 4; mem:LD4[%10]
+	%AT<def> = AND %V0, %V1
+	BEQ %AT<kill>, %ZERO, <BB#4>, %AT<imp-def,dead>
+	B <BB#3>, %AT<imp-def,dead>
+    Successors according to CFG: BB#4(0x30000000 / 0x80000000 = 37.50%) BB#3(0x50000000 / 0x80000000 = 62.50%)
+
+BB#3: derived from LLVM BB %15
+    Live Ins: %A2 %V0 %V1
+    Predecessors according to CFG: BB#2
+	%AT<def> = NOR %V1<kill>, %ZERO
+	%AT<def> = AND %V0<kill>, %AT<kill>
+	SW %AT<kill>, %A2, 4; mem:ST4[%sunkaddr2]
+	%AT<def> = LW %A2, 0; mem:LD4[%18]
+	%AT<def> = ADDiu %AT<kill>, -1
+	SW %AT<kill>, %A2<kill>, 0; mem:ST4[%18]
+    Successors according to CFG: BB#4(?%)
+
+BB#4: derived from LLVM BB %21
+    Predecessors according to CFG: BB#0 BB#1 BB#2 BB#3
+	RetRA
+
+# End machine code for function parms_set.
+
+# After Post-RA pseudo instruction expansion pass:
+# Machine code for function parms_set: Post SSA
+Function Live Ins: %A0, %A2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %A0 %A2
+	%AT<def> = LW %A0, 0; mem:LD4[%1]
+	%V0<def> = LUi 65535
+	%AT<def> = AND %AT<kill>, %V0<kill>
+	%V0<def> = LUi 61
+	BNE %AT<kill>, %V0<kill>, <BB#4>, %AT<imp-def,dead>
+	B <BB#1>, %AT<imp-def,dead>
+    Successors according to CFG: BB#1(0x40000000 / 0x80000000 = 50.00%) BB#4(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %4
+    Live Ins: %A0 %A2
+    Predecessors according to CFG: BB#0
+	%V0<def> = LW %A0<kill>, 4; mem:LD4[%5]
+	%AT<def> = SLTiu %V0, 53
+	BEQ %AT<kill>, %ZERO, <BB#4>, %AT<imp-def,dead>
+	B <BB#2>, %AT<imp-def,dead>
+    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#4(0x40000000 / 0x80000000 = 50.00%)
+
+BB#2: derived from LLVM BB %8
+    Live Ins: %A2 %V0
+    Predecessors according to CFG: BB#1
+	%AT<def> = ADDiu %ZERO, 1
+	%V1<def> = SLLV %AT<kill>, %V0<kill>
+	%V0<def> = LW %A2, 4; mem:LD4[%10]
+	%AT<def> = AND %V0, %V1
+	BEQ %AT<kill>, %ZERO, <BB#4>, %AT<imp-def,dead>
+	B <BB#3>, %AT<imp-def,dead>
+    Successors according to CFG: BB#4(0x30000000 / 0x80000000 = 37.50%) BB#3(0x50000000 / 0x80000000 = 62.50%)
+
+BB#3: derived from LLVM BB %15
+    Live Ins: %A2 %V0 %V1
+    Predecessors according to CFG: BB#2
+	%AT<def> = NOR %V1<kill>, %ZERO
+	%AT<def> = AND %V0<kill>, %AT<kill>
+	SW %AT<kill>, %A2, 4; mem:ST4[%sunkaddr2]
+	%AT<def> = LW %A2, 0; mem:LD4[%18]
+	%AT<def> = ADDiu %AT<kill>, -1
+	SW %AT<kill>, %A2<kill>, 0; mem:ST4[%18]
+    Successors according to CFG: BB#4(?%)
+
+BB#4: derived from LLVM BB %21
+    Predecessors according to CFG: BB#0 BB#1 BB#2 BB#3
+	PseudoReturn %RA
+
+# End machine code for function parms_set.
+
+# After Analyze Machine Code For Garbage Collection:
+# Machine code for function parms_set: Post SSA
+Function Live Ins: %A0, %A2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %A0 %A2
+	%AT<def> = LW %A0, 0; mem:LD4[%1]
+	%V0<def> = LUi 65535
+	%AT<def> = AND %AT<kill>, %V0<kill>
+	%V0<def> = LUi 61
+	BNE %AT<kill>, %V0<kill>, <BB#4>, %AT<imp-def,dead>
+	B <BB#1>, %AT<imp-def,dead>
+    Successors according to CFG: BB#1(0x40000000 / 0x80000000 = 50.00%) BB#4(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %4
+    Live Ins: %A0 %A2
+    Predecessors according to CFG: BB#0
+	%V0<def> = LW %A0<kill>, 4; mem:LD4[%5]
+	%AT<def> = SLTiu %V0, 53
+	BEQ %AT<kill>, %ZERO, <BB#4>, %AT<imp-def,dead>
+	B <BB#2>, %AT<imp-def,dead>
+    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#4(0x40000000 / 0x80000000 = 50.00%)
+
+BB#2: derived from LLVM BB %8
+    Live Ins: %A2 %V0
+    Predecessors according to CFG: BB#1
+	%AT<def> = ADDiu %ZERO, 1
+	%V1<def> = SLLV %AT<kill>, %V0<kill>
+	%V0<def> = LW %A2, 4; mem:LD4[%10]
+	%AT<def> = AND %V0, %V1
+	BEQ %AT<kill>, %ZERO, <BB#4>, %AT<imp-def,dead>
+	B <BB#3>, %AT<imp-def,dead>
+    Successors according to CFG: BB#4(0x30000000 / 0x80000000 = 37.50%) BB#3(0x50000000 / 0x80000000 = 62.50%)
+
+BB#3: derived from LLVM BB %15
+    Live Ins: %A2 %V0 %V1
+    Predecessors according to CFG: BB#2
+	%AT<def> = NOR %V1<kill>, %ZERO
+	%AT<def> = AND %V0<kill>, %AT<kill>
+	SW %AT<kill>, %A2, 4; mem:ST4[%sunkaddr2]
+	%AT<def> = LW %A2, 0; mem:LD4[%18]
+	%AT<def> = ADDiu %AT<kill>, -1
+	SW %AT<kill>, %A2<kill>, 0; mem:ST4[%18]
+    Successors according to CFG: BB#4(?%)
+
+BB#4: derived from LLVM BB %21
+    Predecessors according to CFG: BB#0 BB#1 BB#2 BB#3
+	PseudoReturn %RA
+
+# End machine code for function parms_set.
+
+# After Mips Delay Slot Filler:
+# Machine code for function parms_set: Post SSA, not tracking liveness
+Function Live Ins: %A0, %A2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %A0 %A2
+	%AT<def> = LW %A0, 0; mem:LD4[%1]
+	%V0<def> = LUi 65535
+	%AT<def> = AND %AT<kill>, %V0<kill>
+	%V0<def> = LUi 61
+	BNE %AT<kill>, %V0<kill>, <BB#4>, %AT<imp-def,dead>
+	  * NOP
+	B <BB#1>, %AT<imp-def,dead>
+	  * NOP
+    Successors according to CFG: BB#1(0x40000000 / 0x80000000 = 50.00%) BB#4(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %4
+    Live Ins: %A0 %A2
+    Predecessors according to CFG: BB#0
+	%V0<def> = LW %A0<kill>, 4; mem:LD4[%5]
+	%AT<def> = SLTiu %V0, 53
+	BEQ %AT<kill>, %ZERO, <BB#4>, %AT<imp-def,dead>
+	  * NOP
+	B <BB#2>, %AT<imp-def,dead>
+	  * NOP
+    Successors according to CFG: BB#2(0x40000000 / 0x80000000 = 50.00%) BB#4(0x40000000 / 0x80000000 = 50.00%)
+
+BB#2: derived from LLVM BB %8
+    Live Ins: %A2 %V0
+    Predecessors according to CFG: BB#1
+	%AT<def> = ADDiu %ZERO, 1
+	%V1<def> = SLLV %AT<kill>, %V0<kill>
+	%V0<def> = LW %A2, 4; mem:LD4[%10]
+	%AT<def> = AND %V0, %V1
+	BEQ %AT<kill>, %ZERO, <BB#4>, %AT<imp-def,dead>
+	  * NOP
+	B <BB#3>, %AT<imp-def,dead>
+	  * NOP
+    Successors according to CFG: BB#4(0x30000000 / 0x80000000 = 37.50%) BB#3(0x50000000 / 0x80000000 = 62.50%)
+
+BB#3: derived from LLVM BB %15
+    Live Ins: %A2 %V0 %V1
+    Predecessors according to CFG: BB#2
+	%AT<def> = NOR %V1<kill>, %ZERO
+	%AT<def> = AND %V0<kill>, %AT<kill>
+	SW %AT<kill>, %A2, 4; mem:ST4[%sunkaddr2]
+	%AT<def> = LW %A2, 0; mem:LD4[%18]
+	%AT<def> = ADDiu %AT<kill>, -1
+	SW %AT<kill>, %A2<kill>, 0; mem:ST4[%18]
+    Successors according to CFG: BB#4(?%)
+
+BB#4: derived from LLVM BB %21
+    Predecessors according to CFG: BB#0 BB#1 BB#2 BB#3
+	PseudoReturn %RA
+	  * NOP
+
+# End machine code for function parms_set.
+
+# After Mips Long Branch:
+# Machine code for function parms_set: Post SSA, not tracking liveness
+Function Live Ins: %A0, %A2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %A0 %A2
+	%AT<def> = LW %A0, 0; mem:LD4[%1]
+	%V0<def> = LUi 65535
+	%AT<def> = AND %AT<kill>, %V0<kill>
+	%V0<def> = LUi 61
+	BNE %AT<kill>, %V0<kill>, <BB#7>, %AT<imp-def,dead>
+	  * NOP
+    Successors according to CFG: BB#1(?%) BB#7(?%)
+
+BB#1: derived from LLVM BB %0
+    Predecessors according to CFG: BB#0
+	B <BB#2>, %AT<imp-def,dead>
+	  * NOP
+    Successors according to CFG: BB#2(0x80000000 / 0x80000000 = 100.00%)
+
+BB#2: derived from LLVM BB %4
+    Live Ins: %A0 %A2
+    Predecessors according to CFG: BB#1
+	%V0<def> = LW %A0<kill>, 4; mem:LD4[%5]
+	%AT<def> = SLTiu %V0, 53
+	BEQ %AT<kill>, %ZERO, <BB#7>, %AT<imp-def,dead>
+	  * NOP
+    Successors according to CFG: BB#3(?%) BB#7(?%)
+
+BB#3: derived from LLVM BB %4
+    Predecessors according to CFG: BB#2
+	B <BB#4>, %AT<imp-def,dead>
+	  * NOP
+    Successors according to CFG: BB#4(0x80000000 / 0x80000000 = 100.00%)
+
+BB#4: derived from LLVM BB %8
+    Live Ins: %A2 %V0
+    Predecessors according to CFG: BB#3
+	%AT<def> = ADDiu %ZERO, 1
+	%V1<def> = SLLV %AT<kill>, %V0<kill>
+	%V0<def> = LW %A2, 4; mem:LD4[%10]
+	%AT<def> = AND %V0, %V1
+	BEQ %AT<kill>, %ZERO, <BB#7>, %AT<imp-def,dead>
+	  * NOP
+    Successors according to CFG: BB#5(?%) BB#7(?%)
+
+BB#5: derived from LLVM BB %8
+    Predecessors according to CFG: BB#4
+	B <BB#6>, %AT<imp-def,dead>
+	  * NOP
+    Successors according to CFG: BB#6(0x80000000 / 0x80000000 = 100.00%)
+
+BB#6: derived from LLVM BB %15
+    Live Ins: %A2 %V0 %V1
+    Predecessors according to CFG: BB#5
+	%AT<def> = NOR %V1<kill>, %ZERO
+	%AT<def> = AND %V0<kill>, %AT<kill>
+	SW %AT<kill>, %A2, 4; mem:ST4[%sunkaddr2]
+	%AT<def> = LW %A2, 0; mem:LD4[%18]
+	%AT<def> = ADDiu %AT<kill>, -1
+	SW %AT<kill>, %A2<kill>, 0; mem:ST4[%18]
+    Successors according to CFG: BB#7(?%)
+
+BB#7: derived from LLVM BB %21
+    Predecessors according to CFG: BB#6 BB#0 BB#2 BB#4
+	PseudoReturn %RA
+	  * NOP
+
+# End machine code for function parms_set.
+
+# After Mips Constant Islands:
+# Machine code for function parms_set: Post SSA, not tracking liveness
+Function Live Ins: %A0, %A2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %A0 %A2
+	%AT<def> = LW %A0, 0; mem:LD4[%1]
+	%V0<def> = LUi 65535
+	%AT<def> = AND %AT<kill>, %V0<kill>
+	%V0<def> = LUi 61
+	BNE %AT<kill>, %V0<kill>, <BB#7>, %AT<imp-def,dead>
+	  * NOP
+    Successors according to CFG: BB#1(?%) BB#7(?%)
+
+BB#1: derived from LLVM BB %0
+    Predecessors according to CFG: BB#0
+	B <BB#2>, %AT<imp-def,dead>
+	  * NOP
+    Successors according to CFG: BB#2(0x80000000 / 0x80000000 = 100.00%)
+
+BB#2: derived from LLVM BB %4
+    Live Ins: %A0 %A2
+    Predecessors according to CFG: BB#1
+	%V0<def> = LW %A0<kill>, 4; mem:LD4[%5]
+	%AT<def> = SLTiu %V0, 53
+	BEQ %AT<kill>, %ZERO, <BB#7>, %AT<imp-def,dead>
+	  * NOP
+    Successors according to CFG: BB#3(?%) BB#7(?%)
+
+BB#3: derived from LLVM BB %4
+    Predecessors according to CFG: BB#2
+	B <BB#4>, %AT<imp-def,dead>
+	  * NOP
+    Successors according to CFG: BB#4(0x80000000 / 0x80000000 = 100.00%)
+
+BB#4: derived from LLVM BB %8
+    Live Ins: %A2 %V0
+    Predecessors according to CFG: BB#3
+	%AT<def> = ADDiu %ZERO, 1
+	%V1<def> = SLLV %AT<kill>, %V0<kill>
+	%V0<def> = LW %A2, 4; mem:LD4[%10]
+	%AT<def> = AND %V0, %V1
+	BEQ %AT<kill>, %ZERO, <BB#7>, %AT<imp-def,dead>
+	  * NOP
+    Successors according to CFG: BB#5(?%) BB#7(?%)
+
+BB#5: derived from LLVM BB %8
+    Predecessors according to CFG: BB#4
+	B <BB#6>, %AT<imp-def,dead>
+	  * NOP
+    Successors according to CFG: BB#6(0x80000000 / 0x80000000 = 100.00%)
+
+BB#6: derived from LLVM BB %15
+    Live Ins: %A2 %V0 %V1
+    Predecessors according to CFG: BB#5
+	%AT<def> = NOR %V1<kill>, %ZERO
+	%AT<def> = AND %V0<kill>, %AT<kill>
+	SW %AT<kill>, %A2, 4; mem:ST4[%sunkaddr2]
+	%AT<def> = LW %A2, 0; mem:LD4[%18]
+	%AT<def> = ADDiu %AT<kill>, -1
+	SW %AT<kill>, %A2<kill>, 0; mem:ST4[%18]
+    Successors according to CFG: BB#7(?%)
+
+BB#7: derived from LLVM BB %21
+    Predecessors according to CFG: BB#6 BB#0 BB#2 BB#4
+	PseudoReturn %RA
+	  * NOP
+
+# End machine code for function parms_set.
+
+# After Contiguously Lay Out Funclets:
+# Machine code for function parms_set: Post SSA, not tracking liveness
+Function Live Ins: %A0, %A2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %A0 %A2
+	%AT<def> = LW %A0, 0; mem:LD4[%1]
+	%V0<def> = LUi 65535
+	%AT<def> = AND %AT<kill>, %V0<kill>
+	%V0<def> = LUi 61
+	BNE %AT<kill>, %V0<kill>, <BB#7>, %AT<imp-def,dead>
+	  * NOP
+    Successors according to CFG: BB#1(?%) BB#7(?%)
+
+BB#1: derived from LLVM BB %0
+    Predecessors according to CFG: BB#0
+	B <BB#2>, %AT<imp-def,dead>
+	  * NOP
+    Successors according to CFG: BB#2(0x80000000 / 0x80000000 = 100.00%)
+
+BB#2: derived from LLVM BB %4
+    Live Ins: %A0 %A2
+    Predecessors according to CFG: BB#1
+	%V0<def> = LW %A0<kill>, 4; mem:LD4[%5]
+	%AT<def> = SLTiu %V0, 53
+	BEQ %AT<kill>, %ZERO, <BB#7>, %AT<imp-def,dead>
+	  * NOP
+    Successors according to CFG: BB#3(?%) BB#7(?%)
+
+BB#3: derived from LLVM BB %4
+    Predecessors according to CFG: BB#2
+	B <BB#4>, %AT<imp-def,dead>
+	  * NOP
+    Successors according to CFG: BB#4(0x80000000 / 0x80000000 = 100.00%)
+
+BB#4: derived from LLVM BB %8
+    Live Ins: %A2 %V0
+    Predecessors according to CFG: BB#3
+	%AT<def> = ADDiu %ZERO, 1
+	%V1<def> = SLLV %AT<kill>, %V0<kill>
+	%V0<def> = LW %A2, 4; mem:LD4[%10]
+	%AT<def> = AND %V0, %V1
+	BEQ %AT<kill>, %ZERO, <BB#7>, %AT<imp-def,dead>
+	  * NOP
+    Successors according to CFG: BB#5(?%) BB#7(?%)
+
+BB#5: derived from LLVM BB %8
+    Predecessors according to CFG: BB#4
+	B <BB#6>, %AT<imp-def,dead>
+	  * NOP
+    Successors according to CFG: BB#6(0x80000000 / 0x80000000 = 100.00%)
+
+BB#6: derived from LLVM BB %15
+    Live Ins: %A2 %V0 %V1
+    Predecessors according to CFG: BB#5
+	%AT<def> = NOR %V1<kill>, %ZERO
+	%AT<def> = AND %V0<kill>, %AT<kill>
+	SW %AT<kill>, %A2, 4; mem:ST4[%sunkaddr2]
+	%AT<def> = LW %A2, 0; mem:LD4[%18]
+	%AT<def> = ADDiu %AT<kill>, -1
+	SW %AT<kill>, %A2<kill>, 0; mem:ST4[%18]
+    Successors according to CFG: BB#7(?%)
+
+BB#7: derived from LLVM BB %21
+    Predecessors according to CFG: BB#6 BB#0 BB#2 BB#4
+	PseudoReturn %RA
+	  * NOP
+
+# End machine code for function parms_set.
+
+# After StackMap Liveness Analysis:
+# Machine code for function parms_set: Post SSA, not tracking liveness
+Function Live Ins: %A0, %A2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %A0 %A2
+	%AT<def> = LW %A0, 0; mem:LD4[%1]
+	%V0<def> = LUi 65535
+	%AT<def> = AND %AT<kill>, %V0<kill>
+	%V0<def> = LUi 61
+	BNE %AT<kill>, %V0<kill>, <BB#7>, %AT<imp-def,dead>
+	  * NOP
+    Successors according to CFG: BB#1(?%) BB#7(?%)
+
+BB#1: derived from LLVM BB %0
+    Predecessors according to CFG: BB#0
+	B <BB#2>, %AT<imp-def,dead>
+	  * NOP
+    Successors according to CFG: BB#2(0x80000000 / 0x80000000 = 100.00%)
+
+BB#2: derived from LLVM BB %4
+    Live Ins: %A0 %A2
+    Predecessors according to CFG: BB#1
+	%V0<def> = LW %A0<kill>, 4; mem:LD4[%5]
+	%AT<def> = SLTiu %V0, 53
+	BEQ %AT<kill>, %ZERO, <BB#7>, %AT<imp-def,dead>
+	  * NOP
+    Successors according to CFG: BB#3(?%) BB#7(?%)
+
+BB#3: derived from LLVM BB %4
+    Predecessors according to CFG: BB#2
+	B <BB#4>, %AT<imp-def,dead>
+	  * NOP
+    Successors according to CFG: BB#4(0x80000000 / 0x80000000 = 100.00%)
+
+BB#4: derived from LLVM BB %8
+    Live Ins: %A2 %V0
+    Predecessors according to CFG: BB#3
+	%AT<def> = ADDiu %ZERO, 1
+	%V1<def> = SLLV %AT<kill>, %V0<kill>
+	%V0<def> = LW %A2, 4; mem:LD4[%10]
+	%AT<def> = AND %V0, %V1
+	BEQ %AT<kill>, %ZERO, <BB#7>, %AT<imp-def,dead>
+	  * NOP
+    Successors according to CFG: BB#5(?%) BB#7(?%)
+
+BB#5: derived from LLVM BB %8
+    Predecessors according to CFG: BB#4
+	B <BB#6>, %AT<imp-def,dead>
+	  * NOP
+    Successors according to CFG: BB#6(0x80000000 / 0x80000000 = 100.00%)
+
+BB#6: derived from LLVM BB %15
+    Live Ins: %A2 %V0 %V1
+    Predecessors according to CFG: BB#5
+	%AT<def> = NOR %V1<kill>, %ZERO
+	%AT<def> = AND %V0<kill>, %AT<kill>
+	SW %AT<kill>, %A2, 4; mem:ST4[%sunkaddr2]
+	%AT<def> = LW %A2, 0; mem:LD4[%18]
+	%AT<def> = ADDiu %AT<kill>, -1
+	SW %AT<kill>, %A2<kill>, 0; mem:ST4[%18]
+    Successors according to CFG: BB#7(?%)
+
+BB#7: derived from LLVM BB %21
+    Predecessors according to CFG: BB#6 BB#0 BB#2 BB#4
+	PseudoReturn %RA
+	  * NOP
+
+# End machine code for function parms_set.
+
+# After Live DEBUG_VALUE analysis:
+# Machine code for function parms_set: Post SSA, not tracking liveness
+Function Live Ins: %A0, %A2
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %A0 %A2
+	%AT<def> = LW %A0, 0; mem:LD4[%1]
+	%V0<def> = LUi 65535
+	%AT<def> = AND %AT<kill>, %V0<kill>
+	%V0<def> = LUi 61
+	BNE %AT<kill>, %V0<kill>, <BB#7>, %AT<imp-def,dead>
+	  * NOP
+    Successors according to CFG: BB#1(?%) BB#7(?%)
+
+BB#1: derived from LLVM BB %0
+    Predecessors according to CFG: BB#0
+	B <BB#2>, %AT<imp-def,dead>
+	  * NOP
+    Successors according to CFG: BB#2(0x80000000 / 0x80000000 = 100.00%)
+
+BB#2: derived from LLVM BB %4
+    Live Ins: %A0 %A2
+    Predecessors according to CFG: BB#1
+	%V0<def> = LW %A0<kill>, 4; mem:LD4[%5]
+	%AT<def> = SLTiu %V0, 53
+	BEQ %AT<kill>, %ZERO, <BB#7>, %AT<imp-def,dead>
+	  * NOP
+    Successors according to CFG: BB#3(?%) BB#7(?%)
+
+BB#3: derived from LLVM BB %4
+    Predecessors according to CFG: BB#2
+	B <BB#4>, %AT<imp-def,dead>
+	  * NOP
+    Successors according to CFG: BB#4(0x80000000 / 0x80000000 = 100.00%)
+
+BB#4: derived from LLVM BB %8
+    Live Ins: %A2 %V0
+    Predecessors according to CFG: BB#3
+	%AT<def> = ADDiu %ZERO, 1
+	%V1<def> = SLLV %AT<kill>, %V0<kill>
+	%V0<def> = LW %A2, 4; mem:LD4[%10]
+	%AT<def> = AND %V0, %V1
+	BEQ %AT<kill>, %ZERO, <BB#7>, %AT<imp-def,dead>
+	  * NOP
+    Successors according to CFG: BB#5(?%) BB#7(?%)
+
+BB#5: derived from LLVM BB %8
+    Predecessors according to CFG: BB#4
+	B <BB#6>, %AT<imp-def,dead>
+	  * NOP
+    Successors according to CFG: BB#6(0x80000000 / 0x80000000 = 100.00%)
+
+BB#6: derived from LLVM BB %15
+    Live Ins: %A2 %V0 %V1
+    Predecessors according to CFG: BB#5
+	%AT<def> = NOR %V1<kill>, %ZERO
+	%AT<def> = AND %V0<kill>, %AT<kill>
+	SW %AT<kill>, %A2, 4; mem:ST4[%sunkaddr2]
+	%AT<def> = LW %A2, 0; mem:LD4[%18]
+	%AT<def> = ADDiu %AT<kill>, -1
+	SW %AT<kill>, %A2<kill>, 0; mem:ST4[%18]
+    Successors according to CFG: BB#7(?%)
+
+BB#7: derived from LLVM BB %21
+    Predecessors according to CFG: BB#6 BB#0 BB#2 BB#4
+	PseudoReturn %RA
+	  * NOP
+
+# End machine code for function parms_set.
+

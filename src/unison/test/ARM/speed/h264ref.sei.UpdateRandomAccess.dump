@@ -1,0 +1,1435 @@
+# After Instruction Selection:
+# Machine code for function UpdateRandomAccess: SSA
+
+BB#0: derived from LLVM BB %0
+	%vreg2<def> = t2MOVi32imm <ga:@img>; rGPR:%vreg2
+	%vreg3<def> = t2LDRi12 %vreg2<kill>, 0, pred:14, pred:%noreg; mem:LD4[@img] GPR:%vreg3 rGPR:%vreg2
+	%vreg4<def> = t2LDRi12 %vreg3<kill>, 24, pred:14, pred:%noreg; mem:LD4[%2](align=8) GPRnopc:%vreg4 GPR:%vreg3
+	%vreg5<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg5
+	%vreg1<def> = COPY %vreg5; GPR:%vreg1 rGPR:%vreg5
+	t2CMPri %vreg4<kill>, 2, pred:14, pred:%noreg, %CPSR<imp-def>; GPRnopc:%vreg4
+	t2Bcc <BB#2>, pred:1, pred:%CPSR
+	t2B <BB#1>, pred:14, pred:%noreg
+    Successors according to CFG: BB#1(0x40000000 / 0x80000000 = 50.00%) BB#2(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %5
+    Predecessors according to CFG: BB#0
+	%vreg7<def> = t2MOVi32imm <ga:@seiRandomAccess>; rGPR:%vreg7
+	%vreg8<def> = t2MOVi 256, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg8
+	t2STRHi12 %vreg8<kill>, %vreg7, 0, pred:14, pred:%noreg; mem:ST2[getelementptr inbounds (%struct.randomaccess_information_struct.1391, %struct.randomaccess_information_struct.1391* @seiRandomAccess, i32 0, i32 0)](align=4) rGPR:%vreg8,%vreg7
+	%vreg9<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg9
+	t2STRBi12 %vreg9<kill>, %vreg7, 2, pred:14, pred:%noreg; mem:ST1[getelementptr inbounds (%struct.randomaccess_information_struct.1391, %struct.randomaccess_information_struct.1391* @seiRandomAccess, i32 0, i32 2)](align=2) rGPR:%vreg9,%vreg7
+	%vreg10<def> = t2MOVi 1, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg10
+	%vreg6<def> = COPY %vreg10; GPR:%vreg6 rGPR:%vreg10
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %6
+    Predecessors according to CFG: BB#0 BB#1
+	%vreg0<def> = PHI %vreg1, <BB#0>, %vreg6, <BB#1>; GPR:%vreg0,%vreg1,%vreg6
+	%vreg11<def> = t2MOVi32imm <ga:@seiHasRandomAccess_info>; rGPR:%vreg11
+	t2STRi12 %vreg0, %vreg11<kill>, 0, pred:14, pred:%noreg; mem:ST4[@seiHasRandomAccess_info] GPR:%vreg0 rGPR:%vreg11
+	tBX_RET pred:14, pred:%noreg
+
+# End machine code for function UpdateRandomAccess.
+
+# After Expand ISel Pseudo-instructions:
+# Machine code for function UpdateRandomAccess: SSA
+
+BB#0: derived from LLVM BB %0
+	%vreg2<def> = t2MOVi32imm <ga:@img>; rGPR:%vreg2
+	%vreg3<def> = t2LDRi12 %vreg2<kill>, 0, pred:14, pred:%noreg; mem:LD4[@img] GPR:%vreg3 rGPR:%vreg2
+	%vreg4<def> = t2LDRi12 %vreg3<kill>, 24, pred:14, pred:%noreg; mem:LD4[%2](align=8) GPRnopc:%vreg4 GPR:%vreg3
+	%vreg5<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg5
+	%vreg1<def> = COPY %vreg5; GPR:%vreg1 rGPR:%vreg5
+	t2CMPri %vreg4<kill>, 2, pred:14, pred:%noreg, %CPSR<imp-def>; GPRnopc:%vreg4
+	t2Bcc <BB#2>, pred:1, pred:%CPSR
+	t2B <BB#1>, pred:14, pred:%noreg
+    Successors according to CFG: BB#1(0x40000000 / 0x80000000 = 50.00%) BB#2(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %5
+    Predecessors according to CFG: BB#0
+	%vreg7<def> = t2MOVi32imm <ga:@seiRandomAccess>; rGPR:%vreg7
+	%vreg8<def> = t2MOVi 256, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg8
+	t2STRHi12 %vreg8<kill>, %vreg7, 0, pred:14, pred:%noreg; mem:ST2[getelementptr inbounds (%struct.randomaccess_information_struct.1391, %struct.randomaccess_information_struct.1391* @seiRandomAccess, i32 0, i32 0)](align=4) rGPR:%vreg8,%vreg7
+	%vreg9<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg9
+	t2STRBi12 %vreg9<kill>, %vreg7, 2, pred:14, pred:%noreg; mem:ST1[getelementptr inbounds (%struct.randomaccess_information_struct.1391, %struct.randomaccess_information_struct.1391* @seiRandomAccess, i32 0, i32 2)](align=2) rGPR:%vreg9,%vreg7
+	%vreg10<def> = t2MOVi 1, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg10
+	%vreg6<def> = COPY %vreg10; GPR:%vreg6 rGPR:%vreg10
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %6
+    Predecessors according to CFG: BB#0 BB#1
+	%vreg0<def> = PHI %vreg1, <BB#0>, %vreg6, <BB#1>; GPR:%vreg0,%vreg1,%vreg6
+	%vreg11<def> = t2MOVi32imm <ga:@seiHasRandomAccess_info>; rGPR:%vreg11
+	t2STRi12 %vreg0, %vreg11<kill>, 0, pred:14, pred:%noreg; mem:ST4[@seiHasRandomAccess_info] GPR:%vreg0 rGPR:%vreg11
+	tBX_RET pred:14, pred:%noreg
+
+# End machine code for function UpdateRandomAccess.
+
+# After Tail Duplication:
+# Machine code for function UpdateRandomAccess: SSA
+
+BB#0: derived from LLVM BB %0
+	%vreg2<def> = t2MOVi32imm <ga:@img>; rGPR:%vreg2
+	%vreg3<def> = t2LDRi12 %vreg2<kill>, 0, pred:14, pred:%noreg; mem:LD4[@img] GPR:%vreg3 rGPR:%vreg2
+	%vreg4<def> = t2LDRi12 %vreg3<kill>, 24, pred:14, pred:%noreg; mem:LD4[%2](align=8) GPRnopc:%vreg4 GPR:%vreg3
+	%vreg5<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg5
+	%vreg1<def> = COPY %vreg5; GPR:%vreg1 rGPR:%vreg5
+	t2CMPri %vreg4<kill>, 2, pred:14, pred:%noreg, %CPSR<imp-def>; GPRnopc:%vreg4
+	t2Bcc <BB#2>, pred:1, pred:%CPSR
+	t2B <BB#1>, pred:14, pred:%noreg
+    Successors according to CFG: BB#1(0x40000000 / 0x80000000 = 50.00%) BB#2(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %5
+    Predecessors according to CFG: BB#0
+	%vreg7<def> = t2MOVi32imm <ga:@seiRandomAccess>; rGPR:%vreg7
+	%vreg8<def> = t2MOVi 256, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg8
+	t2STRHi12 %vreg8<kill>, %vreg7, 0, pred:14, pred:%noreg; mem:ST2[getelementptr inbounds (%struct.randomaccess_information_struct.1391, %struct.randomaccess_information_struct.1391* @seiRandomAccess, i32 0, i32 0)](align=4) rGPR:%vreg8,%vreg7
+	%vreg9<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg9
+	t2STRBi12 %vreg9<kill>, %vreg7, 2, pred:14, pred:%noreg; mem:ST1[getelementptr inbounds (%struct.randomaccess_information_struct.1391, %struct.randomaccess_information_struct.1391* @seiRandomAccess, i32 0, i32 2)](align=2) rGPR:%vreg9,%vreg7
+	%vreg10<def> = t2MOVi 1, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg10
+	%vreg6<def> = COPY %vreg10; GPR:%vreg6 rGPR:%vreg10
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %6
+    Predecessors according to CFG: BB#0 BB#1
+	%vreg0<def> = PHI %vreg1, <BB#0>, %vreg6, <BB#1>; GPR:%vreg0,%vreg1,%vreg6
+	%vreg11<def> = t2MOVi32imm <ga:@seiHasRandomAccess_info>; rGPR:%vreg11
+	t2STRi12 %vreg0, %vreg11<kill>, 0, pred:14, pred:%noreg; mem:ST4[@seiHasRandomAccess_info] GPR:%vreg0 rGPR:%vreg11
+	tBX_RET pred:14, pred:%noreg
+
+# End machine code for function UpdateRandomAccess.
+
+# After Optimize machine instruction PHIs:
+# Machine code for function UpdateRandomAccess: SSA
+
+BB#0: derived from LLVM BB %0
+	%vreg2<def> = t2MOVi32imm <ga:@img>; rGPR:%vreg2
+	%vreg3<def> = t2LDRi12 %vreg2<kill>, 0, pred:14, pred:%noreg; mem:LD4[@img] GPR:%vreg3 rGPR:%vreg2
+	%vreg4<def> = t2LDRi12 %vreg3<kill>, 24, pred:14, pred:%noreg; mem:LD4[%2](align=8) GPRnopc:%vreg4 GPR:%vreg3
+	%vreg5<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg5
+	%vreg1<def> = COPY %vreg5; GPR:%vreg1 rGPR:%vreg5
+	t2CMPri %vreg4<kill>, 2, pred:14, pred:%noreg, %CPSR<imp-def>; GPRnopc:%vreg4
+	t2Bcc <BB#2>, pred:1, pred:%CPSR
+	t2B <BB#1>, pred:14, pred:%noreg
+    Successors according to CFG: BB#1(0x40000000 / 0x80000000 = 50.00%) BB#2(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %5
+    Predecessors according to CFG: BB#0
+	%vreg7<def> = t2MOVi32imm <ga:@seiRandomAccess>; rGPR:%vreg7
+	%vreg8<def> = t2MOVi 256, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg8
+	t2STRHi12 %vreg8<kill>, %vreg7, 0, pred:14, pred:%noreg; mem:ST2[getelementptr inbounds (%struct.randomaccess_information_struct.1391, %struct.randomaccess_information_struct.1391* @seiRandomAccess, i32 0, i32 0)](align=4) rGPR:%vreg8,%vreg7
+	%vreg9<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg9
+	t2STRBi12 %vreg9<kill>, %vreg7, 2, pred:14, pred:%noreg; mem:ST1[getelementptr inbounds (%struct.randomaccess_information_struct.1391, %struct.randomaccess_information_struct.1391* @seiRandomAccess, i32 0, i32 2)](align=2) rGPR:%vreg9,%vreg7
+	%vreg10<def> = t2MOVi 1, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg10
+	%vreg6<def> = COPY %vreg10; GPR:%vreg6 rGPR:%vreg10
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %6
+    Predecessors according to CFG: BB#0 BB#1
+	%vreg0<def> = PHI %vreg1, <BB#0>, %vreg6, <BB#1>; GPR:%vreg0,%vreg1,%vreg6
+	%vreg11<def> = t2MOVi32imm <ga:@seiHasRandomAccess_info>; rGPR:%vreg11
+	t2STRi12 %vreg0, %vreg11<kill>, 0, pred:14, pred:%noreg; mem:ST4[@seiHasRandomAccess_info] GPR:%vreg0 rGPR:%vreg11
+	tBX_RET pred:14, pred:%noreg
+
+# End machine code for function UpdateRandomAccess.
+
+# After Merge disjoint stack slots:
+# Machine code for function UpdateRandomAccess: SSA
+
+BB#0: derived from LLVM BB %0
+	%vreg2<def> = t2MOVi32imm <ga:@img>; rGPR:%vreg2
+	%vreg3<def> = t2LDRi12 %vreg2<kill>, 0, pred:14, pred:%noreg; mem:LD4[@img] GPR:%vreg3 rGPR:%vreg2
+	%vreg4<def> = t2LDRi12 %vreg3<kill>, 24, pred:14, pred:%noreg; mem:LD4[%2](align=8) GPRnopc:%vreg4 GPR:%vreg3
+	%vreg5<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg5
+	%vreg1<def> = COPY %vreg5; GPR:%vreg1 rGPR:%vreg5
+	t2CMPri %vreg4<kill>, 2, pred:14, pred:%noreg, %CPSR<imp-def>; GPRnopc:%vreg4
+	t2Bcc <BB#2>, pred:1, pred:%CPSR
+	t2B <BB#1>, pred:14, pred:%noreg
+    Successors according to CFG: BB#1(0x40000000 / 0x80000000 = 50.00%) BB#2(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %5
+    Predecessors according to CFG: BB#0
+	%vreg7<def> = t2MOVi32imm <ga:@seiRandomAccess>; rGPR:%vreg7
+	%vreg8<def> = t2MOVi 256, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg8
+	t2STRHi12 %vreg8<kill>, %vreg7, 0, pred:14, pred:%noreg; mem:ST2[getelementptr inbounds (%struct.randomaccess_information_struct.1391, %struct.randomaccess_information_struct.1391* @seiRandomAccess, i32 0, i32 0)](align=4) rGPR:%vreg8,%vreg7
+	%vreg9<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg9
+	t2STRBi12 %vreg9<kill>, %vreg7, 2, pred:14, pred:%noreg; mem:ST1[getelementptr inbounds (%struct.randomaccess_information_struct.1391, %struct.randomaccess_information_struct.1391* @seiRandomAccess, i32 0, i32 2)](align=2) rGPR:%vreg9,%vreg7
+	%vreg10<def> = t2MOVi 1, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg10
+	%vreg6<def> = COPY %vreg10; GPR:%vreg6 rGPR:%vreg10
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %6
+    Predecessors according to CFG: BB#0 BB#1
+	%vreg0<def> = PHI %vreg1, <BB#0>, %vreg6, <BB#1>; GPR:%vreg0,%vreg1,%vreg6
+	%vreg11<def> = t2MOVi32imm <ga:@seiHasRandomAccess_info>; rGPR:%vreg11
+	t2STRi12 %vreg0, %vreg11<kill>, 0, pred:14, pred:%noreg; mem:ST4[@seiHasRandomAccess_info] GPR:%vreg0 rGPR:%vreg11
+	tBX_RET pred:14, pred:%noreg
+
+# End machine code for function UpdateRandomAccess.
+
+# After Local Stack Slot Allocation:
+# Machine code for function UpdateRandomAccess: SSA
+
+BB#0: derived from LLVM BB %0
+	%vreg2<def> = t2MOVi32imm <ga:@img>; rGPR:%vreg2
+	%vreg3<def> = t2LDRi12 %vreg2<kill>, 0, pred:14, pred:%noreg; mem:LD4[@img] GPR:%vreg3 rGPR:%vreg2
+	%vreg4<def> = t2LDRi12 %vreg3<kill>, 24, pred:14, pred:%noreg; mem:LD4[%2](align=8) GPRnopc:%vreg4 GPR:%vreg3
+	%vreg5<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg5
+	%vreg1<def> = COPY %vreg5; GPR:%vreg1 rGPR:%vreg5
+	t2CMPri %vreg4<kill>, 2, pred:14, pred:%noreg, %CPSR<imp-def>; GPRnopc:%vreg4
+	t2Bcc <BB#2>, pred:1, pred:%CPSR
+	t2B <BB#1>, pred:14, pred:%noreg
+    Successors according to CFG: BB#1(0x40000000 / 0x80000000 = 50.00%) BB#2(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %5
+    Predecessors according to CFG: BB#0
+	%vreg7<def> = t2MOVi32imm <ga:@seiRandomAccess>; rGPR:%vreg7
+	%vreg8<def> = t2MOVi 256, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg8
+	t2STRHi12 %vreg8<kill>, %vreg7, 0, pred:14, pred:%noreg; mem:ST2[getelementptr inbounds (%struct.randomaccess_information_struct.1391, %struct.randomaccess_information_struct.1391* @seiRandomAccess, i32 0, i32 0)](align=4) rGPR:%vreg8,%vreg7
+	%vreg9<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg9
+	t2STRBi12 %vreg9<kill>, %vreg7, 2, pred:14, pred:%noreg; mem:ST1[getelementptr inbounds (%struct.randomaccess_information_struct.1391, %struct.randomaccess_information_struct.1391* @seiRandomAccess, i32 0, i32 2)](align=2) rGPR:%vreg9,%vreg7
+	%vreg10<def> = t2MOVi 1, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg10
+	%vreg6<def> = COPY %vreg10; GPR:%vreg6 rGPR:%vreg10
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %6
+    Predecessors according to CFG: BB#0 BB#1
+	%vreg0<def> = PHI %vreg1, <BB#0>, %vreg6, <BB#1>; GPR:%vreg0,%vreg1,%vreg6
+	%vreg11<def> = t2MOVi32imm <ga:@seiHasRandomAccess_info>; rGPR:%vreg11
+	t2STRi12 %vreg0, %vreg11<kill>, 0, pred:14, pred:%noreg; mem:ST4[@seiHasRandomAccess_info] GPR:%vreg0 rGPR:%vreg11
+	tBX_RET pred:14, pred:%noreg
+
+# End machine code for function UpdateRandomAccess.
+
+# After Remove dead machine instructions:
+# Machine code for function UpdateRandomAccess: SSA
+
+BB#0: derived from LLVM BB %0
+	%vreg2<def> = t2MOVi32imm <ga:@img>; rGPR:%vreg2
+	%vreg3<def> = t2LDRi12 %vreg2<kill>, 0, pred:14, pred:%noreg; mem:LD4[@img] GPR:%vreg3 rGPR:%vreg2
+	%vreg4<def> = t2LDRi12 %vreg3<kill>, 24, pred:14, pred:%noreg; mem:LD4[%2](align=8) GPRnopc:%vreg4 GPR:%vreg3
+	%vreg5<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg5
+	%vreg1<def> = COPY %vreg5; GPR:%vreg1 rGPR:%vreg5
+	t2CMPri %vreg4<kill>, 2, pred:14, pred:%noreg, %CPSR<imp-def>; GPRnopc:%vreg4
+	t2Bcc <BB#2>, pred:1, pred:%CPSR
+	t2B <BB#1>, pred:14, pred:%noreg
+    Successors according to CFG: BB#1(0x40000000 / 0x80000000 = 50.00%) BB#2(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %5
+    Predecessors according to CFG: BB#0
+	%vreg7<def> = t2MOVi32imm <ga:@seiRandomAccess>; rGPR:%vreg7
+	%vreg8<def> = t2MOVi 256, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg8
+	t2STRHi12 %vreg8<kill>, %vreg7, 0, pred:14, pred:%noreg; mem:ST2[getelementptr inbounds (%struct.randomaccess_information_struct.1391, %struct.randomaccess_information_struct.1391* @seiRandomAccess, i32 0, i32 0)](align=4) rGPR:%vreg8,%vreg7
+	%vreg9<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg9
+	t2STRBi12 %vreg9<kill>, %vreg7, 2, pred:14, pred:%noreg; mem:ST1[getelementptr inbounds (%struct.randomaccess_information_struct.1391, %struct.randomaccess_information_struct.1391* @seiRandomAccess, i32 0, i32 2)](align=2) rGPR:%vreg9,%vreg7
+	%vreg10<def> = t2MOVi 1, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg10
+	%vreg6<def> = COPY %vreg10; GPR:%vreg6 rGPR:%vreg10
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %6
+    Predecessors according to CFG: BB#0 BB#1
+	%vreg0<def> = PHI %vreg1, <BB#0>, %vreg6, <BB#1>; GPR:%vreg0,%vreg1,%vreg6
+	%vreg11<def> = t2MOVi32imm <ga:@seiHasRandomAccess_info>; rGPR:%vreg11
+	t2STRi12 %vreg0, %vreg11<kill>, 0, pred:14, pred:%noreg; mem:ST4[@seiHasRandomAccess_info] GPR:%vreg0 rGPR:%vreg11
+	tBX_RET pred:14, pred:%noreg
+
+# End machine code for function UpdateRandomAccess.
+
+# After Machine Loop Invariant Code Motion:
+# Machine code for function UpdateRandomAccess: SSA
+
+BB#0: derived from LLVM BB %0
+	%vreg2<def> = t2MOVi32imm <ga:@img>; rGPR:%vreg2
+	%vreg3<def> = t2LDRi12 %vreg2<kill>, 0, pred:14, pred:%noreg; mem:LD4[@img] GPR:%vreg3 rGPR:%vreg2
+	%vreg4<def> = t2LDRi12 %vreg3<kill>, 24, pred:14, pred:%noreg; mem:LD4[%2](align=8) GPRnopc:%vreg4 GPR:%vreg3
+	%vreg5<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg5
+	%vreg1<def> = COPY %vreg5; GPR:%vreg1 rGPR:%vreg5
+	t2CMPri %vreg4<kill>, 2, pred:14, pred:%noreg, %CPSR<imp-def>; GPRnopc:%vreg4
+	t2Bcc <BB#2>, pred:1, pred:%CPSR
+	t2B <BB#1>, pred:14, pred:%noreg
+    Successors according to CFG: BB#1(0x40000000 / 0x80000000 = 50.00%) BB#2(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %5
+    Predecessors according to CFG: BB#0
+	%vreg7<def> = t2MOVi32imm <ga:@seiRandomAccess>; rGPR:%vreg7
+	%vreg8<def> = t2MOVi 256, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg8
+	t2STRHi12 %vreg8<kill>, %vreg7, 0, pred:14, pred:%noreg; mem:ST2[getelementptr inbounds (%struct.randomaccess_information_struct.1391, %struct.randomaccess_information_struct.1391* @seiRandomAccess, i32 0, i32 0)](align=4) rGPR:%vreg8,%vreg7
+	%vreg9<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg9
+	t2STRBi12 %vreg9<kill>, %vreg7, 2, pred:14, pred:%noreg; mem:ST1[getelementptr inbounds (%struct.randomaccess_information_struct.1391, %struct.randomaccess_information_struct.1391* @seiRandomAccess, i32 0, i32 2)](align=2) rGPR:%vreg9,%vreg7
+	%vreg10<def> = t2MOVi 1, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg10
+	%vreg6<def> = COPY %vreg10; GPR:%vreg6 rGPR:%vreg10
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %6
+    Predecessors according to CFG: BB#0 BB#1
+	%vreg0<def> = PHI %vreg1, <BB#0>, %vreg6, <BB#1>; GPR:%vreg0,%vreg1,%vreg6
+	%vreg11<def> = t2MOVi32imm <ga:@seiHasRandomAccess_info>; rGPR:%vreg11
+	t2STRi12 %vreg0, %vreg11<kill>, 0, pred:14, pred:%noreg; mem:ST4[@seiHasRandomAccess_info] GPR:%vreg0 rGPR:%vreg11
+	tBX_RET pred:14, pred:%noreg
+
+# End machine code for function UpdateRandomAccess.
+
+# After Machine Common Subexpression Elimination:
+# Machine code for function UpdateRandomAccess: SSA
+
+BB#0: derived from LLVM BB %0
+	%vreg2<def> = t2MOVi32imm <ga:@img>; rGPR:%vreg2
+	%vreg3<def> = t2LDRi12 %vreg2<kill>, 0, pred:14, pred:%noreg; mem:LD4[@img] GPR:%vreg3 rGPR:%vreg2
+	%vreg4<def> = t2LDRi12 %vreg3<kill>, 24, pred:14, pred:%noreg; mem:LD4[%2](align=8) GPRnopc:%vreg4 GPR:%vreg3
+	%vreg5<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg5
+	%vreg1<def> = COPY %vreg5; GPR:%vreg1 rGPR:%vreg5
+	t2CMPri %vreg4<kill>, 2, pred:14, pred:%noreg, %CPSR<imp-def>; GPRnopc:%vreg4
+	t2Bcc <BB#2>, pred:1, pred:%CPSR
+	t2B <BB#1>, pred:14, pred:%noreg
+    Successors according to CFG: BB#1(0x40000000 / 0x80000000 = 50.00%) BB#2(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %5
+    Predecessors according to CFG: BB#0
+	%vreg7<def> = t2MOVi32imm <ga:@seiRandomAccess>; rGPR:%vreg7
+	%vreg8<def> = t2MOVi 256, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg8
+	t2STRHi12 %vreg8<kill>, %vreg7, 0, pred:14, pred:%noreg; mem:ST2[getelementptr inbounds (%struct.randomaccess_information_struct.1391, %struct.randomaccess_information_struct.1391* @seiRandomAccess, i32 0, i32 0)](align=4) rGPR:%vreg8,%vreg7
+	t2STRBi12 %vreg5, %vreg7, 2, pred:14, pred:%noreg; mem:ST1[getelementptr inbounds (%struct.randomaccess_information_struct.1391, %struct.randomaccess_information_struct.1391* @seiRandomAccess, i32 0, i32 2)](align=2) rGPR:%vreg5,%vreg7
+	%vreg10<def> = t2MOVi 1, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg10
+	%vreg6<def> = COPY %vreg10; GPR:%vreg6 rGPR:%vreg10
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %6
+    Predecessors according to CFG: BB#0 BB#1
+	%vreg0<def> = PHI %vreg1, <BB#0>, %vreg6, <BB#1>; GPR:%vreg0,%vreg1,%vreg6
+	%vreg11<def> = t2MOVi32imm <ga:@seiHasRandomAccess_info>; rGPR:%vreg11
+	t2STRi12 %vreg0, %vreg11<kill>, 0, pred:14, pred:%noreg; mem:ST4[@seiHasRandomAccess_info] GPR:%vreg0 rGPR:%vreg11
+	tBX_RET pred:14, pred:%noreg
+
+# End machine code for function UpdateRandomAccess.
+
+# After Machine code sinking:
+# Machine code for function UpdateRandomAccess: SSA
+
+BB#0: derived from LLVM BB %0
+	%vreg2<def> = t2MOVi32imm <ga:@img>; rGPR:%vreg2
+	%vreg3<def> = t2LDRi12 %vreg2<kill>, 0, pred:14, pred:%noreg; mem:LD4[@img] GPR:%vreg3 rGPR:%vreg2
+	%vreg4<def> = t2LDRi12 %vreg3<kill>, 24, pred:14, pred:%noreg; mem:LD4[%2](align=8) GPRnopc:%vreg4 GPR:%vreg3
+	%vreg5<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg5
+	%vreg1<def> = COPY %vreg5; GPR:%vreg1 rGPR:%vreg5
+	t2CMPri %vreg4<kill>, 2, pred:14, pred:%noreg, %CPSR<imp-def>; GPRnopc:%vreg4
+	t2Bcc <BB#2>, pred:1, pred:%CPSR
+	t2B <BB#1>, pred:14, pred:%noreg
+    Successors according to CFG: BB#1(0x40000000 / 0x80000000 = 50.00%) BB#2(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %5
+    Predecessors according to CFG: BB#0
+	%vreg7<def> = t2MOVi32imm <ga:@seiRandomAccess>; rGPR:%vreg7
+	%vreg8<def> = t2MOVi 256, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg8
+	t2STRHi12 %vreg8<kill>, %vreg7, 0, pred:14, pred:%noreg; mem:ST2[getelementptr inbounds (%struct.randomaccess_information_struct.1391, %struct.randomaccess_information_struct.1391* @seiRandomAccess, i32 0, i32 0)](align=4) rGPR:%vreg8,%vreg7
+	t2STRBi12 %vreg5, %vreg7, 2, pred:14, pred:%noreg; mem:ST1[getelementptr inbounds (%struct.randomaccess_information_struct.1391, %struct.randomaccess_information_struct.1391* @seiRandomAccess, i32 0, i32 2)](align=2) rGPR:%vreg5,%vreg7
+	%vreg10<def> = t2MOVi 1, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg10
+	%vreg6<def> = COPY %vreg10; GPR:%vreg6 rGPR:%vreg10
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %6
+    Predecessors according to CFG: BB#0 BB#1
+	%vreg0<def> = PHI %vreg1, <BB#0>, %vreg6, <BB#1>; GPR:%vreg0,%vreg1,%vreg6
+	%vreg11<def> = t2MOVi32imm <ga:@seiHasRandomAccess_info>; rGPR:%vreg11
+	t2STRi12 %vreg0, %vreg11<kill>, 0, pred:14, pred:%noreg; mem:ST4[@seiHasRandomAccess_info] GPR:%vreg0 rGPR:%vreg11
+	tBX_RET pred:14, pred:%noreg
+
+# End machine code for function UpdateRandomAccess.
+
+# After Peephole Optimizations:
+# Machine code for function UpdateRandomAccess: SSA
+
+BB#0: derived from LLVM BB %0
+	%vreg2<def> = t2MOVi32imm <ga:@img>; rGPR:%vreg2
+	%vreg3<def> = t2LDRi12 %vreg2<kill>, 0, pred:14, pred:%noreg; mem:LD4[@img] GPR:%vreg3 rGPR:%vreg2
+	%vreg4<def> = t2LDRi12 %vreg3<kill>, 24, pred:14, pred:%noreg; mem:LD4[%2](align=8) GPRnopc:%vreg4 GPR:%vreg3
+	%vreg5<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg5
+	%vreg1<def> = COPY %vreg5; GPR:%vreg1 rGPR:%vreg5
+	t2CMPri %vreg4<kill>, 2, pred:14, pred:%noreg, %CPSR<imp-def>; GPRnopc:%vreg4
+	t2Bcc <BB#2>, pred:1, pred:%CPSR
+	t2B <BB#1>, pred:14, pred:%noreg
+    Successors according to CFG: BB#1(0x40000000 / 0x80000000 = 50.00%) BB#2(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %5
+    Predecessors according to CFG: BB#0
+	%vreg7<def> = t2MOVi32imm <ga:@seiRandomAccess>; rGPR:%vreg7
+	%vreg8<def> = t2MOVi 256, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg8
+	t2STRHi12 %vreg8<kill>, %vreg7, 0, pred:14, pred:%noreg; mem:ST2[getelementptr inbounds (%struct.randomaccess_information_struct.1391, %struct.randomaccess_information_struct.1391* @seiRandomAccess, i32 0, i32 0)](align=4) rGPR:%vreg8,%vreg7
+	t2STRBi12 %vreg5, %vreg7, 2, pred:14, pred:%noreg; mem:ST1[getelementptr inbounds (%struct.randomaccess_information_struct.1391, %struct.randomaccess_information_struct.1391* @seiRandomAccess, i32 0, i32 2)](align=2) rGPR:%vreg5,%vreg7
+	%vreg10<def> = t2MOVi 1, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg10
+	%vreg6<def> = COPY %vreg10; GPR:%vreg6 rGPR:%vreg10
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %6
+    Predecessors according to CFG: BB#0 BB#1
+	%vreg0<def> = PHI %vreg1, <BB#0>, %vreg6, <BB#1>; GPR:%vreg0,%vreg1,%vreg6
+	%vreg11<def> = t2MOVi32imm <ga:@seiHasRandomAccess_info>; rGPR:%vreg11
+	t2STRi12 %vreg0, %vreg11<kill>, 0, pred:14, pred:%noreg; mem:ST4[@seiHasRandomAccess_info] GPR:%vreg0 rGPR:%vreg11
+	tBX_RET pred:14, pred:%noreg
+
+# End machine code for function UpdateRandomAccess.
+
+# After Remove dead machine instructions:
+# Machine code for function UpdateRandomAccess: SSA
+
+BB#0: derived from LLVM BB %0
+	%vreg2<def> = t2MOVi32imm <ga:@img>; rGPR:%vreg2
+	%vreg3<def> = t2LDRi12 %vreg2<kill>, 0, pred:14, pred:%noreg; mem:LD4[@img] GPR:%vreg3 rGPR:%vreg2
+	%vreg4<def> = t2LDRi12 %vreg3<kill>, 24, pred:14, pred:%noreg; mem:LD4[%2](align=8) GPRnopc:%vreg4 GPR:%vreg3
+	%vreg5<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg5
+	%vreg1<def> = COPY %vreg5; GPR:%vreg1 rGPR:%vreg5
+	t2CMPri %vreg4<kill>, 2, pred:14, pred:%noreg, %CPSR<imp-def>; GPRnopc:%vreg4
+	t2Bcc <BB#2>, pred:1, pred:%CPSR
+	t2B <BB#1>, pred:14, pred:%noreg
+    Successors according to CFG: BB#1(0x40000000 / 0x80000000 = 50.00%) BB#2(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %5
+    Predecessors according to CFG: BB#0
+	%vreg7<def> = t2MOVi32imm <ga:@seiRandomAccess>; rGPR:%vreg7
+	%vreg8<def> = t2MOVi 256, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg8
+	t2STRHi12 %vreg8<kill>, %vreg7, 0, pred:14, pred:%noreg; mem:ST2[getelementptr inbounds (%struct.randomaccess_information_struct.1391, %struct.randomaccess_information_struct.1391* @seiRandomAccess, i32 0, i32 0)](align=4) rGPR:%vreg8,%vreg7
+	t2STRBi12 %vreg5, %vreg7, 2, pred:14, pred:%noreg; mem:ST1[getelementptr inbounds (%struct.randomaccess_information_struct.1391, %struct.randomaccess_information_struct.1391* @seiRandomAccess, i32 0, i32 2)](align=2) rGPR:%vreg5,%vreg7
+	%vreg10<def> = t2MOVi 1, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg10
+	%vreg6<def> = COPY %vreg10; GPR:%vreg6 rGPR:%vreg10
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %6
+    Predecessors according to CFG: BB#0 BB#1
+	%vreg0<def> = PHI %vreg1, <BB#0>, %vreg6, <BB#1>; GPR:%vreg0,%vreg1,%vreg6
+	%vreg11<def> = t2MOVi32imm <ga:@seiHasRandomAccess_info>; rGPR:%vreg11
+	t2STRi12 %vreg0, %vreg11<kill>, 0, pred:14, pred:%noreg; mem:ST4[@seiHasRandomAccess_info] GPR:%vreg0 rGPR:%vreg11
+	tBX_RET pred:14, pred:%noreg
+
+# End machine code for function UpdateRandomAccess.
+
+# After ARM MLA / MLS expansion pass:
+# Machine code for function UpdateRandomAccess: SSA
+
+BB#0: derived from LLVM BB %0
+	%vreg2<def> = t2MOVi32imm <ga:@img>; rGPR:%vreg2
+	%vreg3<def> = t2LDRi12 %vreg2<kill>, 0, pred:14, pred:%noreg; mem:LD4[@img] GPR:%vreg3 rGPR:%vreg2
+	%vreg4<def> = t2LDRi12 %vreg3<kill>, 24, pred:14, pred:%noreg; mem:LD4[%2](align=8) GPRnopc:%vreg4 GPR:%vreg3
+	%vreg5<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg5
+	%vreg1<def> = COPY %vreg5; GPR:%vreg1 rGPR:%vreg5
+	t2CMPri %vreg4<kill>, 2, pred:14, pred:%noreg, %CPSR<imp-def>; GPRnopc:%vreg4
+	t2Bcc <BB#2>, pred:1, pred:%CPSR
+	t2B <BB#1>, pred:14, pred:%noreg
+    Successors according to CFG: BB#1(0x40000000 / 0x80000000 = 50.00%) BB#2(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %5
+    Predecessors according to CFG: BB#0
+	%vreg7<def> = t2MOVi32imm <ga:@seiRandomAccess>; rGPR:%vreg7
+	%vreg8<def> = t2MOVi 256, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg8
+	t2STRHi12 %vreg8<kill>, %vreg7, 0, pred:14, pred:%noreg; mem:ST2[getelementptr inbounds (%struct.randomaccess_information_struct.1391, %struct.randomaccess_information_struct.1391* @seiRandomAccess, i32 0, i32 0)](align=4) rGPR:%vreg8,%vreg7
+	t2STRBi12 %vreg5, %vreg7, 2, pred:14, pred:%noreg; mem:ST1[getelementptr inbounds (%struct.randomaccess_information_struct.1391, %struct.randomaccess_information_struct.1391* @seiRandomAccess, i32 0, i32 2)](align=2) rGPR:%vreg5,%vreg7
+	%vreg10<def> = t2MOVi 1, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg10
+	%vreg6<def> = COPY %vreg10; GPR:%vreg6 rGPR:%vreg10
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %6
+    Predecessors according to CFG: BB#0 BB#1
+	%vreg0<def> = PHI %vreg1, <BB#0>, %vreg6, <BB#1>; GPR:%vreg0,%vreg1,%vreg6
+	%vreg11<def> = t2MOVi32imm <ga:@seiHasRandomAccess_info>; rGPR:%vreg11
+	t2STRi12 %vreg0, %vreg11<kill>, 0, pred:14, pred:%noreg; mem:ST4[@seiHasRandomAccess_info] GPR:%vreg0 rGPR:%vreg11
+	tBX_RET pred:14, pred:%noreg
+
+# End machine code for function UpdateRandomAccess.
+
+# After ARM pre- register allocation load / store optimization pass:
+# Machine code for function UpdateRandomAccess: SSA
+
+BB#0: derived from LLVM BB %0
+	%vreg2<def> = t2MOVi32imm <ga:@img>; rGPR:%vreg2
+	%vreg3<def> = t2LDRi12 %vreg2<kill>, 0, pred:14, pred:%noreg; mem:LD4[@img] GPR:%vreg3 rGPR:%vreg2
+	%vreg4<def> = t2LDRi12 %vreg3<kill>, 24, pred:14, pred:%noreg; mem:LD4[%2](align=8) GPRnopc:%vreg4 GPR:%vreg3
+	%vreg5<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg5
+	%vreg1<def> = COPY %vreg5; GPR:%vreg1 rGPR:%vreg5
+	t2CMPri %vreg4<kill>, 2, pred:14, pred:%noreg, %CPSR<imp-def>; GPRnopc:%vreg4
+	t2Bcc <BB#2>, pred:1, pred:%CPSR
+	t2B <BB#1>, pred:14, pred:%noreg
+    Successors according to CFG: BB#1(0x40000000 / 0x80000000 = 50.00%) BB#2(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %5
+    Predecessors according to CFG: BB#0
+	%vreg7<def> = t2MOVi32imm <ga:@seiRandomAccess>; rGPR:%vreg7
+	%vreg8<def> = t2MOVi 256, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg8
+	t2STRHi12 %vreg8<kill>, %vreg7, 0, pred:14, pred:%noreg; mem:ST2[getelementptr inbounds (%struct.randomaccess_information_struct.1391, %struct.randomaccess_information_struct.1391* @seiRandomAccess, i32 0, i32 0)](align=4) rGPR:%vreg8,%vreg7
+	t2STRBi12 %vreg5, %vreg7, 2, pred:14, pred:%noreg; mem:ST1[getelementptr inbounds (%struct.randomaccess_information_struct.1391, %struct.randomaccess_information_struct.1391* @seiRandomAccess, i32 0, i32 2)](align=2) rGPR:%vreg5,%vreg7
+	%vreg10<def> = t2MOVi 1, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg10
+	%vreg6<def> = COPY %vreg10; GPR:%vreg6 rGPR:%vreg10
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %6
+    Predecessors according to CFG: BB#0 BB#1
+	%vreg0<def> = PHI %vreg1, <BB#0>, %vreg6, <BB#1>; GPR:%vreg0,%vreg1,%vreg6
+	%vreg11<def> = t2MOVi32imm <ga:@seiHasRandomAccess_info>; rGPR:%vreg11
+	t2STRi12 %vreg0, %vreg11<kill>, 0, pred:14, pred:%noreg; mem:ST4[@seiHasRandomAccess_info] GPR:%vreg0 rGPR:%vreg11
+	tBX_RET pred:14, pred:%noreg
+
+# End machine code for function UpdateRandomAccess.
+
+# After ARM A15 S->D optimizer:
+# Machine code for function UpdateRandomAccess: SSA
+
+BB#0: derived from LLVM BB %0
+	%vreg2<def> = t2MOVi32imm <ga:@img>; rGPR:%vreg2
+	%vreg3<def> = t2LDRi12 %vreg2<kill>, 0, pred:14, pred:%noreg; mem:LD4[@img] GPR:%vreg3 rGPR:%vreg2
+	%vreg4<def> = t2LDRi12 %vreg3<kill>, 24, pred:14, pred:%noreg; mem:LD4[%2](align=8) GPRnopc:%vreg4 GPR:%vreg3
+	%vreg5<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg5
+	%vreg1<def> = COPY %vreg5; GPR:%vreg1 rGPR:%vreg5
+	t2CMPri %vreg4<kill>, 2, pred:14, pred:%noreg, %CPSR<imp-def>; GPRnopc:%vreg4
+	t2Bcc <BB#2>, pred:1, pred:%CPSR
+	t2B <BB#1>, pred:14, pred:%noreg
+    Successors according to CFG: BB#1(0x40000000 / 0x80000000 = 50.00%) BB#2(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %5
+    Predecessors according to CFG: BB#0
+	%vreg7<def> = t2MOVi32imm <ga:@seiRandomAccess>; rGPR:%vreg7
+	%vreg8<def> = t2MOVi 256, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg8
+	t2STRHi12 %vreg8<kill>, %vreg7, 0, pred:14, pred:%noreg; mem:ST2[getelementptr inbounds (%struct.randomaccess_information_struct.1391, %struct.randomaccess_information_struct.1391* @seiRandomAccess, i32 0, i32 0)](align=4) rGPR:%vreg8,%vreg7
+	t2STRBi12 %vreg5, %vreg7, 2, pred:14, pred:%noreg; mem:ST1[getelementptr inbounds (%struct.randomaccess_information_struct.1391, %struct.randomaccess_information_struct.1391* @seiRandomAccess, i32 0, i32 2)](align=2) rGPR:%vreg5,%vreg7
+	%vreg10<def> = t2MOVi 1, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg10
+	%vreg6<def> = COPY %vreg10; GPR:%vreg6 rGPR:%vreg10
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %6
+    Predecessors according to CFG: BB#0 BB#1
+	%vreg0<def> = PHI %vreg1, <BB#0>, %vreg6, <BB#1>; GPR:%vreg0,%vreg1,%vreg6
+	%vreg11<def> = t2MOVi32imm <ga:@seiHasRandomAccess_info>; rGPR:%vreg11
+	t2STRi12 %vreg0, %vreg11<kill>, 0, pred:14, pred:%noreg; mem:ST4[@seiHasRandomAccess_info] GPR:%vreg0 rGPR:%vreg11
+	tBX_RET pred:14, pred:%noreg
+
+# End machine code for function UpdateRandomAccess.
+
+# After Process Implicit Definitions:
+# Machine code for function UpdateRandomAccess: SSA
+
+BB#0: derived from LLVM BB %0
+	%vreg2<def> = t2MOVi32imm <ga:@img>; rGPR:%vreg2
+	%vreg3<def> = t2LDRi12 %vreg2<kill>, 0, pred:14, pred:%noreg; mem:LD4[@img] GPR:%vreg3 rGPR:%vreg2
+	%vreg4<def> = t2LDRi12 %vreg3<kill>, 24, pred:14, pred:%noreg; mem:LD4[%2](align=8) GPRnopc:%vreg4 GPR:%vreg3
+	%vreg5<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg5
+	%vreg1<def> = COPY %vreg5; GPR:%vreg1 rGPR:%vreg5
+	t2CMPri %vreg4<kill>, 2, pred:14, pred:%noreg, %CPSR<imp-def>; GPRnopc:%vreg4
+	t2Bcc <BB#2>, pred:1, pred:%CPSR
+	t2B <BB#1>, pred:14, pred:%noreg
+    Successors according to CFG: BB#1(0x40000000 / 0x80000000 = 50.00%) BB#2(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %5
+    Predecessors according to CFG: BB#0
+	%vreg7<def> = t2MOVi32imm <ga:@seiRandomAccess>; rGPR:%vreg7
+	%vreg8<def> = t2MOVi 256, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg8
+	t2STRHi12 %vreg8<kill>, %vreg7, 0, pred:14, pred:%noreg; mem:ST2[getelementptr inbounds (%struct.randomaccess_information_struct.1391, %struct.randomaccess_information_struct.1391* @seiRandomAccess, i32 0, i32 0)](align=4) rGPR:%vreg8,%vreg7
+	t2STRBi12 %vreg5, %vreg7, 2, pred:14, pred:%noreg; mem:ST1[getelementptr inbounds (%struct.randomaccess_information_struct.1391, %struct.randomaccess_information_struct.1391* @seiRandomAccess, i32 0, i32 2)](align=2) rGPR:%vreg5,%vreg7
+	%vreg10<def> = t2MOVi 1, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg10
+	%vreg6<def> = COPY %vreg10; GPR:%vreg6 rGPR:%vreg10
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %6
+    Predecessors according to CFG: BB#0 BB#1
+	%vreg0<def> = PHI %vreg1, <BB#0>, %vreg6, <BB#1>; GPR:%vreg0,%vreg1,%vreg6
+	%vreg11<def> = t2MOVi32imm <ga:@seiHasRandomAccess_info>; rGPR:%vreg11
+	t2STRi12 %vreg0, %vreg11<kill>, 0, pred:14, pred:%noreg; mem:ST4[@seiHasRandomAccess_info] GPR:%vreg0 rGPR:%vreg11
+	tBX_RET pred:14, pred:%noreg
+
+# End machine code for function UpdateRandomAccess.
+
+# After Live Variable Analysis:
+# Machine code for function UpdateRandomAccess: SSA
+
+BB#0: derived from LLVM BB %0
+	%vreg2<def> = t2MOVi32imm <ga:@img>; rGPR:%vreg2
+	%vreg3<def> = t2LDRi12 %vreg2<kill>, 0, pred:14, pred:%noreg; mem:LD4[@img] GPR:%vreg3 rGPR:%vreg2
+	%vreg4<def> = t2LDRi12 %vreg3<kill>, 24, pred:14, pred:%noreg; mem:LD4[%2](align=8) GPRnopc:%vreg4 GPR:%vreg3
+	%vreg5<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg5
+	%vreg1<def> = COPY %vreg5; GPR:%vreg1 rGPR:%vreg5
+	t2CMPri %vreg4<kill>, 2, pred:14, pred:%noreg, %CPSR<imp-def>; GPRnopc:%vreg4
+	t2Bcc <BB#2>, pred:1, pred:%CPSR<kill>
+	t2B <BB#1>, pred:14, pred:%noreg
+    Successors according to CFG: BB#1(0x40000000 / 0x80000000 = 50.00%) BB#2(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %5
+    Predecessors according to CFG: BB#0
+	%vreg7<def> = t2MOVi32imm <ga:@seiRandomAccess>; rGPR:%vreg7
+	%vreg8<def> = t2MOVi 256, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg8
+	t2STRHi12 %vreg8<kill>, %vreg7, 0, pred:14, pred:%noreg; mem:ST2[getelementptr inbounds (%struct.randomaccess_information_struct.1391, %struct.randomaccess_information_struct.1391* @seiRandomAccess, i32 0, i32 0)](align=4) rGPR:%vreg8,%vreg7
+	t2STRBi12 %vreg5<kill>, %vreg7<kill>, 2, pred:14, pred:%noreg; mem:ST1[getelementptr inbounds (%struct.randomaccess_information_struct.1391, %struct.randomaccess_information_struct.1391* @seiRandomAccess, i32 0, i32 2)](align=2) rGPR:%vreg5,%vreg7
+	%vreg10<def> = t2MOVi 1, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg10
+	%vreg6<def> = COPY %vreg10<kill>; GPR:%vreg6 rGPR:%vreg10
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %6
+    Predecessors according to CFG: BB#0 BB#1
+	%vreg0<def> = PHI %vreg1, <BB#0>, %vreg6, <BB#1>; GPR:%vreg0,%vreg1,%vreg6
+	%vreg11<def> = t2MOVi32imm <ga:@seiHasRandomAccess_info>; rGPR:%vreg11
+	t2STRi12 %vreg0<kill>, %vreg11<kill>, 0, pred:14, pred:%noreg; mem:ST4[@seiHasRandomAccess_info] GPR:%vreg0 rGPR:%vreg11
+	tBX_RET pred:14, pred:%noreg
+
+# End machine code for function UpdateRandomAccess.
+
+# After Machine Natural Loop Construction:
+# Machine code for function UpdateRandomAccess: SSA
+
+BB#0: derived from LLVM BB %0
+	%vreg2<def> = t2MOVi32imm <ga:@img>; rGPR:%vreg2
+	%vreg3<def> = t2LDRi12 %vreg2<kill>, 0, pred:14, pred:%noreg; mem:LD4[@img] GPR:%vreg3 rGPR:%vreg2
+	%vreg4<def> = t2LDRi12 %vreg3<kill>, 24, pred:14, pred:%noreg; mem:LD4[%2](align=8) GPRnopc:%vreg4 GPR:%vreg3
+	%vreg5<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg5
+	%vreg1<def> = COPY %vreg5; GPR:%vreg1 rGPR:%vreg5
+	t2CMPri %vreg4<kill>, 2, pred:14, pred:%noreg, %CPSR<imp-def>; GPRnopc:%vreg4
+	t2Bcc <BB#2>, pred:1, pred:%CPSR<kill>
+	t2B <BB#1>, pred:14, pred:%noreg
+    Successors according to CFG: BB#1(0x40000000 / 0x80000000 = 50.00%) BB#2(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %5
+    Predecessors according to CFG: BB#0
+	%vreg7<def> = t2MOVi32imm <ga:@seiRandomAccess>; rGPR:%vreg7
+	%vreg8<def> = t2MOVi 256, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg8
+	t2STRHi12 %vreg8<kill>, %vreg7, 0, pred:14, pred:%noreg; mem:ST2[getelementptr inbounds (%struct.randomaccess_information_struct.1391, %struct.randomaccess_information_struct.1391* @seiRandomAccess, i32 0, i32 0)](align=4) rGPR:%vreg8,%vreg7
+	t2STRBi12 %vreg5<kill>, %vreg7<kill>, 2, pred:14, pred:%noreg; mem:ST1[getelementptr inbounds (%struct.randomaccess_information_struct.1391, %struct.randomaccess_information_struct.1391* @seiRandomAccess, i32 0, i32 2)](align=2) rGPR:%vreg5,%vreg7
+	%vreg10<def> = t2MOVi 1, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg10
+	%vreg6<def> = COPY %vreg10<kill>; GPR:%vreg6 rGPR:%vreg10
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %6
+    Predecessors according to CFG: BB#0 BB#1
+	%vreg0<def> = PHI %vreg1, <BB#0>, %vreg6, <BB#1>; GPR:%vreg0,%vreg1,%vreg6
+	%vreg11<def> = t2MOVi32imm <ga:@seiHasRandomAccess_info>; rGPR:%vreg11
+	t2STRi12 %vreg0<kill>, %vreg11<kill>, 0, pred:14, pred:%noreg; mem:ST4[@seiHasRandomAccess_info] GPR:%vreg0 rGPR:%vreg11
+	tBX_RET pred:14, pred:%noreg
+
+# End machine code for function UpdateRandomAccess.
+
+# After Eliminate PHI nodes for register allocation:
+# Machine code for function UpdateRandomAccess: Post SSA
+
+BB#0: derived from LLVM BB %0
+	%vreg2<def> = t2MOVi32imm <ga:@img>; rGPR:%vreg2
+	%vreg3<def> = t2LDRi12 %vreg2<kill>, 0, pred:14, pred:%noreg; mem:LD4[@img] GPR:%vreg3 rGPR:%vreg2
+	%vreg4<def> = t2LDRi12 %vreg3<kill>, 24, pred:14, pred:%noreg; mem:LD4[%2](align=8) GPRnopc:%vreg4 GPR:%vreg3
+	%vreg5<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg5
+	%vreg1<def> = COPY %vreg5; GPR:%vreg1 rGPR:%vreg5
+	t2CMPri %vreg4<kill>, 2, pred:14, pred:%noreg, %CPSR<imp-def>; GPRnopc:%vreg4
+	%vreg12<def> = COPY %vreg1<kill>; GPR:%vreg12,%vreg1
+	t2Bcc <BB#2>, pred:1, pred:%CPSR<kill>
+	t2B <BB#1>, pred:14, pred:%noreg
+    Successors according to CFG: BB#1(0x40000000 / 0x80000000 = 50.00%) BB#2(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %5
+    Predecessors according to CFG: BB#0
+	%vreg7<def> = t2MOVi32imm <ga:@seiRandomAccess>; rGPR:%vreg7
+	%vreg8<def> = t2MOVi 256, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg8
+	t2STRHi12 %vreg8<kill>, %vreg7, 0, pred:14, pred:%noreg; mem:ST2[getelementptr inbounds (%struct.randomaccess_information_struct.1391, %struct.randomaccess_information_struct.1391* @seiRandomAccess, i32 0, i32 0)](align=4) rGPR:%vreg8,%vreg7
+	t2STRBi12 %vreg5<kill>, %vreg7<kill>, 2, pred:14, pred:%noreg; mem:ST1[getelementptr inbounds (%struct.randomaccess_information_struct.1391, %struct.randomaccess_information_struct.1391* @seiRandomAccess, i32 0, i32 2)](align=2) rGPR:%vreg5,%vreg7
+	%vreg10<def> = t2MOVi 1, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg10
+	%vreg6<def> = COPY %vreg10<kill>; GPR:%vreg6 rGPR:%vreg10
+	%vreg12<def> = COPY %vreg6<kill>; GPR:%vreg12,%vreg6
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %6
+    Predecessors according to CFG: BB#0 BB#1
+	%vreg0<def> = COPY %vreg12<kill>; GPR:%vreg0,%vreg12
+	%vreg11<def> = t2MOVi32imm <ga:@seiHasRandomAccess_info>; rGPR:%vreg11
+	t2STRi12 %vreg0<kill>, %vreg11<kill>, 0, pred:14, pred:%noreg; mem:ST4[@seiHasRandomAccess_info] GPR:%vreg0 rGPR:%vreg11
+	tBX_RET pred:14, pred:%noreg
+
+# End machine code for function UpdateRandomAccess.
+
+# After Two-Address instruction pass:
+# Machine code for function UpdateRandomAccess: Post SSA
+
+BB#0: derived from LLVM BB %0
+	%vreg2<def> = t2MOVi32imm <ga:@img>; rGPR:%vreg2
+	%vreg3<def> = t2LDRi12 %vreg2<kill>, 0, pred:14, pred:%noreg; mem:LD4[@img] GPR:%vreg3 rGPR:%vreg2
+	%vreg4<def> = t2LDRi12 %vreg3<kill>, 24, pred:14, pred:%noreg; mem:LD4[%2](align=8) GPRnopc:%vreg4 GPR:%vreg3
+	%vreg5<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg5
+	%vreg1<def> = COPY %vreg5; GPR:%vreg1 rGPR:%vreg5
+	t2CMPri %vreg4<kill>, 2, pred:14, pred:%noreg, %CPSR<imp-def>; GPRnopc:%vreg4
+	%vreg12<def> = COPY %vreg1<kill>; GPR:%vreg12,%vreg1
+	t2Bcc <BB#2>, pred:1, pred:%CPSR<kill>
+	t2B <BB#1>, pred:14, pred:%noreg
+    Successors according to CFG: BB#1(0x40000000 / 0x80000000 = 50.00%) BB#2(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %5
+    Predecessors according to CFG: BB#0
+	%vreg7<def> = t2MOVi32imm <ga:@seiRandomAccess>; rGPR:%vreg7
+	%vreg8<def> = t2MOVi 256, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg8
+	t2STRHi12 %vreg8<kill>, %vreg7, 0, pred:14, pred:%noreg; mem:ST2[getelementptr inbounds (%struct.randomaccess_information_struct.1391, %struct.randomaccess_information_struct.1391* @seiRandomAccess, i32 0, i32 0)](align=4) rGPR:%vreg8,%vreg7
+	t2STRBi12 %vreg5<kill>, %vreg7<kill>, 2, pred:14, pred:%noreg; mem:ST1[getelementptr inbounds (%struct.randomaccess_information_struct.1391, %struct.randomaccess_information_struct.1391* @seiRandomAccess, i32 0, i32 2)](align=2) rGPR:%vreg5,%vreg7
+	%vreg10<def> = t2MOVi 1, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg10
+	%vreg6<def> = COPY %vreg10<kill>; GPR:%vreg6 rGPR:%vreg10
+	%vreg12<def> = COPY %vreg6<kill>; GPR:%vreg12,%vreg6
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %6
+    Predecessors according to CFG: BB#0 BB#1
+	%vreg0<def> = COPY %vreg12<kill>; GPR:%vreg0,%vreg12
+	%vreg11<def> = t2MOVi32imm <ga:@seiHasRandomAccess_info>; rGPR:%vreg11
+	t2STRi12 %vreg0<kill>, %vreg11<kill>, 0, pred:14, pred:%noreg; mem:ST4[@seiHasRandomAccess_info] GPR:%vreg0 rGPR:%vreg11
+	tBX_RET pred:14, pred:%noreg
+
+# End machine code for function UpdateRandomAccess.
+
+# After Simple Register Coalescing:
+# Machine code for function UpdateRandomAccess: Post SSA
+
+0B	BB#0: derived from LLVM BB %0
+16B		%vreg2<def> = t2MOVi32imm <ga:@img>; rGPR:%vreg2
+32B		%vreg3<def> = t2LDRi12 %vreg2, 0, pred:14, pred:%noreg; mem:LD4[@img] GPR:%vreg3 rGPR:%vreg2
+48B		%vreg4<def> = t2LDRi12 %vreg3, 24, pred:14, pred:%noreg; mem:LD4[%2](align=8) GPRnopc:%vreg4 GPR:%vreg3
+64B		%vreg12<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg12
+96B		t2CMPri %vreg4, 2, pred:14, pred:%noreg, %CPSR<imp-def>; GPRnopc:%vreg4
+128B		t2Bcc <BB#2>, pred:1, pred:%CPSR<kill>
+144B		t2B <BB#1>, pred:14, pred:%noreg
+	    Successors according to CFG: BB#1(0x40000000 / 0x80000000 = 50.00%) BB#2(0x40000000 / 0x80000000 = 50.00%)
+
+160B	BB#1: derived from LLVM BB %5
+	    Predecessors according to CFG: BB#0
+176B		%vreg7<def> = t2MOVi32imm <ga:@seiRandomAccess>; rGPR:%vreg7
+192B		%vreg8<def> = t2MOVi 256, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg8
+208B		t2STRHi12 %vreg8, %vreg7, 0, pred:14, pred:%noreg; mem:ST2[getelementptr inbounds (%struct.randomaccess_information_struct.1391, %struct.randomaccess_information_struct.1391* @seiRandomAccess, i32 0, i32 0)](align=4) rGPR:%vreg8,%vreg7
+224B		t2STRBi12 %vreg12, %vreg7, 2, pred:14, pred:%noreg; mem:ST1[getelementptr inbounds (%struct.randomaccess_information_struct.1391, %struct.randomaccess_information_struct.1391* @seiRandomAccess, i32 0, i32 2)](align=2) rGPR:%vreg12,%vreg7
+240B		%vreg12<def> = t2MOVi 1, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg12
+	    Successors according to CFG: BB#2(?%)
+
+288B	BB#2: derived from LLVM BB %6
+	    Predecessors according to CFG: BB#0 BB#1
+320B		%vreg11<def> = t2MOVi32imm <ga:@seiHasRandomAccess_info>; rGPR:%vreg11
+336B		t2STRi12 %vreg12, %vreg11, 0, pred:14, pred:%noreg; mem:ST4[@seiHasRandomAccess_info] rGPR:%vreg12,%vreg11
+352B		tBX_RET pred:14, pred:%noreg
+
+# End machine code for function UpdateRandomAccess.
+
+# After Machine Instruction Scheduler:
+# Machine code for function UpdateRandomAccess: Post SSA
+
+0B	BB#0: derived from LLVM BB %0
+16B		%vreg2<def> = t2MOVi32imm <ga:@img>; rGPR:%vreg2
+32B		%vreg3<def> = t2LDRi12 %vreg2, 0, pred:14, pred:%noreg; mem:LD4[@img] GPR:%vreg3 rGPR:%vreg2
+48B		%vreg4<def> = t2LDRi12 %vreg3, 24, pred:14, pred:%noreg; mem:LD4[%2](align=8) GPRnopc:%vreg4 GPR:%vreg3
+64B		%vreg12<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg12
+96B		t2CMPri %vreg4, 2, pred:14, pred:%noreg, %CPSR<imp-def>; GPRnopc:%vreg4
+128B		t2Bcc <BB#2>, pred:1, pred:%CPSR<kill>
+144B		t2B <BB#1>, pred:14, pred:%noreg
+	    Successors according to CFG: BB#1(0x40000000 / 0x80000000 = 50.00%) BB#2(0x40000000 / 0x80000000 = 50.00%)
+
+160B	BB#1: derived from LLVM BB %5
+	    Predecessors according to CFG: BB#0
+176B		%vreg7<def> = t2MOVi32imm <ga:@seiRandomAccess>; rGPR:%vreg7
+192B		%vreg8<def> = t2MOVi 256, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg8
+208B		t2STRHi12 %vreg8, %vreg7, 0, pred:14, pred:%noreg; mem:ST2[getelementptr inbounds (%struct.randomaccess_information_struct.1391, %struct.randomaccess_information_struct.1391* @seiRandomAccess, i32 0, i32 0)](align=4) rGPR:%vreg8,%vreg7
+224B		t2STRBi12 %vreg12, %vreg7, 2, pred:14, pred:%noreg; mem:ST1[getelementptr inbounds (%struct.randomaccess_information_struct.1391, %struct.randomaccess_information_struct.1391* @seiRandomAccess, i32 0, i32 2)](align=2) rGPR:%vreg12,%vreg7
+240B		%vreg12<def> = t2MOVi 1, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg12
+	    Successors according to CFG: BB#2(?%)
+
+288B	BB#2: derived from LLVM BB %6
+	    Predecessors according to CFG: BB#0 BB#1
+320B		%vreg11<def> = t2MOVi32imm <ga:@seiHasRandomAccess_info>; rGPR:%vreg11
+336B		t2STRi12 %vreg12, %vreg11, 0, pred:14, pred:%noreg; mem:ST4[@seiHasRandomAccess_info] rGPR:%vreg12,%vreg11
+352B		tBX_RET pred:14, pred:%noreg
+
+# End machine code for function UpdateRandomAccess.
+
+# After Greedy Register Allocator:
+# Machine code for function UpdateRandomAccess: Post SSA
+
+0B	BB#0: derived from LLVM BB %0
+16B		%vreg2<def> = t2MOVi32imm <ga:@img>; rGPR:%vreg2
+32B		%vreg3<def> = t2LDRi12 %vreg2, 0, pred:14, pred:%noreg; mem:LD4[@img] GPR:%vreg3 rGPR:%vreg2
+48B		%vreg4<def> = t2LDRi12 %vreg3, 24, pred:14, pred:%noreg; mem:LD4[%2](align=8) GPRnopc:%vreg4 GPR:%vreg3
+64B		%vreg12<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg12
+96B		t2CMPri %vreg4, 2, pred:14, pred:%noreg, %CPSR<imp-def>; GPRnopc:%vreg4
+128B		t2Bcc <BB#2>, pred:1, pred:%CPSR<kill>
+144B		t2B <BB#1>, pred:14, pred:%noreg
+	    Successors according to CFG: BB#1(0x40000000 / 0x80000000 = 50.00%) BB#2(0x40000000 / 0x80000000 = 50.00%)
+
+160B	BB#1: derived from LLVM BB %5
+	    Predecessors according to CFG: BB#0
+176B		%vreg7<def> = t2MOVi32imm <ga:@seiRandomAccess>; rGPR:%vreg7
+192B		%vreg8<def> = t2MOVi 256, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg8
+208B		t2STRHi12 %vreg8, %vreg7, 0, pred:14, pred:%noreg; mem:ST2[getelementptr inbounds (%struct.randomaccess_information_struct.1391, %struct.randomaccess_information_struct.1391* @seiRandomAccess, i32 0, i32 0)](align=4) rGPR:%vreg8,%vreg7
+224B		t2STRBi12 %vreg12, %vreg7, 2, pred:14, pred:%noreg; mem:ST1[getelementptr inbounds (%struct.randomaccess_information_struct.1391, %struct.randomaccess_information_struct.1391* @seiRandomAccess, i32 0, i32 2)](align=2) rGPR:%vreg12,%vreg7
+240B		%vreg12<def> = t2MOVi 1, pred:14, pred:%noreg, opt:%noreg; rGPR:%vreg12
+	    Successors according to CFG: BB#2(?%)
+
+288B	BB#2: derived from LLVM BB %6
+	    Predecessors according to CFG: BB#0 BB#1
+320B		%vreg11<def> = t2MOVi32imm <ga:@seiHasRandomAccess_info>; rGPR:%vreg11
+336B		t2STRi12 %vreg12, %vreg11, 0, pred:14, pred:%noreg; mem:ST4[@seiHasRandomAccess_info] rGPR:%vreg12,%vreg11
+352B		tBX_RET pred:14, pred:%noreg
+
+# End machine code for function UpdateRandomAccess.
+
+# After Virtual Register Rewriter:
+# Machine code for function UpdateRandomAccess: Post SSA
+
+0B	BB#0: derived from LLVM BB %0
+16B		%R0<def> = t2MOVi32imm <ga:@img>
+32B		%R0<def> = t2LDRi12 %R0<kill>, 0, pred:14, pred:%noreg; mem:LD4[@img]
+48B		%R1<def> = t2LDRi12 %R0<kill>, 24, pred:14, pred:%noreg; mem:LD4[%2](align=8)
+64B		%R0<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg
+96B		t2CMPri %R1<kill>, 2, pred:14, pred:%noreg, %CPSR<imp-def>
+128B		t2Bcc <BB#2>, pred:1, pred:%CPSR<kill>
+144B		t2B <BB#1>, pred:14, pred:%noreg
+	    Successors according to CFG: BB#1(0x40000000 / 0x80000000 = 50.00%) BB#2(0x40000000 / 0x80000000 = 50.00%)
+
+160B	BB#1: derived from LLVM BB %5
+	    Live Ins: %R0
+	    Predecessors according to CFG: BB#0
+176B		%R1<def> = t2MOVi32imm <ga:@seiRandomAccess>
+192B		%R2<def> = t2MOVi 256, pred:14, pred:%noreg, opt:%noreg
+208B		t2STRHi12 %R2<kill>, %R1, 0, pred:14, pred:%noreg; mem:ST2[getelementptr inbounds (%struct.randomaccess_information_struct.1391, %struct.randomaccess_information_struct.1391* @seiRandomAccess, i32 0, i32 0)](align=4)
+224B		t2STRBi12 %R0<kill>, %R1<kill>, 2, pred:14, pred:%noreg; mem:ST1[getelementptr inbounds (%struct.randomaccess_information_struct.1391, %struct.randomaccess_information_struct.1391* @seiRandomAccess, i32 0, i32 2)](align=2)
+240B		%R0<def> = t2MOVi 1, pred:14, pred:%noreg, opt:%noreg
+	    Successors according to CFG: BB#2(?%)
+
+288B	BB#2: derived from LLVM BB %6
+	    Live Ins: %R0
+	    Predecessors according to CFG: BB#0 BB#1
+320B		%R1<def> = t2MOVi32imm <ga:@seiHasRandomAccess_info>
+336B		t2STRi12 %R0<kill>, %R1<kill>, 0, pred:14, pred:%noreg; mem:ST4[@seiHasRandomAccess_info]
+352B		tBX_RET pred:14, pred:%noreg
+
+# End machine code for function UpdateRandomAccess.
+
+# After Stack Slot Coloring:
+# Machine code for function UpdateRandomAccess: Post SSA
+
+BB#0: derived from LLVM BB %0
+	%R0<def> = t2MOVi32imm <ga:@img>
+	%R0<def> = t2LDRi12 %R0<kill>, 0, pred:14, pred:%noreg; mem:LD4[@img]
+	%R1<def> = t2LDRi12 %R0<kill>, 24, pred:14, pred:%noreg; mem:LD4[%2](align=8)
+	%R0<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg
+	t2CMPri %R1<kill>, 2, pred:14, pred:%noreg, %CPSR<imp-def>
+	t2Bcc <BB#2>, pred:1, pred:%CPSR<kill>
+	t2B <BB#1>, pred:14, pred:%noreg
+    Successors according to CFG: BB#1(0x40000000 / 0x80000000 = 50.00%) BB#2(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %5
+    Live Ins: %R0
+    Predecessors according to CFG: BB#0
+	%R1<def> = t2MOVi32imm <ga:@seiRandomAccess>
+	%R2<def> = t2MOVi 256, pred:14, pred:%noreg, opt:%noreg
+	t2STRHi12 %R2<kill>, %R1, 0, pred:14, pred:%noreg; mem:ST2[getelementptr inbounds (%struct.randomaccess_information_struct.1391, %struct.randomaccess_information_struct.1391* @seiRandomAccess, i32 0, i32 0)](align=4)
+	t2STRBi12 %R0<kill>, %R1<kill>, 2, pred:14, pred:%noreg; mem:ST1[getelementptr inbounds (%struct.randomaccess_information_struct.1391, %struct.randomaccess_information_struct.1391* @seiRandomAccess, i32 0, i32 2)](align=2)
+	%R0<def> = t2MOVi 1, pred:14, pred:%noreg, opt:%noreg
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %6
+    Live Ins: %R0
+    Predecessors according to CFG: BB#0 BB#1
+	%R1<def> = t2MOVi32imm <ga:@seiHasRandomAccess_info>
+	t2STRi12 %R0<kill>, %R1<kill>, 0, pred:14, pred:%noreg; mem:ST4[@seiHasRandomAccess_info]
+	tBX_RET pred:14, pred:%noreg
+
+# End machine code for function UpdateRandomAccess.
+
+# After Machine Loop Invariant Code Motion:
+# Machine code for function UpdateRandomAccess: Post SSA
+
+BB#0: derived from LLVM BB %0
+	%R0<def> = t2MOVi32imm <ga:@img>
+	%R0<def> = t2LDRi12 %R0<kill>, 0, pred:14, pred:%noreg; mem:LD4[@img]
+	%R1<def> = t2LDRi12 %R0<kill>, 24, pred:14, pred:%noreg; mem:LD4[%2](align=8)
+	%R0<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg
+	t2CMPri %R1<kill>, 2, pred:14, pred:%noreg, %CPSR<imp-def>
+	t2Bcc <BB#2>, pred:1, pred:%CPSR<kill>
+	t2B <BB#1>, pred:14, pred:%noreg
+    Successors according to CFG: BB#1(0x40000000 / 0x80000000 = 50.00%) BB#2(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %5
+    Live Ins: %R0
+    Predecessors according to CFG: BB#0
+	%R1<def> = t2MOVi32imm <ga:@seiRandomAccess>
+	%R2<def> = t2MOVi 256, pred:14, pred:%noreg, opt:%noreg
+	t2STRHi12 %R2<kill>, %R1, 0, pred:14, pred:%noreg; mem:ST2[getelementptr inbounds (%struct.randomaccess_information_struct.1391, %struct.randomaccess_information_struct.1391* @seiRandomAccess, i32 0, i32 0)](align=4)
+	t2STRBi12 %R0<kill>, %R1<kill>, 2, pred:14, pred:%noreg; mem:ST1[getelementptr inbounds (%struct.randomaccess_information_struct.1391, %struct.randomaccess_information_struct.1391* @seiRandomAccess, i32 0, i32 2)](align=2)
+	%R0<def> = t2MOVi 1, pred:14, pred:%noreg, opt:%noreg
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %6
+    Live Ins: %R0
+    Predecessors according to CFG: BB#0 BB#1
+	%R1<def> = t2MOVi32imm <ga:@seiHasRandomAccess_info>
+	t2STRi12 %R0<kill>, %R1<kill>, 0, pred:14, pred:%noreg; mem:ST4[@seiHasRandomAccess_info]
+	tBX_RET pred:14, pred:%noreg
+
+# End machine code for function UpdateRandomAccess.
+
+# After Shrink Wrapping analysis:
+# Machine code for function UpdateRandomAccess: Post SSA
+
+BB#0: derived from LLVM BB %0
+	%R0<def> = t2MOVi32imm <ga:@img>
+	%R0<def> = t2LDRi12 %R0<kill>, 0, pred:14, pred:%noreg; mem:LD4[@img]
+	%R1<def> = t2LDRi12 %R0<kill>, 24, pred:14, pred:%noreg; mem:LD4[%2](align=8)
+	%R0<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg
+	t2CMPri %R1<kill>, 2, pred:14, pred:%noreg, %CPSR<imp-def>
+	t2Bcc <BB#2>, pred:1, pred:%CPSR<kill>
+	t2B <BB#1>, pred:14, pred:%noreg
+    Successors according to CFG: BB#1(0x40000000 / 0x80000000 = 50.00%) BB#2(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %5
+    Live Ins: %R0
+    Predecessors according to CFG: BB#0
+	%R1<def> = t2MOVi32imm <ga:@seiRandomAccess>
+	%R2<def> = t2MOVi 256, pred:14, pred:%noreg, opt:%noreg
+	t2STRHi12 %R2<kill>, %R1, 0, pred:14, pred:%noreg; mem:ST2[getelementptr inbounds (%struct.randomaccess_information_struct.1391, %struct.randomaccess_information_struct.1391* @seiRandomAccess, i32 0, i32 0)](align=4)
+	t2STRBi12 %R0<kill>, %R1<kill>, 2, pred:14, pred:%noreg; mem:ST1[getelementptr inbounds (%struct.randomaccess_information_struct.1391, %struct.randomaccess_information_struct.1391* @seiRandomAccess, i32 0, i32 2)](align=2)
+	%R0<def> = t2MOVi 1, pred:14, pred:%noreg, opt:%noreg
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %6
+    Live Ins: %R0
+    Predecessors according to CFG: BB#0 BB#1
+	%R1<def> = t2MOVi32imm <ga:@seiHasRandomAccess_info>
+	t2STRi12 %R0<kill>, %R1<kill>, 0, pred:14, pred:%noreg; mem:ST4[@seiHasRandomAccess_info]
+	tBX_RET pred:14, pred:%noreg
+
+# End machine code for function UpdateRandomAccess.
+
+# After Prologue/Epilogue Insertion & Frame Finalization:
+# Machine code for function UpdateRandomAccess: Post SSA
+
+BB#0: derived from LLVM BB %0
+	%R0<def> = t2MOVi32imm <ga:@img>
+	%R0<def> = t2LDRi12 %R0<kill>, 0, pred:14, pred:%noreg; mem:LD4[@img]
+	%R1<def> = t2LDRi12 %R0<kill>, 24, pred:14, pred:%noreg; mem:LD4[%2](align=8)
+	%R0<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg
+	t2CMPri %R1<kill>, 2, pred:14, pred:%noreg, %CPSR<imp-def>
+	t2Bcc <BB#2>, pred:1, pred:%CPSR<kill>
+	t2B <BB#1>, pred:14, pred:%noreg
+    Successors according to CFG: BB#1(0x40000000 / 0x80000000 = 50.00%) BB#2(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %5
+    Live Ins: %R0
+    Predecessors according to CFG: BB#0
+	%R1<def> = t2MOVi32imm <ga:@seiRandomAccess>
+	%R2<def> = t2MOVi 256, pred:14, pred:%noreg, opt:%noreg
+	t2STRHi12 %R2<kill>, %R1, 0, pred:14, pred:%noreg; mem:ST2[getelementptr inbounds (%struct.randomaccess_information_struct.1391, %struct.randomaccess_information_struct.1391* @seiRandomAccess, i32 0, i32 0)](align=4)
+	t2STRBi12 %R0<kill>, %R1<kill>, 2, pred:14, pred:%noreg; mem:ST1[getelementptr inbounds (%struct.randomaccess_information_struct.1391, %struct.randomaccess_information_struct.1391* @seiRandomAccess, i32 0, i32 2)](align=2)
+	%R0<def> = t2MOVi 1, pred:14, pred:%noreg, opt:%noreg
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %6
+    Live Ins: %R0
+    Predecessors according to CFG: BB#0 BB#1
+	%R1<def> = t2MOVi32imm <ga:@seiHasRandomAccess_info>
+	t2STRi12 %R0<kill>, %R1<kill>, 0, pred:14, pred:%noreg; mem:ST4[@seiHasRandomAccess_info]
+	tBX_RET pred:14, pred:%noreg
+
+# End machine code for function UpdateRandomAccess.
+
+# After Machine Copy Propagation Pass:
+# Machine code for function UpdateRandomAccess: Post SSA
+
+BB#0: derived from LLVM BB %0
+	%R0<def> = t2MOVi32imm <ga:@img>
+	%R0<def> = t2LDRi12 %R0<kill>, 0, pred:14, pred:%noreg; mem:LD4[@img]
+	%R1<def> = t2LDRi12 %R0<kill>, 24, pred:14, pred:%noreg; mem:LD4[%2](align=8)
+	%R0<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg
+	t2CMPri %R1<kill>, 2, pred:14, pred:%noreg, %CPSR<imp-def>
+	t2Bcc <BB#2>, pred:1, pred:%CPSR<kill>
+	t2B <BB#1>, pred:14, pred:%noreg
+    Successors according to CFG: BB#1(0x40000000 / 0x80000000 = 50.00%) BB#2(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %5
+    Live Ins: %R0
+    Predecessors according to CFG: BB#0
+	%R1<def> = t2MOVi32imm <ga:@seiRandomAccess>
+	%R2<def> = t2MOVi 256, pred:14, pred:%noreg, opt:%noreg
+	t2STRHi12 %R2<kill>, %R1, 0, pred:14, pred:%noreg; mem:ST2[getelementptr inbounds (%struct.randomaccess_information_struct.1391, %struct.randomaccess_information_struct.1391* @seiRandomAccess, i32 0, i32 0)](align=4)
+	t2STRBi12 %R0<kill>, %R1<kill>, 2, pred:14, pred:%noreg; mem:ST1[getelementptr inbounds (%struct.randomaccess_information_struct.1391, %struct.randomaccess_information_struct.1391* @seiRandomAccess, i32 0, i32 2)](align=2)
+	%R0<def> = t2MOVi 1, pred:14, pred:%noreg, opt:%noreg
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %6
+    Live Ins: %R0
+    Predecessors according to CFG: BB#0 BB#1
+	%R1<def> = t2MOVi32imm <ga:@seiHasRandomAccess_info>
+	t2STRi12 %R0<kill>, %R1<kill>, 0, pred:14, pred:%noreg; mem:ST4[@seiHasRandomAccess_info]
+	tBX_RET pred:14, pred:%noreg
+
+# End machine code for function UpdateRandomAccess.
+
+# After Post-RA pseudo instruction expansion pass:
+# Machine code for function UpdateRandomAccess: Post SSA
+
+BB#0: derived from LLVM BB %0
+	%R0<def> = t2MOVi32imm <ga:@img>
+	%R0<def> = t2LDRi12 %R0<kill>, 0, pred:14, pred:%noreg; mem:LD4[@img]
+	%R1<def> = t2LDRi12 %R0<kill>, 24, pred:14, pred:%noreg; mem:LD4[%2](align=8)
+	%R0<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg
+	t2CMPri %R1<kill>, 2, pred:14, pred:%noreg, %CPSR<imp-def>
+	t2Bcc <BB#2>, pred:1, pred:%CPSR<kill>
+	t2B <BB#1>, pred:14, pred:%noreg
+    Successors according to CFG: BB#1(0x40000000 / 0x80000000 = 50.00%) BB#2(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %5
+    Live Ins: %R0
+    Predecessors according to CFG: BB#0
+	%R1<def> = t2MOVi32imm <ga:@seiRandomAccess>
+	%R2<def> = t2MOVi 256, pred:14, pred:%noreg, opt:%noreg
+	t2STRHi12 %R2<kill>, %R1, 0, pred:14, pred:%noreg; mem:ST2[getelementptr inbounds (%struct.randomaccess_information_struct.1391, %struct.randomaccess_information_struct.1391* @seiRandomAccess, i32 0, i32 0)](align=4)
+	t2STRBi12 %R0<kill>, %R1<kill>, 2, pred:14, pred:%noreg; mem:ST1[getelementptr inbounds (%struct.randomaccess_information_struct.1391, %struct.randomaccess_information_struct.1391* @seiRandomAccess, i32 0, i32 2)](align=2)
+	%R0<def> = t2MOVi 1, pred:14, pred:%noreg, opt:%noreg
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %6
+    Live Ins: %R0
+    Predecessors according to CFG: BB#0 BB#1
+	%R1<def> = t2MOVi32imm <ga:@seiHasRandomAccess_info>
+	t2STRi12 %R0<kill>, %R1<kill>, 0, pred:14, pred:%noreg; mem:ST4[@seiHasRandomAccess_info]
+	tBX_RET pred:14, pred:%noreg
+
+# End machine code for function UpdateRandomAccess.
+
+# After ARM load / store optimization pass:
+# Machine code for function UpdateRandomAccess: Post SSA
+
+BB#0: derived from LLVM BB %0
+	%R0<def> = t2MOVi32imm <ga:@img>
+	%R0<def> = t2LDRi12 %R0<kill>, 0, pred:14, pred:%noreg; mem:LD4[@img]
+	%R1<def> = t2LDRi12 %R0<kill>, 24, pred:14, pred:%noreg; mem:LD4[%2](align=8)
+	%R0<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg
+	t2CMPri %R1<kill>, 2, pred:14, pred:%noreg, %CPSR<imp-def>
+	t2Bcc <BB#2>, pred:1, pred:%CPSR<kill>
+	t2B <BB#1>, pred:14, pred:%noreg
+    Successors according to CFG: BB#1(0x40000000 / 0x80000000 = 50.00%) BB#2(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %5
+    Live Ins: %R0
+    Predecessors according to CFG: BB#0
+	%R1<def> = t2MOVi32imm <ga:@seiRandomAccess>
+	%R2<def> = t2MOVi 256, pred:14, pred:%noreg, opt:%noreg
+	t2STRHi12 %R2<kill>, %R1, 0, pred:14, pred:%noreg; mem:ST2[getelementptr inbounds (%struct.randomaccess_information_struct.1391, %struct.randomaccess_information_struct.1391* @seiRandomAccess, i32 0, i32 0)](align=4)
+	t2STRBi12 %R0<kill>, %R1<kill>, 2, pred:14, pred:%noreg; mem:ST1[getelementptr inbounds (%struct.randomaccess_information_struct.1391, %struct.randomaccess_information_struct.1391* @seiRandomAccess, i32 0, i32 2)](align=2)
+	%R0<def> = t2MOVi 1, pred:14, pred:%noreg, opt:%noreg
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %6
+    Live Ins: %R0
+    Predecessors according to CFG: BB#0 BB#1
+	%R1<def> = t2MOVi32imm <ga:@seiHasRandomAccess_info>
+	t2STRi12 %R0<kill>, %R1<kill>, 0, pred:14, pred:%noreg; mem:ST4[@seiHasRandomAccess_info]
+	tBX_RET pred:14, pred:%noreg
+
+# End machine code for function UpdateRandomAccess.
+
+# After Execution dependency fix:
+# Machine code for function UpdateRandomAccess: Post SSA
+
+BB#0: derived from LLVM BB %0
+	%R0<def> = t2MOVi32imm <ga:@img>
+	%R0<def> = t2LDRi12 %R0<kill>, 0, pred:14, pred:%noreg; mem:LD4[@img]
+	%R1<def> = t2LDRi12 %R0<kill>, 24, pred:14, pred:%noreg; mem:LD4[%2](align=8)
+	%R0<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg
+	t2CMPri %R1<kill>, 2, pred:14, pred:%noreg, %CPSR<imp-def>
+	t2Bcc <BB#2>, pred:1, pred:%CPSR<kill>
+	t2B <BB#1>, pred:14, pred:%noreg
+    Successors according to CFG: BB#1(0x40000000 / 0x80000000 = 50.00%) BB#2(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %5
+    Live Ins: %R0
+    Predecessors according to CFG: BB#0
+	%R1<def> = t2MOVi32imm <ga:@seiRandomAccess>
+	%R2<def> = t2MOVi 256, pred:14, pred:%noreg, opt:%noreg
+	t2STRHi12 %R2<kill>, %R1, 0, pred:14, pred:%noreg; mem:ST2[getelementptr inbounds (%struct.randomaccess_information_struct.1391, %struct.randomaccess_information_struct.1391* @seiRandomAccess, i32 0, i32 0)](align=4)
+	t2STRBi12 %R0<kill>, %R1<kill>, 2, pred:14, pred:%noreg; mem:ST1[getelementptr inbounds (%struct.randomaccess_information_struct.1391, %struct.randomaccess_information_struct.1391* @seiRandomAccess, i32 0, i32 2)](align=2)
+	%R0<def> = t2MOVi 1, pred:14, pred:%noreg, opt:%noreg
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %6
+    Live Ins: %R0
+    Predecessors according to CFG: BB#0 BB#1
+	%R1<def> = t2MOVi32imm <ga:@seiHasRandomAccess_info>
+	t2STRi12 %R0<kill>, %R1<kill>, 0, pred:14, pred:%noreg; mem:ST4[@seiHasRandomAccess_info]
+	tBX_RET pred:14, pred:%noreg
+
+# End machine code for function UpdateRandomAccess.
+
+# After ARM pseudo instruction expansion pass:
+# Machine code for function UpdateRandomAccess: Post SSA
+
+BB#0: derived from LLVM BB %0
+	%R0<def> = t2MOVi16 <ga:@img>[TF=1], pred:14, pred:%noreg
+	%R0<def,tied1> = t2MOVTi16 %R0<tied0>, <ga:@img>[TF=2], pred:14, pred:%noreg
+	%R0<def> = t2LDRi12 %R0<kill>, 0, pred:14, pred:%noreg; mem:LD4[@img]
+	%R1<def> = t2LDRi12 %R0<kill>, 24, pred:14, pred:%noreg; mem:LD4[%2](align=8)
+	%R0<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg
+	t2CMPri %R1<kill>, 2, pred:14, pred:%noreg, %CPSR<imp-def>
+	t2Bcc <BB#2>, pred:1, pred:%CPSR<kill>
+	t2B <BB#1>, pred:14, pred:%noreg
+    Successors according to CFG: BB#1(0x40000000 / 0x80000000 = 50.00%) BB#2(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %5
+    Live Ins: %R0
+    Predecessors according to CFG: BB#0
+	%R1<def> = t2MOVi16 <ga:@seiRandomAccess>[TF=1], pred:14, pred:%noreg
+	%R1<def,tied1> = t2MOVTi16 %R1<tied0>, <ga:@seiRandomAccess>[TF=2], pred:14, pred:%noreg
+	%R2<def> = t2MOVi 256, pred:14, pred:%noreg, opt:%noreg
+	t2STRHi12 %R2<kill>, %R1, 0, pred:14, pred:%noreg; mem:ST2[getelementptr inbounds (%struct.randomaccess_information_struct.1391, %struct.randomaccess_information_struct.1391* @seiRandomAccess, i32 0, i32 0)](align=4)
+	t2STRBi12 %R0<kill>, %R1<kill>, 2, pred:14, pred:%noreg; mem:ST1[getelementptr inbounds (%struct.randomaccess_information_struct.1391, %struct.randomaccess_information_struct.1391* @seiRandomAccess, i32 0, i32 2)](align=2)
+	%R0<def> = t2MOVi 1, pred:14, pred:%noreg, opt:%noreg
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %6
+    Live Ins: %R0
+    Predecessors according to CFG: BB#0 BB#1
+	%R1<def> = t2MOVi16 <ga:@seiHasRandomAccess_info>[TF=1], pred:14, pred:%noreg
+	%R1<def,tied1> = t2MOVTi16 %R1<tied0>, <ga:@seiHasRandomAccess_info>[TF=2], pred:14, pred:%noreg
+	t2STRi12 %R0<kill>, %R1<kill>, 0, pred:14, pred:%noreg; mem:ST4[@seiHasRandomAccess_info]
+	tBX_RET pred:14, pred:%noreg
+
+# End machine code for function UpdateRandomAccess.
+
+# After Thumb2 instruction size reduction pass:
+# Machine code for function UpdateRandomAccess: Post SSA
+
+BB#0: derived from LLVM BB %0
+	%R0<def> = t2MOVi16 <ga:@img>[TF=1], pred:14, pred:%noreg
+	%R0<def,tied1> = t2MOVTi16 %R0<tied0>, <ga:@img>[TF=2], pred:14, pred:%noreg
+	%R0<def> = t2LDRi12 %R0<kill>, 0, pred:14, pred:%noreg; mem:LD4[@img]
+	%R1<def> = t2LDRi12 %R0<kill>, 24, pred:14, pred:%noreg; mem:LD4[%2](align=8)
+	%R0<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg
+	t2CMPri %R1<kill>, 2, pred:14, pred:%noreg, %CPSR<imp-def>
+	t2Bcc <BB#2>, pred:1, pred:%CPSR<kill>
+	t2B <BB#1>, pred:14, pred:%noreg
+    Successors according to CFG: BB#1(0x40000000 / 0x80000000 = 50.00%) BB#2(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %5
+    Live Ins: %R0
+    Predecessors according to CFG: BB#0
+	%R1<def> = t2MOVi16 <ga:@seiRandomAccess>[TF=1], pred:14, pred:%noreg
+	%R1<def,tied1> = t2MOVTi16 %R1<tied0>, <ga:@seiRandomAccess>[TF=2], pred:14, pred:%noreg
+	%R2<def> = t2MOVi 256, pred:14, pred:%noreg, opt:%noreg
+	t2STRHi12 %R2<kill>, %R1, 0, pred:14, pred:%noreg; mem:ST2[getelementptr inbounds (%struct.randomaccess_information_struct.1391, %struct.randomaccess_information_struct.1391* @seiRandomAccess, i32 0, i32 0)](align=4)
+	t2STRBi12 %R0<kill>, %R1<kill>, 2, pred:14, pred:%noreg; mem:ST1[getelementptr inbounds (%struct.randomaccess_information_struct.1391, %struct.randomaccess_information_struct.1391* @seiRandomAccess, i32 0, i32 2)](align=2)
+	%R0<def> = t2MOVi 1, pred:14, pred:%noreg, opt:%noreg
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %6
+    Live Ins: %R0
+    Predecessors according to CFG: BB#0 BB#1
+	%R1<def> = t2MOVi16 <ga:@seiHasRandomAccess_info>[TF=1], pred:14, pred:%noreg
+	%R1<def,tied1> = t2MOVTi16 %R1<tied0>, <ga:@seiHasRandomAccess_info>[TF=2], pred:14, pred:%noreg
+	t2STRi12 %R0<kill>, %R1<kill>, 0, pred:14, pred:%noreg; mem:ST4[@seiHasRandomAccess_info]
+	tBX_RET pred:14, pred:%noreg
+
+# End machine code for function UpdateRandomAccess.
+
+# After Thumb IT blocks insertion pass:
+# Machine code for function UpdateRandomAccess: Post SSA
+
+BB#0: derived from LLVM BB %0
+	%R0<def> = t2MOVi16 <ga:@img>[TF=1], pred:14, pred:%noreg
+	%R0<def,tied1> = t2MOVTi16 %R0<tied0>, <ga:@img>[TF=2], pred:14, pred:%noreg
+	%R0<def> = t2LDRi12 %R0<kill>, 0, pred:14, pred:%noreg; mem:LD4[@img]
+	%R1<def> = t2LDRi12 %R0<kill>, 24, pred:14, pred:%noreg; mem:LD4[%2](align=8)
+	%R0<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg
+	t2CMPri %R1<kill>, 2, pred:14, pred:%noreg, %CPSR<imp-def>
+	t2Bcc <BB#2>, pred:1, pred:%CPSR<kill>
+	t2B <BB#1>, pred:14, pred:%noreg
+    Successors according to CFG: BB#1(0x40000000 / 0x80000000 = 50.00%) BB#2(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %5
+    Live Ins: %R0
+    Predecessors according to CFG: BB#0
+	%R1<def> = t2MOVi16 <ga:@seiRandomAccess>[TF=1], pred:14, pred:%noreg
+	%R1<def,tied1> = t2MOVTi16 %R1<tied0>, <ga:@seiRandomAccess>[TF=2], pred:14, pred:%noreg
+	%R2<def> = t2MOVi 256, pred:14, pred:%noreg, opt:%noreg
+	t2STRHi12 %R2<kill>, %R1, 0, pred:14, pred:%noreg; mem:ST2[getelementptr inbounds (%struct.randomaccess_information_struct.1391, %struct.randomaccess_information_struct.1391* @seiRandomAccess, i32 0, i32 0)](align=4)
+	t2STRBi12 %R0<kill>, %R1<kill>, 2, pred:14, pred:%noreg; mem:ST1[getelementptr inbounds (%struct.randomaccess_information_struct.1391, %struct.randomaccess_information_struct.1391* @seiRandomAccess, i32 0, i32 2)](align=2)
+	%R0<def> = t2MOVi 1, pred:14, pred:%noreg, opt:%noreg
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %6
+    Live Ins: %R0
+    Predecessors according to CFG: BB#0 BB#1
+	%R1<def> = t2MOVi16 <ga:@seiHasRandomAccess_info>[TF=1], pred:14, pred:%noreg
+	%R1<def,tied1> = t2MOVTi16 %R1<tied0>, <ga:@seiHasRandomAccess_info>[TF=2], pred:14, pred:%noreg
+	t2STRi12 %R0<kill>, %R1<kill>, 0, pred:14, pred:%noreg; mem:ST4[@seiHasRandomAccess_info]
+	tBX_RET pred:14, pred:%noreg
+
+# End machine code for function UpdateRandomAccess.
+
+# After Analyze Machine Code For Garbage Collection:
+# Machine code for function UpdateRandomAccess: Post SSA
+
+BB#0: derived from LLVM BB %0
+	%R0<def> = t2MOVi16 <ga:@img>[TF=1], pred:14, pred:%noreg
+	%R0<def,tied1> = t2MOVTi16 %R0<tied0>, <ga:@img>[TF=2], pred:14, pred:%noreg
+	%R0<def> = t2LDRi12 %R0<kill>, 0, pred:14, pred:%noreg; mem:LD4[@img]
+	%R1<def> = t2LDRi12 %R0<kill>, 24, pred:14, pred:%noreg; mem:LD4[%2](align=8)
+	%R0<def> = t2MOVi 0, pred:14, pred:%noreg, opt:%noreg
+	t2CMPri %R1<kill>, 2, pred:14, pred:%noreg, %CPSR<imp-def>
+	t2Bcc <BB#2>, pred:1, pred:%CPSR<kill>
+	t2B <BB#1>, pred:14, pred:%noreg
+    Successors according to CFG: BB#1(0x40000000 / 0x80000000 = 50.00%) BB#2(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %5
+    Live Ins: %R0
+    Predecessors according to CFG: BB#0
+	%R1<def> = t2MOVi16 <ga:@seiRandomAccess>[TF=1], pred:14, pred:%noreg
+	%R1<def,tied1> = t2MOVTi16 %R1<tied0>, <ga:@seiRandomAccess>[TF=2], pred:14, pred:%noreg
+	%R2<def> = t2MOVi 256, pred:14, pred:%noreg, opt:%noreg
+	t2STRHi12 %R2<kill>, %R1, 0, pred:14, pred:%noreg; mem:ST2[getelementptr inbounds (%struct.randomaccess_information_struct.1391, %struct.randomaccess_information_struct.1391* @seiRandomAccess, i32 0, i32 0)](align=4)
+	t2STRBi12 %R0<kill>, %R1<kill>, 2, pred:14, pred:%noreg; mem:ST1[getelementptr inbounds (%struct.randomaccess_information_struct.1391, %struct.randomaccess_information_struct.1391* @seiRandomAccess, i32 0, i32 2)](align=2)
+	%R0<def> = t2MOVi 1, pred:14, pred:%noreg, opt:%noreg
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %6
+    Live Ins: %R0
+    Predecessors according to CFG: BB#0 BB#1
+	%R1<def> = t2MOVi16 <ga:@seiHasRandomAccess_info>[TF=1], pred:14, pred:%noreg
+	%R1<def,tied1> = t2MOVTi16 %R1<tied0>, <ga:@seiHasRandomAccess_info>[TF=2], pred:14, pred:%noreg
+	t2STRi12 %R0<kill>, %R1<kill>, 0, pred:14, pred:%noreg; mem:ST4[@seiHasRandomAccess_info]
+	tBX_RET pred:14, pred:%noreg
+
+# End machine code for function UpdateRandomAccess.
+
+# After Thumb2 instruction size reduction pass:
+# Machine code for function UpdateRandomAccess: Post SSA
+
+BB#0: derived from LLVM BB %0
+	%R0<def> = t2MOVi16 <ga:@img>[TF=1], pred:14, pred:%noreg
+	%R0<def,tied1> = t2MOVTi16 %R0<tied0>, <ga:@img>[TF=2], pred:14, pred:%noreg
+	%R0<def> = tLDRi %R0<kill>, 0, pred:14, pred:%noreg; mem:LD4[@img]
+	%R1<def> = tLDRi %R0<kill>, 6, pred:14, pred:%noreg; mem:LD4[%2](align=8)
+	%R0<def>, %CPSR<def,dead> = tMOVi8 0, pred:14, pred:%noreg
+	tCMPi8 %R1<kill>, 2, pred:14, pred:%noreg, %CPSR<imp-def>
+	t2Bcc <BB#2>, pred:1, pred:%CPSR<kill>
+	t2B <BB#1>, pred:14, pred:%noreg
+    Successors according to CFG: BB#1(0x40000000 / 0x80000000 = 50.00%) BB#2(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %5
+    Live Ins: %R0
+    Predecessors according to CFG: BB#0
+	%R1<def> = t2MOVi16 <ga:@seiRandomAccess>[TF=1], pred:14, pred:%noreg
+	%R1<def,tied1> = t2MOVTi16 %R1<tied0>, <ga:@seiRandomAccess>[TF=2], pred:14, pred:%noreg
+	%R2<def> = t2MOVi 256, pred:14, pred:%noreg, opt:%noreg
+	tSTRHi %R2<kill>, %R1, 0, pred:14, pred:%noreg; mem:ST2[getelementptr inbounds (%struct.randomaccess_information_struct.1391, %struct.randomaccess_information_struct.1391* @seiRandomAccess, i32 0, i32 0)](align=4)
+	tSTRBi %R0<kill>, %R1<kill>, 2, pred:14, pred:%noreg; mem:ST1[getelementptr inbounds (%struct.randomaccess_information_struct.1391, %struct.randomaccess_information_struct.1391* @seiRandomAccess, i32 0, i32 2)](align=2)
+	%R0<def>, %CPSR<def,dead> = tMOVi8 1, pred:14, pred:%noreg
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %6
+    Live Ins: %R0
+    Predecessors according to CFG: BB#0 BB#1
+	%R1<def> = t2MOVi16 <ga:@seiHasRandomAccess_info>[TF=1], pred:14, pred:%noreg
+	%R1<def,tied1> = t2MOVTi16 %R1<tied0>, <ga:@seiHasRandomAccess_info>[TF=2], pred:14, pred:%noreg
+	tSTRi %R0<kill>, %R1<kill>, 0, pred:14, pred:%noreg; mem:ST4[@seiHasRandomAccess_info]
+	tBX_RET pred:14, pred:%noreg
+
+# End machine code for function UpdateRandomAccess.
+
+# After Unpack machine instruction bundles:
+# Machine code for function UpdateRandomAccess: Post SSA
+
+BB#0: derived from LLVM BB %0
+	%R0<def> = t2MOVi16 <ga:@img>[TF=1], pred:14, pred:%noreg
+	%R0<def,tied1> = t2MOVTi16 %R0<tied0>, <ga:@img>[TF=2], pred:14, pred:%noreg
+	%R0<def> = tLDRi %R0<kill>, 0, pred:14, pred:%noreg; mem:LD4[@img]
+	%R1<def> = tLDRi %R0<kill>, 6, pred:14, pred:%noreg; mem:LD4[%2](align=8)
+	%R0<def>, %CPSR<def,dead> = tMOVi8 0, pred:14, pred:%noreg
+	tCMPi8 %R1<kill>, 2, pred:14, pred:%noreg, %CPSR<imp-def>
+	t2Bcc <BB#2>, pred:1, pred:%CPSR<kill>
+	t2B <BB#1>, pred:14, pred:%noreg
+    Successors according to CFG: BB#1(0x40000000 / 0x80000000 = 50.00%) BB#2(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %5
+    Live Ins: %R0
+    Predecessors according to CFG: BB#0
+	%R1<def> = t2MOVi16 <ga:@seiRandomAccess>[TF=1], pred:14, pred:%noreg
+	%R1<def,tied1> = t2MOVTi16 %R1<tied0>, <ga:@seiRandomAccess>[TF=2], pred:14, pred:%noreg
+	%R2<def> = t2MOVi 256, pred:14, pred:%noreg, opt:%noreg
+	tSTRHi %R2<kill>, %R1, 0, pred:14, pred:%noreg; mem:ST2[getelementptr inbounds (%struct.randomaccess_information_struct.1391, %struct.randomaccess_information_struct.1391* @seiRandomAccess, i32 0, i32 0)](align=4)
+	tSTRBi %R0<kill>, %R1<kill>, 2, pred:14, pred:%noreg; mem:ST1[getelementptr inbounds (%struct.randomaccess_information_struct.1391, %struct.randomaccess_information_struct.1391* @seiRandomAccess, i32 0, i32 2)](align=2)
+	%R0<def>, %CPSR<def,dead> = tMOVi8 1, pred:14, pred:%noreg
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %6
+    Live Ins: %R0
+    Predecessors according to CFG: BB#0 BB#1
+	%R1<def> = t2MOVi16 <ga:@seiHasRandomAccess_info>[TF=1], pred:14, pred:%noreg
+	%R1<def,tied1> = t2MOVTi16 %R1<tied0>, <ga:@seiHasRandomAccess_info>[TF=2], pred:14, pred:%noreg
+	tSTRi %R0<kill>, %R1<kill>, 0, pred:14, pred:%noreg; mem:ST4[@seiHasRandomAccess_info]
+	tBX_RET pred:14, pred:%noreg
+
+# End machine code for function UpdateRandomAccess.
+
+# After optimise barriers pass:
+# Machine code for function UpdateRandomAccess: Post SSA
+
+BB#0: derived from LLVM BB %0
+	%R0<def> = t2MOVi16 <ga:@img>[TF=1], pred:14, pred:%noreg
+	%R0<def,tied1> = t2MOVTi16 %R0<tied0>, <ga:@img>[TF=2], pred:14, pred:%noreg
+	%R0<def> = tLDRi %R0<kill>, 0, pred:14, pred:%noreg; mem:LD4[@img]
+	%R1<def> = tLDRi %R0<kill>, 6, pred:14, pred:%noreg; mem:LD4[%2](align=8)
+	%R0<def>, %CPSR<def,dead> = tMOVi8 0, pred:14, pred:%noreg
+	tCMPi8 %R1<kill>, 2, pred:14, pred:%noreg, %CPSR<imp-def>
+	t2Bcc <BB#2>, pred:1, pred:%CPSR<kill>
+	t2B <BB#1>, pred:14, pred:%noreg
+    Successors according to CFG: BB#1(0x40000000 / 0x80000000 = 50.00%) BB#2(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %5
+    Live Ins: %R0
+    Predecessors according to CFG: BB#0
+	%R1<def> = t2MOVi16 <ga:@seiRandomAccess>[TF=1], pred:14, pred:%noreg
+	%R1<def,tied1> = t2MOVTi16 %R1<tied0>, <ga:@seiRandomAccess>[TF=2], pred:14, pred:%noreg
+	%R2<def> = t2MOVi 256, pred:14, pred:%noreg, opt:%noreg
+	tSTRHi %R2<kill>, %R1, 0, pred:14, pred:%noreg; mem:ST2[getelementptr inbounds (%struct.randomaccess_information_struct.1391, %struct.randomaccess_information_struct.1391* @seiRandomAccess, i32 0, i32 0)](align=4)
+	tSTRBi %R0<kill>, %R1<kill>, 2, pred:14, pred:%noreg; mem:ST1[getelementptr inbounds (%struct.randomaccess_information_struct.1391, %struct.randomaccess_information_struct.1391* @seiRandomAccess, i32 0, i32 2)](align=2)
+	%R0<def>, %CPSR<def,dead> = tMOVi8 1, pred:14, pred:%noreg
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %6
+    Live Ins: %R0
+    Predecessors according to CFG: BB#0 BB#1
+	%R1<def> = t2MOVi16 <ga:@seiHasRandomAccess_info>[TF=1], pred:14, pred:%noreg
+	%R1<def,tied1> = t2MOVTi16 %R1<tied0>, <ga:@seiHasRandomAccess_info>[TF=2], pred:14, pred:%noreg
+	tSTRi %R0<kill>, %R1<kill>, 0, pred:14, pred:%noreg; mem:ST4[@seiHasRandomAccess_info]
+	tBX_RET pred:14, pred:%noreg
+
+# End machine code for function UpdateRandomAccess.
+
+# After ARM constant island placement and branch shortening pass:
+# Machine code for function UpdateRandomAccess: Post SSA, not tracking liveness
+
+BB#0: derived from LLVM BB %0
+	%R0<def> = t2MOVi16 <ga:@img>[TF=1], pred:14, pred:%noreg
+	%R0<def,tied1> = t2MOVTi16 %R0<tied0>, <ga:@img>[TF=2], pred:14, pred:%noreg
+	%R0<def> = tLDRi %R0<kill>, 0, pred:14, pred:%noreg; mem:LD4[@img]
+	%R1<def> = tLDRi %R0<kill>, 6, pred:14, pred:%noreg; mem:LD4[%2](align=8)
+	%R0<def>, %CPSR<def,dead> = tMOVi8 0, pred:14, pred:%noreg
+	tCMPi8 %R1<kill>, 2, pred:14, pred:%noreg, %CPSR<imp-def>
+	t2Bcc <BB#2>, pred:1, pred:%CPSR<kill>
+	t2B <BB#1>, pred:14, pred:%noreg
+    Successors according to CFG: BB#1(0x40000000 / 0x80000000 = 50.00%) BB#2(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %5
+    Live Ins: %R0
+    Predecessors according to CFG: BB#0
+	%R1<def> = t2MOVi16 <ga:@seiRandomAccess>[TF=1], pred:14, pred:%noreg
+	%R1<def,tied1> = t2MOVTi16 %R1<tied0>, <ga:@seiRandomAccess>[TF=2], pred:14, pred:%noreg
+	%R2<def> = t2MOVi 256, pred:14, pred:%noreg, opt:%noreg
+	tSTRHi %R2<kill>, %R1, 0, pred:14, pred:%noreg; mem:ST2[getelementptr inbounds (%struct.randomaccess_information_struct.1391, %struct.randomaccess_information_struct.1391* @seiRandomAccess, i32 0, i32 0)](align=4)
+	tSTRBi %R0<kill>, %R1<kill>, 2, pred:14, pred:%noreg; mem:ST1[getelementptr inbounds (%struct.randomaccess_information_struct.1391, %struct.randomaccess_information_struct.1391* @seiRandomAccess, i32 0, i32 2)](align=2)
+	%R0<def>, %CPSR<def,dead> = tMOVi8 1, pred:14, pred:%noreg
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %6
+    Live Ins: %R0
+    Predecessors according to CFG: BB#0 BB#1
+	%R1<def> = t2MOVi16 <ga:@seiHasRandomAccess_info>[TF=1], pred:14, pred:%noreg
+	%R1<def,tied1> = t2MOVTi16 %R1<tied0>, <ga:@seiHasRandomAccess_info>[TF=2], pred:14, pred:%noreg
+	tSTRi %R0<kill>, %R1<kill>, 0, pred:14, pred:%noreg; mem:ST4[@seiHasRandomAccess_info]
+	tBX_RET pred:14, pred:%noreg
+
+# End machine code for function UpdateRandomAccess.
+
+# After Contiguously Lay Out Funclets:
+# Machine code for function UpdateRandomAccess: Post SSA, not tracking liveness
+
+BB#0: derived from LLVM BB %0
+	%R0<def> = t2MOVi16 <ga:@img>[TF=1], pred:14, pred:%noreg
+	%R0<def,tied1> = t2MOVTi16 %R0<tied0>, <ga:@img>[TF=2], pred:14, pred:%noreg
+	%R0<def> = tLDRi %R0<kill>, 0, pred:14, pred:%noreg; mem:LD4[@img]
+	%R1<def> = tLDRi %R0<kill>, 6, pred:14, pred:%noreg; mem:LD4[%2](align=8)
+	%R0<def>, %CPSR<def,dead> = tMOVi8 0, pred:14, pred:%noreg
+	tCMPi8 %R1<kill>, 2, pred:14, pred:%noreg, %CPSR<imp-def>
+	t2Bcc <BB#2>, pred:1, pred:%CPSR<kill>
+	t2B <BB#1>, pred:14, pred:%noreg
+    Successors according to CFG: BB#1(0x40000000 / 0x80000000 = 50.00%) BB#2(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %5
+    Live Ins: %R0
+    Predecessors according to CFG: BB#0
+	%R1<def> = t2MOVi16 <ga:@seiRandomAccess>[TF=1], pred:14, pred:%noreg
+	%R1<def,tied1> = t2MOVTi16 %R1<tied0>, <ga:@seiRandomAccess>[TF=2], pred:14, pred:%noreg
+	%R2<def> = t2MOVi 256, pred:14, pred:%noreg, opt:%noreg
+	tSTRHi %R2<kill>, %R1, 0, pred:14, pred:%noreg; mem:ST2[getelementptr inbounds (%struct.randomaccess_information_struct.1391, %struct.randomaccess_information_struct.1391* @seiRandomAccess, i32 0, i32 0)](align=4)
+	tSTRBi %R0<kill>, %R1<kill>, 2, pred:14, pred:%noreg; mem:ST1[getelementptr inbounds (%struct.randomaccess_information_struct.1391, %struct.randomaccess_information_struct.1391* @seiRandomAccess, i32 0, i32 2)](align=2)
+	%R0<def>, %CPSR<def,dead> = tMOVi8 1, pred:14, pred:%noreg
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %6
+    Live Ins: %R0
+    Predecessors according to CFG: BB#0 BB#1
+	%R1<def> = t2MOVi16 <ga:@seiHasRandomAccess_info>[TF=1], pred:14, pred:%noreg
+	%R1<def,tied1> = t2MOVTi16 %R1<tied0>, <ga:@seiHasRandomAccess_info>[TF=2], pred:14, pred:%noreg
+	tSTRi %R0<kill>, %R1<kill>, 0, pred:14, pred:%noreg; mem:ST4[@seiHasRandomAccess_info]
+	tBX_RET pred:14, pred:%noreg
+
+# End machine code for function UpdateRandomAccess.
+
+# After StackMap Liveness Analysis:
+# Machine code for function UpdateRandomAccess: Post SSA, not tracking liveness
+
+BB#0: derived from LLVM BB %0
+	%R0<def> = t2MOVi16 <ga:@img>[TF=1], pred:14, pred:%noreg
+	%R0<def,tied1> = t2MOVTi16 %R0<tied0>, <ga:@img>[TF=2], pred:14, pred:%noreg
+	%R0<def> = tLDRi %R0<kill>, 0, pred:14, pred:%noreg; mem:LD4[@img]
+	%R1<def> = tLDRi %R0<kill>, 6, pred:14, pred:%noreg; mem:LD4[%2](align=8)
+	%R0<def>, %CPSR<def,dead> = tMOVi8 0, pred:14, pred:%noreg
+	tCMPi8 %R1<kill>, 2, pred:14, pred:%noreg, %CPSR<imp-def>
+	t2Bcc <BB#2>, pred:1, pred:%CPSR<kill>
+	t2B <BB#1>, pred:14, pred:%noreg
+    Successors according to CFG: BB#1(0x40000000 / 0x80000000 = 50.00%) BB#2(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %5
+    Live Ins: %R0
+    Predecessors according to CFG: BB#0
+	%R1<def> = t2MOVi16 <ga:@seiRandomAccess>[TF=1], pred:14, pred:%noreg
+	%R1<def,tied1> = t2MOVTi16 %R1<tied0>, <ga:@seiRandomAccess>[TF=2], pred:14, pred:%noreg
+	%R2<def> = t2MOVi 256, pred:14, pred:%noreg, opt:%noreg
+	tSTRHi %R2<kill>, %R1, 0, pred:14, pred:%noreg; mem:ST2[getelementptr inbounds (%struct.randomaccess_information_struct.1391, %struct.randomaccess_information_struct.1391* @seiRandomAccess, i32 0, i32 0)](align=4)
+	tSTRBi %R0<kill>, %R1<kill>, 2, pred:14, pred:%noreg; mem:ST1[getelementptr inbounds (%struct.randomaccess_information_struct.1391, %struct.randomaccess_information_struct.1391* @seiRandomAccess, i32 0, i32 2)](align=2)
+	%R0<def>, %CPSR<def,dead> = tMOVi8 1, pred:14, pred:%noreg
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %6
+    Live Ins: %R0
+    Predecessors according to CFG: BB#0 BB#1
+	%R1<def> = t2MOVi16 <ga:@seiHasRandomAccess_info>[TF=1], pred:14, pred:%noreg
+	%R1<def,tied1> = t2MOVTi16 %R1<tied0>, <ga:@seiHasRandomAccess_info>[TF=2], pred:14, pred:%noreg
+	tSTRi %R0<kill>, %R1<kill>, 0, pred:14, pred:%noreg; mem:ST4[@seiHasRandomAccess_info]
+	tBX_RET pred:14, pred:%noreg
+
+# End machine code for function UpdateRandomAccess.
+
+# After Live DEBUG_VALUE analysis:
+# Machine code for function UpdateRandomAccess: Post SSA, not tracking liveness
+
+BB#0: derived from LLVM BB %0
+	%R0<def> = t2MOVi16 <ga:@img>[TF=1], pred:14, pred:%noreg
+	%R0<def,tied1> = t2MOVTi16 %R0<tied0>, <ga:@img>[TF=2], pred:14, pred:%noreg
+	%R0<def> = tLDRi %R0<kill>, 0, pred:14, pred:%noreg; mem:LD4[@img]
+	%R1<def> = tLDRi %R0<kill>, 6, pred:14, pred:%noreg; mem:LD4[%2](align=8)
+	%R0<def>, %CPSR<def,dead> = tMOVi8 0, pred:14, pred:%noreg
+	tCMPi8 %R1<kill>, 2, pred:14, pred:%noreg, %CPSR<imp-def>
+	t2Bcc <BB#2>, pred:1, pred:%CPSR<kill>
+	t2B <BB#1>, pred:14, pred:%noreg
+    Successors according to CFG: BB#1(0x40000000 / 0x80000000 = 50.00%) BB#2(0x40000000 / 0x80000000 = 50.00%)
+
+BB#1: derived from LLVM BB %5
+    Live Ins: %R0
+    Predecessors according to CFG: BB#0
+	%R1<def> = t2MOVi16 <ga:@seiRandomAccess>[TF=1], pred:14, pred:%noreg
+	%R1<def,tied1> = t2MOVTi16 %R1<tied0>, <ga:@seiRandomAccess>[TF=2], pred:14, pred:%noreg
+	%R2<def> = t2MOVi 256, pred:14, pred:%noreg, opt:%noreg
+	tSTRHi %R2<kill>, %R1, 0, pred:14, pred:%noreg; mem:ST2[getelementptr inbounds (%struct.randomaccess_information_struct.1391, %struct.randomaccess_information_struct.1391* @seiRandomAccess, i32 0, i32 0)](align=4)
+	tSTRBi %R0<kill>, %R1<kill>, 2, pred:14, pred:%noreg; mem:ST1[getelementptr inbounds (%struct.randomaccess_information_struct.1391, %struct.randomaccess_information_struct.1391* @seiRandomAccess, i32 0, i32 2)](align=2)
+	%R0<def>, %CPSR<def,dead> = tMOVi8 1, pred:14, pred:%noreg
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %6
+    Live Ins: %R0
+    Predecessors according to CFG: BB#0 BB#1
+	%R1<def> = t2MOVi16 <ga:@seiHasRandomAccess_info>[TF=1], pred:14, pred:%noreg
+	%R1<def,tied1> = t2MOVTi16 %R1<tied0>, <ga:@seiHasRandomAccess_info>[TF=2], pred:14, pred:%noreg
+	tSTRi %R0<kill>, %R1<kill>, 0, pred:14, pred:%noreg; mem:ST4[@seiHasRandomAccess_info]
+	tBX_RET pred:14, pred:%noreg
+
+# End machine code for function UpdateRandomAccess.
+

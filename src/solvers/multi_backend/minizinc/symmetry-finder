@@ -1,0 +1,33 @@
+#!/bin/bash
+# assuming current directory is ../../.. i.e. .../src
+mzn='mzn-gecode'
+gc='true'
+ncores='1'
+BASENAME=$(basename $1 .ext.json)
+EXTJSON=$1
+shift
+while [ $# -gt  0 ]; do
+    opt="$1"
+    shift
+    case "${opt}" in
+      --gecode)
+        mzn='mzn-gecode'
+        gc='true'
+      ;;
+      --sicstus)
+        mzn='mzn-sicstus'
+        gc='true'
+      ;;
+      --cpx)
+        mzn='mzn-g12cpx'
+        gc='false'
+      ;;
+      -p)
+	ncores=$1
+	shift
+      ;;
+    esac
+done
+echo "json2dzn('${EXTJSON}')." | sicstus -f --nologo --noinfo -l solvers/multi_backend/minizinc/solution2dzn.pl
+cp solvers/multi_backend/minizinc/symmetry-finder.mzn .
+time ${mzn} -s -k -a -p ${ncores} --no-optimize -D good_cumulative=${gc} symmetry-finder.mzn $BASENAME.dzn 

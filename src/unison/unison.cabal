@@ -1,0 +1,274 @@
+Name:           unison
+Version:        0
+Cabal-Version:  >= 1.8
+License:        BSD3
+License-file:   LICENSE
+Author:         Roberto Castaneda Lozano <rcas@sics.se>
+Maintainer:     Roberto Castaneda Lozano <rcas@sics.se>
+Synopsis:       A package for constraint-based code generation
+Category:       Language, Compiler, Code generation, Program Transformation
+Build-Type:     Simple
+Description:    This package provides two low-level program representations:
+                the Unison IR, and LLVM's Machine IR which is used to interface
+                Unison. The package provides transformations on these
+                representations to support constraint-based code generation, see
+                http://unison-code.github.io
+
+Library
+
+  Hs-source-dirs:  src
+  Exposed-Modules: Unison
+
+                   Unison.Base
+                   Unison.Constructors
+                   Unison.Predicates
+                   Unison.Instances
+                   Unison.Util
+                   Unison.Parser
+                   Unison.Driver
+                   Unison.Target
+
+                   Unison.Target.API
+                   Unison.Target.RegisterArray
+                   Unison.Target.Query
+                   Unison.Target.Hexagon
+                   Unison.Target.ARM
+                   Unison.Target.Mips
+
+                   Unison.Graphs.Util
+                   Unison.Graphs.BCFG
+                   Unison.Graphs.ICFG
+                   Unison.Graphs.DT
+                   Unison.Graphs.SG
+                   Unison.Graphs.DG
+                   Unison.Graphs.CG
+                   Unison.Graphs.OG
+                   Unison.Graphs.PG
+                   Unison.Graphs.Hoopl
+                   Unison.Graphs.Hoopl.Liveness
+                   Unison.Graphs.Hoopl.ReachingConstants
+                   Unison.Graphs.Hoopl.ReachingDefinitions
+                   Unison.Graphs.Partition
+                   Unison.Graphs.ThirdParty
+
+                   Unison.Construction.AddDelimiters
+                   Unison.Construction.BuildFunction
+
+                   Unison.Transformations.RenameTemps
+                   Unison.Transformations.RenameMOperands
+                   Unison.Transformations.RenameBlocks
+                   Unison.Transformations.SortGlobalTemps
+                   Unison.Transformations.RenameOperations
+                   Unison.Transformations.PostponeBranches
+                   Unison.Transformations.PropagatePhiCongruences
+                   Unison.Transformations.EstimateFrequency
+                   Unison.Transformations.NormalizeFrequency
+                   Unison.Transformations.FinalizeOperations
+                   Unison.Transformations.UnbundleSingletons
+                   Unison.Transformations.CleanPragmas
+                   Unison.Transformations.AddPragmas
+
+                   Unison.Analysis.FrequencyEstimation
+                   Unison.Analysis.TemporaryType
+                   Unison.Analysis.CallingConvention
+                   Unison.Analysis.BoundaryTemporaries
+                   Unison.Analysis.CopyRelated
+                   Unison.Analysis.MakespanBounds
+                   Unison.Analysis.TransitiveOperations
+                   Unison.Analysis.Stalls
+                   Unison.Analysis.FrameOffsets
+
+                   Unison.Test.Driver
+                   Unison.Test.Invariants
+
+                   Unison.Tools.Import
+                   Unison.Tools.Linearize
+                   Unison.Tools.Extend
+                   Unison.Tools.Augment
+                   Unison.Tools.Model
+                   Unison.Tools.Export
+                   Unison.Tools.Analyze
+                   Unison.Tools.Normalize
+                   Unison.Tools.Lint
+                   Unison.Tools.Count
+                   Unison.Tools.Plot
+                   Unison.Tools.Legalize
+                   Unison.Tools.Run
+                   Unison.Tools.Uni
+                   Unison.Tools.UniArgs
+
+                   MachineIR
+                   MachineIR.Base
+                   MachineIR.Constructors
+                   MachineIR.Util
+                   MachineIR.Predicates
+                   MachineIR.Parser
+                   MachineIR.Instances
+
+                   MachineIR.Transformations.SplitTerminators
+                   MachineIR.Transformations.LiftCustomProperties
+                   MachineIR.Transformations.LiftJumpTables
+                   MachineIR.Transformations.DropExplicitFallthroughs
+                   MachineIR.Transformations.RenameMachineBlocks
+                   MachineIR.Transformations.RemoveEmptyBlocks
+                   MachineIR.Transformations.SimplifyFallthroughs
+                   MachineIR.Transformations.PrepareForEmission
+
+                   Common.Util
+
+  Other-modules:  Unison.Tools.Import.AdjustPhiLabels
+                  Unison.Tools.Import.CorrectDoubleBranches
+                  Unison.Tools.Import.DropDebugLocations
+                  Unison.Tools.Import.NormalizePhis
+                  Unison.Tools.Import.LiftMemoryPartitions
+                  Unison.Tools.Import.DropEHLabels
+                  Unison.Tools.Import.EnforceCalleeSaved
+                  Unison.Tools.Import.EnforceCallerSaved
+                  Unison.Tools.Import.ExtractCallRegs
+                  Unison.Tools.Import.LiftRegs
+                  Unison.Tools.Import.RunTargetTransforms
+                  Unison.Tools.Import.ExtractRegs
+                  Unison.Tools.Import.ExtractSubRegs
+                  Unison.Tools.Import.FoldCopies
+                  Unison.Tools.Import.ImplementFrameOperations
+                  Unison.Tools.Import.KillUnusedTemps
+                  Unison.Tools.Import.LiftUndefRegs
+                  Unison.Tools.Import.LowerInsertSubRegs
+                  Unison.Tools.Import.LowerSubRegVirtuals
+                  Unison.Tools.Import.RelocateDefines
+                  Unison.Tools.Import.RemoveUselessVirtuals
+                  Unison.Tools.Import.RepairCSSA
+                  Unison.Tools.Import.AdvancePhis
+                  Unison.Tools.Import.ReserveRegs
+                  Unison.Tools.Import.RunPreProcess
+                  Unison.Tools.Import.SimplifyCombinations
+                  Unison.Tools.Import.SplitBlocks
+                  Unison.Tools.Linearize.SinkLiveOuts
+                  Unison.Tools.Linearize.SourceLiveIns
+                  Unison.Tools.Linearize.RemovePhis
+                  Unison.Tools.Linearize.NormalizeCongruences
+                  Unison.Tools.Linearize.AddReflexiveCongruences
+                  Unison.Tools.Extend.ExtendWithCopies
+                  Unison.Tools.Extend.CleanCongruences
+                  Unison.Tools.Extend.SortCopies
+                  Unison.Tools.Extend.GroupCalls
+                  Unison.Tools.Augment.AddReadWrites
+                  Unison.Tools.Augment.GeneralizeCongruences
+                  Unison.Tools.Augment.GeneralizeOperands
+                  Unison.Tools.Augment.LiftMemInfo
+                  Unison.Tools.Augment.AugmentOperands
+                  Unison.Tools.Augment.MoveUpPacks
+                  Unison.Tools.Augment.ExpandCopies
+                  Unison.Tools.Augment.AddRematerialization
+                  Unison.Tools.Augment.AddPrologueEpilogue
+                  Unison.Tools.Augment.CleanAttributes
+                  Unison.Tools.Model.Definitions
+                  Unison.Tools.Model.PresolverParameters
+                  Unison.Tools.Model.InstructionScheduling
+                  Unison.Tools.Model.RegisterAllocation
+                  Unison.Tools.Model.Presolver
+                  Unison.Tools.Export.SelectTemporaries
+                  Unison.Tools.Export.AssignRegisters
+                  Unison.Tools.Export.RemoveRedundancies
+                  Unison.Tools.Export.BundleOperations
+                  Unison.Tools.Export.SelectInstructions
+                  Unison.Tools.Export.LiftFrameObjects
+                  Unison.Tools.Export.ComputeFrameOffsets
+                  Unison.Tools.Export.DirectFrame
+                  Unison.Tools.Export.LowerFrameIndices
+                  Unison.Tools.Export.RemoveNops
+                  Unison.Tools.Export.RunPostProcess
+                  Unison.Tools.Export.CleanNops
+                  Unison.Tools.Analyze.GoalParser
+                  Unison.Tools.Analyze.InsertNops
+                  Unison.Tools.Analyze.InsertFuns
+                  Unison.Tools.Analyze.ComputeGoal
+
+                  Unison.Target.Hexagon.Common
+                  Unison.Target.Hexagon.Registers
+                  Unison.Target.Hexagon.Transforms
+                  Unison.Target.Hexagon.HexagonRegisterDecl
+                  Unison.Target.Hexagon.HexagonRegisterClassDecl
+                  Unison.Target.Hexagon.SpecsGen
+                  Unison.Target.Hexagon.SpecsGen.HexagonInstructionDecl
+                  Unison.Target.Hexagon.SpecsGen.HexagonItineraryDecl
+                  Unison.Target.Hexagon.SpecsGen.ReadWriteInfo
+                  Unison.Target.Hexagon.SpecsGen.OperandInfo
+                  Unison.Target.Hexagon.SpecsGen.ReadOp
+                  Unison.Target.Hexagon.SpecsGen.ShowInstance
+                  Unison.Target.Hexagon.SpecsGen.Itinerary
+                  Unison.Target.Hexagon.SpecsGen.InstructionType
+                  Unison.Target.Hexagon.SpecsGen.AlignedPairs
+
+                  Unison.Target.ARM.Common
+                  Unison.Target.ARM.Registers
+                  Unison.Target.ARM.OperandInfo
+                  Unison.Target.ARM.Transforms
+                  Unison.Target.ARM.ARMRegisterDecl
+                  Unison.Target.ARM.ARMRegisterClassDecl
+                  Unison.Target.ARM.SpecsGen
+                  Unison.Target.ARM.SpecsGen.ARMInstructionDecl
+                  Unison.Target.ARM.SpecsGen.ARMItineraryDecl
+                  Unison.Target.ARM.SpecsGen.ReadWriteInfo
+                  Unison.Target.ARM.SpecsGen.OperandInfo
+                  Unison.Target.ARM.SpecsGen.ReadOp
+                  Unison.Target.ARM.SpecsGen.ShowInstance
+                  Unison.Target.ARM.SpecsGen.Itinerary
+                  Unison.Target.ARM.SpecsGen.InstructionType
+                  Unison.Target.ARM.SpecsGen.AlignedPairs
+                  Unison.Target.ARM.SpecsGen.Size
+
+                  Unison.Target.Mips.Registers
+                  Unison.Target.Mips.Transforms
+                  Unison.Target.Mips.MipsRegisterDecl
+                  Unison.Target.Mips.MipsRegisterClassDecl
+                  Unison.Target.Mips.SpecsGen
+                  Unison.Target.Mips.SpecsGen.MipsInstructionDecl
+                  Unison.Target.Mips.SpecsGen.MipsItineraryDecl
+                  Unison.Target.Mips.SpecsGen.ReadWriteInfo
+                  Unison.Target.Mips.SpecsGen.OperandInfo
+                  Unison.Target.Mips.SpecsGen.ReadOp
+                  Unison.Target.Mips.SpecsGen.ShowInstance
+                  Unison.Target.Mips.SpecsGen.Itinerary
+                  Unison.Target.Mips.SpecsGen.InstructionType
+                  Unison.Target.Mips.SpecsGen.AlignedPairs
+                  Unison.Target.Mips.SpecsGen.Size
+                  Unison.Target.Mips.SpecsGen.AllInstructions
+                  Unison.Target.Mips.SpecsGen.Parent
+
+  Build-Depends: base >= 4.0,
+                 fgl >= 5.4,
+                 pretty >= 1.0,
+                 graphviz >= 2999.17,
+                 parsec >= 3.1,
+                 split >= 0.1,
+                 containers >= 0.3,
+                 hoopl >= 3.9,
+                 filepath >= 1.1,
+                 text >= 0.11,
+                 cmdargs >= 0.10,
+                 aeson >= 0.7,
+                 aeson-pretty >= 0.7,
+                 bytestring >= 0.9,
+                 unordered-containers >= 0.2,
+                 yaml >= 0.8,
+                 scientific >= 0.3,
+                 directory >= 1.2,
+                 process >= 1.2,
+                 HUnit
+
+  Ghc-options: -fwarn-dodgy-exports -fwarn-dodgy-imports -fwarn-unused-matches
+               -fwarn-unused-imports -fwarn-unused-binds -O2
+
+Executable uni
+
+  Hs-source-dirs: exec/uni
+  Main-is:        Main.hs
+  Build-depends:  unison, base
+  Ghc-options:    -rtsopts
+
+Test-Suite regression
+  Hs-source-dirs: test
+  Type:           exitcode-stdio-1.0
+  Main-is:        Main.hs
+  Build-depends:  unison, base

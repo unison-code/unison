@@ -1,0 +1,1093 @@
+# After Instruction Selection:
+# Machine code for function get_last_player: SSA
+Function Live Ins: %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %T9 %V0
+	%vreg4<def> = ADDu %V0, %T9; GPR32:%vreg4
+	%vreg5<def> = LW %vreg4, <ga:@move_history_pointer>[TF=1]; mem:LD4[GOT] GPR32:%vreg5,%vreg4
+	%vreg0<def> = LW %vreg5<kill>, 0; mem:LD4[@move_history_pointer] GPR32:%vreg0,%vreg5
+	%vreg3<def> = ADDiu %ZERO, 0; GPR32:%vreg3
+	BEQ %vreg0, %ZERO, <BB#2>, %AT<imp-def,dead>; GPR32:%vreg0
+	B <BB#1>, %AT<imp-def,dead>
+    Successors according to CFG: BB#2(0x30000000 / 0x80000000 = 37.50%) BB#1(0x50000000 / 0x80000000 = 62.50%)
+
+BB#1: derived from LLVM BB %3
+    Predecessors according to CFG: BB#0
+	%vreg6<def> = SLL %vreg0, 2; GPR32:%vreg6,%vreg0
+	%vreg7<def> = LW %vreg4, <ga:@move_history_color>[TF=1]; mem:LD4[GOT] GPR32:%vreg7,%vreg4
+	%vreg8<def> = ADDu %vreg6<kill>, %vreg7<kill>; GPR32:%vreg8,%vreg6,%vreg7
+	%vreg1<def> = LW %vreg8<kill>, -4; mem:LD4[%5] GPR32:%vreg1,%vreg8
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %7
+    Predecessors according to CFG: BB#0 BB#1
+	%vreg2<def> = PHI %vreg3, <BB#0>, %vreg1, <BB#1>; GPR32:%vreg2,%vreg3,%vreg1
+	%V0<def> = COPY %vreg2; GPR32:%vreg2
+	RetRA %V0<imp-use>
+
+# End machine code for function get_last_player.
+
+# After Expand ISel Pseudo-instructions:
+# Machine code for function get_last_player: SSA
+Function Live Ins: %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %T9 %V0
+	%vreg4<def> = ADDu %V0, %T9; GPR32:%vreg4
+	%vreg5<def> = LW %vreg4, <ga:@move_history_pointer>[TF=1]; mem:LD4[GOT] GPR32:%vreg5,%vreg4
+	%vreg0<def> = LW %vreg5<kill>, 0; mem:LD4[@move_history_pointer] GPR32:%vreg0,%vreg5
+	%vreg3<def> = ADDiu %ZERO, 0; GPR32:%vreg3
+	BEQ %vreg0, %ZERO, <BB#2>, %AT<imp-def,dead>; GPR32:%vreg0
+	B <BB#1>, %AT<imp-def,dead>
+    Successors according to CFG: BB#2(0x30000000 / 0x80000000 = 37.50%) BB#1(0x50000000 / 0x80000000 = 62.50%)
+
+BB#1: derived from LLVM BB %3
+    Predecessors according to CFG: BB#0
+	%vreg6<def> = SLL %vreg0, 2; GPR32:%vreg6,%vreg0
+	%vreg7<def> = LW %vreg4, <ga:@move_history_color>[TF=1]; mem:LD4[GOT] GPR32:%vreg7,%vreg4
+	%vreg8<def> = ADDu %vreg6<kill>, %vreg7<kill>; GPR32:%vreg8,%vreg6,%vreg7
+	%vreg1<def> = LW %vreg8<kill>, -4; mem:LD4[%5] GPR32:%vreg1,%vreg8
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %7
+    Predecessors according to CFG: BB#0 BB#1
+	%vreg2<def> = PHI %vreg3, <BB#0>, %vreg1, <BB#1>; GPR32:%vreg2,%vreg3,%vreg1
+	%V0<def> = COPY %vreg2; GPR32:%vreg2
+	RetRA %V0<imp-use>
+
+# End machine code for function get_last_player.
+
+# After Mips OptimizePICCall:
+# Machine code for function get_last_player: SSA
+Function Live Ins: %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %T9 %V0
+	%vreg4<def> = ADDu %V0, %T9; GPR32:%vreg4
+	%vreg5<def> = LW %vreg4, <ga:@move_history_pointer>[TF=1]; mem:LD4[GOT] GPR32:%vreg5,%vreg4
+	%vreg0<def> = LW %vreg5<kill>, 0; mem:LD4[@move_history_pointer] GPR32:%vreg0,%vreg5
+	%vreg3<def> = ADDiu %ZERO, 0; GPR32:%vreg3
+	BEQ %vreg0, %ZERO, <BB#2>, %AT<imp-def,dead>; GPR32:%vreg0
+	B <BB#1>, %AT<imp-def,dead>
+    Successors according to CFG: BB#2(0x30000000 / 0x80000000 = 37.50%) BB#1(0x50000000 / 0x80000000 = 62.50%)
+
+BB#1: derived from LLVM BB %3
+    Predecessors according to CFG: BB#0
+	%vreg6<def> = SLL %vreg0, 2; GPR32:%vreg6,%vreg0
+	%vreg7<def> = LW %vreg4, <ga:@move_history_color>[TF=1]; mem:LD4[GOT] GPR32:%vreg7,%vreg4
+	%vreg8<def> = ADDu %vreg6<kill>, %vreg7<kill>; GPR32:%vreg8,%vreg6,%vreg7
+	%vreg1<def> = LW %vreg8<kill>, -4; mem:LD4[%5] GPR32:%vreg1,%vreg8
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %7
+    Predecessors according to CFG: BB#0 BB#1
+	%vreg2<def> = PHI %vreg3, <BB#0>, %vreg1, <BB#1>; GPR32:%vreg2,%vreg3,%vreg1
+	%V0<def> = COPY %vreg2; GPR32:%vreg2
+	RetRA %V0<imp-use>
+
+# End machine code for function get_last_player.
+
+# After Tail Duplication:
+# Machine code for function get_last_player: SSA
+Function Live Ins: %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %T9 %V0
+	%vreg4<def> = ADDu %V0, %T9; GPR32:%vreg4
+	%vreg5<def> = LW %vreg4, <ga:@move_history_pointer>[TF=1]; mem:LD4[GOT] GPR32:%vreg5,%vreg4
+	%vreg0<def> = LW %vreg5<kill>, 0; mem:LD4[@move_history_pointer] GPR32:%vreg0,%vreg5
+	%vreg3<def> = ADDiu %ZERO, 0; GPR32:%vreg3
+	BEQ %vreg0, %ZERO, <BB#2>, %AT<imp-def,dead>; GPR32:%vreg0
+	B <BB#1>, %AT<imp-def,dead>
+    Successors according to CFG: BB#2(0x30000000 / 0x80000000 = 37.50%) BB#1(0x50000000 / 0x80000000 = 62.50%)
+
+BB#1: derived from LLVM BB %3
+    Predecessors according to CFG: BB#0
+	%vreg6<def> = SLL %vreg0, 2; GPR32:%vreg6,%vreg0
+	%vreg7<def> = LW %vreg4, <ga:@move_history_color>[TF=1]; mem:LD4[GOT] GPR32:%vreg7,%vreg4
+	%vreg8<def> = ADDu %vreg6<kill>, %vreg7<kill>; GPR32:%vreg8,%vreg6,%vreg7
+	%vreg1<def> = LW %vreg8<kill>, -4; mem:LD4[%5] GPR32:%vreg1,%vreg8
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %7
+    Predecessors according to CFG: BB#0 BB#1
+	%vreg2<def> = PHI %vreg3, <BB#0>, %vreg1, <BB#1>; GPR32:%vreg2,%vreg3,%vreg1
+	%V0<def> = COPY %vreg2; GPR32:%vreg2
+	RetRA %V0<imp-use>
+
+# End machine code for function get_last_player.
+
+# After Optimize machine instruction PHIs:
+# Machine code for function get_last_player: SSA
+Function Live Ins: %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %T9 %V0
+	%vreg4<def> = ADDu %V0, %T9; GPR32:%vreg4
+	%vreg5<def> = LW %vreg4, <ga:@move_history_pointer>[TF=1]; mem:LD4[GOT] GPR32:%vreg5,%vreg4
+	%vreg0<def> = LW %vreg5<kill>, 0; mem:LD4[@move_history_pointer] GPR32:%vreg0,%vreg5
+	%vreg3<def> = ADDiu %ZERO, 0; GPR32:%vreg3
+	BEQ %vreg0, %ZERO, <BB#2>, %AT<imp-def,dead>; GPR32:%vreg0
+	B <BB#1>, %AT<imp-def,dead>
+    Successors according to CFG: BB#2(0x30000000 / 0x80000000 = 37.50%) BB#1(0x50000000 / 0x80000000 = 62.50%)
+
+BB#1: derived from LLVM BB %3
+    Predecessors according to CFG: BB#0
+	%vreg6<def> = SLL %vreg0, 2; GPR32:%vreg6,%vreg0
+	%vreg7<def> = LW %vreg4, <ga:@move_history_color>[TF=1]; mem:LD4[GOT] GPR32:%vreg7,%vreg4
+	%vreg8<def> = ADDu %vreg6<kill>, %vreg7<kill>; GPR32:%vreg8,%vreg6,%vreg7
+	%vreg1<def> = LW %vreg8<kill>, -4; mem:LD4[%5] GPR32:%vreg1,%vreg8
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %7
+    Predecessors according to CFG: BB#0 BB#1
+	%vreg2<def> = PHI %vreg3, <BB#0>, %vreg1, <BB#1>; GPR32:%vreg2,%vreg3,%vreg1
+	%V0<def> = COPY %vreg2; GPR32:%vreg2
+	RetRA %V0<imp-use>
+
+# End machine code for function get_last_player.
+
+# After Merge disjoint stack slots:
+# Machine code for function get_last_player: SSA
+Function Live Ins: %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %T9 %V0
+	%vreg4<def> = ADDu %V0, %T9; GPR32:%vreg4
+	%vreg5<def> = LW %vreg4, <ga:@move_history_pointer>[TF=1]; mem:LD4[GOT] GPR32:%vreg5,%vreg4
+	%vreg0<def> = LW %vreg5<kill>, 0; mem:LD4[@move_history_pointer] GPR32:%vreg0,%vreg5
+	%vreg3<def> = ADDiu %ZERO, 0; GPR32:%vreg3
+	BEQ %vreg0, %ZERO, <BB#2>, %AT<imp-def,dead>; GPR32:%vreg0
+	B <BB#1>, %AT<imp-def,dead>
+    Successors according to CFG: BB#2(0x30000000 / 0x80000000 = 37.50%) BB#1(0x50000000 / 0x80000000 = 62.50%)
+
+BB#1: derived from LLVM BB %3
+    Predecessors according to CFG: BB#0
+	%vreg6<def> = SLL %vreg0, 2; GPR32:%vreg6,%vreg0
+	%vreg7<def> = LW %vreg4, <ga:@move_history_color>[TF=1]; mem:LD4[GOT] GPR32:%vreg7,%vreg4
+	%vreg8<def> = ADDu %vreg6<kill>, %vreg7<kill>; GPR32:%vreg8,%vreg6,%vreg7
+	%vreg1<def> = LW %vreg8<kill>, -4; mem:LD4[%5] GPR32:%vreg1,%vreg8
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %7
+    Predecessors according to CFG: BB#0 BB#1
+	%vreg2<def> = PHI %vreg3, <BB#0>, %vreg1, <BB#1>; GPR32:%vreg2,%vreg3,%vreg1
+	%V0<def> = COPY %vreg2; GPR32:%vreg2
+	RetRA %V0<imp-use>
+
+# End machine code for function get_last_player.
+
+# After Local Stack Slot Allocation:
+# Machine code for function get_last_player: SSA
+Function Live Ins: %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %T9 %V0
+	%vreg4<def> = ADDu %V0, %T9; GPR32:%vreg4
+	%vreg5<def> = LW %vreg4, <ga:@move_history_pointer>[TF=1]; mem:LD4[GOT] GPR32:%vreg5,%vreg4
+	%vreg0<def> = LW %vreg5<kill>, 0; mem:LD4[@move_history_pointer] GPR32:%vreg0,%vreg5
+	%vreg3<def> = ADDiu %ZERO, 0; GPR32:%vreg3
+	BEQ %vreg0, %ZERO, <BB#2>, %AT<imp-def,dead>; GPR32:%vreg0
+	B <BB#1>, %AT<imp-def,dead>
+    Successors according to CFG: BB#2(0x30000000 / 0x80000000 = 37.50%) BB#1(0x50000000 / 0x80000000 = 62.50%)
+
+BB#1: derived from LLVM BB %3
+    Predecessors according to CFG: BB#0
+	%vreg6<def> = SLL %vreg0, 2; GPR32:%vreg6,%vreg0
+	%vreg7<def> = LW %vreg4, <ga:@move_history_color>[TF=1]; mem:LD4[GOT] GPR32:%vreg7,%vreg4
+	%vreg8<def> = ADDu %vreg6<kill>, %vreg7<kill>; GPR32:%vreg8,%vreg6,%vreg7
+	%vreg1<def> = LW %vreg8<kill>, -4; mem:LD4[%5] GPR32:%vreg1,%vreg8
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %7
+    Predecessors according to CFG: BB#0 BB#1
+	%vreg2<def> = PHI %vreg3, <BB#0>, %vreg1, <BB#1>; GPR32:%vreg2,%vreg3,%vreg1
+	%V0<def> = COPY %vreg2; GPR32:%vreg2
+	RetRA %V0<imp-use>
+
+# End machine code for function get_last_player.
+
+# After Remove dead machine instructions:
+# Machine code for function get_last_player: SSA
+Function Live Ins: %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %T9 %V0
+	%vreg4<def> = ADDu %V0, %T9; GPR32:%vreg4
+	%vreg5<def> = LW %vreg4, <ga:@move_history_pointer>[TF=1]; mem:LD4[GOT] GPR32:%vreg5,%vreg4
+	%vreg0<def> = LW %vreg5<kill>, 0; mem:LD4[@move_history_pointer] GPR32:%vreg0,%vreg5
+	%vreg3<def> = ADDiu %ZERO, 0; GPR32:%vreg3
+	BEQ %vreg0, %ZERO, <BB#2>, %AT<imp-def,dead>; GPR32:%vreg0
+	B <BB#1>, %AT<imp-def,dead>
+    Successors according to CFG: BB#2(0x30000000 / 0x80000000 = 37.50%) BB#1(0x50000000 / 0x80000000 = 62.50%)
+
+BB#1: derived from LLVM BB %3
+    Predecessors according to CFG: BB#0
+	%vreg6<def> = SLL %vreg0, 2; GPR32:%vreg6,%vreg0
+	%vreg7<def> = LW %vreg4, <ga:@move_history_color>[TF=1]; mem:LD4[GOT] GPR32:%vreg7,%vreg4
+	%vreg8<def> = ADDu %vreg6<kill>, %vreg7<kill>; GPR32:%vreg8,%vreg6,%vreg7
+	%vreg1<def> = LW %vreg8<kill>, -4; mem:LD4[%5] GPR32:%vreg1,%vreg8
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %7
+    Predecessors according to CFG: BB#0 BB#1
+	%vreg2<def> = PHI %vreg3, <BB#0>, %vreg1, <BB#1>; GPR32:%vreg2,%vreg3,%vreg1
+	%V0<def> = COPY %vreg2; GPR32:%vreg2
+	RetRA %V0<imp-use>
+
+# End machine code for function get_last_player.
+
+# After Machine Loop Invariant Code Motion:
+# Machine code for function get_last_player: SSA
+Function Live Ins: %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %T9 %V0
+	%vreg4<def> = ADDu %V0, %T9; GPR32:%vreg4
+	%vreg5<def> = LW %vreg4, <ga:@move_history_pointer>[TF=1]; mem:LD4[GOT] GPR32:%vreg5,%vreg4
+	%vreg0<def> = LW %vreg5<kill>, 0; mem:LD4[@move_history_pointer] GPR32:%vreg0,%vreg5
+	%vreg3<def> = ADDiu %ZERO, 0; GPR32:%vreg3
+	BEQ %vreg0, %ZERO, <BB#2>, %AT<imp-def,dead>; GPR32:%vreg0
+	B <BB#1>, %AT<imp-def,dead>
+    Successors according to CFG: BB#2(0x30000000 / 0x80000000 = 37.50%) BB#1(0x50000000 / 0x80000000 = 62.50%)
+
+BB#1: derived from LLVM BB %3
+    Predecessors according to CFG: BB#0
+	%vreg6<def> = SLL %vreg0, 2; GPR32:%vreg6,%vreg0
+	%vreg7<def> = LW %vreg4, <ga:@move_history_color>[TF=1]; mem:LD4[GOT] GPR32:%vreg7,%vreg4
+	%vreg8<def> = ADDu %vreg6<kill>, %vreg7<kill>; GPR32:%vreg8,%vreg6,%vreg7
+	%vreg1<def> = LW %vreg8<kill>, -4; mem:LD4[%5] GPR32:%vreg1,%vreg8
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %7
+    Predecessors according to CFG: BB#0 BB#1
+	%vreg2<def> = PHI %vreg3, <BB#0>, %vreg1, <BB#1>; GPR32:%vreg2,%vreg3,%vreg1
+	%V0<def> = COPY %vreg2; GPR32:%vreg2
+	RetRA %V0<imp-use>
+
+# End machine code for function get_last_player.
+
+# After Machine Common Subexpression Elimination:
+# Machine code for function get_last_player: SSA
+Function Live Ins: %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %T9 %V0
+	%vreg4<def> = ADDu %V0, %T9; GPR32:%vreg4
+	%vreg5<def> = LW %vreg4, <ga:@move_history_pointer>[TF=1]; mem:LD4[GOT] GPR32:%vreg5,%vreg4
+	%vreg0<def> = LW %vreg5<kill>, 0; mem:LD4[@move_history_pointer] GPR32:%vreg0,%vreg5
+	%vreg3<def> = ADDiu %ZERO, 0; GPR32:%vreg3
+	BEQ %vreg0, %ZERO, <BB#2>, %AT<imp-def,dead>; GPR32:%vreg0
+	B <BB#1>, %AT<imp-def,dead>
+    Successors according to CFG: BB#2(0x30000000 / 0x80000000 = 37.50%) BB#1(0x50000000 / 0x80000000 = 62.50%)
+
+BB#1: derived from LLVM BB %3
+    Predecessors according to CFG: BB#0
+	%vreg6<def> = SLL %vreg0, 2; GPR32:%vreg6,%vreg0
+	%vreg7<def> = LW %vreg4, <ga:@move_history_color>[TF=1]; mem:LD4[GOT] GPR32:%vreg7,%vreg4
+	%vreg8<def> = ADDu %vreg6<kill>, %vreg7<kill>; GPR32:%vreg8,%vreg6,%vreg7
+	%vreg1<def> = LW %vreg8<kill>, -4; mem:LD4[%5] GPR32:%vreg1,%vreg8
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %7
+    Predecessors according to CFG: BB#0 BB#1
+	%vreg2<def> = PHI %vreg3, <BB#0>, %vreg1, <BB#1>; GPR32:%vreg2,%vreg3,%vreg1
+	%V0<def> = COPY %vreg2; GPR32:%vreg2
+	RetRA %V0<imp-use>
+
+# End machine code for function get_last_player.
+
+# After Machine code sinking:
+# Machine code for function get_last_player: SSA
+Function Live Ins: %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %T9 %V0
+	%vreg4<def> = ADDu %V0, %T9; GPR32:%vreg4
+	%vreg5<def> = LW %vreg4, <ga:@move_history_pointer>[TF=1]; mem:LD4[GOT] GPR32:%vreg5,%vreg4
+	%vreg0<def> = LW %vreg5<kill>, 0; mem:LD4[@move_history_pointer] GPR32:%vreg0,%vreg5
+	%vreg3<def> = ADDiu %ZERO, 0; GPR32:%vreg3
+	BEQ %vreg0, %ZERO, <BB#2>, %AT<imp-def,dead>; GPR32:%vreg0
+	B <BB#1>, %AT<imp-def,dead>
+    Successors according to CFG: BB#2(0x30000000 / 0x80000000 = 37.50%) BB#1(0x50000000 / 0x80000000 = 62.50%)
+
+BB#1: derived from LLVM BB %3
+    Predecessors according to CFG: BB#0
+	%vreg6<def> = SLL %vreg0, 2; GPR32:%vreg6,%vreg0
+	%vreg7<def> = LW %vreg4, <ga:@move_history_color>[TF=1]; mem:LD4[GOT] GPR32:%vreg7,%vreg4
+	%vreg8<def> = ADDu %vreg6<kill>, %vreg7<kill>; GPR32:%vreg8,%vreg6,%vreg7
+	%vreg1<def> = LW %vreg8<kill>, -4; mem:LD4[%5] GPR32:%vreg1,%vreg8
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %7
+    Predecessors according to CFG: BB#0 BB#1
+	%vreg2<def> = PHI %vreg3, <BB#0>, %vreg1, <BB#1>; GPR32:%vreg2,%vreg3,%vreg1
+	%V0<def> = COPY %vreg2; GPR32:%vreg2
+	RetRA %V0<imp-use>
+
+# End machine code for function get_last_player.
+
+# After Peephole Optimizations:
+# Machine code for function get_last_player: SSA
+Function Live Ins: %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %T9 %V0
+	%vreg4<def> = ADDu %V0, %T9; GPR32:%vreg4
+	%vreg5<def> = LW %vreg4, <ga:@move_history_pointer>[TF=1]; mem:LD4[GOT] GPR32:%vreg5,%vreg4
+	%vreg0<def> = LW %vreg5<kill>, 0; mem:LD4[@move_history_pointer] GPR32:%vreg0,%vreg5
+	%vreg3<def> = ADDiu %ZERO, 0; GPR32:%vreg3
+	BEQ %vreg0, %ZERO, <BB#2>, %AT<imp-def,dead>; GPR32:%vreg0
+	B <BB#1>, %AT<imp-def,dead>
+    Successors according to CFG: BB#2(0x30000000 / 0x80000000 = 37.50%) BB#1(0x50000000 / 0x80000000 = 62.50%)
+
+BB#1: derived from LLVM BB %3
+    Predecessors according to CFG: BB#0
+	%vreg6<def> = SLL %vreg0, 2; GPR32:%vreg6,%vreg0
+	%vreg7<def> = LW %vreg4, <ga:@move_history_color>[TF=1]; mem:LD4[GOT] GPR32:%vreg7,%vreg4
+	%vreg8<def> = ADDu %vreg6<kill>, %vreg7<kill>; GPR32:%vreg8,%vreg6,%vreg7
+	%vreg1<def> = LW %vreg8<kill>, -4; mem:LD4[%5] GPR32:%vreg1,%vreg8
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %7
+    Predecessors according to CFG: BB#0 BB#1
+	%vreg2<def> = PHI %vreg3, <BB#0>, %vreg1, <BB#1>; GPR32:%vreg2,%vreg3,%vreg1
+	%V0<def> = COPY %vreg2; GPR32:%vreg2
+	RetRA %V0<imp-use>
+
+# End machine code for function get_last_player.
+
+# After Remove dead machine instructions:
+# Machine code for function get_last_player: SSA
+Function Live Ins: %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %T9 %V0
+	%vreg4<def> = ADDu %V0, %T9; GPR32:%vreg4
+	%vreg5<def> = LW %vreg4, <ga:@move_history_pointer>[TF=1]; mem:LD4[GOT] GPR32:%vreg5,%vreg4
+	%vreg0<def> = LW %vreg5<kill>, 0; mem:LD4[@move_history_pointer] GPR32:%vreg0,%vreg5
+	%vreg3<def> = ADDiu %ZERO, 0; GPR32:%vreg3
+	BEQ %vreg0, %ZERO, <BB#2>, %AT<imp-def,dead>; GPR32:%vreg0
+	B <BB#1>, %AT<imp-def,dead>
+    Successors according to CFG: BB#2(0x30000000 / 0x80000000 = 37.50%) BB#1(0x50000000 / 0x80000000 = 62.50%)
+
+BB#1: derived from LLVM BB %3
+    Predecessors according to CFG: BB#0
+	%vreg6<def> = SLL %vreg0, 2; GPR32:%vreg6,%vreg0
+	%vreg7<def> = LW %vreg4, <ga:@move_history_color>[TF=1]; mem:LD4[GOT] GPR32:%vreg7,%vreg4
+	%vreg8<def> = ADDu %vreg6<kill>, %vreg7<kill>; GPR32:%vreg8,%vreg6,%vreg7
+	%vreg1<def> = LW %vreg8<kill>, -4; mem:LD4[%5] GPR32:%vreg1,%vreg8
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %7
+    Predecessors according to CFG: BB#0 BB#1
+	%vreg2<def> = PHI %vreg3, <BB#0>, %vreg1, <BB#1>; GPR32:%vreg2,%vreg3,%vreg1
+	%V0<def> = COPY %vreg2; GPR32:%vreg2
+	RetRA %V0<imp-use>
+
+# End machine code for function get_last_player.
+
+# After Process Implicit Definitions:
+# Machine code for function get_last_player: SSA
+Function Live Ins: %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %T9 %V0
+	%vreg4<def> = ADDu %V0, %T9; GPR32:%vreg4
+	%vreg5<def> = LW %vreg4, <ga:@move_history_pointer>[TF=1]; mem:LD4[GOT] GPR32:%vreg5,%vreg4
+	%vreg0<def> = LW %vreg5<kill>, 0; mem:LD4[@move_history_pointer] GPR32:%vreg0,%vreg5
+	%vreg3<def> = ADDiu %ZERO, 0; GPR32:%vreg3
+	BEQ %vreg0, %ZERO, <BB#2>, %AT<imp-def,dead>; GPR32:%vreg0
+	B <BB#1>, %AT<imp-def,dead>
+    Successors according to CFG: BB#2(0x30000000 / 0x80000000 = 37.50%) BB#1(0x50000000 / 0x80000000 = 62.50%)
+
+BB#1: derived from LLVM BB %3
+    Predecessors according to CFG: BB#0
+	%vreg6<def> = SLL %vreg0, 2; GPR32:%vreg6,%vreg0
+	%vreg7<def> = LW %vreg4, <ga:@move_history_color>[TF=1]; mem:LD4[GOT] GPR32:%vreg7,%vreg4
+	%vreg8<def> = ADDu %vreg6<kill>, %vreg7<kill>; GPR32:%vreg8,%vreg6,%vreg7
+	%vreg1<def> = LW %vreg8<kill>, -4; mem:LD4[%5] GPR32:%vreg1,%vreg8
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %7
+    Predecessors according to CFG: BB#0 BB#1
+	%vreg2<def> = PHI %vreg3, <BB#0>, %vreg1, <BB#1>; GPR32:%vreg2,%vreg3,%vreg1
+	%V0<def> = COPY %vreg2; GPR32:%vreg2
+	RetRA %V0<imp-use>
+
+# End machine code for function get_last_player.
+
+# After Live Variable Analysis:
+# Machine code for function get_last_player: SSA
+Function Live Ins: %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %T9 %V0
+	%vreg4<def> = ADDu %V0<kill>, %T9<kill>; GPR32:%vreg4
+	%vreg5<def> = LW %vreg4, <ga:@move_history_pointer>[TF=1]; mem:LD4[GOT] GPR32:%vreg5,%vreg4
+	%vreg0<def> = LW %vreg5<kill>, 0; mem:LD4[@move_history_pointer] GPR32:%vreg0,%vreg5
+	%vreg3<def> = ADDiu %ZERO, 0; GPR32:%vreg3
+	BEQ %vreg0, %ZERO, <BB#2>, %AT<imp-def,dead>; GPR32:%vreg0
+	B <BB#1>, %AT<imp-def,dead>
+    Successors according to CFG: BB#2(0x30000000 / 0x80000000 = 37.50%) BB#1(0x50000000 / 0x80000000 = 62.50%)
+
+BB#1: derived from LLVM BB %3
+    Predecessors according to CFG: BB#0
+	%vreg6<def> = SLL %vreg0<kill>, 2; GPR32:%vreg6,%vreg0
+	%vreg7<def> = LW %vreg4<kill>, <ga:@move_history_color>[TF=1]; mem:LD4[GOT] GPR32:%vreg7,%vreg4
+	%vreg8<def> = ADDu %vreg6<kill>, %vreg7<kill>; GPR32:%vreg8,%vreg6,%vreg7
+	%vreg1<def> = LW %vreg8<kill>, -4; mem:LD4[%5] GPR32:%vreg1,%vreg8
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %7
+    Predecessors according to CFG: BB#0 BB#1
+	%vreg2<def> = PHI %vreg3, <BB#0>, %vreg1, <BB#1>; GPR32:%vreg2,%vreg3,%vreg1
+	%V0<def> = COPY %vreg2<kill>; GPR32:%vreg2
+	RetRA %V0<imp-use,kill>
+
+# End machine code for function get_last_player.
+
+# After Machine Natural Loop Construction:
+# Machine code for function get_last_player: SSA
+Function Live Ins: %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %T9 %V0
+	%vreg4<def> = ADDu %V0<kill>, %T9<kill>; GPR32:%vreg4
+	%vreg5<def> = LW %vreg4, <ga:@move_history_pointer>[TF=1]; mem:LD4[GOT] GPR32:%vreg5,%vreg4
+	%vreg0<def> = LW %vreg5<kill>, 0; mem:LD4[@move_history_pointer] GPR32:%vreg0,%vreg5
+	%vreg3<def> = ADDiu %ZERO, 0; GPR32:%vreg3
+	BEQ %vreg0, %ZERO, <BB#2>, %AT<imp-def,dead>; GPR32:%vreg0
+	B <BB#1>, %AT<imp-def,dead>
+    Successors according to CFG: BB#2(0x30000000 / 0x80000000 = 37.50%) BB#1(0x50000000 / 0x80000000 = 62.50%)
+
+BB#1: derived from LLVM BB %3
+    Predecessors according to CFG: BB#0
+	%vreg6<def> = SLL %vreg0<kill>, 2; GPR32:%vreg6,%vreg0
+	%vreg7<def> = LW %vreg4<kill>, <ga:@move_history_color>[TF=1]; mem:LD4[GOT] GPR32:%vreg7,%vreg4
+	%vreg8<def> = ADDu %vreg6<kill>, %vreg7<kill>; GPR32:%vreg8,%vreg6,%vreg7
+	%vreg1<def> = LW %vreg8<kill>, -4; mem:LD4[%5] GPR32:%vreg1,%vreg8
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %7
+    Predecessors according to CFG: BB#0 BB#1
+	%vreg2<def> = PHI %vreg3, <BB#0>, %vreg1, <BB#1>; GPR32:%vreg2,%vreg3,%vreg1
+	%V0<def> = COPY %vreg2<kill>; GPR32:%vreg2
+	RetRA %V0<imp-use,kill>
+
+# End machine code for function get_last_player.
+
+# After Eliminate PHI nodes for register allocation:
+# Machine code for function get_last_player: Post SSA
+Function Live Ins: %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %T9 %V0
+	%vreg4<def> = ADDu %V0<kill>, %T9<kill>; GPR32:%vreg4
+	%vreg5<def> = LW %vreg4, <ga:@move_history_pointer>[TF=1]; mem:LD4[GOT] GPR32:%vreg5,%vreg4
+	%vreg0<def> = LW %vreg5<kill>, 0; mem:LD4[@move_history_pointer] GPR32:%vreg0,%vreg5
+	%vreg3<def> = ADDiu %ZERO, 0; GPR32:%vreg3
+	%vreg11<def> = COPY %vreg3<kill>; GPR32:%vreg11,%vreg3
+	BEQ %vreg0, %ZERO, <BB#2>, %AT<imp-def,dead>; GPR32:%vreg0
+	B <BB#1>, %AT<imp-def,dead>
+    Successors according to CFG: BB#2(0x30000000 / 0x80000000 = 37.50%) BB#1(0x50000000 / 0x80000000 = 62.50%)
+
+BB#1: derived from LLVM BB %3
+    Predecessors according to CFG: BB#0
+	%vreg6<def> = SLL %vreg0<kill>, 2; GPR32:%vreg6,%vreg0
+	%vreg7<def> = LW %vreg4<kill>, <ga:@move_history_color>[TF=1]; mem:LD4[GOT] GPR32:%vreg7,%vreg4
+	%vreg8<def> = ADDu %vreg6<kill>, %vreg7<kill>; GPR32:%vreg8,%vreg6,%vreg7
+	%vreg1<def> = LW %vreg8<kill>, -4; mem:LD4[%5] GPR32:%vreg1,%vreg8
+	%vreg11<def> = COPY %vreg1<kill>; GPR32:%vreg11,%vreg1
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %7
+    Predecessors according to CFG: BB#0 BB#1
+	%vreg2<def> = COPY %vreg11<kill>; GPR32:%vreg2,%vreg11
+	%V0<def> = COPY %vreg2<kill>; GPR32:%vreg2
+	RetRA %V0<imp-use,kill>
+
+# End machine code for function get_last_player.
+
+# After Two-Address instruction pass:
+# Machine code for function get_last_player: Post SSA
+Function Live Ins: %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %T9 %V0
+	%vreg4<def> = ADDu %V0<kill>, %T9<kill>; GPR32:%vreg4
+	%vreg5<def> = LW %vreg4, <ga:@move_history_pointer>[TF=1]; mem:LD4[GOT] GPR32:%vreg5,%vreg4
+	%vreg0<def> = LW %vreg5<kill>, 0; mem:LD4[@move_history_pointer] GPR32:%vreg0,%vreg5
+	%vreg3<def> = ADDiu %ZERO, 0; GPR32:%vreg3
+	%vreg11<def> = COPY %vreg3<kill>; GPR32:%vreg11,%vreg3
+	BEQ %vreg0, %ZERO, <BB#2>, %AT<imp-def,dead>; GPR32:%vreg0
+	B <BB#1>, %AT<imp-def,dead>
+    Successors according to CFG: BB#2(0x30000000 / 0x80000000 = 37.50%) BB#1(0x50000000 / 0x80000000 = 62.50%)
+
+BB#1: derived from LLVM BB %3
+    Predecessors according to CFG: BB#0
+	%vreg6<def> = SLL %vreg0<kill>, 2; GPR32:%vreg6,%vreg0
+	%vreg7<def> = LW %vreg4<kill>, <ga:@move_history_color>[TF=1]; mem:LD4[GOT] GPR32:%vreg7,%vreg4
+	%vreg8<def> = ADDu %vreg6<kill>, %vreg7<kill>; GPR32:%vreg8,%vreg6,%vreg7
+	%vreg1<def> = LW %vreg8<kill>, -4; mem:LD4[%5] GPR32:%vreg1,%vreg8
+	%vreg11<def> = COPY %vreg1<kill>; GPR32:%vreg11,%vreg1
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %7
+    Predecessors according to CFG: BB#0 BB#1
+	%vreg2<def> = COPY %vreg11<kill>; GPR32:%vreg2,%vreg11
+	%V0<def> = COPY %vreg2<kill>; GPR32:%vreg2
+	RetRA %V0<imp-use,kill>
+
+# End machine code for function get_last_player.
+
+# After Simple Register Coalescing:
+# Machine code for function get_last_player: Post SSA
+Function Live Ins: %T9, %V0
+
+0B	BB#0: derived from LLVM BB %0
+	    Live Ins: %T9 %V0
+16B		%vreg4<def> = ADDu %V0, %T9; GPR32:%vreg4
+32B		%vreg5<def> = LW %vreg4, <ga:@move_history_pointer>[TF=1]; mem:LD4[GOT] GPR32:%vreg5,%vreg4
+48B		%vreg0<def> = LW %vreg5, 0; mem:LD4[@move_history_pointer] GPR32:%vreg0,%vreg5
+64B		%vreg11<def> = ADDiu %ZERO, 0; GPR32:%vreg11
+96B		BEQ %vreg0, %ZERO, <BB#2>, %AT<imp-def,dead>; GPR32:%vreg0
+112B		B <BB#1>, %AT<imp-def,dead>
+	    Successors according to CFG: BB#2(0x30000000 / 0x80000000 = 37.50%) BB#1(0x50000000 / 0x80000000 = 62.50%)
+
+128B	BB#1: derived from LLVM BB %3
+	    Predecessors according to CFG: BB#0
+144B		%vreg6<def> = SLL %vreg0, 2; GPR32:%vreg6,%vreg0
+160B		%vreg7<def> = LW %vreg4, <ga:@move_history_color>[TF=1]; mem:LD4[GOT] GPR32:%vreg7,%vreg4
+176B		%vreg8<def> = ADDu %vreg6, %vreg7; GPR32:%vreg8,%vreg6,%vreg7
+192B		%vreg11<def> = LW %vreg8, -4; mem:LD4[%5] GPR32:%vreg11,%vreg8
+	    Successors according to CFG: BB#2(?%)
+
+224B	BB#2: derived from LLVM BB %7
+	    Predecessors according to CFG: BB#0 BB#1
+256B		%V0<def> = COPY %vreg11; GPR32:%vreg11
+272B		RetRA %V0<imp-use>
+
+# End machine code for function get_last_player.
+
+# After Machine Instruction Scheduler:
+# Machine code for function get_last_player: Post SSA
+Function Live Ins: %T9, %V0
+
+0B	BB#0: derived from LLVM BB %0
+	    Live Ins: %T9 %V0
+16B		%vreg4<def> = ADDu %V0, %T9; GPR32:%vreg4
+32B		%vreg5<def> = LW %vreg4, <ga:@move_history_pointer>[TF=1]; mem:LD4[GOT] GPR32:%vreg5,%vreg4
+48B		%vreg0<def> = LW %vreg5, 0; mem:LD4[@move_history_pointer] GPR32:%vreg0,%vreg5
+64B		%vreg11<def> = ADDiu %ZERO, 0; GPR32:%vreg11
+96B		BEQ %vreg0, %ZERO, <BB#2>, %AT<imp-def,dead>; GPR32:%vreg0
+112B		B <BB#1>, %AT<imp-def,dead>
+	    Successors according to CFG: BB#2(0x30000000 / 0x80000000 = 37.50%) BB#1(0x50000000 / 0x80000000 = 62.50%)
+
+128B	BB#1: derived from LLVM BB %3
+	    Predecessors according to CFG: BB#0
+144B		%vreg6<def> = SLL %vreg0, 2; GPR32:%vreg6,%vreg0
+160B		%vreg7<def> = LW %vreg4, <ga:@move_history_color>[TF=1]; mem:LD4[GOT] GPR32:%vreg7,%vreg4
+176B		%vreg8<def> = ADDu %vreg6, %vreg7; GPR32:%vreg8,%vreg6,%vreg7
+192B		%vreg11<def> = LW %vreg8, -4; mem:LD4[%5] GPR32:%vreg11,%vreg8
+	    Successors according to CFG: BB#2(?%)
+
+224B	BB#2: derived from LLVM BB %7
+	    Predecessors according to CFG: BB#0 BB#1
+256B		%V0<def> = COPY %vreg11; GPR32:%vreg11
+272B		RetRA %V0<imp-use>
+
+# End machine code for function get_last_player.
+
+# After Greedy Register Allocator:
+# Machine code for function get_last_player: Post SSA
+Function Live Ins: %T9, %V0
+
+0B	BB#0: derived from LLVM BB %0
+	    Live Ins: %T9 %V0
+16B		%vreg4<def> = ADDu %V0, %T9; GPR32:%vreg4
+32B		%vreg5<def> = LW %vreg4, <ga:@move_history_pointer>[TF=1]; mem:LD4[GOT] GPR32:%vreg5,%vreg4
+48B		%vreg0<def> = LW %vreg5, 0; mem:LD4[@move_history_pointer] GPR32:%vreg0,%vreg5
+64B		%vreg11<def> = ADDiu %ZERO, 0; GPR32:%vreg11
+96B		BEQ %vreg0, %ZERO, <BB#2>, %AT<imp-def,dead>; GPR32:%vreg0
+112B		B <BB#1>, %AT<imp-def,dead>
+	    Successors according to CFG: BB#2(0x30000000 / 0x80000000 = 37.50%) BB#1(0x50000000 / 0x80000000 = 62.50%)
+
+128B	BB#1: derived from LLVM BB %3
+	    Predecessors according to CFG: BB#0
+144B		%vreg6<def> = SLL %vreg0, 2; GPR32:%vreg6,%vreg0
+160B		%vreg7<def> = LW %vreg4, <ga:@move_history_color>[TF=1]; mem:LD4[GOT] GPR32:%vreg7,%vreg4
+176B		%vreg8<def> = ADDu %vreg6, %vreg7; GPR32:%vreg8,%vreg6,%vreg7
+192B		%vreg11<def> = LW %vreg8, -4; mem:LD4[%5] GPR32:%vreg11,%vreg8
+	    Successors according to CFG: BB#2(?%)
+
+224B	BB#2: derived from LLVM BB %7
+	    Predecessors according to CFG: BB#0 BB#1
+256B		%V0<def> = COPY %vreg11; GPR32:%vreg11
+272B		RetRA %V0<imp-use>
+
+# End machine code for function get_last_player.
+
+# After Virtual Register Rewriter:
+# Machine code for function get_last_player: Post SSA
+Function Live Ins: %T9, %V0
+
+0B	BB#0: derived from LLVM BB %0
+	    Live Ins: %T9 %V0
+16B		%V1<def> = ADDu %V0, %T9
+32B		%AT<def> = LW %V1, <ga:@move_history_pointer>[TF=1]; mem:LD4[GOT]
+48B		%A0<def> = LW %AT<kill>, 0; mem:LD4[@move_history_pointer]
+64B		%V0<def> = ADDiu %ZERO, 0
+96B		BEQ %A0, %ZERO, <BB#2>, %AT<imp-def,dead>
+112B		B <BB#1>, %AT<imp-def,dead>
+	    Successors according to CFG: BB#2(0x30000000 / 0x80000000 = 37.50%) BB#1(0x50000000 / 0x80000000 = 62.50%)
+
+128B	BB#1: derived from LLVM BB %3
+	    Live Ins: %A0 %V1
+	    Predecessors according to CFG: BB#0
+144B		%AT<def> = SLL %A0<kill>, 2
+160B		%V0<def> = LW %V1<kill>, <ga:@move_history_color>[TF=1]; mem:LD4[GOT]
+176B		%AT<def> = ADDu %AT<kill>, %V0<kill>
+192B		%V0<def> = LW %AT<kill>, -4; mem:LD4[%5]
+	    Successors according to CFG: BB#2(?%)
+
+224B	BB#2: derived from LLVM BB %7
+	    Live Ins: %V0
+	    Predecessors according to CFG: BB#0 BB#1
+272B		RetRA %V0<imp-use>
+
+# End machine code for function get_last_player.
+
+# After Stack Slot Coloring:
+# Machine code for function get_last_player: Post SSA
+Function Live Ins: %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %T9 %V0
+	%V1<def> = ADDu %V0, %T9
+	%AT<def> = LW %V1, <ga:@move_history_pointer>[TF=1]; mem:LD4[GOT]
+	%A0<def> = LW %AT<kill>, 0; mem:LD4[@move_history_pointer]
+	%V0<def> = ADDiu %ZERO, 0
+	BEQ %A0, %ZERO, <BB#2>, %AT<imp-def,dead>
+	B <BB#1>, %AT<imp-def,dead>
+    Successors according to CFG: BB#2(0x30000000 / 0x80000000 = 37.50%) BB#1(0x50000000 / 0x80000000 = 62.50%)
+
+BB#1: derived from LLVM BB %3
+    Live Ins: %A0 %V1
+    Predecessors according to CFG: BB#0
+	%AT<def> = SLL %A0<kill>, 2
+	%V0<def> = LW %V1<kill>, <ga:@move_history_color>[TF=1]; mem:LD4[GOT]
+	%AT<def> = ADDu %AT<kill>, %V0<kill>
+	%V0<def> = LW %AT<kill>, -4; mem:LD4[%5]
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %7
+    Live Ins: %V0
+    Predecessors according to CFG: BB#0 BB#1
+	RetRA %V0<imp-use>
+
+# End machine code for function get_last_player.
+
+# After Machine Loop Invariant Code Motion:
+# Machine code for function get_last_player: Post SSA
+Function Live Ins: %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %T9 %V0
+	%V1<def> = ADDu %V0, %T9
+	%AT<def> = LW %V1, <ga:@move_history_pointer>[TF=1]; mem:LD4[GOT]
+	%A0<def> = LW %AT<kill>, 0; mem:LD4[@move_history_pointer]
+	%V0<def> = ADDiu %ZERO, 0
+	BEQ %A0, %ZERO, <BB#2>, %AT<imp-def,dead>
+	B <BB#1>, %AT<imp-def,dead>
+    Successors according to CFG: BB#2(0x30000000 / 0x80000000 = 37.50%) BB#1(0x50000000 / 0x80000000 = 62.50%)
+
+BB#1: derived from LLVM BB %3
+    Live Ins: %A0 %V1
+    Predecessors according to CFG: BB#0
+	%AT<def> = SLL %A0<kill>, 2
+	%V0<def> = LW %V1<kill>, <ga:@move_history_color>[TF=1]; mem:LD4[GOT]
+	%AT<def> = ADDu %AT<kill>, %V0<kill>
+	%V0<def> = LW %AT<kill>, -4; mem:LD4[%5]
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %7
+    Live Ins: %V0
+    Predecessors according to CFG: BB#0 BB#1
+	RetRA %V0<imp-use>
+
+# End machine code for function get_last_player.
+
+# After Shrink Wrapping analysis:
+# Machine code for function get_last_player: Post SSA
+Function Live Ins: %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %T9 %V0
+	%V1<def> = ADDu %V0, %T9
+	%AT<def> = LW %V1, <ga:@move_history_pointer>[TF=1]; mem:LD4[GOT]
+	%A0<def> = LW %AT<kill>, 0; mem:LD4[@move_history_pointer]
+	%V0<def> = ADDiu %ZERO, 0
+	BEQ %A0, %ZERO, <BB#2>, %AT<imp-def,dead>
+	B <BB#1>, %AT<imp-def,dead>
+    Successors according to CFG: BB#2(0x30000000 / 0x80000000 = 37.50%) BB#1(0x50000000 / 0x80000000 = 62.50%)
+
+BB#1: derived from LLVM BB %3
+    Live Ins: %A0 %V1
+    Predecessors according to CFG: BB#0
+	%AT<def> = SLL %A0<kill>, 2
+	%V0<def> = LW %V1<kill>, <ga:@move_history_color>[TF=1]; mem:LD4[GOT]
+	%AT<def> = ADDu %AT<kill>, %V0<kill>
+	%V0<def> = LW %AT<kill>, -4; mem:LD4[%5]
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %7
+    Live Ins: %V0
+    Predecessors according to CFG: BB#0 BB#1
+	RetRA %V0<imp-use>
+
+# End machine code for function get_last_player.
+
+# After Prologue/Epilogue Insertion & Frame Finalization:
+# Machine code for function get_last_player: Post SSA
+Function Live Ins: %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %T9 %V0
+	%V1<def> = ADDu %V0, %T9
+	%AT<def> = LW %V1, <ga:@move_history_pointer>[TF=1]; mem:LD4[GOT]
+	%A0<def> = LW %AT<kill>, 0; mem:LD4[@move_history_pointer]
+	%V0<def> = ADDiu %ZERO, 0
+	BEQ %A0, %ZERO, <BB#2>, %AT<imp-def,dead>
+	B <BB#1>, %AT<imp-def,dead>
+    Successors according to CFG: BB#2(0x30000000 / 0x80000000 = 37.50%) BB#1(0x50000000 / 0x80000000 = 62.50%)
+
+BB#1: derived from LLVM BB %3
+    Live Ins: %A0 %V1
+    Predecessors according to CFG: BB#0
+	%AT<def> = SLL %A0<kill>, 2
+	%V0<def> = LW %V1<kill>, <ga:@move_history_color>[TF=1]; mem:LD4[GOT]
+	%AT<def> = ADDu %AT<kill>, %V0<kill>
+	%V0<def> = LW %AT<kill>, -4; mem:LD4[%5]
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %7
+    Live Ins: %V0
+    Predecessors according to CFG: BB#0 BB#1
+	RetRA %V0<imp-use>
+
+# End machine code for function get_last_player.
+
+# After Machine Copy Propagation Pass:
+# Machine code for function get_last_player: Post SSA
+Function Live Ins: %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %T9 %V0
+	%V1<def> = ADDu %V0, %T9
+	%AT<def> = LW %V1, <ga:@move_history_pointer>[TF=1]; mem:LD4[GOT]
+	%A0<def> = LW %AT<kill>, 0; mem:LD4[@move_history_pointer]
+	%V0<def> = ADDiu %ZERO, 0
+	BEQ %A0, %ZERO, <BB#2>, %AT<imp-def,dead>
+	B <BB#1>, %AT<imp-def,dead>
+    Successors according to CFG: BB#2(0x30000000 / 0x80000000 = 37.50%) BB#1(0x50000000 / 0x80000000 = 62.50%)
+
+BB#1: derived from LLVM BB %3
+    Live Ins: %A0 %V1
+    Predecessors according to CFG: BB#0
+	%AT<def> = SLL %A0<kill>, 2
+	%V0<def> = LW %V1<kill>, <ga:@move_history_color>[TF=1]; mem:LD4[GOT]
+	%AT<def> = ADDu %AT<kill>, %V0<kill>
+	%V0<def> = LW %AT<kill>, -4; mem:LD4[%5]
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %7
+    Live Ins: %V0
+    Predecessors according to CFG: BB#0 BB#1
+	RetRA %V0<imp-use>
+
+# End machine code for function get_last_player.
+
+# After Post-RA pseudo instruction expansion pass:
+# Machine code for function get_last_player: Post SSA
+Function Live Ins: %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %T9 %V0
+	%V1<def> = ADDu %V0, %T9
+	%AT<def> = LW %V1, <ga:@move_history_pointer>[TF=1]; mem:LD4[GOT]
+	%A0<def> = LW %AT<kill>, 0; mem:LD4[@move_history_pointer]
+	%V0<def> = ADDiu %ZERO, 0
+	BEQ %A0, %ZERO, <BB#2>, %AT<imp-def,dead>
+	B <BB#1>, %AT<imp-def,dead>
+    Successors according to CFG: BB#2(0x30000000 / 0x80000000 = 37.50%) BB#1(0x50000000 / 0x80000000 = 62.50%)
+
+BB#1: derived from LLVM BB %3
+    Live Ins: %A0 %V1
+    Predecessors according to CFG: BB#0
+	%AT<def> = SLL %A0<kill>, 2
+	%V0<def> = LW %V1<kill>, <ga:@move_history_color>[TF=1]; mem:LD4[GOT]
+	%AT<def> = ADDu %AT<kill>, %V0<kill>
+	%V0<def> = LW %AT<kill>, -4; mem:LD4[%5]
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %7
+    Live Ins: %V0
+    Predecessors according to CFG: BB#0 BB#1
+	PseudoReturn %RA
+
+# End machine code for function get_last_player.
+
+# After Analyze Machine Code For Garbage Collection:
+# Machine code for function get_last_player: Post SSA
+Function Live Ins: %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %T9 %V0
+	%V1<def> = ADDu %V0, %T9
+	%AT<def> = LW %V1, <ga:@move_history_pointer>[TF=1]; mem:LD4[GOT]
+	%A0<def> = LW %AT<kill>, 0; mem:LD4[@move_history_pointer]
+	%V0<def> = ADDiu %ZERO, 0
+	BEQ %A0, %ZERO, <BB#2>, %AT<imp-def,dead>
+	B <BB#1>, %AT<imp-def,dead>
+    Successors according to CFG: BB#2(0x30000000 / 0x80000000 = 37.50%) BB#1(0x50000000 / 0x80000000 = 62.50%)
+
+BB#1: derived from LLVM BB %3
+    Live Ins: %A0 %V1
+    Predecessors according to CFG: BB#0
+	%AT<def> = SLL %A0<kill>, 2
+	%V0<def> = LW %V1<kill>, <ga:@move_history_color>[TF=1]; mem:LD4[GOT]
+	%AT<def> = ADDu %AT<kill>, %V0<kill>
+	%V0<def> = LW %AT<kill>, -4; mem:LD4[%5]
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %7
+    Live Ins: %V0
+    Predecessors according to CFG: BB#0 BB#1
+	PseudoReturn %RA
+
+# End machine code for function get_last_player.
+
+# After Mips Delay Slot Filler:
+# Machine code for function get_last_player: Post SSA, not tracking liveness
+Function Live Ins: %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %T9 %V0
+	%V1<def> = ADDu %V0, %T9
+	%AT<def> = LW %V1, <ga:@move_history_pointer>[TF=1]; mem:LD4[GOT]
+	%A0<def> = LW %AT<kill>, 0; mem:LD4[@move_history_pointer]
+	BEQ %A0, %ZERO, <BB#2>, %AT<imp-def,dead>
+	  * %V0<def> = ADDiu %ZERO, 0
+	B <BB#1>, %AT<imp-def,dead>
+	  * NOP
+    Successors according to CFG: BB#2(0x30000000 / 0x80000000 = 37.50%) BB#1(0x50000000 / 0x80000000 = 62.50%)
+
+BB#1: derived from LLVM BB %3
+    Live Ins: %A0 %V1
+    Predecessors according to CFG: BB#0
+	%AT<def> = SLL %A0<kill>, 2
+	%V0<def> = LW %V1<kill>, <ga:@move_history_color>[TF=1]; mem:LD4[GOT]
+	%AT<def> = ADDu %AT<kill>, %V0<kill>
+	%V0<def> = LW %AT<kill>, -4; mem:LD4[%5]
+    Successors according to CFG: BB#2(?%)
+
+BB#2: derived from LLVM BB %7
+    Live Ins: %V0
+    Predecessors according to CFG: BB#0 BB#1
+	PseudoReturn %RA
+	  * NOP
+
+# End machine code for function get_last_player.
+
+# After Mips Long Branch:
+# Machine code for function get_last_player: Post SSA, not tracking liveness
+Function Live Ins: %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %T9
+	%V0<def> = LUi <es:_gp_disp>[TF=5]
+	%V0<def> = ADDiu %V0, <es:_gp_disp>[TF=6]
+	%V1<def> = ADDu %V0, %T9
+	%AT<def> = LW %V1, <ga:@move_history_pointer>[TF=1]; mem:LD4[GOT]
+	%A0<def> = LW %AT<kill>, 0; mem:LD4[@move_history_pointer]
+	BEQ %A0, %ZERO, <BB#3>, %AT<imp-def,dead>
+	  * %V0<def> = ADDiu %ZERO, 0
+    Successors according to CFG: BB#1(?%) BB#3(?%)
+
+BB#1: derived from LLVM BB %0
+    Predecessors according to CFG: BB#0
+	B <BB#2>, %AT<imp-def,dead>
+	  * NOP
+    Successors according to CFG: BB#2(0x80000000 / 0x80000000 = 100.00%)
+
+BB#2: derived from LLVM BB %3
+    Live Ins: %A0 %V1
+    Predecessors according to CFG: BB#1
+	%AT<def> = SLL %A0<kill>, 2
+	%V0<def> = LW %V1<kill>, <ga:@move_history_color>[TF=1]; mem:LD4[GOT]
+	%AT<def> = ADDu %AT<kill>, %V0<kill>
+	%V0<def> = LW %AT<kill>, -4; mem:LD4[%5]
+    Successors according to CFG: BB#3(?%)
+
+BB#3: derived from LLVM BB %7
+    Live Ins: %V0
+    Predecessors according to CFG: BB#2 BB#0
+	PseudoReturn %RA
+	  * NOP
+
+# End machine code for function get_last_player.
+
+# After Mips Constant Islands:
+# Machine code for function get_last_player: Post SSA, not tracking liveness
+Function Live Ins: %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %T9
+	%V0<def> = LUi <es:_gp_disp>[TF=5]
+	%V0<def> = ADDiu %V0, <es:_gp_disp>[TF=6]
+	%V1<def> = ADDu %V0, %T9
+	%AT<def> = LW %V1, <ga:@move_history_pointer>[TF=1]; mem:LD4[GOT]
+	%A0<def> = LW %AT<kill>, 0; mem:LD4[@move_history_pointer]
+	BEQ %A0, %ZERO, <BB#3>, %AT<imp-def,dead>
+	  * %V0<def> = ADDiu %ZERO, 0
+    Successors according to CFG: BB#1(?%) BB#3(?%)
+
+BB#1: derived from LLVM BB %0
+    Predecessors according to CFG: BB#0
+	B <BB#2>, %AT<imp-def,dead>
+	  * NOP
+    Successors according to CFG: BB#2(0x80000000 / 0x80000000 = 100.00%)
+
+BB#2: derived from LLVM BB %3
+    Live Ins: %A0 %V1
+    Predecessors according to CFG: BB#1
+	%AT<def> = SLL %A0<kill>, 2
+	%V0<def> = LW %V1<kill>, <ga:@move_history_color>[TF=1]; mem:LD4[GOT]
+	%AT<def> = ADDu %AT<kill>, %V0<kill>
+	%V0<def> = LW %AT<kill>, -4; mem:LD4[%5]
+    Successors according to CFG: BB#3(?%)
+
+BB#3: derived from LLVM BB %7
+    Live Ins: %V0
+    Predecessors according to CFG: BB#2 BB#0
+	PseudoReturn %RA
+	  * NOP
+
+# End machine code for function get_last_player.
+
+# After Contiguously Lay Out Funclets:
+# Machine code for function get_last_player: Post SSA, not tracking liveness
+Function Live Ins: %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %T9
+	%V0<def> = LUi <es:_gp_disp>[TF=5]
+	%V0<def> = ADDiu %V0, <es:_gp_disp>[TF=6]
+	%V1<def> = ADDu %V0, %T9
+	%AT<def> = LW %V1, <ga:@move_history_pointer>[TF=1]; mem:LD4[GOT]
+	%A0<def> = LW %AT<kill>, 0; mem:LD4[@move_history_pointer]
+	BEQ %A0, %ZERO, <BB#3>, %AT<imp-def,dead>
+	  * %V0<def> = ADDiu %ZERO, 0
+    Successors according to CFG: BB#1(?%) BB#3(?%)
+
+BB#1: derived from LLVM BB %0
+    Predecessors according to CFG: BB#0
+	B <BB#2>, %AT<imp-def,dead>
+	  * NOP
+    Successors according to CFG: BB#2(0x80000000 / 0x80000000 = 100.00%)
+
+BB#2: derived from LLVM BB %3
+    Live Ins: %A0 %V1
+    Predecessors according to CFG: BB#1
+	%AT<def> = SLL %A0<kill>, 2
+	%V0<def> = LW %V1<kill>, <ga:@move_history_color>[TF=1]; mem:LD4[GOT]
+	%AT<def> = ADDu %AT<kill>, %V0<kill>
+	%V0<def> = LW %AT<kill>, -4; mem:LD4[%5]
+    Successors according to CFG: BB#3(?%)
+
+BB#3: derived from LLVM BB %7
+    Live Ins: %V0
+    Predecessors according to CFG: BB#2 BB#0
+	PseudoReturn %RA
+	  * NOP
+
+# End machine code for function get_last_player.
+
+# After StackMap Liveness Analysis:
+# Machine code for function get_last_player: Post SSA, not tracking liveness
+Function Live Ins: %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %T9
+	%V0<def> = LUi <es:_gp_disp>[TF=5]
+	%V0<def> = ADDiu %V0, <es:_gp_disp>[TF=6]
+	%V1<def> = ADDu %V0, %T9
+	%AT<def> = LW %V1, <ga:@move_history_pointer>[TF=1]; mem:LD4[GOT]
+	%A0<def> = LW %AT<kill>, 0; mem:LD4[@move_history_pointer]
+	BEQ %A0, %ZERO, <BB#3>, %AT<imp-def,dead>
+	  * %V0<def> = ADDiu %ZERO, 0
+    Successors according to CFG: BB#1(?%) BB#3(?%)
+
+BB#1: derived from LLVM BB %0
+    Predecessors according to CFG: BB#0
+	B <BB#2>, %AT<imp-def,dead>
+	  * NOP
+    Successors according to CFG: BB#2(0x80000000 / 0x80000000 = 100.00%)
+
+BB#2: derived from LLVM BB %3
+    Live Ins: %A0 %V1
+    Predecessors according to CFG: BB#1
+	%AT<def> = SLL %A0<kill>, 2
+	%V0<def> = LW %V1<kill>, <ga:@move_history_color>[TF=1]; mem:LD4[GOT]
+	%AT<def> = ADDu %AT<kill>, %V0<kill>
+	%V0<def> = LW %AT<kill>, -4; mem:LD4[%5]
+    Successors according to CFG: BB#3(?%)
+
+BB#3: derived from LLVM BB %7
+    Live Ins: %V0
+    Predecessors according to CFG: BB#2 BB#0
+	PseudoReturn %RA
+	  * NOP
+
+# End machine code for function get_last_player.
+
+# After Live DEBUG_VALUE analysis:
+# Machine code for function get_last_player: Post SSA, not tracking liveness
+Function Live Ins: %T9, %V0
+
+BB#0: derived from LLVM BB %0
+    Live Ins: %T9
+	%V0<def> = LUi <es:_gp_disp>[TF=5]
+	%V0<def> = ADDiu %V0, <es:_gp_disp>[TF=6]
+	%V1<def> = ADDu %V0, %T9
+	%AT<def> = LW %V1, <ga:@move_history_pointer>[TF=1]; mem:LD4[GOT]
+	%A0<def> = LW %AT<kill>, 0; mem:LD4[@move_history_pointer]
+	BEQ %A0, %ZERO, <BB#3>, %AT<imp-def,dead>
+	  * %V0<def> = ADDiu %ZERO, 0
+    Successors according to CFG: BB#1(?%) BB#3(?%)
+
+BB#1: derived from LLVM BB %0
+    Predecessors according to CFG: BB#0
+	B <BB#2>, %AT<imp-def,dead>
+	  * NOP
+    Successors according to CFG: BB#2(0x80000000 / 0x80000000 = 100.00%)
+
+BB#2: derived from LLVM BB %3
+    Live Ins: %A0 %V1
+    Predecessors according to CFG: BB#1
+	%AT<def> = SLL %A0<kill>, 2
+	%V0<def> = LW %V1<kill>, <ga:@move_history_color>[TF=1]; mem:LD4[GOT]
+	%AT<def> = ADDu %AT<kill>, %V0<kill>
+	%V0<def> = LW %AT<kill>, -4; mem:LD4[%5]
+    Successors according to CFG: BB#3(?%)
+
+BB#3: derived from LLVM BB %7
+    Live Ins: %V0
+    Predecessors according to CFG: BB#2 BB#0
+	PseudoReturn %RA
+	  * NOP
+
+# End machine code for function get_last_player.
+
