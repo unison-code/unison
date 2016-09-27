@@ -81,8 +81,11 @@ make install PREFIX=$DIR
 ## Running
 
 Unison can be run as a standalone tool but is only really useful as a complement
-to a full-fledged compiler such as [LLVM](http://llvm.org/). An instrumented
-version of LLVM with a Unison driver will soon be available.
+to a full-fledged compiler such as [LLVM](http://llvm.org/). [Our LLVM
+fork](https://github.com/unison-code/llvm) includes a Unison driver built on top
+of LLVM's `llc` code generator. To try it out, just clone the LLVM fork and
+follow the instructions in the `README.md` file from any of the branches with a
+`-unison` suffix.
 
 ## Contact
 
@@ -90,7 +93,7 @@ version of LLVM with a Unison driver will soon be available.
 
 ## License
 
-Unison is licensed under the BSD3 license see the [LICENSE.md](LICENSE.md) file
+Unison is licensed under the BSD3 license, see the [LICENSE.md](LICENSE.md) file
 for details.
 
 ## Further Reading
