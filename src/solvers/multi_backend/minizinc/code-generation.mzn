@@ -29,9 +29,6 @@
 %  CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
 %  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 %  POSSIBILITY OF SUCH DAMAGE.
-%
-%
-%   TODO:
 
 include "globals.mzn";
 
@@ -440,7 +437,7 @@ constraint
           (ls[v] = c[temp_definer[v]] /\
 	   (r[v] >= 0 <-> a[temp_definer[v]])) /\
     forall(v in 0..MAXT where op_type[temp_definer[v]] = TYPE_IN) % rematerialization
-          (ls[v] in -1..0 /\
+          (ls[v] in -1 .. 0 /\
 	   (r[v] >= 0 <-> ls[v]=0) /\
 	   (r[v] >= 0 <-> t[temp_def[v]] = v)) /\
     forall(v in 0..MAXT) (
@@ -464,32 +461,21 @@ constraint
 
 constraint
     forall(b in 1..MAXB) (
-        if exists(o in bb_ops[b] where not op_mand[o])(true) then
-	    let {int: realsum = sum(o in bb_ops[b] where isreal(o))(1),
-		 int: bundlesize = max(x in 0..MAXI)(res_con[1,x]),
-		 int: copysize = min(o in bb_ops[b], x in op_instructions[o]
-			             where not op_mand[o] /\ x>0)(res_con[1,x]),
-		 int: realtotal = sum(o in bb_ops[b] where isreal(o))
-				     (min(x in op_instructions[o])(res_con[1,x]))} in (
-		forall(o in bb_ops[b])(c[o] in -1..bb_maxcycle[b]) /\
-		c[min(bb_ops[b])] = 0 /\
-		copysum[b] = sum(o in bb_ops[b] where not op_mand[o])(bool2int(a[o])) /\
-		copysum[b] >= bb_optional_min[b] /\
-		copysum[b] + realsum + 2 >= c[max(bb_ops[b])] /\
-		copysize*copysum[b] + realtotal <= bundlesize*(c[max(bb_ops[b])]-1)
-	    )
-	else
-	    let {int: realsum = sum(o in bb_ops[b] where isreal(o))(1),
-		 int: bundlesize = max(x in 0..MAXI)(res_con[1,x]),
-		 int: realtotal = sum(o in bb_ops[b] where isreal(o))
-				     (min(x in op_instructions[o])(res_con[1,x]))} in (
-		forall(o in bb_ops[b])(c[o] in -1..bb_maxcycle[b]) /\
-		c[min(bb_ops[b])] = 0 /\
-		copysum[b] = 0 /\
-		realsum + 2 >= c[max(bb_ops[b])] /\
-		realtotal <= bundlesize*(c[max(bb_ops[b])]-1)
-	    )
-	endif
+	let {int: copysize = min(o in bb_ops[b], x in op_instructions[o]
+				 where not op_mand[o] /\ x>0)(res_con[1,x])
+	     % int: bundlesize = max(x in 0..MAXI)(res_con[1,x]),
+	     % int: realsum = sum(o in bb_ops[b] where isreal(o))(1),
+	     % int: realtotal = sum(o in bb_ops[b] where isreal(o))
+	     % 		     (min(x in op_instructions[o])(res_con[1,x]))
+				 } in (
+	    forall(o in bb_ops[b])(c[o] in -1..bb_maxcycle[b]) /\
+	    c[min(bb_ops[b])] = 0 /\
+	    copysum[b] = sum(o in bb_ops[b] where not op_mand[o])(bool2int(a[o])) /\
+	    copysum[b] >= bb_optional_min[b]
+	    % wrong e.g. for ARM
+	    % copysum[b] + realsum + 2 >= c[max(bb_ops[b])] /\
+	    % copysize*copysum[b] + realtotal <= bundlesize*(c[max(bb_ops[b])]-1)
+	)
     ) /\
     obj = sum(b in 1..MAXB) (bb_frequency[b] * c[max(bb_ops[b])]);
 
