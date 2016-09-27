@@ -42,7 +42,7 @@ install:
   - sudo apt-get -qq update
   - sudo apt-get install -y haskell-platform g++ libqt4-dev libgraphviz-dev
   - cabal update
-  - svn --non-interactive --trust-server-cert --username anonymous --password robcasloz@gmail.com checkout -r14847 https://svn.gecode.org/svn/gecode/trunk gecode-trunk
+  - svn --non-interactive --trust-server-cert-failures=unknown-ca,cn-mismatch,expired,not-yet-valid,other --username anonymous --password robcasloz@gmail.com checkout -r14847 https://svn.gecode.org/svn/gecode/trunk gecode-trunk
   - cd gecode-trunk && ./configure && make && sudo make install && cd -
 
 # Build and test Unison
