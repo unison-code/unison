@@ -41,7 +41,7 @@ sudo: required
 
 install:
   - sudo apt-get -qq update
-  - sudo apt-get install -y haskell-platform g++ libqt4-dev libgraphviz-dev
+  - sudo apt-get install -y expect haskell-platform g++ libqt4-dev libgraphviz-dev
   - cabal update
   - ./.accept-svn-certificate anonymous robcasloz@gmail.com https://svn.gecode.org/svn/gecode/trunk
   - svn --non-interactive --username anonymous --password robcasloz@gmail.com checkout -r14847 https://svn.gecode.org/svn/gecode/trunk gecode-trunk
