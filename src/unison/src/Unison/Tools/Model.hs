@@ -21,7 +21,7 @@ import Data.Ord
 import Data.Aeson
 import Data.Aeson.Encode.Pretty
 import qualified Data.ByteString.Lazy.Char8 as BSL
-import qualified Data.Text.Internal.Builder as DTB
+import qualified Data.Text.Lazy.Builder as DTB
 import Data.Scientific
 
 import Common.Util

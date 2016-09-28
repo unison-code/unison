@@ -245,7 +245,7 @@ Library
                  containers >= 0.3,
                  hoopl >= 3.9,
                  filepath >= 1.1,
-                 text >= 0.11,
+                 text >= 1.0,
                  cmdargs >= 0.10,
                  aeson >= 0.7,
                  aeson-pretty >= 0.7,
