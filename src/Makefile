@@ -45,8 +45,11 @@ SOLVERBIN := $(SOLVERDIR)/gecode-solver
 
 build: build-unison $(PRESOLVERBIN) $(SOLVERBIN)
 
-build-unison:
+build-unison: prepare-unison
 	cd $(UNISONDIR); $(CABALBIN) configure --enable-tests; $(CABALBIN) build
+
+prepare-unison:
+	cd $(UNISONDIR); $(CABALBIN) install --only-dependencies --enable-tests
 
 test:
 	cd $(UNISONDIR); $(CABALBIN) test --show-details=streaming \
@@ -92,8 +95,11 @@ SGARMROOTDIR   = $(UNISONDIR)/src/Unison/Target/ARM/SpecsGen
 SGARMINPUTYAML = $(SGARMROOTDIR)/input/arm.yaml
 SGARMAUXYAML   = $(SGARMROOTDIR)/input/arm-manual.yaml
 
-build-specsgen:
-	cd $(UNISONSPECSGENDIR); $(CABALBIN) build
+build-specsgen: prepare-specsgen
+	cd $(UNISONSPECSGENDIR); $(CABALBIN) configure; $(CABALBIN) build
+
+prepare-specsgen:
+	cd $(UNISONSPECSGENDIR); $(CABALBIN) install --only-dependencies
 
 install-specsgen:
 	cp $(UNISONSPECSGENDIR)/dist/build/specsgen/specsgen $(BINDIR)
