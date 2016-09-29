@@ -9,7 +9,7 @@ Main authors:
 
 This file is part of Unison, see http://unison-code.github.io
 -}
-{-# LANGUAGE OverloadedStrings, FlexibleContexts, DeriveDataTypeable #-}
+{-# LANGUAGE OverloadedStrings, FlexibleContexts, DeriveDataTypeable, CPP #-}
 module Unison.Test.Driver where
 
 import Data.Maybe
@@ -24,6 +24,9 @@ import System.FilePath hiding (addExtension)
 import Data.List
 import Data.Yaml
 import Data.List.Split
+#if (!defined(__GLASGOW_HASKELL__)) || (__GLASGOW_HASKELL__ < 710)
+import Control.Applicative ((<$>),(<*>))
+#endif
 import qualified Data.ByteString.Lazy.Char8 as BSL
 import qualified Data.Aeson as JSON
 import qualified Data.HashMap.Strict as HM

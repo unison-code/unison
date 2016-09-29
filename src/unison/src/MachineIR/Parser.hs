@@ -12,7 +12,7 @@ Main authors:
 
 This file is part of Unison, see http://unison-code.github.io
 -}
-{-# LANGUAGE OverloadedStrings, FlexibleContexts #-}
+{-# LANGUAGE OverloadedStrings, FlexibleContexts, CPP #-}
 module MachineIR.Parser
        (MachineIR.Parser.parse, mirOperand, mirFI, mirJTI) where
 
@@ -20,7 +20,9 @@ import Data.Maybe
 import Data.Char
 import Data.List.Split hiding (sepBy, endBy)
 import Data.Yaml
+#if (!defined(__GLASGOW_HASKELL__)) || (__GLASGOW_HASKELL__ < 710)
 import Control.Applicative ((<$>),(<*>))
+#endif
 import Text.ParserCombinators.Parsec as P
 import qualified Text.Parsec.Token as T
 import Text.Parsec.Language (emptyDef)

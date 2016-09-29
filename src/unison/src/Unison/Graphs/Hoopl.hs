@@ -12,12 +12,14 @@ Main authors:
 
 This file is part of Unison, see http://unison-code.github.io
 -}
-{-# LANGUAGE ScopedTypeVariables, GADTs, NoMonomorphismRestriction #-}
+{-# LANGUAGE ScopedTypeVariables, GADTs, NoMonomorphismRestriction, CPP #-}
 module Unison.Graphs.Hoopl
     (HOperation (..), toHGraph, toBody, hLabelToLabel, labelToHLabel,
      toHOprGraph) where
 
+#if (defined(__GLASGOW_HASKELL__)) && (__GLASGOW_HASKELL__ >= 710)
 import Prelude hiding ((<*>))
+#endif
 import Data.List
 import Compiler.Hoopl
 import Compiler.Hoopl.Internals (uniqueToLbl, lblToUnique)
