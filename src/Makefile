@@ -52,7 +52,7 @@ prepare-unison:
 	cd $(UNISONDIR); $(CABALBIN) install --only-dependencies --enable-tests
 
 test:
-	cd $(UNISONDIR); $(CABALBIN) test --show-details=streaming \
+	cd $(UNISONDIR); $(CABALBIN) test --show-details=always \
 	--test-option=--directory=$(CURDIR)/$(UNISONDIR)/test \
 	--test-option=--presolver=$(CURDIR)/$(PRESOLVERBIN) \
 	--test-option=--solver=$(CURDIR)/$(SOLVERBIN) \
