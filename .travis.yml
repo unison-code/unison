@@ -47,6 +47,7 @@ install:
   - ./.accept-svn-certificate anonymous robcasloz@gmail.com https://svn.gecode.org/svn/gecode/trunk
   - svn --non-interactive --username anonymous --password robcasloz@gmail.com checkout -r14847 https://svn.gecode.org/svn/gecode/trunk gecode-trunk
   - cd gecode-trunk && ./configure && make && sudo make install && cd -
+  - export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib
 
 # Build and test Unison
 
