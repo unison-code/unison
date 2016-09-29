@@ -1,6 +1,6 @@
 Name:           unison
 Version:        0
-Cabal-Version:  >= 1.8
+Cabal-Version:  >= 1.20
 License:        BSD3
 License-file:   LICENSE
 Author:         Roberto Castaneda Lozano <rcas@sics.se>
@@ -16,105 +16,106 @@ Description:    This package provides two low-level program representations:
 
 Library
 
-  Hs-source-dirs:  src
-  Exposed-Modules: Unison
+  Default-language: Haskell2010
+  Hs-source-dirs:   src
+  Exposed-Modules:  Unison
 
-                   Unison.Base
-                   Unison.Constructors
-                   Unison.Predicates
-                   Unison.Instances
-                   Unison.Util
-                   Unison.Parser
-                   Unison.Driver
-                   Unison.Target
+                    Unison.Base
+                    Unison.Constructors
+                    Unison.Predicates
+                    Unison.Instances
+                    Unison.Util
+                    Unison.Parser
+                    Unison.Driver
+                    Unison.Target
 
-                   Unison.Target.API
-                   Unison.Target.RegisterArray
-                   Unison.Target.Query
-                   Unison.Target.Hexagon
-                   Unison.Target.ARM
-                   Unison.Target.Mips
+                    Unison.Target.API
+                    Unison.Target.RegisterArray
+                    Unison.Target.Query
+                    Unison.Target.Hexagon
+                    Unison.Target.ARM
+                    Unison.Target.Mips
 
-                   Unison.Graphs.Util
-                   Unison.Graphs.BCFG
-                   Unison.Graphs.ICFG
-                   Unison.Graphs.DT
-                   Unison.Graphs.SG
-                   Unison.Graphs.DG
-                   Unison.Graphs.CG
-                   Unison.Graphs.OG
-                   Unison.Graphs.PG
-                   Unison.Graphs.Hoopl
-                   Unison.Graphs.Hoopl.Liveness
-                   Unison.Graphs.Hoopl.ReachingConstants
-                   Unison.Graphs.Hoopl.ReachingDefinitions
-                   Unison.Graphs.Partition
-                   Unison.Graphs.ThirdParty
+                    Unison.Graphs.Util
+                    Unison.Graphs.BCFG
+                    Unison.Graphs.ICFG
+                    Unison.Graphs.DT
+                    Unison.Graphs.SG
+                    Unison.Graphs.DG
+                    Unison.Graphs.CG
+                    Unison.Graphs.OG
+                    Unison.Graphs.PG
+                    Unison.Graphs.Hoopl
+                    Unison.Graphs.Hoopl.Liveness
+                    Unison.Graphs.Hoopl.ReachingConstants
+                    Unison.Graphs.Hoopl.ReachingDefinitions
+                    Unison.Graphs.Partition
+                    Unison.Graphs.ThirdParty
 
-                   Unison.Construction.AddDelimiters
-                   Unison.Construction.BuildFunction
+                    Unison.Construction.AddDelimiters
+                    Unison.Construction.BuildFunction
 
-                   Unison.Transformations.RenameTemps
-                   Unison.Transformations.RenameMOperands
-                   Unison.Transformations.RenameBlocks
-                   Unison.Transformations.SortGlobalTemps
-                   Unison.Transformations.RenameOperations
-                   Unison.Transformations.PostponeBranches
-                   Unison.Transformations.PropagatePhiCongruences
-                   Unison.Transformations.EstimateFrequency
-                   Unison.Transformations.NormalizeFrequency
-                   Unison.Transformations.FinalizeOperations
-                   Unison.Transformations.UnbundleSingletons
-                   Unison.Transformations.CleanPragmas
-                   Unison.Transformations.AddPragmas
+                    Unison.Transformations.RenameTemps
+                    Unison.Transformations.RenameMOperands
+                    Unison.Transformations.RenameBlocks
+                    Unison.Transformations.SortGlobalTemps
+                    Unison.Transformations.RenameOperations
+                    Unison.Transformations.PostponeBranches
+                    Unison.Transformations.PropagatePhiCongruences
+                    Unison.Transformations.EstimateFrequency
+                    Unison.Transformations.NormalizeFrequency
+                    Unison.Transformations.FinalizeOperations
+                    Unison.Transformations.UnbundleSingletons
+                    Unison.Transformations.CleanPragmas
+                    Unison.Transformations.AddPragmas
 
-                   Unison.Analysis.FrequencyEstimation
-                   Unison.Analysis.TemporaryType
-                   Unison.Analysis.CallingConvention
-                   Unison.Analysis.BoundaryTemporaries
-                   Unison.Analysis.CopyRelated
-                   Unison.Analysis.MakespanBounds
-                   Unison.Analysis.TransitiveOperations
-                   Unison.Analysis.Stalls
-                   Unison.Analysis.FrameOffsets
+                    Unison.Analysis.FrequencyEstimation
+                    Unison.Analysis.TemporaryType
+                    Unison.Analysis.CallingConvention
+                    Unison.Analysis.BoundaryTemporaries
+                    Unison.Analysis.CopyRelated
+                    Unison.Analysis.MakespanBounds
+                    Unison.Analysis.TransitiveOperations
+                    Unison.Analysis.Stalls
+                    Unison.Analysis.FrameOffsets
 
-                   Unison.Test.Driver
-                   Unison.Test.Invariants
+                    Unison.Test.Driver
+                    Unison.Test.Invariants
 
-                   Unison.Tools.Import
-                   Unison.Tools.Linearize
-                   Unison.Tools.Extend
-                   Unison.Tools.Augment
-                   Unison.Tools.Model
-                   Unison.Tools.Export
-                   Unison.Tools.Analyze
-                   Unison.Tools.Normalize
-                   Unison.Tools.Lint
-                   Unison.Tools.Count
-                   Unison.Tools.Plot
-                   Unison.Tools.Legalize
-                   Unison.Tools.Run
-                   Unison.Tools.Uni
-                   Unison.Tools.UniArgs
+                    Unison.Tools.Import
+                    Unison.Tools.Linearize
+                    Unison.Tools.Extend
+                    Unison.Tools.Augment
+                    Unison.Tools.Model
+                    Unison.Tools.Export
+                    Unison.Tools.Analyze
+                    Unison.Tools.Normalize
+                    Unison.Tools.Lint
+                    Unison.Tools.Count
+                    Unison.Tools.Plot
+                    Unison.Tools.Legalize
+                    Unison.Tools.Run
+                    Unison.Tools.Uni
+                    Unison.Tools.UniArgs
 
-                   MachineIR
-                   MachineIR.Base
-                   MachineIR.Constructors
-                   MachineIR.Util
-                   MachineIR.Predicates
-                   MachineIR.Parser
-                   MachineIR.Instances
+                    MachineIR
+                    MachineIR.Base
+                    MachineIR.Constructors
+                    MachineIR.Util
+                    MachineIR.Predicates
+                    MachineIR.Parser
+                    MachineIR.Instances
 
-                   MachineIR.Transformations.SplitTerminators
-                   MachineIR.Transformations.LiftCustomProperties
-                   MachineIR.Transformations.LiftJumpTables
-                   MachineIR.Transformations.DropExplicitFallthroughs
-                   MachineIR.Transformations.RenameMachineBlocks
-                   MachineIR.Transformations.RemoveEmptyBlocks
-                   MachineIR.Transformations.SimplifyFallthroughs
-                   MachineIR.Transformations.PrepareForEmission
+                    MachineIR.Transformations.SplitTerminators
+                    MachineIR.Transformations.LiftCustomProperties
+                    MachineIR.Transformations.LiftJumpTables
+                    MachineIR.Transformations.DropExplicitFallthroughs
+                    MachineIR.Transformations.RenameMachineBlocks
+                    MachineIR.Transformations.RemoveEmptyBlocks
+                    MachineIR.Transformations.SimplifyFallthroughs
+                    MachineIR.Transformations.PrepareForEmission
 
-                   Common.Util
+                    Common.Util
 
   Other-modules:  Unison.Tools.Import.AdjustPhiLabels
                   Unison.Tools.Import.CorrectDoubleBranches
@@ -262,13 +263,16 @@ Library
 
 Executable uni
 
-  Hs-source-dirs: exec/uni
-  Main-is:        Main.hs
-  Build-depends:  unison, base
-  Ghc-options:    -rtsopts
+  Default-language: Haskell2010
+  Hs-source-dirs:   exec/uni
+  Main-is:          Main.hs
+  Build-depends:    unison, base
+  Ghc-options:      -rtsopts
 
 Test-Suite regression
-  Hs-source-dirs: test
-  Type:           exitcode-stdio-1.0
-  Main-is:        Main.hs
-  Build-depends:  unison, base
+
+  Default-language: Haskell2010
+  Hs-source-dirs:   test
+  Type:             exitcode-stdio-1.0
+  Main-is:          Main.hs
+  Build-depends:    unison, base
