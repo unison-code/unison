@@ -199,6 +199,7 @@ Library
                   Unison.Target.Hexagon.SpecsGen.Itinerary
                   Unison.Target.Hexagon.SpecsGen.InstructionType
                   Unison.Target.Hexagon.SpecsGen.AlignedPairs
+                  Unison.Target.Hexagon.SpecsGen.Parent
 
                   Unison.Target.ARM.Common
                   Unison.Target.ARM.Registers

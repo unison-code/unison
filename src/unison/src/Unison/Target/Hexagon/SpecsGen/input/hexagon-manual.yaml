@@ -296,50 +296,18 @@ instruction-set:
       - id:     TFR_FI_fi
         << :    [*alu32, *ii2r]
 
-      - id:                 MVW
-        type:               copy
-        operands:
-         - dst:             [register, def, IntRegs]
-         - src:             [register, use, IntRegs]
-        uses:               [src]
-        defines:            [dst]
-        size:               4
-        affects:
-        affected-by:
-        itinerary:          ALU32_2op_tc_1_SLOT0123
+      - id:     MVW
+        parent: A2_tfr
+        type:   copy
 
-      - id:                 MVD
-        type:               copy
-        operands:
-         - dst:             [register, def, DoubleRegs]
-         - src:             [register, use, DoubleRegs]
-        uses:               [src]
-        defines:            [dst]
-        size:               4
-        affects:
-        affected-by:
-        itinerary:          ALU32_2op_tc_1_SLOT0123
+      - id:     MVD
+        parent: A2_tfrp
+        type:   copy
 
-      - id:                 MVPR
-        type:               copy
-        operands:
-         - Rd:              [register, def, IntRegs]
-         - Ps:              [register, use, PredRegs]
-        uses:               [Ps]
-        defines:            [Rd]
-        size:               4
-        affects:
-        affected-by:
-        itinerary:          S_2op_tc_1_SLOT23
+      - id:     MVPR
+        parent: C2_tfrpr
+        type:   copy
 
-      - id:                 MVRP
-        type:               copy
-        operands:
-         - Pd:              [register, def, PredRegs]
-         - Rs:              [register, use, IntRegs]
-        uses:               [Rs]
-        defines:            [Pd]
-        size:               4
-        affects:
-        affected-by:
-        itinerary:          S_2op_tc_2early_SLOT23
+      - id:     MVRP
+        parent: C2_tfrrp
+        type:   copy

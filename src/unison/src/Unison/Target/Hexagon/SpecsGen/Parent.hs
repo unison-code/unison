@@ -516,9 +516,9 @@ parent i
        M4_vrmpyoh_s1, M4_xor_and, M4_xor_andn, M4_xor_or, M4_xor_xacc,
        M5_vdmacbsu, M5_vdmpybsu, M5_vmacbsu, M5_vmacbuu, M5_vmpybsu,
        M5_vmpybuu, M5_vrmacbsu, M5_vrmacbuu, M5_vrmpybsu, M5_vrmpybuu,
-       MUX64_rr, MUX_ir_f, MUX_ir_f_ce, MUX_ri_f, MUX_ri_f_ce, MVD, MVPR,
-       MVRP, MVW, PATCHPOINT, PATCHPOINT_ce, PHI, PHI_ce, REG_SEQUENCE,
-       REG_SEQUENCE_ce, RESTORE_DEALLOC_BEFORE_TAILCALL_V4,
+       MUX64_rr, MUX_ir_f, MUX_ir_f_ce, MUX_ri_f, MUX_ri_f_ce, PATCHPOINT,
+       PATCHPOINT_ce, PHI, PHI_ce, REG_SEQUENCE, REG_SEQUENCE_ce,
+       RESTORE_DEALLOC_BEFORE_TAILCALL_V4,
        RESTORE_DEALLOC_BEFORE_TAILCALL_V4_EXT,
        RESTORE_DEALLOC_BEFORE_TAILCALL_V4_EXT_ce,
        RESTORE_DEALLOC_BEFORE_TAILCALL_V4_ce, RESTORE_DEALLOC_RET_JMP_V4,
@@ -1073,4 +1073,10 @@ parent i
        Y6_l2gcleaninvpa, Y6_l2gcleanpa, Dep_A2_addsat, Dep_A2_subsat,
        Dep_S2_packhl]
     = Nothing
+  | i `elem` [MVW] = Just A2_tfr
+  | i `elem` [MVD] = Just A2_tfrp
+  | i `elem` [MVPR] = Just C2_tfrpr
+  | i `elem` [MVRP] = Just C2_tfrrp
+  | i `elem` [S2_storerf_io_fi, S2_storerf_io_fi_ce] =
+    Just S2_storerf_io
 

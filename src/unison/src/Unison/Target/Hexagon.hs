@@ -237,14 +237,17 @@ isReserved r = r `elem` reserved
 
 -- | Transforms copy instructions into natural instructions
 
-fromCopy o @ Copy {oCopyIs = [TargetInstruction i], oCopyS = s, oCopyD = d}
-  | i `elem` [MVW, MVD, MVPR, MVRP] = toLinear o
+fromCopy Copy {oCopyIs = [TargetInstruction i], oCopyS = s, oCopyD = d}
+  | i `elem` [MVW, MVD, MVPR, MVRP] =
+    Linear {oIs = [TargetInstruction (fromCopyInstr i)],
+            oUs = [s],
+            oDs = [d]}
   | i `elem` [STW, STD, STW_nv] =
-    Linear {oIs = [TargetInstruction (fromCopyOp i)],
+    Linear {oIs = [TargetInstruction (fromCopyInstr i)],
             oUs = [mkOprHexagonSP, mkBoundMachineFrameObject i d, s],
             oDs = []}
   | i `elem` [LDW, LDD] =
-    Linear {oIs = [TargetInstruction (fromCopyOp i)],
+    Linear {oIs = [TargetInstruction (fromCopyInstr i)],
             oUs = [mkOprHexagonSP, mkBoundMachineFrameObject i s],
             oDs = [d]}
 
@@ -260,11 +263,14 @@ stackSize op
   | op `elem` [STW, STW_nv, LDW] = 4
   | op `elem` [STD, LDD] = 8
 
-fromCopyOp STW = S2_storeri_io
-fromCopyOp STD = S2_storerd_io
-fromCopyOp STW_nv = S2_storerinew_io
-fromCopyOp LDW = L2_loadri_io
-fromCopyOp LDD = L2_loadrd_io
+fromCopyInstr i
+  | isJust (SpecsGen.parent i) = fromJust (SpecsGen.parent i)
+fromCopyInstr STW = S2_storeri_io
+fromCopyInstr STD = S2_storerd_io
+fromCopyInstr STW_nv = S2_storerinew_io
+fromCopyInstr LDW = L2_loadri_io
+fromCopyInstr LDD = L2_loadrd_io
+
 
 -- | Gives information about the operands of each instruction
 
