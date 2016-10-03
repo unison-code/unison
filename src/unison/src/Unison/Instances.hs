@@ -119,7 +119,7 @@ instance (Eq i, Eq r) => Eq (OGEdgeLabel i r) where
 equaling = ((==) `on`)
 
 instance (Show i, Show r) => Show (Function i r) where
-    show (Function comments name code cs ffobjs fobjs jt src) =
+    show (Function comments name code cs ffobjs fobjs jt goal src) =
       concatMap showComment comments ++
       showSectionName "function" ++ " " ++ name ++ newLine ++
       concatMap show code ++
@@ -131,10 +131,15 @@ instance (Show i, Show r) => Show (Function i r) where
       showFrameObjects False fobjs ++
       showSectionName "jump-table" ++ newLine ++
       showJumpTableEntries jt ++
+      showSectionName "goal" ++ maybeShowGoal goal ++ newLine ++
       showSectionName "source" ++ newLine ++
       src
 
 showComment comment = "//" ++ comment ++ newLine
+
+maybeShowGoal Nothing = ""
+maybeShowGoal (Just Speed) = " speed"
+maybeShowGoal (Just Size) = " size"
 
 instance (Show i, Show r) => Show (Block i r) where
   show (Block l as code) =
@@ -322,3 +327,9 @@ maxIdWidth = maximum . map (length . show . firstId)
 
 firstId (SingleOperation {oId = id}) = id
 firstId (Bundle {bundleOs = (i:_)}) = firstId i
+
+instance Read HighLevelGoal where
+  readsPrec _ str = [(readHighLevelGoal str, "")]
+
+readHighLevelGoal "speed" = Speed
+readHighLevelGoal "size"  = Size

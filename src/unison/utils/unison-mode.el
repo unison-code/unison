@@ -31,7 +31,7 @@
 ;; Block labels
 '("b[0-9]+" . font-lock-function-name-face)
 ;; Keywords
-`(,(regexp-opt '("function" "adjacent" "fixed-frame" "frame" "jump-table" "source") 'symbol) . font-lock-keyword-face)
+`(,(regexp-opt '("function" "adjacent" "fixed-frame" "frame" "jump-table" "goal" "source") 'symbol) . font-lock-keyword-face)
 ;; Builtins
 '("\\bcall\\b" . font-lock-builtin-face)
 '("\\mem-[0-9]+\\b" . font-lock-builtin-face)

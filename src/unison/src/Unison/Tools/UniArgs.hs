@@ -21,7 +21,7 @@ data Uni =
                outFile :: Maybe FilePath, debug :: Bool, intermediate :: Bool,
                lint :: Bool, estimateFreq :: Bool, implementFrames :: Bool,
                noCC :: Bool, noReserved :: Bool, maxBlockSize :: Maybe Integer,
-               function :: Maybe String} |
+               function :: Maybe String, goal :: Maybe String} |
     Linearize {targetName :: String, inFile :: FilePath, targetOption :: [String],
                outFile :: Maybe FilePath, debug :: Bool, intermediate :: Bool,
                lint :: Bool} |
@@ -34,8 +34,7 @@ data Uni =
                oldModel :: Bool, expandCopies :: Bool, rematerialize :: Bool} |
     Model     {targetName :: String, inFile :: FilePath, targetOption :: [String],
                outFile :: Maybe FilePath, baseFile :: Maybe FilePath,
-               scaleFreq :: Bool, oldModel :: Bool, optimizeDynamic :: Bool,
-               optimizeResource :: String, applyBaseFile :: Bool,
+               scaleFreq :: Bool, oldModel :: Bool, applyBaseFile :: Bool,
                tightPressureBound :: Bool, strictlyBetter :: Bool} |
     Export    {targetName :: String, inFile :: FilePath, targetOption :: [String],
                outFile :: Maybe FilePath, debug :: Bool, removeReds :: Bool,
@@ -43,7 +42,7 @@ data Uni =
                tightPressureBound :: Bool, solFile :: Maybe FilePath} |
     Analyze   {targetName :: String, inFile :: FilePath, targetOption :: [String],
                outFile :: Maybe FilePath, debug :: Bool, intermediate :: Bool,
-               goals :: Maybe String, estimateFreq :: Bool,
+               goals :: String, estimateFreq :: Bool,
                simulateStalls :: Bool, modelCost :: Bool} |
     Normalize {targetName :: String, inFile :: FilePath, targetOption :: [String],
                outFile :: Maybe FilePath, debug :: Bool, estimateFreq :: Bool} |
@@ -74,13 +73,13 @@ data Uni =
                intermediate :: Bool, lint :: Bool, estimateFreq :: Bool,
                implementFrames :: Bool, noCC :: Bool, noReserved :: Bool,
                maxBlockSize :: Maybe Integer, function :: Maybe String,
-               noCross :: Bool, oldModel :: Bool, expandCopies :: Bool,
-               rematerialize :: Bool, baseFile :: Maybe FilePath,
-               scaleFreq :: Bool, optimizeDynamic :: Bool,
-               optimizeResource :: String, applyBaseFile :: Bool,
-               tightPressureBound :: Bool, strictlyBetter :: Bool,
-               removeReds :: Bool, keepNops :: Bool, outTemp :: Bool,
-               presolver :: Maybe FilePath, solver :: Maybe FilePath}
+               goal :: Maybe String, noCross :: Bool, oldModel :: Bool,
+               expandCopies :: Bool, rematerialize :: Bool,
+               baseFile :: Maybe FilePath, scaleFreq :: Bool,
+               applyBaseFile :: Bool, tightPressureBound :: Bool,
+               strictlyBetter :: Bool, removeReds :: Bool, keepNops :: Bool,
+               outTemp :: Bool, presolver :: Maybe FilePath,
+               solver :: Maybe FilePath}
     deriving (Data, Typeable, Show, Eq)
 
 allModes = [import', linearize', extend', augment', model', export', analyze',
@@ -103,7 +102,8 @@ import' = Import {
   noCC            = False &= help "Do not enforce calling convention",
   noReserved      = False &= help "Do not enforce reserved registers",
   maxBlockSize    = Nothing &= help "Maximum block size",
-  function        = Nothing &= help "Name of the function to import from the input MachineIR"}
+  function        = Nothing &= help "Name of the function to import from the input MachineIR",
+  goal            = Nothing &= help "Optimization goal (one of {speed, size})"}
   &= help "Import a MachineIR function into Unison"
 
 linearize' = Linearize {} &= help "Transform a Unison function into Linear SSA form"
@@ -120,8 +120,6 @@ augment' = Augment {
 model' = Model {
   baseFile           = Nothing &= help "Base assembly solution" &= typFile,
   scaleFreq          = True  &= help "Scale down block frequencies if there is a potential cost function overflow",
-  optimizeDynamic    = True &= help "Use block frequencies as weights in the objective function",
-  optimizeResource   = "cycles" &= help "Resource whose consumption is to be optimized in the objective function ('cycles' or processor resource name)",
   applyBaseFile      = True &= help "Apply base file to limit the maximum cost of the function",
   tightPressureBound = False &= help "Compute a tight bound of the register atoms contained in an infinite register space (incompatible with presolver's infinite register dominance constraints)",
   strictlyBetter     = True &= help "Require the solver to find a strictly better solution than the base (as opposed to better or equal)"}
@@ -135,7 +133,7 @@ export' = Export {
   &= help "Export a Unison solution as a MachineIR function"
 
 analyze' = Analyze {
-  goals          = Nothing &= help "Goals to analyze",
+  goals          = "" &= help "Comma-separated list of goals (speed, size) to analyze",
   simulateStalls = True &= help "Simulate stalls due to unsatisfied non-critical latencies",
   modelCost      = False &= help "Compute costs as similarly as possible to the model cost function"}
   &= help "Analyze a MachineIR function"

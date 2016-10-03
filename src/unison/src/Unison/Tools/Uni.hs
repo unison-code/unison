@@ -45,7 +45,7 @@ mainWithTargets targets = do
              (Any target) ->
                  Import.run
                  (estimateFreq, noCC, noReserved, maxBlockSize, implementFrames,
-                  function,
+                  function, goal,
                   inFile, debug, intermediate, lint, outFile)
                  input (target, targetOption)
     Linearize{..} ->
@@ -76,9 +76,8 @@ mainWithTargets targets = do
            case pickTarget targetName targets of
              (Any target) ->
                  Model.run
-                 (baseFile, scaleFreq, oldModel, optimizeDynamic,
-                  optimizeResource, applyBaseFile, tightPressureBound,
-                  strictlyBetter, outFile)
+                 (baseFile, scaleFreq, oldModel, applyBaseFile,
+                  tightPressureBound, strictlyBetter, outFile)
                  input (target, targetOption)
     Export{..} ->
         do input <- readFile inFile
@@ -93,7 +92,7 @@ mainWithTargets targets = do
            case pickTarget targetName targets of
              (Any target) ->
                  Analyze.run
-                 (fromJust goals, estimateFreq, simulateStalls, modelCost,
+                 (goals, estimateFreq, simulateStalls, modelCost,
                   inFile, debug, intermediate, outFile)
                  input (target, targetOption)
     Normalize{..} ->
@@ -136,10 +135,9 @@ mainWithTargets targets = do
        (Any target) -> do
          Run.run
            (estimateFreq, noCC, noReserved, maxBlockSize, implementFrames,
-            function, noCross, oldModel, expandCopies, rematerialize, baseFile,
-            scaleFreq, optimizeDynamic, optimizeResource, applyBaseFile,
-            tightPressureBound, strictlyBetter, removeReds, keepNops,
-            inFile, debug, verbose, intermediate, lint, outFile, outTemp,
-            presolver, solver)
+            function, goal, noCross, oldModel, expandCopies, rematerialize,
+            baseFile, scaleFreq, applyBaseFile, tightPressureBound,
+            strictlyBetter, removeReds, keepNops, inFile, debug, verbose,
+            intermediate, lint, outFile, outTemp, presolver, solver)
            (target, targetOption)
          return ()

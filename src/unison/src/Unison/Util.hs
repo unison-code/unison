@@ -166,7 +166,8 @@ module Unison.Util
         isDelimiterOperand,
         linearizeCode,
         linearizeOpr,
-        toSubRegIndex
+        toSubRegIndex,
+        lowerGoal
        )
        where
 
@@ -1280,3 +1281,7 @@ toSubRegIndex :: Show r => MachineOperand r -> SubRegIndex
 toSubRegIndex (MachineSubRegIndex sri) = NamedSubRegIndex sri
 toSubRegIndex (MachineImm idx) = RawSubRegIndex idx
 toSubRegIndex mop = error ("unmatched: toSubRegIndex " ++ show mop)
+
+lowerGoal :: Read s => HighLevelGoal -> Goal s
+lowerGoal Speed = DynamicGoal Cycles
+lowerGoal Size  = StaticGoal (ResourceUsage (read "BundleWidth"))

@@ -23,6 +23,7 @@ import Unison.Tools.Lint (invokeLint)
 import qualified MachineIR as MachineIR
 
 import Unison.Construction.AddDelimiters
+import Unison.Construction.LiftGoal
 import Unison.Construction.BuildFunction
 
 import MachineIR.Transformations.LiftCustomProperties
@@ -70,7 +71,7 @@ import Unison.Tools.Import.RepairCSSA
 import Unison.Tools.Import.AdvancePhis
 
 run (estimateFreq, noCC, noReserved, maxBlockSize, implementFrames, function,
-     mirFile, debug, intermediate, lint, uniFile) mir target =
+     goal, mirFile, debug, intermediate, lint, uniFile) mir target =
     let mf = selectFunction function $ MachineIR.parse mir
         (mf', partialMfs) =
             applyTransformations
@@ -79,8 +80,8 @@ run (estimateFreq, noCC, noReserved, maxBlockSize, implementFrames, function,
         ff = buildFunction target mf'
         (f, partialFs) =
             applyTransformations
-            (uniTransformations (noCC, noReserved, maxBlockSize, estimateFreq,
-                                 implementFrames))
+            (uniTransformations (goal, noCC, noReserved, maxBlockSize,
+                                 estimateFreq, implementFrames))
             target ff
         baseName = takeBaseName mirFile
     in do when debug $
@@ -107,9 +108,10 @@ mirTransformations estimateFreq =
      (lowerSubRegVirtuals, "lowerSubRegVirtuals", True),
      (runPreProcess, "runPreProcess", True)]
 
-uniTransformations (noCC, noReserved, maxBlockSize, estimateFreq,
+uniTransformations (goal, noCC, noReserved, maxBlockSize, estimateFreq,
                     implementFrames) =
-    [(addDelimiters, "addDelimiters", True),
+    [(liftGoal goal, "liftGoal", True),
+     (addDelimiters, "addDelimiters", True),
      (postponeBranches, "postponeBranches", True),
      (correctDoubleBranches, "correctDoubleBranches", True),
      (adjustPhiLabels, "adjustPhiLabels", True),

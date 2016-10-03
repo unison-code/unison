@@ -17,6 +17,7 @@ import System.FilePath
 import Control.Monad
 import Data.Aeson.Encode.Pretty
 import qualified Data.ByteString.Lazy.Char8 as BSL
+import Data.List.Split
 
 import Unison
 import Unison.Target.API
@@ -29,18 +30,17 @@ import Unison.Construction.AddDelimiters
 import Unison.Transformations.EstimateFrequency
 import Unison.Transformations.UnbundleSingletons
 
-import Unison.Tools.Analyze.GoalParser
-
 import Unison.Tools.Analyze.InsertNops
 import Unison.Tools.Analyze.InsertFuns
 import Unison.Tools.Analyze.ComputeGoal
 
 run (goals, estimateFreq, simulateStalls, modelCost,
      mirFile, debug, intermediate, jsonFile) mir target =
-  let (ds, gs)        = unzip [(d, g) | GoalDescription d g <- parseGoals goals]
+  let sgoals          = splitOn "," goals
+      gs              = map (lowerGoal . read) sgoals
       (rs, partialFs) = analyze (estimateFreq, simulateStalls, modelCost)
                         1.0 gs mir target
-      results         = zip ds rs
+      results         = zip sgoals rs
       baseName        = takeBaseName mirFile
   in do when debug $
              putStr (toPlainText partialFs)

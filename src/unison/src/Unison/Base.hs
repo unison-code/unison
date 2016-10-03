@@ -44,6 +44,7 @@ module Unison.Base
         CongruenceTuple,
         FrameObject (..),
         JumpTableEntry (..),
+        HighLevelGoal (..),
         BlockAttributes (..),
         Attributes (..),
         RWObject (..),
@@ -141,11 +142,13 @@ data Function i r = Function {
       -- | Congruences among operands
       fCongruences :: [CongruenceTuple r],
       -- | Fixed stack frame information
-      fFixedStackFrame  :: [FrameObject],
+      fFixedStackFrame :: [FrameObject],
       -- | Variable stack frame information
       fStackFrame  :: [FrameObject],
       -- | Jump table kind and entries
       fJumpTable   :: (String, [JumpTableEntry]),
+      -- | Goal for which the function is to be optimized
+      fGoal        :: Maybe HighLevelGoal,
       -- | Source program (e.g. LLVM IR)
       fSource      :: String
     }
@@ -573,6 +576,14 @@ data JumpTableEntry = JumpTableEntry {
   -- | Jump table block ids
   jtBlocks :: [BlockId]
 } deriving (Eq, Ord)
+
+-- | High-level optimization goal.
+data HighLevelGoal =
+  -- | Speed optimization (corresponds to 'DynamicGoal Cycles')
+  Speed |
+  -- | Code size optimization (corresponds to 'StaticGoal BundleWidth')
+  Size
+  deriving (Eq, Ord)
 
 -- | Types corresponding to 'Operation'.
 

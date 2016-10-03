@@ -92,6 +92,11 @@ data LsBlockAttribute =
   LsSplit
   deriving (Eq, Show)
 
+data LsHighLevelGoals =
+  LsSpeed |
+  LsSize
+  deriving (Eq, Show)
+
 parse :: Read i => Read r =>
          TargetWithOptions i r rc s -> String -> Function i r
 parse target s =
@@ -112,11 +117,12 @@ sFile =
      jumpTableMarkerLine
      jtk    <- option [] (jumpTableKindLine `endBy` newline)
      jtes   <- jumpTableEntryLine `endBy` newline
+     goal   <- goalLine
      sourceMarkerLine
      src    <- sourceLine `endBy` newline
      eof
      return (comms, name, body, listToMaybe cs, ffobjs, fobjs,
-             (toKind jtk, jtes), src)
+             (toKind jtk, jtes), goal, src)
 
 toKind [] = ""
 toKind [k] = k
@@ -143,6 +149,25 @@ fixedframeMarkerLine  = lineOf (marker "fixed-frame")
 frameMarkerLine       = lineOf (marker "frame")
 jumpTableMarkerLine   = lineOf (marker "jump-table")
 sourceMarkerLine      = lineOf (marker "source")
+
+goalLine = lineOf goal
+
+goal =
+  do marker "goal"
+     whiteSpace
+     goal <- optionMaybe goalName
+     whiteSpace
+     return goal
+
+goalName = try speedGoal <|> try sizeGoal
+
+speedGoal =
+  do string "speed"
+     return LsSpeed
+
+sizeGoal =
+  do string "size"
+     return LsSize
 
 lineOf e =
   do whiteSpace
@@ -469,12 +494,13 @@ isLsRemat _           = False
 isLsJTBlocks (LsJTBlocks _) = True
 isLsJTBlocks _              = False
 
-toFunction target (cmms, name, body, cs, ffobjs, fobjs, (jtk, jt), src) =
-  let cms  = [cm | (LsComment cm) <- cmms]
-      code = map (toBB target) (split (dWhen isLsBB) body)
-      cs'  = map (mapTuple toOperand) $ fromMaybe [] cs
-      src' = concat [l ++ "\n" | l <- src]
-  in mkCompleteFunction cms name code cs' ffobjs fobjs (jtk, jt) src'
+toFunction target (cmms, name, body, cs, ffobjs, fobjs, (jtk, jt), goal, src) =
+  let cms   = [cm | (LsComment cm) <- cmms]
+      code  = map (toBB target) (split (dWhen isLsBB) body)
+      cs'   = map (mapTuple toOperand) $ fromMaybe [] cs
+      goal' = fmap toHLGoal goal
+      src'  = concat [l ++ "\n" | l <- src]
+  in mkCompleteFunction cms name code cs' ffobjs fobjs (jtk, jt) goal' src'
 
 toBB target (LsBlock l as : code) =
   Block l (toBlockAttributes as) (map (toOperation target) code)
@@ -514,6 +540,9 @@ toOperand (LsMOperand pid ts pas) =
     mkMOperand pid (map toOperand ts) (fmap toOperand pas)
 toOperand (LsBlockRef bid) = mkBlockRef bid
 toOperand (LsOperandRef pid) = mkOperandRef pid
+
+toHLGoal LsSpeed = Speed
+toHLGoal LsSize = Size
 
 operationType _ [LsVirtualInstruction i] = VirtualType (toVirtualType i)
 operationType itf is =

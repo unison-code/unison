@@ -47,16 +47,15 @@ import qualified Unison.Tools.Analyze as Analyze
 import qualified Unison.Tools.Model.InstructionScheduling as IS
 import qualified Unison.Tools.Model.RegisterAllocation as RA
 
-run (baseFile, scaleFreq, oldModel, optimizeDynamic, optimizeResource,
-     applyBaseFile, tightPressureBound, strictlyBetter, jsonFile)
+run (baseFile, scaleFreq, oldModel, applyBaseFile, tightPressureBound,
+     strictlyBetter, jsonFile)
     extUni target =
   do baseMir <- maybeReadFile baseFile
      let f    = parse target extUni
          base = maybeNothing applyBaseFile baseMir
          aux  = auxiliarDataStructures target tightPressureBound base f
          ps   = modeler scaleFreq aux target f
-         ps'  = optimization strictlyBetter scaleFreq optimizeDynamic
-                optimizeResource aux target f ps
+         ps'  = optimization strictlyBetter scaleFreq aux target f ps
          ps'' = presolver oldModel aux target f ps'
      emitOutput jsonFile ((BSL.unpack (encodePretty' jsonConfig ps'')))
 
@@ -79,21 +78,19 @@ auxiliarDataStructures target tight baseMir f @ Function {fCode = code} =
       ra'   = mkRegisterArray target inf
   in (cg, dgs, t2w, ra', baseMir)
 
-optimization strictlyBetter scaleFreq optimizeDynamic optimizeResource aux
+optimization strictlyBetter scaleFreq aux
   target f ps =
     let ops = toJSON (M.fromList (optimizationParameters
-                                  strictlyBetter scaleFreq optimizeDynamic
-                                  optimizeResource
+                                  strictlyBetter scaleFreq
                                   aux target f))
     in unionMaps ps ops
 
-optimizationParameters strictlyBetter scaleFreq optimizeDynamic optimizeResource
-                       (_, dgs, _, _, baseMir)
-                       target Function {fCode = code} =
+optimizationParameters strictlyBetter scaleFreq (_, dgs, _, _, baseMir)
+                       target Function {fCode = code, fGoal = goal} =
     let rm   = resourceManager target
         cf   = capacityMap target
         r2id = M.fromList [(resName (res ir), resId ir) | ir <- iResources rm]
-        gl   = mkGoal optimizeDynamic optimizeResource
+        gl   = mkGoal goal
         od   = isDynamic gl :: Bool
         or   = optResource r2id gl :: ResourceId
         maxf = case baseMir of
@@ -116,12 +113,8 @@ optimizationParameters strictlyBetter scaleFreq optimizeDynamic optimizeResource
       ("maxf", toJSON maxf)
       ]
 
-mkGoal optimizeDynamic optimizeResource =
-    let go = mkGoalObject optimizeResource
-    in if optimizeDynamic then DynamicGoal go else StaticGoal go
-
-mkGoalObject "cycles" = Cycles
-mkGoalObject r = ResourceUsage (read r)
+mkGoal Nothing = error ("optimization goal is missing")
+mkGoal (Just goal) = lowerGoal goal
 
 isDynamic (DynamicGoal _) = True
 isDynamic _ = False

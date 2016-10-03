@@ -53,6 +53,7 @@ Library
 
                    Unison.Construction.AddDelimiters
                    Unison.Construction.BuildFunction
+                   Unison.Construction.LiftGoal
 
                    Unison.Transformations.RenameTemps
                    Unison.Transformations.RenameMOperands
@@ -179,7 +180,6 @@ Library
                   Unison.Tools.Export.RemoveNops
                   Unison.Tools.Export.RunPostProcess
                   Unison.Tools.Export.CleanNops
-                  Unison.Tools.Analyze.GoalParser
                   Unison.Tools.Analyze.InsertNops
                   Unison.Tools.Analyze.InsertFuns
                   Unison.Tools.Analyze.ComputeGoal

@@ -27,9 +27,8 @@ import qualified Unison.Tools.Export as Export
 import qualified Unison.Tools.Normalize as Normalize
 
 run (estimateFreq, noCC, noReserved, maxBlockSize, implementFrames, function,
-     noCross, oldModel, expandCopies, rematerialize, baseFile, scaleFreq,
-     optimizeDynamic, optimizeResource, applyBaseFile, tightPressureBound,
-     strictlyBetter, removeReds, keepNops,
+     goal, noCross, oldModel, expandCopies, rematerialize, baseFile, scaleFreq,
+     applyBaseFile, tightPressureBound, strictlyBetter, removeReds, keepNops,
      inFile, debug, verbose, intermediate, lint, outFile, outTemp, presolver,
      solver)
      targetWithOption =
@@ -43,7 +42,7 @@ run (estimateFreq, noCC, noReserved, maxBlockSize, implementFrames, function,
      maybePutStrLn "Running 'uni import'..."
      Import.run
        (estimateFreq, noCC, noReserved, maxBlockSize, implementFrames, function,
-        inFile, debug, intermediate, lint, Just uniFile)
+        goal, inFile, debug, intermediate, lint, Just uniFile)
        mirInput targetWithOption
      uniInput <- readFile uniFile
 
@@ -76,8 +75,8 @@ run (estimateFreq, noCC, noReserved, maxBlockSize, implementFrames, function,
      let jsonFile = addExtension prefix "json"
      maybePutStrLn "Running 'uni model'..."
      Model.run
-       (baseFile', scaleFreq, oldModel, optimizeDynamic, optimizeResource,
-        applyBaseFile, tightPressureBound, strictlyBetter, Just jsonFile)
+       (baseFile', scaleFreq, oldModel, applyBaseFile, tightPressureBound,
+        strictlyBetter, Just jsonFile)
        altUniInput targetWithOption
 
      let extJsonFile   = addExtension prefix "ext.json"

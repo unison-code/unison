@@ -77,10 +77,6 @@ runUnison unisonTargets testArgs mirFile =
          upd = update testArgs
          asmMirFile = addExtension (take (length mirFile - 4) mirFile) "asm.mir"
          properties = parseTestProperties unisonTargets mirFile mir
-         (optDynamic, optResource) =
-           case testGoal properties of
-            "speed" -> (True, "cycles")
-            "size"  -> (False, "BundleWidth")
      when (verb || sp) $ hPutStrLn stderr ""
      when sp $ hPutStrLn stderr ("Running test " ++ mirFile ++ "...")
      case pickTarget (testTarget properties) unisonTargets of
@@ -92,14 +88,13 @@ runUnison unisonTargets testArgs mirFile =
                    maxBlockSize args,
                    implementFrames args,
                    function args,
+                   Just (testGoal properties),
                    noCross args,
                    oldModel args,
                    expandCopies args,
                    rematerialize args,
                    Just asmMirFile,
                    scaleFreq args,
-                   optDynamic,
-                   optResource,
                    applyBaseFile args,
                    tightPressureBound args,
                    strictlyBetter args,
@@ -212,7 +207,7 @@ assertOutJson update properties prefix =
 
 assertCost update target properties unisonMirFile =
     do unisonMir <- readFile unisonMirFile
-       let gl = goal properties
+       let gl = lowLevelGoal properties
            ([expCost], _) =
              Analyze.analyze (False, True, False) 1.0 [gl] unisonMir target
            properties1 = if update then properties {testExpectedCost =
@@ -226,7 +221,7 @@ assertCost update target properties unisonMirFile =
          expCost
        return properties1
 
-goal properties =
+lowLevelGoal properties =
   case testGoal properties of
    "speed" -> DynamicGoal Cycles
    "size" -> StaticGoal (ResourceUsage (read "BundleWidth"))

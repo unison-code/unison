@@ -32,7 +32,7 @@ buildFunction target MachineFunction {mfName = name, mfBlocks = blocks,
       ffos = buildFixedStackFrame mps
       fos  = buildStackFrame mps
       jt   = buildJumpTable (find isMachineFunctionPropertyJumpTable mps)
-      f    = mkCompleteFunction [] name code [] ffos fos jt ir
+      f    = mkCompleteFunction [] name code [] ffos fos jt Nothing ir
   in f
 
 buildBlock itf oif (id, code)
