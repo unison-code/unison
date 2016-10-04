@@ -277,10 +277,15 @@ realUses [imm1, cond, _, _]
 realUses [imm1, cond, _]
   | isImmValue 14 cond = [imm1]
 realUses [Temporary {}, Temporary {}, cond, r]
+  | isImmValue 0 cond = []
+  | isImmValue 12 cond = []
   | isImmValue 14 cond = []
   | isRegister r = []
 realUses [imm1, _, r, _]
   | isRegister r = [imm1]
+realUses [imm1, cond, Temporary {}, _]
+  | isImmValue 1 cond = [imm1]
+  | isImmValue 10 cond = [imm1]
 realUses us = error ("unmatched: realUses " ++ show us)
 
 isImmValue n (Bound (MachineImm imm)) = n == imm
