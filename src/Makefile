@@ -43,6 +43,8 @@ PRESOLVERBIN := $(PRESOLVERDIR)/gecode-presolver
 SOLVERDIR := solvers/gecode
 SOLVERBIN := $(SOLVERDIR)/gecode-solver
 
+UNISON_SHOW_DETAILS ?= always
+
 build: build-unison $(PRESOLVERBIN) $(SOLVERBIN)
 
 build-unison: prepare-unison
@@ -52,7 +54,8 @@ prepare-unison:
 	cd $(UNISONDIR); $(CABALBIN) install --only-dependencies --enable-tests
 
 test:
-	cd $(UNISONDIR); $(CABALBIN) test --show-details=always \
+	cd $(UNISONDIR); \
+	$(CABALBIN) test --show-details=$(UNISON_SHOW_DETAILS) \
 	--test-option=--directory=$(CURDIR)/$(UNISONDIR)/test \
 	--test-option=--presolver=$(CURDIR)/$(PRESOLVERBIN) \
 	--test-option=--solver=$(CURDIR)/$(SOLVERBIN) \
