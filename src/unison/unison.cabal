@@ -205,8 +205,10 @@ Library
                   Unison.Target.ARM.Registers
                   Unison.Target.ARM.OperandInfo
                   Unison.Target.ARM.Transforms
+                  Unison.Target.ARM.Usages
                   Unison.Target.ARM.ARMRegisterDecl
                   Unison.Target.ARM.ARMRegisterClassDecl
+                  Unison.Target.ARM.ARMResourceDecl
                   Unison.Target.ARM.SpecsGen
                   Unison.Target.ARM.SpecsGen.ARMInstructionDecl
                   Unison.Target.ARM.SpecsGen.ARMItineraryDecl

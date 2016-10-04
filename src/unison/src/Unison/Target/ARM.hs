@@ -27,10 +27,11 @@ import Unison.Target.ARM.Common
 import Unison.Target.ARM.Registers
 import Unison.Target.ARM.OperandInfo
 import Unison.Target.ARM.Transforms
+import Unison.Target.ARM.Usages
 import Unison.Target.ARM.ARMRegisterDecl
 import Unison.Target.ARM.ARMRegisterClassDecl
+import Unison.Target.ARM.ARMResourceDecl
 import Unison.Target.ARM.SpecsGen.ARMInstructionDecl
-import Unison.Target.ARM.SpecsGen.ARMItineraryDecl
 import qualified Unison.Target.ARM.SpecsGen as SpecsGen
 
 target =
@@ -132,26 +133,27 @@ copies (f, _, _, _, _, _) False t [] d [u]
     ([], [[]])
 
 copies (f, _, cg, ra, _, _) _ t _rs d us =
-  let is = d:us
-      w  = widthOfTemp ra cg f t is
+  let is     = d:us
+      w      = widthOfTemp ra cg f t is
+      Just g = fGoal f
   in (
-      (defCopies t w d),
-      map (useCopies t w) us
+      (defCopies g t w d),
+      map (useCopies g t w) us
       )
 
 popInstruction f t [R4_7]
   | none isTailCall $ bCode $ tempBlock (fCode f) t = TPOPcs_free
 popInstruction _ _ _ = TPOPcs
 
-defCopies _ w _ =
+defCopies g _ w _ =
   [mkNullInstruction] ++
-   map TargetInstruction (moveInstrs w) ++
-   map TargetInstruction (storeInstrs w)
+   map TargetInstruction (moveInstrs g w) ++
+   map TargetInstruction (storeInstrs g w)
 
-useCopies _ w _ =
+useCopies g _ w _ =
   [mkNullInstruction] ++
-   map TargetInstruction (moveInstrs w) ++
-   map TargetInstruction (loadInstrs w)
+   map TargetInstruction (moveInstrs g w) ++
+   map TargetInstruction (loadInstrs g w)
 
 widthOfTemp = widthOf (target, [])
 
@@ -160,19 +162,25 @@ widthOfTemp = widthOf (target, [])
 -- TMOVr, {TMOVr, VMOVS, VMOVSR, VMOVRS} (MOVE_ALL is instanciated after
 -- register allocation since their properties are all the same -- except TMOVr
 -- has size 2)
-moveInstrs 1 = [MOVE, MOVE_ALL]
+moveInstrs g 1
+  | g == Speed = [MOVE_ALL]
+  | g == Size = [MOVE, MOVE_ALL]
 -- VMOVD
-moveInstrs 2 = [MOVE_D]
+moveInstrs _ 2 = [MOVE_D]
 
 -- {T2STRi12, tSTRi}
-storeInstrs 1 = [STORE, STORE_T]
+storeInstrs g 1
+  | g == Speed = [STORE]
+  | g == Size = [STORE, STORE_T]
 -- VSTRD
-storeInstrs 2 = [STORE_D]
+storeInstrs _ 2 = [STORE_D]
 
 -- {T2LDRi12, tLDRi}
-loadInstrs 1 = [LOAD, LOAD_T]
+loadInstrs g 1
+  | g == Speed = [LOAD]
+  | g == Size = [LOAD, LOAD_T]
 -- VLDRD
-loadInstrs 2 = [LOAD_D]
+loadInstrs _ 2 = [LOAD_D]
 
 isReserved r = r `elem` reserved
 
@@ -233,11 +241,6 @@ isGPR r = rTargetReg (regId r) `elem` registers (RegisterClass GPR)
 
 -- | Declares target architecture resources
 
-data MipsResource =
-  BundleWidth |
-  V6_Pipe
-  deriving (Eq, Ord, Show, Read)
-
 resources =
     [
 
@@ -250,51 +253,6 @@ resources =
      Resource V6_Pipe 1
 
     ]
-
--- | Declares resource usages of each instruction
-
-usages i =
-  let it = SpecsGen.itinerary i
-  -- TODO: define instruction size as BundleWidth usage
-  in mergeUsages (itineraryUsage i it)
-     [Usage BundleWidth (SpecsGen.size i) 1]
-
-itineraryUsage _ it
-  | it `elem` [NoItinerary] = []
-  | it `elem` [IIC_Br, IIC_iALUi, IIC_iBITi, IIC_iCMPi, IIC_iEXTr,
-               IIC_iLoad_bh_r, IIC_iLoad_r, IIC_iMOVi, IIC_iMVNi, IIC_fpCVTID,
-               IIC_iALUr, IIC_iCMOVr, IIC_iCMPr, IIC_iLoad_bh_ru, IIC_iMVNr,
-               IIC_iStore_r, IIC_iTSTi, IIC_iTSTr, IIC_iUNAsi, IIC_fpLoad32,
-               IIC_fpLoad64, IIC_iBITr, IIC_iCMOVi, IIC_iCMOVsr, IIC_iEXTAr,
-               IIC_iLoad_iu, IIC_iMAC16, IIC_iStore_bh_iu, IIC_iStore_bh_r,
-               IIC_iStore_bh_ru, IIC_iStore_d_r, IIC_iStore_iu, IIC_fpALU32,
-               IIC_fpCMP64, IIC_fpCVTDS, IIC_fpMOVID, IIC_iLoad_ru, IIC_iMUL16,
-               IIC_fpALU64, IIC_fpSTAT, IIC_fpStore32, IIC_fpStore64,
-               IIC_iStore_ru, IIC_fpCVTSD, IIC_fpMUL32, IIC_fpCVTIS,
-               IIC_fpCVTSI, IIC_fpMOVDI, IIC_iMOVr, IIC_fpUNA64, IIC_fpMOVIS,
-               IIC_iALUsi, IIC_iALUsir, IIC_iBITsi, IIC_iLoad_bh_i, IIC_iLoad_i,
-               IIC_iMOVsi, IIC_iStore_i, IIC_iCMOVsi, IIC_iCMPsi,
-               IIC_iLoad_bh_iu, IIC_iStore_bh_i, IIC_iALUx, IIC_iLoad_d_i,
-               IIC_iUNAr, IIC_fpMOVSI, IIC_iTSTsi, IIC_fpCMP32, IIC_fpCVTDI,
-               IIC_fpUNA32] =
-      [Usage V6_Pipe 1 1]
-  | it `elem` [IIC_iALUsr, IIC_iMOVsr, IIC_iBITsr, IIC_iCMPsr, IIC_iMOVix2,
-               IIC_iMUL32, IIC_iLoad_si, IIC_iCMOVix2, IIC_iLoad_bh_si,
-               IIC_iStore_si, IIC_fpMUL64, IIC_iMAC32, IIC_iStore_bh_si,
-               IIC_iTSTsr] =
-      [Usage V6_Pipe 1 2]
-  | it `elem` [IIC_iStore_mu, IIC_iStore_m, IIC_iLoad_mu, IIC_iLoad_m,
-               IIC_fpStore_mu, IIC_fpLoad_mu, IIC_iPop, IIC_fpLoad_m,
-               IIC_fpStore_m] =
-      [Usage V6_Pipe 1 3]
-  | it `elem` [IIC_iLoad_mBr, IIC_iPop_Br] =
-      [Usage V6_Pipe 1 4]
-  | it `elem` [IIC_fpDIV32] =
-      [Usage V6_Pipe 1 15]
-  | it `elem` [IIC_fpSQRT64, IIC_fpDIV64] =
-      [Usage V6_Pipe 1 29]
-
-itineraryUsage _ it = error ("unmatched: itineraryUsage " ++ show it)
 
 -- | No-operation instruction
 
@@ -533,8 +491,12 @@ removeFrameIndexInstr mi @ MachineSingle {msOpcode = MachineTargetOpc i}
 
 -- | Gives a list of function transformers
 transforms = [peephole extractReturnRegs, peephole foldResRegAssignment,
-              peephole cleanResRegCopies, mapToOperation addThumbAlternatives,
+              peephole cleanResRegCopies,
+              mapToOperationWithGoal addThumbAlternatives,
               peephole handlePromotedOperands]
+
+mapToOperationWithGoal t f @ Function {fCode = code, fGoal = Just goal} =
+  f {fCode = map (mapToOperationInBlock (t goal)) code}
 
 -- | Latency of read-write dependencies
 

@@ -17,6 +17,7 @@ module Unison.Target.ARM.Transforms
      handlePromotedOperands) where
 
 import qualified Data.Map as M
+import qualified Data.Set as S
 import Data.Word
 import Data.Bits
 
@@ -26,6 +27,8 @@ import Unison.Target.Query
 import Unison.Target.ARM.Common
 import Unison.Target.ARM.Registers
 import Unison.Target.ARM.OperandInfo
+import Unison.Target.ARM.Usages
+import Unison.Target.ARM.ARMResourceDecl
 import Unison.Target.ARM.SpecsGen.ARMInstructionDecl
 
 extractReturnRegs _ (
@@ -118,10 +121,22 @@ cleanResRegCopies _ (o : rest) _ = (rest, [o])
 -- This transformation adds 16-bits Thumb alternatives when possible, according
 -- to the logic in Thumb2SizeReduction
 
-addThumbAlternatives o @ SingleOperation {
+addThumbAlternatives goal o @ SingleOperation {
   oOpr = Natural Linear {oIs = [TargetInstruction i]}} =
-  addThumbAlternative o (M.lookup i reduceMap) i
-addThumbAlternatives o = o
+  let o' = addThumbAlternative o (M.lookup i reduceMap) i
+  in case goal of
+      Size -> o'
+      -- if we optimize for speed, keep on Thumb alternatives if they can
+      -- improve latency
+      Speed -> if occupations o == occupations o' then o else o'
+addThumbAlternatives _ o = o
+
+occupations = S.fromList .
+              concatMap (map occupation . filter isV6 . usages . oTargetInstr) .
+              oInstructions
+
+isV6 Usage {resource = V6_Pipe} = True
+isV6 _ = False
 
 addThumbAlternative o (Just r) i
   | special r = reduceSpecial o r i
