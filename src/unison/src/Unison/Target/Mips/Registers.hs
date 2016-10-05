@@ -27,22 +27,21 @@ import Unison.Target.Mips.MipsRegisterClassDecl
 
 registerArray =
     map RegisterClass
-    [GPR32Opnd, ACC64, FGR32Opnd, FCCRegsOpnd, MSA128BOpnd, DSPCC] ++
+    [GPR32Opnd, ACC64, FGR32Opnd, FCCRegsOpnd, DSPCC] ++
     [InfiniteRegisterClass M32]
 
 -- | Register classes
 regClasses =
   map RegisterClass
   [GPR32Opnd, GPR32, ACC64, FGR32Opnd, FGR32, AFGR64Opnd, AFGR64, FCCRegsOpnd,
-   MSA128BOpnd, DSPCC] ++
+   DSPCC] ++
   map InfiniteRegisterClass [M32, M64]
 
 -- | Register atoms of 1-width registers
 
 registerAtoms ra
     | ra `elem` concatMap (registers . RegisterClass)
-      [GPR32Opnd, GPR32, ACC64, FGR32Opnd, FGR32, FCCRegsOpnd, MSA128BOpnd,
-       DSPCC] =
+      [GPR32Opnd, GPR32, ACC64, FGR32Opnd, FGR32, FCCRegsOpnd, DSPCC] =
       (ra, ra)
 
 -- | Register atoms of 2-width registers
@@ -85,10 +84,6 @@ registers (RegisterClass rc)
  -- Only the first register since the class is reserved and FCC0 is the
  -- only register that appears in the input MIR:
   | rc `elem` [FCCRegsOpnd] = [FCC0]
-  | rc `elem` [MSA128BOpnd] =
-      [W0, W1, W2, W3, W4, W5, W6, W7, W8, W9, W10, W11, W12, W13, W14, W15,
-       W16, W17, W18, W19, W20, W21, W22, W23, W24, W25, W26, W27, W28, W29,
-       W30, W31]
   | rc `elem` [DSPCC] = [DSPCCond]
 
 -- | Map from infinite register class to register usage
@@ -168,7 +163,6 @@ regStrings = M.fromList $
   regStringsWithIndex "f" FGR32Opnd ++
   regStringsWithIndex "d" AFGR64Opnd ++
   [(FCC0, "fcc0")] ++
-  regStringsWithIndex "w" MSA128BOpnd ++
   [(DSPCCond, "dspccond"),
    (DSPCarry, "dspcarry"),
    (DSPEFI, "dspefi"),
