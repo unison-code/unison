@@ -44,6 +44,7 @@ runLint rawArgs f target =
                    (I.noEmptyRegClass, noEmptyRegClass args),
                    (I.consistentOperandInfo, consistentOperandInfo args),
                    (I.consistentOperands, consistentOperands args),
+                   (I.consistentPreAssignments, consistentPreAssignments args),
                    (I.noRedefinitions, noRedefinitions args),
                    (I.noEdgeInterferences, noEdgeInterferences args),
                    (I.noMustConflicts, noMustConflicts args),

@@ -18,6 +18,7 @@ module Unison.Test.Invariants
      allRegClassesDefined,
      consistentOperandInfo,
      consistentOperands,
+     consistentPreAssignments,
      noRedefinitions,
      noEdgeInterferences,
      noMustConflicts,
@@ -167,7 +168,6 @@ consistentSingleOperandInfo (o, oi) =
 consistentOperands f target =
   let   oif    = operandInfo target
         cg     = CG.fromFunction f
-        _      = CG.toDot cg
         fcode  = sortBy (comparing oId) (flatCode f)
         ra     = mkRegisterArray target 0
         rc2u   = M.fromList ([(rc, raRcUsage ra rc) | rc <- raRcs ra])
@@ -223,6 +223,27 @@ consistentOperand _ (o, oi) =
 
 firstTemp = undoPreAssign . head . extractTemps
 width t2w t = t2w M.! (undoPreAssign t)
+
+consistentPreAssignments f target =
+  let oif   = operandInfo target
+      cg    = CG.fromFunction f
+      fcode = sortBy (comparing oId) (flatCode f)
+      ra    = mkRegisterArray target 0
+      t2w   = tempWidths ra oif fcode cg
+      r2w   = M.map snd $ inverseMap $ atomWidthToRegs ra
+  in testAllOperands (consistentPreAssignment t2w r2w) (fCode f)
+
+consistentPreAssignment t2w r2w _ t =
+  case preAssignment t of
+   Just r ->
+     let iw = t2w M.! (undoPreAssign $ head $ extractTemps t)
+         rw = r2w M.! r
+     in if iw /= rw then
+          Just ("the inferred width of " ++ show t ++ " (" ++ show iw ++
+                ") is inconsistent with the width of its pre-assigned register "
+                ++ show r ++ " (" ++ show rw ++ ")")
+        else Nothing
+   Nothing -> Nothing
 
 noRedefinitions f _ = testAllOperations noIstrRedefinitions (fCode f)
 
@@ -360,7 +381,6 @@ noComponentConflicts f target
     let apf = alignedPairs target
         sp  = samePartitions apf f
         cg  = CG.fromFunction f
-        _   = CG.toDot cg
     in mapMaybe (componentConflicts cg) sp
 
 componentConflicts cg ts =
@@ -506,6 +526,12 @@ testAllTemporaries f code =
     let fCode  = flatten code
         ts     = tUniqueOps fCode
         result = map (f fCode) ts
+    in catMaybes result
+
+testAllOperands f code =
+    let fCode  = flatten code
+        ps     = concatMap oModelOps fCode
+        result = map (f fCode) ps
     in catMaybes result
 
 testAllOperations f code =
