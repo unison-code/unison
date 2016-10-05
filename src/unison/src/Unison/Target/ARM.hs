@@ -120,7 +120,7 @@ copies _ False _ rs _ us | any isReserved rs =
 -- Do not add copies for intermediate callee-saved temporaries
 copies (f, cst, _, _, _, _) False t rs _ [_] | not (null rs) && S.member t cst =
       (if isEntryTemp (fCode f) t
-       then [mkNullInstruction, TargetInstruction TPUSHcs]
+       then [mkNullInstruction, TargetInstruction (pushInstruction rs)]
        else [],
        [if isExitTemp (fCode f) t
         then [mkNullInstruction, TargetInstruction (popInstruction f t rs)]
@@ -141,9 +141,14 @@ copies (f, _, cg, ra, _, _) _ t _rs d us =
       map (useCopies g t w) us
       )
 
-popInstruction f t [R4_7]
-  | none isTailCall $ bCode $ tempBlock (fCode f) t = TPOPcs_free
-popInstruction _ _ _ = TPOPcs
+pushInstruction [r]
+  | r `elem` registers (RegisterClass CS) = TPUSHcs
+  | r `elem` registers (RegisterClass DPR) = STORE_D
+
+popInstruction f t [r]
+  | r == R4_7 && (none isTailCall $ bCode $ tempBlock (fCode f) t) = TPOPcs_free
+  | r `elem` registers (RegisterClass CS) = TPOPcs
+  | r `elem` registers (RegisterClass DPR) = LOAD_D
 
 defCopies g _ w _ =
   [mkNullInstruction] ++

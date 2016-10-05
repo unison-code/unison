@@ -129,10 +129,12 @@ reserved = [SP, LR, PC]
 -- | Caller- and callee-saved registers
 
 -- | Registers that are not preserved across calls
-callerSaved = [R0, R1, R2, R3, R12]
+callerSaved = [R0, R1, R2, R3, R12,
+               D0, D1, D2, D3, D4, D5, D6, D7]
 
 -- | Registers that are preserved across calls
-calleeSaved = [R4_7, R8_11]
+calleeSaved = [R4_7, R8_11,
+               D8, D9, D10, D11, D12, D13, D14, D15]
 
 instance Read ARMRegister where
   readsPrec _ s = [(readReg s, "")]
