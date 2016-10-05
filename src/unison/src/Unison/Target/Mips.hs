@@ -95,22 +95,22 @@ copies _fInfo _phiTemp _t [r] _d us | isReservedRegister r =
     ([], replicate (length us) [])
 
 -- Do not extend temporaries that are defined by virtual defines
-copies _fInfo False _t _musts d [_] | isDefine d = ([], [[]])
+copies _fInfo False _t _rs d [_] | isDefine d = ([], [[]])
 
 -- Do not extend temporaries that are only used by virtual kills
-copies _fInfo False _t _musts _d [u] | isKill u = ([], [[]])
+copies _fInfo False _t _rs _d [u] | isKill u = ([], [[]])
 
 -- Add only one store for entry calle-saved temporaries
 -- Add only one load for exit calle-saved temporaries
 -- Do not add copies for intermediate calle-saved temporaries
-copies (f, cst, _, _, _, _) False t musts _d [_u]
-  | not (null musts) && S.member t cst =
+copies (f, cst, _, _, _, _) False t [r] _d [_u]
+  | S.member t cst =
     (
       if isEntryTemp (fCode f) t
-      then [mkNullInstruction, TargetInstruction STORE]
+      then [mkNullInstruction, TargetInstruction (pushInstruction r)]
       else [],
       [if isExitTemp (fCode f) t
-       then [mkNullInstruction, TargetInstruction LOAD]
+       then [mkNullInstruction, TargetInstruction (popInstruction r)]
        else []]
     )
 
@@ -161,6 +161,14 @@ accCopy t i
   | isCombine i && isCombineLowOf t i  = [mkNullInstruction, TargetInstruction MTLO]
   | isCombine i && isCombineHighOf t i = [mkNullInstruction, TargetInstruction MTHI]
   | otherwise = []
+
+pushInstruction r
+  | r `elem` registers (RegisterClass GPR32Opnd) = STORE
+  | r `elem` registers (RegisterClass AFGR64Opnd) = STORE_D
+
+popInstruction r
+  | r `elem` registers (RegisterClass GPR32Opnd) = LOAD
+  | r `elem` registers (RegisterClass AFGR64Opnd) = LOAD_D
 
 -- | Transforms copy instructions into natural instructions
 

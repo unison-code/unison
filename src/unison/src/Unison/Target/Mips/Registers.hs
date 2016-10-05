@@ -104,13 +104,16 @@ reserved = [ZERO]
 
 subRegIndexType subreg = error ("unmatched: subRegIndexType " ++ show subreg)
 
--- | Caller- and callee-saved registers
+-- | Caller- and callee-saved registers (extracted from "SYSTEM V APPLICATION
+-- BINARY INTERFACE MIPS RISC Processor Supplement", 3rd Edition, 1996)
 
 -- | Registers that are not preserved across calls
-callerSaved = [T0, T1, T2, T3, T4, T5, T6, T7, T8, T9]
+callerSaved = [T0, T1, T2, T3, T4, T5, T6, T7, T8, T9,
+               D0, D1, D2, D3, D4, D5, D6, D7, D8, D9]
 
 -- | Registers that are preserved across calls
-calleeSaved = [S0, S1, S2, S3, S4, S5, S6, S7]
+calleeSaved = [S0, S1, S2, S3, S4, S5, S6, S7,
+               D10, D11, D12, D13, D14, D15]
 
 instance Read MipsRegister where
   readsPrec _ s = [(readReg s, "")]
