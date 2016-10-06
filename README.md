@@ -4,41 +4,20 @@ Unison is a simple, flexible, and potentially optimal software tool that
 performs register allocation and instruction scheduling in integration using
 combinatorial optimization.
 
-## Prerequisities
+## Prerequisites
 
 Unison has the following dependencies:
-
-### [Haskell platform](http://hackage.haskell.org/platform/)
-
-In Debian-based Linux distributions, just run:
-
-```
-apt-get install haskell-platform
-```
-
-### [GCC](https://gcc.gnu.org/) (version 4.6 or newer)
-
-Available by default in most systems.
-
-### [Qt](https://www.qt.io/) (version 4.x)
-
-In Debian-based Linux distributions, just run:
+[Haskell platform](http://hackage.haskell.org/platform/),
+[Qt](https://www.qt.io/)(version 4.x),
+[Graphviz library](http://www.graphviz.org/), and
+[Gecode](http://www.gecode.org/) (svn revision 14847 or newer).
+To get the first three dependencies In Debian-based distributions, just run:
 
 ```
-apt-get install libqt4-dev
+apt-get install haskell-platform libqt4-dev libgraphviz-dev
 ```
 
-### [Graphviz library](http://www.graphviz.org/)
-
-In Debian-based Linux distributions, just run:
-
-```
-apt-get install libgraphviz-dev
-```
-
-### [Gecode](http://www.gecode.org/) (svn revision 14847 or newer)
-
-The source of the required revision can be fetched with:
+The source of the required Gecode revision can be fetched with:
 
 ```
 svn --username anonymous checkout -r14847 https://svn.gecode.org/svn/gecode/trunk
