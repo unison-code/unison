@@ -11,7 +11,7 @@ Unison has the following dependencies:
 [Qt](https://www.qt.io/)(version 4.x),
 [Graphviz library](http://www.graphviz.org/), and
 [Gecode](http://www.gecode.org/) (svn revision 14847 or newer).
-To get the first three dependencies In Debian-based distributions, just run:
+To get the first three dependencies in Debian-based distributions, just run:
 
 ```
 apt-get install haskell-platform libqt4-dev libgraphviz-dev
