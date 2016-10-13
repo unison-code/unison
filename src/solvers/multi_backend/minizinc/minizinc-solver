@@ -70,8 +70,8 @@ done
 BASENAME=$(basename $1 .ext.json)
 EXTJSON=$1
 shift
-echo "json2dzn('${EXTJSON}')." | sicstus -f --nologo --noinfo -l solvers/multi_backend/minizinc/model2dzn.pl
-cat solvers/multi_backend/minizinc/code-generation.mzn solvers/multi_backend/minizinc/${search} > code-generation.mzn
+echo "json2dzn('${EXTJSON}')." | sicstus -f --nologo --noinfo -l ../src/solvers/multi_backend/minizinc/model2dzn.pl
+cat ../src/solvers/multi_backend/minizinc/code-generation.mzn ../src/solvers/multi_backend/minizinc/${search} > code-generation.mzn
 if [ $mzn = 'mzn-gecode' ]; then
   pflag='-p'
   pvalue=${ncores}
@@ -79,5 +79,5 @@ else
   pflag=''
   pvalue=''
 fi
-echo ${mzn} -k ${statflag} ${pflag} ${pvalue} ${freeflag} ${toflag} ${allsolns} --no-optimize -D good_cumulative=${cumulative} code-generation.mzn $BASENAME.dzn | solvers/multi_backend/common/outfilter.pl > ${OUTJSON}
-time ${mzn} -k ${statflag} ${pflag} ${pvalue} ${freeflag} ${toflag} ${allsolns} --no-optimize -D good_cumulative=${cumulative} code-generation.mzn $BASENAME.dzn | solvers/multi_backend/common/outfilter.pl > ${OUTJSON}
+echo ${mzn} -k ${statflag} ${pflag} ${pvalue} ${freeflag} ${toflag} ${allsolns} --no-optimize -D good_cumulative=${cumulative} code-generation.mzn $BASENAME.dzn | ../src/solvers/multi_backend/common/outfilter.pl > ${OUTJSON}
+time ${mzn} -k ${statflag} ${pflag} ${pvalue} ${freeflag} ${toflag} ${allsolns} --no-optimize -D good_cumulative=${cumulative} code-generation.mzn $BASENAME.dzn | ../src/solvers/multi_backend/common/outfilter.pl > ${OUTJSON}

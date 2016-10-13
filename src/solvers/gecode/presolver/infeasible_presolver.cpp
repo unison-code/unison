@@ -733,8 +733,9 @@ void InfeasiblePresolver::emit_nogood(const vector<vector<operand> >* R,
 				      const Temporand& v2,
 				      vector<nogood>& Nogoods) {
   // G is true iff it is nullptr!
-  if(R == nullptr) Nogoods.push_back(Conj);
-  else {
+  if (R == nullptr) {
+    Nogoods.push_back(Conj);
+  } else {
     // M <- P <- ø
     map<vector<temporary>, vector<operand> > M;
     vector<operand> P, Q;

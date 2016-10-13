@@ -45,7 +45,11 @@ SOLVERBIN := $(SOLVERDIR)/gecode-solver
 
 UNISON_SHOW_DETAILS ?= always
 
-build: build-unison $(PRESOLVERBIN) $(SOLVERBIN)
+build: build-unison build-presolver build-solver
+
+build-solver: $(SOLVERBIN)
+
+build-presolver: $(PRESOLVERBIN)
 
 build-unison: prepare-unison
 	cd $(UNISONDIR); $(CABALBIN) configure --enable-tests; $(CABALBIN) build

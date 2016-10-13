@@ -729,7 +729,7 @@ void Parameters::compute_derived() {
       t_preassign[temps[p][0]] = pr[1];
   }
 
-  int nregs = atoms[1].size();
+  int nregs = atoms[0].size();	// safe over-estimation
   init_vector(r_calleesaved, nregs, true); // also the default for regs that are neither: Hexagon 29/30/31
   for(int r : callersaved)
     r_calleesaved[r] = false;
