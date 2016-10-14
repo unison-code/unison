@@ -3141,14 +3141,12 @@ instruction-set:
         - id:                 MEMCPY
           type:               linear
           operands:
-           - newdst:          [register, def, GPR]
-           - newsrc:          [register, def, GPR]
-           - dst:             [register, use, GPR]
-           - src:             [register, use, GPR]
+           - dst:             [register, usedef, GPR]
+           - src:             [register, usedef, GPR]
            - nreg:            bound
            - unnamed:         bound
           uses:               [dst, src, nreg, unnamed]
-          defines:            [newdst, newsrc]
+          defines:            [dst, src]
           size:               0
           affects:
           affected-by:
@@ -5148,17 +5146,15 @@ instruction-set:
         - id:                 SMLAL
           type:               linear
           operands:
-           - RdLo:            [register, def, GPR]
-           - RdHi:            [register, def, GPR]
+           - RLo:             [register, usedef, GPR]
+           - RHi:             [register, usedef, GPR]
            - Rn:              [register, use, GPR]
            - Rm:              [register, use, GPR]
-           - RLo:             [register, use, GPR]
-           - RHi:             [register, use, GPR]
            - p1:              bound
            - p2:              bound
            - s:               [register, use, CCR]
           uses:               [Rn, Rm, RLo, RHi, p1, p2, s]
-          defines:            [RdLo, RdHi]
+          defines:            [RLo, RHi]
           size:               4
           affects:
           affected-by:
@@ -5263,17 +5259,15 @@ instruction-set:
         - id:                 SMLALv5
           type:               linear
           operands:
-           - RdLo:            [register, def, GPR]
-           - RdHi:            [register, def, GPR]
+           - RLo:             [register, usedef, GPR]
+           - RHi:             [register, usedef, GPR]
            - Rn:              [register, use, GPR]
            - Rm:              [register, use, GPR]
-           - RLo:             [register, use, GPR]
-           - RHi:             [register, use, GPR]
            - p1:              bound
            - p2:              bound
            - s:               [register, use, CCR]
           uses:               [Rn, Rm, RLo, RHi, p1, p2, s]
-          defines:            [RdLo, RdHi]
+          defines:            [RLo, RHi]
           size:               4
           affects:
           affected-by:
@@ -6416,7 +6410,7 @@ instruction-set:
         - id:                 STRB_POST_IMM
           type:               linear
           operands:
-           - Rn_wb:           [register, def, GPR]
+           - addr.base:       [register, def, GPR]
            - Rt:              [register, use, GPR]
            - addr:            [register, use, GPR]
            - offset1:         [register, use, GPRnopc]
@@ -6424,7 +6418,7 @@ instruction-set:
            - p1:              bound
            - p2:              bound
           uses:               [Rt, addr, offset1, offset2, p1, p2]
-          defines:            [Rn_wb]
+          defines:            [addr.base]
           size:               4
           affects:
            - mem:             memory
@@ -6434,7 +6428,7 @@ instruction-set:
         - id:                 STRB_POST_REG
           type:               linear
           operands:
-           - Rn_wb:           [register, def, GPR]
+           - addr.base:       [register, def, GPR]
            - Rt:              [register, use, GPR]
            - addr:            [register, use, GPR]
            - offset1:         [register, use, GPRnopc]
@@ -6442,7 +6436,7 @@ instruction-set:
            - p1:              bound
            - p2:              bound
           uses:               [Rt, addr, offset1, offset2, p1, p2]
-          defines:            [Rn_wb]
+          defines:            [addr.base]
           size:               4
           affects:
            - mem:             memory
@@ -6452,14 +6446,14 @@ instruction-set:
         - id:                 STRB_PRE_IMM
           type:               linear
           operands:
-           - Rn_wb:           [register, def, GPR]
+           - addr.base:       [register, def, GPR]
            - Rt:              [register, use, GPR]
            - addr1:           [register, use, GPR]
            - addr2:           bound
            - p1:              bound
            - p2:              bound
           uses:               [Rt, addr1, addr2, p1, p2]
-          defines:            [Rn_wb]
+          defines:            [addr.base]
           size:               4
           affects:
            - mem:             memory
@@ -6469,7 +6463,7 @@ instruction-set:
         - id:                 STRB_PRE_REG
           type:               linear
           operands:
-           - Rn_wb:           [register, def, GPR]
+           - addr.base:       [register, def, GPR]
            - Rt:              [register, use, GPR]
            - addr1:           [register, use, GPR]
            - addr2:           [register, use, GPRnopc]
@@ -6477,7 +6471,7 @@ instruction-set:
            - p1:              bound
            - p2:              bound
           uses:               [Rt, addr1, addr2, addr3, p1, p2]
-          defines:            [Rn_wb]
+          defines:            [addr.base]
           size:               4
           affects:
            - mem:             memory
@@ -6502,15 +6496,14 @@ instruction-set:
         - id:                 STRBi_preidx
           type:               linear
           operands:
-           - Rn_wb:           [register, def, GPR]
+           - Rn:              [register, usedef, GPR]
            - Rt:              [register, use, GPR]
-           - Rn:              [register, use, GPR]
            - offset1:         [register, use, GPRnopc]
            - offset2:         bound
            - p1:              bound
            - p2:              bound
           uses:               [Rt, Rn, offset1, offset2, p1, p2]
-          defines:            [Rn_wb]
+          defines:            [Rn]
           size:               4
           affects:
           affected-by:
@@ -6519,15 +6512,14 @@ instruction-set:
         - id:                 STRBr_preidx
           type:               linear
           operands:
-           - Rn_wb:           [register, def, GPR]
+           - Rn:              [register, usedef, GPR]
            - Rt:              [register, use, GPR]
-           - Rn:              [register, use, GPR]
            - offset1:         [register, use, GPRnopc]
            - offset2:         bound
            - p1:              bound
            - p2:              bound
           uses:               [Rt, Rn, offset1, offset2, p1, p2]
-          defines:            [Rn_wb]
+          defines:            [Rn]
           size:               4
           affects:
           affected-by:
@@ -6721,7 +6713,7 @@ instruction-set:
         - id:                 STRH_POST
           type:               linear
           operands:
-           - Rn_wb:           [register, def, GPR]
+           - addr.base:       [register, def, GPR]
            - Rt:              [register, use, GPR]
            - addr:            [register, use, GPR]
            - offset1:         [register, use, GPR]
@@ -6729,7 +6721,7 @@ instruction-set:
            - p1:              bound
            - p2:              bound
           uses:               [Rt, addr, offset1, offset2, p1, p2]
-          defines:            [Rn_wb]
+          defines:            [addr.base]
           size:               4
           affects:
           affected-by:
@@ -6738,7 +6730,7 @@ instruction-set:
         - id:                 STRH_PRE
           type:               linear
           operands:
-           - Rn_wb:           [register, def, GPR]
+           - addr.base:       [register, def, GPR]
            - Rt:              [register, use, GPR]
            - addr1:           [register, use, GPR]
            - addr2:           [register, use, GPR]
@@ -6746,7 +6738,7 @@ instruction-set:
            - p1:              bound
            - p2:              bound
           uses:               [Rt, addr1, addr2, addr3, p1, p2]
-          defines:            [Rn_wb]
+          defines:            [addr.base]
           size:               4
           affects:
           affected-by:
@@ -6755,15 +6747,14 @@ instruction-set:
         - id:                 STRH_preidx
           type:               linear
           operands:
-           - Rn_wb:           [register, def, GPR]
+           - Rn:              [register, usedef, GPR]
            - Rt:              [register, use, GPR]
-           - Rn:              [register, use, GPR]
            - offset1:         [register, use, GPR]
            - offset2:         bound
            - p1:              bound
            - p2:              bound
           uses:               [Rt, Rn, offset1, offset2, p1, p2]
-          defines:            [Rn_wb]
+          defines:            [Rn]
           size:               4
           affects:
           affected-by:
@@ -6822,7 +6813,7 @@ instruction-set:
         - id:                 STR_POST_IMM
           type:               linear
           operands:
-           - Rn_wb:           [register, def, GPR]
+           - addr.base:       [register, def, GPR]
            - Rt:              [register, use, GPR]
            - addr:            [register, use, GPR]
            - offset1:         [register, use, GPRnopc]
@@ -6830,7 +6821,7 @@ instruction-set:
            - p1:              bound
            - p2:              bound
           uses:               [Rt, addr, offset1, offset2, p1, p2]
-          defines:            [Rn_wb]
+          defines:            [addr.base]
           size:               4
           affects:
            - mem:             memory
@@ -6840,7 +6831,7 @@ instruction-set:
         - id:                 STR_POST_REG
           type:               linear
           operands:
-           - Rn_wb:           [register, def, GPR]
+           - addr.base:       [register, def, GPR]
            - Rt:              [register, use, GPR]
            - addr:            [register, use, GPR]
            - offset1:         [register, use, GPRnopc]
@@ -6848,7 +6839,7 @@ instruction-set:
            - p1:              bound
            - p2:              bound
           uses:               [Rt, addr, offset1, offset2, p1, p2]
-          defines:            [Rn_wb]
+          defines:            [addr.base]
           size:               4
           affects:
            - mem:             memory
@@ -6858,14 +6849,14 @@ instruction-set:
         - id:                 STR_PRE_IMM
           type:               linear
           operands:
-           - Rn_wb:           [register, def, GPR]
+           - addr.base:       [register, def, GPR]
            - Rt:              [register, use, GPR]
            - addr1:           [register, use, GPR]
            - addr2:           bound
            - p1:              bound
            - p2:              bound
           uses:               [Rt, addr1, addr2, p1, p2]
-          defines:            [Rn_wb]
+          defines:            [addr.base]
           size:               4
           affects:
            - mem:             memory
@@ -6875,7 +6866,7 @@ instruction-set:
         - id:                 STR_PRE_REG
           type:               linear
           operands:
-           - Rn_wb:           [register, def, GPR]
+           - addr.base:       [register, def, GPR]
            - Rt:              [register, use, GPR]
            - addr1:           [register, use, GPR]
            - addr2:           [register, use, GPRnopc]
@@ -6883,7 +6874,7 @@ instruction-set:
            - p1:              bound
            - p2:              bound
           uses:               [Rt, addr1, addr2, addr3, p1, p2]
-          defines:            [Rn_wb]
+          defines:            [addr.base]
           size:               4
           affects:
            - mem:             memory
@@ -6908,15 +6899,14 @@ instruction-set:
         - id:                 STRi_preidx
           type:               linear
           operands:
-           - Rn_wb:           [register, def, GPR]
+           - Rn:              [register, usedef, GPR]
            - Rt:              [register, use, GPR]
-           - Rn:              [register, use, GPR]
            - offset1:         [register, use, GPRnopc]
            - offset2:         bound
            - p1:              bound
            - p2:              bound
           uses:               [Rt, Rn, offset1, offset2, p1, p2]
-          defines:            [Rn_wb]
+          defines:            [Rn]
           size:               4
           affects:
           affected-by:
@@ -6925,15 +6915,14 @@ instruction-set:
         - id:                 STRr_preidx
           type:               linear
           operands:
-           - Rn_wb:           [register, def, GPR]
+           - Rn:              [register, usedef, GPR]
            - Rt:              [register, use, GPR]
-           - Rn:              [register, use, GPR]
            - offset1:         [register, use, GPRnopc]
            - offset2:         bound
            - p1:              bound
            - p2:              bound
           uses:               [Rt, Rn, offset1, offset2, p1, p2]
-          defines:            [Rn_wb]
+          defines:            [Rn]
           size:               4
           affects:
           affected-by:
@@ -7662,17 +7651,15 @@ instruction-set:
         - id:                 UMLAL
           type:               linear
           operands:
-           - RdLo:            [register, def, GPR]
-           - RdHi:            [register, def, GPR]
+           - RLo:             [register, usedef, GPR]
+           - RHi:             [register, usedef, GPR]
            - Rn:              [register, use, GPR]
            - Rm:              [register, use, GPR]
-           - RLo:             [register, use, GPR]
-           - RHi:             [register, use, GPR]
            - p1:              bound
            - p2:              bound
            - s:               [register, use, CCR]
           uses:               [Rn, Rm, RLo, RHi, p1, p2, s]
-          defines:            [RdLo, RdHi]
+          defines:            [RLo, RHi]
           size:               4
           affects:
           affected-by:
@@ -7681,17 +7668,15 @@ instruction-set:
         - id:                 UMLALv5
           type:               linear
           operands:
-           - RdLo:            [register, def, GPR]
-           - RdHi:            [register, def, GPR]
+           - RLo:             [register, usedef, GPR]
+           - RHi:             [register, usedef, GPR]
            - Rn:              [register, use, GPR]
            - Rm:              [register, use, GPR]
-           - RLo:             [register, use, GPR]
-           - RHi:             [register, use, GPR]
            - p1:              bound
            - p2:              bound
            - s:               [register, use, CCR]
           uses:               [Rn, Rm, RLo, RHi, p1, p2, s]
-          defines:            [RdLo, RdHi]
+          defines:            [RLo, RHi]
           size:               4
           affects:
           affected-by:
@@ -13740,17 +13725,16 @@ instruction-set:
         - id:                 VLD1LNd16_UPD
           type:               linear
           operands:
-           - Vd:              [register, def, DPR]
-           - wb:              [register, def, GPR]
+           - src:             [register, usedef, DPR]
+           - Rn.addr:         [register, def, GPR]
            - Rn1:             [register, use, GPR]
            - Rn2:             bound
            - Rm:              [register, use, GPR]
-           - src:             [register, use, DPR]
            - lane:            bound
            - p1:              bound
            - p2:              bound
           uses:               [Rn1, Rn2, Rm, src, lane, p1, p2]
-          defines:            [Vd, wb]
+          defines:            [src, Rn.addr]
           size:               4
           affects:
           affected-by:
@@ -13776,17 +13760,16 @@ instruction-set:
         - id:                 VLD1LNd32_UPD
           type:               linear
           operands:
-           - Vd:              [register, def, DPR]
-           - wb:              [register, def, GPR]
+           - src:             [register, usedef, DPR]
+           - Rn.addr:         [register, def, GPR]
            - Rn1:             [register, use, GPR]
            - Rn2:             bound
            - Rm:              [register, use, GPR]
-           - src:             [register, use, DPR]
            - lane:            bound
            - p1:              bound
            - p2:              bound
           uses:               [Rn1, Rn2, Rm, src, lane, p1, p2]
-          defines:            [Vd, wb]
+          defines:            [src, Rn.addr]
           size:               4
           affects:
           affected-by:
@@ -13812,17 +13795,16 @@ instruction-set:
         - id:                 VLD1LNd8_UPD
           type:               linear
           operands:
-           - Vd:              [register, def, DPR]
-           - wb:              [register, def, GPR]
+           - src:             [register, usedef, DPR]
+           - Rn.addr:         [register, def, GPR]
            - Rn1:             [register, use, GPR]
            - Rn2:             bound
            - Rm:              [register, use, GPR]
-           - src:             [register, use, DPR]
            - lane:            bound
            - p1:              bound
            - p2:              bound
           uses:               [Rn1, Rn2, Rm, src, lane, p1, p2]
-          defines:            [Vd, wb]
+          defines:            [src, Rn.addr]
           size:               4
           affects:
           affected-by:
@@ -13995,17 +13977,16 @@ instruction-set:
         - id:                 VLD1LNq16Pseudo_UPD
           type:               linear
           operands:
-           - dst:             [register, def, QPR]
-           - wb:              [register, def, GPR]
+           - src:             [register, usedef, QPR]
+           - addr.addr:       [register, def, GPR]
            - addr1:           [register, use, GPR]
            - addr2:           bound
            - offset:          [register, use, GPR]
-           - src:             [register, use, QPR]
            - lane:            bound
            - p1:              bound
            - p2:              bound
           uses:               [addr1, addr2, offset, src, lane, p1, p2]
-          defines:            [dst, wb]
+          defines:            [src, addr.addr]
           size:               4
           affects:
           affected-by:
@@ -14031,17 +14012,16 @@ instruction-set:
         - id:                 VLD1LNq32Pseudo_UPD
           type:               linear
           operands:
-           - dst:             [register, def, QPR]
-           - wb:              [register, def, GPR]
+           - src:             [register, usedef, QPR]
+           - addr.addr:       [register, def, GPR]
            - addr1:           [register, use, GPR]
            - addr2:           bound
            - offset:          [register, use, GPR]
-           - src:             [register, use, QPR]
            - lane:            bound
            - p1:              bound
            - p2:              bound
           uses:               [addr1, addr2, offset, src, lane, p1, p2]
-          defines:            [dst, wb]
+          defines:            [src, addr.addr]
           size:               4
           affects:
           affected-by:
@@ -14067,17 +14047,16 @@ instruction-set:
         - id:                 VLD1LNq8Pseudo_UPD
           type:               linear
           operands:
-           - dst:             [register, def, QPR]
-           - wb:              [register, def, GPR]
+           - src:             [register, usedef, QPR]
+           - addr.addr:       [register, def, GPR]
            - addr1:           [register, use, GPR]
            - addr2:           bound
            - offset:          [register, use, GPR]
-           - src:             [register, use, QPR]
            - lane:            bound
            - p1:              bound
            - p2:              bound
           uses:               [addr1, addr2, offset, src, lane, p1, p2]
-          defines:            [dst, wb]
+          defines:            [src, addr.addr]
           size:               4
           affects:
           affected-by:
@@ -15311,17 +15290,15 @@ instruction-set:
         - id:                 VLD2LNd16
           type:               linear
           operands:
-           - Vd:              [register, def, DPR]
-           - dst2:            [register, def, DPR]
+           - src1:            [register, usedef, DPR]
+           - src2:            [register, usedef, DPR]
            - Rn1:             [register, use, GPR]
            - Rn2:             bound
-           - src1:            [register, use, DPR]
-           - src2:            [register, use, DPR]
            - lane:            bound
            - p1:              bound
            - p2:              bound
           uses:               [Rn1, Rn2, src1, src2, lane, p1, p2]
-          defines:            [Vd, dst2]
+          defines:            [src1, src2]
           size:               4
           affects:
           affected-by:
@@ -15348,17 +15325,16 @@ instruction-set:
         - id:                 VLD2LNd16Pseudo_UPD
           type:               linear
           operands:
-           - dst:             [register, def, QPR]
-           - wb:              [register, def, GPR]
+           - src:             [register, usedef, QPR]
+           - addr.addr:       [register, def, GPR]
            - addr1:           [register, use, GPR]
            - addr2:           bound
            - offset:          [register, use, GPR]
-           - src:             [register, use, QPR]
            - lane:            bound
            - p1:              bound
            - p2:              bound
           uses:               [addr1, addr2, offset, src, lane, p1, p2]
-          defines:            [dst, wb]
+          defines:            [src, addr.addr]
           size:               4
           affects:
           affected-by:
@@ -15368,19 +15344,17 @@ instruction-set:
         - id:                 VLD2LNd16_UPD
           type:               linear
           operands:
-           - Vd:              [register, def, DPR]
-           - dst2:            [register, def, DPR]
-           - wb:              [register, def, GPR]
+           - src1:            [register, usedef, DPR]
+           - src2:            [register, usedef, DPR]
+           - Rn.addr:         [register, def, GPR]
            - Rn1:             [register, use, GPR]
            - Rn2:             bound
            - Rm:              [register, use, GPR]
-           - src1:            [register, use, DPR]
-           - src2:            [register, use, DPR]
            - lane:            bound
            - p1:              bound
            - p2:              bound
           uses:               [Rn1, Rn2, Rm, src1, src2, lane, p1, p2]
-          defines:            [Vd, dst2, wb]
+          defines:            [src1, src2, Rn.addr]
           size:               4
           affects:
           affected-by:
@@ -15390,17 +15364,15 @@ instruction-set:
         - id:                 VLD2LNd32
           type:               linear
           operands:
-           - Vd:              [register, def, DPR]
-           - dst2:            [register, def, DPR]
+           - src1:            [register, usedef, DPR]
+           - src2:            [register, usedef, DPR]
            - Rn1:             [register, use, GPR]
            - Rn2:             bound
-           - src1:            [register, use, DPR]
-           - src2:            [register, use, DPR]
            - lane:            bound
            - p1:              bound
            - p2:              bound
           uses:               [Rn1, Rn2, src1, src2, lane, p1, p2]
-          defines:            [Vd, dst2]
+          defines:            [src1, src2]
           size:               4
           affects:
           affected-by:
@@ -15427,17 +15399,16 @@ instruction-set:
         - id:                 VLD2LNd32Pseudo_UPD
           type:               linear
           operands:
-           - dst:             [register, def, QPR]
-           - wb:              [register, def, GPR]
+           - src:             [register, usedef, QPR]
+           - addr.addr:       [register, def, GPR]
            - addr1:           [register, use, GPR]
            - addr2:           bound
            - offset:          [register, use, GPR]
-           - src:             [register, use, QPR]
            - lane:            bound
            - p1:              bound
            - p2:              bound
           uses:               [addr1, addr2, offset, src, lane, p1, p2]
-          defines:            [dst, wb]
+          defines:            [src, addr.addr]
           size:               4
           affects:
           affected-by:
@@ -15447,19 +15418,17 @@ instruction-set:
         - id:                 VLD2LNd32_UPD
           type:               linear
           operands:
-           - Vd:              [register, def, DPR]
-           - dst2:            [register, def, DPR]
-           - wb:              [register, def, GPR]
+           - src1:            [register, usedef, DPR]
+           - src2:            [register, usedef, DPR]
+           - Rn.addr:         [register, def, GPR]
            - Rn1:             [register, use, GPR]
            - Rn2:             bound
            - Rm:              [register, use, GPR]
-           - src1:            [register, use, DPR]
-           - src2:            [register, use, DPR]
            - lane:            bound
            - p1:              bound
            - p2:              bound
           uses:               [Rn1, Rn2, Rm, src1, src2, lane, p1, p2]
-          defines:            [Vd, dst2, wb]
+          defines:            [src1, src2, Rn.addr]
           size:               4
           affects:
           affected-by:
@@ -15469,17 +15438,15 @@ instruction-set:
         - id:                 VLD2LNd8
           type:               linear
           operands:
-           - Vd:              [register, def, DPR]
-           - dst2:            [register, def, DPR]
+           - src1:            [register, usedef, DPR]
+           - src2:            [register, usedef, DPR]
            - Rn1:             [register, use, GPR]
            - Rn2:             bound
-           - src1:            [register, use, DPR]
-           - src2:            [register, use, DPR]
            - lane:            bound
            - p1:              bound
            - p2:              bound
           uses:               [Rn1, Rn2, src1, src2, lane, p1, p2]
-          defines:            [Vd, dst2]
+          defines:            [src1, src2]
           size:               4
           affects:
           affected-by:
@@ -15506,17 +15473,16 @@ instruction-set:
         - id:                 VLD2LNd8Pseudo_UPD
           type:               linear
           operands:
-           - dst:             [register, def, QPR]
-           - wb:              [register, def, GPR]
+           - src:             [register, usedef, QPR]
+           - addr.addr:       [register, def, GPR]
            - addr1:           [register, use, GPR]
            - addr2:           bound
            - offset:          [register, use, GPR]
-           - src:             [register, use, QPR]
            - lane:            bound
            - p1:              bound
            - p2:              bound
           uses:               [addr1, addr2, offset, src, lane, p1, p2]
-          defines:            [dst, wb]
+          defines:            [src, addr.addr]
           size:               4
           affects:
           affected-by:
@@ -15526,19 +15492,17 @@ instruction-set:
         - id:                 VLD2LNd8_UPD
           type:               linear
           operands:
-           - Vd:              [register, def, DPR]
-           - dst2:            [register, def, DPR]
-           - wb:              [register, def, GPR]
+           - src1:            [register, usedef, DPR]
+           - src2:            [register, usedef, DPR]
+           - Rn.addr:         [register, def, GPR]
            - Rn1:             [register, use, GPR]
            - Rn2:             bound
            - Rm:              [register, use, GPR]
-           - src1:            [register, use, DPR]
-           - src2:            [register, use, DPR]
            - lane:            bound
            - p1:              bound
            - p2:              bound
           uses:               [Rn1, Rn2, Rm, src1, src2, lane, p1, p2]
-          defines:            [Vd, dst2, wb]
+          defines:            [src1, src2, Rn.addr]
           size:               4
           affects:
           affected-by:
@@ -15695,17 +15659,15 @@ instruction-set:
         - id:                 VLD2LNq16
           type:               linear
           operands:
-           - Vd:              [register, def, DPR]
-           - dst2:            [register, def, DPR]
+           - src1:            [register, usedef, DPR]
+           - src2:            [register, usedef, DPR]
            - Rn1:             [register, use, GPR]
            - Rn2:             bound
-           - src1:            [register, use, DPR]
-           - src2:            [register, use, DPR]
            - lane:            bound
            - p1:              bound
            - p2:              bound
           uses:               [Rn1, Rn2, src1, src2, lane, p1, p2]
-          defines:            [Vd, dst2]
+          defines:            [src1, src2]
           size:               4
           affects:
           affected-by:
@@ -15732,17 +15694,16 @@ instruction-set:
         - id:                 VLD2LNq16Pseudo_UPD
           type:               linear
           operands:
-           - dst:             [register, def, QQPR]
-           - wb:              [register, def, GPR]
+           - src:             [register, usedef, QQPR]
+           - addr.addr:       [register, def, GPR]
            - addr1:           [register, use, GPR]
            - addr2:           bound
            - offset:          [register, use, GPR]
-           - src:             [register, use, QQPR]
            - lane:            bound
            - p1:              bound
            - p2:              bound
           uses:               [addr1, addr2, offset, src, lane, p1, p2]
-          defines:            [dst, wb]
+          defines:            [src, addr.addr]
           size:               4
           affects:
           affected-by:
@@ -15752,19 +15713,17 @@ instruction-set:
         - id:                 VLD2LNq16_UPD
           type:               linear
           operands:
-           - Vd:              [register, def, DPR]
-           - dst2:            [register, def, DPR]
-           - wb:              [register, def, GPR]
+           - src1:            [register, usedef, DPR]
+           - src2:            [register, usedef, DPR]
+           - Rn.addr:         [register, def, GPR]
            - Rn1:             [register, use, GPR]
            - Rn2:             bound
            - Rm:              [register, use, GPR]
-           - src1:            [register, use, DPR]
-           - src2:            [register, use, DPR]
            - lane:            bound
            - p1:              bound
            - p2:              bound
           uses:               [Rn1, Rn2, Rm, src1, src2, lane, p1, p2]
-          defines:            [Vd, dst2, wb]
+          defines:            [src1, src2, Rn.addr]
           size:               4
           affects:
           affected-by:
@@ -15774,17 +15733,15 @@ instruction-set:
         - id:                 VLD2LNq32
           type:               linear
           operands:
-           - Vd:              [register, def, DPR]
-           - dst2:            [register, def, DPR]
+           - src1:            [register, usedef, DPR]
+           - src2:            [register, usedef, DPR]
            - Rn1:             [register, use, GPR]
            - Rn2:             bound
-           - src1:            [register, use, DPR]
-           - src2:            [register, use, DPR]
            - lane:            bound
            - p1:              bound
            - p2:              bound
           uses:               [Rn1, Rn2, src1, src2, lane, p1, p2]
-          defines:            [Vd, dst2]
+          defines:            [src1, src2]
           size:               4
           affects:
           affected-by:
@@ -15811,17 +15768,16 @@ instruction-set:
         - id:                 VLD2LNq32Pseudo_UPD
           type:               linear
           operands:
-           - dst:             [register, def, QQPR]
-           - wb:              [register, def, GPR]
+           - src:             [register, usedef, QQPR]
+           - addr.addr:       [register, def, GPR]
            - addr1:           [register, use, GPR]
            - addr2:           bound
            - offset:          [register, use, GPR]
-           - src:             [register, use, QQPR]
            - lane:            bound
            - p1:              bound
            - p2:              bound
           uses:               [addr1, addr2, offset, src, lane, p1, p2]
-          defines:            [dst, wb]
+          defines:            [src, addr.addr]
           size:               4
           affects:
           affected-by:
@@ -15831,19 +15787,17 @@ instruction-set:
         - id:                 VLD2LNq32_UPD
           type:               linear
           operands:
-           - Vd:              [register, def, DPR]
-           - dst2:            [register, def, DPR]
-           - wb:              [register, def, GPR]
+           - src1:            [register, usedef, DPR]
+           - src2:            [register, usedef, DPR]
+           - Rn.addr:         [register, def, GPR]
            - Rn1:             [register, use, GPR]
            - Rn2:             bound
            - Rm:              [register, use, GPR]
-           - src1:            [register, use, DPR]
-           - src2:            [register, use, DPR]
            - lane:            bound
            - p1:              bound
            - p2:              bound
           uses:               [Rn1, Rn2, Rm, src1, src2, lane, p1, p2]
-          defines:            [Vd, dst2, wb]
+          defines:            [src1, src2, Rn.addr]
           size:               4
           affects:
           affected-by:
@@ -17169,19 +17123,16 @@ instruction-set:
         - id:                 VLD3LNd16
           type:               linear
           operands:
-           - Vd:              [register, def, DPR]
-           - dst2:            [register, def, DPR]
-           - dst3:            [register, def, DPR]
+           - src1:            [register, usedef, DPR]
+           - src2:            [register, usedef, DPR]
+           - src3:            [register, usedef, DPR]
            - Rn1:             [register, use, GPR]
            - Rn2:             bound
-           - src1:            [register, use, DPR]
-           - src2:            [register, use, DPR]
-           - src3:            [register, use, DPR]
            - lane:            bound
            - p1:              bound
            - p2:              bound
           uses:               [Rn1, Rn2, src1, src2, src3, lane, p1, p2]
-          defines:            [Vd, dst2, dst3]
+          defines:            [src1, src2, src3]
           size:               4
           affects:
           affected-by:
@@ -17208,17 +17159,16 @@ instruction-set:
         - id:                 VLD3LNd16Pseudo_UPD
           type:               linear
           operands:
-           - dst:             [register, def, QQPR]
-           - wb:              [register, def, GPR]
+           - src:             [register, usedef, QQPR]
+           - addr.addr:       [register, def, GPR]
            - addr1:           [register, use, GPR]
            - addr2:           bound
            - offset:          [register, use, GPR]
-           - src:             [register, use, QQPR]
            - lane:            bound
            - p1:              bound
            - p2:              bound
           uses:               [addr1, addr2, offset, src, lane, p1, p2]
-          defines:            [dst, wb]
+          defines:            [src, addr.addr]
           size:               4
           affects:
           affected-by:
@@ -17228,21 +17178,18 @@ instruction-set:
         - id:                 VLD3LNd16_UPD
           type:               linear
           operands:
-           - Vd:              [register, def, DPR]
-           - dst2:            [register, def, DPR]
-           - dst3:            [register, def, DPR]
-           - wb:              [register, def, GPR]
+           - src1:            [register, usedef, DPR]
+           - src2:            [register, usedef, DPR]
+           - src3:            [register, usedef, DPR]
+           - Rn.addr:         [register, def, GPR]
            - Rn1:             [register, use, GPR]
            - Rn2:             bound
            - Rm:              [register, use, GPR]
-           - src1:            [register, use, DPR]
-           - src2:            [register, use, DPR]
-           - src3:            [register, use, DPR]
            - lane:            bound
            - p1:              bound
            - p2:              bound
           uses:               [Rn1, Rn2, Rm, src1, src2, src3, lane, p1, p2]
-          defines:            [Vd, dst2, dst3, wb]
+          defines:            [src1, src2, src3, Rn.addr]
           size:               4
           affects:
           affected-by:
@@ -17252,19 +17199,16 @@ instruction-set:
         - id:                 VLD3LNd32
           type:               linear
           operands:
-           - Vd:              [register, def, DPR]
-           - dst2:            [register, def, DPR]
-           - dst3:            [register, def, DPR]
+           - src1:            [register, usedef, DPR]
+           - src2:            [register, usedef, DPR]
+           - src3:            [register, usedef, DPR]
            - Rn1:             [register, use, GPR]
            - Rn2:             bound
-           - src1:            [register, use, DPR]
-           - src2:            [register, use, DPR]
-           - src3:            [register, use, DPR]
            - lane:            bound
            - p1:              bound
            - p2:              bound
           uses:               [Rn1, Rn2, src1, src2, src3, lane, p1, p2]
-          defines:            [Vd, dst2, dst3]
+          defines:            [src1, src2, src3]
           size:               4
           affects:
           affected-by:
@@ -17291,17 +17235,16 @@ instruction-set:
         - id:                 VLD3LNd32Pseudo_UPD
           type:               linear
           operands:
-           - dst:             [register, def, QQPR]
-           - wb:              [register, def, GPR]
+           - src:             [register, usedef, QQPR]
+           - addr.addr:       [register, def, GPR]
            - addr1:           [register, use, GPR]
            - addr2:           bound
            - offset:          [register, use, GPR]
-           - src:             [register, use, QQPR]
            - lane:            bound
            - p1:              bound
            - p2:              bound
           uses:               [addr1, addr2, offset, src, lane, p1, p2]
-          defines:            [dst, wb]
+          defines:            [src, addr.addr]
           size:               4
           affects:
           affected-by:
@@ -17311,21 +17254,18 @@ instruction-set:
         - id:                 VLD3LNd32_UPD
           type:               linear
           operands:
-           - Vd:              [register, def, DPR]
-           - dst2:            [register, def, DPR]
-           - dst3:            [register, def, DPR]
-           - wb:              [register, def, GPR]
+           - src1:            [register, usedef, DPR]
+           - src2:            [register, usedef, DPR]
+           - src3:            [register, usedef, DPR]
+           - Rn.addr:         [register, def, GPR]
            - Rn1:             [register, use, GPR]
            - Rn2:             bound
            - Rm:              [register, use, GPR]
-           - src1:            [register, use, DPR]
-           - src2:            [register, use, DPR]
-           - src3:            [register, use, DPR]
            - lane:            bound
            - p1:              bound
            - p2:              bound
           uses:               [Rn1, Rn2, Rm, src1, src2, src3, lane, p1, p2]
-          defines:            [Vd, dst2, dst3, wb]
+          defines:            [src1, src2, src3, Rn.addr]
           size:               4
           affects:
           affected-by:
@@ -17335,19 +17275,16 @@ instruction-set:
         - id:                 VLD3LNd8
           type:               linear
           operands:
-           - Vd:              [register, def, DPR]
-           - dst2:            [register, def, DPR]
-           - dst3:            [register, def, DPR]
+           - src1:            [register, usedef, DPR]
+           - src2:            [register, usedef, DPR]
+           - src3:            [register, usedef, DPR]
            - Rn1:             [register, use, GPR]
            - Rn2:             bound
-           - src1:            [register, use, DPR]
-           - src2:            [register, use, DPR]
-           - src3:            [register, use, DPR]
            - lane:            bound
            - p1:              bound
            - p2:              bound
           uses:               [Rn1, Rn2, src1, src2, src3, lane, p1, p2]
-          defines:            [Vd, dst2, dst3]
+          defines:            [src1, src2, src3]
           size:               4
           affects:
           affected-by:
@@ -17374,17 +17311,16 @@ instruction-set:
         - id:                 VLD3LNd8Pseudo_UPD
           type:               linear
           operands:
-           - dst:             [register, def, QQPR]
-           - wb:              [register, def, GPR]
+           - src:             [register, usedef, QQPR]
+           - addr.addr:       [register, def, GPR]
            - addr1:           [register, use, GPR]
            - addr2:           bound
            - offset:          [register, use, GPR]
-           - src:             [register, use, QQPR]
            - lane:            bound
            - p1:              bound
            - p2:              bound
           uses:               [addr1, addr2, offset, src, lane, p1, p2]
-          defines:            [dst, wb]
+          defines:            [src, addr.addr]
           size:               4
           affects:
           affected-by:
@@ -17394,21 +17330,18 @@ instruction-set:
         - id:                 VLD3LNd8_UPD
           type:               linear
           operands:
-           - Vd:              [register, def, DPR]
-           - dst2:            [register, def, DPR]
-           - dst3:            [register, def, DPR]
-           - wb:              [register, def, GPR]
+           - src1:            [register, usedef, DPR]
+           - src2:            [register, usedef, DPR]
+           - src3:            [register, usedef, DPR]
+           - Rn.addr:         [register, def, GPR]
            - Rn1:             [register, use, GPR]
            - Rn2:             bound
            - Rm:              [register, use, GPR]
-           - src1:            [register, use, DPR]
-           - src2:            [register, use, DPR]
-           - src3:            [register, use, DPR]
            - lane:            bound
            - p1:              bound
            - p2:              bound
           uses:               [Rn1, Rn2, Rm, src1, src2, src3, lane, p1, p2]
-          defines:            [Vd, dst2, dst3, wb]
+          defines:            [src1, src2, src3, Rn.addr]
           size:               4
           affects:
           affected-by:
@@ -17565,19 +17498,16 @@ instruction-set:
         - id:                 VLD3LNq16
           type:               linear
           operands:
-           - Vd:              [register, def, DPR]
-           - dst2:            [register, def, DPR]
-           - dst3:            [register, def, DPR]
+           - src1:            [register, usedef, DPR]
+           - src2:            [register, usedef, DPR]
+           - src3:            [register, usedef, DPR]
            - Rn1:             [register, use, GPR]
            - Rn2:             bound
-           - src1:            [register, use, DPR]
-           - src2:            [register, use, DPR]
-           - src3:            [register, use, DPR]
            - lane:            bound
            - p1:              bound
            - p2:              bound
           uses:               [Rn1, Rn2, src1, src2, src3, lane, p1, p2]
-          defines:            [Vd, dst2, dst3]
+          defines:            [src1, src2, src3]
           size:               4
           affects:
           affected-by:
@@ -17604,17 +17534,16 @@ instruction-set:
         - id:                 VLD3LNq16Pseudo_UPD
           type:               linear
           operands:
-           - dst:             [register, def, QQQQPR]
-           - wb:              [register, def, GPR]
+           - src:             [register, usedef, QQQQPR]
+           - addr.addr:       [register, def, GPR]
            - addr1:           [register, use, GPR]
            - addr2:           bound
            - offset:          [register, use, GPR]
-           - src:             [register, use, QQQQPR]
            - lane:            bound
            - p1:              bound
            - p2:              bound
           uses:               [addr1, addr2, offset, src, lane, p1, p2]
-          defines:            [dst, wb]
+          defines:            [src, addr.addr]
           size:               4
           affects:
           affected-by:
@@ -17624,21 +17553,18 @@ instruction-set:
         - id:                 VLD3LNq16_UPD
           type:               linear
           operands:
-           - Vd:              [register, def, DPR]
-           - dst2:            [register, def, DPR]
-           - dst3:            [register, def, DPR]
-           - wb:              [register, def, GPR]
+           - src1:            [register, usedef, DPR]
+           - src2:            [register, usedef, DPR]
+           - src3:            [register, usedef, DPR]
+           - Rn.addr:         [register, def, GPR]
            - Rn1:             [register, use, GPR]
            - Rn2:             bound
            - Rm:              [register, use, GPR]
-           - src1:            [register, use, DPR]
-           - src2:            [register, use, DPR]
-           - src3:            [register, use, DPR]
            - lane:            bound
            - p1:              bound
            - p2:              bound
           uses:               [Rn1, Rn2, Rm, src1, src2, src3, lane, p1, p2]
-          defines:            [Vd, dst2, dst3, wb]
+          defines:            [src1, src2, src3, Rn.addr]
           size:               4
           affects:
           affected-by:
@@ -17648,19 +17574,16 @@ instruction-set:
         - id:                 VLD3LNq32
           type:               linear
           operands:
-           - Vd:              [register, def, DPR]
-           - dst2:            [register, def, DPR]
-           - dst3:            [register, def, DPR]
+           - src1:            [register, usedef, DPR]
+           - src2:            [register, usedef, DPR]
+           - src3:            [register, usedef, DPR]
            - Rn1:             [register, use, GPR]
            - Rn2:             bound
-           - src1:            [register, use, DPR]
-           - src2:            [register, use, DPR]
-           - src3:            [register, use, DPR]
            - lane:            bound
            - p1:              bound
            - p2:              bound
           uses:               [Rn1, Rn2, src1, src2, src3, lane, p1, p2]
-          defines:            [Vd, dst2, dst3]
+          defines:            [src1, src2, src3]
           size:               4
           affects:
           affected-by:
@@ -17687,17 +17610,16 @@ instruction-set:
         - id:                 VLD3LNq32Pseudo_UPD
           type:               linear
           operands:
-           - dst:             [register, def, QQQQPR]
-           - wb:              [register, def, GPR]
+           - src:             [register, usedef, QQQQPR]
+           - addr.addr:       [register, def, GPR]
            - addr1:           [register, use, GPR]
            - addr2:           bound
            - offset:          [register, use, GPR]
-           - src:             [register, use, QQQQPR]
            - lane:            bound
            - p1:              bound
            - p2:              bound
           uses:               [addr1, addr2, offset, src, lane, p1, p2]
-          defines:            [dst, wb]
+          defines:            [src, addr.addr]
           size:               4
           affects:
           affected-by:
@@ -17707,21 +17629,18 @@ instruction-set:
         - id:                 VLD3LNq32_UPD
           type:               linear
           operands:
-           - Vd:              [register, def, DPR]
-           - dst2:            [register, def, DPR]
-           - dst3:            [register, def, DPR]
-           - wb:              [register, def, GPR]
+           - src1:            [register, usedef, DPR]
+           - src2:            [register, usedef, DPR]
+           - src3:            [register, usedef, DPR]
+           - Rn.addr:         [register, def, GPR]
            - Rn1:             [register, use, GPR]
            - Rn2:             bound
            - Rm:              [register, use, GPR]
-           - src1:            [register, use, DPR]
-           - src2:            [register, use, DPR]
-           - src3:            [register, use, DPR]
            - lane:            bound
            - p1:              bound
            - p2:              bound
           uses:               [Rn1, Rn2, Rm, src1, src2, src3, lane, p1, p2]
-          defines:            [Vd, dst2, dst3, wb]
+          defines:            [src1, src2, src3, Rn.addr]
           size:               4
           affects:
           affected-by:
@@ -18201,16 +18120,15 @@ instruction-set:
         - id:                 VLD3q16Pseudo_UPD
           type:               linear
           operands:
-           - dst:             [register, def, QQQQPR]
-           - wb:              [register, def, GPR]
+           - src:             [register, usedef, QQQQPR]
+           - addr.addr:       [register, def, GPR]
            - addr1:           [register, use, GPR]
            - addr2:           bound
            - offset:          [register, use, GPR]
-           - src:             [register, use, QQQQPR]
            - p1:              bound
            - p2:              bound
           uses:               [addr1, addr2, offset, src, p1, p2]
-          defines:            [dst, wb]
+          defines:            [src, addr.addr]
           size:               4
           affects:
           affected-by:
@@ -18256,16 +18174,15 @@ instruction-set:
         - id:                 VLD3q16oddPseudo_UPD
           type:               linear
           operands:
-           - dst:             [register, def, QQQQPR]
-           - wb:              [register, def, GPR]
+           - src:             [register, usedef, QQQQPR]
+           - addr.addr:       [register, def, GPR]
            - addr1:           [register, use, GPR]
            - addr2:           bound
            - offset:          [register, use, GPR]
-           - src:             [register, use, QQQQPR]
            - p1:              bound
            - p2:              bound
           uses:               [addr1, addr2, offset, src, p1, p2]
-          defines:            [dst, wb]
+          defines:            [src, addr.addr]
           size:               4
           affects:
           affected-by:
@@ -18293,16 +18210,15 @@ instruction-set:
         - id:                 VLD3q32Pseudo_UPD
           type:               linear
           operands:
-           - dst:             [register, def, QQQQPR]
-           - wb:              [register, def, GPR]
+           - src:             [register, usedef, QQQQPR]
+           - addr.addr:       [register, def, GPR]
            - addr1:           [register, use, GPR]
            - addr2:           bound
            - offset:          [register, use, GPR]
-           - src:             [register, use, QQQQPR]
            - p1:              bound
            - p2:              bound
           uses:               [addr1, addr2, offset, src, p1, p2]
-          defines:            [dst, wb]
+          defines:            [src, addr.addr]
           size:               4
           affects:
           affected-by:
@@ -18348,16 +18264,15 @@ instruction-set:
         - id:                 VLD3q32oddPseudo_UPD
           type:               linear
           operands:
-           - dst:             [register, def, QQQQPR]
-           - wb:              [register, def, GPR]
+           - src:             [register, usedef, QQQQPR]
+           - addr.addr:       [register, def, GPR]
            - addr1:           [register, use, GPR]
            - addr2:           bound
            - offset:          [register, use, GPR]
-           - src:             [register, use, QQQQPR]
            - p1:              bound
            - p2:              bound
           uses:               [addr1, addr2, offset, src, p1, p2]
-          defines:            [dst, wb]
+          defines:            [src, addr.addr]
           size:               4
           affects:
           affected-by:
@@ -18385,16 +18300,15 @@ instruction-set:
         - id:                 VLD3q8Pseudo_UPD
           type:               linear
           operands:
-           - dst:             [register, def, QQQQPR]
-           - wb:              [register, def, GPR]
+           - src:             [register, usedef, QQQQPR]
+           - addr.addr:       [register, def, GPR]
            - addr1:           [register, use, GPR]
            - addr2:           bound
            - offset:          [register, use, GPR]
-           - src:             [register, use, QQQQPR]
            - p1:              bound
            - p2:              bound
           uses:               [addr1, addr2, offset, src, p1, p2]
-          defines:            [dst, wb]
+          defines:            [src, addr.addr]
           size:               4
           affects:
           affected-by:
@@ -18440,16 +18354,15 @@ instruction-set:
         - id:                 VLD3q8oddPseudo_UPD
           type:               linear
           operands:
-           - dst:             [register, def, QQQQPR]
-           - wb:              [register, def, GPR]
+           - src:             [register, usedef, QQQQPR]
+           - addr.addr:       [register, def, GPR]
            - addr1:           [register, use, GPR]
            - addr2:           bound
            - offset:          [register, use, GPR]
-           - src:             [register, use, QQQQPR]
            - p1:              bound
            - p2:              bound
           uses:               [addr1, addr2, offset, src, p1, p2]
-          defines:            [dst, wb]
+          defines:            [src, addr.addr]
           size:               4
           affects:
           affected-by:
@@ -19215,21 +19128,17 @@ instruction-set:
         - id:                 VLD4LNd16
           type:               linear
           operands:
-           - Vd:              [register, def, DPR]
-           - dst2:            [register, def, DPR]
-           - dst3:            [register, def, DPR]
-           - dst4:            [register, def, DPR]
+           - src1:            [register, usedef, DPR]
+           - src2:            [register, usedef, DPR]
+           - src3:            [register, usedef, DPR]
+           - src4:            [register, usedef, DPR]
            - Rn1:             [register, use, GPR]
            - Rn2:             bound
-           - src1:            [register, use, DPR]
-           - src2:            [register, use, DPR]
-           - src3:            [register, use, DPR]
-           - src4:            [register, use, DPR]
            - lane:            bound
            - p1:              bound
            - p2:              bound
           uses:               [Rn1, Rn2, src1, src2, src3, src4, lane, p1, p2]
-          defines:            [Vd, dst2, dst3, dst4]
+          defines:            [src1, src2, src3, src4]
           size:               4
           affects:
           affected-by:
@@ -19256,17 +19165,16 @@ instruction-set:
         - id:                 VLD4LNd16Pseudo_UPD
           type:               linear
           operands:
-           - dst:             [register, def, QQPR]
-           - wb:              [register, def, GPR]
+           - src:             [register, usedef, QQPR]
+           - addr.addr:       [register, def, GPR]
            - addr1:           [register, use, GPR]
            - addr2:           bound
            - offset:          [register, use, GPR]
-           - src:             [register, use, QQPR]
            - lane:            bound
            - p1:              bound
            - p2:              bound
           uses:               [addr1, addr2, offset, src, lane, p1, p2]
-          defines:            [dst, wb]
+          defines:            [src, addr.addr]
           size:               4
           affects:
           affected-by:
@@ -19276,23 +19184,19 @@ instruction-set:
         - id:                 VLD4LNd16_UPD
           type:               linear
           operands:
-           - Vd:              [register, def, DPR]
-           - dst2:            [register, def, DPR]
-           - dst3:            [register, def, DPR]
-           - dst4:            [register, def, DPR]
-           - wb:              [register, def, GPR]
+           - src1:            [register, usedef, DPR]
+           - src2:            [register, usedef, DPR]
+           - src3:            [register, usedef, DPR]
+           - src4:            [register, usedef, DPR]
+           - Rn.addr:         [register, def, GPR]
            - Rn1:             [register, use, GPR]
            - Rn2:             bound
            - Rm:              [register, use, GPR]
-           - src1:            [register, use, DPR]
-           - src2:            [register, use, DPR]
-           - src3:            [register, use, DPR]
-           - src4:            [register, use, DPR]
            - lane:            bound
            - p1:              bound
            - p2:              bound
           uses:               [Rn1, Rn2, Rm, src1, src2, src3, src4, lane, p1, p2]
-          defines:            [Vd, dst2, dst3, dst4, wb]
+          defines:            [src1, src2, src3, src4, Rn.addr]
           size:               4
           affects:
           affected-by:
@@ -19302,21 +19206,17 @@ instruction-set:
         - id:                 VLD4LNd32
           type:               linear
           operands:
-           - Vd:              [register, def, DPR]
-           - dst2:            [register, def, DPR]
-           - dst3:            [register, def, DPR]
-           - dst4:            [register, def, DPR]
+           - src1:            [register, usedef, DPR]
+           - src2:            [register, usedef, DPR]
+           - src3:            [register, usedef, DPR]
+           - src4:            [register, usedef, DPR]
            - Rn1:             [register, use, GPR]
            - Rn2:             bound
-           - src1:            [register, use, DPR]
-           - src2:            [register, use, DPR]
-           - src3:            [register, use, DPR]
-           - src4:            [register, use, DPR]
            - lane:            bound
            - p1:              bound
            - p2:              bound
           uses:               [Rn1, Rn2, src1, src2, src3, src4, lane, p1, p2]
-          defines:            [Vd, dst2, dst3, dst4]
+          defines:            [src1, src2, src3, src4]
           size:               4
           affects:
           affected-by:
@@ -19343,17 +19243,16 @@ instruction-set:
         - id:                 VLD4LNd32Pseudo_UPD
           type:               linear
           operands:
-           - dst:             [register, def, QQPR]
-           - wb:              [register, def, GPR]
+           - src:             [register, usedef, QQPR]
+           - addr.addr:       [register, def, GPR]
            - addr1:           [register, use, GPR]
            - addr2:           bound
            - offset:          [register, use, GPR]
-           - src:             [register, use, QQPR]
            - lane:            bound
            - p1:              bound
            - p2:              bound
           uses:               [addr1, addr2, offset, src, lane, p1, p2]
-          defines:            [dst, wb]
+          defines:            [src, addr.addr]
           size:               4
           affects:
           affected-by:
@@ -19363,23 +19262,19 @@ instruction-set:
         - id:                 VLD4LNd32_UPD
           type:               linear
           operands:
-           - Vd:              [register, def, DPR]
-           - dst2:            [register, def, DPR]
-           - dst3:            [register, def, DPR]
-           - dst4:            [register, def, DPR]
-           - wb:              [register, def, GPR]
+           - src1:            [register, usedef, DPR]
+           - src2:            [register, usedef, DPR]
+           - src3:            [register, usedef, DPR]
+           - src4:            [register, usedef, DPR]
+           - Rn.addr:         [register, def, GPR]
            - Rn1:             [register, use, GPR]
            - Rn2:             bound
            - Rm:              [register, use, GPR]
-           - src1:            [register, use, DPR]
-           - src2:            [register, use, DPR]
-           - src3:            [register, use, DPR]
-           - src4:            [register, use, DPR]
            - lane:            bound
            - p1:              bound
            - p2:              bound
           uses:               [Rn1, Rn2, Rm, src1, src2, src3, src4, lane, p1, p2]
-          defines:            [Vd, dst2, dst3, dst4, wb]
+          defines:            [src1, src2, src3, src4, Rn.addr]
           size:               4
           affects:
           affected-by:
@@ -19389,21 +19284,17 @@ instruction-set:
         - id:                 VLD4LNd8
           type:               linear
           operands:
-           - Vd:              [register, def, DPR]
-           - dst2:            [register, def, DPR]
-           - dst3:            [register, def, DPR]
-           - dst4:            [register, def, DPR]
+           - src1:            [register, usedef, DPR]
+           - src2:            [register, usedef, DPR]
+           - src3:            [register, usedef, DPR]
+           - src4:            [register, usedef, DPR]
            - Rn1:             [register, use, GPR]
            - Rn2:             bound
-           - src1:            [register, use, DPR]
-           - src2:            [register, use, DPR]
-           - src3:            [register, use, DPR]
-           - src4:            [register, use, DPR]
            - lane:            bound
            - p1:              bound
            - p2:              bound
           uses:               [Rn1, Rn2, src1, src2, src3, src4, lane, p1, p2]
-          defines:            [Vd, dst2, dst3, dst4]
+          defines:            [src1, src2, src3, src4]
           size:               4
           affects:
           affected-by:
@@ -19430,17 +19321,16 @@ instruction-set:
         - id:                 VLD4LNd8Pseudo_UPD
           type:               linear
           operands:
-           - dst:             [register, def, QQPR]
-           - wb:              [register, def, GPR]
+           - src:             [register, usedef, QQPR]
+           - addr.addr:       [register, def, GPR]
            - addr1:           [register, use, GPR]
            - addr2:           bound
            - offset:          [register, use, GPR]
-           - src:             [register, use, QQPR]
            - lane:            bound
            - p1:              bound
            - p2:              bound
           uses:               [addr1, addr2, offset, src, lane, p1, p2]
-          defines:            [dst, wb]
+          defines:            [src, addr.addr]
           size:               4
           affects:
           affected-by:
@@ -19450,23 +19340,19 @@ instruction-set:
         - id:                 VLD4LNd8_UPD
           type:               linear
           operands:
-           - Vd:              [register, def, DPR]
-           - dst2:            [register, def, DPR]
-           - dst3:            [register, def, DPR]
-           - dst4:            [register, def, DPR]
-           - wb:              [register, def, GPR]
+           - src1:            [register, usedef, DPR]
+           - src2:            [register, usedef, DPR]
+           - src3:            [register, usedef, DPR]
+           - src4:            [register, usedef, DPR]
+           - Rn.addr:         [register, def, GPR]
            - Rn1:             [register, use, GPR]
            - Rn2:             bound
            - Rm:              [register, use, GPR]
-           - src1:            [register, use, DPR]
-           - src2:            [register, use, DPR]
-           - src3:            [register, use, DPR]
-           - src4:            [register, use, DPR]
            - lane:            bound
            - p1:              bound
            - p2:              bound
           uses:               [Rn1, Rn2, Rm, src1, src2, src3, src4, lane, p1, p2]
-          defines:            [Vd, dst2, dst3, dst4, wb]
+          defines:            [src1, src2, src3, src4, Rn.addr]
           size:               4
           affects:
           affected-by:
@@ -19623,21 +19509,17 @@ instruction-set:
         - id:                 VLD4LNq16
           type:               linear
           operands:
-           - Vd:              [register, def, DPR]
-           - dst2:            [register, def, DPR]
-           - dst3:            [register, def, DPR]
-           - dst4:            [register, def, DPR]
+           - src1:            [register, usedef, DPR]
+           - src2:            [register, usedef, DPR]
+           - src3:            [register, usedef, DPR]
+           - src4:            [register, usedef, DPR]
            - Rn1:             [register, use, GPR]
            - Rn2:             bound
-           - src1:            [register, use, DPR]
-           - src2:            [register, use, DPR]
-           - src3:            [register, use, DPR]
-           - src4:            [register, use, DPR]
            - lane:            bound
            - p1:              bound
            - p2:              bound
           uses:               [Rn1, Rn2, src1, src2, src3, src4, lane, p1, p2]
-          defines:            [Vd, dst2, dst3, dst4]
+          defines:            [src1, src2, src3, src4]
           size:               4
           affects:
           affected-by:
@@ -19664,17 +19546,16 @@ instruction-set:
         - id:                 VLD4LNq16Pseudo_UPD
           type:               linear
           operands:
-           - dst:             [register, def, QQQQPR]
-           - wb:              [register, def, GPR]
+           - src:             [register, usedef, QQQQPR]
+           - addr.addr:       [register, def, GPR]
            - addr1:           [register, use, GPR]
            - addr2:           bound
            - offset:          [register, use, GPR]
-           - src:             [register, use, QQQQPR]
            - lane:            bound
            - p1:              bound
            - p2:              bound
           uses:               [addr1, addr2, offset, src, lane, p1, p2]
-          defines:            [dst, wb]
+          defines:            [src, addr.addr]
           size:               4
           affects:
           affected-by:
@@ -19684,23 +19565,19 @@ instruction-set:
         - id:                 VLD4LNq16_UPD
           type:               linear
           operands:
-           - Vd:              [register, def, DPR]
-           - dst2:            [register, def, DPR]
-           - dst3:            [register, def, DPR]
-           - dst4:            [register, def, DPR]
-           - wb:              [register, def, GPR]
+           - src1:            [register, usedef, DPR]
+           - src2:            [register, usedef, DPR]
+           - src3:            [register, usedef, DPR]
+           - src4:            [register, usedef, DPR]
+           - Rn.addr:         [register, def, GPR]
            - Rn1:             [register, use, GPR]
            - Rn2:             bound
            - Rm:              [register, use, GPR]
-           - src1:            [register, use, DPR]
-           - src2:            [register, use, DPR]
-           - src3:            [register, use, DPR]
-           - src4:            [register, use, DPR]
            - lane:            bound
            - p1:              bound
            - p2:              bound
           uses:               [Rn1, Rn2, Rm, src1, src2, src3, src4, lane, p1, p2]
-          defines:            [Vd, dst2, dst3, dst4, wb]
+          defines:            [src1, src2, src3, src4, Rn.addr]
           size:               4
           affects:
           affected-by:
@@ -19710,21 +19587,17 @@ instruction-set:
         - id:                 VLD4LNq32
           type:               linear
           operands:
-           - Vd:              [register, def, DPR]
-           - dst2:            [register, def, DPR]
-           - dst3:            [register, def, DPR]
-           - dst4:            [register, def, DPR]
+           - src1:            [register, usedef, DPR]
+           - src2:            [register, usedef, DPR]
+           - src3:            [register, usedef, DPR]
+           - src4:            [register, usedef, DPR]
            - Rn1:             [register, use, GPR]
            - Rn2:             bound
-           - src1:            [register, use, DPR]
-           - src2:            [register, use, DPR]
-           - src3:            [register, use, DPR]
-           - src4:            [register, use, DPR]
            - lane:            bound
            - p1:              bound
            - p2:              bound
           uses:               [Rn1, Rn2, src1, src2, src3, src4, lane, p1, p2]
-          defines:            [Vd, dst2, dst3, dst4]
+          defines:            [src1, src2, src3, src4]
           size:               4
           affects:
           affected-by:
@@ -19751,17 +19624,16 @@ instruction-set:
         - id:                 VLD4LNq32Pseudo_UPD
           type:               linear
           operands:
-           - dst:             [register, def, QQQQPR]
-           - wb:              [register, def, GPR]
+           - src:             [register, usedef, QQQQPR]
+           - addr.addr:       [register, def, GPR]
            - addr1:           [register, use, GPR]
            - addr2:           bound
            - offset:          [register, use, GPR]
-           - src:             [register, use, QQQQPR]
            - lane:            bound
            - p1:              bound
            - p2:              bound
           uses:               [addr1, addr2, offset, src, lane, p1, p2]
-          defines:            [dst, wb]
+          defines:            [src, addr.addr]
           size:               4
           affects:
           affected-by:
@@ -19771,23 +19643,19 @@ instruction-set:
         - id:                 VLD4LNq32_UPD
           type:               linear
           operands:
-           - Vd:              [register, def, DPR]
-           - dst2:            [register, def, DPR]
-           - dst3:            [register, def, DPR]
-           - dst4:            [register, def, DPR]
-           - wb:              [register, def, GPR]
+           - src1:            [register, usedef, DPR]
+           - src2:            [register, usedef, DPR]
+           - src3:            [register, usedef, DPR]
+           - src4:            [register, usedef, DPR]
+           - Rn.addr:         [register, def, GPR]
            - Rn1:             [register, use, GPR]
            - Rn2:             bound
            - Rm:              [register, use, GPR]
-           - src1:            [register, use, DPR]
-           - src2:            [register, use, DPR]
-           - src3:            [register, use, DPR]
-           - src4:            [register, use, DPR]
            - lane:            bound
            - p1:              bound
            - p2:              bound
           uses:               [Rn1, Rn2, Rm, src1, src2, src3, src4, lane, p1, p2]
-          defines:            [Vd, dst2, dst3, dst4, wb]
+          defines:            [src1, src2, src3, src4, Rn.addr]
           size:               4
           affects:
           affected-by:
@@ -20274,16 +20142,15 @@ instruction-set:
         - id:                 VLD4q16Pseudo_UPD
           type:               linear
           operands:
-           - dst:             [register, def, QQQQPR]
-           - wb:              [register, def, GPR]
+           - src:             [register, usedef, QQQQPR]
+           - addr.addr:       [register, def, GPR]
            - addr1:           [register, use, GPR]
            - addr2:           bound
            - offset:          [register, use, GPR]
-           - src:             [register, use, QQQQPR]
            - p1:              bound
            - p2:              bound
           uses:               [addr1, addr2, offset, src, p1, p2]
-          defines:            [dst, wb]
+          defines:            [src, addr.addr]
           size:               4
           affects:
           affected-by:
@@ -20330,16 +20197,15 @@ instruction-set:
         - id:                 VLD4q16oddPseudo_UPD
           type:               linear
           operands:
-           - dst:             [register, def, QQQQPR]
-           - wb:              [register, def, GPR]
+           - src:             [register, usedef, QQQQPR]
+           - addr.addr:       [register, def, GPR]
            - addr1:           [register, use, GPR]
            - addr2:           bound
            - offset:          [register, use, GPR]
-           - src:             [register, use, QQQQPR]
            - p1:              bound
            - p2:              bound
           uses:               [addr1, addr2, offset, src, p1, p2]
-          defines:            [dst, wb]
+          defines:            [src, addr.addr]
           size:               4
           affects:
           affected-by:
@@ -20368,16 +20234,15 @@ instruction-set:
         - id:                 VLD4q32Pseudo_UPD
           type:               linear
           operands:
-           - dst:             [register, def, QQQQPR]
-           - wb:              [register, def, GPR]
+           - src:             [register, usedef, QQQQPR]
+           - addr.addr:       [register, def, GPR]
            - addr1:           [register, use, GPR]
            - addr2:           bound
            - offset:          [register, use, GPR]
-           - src:             [register, use, QQQQPR]
            - p1:              bound
            - p2:              bound
           uses:               [addr1, addr2, offset, src, p1, p2]
-          defines:            [dst, wb]
+          defines:            [src, addr.addr]
           size:               4
           affects:
           affected-by:
@@ -20424,16 +20289,15 @@ instruction-set:
         - id:                 VLD4q32oddPseudo_UPD
           type:               linear
           operands:
-           - dst:             [register, def, QQQQPR]
-           - wb:              [register, def, GPR]
+           - src:             [register, usedef, QQQQPR]
+           - addr.addr:       [register, def, GPR]
            - addr1:           [register, use, GPR]
            - addr2:           bound
            - offset:          [register, use, GPR]
-           - src:             [register, use, QQQQPR]
            - p1:              bound
            - p2:              bound
           uses:               [addr1, addr2, offset, src, p1, p2]
-          defines:            [dst, wb]
+          defines:            [src, addr.addr]
           size:               4
           affects:
           affected-by:
@@ -20462,16 +20326,15 @@ instruction-set:
         - id:                 VLD4q8Pseudo_UPD
           type:               linear
           operands:
-           - dst:             [register, def, QQQQPR]
-           - wb:              [register, def, GPR]
+           - src:             [register, usedef, QQQQPR]
+           - addr.addr:       [register, def, GPR]
            - addr1:           [register, use, GPR]
            - addr2:           bound
            - offset:          [register, use, GPR]
-           - src:             [register, use, QQQQPR]
            - p1:              bound
            - p2:              bound
           uses:               [addr1, addr2, offset, src, p1, p2]
-          defines:            [dst, wb]
+          defines:            [src, addr.addr]
           size:               4
           affects:
           affected-by:
@@ -20518,16 +20381,15 @@ instruction-set:
         - id:                 VLD4q8oddPseudo_UPD
           type:               linear
           operands:
-           - dst:             [register, def, QQQQPR]
-           - wb:              [register, def, GPR]
+           - src:             [register, usedef, QQQQPR]
+           - addr.addr:       [register, def, GPR]
            - addr1:           [register, use, GPR]
            - addr2:           bound
            - offset:          [register, use, GPR]
-           - src:             [register, use, QQQQPR]
            - p1:              bound
            - p2:              bound
           uses:               [addr1, addr2, offset, src, p1, p2]
-          defines:            [dst, wb]
+          defines:            [src, addr.addr]
           size:               4
           affects:
           affected-by:
@@ -36541,14 +36403,12 @@ instruction-set:
         - id:                 VSWPd
           type:               linear
           operands:
-           - Vd:              [register, def, DPR]
-           - Vm:              [register, def, DPR]
-           - in1:             [register, use, DPR]
-           - in2:             [register, use, DPR]
+           - in1:             [register, usedef, DPR]
+           - in2:             [register, usedef, DPR]
            - p1:              bound
            - p2:              bound
           uses:               [in1, in2, p1, p2]
-          defines:            [Vd, Vm]
+          defines:            [in1, in2]
           size:               4
           affects:
           affected-by:
@@ -36557,14 +36417,12 @@ instruction-set:
         - id:                 VSWPq
           type:               linear
           operands:
-           - Vd:              [register, def, QPR]
-           - Vm:              [register, def, QPR]
-           - in1:             [register, use, QPR]
-           - in2:             [register, use, QPR]
+           - in1:             [register, usedef, QPR]
+           - in2:             [register, usedef, QPR]
            - p1:              bound
            - p2:              bound
           uses:               [in1, in2, p1, p2]
-          defines:            [Vd, Vm]
+          defines:            [in1, in2]
           size:               4
           affects:
           affected-by:
@@ -36981,14 +36839,12 @@ instruction-set:
         - id:                 VTRNd16
           type:               linear
           operands:
-           - Vd:              [register, def, DPR]
-           - Vm:              [register, def, DPR]
-           - src1:            [register, use, DPR]
-           - src2:            [register, use, DPR]
+           - src1:            [register, usedef, DPR]
+           - src2:            [register, usedef, DPR]
            - p1:              bound
            - p2:              bound
           uses:               [src1, src2, p1, p2]
-          defines:            [Vd, Vm]
+          defines:            [src1, src2]
           size:               4
           affects:
           affected-by:
@@ -36997,14 +36853,12 @@ instruction-set:
         - id:                 VTRNd32
           type:               linear
           operands:
-           - Vd:              [register, def, DPR]
-           - Vm:              [register, def, DPR]
-           - src1:            [register, use, DPR]
-           - src2:            [register, use, DPR]
+           - src1:            [register, usedef, DPR]
+           - src2:            [register, usedef, DPR]
            - p1:              bound
            - p2:              bound
           uses:               [src1, src2, p1, p2]
-          defines:            [Vd, Vm]
+          defines:            [src1, src2]
           size:               4
           affects:
           affected-by:
@@ -37013,14 +36867,12 @@ instruction-set:
         - id:                 VTRNd8
           type:               linear
           operands:
-           - Vd:              [register, def, DPR]
-           - Vm:              [register, def, DPR]
-           - src1:            [register, use, DPR]
-           - src2:            [register, use, DPR]
+           - src1:            [register, usedef, DPR]
+           - src2:            [register, usedef, DPR]
            - p1:              bound
            - p2:              bound
           uses:               [src1, src2, p1, p2]
-          defines:            [Vd, Vm]
+          defines:            [src1, src2]
           size:               4
           affects:
           affected-by:
@@ -37029,14 +36881,12 @@ instruction-set:
         - id:                 VTRNq16
           type:               linear
           operands:
-           - Vd:              [register, def, QPR]
-           - Vm:              [register, def, QPR]
-           - src1:            [register, use, QPR]
-           - src2:            [register, use, QPR]
+           - src1:            [register, usedef, QPR]
+           - src2:            [register, usedef, QPR]
            - p1:              bound
            - p2:              bound
           uses:               [src1, src2, p1, p2]
-          defines:            [Vd, Vm]
+          defines:            [src1, src2]
           size:               4
           affects:
           affected-by:
@@ -37045,14 +36895,12 @@ instruction-set:
         - id:                 VTRNq32
           type:               linear
           operands:
-           - Vd:              [register, def, QPR]
-           - Vm:              [register, def, QPR]
-           - src1:            [register, use, QPR]
-           - src2:            [register, use, QPR]
+           - src1:            [register, usedef, QPR]
+           - src2:            [register, usedef, QPR]
            - p1:              bound
            - p2:              bound
           uses:               [src1, src2, p1, p2]
-          defines:            [Vd, Vm]
+          defines:            [src1, src2]
           size:               4
           affects:
           affected-by:
@@ -37061,14 +36909,12 @@ instruction-set:
         - id:                 VTRNq8
           type:               linear
           operands:
-           - Vd:              [register, def, QPR]
-           - Vm:              [register, def, QPR]
-           - src1:            [register, use, QPR]
-           - src2:            [register, use, QPR]
+           - src1:            [register, usedef, QPR]
+           - src2:            [register, usedef, QPR]
            - p1:              bound
            - p2:              bound
           uses:               [src1, src2, p1, p2]
-          defines:            [Vd, Vm]
+          defines:            [src1, src2]
           size:               4
           affects:
           affected-by:
@@ -37251,14 +37097,12 @@ instruction-set:
         - id:                 VUZPd16
           type:               linear
           operands:
-           - Vd:              [register, def, DPR]
-           - Vm:              [register, def, DPR]
-           - src1:            [register, use, DPR]
-           - src2:            [register, use, DPR]
+           - src1:            [register, usedef, DPR]
+           - src2:            [register, usedef, DPR]
            - p1:              bound
            - p2:              bound
           uses:               [src1, src2, p1, p2]
-          defines:            [Vd, Vm]
+          defines:            [src1, src2]
           size:               4
           affects:
           affected-by:
@@ -37267,14 +37111,12 @@ instruction-set:
         - id:                 VUZPd8
           type:               linear
           operands:
-           - Vd:              [register, def, DPR]
-           - Vm:              [register, def, DPR]
-           - src1:            [register, use, DPR]
-           - src2:            [register, use, DPR]
+           - src1:            [register, usedef, DPR]
+           - src2:            [register, usedef, DPR]
            - p1:              bound
            - p2:              bound
           uses:               [src1, src2, p1, p2]
-          defines:            [Vd, Vm]
+          defines:            [src1, src2]
           size:               4
           affects:
           affected-by:
@@ -37283,14 +37125,12 @@ instruction-set:
         - id:                 VUZPq16
           type:               linear
           operands:
-           - Vd:              [register, def, QPR]
-           - Vm:              [register, def, QPR]
-           - src1:            [register, use, QPR]
-           - src2:            [register, use, QPR]
+           - src1:            [register, usedef, QPR]
+           - src2:            [register, usedef, QPR]
            - p1:              bound
            - p2:              bound
           uses:               [src1, src2, p1, p2]
-          defines:            [Vd, Vm]
+          defines:            [src1, src2]
           size:               4
           affects:
           affected-by:
@@ -37299,14 +37139,12 @@ instruction-set:
         - id:                 VUZPq32
           type:               linear
           operands:
-           - Vd:              [register, def, QPR]
-           - Vm:              [register, def, QPR]
-           - src1:            [register, use, QPR]
-           - src2:            [register, use, QPR]
+           - src1:            [register, usedef, QPR]
+           - src2:            [register, usedef, QPR]
            - p1:              bound
            - p2:              bound
           uses:               [src1, src2, p1, p2]
-          defines:            [Vd, Vm]
+          defines:            [src1, src2]
           size:               4
           affects:
           affected-by:
@@ -37315,14 +37153,12 @@ instruction-set:
         - id:                 VUZPq8
           type:               linear
           operands:
-           - Vd:              [register, def, QPR]
-           - Vm:              [register, def, QPR]
-           - src1:            [register, use, QPR]
-           - src2:            [register, use, QPR]
+           - src1:            [register, usedef, QPR]
+           - src2:            [register, usedef, QPR]
            - p1:              bound
            - p2:              bound
           uses:               [src1, src2, p1, p2]
-          defines:            [Vd, Vm]
+          defines:            [src1, src2]
           size:               4
           affects:
           affected-by:
@@ -37331,14 +37167,12 @@ instruction-set:
         - id:                 VZIPd16
           type:               linear
           operands:
-           - Vd:              [register, def, DPR]
-           - Vm:              [register, def, DPR]
-           - src1:            [register, use, DPR]
-           - src2:            [register, use, DPR]
+           - src1:            [register, usedef, DPR]
+           - src2:            [register, usedef, DPR]
            - p1:              bound
            - p2:              bound
           uses:               [src1, src2, p1, p2]
-          defines:            [Vd, Vm]
+          defines:            [src1, src2]
           size:               4
           affects:
           affected-by:
@@ -37347,14 +37181,12 @@ instruction-set:
         - id:                 VZIPd8
           type:               linear
           operands:
-           - Vd:              [register, def, DPR]
-           - Vm:              [register, def, DPR]
-           - src1:            [register, use, DPR]
-           - src2:            [register, use, DPR]
+           - src1:            [register, usedef, DPR]
+           - src2:            [register, usedef, DPR]
            - p1:              bound
            - p2:              bound
           uses:               [src1, src2, p1, p2]
-          defines:            [Vd, Vm]
+          defines:            [src1, src2]
           size:               4
           affects:
           affected-by:
@@ -37363,14 +37195,12 @@ instruction-set:
         - id:                 VZIPq16
           type:               linear
           operands:
-           - Vd:              [register, def, QPR]
-           - Vm:              [register, def, QPR]
-           - src1:            [register, use, QPR]
-           - src2:            [register, use, QPR]
+           - src1:            [register, usedef, QPR]
+           - src2:            [register, usedef, QPR]
            - p1:              bound
            - p2:              bound
           uses:               [src1, src2, p1, p2]
-          defines:            [Vd, Vm]
+          defines:            [src1, src2]
           size:               4
           affects:
           affected-by:
@@ -37379,14 +37209,12 @@ instruction-set:
         - id:                 VZIPq32
           type:               linear
           operands:
-           - Vd:              [register, def, QPR]
-           - Vm:              [register, def, QPR]
-           - src1:            [register, use, QPR]
-           - src2:            [register, use, QPR]
+           - src1:            [register, usedef, QPR]
+           - src2:            [register, usedef, QPR]
            - p1:              bound
            - p2:              bound
           uses:               [src1, src2, p1, p2]
-          defines:            [Vd, Vm]
+          defines:            [src1, src2]
           size:               4
           affects:
           affected-by:
@@ -37395,14 +37223,12 @@ instruction-set:
         - id:                 VZIPq8
           type:               linear
           operands:
-           - Vd:              [register, def, QPR]
-           - Vm:              [register, def, QPR]
-           - src1:            [register, use, QPR]
-           - src2:            [register, use, QPR]
+           - src1:            [register, usedef, QPR]
+           - src2:            [register, usedef, QPR]
            - p1:              bound
            - p2:              bound
           uses:               [src1, src2, p1, p2]
-          defines:            [Vd, Vm]
+          defines:            [src1, src2]
           size:               4
           affects:
           affected-by:
@@ -41531,16 +41357,14 @@ instruction-set:
         - id:                 t2SMLAL
           type:               linear
           operands:
-           - RdLo:            [register, def, rGPR]
-           - RdHi:            [register, def, rGPR]
+           - RLo:             [register, usedef, rGPR]
+           - RHi:             [register, usedef, rGPR]
            - Rn:              [register, use, rGPR]
            - Rm:              [register, use, rGPR]
-           - RLo:             [register, use, rGPR]
-           - RHi:             [register, use, rGPR]
            - p1:              bound
            - p2:              bound
           uses:               [Rn, Rm, RLo, RHi, p1, p2]
-          defines:            [RdLo, RdHi]
+          defines:            [RLo, RHi]
           size:               4
           affects:
           affected-by:
@@ -42603,14 +42427,13 @@ instruction-set:
         - id:                 t2STRB_POST
           type:               linear
           operands:
-           - Rn_wb:           [register, def, GPRnopc]
+           - Rn:              [register, def, GPRnopc]
            - Rt:              [register, use, rGPR]
-           - Rn:              [register, use, GPR]
            - offset:          bound
            - p1:              bound
            - p2:              bound
           uses:               [Rt, Rn, offset, p1, p2]
-          defines:            [Rn_wb]
+          defines:            [Rn]
           size:               4
           affects:
           affected-by:
@@ -42619,14 +42442,14 @@ instruction-set:
         - id:                 t2STRB_PRE
           type:               linear
           operands:
-           - Rn_wb:           [register, def, GPRnopc]
+           - addr.base:       [register, def, GPRnopc]
            - Rt:              [register, use, rGPR]
            - addr1:           [register, use, GPR]
            - addr2:           bound
            - p1:              bound
            - p2:              bound
           uses:               [Rt, addr1, addr2, p1, p2]
-          defines:            [Rn_wb]
+          defines:            [addr.base]
           size:               4
           affects:
            - mem:             memory
@@ -42636,14 +42459,13 @@ instruction-set:
         - id:                 t2STRB_preidx
           type:               linear
           operands:
-           - Rn_wb:           [register, def, GPRnopc]
+           - Rn:              [register, usedef, GPRnopc]
            - Rt:              [register, use, rGPR]
-           - Rn:              [register, use, GPRnopc]
            - offset:          bound
            - p1:              bound
            - p2:              bound
           uses:               [Rt, Rn, offset, p1, p2]
-          defines:            [Rn_wb]
+          defines:            [Rn]
           size:               4
           affects:
           affected-by:
@@ -42832,14 +42654,13 @@ instruction-set:
         - id:                 t2STRH_POST
           type:               linear
           operands:
-           - Rn_wb:           [register, def, GPRnopc]
+           - Rn:              [register, def, GPRnopc]
            - Rt:              [register, use, rGPR]
-           - Rn:              [register, use, GPR]
            - offset:          bound
            - p1:              bound
            - p2:              bound
           uses:               [Rt, Rn, offset, p1, p2]
-          defines:            [Rn_wb]
+          defines:            [Rn]
           size:               4
           affects:
           affected-by:
@@ -42848,14 +42669,14 @@ instruction-set:
         - id:                 t2STRH_PRE
           type:               linear
           operands:
-           - Rn_wb:           [register, def, GPRnopc]
+           - addr.base:       [register, def, GPRnopc]
            - Rt:              [register, use, rGPR]
            - addr1:           [register, use, GPR]
            - addr2:           bound
            - p1:              bound
            - p2:              bound
           uses:               [Rt, addr1, addr2, p1, p2]
-          defines:            [Rn_wb]
+          defines:            [addr.base]
           size:               4
           affects:
            - mem:             memory
@@ -42865,14 +42686,13 @@ instruction-set:
         - id:                 t2STRH_preidx
           type:               linear
           operands:
-           - Rn_wb:           [register, def, GPRnopc]
+           - Rn:              [register, usedef, GPRnopc]
            - Rt:              [register, use, rGPR]
-           - Rn:              [register, use, GPRnopc]
            - offset:          bound
            - p1:              bound
            - p2:              bound
           uses:               [Rt, Rn, offset, p1, p2]
-          defines:            [Rn_wb]
+          defines:            [Rn]
           size:               4
           affects:
           affected-by:
@@ -42942,14 +42762,13 @@ instruction-set:
         - id:                 t2STR_POST
           type:               linear
           operands:
-           - Rn_wb:           [register, def, GPRnopc]
+           - Rn:              [register, def, GPRnopc]
            - Rt:              [register, use, GPRnopc]
-           - Rn:              [register, use, GPR]
            - offset:          bound
            - p1:              bound
            - p2:              bound
           uses:               [Rt, Rn, offset, p1, p2]
-          defines:            [Rn_wb]
+          defines:            [Rn]
           size:               4
           affects:
           affected-by:
@@ -42958,14 +42777,14 @@ instruction-set:
         - id:                 t2STR_PRE
           type:               linear
           operands:
-           - Rn_wb:           [register, def, GPRnopc]
+           - addr.base:       [register, def, GPRnopc]
            - Rt:              [register, use, GPRnopc]
            - addr1:           [register, use, GPR]
            - addr2:           bound
            - p1:              bound
            - p2:              bound
           uses:               [Rt, addr1, addr2, p1, p2]
-          defines:            [Rn_wb]
+          defines:            [addr.base]
           size:               4
           affects:
            - mem:             memory
@@ -42975,14 +42794,13 @@ instruction-set:
         - id:                 t2STR_preidx
           type:               linear
           operands:
-           - Rn_wb:           [register, def, GPRnopc]
+           - Rn:              [register, usedef, GPRnopc]
            - Rt:              [register, use, rGPR]
-           - Rn:              [register, use, GPRnopc]
            - offset:          bound
            - p1:              bound
            - p2:              bound
           uses:               [Rt, Rn, offset, p1, p2]
-          defines:            [Rn_wb]
+          defines:            [Rn]
           size:               4
           affects:
           affected-by:
@@ -43598,16 +43416,14 @@ instruction-set:
         - id:                 t2UMLAL
           type:               linear
           operands:
-           - RdLo:            [register, def, rGPR]
-           - RdHi:            [register, def, rGPR]
+           - RLo:             [register, usedef, rGPR]
+           - RHi:             [register, usedef, rGPR]
            - Rn:              [register, use, rGPR]
            - Rm:              [register, use, rGPR]
-           - RLo:             [register, use, rGPR]
-           - RHi:             [register, use, rGPR]
            - p1:              bound
            - p2:              bound
           uses:               [Rn, Rm, RLo, RHi, p1, p2]
-          defines:            [RdLo, RdHi]
+          defines:            [RLo, RHi]
           size:               4
           affects:
           affected-by:
@@ -44474,6 +44290,21 @@ instruction-set:
           defines:            []
           size:               2
           affects:
+          affected-by:
+          itinerary:          NoItinerary
+
+        - id:                 tInt_WIN_eh_sjlj_longjmp
+          type:               linear
+          operands:
+           - src:             [register, use, GPR]
+           - scratch:         [register, use, GPR]
+          uses:               [src, scratch]
+          defines:            []
+          size:               0
+          affects:
+           - R11:             register
+           - LR:              register
+           - SP:              register
           affected-by:
           itinerary:          NoItinerary
 

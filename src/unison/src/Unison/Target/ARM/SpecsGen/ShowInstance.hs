@@ -2874,6 +2874,7 @@ instance Show ARMInstruction where
         show TEOR = "tEOR"
         show THINT = "tHINT"
         show THLT = "tHLT"
+        show TInt_WIN_eh_sjlj_longjmp = "tInt_WIN_eh_sjlj_longjmp"
         show TInt_eh_sjlj_longjmp = "tInt_eh_sjlj_longjmp"
         show TInt_eh_sjlj_setjmp = "tInt_eh_sjlj_setjmp"
         show TLDMIA = "tLDMIA"

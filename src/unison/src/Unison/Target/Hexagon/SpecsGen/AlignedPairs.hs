@@ -539,8 +539,9 @@ alignedPairs i ([_, _], [_]) | i `elem` [V4_SA1_addrx] = []
 alignedPairs i ([_src_, _, _], [_src_'])
   | i `elem` [M2_vrcmpys_acc_s1_h, M2_vrcmpys_acc_s1_l] =
     [(_src_, _src_')]
-alignedPairs i ([_, _, _], [_, _])
-  | i `elem` [L2_loadalignb_pcr, L2_loadalignh_pcr] = []
+alignedPairs i ([_src_, rz, _], [_src_', rz'])
+  | i `elem` [L2_loadalignb_pcr, L2_loadalignh_pcr] =
+    [(_src_, _src_'), (rz, rz')]
 alignedPairs i ([_, _], [_])
   | i `elem` [V4_SA1_addi, V4_SA1_addi_ce] = []
 alignedPairs i ([_src_, _], [_src_'])
@@ -1258,11 +1259,6 @@ alignedPairs i ([_, _, _], [_])
        L2_ploadruhfnew_io, L2_ploadruhfnew_io_ce, L2_ploadruht_io,
        L2_ploadruht_io_ce, L2_ploadruhtnew_io, L2_ploadruhtnew_io_ce]
     = []
-alignedPairs i ([_, _, _], [_, _])
-  | i `elem`
-      [L2_loadalignb_pi, L2_loadalignb_pi_ce, L2_loadalignh_pi,
-       L2_loadalignh_pi_ce]
-    = []
 alignedPairs i ([_, src2, _], [_, src2'])
   | i `elem`
       [L2_ploadrbf_pi, L2_ploadrbf_pi_ce, L2_ploadrbfnew_pi,
@@ -1287,6 +1283,11 @@ alignedPairs i ([src1, _, _], [src1'])
       [L2_loadalignb_io, L2_loadalignb_io_ce, L2_loadalignh_io,
        L2_loadalignh_io_ce]
     = [(src1, src1')]
+alignedPairs i ([src1, src2, _], [src1', src2'])
+  | i `elem`
+      [L2_loadalignb_pi, L2_loadalignb_pi_ce, L2_loadalignh_pi,
+       L2_loadalignh_pi_ce]
+    = [(src1, src1'), (src2, src2')]
 alignedPairs i ([_, src2, _, _], [src2'])
   | i `elem`
       [S2_pstorerbf_pi, S2_pstorerbf_pi_ce, S2_pstorerbfnew_pi,
@@ -1333,9 +1334,6 @@ alignedPairs i ([_, _, _], [])
        V6_vS32b_nt_ai_ce, V6_vS32b_nt_new_ai, V6_vS32b_nt_new_ai_128B,
        V6_vS32b_nt_new_ai_128B_ce, V6_vS32b_nt_new_ai_ce]
     = []
-alignedPairs i ([_, _, _], [_, _])
-  | i `elem` [V6_vdeal, V6_vdeal_128B, V6_vshuff, V6_vshuff_128B] =
-    []
 alignedPairs i ([_, _, _], [_])
   | i `elem`
       [L4_loadalignb_ur, L4_loadalignb_ur_ce, L4_loadalignh_ur,
@@ -1365,8 +1363,6 @@ alignedPairs i ([_, _, _], [_])
        V6_vshuffvdd, V6_vshuffvdd_128B, V6_vswap, V6_vswap_128B,
        VSelectDblPseudo_V6, VSelectPseudo_V6]
     = []
-alignedPairs i ([_, _, _], [_, _])
-  | i `elem` [L2_loadalignb_pr, L2_loadalignh_pr] = []
 alignedPairs i ([src1, _, _], [src1'])
   | i `elem`
       [M2_acci, M2_accii, M2_accii_ce, M2_maci, M2_macsin, M2_macsin_ce,
@@ -1394,6 +1390,11 @@ alignedPairs i ([src1, _, _], [src1', _])
       [L2_loadrb_pbr_pseudo, L2_loadrd_pbr_pseudo, L2_loadrh_pbr_pseudo,
        L2_loadri_pbr_pseudo, L2_loadrub_pbr_pseudo, L2_loadruh_pbr_pseudo]
     = [(src1, src1')]
+alignedPairs i ([src1, src2, _], [src1', src2'])
+  | i `elem`
+      [L2_loadalignb_pr, L2_loadalignh_pr, V6_vdeal, V6_vdeal_128B,
+       V6_vshuff, V6_vshuff_128B]
+    = [(src1, src1'), (src2, src2')]
 alignedPairs i ([_, _, _, _], [])
   | i `elem`
       [S2_pstorerbf_io, S2_pstorerbf_io_ce, S2_pstorerbnewf_io,

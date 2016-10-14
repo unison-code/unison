@@ -2873,6 +2873,7 @@ data ARMInstruction = ABS
                     | TEOR
                     | THINT
                     | THLT
+                    | TInt_WIN_eh_sjlj_longjmp
                     | TInt_eh_sjlj_longjmp
                     | TInt_eh_sjlj_setjmp
                     | TLDMIA

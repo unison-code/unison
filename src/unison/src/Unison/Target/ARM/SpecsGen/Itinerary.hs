@@ -999,7 +999,8 @@ itinerary i
        T2UHASX, T2UHSAX, T2UHSUB16, T2UHSUB8, T2UQADD16, T2UQADD8,
        T2UQASX, T2UQSAX, T2UQSUB16, T2UQSUB8, T2USAD8, T2USADA8, T2USAT,
        T2USAT16, T2USAX, T2USUB16, T2USUB8, TADDframe, TADJCALLSTACKDOWN,
-       TADJCALLSTACKUP, TBKPT, TCPS, THINT, THLT, TInt_eh_sjlj_longjmp,
+       TADJCALLSTACKUP, TBKPT, TCPS, THINT, THLT,
+       TInt_WIN_eh_sjlj_longjmp, TInt_eh_sjlj_longjmp,
        TInt_eh_sjlj_setjmp, TLDRpci_pic, TMOVCCr_pseudo, TSETEND]
     = NoItinerary
 

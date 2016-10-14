@@ -550,6 +550,8 @@ readWriteInfo i
       OtherSideEffect Q3, OtherSideEffect Q8, OtherSideEffect Q9,
       OtherSideEffect Q10, OtherSideEffect Q11, OtherSideEffect Q12,
       OtherSideEffect Q13, OtherSideEffect Q14, OtherSideEffect Q15])
+  | i `elem` [TInt_WIN_eh_sjlj_longjmp] =
+    ([], [OtherSideEffect R11, OtherSideEffect LR, OtherSideEffect SP])
   | i `elem` [WIN__CHKSTK] =
     ([], [OtherSideEffect R4, OtherSideEffect SP])
   | i `elem` [Int_eh_sjlj_longjmp, TInt_eh_sjlj_longjmp] =

@@ -366,7 +366,10 @@ operandInfo i
   | i `elem` [WIN__DBZCHK] =
     ([TemporaryInfo (RegisterClass GPR) 0],
      [TemporaryInfo (AbstractRegisterClass Unknown) 1])
-  | i `elem` [Int_eh_sjlj_longjmp, TInt_eh_sjlj_longjmp] =
+  | i `elem`
+      [Int_eh_sjlj_longjmp, TInt_WIN_eh_sjlj_longjmp,
+       TInt_eh_sjlj_longjmp]
+    =
     ([TemporaryInfo (RegisterClass GPR) 0,
       TemporaryInfo (RegisterClass GPR) 0],
      [])
@@ -1608,7 +1611,7 @@ operandInfo i
       TemporaryInfo (RegisterClass GPR) 0, BoundInfo, BoundInfo,
       TemporaryInfo (RegisterClass CCR) 0],
      [])
-  | i `elem` [BFI, T2STR_POST, T2STR_PRE] =
+  | i `elem` [BFI, T2STR_PRE] =
     ([TemporaryInfo (RegisterClass GPRnopc) 0,
       TemporaryInfo (RegisterClass GPR) 0, BoundInfo, BoundInfo,
       TemporaryInfo (RegisterClass CCR) 0],
@@ -1682,7 +1685,7 @@ operandInfo i
       TemporaryInfo (RegisterClass CCR) 0,
       TemporaryInfo (RegisterClass CCR) 0],
      [TemporaryInfo (RegisterClass GPRnopc) 1])
-  | i `elem` [PKHBT, PKHTB] =
+  | i `elem` [PKHBT, PKHTB, T2STR_POST] =
     ([TemporaryInfo (RegisterClass GPRnopc) 0,
       TemporaryInfo (RegisterClass GPRnopc) 0, BoundInfo, BoundInfo,
       TemporaryInfo (RegisterClass CCR) 0],
@@ -2313,7 +2316,7 @@ operandInfo i
       TemporaryInfo (RegisterClass GPR) 0, BoundInfo, BoundInfo,
       TemporaryInfo (RegisterClass CCR) 0],
      [])
-  | i `elem` [T2STRB_POST, T2STRB_PRE, T2STRH_POST, T2STRH_PRE] =
+  | i `elem` [T2STRB_PRE, T2STRH_PRE] =
     ([TemporaryInfo (RegisterClass RGPR) 0,
       TemporaryInfo (RegisterClass GPR) 0, BoundInfo, BoundInfo,
       TemporaryInfo (RegisterClass CCR) 0],
@@ -2324,7 +2327,10 @@ operandInfo i
       TemporaryInfo (RegisterClass GPRnopc) 0, BoundInfo, BoundInfo,
       TemporaryInfo (RegisterClass CCR) 0],
      [])
-  | i `elem` [T2STRB_preidx, T2STRH_preidx, T2STR_preidx] =
+  | i `elem`
+      [T2STRB_POST, T2STRB_preidx, T2STRH_POST, T2STRH_preidx,
+       T2STR_preidx]
+    =
     ([TemporaryInfo (RegisterClass RGPR) 0,
       TemporaryInfo (RegisterClass GPRnopc) 0, BoundInfo, BoundInfo,
       TemporaryInfo (RegisterClass CCR) 0],

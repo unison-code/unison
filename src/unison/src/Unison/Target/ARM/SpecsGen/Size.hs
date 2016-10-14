@@ -105,8 +105,9 @@ size i
        T2LDRSHpcrel, T2LDRpci_pic, T2LDRpcrel, T2MOVSsi, T2MOVSsr,
        T2MOVTi16_ga_pcrel, T2MOV_ga_pcrel, T2MOVi16_ga_pcrel, T2MOVi32imm,
        T2MOVsi, T2MOVsr, TADDframe, TADJCALLSTACKDOWN, TADJCALLSTACKUP,
-       TInt_eh_sjlj_longjmp, TInt_eh_sjlj_setjmp, TLDRLIT_ga_abs,
-       TLDRLIT_ga_pcrel, TLDRpci_pic, TMOVCCr_pseudo, TPOPcs_free]
+       TInt_WIN_eh_sjlj_longjmp, TInt_eh_sjlj_longjmp,
+       TInt_eh_sjlj_setjmp, TLDRLIT_ga_abs, TLDRLIT_ga_pcrel, TLDRpci_pic,
+       TMOVCCr_pseudo, TPOPcs_free]
     = 0
   | i `elem`
       [LOAD_T, MOVE, STORE_T, T2IT, T2SETPAN, TADC, TADDhirr, TADDhirrs,

@@ -96,10 +96,11 @@ alignedPairs i ([_, _], [_])
       [CRC32B, CRC32CB, CRC32CH, CRC32CW, CRC32H, CRC32W, T2CRC32B,
        T2CRC32CB, T2CRC32CH, T2CRC32CW, T2CRC32H, T2CRC32W]
     = []
-alignedPairs i ([_, _, _, _, _, _], [_, _])
-  | i `elem` [T2SMLAL, T2UMLAL] = []
-alignedPairs i ([_, _, _, _, _, _, _], [_, _])
-  | i `elem` [SMLAL, SMLALv5, UMLAL, UMLALv5] = []
+alignedPairs i ([_, _, rLo, rHi, _, _], [rLo', rHi'])
+  | i `elem` [T2SMLAL, T2UMLAL] = [(rLo, rLo'), (rHi, rHi')]
+alignedPairs i ([_, _, rLo, rHi, _, _, _], [rLo', rHi'])
+  | i `elem` [SMLAL, SMLALv5, UMLAL, UMLALv5] =
+    [(rLo, rLo'), (rHi, rHi')]
 alignedPairs i ([_, _, _, _, _], [_])
   | i `elem`
       [MLS, SMLABB, SMLABT, SMLAD, SMLADX, SMLATB, SMLATT, SMLAWB,
@@ -344,23 +345,27 @@ alignedPairs i ([_, _, _, _, _], [_, _, _, _, _])
        VLD4DUPq32_UPD, VLD4DUPq8_UPD, VLD4d16_UPD, VLD4d32_UPD,
        VLD4d8_UPD, VLD4q16_UPD, VLD4q32_UPD, VLD4q8_UPD]
     = []
-alignedPairs i ([_, _, _, _, _, _, _], [_, _])
-  | i `elem` [VLD1LNd16_UPD, VLD1LNd32_UPD, VLD1LNd8_UPD] = []
-alignedPairs i ([_, _, _, _, _, _, _, _], [_, _, _])
+alignedPairs i ([_, _, _, src, _, _, _], [src', _])
+  | i `elem` [VLD1LNd16_UPD, VLD1LNd32_UPD, VLD1LNd8_UPD] =
+    [(src, src')]
+alignedPairs i ([_, _, _, src1, src2, _, _, _], [src1', src2', _])
   | i `elem`
       [VLD2LNd16_UPD, VLD2LNd32_UPD, VLD2LNd8_UPD, VLD2LNq16_UPD,
        VLD2LNq32_UPD]
-    = []
-alignedPairs i ([_, _, _, _, _, _, _, _, _], [_, _, _, _])
+    = [(src1, src1'), (src2, src2')]
+alignedPairs i
+  ([_, _, _, src1, src2, src3, _, _, _], [src1', src2', src3', _])
   | i `elem`
       [VLD3LNd16_UPD, VLD3LNd32_UPD, VLD3LNd8_UPD, VLD3LNq16_UPD,
        VLD3LNq32_UPD]
-    = []
-alignedPairs i ([_, _, _, _, _, _, _, _, _, _], [_, _, _, _, _])
+    = [(src1, src1'), (src2, src2'), (src3, src3')]
+alignedPairs i
+  ([_, _, _, src1, src2, src3, src4, _, _, _],
+   [src1', src2', src3', src4', _])
   | i `elem`
       [VLD4LNd16_UPD, VLD4LNd32_UPD, VLD4LNd8_UPD, VLD4LNq16_UPD,
        VLD4LNq32_UPD]
-    = []
+    = [(src1, src1'), (src2, src2'), (src3, src3'), (src4, src4')]
 alignedPairs i ([_, _, _, _, _, _], [])
   | i `elem` [VST1LNd16, VST1LNd32, VST1LNd8] = []
 alignedPairs i ([_, _, _, _, _], [])
@@ -431,24 +436,27 @@ alignedPairs i ([_, _, _, _], [_, _, _, _])
     = []
 alignedPairs i ([_, _, src, _, _, _], [src'])
   | i `elem` [VLD1LNd16, VLD1LNd32, VLD1LNd8] = [(src, src')]
-alignedPairs i ([_, _, _, _, _, _, _], [_, _])
+alignedPairs i ([_, _, src1, src2, _, _, _], [src1', src2'])
   | i `elem` [VLD2LNd16, VLD2LNd32, VLD2LNd8, VLD2LNq16, VLD2LNq32] =
-    []
-alignedPairs i ([_, _, _, _, _, _, _, _], [_, _, _])
+    [(src1, src1'), (src2, src2')]
+alignedPairs i
+  ([_, _, src1, src2, src3, _, _, _], [src1', src2', src3'])
   | i `elem` [VLD3LNd16, VLD3LNd32, VLD3LNd8, VLD3LNq16, VLD3LNq32] =
-    []
-alignedPairs i ([_, _, _, _, _, _, _, _, _], [_, _, _, _])
+    [(src1, src1'), (src2, src2'), (src3, src3')]
+alignedPairs i
+  ([_, _, src1, src2, src3, src4, _, _, _],
+   [src1', src2', src3', src4'])
   | i `elem` [VLD4LNd16, VLD4LNd32, VLD4LNd8, VLD4LNq16, VLD4LNq32] =
-    []
-alignedPairs i ([_, _, _, _, _], [_])
+    [(src1, src1'), (src2, src2'), (src3, src3'), (src4, src4')]
+alignedPairs i ([_, rn, _, _, _], [rn'])
   | i `elem`
       [T2STRB_POST, T2STRB_preidx, T2STRH_POST, T2STRH_preidx,
        T2STR_POST, T2STR_preidx]
-    = []
-alignedPairs i ([_, _, _, _, _, _], [_])
+    = [(rn, rn')]
+alignedPairs i ([_, rn, _, _, _, _], [rn'])
   | i `elem`
       [STRBi_preidx, STRBr_preidx, STRH_preidx, STRi_preidx, STRr_preidx]
-    = []
+    = [(rn, rn')]
 alignedPairs i ([_, _, _, _, _, _], [_])
   | i `elem` [T2STRD_POST] = []
 alignedPairs i ([_, _, _, _, _, _, _], [_])
@@ -466,12 +474,9 @@ alignedPairs i ([_, _, _, _, _, _], [_]) | i `elem` [STRHTr] = []
 alignedPairs i ([_, _, _, _, _], [_]) | i `elem` [STRHTi] = []
 alignedPairs i ([_, _, _, _, _, _], [_])
   | i `elem`
-      [STRB_POST_IMM, STRB_POST_REG, STRH_POST, STR_POST_IMM,
+      [STRBT_POST_IMM, STRBT_POST_REG, STRB_POST_IMM, STRB_POST_REG,
+       STRH_POST, STRT_POST_IMM, STRT_POST_REG, STR_POST_IMM,
        STR_POST_REG]
-    = []
-alignedPairs i ([_, _, _, _, _, _], [_])
-  | i `elem`
-      [STRBT_POST_IMM, STRBT_POST_REG, STRT_POST_IMM, STRT_POST_REG]
     = []
 alignedPairs i ([_, _, _, _], [])
   | i `elem`
@@ -801,7 +806,7 @@ alignedPairs i ([_, _, _, _, _, _, _], [_])
        VST3LNq32Pseudo_UPD, VST4LNd16Pseudo_UPD, VST4LNd32Pseudo_UPD,
        VST4LNd8Pseudo_UPD, VST4LNq16Pseudo_UPD, VST4LNq32Pseudo_UPD]
     = []
-alignedPairs i ([_, _, _, _, _, _, _], [_, _])
+alignedPairs i ([_, _, _, src, _, _, _], [src', _])
   | i `elem`
       [VLD1LNq16Pseudo_UPD, VLD1LNq32Pseudo_UPD, VLD1LNq8Pseudo_UPD,
        VLD2LNd16Pseudo_UPD, VLD2LNd32Pseudo_UPD, VLD2LNd8Pseudo_UPD,
@@ -809,7 +814,7 @@ alignedPairs i ([_, _, _, _, _, _, _], [_, _])
        VLD3LNd32Pseudo_UPD, VLD3LNd8Pseudo_UPD, VLD3LNq16Pseudo_UPD,
        VLD3LNq32Pseudo_UPD, VLD4LNd16Pseudo_UPD, VLD4LNd32Pseudo_UPD,
        VLD4LNd8Pseudo_UPD, VLD4LNq16Pseudo_UPD, VLD4LNq32Pseudo_UPD]
-    = []
+    = [(src, src')]
 alignedPairs i ([_, _, _, _, _, _], [_])
   | i `elem`
       [VST1d64QPseudoWB_register, VST1d64TPseudoWB_register,
@@ -822,13 +827,13 @@ alignedPairs i ([_, _, _, _, _, _], [_])
        VST4q32Pseudo_UPD, VST4q32oddPseudo_UPD, VST4q8Pseudo_UPD,
        VST4q8oddPseudo_UPD]
     = []
-alignedPairs i ([_, _, _, _, _, _], [_, _])
+alignedPairs i ([_, _, _, src, _, _], [src', _])
   | i `elem`
       [VLD3q16Pseudo_UPD, VLD3q16oddPseudo_UPD, VLD3q32Pseudo_UPD,
        VLD3q32oddPseudo_UPD, VLD3q8Pseudo_UPD, VLD3q8oddPseudo_UPD,
        VLD4q16Pseudo_UPD, VLD4q16oddPseudo_UPD, VLD4q32Pseudo_UPD,
        VLD4q32oddPseudo_UPD, VLD4q8Pseudo_UPD, VLD4q8oddPseudo_UPD]
-    = []
+    = [(src, src')]
 alignedPairs i ([_, _, _, _], [])
   | i `elem`
       [T2PLDWi12, T2PLDWi8, T2PLDi12, T2PLDi8, T2PLIi12, T2PLIi8, T2TBB,
@@ -968,7 +973,8 @@ alignedPairs i ([_], [])
     = []
 alignedPairs i ([_, _, _], [])
   | i `elem` [BX_pred, TTAILJMPd, TTAILJMPdND] = []
-alignedPairs i ([_, _, _, _], [_, _]) | i `elem` [MEMCPY] = []
+alignedPairs i ([dst, src, _, _], [dst', src'])
+  | i `elem` [MEMCPY] = [(dst, dst'), (src, src')]
 alignedPairs i ([_, _, _, _], [])
   | i `elem` [COPY_STRUCT_BYVAL_I32] = []
 alignedPairs i ([_], []) | i `elem` [SETEND, TSETEND] = []
@@ -1016,8 +1022,8 @@ alignedPairs i ([_, _, _, _], [_]) | i `elem` [TMOVi8s] = []
 alignedPairs i ([_, _], []) | i `elem` [CPS2p, T2CPS2p, TCPS] = []
 alignedPairs i ([_, _, _], []) | i `elem` [CPS3p, T2CPS3p] = []
 alignedPairs i ([_, _, _], [_]) | i `elem` [SUBREG_TO_REG] = []
-alignedPairs i ([_, _, _, _], [_, _])
-  | i `elem` [VSWPd, VSWPq] = []
+alignedPairs i ([in1, in2, _, _], [in1', in2'])
+  | i `elem` [VSWPd, VSWPq] = [(in1, in1'), (in2, in2')]
 alignedPairs i ([_, _, _], [])
   | i `elem`
       [CONSTPOOL_ENTRY, JUMPTABLE_ADDRS, JUMPTABLE_INSTS, JUMPTABLE_TBB,
@@ -1201,7 +1207,10 @@ alignedPairs i ([_, _, _], [])
     = []
 alignedPairs i ([_, _], [_]) | i `elem` [COPY_TO_REGCLASS] = []
 alignedPairs i ([_, _], [])
-  | i `elem` [Int_eh_sjlj_longjmp, TInt_eh_sjlj_longjmp] = []
+  | i `elem`
+      [Int_eh_sjlj_longjmp, TInt_WIN_eh_sjlj_longjmp,
+       TInt_eh_sjlj_longjmp]
+    = []
 alignedPairs i ([_, _], [_])
   | i `elem`
       [Int_eh_sjlj_setjmp, Int_eh_sjlj_setjmp_nofp, T2Int_eh_sjlj_setjmp,
@@ -1256,13 +1265,13 @@ alignedPairs i ([src1, _, _, _, _], [src1'])
        VQRDMLSHv4i16, VQRDMLSHv4i32, VQRDMLSHv8i16]
     = [(src1, src1')]
 alignedPairs i ([_, _, _, _], [_, _]) | i `elem` [VMOVRRS] = []
-alignedPairs i ([_, _, _, _], [_, _])
+alignedPairs i ([_, _, _, _], [_, _]) | i `elem` [VMOVSRR] = []
+alignedPairs i ([src1, src2, _, _], [src1', src2'])
   | i `elem`
       [VTRNd16, VTRNd32, VTRNd8, VTRNq16, VTRNq32, VTRNq8, VUZPd16,
        VUZPd8, VUZPq16, VUZPq32, VUZPq8, VZIPd16, VZIPd8, VZIPq16,
        VZIPq32, VZIPq8]
-    = []
-alignedPairs i ([_, _, _, _], [_, _]) | i `elem` [VMOVSRR] = []
+    = [(src1, src1'), (src2, src2')]
 alignedPairs i ([_, _, _, _, _], [_]) | i `elem` [MOVsi] = []
 alignedPairs i ([_, _, _, _, _, _], [_]) | i `elem` [MOVsr] = []
 alignedPairs i ([_, _], [_]) | i `elem` [EXTRACT_SUBREG] = []

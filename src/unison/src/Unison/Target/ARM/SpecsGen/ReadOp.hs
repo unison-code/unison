@@ -2872,6 +2872,7 @@ readOp "tCPS" = TCPS
 readOp "tEOR" = TEOR
 readOp "tHINT" = THINT
 readOp "tHLT" = THLT
+readOp "tInt_WIN_eh_sjlj_longjmp" = TInt_WIN_eh_sjlj_longjmp
 readOp "tInt_eh_sjlj_longjmp" = TInt_eh_sjlj_longjmp
 readOp "tInt_eh_sjlj_setjmp" = TInt_eh_sjlj_setjmp
 readOp "tLDMIA" = TLDMIA

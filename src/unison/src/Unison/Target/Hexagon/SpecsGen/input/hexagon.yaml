@@ -8671,13 +8671,11 @@ instruction-set:
         - id:                 L2_loadalignb_pcr
           type:               linear
           operands:
-           - dst:             [register, def, DoubleRegs]
-           - _dst_:           [register, def, IntRegs]
-           - _src_:           [register, use, DoubleRegs]
-           - Rz:              [register, use, IntRegs]
+           - _src_:           [register, usedef, DoubleRegs]
+           - Rz:              [register, usedef, IntRegs]
            - Mu:              [register, use, ModRegs]
           uses:               [_src_, Rz, Mu]
-          defines:            [dst, _dst_]
+          defines:            [_src_, Rz]
           size:               4
           affects:
           affected-by:
@@ -8688,13 +8686,11 @@ instruction-set:
         - id:                 L2_loadalignb_pi
           type:               linear
           operands:
-           - dst:             [register, def, DoubleRegs]
-           - dst2:            [register, def, IntRegs]
-           - src1:            [register, use, DoubleRegs]
-           - src2:            [register, use, IntRegs]
+           - src1:            [register, usedef, DoubleRegs]
+           - src2:            [register, usedef, IntRegs]
            - offset:          bound
           uses:               [src1, src2, offset]
-          defines:            [dst, dst2]
+          defines:            [src1, src2]
           size:               4
           affects:
           affected-by:
@@ -8704,13 +8700,11 @@ instruction-set:
         - id:                 L2_loadalignb_pr
           type:               linear
           operands:
-           - dst:             [register, def, DoubleRegs]
-           - _dst_:           [register, def, IntRegs]
-           - src1:            [register, use, DoubleRegs]
-           - src2:            [register, use, IntRegs]
+           - src1:            [register, usedef, DoubleRegs]
+           - src2:            [register, usedef, IntRegs]
            - src3:            [register, use, ModRegs]
           uses:               [src1, src2, src3]
-          defines:            [dst, _dst_]
+          defines:            [src1, src2]
           size:               4
           affects:
           affected-by:
@@ -8764,13 +8758,11 @@ instruction-set:
         - id:                 L2_loadalignh_pcr
           type:               linear
           operands:
-           - dst:             [register, def, DoubleRegs]
-           - _dst_:           [register, def, IntRegs]
-           - _src_:           [register, use, DoubleRegs]
-           - Rz:              [register, use, IntRegs]
+           - _src_:           [register, usedef, DoubleRegs]
+           - Rz:              [register, usedef, IntRegs]
            - Mu:              [register, use, ModRegs]
           uses:               [_src_, Rz, Mu]
-          defines:            [dst, _dst_]
+          defines:            [_src_, Rz]
           size:               4
           affects:
           affected-by:
@@ -8781,13 +8773,11 @@ instruction-set:
         - id:                 L2_loadalignh_pi
           type:               linear
           operands:
-           - dst:             [register, def, DoubleRegs]
-           - dst2:            [register, def, IntRegs]
-           - src1:            [register, use, DoubleRegs]
-           - src2:            [register, use, IntRegs]
+           - src1:            [register, usedef, DoubleRegs]
+           - src2:            [register, usedef, IntRegs]
            - offset:          bound
           uses:               [src1, src2, offset]
-          defines:            [dst, dst2]
+          defines:            [src1, src2]
           size:               4
           affects:
           affected-by:
@@ -8797,13 +8787,11 @@ instruction-set:
         - id:                 L2_loadalignh_pr
           type:               linear
           operands:
-           - dst:             [register, def, DoubleRegs]
-           - _dst_:           [register, def, IntRegs]
-           - src1:            [register, use, DoubleRegs]
-           - src2:            [register, use, IntRegs]
+           - src1:            [register, usedef, DoubleRegs]
+           - src2:            [register, usedef, IntRegs]
            - src3:            [register, use, ModRegs]
           uses:               [src1, src2, src3]
-          defines:            [dst, _dst_]
+          defines:            [src1, src2]
           size:               4
           affects:
           affected-by:
@@ -28672,13 +28660,11 @@ instruction-set:
         - id:                 V6_vdeal
           type:               linear
           operands:
-           - _dst1_:          [register, def, VectorRegs]
-           - _dst2_:          [register, def, VectorRegs]
-           - src1:            [register, use, VectorRegs]
-           - src2:            [register, use, VectorRegs]
+           - src1:            [register, usedef, VectorRegs]
+           - src2:            [register, usedef, VectorRegs]
            - src3:            [register, use, IntRegs]
           uses:               [src1, src2, src3]
-          defines:            [_dst1_, _dst2_]
+          defines:            [src1, src2]
           size:               4
           affects:
           affected-by:
@@ -28687,13 +28673,11 @@ instruction-set:
         - id:                 V6_vdeal_128B
           type:               linear
           operands:
-           - _dst1_:          [register, def, VectorRegs128B]
-           - _dst2_:          [register, def, VectorRegs128B]
-           - src1:            [register, use, VectorRegs128B]
-           - src2:            [register, use, VectorRegs128B]
+           - src1:            [register, usedef, VectorRegs128B]
+           - src2:            [register, usedef, VectorRegs128B]
            - src3:            [register, use, IntRegs]
           uses:               [src1, src2, src3]
-          defines:            [_dst1_, _dst2_]
+          defines:            [src1, src2]
           size:               4
           affects:
           affected-by:
@@ -33233,13 +33217,11 @@ instruction-set:
         - id:                 V6_vshuff
           type:               linear
           operands:
-           - _dst1_:          [register, def, VectorRegs]
-           - _dst2_:          [register, def, VectorRegs]
-           - src1:            [register, use, VectorRegs]
-           - src2:            [register, use, VectorRegs]
+           - src1:            [register, usedef, VectorRegs]
+           - src2:            [register, usedef, VectorRegs]
            - src3:            [register, use, IntRegs]
           uses:               [src1, src2, src3]
-          defines:            [_dst1_, _dst2_]
+          defines:            [src1, src2]
           size:               4
           affects:
           affected-by:
@@ -33248,13 +33230,11 @@ instruction-set:
         - id:                 V6_vshuff_128B
           type:               linear
           operands:
-           - _dst1_:          [register, def, VectorRegs128B]
-           - _dst2_:          [register, def, VectorRegs128B]
-           - src1:            [register, use, VectorRegs128B]
-           - src2:            [register, use, VectorRegs128B]
+           - src1:            [register, usedef, VectorRegs128B]
+           - src2:            [register, usedef, VectorRegs128B]
            - src3:            [register, use, IntRegs]
           uses:               [src1, src2, src3]
-          defines:            [_dst1_, _dst2_]
+          defines:            [src1, src2]
           size:               4
           affects:
           affected-by:
