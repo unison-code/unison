@@ -26,6 +26,9 @@ import Common.Util
 import MachineIR.Base
 import MachineIR.Predicates
 
+instance (Show i, Show r) => ShowSimple (MachineFunction i r) where
+  showSimple mf = show (mf {mfIR = ""})
+
 instance (Show i, Show r) => Show (MachineFunction i r) where
   show mf = showMir mf
 

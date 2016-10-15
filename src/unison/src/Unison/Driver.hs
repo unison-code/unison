@@ -22,6 +22,8 @@ module Unison.Driver
      unisonPrefixFile)
     where
 
+import Common.Util
+
 import Data.Maybe
 import Data.List
 import System.FilePath
@@ -33,7 +35,7 @@ applyTransformations ts target f = mapAccumL (applyTransformation target) f ts
 applyTransformation _ f (_, n, False) = (f, (n, Nothing))
 applyTransformation target f (t, n, True) =
     let o   = t f target
-        out = (n, Just (show o))
+        out = (n, Just (showSimple o))
     in (o, out)
 
 toPlainText :: [(String, Maybe String)] -> String

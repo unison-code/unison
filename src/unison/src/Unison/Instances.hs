@@ -118,6 +118,9 @@ instance (Eq i, Eq r) => Eq (OGEdgeLabel i r) where
 
 equaling = ((==) `on`)
 
+instance (Show i, Show r) => ShowSimple (Function i r) where
+  showSimple f = show (f {fSource = ""})
+
 instance (Show i, Show r) => Show (Function i r) where
     show (Function comments name code cs ffobjs fobjs jt goal src) =
       concatMap showComment comments ++

@@ -58,7 +58,8 @@ module Common.Util (
         combineAdd,
         onDocumentEnd,
         decodeYaml,
-        encodeYaml
+        encodeYaml,
+        ShowSimple (..)
        )
        where
 
@@ -182,3 +183,7 @@ decodeYaml s =
     Right yaml -> yaml
 
 encodeYaml y = B8.unpack $ encode y
+
+-- | Something that can be shown in a simple way
+class ShowSimple a where
+    showSimple :: a -> String
