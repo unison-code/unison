@@ -206,11 +206,11 @@ isReservedRegister _ = False
 
 data MipsResource = BundleWidth deriving (Eq, Ord, Show, Read)
 
-resources = [Resource BundleWidth 32]
+resources = [Resource BundleWidth 1]
 
 -- | Declares resource usages of each instruction
 
-usages = const [Usage BundleWidth 32 1]
+usages = const [Usage BundleWidth 1 1]
 
 -- | No-operation instruction
 
