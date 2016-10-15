@@ -12,7 +12,7 @@ usages i =
   let it = SpecsGen.itinerary i
   -- TODO: define instruction size as BundleWidth usage
   in mergeUsages (itineraryUsage i it)
-     [Usage BundleWidth (SpecsGen.size i) 1]
+     [Usage BundleWidth (SpecsGen.size i `div` 2) 1]
 
 itineraryUsage _ it
   | it `elem` [NoItinerary] = []

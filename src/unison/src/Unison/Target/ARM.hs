@@ -249,9 +249,9 @@ isGPR r = rTargetReg (regId r) `elem` registers (RegisterClass GPR)
 resources =
     [
 
-     -- Boundle width
+     -- Boundle width (times 16 bits)
 
-     Resource BundleWidth 8,
+     Resource BundleWidth 4,
 
      -- Resources as defined by ARMScheduleV6
 
