@@ -273,6 +273,15 @@ void emit_output(GlobalModel * base, vector<ResultData> & results,
 
 }
 
+bool has_solution(vector<ResultData> & results) {
+  for (ResultData rd : results) {
+    if (rd.solution) {
+      return true;
+    }
+  }
+  return false;
+}
+
 int main(int argc, char* argv[]) {
 
   int argc0 = argc;
@@ -811,16 +820,10 @@ int main(int argc, char* argv[]) {
 
       if (base->options->solve_global_only()) exit(EXIT_SUCCESS);
 
-      // If the global problem is unsatisfiable we have found the optimal solution
-      bool has_solution = false;
-      for (ResultData rd : results)
-        if (rd.solution) {
-          has_solution = true;
-          break;
-        }
-
       if (gs.result == UNSATISFIABLE || base->status() == SS_FAILED) {
-        if (has_solution) {
+        // If the global problem is unsatisfiable and there is some solution we
+        // have found the optimal one
+        if (has_solution(results)) {
           if (options.verbose())
             cerr << global() << "found optimal solution" << endl;
           // Remove results from the back until a solution is found
@@ -840,7 +843,7 @@ int main(int argc, char* argv[]) {
       total_failed += iteration_failed;
       total_nodes += iteration_nodes;
 
-      if (has_solution && options.first_solution()) break;
+      if (has_solution(results) && options.first_solution()) break;
 
       if (!deactivation) { // Update aggressiveness
         state.next(&options);
@@ -857,10 +860,30 @@ int main(int argc, char* argv[]) {
     double solving_time = t.stop();
     total_failed += ms.failures;
     total_nodes += ms.nodes;
-    bool msproven = ms.result == OPTIMAL_SOLUTION || ms.result == UNSATISFIABLE;
-    results.push_back(ResultData(ms.solution, msproven, ms.failures, ms.nodes,
-                                 presolver_time, presolving_time,
-                                 solving_time, solving_time));
+    if (ms.result == OPTIMAL_SOLUTION) {
+      if (options.verbose())
+        cerr << monolithic() << "found optimal solution" << endl;
+      results.push_back(ResultData(ms.solution, true, ms.failures, ms.nodes,
+                                   presolver_time, presolving_time,
+                                   solving_time, solving_time));
+    } else if (ms.result == UNSATISFIABLE) {
+      // If the global problem is unsatisfiable and there is some solution we
+      // have found the optimal one
+      if (has_solution(results)) {
+        if (options.verbose())
+          cerr << monolithic() << "found optimal solution" << endl;
+        // Remove results from the back until a solution is found
+        while (!results.back().solution) results.pop_back();
+        assert(results.back().solution);
+      } else {
+        if (options.verbose()) {
+          cerr << monolithic()
+               << "proven absence of solutions with cost less or equal than "
+               << input.maxf << endl;
+        }
+      }
+      results.back().proven = true;
+    }
   }
 
   double execution_time = t.stop();
