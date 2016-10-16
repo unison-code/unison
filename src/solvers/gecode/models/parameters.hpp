@@ -476,8 +476,8 @@ public:
   // set of register avoidance hints
   vector<AvoidHint> avoidhints;
 
-  // ordered callee-saved copies
-  vector<operation> callee_saved_copies;
+  // ordered callee-saved store copies
+  vector<operation> callee_saved_stores;
 
   // activation classes
   vector<activation_class> AC;

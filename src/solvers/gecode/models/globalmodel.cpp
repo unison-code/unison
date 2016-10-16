@@ -562,7 +562,7 @@ void GlobalModel::post_different_solution(GlobalModel * g1, bool unsat) {
     }
   }
   if (input->B.size() == 1 && unsat) {
-    for (operation o : input->callee_saved_copies)
+    for (operation o : input->callee_saved_stores)
       lits << var(a(o) == g1->a(o).val());
   }
   if (lits.size() > 0)
@@ -682,7 +682,7 @@ void GlobalModel::post_branchers(void) {
 
 void GlobalModel::post_callee_saved_branchers(void) {
 
-  vector<operation> cs = input->callee_saved_copies;
+  vector<operation> cs = input->callee_saved_stores;
   unsigned int active = (1.0 - af) * cs.size();
 
   BoolVarArgs as1;

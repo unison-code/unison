@@ -80,7 +80,7 @@ void presolve_minimum_consumption(GlobalModel * base) {
 void
 presolve_relaxation(GlobalModel * base, GIST_OPTIONS * go, GIST_OPTIONS * lo) {
   for (operation co : concat({NULL_OPERATION},
-                             base->input->callee_saved_copies)) {
+                             base->input->callee_saved_stores)) {
     for (activation_class ac : concat({NULL_ACTIVATION_CLASS},
                                       base->input->AC)) {
       operation oo = ac == NULL_ACTIVATION_CLASS ? NULL_OPERATION :

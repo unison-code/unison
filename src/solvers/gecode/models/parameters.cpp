@@ -186,7 +186,7 @@ void Parameters::compute_derived() {
   operand_width.clear();
   destroyed.clear();
   avoidhints.clear();
-  callee_saved_copies.clear();
+  callee_saved_stores.clear();
   AC.clear();
   activation_class_instructions.clear();
   activation_class_operations.clear();
@@ -535,7 +535,7 @@ void Parameters::compute_derived() {
       for (operand q : users[single_temp[p]]) {
         operation o = oper[q];
         if (type[o] == COPY && temps[q].size() == 2)
-          callee_saved_copies.push_back(o);
+          callee_saved_stores.push_back(o);
       }
   }
 

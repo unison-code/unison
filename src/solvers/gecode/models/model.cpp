@@ -1647,7 +1647,7 @@ void Model::post_callee_saved_symmetry_breaking_constraints(block b) {
 #if !MCMOD
   if (b == 0) {
     BoolVarArgs as;
-    for (operation o : input->callee_saved_copies) as << a(o);
+    for (operation o : input->callee_saved_stores) as << a(o);
     rel(*this, as, IRT_GQ);
   }
 #else
