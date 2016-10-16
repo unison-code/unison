@@ -187,6 +187,7 @@ void Parameters::compute_derived() {
   destroyed.clear();
   avoidhints.clear();
   callee_saved_stores.clear();
+  callee_saved_loads.clear();
   AC.clear();
   activation_class_instructions.clear();
   activation_class_operations.clear();
@@ -531,12 +532,19 @@ void Parameters::compute_derived() {
   for (vector<int> pa : preassign) {
     operand p = pa[0];
     register_atom a = pa[1];
-    if (oper[p] == 0 && contains(calleesaved, a))
-      for (operand q : users[single_temp[p]]) {
-        operation o = oper[q];
-        if (type[o] == COPY && temps[q].size() == 2)
-          callee_saved_stores.push_back(o);
+    if (contains(calleesaved, a)) {
+      if (type[oper[p]] == IN) {
+        for (operand q : users[single_temp[p]]) {
+          operation o = oper[q];
+          if (type[o] == COPY && temps[q].size() == 2)
+            callee_saved_stores.push_back(o);
+        }
+      } else if (type[oper[p]] == OUT) {
+        operation o = def_opr[temps[p].back()];
+        if (type[o] == COPY)
+          callee_saved_loads.push_back(o);
       }
+    }
   }
 
   set<instruction> emptyiss;

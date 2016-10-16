@@ -479,6 +479,9 @@ public:
   // ordered callee-saved store copies
   vector<operation> callee_saved_stores;
 
+  // ordered callee-saved store loads
+  vector<operation> callee_saved_loads;
+
   // activation classes
   vector<activation_class> AC;
 
