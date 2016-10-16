@@ -95,6 +95,7 @@ public:
   void post_activation_constraints(void);
 
   void post_improved_model_constraints(void);
+  void post_effective_callee_saved_spilling_constraints(void);
 
   void post_presolver_constraints(void);
 

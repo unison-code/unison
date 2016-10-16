@@ -191,8 +191,39 @@ void CompleteModel::post_activation_constraints(void) {
 }
 
 void CompleteModel::post_improved_model_constraints(void) {
+
   for (block b : input->B)
     Model::post_improved_model_constraints(b);
+  post_effective_callee_saved_spilling_constraints();
+
+}
+
+void CompleteModel::post_effective_callee_saved_spilling_constraints(void) {
+
+  // A callee-saved register is spilled iff it is assigned within the function:
+
+  for (operation o : input->callee_saved_stores) {
+    temporary t = input->single_temp[src(o)];
+    operand p = input->definer[t];
+    register_atom fa = input->p_preassign[p],
+                  la = input->p_preassign[p] + input->operand_width[p] - 1;
+    BoolVarArgs rts;
+    for (temporary t : input->T) {
+      operation d = input->def_opr[t];
+      if ((input->type[d] != IN) &&
+          !contains(input->callee_saved_stores, d) &&
+          !contains(input->callee_saved_loads, d)) {
+        for (register_atom ra = fa - input->width[t] + 1; ra <= la; ra++) {
+          BoolVar t_overlap(*this, 0, 1);
+          // For some reason, having l = fa - input->width[t] + 1 and m = la in
+          // the dom constraint does not propagate with domain consistency
+          dom(*this, r(t), ra, ra, t_overlap, IPL_DOM);
+          rts << t_overlap;
+        }
+      }
+    }
+    rel(*this, BOT_OR, rts, a(o), IPL_DOM);
+  }
 }
 
 void CompleteModel::post_presolver_constraints(void) {
