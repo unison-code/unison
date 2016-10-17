@@ -41,6 +41,10 @@
 using namespace std;
 using namespace Gecode;
 
+// Discards ineffective callee-saved copies (that is, copies that cannot be
+// useful)
+void presolve_effective_callee_saved_spilling(GlobalModel * base);
+
 // Updates the lower bound of the cost of each block with the minimum resource
 // consumption added by copies that must be active
 void presolve_minimum_consumption(GlobalModel * base);

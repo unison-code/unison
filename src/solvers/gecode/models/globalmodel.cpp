@@ -543,6 +543,31 @@ void GlobalModel::post_cluster_connection_decision(
     constraint(!x(p));
 }
 
+void GlobalModel::post_effective_callee_saved_spilling(operation o) {
+  // A callee-saved register is spilled iff it is assigned within the function:
+  assert(contains(input->callee_saved_stores, o));
+  temporary t = input->single_temp[src(o)];
+  operand p = input->definer[t];
+  register_atom fa = input->p_preassign[p],
+                la = input->p_preassign[p] + input->operand_width[p] - 1;
+  BoolVarArgs rts;
+  for (temporary t : input->T) {
+    operation d = input->def_opr[t];
+    if ((input->type[d] != IN) &&
+        !contains(input->callee_saved_stores, d) &&
+        !contains(input->callee_saved_loads, d)) {
+      for (register_atom ra = fa - input->width[t] + 1; ra <= la; ra++) {
+        BoolVar t_overlap(*this, 0, 1);
+        // For some reason, having l = fa - input->width[t] + 1 and m = la in
+        // the dom constraint does not propagate with domain consistency
+        dom(*this, r(t), ra, ra, t_overlap, IPL_DOM);
+        rts << t_overlap;
+      }
+    }
+  }
+  rel(*this, BOT_OR, rts, a(o), IPL_DOM);
+}
+
 void GlobalModel::constrain_local_cost(block b, IntRelType irt, int cost) {
   rel(*this, f(b), irt, cost, ipl);
 }

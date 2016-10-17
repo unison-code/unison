@@ -545,6 +545,8 @@ int main(int argc, char* argv[]) {
 
   if (!options.disable_presolving()) {
 
+    presolve_effective_callee_saved_spilling(base);
+
     if (input.optimize_resource != ISSUE_CYCLES)
       presolve_minimum_consumption(base);
 

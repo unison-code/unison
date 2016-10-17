@@ -34,6 +34,28 @@
 
 #include "globalprocedures.hpp"
 
+void presolve_effective_callee_saved_spilling(GlobalModel * base) {
+  if (base->options->verbose())
+    cerr << pre()
+         << "computing effective callee-saved copies..." << endl;
+  for (operation o : base->input->callee_saved_stores) {
+    GlobalModel * g = (GlobalModel*) base->clone();
+    g->post_effective_callee_saved_spilling(o);
+    Gecode::SpaceStatus ss = g->status();
+    assert(ss != SS_FAILED);
+    if (g->a(o).assigned()) {
+      if (g->a(o).val()) {
+        base->post_active_operation(o);
+      } else {
+        base->post_inactive_operation(o);
+      }
+      Gecode::SpaceStatus ss1 = base->status();
+      assert(ss1 != SS_FAILED);
+    }
+    delete g;
+  }
+}
+
 void presolve_minimum_consumption(GlobalModel * base) {
   resource r = base->input->optimize_resource;
   assert(r != ISSUE_CYCLES);

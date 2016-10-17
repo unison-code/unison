@@ -160,6 +160,7 @@ public:
   void post_instruction_nogood(int cost, InstructionAssignment forbidden);
   void post_activation_nogood(operation o, int lb);
   void post_cluster_connection_decision(global_cluster gc, bool connect);
+  void post_effective_callee_saved_spilling(operation o);
   void constrain_local_cost(block b, IntRelType irt, int cost);
 
   void post_different_solution(GlobalModel * g1, bool unsat);
