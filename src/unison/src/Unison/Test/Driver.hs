@@ -100,6 +100,7 @@ runUnison unisonTargets testArgs mirFile =
                    strictlyBetter args,
                    removeReds args,
                    keepNops args,
+                   solverFlags args,
                    mirFile,
                    False,
                    verb,

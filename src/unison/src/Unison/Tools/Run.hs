@@ -16,6 +16,7 @@ import System.IO
 import System.Directory
 import System.Process
 import Control.Monad
+import Data.List.Split
 
 import Unison.Driver
 import qualified Unison.Tools.Import as Import
@@ -29,8 +30,8 @@ import qualified Unison.Tools.Normalize as Normalize
 run (estimateFreq, noCC, noReserved, maxBlockSize, implementFrames, function,
      goal, noCross, oldModel, expandCopies, rematerialize, baseFile, scaleFreq,
      applyBaseFile, tightPressureBound, strictlyBetter, removeReds, keepNops,
-     inFile, debug, verbose, intermediate, lint, outFile, outTemp, presolver,
-     solver)
+     solverFlags, inFile, debug, verbose, intermediate, lint, outFile, outTemp,
+     presolver, solver)
      targetWithOption =
 
   do tmp <- getTemporaryDirectory
@@ -89,12 +90,14 @@ run (estimateFreq, noCC, noReserved, maxBlockSize, implementFrames, function,
         ["-t", "180000", jsonFile])
 
      let outJsonFile = addExtension prefix "out.json"
+         splitFlags  = [flag | flag <- splitOn " " solverFlags, not (null flag)]
          solverPath  = case solver of
                           Just path -> path
                           Nothing -> "gecode-solver"
      maybePutStrLn ("Running '" ++ solverPath ++ "'...")
      callProcess solverPath
-       (["-o", outJsonFile] ++ ["--verbose" | verbose] ++ [extJsonFile])
+       (["-o", outJsonFile] ++ ["--verbose" | verbose] ++ splitFlags ++
+        [extJsonFile])
 
      let unisonMirFile =
            case outFile of

@@ -78,8 +78,8 @@ data Uni =
                baseFile :: Maybe FilePath, scaleFreq :: Bool,
                applyBaseFile :: Bool, tightPressureBound :: Bool,
                strictlyBetter :: Bool, removeReds :: Bool, keepNops :: Bool,
-               outTemp :: Bool, presolver :: Maybe FilePath,
-               solver :: Maybe FilePath}
+               solverFlags :: String, outTemp :: Bool,
+               presolver :: Maybe FilePath, solver :: Maybe FilePath}
     deriving (Data, Typeable, Show, Eq)
 
 allModes = [import', linearize', extend', augment', model', export', analyze',
@@ -189,8 +189,9 @@ plot' = Plot {
   &= help "Plot a Unison function in GraphViz format"
 
 run' = Run {
-  verbose   = False &= name "v" &= help "Run Unison in verbose mode",
-  outTemp   = False &= help "Dump output into temporary file with same prefix as the generated intermediate files",
-  presolver = Nothing &= help "Path to Unison's presolver binary" &= typFile,
-  solver    = Nothing &= help "Path to Unison's solver binary" &= typFile}
+  verbose     = False &= name "v" &= help "Run Unison in verbose mode",
+  solverFlags = "" &= help "Flags to be passed on to the solver",
+  outTemp     = False &= help "Dump output into temporary file with same prefix as the generated intermediate files",
+  presolver   = Nothing &= help "Path to Unison's presolver binary" &= typFile,
+  solver      = Nothing &= help "Path to Unison's solver binary" &= typFile}
   &= help "Run the entire Unison toolchain from 'uni import' to 'uni export'"
