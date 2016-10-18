@@ -134,13 +134,12 @@ maximumCost :: (Eq i, Show i, Read i, Ord r, Show r, Read r, Ord rc, Show rc,
 maximumCost strictlyBetter scaleFreq cf gl (mir, mf) dgs target code =
     let rm     = resourceManager target
         oif    = operandInfo target
-        gl'    = [gl]
         bbs    = map MIR.machineBlockFreq (MIR.mfBlocks mf)
         fbs    = map blockFreq code
         factor = if scaleFreq then scaleFactor (rm, oif, dgs) code else 1.0
         nf     = sort . map (scaleDown factor)
         ([baseCost], _) = Analyze.analyze (False, True, True)
-                          factor gl' mir target
+                          factor [gl] mir target
         baseCost' = baseCost + compensation cf gl (nf fbs) (nf bbs)
         maxCost = if strictlyBetter then baseCost' - 1 else baseCost'
     in maxCost
