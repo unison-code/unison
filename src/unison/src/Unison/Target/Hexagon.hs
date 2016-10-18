@@ -386,9 +386,6 @@ usages i
   | isConstantExtended i =
     let it = SpecsGen.itinerary (nonConstantExtendedInstr i)
     in mergeUsages (itineraryUsage i it) [Usage BundleWidth 1 1]
-  | isNewValueCompareJump i =
-    let it = SpecsGen.itinerary i
-    in mergeUsages (itineraryUsage i it) [Usage BundleWidth 1 1]
   | otherwise = itineraryUsage i $ SpecsGen.itinerary i
 
 itineraryUsage i it
@@ -430,8 +427,6 @@ itineraryUsage i it
     | it `elem` [J_tc_2early_SLOT0123, NoItinerary] = []
 
 itineraryUsage _ it = error ("unmatched: itineraryUsage " ++ show it)
-
-isNewValueCompareJump i = SpecsGen.itinerary i == NCJ_tc_3or4stall_SLOT0
 
 -- | No-operation instruction
 
