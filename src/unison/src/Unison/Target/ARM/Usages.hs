@@ -5,6 +5,7 @@ import Unison
 import Unison.Target.ARM.ARMResourceDecl
 import qualified Unison.Target.ARM.SpecsGen as SpecsGen
 import Unison.Target.ARM.SpecsGen.ARMItineraryDecl
+import Unison.Target.ARM.SpecsGen.ARMInstructionDecl
 
 -- | Declares resource usages of each instruction
 
@@ -12,7 +13,7 @@ usages i =
   let it = SpecsGen.itinerary i
   -- TODO: define instruction size as BundleWidth usage
   in mergeUsages (itineraryUsage i it)
-     [Usage BundleWidth (SpecsGen.size i `div` 2) 1]
+     [Usage BundleWidth (size i) 1]
 
 itineraryUsage _ it
   | it `elem` [NoItinerary] = []
@@ -50,3 +51,10 @@ itineraryUsage _ it
       [Usage V6_Pipe 1 29]
 
 itineraryUsage _ it = error ("unmatched: itineraryUsage " ++ show it)
+
+size T2MOVi32imm = size T2MOVi16 + size T2MOVTi16
+size TPOPcs_free = 0
+size i =
+  case SpecsGen.size i of
+   0 -> error ("size of instruction " ++ show i ++ " is 0")
+   b -> b `div` 2
