@@ -379,10 +379,13 @@ itineraryUsage i it
     | it `elem` [NCJ_tc_3or4stall_SLOT0] && (mayStore i || i == STW_nv) =
       itineraryUsage i LD_tc_ld_SLOT01 ++
       [Usage Slot0 1 1, Usage Store 2 1]
-      -- TODO: think about new-value compare and jump instructions. There cannot
-      -- be any store in the same bundle as slot 0 will be occupied by the
-      -- new-value compare and jump and slot 1 will be occupied by the
-      -- instruction feeding the comparison. How to model this?
+      -- A new-value compare and jump instruction i cannot be issued in parallel
+      -- with stores as slot 0 will be occupied by i and slot 1 will be occupied
+      -- by the instruction feeding i. We model this by saturating the 'Store'
+      -- resource.
+    | it `elem` [NCJ_tc_3or4stall_SLOT0] && (isLinearNewValueCmpJump i) =
+      itineraryUsage i LD_tc_ld_SLOT01 ++
+      [Usage Slot0 1 1, Usage Store 2 1]
     | it `elem` [LD_tc_ld_SLOT0,  ST_tc_3stall_SLOT0, V4LDST_tc_st_SLOT0,
                  NCJ_tc_3or4stall_SLOT0, LD_tc_3or4stall_SLOT0] =
       itineraryUsage i LD_tc_ld_SLOT01 ++ [Usage Slot0 1 1]
