@@ -2563,16 +2563,6 @@ readOp "Y6_l2gcleanpa" = Y6_l2gcleanpa
 readOp "dep_A2_addsat" = Dep_A2_addsat
 readOp "dep_A2_subsat" = Dep_A2_subsat
 readOp "dep_S2_packhl" = Dep_S2_packhl
-readOp "C2_cmpeqi_nv" = C2_cmpeqi_nv
-readOp "C2_cmpeq_nv" = C2_cmpeq_nv
-readOp "C2_cmpgti_nv" = C2_cmpgti_nv
-readOp "C2_cmpgt_nv" = C2_cmpgt_nv
-readOp "C2_cmpgtui_nv" = C2_cmpgtui_nv
-readOp "C2_cmpgtu_nv" = C2_cmpgtu_nv
-readOp "C4_cmplteu_nv" = C4_cmplteu_nv
-readOp "C2_cmpeqp_nv" = C2_cmpeqp_nv
-readOp "J2_jumpf_nv" = J2_jumpf_nv
-readOp "J2_jumpt_nv" = J2_jumpt_nv
 readOp "L2_loadrb_io_fi" = L2_loadrb_io_fi
 readOp "L2_loadrh_io_fi" = L2_loadrh_io_fi
 readOp "L2_loadrd_io_fi" = L2_loadrd_io_fi
@@ -2596,6 +2586,30 @@ readOp "MVW" = MVW
 readOp "MVD" = MVD
 readOp "MVPR" = MVPR
 readOp "MVRP" = MVRP
+readOp "J4_cmpeq_f_jumpnv_t_linear" = J4_cmpeq_f_jumpnv_t_linear
+readOp "J4_cmpeq_t_jumpnv_t_linear" = J4_cmpeq_t_jumpnv_t_linear
+readOp "J4_cmpgt_f_jumpnv_t_linear" = J4_cmpgt_f_jumpnv_t_linear
+readOp "J4_cmpgt_t_jumpnv_t_linear" = J4_cmpgt_t_jumpnv_t_linear
+readOp "J4_cmpgtu_t_jumpnv_t_linear" = J4_cmpgtu_t_jumpnv_t_linear
+readOp "J4_cmpgtu_f_jumpnv_t_linear" = J4_cmpgtu_f_jumpnv_t_linear
+readOp "J4_cmplt_t_jumpnv_t_linear" = J4_cmplt_t_jumpnv_t_linear
+readOp "J4_cmplt_f_jumpnv_t_linear" = J4_cmplt_f_jumpnv_t_linear
+readOp "J4_cmpltu_t_jumpnv_t_linear" = J4_cmpltu_t_jumpnv_t_linear
+readOp "J4_cmpltu_f_jumpnv_t_linear" = J4_cmpltu_f_jumpnv_t_linear
+readOp "J4_cmpeqi_t_jumpnv_t_linear" = J4_cmpeqi_t_jumpnv_t_linear
+readOp "J4_cmpeqi_f_jumpnv_t_linear" = J4_cmpeqi_f_jumpnv_t_linear
+readOp "J4_cmpgti_t_jumpnv_t_linear" = J4_cmpgti_t_jumpnv_t_linear
+readOp "J4_cmpgtui_t_jumpnv_t_linear"
+  = J4_cmpgtui_t_jumpnv_t_linear
+readOp "J4_cmpeqn1_t_jumpnv_t_linear"
+  = J4_cmpeqn1_t_jumpnv_t_linear
+readOp "J4_cmpgtn1_t_jumpnv_t_linear"
+  = J4_cmpgtn1_t_jumpnv_t_linear
+readOp "J2_jumpt_linear" = J2_jumpt_linear
+readOp "J2_jumpf_linear" = J2_jumpf_linear
+readOp "J2_jumpt_nv" = J2_jumpt_nv
+readOp "J2_jumpf_nv" = J2_jumpf_nv
+readOp "jump_merge" = Jump_merge
 readOp "A2_addi_ce" = A2_addi_ce
 readOp "A2_andir_ce" = A2_andir_ce
 readOp "A2_combineii_ce" = A2_combineii_ce
@@ -3608,11 +3622,6 @@ readOp "V6_vrsadubi_128B_ce" = V6_vrsadubi_128B_ce
 readOp "V6_vrsadubi_acc_ce" = V6_vrsadubi_acc_ce
 readOp "V6_vrsadubi_acc_128B_ce" = V6_vrsadubi_acc_128B_ce
 readOp "Y2_dcfetchbo_ce" = Y2_dcfetchbo_ce
-readOp "C2_cmpeqi_nv_ce" = C2_cmpeqi_nv_ce
-readOp "C2_cmpgti_nv_ce" = C2_cmpgti_nv_ce
-readOp "C2_cmpgtui_nv_ce" = C2_cmpgtui_nv_ce
-readOp "J2_jumpf_nv_ce" = J2_jumpf_nv_ce
-readOp "J2_jumpt_nv_ce" = J2_jumpt_nv_ce
 readOp "L2_loadrb_io_fi_ce" = L2_loadrb_io_fi_ce
 readOp "L2_loadrh_io_fi_ce" = L2_loadrh_io_fi_ce
 readOp "L2_loadrd_io_fi_ce" = L2_loadrd_io_fi_ce
@@ -3627,5 +3636,16 @@ readOp "S4_storeiri_io_fi_ce" = S4_storeiri_io_fi_ce
 readOp "S2_storerinew_io_fi_ce" = S2_storerinew_io_fi_ce
 readOp "S2_storerf_io_fi_ce" = S2_storerf_io_fi_ce
 readOp "TFR_FI_fi_ce" = TFR_FI_fi_ce
+readOp "J4_cmpeqi_t_jumpnv_t_linear_ce"
+  = J4_cmpeqi_t_jumpnv_t_linear_ce
+readOp "J4_cmpeqi_f_jumpnv_t_linear_ce"
+  = J4_cmpeqi_f_jumpnv_t_linear_ce
+readOp "J4_cmpgti_t_jumpnv_t_linear_ce"
+  = J4_cmpgti_t_jumpnv_t_linear_ce
+readOp "J4_cmpgtui_t_jumpnv_t_linear_ce"
+  = J4_cmpgtui_t_jumpnv_t_linear_ce
+readOp "J2_jumpt_nv_ce" = J2_jumpt_nv_ce
+readOp "J2_jumpf_nv_ce" = J2_jumpf_nv_ce
+readOp "jump_merge_ce" = Jump_merge_ce
 readOp a = error ("unmatched: readOp " ++ show a)
 

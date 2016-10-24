@@ -45,7 +45,7 @@ extractReturnRegs _ (
   :
   o @ SingleOperation {oOpr = Virtual (Delimiter Out {oOuts = outs})}
   :
-  rest) (ti, _) | Register r1 `elem` outs &&
+  rest) (ti, _, _) | Register r1 `elem` outs &&
                   Register r2 `elem` outs &&
                   Register r3 `elem` outs =
   let t1 = mkTemp ti
@@ -75,7 +75,7 @@ extractReturnRegs _ (
   :
   o @ SingleOperation {oOpr = Virtual (Delimiter Out {oOuts = outs})}
   :
-  rest) (ti, _) | Register r1 `elem` outs &&
+  rest) (ti, _, _) | Register r1 `elem` outs &&
                   Register r2 `elem` outs =
   let t1 = mkTemp ti
       t2 = mkTemp (ti + 1)
@@ -395,9 +395,9 @@ handlePromotedOperands _ (
   o @ SingleOperation {
     oOpr = Natural ni @ (Linear {oIs = is, oDs = [t]})}
   :
-  rest) (_, _) | isTemporary t &&
-                 all (\(TargetInstruction i) -> isCpsrDef i) is &&
-                 isAbstractRegisterClass (regClassOf operandInfo o t) =
+  rest) _ | isTemporary t &&
+            all (\(TargetInstruction i) -> isCpsrDef i) is &&
+            isAbstractRegisterClass (regClassOf operandInfo o t) =
     (
      rest,
      [o {oOpr = Natural ni {oIs = map (\(TargetInstruction i) ->

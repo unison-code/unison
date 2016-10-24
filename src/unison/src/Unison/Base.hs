@@ -88,6 +88,7 @@ module Unison.Base
         OperationTransform,
         BlockTransform,
         FunctionTransform,
+        TransformPhase (..),
         IndexedInstruction (..),
         AnnotatedInstruction,
         GoalDescription (..),
@@ -881,9 +882,9 @@ type OperationTransform i r =
     -- ^ Entire function (context)
     -> [BlockOperation i r]
     -- ^ Input block
-    -> (TemporaryId, OperationId)
-    -- ^ Identifiers not yet used by any temporary or operation in the current
-    -- function
+    -> (TemporaryId, OperationId, MoperandId)
+    -- ^ Identifiers not yet used by any temporary, operation, or operand in the
+    -- current function
     -> ([BlockOperation i r], [BlockOperation i r])
     -- ^ Remaining of the block left to process (first) and transformed
     -- operations (second)
@@ -906,6 +907,17 @@ type FunctionTransform i r =
     -- ^ Input function
     -> Function i r
     -- ^ Transformed function
+
+-- | Phase in which target-specific transformations can be invoked.
+
+data TransformPhase =
+    -- | During import phase, before register lifting
+    ImportPreLift |
+    -- | During import phase, after register lifting
+    ImportPostLift |
+    -- | During augment phase
+    Augment
+    deriving Show
 
 -- | Description of an objective goal to optimize for.
 

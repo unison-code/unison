@@ -38,10 +38,6 @@ operandInfo i
   | i `elem` [A4_tfrcpp] =
     ([TemporaryInfo (RegisterClass CtrRegs64) 0],
      [TemporaryInfo (RegisterClass DoubleRegs) 1])
-  | i `elem` [C2_cmpeqp_nv] =
-    ([TemporaryInfo (RegisterClass DoubleRegs) (-1),
-      TemporaryInfo (RegisterClass DoubleRegs) (-1)],
-     [TemporaryInfo (RegisterClass F32) 1])
   | i `elem` [Y6_l2gcleaninvpa, Y6_l2gcleanpa] =
     ([TemporaryInfo (RegisterClass DoubleRegs) 0], [])
   | i `elem` [A4_tfrpcp] =
@@ -290,17 +286,31 @@ operandInfo i
     ([TemporaryInfo (RegisterClass DoubleRegs) 0, BoundInfo,
       BoundInfo],
      [TemporaryInfo (RegisterClass DoubleRegs) 1])
+  | i `elem` [Jump_merge, Jump_merge_ce] =
+    ([TemporaryInfo (RegisterClass F32) (-1), BlockRefInfo], [])
+  | i `elem`
+      [J4_cmpeqn1_t_jumpnv_t_linear, J4_cmpgtn1_t_jumpnv_t_linear]
+    =
+    ([TemporaryInfo (RegisterClass IntRegs) (-1)],
+     [TemporaryInfo (RegisterClass F32) 1])
   | i `elem` [STW_nv] =
     ([TemporaryInfo (RegisterClass IntRegs) (-1)],
      [TemporaryInfo (InfiniteRegisterClass M32) 1])
-  | i `elem` [C2_cmpeq_nv, C2_cmpgt_nv, C2_cmpgtu_nv, C4_cmplteu_nv]
+  | i `elem`
+      [J4_cmpeq_f_jumpnv_t_linear, J4_cmpeq_t_jumpnv_t_linear,
+       J4_cmpgt_f_jumpnv_t_linear, J4_cmpgt_t_jumpnv_t_linear,
+       J4_cmpgtu_f_jumpnv_t_linear, J4_cmpgtu_t_jumpnv_t_linear,
+       J4_cmplt_f_jumpnv_t_linear, J4_cmplt_t_jumpnv_t_linear,
+       J4_cmpltu_f_jumpnv_t_linear, J4_cmpltu_t_jumpnv_t_linear]
     =
     ([TemporaryInfo (RegisterClass IntRegs) (-1),
       TemporaryInfo (RegisterClass IntRegs) (-1)],
      [TemporaryInfo (RegisterClass F32) 1])
   | i `elem`
-      [C2_cmpeqi_nv, C2_cmpeqi_nv_ce, C2_cmpgti_nv, C2_cmpgti_nv_ce,
-       C2_cmpgtui_nv, C2_cmpgtui_nv_ce]
+      [J4_cmpeqi_f_jumpnv_t_linear, J4_cmpeqi_f_jumpnv_t_linear_ce,
+       J4_cmpeqi_t_jumpnv_t_linear, J4_cmpeqi_t_jumpnv_t_linear_ce,
+       J4_cmpgti_t_jumpnv_t_linear, J4_cmpgti_t_jumpnv_t_linear_ce,
+       J4_cmpgtui_t_jumpnv_t_linear, J4_cmpgtui_t_jumpnv_t_linear_ce]
     =
     ([TemporaryInfo (RegisterClass IntRegs) (-1), BoundInfo],
      [TemporaryInfo (RegisterClass F32) 1])
@@ -1103,6 +1113,12 @@ operandInfo i
   | i `elem` [J4_jumpsetr, J4_jumpsetr_ce] =
     ([TemporaryInfo (RegisterClass IntRegs) 0, BlockRefInfo],
      [TemporaryInfo (RegisterClass IntRegs) 1])
+  | i `elem` [J2_jumpf_linear, J2_jumpt_linear] =
+    ([TemporaryInfo (RegisterClass PredRegs) (-1)],
+     [TemporaryInfo (RegisterClass F32) 1])
+  | i `elem`
+      [J2_jumpf_nv, J2_jumpf_nv_ce, J2_jumpt_nv, J2_jumpt_nv_ce]
+    = ([TemporaryInfo (RegisterClass PredRegs) (-1), BlockRefInfo], [])
   | i `elem`
       [L4_return_f, L4_return_fnew_pnt, L4_return_fnew_pt, L4_return_t,
        L4_return_tnew_pnt, L4_return_tnew_pt]
@@ -2153,9 +2169,6 @@ operandInfo i
     ([TemporaryInfo (RegisterClass VectorRegs128B) 0,
       TemporaryInfo (RegisterClass VectorRegs128B) 0, BoundInfo],
      [TemporaryInfo (RegisterClass VectorRegs128B) 1])
-  | i `elem`
-      [J2_jumpf_nv, J2_jumpf_nv_ce, J2_jumpt_nv, J2_jumpt_nv_ce]
-    = ([TemporaryInfo (RegisterClass F32) (-1), BlockRefInfo], [])
   | i `elem` [LDW] =
     ([TemporaryInfo (InfiniteRegisterClass M32) 0],
      [TemporaryInfo (RegisterClass IntRegs) 1])

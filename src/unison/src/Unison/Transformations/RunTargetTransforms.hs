@@ -9,12 +9,12 @@ Main authors:
 
 This file is part of Unison, see http://unison-code.github.io
 -}
-module Unison.Tools.Import.RunTargetTransforms (runTargetTransforms) where
+module Unison.Transformations.RunTargetTransforms (runTargetTransforms) where
 
 import Unison.Target.API
 
-runTargetTransforms f target =
-    let tfs = transforms target
+runTargetTransforms phase f target =
+    let tfs = transforms target phase
         f'  = foldl applyTransform f tfs
     in f'
 

@@ -226,9 +226,10 @@ data TargetDescription i r rc s = TargetDescription {
       -- in the export phase
       tPostProcess      :: TargetOptions ->
                            [MachineFunction i r -> MachineFunction i r],
-      -- | Target-dependent transformations to be applied in the
-      -- import phase
-      tTransforms       :: TargetOptions -> [FunctionTransform i r],
+      -- | Target-dependent transformations to be applied during the phase given
+      -- by 'TransformPhase'
+      tTransforms       :: TargetOptions -> TransformPhase ->
+                           [FunctionTransform i r],
       -- | Copy instructions to extend the given temporary between the
       -- given definer and users
       tCopies           :: TargetOptions -> FunctionInfo i r rc -> Bool ->

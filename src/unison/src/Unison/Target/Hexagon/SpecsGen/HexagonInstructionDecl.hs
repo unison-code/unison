@@ -2556,16 +2556,6 @@ data HexagonInstruction = A2_abs
                         | Dep_A2_addsat
                         | Dep_A2_subsat
                         | Dep_S2_packhl
-                        | C2_cmpeqi_nv
-                        | C2_cmpeq_nv
-                        | C2_cmpgti_nv
-                        | C2_cmpgt_nv
-                        | C2_cmpgtui_nv
-                        | C2_cmpgtu_nv
-                        | C4_cmplteu_nv
-                        | C2_cmpeqp_nv
-                        | J2_jumpf_nv
-                        | J2_jumpt_nv
                         | L2_loadrb_io_fi
                         | L2_loadrh_io_fi
                         | L2_loadrd_io_fi
@@ -2589,6 +2579,27 @@ data HexagonInstruction = A2_abs
                         | MVD
                         | MVPR
                         | MVRP
+                        | J4_cmpeq_f_jumpnv_t_linear
+                        | J4_cmpeq_t_jumpnv_t_linear
+                        | J4_cmpgt_f_jumpnv_t_linear
+                        | J4_cmpgt_t_jumpnv_t_linear
+                        | J4_cmpgtu_t_jumpnv_t_linear
+                        | J4_cmpgtu_f_jumpnv_t_linear
+                        | J4_cmplt_t_jumpnv_t_linear
+                        | J4_cmplt_f_jumpnv_t_linear
+                        | J4_cmpltu_t_jumpnv_t_linear
+                        | J4_cmpltu_f_jumpnv_t_linear
+                        | J4_cmpeqi_t_jumpnv_t_linear
+                        | J4_cmpeqi_f_jumpnv_t_linear
+                        | J4_cmpgti_t_jumpnv_t_linear
+                        | J4_cmpgtui_t_jumpnv_t_linear
+                        | J4_cmpeqn1_t_jumpnv_t_linear
+                        | J4_cmpgtn1_t_jumpnv_t_linear
+                        | J2_jumpt_linear
+                        | J2_jumpf_linear
+                        | J2_jumpt_nv
+                        | J2_jumpf_nv
+                        | Jump_merge
                         | A2_addi_ce
                         | A2_andir_ce
                         | A2_combineii_ce
@@ -3579,11 +3590,6 @@ data HexagonInstruction = A2_abs
                         | V6_vrsadubi_acc_ce
                         | V6_vrsadubi_acc_128B_ce
                         | Y2_dcfetchbo_ce
-                        | C2_cmpeqi_nv_ce
-                        | C2_cmpgti_nv_ce
-                        | C2_cmpgtui_nv_ce
-                        | J2_jumpf_nv_ce
-                        | J2_jumpt_nv_ce
                         | L2_loadrb_io_fi_ce
                         | L2_loadrh_io_fi_ce
                         | L2_loadrd_io_fi_ce
@@ -3598,5 +3604,12 @@ data HexagonInstruction = A2_abs
                         | S2_storerinew_io_fi_ce
                         | S2_storerf_io_fi_ce
                         | TFR_FI_fi_ce
+                        | J4_cmpeqi_t_jumpnv_t_linear_ce
+                        | J4_cmpeqi_f_jumpnv_t_linear_ce
+                        | J4_cmpgti_t_jumpnv_t_linear_ce
+                        | J4_cmpgtui_t_jumpnv_t_linear_ce
+                        | J2_jumpt_nv_ce
+                        | J2_jumpf_nv_ce
+                        | Jump_merge_ce
                         deriving (Eq, Ord)
 

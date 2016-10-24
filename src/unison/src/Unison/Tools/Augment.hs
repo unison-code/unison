@@ -15,6 +15,7 @@ module Unison.Tools.Augment (run) where
 import System.FilePath
 import Control.Monad
 
+import Unison.Base
 import Unison.Driver
 import Unison.Parser
 import Unison.Tools.Lint (invokeLint)
@@ -25,6 +26,7 @@ import Unison.Transformations.RenameMOperands
 import Unison.Transformations.RenameOperations
 import Unison.Transformations.CleanPragmas
 import Unison.Transformations.AddPragmas
+import Unison.Transformations.RunTargetTransforms
 
 import Unison.Tools.Augment.GeneralizeOperands
 import Unison.Tools.Augment.GeneralizeCongruences
@@ -63,6 +65,7 @@ augmenterTransformations (implementFrames, noCross, oldModel, expandCopies',
      (expandCopies, "expandCopies", expandCopies'),
      (addRematerialization, "addRematerialization", rematerialize),
      (postponeBranches, "postponeBranches", True),
+     (runTargetTransforms Augment, "runTargetTransforms", True),
      (addPrologueEpilogue, "addPrologueEpilogue", implementFrames),
      (cleanAttributes, "cleanAttributes", True),
      (renameTemps, "renameTemps", True),

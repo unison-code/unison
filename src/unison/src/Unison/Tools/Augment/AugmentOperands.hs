@@ -35,7 +35,7 @@ augmentOperandsInBlock atf noCross oldModel b @ Block {bCode = code} =
 
 augmentOperandsInOpr atf noCross oldModel code cg o =
     let o' = mapToEachUse (augmentOperand atf noCross oldModel code cg o) o
-        nf = if oldModel then id else addNullTemp o
+        nf = if oldModel then id else maybeAddNullTemp o
     in mapToEachDef nf o'
 
 augmentOperand atf noCross oldModel code cg o p @ MOperand {altTemps = [t]} =
@@ -53,9 +53,9 @@ augmentOperand atf noCross oldModel code cg o p @ MOperand {altTemps = [t]} =
 
 augmentOperand _ _ _ _ _ _ u = u
 
-addNullTemp o p @ MOperand {altTemps = ts}
+maybeAddNullTemp o p @ MOperand {altTemps = ts}
   | nullable o = p {altTemps = mkNullTemp : ts}
-addNullTemp _ p = p
+maybeAddNullTemp _ p = p
 
 maybeRemoveDeeperThan o cg' =
     case find (isOperationEdge (oId o)) (labEdges cg') of

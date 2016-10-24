@@ -51,6 +51,7 @@ runLint rawArgs f target =
                    (I.noCongruentCopy, noCongruentCopy args),
                    (I.noIsolatedGlobals, noIsolatedGlobals args),
                    (I.uniqueOperationIds, uniqueOperationIds args),
+                   (I.uniqueOperandIds, uniqueOperandIds args),
                    (I.singleEntryBlock, singleEntryBlock args),
                    (I.allEntryOpsPreAssigned, allEntryOpsPreAssigned args),
                    (I.allExitOpsPreAssigned, allExitOpsPreAssigned args),

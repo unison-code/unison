@@ -68,6 +68,7 @@ Library
                    Unison.Transformations.UnbundleSingletons
                    Unison.Transformations.CleanPragmas
                    Unison.Transformations.AddPragmas
+                   Unison.Transformations.RunTargetTransforms
 
                    Unison.Analysis.FrequencyEstimation
                    Unison.Analysis.TemporaryType
@@ -127,7 +128,6 @@ Library
                   Unison.Tools.Import.EnforceCallerSaved
                   Unison.Tools.Import.ExtractCallRegs
                   Unison.Tools.Import.LiftRegs
-                  Unison.Tools.Import.RunTargetTransforms
                   Unison.Tools.Import.ExtractRegs
                   Unison.Tools.Import.ExtractSubRegs
                   Unison.Tools.Import.FoldCopies

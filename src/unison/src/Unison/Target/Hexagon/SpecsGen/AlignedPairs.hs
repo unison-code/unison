@@ -858,11 +858,12 @@ alignedPairs i ([_], [_])
        A2_tfrcrr, A2_tfrp, A2_tfrrcr, A4_tfrcpp, A4_tfrpcp, C2_pxfer_map,
        COPY, COPY_ce, F2_dfimm_n, F2_dfimm_n_ce, F2_dfimm_p,
        F2_dfimm_p_ce, F2_sfimm_n, F2_sfimm_n_ce, F2_sfimm_p,
-       F2_sfimm_p_ce, L2_loadw_locked, L4_loadd_locked, LDD, LDW, MVD,
-       MVW, S2_brev, S2_svsathb, S2_svsathub, S2_vrndpackwh,
-       S2_vrndpackwhs, S2_vsathb, S2_vsathub, S2_vsatwh, S2_vsatwuh,
-       S2_vsplatrb, S2_vsplatrh, S2_vsxtbh, S2_vsxthw, S2_vtrunehb,
-       S2_vtrunohb, S2_vzxtbh, S2_vzxthw, STD, STW, STW_nv]
+       F2_sfimm_p_ce, J2_jumpf_linear, J2_jumpt_linear, L2_loadw_locked,
+       L4_loadd_locked, LDD, LDW, MVD, MVW, S2_brev, S2_svsathb,
+       S2_svsathub, S2_vrndpackwh, S2_vrndpackwhs, S2_vsathb, S2_vsathub,
+       S2_vsatwh, S2_vsatwuh, S2_vsplatrb, S2_vsplatrh, S2_vsxtbh,
+       S2_vsxthw, S2_vtrunehb, S2_vtrunohb, S2_vzxtbh, S2_vzxthw, STD,
+       STW, STW_nv]
     = []
 alignedPairs i ([_, _], [])
   | i `elem`
@@ -874,15 +875,13 @@ alignedPairs i ([_, _], [])
        J2_jump_noextfnewpt, J2_jump_noextfnewpt_ce, J2_jump_noextt,
        J2_jump_noextt_ce, J2_jump_noexttnew, J2_jump_noexttnew_ce,
        J2_jump_noexttnewpt, J2_jump_noexttnewpt_ce, J2_jumpf, J2_jumpf_ce,
-       J2_jumpfnew, J2_jumpfnew_ce, J2_jumpfnewpt, J2_jumpfnewpt_ce,
-       J2_jumprf, J2_jumprfnew, J2_jumprfnewpt, J2_jumprt, J2_jumprtnew,
-       J2_jumprtnewpt, J2_jumpt, J2_jumpt_ce, J2_jumptnew, J2_jumptnew_ce,
-       J2_jumptnewpt, J2_jumptnewpt_ce, JMPretf, JMPretfnew, JMPretfnewpt,
-       JMPrett, JMPrettnew, JMPrettnewpt]
-    = []
-alignedPairs i ([_, _], [])
-  | i `elem`
-      [J2_jumpf_nv, J2_jumpf_nv_ce, J2_jumpt_nv, J2_jumpt_nv_ce]
+       J2_jumpf_nv, J2_jumpf_nv_ce, J2_jumpfnew, J2_jumpfnew_ce,
+       J2_jumpfnewpt, J2_jumpfnewpt_ce, J2_jumprf, J2_jumprfnew,
+       J2_jumprfnewpt, J2_jumprt, J2_jumprtnew, J2_jumprtnewpt, J2_jumpt,
+       J2_jumpt_ce, J2_jumpt_nv, J2_jumpt_nv_ce, J2_jumptnew,
+       J2_jumptnew_ce, J2_jumptnewpt, J2_jumptnewpt_ce, JMPretf,
+       JMPretfnew, JMPretfnewpt, JMPrett, JMPrettnew, JMPrettnewpt,
+       Jump_merge, Jump_merge_ce]
     = []
 alignedPairs i ([_, _], [_])
   | i `elem` [COPY_TO_REGCLASS, COPY_TO_REGCLASS_ce] = []
@@ -905,6 +904,7 @@ alignedPairs i ([_], [_])
        CONST32_Float_Real_ce, CONST64_Float_Real, CONST64_Float_Real_ce,
        HEXAGON_V6_hi, HEXAGON_V6_hi_128B, HEXAGON_V6_lo,
        HEXAGON_V6_lo_128B, HEXAGON_V6_vassignp, HEXAGON_V6_vassignp_128B,
+       J4_cmpeqn1_t_jumpnv_t_linear, J4_cmpgtn1_t_jumpnv_t_linear,
        TFRI64_V4, TFRI64_V4_ce, TFRI_f, TFRI_f_ce, V6_lvsplatw,
        V6_lvsplatw_128B, V6_pred_not, V6_pred_not_128B, V6_pred_scalar2,
        V6_pred_scalar2_128B, V6_vabsh, V6_vabsh_128B, V6_vabsh_sat,
@@ -1064,14 +1064,20 @@ alignedPairs i ([_, _], [_])
   | i `elem`
       [A2_tfrf, A2_tfrfnew, A2_tfrpf, A2_tfrpfnew, A2_tfrpt, A2_tfrptnew,
        A2_tfrt, A2_tfrtnew, A4_cround_rr, A4_round_rr, A4_round_rr_sat,
-       A5_vaddhubs, C2_cmpeq_nv, C2_cmpeqi, C2_cmpeqi_ce, C2_cmpeqi_nv,
-       C2_cmpeqi_nv_ce, C2_cmpeqp_nv, C2_cmpgt_nv, C2_cmpgti,
-       C2_cmpgti_ce, C2_cmpgti_nv, C2_cmpgti_nv_ce, C2_cmpgtu_nv,
-       C2_cmpgtui, C2_cmpgtui_ce, C2_cmpgtui_nv, C2_cmpgtui_nv_ce,
-       C4_cmpltei, C4_cmpltei_ce, C4_cmplteu_nv, C4_cmplteui,
+       A5_vaddhubs, C2_cmpeqi, C2_cmpeqi_ce, C2_cmpgti, C2_cmpgti_ce,
+       C2_cmpgtui, C2_cmpgtui_ce, C4_cmpltei, C4_cmpltei_ce, C4_cmplteui,
        C4_cmplteui_ce, C4_cmpneqi, C4_cmpneqi_ce, F2_dfcmpeq, F2_dfcmpge,
        F2_dfcmpgt, F2_dfcmpuo, F2_sfcmpeq, F2_sfcmpge, F2_sfcmpgt,
-       F2_sfcmpuo, L2_loadrb_io_fi, L2_loadrb_io_fi_ce, L2_loadrd_io_fi,
+       F2_sfcmpuo, J4_cmpeq_f_jumpnv_t_linear, J4_cmpeq_t_jumpnv_t_linear,
+       J4_cmpeqi_f_jumpnv_t_linear, J4_cmpeqi_f_jumpnv_t_linear_ce,
+       J4_cmpeqi_t_jumpnv_t_linear, J4_cmpeqi_t_jumpnv_t_linear_ce,
+       J4_cmpgt_f_jumpnv_t_linear, J4_cmpgt_t_jumpnv_t_linear,
+       J4_cmpgti_t_jumpnv_t_linear, J4_cmpgti_t_jumpnv_t_linear_ce,
+       J4_cmpgtu_f_jumpnv_t_linear, J4_cmpgtu_t_jumpnv_t_linear,
+       J4_cmpgtui_t_jumpnv_t_linear, J4_cmpgtui_t_jumpnv_t_linear_ce,
+       J4_cmplt_f_jumpnv_t_linear, J4_cmplt_t_jumpnv_t_linear,
+       J4_cmpltu_f_jumpnv_t_linear, J4_cmpltu_t_jumpnv_t_linear,
+       L2_loadrb_io_fi, L2_loadrb_io_fi_ce, L2_loadrd_io_fi,
        L2_loadrd_io_fi_ce, L2_loadrh_io_fi, L2_loadrh_io_fi_ce,
        L2_loadri_io_fi, L2_loadri_io_fi_ce, L2_loadrub_io_fi,
        L2_loadrub_io_fi_ce, L2_loadruh_io_fi, L2_loadruh_io_fi_ce,

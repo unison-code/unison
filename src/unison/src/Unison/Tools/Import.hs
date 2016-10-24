@@ -17,6 +17,7 @@ import Data.Maybe
 import System.FilePath
 import Control.Monad
 
+import Unison.Base
 import Unison.Driver
 import Unison.Tools.Lint (invokeLint)
 
@@ -40,6 +41,7 @@ import Unison.Transformations.RenameOperations
 import Unison.Transformations.EstimateFrequency
 import Unison.Transformations.NormalizeFrequency
 import Unison.Transformations.AddPragmas
+import Unison.Transformations.RunTargetTransforms
 
 import Unison.Tools.Import.DropDebugLocations
 import Unison.Tools.Import.NormalizePhis
@@ -55,7 +57,6 @@ import Unison.Tools.Import.AdjustPhiLabels
 import Unison.Tools.Import.SimplifyCombinations
 import Unison.Tools.Import.RemoveUselessVirtuals
 import Unison.Tools.Import.RelocateDefines
-import Unison.Tools.Import.RunTargetTransforms
 import Unison.Tools.Import.ExtractCallRegs
 import Unison.Tools.Import.LiftRegs
 import Unison.Tools.Import.EnforceCallerSaved
@@ -118,10 +119,10 @@ uniTransformations (goal, noCC, noReserved, maxBlockSize, estimateFreq,
      (simplifyCombinations, "simplifyCombinations", True),
      (removeUselessVirtuals, "removeUselessVirtuals", True),
      (relocateDefines, "relocateDefines", True),
-     (runTargetTransforms, "runTargetTransforms", True),
+     (runTargetTransforms ImportPreLift, "runTargetTransforms", True),
      (extractCallRegs, "extractCallRegs", True),
      (liftRegs, "liftRegs", True),
-     (runTargetTransforms, "runTargetTransforms", True),
+     (runTargetTransforms ImportPostLift, "runTargetTransforms", True),
      (enforceCallerSaved, "enforceCallerSaved", not noCC),
      (enforceCalleeSaved, "enforceCalleeSaved", not noCC),
      (reserveRegs, "reserveRegs", not noReserved),

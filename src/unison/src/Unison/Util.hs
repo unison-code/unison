@@ -128,6 +128,8 @@ module Unison.Util
         foldBlock,
         peephole,
         minLiveOfDefs,
+        makeOptional,
+        addNullTemp,
         -- * Accessors
         oAllOperands,
         oUseOperands,
@@ -851,10 +853,26 @@ minLiveOfDefs o
   | isVirtual o = 0
   | otherwise   = 1
 
-peephole :: OperationTransform i r -> FunctionTransform i r
+makeOptional :: BlockOperation i r -> BlockOperation i r
+makeOptional o =
+  let o'  = addNullInstruction o
+      o'' = mapToModelOperand addNullTemp o'
+  in o''
+
+addNullInstruction o
+  | isNatural o = mapToInstructions (\is -> [mkNullInstruction] ++ is) o
+addNullInstruction o @ SingleOperation {oOpr = Virtual opr} =
+  o {oOpr = Virtual (mapToVirtualOprInstructions addNullInstr opr)}
+
+addNullInstr is = [mkNullInstruction] ++ is
+
+addNullTemp :: Operand r -> Operand r
+addNullTemp p @ MOperand {altTemps = ts} = p {altTemps = [mkNullTemp] ++ ts}
+
+peephole :: Eq r => OperationTransform i r -> FunctionTransform i r
 peephole tf f @ Function {fCode = code} =
   let fcode      = flatten code
-      ids        = (newTempIndex fcode, newOprIndex fcode)
+      ids        = (newTempIndex fcode, newOprIndex fcode, newOperIndex fcode)
       (_, code') = foldl (peepholeBlock (tf f)) (ids, []) code
   in f {fCode = code'}
 
@@ -871,10 +889,11 @@ applyPeephole tf rcode tcode ids =
         ids' = updateIndexes ids tcode'
     in applyPeephole tf rest (tcode ++ tcode') ids'
 
-updateIndexes (ti, ii) code =
+updateIndexes (ti, ii, pi) code =
   let ti' = maxIndex ti (newTempIndex code)
       ii' = maxIndex ii (newOprIndex code)
-  in (ti', ii')
+      pi' = maxIndex pi (newOperIndex code)
+  in (ti', ii', pi')
 
 maxIndex id f = max id f + 1
 

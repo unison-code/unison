@@ -495,10 +495,12 @@ removeFrameIndexInstr mi @ MachineSingle {msOpcode = MachineTargetOpc i}
 
 
 -- | Gives a list of function transformers
-transforms = [peephole extractReturnRegs, peephole foldResRegAssignment,
-              peephole cleanResRegCopies,
-              mapToOperationWithGoal addThumbAlternatives,
-              peephole handlePromotedOperands]
+transforms ImportPreLift = [peephole extractReturnRegs,
+                            peephole foldResRegAssignment,
+                            peephole cleanResRegCopies,
+                            mapToOperationWithGoal addThumbAlternatives]
+transforms ImportPostLift = [peephole handlePromotedOperands]
+transforms _ = []
 
 mapToOperationWithGoal t f @ Function {fCode = code, fGoal = Just goal} =
   f {fCode = map (mapToOperationInBlock (t goal)) code}

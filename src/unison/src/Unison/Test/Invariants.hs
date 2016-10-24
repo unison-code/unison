@@ -25,6 +25,7 @@ module Unison.Test.Invariants
      noCongruentCopy,
      noIsolatedGlobals,
      uniqueOperationIds,
+     uniqueOperandIds,
      singleEntryBlock,
      allEntryOpsPreAssigned,
      allExitOpsPreAssigned,
@@ -342,6 +343,17 @@ noIsolatedGlobal sos o =
              (show o ++ " is not present in any congruence tuple"))
 
 uniqueOperationIds f _ =
+    let idFs = M.fromListWith (+)
+               (concat [[(operandId p, 1) | p <- oDefs o ++ oUseOperands o,
+                         isMOperand p] | o <- flatCode f])
+    in testAllElements noRepeatedOperandId (M.toList idFs)
+
+noRepeatedOperandId (_,  1) = Nothing
+noRepeatedOperandId (id, n) =
+    Just (showProblem "uniqueOperandIds"
+         ("there are " ++ show n ++ " operands called p" ++ show id))
+
+uniqueOperandIds f _ =
     let idFs = M.fromListWith (+) [(oId i, 1) | i <- flatCode f]
     in testAllElements noRepeatedId (M.toList idFs)
 

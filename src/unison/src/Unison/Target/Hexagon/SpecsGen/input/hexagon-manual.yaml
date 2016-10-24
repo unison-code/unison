@@ -31,14 +31,6 @@ instruction-set:
         type:            linear
         itinerary:       NCJ_tc_3or4stall_SLOT0
 
-    - instruction-attrs: &nvcmp
-        type:            linear
-        itinerary:       NCJ_tc_3or4stall_SLOT0_NV
-
-    - instruction-attrs: &modelnvcmpj
-        type:            branch
-        itinerary:       J_tc_2early_SLOT23
-
     - instruction-attrs: &i2r
         operands:
           - src:         bound
@@ -205,38 +197,35 @@ instruction-set:
     - instruction-attrs: &mem-write
         affects:         mem
 
+    - instruction-attrs: &linear-jump
+        type:            linear
+        affects:
+
+    - instruction-attrs: &linear-jump-rr
+          operands:
+           - src1:            [register, use, IntRegs, -1]
+           - src2:            [register, use, IntRegs, -1]
+           - dst:             [register, def, F32]
+          uses:               [src1, src2]
+          defines:            [dst]
+
+    - instruction-attrs: &linear-jump-ri
+          operands:
+           - src1:            [register, use, IntRegs, -1]
+           - src2:            bound
+           - dst:             [register, def, F32]
+          uses:               [src1, src2]
+          defines:            [dst]
+
+    - instruction-attrs: &linear-jump-r
+          operands:
+           - src1:            [register, use, IntRegs, -1]
+           - dst:             [register, def, F32]
+          uses:               [src1]
+          defines:            [dst]
+
   - group: MANUAL
     instructions:
-
-      - id:     C2_cmpeqi_nv
-        << :    [*nvcmp, *ri2f]
-
-      - id:     C2_cmpeq_nv
-        << :    [*nvcmp, *rr2f]
-
-      - id:     C2_cmpgti_nv
-        << :    [*nvcmp, *ri2f]
-
-      - id:     C2_cmpgt_nv
-        << :    [*nvcmp, *rr2f]
-
-      - id:     C2_cmpgtui_nv
-        << :    [*nvcmp, *ri2f]
-
-      - id:     C2_cmpgtu_nv
-        << :    [*nvcmp, *rr2f]
-
-      - id:     C4_cmplteu_nv
-        << :    [*nvcmp, *rr2f]
-
-      - id:     C2_cmpeqp_nv
-        << :    [*nvcmp, *dd2f]
-
-      - id:     J2_jumpf_nv
-        << :    [*modelnvcmpj, *fl]
-
-      - id:     J2_jumpt_nv
-        << :    [*modelnvcmpj, *fl]
 
       - id:     L2_loadrb_io_fi
         << :    [*ld, *ii2r, *mem-read]
@@ -311,3 +300,107 @@ instruction-set:
       - id:     MVRP
         parent: C2_tfrrp
         type:   copy
+
+      - id:     J4_cmpeq_f_jumpnv_t_linear
+        parent: J4_cmpeq_f_jumpnv_t
+        << :    [*linear-jump, *linear-jump-rr]
+
+      - id:     J4_cmpeq_t_jumpnv_t_linear
+        parent: J4_cmpeq_t_jumpnv_t
+        << :    [*linear-jump, *linear-jump-rr]
+
+      - id:     J4_cmpgt_f_jumpnv_t_linear
+        parent: J4_cmpgt_f_jumpnv_t
+        << :    [*linear-jump, *linear-jump-rr]
+
+      - id:     J4_cmpgt_t_jumpnv_t_linear
+        parent: J4_cmpgt_t_jumpnv_t
+        << :    [*linear-jump, *linear-jump-rr]
+
+      - id:     J4_cmpgtu_t_jumpnv_t_linear
+        parent: J4_cmpgtu_t_jumpnv_t
+        << :    [*linear-jump, *linear-jump-rr]
+
+      - id:     J4_cmpgtu_f_jumpnv_t_linear
+        parent: J4_cmpgtu_f_jumpnv_t
+        << :    [*linear-jump, *linear-jump-rr]
+
+      - id:     J4_cmplt_t_jumpnv_t_linear
+        parent: J4_cmplt_t_jumpnv_t
+        << :    [*linear-jump, *linear-jump-rr]
+
+      - id:     J4_cmplt_f_jumpnv_t_linear
+        parent: J4_cmplt_f_jumpnv_t
+        << :    [*linear-jump, *linear-jump-rr]
+
+      - id:     J4_cmpltu_t_jumpnv_t_linear
+        parent: J4_cmpltu_t_jumpnv_t
+        << :    [*linear-jump, *linear-jump-rr]
+
+      - id:     J4_cmpltu_f_jumpnv_t_linear
+        parent: J4_cmpltu_f_jumpnv_t
+        << :    [*linear-jump, *linear-jump-rr]
+
+      - id:     J4_cmpeqi_t_jumpnv_t_linear
+        parent: J4_cmpeqi_t_jumpnv_t
+        << :    [*linear-jump, *linear-jump-ri]
+
+      - id:     J4_cmpeqi_f_jumpnv_t_linear
+        parent: J4_cmpeqi_f_jumpnv_t
+        << :    [*linear-jump, *linear-jump-ri]
+
+      - id:     J4_cmpgti_t_jumpnv_t_linear
+        parent: J4_cmpgti_t_jumpnv_t
+        << :    [*linear-jump, *linear-jump-ri]
+
+      - id:     J4_cmpgtui_t_jumpnv_t_linear
+        parent: J4_cmpgtui_t_jumpnv_t
+        << :    [*linear-jump, *linear-jump-ri]
+
+      - id:     J4_cmpeqn1_t_jumpnv_t_linear
+        parent: J4_cmpeqn1_t_jumpnv_t
+        << :    [*linear-jump, *linear-jump-r]
+
+      - id:     J4_cmpgtn1_t_jumpnv_t_linear
+        parent: J4_cmpgtn1_t_jumpnv_t
+        << :    [*linear-jump, *linear-jump-r]
+
+      - id:     J2_jumpt_linear
+        parent: J2_jumpt
+        << :    [*linear-jump]
+        operands:
+         - src:             [register, use, PredRegs, -1]
+         - dst:             [register, def, F32]
+        uses:               [src]
+        defines:            [dst]
+
+      - id:     J2_jumpf_linear
+        parent: J2_jumpf
+        << :    [*linear-jump]
+        operands:
+         - src:             [register, use, PredRegs, -1]
+         - dst:             [register, def, F32]
+        uses:               [src]
+        defines:            [dst]
+
+      - id:     J2_jumpt_nv
+        parent: J2_jumpt
+        operands:
+         - src:             [register, use, PredRegs, -1]
+         - dst:             label
+
+      - id:     J2_jumpf_nv
+        parent: J2_jumpf
+        operands:
+         - src:             [register, use, PredRegs, -1]
+         - dst:             label
+
+      - id:                 jump_merge
+        type:               branch
+        operands:
+         - src:             [register, use, F32, -1]
+         - dst:             label
+        uses:               [src, dst]
+        defines:            []
+        size:               0
+        itinerary:          NoItinerary

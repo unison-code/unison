@@ -75,21 +75,19 @@ parent i
        C2_ccombinewnewf, C2_ccombinewnewt, C2_ccombinewt, C2_cmoveif,
        C2_cmoveif_ce, C2_cmoveit, C2_cmoveit_ce, C2_cmovenewif,
        C2_cmovenewif_ce, C2_cmovenewit, C2_cmovenewit_ce, C2_cmpeq,
-       C2_cmpeq_nv, C2_cmpeqi, C2_cmpeqi_ce, C2_cmpeqi_nv,
-       C2_cmpeqi_nv_ce, C2_cmpeqp, C2_cmpeqp_nv, C2_cmpgei, C2_cmpgei_ce,
-       C2_cmpgeui, C2_cmpgeui_ce, C2_cmpgt, C2_cmpgt_nv, C2_cmpgti,
-       C2_cmpgti_ce, C2_cmpgti_nv, C2_cmpgti_nv_ce, C2_cmpgtp, C2_cmpgtu,
-       C2_cmpgtu_nv, C2_cmpgtui, C2_cmpgtui_ce, C2_cmpgtui_nv,
-       C2_cmpgtui_nv_ce, C2_cmpgtup, C2_mask, C2_mux, C2_muxii,
-       C2_muxii_ce, C2_muxir, C2_muxir_ce, C2_muxri, C2_muxri_ce, C2_not,
-       C2_or, C2_orn, C2_pxfer_map, C2_tfrpr, C2_tfrrp, C2_vitpack,
-       C2_vmux, C2_xor, C4_addipc, C4_addipc_ce, C4_and_and, C4_and_andn,
-       C4_and_or, C4_and_orn, C4_cmplte, C4_cmpltei, C4_cmpltei_ce,
-       C4_cmplteu, C4_cmplteu_nv, C4_cmplteui, C4_cmplteui_ce, C4_cmpneq,
-       C4_cmpneqi, C4_cmpneqi_ce, C4_fastcorner9, C4_fastcorner9_not,
-       C4_nbitsclr, C4_nbitsclri, C4_nbitsclri_ce, C4_nbitsset, C4_or_and,
-       C4_or_andn, C4_or_or, C4_or_orn, CALLRv3nr, CALLv3nr, CALLv3nr_ce,
-       CFI_INSTRUCTION, CFI_INSTRUCTION_ce, CONST32, CONST32_Float_Real,
+       C2_cmpeqi, C2_cmpeqi_ce, C2_cmpeqp, C2_cmpgei, C2_cmpgei_ce,
+       C2_cmpgeui, C2_cmpgeui_ce, C2_cmpgt, C2_cmpgti, C2_cmpgti_ce,
+       C2_cmpgtp, C2_cmpgtu, C2_cmpgtui, C2_cmpgtui_ce, C2_cmpgtup,
+       C2_mask, C2_mux, C2_muxii, C2_muxii_ce, C2_muxir, C2_muxir_ce,
+       C2_muxri, C2_muxri_ce, C2_not, C2_or, C2_orn, C2_pxfer_map,
+       C2_tfrpr, C2_tfrrp, C2_vitpack, C2_vmux, C2_xor, C4_addipc,
+       C4_addipc_ce, C4_and_and, C4_and_andn, C4_and_or, C4_and_orn,
+       C4_cmplte, C4_cmpltei, C4_cmpltei_ce, C4_cmplteu, C4_cmplteui,
+       C4_cmplteui_ce, C4_cmpneq, C4_cmpneqi, C4_cmpneqi_ce,
+       C4_fastcorner9, C4_fastcorner9_not, C4_nbitsclr, C4_nbitsclri,
+       C4_nbitsclri_ce, C4_nbitsset, C4_or_and, C4_or_andn, C4_or_or,
+       C4_or_orn, CALLRv3nr, CALLv3nr, CALLv3nr_ce, CFI_INSTRUCTION,
+       CFI_INSTRUCTION_ce, CONST32, CONST32_Float_Real,
        CONST32_Float_Real_ce, CONST32_Int_Real, CONST32_Int_Real_ce,
        CONST32_ce, CONST64_Float_Real, CONST64_Float_Real_ce,
        CONST64_Int_Real, CONST64_Int_Real_ce, COPY, COPY_TO_REGCLASS,
@@ -132,23 +130,22 @@ parent i
        J2_jump_noextfnew, J2_jump_noextfnew_ce, J2_jump_noextfnewpt,
        J2_jump_noextfnewpt_ce, J2_jump_noextt, J2_jump_noextt_ce,
        J2_jump_noexttnew, J2_jump_noexttnew_ce, J2_jump_noexttnewpt,
-       J2_jump_noexttnewpt_ce, J2_jumpf, J2_jumpf_ce, J2_jumpf_nv,
-       J2_jumpf_nv_ce, J2_jumpfnew, J2_jumpfnew_ce, J2_jumpfnewpt,
-       J2_jumpfnewpt_ce, J2_jumpr, J2_jumprf, J2_jumprfnew,
-       J2_jumprfnewpt, J2_jumprgtez, J2_jumprgtez_ce, J2_jumprgtezpt,
-       J2_jumprgtezpt_ce, J2_jumprltez, J2_jumprltez_ce, J2_jumprltezpt,
-       J2_jumprltezpt_ce, J2_jumprnz, J2_jumprnz_ce, J2_jumprnzpt,
-       J2_jumprnzpt_ce, J2_jumprt, J2_jumprtnew, J2_jumprtnewpt,
-       J2_jumprz, J2_jumprz_ce, J2_jumprzpt, J2_jumprzpt_ce, J2_jumpt,
-       J2_jumpt_ce, J2_jumpt_nv, J2_jumpt_nv_ce, J2_jumptnew,
-       J2_jumptnew_ce, J2_jumptnewpt, J2_jumptnewpt_ce, J2_loop0i,
-       J2_loop0i_ce, J2_loop0iext, J2_loop0iext_ce, J2_loop0r,
-       J2_loop0r_ce, J2_loop0rext, J2_loop0rext_ce, J2_loop1i,
-       J2_loop1i_ce, J2_loop1iext, J2_loop1iext_ce, J2_loop1r,
-       J2_loop1r_ce, J2_loop1rext, J2_loop1rext_ce, J2_ploop1si,
-       J2_ploop1si_ce, J2_ploop1sr, J2_ploop1sr_ce, J2_ploop2si,
-       J2_ploop2si_ce, J2_ploop2sr, J2_ploop2sr_ce, J2_ploop3si,
-       J2_ploop3si_ce, J2_ploop3sr, J2_ploop3sr_ce, J4_cmpeq_f_jumpnv_nt,
+       J2_jump_noexttnewpt_ce, J2_jumpf, J2_jumpf_ce, J2_jumpfnew,
+       J2_jumpfnew_ce, J2_jumpfnewpt, J2_jumpfnewpt_ce, J2_jumpr,
+       J2_jumprf, J2_jumprfnew, J2_jumprfnewpt, J2_jumprgtez,
+       J2_jumprgtez_ce, J2_jumprgtezpt, J2_jumprgtezpt_ce, J2_jumprltez,
+       J2_jumprltez_ce, J2_jumprltezpt, J2_jumprltezpt_ce, J2_jumprnz,
+       J2_jumprnz_ce, J2_jumprnzpt, J2_jumprnzpt_ce, J2_jumprt,
+       J2_jumprtnew, J2_jumprtnewpt, J2_jumprz, J2_jumprz_ce, J2_jumprzpt,
+       J2_jumprzpt_ce, J2_jumpt, J2_jumpt_ce, J2_jumptnew, J2_jumptnew_ce,
+       J2_jumptnewpt, J2_jumptnewpt_ce, J2_loop0i, J2_loop0i_ce,
+       J2_loop0iext, J2_loop0iext_ce, J2_loop0r, J2_loop0r_ce,
+       J2_loop0rext, J2_loop0rext_ce, J2_loop1i, J2_loop1i_ce,
+       J2_loop1iext, J2_loop1iext_ce, J2_loop1r, J2_loop1r_ce,
+       J2_loop1rext, J2_loop1rext_ce, J2_ploop1si, J2_ploop1si_ce,
+       J2_ploop1sr, J2_ploop1sr_ce, J2_ploop2si, J2_ploop2si_ce,
+       J2_ploop2sr, J2_ploop2sr_ce, J2_ploop3si, J2_ploop3si_ce,
+       J2_ploop3sr, J2_ploop3sr_ce, J4_cmpeq_f_jumpnv_nt,
        J4_cmpeq_f_jumpnv_nt_ce, J4_cmpeq_f_jumpnv_t,
        J4_cmpeq_f_jumpnv_t_ce, J4_cmpeq_fp0_jump_nt,
        J4_cmpeq_fp0_jump_nt_ce, J4_cmpeq_fp0_jump_t,
@@ -1071,12 +1068,46 @@ parent i
        Y2_isync, Y2_syncht, Y4_l2fetch, Y4_trace, Y5_l2fetch, Y5_l2gclean,
        Y5_l2gcleaninv, Y5_l2gunlock, Y5_l2locka, Y5_l2unlocka,
        Y6_l2gcleaninvpa, Y6_l2gcleanpa, Dep_A2_addsat, Dep_A2_subsat,
-       Dep_S2_packhl]
+       Dep_S2_packhl, Jump_merge, Jump_merge_ce]
     = Nothing
   | i `elem` [MVW] = Just A2_tfr
   | i `elem` [MVD] = Just A2_tfrp
   | i `elem` [MVPR] = Just C2_tfrpr
   | i `elem` [MVRP] = Just C2_tfrrp
+  | i `elem` [J2_jumpf_linear, J2_jumpf_nv, J2_jumpf_nv_ce] =
+    Just J2_jumpf
+  | i `elem` [J2_jumpt_linear, J2_jumpt_nv, J2_jumpt_nv_ce] =
+    Just J2_jumpt
+  | i `elem` [J4_cmpeq_f_jumpnv_t_linear] = Just J4_cmpeq_f_jumpnv_t
+  | i `elem` [J4_cmpeq_t_jumpnv_t_linear] = Just J4_cmpeq_t_jumpnv_t
+  | i `elem`
+      [J4_cmpeqi_f_jumpnv_t_linear, J4_cmpeqi_f_jumpnv_t_linear_ce]
+    = Just J4_cmpeqi_f_jumpnv_t
+  | i `elem`
+      [J4_cmpeqi_t_jumpnv_t_linear, J4_cmpeqi_t_jumpnv_t_linear_ce]
+    = Just J4_cmpeqi_t_jumpnv_t
+  | i `elem` [J4_cmpeqn1_t_jumpnv_t_linear] =
+    Just J4_cmpeqn1_t_jumpnv_t
+  | i `elem` [J4_cmpgt_f_jumpnv_t_linear] = Just J4_cmpgt_f_jumpnv_t
+  | i `elem` [J4_cmpgt_t_jumpnv_t_linear] = Just J4_cmpgt_t_jumpnv_t
+  | i `elem`
+      [J4_cmpgti_t_jumpnv_t_linear, J4_cmpgti_t_jumpnv_t_linear_ce]
+    = Just J4_cmpgti_t_jumpnv_t
+  | i `elem` [J4_cmpgtn1_t_jumpnv_t_linear] =
+    Just J4_cmpgtn1_t_jumpnv_t
+  | i `elem` [J4_cmpgtu_f_jumpnv_t_linear] =
+    Just J4_cmpgtu_f_jumpnv_t
+  | i `elem` [J4_cmpgtu_t_jumpnv_t_linear] =
+    Just J4_cmpgtu_t_jumpnv_t
+  | i `elem`
+      [J4_cmpgtui_t_jumpnv_t_linear, J4_cmpgtui_t_jumpnv_t_linear_ce]
+    = Just J4_cmpgtui_t_jumpnv_t
+  | i `elem` [J4_cmplt_f_jumpnv_t_linear] = Just J4_cmplt_f_jumpnv_t
+  | i `elem` [J4_cmplt_t_jumpnv_t_linear] = Just J4_cmplt_t_jumpnv_t
+  | i `elem` [J4_cmpltu_f_jumpnv_t_linear] =
+    Just J4_cmpltu_f_jumpnv_t
+  | i `elem` [J4_cmpltu_t_jumpnv_t_linear] =
+    Just J4_cmpltu_t_jumpnv_t
   | i `elem` [S2_storerf_io_fi, S2_storerf_io_fi_ce] =
     Just S2_storerf_io
 

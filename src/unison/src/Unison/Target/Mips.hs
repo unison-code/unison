@@ -259,10 +259,11 @@ serializeDelaySlot MachineBundle {mbInstrs = mis} = mis
 postProcess = []
 
 -- | Gives a list of function transformers
-transforms = [peephole rs2ts,
-              peephole normalizeCallPrologue,
-              peephole normalizeCallEpilogue,
-              peephole extractReturnRegs]
+transforms ImportPreLift = [peephole rs2ts,
+                            peephole normalizeCallPrologue,
+                            peephole normalizeCallEpilogue,
+                            peephole extractReturnRegs]
+transforms _ = []
 
 -- | Latency of read-write dependencies
 

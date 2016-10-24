@@ -77,6 +77,5 @@ data HexagonItinerary = S_2op_tc_2_SLOT23
                       | CVI_VINLANESAT
                       | CVI_VP_VS
                       | ST_tc_3stall_SLOT0
-                      | NCJ_tc_3or4stall_SLOT0_NV
                       deriving (Eq, Read, Show)
 

@@ -24,7 +24,6 @@ import Unison
 import qualified Unison.Target.API as API
 import Unison.Target.RegisterArray
 import Unison.Analysis.TemporaryType
-import Unison.Target.Hexagon.Common
 import Unison.Target.Hexagon.Registers
 import Unison.Target.Hexagon.Transforms
 import Unison.Target.Hexagon.HexagonRegisterDecl
@@ -80,8 +79,6 @@ nonConstantExtendedInstr i = read $ dropSuffix "_ce" (show i)
 
 isConstantExtended :: HexagonInstruction -> Bool
 isConstantExtended i = "_ce" `isSuffixOf` (show i)
-
-dropNVSuffix = dropSuffix "_nv"
 
 -- | Gives the type of natural operation according to the instruction
 
@@ -278,50 +275,16 @@ fromCopyInstr LDD = L2_loadrd_io
 -- instructions with use latency -1... can we do this better? (e.g. via custom
 -- Haskell functions specified in hexagon-manual.yaml).
 operandInfo op
-  -- TODO: complete list with other new-value instructions
-  | op `elem` [J2_jumpf, J2_jumpf_ce, J2_jumpt, J2_jumpt_ce] =
-    ([TemporaryInfo (RegisterClass PredRegs) (-1), BlockRefInfo], [])
   | op `elem`
-      [J2_jumpf_nv, J2_jumpfnew, J2_jumpfnewpt, J2_jumpt_nv, J2_jumptnew,
-       J2_jumptnewpt]
+      [J2_jumpfnew, J2_jumpfnewpt, J2_jumptnew, J2_jumptnewpt]
     = ([TemporaryInfo (RegisterClass F32) (-1), BlockRefInfo], [])
-  | op `elem` [C2_cmpeq_nv, C2_cmpgtu_nv, C2_cmpgt_nv] =
-    ([TemporaryInfo (RegisterClass IntRegs) (-1),
-      TemporaryInfo (RegisterClass IntRegs) (-1)],
-     [TemporaryInfo (RegisterClass F32) 1])
-  | op `elem`
-      [J4_cmpeq_f_jumpnv_nt, J4_cmpeq_f_jumpnv_t,
-       J4_cmpeq_t_jumpnv_nt, J4_cmpeq_t_jumpnv_t,
-       J4_cmpgtu_f_jumpnv_t, J4_cmpgtu_t_jumpnv_nt,
-       J4_cmpgtu_t_jumpnv_t, J4_cmpgt_f_jumpnv_nt,
-       J4_cmpgt_f_jumpnv_t, J4_cmpgt_t_jumpnv_nt,
-       J4_cmpgt_t_jumpnv_t, J4_cmpltu_t_jumpnv_nt,
-       J4_cmpltu_t_jumpnv_t, J4_cmplt_f_jumpnv_nt,
-       J4_cmplt_f_jumpnv_t, J4_cmplt_t_jumpnv_t]
-    =
-    ([TemporaryInfo (RegisterClass IntRegs) (-1),
-      TemporaryInfo (RegisterClass IntRegs) (-1), BlockRefInfo],
-     [])
-  | op `elem`
-      [J4_cmpeqi_f_jumpnv_nt, J4_cmpeqi_f_jumpnv_t,
-       J4_cmpeqi_t_jumpnv_nt, J4_cmpeqi_t_jumpnv_t,
-       J4_cmpgtui_t_jumpnv_nt, J4_cmpgtui_t_jumpnv_t,
-       J4_cmpgti_f_jumpnv_nt, J4_cmpgti_f_jumpnv_t,
-       J4_cmpgti_t_jumpnv_nt, J4_cmpgti_t_jumpnv_t]
-    =
-    ([TemporaryInfo (RegisterClass IntRegs) (-1), BoundInfo,
-      BlockRefInfo],
-     [])
-  | op `elem`
-      [J4_cmpeqn1_f_jumpnv_t, J4_cmpgtn1_f_jumpnv_nt,
-       J4_cmpgtn1_f_jumpnv_t, J4_cmpgtn1_t_jumpnv_t]
-    = ([TemporaryInfo (RegisterClass IntRegs) (-1), BlockRefInfo], [])
   | op `elem` [A2_tfrt, A2_tfrf] =
     ([TemporaryInfo (RegisterClass PredRegs) (-1),
       TemporaryInfo (RegisterClass IntRegs) 0],
      [TemporaryInfo (RegisterClass IntRegs) 1])
   -- New-value stores (the last use of class IntRegs has latency -1)
-  | op `elem` [S2_storerinew_io, S2_storerbnew_io, S2_storerhnew_io] =
+  | op `elem` [S2_storerinew_io, S2_storerbnew_io, S2_storerhnew_io,
+               S2_storerinew_io_ce, S2_storerbnew_io_ce, S2_storerhnew_io_ce] =
     ([TemporaryInfo (RegisterClass IntRegs) 0, BoundInfo,
       TemporaryInfo (RegisterClass IntRegs) (-1)],
      [])
@@ -351,7 +314,8 @@ data HexagonResource =
   Slot2 |
   Slot3 |
   Store |
-  Nvcmp
+  Nvcmp |
+  BlockEnd
   deriving (Eq, Ord, Show, Read)
 
 resources =
@@ -375,13 +339,15 @@ resources =
      -- only be up to two regular stores or a single new-value store per bundle
      Resource Store 2,    -- Used by ST and NVST
 
-     -- Artificial resource to disallow new-value compares to be scheduled in call barrier cycles
-     Resource Nvcmp 1
+     -- Artificial resource to disallow jump merges to be scheduled together
+     -- with (out)-delimiters
+     Resource BlockEnd 1
 
     ]
 
 -- | Declares resource usages of each instruction
 
+usages Jump_merge = [Usage BlockEnd 1 1]
 usages i
   | isConstantExtended i =
     let it = SpecsGen.itinerary (nonConstantExtendedInstr i)
@@ -412,18 +378,16 @@ itineraryUsage i it
     | it `elem` [NCJ_tc_3or4stall_SLOT0] && (mayStore i || i == STW_nv) =
       itineraryUsage i LD_tc_ld_SLOT01 ++
       [Usage Slot0 1 1, Usage Store 2 1]
+      -- TODO: think about new-value compare and jump instructions. There cannot
+      -- be any store in the same bundle as slot 0 will be occupied by the
+      -- new-value compare and jump and slot 1 will be occupied by the
+      -- instruction feeding the comparison. How to model this?
     | it `elem` [LD_tc_ld_SLOT0,  ST_tc_3stall_SLOT0, V4LDST_tc_st_SLOT0,
                  NCJ_tc_3or4stall_SLOT0, LD_tc_3or4stall_SLOT0] =
       itineraryUsage i LD_tc_ld_SLOT01 ++ [Usage Slot0 1 1]
     | it `elem` [ST_tc_st_SLOT0, ST_tc_ld_SLOT0, V2LDST_tc_st_SLOT0] =
       itineraryUsage i LD_tc_ld_SLOT01 ++
       [Usage Slot0 1 1, Usage Store 1 1]
-    | it `elem` [NCJ_tc_3or4stall_SLOT0_NV] =
-      itineraryUsage i LD_tc_ld_SLOT01 ++
-      -- There cannot be any store in the same bundle as slot 0 will be occupied
-      -- by the new-value compare and jump and slot 1 will be occupied by the
-      -- instruction feeding the comparison
-      [Usage Slot0 1 1, Usage Store 2 1, Usage Nvcmp 1 1]
     | it `elem` [J_tc_2early_SLOT0123, NoItinerary] = []
 
 itineraryUsage _ it = error ("unmatched: itineraryUsage " ++ show it)
@@ -493,8 +457,7 @@ isConstExtendedProperty =
 
 -- | Target dependent post-processing functions
 
-postProcess = [constantDeExtend, removeFrameIndex, replaceNVCmpJmps,
-               addImplicitRegs]
+postProcess = [constantDeExtend, removeFrameIndex, addImplicitRegs]
 
 constantDeExtend = mapToTargetMachineInstruction constantDeExtendInstr
 
@@ -538,75 +501,6 @@ removeFrameIndexInstr mi @ MachineSingle {msOpcode = MachineTargetOpc i,
 
 mkMachineRegSP = mkMachineReg hexagonSP
 
-replaceNVCmpJmps mf @ MachineFunction {mfBlocks = mbs} =
-  mf {mfBlocks = map replaceNVCmpJmpsInBlock mbs}
-
-replaceNVCmpJmpsInBlock mb @ MachineBlock {mbInstructions = mis} =
-  mb {mbInstructions = map replaceNVCmpJmpsInBundle mis}
-
-replaceNVCmpJmpsInBundle mb @ MachineBundle {mbInstrs = mbs}
-  -- New-value compare jumps (C2_cmp*_nv + J2_jump?_nv)
-  | any isNVCmp mbs && any isNVJmp mbs =
-    let nvCmpInstr    = fromJust $ find isNVCmp mbs
-        nvJmpInstr    = fromJust $ find isNVJmp mbs
-        nvCmpJmpInstr = mergeNVCmpJmp nvCmpInstr nvJmpInstr
-        mbs'          = filter (not . isNVCmpOrJmp) mbs
-        mbs''         = mbs' ++ [nvCmpJmpInstr]
-    in case mbs'' of
-      [ms] -> ms
-      _    -> mb {mbInstrs = mbs''}
-  -- Dot-new conditional jump with a regular compare (CMP*r? + JMP_?)
-  | any isCmp mbs && any isJmp mbs =
-    let jmpInstr = fromJust $ find isJmp mbs
-        mbs'     = filter (not . isJmp) mbs
-        mbs''    = mbs' ++
-                   [jmpInstr {msOpcode = liftToTOpc toJmpNew
-                                         (msOpcode jmpInstr)}]
-    in mb {mbInstrs = mbs''}
-  -- The bundle may contain a single compare or a single jump, if they are
-  -- new-value lower to non-new value (this is correct since non-new value
-  -- instructions require a subset of the resources)
-  | otherwise =
-        let mbs' = mapIf isNVCmpOrJmp lowerNV mbs
-        in mb {mbInstrs = mbs'}
-
-replaceNVCmpJmpsInBundle ms @ MachineSingle {}
-  | isNVCmpOrJmp ms = lowerNV ms
-  | otherwise = ms
-
-toJmpNew J2_jumpt = J2_jumptnew
-toJmpNew J2_jumpf = J2_jumpfnew
-
-isNVCmpOrJmp ms = isNVCmp ms || isNVJmp ms
-
-mergeNVCmpJmp MachineSingle {msOpcode = MachineTargetOpc nvCmp,
-                             msOperands = [_, r, i]}
-              MachineSingle {msOpcode = MachineTargetOpc nvJmp,
-                             msOperands = [_, l]} =
-  mkMachineSingle (mkMachineTargetOpc $ mergeNVOpcodes nvCmp nvJmp) [] [r, i, l]
-
-mergeNVOpcodes nvCmp nvJmp =
-  let cmp = "J4_" ++
-            (normalNVForm $ dropPrefix "C2_" $ dropNVSuffix (show nvCmp))
-      -- We assume the "taken" hint all the time
-  in read $ cmp ++ "_" ++
-            (if isTrueNVJmp nvJmp then "t" else "f") ++
-            "_jumpnv_t"
-
-normalNVForm "cmplteu" = "cmpltu"
-normalNVForm i = i
-
-isTrueNVJmp J2_jumpt_nv = True
-isTrueNVJmp J2_jumpf_nv = False
-
-lowerNV ms @ MachineSingle {msOpcode = mopc, msOperands = (p:mops)} =
-  let p' = if isFReg p then mkMachineReg P0 else p
-  in ms {msOpcode = liftToTOpc (read . dropNVSuffix . show) mopc,
-         msOperands = p':mops}
-
-isFReg MachineReg {mrName = F0} = True
-isFReg _ = False
-
 mayStore i =
   let ws  = snd (SpecsGen.readWriteInfo i) :: [RWObject HexagonRegister]
       mem = Memory "mem" :: RWObject HexagonRegister
@@ -625,10 +519,11 @@ addImplicitRegsToInstr mi @ MachineSingle {msOpcode = MachineTargetOpc i,
   in mi {msOperands = mos'}
 
 -- | Gives a list of function transformers
-transforms = [peephole extractReturnRegs,
-              peephole foldStackPointerCopy,
-              mapToOperation addAlternativeInstructions,
-              selectNewValueCompareJumps]
+transforms ImportPreLift = [peephole extractReturnRegs,
+                            peephole foldStackPointerCopy,
+                            mapToOperation addAlternativeInstructions]
+transforms Augment = [peephole expandJumps]
+transforms _ = []
 
 -- | Latency of read-write dependencies
 

@@ -55,11 +55,12 @@ data Uni =
                consistentPreAssignments :: Bool, noRedefinitions :: Bool,
                noEdgeInterferences :: Bool, noMustConflicts :: Bool,
                noCongruentCopy :: Bool, noIsolatedGlobals :: Bool,
-               uniqueOperationIds :: Bool, singleEntryBlock :: Bool,
-               allEntryOpsPreAssigned :: Bool, allExitOpsPreAssigned :: Bool,
-               noComponentConflicts :: Bool, noCostOverflow :: Bool,
-               noAmbiguousPhis :: Bool, allResourcesDefined :: Bool,
-               allRegClassesReal :: Bool, noReservedRegRedef :: Bool} |
+               uniqueOperationIds :: Bool, uniqueOperandIds :: Bool,
+               singleEntryBlock :: Bool, allEntryOpsPreAssigned :: Bool,
+               allExitOpsPreAssigned :: Bool, noComponentConflicts :: Bool,
+               noCostOverflow :: Bool, noAmbiguousPhis :: Bool,
+               allResourcesDefined :: Bool, allRegClassesReal :: Bool,
+               noReservedRegRedef :: Bool} |
     Count     {targetName :: String, inFile :: FilePath, targetOption :: [String],
                outFile :: Maybe FilePath, singleRow :: Bool} |
     Legalize  {targetName :: String, inFile :: FilePath, targetOption :: [String],
@@ -157,6 +158,7 @@ lint' = Lint {
   noCongruentCopy          = True,
   noIsolatedGlobals        = True,
   uniqueOperationIds       = True,
+  uniqueOperandIds         = True,
   singleEntryBlock         = True,
   allEntryOpsPreAssigned   = True,
   allExitOpsPreAssigned    = True,

@@ -179,20 +179,6 @@ nullifyOperand t p
 isRealConnection t p @ MOperand {altTemps = ts} =
     t `elem` ts && not (isNullableOperand p)
 
-makeOptional o =
-  let o'  = addNullInstruction o
-      o'' = mapToModelOperand addNullTemp o'
-  in o''
-
-addNullInstruction o
-  | isNatural o = mapToInstructions (\is -> [mkNullInstruction] ++ is) o
-addNullInstruction o @ SingleOperation {oOpr = Virtual opr} =
-  o {oOpr = Virtual (mapToVirtualOprInstructions addNullInstr opr)}
-
-addNullInstr is = [mkNullInstruction] ++ is
-
-addNullTemp p @ MOperand {altTemps = ts} = p {altTemps = [mkNullTemp] ++ ts}
-
 codeOperands f = concatMap oAllOperands (flatCode f)
 
 isSureDefiner t o = any (isSureConnection t) (oDefs o)
