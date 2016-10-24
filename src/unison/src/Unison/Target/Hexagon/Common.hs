@@ -10,7 +10,7 @@ Main authors:
 This file is part of Unison, see http://unison-code.github.io
 -}
 module Unison.Target.Hexagon.Common
-    (isNVJmp, isCmp, isCmpInstr, isJmp, isJmpInstr) where
+    (isNVJmpInstr, isNVJmp, isCmp, isCmpInstr, isJmp, isJmpInstr) where
 
 import MachineIR
 import qualified Unison.Target.Hexagon.SpecsGen as SpecsGen
@@ -19,7 +19,11 @@ import Unison.Target.Hexagon.SpecsGen.HexagonInstructionDecl
 instance Read HexagonInstruction where
   readsPrec _ strOp = [(SpecsGen.readOp strOp, "")]
 
-isNVJmp = isSingleTargetOf [J2_jumpt_nv, J2_jumpf_nv]
+isNVJmpInstr i = i `elem` nvJmpInstrs
+
+isNVJmp = isSingleTargetOf nvJmpInstrs
+
+nvJmpInstrs = [J2_jumpt_nv, J2_jumpf_nv]
 
 isCmp = isSingleTargetOf cmpInstrs
 

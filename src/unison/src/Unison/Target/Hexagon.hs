@@ -26,6 +26,7 @@ import Unison.Target.RegisterArray
 import Unison.Analysis.TemporaryType
 import Unison.Target.Hexagon.Registers
 import Unison.Target.Hexagon.Transforms
+import Unison.Target.Hexagon.Common
 import Unison.Target.Hexagon.HexagonRegisterDecl
 import Unison.Target.Hexagon.HexagonRegisterClassDecl
 import Unison.Target.Hexagon.SpecsGen.HexagonInstructionDecl
@@ -457,7 +458,8 @@ isConstExtendedProperty =
 
 -- | Target dependent post-processing functions
 
-postProcess = [constantDeExtend, removeFrameIndex, addImplicitRegs]
+postProcess = [constantDeExtend, removeFrameIndex, normalizeJumpMerges,
+               normalizeNVJumps, addImplicitRegs]
 
 constantDeExtend = mapToTargetMachineInstruction constantDeExtendInstr
 
@@ -500,6 +502,46 @@ removeFrameIndexInstr mi @ MachineSingle {msOpcode = MachineTargetOpc i,
   | otherwise = mi
 
 mkMachineRegSP = mkMachineReg hexagonSP
+
+normalizeJumpMerges = mapToMachineBlock normalizeJumpMergesInBlock
+
+normalizeJumpMergesInBlock mb @ MachineBlock {mbInstructions = mis} =
+  case find isJumpMerge (concatMap miToList mis) of
+   Just MachineSingle {msOperands = [_, l]} ->
+     let mb1 = filterMachineInstructionsBlock (not . isJumpMerge) mb
+         mb2 = concatMapToMachineInstructionBlock (normalizeLinearJump l) mb1
+     in mb2
+   _ -> mb
+
+isJumpMerge MachineSingle {msOpcode = MachineTargetOpc Jump_merge} = True
+isJumpMerge _ = False
+
+normalizeLinearJump l mi @ MachineSingle {msOpcode = MachineTargetOpc i,
+                                          msOperands = [_, p1, p2]}
+  | isLinearNewValueCmpJump i =
+    [mi {msOpcode = mkMachineTargetOpc $ branchJump i,
+         msOperands = [p1, p2, l]}]
+normalizeLinearJump l mi @ MachineSingle {msOpcode = MachineTargetOpc i,
+                                          msOperands = [_, p1]}
+  | isLinearJump i =
+    [mi {msOpcode = mkMachineTargetOpc $ branchJump i,
+         msOperands = [p1, l]}]
+normalizeLinearJump _ mi = [mi]
+
+isLinearJump i = i `elem` [J2_jumpt_linear, J2_jumpf_linear]
+isLinearNewValueCmpJump i = "_jumpnv_t_linear" `isSuffixOf` (show i)
+
+branchJump jmp = read $ dropSuffix "_linear" (show jmp)
+
+normalizeNVJumps = mapToTargetMachineInstruction normalizeNVJump
+
+normalizeNVJump mi @ MachineSingle {msOpcode = MachineTargetOpc i}
+  | isNVJmpInstr i =
+      mi {msOpcode = mkMachineTargetOpc (externalNewValueJump i)}
+normalizeNVJump mi = mi
+
+externalNewValueJump J2_jumpt_nv = J2_jumptnew
+externalNewValueJump J2_jumpf_nv = J2_jumpfnew
 
 mayStore i =
   let ws  = snd (SpecsGen.readWriteInfo i) :: [RWObject HexagonRegister]
