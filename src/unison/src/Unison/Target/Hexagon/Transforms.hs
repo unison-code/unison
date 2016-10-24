@@ -13,7 +13,6 @@ module Unison.Target.Hexagon.Transforms
     (extractReturnRegs,
      foldStackPointerCopy,
      addAlternativeInstructions,
-     selectNewValueCompareJumps,
      expandJumps) where
 
 import Data.List
@@ -87,40 +86,6 @@ addAlternativeInstructions
   let newIs = map TargetInstruction (alternativeInstructions i)
   in o {oOpr = Natural (ao {oIs = nub (TargetInstruction i : newIs)})}
 addAlternativeInstructions o = o
-
-selectNewValueCompareJumps f @ Function {fCode = code} =
-  f {fCode = map (selectNewValueCompareJumpsInBlock (flatten code)) code}
-
-selectNewValueCompareJumpsInBlock fcode b @ Block {bCode = code} =
-  case find isCmpOpr code of
-    (Just c) ->
-      let t = fromSingleton (oDefs c)
-      in case find isConditionalBranch code of
-        (Just br) | users t fcode == [br] ->
-          let code'  = if isNewValueJumpCandidateOpr c then
-                         mapIf (isIdOf c)  (mapToInstructions addNVInstr) code
-                       else code
-              code'' = mapIf (isIdOf br) (mapToInstructions addNVInstr) code'
-          in b {bCode = code''}
-        _ -> b
-    Nothing -> b
-
-addNVInstr [TargetInstruction i] = map TargetInstruction [toNVInstr i, i]
-
-toNVInstr i = read (show i ++ "_nv")
-
-isCmpOpr = isSingleLinearInstrOf isCmpInstr
-
-isNewValueJumpCandidateOpr = isSingleLinearInstrOf isNewValueJumpCandidateInstr
-
-isSingleLinearInstrOf p SingleOperation {
-  oOpr = Natural Linear {oIs = [TargetInstruction i]}} = p i
-isSingleLinearInstrOf _ _ = False
-
-isConditionalBranch SingleOperation {
-  oOpr = Natural Branch {oBranchIs = [TargetInstruction i]}} =
-  isConditionalBranchInstr i
-isConditionalBranch _ = False
 
 -- See `isNewValueJumpCandidate` in HexagonNewValueJump.cpp
 isNewValueJumpCandidateInstr i =
