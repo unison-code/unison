@@ -114,6 +114,7 @@ sFile =
      ffobjs <- frameObjectLine `endBy` newline
      frameMarkerLine
      fobjs  <- frameObjectLine `endBy` newline
+     sp     <- spOffsetLine
      jumpTableMarkerLine
      jtk    <- option [] (jumpTableKindLine `endBy` newline)
      jtes   <- jumpTableEntryLine `endBy` newline
@@ -121,7 +122,7 @@ sFile =
      sourceMarkerLine
      src    <- sourceLine `endBy` newline
      eof
-     return (comms, name, body, listToMaybe cs, ffobjs, fobjs,
+     return (comms, name, body, listToMaybe cs, ffobjs, fobjs, sp,
              (toKind jtk, jtes), goal, src)
 
 toKind [] = ""
@@ -150,6 +151,7 @@ frameMarkerLine       = lineOf (marker "frame")
 jumpTableMarkerLine   = lineOf (marker "jump-table")
 sourceMarkerLine      = lineOf (marker "source")
 
+spOffsetLine = lineOf spOffset
 goalLine = lineOf goal
 
 goal =
@@ -158,6 +160,13 @@ goal =
      goal <- optionMaybe goalName
      whiteSpace
      return goal
+
+spOffset =
+  do marker "stack-pointer-offset"
+     whiteSpace
+     sp <- decimal
+     whiteSpace
+     return sp
 
 goalName = try speedGoal <|> try sizeGoal
 
@@ -494,13 +503,14 @@ isLsRemat _           = False
 isLsJTBlocks (LsJTBlocks _) = True
 isLsJTBlocks _              = False
 
-toFunction target (cmms, name, body, cs, ffobjs, fobjs, (jtk, jt), goal, src) =
+toFunction target
+  (cmms, name, body, cs, ffobjs, fobjs, sp, (jtk, jt), goal, src) =
   let cms   = [cm | (LsComment cm) <- cmms]
       code  = map (toBB target) (split (dWhen isLsBB) body)
       cs'   = map (mapTuple toOperand) $ fromMaybe [] cs
       goal' = fmap toHLGoal goal
       src'  = concat [l ++ "\n" | l <- src]
-  in mkCompleteFunction cms name code cs' ffobjs fobjs (jtk, jt) goal' src'
+  in mkCompleteFunction cms name code cs' ffobjs fobjs sp (jtk, jt) goal' src'
 
 toBB target (LsBlock l as : code) =
   Block l (toBlockAttributes as) (map (toOperation target) code)

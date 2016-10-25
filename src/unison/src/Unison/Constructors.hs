@@ -139,10 +139,11 @@ mkFrameDestroy id s =
 
 mkFunction = mkCompleteFunction [] ""
 
-mkCompleteFunction comments name code cs ffobjs fobjs jt goal src =
+mkCompleteFunction comments name code cs ffobjs fobjs sp jt goal src =
   Function {fComments = comments, fName = name, fCode = code, fCongruences = cs,
-            fFixedStackFrame = ffobjs, fStackFrame = fobjs, fJumpTable = jt,
-            fGoal = goal, fSource = src}
+            fFixedStackFrame = ffobjs, fStackFrame = fobjs,
+            fStackPointerOffset = sp, fJumpTable = jt, fGoal = goal,
+            fSource = src}
 
 mkBlock = Block
 

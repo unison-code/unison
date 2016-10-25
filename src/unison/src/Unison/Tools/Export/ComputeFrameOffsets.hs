@@ -18,14 +18,21 @@ import MachineIR
 import Unison
 import Unison.Analysis.FrameOffsets
 
--- This pass computes the offsets for the variable ("free") frame objects, and
--- replaces stack size markers by the actual size of the stack.
+-- This pass computes the offsets for the variable ("free") frame objects,
+-- shifts all offsets according to the stack pointer offset, and replaces stack
+-- size markers by the actual size of the stack.
 
 computeFrameOffsets f @ Function {fCode = code, fFixedStackFrame = fobjs,
-                                  fStackFrame = objs} _target =
+                                  fStackFrame = objs,
+                                  fStackPointerOffset = off} _ =
   let (_, objs') = mapAccumL allocateObject (slotSet fobjs) objs
       size       = frameSize (fobjs ++ objs')
       mfsToImm = M.fromList
                  [(mkBound mkMachineFrameSize, mkBound (mkMachineImm size))]
       code'    = mapToOperationInBlocks (applyMapToOperands mfsToImm) code
-  in f {fCode = code', fStackFrame = objs'}
+      fobjs'   = map (reoffset (- off)) fobjs
+      objs''   = map (reoffset (- off)) objs'
+  in f {fCode = code', fFixedStackFrame = fobjs', fStackFrame = objs'',
+        fStackPointerOffset = 0}
+
+reoffset delta fo @ FrameObject {foOffset = off} = fo {foOffset = off + delta}

@@ -146,6 +146,8 @@ data Function i r = Function {
       fFixedStackFrame :: [FrameObject],
       -- | Variable stack frame information
       fStackFrame  :: [FrameObject],
+      -- | Stack pointer offset (default is 0)
+      fStackPointerOffset :: Integer,
       -- | Jump table kind and entries
       fJumpTable   :: (String, [JumpTableEntry]),
       -- | Goal for which the function is to be optimized

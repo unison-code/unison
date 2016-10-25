@@ -19,9 +19,7 @@ import Unison.Analysis.FrameOffsets
 import MachineIR
 
 -- This pass lifts frame objects created by spilling to the list of fixed
--- stack frame objects. TODO: assume that stack grows upwards during all
--- computations and add a pass at the end to direct the stack accordingly
--- to the target.
+-- stack frame objects.
 
 liftFrameObjects f @ Function {fCode = code, fFixedStackFrame = fobjs} _target =
   let mobjs  = nub $ concatMap machineFrameObjects $ flatten code
