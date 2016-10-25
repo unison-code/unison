@@ -25,7 +25,7 @@ import MachineIR
 
 liftFrameObjects f @ Function {fCode = code, fFixedStackFrame = fobjs} _target =
   let mobjs  = nub $ concatMap machineFrameObjects $ flatten code
-      fstIdx = newIndex fobjs
+      fstIdx = newFrameIndex fobjs
       objMap = M.fromList [(mfo, toFrameObject idx mfo) |
                            (idx, mfo) <- zip [fstIdx..] mobjs]
       code'  = mapToOperationInBlocks (toFrameIndexOperand objMap) code
@@ -44,6 +44,3 @@ toFrameIndexOperand = mapToOperandIf always . toFrameIndex
 toFrameIndex objMap (Bound mfo) | isMachineFrameObject mfo =
   mkBound (mkMachineFrameIndex (foIndex (objMap M.! mfo)) True)
 toFrameIndex _ op = op
-
-newIndex []   = 0
-newIndex objs = maximum (map foIndex objs) + 1

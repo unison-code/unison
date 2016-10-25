@@ -23,6 +23,7 @@ import Unison.Parser
 
 import Unison.Transformations.FinalizeOperations
 import Unison.Transformations.UnbundleSingletons
+import Unison.Transformations.RunTargetTransforms
 import MachineIR.Transformations.PrepareForEmission
 
 import Unison.Tools.Export.SelectTemporaries
@@ -102,6 +103,7 @@ synthesizerTransformations (cycles, instructions, registers, temporaries)
     [(assignRegisters tight registers, "assignRegisters", True),
      (selectTemporaries temporaries, "selectTemporaries", True),
      (selectInstructions instructions, "selectInstructions", True),
+     (runTargetTransforms Export, "runTargetTransforms", True),
      (liftFrameObjects, "liftFrameObjects", True),
      (computeFrameOffsets, "computeFrameOffsets", True),
      (directFrame, "directFrame", True),

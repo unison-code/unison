@@ -154,6 +154,7 @@ module Unison.Util
         oRWObjects,
         oActivators,
         foMaybeSize,
+        newFrameIndex,
         -- * Comparators
         alternativeCopies,
         -- * Conversion functions
@@ -1044,6 +1045,10 @@ foMaybeSize fo =
   case foSize fo of
     Just size -> size
     Nothing -> 0
+
+newFrameIndex :: [FrameObject] -> Integer
+newFrameIndex []   = 0
+newFrameIndex objs = maximum (map foIndex objs) + 1
 
 oType :: BlockOperation i r -> OperationT
 oType (SingleOperation {oOpr = inst}) = oOprType inst

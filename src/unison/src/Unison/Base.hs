@@ -916,7 +916,9 @@ data TransformPhase =
     -- | During import phase, after register lifting
     ImportPostLift |
     -- | During augment phase
-    Augment
+    Augment |
+    -- | During export phase
+    Export
     deriving Show
 
 -- | Description of an objective goal to optimize for.
