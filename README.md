@@ -8,20 +8,17 @@ combinatorial optimization.
 
 Unison has the following dependencies:
 [Haskell platform](http://hackage.haskell.org/platform/),
-[Qt](https://www.qt.io/)(version 4.x),
+[Qt](https://www.qt.io/) (version 4.x),
 [Graphviz library](http://www.graphviz.org/), and
-[Gecode](http://www.gecode.org/) (svn revision 14847 or newer).
+[Gecode](http://www.gecode.org/) (version 5.x).
 To get the first three dependencies in Debian-based distributions, just run:
 
 ```
 apt-get install haskell-platform libqt4-dev libgraphviz-dev
 ```
 
-The source of the required Gecode revision can be fetched with:
-
-```
-svn --username anonymous checkout -r14847 https://svn.gecode.org/svn/gecode/trunk
-```
+The required version of Gecode can be downloaded from its
+[website](http://www.gecode.org/download.html).
 
 ## Building
 

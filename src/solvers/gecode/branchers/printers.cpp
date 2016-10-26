@@ -34,7 +34,7 @@
 
 #include "printers.hpp"
 
-void print_cluster_connection_decision(const Space &s, const BrancherHandle&,
+void print_cluster_connection_decision(const Space &s, const Brancher&,
                                        unsigned int alternative,
                                        BoolVar, global_cluster gc, const int&,
                                        std::ostream& out) {
@@ -44,7 +44,7 @@ void print_cluster_connection_decision(const Space &s, const BrancherHandle&,
   out << "x(" << show(ps, ",", "p", "{}") << ")";
 }
 
-void print_cluster_disconnection_decision(const Space &s, const BrancherHandle&,
+void print_cluster_disconnection_decision(const Space &s, const Brancher&,
                                           unsigned int alternative,
                                           BoolVar, global_cluster gc, const int&,
                                           std::ostream& out) {
@@ -54,7 +54,7 @@ void print_cluster_disconnection_decision(const Space &s, const BrancherHandle&,
   out << "x(" << show(ps, ",", "p", "{}") << ")";
 }
 
-void print_allocation_decision(const Space &s, const BrancherHandle&,
+void print_allocation_decision(const Space &s, const Brancher&,
                                unsigned int alternative,
                                SetVar, int g, const int& rs,
                                std::ostream& out) {
@@ -73,7 +73,7 @@ void print_allocation_decision(const Space &s, const BrancherHandle&,
       << " " << m.input->spacename[rs];
 }
 
-void print_activation_decision(const Space &s, const BrancherHandle&,
+void print_activation_decision(const Space &s, const Brancher&,
                                unsigned int alternative,
                                BoolVar, activation_class ac, const int&,
                                std::ostream& out) {
@@ -83,7 +83,7 @@ void print_activation_decision(const Space &s, const BrancherHandle&,
   out << "a(" << show(os, ",", "o", "{}") << ")";
 }
 
-void print_hinted_avoidance_decision(const Space &s, const BrancherHandle&,
+void print_hinted_avoidance_decision(const Space &s, const Brancher&,
                                      unsigned int alternative,
                                      BoolVar, int hi, const int&,
                                      std::ostream& out) {
@@ -99,7 +99,7 @@ void print_hinted_avoidance_decision(const Space &s, const BrancherHandle&,
       << "}";
 }
 
-void print_hinted_assignment_decision(const Space &s, const BrancherHandle&,
+void print_hinted_assignment_decision(const Space &s, const Brancher&,
                                       unsigned int alternative,
                                       BoolVar, int hi, const int&,
                                       std::ostream& out) {
@@ -111,7 +111,7 @@ void print_hinted_assignment_decision(const Space &s, const BrancherHandle&,
       << " " << show_register(ra, m.input->operand_width[p], m.input);
 }
 
-void print_alignment_decision(const Space &s, const BrancherHandle&,
+void print_alignment_decision(const Space &s, const Brancher&,
                               unsigned int alternative,
                               BoolVar, int a, const int&,
                               std::ostream& out) {
@@ -121,7 +121,7 @@ void print_alignment_decision(const Space &s, const BrancherHandle&,
   out << "oa(p" << p << ", p" << q  << ")";
 }
 
-void print_assignment_decision(const Space &s, const BrancherHandle&,
+void print_assignment_decision(const Space &s, const Brancher&,
                                unsigned int alternative,
                                IntVar, int g, const int& ra,
                                std::ostream& out) {
@@ -140,7 +140,7 @@ void print_assignment_decision(const Space &s, const BrancherHandle&,
       << " " << show_register(ra, m.input->operand_width[fp], m.input);
 }
 
-void print_inactive_decision(const Space &s, const BrancherHandle&,
+void print_inactive_decision(const Space &s, const Brancher&,
                              unsigned int alternative,
                              BoolVar, int oi, const int&,
                              std::ostream& out) {
@@ -150,14 +150,14 @@ void print_inactive_decision(const Space &s, const BrancherHandle&,
   out << "a(o" << o << ")";
 }
 
-void print_active_decision(const Space &s, const BrancherHandle& bh,
+void print_active_decision(const Space &s, const Brancher& bh,
                            unsigned int alternative,
                            BoolVar b, int oi, const int& v,
                            std::ostream& out) {
   print_inactive_decision(s, bh, !alternative, b, oi, v, out);
 }
 
-void print_global_inactive_decision(const Space &, const BrancherHandle&,
+void print_global_inactive_decision(const Space &, const Brancher&,
                                     unsigned int alternative,
                                     BoolVar, operation o, const int&,
                                     std::ostream& out) {
@@ -165,7 +165,7 @@ void print_global_inactive_decision(const Space &, const BrancherHandle&,
   out << "a(o" << o << ")";
 }
 
-void print_instruction_decision(const Space &s, const BrancherHandle&,
+void print_instruction_decision(const Space &s, const Brancher&,
                               unsigned int alternative,
                               IntVar, int oi, const int& ii,
                               std::ostream& out) {
@@ -176,7 +176,7 @@ void print_instruction_decision(const Space &s, const BrancherHandle&,
       << " " << m.input->insname[m.input->instructions[o][ii]];
 }
 
-void print_global_instruction_decision(const Space &s, const BrancherHandle&,
+void print_global_instruction_decision(const Space &s, const Brancher&,
                                        unsigned int alternative,
                                        IntVar, operation o, const int& ii,
                                        std::ostream& out) {
@@ -186,7 +186,7 @@ void print_global_instruction_decision(const Space &s, const BrancherHandle&,
       << " " << m.input->insname[m.input->instructions[o][ii]];
 }
 
-void print_temporary_decision(const Space &s, const BrancherHandle&,
+void print_temporary_decision(const Space &s, const Brancher&,
                               unsigned int alternative,
                               IntVar, int pi, const int& ti,
                               std::ostream& out) {
@@ -197,7 +197,7 @@ void print_temporary_decision(const Space &s, const BrancherHandle&,
       << "t" << m.input->temps[p][ti];
 }
 
-void print_global_temporary_decision(const Space &s, const BrancherHandle&,
+void print_global_temporary_decision(const Space &s, const Brancher&,
                                      unsigned int alternative,
                                      IntVar, operand p, const int& ti,
                                      std::ostream& out) {
@@ -207,7 +207,7 @@ void print_global_temporary_decision(const Space &s, const BrancherHandle&,
       << "t" << m.input->temps[p][ti];
 }
 
-void print_register_decision(const Space &s, const BrancherHandle&,
+void print_register_decision(const Space &s, const Brancher&,
                              unsigned int alternative,
                              IntVar, int ti, const int& ra,
                              std::ostream& out) {
@@ -218,7 +218,7 @@ void print_register_decision(const Space &s, const BrancherHandle&,
       << " " << show_register(ra, m.input->width[t], m.input);
 }
 
-void print_global_register_decision(const Space &s, const BrancherHandle&,
+void print_global_register_decision(const Space &s, const Brancher&,
                                     unsigned int alternative,
                                     IntVar, temporary t, const int& ra,
                                     std::ostream& out) {
@@ -228,7 +228,7 @@ void print_global_register_decision(const Space &s, const BrancherHandle&,
       << " " << show_register(ra, m.input->width[t], m.input);
 }
 
-void print_cycle_decision(const Space &s, const BrancherHandle&,
+void print_cycle_decision(const Space &s, const Brancher&,
                           unsigned int alternative,
                           IntVar, int oi, const int& c,
                           std::ostream& out) {
@@ -239,7 +239,7 @@ void print_cycle_decision(const Space &s, const BrancherHandle&,
       << " " << c;
 }
 
-void print_global_cycle_decision(const Space &, const BrancherHandle&,
+void print_global_cycle_decision(const Space &, const Brancher&,
                                  unsigned int alternative,
                                  IntVar, operation o, const int& c,
                                  std::ostream& out) {
@@ -248,7 +248,7 @@ void print_global_cycle_decision(const Space &, const BrancherHandle&,
       << " " << c;
 }
 
-void print_cost_decision(const Space &s, const BrancherHandle&,
+void print_cost_decision(const Space &s, const Brancher&,
                          unsigned int alternative,
                          IntVar, int, const int& c,
                          std::ostream& out) {
@@ -258,7 +258,7 @@ void print_cost_decision(const Space &s, const BrancherHandle&,
       << " " << c;
 }
 
-void print_global_cost_decision(const Space &, const BrancherHandle&,
+void print_global_cost_decision(const Space &, const Brancher&,
                                 unsigned int alternative,
                                 IntVar, int, const int& c,
                                 std::ostream& out) {
