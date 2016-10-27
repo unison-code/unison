@@ -567,7 +567,7 @@ addImplicitRegsToInstr mi @ MachineSingle {msOpcode = MachineTargetOpc i,
 transforms ImportPreLift = [peephole extractReturnRegs,
                             peephole foldStackPointerCopy,
                             mapToOperation addAlternativeInstructions]
-transforms Augment = [peephole expandJumps]
+transforms AugmentPreRW = [peephole expandJumps]
 transforms _ = []
 
 -- | Latency of read-write dependencies

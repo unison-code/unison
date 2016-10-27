@@ -917,8 +917,10 @@ data TransformPhase =
     ImportPreLift |
     -- | During import phase, after register lifting
     ImportPostLift |
-    -- | During augment phase
-    Augment |
+    -- | During augment phase, before adding read/write objects
+    AugmentPreRW |
+    -- | During augment phase, after adding read/write objects
+    AugmentPostRW |
     -- | During export phase
     Export
     deriving Show
