@@ -46,7 +46,7 @@ install:
   - cd src && make prepare-unison && cd -
   - wget http://www.gecode.org/download/gecode-5.0.0.tar.gz
   - tar -zxf gecode-5.0.0.tar.gz
-  - cd gecode-5.0.0 && ./configure --disable-examples --disable-gist --disable-float --disable-flatzinc && make && sudo make install && cd -
+  - cd gecode-5.0.0 && ./configure --disable-examples --disable-float --disable-flatzinc && make && sudo make install && cd -
   - export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib
 
 # Build and test Unison
