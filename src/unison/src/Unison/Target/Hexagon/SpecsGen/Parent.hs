@@ -1091,6 +1091,9 @@ parent i
   | i `elem` [J4_cmpgt_f_jumpnv_t_linear] = Just J4_cmpgt_f_jumpnv_t
   | i `elem` [J4_cmpgt_t_jumpnv_t_linear] = Just J4_cmpgt_t_jumpnv_t
   | i `elem`
+      [J4_cmpgti_f_jumpnv_t_linear, J4_cmpgti_f_jumpnv_t_linear_ce]
+    = Just J4_cmpgti_f_jumpnv_t
+  | i `elem`
       [J4_cmpgti_t_jumpnv_t_linear, J4_cmpgti_t_jumpnv_t_linear_ce]
     = Just J4_cmpgti_t_jumpnv_t
   | i `elem` [J4_cmpgtn1_t_jumpnv_t_linear] =

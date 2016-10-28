@@ -309,6 +309,7 @@ operandInfo i
   | i `elem`
       [J4_cmpeqi_f_jumpnv_t_linear, J4_cmpeqi_f_jumpnv_t_linear_ce,
        J4_cmpeqi_t_jumpnv_t_linear, J4_cmpeqi_t_jumpnv_t_linear_ce,
+       J4_cmpgti_f_jumpnv_t_linear, J4_cmpgti_f_jumpnv_t_linear_ce,
        J4_cmpgti_t_jumpnv_t_linear, J4_cmpgti_t_jumpnv_t_linear_ce,
        J4_cmpgtui_t_jumpnv_t_linear, J4_cmpgtui_t_jumpnv_t_linear_ce]
     =

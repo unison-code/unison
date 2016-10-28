@@ -787,6 +787,7 @@ itinerary i
        J4_cmpgt_t_jumpnv_t_ce, J4_cmpgt_t_jumpnv_t_linear,
        J4_cmpgti_f_jumpnv_nt, J4_cmpgti_f_jumpnv_nt_ce,
        J4_cmpgti_f_jumpnv_t, J4_cmpgti_f_jumpnv_t_ce,
+       J4_cmpgti_f_jumpnv_t_linear, J4_cmpgti_f_jumpnv_t_linear_ce,
        J4_cmpgti_t_jumpnv_nt, J4_cmpgti_t_jumpnv_nt_ce,
        J4_cmpgti_t_jumpnv_t, J4_cmpgti_t_jumpnv_t_ce,
        J4_cmpgti_t_jumpnv_t_linear, J4_cmpgti_t_jumpnv_t_linear_ce,

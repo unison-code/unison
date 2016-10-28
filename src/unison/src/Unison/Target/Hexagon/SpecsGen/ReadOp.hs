@@ -2599,6 +2599,7 @@ readOp "J4_cmpltu_f_jumpnv_t_linear" = J4_cmpltu_f_jumpnv_t_linear
 readOp "J4_cmpeqi_t_jumpnv_t_linear" = J4_cmpeqi_t_jumpnv_t_linear
 readOp "J4_cmpeqi_f_jumpnv_t_linear" = J4_cmpeqi_f_jumpnv_t_linear
 readOp "J4_cmpgti_t_jumpnv_t_linear" = J4_cmpgti_t_jumpnv_t_linear
+readOp "J4_cmpgti_f_jumpnv_t_linear" = J4_cmpgti_f_jumpnv_t_linear
 readOp "J4_cmpgtui_t_jumpnv_t_linear"
   = J4_cmpgtui_t_jumpnv_t_linear
 readOp "J4_cmpeqn1_t_jumpnv_t_linear"
@@ -3642,6 +3643,8 @@ readOp "J4_cmpeqi_f_jumpnv_t_linear_ce"
   = J4_cmpeqi_f_jumpnv_t_linear_ce
 readOp "J4_cmpgti_t_jumpnv_t_linear_ce"
   = J4_cmpgti_t_jumpnv_t_linear_ce
+readOp "J4_cmpgti_f_jumpnv_t_linear_ce"
+  = J4_cmpgti_f_jumpnv_t_linear_ce
 readOp "J4_cmpgtui_t_jumpnv_t_linear_ce"
   = J4_cmpgtui_t_jumpnv_t_linear_ce
 readOp "J2_jumpt_nv_ce" = J2_jumpt_nv_ce
