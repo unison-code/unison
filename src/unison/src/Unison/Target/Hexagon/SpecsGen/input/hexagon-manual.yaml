@@ -361,6 +361,10 @@ instruction-set:
         parent: J4_cmpgtui_t_jumpnv_t
         << :    [*linear-jump, *linear-jump-ri]
 
+      - id:     J4_cmpgtui_f_jumpnv_t_linear
+        parent: J4_cmpgtui_f_jumpnv_t
+        << :    [*linear-jump, *linear-jump-ri]
+
       - id:     J4_cmpeqn1_t_jumpnv_t_linear
         parent: J4_cmpeqn1_t_jumpnv_t
         << :    [*linear-jump, *linear-jump-r]

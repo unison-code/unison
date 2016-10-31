@@ -257,6 +257,7 @@ size i
        J4_cmpgtu_tp1_jump_t, J4_cmpgtu_tp1_jump_t_ce,
        J4_cmpgtui_f_jumpnv_nt, J4_cmpgtui_f_jumpnv_nt_ce,
        J4_cmpgtui_f_jumpnv_t, J4_cmpgtui_f_jumpnv_t_ce,
+       J4_cmpgtui_f_jumpnv_t_linear, J4_cmpgtui_f_jumpnv_t_linear_ce,
        J4_cmpgtui_fp0_jump_nt, J4_cmpgtui_fp0_jump_nt_ce,
        J4_cmpgtui_fp0_jump_t, J4_cmpgtui_fp0_jump_t_ce,
        J4_cmpgtui_fp1_jump_nt, J4_cmpgtui_fp1_jump_nt_ce,

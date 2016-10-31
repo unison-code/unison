@@ -1103,6 +1103,9 @@ parent i
   | i `elem` [J4_cmpgtu_t_jumpnv_t_linear] =
     Just J4_cmpgtu_t_jumpnv_t
   | i `elem`
+      [J4_cmpgtui_f_jumpnv_t_linear, J4_cmpgtui_f_jumpnv_t_linear_ce]
+    = Just J4_cmpgtui_f_jumpnv_t
+  | i `elem`
       [J4_cmpgtui_t_jumpnv_t_linear, J4_cmpgtui_t_jumpnv_t_linear_ce]
     = Just J4_cmpgtui_t_jumpnv_t
   | i `elem` [J4_cmplt_f_jumpnv_t_linear] = Just J4_cmplt_f_jumpnv_t

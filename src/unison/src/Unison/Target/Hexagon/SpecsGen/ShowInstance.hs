@@ -2600,6 +2600,7 @@ instance Show HexagonInstruction where
         show J4_cmpgti_t_jumpnv_t_linear = "J4_cmpgti_t_jumpnv_t_linear"
         show J4_cmpgti_f_jumpnv_t_linear = "J4_cmpgti_f_jumpnv_t_linear"
         show J4_cmpgtui_t_jumpnv_t_linear = "J4_cmpgtui_t_jumpnv_t_linear"
+        show J4_cmpgtui_f_jumpnv_t_linear = "J4_cmpgtui_f_jumpnv_t_linear"
         show J4_cmpeqn1_t_jumpnv_t_linear = "J4_cmpeqn1_t_jumpnv_t_linear"
         show J4_cmpgtn1_t_jumpnv_t_linear = "J4_cmpgtn1_t_jumpnv_t_linear"
         show J2_jumpt_linear = "J2_jumpt_linear"
@@ -3635,6 +3636,8 @@ instance Show HexagonInstruction where
           = "J4_cmpgti_f_jumpnv_t_linear_ce"
         show J4_cmpgtui_t_jumpnv_t_linear_ce
           = "J4_cmpgtui_t_jumpnv_t_linear_ce"
+        show J4_cmpgtui_f_jumpnv_t_linear_ce
+          = "J4_cmpgtui_f_jumpnv_t_linear_ce"
         show J2_jumpt_nv_ce = "J2_jumpt_nv_ce"
         show J2_jumpf_nv_ce = "J2_jumpf_nv_ce"
         show Jump_merge_ce = "jump_merge_ce"
