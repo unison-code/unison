@@ -46,11 +46,11 @@ cache:
 install:
   - sudo apt-get -qq update
   - sudo apt-get install -y expect haskell-platform g++ libqt4-dev libgraphviz-dev
-  - cabal update
-  - cd src && make prepare-unison && cd -
-  - if test ! -d gecode-5.0.0; then ./.travis/download-build-gecode.sh; fi
+  - if [ ! -e gecode-5.0.0/Makefile ]; then ./.travis/download-build-gecode.sh; fi
   - cd gecode-5.0.0 && sudo make install && cd -
   - export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib
+  - cabal update
+  - cd src && make prepare-unison && cd -
 
 # Build and test Unison
 
