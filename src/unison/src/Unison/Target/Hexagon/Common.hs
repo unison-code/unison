@@ -10,7 +10,10 @@ Main authors:
 This file is part of Unison, see http://unison-code.github.io
 -}
 module Unison.Target.Hexagon.Common
-    (isNVJmpInstr, isNVJmp, isCmp, isCmpInstr, isJmp, isJmpInstr) where
+    (isNVJmpInstr, isNVJmp, isCmp, isCmpInstr, isJmp, isJmpInstr,
+     isLinearJump, isLinearNewValueCmpJump) where
+
+import Data.List
 
 import MachineIR
 import qualified Unison.Target.Hexagon.SpecsGen as SpecsGen
@@ -42,3 +45,6 @@ jmpInstrs = [J2_jumpt, J2_jumpf]
 
 isSingleTargetOf is ms =
     isMachineTarget ms && mopcTarget (msOpcode ms) `elem` is
+
+isLinearJump i = i `elem` [J2_jumpt_linear, J2_jumpf_linear]
+isLinearNewValueCmpJump i = "_jumpnv_t_linear" `isSuffixOf` (show i)

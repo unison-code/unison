@@ -531,9 +531,6 @@ normalizeLinearJump l mi @ MachineSingle {msOpcode = MachineTargetOpc i,
          msOperands = [p1, l]}]
 normalizeLinearJump _ mi = [mi]
 
-isLinearJump i = i `elem` [J2_jumpt_linear, J2_jumpf_linear]
-isLinearNewValueCmpJump i = "_jumpnv_t_linear" `isSuffixOf` (show i)
-
 branchJump jmp = read $ dropSuffix "_linear" (show jmp)
 
 normalizeNVJumps = mapToTargetMachineInstruction normalizeNVJump
@@ -568,11 +565,14 @@ transforms ImportPreLift = [peephole extractReturnRegs,
                             peephole foldStackPointerCopy,
                             mapToOperation addAlternativeInstructions]
 transforms AugmentPreRW = [peephole expandJumps]
+transforms AugmentPostRW = [mapToOperation addControlBarrier]
 transforms _ = []
 
 -- | Latency of read-write dependencies
 
 readWriteLatency _ (_, Read) (_, Write) = 0
+-- This is so that linear jumps and merge jumps can be scheduled in parallel
+readWriteLatency ControlSideEffect (_, Write) (_, Write) = 0
 readWriteLatency _ ((_, VirtualType (DelimiterType InType)), _) (_, _) = 1
 readWriteLatency _ ((_, VirtualType FunType), _) (_, _) = 1
 readWriteLatency _ ((_, VirtualType _), _) (_, _) = 0

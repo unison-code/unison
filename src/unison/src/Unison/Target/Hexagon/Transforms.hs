@@ -13,7 +13,8 @@ module Unison.Target.Hexagon.Transforms
     (extractReturnRegs,
      foldStackPointerCopy,
      addAlternativeInstructions,
-     expandJumps) where
+     expandJumps,
+     addControlBarrier) where
 
 import Data.List
 import Data.Maybe
@@ -187,6 +188,14 @@ isTrueJump J2_jumpt = True
 isTrueJump J2_jumpf = False
 
 mkMOp id ts = mkMOperand id ts Nothing
+
+addControlBarrier o @ SingleOperation {oOpr = Natural Linear {oIs = is},
+                                       oAs = as} =
+  let is' = [i | TargetInstruction i <- is]
+  in if any (\i -> isLinearJump i || isLinearNewValueCmpJump i) is' then
+       o {oAs = as {aReads = [], aWrites = [ControlSideEffect]}}
+     else o
+addControlBarrier o = o
 
 -- | Gives alternative instructions with the same semantics
 
