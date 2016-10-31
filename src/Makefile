@@ -111,13 +111,19 @@ prepare-specsgen:
 install-specsgen:
 	cp $(UNISONSPECSGENDIR)/dist/build/specsgen/specsgen $(BINDIR)
 
-run-specsgen:
+run-specsgen: run-specsgen-hexagon run-specsgen-mips run-specsgen-arm
+
+run-specsgen-hexagon:
 	specsgen --targetname=Hexagon $(SGHEXAGONINPUTYAML) $(SGHEXAGONAUXYAML) \
 	         --outputdir=$(SGHEXAGONROOTDIR) \
 	         --constantextend --infiniteregclass m32 --infiniteregclass m64
+
+run-specsgen-mips:
 	specsgen --targetname=Mips $(SGMIPSINPUTYAML) $(SGMIPSAUXYAML) \
 	         --outputdir=$(SGMIPSROOTDIR) \
 	         --infiniteregclass m32 --infiniteregclass m64
+
+run-specsgen-arm:
 	specsgen --targetname=ARM $(SGARMINPUTYAML) $(SGARMAUXYAML) \
 	         --outputdir=$(SGARMROOTDIR) \
 	         --regclass p2:CCR --infiniteregclass M32 --infiniteregclass M32t \
