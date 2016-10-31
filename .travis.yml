@@ -37,6 +37,10 @@ language: c
 dist: trusty
 sudo: required
 
+cache:
+  directories:
+  - gecode-5.0.0
+
 # Install prerequisities
 
 install:
@@ -44,9 +48,8 @@ install:
   - sudo apt-get install -y expect haskell-platform g++ libqt4-dev libgraphviz-dev
   - cabal update
   - cd src && make prepare-unison && cd -
-  - wget http://www.gecode.org/download/gecode-5.0.0.tar.gz
-  - tar -zxf gecode-5.0.0.tar.gz
-  - cd gecode-5.0.0 && ./configure --disable-examples --disable-float --disable-flatzinc && make && sudo make install && cd -
+  - if test ! -d gecode-5.0.0; then ./.travis/download-build-gecode.sh; fi
+  - cd gecode-5.0.0 && sudo make install && cd -
   - export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib
 
 # Build and test Unison
