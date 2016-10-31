@@ -1606,10 +1606,8 @@ void Model::post_active_first_copy_constraints(block b) {
             BoolVar rtp_in_o2_atoms(*this, 0, 1);
             dom(*this, ry(p), IntSet(o2_atoms), rtp_in_o2_atoms, ipl);
             BoolVarArgs ncs;
-            for (temporary t1 : input->temps[q])
-              if (input->type[input->def_opr[t1]] != COPY) {
-		ncs << u(q, t1);
-	      }
+            for (temporary t1 : input->real_temps[q])
+              if (input->type[input->def_opr[t1]] != COPY) ncs << u(q, t1);
             // If q is connected to a copy-defined temporary that is related to
             // t (and !rtp_in_o2_atoms holds), then o1 (the first copy of t)
             // must be active:
