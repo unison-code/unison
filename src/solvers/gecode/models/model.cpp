@@ -1587,7 +1587,7 @@ void Model::post_active_first_copy_constraints(block b) {
     operand p = input->definer[t];
     if (input->type[input->oper[p]] != COPY) {
       for (operand q : input->users[t]) {
-        if (input->type[input->oper[q]] != COPY) {
+        if (input->type[input->oper[q]] != COPY && must_connect(q)) {
           // Copy with minimum index having t as a source
           operation o1 = input->first_copy[t];
           if (o1 != -1) {
@@ -1606,11 +1606,11 @@ void Model::post_active_first_copy_constraints(block b) {
             BoolVar rtp_in_o2_atoms(*this, 0, 1);
             dom(*this, ry(p), IntSet(o2_atoms), rtp_in_o2_atoms, ipl);
             BoolVarArgs ncs;
-            for (temporary t1 : input->real_temps[q])
+            for (temporary t1 : input->temps[q])
               if (input->type[input->def_opr[t1]] != COPY) ncs << u(q, t1);
             // If q is connected to a copy-defined temporary that is related to
-            // t (and !rtp_in_o2_atoms holds), then o1 (the first copy of t)
-            // must be active:
+            // t and t is assigned to a register atom which can be defined by o1
+            // (the first copy of t), then o1 must be active:
             constraint((sum(ncs) == 0 && !rtp_in_o2_atoms) >> a(o1));
           }
         }
