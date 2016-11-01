@@ -1,0 +1,234 @@
+
+\newcommand{\connectedOperandEquation}{
+  \begin{equation}\textstyle\label{eq:connected-operand}
+    \connectedOperand{p} \iff \operandTemporary{p} \neq \nullConnection{}
+    \quad
+    \forallIn{p}{\allOperands{}}
+  \end{equation}
+}
+
+\newcommand{\liveStartEquation}{
+\begin{equation}\textstyle\label{eq:live-start}
+  \liveTemporary{t} \implies \temporaryLiveStart{t} =
+  \operationIssueCycle{\operandOperation{\definer{t}}}
+  \quad
+  \forallIn{t}{\allTemporaries{}}
+\end{equation}
+}
+
+\newcommand{\liveEndEquation}{
+\begin{equation}\displaystyle\label{eq:live-end}
+  \liveTemporary{t} \implies \temporaryLiveEnd{t} =
+  \operatorname{max}\left(\;\;\;\maximum{\substack{p \in \users{t} \suchThat\\\operandTemporary{p} = t}}{\operationIssueCycle{\operandOperation{p}}}, \temporaryLiveStart{t} + \minimumLiveDuration{t}\right)
+  \quad
+  \forallIn{t}{\allTemporaries{}}
+\end{equation}
+}
+
+\newcommand{\usersEquation}{
+  \begin{equation}\textstyle\label{eq:users}
+    \users{t} = \setBuilder{p \in \allOperands{}}{\use{p} \land t \in \temps{p}}
+  \end{equation}
+}
+
+\newcommand{\connectedDefinerEquation}{
+\begin{equation}\textstyle\label{eq:connected-definer}
+  \liveTemporary{t} \iff \connectedOperand{\definer{t}}
+  \quad
+  \forallIn{t}{\allTemporaries{}}
+\end{equation}
+}
+
+\newcommand{\definerEquation}{
+  \begin{equation}\textstyle\label{eq:definer}
+    \definer{t} = p \in \allOperands{} \suchThat \p{\neg \use{p} \land t \in \temps{p}}
+  \end{equation}
+}
+
+\newcommand{\localOperandConnectionEquation}{
+  \begin{equation}\textstyle\label{eq:local-operand-connection}
+    \connectedOperand{p} \iff \activeOperation{\operandOperation{p}}
+    \quad
+    \forallIn{p}{\allOperands{}} \suchThat \neg \globalOperand{p}
+  \end{equation}
+}
+
+\newcommand{\globalEquation}{
+  \begin{equation}\textstyle\label{eq:global}
+    \globalOperand{p} \iff \existsIn{q}{P} \suchThat \p{\adjacent{p}{q} \lor \adjacent{q}{p}}
+    \quad
+    \forallIn{p}{\allOperands{}}
+  \end{equation}
+}
+
+\newcommand{\operandOperationEquation}{
+  \begin{equation}\textstyle\label{eq:operand-operation}
+     \operandOperation{p} = o \in \allOperations{} \suchThat p \in \operands{o}
+  \end{equation}
+}
+
+\newcommand{\globalOperandConnectionEquation}{
+  \begin{equation}\textstyle\label{eq:global-operand-connection}
+    \begin{aligned}
+      \connectedOperand{p} \iff
+      \existsIn{q}{P} \suchThat
+      \p{\adjacent{p}{q} \land \connectedOperand{q}}
+      \quad
+      \forallIn{p}{\allOperands{}} \suchThat \globalOperand{p}
+    \end{aligned}
+  \end{equation}
+}
+
+\newcommand{\activeInstructionEquation}{
+  \begin{equation}\textstyle\label{eq:active-instruction}
+    \activeOperation{o} \iff \operationInstruction{o} \neq \nullInstruction
+    \quad
+    \forallIn{o}{\allOperations{}}
+  \end{equation}
+}
+
+\newcommand{\connectedUsersEquation}{
+  \begin{equation}\textstyle\label{eq:connected-users}
+    \liveTemporary{t} \iff \existsIn{p}{\users{t}} \suchThat
+    \operandTemporary{p} = t
+    \quad
+    \forallIn{t}{\allTemporaries{}}
+  \end{equation}
+}
+
+\newcommand{\preAssignmentEquation}{
+\begin{equation}\textstyle\label{eq:pre-assignment}
+  \temporaryRegister{\operandTemporary{p}} = \register{r}
+  \quad
+  \forallIn{p}{\allOperands{}} \suchThat \preAssigned{p\hspace{0.025cm}}{r}
+\end{equation}
+}
+
+\newcommand{\disjointLiveRangesEquation}{
+\begin{equation}\textstyle\label{eq:disjoint-live-ranges}
+  \disjoint{
+    \set{\tuple{
+        \temporaryRegister{t},
+        \temporaryRegister{t} \squeeze{+} \width{t} \times \liveTemporary{t},
+        \temporaryLiveStart{t},
+        \temporaryLiveEnd{t}}
+      \! \suchThat \!
+      t \squeeze{\in} \temporaries{b}}}
+  \;\;
+  \forallIn{b}{\allBlocks{}}
+\end{equation}
+}
+
+\newcommand{\blockTemporariesEquation}{
+  \begin{equation}\textstyle\label{eq:block-temporaries}
+    \temporaries{b} = \setBuilder{t \in T}{\operationBlock{\operandOperation{\definer{t}}} = b}
+  \end{equation}
+}
+
+\newcommand{\registerClassEquation}{
+\begin{equation}\textstyle\label{eq:instruction-selection}
+  \temporaryRegister{\operandTemporary{p}}
+  \squeeze{\in}
+  \registerClass{o}{\operationInstruction{o}}{p}
+  \quad
+  \forallIn{o}{\allOperations{}}, \,
+  \forallIn{p}{\operands{o}}
+\end{equation}
+}
+
+\newcommand{\congruenceEquation}{
+  \begin{equation}\textstyle\label{eq:congruence}
+    \connectedOperand{p} \land
+    \connectedOperand{q} \implies
+    \temporaryRegister{\operandTemporary{p}} = \temporaryRegister{\operandTemporary{q}}
+    \quad
+    \forallIn{p, q}{\allOperands{}} \suchThat \adjacent{p}{q}
+  \end{equation}
+}
+
+\newcommand{\alignmentEquation}{
+\begin{equation}\textstyle\label{eq:alignment}
+  \begin{aligned}
+    \operationInstruction{\operandOperation{p}} = i \land
+    \operationInstruction{\operandOperation{q}} = j \implies
+    \temporaryRegister{\operandTemporary{p}} = \temporaryRegister{\operandTemporary{q}} + \alignmentDistance{p}{i}{q}{j} \\
+    \forallIn{p, q}{\allOperands{}}, \,
+    \forallIn{i, j}{I}
+    \suchThat \alignedOperands{p}{i}{q}{j}
+  \end{aligned}
+\end{equation}
+}
+
+\newcommand{\packingEquation}{
+\begin{equation}\textstyle\label{eq:packing}
+  \begin{aligned}
+    \connectedOperand{p} \land
+    \temporaryRegister{\operandTemporary{p}} &\in \atoms{\packRegisterClass{p}{q}}
+    \implies\\
+    &\temporaryRegister{\operandTemporary{q}} =
+    \temporaryRegister{\operandTemporary{p}} +
+    \begin{cases}
+      \displaystyle{} \width{p} &
+      \text{if }
+      \temporaryRegister{\operandTemporary{p}}
+      \eat \eat \eat \eat \mod \eat \p{\width{p} \times 2} = 0 \\
+      \displaystyle{} - \width{p} &
+      \text{otherwise}
+    \end{cases}\\
+    &\hspace{5cm}\forallIn{p, q}{\allOperands{}} \suchThat \packedOperands{p}{q}
+  \end{aligned}
+\end{equation}
+}
+
+\newcommand{\dataPrecedencesEquation}{
+\begin{equation}\textstyle\label{eq:data-precedences}
+  \begin{aligned}
+    \operandTemporary{q} = t &\implies c_u \ge c_d + \latency{d}{\operationInstruction{d}}{p} + \latency{u}{\operationInstruction{u}}{q}\\
+    & \forall t \in \allTemporaries{},\\
+    & \forall p \in \set{\definer{t}}, \forall d \in \set{\operandOperation{p}}\\
+    & \forall q \in \users{t},         \forall u \in \set{\operandOperation{q}}
+  \end{aligned}
+\end{equation}
+}
+
+\newcommand{\fixedPrecedencesEquation}{
+\begin{equation}\textstyle\label{eq:fixed-precedences}
+  \activeOperation{d} \land \activeOperation{u} \implies \operationIssueCycle{u} \ge \operationIssueCycle{d} + \minimumDistance{d}{u}{\operationInstruction{d}} \quad
+  \forall b \in B, \,
+  \forall \sequence{d,u} \in \dependencyGraph{b}
+\end{equation}
+}
+
+\newcommand{\activationEquation}{
+\begin{equation}\textstyle\label{eq:activation}
+  \exists{} \, o' \in \allOperations{} \suchThat \operationInstruction{o'} \in \activators{o} \implies \activeOperation{o} \quad
+  \forall o \in \allOperations{}
+\end{equation}
+}
+
+\newcommand{\processorResourcesEquation}{
+  \begin{eqnarray}\textstyle\label{eq:processor-resources}
+    \cumulative{
+      \setBuilder
+          {\tuple{
+              \operationIssueCycle{o}, \eat
+              \units{\operationInstruction{o}}{\processorResource{r}},
+              \duration{\operationInstruction{o}}{\processorResource{r}}
+              \eat}}
+          {\eat o \squeeze{\in} \operations{b}},
+          \capacity{\processorResource{r}}}\notag{}\hspace{-0.5cm}\\
+    \forallIn{b}{\allBlocks{}}, \forallIn{\processorResource{r}}{R}
+  \end{eqnarray}
+}
+
+\newcommand{\blockOperationsEquation}{
+  \begin{equation}\textstyle\label{eq:block-operations}
+    \operations{b} = \setBuilder{o \in O}{\operationBlock{o} = b}
+  \end{equation}
+}
+
+\newcommand{\genericObjectiveEquation}{
+  \begin{equation*}\label{eq:generic-objective}
+    \summation{b \in B}{\blockWeight{b} \times \blockCost{b}}
+  \end{equation*}
+}

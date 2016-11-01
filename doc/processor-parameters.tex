@@ -1,0 +1,56 @@
+\begin{tabular}{ l p{9.7cm} }
+
+  \parameter{I, R}{sets of instructions and resources}
+  \json{I}{[0, 1, 2, 3, \dots, 16]}
+  \json{R}{[0, 1, 2, 3, \dots, 8]}
+
+  \tableSpace
+
+  \parameter{\minimumDistance{o_1}{o_2}{\instruction{i}}}{min.~issue distance of
+    ops.~$o_1$ and $o_2$ when $o_1$ is implemented by $\instruction{i}$}
+  \json{dist}{[[[1], \dots, [0, 0, 0], \dots, [1, 1]], [\dots], [\dots]]}
+  \jsonComment{Note: this parameter is encoded with the same structure as
+    \code{dep}: each dependency and its corresponding distance array are found
+    in the same positions of their respective JSON arrays (example:
+    \code{dep[0][2]~=~[0, 3]}, \code{dist[0][2] = [1]}).}
+
+  \tableSpace
+
+  \parameter{\registerClass{o}{\instruction{i}}{p}}{register class in which
+    operation $o$ implemented by $\instruction{i}$ accesses $p$}
+  \json{class}{[[0, 0]], [[0, 0], [1, 1], [1, 9]], \dots, [[0]]}
+
+  \tableSpace
+
+  \parameter{\atoms{rc}}{atoms of register class $rc$}
+  \json{atoms}{[[0, 1, 2, \dots, 52], \dots, [37, 39, 41, \dots, 51]]}
+
+  \tableSpace
+
+  \parameter{\instructions{o}}{set of instructions that can implement operation
+    $o$}
+  \json{instructions}{[[2], [0, 3, 4], [5], \dots, [16], [2]]}
+
+  \tableSpace
+
+  \parameter{\latency{o}{\instruction{i}}{p}}{latency of $p$ when its operation $o$ is implemented by $\instruction{i}$}
+  \json{lat}{[[[1, 1]], [[0, 0], [0, 1], [0, 1]], \dots, [[0]]]}
+
+  \tableSpace
+
+  \parameter{\capacity{\code{r}}}{capacity of processor resource $r$}
+  \json{cap}{[4, 4, 2, 1, 2, 1, 1, 2, 1]}
+
+  \tableSpace
+
+  \parameter{\units{\instruction{i}}{\code{r}}}
+  {consumption of processor resource $r$ by instruction $\instruction{i}$}
+  \json{con}{[[0, 0, \dots, 0, 0], \dots, [1, 1, 0, 0, 1, 1, 0, 0, 0]]}
+
+  \tableSpace
+
+  \parameter{\duration{\instruction{i}}{\code{r}}}{duration of usage of processor
+    resource $r$ by instruction $\instruction{i}$}
+  \json{dur}{[[0, 0, \dots, 0, 0], \dots, [1, 1, 0, 0, 1, 1, 0, 0, 0]]}
+
+\end{tabular}

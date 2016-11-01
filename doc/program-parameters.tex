@@ -1,0 +1,110 @@
+\begin{tabular}{ l p{9.7cm} }
+
+  \parameter{B, O, P, T}{sets of blocks, operations, operands and temporaries}
+  \json{B}{[0, 1, 2]}
+  \json{O}{[0, 1, 2, \dots, 29, 30]}
+  \json{P}{[0, 1, 2, \dots, 59, 60]}
+  \json{T}{[0, 1, 2, \dots, 27, 28]}
+
+  \tableSpace
+
+  \parameter{\operationBlock{o}}{block to which operation $o$ belongs}
+  \json{block}{[0, 0, \dots, 1, 1, 2, 2, 2, 2, 2]}
+
+  \tableSpace
+
+  \parameter{\operands{o}}{set of operands of operation $o$}
+  \json{operands}{[[0, 1], [2, 3], [4], \dots, [57, 58], [59], [60]]}
+
+  \tableSpace
+
+  \parameter{\temps{p}}{set of temporaries that can be connected to operand $p$}
+  \json{temps}{[[0], [1], [-1, 0], \dots, [26], [25, 27, 28]]}
+
+  \tableSpace
+
+  \parameter{\use{p}}{whether $p$ is a use operand}
+  \json{use}{[0, 0, 1, 0, 0, 1, 0, 1, \dots, 1, 1]}
+
+  \tableSpace
+
+  \parameter{\adjacent{p}{q}}{whether operands $p$ and $q$ are adjacent}
+  \json{adjacent}{[[16, 20], [17, 21], \dots, [52, 53]]}
+
+  \tableSpace
+
+  \parameter
+  {\preAssigned{p\hspace{0.025cm}}{r}}
+  {whether operand $p$ is preassigned to register $\register{r}$}
+  \json{preassign}{[[0, 0], [1, 31], [60, 0]]}
+
+  \tableSpace
+
+  \parameter{\width{t}}{number of register atoms that temporary $t$ occupies}
+  \json{width}{[1, 1, 1, \dots, 1, 1]}
+
+  \tableSpace
+
+  \parameter{\frequency{b}}{estimated execution frequency of block $b$}
+  \json{freq}{[4, 85, 4]}
+
+  \tableSpace
+
+  % Below parameters are not in LCTES2014 paper
+
+  \parameter{\alignedOperands{p}{i}{q}{j}}{whether operands $p$ and $q$ are
+    aligned when implemented by instructions $i$ and $j$}
+  \json{aligned}{[[69, 17, 71, 17], [70, 24, 71, 24]]}
+  \jsonComment{Note: the example JSON arrays are extracted from a different
+    program (\code{factorial} does not contain alignment constraints)}
+
+  \tableSpace
+
+  \parameter{\alignmentDistance{p}{i}{q}{j}}{alignment distance of operands $p$
+    and $q$ when implemented by instructions $i$ and $j$}
+  \json{adist}{[0, 1, 1]}
+  \jsonComment{Note: this parameter is encoded with the same structure as
+    \code{aligned}: each aligned operand tuple and its corresponding alignment
+    distance are found in the same positions of their respective JSON arrays
+    (example: \code{aligned[1]~=~[70, 24, 71, 24]}, \code{adist[1]~=~1}.)}
+
+  \tableSpace
+
+  \parameter{\packedOperands{p}{q}}{whether operands $p$ and $q$ are
+    packed ($p$ is the \emph{free} operand and $q$ is the \emph{bound}
+    operand)}
+  \json{packed}{[[13, 14], [34, 35], [54, 55]]}
+  \jsonComment{Note: the example JSON arrays are extracted from a different
+    program (\code{factorial} does not contain packing constraints)}
+
+  \tableSpace
+
+  \parameter{\packRegisterClass{p}{q}}{pack register class of packed operands $p$ and $q$}
+  \json{pclass}{[13, 24, 13]}
+  \jsonComment{Note: this parameter is encoded with the same structure
+    as \code{packed}: each packed operand pair and its corresponding
+    pack register class are found in the same positions of their
+    respective JSON arrays (example: \code{packed[1]~=~[34, 35]},
+    \code{pclass[1]~=~24}.)}
+
+  \tableSpace
+
+  \parameter{\minimumLiveDuration{t}}{minimum live duration of temporary $t$ if
+    it is live}
+  \json{minlive}{[1, 1, 1, \dots, 1, 1]}
+
+  \tableSpace
+
+  \parameter
+  {\dependencyGraph{b}}
+  {fixed dependency graph of the operations of block $b$}
+  \json{dep}{[[[0, 1], \dots, [1, 8], \dots, [8, 9]], [\dots], [\dots]]}
+
+  \tableSpace
+
+  \parameter{\activators{o}}{set of instructions that activate operation $o$}
+  \json{activators}{[[], [10, 17, 13, 19], [10, 17, 13, 19], \dots, []]}
+  \jsonComment{Note: the example JSON array is extracted from a different
+    program (Hexagon programs do not yet yield activation constraints)}
+
+\end{tabular}

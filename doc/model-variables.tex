@@ -1,0 +1,22 @@
+\begin{tabular}{ l p{9.7cm} }
+
+  \modelVariable{\activeOperation{o}}{\set{0, 1}}{whether operation $o$ is active}
+  \tableSpace
+  \modelVariable{\operationInstruction{o}}{\instructions{o}}{instruction that implements operation $o$}
+  \tableSpace
+  \modelVariable{\liveTemporary{t}}{\set{0, 1}}{whether temporary $t$ is live}
+  \tableSpace
+  \modelVariable{\temporaryRegister{t}}{\naturalNumbersZero}{register to which temporary $t$ is assigned}
+  \tableSpace
+  \modelVariable{\connectedOperand{p}}{\set{0, 1}}{whether operand $p$ is connected}
+  \tableSpace
+  \modelVariable{\operandTemporary{p}}{\temps{p}}{temporary that is connected to operand $p$}
+  \tableSpace
+  \modelVariable{\operationIssueCycle{o}}{\naturalNumbersZero}{issue cycle of operation $o$ relative
+    to the beginning of its block}
+  \tableSpace
+  \modelVariable{\temporaryLiveStart{t}}{\naturalNumbersZero}{live start of temporary
+    $t$}
+  \tableSpace
+  \modelVariable{\temporaryLiveEnd{t}}{\naturalNumbersZero}{live end of temporary $t$}
+\end{tabular}

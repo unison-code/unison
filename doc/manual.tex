@@ -5,9 +5,10 @@
 \usepackage[english]{babel}
 \usepackage[breaklinks]{hyperref}
 \usepackage{url}
-\usepackage[adobe-utopia]{mathdesign}
-
+\usepackage{etoolbox}
 \usepackage{amsmath}
+\usepackage{unison}
+\usepackage[adobe-utopia]{mathdesign}
 
 \setcounter{secnumdepth}{2}
 
@@ -37,7 +38,112 @@
 
 \section{Unison IR}
 
-\section{Constraint Model}
+\section{Constraint Model}\label{sec:constraint-model}
+
+\subsection{Parameters}\label{sec:parameters}
+
+\boolfalse{showJson}
+
+\subsubsection{Program}
+
+\input{program-parameters}
+
+\subsubsection{Processor}
+
+\input{processor-parameters}
+
+\subsubsection{Objective}
+
+\input{objective-parameters}
+
+\subsection{Variables}
+
+\input{model-variables}
+
+\subsection{Constraints}
+
+\input{constraints}
+
+\subsubsection{Register allocation}
+
+\constraintComment{connected operands}{operands cannot be connected to null temporaries}
+\connectedOperandEquation
+\constraintComment{connected users}{a temporary is live iff it is connected to a user}
+\connectedUsersEquation
+where
+\usersEquation
+\constraintComment{connected definers}{a temporary is live iff it is connected to its definer}
+\connectedDefinerEquation
+where
+\definerEquation
+\constraintComment{local operand connections}{local operands are connected iff their operations are active}
+\localOperandConnectionEquation
+where
+\globalEquation
+and
+\operandOperationEquation
+\constraintComment{global operand connections}{global operands are connected iff any of their successors is connected}
+\globalOperandConnectionEquation
+\constraintComment{active instructions}{active operations are implemented by non-null instructions}
+\activeInstructionEquation
+\constraintComment{register class}{The instruction that implements an
+  operation determines the register class to which its operands are allocated}
+\registerClassEquation
+\constraintComment{disjoint live ranges}{temporaries whose live ranges overlap are assigned to different register atoms}
+\disjointLiveRangesEquation
+where
+\blockTemporariesEquation
+\constraintComment{preassignment}{certain operands are preassigned to registers}
+\preAssignmentEquation
+\constraintComment{congruence}{connected adjacent operands are assigned to the same register}
+\congruenceEquation
+\constraintComment{alignment}{aligned operands are assigned to registers at a
+  given relative distance}
+\alignmentEquation
+\constraintComment{packing}{\emph{bound} operands are packed together
+  with \emph{free} operands assigned to pack register classes}
+\packingEquation
+
+
+\subsubsection{Instruction Scheduling}
+
+\constraintComment{live start}{the live range of a temporary starts at the issue cycle of its definer}
+\liveStartEquation
+\constraintComment{live end}{the live range of a temporary ends with the last issue cycle of its users}
+\liveEndEquation
+\constraintComment{data precedences}{an operation that uses a temporary must be preceded by its definer}
+\dataPrecedencesEquation
+\constraintComment{processor resources}{the capacity of each processor resource cannot be exceeded at any issue cycle}
+\processorResourcesEquation
+where
+\blockOperationsEquation
+\constraintComment{fixed precedences}{control and read-write dependencies yield fixed precedences among operations}
+\fixedPrecedencesEquation
+\constraintComment{activation}{an operation is active if any of its activator instructions is selected}
+\activationEquation
+
+\subsection{Objective}
+
+The objective is to minimize the sum of the weigthed costs of each block:
+%
+\genericObjectiveEquation
+%
+where $\blockWeight{b}$ and $\blockCost{b}$ give the weight and estimated cost
+of block $b$.
+%
+To optimize for speed, $\blockWeight{b}$ is set to $\blockFrequency{b}$
+(corresponding to $\optimizeDynamic{} = \code{true}$), and $\blockCost{b}$ is defined
+as $\max_{o \in \operations{b} \suchThat
+  \activeOperation{o}}{\operationIssueCycle{o}}$ (or simply as
+$\operationIssueCycle{\operatorname{out(b)}}$ where $\operatorname{out(b)}$ is
+the out-delimiter of block $b$).
+%
+To optimize for code size, $\blockWeight{b}$ is disregarded (corresponding to
+$\optimizeDynamic{} = \code{false}$) and $\blockCost{b}$ is defined as $\sum_{o
+  \in \operations{b}}{\units{\operationInstruction{o}}{\bits{}}}$, where the
+processor resource $\bits{}$ represents the bits with which instructions are
+encoded (the particular resource to be optimized for is determined by the
+parameter $\optimizeResource{}$).
 
 \section{Target Description}
 
