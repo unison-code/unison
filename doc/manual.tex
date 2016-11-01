@@ -7,6 +7,9 @@
 \usepackage{url}
 \usepackage{etoolbox}
 \usepackage{amsmath}
+\usepackage{float}
+\usepackage{tikz}
+\usetikzlibrary{positioning, fit}
 \usepackage{unison}
 \usepackage[left=3cm, right=3cm]{geometry}
 \usepackage[adobe-utopia]{mathdesign}
@@ -35,7 +38,54 @@
 
 \section{LLVM Integration}
 
-\section{Architecture}
+\section{Architecture}\label{sec:architecture}
+
+As usual in compiler construction, Unison is organized as a chain of
+transformation components through which the program flows.
+%
+Each intermediate representation of the program is stored in a file.
+
+Figure~\ref{fig:components} shows the main components involved in compilation of
+intermediate code to assembly code.
+%
+Arcs between components are labeled with the file extension corresponding to the
+shared data file.
+%
+The Unison components are enclosed by a dashed rectangle.
+
+\begin{figure}[H]
+  \centering
+  \scalebox{0.65}{\input{figures/unison-components}}
+  \caption{main components and boundaries of Unison}
+  \label{fig:components}
+\end{figure}
+
+The function of each component is:
+
+\begin{description}
+
+\item [\code{uni import}:] transform the instruction-selected program into
+  Unison IR;
+
+\item [\code{uni linearize}:] transform the program to Linear Static Single
+  Assignment form;
+
+\item [\code{uni extend}:] extend the program with copies;
+
+\item [\code{uni augment}:] augment the program with alternative temporaries;
+
+\item [\code{uni model}:] formulate a combinatorial problem combining global
+  register allocation and instruction scheduling;
+
+\item [\code{gecode-presolver}:] produce an equivalent combinatorial problem
+  that is easier to solve;
+
+\item [\code{gecode-solver}:] solve the combinatorial problem;
+
+\item [\code{uni export}:] generate the assembly program with the solution to
+  the combinatorial problem.
+
+\end{description}
 
 \section{Unison IR}
 

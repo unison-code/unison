@@ -1,0 +1,55 @@
+\def\lightGray{gray!15}%
+% Generated with https://coolors.co
+\definecolor{bgcolor1}{rgb}{1, 0.9921568627, 0.5960784314}%
+\definecolor{bgcolor2}{rgb}{0.7411764706, 0.8941176471, 0.6549019608}%
+\definecolor{bgcolor3}{rgb}{0.7019607843, 0.8235294118, 0.6980392157}%
+\definecolor{bgcolor4}{rgb}{0.6235294118, 0.7333333333, 0.8}%
+\definecolor{bgcolor5}{rgb}{0.4784313725, 0.6117647059, 0.7764705882}%
+\newdimen\zerolinewidth%
+\newdimen\cornerRadius%
+\newdimen\lessCornerRadius%
+\cornerRadius=20pt%
+\lessCornerRadius=10pt%
+\tikzset{%
+  zero line width/.code={%
+    \zerolinewidth=\pgflinewidth
+    \tikzset{line width=0cm}%
+  },
+  use line width/.code={%
+    \tikzset{line width=\the\zerolinewidth}%
+  },
+  file/.style={%
+    outer sep=0,
+  },
+  input/.style={%
+    file,
+  },
+  output/.style={%
+    file,
+  },
+  box/.style={%
+    draw,
+    fill=white,
+  },
+  flow/.style={%
+    ->,
+    >=stealth,
+  },
+  unison/.style={%
+    draw,
+    inner xsep=3mm,
+    inner ysep=4mm,
+    dash pattern=on 2mm off 2mm,
+    fill=bgcolor4!33
+  },
+  unison stage/.style={%
+    box,
+    fill=bgcolor1!33
+  },
+}%
+\pgfdeclarelayer{layer0}%
+\pgfdeclarelayer{layer1}%
+\pgfdeclarelayer{layer2}%
+\pgfdeclarelayer{layer3}%
+\pgfdeclarelayer{layer4}%
+\pgfdeclarelayer{layer5}%

@@ -1,0 +1,47 @@
+\input{./figures/styles}%
+\pgfsetlayers{layer1,layer2}%
+\begin{tikzpicture}
+  \newcommand{\twoLines}[2]{\begin{tabular}{c}\code{#1}\\\code{#2}\end{tabular}}
+  \newcommand{\uniCommand}[1]{\twoLines{uni}{#1}}
+  \begin{pgfonlayer}{layer2}
+    \node [input] (input) {};
+    \node [unison stage, right=of input] (importer) {\uniCommand{import}};
+    \begin{scope}[node distance=0.6cm]
+    \node [unison stage, right=of importer] (linearizer) {\uniCommand{linearize}};
+    \node [unison stage, right=of linearizer] (extender) {\uniCommand{extend}};
+    \node [unison stage, right=of extender] (augmenter) {\uniCommand{augment}};
+    \node [unison stage, right=of augmenter] (modeler) {\uniCommand{model}};
+    \node [input, above=1cm of modeler] (baseinput) {};
+    \node [unison stage, right=of modeler] (presolver) {\twoLines{gecode-}{presolver}};
+    \node [unison stage, right=of presolver] (solver) {\twoLines{gecode-}{solver}};
+    \node [unison stage, right=of solver] (exporter) {\uniCommand{export}};
+    \end{scope}
+    \node [output, right=of exporter] (output) {};
+  \end{pgfonlayer}
+
+  \coordinate (augmenterbot) at ([yshift=-0.8cm] augmenter.south);
+  \coordinate (exporterbot)  at ([yshift=-0.8cm] exporter.south);
+
+  \begin{pgfonlayer}{layer1}
+    \node [unison, fit=(importer) (linearizer) (extender) (augmenter) (augmenterbot) (modeler) (presolver) (solver) (exporter)] (unison) {};
+  \end{pgfonlayer}
+
+  \begin{pgfonlayer}{layer1}
+    \begin{scope}[flow]
+      \draw (input) -- node[xshift=-0.5cm, yshift=-0.4cm] {\code{.mir}} (importer);
+      \draw (importer) -- node[yshift=-0.9cm] {\code{.uni}} (linearizer);
+      \draw (linearizer) -- node[yshift=-0.9cm] {\code{.lssa.uni}} (extender);
+      \draw (extender) -- node[yshift=-0.9cm] {\code{.ext.uni}} (augmenter);
+      \draw (augmenter) -- node[yshift=-0.9cm] {\code{.alt.uni}} (modeler);
+      \draw (baseinput) -- node[auto, yshift=0.3cm] {\code{.asm.mir}} (modeler);
+      \draw (modeler) -- node[yshift=-0.9cm] {\code{.json}} (presolver);
+      \draw (presolver) -- node[yshift=-0.9cm] {\code{.ext.json}} (solver);
+      \draw (solver) -- node[yshift=-0.9cm] {\code{.out.json}} (exporter);
+      \draw (exporter) -- node[xshift=1.2cm, yshift=-0.4cm] {\code{.unison.mir}} (output);
+    \end{scope}
+  \draw (augmenter) -- (augmenterbot);
+  \draw (augmenterbot) -- (exporterbot);
+  \draw [flow] (exporterbot) -- (exporter);
+  \end{pgfonlayer}
+
+\end{tikzpicture}
