@@ -19,7 +19,7 @@
 \newcommand{\liveEndEquation}{
 \begin{equation}\displaystyle\label{eq:live-end}
   \liveTemporary{t} \implies \temporaryLiveEnd{t} =
-  \operatorname{max}\left(\;\;\;\maximum{\substack{p \in \users{t} \suchThat\\\operandTemporary{p} = t}}{\operationIssueCycle{\operandOperation{p}}}, \temporaryLiveStart{t} + \minimumLiveDuration{t}\right)
+  \operator{max}\left(\;\;\;\maximum{\substack{p \in \users{t} \suchThat\\\operandTemporary{p} = t}}{\operationIssueCycle{\operandOperation{p}}}, \temporaryLiveStart{t} + \minimumLiveDuration{t}\right)
   \quad
   \forallIn{t}{\allTemporaries{}}
 \end{equation}

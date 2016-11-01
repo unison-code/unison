@@ -16,6 +16,7 @@
 \newcommand{\jsonComment}[1]{
   \ifbool{showJson}{& #1 \\}{}
 }
+\newcommand{\operator}[1]{\operatorname{#1}\,}
 
 % Commands and environments to represent programs
 
@@ -62,21 +63,21 @@
 \newcommand{\sequenceBuilder}[2]{\sequence{ #1 \suchThat #2 }}
 \newcommand{\naturalNumbersZero}{\mathbb{N}_0}
 \newcommand{\integerNumbers}{\mathbb{Z}}
-\newcommand{\minimum}[2]{\operatorname{min}\left(#1, #2\right)}
-\newcommand{\domain}[1]{\operatorname{D}\left(#1\right)}
+\newcommand{\minimum}[2]{\operator{min}\left(#1, #2\right)}
+\newcommand{\domain}[1]{\operator{D}\left(#1\right)}
 \newcommand{\forallIn}[2]{\forall #1 \squeeze{\in} #2}
 \newcommand{\existsIn}[2]{\exists #1 \squeeze{\in} #2}
 \newcommand{\notExistsIn}[2]{\nexists #1 \squeeze{\in} #2}
 
 % Constraint commands
 
-\newcommand{\disjointSymbol}{\operatorname{disjoint2}}
+\newcommand{\disjointSymbol}{\operator{disjoint2}}
 \newcommand{\disjoint}[1]{\disjointSymbol(#1)}
-\newcommand{\cumulativeSymbol}{\operatorname{cumulative}}
+\newcommand{\cumulativeSymbol}{\operator{cumulative}}
 \newcommand{\cumulative}[1]{\cumulativeSymbol(#1)}
-\newcommand{\cumulativesSymbol}{\operatorname{cumulatives}}
+\newcommand{\cumulativesSymbol}{\operator{cumulatives}}
 \newcommand{\cumulatives}[1]{\cumulativesSymbol(#1)}
-\newcommand{\elementSymbol}{\operatorname{element}}
+\newcommand{\elementSymbol}{\operator{element}}
 \newcommand{\element}[1]{\elementSymbol(#1)}
 
 % Model commands
@@ -87,77 +88,77 @@
 \newcommand{\allTemporaries}{T}
 \newcommand{\allResources}{R}
 
-\newcommand{\instructionsSymbol}{\operatorname{instrs}}
-\newcommand{\temporariesSymbol}{\operatorname{T}}
-\newcommand{\operandsSymbol}{\operatorname{operands}}
-\newcommand{\operationsSymbol}{\operatorname{O}}
-\newcommand{\capacitySymbol}{\operatorname{cap}}
-\newcommand{\unitsSymbol}{\operatorname{con}}
-\newcommand{\durationSymbol}{\operatorname{dur}}
-\newcommand{\busySymbol}{\operatorname{busy}}
-\newcommand{\latencySymbol}{\operatorname{lat}}
-\newcommand{\operationLatencySymbol}{\operatorname{op-lat}}
+\newcommand{\instructionsSymbol}{\operator{instrs}}
+\newcommand{\temporariesSymbol}{\operator{T}}
+\newcommand{\operandsSymbol}{\operator{operands}}
+\newcommand{\operationsSymbol}{\operator{O}}
+\newcommand{\capacitySymbol}{\operator{cap}}
+\newcommand{\unitsSymbol}{\operator{con}}
+\newcommand{\durationSymbol}{\operator{dur}}
+\newcommand{\busySymbol}{\operator{busy}}
+\newcommand{\latencySymbol}{\operator{lat}}
+\newcommand{\operationLatencySymbol}{\operator{op-lat}}
 \newcommand{\preAssignedSymbol}{:}
-\newcommand{\upwardLiveStartSymbol}{\operatorname{uls}}
-\newcommand{\downwardLiveEndSymbol}{\operatorname{dle}}
+\newcommand{\upwardLiveStartSymbol}{\operator{uls}}
+\newcommand{\downwardLiveEndSymbol}{\operator{dle}}
 \newcommand{\liveStartSymbol}{\mathit{ls}}
 \newcommand{\liveEndSymbol}{\mathit{le}}
-\newcommand{\definerSymbol}{\operatorname{definer}}
-\newcommand{\operandOperationSymbol}{\operatorname{operation}}
-\newcommand{\operationBlockSymbol}{\operatorname{block}}
-\newcommand{\usersSymbol}{\operatorname{users}}
-\newcommand{\registerClassSymbol}{\operatorname{class}}
-\newcommand{\packRegisterClassSymbol}{\operatorname{pclass}}
-\newcommand{\registerSpaceSymbol}{\operatorname{space}}
-\newcommand{\oldRegisterSpaceSymbol}{\operatorname{space}}
-\newcommand{\sourceSymbol}{\operatorname{src}}
-\newcommand{\destinationSymbol}{\operatorname{dst}}
-\newcommand{\widthSymbol}{\operatorname{width}}
-\newcommand{\forbiddenRegisterAtomsSymbol}{\operatorname{forbidden}}
-\newcommand{\dependencyGraphSymbol}{\operatorname{dep}}
-\newcommand{\minimumDistanceSymbol}{\operatorname{dist}}
-\newcommand{\blockWeightSymbol}{\operatorname{weight}}
-\newcommand{\blockCostSymbol}{\operatorname{cost}}
-\newcommand{\blockFrequencySymbol}{\operatorname{freq}}
-\newcommand{\frequencySymbol}{\operatorname{freq}}
-\newcommand{\minimizeSymbol}{\operatorname{minimize}}
-\newcommand{\edgesSymbol}{\operatorname{edges}}
-\newcommand{\lowSymbol}{\operatorname{low}}
-\newcommand{\highSymbol}{\operatorname{high}}
-\newcommand{\alignedOperandsSymbol}{\operatorname{aligned}}
-\newcommand{\packedOperandsSymbol}{\operatorname{packed}}
-\newcommand{\alignmentDistanceSymbol}{\operatorname{adist}}
-\newcommand{\useSymbol}{\operatorname{use}}
-\newcommand{\tempsSymbol}{\operatorname{temps}}
-\newcommand{\atomsSymbol}{\operatorname{atoms}}
-\newcommand{\registerSpaceRangeSymbol}{\operatorname{range}}
-\newcommand{\nameSymbol}{\operatorname{name}}
-\newcommand{\maxCycleSymbol}{\operatorname{max-cycle}}
-\newcommand{\optimizeDynamicSymbol}{\operatorname{dynamic}}
-\newcommand{\optimizeResourceSymbol}{\operatorname{resource}}
-\newcommand{\maxCostSymbol}{\operatorname{max-cost}}
-\newcommand{\controlFlowGraphSymbol}{\operatorname{cfg}}
-\newcommand{\isCopySymbol}{\operatorname{copy}}
-\newcommand{\liveBeforeSymbol}{\operatorname{before}}
-\newcommand{\noTempsSymbol}{\operatorname{notemps}}
-\newcommand{\cnoTempsSymbol}{\operatorname{cnotemps}}
-\newcommand{\acrossSymbol}{\operatorname{across}}
-\newcommand{\dominatesSymbol}{\operatorname{dominates}}
-\newcommand{\operationTypeSymbol}{\operatorname{type}}
-\newcommand{\operandInstructionSymbol}{\operatorname{instr}}
-\newcommand{\operandLatencySymbol}{\operatorname{lat}}
-\newcommand{\definerOperandSymbol}{\operatorname{def}}
-\newcommand{\instructionIndexSymbol}{\operatorname{index}}
-\newcommand{\interchangeableSymbol}{\operatorname{interchangeable}}
-\newcommand{\singleTemporarySymbol}{\operatorname{temp}}
-\newcommand{\userOperandsSymbol}{\operatorname{users}}
-\newcommand{\callerSavedSymbol}{\operatorname{caller-saved}}
-\newcommand{\calleeSavedSymbol}{\operatorname{callee-saved}}
-\newcommand{\saturationLikelihoodSymbol}{\operatorname{saturation-likelihood}}
-\newcommand{\infiniteRegisterSpaceSymbol}{\operatorname{infinite}}
-\newcommand{\minimumLiveDurationSymbol}{\operatorname{min-live}}
-\newcommand{\activatorsSymbol}{\operatorname{activators}}
-\newcommand{\globalOperandSymbol}{\operatorname{global}}
+\newcommand{\definerSymbol}{\operator{definer}}
+\newcommand{\operandOperationSymbol}{\operator{operation}}
+\newcommand{\operationBlockSymbol}{\operator{block}}
+\newcommand{\usersSymbol}{\operator{users}}
+\newcommand{\registerClassSymbol}{\operator{class}}
+\newcommand{\packRegisterClassSymbol}{\operator{pclass}}
+\newcommand{\registerSpaceSymbol}{\operator{space}}
+\newcommand{\oldRegisterSpaceSymbol}{\operator{space}}
+\newcommand{\sourceSymbol}{\operator{src}}
+\newcommand{\destinationSymbol}{\operator{dst}}
+\newcommand{\widthSymbol}{\operator{width}}
+\newcommand{\forbiddenRegisterAtomsSymbol}{\operator{forbidden}}
+\newcommand{\dependencyGraphSymbol}{\operator{dep}}
+\newcommand{\minimumDistanceSymbol}{\operator{dist}}
+\newcommand{\blockWeightSymbol}{\operator{weight}}
+\newcommand{\blockCostSymbol}{\operator{cost}}
+\newcommand{\blockFrequencySymbol}{\operator{freq}}
+\newcommand{\frequencySymbol}{\operator{freq}}
+\newcommand{\minimizeSymbol}{\operator{minimize}}
+\newcommand{\edgesSymbol}{\operator{edges}}
+\newcommand{\lowSymbol}{\operator{low}}
+\newcommand{\highSymbol}{\operator{high}}
+\newcommand{\alignedOperandsSymbol}{\operator{aligned}}
+\newcommand{\packedOperandsSymbol}{\operator{packed}}
+\newcommand{\alignmentDistanceSymbol}{\operator{adist}}
+\newcommand{\useSymbol}{\operator{use}}
+\newcommand{\tempsSymbol}{\operator{temps}}
+\newcommand{\atomsSymbol}{\operator{atoms}}
+\newcommand{\registerSpaceRangeSymbol}{\operator{range}}
+\newcommand{\nameSymbol}{\operator{name}}
+\newcommand{\maxCycleSymbol}{\operator{max-cycle}}
+\newcommand{\optimizeDynamicSymbol}{\operator{dynamic}}
+\newcommand{\optimizeResourceSymbol}{\operator{resource}}
+\newcommand{\maxCostSymbol}{\operator{max-cost}}
+\newcommand{\controlFlowGraphSymbol}{\operator{cfg}}
+\newcommand{\isCopySymbol}{\operator{copy}}
+\newcommand{\liveBeforeSymbol}{\operator{before}}
+\newcommand{\noTempsSymbol}{\operator{notemps}}
+\newcommand{\cnoTempsSymbol}{\operator{cnotemps}}
+\newcommand{\acrossSymbol}{\operator{across}}
+\newcommand{\dominatesSymbol}{\operator{dominates}}
+\newcommand{\operationTypeSymbol}{\operator{type}}
+\newcommand{\operandInstructionSymbol}{\operator{instr}}
+\newcommand{\operandLatencySymbol}{\operator{lat}}
+\newcommand{\definerOperandSymbol}{\operator{def}}
+\newcommand{\instructionIndexSymbol}{\operator{index}}
+\newcommand{\interchangeableSymbol}{\operator{interchangeable}}
+\newcommand{\singleTemporarySymbol}{\operator{temp}}
+\newcommand{\userOperandsSymbol}{\operator{users}}
+\newcommand{\callerSavedSymbol}{\operator{caller-saved}}
+\newcommand{\calleeSavedSymbol}{\operator{callee-saved}}
+\newcommand{\saturationLikelihoodSymbol}{\operator{saturation-likelihood}}
+\newcommand{\infiniteRegisterSpaceSymbol}{\operator{infinite}}
+\newcommand{\minimumLiveDurationSymbol}{\operator{min-live}}
+\newcommand{\activatorsSymbol}{\operator{activators}}
+\newcommand{\globalOperandSymbol}{\operator{global}}
 
 \newcommand{\instructions}[1]{\instructionsSymbol(#1)}
 \newcommand{\temporaries}[1]{\temporariesSymbol(#1)}

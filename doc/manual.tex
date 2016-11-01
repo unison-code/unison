@@ -1,4 +1,4 @@
-\documentclass{article}
+\documentclass[11pt]{article}
 \usepackage{graphicx}
 \usepackage{abstract}
 \usepackage[latin1]{inputenc}
@@ -8,6 +8,7 @@
 \usepackage{etoolbox}
 \usepackage{amsmath}
 \usepackage{unison}
+\usepackage[left=3cm, right=3cm]{geometry}
 \usepackage[adobe-utopia]{mathdesign}
 
 \setcounter{secnumdepth}{2}
@@ -132,11 +133,11 @@ where $\blockWeight{b}$ and $\blockCost{b}$ give the weight and estimated cost
 of block $b$.
 %
 To optimize for speed, $\blockWeight{b}$ is set to $\blockFrequency{b}$
-(corresponding to $\optimizeDynamic{} = \code{true}$), and $\blockCost{b}$ is defined
-as $\max_{o \in \operations{b} \suchThat
+(corresponding to $\optimizeDynamic{} = \code{true}$), and $\blockCost{b}$ is
+defined as $\max_{o \in \operations{b} \suchThat
   \activeOperation{o}}{\operationIssueCycle{o}}$ (or simply as
-$\operationIssueCycle{\operatorname{out(b)}}$ where $\operatorname{out(b)}$ is
-the out-delimiter of block $b$).
+$\operationIssueCycle{\operator{out}(b)}$ where $\operator{out}(b)$ is the
+out-delimiter of block $b$).
 %
 To optimize for code size, $\blockWeight{b}$ is disregarded (corresponding to
 $\optimizeDynamic{} = \code{false}$) and $\blockCost{b}$ is defined as $\sum_{o
