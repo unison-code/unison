@@ -1,10 +1,10 @@
 \documentclass[11pt]{report}
 \usepackage{graphicx}
 \usepackage{abstract}
-\usepackage[latin1]{inputenc}
+\usepackage[utf8]{inputenc}
 \usepackage[english]{babel}
 \usepackage[breaklinks]{hyperref}
-\usepackage{url}
+\usepackage{fancyvrb}
 \usepackage{etoolbox}
 \usepackage{amsmath}
 \usepackage{float}
@@ -18,7 +18,7 @@
 
 \title{The Unison Manual}
 
-\author{Roberto Casta�eda Lozano}
+\author{Roberto Castañeda Lozano}
 
 \date{}
 
@@ -35,10 +35,11 @@
 \chapter*{Introduction}
 \addcontentsline{toc}{chapter}{Introduction}
 
-You are reading the manual of Unison: a simple, flexible, and potentially
-optimal open-source tool that performs integrated
-\href{https://en.wikipedia.org/wiki/Register_allocation}{register allocation}
-and \href{https://en.wikipedia.org/wiki/Instruction_scheduling}{instruction
+You are reading the manual of \href{http://unison-code.github.io/}{Unison}: a
+simple, flexible, and potentially optimal open-source tool that performs
+integrated \href{https://en.wikipedia.org/wiki/Register_allocation}{register
+  allocation} and
+\href{https://en.wikipedia.org/wiki/Instruction_scheduling}{instruction
   scheduling} using
 \href{https://en.wikipedia.org/wiki/Constraint_programming}{constraint
   programming}.
@@ -51,12 +52,12 @@ Unison is particularly easy to integrate with the latter as a driver is already
 available (see Chapter~\ref{sec:llvm-integration} for details).
 
 This manual is divided into two main parts: Part~\ref{part:using-unison}
-(Chapters~\ref{sec:license-contact-and-acknowledgements}
+(Chapters~\ref{sec:license-contact-and-acknowledgments}
 to~\ref{sec:llvm-integration}) is devoted to the use of Unison, while
 Part~\ref{part:developing-and-extending-unison} (Chapters~\ref{sec:architecture}
 to~\ref{sec:target-description}) deals with its development and extension.
 
-Chapter~\ref{sec:license-contact-and-acknowledgements} discusses licensing
+Chapter~\ref{sec:license-contact-and-acknowledgments} discusses licensing
 aspects and provides contact information.
 %
 Chapter~\ref{sec:getting-started} contains instructions to download, build,
@@ -81,8 +82,84 @@ other sources of documentation.
 \part{Using Unison}
 \label{part:using-unison}
 
-\chapter{License, Contact, and Acknowledgements}%
-\label{sec:license-contact-and-acknowledgements}
+\chapter{License, Contact, and Acknowledgments}%
+\label{sec:license-contact-and-acknowledgments}
+
+Unison is developed at the \href{https://www.sics.se/}{Swedish Institute of
+  Computer Science} in collaboration with \href{https://www.kth.se/en}{KTH Royal
+  Institute of Technology} in Stockholm, Sweden.
+
+Unison and the Unison Driver for LLVM are released under the BSD3 open-source
+license:
+
+\fvset{fontsize=\footnotesize}
+\begin{center}
+\BVerbatimInput{verbatim/LICENSE}
+\end{center}
+
+Unison includes code from the following projects:
+
+\begin{itemize}
+\item \href{https://hackage.haskell.org/package/Graphalyze}{Graphalyze} (in some
+  graph algorithms of \texttt{unison} package).
+  %
+  The code is licensed under
+  \href{https://hackage.haskell.org/package/Graphalyze/src/LICENSE}{BSD2}.
+\item Erik Ekström's
+  \href{https://www.sics.se/\%7ercas/teaching/ErikEkstrom_2015.pdf}{master's
+    thesis} (in parts of the presolver).
+  %
+  The code is licensed under BSD3 but the copyright is held by Erik Ekström.
+
+\item Mikael Almgren's
+  \href{https://www.sics.se/\%7ercas/teaching/MikaelAlmgren_2015.pdf}{master's
+    thesis} (in parts of the presolver).
+  %
+  The code is licensed under BSD3 but the copyright is held by Mikael Almgren.
+\end{itemize}
+
+The Unison Driver is built on top of the LLVM Compiler Infrastructure which is
+licensed under the University of Illinois/NCSA Open Source License, see
+\href{http://llvm.org/}{the LLVM website} for details.
+
+Furthermore, Unison makes extensive use of other open-source components,
+including:
+
+\begin{itemize}
+\item \href{http://www.gecode.org/}{Gecode}
+\item \href{https://www.qt.io/}{Qt}
+\item \href{http://www.graphviz.org/}{Graphviz}
+\item \href{https://www.haskell.org/platform/}{Haskell Platform}
+\item Various Haskell packages (see the \texttt{Build-Depends} field in
+  \href{https://github.com/unison-code/unison/blob/master/src/unison/unison.cabal}{this}
+  and
+  \href{https://github.com/unison-code/unison/blob/master/src/unison-specsgen/unison-specsgen.cabal}{this}
+  package descriptions)
+\end{itemize}
+
+For further license detail on these components, please check their websites.
+
+Unison is designed, developed, and maintained by
+
+\begin{itemize}
+\item Roberto Castañeda Lozano (\href{mailto:rcas@sics.se}{rcas@sics.se})
+\item Mats Carlsson (\href{mailto:matsc@sics.se}{matsc@sics.se})
+\item Gabriel Hjort Blindell (\href{mailto:ghb@kth.se}{ghb@kth.se})
+\item Christian Schulte (\href{mailto:cschulte@kth.se}{cschulte@kth.se})
+\end{itemize}
+
+Other people have also collaborated in the development of Unison:
+%
+\begin{itemize}
+\item Özgür Akgün
+\item Mikael Almgren
+\item Noric Couderc
+\item Frej Drejhammar
+\item Erik Ekström
+\item Bevin Hansson
+\item Jan Tomljanović
+\item Kim-Anh Tran
+\end{itemize}
 
 \chapter{Getting Started}%
 \label{sec:getting-started}
@@ -148,31 +225,31 @@ The function of each component is:
 
 \chapter{Constraint Model}\label{sec:constraint-model}
 
-\subsection{Parameters}\label{sec:parameters}
+\section{Parameters}\label{sec:parameters}
 
 \boolfalse{showJson}
 
-\subsubsection{Program}
+\subsection{Program}
 
 \input{program-parameters}
 
-\subsubsection{Processor}
+\subsection{Processor}
 
 \input{processor-parameters}
 
-\subsubsection{Objective}
+\subsection{Objective}
 
 \input{objective-parameters}
 
-\subsection{Variables}
+\section{Variables}
 
 \input{model-variables}
 
-\subsection{Constraints}
+\section{Constraints}
 
 \input{constraints}
 
-\subsubsection{Register allocation}
+\subsection{Register allocation}
 
 \constraintComment{connected operands}{operands cannot be connected to null temporaries}
 \connectedOperandEquation
@@ -213,7 +290,7 @@ where
 \packingEquation
 
 
-\subsubsection{Instruction Scheduling}
+\subsection{Instruction Scheduling}
 
 \constraintComment{live start}{the live range of a temporary starts at the issue cycle of its definer}
 \liveStartEquation
@@ -230,9 +307,9 @@ where
 \constraintComment{activation}{an operation is active if any of its activator instructions is selected}
 \activationEquation
 
-\subsection{Objective}
+\section{Objective}
 
-The objective is to minimize the sum of the weigthed costs of each block:
+The objective is to minimize the sum of the weighted costs of each block:
 %
 \genericObjectiveEquation
 %
