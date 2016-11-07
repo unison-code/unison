@@ -1,0 +1,33 @@
+--- |
+  ; ModuleID = (...)
+
+...
+---
+name:            factorial
+body:             |
+  bb.0 (freq 4):
+    successors: %bb.2(1), %bb.1(1)
+  
+    BUNDLE {
+      %r1 = A2_tfrsi 1
+      J4_cmpgti_f_jumpnv_t %r0, 0, %bb.2, implicit %pc, implicit-def %pc
+    }
+  
+  bb.1 (freq 85):
+    successors: %bb.1(1), %bb.2(1)
+  
+    BUNDLE {
+      %r0 = A2_addi %r0, -1
+      %r1 = M2_mpyi %r0, %r1
+      %p0 = C2_cmpgti %r0, 1
+      J2_jumpt %p0, %bb.1, implicit %pc, implicit-def %pc
+    }
+  
+  bb.2 (freq 4):
+  
+    BUNDLE {
+      %r0 = A2_tfr %r1
+      JMPret %r31, implicit %pc, implicit-def %pc
+    }
+
+...

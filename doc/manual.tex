@@ -255,6 +255,57 @@ make install PREFIX=$DIR
 \end{command}
 
 \section{Running}
+%
+This manual uses the iterative version of the factorial function as a running
+example.
+%
+A possible C implementation is as follows:
+%
+\fvset{fontsize=\small}
+\begin{center}
+\BVerbatimInput{code/factorial.c}
+\end{center}
+
+
+When used as a standalone tool, Unison takes as input a function in LLVM's
+\href{http://llvm.org/docs/MIRLangRef.html}{Machine IR format (MIR)}.
+%
+In this format, instructions of a certain processor have already been selected.
+%
+The factorial function in MIR format with
+\href{https://developer.qualcomm.com/software/hexagon-dsp-sdk/dsp-processor}{Hexagon
+  V4} instructions looks as follows:
+%
+\fvset{fontsize=\small}
+\begin{center}
+\BVerbatimInput{code/factorial.mir}
+\end{center}
+%
+To execute Unison on this function and obtain the optimal register allocation
+and instruction schedule for Hexagon V4, just run the following command from the
+top of the Git repository:
+%
+\begin{command}
+uni run doc/code/factorial.mir --goal=speed
+\end{command}
+
+This command outputs a function in MIR format where registers are allocated and
+instructions are scheduled.
+%
+The function is thus already very close to assembly code:
+%
+\fvset{fontsize=\small}
+\begin{center}
+\BVerbatimInput{code/factorial.unison.mir}
+\end{center}
+
+The \texttt{uni} tool has several options and commands such as \texttt{run}.
+%
+Detailed information about each option and command can be obtained by running:
+%
+\begin{command}
+uni --help
+\end{command}
 
 Unison can be used as a standalone tool as illustrated above but is only really
 useful as a complement to a full-fledged compiler.

@@ -1,0 +1,32 @@
+--- |
+  ; ModuleID = (...)
+...
+---
+name:            factorial
+body:             |
+  bb.0.entry (freq 12):
+    liveins: %r0
+
+    %5 = COPY %r0
+    %6 = A2_tfrsi 1
+    %7 = C2_cmpgti %5, 0
+    J2_jumpf %7, %bb.2.while.end
+
+  bb.1.while.body (freq 255):
+
+    %0 = PHI %6, %bb.0.entry, %3, %bb.1.while.body
+    %1 = PHI %5, %bb.0.entry, %2, %bb.1.while.body
+    %2 = A2_addi %1, -1
+    %3 = M2_mpyi %1, %0
+    %8 = C2_cmpgti %1, 1
+    J2_jumpt %8, %bb.1.while.body
+    J2_jump %bb.2.while.end
+
+  bb.2.while.end (freq 12):
+    liveouts: %r0
+
+    %4 = PHI %6, %bb.0.entry, %3, %bb.1.while.body
+    %r0 = COPY %4
+    JMPret %r31
+
+...
