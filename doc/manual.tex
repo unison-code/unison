@@ -1,4 +1,4 @@
-\documentclass[11pt]{article}
+\documentclass[11pt]{report}
 \usepackage{graphicx}
 \usepackage{abstract}
 \usepackage[latin1]{inputenc}
@@ -32,13 +32,69 @@
 \setcounter{tocdepth}{2}
 \tableofcontents
 
-\section{Introduction}
+\chapter*{Introduction}
+\addcontentsline{toc}{chapter}{Introduction}
 
-\section{Getting Started}
+You are reading the manual of Unison: a simple, flexible, and potentially
+optimal open-source tool that performs integrated
+\href{https://en.wikipedia.org/wiki/Register_allocation}{register allocation}
+and \href{https://en.wikipedia.org/wiki/Instruction_scheduling}{instruction
+  scheduling} using
+\href{https://en.wikipedia.org/wiki/Constraint_programming}{constraint
+  programming}.
 
-\section{LLVM Integration}
+Unison can be used as an alternative or as a complement to the algorithms
+applied by standard compilers such as \href{https://gcc.gnu.org/}{GCC} and
+\href{http://llvm.org/}{LLVM}.
+%
+Unison is particularly easy to integrate with the latter as a driver is already
+available (see Chapter~\ref{sec:llvm-integration} for details).
 
-\section{Architecture}\label{sec:architecture}
+This manual is divided into two main parts: Part~\ref{part:using-unison}
+(Chapters~\ref{sec:license-contact-and-acknowledgements}
+to~\ref{sec:llvm-integration}) is devoted to the use of Unison, while
+Part~\ref{part:developing-and-extending-unison} (Chapters~\ref{sec:architecture}
+to~\ref{sec:target-description}) deals with its development and extension.
+
+Chapter~\ref{sec:license-contact-and-acknowledgements} discusses licensing
+aspects and provides contact information.
+%
+Chapter~\ref{sec:getting-started} contains instructions to download, build,
+install, and test Unison.
+%
+Chapter~\ref{sec:llvm-integration} describes how to use the LLVM driver.
+
+Chapter~\ref{sec:architecture} outlines the architecture of Unison.
+%
+Chapter~\ref{sec:unison-ir} describes the intermediate representation
+(\emph{Unison IR}).
+%
+Chapter~\ref{sec:constraint-model} formulates the constraint model that lies at
+the core of the Unison approach.
+%
+Chapter~\ref{sec:target-description} provides information about how processors
+are described in Unison.
+
+Appendix~\ref{sec:further-reading} provides references for further reading and
+other sources of documentation.
+
+\part{Using Unison}
+\label{part:using-unison}
+
+\chapter{License, Contact, and Acknowledgements}%
+\label{sec:license-contact-and-acknowledgements}
+
+\chapter{Getting Started}%
+\label{sec:getting-started}
+
+\chapter{LLVM Integration}%
+\label{sec:llvm-integration}
+
+\part{Developing and Extending Unison}
+\label{part:developing-and-extending-unison}
+
+\chapter{Architecture}%
+\label{sec:architecture}
 
 As usual in compiler construction, Unison is organized as a chain of
 transformation components through which the program flows.
@@ -87,9 +143,10 @@ The function of each component is:
 
 \end{description}
 
-\section{Unison IR}
+\chapter{Unison IR}
+\label{sec:unison-ir}
 
-\section{Constraint Model}\label{sec:constraint-model}
+\chapter{Constraint Model}\label{sec:constraint-model}
 
 \subsection{Parameters}\label{sec:parameters}
 
@@ -196,6 +253,12 @@ processor resource $\bits{}$ represents the bits with which instructions are
 encoded (the particular resource to be optimized for is determined by the
 parameter $\optimizeResource{}$).
 
-\section{Target Description}
+\chapter{Target Description}
+\label{sec:target-description}
+
+\appendix
+
+\chapter{Further Reading}
+\label{sec:further-reading}
 
 \end{document}
