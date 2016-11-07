@@ -25,6 +25,15 @@
 \renewcommand{\abstractname}{}
 \renewcommand{\absnamepos}{empty}
 
+\newenvironment{command}
+{
+ \VerbatimEnvironment
+ \begin{Verbatim}%
+}
+{
+ \end{Verbatim}%
+}
+
 \begin{document}
 
 \maketitle
@@ -163,6 +172,94 @@ Other people have also collaborated in the development of Unison:
 
 \chapter{Getting Started}%
 \label{sec:getting-started}
+
+Unison has to be built from source as we do not yet provide pre-compiled
+packages.
+%
+The tool is known to work on Linux and it might work on other platforms such as
+macOS and Windows as all software dependencies claim to be portable across
+these.
+
+Building, installing, and testing Unison in Linux is relatively straightforward.
+%
+Just take the following steps.
+
+\section{Downloading}
+
+Unison is hosted by \href{https://github.com/unison-code/unison}{GitHub}.
+%
+The easiest way to access its source code (including the history) is by running:
+%
+\begin{command}
+git clone git@github.com:unison-code/unison.git
+\end{command}
+
+\section{Prerequisites}
+
+Unison has the following direct dependencies:
+%
+\begin{itemize}
+\item \href{http://hackage.haskell.org/platform/}{Haskell platform}
+\item \href{https://www.qt.io/}{Qt (version 4.x)}
+\item \href{http://www.graphviz.org/}{Graphviz library}
+\item \href{http://www.gecode.org/}{Gecode (version 5.x)}
+\end{itemize}
+%
+To get the first three dependencies in Debian-based distributions, just run:
+%
+\begin{command}
+apt-get install haskell-platform libqt4-dev libgraphviz-dev
+\end{command}
+
+The required version of Gecode can be downloaded from its
+\href{http://www.gecode.org/download.html}{website}.
+
+\section{Building}
+
+Just go to the \texttt{src} directory and run:
+%
+\begin{command}
+make build
+\end{command}
+
+\section{Testing}
+
+Unison contains a test suite with a few functions where different targets and
+optimization goals are exercised.
+%
+To execute the tests just run:
+%
+\begin{command}
+make test
+\end{command}
+
+\section{Installing}
+
+The building process generates three binaries.
+%
+The installation process consists in copying the binaries into the appropriate
+system directory.
+%
+To install the binaries under the default directory \texttt{usr/local} just run:
+%
+\begin{command}
+make install
+\end{command}
+
+The installation directory is specified by the Makefile variable \texttt{PREFIX}.
+%
+To install the binaries under an alternative directory \texttt{\$DIR} just run:
+%
+\begin{command}
+make install PREFIX=$DIR
+\end{command}
+
+\section{Running}
+
+Unison can be used as a standalone tool as illustrated above but is only really
+useful as a complement to a full-fledged compiler.
+%
+The next section gives instructions to use Unison together with LLVM.
 
 \chapter{LLVM Integration}%
 \label{sec:llvm-integration}
