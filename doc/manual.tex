@@ -3,8 +3,10 @@
 \usepackage{abstract}
 \usepackage[utf8]{inputenc}
 \usepackage[english]{babel}
-\usepackage[breaklinks]{hyperref}
+\usepackage[hidelinks,breaklinks]{hyperref}
 \usepackage{fancyvrb}
+\usepackage{tcolorbox}
+\tcbuselibrary{skins,breakable}
 \usepackage{etoolbox}
 \usepackage{amsmath}
 \usepackage{float}
@@ -25,14 +27,36 @@
 \renewcommand{\abstractname}{}
 \renewcommand{\absnamepos}{empty}
 
+% Generated with https://coolors.co
+% TODO: find a better color palette
+\definecolor{bgcolor1}{rgb}{1, 0.9921568627, 0.5960784314}%
+\definecolor{bgcolor2}{rgb}{0.7411764706, 0.8941176471, 0.6549019608}%
+\definecolor{bgcolor3}{rgb}{0.7019607843, 0.8235294118, 0.6980392157}%
+\definecolor{bgcolor4}{rgb}{0.6235294118, 0.7333333333, 0.8}%
+\definecolor{bgcolor5}{rgb}{0.4784313725, 0.6117647059, 0.7764705882}%
+
+\hypersetup{
+  colorlinks = true,
+}
+
+\newenvironment{colorBox}[1]
+ {\begin{tcolorbox}[
+    breakable,
+    colback=#1,
+    colframe=white,
+    boxrule=0pt
+  ]}
+ {\end{tcolorbox}}
+
 \newenvironment{command}
-{
- \VerbatimEnvironment
- \begin{Verbatim}%
-}
-{
- \end{Verbatim}%
-}
+ {\VerbatimEnvironment
+  \begin{colorBox}{bgcolor1}
+  \begin{Verbatim}[fontsize=\small]}
+ {\end{Verbatim}\end{colorBox}}
+
+\newenvironment{codeBox}
+ {\begin{colorBox}{bgcolor4!20}}
+ {\end{colorBox}}
 
 \begin{document}
 
@@ -102,9 +126,9 @@ Unison and the Unison Driver for LLVM are released under the BSD3 open-source
 license:
 
 \fvset{fontsize=\footnotesize}
-\begin{center}
+\begin{codeBox}
 \BVerbatimInput{verbatim/LICENSE}
-\end{center}
+\end{codeBox}
 
 Unison includes code from the following projects:
 
@@ -262,9 +286,9 @@ example.
 A possible C implementation is as follows:
 %
 \fvset{fontsize=\small}
-\begin{center}
+\begin{codeBox}
 \BVerbatimInput{code/factorial.c}
-\end{center}
+\end{codeBox}
 
 
 When used as a standalone tool, Unison takes as input a function in LLVM's
@@ -277,9 +301,9 @@ The factorial function in MIR format with
   V4} instructions looks as follows:
 %
 \fvset{fontsize=\small}
-\begin{center}
+\begin{codeBox}
 \BVerbatimInput{code/factorial.mir}
-\end{center}
+\end{codeBox}
 %
 To execute Unison on this function and obtain the optimal register allocation
 and instruction schedule for Hexagon V4, just run the following command from the
@@ -295,9 +319,9 @@ instructions are scheduled.
 The function is thus already very close to assembly code:
 %
 \fvset{fontsize=\small}
-\begin{center}
+\begin{codeBox}
 \BVerbatimInput{code/factorial.unison.mir}
-\end{center}
+\end{codeBox}
 
 The \texttt{uni} tool has several options and commands such as \texttt{run}.
 %
