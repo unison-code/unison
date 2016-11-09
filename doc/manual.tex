@@ -134,7 +134,7 @@ Unison includes code from the following projects:
 
 \begin{itemize}
 \item \href{https://hackage.haskell.org/package/Graphalyze}{Graphalyze} (in some
-  graph algorithms of \texttt{unison} package).
+  graph algorithms of \code{unison} package).
   %
   The code is licensed under
   \href{https://hackage.haskell.org/package/Graphalyze/src/LICENSE}{BSD2}.
@@ -163,7 +163,7 @@ including:
 \item \href{https://www.qt.io/}{Qt}
 \item \href{http://www.graphviz.org/}{Graphviz}
 \item \href{https://www.haskell.org/platform/}{Haskell Platform}
-\item Various Haskell packages (see the \texttt{Build-Depends} field in
+\item Various Haskell packages (see the \code{Build-Depends} field in
   \href{https://github.com/unison-code/unison/blob/master/src/unison/unison.cabal}{this}
   and
   \href{https://github.com/unison-code/unison/blob/master/src/unison-specsgen/unison-specsgen.cabal}{this}
@@ -197,7 +197,7 @@ Other people have also collaborated in the development of Unison:
 \chapter{Getting Started}%
 \label{sec:getting-started}
 
-Unison has to be built from source as we do not yet provide pre-compiled
+Unison has to be built from source as we do not yet provide precompiled
 packages.
 %
 The tool is known to work on Linux and it might work on other platforms such as
@@ -240,7 +240,7 @@ The required version of Gecode can be downloaded from its
 
 \section{Building}
 
-Just go to the \texttt{src} directory and run:
+Just go to the \code{src} directory and run:
 %
 \begin{command}
 make build
@@ -264,15 +264,15 @@ The building process generates three binaries.
 The installation process consists in copying the binaries into the appropriate
 system directory.
 %
-To install the binaries under the default directory \texttt{usr/local} just run:
+To install the binaries under the default directory \code{usr/local} just run:
 %
 \begin{command}
 make install
 \end{command}
 
-The installation directory is specified by the Makefile variable \texttt{PREFIX}.
+The installation directory is specified by the Makefile variable \code{PREFIX}.
 %
-To install the binaries under an alternative directory \texttt{\$DIR} just run:
+To install the binaries under an alternative directory \code{\$DIR} just run:
 %
 \begin{command}
 make install PREFIX=$DIR
@@ -323,7 +323,7 @@ The function is thus already very close to assembly code:
 \BVerbatimInput{code/factorial.unison.mir}
 \end{codeBox}
 
-The \texttt{uni} tool has several options and commands such as \texttt{run}.
+The \code{uni} tool has several options and commands such as \code{run}.
 %
 Detailed information about each option and command can be obtained by running:
 %
@@ -338,6 +338,122 @@ The next section gives instructions to use Unison together with LLVM.
 
 \chapter{LLVM Integration}%
 \label{sec:llvm-integration}
+
+Unison is accompanied with a driver that allows transparent integration with the
+LLVM compiler infrastructure.
+%
+In particular, the driver enables
+\href{http://llvm.org/docs/CommandGuide/llc.html}{LLVM's code generator}
+(\code{llc}) to run Unison transparently instead of its standard register
+allocation and instruction scheduling algorithms.
+%
+Figure~\ref{fig:llvm} shows how the LLVM driver interfaces with Unison to
+produce assembly code all the way from source code.
+%
+Arcs between components are labeled with the file extension corresponding to the
+shared data file.
+%
+Unison uses LLVM's \href{http://llvm.org/docs/MIRLangRef.html}{Machine IR format
+  (MIR)} as the interface language.
+%
+Unison takes as input a function in MIR format (\code{.mir}) and the function
+where LLVM has already performed register allocation and instruction scheduling
+(\code{.asm.mir}) as a starting point for the optimization algorithm.
+%
+The result of running Unison (\code{.unison.mir}) is sent back to \code{llc}
+where the final assembly code is emitted.
+
+\begin{figure}[H]
+  \centering
+  \scalebox{0.75}{\input{figures/llvm}}
+  \caption{design of the LLVM driver}
+  \label{fig:llvm}
+\end{figure}
+
+As for the core Unison tool, the driver must be built from source as we do not
+yet provide precompiled packages.
+%
+The driver is known to work on Linux and should work in all other main platforms
+provided that Unison itself can be built successfully.
+
+\section{Downloading}
+
+The Unison driver for LLVM is hosted as a LLVM form by
+\href{https://github.com/unison-code/llvm}{GitHub}.
+%
+The easiest way to access its source code (including the history) is by running:
+%
+\begin{command}
+git clone git@github.com:unison-code/llvm.git
+\end{command}
+
+LLVM 3.8 is the latest LLVM supported version.
+%
+To access the driver for this version run the following command on the cloned
+repository:
+%
+\begin{command}
+git checkout release_38-unison
+\end{command}
+
+\section{Prerequisites}
+
+The LLVM driver depends on Unison being installed successfully.
+%
+Check the \href{http://llvm.org/docs/GettingStarted.html#requirements}{LLVM
+  website} for the prerequisites to build LLVM itself.
+
+\section{Building, Testing, and Installing}
+
+Just follow the instructions provided at
+\href{http://llvm.org/docs/GettingStarted.html#compiling-the-llvm-suite-source-code}{LLVM's
+  website} as usual.
+
+\section{Running with llc}
+
+To execute \code{llc} such that Unison is used for register allocation and
+instruction scheduling, just run the following command from the top of the core
+Unison Git repository:
+%
+\begin{command}
+llc doc/code/factorial.ll -march=hexagon -mcpu=hexagonv4 -unison
+\end{command}
+
+Currently, Unison supports the following LLVM targets (defined by
+\code{march}-\code{mcpu}-\code{mattr} triples):
+
+\begin{center}
+  \begin{tabular}{l l l l}
+    target & \code{-march=} & \code{-mcpu=} & \code{-mattr=} \\\hline
+    Hexagon V4 & \code{hexagon} & \code{hexagonv4} & \\
+    ARM1156T2F-S & \code{arm} & \code{arm1156t2f-s} & \code{+thumb-mode} \\
+    MIPS32 & \code{mips} & \code{mips32} & \\
+  \end{tabular}
+\end{center}
+
+Other flags (with a \code{-unison} prefix) can be used to control the execution
+of Unison, run \code{llc --help} for details.
+
+\section{Running with clang}
+
+To execute \code{clang} with Unison's register allocation and instruction
+scheduling for Hexagon V4, first build and install a matching \code{clang}
+version (see the \href{http://clang.llvm.org/get_started.html}{Clang website}
+for details).
+%
+Then just run the following command from the top of the core Unison Git
+repository:
+%
+\begin{command}
+clang doc/code/factorial.c -target hexagon -mllvm -unison
+\end{command}
+
+Alternatively, functions can be annotated with the \code{"unison"} attribute to
+indicate that Unison should be run on them:
+%
+\begin{command}
+__attribute__((annotate("unison")))
+\end{command}
 
 \part{Developing and Extending Unison}
 \label{part:developing-and-extending-unison}

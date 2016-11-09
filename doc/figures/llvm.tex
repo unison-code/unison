@@ -1,0 +1,26 @@
+\input{./figures/styles}%
+\pgfsetlayers{layer1,layer2}%
+\begin{tikzpicture}
+  \begin{pgfonlayer}{layer2}
+    \node [input] (input) {};
+    \node [unison stage, right=of input] (clang) {\code{clang}};
+    \begin{scope}[node distance=1cm]
+    \node [unison stage, right=of clang] (opt) {\code{opt}};
+    \node [unison stage, right=of opt] (llc) {\code{llc}};
+    \node [unison stage, below=of llc] (unison) {\code{unison}};
+    \end{scope}
+    \node [output, right=of llc] (output) {};
+  \end{pgfonlayer}
+
+  \begin{pgfonlayer}{layer1}
+    \begin{scope}[flow]
+      \draw (input) -- node[yshift=0.4cm] {\code{.c}} (clang);
+      \draw (clang) -- node[yshift=0.4cm] {\code{.ll}} (opt);
+      \draw (opt) -- node[yshift=0.4cm] {\code{.ll}} (llc);
+      \draw ([xshift=-0.1cm] llc.south) -- node[xshift=-0.68cm, yshift=0.2cm] {\code{.mir}} ([xshift=-0.1cm] unison.north);
+      \draw ([xshift=-0.2cm] llc.south) -- node[xshift=-1cm, yshift=-0.2cm] {\code{.asm.mir}} ([xshift=-0.2cm] unison.north);
+      \draw ([xshift=0.2cm] unison.north) -- node[xshift=1.3cm] {\code{.unison.mir}} ([xshift=0.2cm] llc.south);
+      \draw (llc) -- node[yshift=0.4cm] {\code{.s}} (output);
+    \end{scope}
+  \end{pgfonlayer}
+\end{tikzpicture}
