@@ -478,23 +478,35 @@ void InfeasiblePresolver::regdomain_nogoods(vector<nogood>& Nogoods) {
 }
 
 void InfeasiblePresolver::dominsn_nogoods(vector<nogood>& Nogoods) {
-  map<PresolverInsn2Class2,vector<operation>> M;
-  vector<pair<PresolverInsnClass,vector<operation>>> R;
+  // exclude instructions that imply alignment and the null instruction
+  vector<int> A;
+  A.push_back(NULL_INSTRUCTION);
+  for(const vector<int>& tuple : input.aligned) {
+      instruction i = tuple[1], j = tuple[3];
+      A.push_back(i);
+      A.push_back(j);
+  }
+  sort(A.begin(), A.end());
+  A.erase(unique(A.begin(), A.end()), A.end());
   // build M: potential alt. insns, their reg classes, and operations in which they occur
+  map<PresolverInsn2Class2,vector<operation>> M;
   for(operation o : input.O) {
     vector<instruction> is(input.instructions[o]);
     for(unsigned i=0; i<is.size(); i++)
-      for(unsigned j=i+1; j<is.size(); j++)
-	if(is[i] != NULL_INSTRUCTION && input.lat[o][i] == input.lat[o][j]) {
-	  PresolverInsn2Class2 iicc;
-	  iicc.insn1 = is[i];
-	  iicc.insn2 = is[j];
-	  iicc.class1 = input.rclass[o][i];
-	  iicc.class2 = input.rclass[o][j];
-	  M[iicc].push_back(o);
-	}
+      if(!ord_contains(A, is[i]))
+	for(unsigned j=i+1; j<is.size(); j++)
+	  if(!ord_contains(A, is[j]))
+	    if(input.lat[o][i] == input.lat[o][j]) {
+	      PresolverInsn2Class2 iicc;
+	      iicc.insn1 = is[i];
+	      iicc.insn2 = is[j];
+	      iicc.class1 = input.rclass[o][i];
+	      iicc.class2 = input.rclass[o][j];
+	      M[iicc].push_back(o);
+	    }
   }
   // build R: actual dominated insn, their reg classes, and operations in which they occur
+  vector<pair<PresolverInsnClass,vector<operation>>> R;
   for(const pair<PresolverInsn2Class2,vector<operation>>& t_os : M) {
     instruction i1 = t_os.first.insn1;
     instruction i2 = t_os.first.insn2;

@@ -1028,6 +1028,28 @@ constraint
 % 	)
 %     );
 
+%% spill callee-saved if and only if some temp interfers with it
+constraint
+    if card(index_set(calleesaved_spill))>0 then
+	let {int: nrows = card(index_set_1of2(cs_spill_transpose)),
+	     int: ncols = card(index_set_2of2(cs_spill_transpose)),
+             set of int: css_ops = {cs_spill_transpose[i,j] | i in 1..nrows, j in 1..ncols},
+             set of int: preass_ops = {y | y in 0..MAXO where op_type[y] in {TYPE_IN,TYPE_CALL,TYPE_TAIL,TYPE_FUN}},
+	     set of int: tcands = {y | y in 0..MAXT where not (temp_definer[y] in css_ops union preass_ops)}} in (
+	    forall(j in 1..ncols) (
+	        let {int: theop = cs_spill_transpose[1,j],
+		     int: thepu = min(op_operands[theop]),
+		     int: thetu = max(operand_temps[thepu]),
+		     int: thepd = temp_def[thetu],
+		     int: thea = min(k in index_set(preassign_reg) where preassign_operand[k]=thepd)(preassign_reg[k]),
+		     int: thew = temp_width[thetu]} in (
+		    % trace("a[\(theop)] <-> exists(ti in \(tcands))(r[ti]+temp_width[ti] > \(thea) && r[ti] in 0..\(thea+thew-1))\n",true)
+		    a[theop] <-> exists(ti in tcands)(r[ti]+temp_width[ti] > thea /\ r[ti] in 0..thea+thew-1)
+		)
+	    )
+	)
+    else true endif;
+
 %% break symmetries among which callee-saved to spill
 constraint
     if card(index_set(calleesaved_spill))>0 then
