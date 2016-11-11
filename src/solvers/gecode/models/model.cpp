@@ -122,6 +122,14 @@ BoolVar Model::presolver_lit_var(presolver_lit &l) {
     instruction in = l[2];
     unsigned int ii = find_index(input->instructions[o], in);
     return var(i(o) != ii);
+  } else if (l[0] == PRESOLVER_OPERAND_CLASS) {
+    assert(l.size() == 3);
+    operand p = l[1];
+    register_class c = l[2];
+    IntArgs cs(input->atoms[c]);
+    BoolVar toc(*this, 0, 1);
+    dom(*this, ry(p), IntSet(cs), toc);
+    return toc;
   } else {
     GECODE_NEVER;
   }

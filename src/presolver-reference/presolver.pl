@@ -90,9 +90,6 @@ DiffTemp ::= Pset
 DiffReg ::= Pset
 
 // For the given operands, the given temps are interchangeable
-// Interpretation 1:
-// for the operands in Pset that do use Tset, the temporaries must be non-decreasing
-// Interpretation 2:
 /  let Tset = [T1,T2,T3...]
 // among Pset, T1 must precede any use of T2, which must precede any use of T3, etc.
 DomOp ::= [Pset,Tset]
@@ -140,6 +137,7 @@ Lit ::= [0,P,Q] // the temp of P is the temp of Q
       | [5,T,U] // temps T and U have overlapping live ranges
       | [6,T]   // temp T uses a caller-saved register
       | [7,O,I] // i(O) != I
+      | [8,P,C] // operand P is connected to reg in class C
 
 B ::= Boolean
 I ::= integer // instruction
@@ -252,7 +250,7 @@ presolve_avl(AVL0, AVL24, Quota) :-
 	before_vs_nogoods(Before0, Before, Nogoods1, Nogoods2),
 	gen_dominates(MAXI, Dominates1, []),
 	difftemps(AVL1, MAXI, LastUse, DiffTempsCliques),
-	Nogoods2 = Nogoods3, % no_temp_pairs(AVL1, Nogoods2, Nogoods3), % redundant as of 15 Dec 2015
+	dominating_insns(AVL1, Nogoods2, Nogoods3),
 	gen_infeasible(AVL1, MAXI, Before, Alldiffs1, Nogoods3, Nogoods4),
 	findall(N, redefined_operand_nogood(Opnd2Lat, N), Nogoods4, Nogoods4c),
 	findall(Fact, (cur_difftemp(Fact0), strip_p(Fact0,Fact)), DiffTemps1, DiffTempsCliques),
@@ -342,6 +340,7 @@ presolve_avl(AVL0, AVL24, Quota) :-
 	findall([P,Q,N,BP2],
 		(member([P,Q,N,BP1],CondBeforePrecedences1), filter_condition(BP1,JNogoods5s,BP2), BP2\==[]),
 		CondBeforePrecedences2),
+	% dag_analysis(AVL1),
 	gen_predecessors_successors(AVL1, Predecessors, Successors),
 	quasi_adjacent(AVL1, QuasiAdjacent),
 	detect_cycles(Precedences3, CycleJNogoods),
@@ -1127,87 +1126,99 @@ ord_pairof([X|Ys], X, Y) :-
 ord_pairof([_|Ys], X, Y) :-
 	ord_pairof(Ys, X, Y).
 
-/***
-%% snippet of fileExists.ext.uni
+% suppress e.g. ARM STORE insn if STORE_T can do the job
+dominating_insns(AVL, Nogoods1, Nogoods6) :-
+	avl_fetch(lat, AVL, Lat),
+	avl_fetch(instructions, AVL, Instructions),
+	avl_fetch(class, AVL, Class),
+	avl_fetch(con, AVL, Con),
+	avl_fetch(dur, AVL, Dur),
+	avl_fetch(atoms, AVL, Atoms),
+	(   foreach(Lato,Lat),
+	    foreach(Iso,Instructions),
+	    foreach(Classo,Class),
+	    fromto(KL1,KL2,KL7,[])
+	do  length(Iso,N),
+	    (   N<2 -> KL2 = KL7
+	    ;   (   for(I,0,N-2),
+		    fromto(KL2,KL3,KL6,KL7),
+		    param(Lato,Iso,Classo,N)
+		do  nth0(I, Lato, Latoi),
+		    nth0(I, Iso, Isoi),
+		    nth0(I, Classo, Classoi),
+		    (   Isoi = 0 -> KL3 = KL6
+		    ;   (   for(J,I+1,N-1),
+			    fromto(KL3,KL4,KL5,KL6),
+			    param(Lato,Iso,Classo,Latoi,Isoi,Classoi)
+			do  nth0(J, Lato, Latoj),
+			    nth0(J, Iso, Isoj),
+			    nth0(J, Classo, Classoj),
+			    (   Latoi \== Latoj -> KL4 = KL5
+			    ;   KL4 = [t(Isoi,Classoi,Isoj,Classoj)|KL5]
+			    )
+			)
+		    )
+		)
+	    )
+	),
+	sort(KL1, Tuples),
+	(   foreach(t(I1,C1,I2,C2),Tuples),
+	    fromto(Rules1,Rules2,Rules3,[]),
+	    param(Con,Dur,Atoms)
+	do  nth0(I1, Con, Con1),
+	    nth0(I2, Con, Con2),
+	    nth0(I1, Dur, Dur1),
+	    nth0(I2, Dur, Dur2),
+	    (   all_lesseq(Con1, Con2),
+		all_lesseq(Dur1, Dur2),
+		all_subseteq(C1, C2, Atoms)
+	    ->  Rules2 = [rule(I1,I2,C1)|Rules3]
+	    ;   all_lesseq(Con2, Con1),
+		all_lesseq(Dur2, Dur1),
+		all_subseteq(C2, C1, Atoms)
+	    ->  Rules2 = [rule(I2,I1,C2)|Rules3]
+	    ;   Rules2 = Rules3
+	    )
+	),
+	length(Instructions, MAXO),
+	(   for(O,0,MAXO-1),
+	    fromto(Nogoods1,Nogoods2,Nogoods5,Nogoods6),
+	    param(Rules1)
+	do  cur_operation(O,_,Insns,Uses,Defs),
+	    append(Uses, Defs, Opnds),
+	    (   foreach(rule(J1,J2,Conds),Rules1),
+		fromto(Nogoods2,Nogoods3,Nogoods4,Nogoods5),
+		param(O,Opnds,Insns)
+	    do  (   member(J1,Insns),
+		    member(J2,Insns)
+		->  (   foreach(Cond,Conds),
+			foreach(Opnd,Opnds),
+			foreach(r(t(Opnd)) in Cond,Rest)
+		    do  true
+		    ),
+		    Nogoods3 = [[i(O)=J2|Rest]|Nogoods4]
+		;   Nogoods3 = Nogoods4
+		)
+	    )
+	).
 
-    i36: [p117{t56},p118{t57},p119{t58},p120{t59},p121{t60},p122{t61},p123{t62},p124{t63},p125{t64},p126{t65},p127{t66}] <- (in) []
-    i37: [p129{-, t67}] <- {null, move, sw} [p128{-, t57}]
-    i38: [p131{-, t68}] <- {null, move, sw} [p130{-, t56}]
-    i39: [p133{-, t69}] <- {null, move, sw} [p132{-, t57}]
-    i40: [p135{-, t70}] <- {null, move, sw} [p134{-, t58}]
-    i41: [p137{-, t71}] <- {null, move, lw} [p136{-, t57, t67, t69}]
-    i42: [p139{t72}] <- lw ["%call16(fclose)",p138{t57, t67, t69, t71, t74}] (reads: [m])
-    i43: [p141{-, t73}] <- {null, move, lw} [p140{-, t58, t70}]
-    i44: [p143{-, t74}] <- {null, move, lw} [p142{-, t57, t67, t69}]
-    i45: [p147{t75}:$2,p148{t76}:$3,p149{t77}:$4,p150{t78}:$5,p151{t79}:$6,p152{t80}:$7,p153{t81}:$8,p154{t82}:$9,p155{t83}:$10,p156{t84}:$11,p157{t85}:$12,p158{t86}:$13,p159{t87}:$14,p160{t88}:$15] <- jalr [p144{t72}:$25,p145{t57, t67, t69, t71, t74}:$gp,p146{t58, t70, t73}:$4] (writes: [m])
-    i46: [] <- (kill) [p161{t75},p162{t76},p163{t77},p164{t78},p165{t79},p166{t80},p167{t81},p168{t82},p169{t83},p170{t84},p171{t85},p172{t86},p173{t87},p174{t88}]
-    i47: [p176{-, t89}] <- {null, move, lw} [p175{-, t56, t68}]
-    i48: [] <- (out) [p177{t59},p178{t60},p179{t61},p180{t62},p181{t63},p182{t64},p183{t65},p184{t66},p185{t56, t68, t89}]
 
-    Furthermore, p185 = p186 = p116 = p117{t56}.
 
-    So if p185{t68} and p130{t56}, then t68 = t56, and i38 is a useless copy.
-       If p185{t89} and p175{t56}, then t89 = t56, and i47 is a useless copy.
-    Hence:
-      t(185) != 68 \/ t(130) != 56 [in fact t(185) != 68]
-      t(185) != 89 \/ t(175) != 56
-    "nogoods": [[[185,68],[130,56]], [[185,89],[175,56]]]
-***/
 
-%% The above is now handled by a more general gen_infeasible.
+all_lesseq(Xs, Ys) :-
+	(   foreach(X,Xs),
+	    foreach(Y,Ys)
+	do  X =< Y
+	).
 
-% no_temp_pairs(AVL1) -->
-% 	{avl_fetch(strictly_congr, AVL1, Congr)},
-% 	{avl_fetch(preassign, AVL1, Preassign)},
-% 	{   foreach([P1,R1],Preassign),
-% 	    foreach(R1-P1,KL1)
-% 	do  true
-% 	},
-% 	{keysort(KL1, KL2)},
-% 	{keyclumped(KL2, KL3)},
-% 	{   foreach(_-Cl,KL3),
-% 	    fromto(Classes1,[Cl|Classes2],Classes2,Congr)
-% 	do  true
-% 	},
-% 	(   foreach(Ps,Classes1)
-% 	do  % split the class into def + use
-% 	    {   foreach(P,Ps),
-% 		foreach(U1-P,KL4)
-% 	    do  cur_operand(P, _, U1, _)
-% 	    },
-% 	    {keysort(KL4, KL5)},
-% 	    {keyclumped(KL5, KL6)},
-% 	    (   {KL6 = [0-Defs,1-Uses]}
-% 	    ->  (   foreach(D,Defs),
-% 		    param(Uses)
-% 		do  (   {cur_operand(D, _, _, [TD])}
-% 		    ->  (   foreach(U,Uses),
-% 			    param(TD)
-% 			do  {cur_operand(U, _, _, TempsU)},
-% 			    (   {TempsU = [TD|Alts]}
-% 			    ->  (   foreach(A,Alts),
-% 				    param(U, TD)
-% 				do  gen_nogoods(U, A, TD)
-% 				)
-% 			    ;   []
-% 			    )
-% 			)
-% 		    ;   []
-% 		    )
-% 		)
-% 	    ;   []
-% 	    )
-% 	).
-
-% gen_nogoods(U, A, TD) -->
-% 	{cur_temp(A, _, _, I)},
-% 	{cur_operation(I, _, _, [Use|_], _)},
-% 	{cur_operand(Use, _, _, TempsI)},
-% 	{member(TD, TempsI)}, !,
-% 	(   {ord_subset(TempsI, [-1,TD])} -> [[p(U)=t(A)]]
-% 	;   [[p(U)=t(A),p(Use)=t(TD)]]
-% 	).
-% gen_nogoods(_, _, _) --> [].
+all_subseteq(Xs, Ys, Atoms) :-
+	(   foreach(X,Xs),
+	    foreach(Y,Ys),
+	    param(Atoms)
+	do  nth0(X, Atoms, XSet),
+	    nth0(Y, Atoms, YSet),
+	    ord_subset(XSet, YSet)
+	).
 
 gen_dominates(MAXI) -->
 	{   for(I,0,MAXI),
@@ -2419,6 +2430,8 @@ lit_to_json(cs(T2)) --> !,
 	[[/*JTAG*/6,T2]].
 lit_to_json(i(O)\=I) --> !,
 	[[/*JTAG*/7,O,I]].
+lit_to_json(r(t(P)) in C) --> !,
+	[[/*JTAG*/8,P,C]].
 
 temp_to_operand(T, P, Nogood) :-
 	(   member(p(P)=t(T), Nogood) -> true
@@ -3141,6 +3154,102 @@ gen_data_precedences1(D, I, P, Q, TCond, Opnd2Lat) -->
 	    )
 	).
 
+dag_analysis(AVL) :-
+	avl_fetch(ops, AVL, Ops),
+	avl_fetch(precs, AVL, Precs),
+	(   foreach(Op,Ops),
+	    foreach(Last,Lasts)
+	do  last(Op, Last)
+	),
+	(   foreach([A,B],Precs),
+	    foreach(L-(A-B),KL1),
+	    param(Lasts)
+	do  (member(L,Lasts), L >= B -> true)
+	),
+	keysort(KL1, KL2),
+	keyclumped(KL2, KL3),
+	(   foreach(Out-Edges,KL3)
+	do  reduce_edges(Edges, EdgesH),
+	    vertices_edges_to_ugraph([], EdgesH, Hasse1),
+	    dag_ensure(Hasse1, Out, Hasse2),
+	    dag_partition_nodes(Hasse2, PartNodes, []),
+	    dag_partitions(Hasse2, PartNodes, Partitions),
+	    (   foreach(Partition,Partitions)
+	    do  dag_regions(Partition)
+	    )
+	).
+
+dag_ensure(G1, Sink, G2) :-
+	(   foreach(V-Ns1,G1),
+	    foreach(V-Ns2,G2),
+	    param(Sink)
+	do  (   Ns1=[], V<Sink -> Ns2 = [Sink]
+	    ;   Ns2 = Ns1
+	    )
+	).
+
+dag_partition_nodes(G) -->
+	{G = [Source-_|_]},
+	(   foreach(V-Ns,G),
+	    fromto(Source,Latest1,Latest2,_)
+	do  ({V = Latest1} -> [V] ; []),
+	    {   Ns = [] -> Latest2 = Latest1
+	    ;   last(Ns, N),
+		Latest2 is max(Latest1,N)
+	    }
+	).
+
+dag_partitions(G, [_,_], [G]) :- !.
+dag_partitions(G, [_|Sinks], Parts) :-
+	edges(G, Edges),
+	(   foreach(A-B,Edges),
+	    foreach(L-(A-B),KL1),
+	    param(Sinks)
+	do  (member(L,Sinks), L >= B -> true)
+	),
+	keysort(KL1, KL2),
+	keyclumped(KL2, KL3),
+	(   foreach(_-Edges2,KL3),
+	    foreach(Part,Parts)
+	do  vertices_edges_to_ugraph([], Edges2, Part)
+	).
+
+dag_regions(G) :-
+	transpose_ugraph(G, H),
+	empty_avl(AVL0),
+	(   foreach(Vi-Psi,H),
+	    fromto(AVL0,AVL1,AVL4,_),
+	    param(H)
+	do  (   foreach(Vj-_,H),
+		fromto(AVL1,AVL2,AVL3,AVL4),
+		param(Vi,Psi)
+	    do  (   Vi < Vj -> AVL2 = AVL3
+		;   r_of_predecessors(Vj, Psi, AVL2, RS1),
+		    sort(RS1, RS2),
+		    (   RS2 = []
+		    ->  (   member(Vj, Psi)
+			->  avl_store(r(Vj,Vi), AVL2, Vi, AVL3)
+			;   AVL2 = AVL3
+			)
+		    ;   RS2 = [R]
+		    ->  avl_store(r(Vj,Vi), AVL2, R, AVL3)
+		    ;   avl_store(r(Vj,Vi), AVL2, Vi, AVL3),
+			print_message(warning, region(Vj,Vi))
+		    )
+		)
+	    )
+	).
+
+r_of_predecessors(Vj, Ps, AVL, RS1) :-
+	(   foreach(Vk,Ps),
+	    fromto(RS1,RS2,RS3,[]),
+	    param(AVL,Vj)
+	do  (   avl_fetch(r(Vj,Vk), AVL, R)
+	    ->  RS2 = [R|RS3]
+	    ;   RS2 = RS3
+	    )
+	).
+
 gen_predecessors_successors(AVL, Predecessors1, Successors1) :-
 	avl_fetch(precs, AVL, Precs),
 	(   foreach([X,Y],Precs),
@@ -3379,7 +3488,7 @@ gen_active_tables(AVL1, MAXI, MAXP, MAXR, MAXT,
 	avl_fetch(copyrel, AVL1, CopyRel),
 	retractall(tmp_table(_,_,_)),
 	retractall(copy_table(_,_)),
-	core_constraints(CallerSaved, Congr, Adjacent, Dominates1, Aligned, ADist, AllJNogoods2,
+	core_constraints(CallerSaved, Atoms, Congr, Adjacent, Dominates1, Aligned, ADist, AllJNogoods2,
 			 Preassign, DiffTemps, DiffRegs, DomOps, QuasiAdjacent,
 			 MAXI, MAXP, Core, Core1),
 	instruction_constraints(Atoms, Class, Domuses, LastUse, MAXR,

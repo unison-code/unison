@@ -191,6 +191,10 @@ string show(const PresolverInstrCond);
 
 string show(const PresolverValuePrecedeChain);
 
+string show(const PresolverInsnClass);
+
+string show(const PresolverInsn2Class2);
+
 string show(const PresolverActiveTable);
 
 string show(const PresolverCopyTmpTable);

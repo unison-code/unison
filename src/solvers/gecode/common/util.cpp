@@ -96,6 +96,23 @@ string show(const PresolverValuePrecedeChain pvc) {
   return s.str();
 }
 
+string show(const PresolverInsnClass t) {
+  stringstream s;
+  s << "[" << show(t.insn)
+    << ", " << show(t.rclass) << "]";
+  return s.str();
+}
+
+string show(const PresolverInsn2Class2 t) {
+  stringstream s;
+  s << "[" << show(t.insn1)
+    << ", " << show(t.insn2)
+    << ", " << show(t.class1)
+    << ", " << show(t.class2)
+    << "]";
+  return s.str();
+}
+
 string show(const PresolverActiveTable t) {
   stringstream s;
   s << "[" << show(t.os) << ", " << show(t.tuples) << "]";
@@ -429,6 +446,9 @@ bool in_block(presolver_lit & l, block b, const Parameters * input) {
   } else if (l[0] == PRESOLVER_NO_OPERATION) {
     operation o = l[1];
     return (input->oblock[o] == b);
+  } else if (l[0] == PRESOLVER_OPERAND_CLASS) {
+    operand p = l[1];
+    return (input->pb[p] == b);
   } else {
     GECODE_NEVER;
   }

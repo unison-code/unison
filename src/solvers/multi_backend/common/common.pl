@@ -180,7 +180,7 @@ model(AVL, Vars, scalar_product(Freq,OutCs), BBs, frame(Mandatory,Instructions),
 	do  [a(M3) #= 1]
 	),
 	% CONSTRAINTS
-	core_constraints(CallerSaved, Congr, Adjacent, Dominates, Aligned, ADist, Nogoods,
+	core_constraints(CallerSaved, Atoms, Congr, Adjacent, Dominates, Aligned, ADist, Nogoods,
 			 Preassign, DiffTemps, DiffRegs, DomOps, QuasiAdjacent,
 			 MAXO, MAXOPND),
 	constrain_definer_reg(MAXOPND),
@@ -241,9 +241,9 @@ model(AVL, Vars, scalar_product(Freq,OutCs), BBs, frame(Mandatory,Instructions),
 				Preassign, MinLive, MemAssign),
 	% [MC] order live ranges for intra-block congruences
 	(   foreach([P,Q,Json],Before),
-	    param(CSRange)
+	    param(CSRange,Atoms)
 	do  [Cond #=> le(t(P)) #=< ls(t(Q))],
-	    {translate_condition(Json, Cond, CSRange)}
+	    {translate_condition(Json, Cond, CSRange, Atoms)}
 	),
 	% [RCAS] max temporary usage
 	(   foreach([Ps4,T4,UB],MaxTemp)
@@ -263,7 +263,7 @@ model(AVL, Vars, scalar_product(Freq,OutCs), BBs, frame(Mandatory,Instructions),
 	    foreach(M2,OptionalMin),
 	    foreach(bb(Isucc..Imax,OPNDsucc..OPNDmax,Tsucc..Tmax,Reals,Calls,M1,M2,Optional,COrder),BBs),
 	    fromto(bb(-1,-1,-1),bb(Iprev,OPNDprev,Tprev),bb(Imax,OPNDmax,Tmax),_),
-	    param(Operands,CSRange,CEESRange)
+	    param(Operands,CSRange,Atoms,CEESRange)
 	do  {Isucc is Iprev+1},
 	    {OPNDsucc is OPNDprev+1},
 	    {Tsucc is Tprev+1},
@@ -314,11 +314,11 @@ model(AVL, Vars, scalar_product(Freq,OutCs), BBs, frame(Mandatory,Instructions),
 	% [MC] valid combinations of a(_) and t(_) variables
 	tmp_table_constraints(TmpTables),
 	% [MC] alldiffs at call sites
-	across_call_constraints(Across, CallerSaved, CSRange, MAXWIDTH),
+	across_call_constraints(Across, CallerSaved, CSRange, Atoms, MAXWIDTH),
 	set_across_call_constraints(SetAcross, CallerSaved, CSRange),
 	memory_domination_constraints(Atoms),
 	precedences_and_resources(MAXO, Precedences,
-				  Dep, Dist, Instructions, Ops, ResSet, DurT, Cap, CSRange),
+				  Dep, Dist, Instructions, Ops, ResSet, DurT, Cap, CSRange, Atoms),
 	callee_saved_spill(CalleeSavedSpill, CSSpill, Ops),
 	activators(Activators, Instructions),
 				% predecessors
@@ -581,13 +581,13 @@ register_set(Op, Atoms, RegSet) :-
 	nth0(Op, Atoms, AtomsOp),
 	list_to_fdset(AtomsOp, RegSet).
 
-across_call_constraints(Across, CallerSaved, CSRange, MaxW) -->
+across_call_constraints(Across, CallerSaved, CSRange, Atoms, MaxW) -->
 	(   foreach([O,Extra,Clump],Across),
-	    param(CallerSaved,CSRange,MaxW)
+	    param(CallerSaved,CSRange,Atoms,MaxW)
 	do  (   foreach([T1,Disj1],Clump),
 		foreach(item(if(Disj4,r(T1),NT1),W),Terms),
-		param(O,CSRange,MaxW)
-	    do  {translate_condition(Disj1, Disj3, CSRange)},
+		param(O,CSRange,Atoms,MaxW)
+	    do  {translate_condition(Disj1, Disj3, CSRange, Atoms)},
 		{Default = (ls(T1) #=< c(O) #/\ le(T1) #> c(O)
 			   /** #/\ #\ (r(T1) in CSRange) -- why was it here? **/
 			   )},
@@ -655,29 +655,33 @@ set_across_expression(Set, O, P, item(rs(P),Width), [is(P),rs(P),lss(P),les(P),w
 	[element(is(P), LESet, les(P))],
 	[lss(P) #=< c(O), les(P) #> c(O)].
 
-translate_condition(Disj1, Disj3, CSRange) :-
+translate_condition(Disj1, Disj3, CSRange, Atoms) :-
 	(   foreach(Conj1,Disj1),
 	    foreach(Conj3,Disj2),
-	    param(CSRange)
+	    param(CSRange,Atoms)
 	do  (   foreach([Tag|Args],Conj1),
 		foreach(Cond,Conj2),
-		param(CSRange)
-	    do  translate_lit(Tag, Args, Cond, CSRange)
+		param(CSRange,Atoms)
+	    do  translate_lit(Tag, Args, Cond, CSRange, Atoms)
 	    ),
 	    conjify(Conj2, Conj3)
 	),
 	disjify(Disj2, Disj3).
 
-translate_lit(0, [P,Q], t(P)#=t(Q), _).
-translate_lit(1, [P,T], t(P)#=T, _).
-translate_lit(2, [O], a(O), _).
-translate_lit(3, [O,I], i(O)#=I, _).
-translate_lit(4, [P,Q], (ls(t(P)) #< le(t(Q)) #/\ ls(t(Q)) #< le(t(P))), _).
-translate_lit(5, [T,U], (ls(T) #< le(U) #/\ ls(U) #< le(T)), _).
-translate_lit(6, [T], r(T) in CSRange, CSRange).
-translate_lit(7, [O,I], i(O)#\=I, _).
+translate_lit(0, [P,Q], t(P)#=t(Q), _, _).
+translate_lit(1, [P,T], t(P)#=T, _, _).
+translate_lit(2, [O], a(O), _, _).
+translate_lit(3, [O,I], i(O)#=I, _, _).
+translate_lit(4, [P,Q], (ls(t(P)) #< le(t(Q)) #/\ ls(t(Q)) #< le(t(P))), _, _).
+translate_lit(5, [T,U], (ls(T) #< le(U) #/\ ls(U) #< le(T)), _, _).
+translate_lit(6, [T], r(T) in CSRange, CSRange, _).
+translate_lit(7, [O,I], i(O)#\=I, _, _).
+translate_lit(8, [P,C], r(t(P)) in Range, _, Atomes) :-
+	nth0(C, Atomes, Atom),
+	list_to_fdset(Atom, Set),
+	fdset_to_range(Set, Range).
 
-core_constraints(CallerSaved, Congr, Adjacent, Dominates, Aligned, ADist, Nogoods,
+core_constraints(CallerSaved, Atoms, Congr, Adjacent, Dominates, Aligned, ADist, Nogoods,
 		 Preassign, DiffTemps, DiffRegs, DomOps, QuasiAdjacent, MAXO, MAXOPND) -->
 	/***
 	% before rematerialization
@@ -797,8 +801,8 @@ core_constraints(CallerSaved, Congr, Adjacent, Dominates, Aligned, ADist, Nogood
 	{list_to_fdset(CallerSaved, CSSet)},
 	{fdset_to_range(CSSet, CSRange)},
 	(   foreach(Nogood,Nogoods),
-	    param(CSRange)
-	do  {translate_condition([Nogood], Conj, CSRange)},
+	    param(CSRange,Atoms)
+	do  {translate_condition([Nogood], Conj, CSRange, Atoms)},
 	    [#\ Conj]
 	),
 	% [MC] sets of different temporaries
@@ -1064,19 +1068,19 @@ dur_con(Dur, Con, MAXO) -->
 % capture all precedences and pass to cumulative
 % precedences come from presolver
 precedences_and_resources(MAXO, Precedences,
-			  _, _, _, Ops, ResSet, DurT, Cap, CSRange) -->
+			  _, _, _, Ops, ResSet, DurT, Cap, CSRange, Atoms) -->
 	{extra_data_precedences(MAXO, QVars1, Goals1, Goals2)},
-	{cond_precedences(Precedences, CSRange, QVars2, Goals2, Goals3)},
+	{cond_precedences(Precedences, CSRange, Atoms, QVars2, Goals2, Goals3)},
 	{append(QVars1, QVars2, QVars3)},
 	{sort(QVars3, QVars)},
 	{resources(QVars, Ops, ResSet, DurT, Cap, Goals3, [])},
 	[let(QVars,Goals1)].
 
-cond_precedences(Precedences, CSRange, QVars) -->
+cond_precedences(Precedences, CSRange, Atoms, QVars) -->
 	(   foreach([I,J,K,Json],Precedences),
 	    foreach(Dis,QVars),
-	    param(CSRange)
-	do  {translate_condition(Json, Cond, CSRange)},
+	    param(CSRange,Atoms)
+	do  {translate_condition(Json, Cond, CSRange, Atoms)},
 	    (   {I<J}		% avoid having both dis(A,B) and dis(B,A)
 	    ->  {Dis = dis(I,J)},
 		[Cond #=> dis(I,J) #>= K]

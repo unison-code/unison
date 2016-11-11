@@ -274,6 +274,9 @@ void InfeasiblePresolver::pass1(vector<temporand_set>& Alldiffs, vector<nogood>&
   // F <- F union regdomain_nogoods()
   regdomain_nogoods(Nogoods);
 
+  // F <- F union dominsn_nogoods()
+  dominsn_nogoods(Nogoods);
+
   // sort and purge duplicates
   sort(Nogoods.begin(), Nogoods.end());
   Nogoods.erase(unique(Nogoods.begin(), Nogoods.end()), Nogoods.end());
@@ -470,6 +473,66 @@ void InfeasiblePresolver::regdomain_nogoods(vector<nogood>& Nogoods) {
 	  Nogoods.push_back(c);
 	}
       }
+    }
+  }
+}
+
+void InfeasiblePresolver::dominsn_nogoods(vector<nogood>& Nogoods) {
+  map<PresolverInsn2Class2,vector<operation>> M;
+  vector<pair<PresolverInsnClass,vector<operation>>> R;
+  // build M: potential alt. insns, their reg classes, and operations in which they occur
+  for(operation o : input.O) {
+    vector<instruction> is(input.instructions[o]);
+    for(unsigned i=0; i<is.size(); i++)
+      for(unsigned j=i+1; j<is.size(); j++)
+	if(is[i] != NULL_INSTRUCTION && input.lat[o][i] == input.lat[o][j]) {
+	  PresolverInsn2Class2 iicc;
+	  iicc.insn1 = is[i];
+	  iicc.insn2 = is[j];
+	  iicc.class1 = input.rclass[o][i];
+	  iicc.class2 = input.rclass[o][j];
+	  M[iicc].push_back(o);
+	}
+  }
+  // build R: actual dominated insn, their reg classes, and operations in which they occur
+  for(const pair<PresolverInsn2Class2,vector<operation>>& t_os : M) {
+    instruction i1 = t_os.first.insn1;
+    instruction i2 = t_os.first.insn2;
+    vector<register_class> c1 = t_os.first.class1;
+    vector<register_class> c2 = t_os.first.class2;
+    PresolverInsnClass ic;
+    for(resource r : input.R)
+      if(input.con[i1][r] > input.con[i2][r] || input.dur[i1][r] > input.dur[i2][r])
+	goto next1;
+    for(unsigned j=0; j<c1.size(); j++)
+      if(!subseteq(input.atoms[c1[j]], input.atoms[c2[j]]))
+	goto next1;
+    ic.insn = i2;
+    ic.rclass = c1;
+    R.push_back(make_pair(ic,t_os.second));
+    goto next2;
+  next1:
+    for(resource r : input.R)
+      if(input.con[i2][r] > input.con[i1][r] || input.dur[i2][r] > input.dur[i1][r])
+	goto next2;
+    for(unsigned j=0; j<c1.size(); j++)
+      if(!subseteq(input.atoms[c2[j]], input.atoms[c1[j]]))
+	goto next2;
+    ic.insn = i1;
+    ic.rclass = c2;
+    R.push_back(make_pair(ic,t_os.second));
+  next2:
+    ;
+  }
+  // emit nogoods
+  for(const pair<PresolverInsnClass,vector<operation>>& ic_os : R) {
+    for(operation o : ic_os.second) {
+      nogood c = {{PRESOLVER_OPERATION, o, ic_os.first.insn}};
+      vector<operand> ps = input.operands[o];
+      vector<register_class> rc = ic_os.first.rclass;
+      for(unsigned j=0; j<ps.size(); j++) 
+	c.push_back({PRESOLVER_OPERAND_CLASS, ps[j], rc[j]});
+      Nogoods.push_back(c);
     }
   }
 }

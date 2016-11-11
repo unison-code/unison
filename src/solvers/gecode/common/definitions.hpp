@@ -103,6 +103,7 @@ const int PRESOLVER_OVERLAPPING_OPERANDS = 4;
 const int PRESOLVER_OVERLAPPING_TEMPORARIES = 5;
 const int PRESOLVER_CALLER_SAVED_TEMPORARY = 6;
 const int PRESOLVER_NO_OPERATION = 7;
+const int PRESOLVER_OPERAND_CLASS = 8;
 
 class PresolverActiveTable {
 public:
@@ -261,6 +262,36 @@ public:
   vector<vector<register_atom>> rss;
   bool operator==(const PresolverValuePrecedeChain& that) const {
     return (ts == that.ts) && (rss == that.rss);
+  }
+};
+
+class PresolverInsnClass {
+public:
+  instruction insn;
+  vector<register_class> rclass;
+  bool operator<(const PresolverInsnClass& that) const {
+    if (insn != that.insn) return insn < that.insn;
+    else return rclass < that.rclass;
+  }
+  bool operator==(const PresolverInsnClass& that) const {
+    return (insn == that.insn) && (rclass == that.rclass);
+  }
+};
+
+class PresolverInsn2Class2 {
+public:
+  instruction insn1;
+  instruction insn2;
+  vector<register_class> class1;
+  vector<register_class> class2;
+  bool operator<(const PresolverInsn2Class2& that) const {
+    if (insn1 != that.insn1) return insn1 < that.insn1;
+    else if (insn2 != that.insn2) return insn2 < that.insn2;
+    else if (class1 != that.class1) return class1 < that.class1;
+    else return class2 < that.class2;
+  }
+  bool operator==(const PresolverInsn2Class2& that) const {
+    return (insn1 == that.insn1) && (insn2 == that.insn2) && (class1 == that.class1) && (class2 == that.class2);
   }
 };
 

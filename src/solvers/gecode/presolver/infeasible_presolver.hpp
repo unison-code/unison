@@ -109,6 +109,8 @@ private:
 
   void regdomain_nogoods(vector<nogood>& Nogoods);
 
+  void dominsn_nogoods(vector<nogood>& Nogoods);
+
   // Auguments U with possible assignments for related use operands,
   // auguments D with set of unrelated use operands.
   pair<equality_set, vector<temporand_set > >

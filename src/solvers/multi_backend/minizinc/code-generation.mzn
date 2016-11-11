@@ -35,6 +35,7 @@ include "globals.mzn";
 %% solver parameters
 
 bool: good_cumulative;
+bool: optimize_cycles;
 
 %% some constants
 %% N.B. keep in sync with modeler!  see also isreal()!
@@ -395,7 +396,8 @@ predicate eval_literal(int: l) = (
 	else if tag=5 then live_overlap(arg1,arg2)
 	else if tag=6 then r[arg1] in callersaved
 	else if tag=7 then i[arg1] != arg2
-        else false endif endif endif endif endif endif endif endif
+	else if tag=8 then rt[arg1] in atom_regs[arg2]
+        else false endif endif endif endif endif endif endif endif endif
     )
 );
 
@@ -477,7 +479,15 @@ constraint
 	    % copysize*copysum[b] + realtotal <= bundlesize*(c[max(bb_ops[b])]-1)
 	)
     ) /\
-    obj = sum(b in 1..MAXB) (bb_frequency[b] * c[max(bb_ops[b])]);
+    if optimize_cycles then
+      obj = sum(b in 1..MAXB) (bb_frequency[b] * c[max(bb_ops[b])])
+    else
+      obj = sum(o in 0..MAXO)(res_con[1,if fixedop(o) then
+					  min(op_instructions[o])
+				        else
+					  i[o]
+				        endif])
+    endif;
 
 %% domains
 constraint
