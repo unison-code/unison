@@ -40,6 +40,7 @@ module MachineIR.Predicates
          isMachineInstructionPropertyDefs,
          -- * MachineOperand predicates
          isMachineReg,
+         isMachineImm,
          isMachineBlockRef,
          isMachineFrameIndex,
          isMachineFrameObject,
@@ -131,6 +132,9 @@ isMachineInstructionPropertyDefs _ = False
 
 isMachineReg MachineReg {} = True
 isMachineReg _ = False
+
+isMachineImm MachineImm {} = True
+isMachineImm _ = False
 
 isMachineBlockRef MachineBlockRef {} = True
 isMachineBlockRef _ = False
