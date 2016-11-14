@@ -160,7 +160,7 @@ isMachinePreUnison mf =
   let mis = concatMap mbInstructions (mfBlocks mf)
   in any isMachinePreUnisonInstruction mis
 
-isMachinePreUnisonInstruction MachineBundle {} = True
+isMachinePreUnisonInstruction MachineBundle {} = False
 isMachinePreUnisonInstruction MachineSingle {msOperands = mos} =
   any isMachinePreUnisonOperand mos
 
