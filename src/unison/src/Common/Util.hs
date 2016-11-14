@@ -27,6 +27,7 @@ module Common.Util (
         applyMap,
         fromListMult,
         mapIf,
+        applyIf,
         mapAppend,
         inverseMap,
         -- * Tuple functions
@@ -111,7 +112,9 @@ applyMap k2t k = fromMaybe k (M.lookup k k2t)
 
 fromListMult l = M.fromListWith (++) $ map (second toSingleton) l
 
-mapIf p f ls = [if p l then f l else l | l <- ls]
+mapIf p f ls = map (applyIf p f) ls
+
+applyIf p f e = if p e then f e else e
 
 mapAppend (k, v) = M.insertWith (++) k v
 

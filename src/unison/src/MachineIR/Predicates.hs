@@ -47,7 +47,9 @@ module MachineIR.Predicates
          isMachineProperty,
          isMachineNullReg,
          isMachineDebugLocation,
-         isMachineConstantPoolIndex
+         isMachineConstantPoolIndex,
+         -- * MachineFunction predicates
+         isMachinePreUnison
        )
        where
 
@@ -153,3 +155,20 @@ isMachineDebugLocation _ = False
 
 isMachineConstantPoolIndex MachineConstantPoolIndex {} = True
 isMachineConstantPoolIndex _ = False
+
+isMachinePreUnison mf =
+  let mis = concatMap mbInstructions (mfBlocks mf)
+  in any isMachinePreUnisonInstruction mis
+
+isMachinePreUnisonInstruction MachineBundle {} = True
+isMachinePreUnisonInstruction MachineSingle {msOperands = mos} =
+  any isMachinePreUnisonOperand mos
+
+isMachinePreUnisonOperand MachineTemp {} = True
+isMachinePreUnisonOperand MachineSubTemp {} = True
+isMachinePreUnisonOperand MachineSubRegIndex {} = True
+isMachinePreUnisonOperand MachineFrameIndex {} = True
+isMachinePreUnisonOperand MachineFrameObject {} = True
+isMachinePreUnisonOperand MachineFrameSize {} = True
+isMachinePreUnisonOperand MachineRegClass {} = True
+isMachinePreUnisonOperand _ = False

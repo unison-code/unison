@@ -70,10 +70,6 @@ mapToTargetMachineInstruction f =
     concatMapToMachineInstruction
     (toSingleton . applyIf (not . isMachineVirtual) f)
 
-applyIf p f a
-    | p a = f a
-    | otherwise = a
-
 concatMapToMachineInstruction =
     mapToMachineBlock . concatMapToMachineInstructionBlock
 
