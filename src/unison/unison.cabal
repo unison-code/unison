@@ -114,6 +114,7 @@ Library
                    MachineIR.Transformations.RenameMachineBlocks
                    MachineIR.Transformations.RemoveEmptyBlocks
                    MachineIR.Transformations.SimplifyFallthroughs
+                   MachineIR.Transformations.MergeBlocks
                    MachineIR.Transformations.PrepareForEmission
 
                    Common.Util

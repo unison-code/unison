@@ -15,10 +15,12 @@ module MachineIR.Transformations.SimplifyFallthroughs
 import Common.Util
 import MachineIR.Transformations.RemoveEmptyBlocks
 import MachineIR.Transformations.DropExplicitFallthroughs
+import MachineIR.Transformations.MergeBlocks
 
 simplifyFallthroughs mf target = fixpoint (simplifyFallthroughsFor target) mf
 
 simplifyFallthroughsFor target mf =
-    let mf'  = removeEmptyBlocks mf target
-        mf'' = dropExplicitFallthroughs mf' target
-    in mf''
+    let mf1 = removeEmptyBlocks mf target
+        mf2 = dropExplicitFallthroughs mf1 target
+        mf3 = mergeBlocks mf2 target
+    in mf3
