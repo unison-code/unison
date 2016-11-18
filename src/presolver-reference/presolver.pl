@@ -330,9 +330,10 @@ presolve_avl(AVL0, AVL24, Quota) :-
 	gen_before_precedences(CondBefore5, CondBeforePrecedences1),
 	gen_fixed_precedences(AVL1, FixedPrecedences1, []),
 	gen_data_precedences(AVL1, MAXI, Opnd2Lat, LastUse, DataPrecedences1, []),
+	gen_region_precedences(AVL1, RegionPrecedences1),
 	% including CondBeforePrecedences gives LOTS of spurious cycles,
 	% too many to be useful
-	append([BeforePrecedences1,FixedPrecedences1,DataPrecedences1], Precedences1),
+	append([BeforePrecedences1,FixedPrecedences1,DataPrecedences1,RegionPrecedences1], Precedences1),
 	sort(Precedences1, Precedences2), % there are duplicates
 	findall([P,Q,N,BP2],
 		(member([P,Q,N,BP1],Precedences2), filter_condition(BP1,JNogoods5s,BP2), BP2\==[]),
@@ -340,8 +341,7 @@ presolve_avl(AVL0, AVL24, Quota) :-
 	findall([P,Q,N,BP2],
 		(member([P,Q,N,BP1],CondBeforePrecedences1), filter_condition(BP1,JNogoods5s,BP2), BP2\==[]),
 		CondBeforePrecedences2),
-	% dag_analysis(AVL1),
-	gen_predecessors_successors(AVL1, Predecessors, Successors),
+	Predecessors=[], Successors=[], % gen_predecessors_successors(AVL1, Predecessors, Successors),
 	quasi_adjacent(AVL1, QuasiAdjacent),
 	detect_cycles(Precedences3, CycleJNogoods),
 	kernel_set(CycleJNogoods, JNogoods5, AllJNogoods1),
@@ -2848,7 +2848,7 @@ gen_fixed_precedences(AVL1) -->
 		;   (   foreach(DIJK,DistIJ2),
 			foreach(OIK,InstructionsI2),
 			param(I,J,Cond1)
-		    do  [[I, J, DIJK, Cond3]],
+		    do  [[I, J, DIJK, [Cond3]]],
 			{ord_union(Cond1, [[/*JTAG*/3,I,OIK]], Cond3)}
 		      % [a(I) #/\ a(J) #/\ i(I)#=OIK #=> dis(I,J) #>= DIJK]
 		    )
@@ -3154,7 +3154,7 @@ gen_data_precedences1(D, I, P, Q, TCond, Opnd2Lat) -->
 	    )
 	).
 
-dag_analysis(AVL) :-
+gen_region_precedences(AVL, Precedences1) :-
 	avl_fetch(ops, AVL, Ops),
 	avl_fetch(precs, AVL, Precs),
 	(   foreach(Op,Ops),
@@ -3162,29 +3162,30 @@ dag_analysis(AVL) :-
 	do  last(Op, Last)
 	),
 	(   foreach([A,B],Precs),
-	    foreach(L-(A-B),KL1),
+	    fromto(KL1,KL2,KL3,[]),
 	    param(Lasts)
-	do  (member(L,Lasts), L >= B -> true)
-	),
-	keysort(KL1, KL2),
-	keyclumped(KL2, KL3),
-	(   foreach(Out-Edges,KL3)
-	do  reduce_edges(Edges, EdgesH),
-	    vertices_edges_to_ugraph([], EdgesH, Hasse1),
-	    dag_ensure(Hasse1, Out, Hasse2),
-	    dag_partition_nodes(Hasse2, PartNodes, []),
-	    dag_partitions(Hasse2, PartNodes, Partitions),
-	    (   foreach(Partition,Partitions)
-	    do  dag_regions(Partition)
+	do  cur_operation(A, Atype, _, _, _),
+	    cur_operation(B, Btype, _, _, _),
+	    (   Atype\==define,
+		Btype\==kill
+	    ->  (member(L,Lasts), L >= B -> true),
+		KL2 = [L-(A-B)|KL3]
+	    ;   KL2 = KL3
 	    )
-	).
-
-dag_ensure(G1, Sink, G2) :-
-	(   foreach(V-Ns1,G1),
-	    foreach(V-Ns2,G2),
-	    param(Sink)
-	do  (   Ns1=[], V<Sink -> Ns2 = [Sink]
-	    ;   Ns2 = Ns1
+	),
+	keysort(KL1, KL4),
+	keyclumped(KL4, KL5),
+	(   foreach(_-Edges,KL5),
+	    fromto(Precedences1,Precedences2,Precedences5,[]),
+	    param(AVL)
+	do  reduce_edges(Edges, EdgesH),
+	    vertices_edges_to_ugraph([], EdgesH, Hasse),
+	    dag_partition_nodes(Hasse, PartNodes, []),
+	    dag_partitions(Hasse, PartNodes, Partitions),
+	    (   foreach(Partition,Partitions),
+		fromto(Precedences2,Precedences3,Precedences4,Precedences5),
+		param(AVL)
+	    do  dag_regions(AVL, Partition, Precedences3, Precedences4)
 	    )
 	).
 
@@ -3214,28 +3215,31 @@ dag_partitions(G, [_|Sinks], Parts) :-
 	do  vertices_edges_to_ugraph([], Edges2, Part)
 	).
 
-dag_regions(G) :-
+dag_regions(InputAVL, G, Precs1, Precs6) :-
 	transpose_ugraph(G, H),
 	empty_avl(AVL0),
-	(   foreach(Vi-Psi,H),
+	H = [_|H2],
+	(   foreach(Vi-Psi,H2),
 	    fromto(AVL0,AVL1,AVL4,_),
-	    param(H)
-	do  (   foreach(Vj-_,H),
+	    fromto(Precs1,Precs2,Precs5,Precs6),
+	    param(G,H,InputAVL)
+	do  (   fromto(H,[Vj-_|H3],H3,[Vi-_|_]),
 		fromto(AVL1,AVL2,AVL3,AVL4),
-		param(Vi,Psi)
-	    do  (   Vi < Vj -> AVL2 = AVL3
-		;   r_of_predecessors(Vj, Psi, AVL2, RS1),
-		    sort(RS1, RS2),
-		    (   RS2 = []
-		    ->  (   member(Vj, Psi)
-			->  avl_store(r(Vj,Vi), AVL2, Vi, AVL3)
-			;   AVL2 = AVL3
-			)
-		    ;   RS2 = [R]
-		    ->  avl_store(r(Vj,Vi), AVL2, R, AVL3)
-		    ;   avl_store(r(Vj,Vi), AVL2, Vi, AVL3),
-			print_message(warning, region(Vj,Vi))
-		    )
+		fromto(Precs2,Precs3,Precs4,Precs5),
+		param(Vi,Psi,InputAVL,G,H)
+	    do  r_of_predecessors(Vj, Psi, AVL2, RS1),
+		sort(RS1, RS2),
+		(   RS2 = []
+		->  (   member(Vj, Psi)
+		    ->  avl_store(r(Vj,Vi), AVL2, Vi, AVL3)
+		    ;   AVL2 = AVL3
+		    ),
+		    Precs3 = Precs4
+		;   RS2 = [R]
+		->  avl_store(r(Vj,Vi), AVL2, R, AVL3),
+		    Precs3 = Precs4		    
+		;   avl_store(r(Vj,Vi), AVL2, Vi, AVL3),
+		    emit_region(InputAVL, Vj, Vi, G, H, Precs3, Precs4)
 		)
 	    )
 	).
@@ -3249,6 +3253,50 @@ r_of_predecessors(Vj, Ps, AVL, RS1) :-
 	    ;   RS2 = RS3
 	    )
 	).
+
+%% TODO: assume that Sink can't be in the same bundle as any other op in the region
+%% Verify this for Hexagon!!
+emit_region(AVL, Source, Sink, G, H, Ps0, Ps) :-
+	avl_fetch(cap, AVL, Cap),
+	avl_fetch(con, AVL, Con),
+	reachable(Source, G, Down),
+	reachable(Sink, H, Up),
+	ord_intersection(Down, Up, Region),
+	ord_subtract(Region, [Source,Sink], Inside),
+	(   foreach(O,Inside),
+	    foreach(Inc,Incs),
+	    param(Con)
+	do  op_min_inc(O, Con, Inc)
+	),
+	transpose(Incs, IncsT),
+	region_lbs(IncsT, Cap, LBs),
+	max_member(LB, LBs),
+	LB > 2, !,
+	Ps0 = [[Source,Sink,LB,[[]]] | Ps],
+	print_message(warning, region(Region, LB)), !.
+emit_region(_, _, _, _, _, Ps, Ps).
+
+op_min_inc(O, Con, Inc) :-
+	cur_operation(O, _, Insns, _, _),
+	(   foreach(I,Insns),
+	    foreach(Coni,Conis),
+	    param(Con)
+	do  nth0(I, Con, Coni)
+	),
+	transpose(Conis,ConisT),
+	(   foreach(Is,ConisT),
+	    foreach(Ismin,Inc)
+	do  min_member(Ismin, Is)
+	).
+
+region_lbs(Vecs, Caps, LBs) :-
+	(   foreach(Vec,Vecs),
+	    foreach(Cap,Caps),
+	    foreach(LB,LBs)
+	do  sumlist(Vec, Sum),
+	    LB is (Sum-1)//Cap+2
+	).
+
 
 gen_predecessors_successors(AVL, Predecessors1, Successors1) :-
 	avl_fetch(precs, AVL, Precs),
