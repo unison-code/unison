@@ -242,6 +242,23 @@ vector<vector<vertex>> Digraph::max_cliques() {
 }
 
 
+// Find longest path, assuming we have a DAG, assuming ascending vertices by top sort
+int Digraph::dag_longest_path(vertex source, vertex sink, vector<vertex> between) {
+  map<vertex,int> L;
+
+  L[source] = L[sink] = 0;
+  for(vertex v : between)
+    L[v] = 0;
+  for(vertex v : neighbors(source))
+    if(L[v] < L[source]+1)
+      L[v] = L[source]+1;
+  for(vertex b : between)
+    for(vertex v : neighbors(b))
+      if(L[v] < L[b]+1)
+	L[v] = L[b]+1;
+  return L[sink];
+}
+
 vector<vector<vertex> > Digraph::scc() {
   vector<vector<vertex> > sccomponents;
   // Based on Kosaraju's algorithm

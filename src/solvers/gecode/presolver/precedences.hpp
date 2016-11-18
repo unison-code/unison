@@ -53,17 +53,19 @@ typedef vector<PresolverPrecedence> precedence_set;
 
 // JSON.precedences: p.47 of the specification
 // GenFixedPrecedences: p.49
-precedence_set gen_fixed_precedences(const Parameters& input);
+void gen_fixed_precedences(const Parameters& input, precedence_set& PI);
 
 // GenDataPrecedences(OpndToLat)
-precedence_set gen_data_precedences(const Parameters& input,
-				    map<operand,map<instruction,latency>>& opnd_to_lat);
+void gen_data_precedences(const Parameters& input,
+			  map<operand,map<instruction,latency>>& opnd_to_lat,
+			  precedence_set& PI);
 
 // GenDataPrecedences1(d, o, p, q, Conj, OpndToLat);
-precedence_set gen_data_precedences1(operation d, operation o,
-				     operand p, operand q,
-				     const presolver_conj& Conj,
-				     map<operand,map<instruction,latency>>& opnd_to_lat);
+void gen_data_precedences1(operation d, operation o,
+			   operand p, operand q,
+			   const presolver_conj& Conj,
+			   map<operand,map<instruction,latency>>& opnd_to_lat,
+			   precedence_set& PI);
 
 class PrecedenceEdge {
     public:
@@ -76,17 +78,28 @@ class PrecedenceEdge {
         }
 };
 
-precedence_set gen_before_precedences(const Parameters& input,
-				      const vector<PresolverBefore>& before);
+void gen_before_precedences(const Parameters& input,
+			    const vector<PresolverBefore>& before,
+			    precedence_set& PI);
 
 multimap<PrecedenceEdge, presolver_conj> gen_before_precedences1(const Parameters& input,
 								 operand p,
 								 operand q,
 								 const presolver_disj& disj);
 
+void gen_region_precedences(const Parameters& input, precedence_set& PI);
+
+void partition_nodes(Digraph& G, vector<operation>& pnodes);
+
+void gen_region_per_partition(const Parameters& input, const Digraph& G, const vector<operation>& pnodes, precedence_set& Pi, const vector<vector<int>>& minres);
+
+void gen_region(const Parameters& input, operation vj, operation vi, Digraph& G, Digraph& H, precedence_set& Pi, const vector<vector<int>>& minres);
+
 void normalize_precedences(const Parameters& input, const precedence_set& P, precedence_set& P1);
 
 map<operand, map<instruction, latency>> compute_opnd_to_lat(const Parameters& input);
+
+#if 0
 
 void gen_predecessors_successors(Parameters& input);
 
@@ -127,5 +140,7 @@ public:
   void post(const vector<operation>& ops);
 
 };
+
+#endif
 
 #endif

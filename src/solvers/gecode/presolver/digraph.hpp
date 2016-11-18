@@ -106,6 +106,8 @@ public:
   // Warning: assumes not a digraph, but an undirected graph
   vector<vector<vertex>> max_cliques();
 
+  // Return longest path, assuming we have a DAG, assuming ascending vertices by top sort
+  int dag_longest_path(vertex source, vertex sink, vector<vertex> between);
 
   // Returns all strongly connected components.
   // Each component is represented by a set of its vertices.

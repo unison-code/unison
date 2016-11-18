@@ -3166,28 +3166,38 @@ gen_region_precedences(AVL, Precedences1) :-
 	    param(Lasts)
 	do  cur_operation(A, Atype, _, _, _),
 	    cur_operation(B, Btype, _, _, _),
-	    (   Atype\==define,
-		Btype\==kill
-	    ->  (member(L,Lasts), L >= B -> true),
-		KL2 = [L-(A-B)|KL3]
+	    (   edge_for_region(Atype, Btype, A, B, A1, B1)
+	    ->  (member(L,Lasts), L >= B1 -> true),
+		KL2 = [L-(A1-B1)|KL3]
 	    ;   KL2 = KL3
 	    )
 	),
 	keysort(KL1, KL4),
 	keyclumped(KL4, KL5),
 	(   foreach(_-Edges,KL5),
-	    fromto(Precedences1,Precedences2,Precedences5,[]),
+	    fromto(Precedences1,Precedences2,Precedences8,[]),
 	    param(AVL)
 	do  reduce_edges(Edges, EdgesH),
 	    vertices_edges_to_ugraph([], EdgesH, Hasse),
 	    dag_partition_nodes(Hasse, PartNodes, []),
 	    dag_partitions(Hasse, PartNodes, Partitions),
+	    (   foreach(I-J,EdgesH),
+		fromto(Precedences2,Precedences3,Precedences4,Precedences5)
+	    do  Precedences3 = [[I,J,1,[[]]] | Precedences4]
+	    ),
 	    (   foreach(Partition,Partitions),
-		fromto(Precedences2,Precedences3,Precedences4,Precedences5),
+		fromto(Precedences5,Precedences6,Precedences7,Precedences8),
 		param(AVL)
-	    do  dag_regions(AVL, Partition, Precedences3, Precedences4)
+	    do  dag_regions(AVL, Partition, Precedences6, Precedences7)
 	    )
 	).
+
+edge_for_region(function, function, _, _, _, _) :- !, fail.
+edge_for_region(define, _, _, _, _, _) :- !, fail.
+edge_for_region(_, kill, _, _, _, _) :- !, fail.
+edge_for_region(_, pack, _, _, _, _) :- !, fail.
+edge_for_region(call, _, A, B, A1, B) :- A1 is A+1, A1<B, !.
+edge_for_region(_, _, A, B, A, B).
 
 dag_partition_nodes(G) -->
 	{G = [Source-_|_]},
@@ -3254,8 +3264,6 @@ r_of_predecessors(Vj, Ps, AVL, RS1) :-
 	    )
 	).
 
-%% TODO: assume that Sink can't be in the same bundle as any other op in the region
-%% Verify this for Hexagon!!
 emit_region(AVL, Source, Sink, G, H, Ps0, Ps) :-
 	avl_fetch(cap, AVL, Cap),
 	avl_fetch(con, AVL, Con),
@@ -3271,10 +3279,36 @@ emit_region(AVL, Source, Sink, G, H, Ps0, Ps) :-
 	transpose(Incs, IncsT),
 	region_lbs(IncsT, Cap, LBs),
 	max_member(LB, LBs),
-	LB > 2, !,
+	longest_path(Region, G, LP),
+	LB > LP, !,
 	Ps0 = [[Source,Sink,LB,[[]]] | Ps],
 	print_message(warning, region(Region, LB)), !.
 emit_region(_, _, _, _, _, Ps, Ps).
+
+longest_path(Region, G, LP) :-
+	(   foreach(I,Region),
+	    foreach(I-0,KL)
+	do  true
+	),
+	ord_list_to_avl(KL, AVL1),
+	(   foreach(J,Region),
+	    fromto(AVL1,AVL2,AVL5,AVL6),
+	    param(G)
+	do  neighbors(J, G, Ns),
+	    avl_fetch(J, AVL2, Jlen),
+	    Update is Jlen+1,
+	    (   foreach(N,Ns),
+		fromto(AVL2,AVL3,AVL4,AVL5),
+		param(Update)
+	    do  (   avl_fetch(N, AVL3, Nlen),
+		    Nlen < Update
+		->  avl_store(N, AVL3, Update, AVL4)
+		;   AVL3 = AVL4
+		)
+	    )
+	),
+	last(Region, Sink),
+	avl_fetch(Sink, AVL6, LP).	
 
 op_min_inc(O, Con, Inc) :-
 	cur_operation(O, _, Insns, _, _),

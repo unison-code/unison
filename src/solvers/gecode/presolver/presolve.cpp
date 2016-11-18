@@ -246,9 +246,13 @@ void presolve(Parameters & input, PresolverOptions & options) {
   // 18: Precedences <- GenBeforePrecedences() U GenFixedPrecedences() U GenDataPrecedences()
 
   map<operand, map<instruction, latency>> opnd2lat = compute_opnd_to_lat(input);
-  precedence_set precedences = ord_union(gen_before_precedences(input, input.before),
-					 ord_union(gen_fixed_precedences(input),
-						   gen_data_precedences(input, opnd2lat)));
+  precedence_set precedences;
+  gen_before_precedences(input, input.before, precedences);
+  gen_fixed_precedences(input, precedences);
+  gen_data_precedences(input, opnd2lat, precedences);
+  gen_region_precedences(input, precedences);
+  sort(precedences.begin(), precedences.end());
+  precedences.erase(unique(precedences.begin(), precedences.end()), precedences.end());
   if (timeout(t, options, "Precedences")) return;
 
   // 19: JSON.precedences <- NormalizePrecedences()
@@ -271,7 +275,9 @@ void presolve(Parameters & input, PresolverOptions & options) {
   // 20: JSON.precedences2 <- NormalizePrecedences()
 
   temp.clear();
-  for(const PresolverPrecedence& pred : gen_before_precedences(input, input.before2)) {
+  precedence_set precedences2;
+  gen_before_precedences(input, input.before2, precedences2);
+  for(const PresolverPrecedence& pred : precedences2) {
     operation p = pred.i;
     operation q = pred.j;
     int n = pred.n;
@@ -311,20 +317,20 @@ void presolve(Parameters & input, PresolverOptions & options) {
   // 25: JSON.predecessors
   // 26: JSON.successors
 
-  gen_predecessors_successors(input);
-  if (timeout(t, options, "predecessors, successors")) return;
+  // gen_predecessors_successors(input);
+  // if (timeout(t, options, "predecessors, successors")) return;
 
-  // 27: JSON.quasi_adjacent
+  // 25: JSON.quasi_adjacent
 
   quasi_adjacent(input);
   if (timeout(t, options, "quasi_adjacent")) return;
 
-  // 28: GENDOMINATES()
+  // 26: GENDOMINATES()
 
   gen_dominates(input);
   if (timeout(t, options, "gen_dominates")) return;
 
-  // 29: DETECTCYCLES(Nogoods)
+  // 27: DETECTCYCLES(Nogoods)
 
   vector<nogood> Nogoods3, n3;
 
@@ -341,25 +347,25 @@ void presolve(Parameters & input, PresolverOptions & options) {
 
   if (timeout(t, options, "detect_cycles")) return;
 
-  // 30: JSON.nogoods <- KERNELSET(Assert.new_nogood, Nogoods) \ DNogoods
+  // 28: JSON.nogoods <- KERNELSET(Assert.new_nogood, Nogoods) \ DNogoods
 
   input.nogoods = ord_difference(kernel_set(PA.new_nogood, Nogoods), DNogoods);
   if (timeout(t, options, "nogoods")) return;
 
-  // 31: GENACTIVETABLES(), JSON.tmp_tables
+  // 29: GENACTIVETABLES(), JSON.tmp_tables
 
   input.compute_derived();	// refresh for Model:: methods
   gen_active_tables(input, t, options);
   if (timeout(t, options, "gen_active_tables")) return;
 
-  // 32: FILTERACTIVETABLES(), JSON.active_tables, JSON.dominates
+  // 30: FILTERACTIVETABLES(), JSON.active_tables, JSON.dominates
 
   filter_active_tables(input);	// sets input.active_tables, input.dominates
   if (timeout(t, options, "filter_active_tables")) return;
 
-  // 33: for all b ∈ JSON.B do
-  // 34: JSON.optional_min[b] <- OPTIONALMINACTIVETABLES(b)
-  // 35: end for
+  // 31: for all b ∈ JSON.B do
+  // 32: JSON.optional_min[b] <- OPTIONALMINACTIVETABLES(b)
+  // 33: end for
 
   for(block b : input.B)
     input.optional_min[b] = optional_min_active_tables(input, b);

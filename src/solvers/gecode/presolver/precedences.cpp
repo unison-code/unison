@@ -32,10 +32,7 @@
  */
 #include "precedences.hpp"
 
-precedence_set gen_fixed_precedences(const Parameters& input) {
-    // PI = empty set
-    precedence_set PI;
-
+void gen_fixed_precedences(const Parameters& input, precedence_set& PI) {
     // For all Dep in JSON.dep, Dist in JSON.dist, in parallel
     assert(input.dep.size() == input.dist.size());
     for(unsigned int i = 0; i < input.dep.size(); ++i) {
@@ -79,13 +76,13 @@ precedence_set gen_fixed_precedences(const Parameters& input) {
 	        // PI <- PI U {<o, o', d', {}>,<o, o',-d', {}}
                 PresolverPrecedence pred(o, o1, d1, {{}});
                 PresolverPrecedence pred1(o1, o, -d1, {{}});
-                vector_insert(PI, pred);
-                vector_insert(PI, pred1);
+                PI.push_back(pred);
+                PI.push_back(pred1);
             } else if (same_all_dij) {
                 // else if all values of dij are the same d'
                 PresolverPrecedence pred(o, o1, d1, presolver_disj({Conj}));
                 // PI <- PI U {<o, o', d', {Conj}}
-                vector_insert(PI, pred);
+                PI.push_back(pred);
             } else {
                 // For all i' in Io, d' in dij, in parallel
                 assert(Io.size() == dij.size());
@@ -96,20 +93,16 @@ precedence_set gen_fixed_precedences(const Parameters& input) {
                     presolver_conj c = Conj;
                     vector_insert(c, {PRESOLVER_OPERATION, o, i1});
                     PresolverPrecedence pred(o, o1, d1, presolver_disj({c}));
-                    vector_insert(PI, pred);
+                    PI.push_back(pred);
                 }
             }
         }
-
     }
-    return PI;
 }
 
-precedence_set gen_data_precedences(const Parameters& input,
-				    map<operand,map<instruction,latency>>& opnd_to_lat) {
-    // PI = empty set
-    precedence_set PI;
-
+void gen_data_precedences(const Parameters& input,
+			  map<operand,map<instruction,latency>>& opnd_to_lat, 
+			  precedence_set& PI) {
     // For all o in JSON.O
     for(operation o : input.O) {
         // For all q in OperOpnds(o) where q is use
@@ -138,8 +131,8 @@ precedence_set gen_data_precedences(const Parameters& input,
 		  PresolverPrecedence pred(d, o, l, presolver_disj({c}));
 		  PresolverPrecedence pred1(o, d, -l, presolver_disj({c}));
 
-		  vector_insert(PI, pred);
-		  vector_insert(PI, pred1);
+		  PI.push_back(pred);
+		  PI.push_back(pred1);
 		  // else if o is (kill) or (d is (define) and q in JSON.last_use)
 		} else if(o_is_kill || (d_is_define && q_in_last_use)) {
 		  // l <- JSON.minlive[t]
@@ -148,29 +141,29 @@ precedence_set gen_data_precedences(const Parameters& input,
 		  PresolverPrecedence pred(d, o, l, {{}});
 		  PresolverPrecedence pred1(o, d, -l, {{}});
 
-		  vector_insert(PI, pred);
-		  vector_insert(PI, pred1);
+		  PI.push_back(pred);
+		  PI.push_back(pred1);
 		} else if (t == T[0]) {
-		  PI = ord_union(PI, gen_data_precedences1(d, o, p, q, {}, opnd_to_lat));
+		  gen_data_precedences1(d, o, p, q, {}, opnd_to_lat, PI);
 		} else {
 		  // PI <- PI U
 		  // GenDataPrecedences1(d, o, p, q, {eq(p(q), t(t))},
 		  // OpndToLat)
 		  presolver_lit lit = {PRESOLVER_OPERAND_TEMPORARY, q, t};
-		  PI = ord_union(PI, gen_data_precedences1(d, o, p, q, {lit}, opnd_to_lat));
+		  gen_data_precedences1(d, o, p, q, {lit}, opnd_to_lat, PI);
 		}
 	      }
             }
 	  }
         }
     }
-    return PI;
 }
 
-precedence_set gen_data_precedences1(operation d, operation o,
-				     operand p, operand q,
-				     const presolver_conj& Conj,
-				     map<operand,map<instruction,latency>>& opnd_to_lat) {
+void gen_data_precedences1(operation d, operation o,
+			   operand p, operand q,
+			   const presolver_conj& Conj,
+			   map<operand,map<instruction,latency>>& opnd_to_lat,
+			   precedence_set& PI) {
     map<instruction, latency> Lp = opnd_to_lat[p];
     map<instruction, latency> Lq = opnd_to_lat[q];
 
@@ -183,7 +176,7 @@ precedence_set gen_data_precedences1(operation d, operation o,
     latency l = min_Lp + min_Lq;
 
     PresolverPrecedence pd(d,o,l,{Conj});
-    precedence_set PI = precedence_set({pd});
+    PI.push_back(pd);
 
     for(const pair<instruction,latency>& mp : Lp) {
         instruction ip = mp.first;
@@ -201,11 +194,10 @@ precedence_set gen_data_precedences1(operation d, operation o,
 		vector_insert(conj, lit2);
 
                 PresolverPrecedence pd(d, o, lp + lq, {conj});
-                vector_insert(PI, pd);
+                PI.push_back(pd);
             }
         }
     }
-    return PI;
 }
 
 multimap<operation, instruction> build_oI (const presolver_disj& Y) {
@@ -223,15 +215,139 @@ multimap<operation, instruction> build_oI (const presolver_disj& Y) {
     return oI;
 }
 
+void gen_region_precedences(const Parameters& input, precedence_set& PI) {
+    map<block,vector<vector<operation>>> M;
+    vector<vector<int>> minres = vector<vector<int>>(input.O.size());
+    for(operation o : input.O) {
+      minres[o] = vector<int>(input.R.size());
+      for(resource r : input.R) {
+	int minr = 9999;
+	for(instruction i : input.instructions[o]) {
+	  if(minr==0)
+	    break;
+	  else if(minr>input.con[i][r])
+	    minr = input.con[i][r];
+	}
+	minres[o][r] = minr;
+      }
+    }
+    for(const vector<operation>& edge : input.precs) {
+      operation i = edge[0];
+      operation j = edge[1];
+      if (input.type[i] == FUN && input.type[j] == FUN) {
+      } else if (input.type[i] == CALL && i+1 != j) {
+	M[input.oblock[j]].push_back({i+1,j});
+      } else if (input.type[i] != DEFINE && input.type[j] != KILL && input.type[j] != PACK) {
+	M[input.oblock[j]].push_back(edge);
+      }
+    }
+    for(const pair<block,vector<vector<operation>>>& b_edges : M) {
+      vector<operation> pnodes;
+      Digraph G = Digraph(b_edges.second).reduction();
+      partition_nodes(G, pnodes);
+      gen_region_per_partition(input, G, pnodes, PI, minres);
+    }
+}
+
+void partition_nodes(Digraph& G, vector<operation>& pnodes) {
+  operation l = G.vertices()[0];
+  for(operation v : G.vertices()) {
+    if (v==l)
+      pnodes.push_back(v);
+    for(operation n : G.neighbors(v))
+      l = n > l ? n : l;
+  }
+}
+
+void gen_region_per_partition(const Parameters& input, const Digraph& G, const vector<operation>& pnodes, precedence_set& PI, const vector<vector<int>>& minres) {
+  map<operation,vector<pair<operation,operation>>> M;
+  int multiplier = input.O.size();
+  presolver_conj ConjTrue;
+  presolver_disj DisjTrue({ConjTrue});
+
+  for(const pair<operation,operation>& edge : G.edges()) {
+    PresolverPrecedence pred(edge.first, edge.second, 1, DisjTrue);
+    PI.push_back(pred);
+    for(operation b : pnodes) {
+      if(b >= edge.second) {
+	M[b].push_back(edge);
+	break;
+      }
+    }
+  }
+  for(const pair<operation,vector<pair<operation,operation>>>& b_edges : M) {
+    Digraph G = Digraph(b_edges.second);
+    Digraph H = G.transpose();
+    map<operation,operation> R;
+    for(operation vi : H.vertices()) {
+      for(operation vj : H.vertices()) {
+	if (vj >= vi) break;
+	operation vji = multiplier*vj+vi;
+	operation r1 = -1;
+	operation r2 = -1;
+	for(operation vk : H.neighbors(vi)) {
+	  if (r2 > -1) break;
+	  operation vjk = multiplier*vj+vk;
+	  if(R.find(vjk) != R.end()) {
+	    operation Rjk = R[vjk];
+	    if (r1 == -1 || r1 == Rjk)
+	      r1 = Rjk;
+	    else
+	      r2 = Rjk;
+	  }
+	}
+	if(r1 == -1) {
+	  if(ord_contains(H.neighbors(vi),vj)) {
+	    R[vji] = vi;
+	  }
+	} else if(r2 == -1) {
+	  R[vji] = r1;
+	} else {
+	  R[vji] = vi;
+	  gen_region(input, vj, vi, G, H, PI, minres);
+	}
+      }
+    }
+  }
+}
+
+void gen_region(const Parameters& input, operation vj, operation vi, Digraph& G, Digraph& H, precedence_set& PI, const vector<vector<int>>& minres) {
+  int glb = 0;
+  vector<operation> inside = ord_intersection(G.reachables(vj), H.reachables(vi)); // excludes vj, vi
+  for (resource r : input.R) {
+    int lb = -1;
+    for (operation o : inside)
+      lb += minres[o][r];
+    lb = lb / input.cap[r] + 2;
+    glb = lb > glb ? lb : glb;
+  }
+  if (glb > G.dag_longest_path(vj,vi,inside)) {
+    presolver_conj Conj;
+    PresolverPrecedence pred(vj, vi, glb, presolver_disj({Conj}));
+    PI.push_back(pred);
+    // cerr << "* REGION source=" << vj << " sink=" << vi << " lat=" << glb << " inside=" << show(inside) << endl;
+  }
+}
+
 void normalize_precedences(const Parameters& input, const precedence_set& P, precedence_set& P1) {
     // M <- P' <- empty
     map<PrecedenceEdge, presolver_disj> M;
     // For all <src, dest, d, D> in P
-    for(const PresolverPrecedence& p : P) {
-        operation src = p.i;
+    for(unsigned int ii=0; ii<P.size(); ii++) {
+	const PresolverPrecedence& p = P[ii];
+	operation src = p.i;
 	operation dest = p.j;
 	int d = p.n;
 	presolver_disj D = p.d;
+	// check first whether we are subsumed by an uncond precedence with greater latency
+	for(unsigned int jj=ii+1; jj<P.size(); jj++) {
+	  const PresolverPrecedence& p2 = P[jj];
+	  if (p2.i!=src || p2.j!=dest) break;
+	  if (p2.n>=d && p2.d.size()==1 && p2.d[0].size()==0) {
+	    // cerr << "SUBSUMED precedence " << show(p) << endl;
+	    goto next;
+	  }
+	}
         // For all C in D
         for(const presolver_conj& C : D) {
             // C <- { L in C | L != o(o,i) || OperInsns(o) != i}
@@ -251,6 +367,7 @@ void normalize_precedences(const Parameters& input, const precedence_set& P, pre
 	    e.n = d;
             M[e].push_back(conj);
         }
+    next: ;
     }
     // For all <src, dest, d> -> D in M
     for(const pair<PrecedenceEdge, presolver_disj>& ed : M) {
@@ -358,8 +475,9 @@ map<operand, map<instruction, latency>> compute_opnd_to_lat(const Parameters& in
     return M;
 }
 
-precedence_set gen_before_precedences(const Parameters& input,
-				      const vector<PresolverBefore>& before) {
+void gen_before_precedences(const Parameters& input,
+			    const vector<PresolverBefore>& before,
+			    precedence_set& PI) {
     // M <- empty
     multimap<PrecedenceEdge, presolver_conj> M;
     vector<PrecedenceEdge> M_keys; // Storing keys for convenience
@@ -374,7 +492,6 @@ precedence_set gen_before_precedences(const Parameters& input,
 	}
     }
     // return {<p,s,n,KernelSet(Disj, empty)> | <p,s,n> -> Disj in M }
-    precedence_set res;
     for(const PrecedenceEdge& k : M_keys) {
         // Get Disj
         auto range = M.equal_range(k);
@@ -383,9 +500,8 @@ precedence_set gen_before_precedences(const Parameters& input,
             disj.push_back(it->second);
         }
         PresolverPrecedence e(k.i, k.j, k.n, kernel_set(disj, {}));
-        vector_insert(res, e);
+        PI.push_back(e);
     }
-    return res;
 }
 
 void before_rule(const Parameters& input,
@@ -516,6 +632,8 @@ multimap<PrecedenceEdge, presolver_conj> gen_before_precedences1(const Parameter
     }
     return M;
 }
+
+#if 0
 
 /*****************************************************************************
     Code related to:
@@ -691,3 +809,4 @@ void MakeSpanModel::post(const vector<operation>& ops) {
   branch(*this, as, INT_VAR_NONE(), INT_VAL_MIN());
 }
 
+#endif
