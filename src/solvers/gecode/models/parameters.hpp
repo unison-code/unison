@@ -539,6 +539,15 @@ public:
   // whether each operand is global
   vector<bool> global_operand;
 
+  // index of each global operand
+  map<operand, int> global_index;
+
+  // first index of a global operand in each block
+  vector<int> first_global_index;
+
+  // number of global operands in each block
+  vector<int> n_global;
+
   // whether each operand is global and may be disconnected
   vector<bool> global_optional;
 

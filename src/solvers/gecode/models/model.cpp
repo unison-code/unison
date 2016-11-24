@@ -739,7 +739,6 @@ void Model::post_secondary_variable_definitions(block b) {
     post_precedence_definition(b);
   }
   post_temporary_users_definition(b);
-  post_local_operand_latency_slack_definition(b);
 
 }
 
@@ -896,14 +895,6 @@ void Model::post_temporary_users_definition(block b) {
     }
   }
 
-}
-
-void Model::post_local_operand_latency_slack_definition(block b) {
-  for (operand p : input->ope[b]) {
-    if (!input->global_operand[p]) {
-      constraint(s(p) == 0);
-    }
-  }
 }
 
 void Model::post_basic_model_constraints(block b) {

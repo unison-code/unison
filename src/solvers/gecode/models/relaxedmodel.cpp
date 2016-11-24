@@ -68,6 +68,10 @@ BoolVar RelaxedModel::p(operation, operation) {
   GECODE_NEVER;
 }
 
+IntVar RelaxedModel::s(operand) const {
+  GECODE_NEVER;
+}
+
 // Based on the function from model.cpp. This version ignores
 // PRESOLVER_OVERLAPPING_OPERANDS and PRESOLVER_OVERLAPPING_TEMPORARIES
 // by just returning a BoolVar in 0..1

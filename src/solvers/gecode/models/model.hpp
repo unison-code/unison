@@ -251,7 +251,7 @@ public:
 
   SetVar users(temporary t) const { return v_users[temp(t)]; }
 
-  IntVar s(operand p) const { return v_s[opr(p)]; }
+  virtual IntVar s(operand p) const = 0;
 
   virtual IntVar f(block b) const = 0;
 
@@ -365,7 +365,6 @@ public:
   void post_temporary_use_latency_definition(block b);
   void post_precedence_definition(block b);
   void post_temporary_users_definition(block b);
-  void post_local_operand_latency_slack_definition(block b);
 
   void post_basic_model_constraints(block b);
   void post_connected_users_constraints(block b);

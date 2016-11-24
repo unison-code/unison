@@ -72,6 +72,11 @@ BoolVar LocalModel::p(operation o1, operation o2) {
   }
 }
 
+IntVar LocalModel::s(operand p) const {
+  assert(input->global_operand[p]);
+  return v_s[input->global_index[p] - input->first_global_index[b]];
+}
+
 LocalModel::LocalModel(Parameters * p_input, ModelOptions * p_options,
                        IntPropLevel p_ipl,
                        GlobalModel * gs, block p_b) :
@@ -105,10 +110,7 @@ LocalModel::LocalModel(Parameters * p_input, ModelOptions * p_options,
                             IntSet(min_of(input->ope[b]),
                                    max_of(input->ope[b])));
   }
-  if (!P().empty()) {
-    v_s = int_var_array(P().size(), -input->max_lat, input->max_lat);
-  }
-
+  v_s = int_var_array(input->n_global[b], -input->max_lat, input->max_lat);
   v_f   = IntVar(*this, 0, Int::Limits::max);
   if (!options->disable_precedence_variables()) {
     v_p = bool_var_array(input->mandatory[b].size() *

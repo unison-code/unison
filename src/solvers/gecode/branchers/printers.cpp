@@ -121,6 +121,22 @@ void print_alignment_decision(const Space &s, const Brancher&,
   out << "oa(p" << p << ", p" << q  << ")";
 }
 
+void print_slack_assignment_decision(const Space &s, const Brancher&,
+                                     unsigned int alternative,
+                                     IntVar, int goi, const int& slack,
+                                     std::ostream& out) {
+  const Model& m = static_cast<const Model&>(s);
+  operand p = -1;
+  for (operand q : m.input->P)
+    if (m.input->global_operand[q] && m.input->global_index[q] == goi) {
+      p = q;
+      break;
+    }
+  out << "s(p" << p << ") "
+      << (alternative == 0 ? "=" : "!=")
+      << " " << slack;
+}
+
 void print_assignment_decision(const Space &s, const Brancher&,
                                unsigned int alternative,
                                IntVar, int g, const int& ra,

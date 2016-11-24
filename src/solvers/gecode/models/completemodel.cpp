@@ -72,6 +72,11 @@ BoolVar CompleteModel::p(operation o1, operation o2) {
   }
 }
 
+IntVar CompleteModel::s(operand p) const {
+  assert(input->global_operand[p]);
+  return v_s[input->global_index[p]];
+}
+
 CompleteModel::CompleteModel(Parameters * p_input, ModelOptions * p_options,
                          IntPropLevel p_ipl) :
   Model(p_input, p_options, p_ipl)
@@ -105,9 +110,7 @@ CompleteModel::CompleteModel(Parameters * p_input, ModelOptions * p_options,
     v_users = set_var_array(T().size(), IntSet::empty,
                             IntSet(min_of(input->P), max_of(input->P)));
   }
-  if (!P().empty()) {
-    v_s = int_var_array(P().size(), -input->max_lat, input->max_lat);
-  }
+  v_s = int_var_array(sum_of(input->n_global), -input->max_lat, input->max_lat);
   v_gf  = IntVar(*this, 0, Int::Limits::max);
   v_f   = int_var_array(input->B.size(), 0, Int::Limits::max);
 

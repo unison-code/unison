@@ -688,18 +688,25 @@ void Parameters::compute_derived() {
   }
 
   init_vector(global_optional, P.size(), false);
-  int goi = 0;
+  int gi = 0, goi = 0;
   for (block b : B) {
+    first_global_index.push_back(gi);
     first_global_optional_index.push_back(goi);
-    int bgoi = 0;
+    int bgi = 0, bgoi = 0;
     for (operand p : ope[b]) {
-      if (global_operand[p] && temps[p][0] == NULL_TEMPORARY) {
-        global_optional[p] = true;
-        global_optional_index[p] = goi;
-        goi++;
-        bgoi++;
+      if (global_operand[p]) {
+        global_index[p] = gi;
+        gi++;
+        bgi++;
+        if (temps[p][0] == NULL_TEMPORARY) {
+          global_optional[p] = true;
+          global_optional_index[p] = goi;
+          goi++;
+          bgoi++;
+        }
       }
     }
+    n_global.push_back(bgi);
     n_global_optionals.push_back(bgoi);
   }
 

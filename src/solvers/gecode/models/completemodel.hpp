@@ -68,6 +68,8 @@ public:
 
   BoolVar p(operation o, operation j);
 
+  IntVar s(operand p) const;
+
   IntVar gf() const { return v_gf; }
 
   IntVar f(block b) const { return v_f[b]; };

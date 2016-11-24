@@ -81,6 +81,11 @@ void print_alignment_decision(const Space &s, const Brancher& b,
                               BoolVar, int ai, const int&,
                               std::ostream& out);
 
+void print_slack_assignment_decision(const Space &s, const Brancher& b,
+                                     unsigned int alternative,
+                                     IntVar, int goi, const int& slack,
+                                     std::ostream& out);
+
 void print_assignment_decision(const Space &s, const Brancher& b,
                                unsigned int alternative,
                                IntVar, int g, const int& ra,
