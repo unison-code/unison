@@ -1872,11 +1872,20 @@ void Model::post_slack_lower_bound_constraints(block b) {
         constraint(s(p) >= - max(lats));
       } else { // type == OUT
         IntVarArgs lats;
+        bool virtual_definer = true;
         for (temporary t : input->real_temps[p]) {
+          operation o = input->def_opr[t];
+          if (input->type[o] == LINEAR ||
+              input->type[o] == BRANCH ||
+              input->type[o] == CALL ||
+              input->type[o] == TAILCALL ||
+              input->type[o] == COPY) {
+            virtual_definer = false;
+          }
           operand q = input->definer[t];
           lats << var(lt(q));
         }
-        constraint(s(p) >= - max(lats) + 1);
+        constraint(s(p) >= - max(lats) + (virtual_definer ? 0 : 1));
       }
     }
   }
