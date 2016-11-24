@@ -130,6 +130,9 @@ public:
   // users[t]: set of operands that use temporary t
   SetVarArray v_users;
 
+  // s[p]: latency slack of operand p
+  IntVarArray v_s;
+
   IntVar zero, one;
 
   // Useful functions
@@ -246,6 +249,8 @@ public:
 
   SetVar users(temporary t) const { return v_users[temp(t)]; }
 
+  IntVar s(operand p) const { return v_s[opr(p)]; }
+
   virtual IntVar f(block b) const = 0;
 
   // Auxiliary methods
@@ -358,6 +363,7 @@ public:
   void post_temporary_use_latency_definition(block b);
   void post_precedence_definition(block b);
   void post_temporary_users_definition(block b);
+  void post_local_operand_latency_slack_definition(block b);
 
   void post_basic_model_constraints(block b);
   void post_connected_users_constraints(block b);
@@ -399,6 +405,7 @@ public:
   void post_local_congruence_constraints(block b);
   void post_ultimate_source_constraints(block b);
   void post_pack_sink_constraints(block b);
+  void post_slack_lower_bound_constraints(block b);
 
   void post_presolver_constraints(block b);
   void post_minimum_number_of_optional_operations_constraints(block b);

@@ -693,6 +693,12 @@ void GlobalModel::post_branchers(void) {
   branch(*this, v_oa, INT_VAR_NONE(), INT_VAL_MAX(),
          NULL, &print_alignment_decision);
 
+  // slack assignment
+
+  IntArgs zeros(v_s.size());
+  for (int i = 0; i < v_s.size(); i++) zeros[i] = 0;
+  branch(*this, v_s, INT_VAR_NONE(), INT_VAL_NEAR_MIN(zeros));
+
   // register assignment
 
   IntVarArgs prs;

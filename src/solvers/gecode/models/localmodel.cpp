@@ -98,12 +98,15 @@ LocalModel::LocalModel(Parameters * p_input, ModelOptions * p_options,
     v_lt = int_var_array(P().size(), input->min_lat, input->max_lat);
   }
   if (input->bnu[b] > 0) {
-    v_lat = int_var_array(input->bnu[b], input->min_lat, input->max_lat * 2);
+    v_lat = int_var_array(input->bnu[b], -input->max_lat, input->max_lat * 3);
   }
   if (!T().empty()) {
     v_users = set_var_array(T().size(), IntSet::empty,
                             IntSet(min_of(input->ope[b]),
                                    max_of(input->ope[b])));
+  }
+  if (!P().empty()) {
+    v_s = int_var_array(P().size(), -input->max_lat, input->max_lat);
   }
 
   v_f   = IntVar(*this, 0, Int::Limits::max);

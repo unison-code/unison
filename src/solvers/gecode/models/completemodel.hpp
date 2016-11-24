@@ -93,6 +93,7 @@ public:
   void post_global_operand_connection_constraints(void);
   void post_congruence_constraints(void);
   void post_activation_constraints(void);
+  void post_slack_balancing_constraints(void);
 
   void post_improved_model_constraints(void);
 

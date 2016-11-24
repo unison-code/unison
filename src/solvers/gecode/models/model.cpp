@@ -664,6 +664,7 @@ Model::Model(bool share, Model& m) :
   v_lat.update(*this, share, m.v_lat);
   v_p.update(*this, share, m.v_p);
   v_users.update(*this, share, m.v_users);
+  v_s.update(*this, share, m.v_s);
   zero.update(*this, share, m.zero);
   one.update(*this, share, m.one);
 }
@@ -734,6 +735,7 @@ void Model::post_secondary_variable_definitions(block b) {
     post_precedence_definition(b);
   }
   post_temporary_users_definition(b);
+  post_local_operand_latency_slack_definition(b);
 
 }
 
@@ -863,7 +865,7 @@ void Model::post_temporary_use_latency_definition(block b) {
         for (temporary t : input->temps[q])
           if (t != NULL_TEMPORARY) {
             operand p = input->definer[t];
-            constraint(lat(q, t) == lt(p) + lt(q));
+            constraint(lat(q, t) == lt(p) + s(p) + lt(q) + s(q));
           }
 
 }
@@ -890,6 +892,14 @@ void Model::post_temporary_users_definition(block b) {
     }
   }
 
+}
+
+void Model::post_local_operand_latency_slack_definition(block b) {
+  for (operand p : input->ope[b]) {
+    if (!input->global_operand[p]) {
+      constraint(s(p) == 0);
+    }
+  }
 }
 
 void Model::post_basic_model_constraints(block b) {
@@ -1073,14 +1083,16 @@ void Model::post_data_precedences_constraints(block b) {
         for (temporary t : input->temps[q])
           if (t == NULL_TEMPORARY) {
             IntVarArgs pcs;
+            // TODO: can we use a tighter bound here?
             for (temporary t1 : input->real_temps[q])
-              pcs << var(c(input->def_opr[t1]) + lat(q, t1));
+              pcs << var(c(input->def_opr[t1]));
             cs << var(min(pcs));
           } else {
             operand p = input->definer[t];
             operation d = input->oper[p];
-            cs << var(c(d) + lt(q) + max(input->min_active_lat[p], lt(p)));
+            cs << var(c(d) + max(input->min_active_lat[p], lt(p)) + s(p) + lt(q) + s(q));
           }
+
         constraint(c(u) >= element(cs, y(q)));
       }
 
@@ -1224,6 +1236,7 @@ void Model::post_improved_model_constraints(block b) {
     post_local_congruence_constraints(b);
     post_ultimate_source_constraints(b);
     post_pack_sink_constraints(b);
+    post_slack_lower_bound_constraints(b);
   }
 
 }
@@ -1849,6 +1862,31 @@ void Model::post_pack_sink_constraints(block b) {
 
 }
 
+void Model::post_slack_lower_bound_constraints(block b) {
+
+  // The slack of an operand is larger than the latencies of its dependent
+  // operands:
+
+  for (operand p : input->ope[b]) {
+    if (input->global_operand[p]) {
+      if (input->type[input->oper[p]] == IN) {
+        IntVarArgs lats;
+        temporary t = input->single_temp[p];
+        for (operand q : input->users[t]) lats << var(lt(q));
+        constraint(s(p) >= - max(lats));
+      } else { // type == OUT
+        IntVarArgs lats;
+        for (temporary t : input->real_temps[p]) {
+          operand q = input->definer[t];
+          lats << var(lt(q));
+        }
+        constraint(s(p) >= - max(lats) + 1);
+      }
+    }
+  }
+
+}
+
 void Model::post_presolver_constraints(block b) {
 
   if (!options->disable_presolver_constraints()) {
@@ -1984,6 +2022,9 @@ void Model::post_conditional_precedence_constraints(block b) {
     operation o = p.i, j = p.j;
     int n = p.n;
     presolver_disj d = p.d;
+    // FIXME: take into account that dependencies involving delimiters can now
+    // be shorter due to slack variables
+    if (input->delimiter[o] || input->delimiter[j]) continue;
     // TODO: study whether 'precedences' brings any additional propagation
     constraint(presolver_disj_var(d) >> (c(o) + n <= c(j)));
   }

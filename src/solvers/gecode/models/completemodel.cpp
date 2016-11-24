@@ -96,7 +96,7 @@ CompleteModel::CompleteModel(Parameters * p_input, ModelOptions * p_options,
     v_lt = int_var_array(P().size(), input->min_lat, input->max_lat);
   }
   if (input->nu > 0) {
-    v_lat = int_var_array(input->nu, input->min_lat, input->max_lat * 2);
+    v_lat = int_var_array(input->nu, -input->max_lat, input->max_lat * 3);
   }
   if (!options->disable_precedence_variables()) {
     v_p   = bool_var_array(input->accman[input->B.size()], 0, 1);
@@ -104,6 +104,9 @@ CompleteModel::CompleteModel(Parameters * p_input, ModelOptions * p_options,
   if (!T().empty()) {
     v_users = set_var_array(T().size(), IntSet::empty,
                             IntSet(min_of(input->P), max_of(input->P)));
+  }
+  if (!P().empty()) {
+    v_s = int_var_array(P().size(), -input->max_lat, input->max_lat);
   }
   v_gf  = IntVar(*this, 0, Int::Limits::max);
   v_f   = int_var_array(input->B.size(), 0, Int::Limits::max);
@@ -141,6 +144,7 @@ void CompleteModel::post_basic_model_constraints(void) {
   post_global_operand_connection_constraints();
   post_congruence_constraints();
   post_activation_constraints();
+  post_slack_balancing_constraints();
 
 }
 
@@ -186,6 +190,17 @@ void CompleteModel::post_activation_constraints(void) {
     for (operation o : input->activation_class_operations[ac]) as << a(o);
     rel(*this, as, IRT_EQ, ipl);
     constraint((sum(is) > 0) >> a(input->activation_class_representative[ac]));
+  }
+
+}
+
+void CompleteModel::post_slack_balancing_constraints(void) {
+
+  // The slack of adjacent operands is balanced:
+
+  for (vector<operand> adj : input->adjacent) {
+    operand p = adj[0], q = adj[1];
+    constraint((s(p) + s(q)) == 0);
   }
 
 }
