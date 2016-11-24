@@ -14,7 +14,8 @@ Main authors:
 This file is part of Unison, see http://unison-code.github.io
 -}
 module Unison.Analysis.Stalls
-       (BlockingResource (..), exceedsCapacity, resUsages, isActive, toMapTuple)
+       (BlockingResource (..), BlockingResourceState (..),
+        stepCycle, exceedsCapacity, resUsages, isActive, toMapTuple)
     where
 
 import Unison
@@ -24,17 +25,30 @@ data BlockingResource r s =
   BlockingReg (Operand r) |
   BlockingRes s Integer deriving (Eq, Ord, Show)
 
+data BlockingResourceState r s =
+  BlockingResourceState {
+    brsResource   :: BlockingResource r s,
+    brsOccupation :: Integer,
+    brsOffset     :: Integer
+    } deriving (Eq, Ord, Show)
+
+stepCycle brs @ BlockingResourceState {brsOccupation = occ, brsOffset = off}
+  | off > 0  = brs {brsOffset = off - 1}
+  | off == 0 = brs {brsOccupation = occ - 1}
+
 exceedsCapacity cf (r, u) = (cf M.! r - u) < 0
 
 resUsages uf cf o
-    | isBarrier o = [(BlockingRes r c, 1) | (r, c) <- M.toList cf]
+    | isBarrier o = [BlockingResourceState (BlockingRes r c) 1 0
+                      | (r, c) <- M.toList cf]
     | isVirtual o = []
     | otherwise =
-        -- TODO: handle usages with offset different than 0
-        [(BlockingRes r us, occ) |
-         (Usage r us occ off) <- uf $ targetInst $ oInstructions o, off == 0]
+        -- TODO: handle usages with offset less than 0
+        [(BlockingResourceState (BlockingRes r us) occ off) |
+         (Usage r us occ off) <- uf $ targetInst $ oInstructions o, off >= 0]
 
-isActive (BlockingReg _, _) = True
-isActive (BlockingRes _ _, l) = l > 0
+isActive BlockingResourceState {brsResource = BlockingReg {}} = True
+isActive BlockingResourceState {brsResource = BlockingRes {},
+                                brsOccupation = occ} = occ > 0
 
-toMapTuple (BlockingRes r us, _) = (r, us)
+toMapTuple BlockingResourceState {brsResource = BlockingRes r us} = (r, us)

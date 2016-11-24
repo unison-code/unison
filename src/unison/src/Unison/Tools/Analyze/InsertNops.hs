@@ -15,7 +15,6 @@ import Data.List
 import Data.Ord
 import qualified Data.Map as M
 import qualified Data.Set as S
-import Control.Arrow
 import Data.Maybe
 
 import Unison
@@ -39,7 +38,7 @@ insertNops f @ Function {fCode = code} target =
     in f {fCode = code'}
 
 insertBlockNops fs id b @ Block {bCode = code} =
-    let blocked = S.empty :: S.Set (BlockingResource r s, Integer)
+    let blocked = S.empty :: S.Set (BlockingResourceState r s)
         ((_, id'),
          codes) = mapAccumL (insertNopsBefore fs) (blocked, id) code
         code'   = concat codes
@@ -51,14 +50,15 @@ insertNopsBefore fs (blocked, id) o
 insertNopsBefore fs @ (oif, ovf, uf, cf, nf, arf) (blocked, id)
   o @ Bundle {bundleOs = bos} =
     let -- Update blocked list after new cycle
-        blocked'   = S.filter isActive $ S.map (second (\e -> e - 1)) blocked
+        blocked'   = S.filter isActive $ S.map stepCycle blocked
         -- Compute whether there are stalls due to uses of blocked registers
         us         = concatMap (uses arf oif) bos
         stalls     = not $ null $ catMaybes $ map (longestStall ovf blocked') us
         -- Compute whether there are stalls due to exceeding resource capacities
         bUsages    = S.toList $ S.filter isBlockingRes blocked'
         newUsages  = concatMap (resUsages uf cf) bos
-        usages     = combineAdd $ map toMapTuple $ bUsages ++ newUsages
+        usages     = combineAdd $ map toMapTuple $
+                     bUsages ++ filter isBlockingRes newUsages
         exceeds    = any (exceedsCapacity cf) usages
     in if exceeds && null bUsages then
            error ("the following bundle exceeds resource capacity: " ++ show o)
@@ -79,27 +79,31 @@ insertNopsBefore fs @ (oif, ovf, uf, cf, nf, arf) (blocked, id)
                in ((blocked4, id), [o])
 
 uses _ _ o | isVirtual o = []
-uses arf oif o = [(BlockingReg r, l)
+uses arf oif o = [BlockingResourceState (BlockingReg r) l 0
                       | (TemporaryInfo _ l, r) <- zip (fst $ oif o) (oUses o),
                                                   S.member r arf]
 defs _ _ o | isVirtual o = []
-defs arf oif o = [(BlockingReg r, l)
+defs arf oif o = [BlockingResourceState (BlockingReg r) l 0
                       | (TemporaryInfo _ l, r) <- zip (snd $ oif o) (oDefs o),
                                                   S.member r arf]
 
-isBlockingRes (BlockingRes _ _, _) = True
-isBlockingRes _                    = False
+isBlockingRes (BlockingResourceState BlockingRes {} _ 0) = True
+isBlockingRes _ = False
 
-longestStall ovf blocked (r, l) =
+longestStall ovf blocked (BlockingResourceState r l _) =
     let alias  = filter (aliasesWith ovf r) (S.toList blocked)
-        alias' = map (second (\l' -> l + l')) alias
+        alias' = map (incrementOccupationBy l) alias
     in case alias' of
          [] -> Nothing
-         as -> case maximumBy (comparing snd) as of
-                 (_, s) | s > 0 -> Just s
-                 _              -> Nothing
+         as -> case maximumBy (comparing brsOccupation) as of
+                 BlockingResourceState {brsOccupation = s} | s > 0 -> Just s
+                 _ -> Nothing
 
-aliasesWith ovf (BlockingReg r) (BlockingReg r', _) = ovf r r'
+incrementOccupationBy l brs @ BlockingResourceState {brsOccupation = occ} =
+  brs {brsOccupation = occ + l}
+
+aliasesWith ovf (BlockingReg r)
+  BlockingResourceState {brsResource = BlockingReg r'} = ovf r r'
 aliasesWith _ _ _ = False
 
 safeRegOverlap r2as r r'

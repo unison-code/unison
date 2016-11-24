@@ -126,7 +126,7 @@ optResource' _ Cycles = -1
 optResource' r2id (ResourceUsage r) = r2id M.! r
 
 maximumCost :: (Eq i, Show i, Read i, Ord r, Show r, Read r, Ord rc, Show rc,
-                Ord s) =>
+                Ord s, Show s) =>
                Bool -> Bool -> M.Map s Integer -> Goal s ->
                (String, MIR.MachineFunction i r) ->
                [DGraph i r] -> TargetWithOptions i r rc s -> [Block i r] ->

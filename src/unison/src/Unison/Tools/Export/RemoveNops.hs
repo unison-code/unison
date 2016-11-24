@@ -14,7 +14,6 @@ module Unison.Tools.Export.RemoveNops (removeNops) where
 import Data.List
 import Data.Maybe
 import qualified Data.Map as M
-import Control.Arrow
 
 import Unison
 import Unison.Target.API
@@ -121,7 +120,7 @@ compress nbf uf cf usages ((cycle, bundle) : rest) deps
         usages'  = M.fromList $ snd $
                    mapAccumL (cycleUsages uf cf) prev rest
         -- combined usages if the nop is removed
-        usages'' = map (combineAdd . map toMapTuple . snd) $ M.toList usages'
+        usages'' = map (combineAdd . map toMapTuple' . snd) $ M.toList usages'
         exceeds  = any (any (exceedsCapacity cf)) usages''
     in if any isNegativeSlack deps' || exceeds then
          (cycle, bundle) : compress nbf uf cf usages rest deps
@@ -145,7 +144,17 @@ aliasesWith _ _ _ = False
 cycleUsages uf cf acc (cycle, o)
   | not (isBundle o) = cycleUsages uf cf acc (cycle, mkBundle [o])
 cycleUsages uf cf blocked (cycle, Bundle {bundleOs = bos}) =
-  let blocked'  = filter isActive $ map (second (\e -> e - 1)) blocked
-      newUsages = concatMap (resUsages uf cf) bos
+  let blocked'  = filter isActive' $ map stepCycle' blocked
+      newUsages = concatMap (resUsages' uf cf) bos
       blocked'' = blocked' ++ newUsages
   in (blocked'', (cycle, blocked''))
+
+resUsages' uf cf o = map toSimple $ filter isNullOffset $ resUsages uf cf o
+isNullOffset BlockingResourceState {brsOffset = off} = off == 0
+stepCycle' = toSimple . stepCycle . fromSimple
+isActive' = isActive . fromSimple
+toMapTuple' = toMapTuple . fromSimple
+
+-- TODO: use BlockingResourceState rather than (BlockingResource, Integer)
+toSimple BlockingResourceState {brsResource = r, brsOccupation = occ} = (r, occ)
+fromSimple (r, occ) = BlockingResourceState r occ 0
