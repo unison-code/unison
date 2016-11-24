@@ -2004,8 +2004,6 @@ void Model::post_conditional_precedence_constraints(block b) {
     presolver_disj d = p.d;
     // FIXME: take into account that dependencies involving delimiters can now
     // be shorter due to slack variables
-    if (input->delimiter[o] || input->delimiter[j]) continue;
-    // TODO: study whether 'precedences' brings any additional propagation
     constraint(presolver_disj_var(d) >> (c(o) + n <= c(j)));
   }
 }
