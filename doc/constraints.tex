@@ -183,12 +183,25 @@
 \newcommand{\dataPrecedencesEquation}{
 \begin{equation}\textstyle\label{eq:data-precedences}
   \begin{aligned}
-    \operandTemporary{q} = t &\implies c_u \ge c_d + \latency{d}{\operationInstruction{d}}{p} + \latency{u}{\operationInstruction{u}}{q}\\
+    \operandTemporary{q} = t &\implies c_u \ge c_d + \latency{d}{\operationInstruction{d}}{p} + \slack{p} + \latency{u}{\operationInstruction{u}}{q} + \slack{q}\\
     & \forall t \in \allTemporaries{},\\
     & \forall p \in \set{\definer{t}}, \forall d \in \set{\operandOperation{p}}\\
     & \forall q \in \users{t},         \forall u \in \set{\operandOperation{q}}
   \end{aligned}
 \end{equation}
+}
+
+\newcommand{\slackEquation}{
+  \begin{equation}\textstyle\label{eq:slack}
+    \slack{p} =
+    \begin{cases}
+      \displaystyle{} \operandLatencySlack{p} &
+      \text{if }
+      \globalOperand{p} \\
+      \displaystyle{} 0 &
+      \text{otherwise}
+    \end{cases}
+  \end{equation}
 }
 
 \newcommand{\fixedPrecedencesEquation}{
@@ -204,6 +217,14 @@
   \exists{} \, o' \in \allOperations{} \suchThat \operationInstruction{o'} \in \activators{o} \implies \activeOperation{o} \quad
   \forall o \in \allOperations{}
 \end{equation}
+}
+
+\newcommand{\slackBalancingEquation}{
+  \begin{equation}\textstyle\label{eq:slack-balancing}
+    \operandLatencySlack{p} + \operandLatencySlack{q} = 0
+    \quad
+    \forallIn{p, q}{\allOperands{}} \suchThat \adjacent{p}{q}
+  \end{equation}
 }
 
 \newcommand{\processorResourcesEquation}{

@@ -586,6 +586,8 @@ where
 \liveEndEquation
 \constraintComment{data precedences}{an operation that uses a temporary must be preceded by its definer}
 \dataPrecedencesEquation
+where
+\slackEquation
 \constraintComment{processor resources}{the capacity of each processor resource cannot be exceeded at any issue cycle}
 \processorResourcesEquation
 where
@@ -594,6 +596,8 @@ where
 \fixedPrecedencesEquation
 \constraintComment{activation}{an operation is active if any of its activator instructions is selected}
 \activationEquation
+\constraintComment{slack balancing}{the slack of adjacent operands is balanced}
+\slackBalancingEquation
 
 \section{Objective}
 
