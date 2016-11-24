@@ -30,8 +30,9 @@ resUsages uf cf o
     | isBarrier o = [(BlockingRes r c, 1) | (r, c) <- M.toList cf]
     | isVirtual o = []
     | otherwise =
+        -- TODO: handle usages with offset different than 0
         [(BlockingRes r us, occ) |
-         (Usage r us occ) <- uf $ targetInst $ oInstructions o]
+         (Usage r us occ off) <- uf $ targetInst $ oInstructions o, off == 0]
 
 isActive (BlockingReg _, _) = True
 isActive (BlockingRes _ _, l) = l > 0

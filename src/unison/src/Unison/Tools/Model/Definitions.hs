@@ -57,7 +57,8 @@ instance ToJSON RegisterAtom where toJSON = toJSON . raId
 instance ToJSON (IndexedResource s) where toJSON = toJSON . resId
 
 instance ToJSON (IndexedUsage s) where
-  toJSON (IndexedUsage resId (Usage _ units occ)) = toJSON (resId, units, occ)
+  toJSON (IndexedUsage resId (Usage _ units occ off)) =
+    toJSON (resId, units, occ, off)
 
 instance ToJSON (IndexedInstruction i) where toJSON = toJSON . ioId
 

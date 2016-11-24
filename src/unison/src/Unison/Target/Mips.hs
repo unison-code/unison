@@ -210,7 +210,7 @@ resources = [Resource BundleWidth 1]
 
 -- | Declares resource usages of each instruction
 
-usages = const [Usage BundleWidth 1 1]
+usages = const [mkUsage BundleWidth 1 1]
 
 -- | No-operation instruction
 

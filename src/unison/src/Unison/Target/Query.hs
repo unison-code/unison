@@ -57,7 +57,7 @@ resourceManager target =
 modelUsages _ _ (General NullInstruction) = []
 modelUsages _ _ (General VirtualInstruction) = []
 modelUsages resf _ (General BarrierInstruction) =
-  [Usage rn rc 1 | Resource {resName = rn, resCapacity = rc} <- resf]
+  [mkUsage rn rc 1 | Resource {resName = rn, resCapacity = rc} <- resf]
 modelUsages _ usf (TargetInstruction i) = usf i
 
 data InstructionManager i r = InstructionManager {

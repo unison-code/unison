@@ -711,7 +711,9 @@ data Usage s = Usage {
   -- | Units of the processor resource used
   units      :: Integer,
   -- | Duration of the usage of processor resource
-  occupation :: Integer
+  occupation :: Integer,
+  -- | Offset of the usage of processor resource
+  offset     :: Integer
 } deriving (Eq, Ord, Show)
 
 -- | Processor resource with an identifier. This data type acts as a container

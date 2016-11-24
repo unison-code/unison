@@ -348,50 +348,50 @@ resources =
 
 -- | Declares resource usages of each instruction
 
-usages Jump_merge = [Usage BlockEnd 1 1]
+usages Jump_merge = [mkUsage BlockEnd 1 1]
 usages i
   | isConstantExtended i =
     let it = SpecsGen.itinerary (nonConstantExtendedInstr i)
-    in mergeUsages (itineraryUsage i it) [Usage BundleWidth 1 1]
+    in mergeUsages (itineraryUsage i it) [mkUsage BundleWidth 1 1]
   | otherwise = itineraryUsage i $ SpecsGen.itinerary i
 
 itineraryUsage i it
     | it `elem` [ALU32_2op_tc_1_SLOT0123, ALU32_2op_tc_2early_SLOT0123,
                  ALU32_3op_tc_1_SLOT0123, ALU32_3op_tc_2early_SLOT0123,
                  ALU32_ADDI_tc_1_SLOT0123, EXTENDER_tc_1_SLOT0123, PSEUDO] =
-        [Usage BundleWidth 1 1, Usage Slot0123 1 1]
+        [mkUsage BundleWidth 1 1, mkUsage Slot0123 1 1]
     | it `elem` [ALU64_tc_1_SLOT23, ALU64_tc_2_SLOT23, ALU64_tc_3x_SLOT23,
                  J_tc_2early_SLOT23, M_tc_2_SLOT23, M_tc_3x_SLOT23,
                  S_2op_tc_1_SLOT23, S_2op_tc_2_SLOT23, S_2op_tc_2early_SLOT23,
                  S_3op_tc_1_SLOT23, S_3op_tc_2_SLOT23, S_3op_tc_2early_SLOT23,
                  CR_tc_2early_SLOT23, ALU64_tc_2early_SLOT23] =
-      itineraryUsage i ALU32_2op_tc_1_SLOT0123 ++ [Usage Slot23 1 1]
+      itineraryUsage i ALU32_2op_tc_1_SLOT0123 ++ [mkUsage Slot23 1 1]
 
     | it `elem` [CR_tc_2early_SLOT3, CR_tc_3x_SLOT3] =
-      itineraryUsage i ALU64_tc_1_SLOT23 ++ [Usage Slot3 1 1]
+      itineraryUsage i ALU64_tc_1_SLOT23 ++ [mkUsage Slot3 1 1]
     | it `elem` [J_tc_2early_SLOT2] =
-      itineraryUsage i ALU64_tc_1_SLOT23 ++ [Usage Slot2 1 1]
+      itineraryUsage i ALU64_tc_1_SLOT23 ++ [mkUsage Slot2 1 1]
     | it `elem` [LD_tc_ld_SLOT01, V2LDST_tc_ld_SLOT01, V4LDST_tc_ld_SLOT01] =
-      itineraryUsage i ALU32_2op_tc_1_SLOT0123 ++ [Usage Slot01 1 1]
+      itineraryUsage i ALU32_2op_tc_1_SLOT0123 ++ [mkUsage Slot01 1 1]
     | it `elem` [ST_tc_st_SLOT01, V2LDST_tc_st_SLOT01, V4LDST_tc_st_SLOT01] =
       itineraryUsage i ALU32_2op_tc_1_SLOT0123 ++
-      [Usage Slot01 1 1, Usage Store 1 1]
+      [mkUsage Slot01 1 1, mkUsage Store 1 1]
     | it `elem` [NCJ_tc_3or4stall_SLOT0] && (mayStore i || i == STW_nv) =
       itineraryUsage i LD_tc_ld_SLOT01 ++
-      [Usage Slot0 1 1, Usage Store 2 1]
+      [mkUsage Slot0 1 1, mkUsage Store 2 1]
       -- A new-value compare and jump instruction i cannot be issued in parallel
       -- with stores as slot 0 will be occupied by i and slot 1 will be occupied
       -- by the instruction feeding i. We model this by saturating the 'Store'
       -- resource.
     | it `elem` [NCJ_tc_3or4stall_SLOT0] && (isLinearNewValueCmpJump i) =
       itineraryUsage i LD_tc_ld_SLOT01 ++
-      [Usage Slot0 1 1, Usage Store 2 1]
+      [mkUsage Slot0 1 1, mkUsage Store 2 1]
     | it `elem` [LD_tc_ld_SLOT0,  ST_tc_3stall_SLOT0, V4LDST_tc_st_SLOT0,
                  NCJ_tc_3or4stall_SLOT0, LD_tc_3or4stall_SLOT0] =
-      itineraryUsage i LD_tc_ld_SLOT01 ++ [Usage Slot0 1 1]
+      itineraryUsage i LD_tc_ld_SLOT01 ++ [mkUsage Slot0 1 1]
     | it `elem` [ST_tc_st_SLOT0, ST_tc_ld_SLOT0, V2LDST_tc_st_SLOT0] =
       itineraryUsage i LD_tc_ld_SLOT01 ++
-      [Usage Slot0 1 1, Usage Store 1 1]
+      [mkUsage Slot0 1 1, mkUsage Store 1 1]
     | it `elem` [J_tc_2early_SLOT0123, NoItinerary] = []
 
 itineraryUsage _ it = error ("unmatched: itineraryUsage " ++ show it)

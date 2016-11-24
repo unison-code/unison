@@ -63,7 +63,8 @@ module Unison.Constructors
         mkVirtualInstruction,
         mkBarrierInstruction,
         mkTargetRegister,
-        mkInfiniteRegister
+        mkInfiniteRegister,
+        mkUsage
        )
        where
 
@@ -193,3 +194,5 @@ mkBarrierInstruction = General BarrierInstruction
 mkTargetRegister = TargetRegister
 
 mkInfiniteRegister = InfiniteRegister
+
+mkUsage r u o = Usage r u o 0

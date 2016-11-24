@@ -725,15 +725,18 @@ mergeUsages :: Ord s => [Usage s] -> [Usage s] -> [Usage s]
 mergeUsages u1 u2 =
   let [u1', u2'] = map usageMap [u1, u2]
       us         = M.toList $ M.fromListWith combineUsages (u1' ++ u2')
-  in [Usage r us occ | (r, (us, occ)) <- us]
+  in [Usage r us occ off | (r, (us, occ, off)) <- us]
 
-usageMap :: [Usage s] -> [(s, (Integer, Integer))]
-usageMap us = [(r, (us, occ)) | (Usage r us occ) <- us]
+type IntegerTriple = (Integer, Integer, Integer)
 
-combineUsages :: (Integer, Integer) -> (Integer, Integer) -> (Integer, Integer)
-combineUsages (us, occ) (us', occ')
-  | occ == occ' = (us + us', occ)
-  | us  == us'  = (us, occ + occ')
+usageMap :: [Usage s] -> [(s, IntegerTriple)]
+usageMap us = [(r, (us, occ, off)) | (Usage r us occ off) <- us]
+
+combineUsages :: IntegerTriple -> IntegerTriple -> IntegerTriple
+combineUsages (us, occ, off) (us', occ', off')
+  | off /= off' = error ("usages cannot be combined, different offset")
+  | occ == occ' = (us + us', occ,  off)
+  | us  == us'  = (us, occ + occ', off)
 
 accessType :: Eq r => RWObject r -> BlockOperation i r -> Maybe Access
 accessType rwo o

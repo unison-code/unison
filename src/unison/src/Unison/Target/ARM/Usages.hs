@@ -13,7 +13,7 @@ usages i =
   let it = SpecsGen.itinerary i
   -- TODO: define instruction size as BundleWidth usage
   in mergeUsages (itineraryUsage i it)
-     [Usage BundleWidth (size i) 1]
+     [mkUsage BundleWidth (size i) 1]
 
 itineraryUsage _ it
   | it `elem` [NoItinerary] = []
@@ -33,22 +33,22 @@ itineraryUsage _ it
                IIC_iLoad_bh_iu, IIC_iStore_bh_i, IIC_iALUx, IIC_iLoad_d_i,
                IIC_iUNAr, IIC_fpMOVSI, IIC_iTSTsi, IIC_fpCMP32, IIC_fpCVTDI,
                IIC_fpUNA32] =
-      [Usage V6_Pipe 1 1]
+      [mkUsage V6_Pipe 1 1]
   | it `elem` [IIC_iALUsr, IIC_iMOVsr, IIC_iBITsr, IIC_iCMPsr, IIC_iMOVix2,
                IIC_iMUL32, IIC_iLoad_si, IIC_iCMOVix2, IIC_iLoad_bh_si,
                IIC_iStore_si, IIC_fpMUL64, IIC_iMAC32, IIC_iStore_bh_si,
                IIC_iTSTsr] =
-      [Usage V6_Pipe 1 2]
+      [mkUsage V6_Pipe 1 2]
   | it `elem` [IIC_iStore_mu, IIC_iStore_m, IIC_iLoad_mu, IIC_iLoad_m,
                IIC_fpStore_mu, IIC_fpLoad_mu, IIC_iPop, IIC_fpLoad_m,
                IIC_fpStore_m] =
-      [Usage V6_Pipe 1 3]
+      [mkUsage V6_Pipe 1 3]
   | it `elem` [IIC_iLoad_mBr, IIC_iPop_Br] =
-      [Usage V6_Pipe 1 4]
+      [mkUsage V6_Pipe 1 4]
   | it `elem` [IIC_fpDIV32] =
-      [Usage V6_Pipe 1 15]
+      [mkUsage V6_Pipe 1 15]
   | it `elem` [IIC_fpSQRT64, IIC_fpDIV64] =
-      [Usage V6_Pipe 1 29]
+      [mkUsage V6_Pipe 1 29]
 
 itineraryUsage _ it = error ("unmatched: itineraryUsage " ++ show it)
 
