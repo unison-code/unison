@@ -406,7 +406,6 @@ public:
   void post_local_congruence_constraints(block b);
   void post_ultimate_source_constraints(block b);
   void post_pack_sink_constraints(block b);
-  void post_slack_lower_bound_constraints(block b);
 
   void post_presolver_constraints(block b);
   void post_minimum_number_of_optional_operations_constraints(block b);

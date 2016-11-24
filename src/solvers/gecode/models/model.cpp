@@ -1232,7 +1232,6 @@ void Model::post_improved_model_constraints(block b) {
     post_local_congruence_constraints(b);
     post_ultimate_source_constraints(b);
     post_pack_sink_constraints(b);
-    post_slack_lower_bound_constraints(b);
   }
 
 }
@@ -1852,40 +1851,6 @@ void Model::post_pack_sink_constraints(block b) {
       }
       if (used_by_pack && uses_but_pack.size() > 0) {
         constraint(l(t) == (sum(uses_but_pack) > 0));
-      }
-    }
-  }
-
-}
-
-void Model::post_slack_lower_bound_constraints(block b) {
-
-  // The slack of an operand is larger than the latencies of its dependent
-  // operands:
-
-  for (operand p : input->ope[b]) {
-    if (input->global_operand[p]) {
-      if (input->type[input->oper[p]] == IN) {
-        IntVarArgs lats;
-        temporary t = input->single_temp[p];
-        for (operand q : input->users[t]) lats << var(lt(q));
-        constraint(s(p) >= - max(lats));
-      } else { // type == OUT
-        IntVarArgs lats;
-        bool virtual_definer = true;
-        for (temporary t : input->real_temps[p]) {
-          operation o = input->def_opr[t];
-          if (input->type[o] == LINEAR ||
-              input->type[o] == BRANCH ||
-              input->type[o] == CALL ||
-              input->type[o] == TAILCALL ||
-              input->type[o] == COPY) {
-            virtual_definer = false;
-          }
-          operand q = input->definer[t];
-          lats << var(lt(q));
-        }
-        constraint(s(p) >= - max(lats) + (virtual_definer ? 0 : 1));
       }
     }
   }

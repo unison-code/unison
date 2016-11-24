@@ -98,6 +98,7 @@ public:
   void post_slack_balancing_constraints(void);
 
   void post_improved_model_constraints(void);
+  void post_slack_lower_bound_constraints(void);
 
   void post_presolver_constraints(void);
 

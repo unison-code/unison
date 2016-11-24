@@ -211,6 +211,62 @@ void CompleteModel::post_slack_balancing_constraints(void) {
 void CompleteModel::post_improved_model_constraints(void) {
   for (block b : input->B)
     Model::post_improved_model_constraints(b);
+  post_slack_lower_bound_constraints();
+}
+
+void CompleteModel::post_slack_lower_bound_constraints(void) {
+
+  // The slack of (in) or (out) congruent operands is larger than the latencies
+  // of their dependent operands:
+
+  for (global_congruence g : input->G) {
+    congruence c = input->regular[g];
+    vector<operand> ins, outs;
+    for (operand p : input->congr[c]) {
+      if (input->global_operand[p]) {
+        if (input->type[input->oper[p]] == IN) {
+          ins.push_back(p);
+        } else { // type == OUT
+          outs.push_back(p);
+        }
+      }
+    }
+
+    if (ins.size() > 0) {
+      IntVarArgs lats;
+      for (operand p : ins) {
+        temporary t = input->single_temp[p];
+        for (operand q : input->users[t]) lats << var(lt(q));
+      }
+      for (operand p : ins) {
+        constraint(s(p) >= - max(lats));
+      }
+    }
+
+    if (outs.size() > 0) {
+      IntVarArgs lats;
+      bool virtual_definer = false;
+      for (operand p : outs) {
+        for (temporary t : input->real_temps[p]) {
+          operation o = input->def_opr[t];
+          if (input->type[o] != LINEAR &&
+              input->type[o] != BRANCH &&
+              input->type[o] != CALL &&
+              input->type[o] != TAILCALL &&
+              input->type[o] != COPY) {
+            virtual_definer = true;
+          }
+          operand q = input->definer[t];
+          lats << var(lt(q));
+        }
+      }
+      for (operand p : outs) {
+        constraint(s(p) >= - max(lats) + (virtual_definer ? 0 : 1));
+      }
+    }
+
+  }
+
 }
 
 void CompleteModel::post_presolver_constraints(void) {
