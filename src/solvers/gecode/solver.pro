@@ -123,7 +123,8 @@ CONFIG(graphics) {
              inspectors/congruenceallocationinspector.hpp \
              inspectors/precedenceinspector.hpp \
              inspectors/precedencematrixinspector.hpp \
-             inspectors/usersinspector.hpp
+             inspectors/usersinspector.hpp \
+             inspectors/operandlatencyinspector.hpp
 
   SOURCES += inspectors/consoleinspector.cpp \
              inspectors/modelgraphicsview.cpp \
@@ -145,7 +146,8 @@ CONFIG(graphics) {
              inspectors/congruenceallocationinspector.cpp \
              inspectors/precedenceinspector.cpp \
              inspectors/precedencematrixinspector.cpp \
-             inspectors/usersinspector.cpp
+             inspectors/usersinspector.cpp \
+             inspectors/operandlatencyinspector.cpp
 
   LIBS -= -ljson
   LIBS += -lgecodegist -lgvc -lcgraph -lcdt

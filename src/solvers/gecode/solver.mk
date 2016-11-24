@@ -50,8 +50,8 @@ registerarrayinspector issuecycleinspector liverangeinspector			\
 assignmentinspector allocationinspector livedurationinspector			\
 selectioninspector operandassignmentinspector resourceconsumptioninspector	\
 dataflowinspector alignmentinspector alignmentpartitioninspector		\
-operandallocationinspector congruenceallocationinspector			\
-precedenceinspector precedencematrixinspector usersinspector
+operandallocationinspector congruenceallocationinspector precedenceinspector	\
+precedencematrixinspector usersinspector operandlatencyinspector
 
 SOLVERCLASSES := $(addprefix $(SOLVERCOMMONDIR)/, $(SOLVERCOMMON)) $(addprefix	\
 $(SOLVERMODELSDIR)/, $(SOLVERMODELS)) $(addprefix $(SOLVERBRANCHERSDIR)/,	\

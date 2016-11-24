@@ -85,6 +85,7 @@
 #include "inspectors/precedenceinspector.hpp"
 #include "inspectors/precedencematrixinspector.hpp"
 #include "inspectors/usersinspector.hpp"
+#include "inspectors/operandlatencyinspector.hpp"
 #endif
 
 using namespace Gecode;
@@ -424,6 +425,8 @@ int main(int argc, char* argv[]) {
   go->inspect.click(gcai);
   GlobalUsersInspector * gui = new GlobalUsersInspector();
   go->inspect.click(gui);
+  GlobalOperandLatencyInspector * goli = new GlobalOperandLatencyInspector();
+  go->inspect.click(goli);
   Gist::VarComparator<GlobalModel> *gprc =
     new Gist::VarComparator<GlobalModel>("Compare problem and secondary variables");
   go->inspect.compare(gprc);
@@ -466,6 +469,8 @@ int main(int argc, char* argv[]) {
   }
   LocalUsersInspector * lui = new LocalUsersInspector();
   lo->inspect.click(lui);
+  LocalOperandLatencyInspector * loli = new LocalOperandLatencyInspector();
+  lo->inspect.click(loli);
   LocalDataFlowInspector * ldfi = new LocalDataFlowInspector();
   lo->inspect.click(ldfi);
 
