@@ -552,6 +552,20 @@ int main(int argc, char* argv[]) {
 
     presolve_effective_callee_saved_spilling(base);
 
+    if (base->status() == SS_FAILED) { // The problem has no solution
+      double execution_time = t.stop();
+      if (options.verbose()) {
+        cerr << pre()
+             << "proven absence of solutions with cost less or equal than "
+             << input.maxf << endl;
+        cerr << "execution time: " << execution_time << " ms" << endl;
+      }
+      results.push_back(ResultData(NULL, true, 0, 0, presolver_time, 0, 0,
+                                   execution_time));
+      emit_output(base, results, gd, state, prefix, go);
+      exit(EXIT_SUCCESS);
+    }
+
     if (input.optimize_resource != ISSUE_CYCLES)
       presolve_minimum_consumption(base);
 

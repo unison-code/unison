@@ -42,7 +42,7 @@ void presolve_effective_callee_saved_spilling(GlobalModel * base) {
     GlobalModel * g = (GlobalModel*) base->clone();
     g->post_effective_callee_saved_spilling(o);
     Gecode::SpaceStatus ss = g->status();
-    assert(ss != SS_FAILED);
+    if (ss == SS_FAILED) return; // Proof that there is no solution
     if (g->a(o).assigned()) {
       if (g->a(o).val()) {
         base->post_active_operation(o);
@@ -50,7 +50,7 @@ void presolve_effective_callee_saved_spilling(GlobalModel * base) {
         base->post_inactive_operation(o);
       }
       Gecode::SpaceStatus ss1 = base->status();
-      assert(ss1 != SS_FAILED);
+      if (ss1 == SS_FAILED) return; // Proof that there is no solution
     }
     delete g;
   }
