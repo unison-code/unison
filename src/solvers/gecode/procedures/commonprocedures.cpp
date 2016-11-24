@@ -294,7 +294,12 @@ value_precede_chains(Parameters & input, Model * m, bool global, block b) {
 
   for(const pair<vector<temporary>,vector<vector<register_atom>>>& TsRs : Ts2Rss) {
     PresolverValuePrecedeChain vpc;
-    vpc.ts = TsRs.first;
+    for (temporary t : TsRs.first) {
+      // FIXME: this check is added temporarily, needs investigation
+      if (!contains(input.callee_saved_loads, input.def_opr[t])) {
+        vpc.ts.push_back(t);
+      }
+    }
     vpc.rss = TsRs.second;
     sort(vpc.rss.begin(), vpc.rss.end()); // canonicalize
     chains.push_back(vpc);
