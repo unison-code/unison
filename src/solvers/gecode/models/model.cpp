@@ -1389,15 +1389,25 @@ void Model::post_reverse_data_precedence_constraints(block b) {
   for (operation o : input->ops[b])
     for (operand p : input->operands[o])
       if (!input->use[p]) {
-        temporary t1 = input->single_temp[p];
+        temporary t = input->single_temp[p];
         IntVarArgs acs, ics;
-        for (operand q : input->users[t1]) {
+        for (operand q : input->users[t]) {
           operation j = input->oper[q];
-          IntVar pc = var(c(j) - lat(q, t1));
-          acs << var(ite(u(q, t1), pc, 0));
+          // if there is a global operand p1 defining a temporary that can be
+          // used by q, subtract the slack of p1:
+          operand p1 = -1;
+          for (temporary t1 : input->real_temps[q]) {
+            operand pd = input->definer[t1];
+            if (input->global_operand[pd]) {
+              p1 = pd;
+              break;
+            }
+          }
+          IntVar pc = var(c(j) - lat(q, t) - (p1 == -1 ? var(0) : s(p1)));
+          acs << var(ite(u(q, t), pc, 0));
           ics << pc;
         }
-        constraint(c(o) <= ite(l(t1), max(acs), max(ics)));
+        constraint(c(o) <= ite(l(t), max(acs), max(ics)));
       }
 
 }
