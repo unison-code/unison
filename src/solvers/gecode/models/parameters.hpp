@@ -163,6 +163,9 @@ public:
   // duration of usage of each processor resource by each instruction
   vector<vector<int> > dur;
 
+  // offset of usage of each processor resource by each instruction
+  vector<vector<int> > off;
+
   // Objective function parameters
 
   // whether to use block frequencies as weight

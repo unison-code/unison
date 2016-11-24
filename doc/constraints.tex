@@ -232,7 +232,8 @@
     \cumulative{
       \setBuilder
           {\tuple{
-              \operationIssueCycle{o}, \eat
+              \operationIssueCycle{o} +
+              \offset{\operationInstruction{o}}{\processorResource{r}}, \eat
               \units{\operationInstruction{o}}{\processorResource{r}},
               \duration{\operationInstruction{o}}{\processorResource{r}}
               \eat}}

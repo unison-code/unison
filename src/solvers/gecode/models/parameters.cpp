@@ -71,6 +71,7 @@ Parameters::Parameters(JSONVALUE root) :
   cap           (get_vector<int>(getRoot(root, "cap"))),
   con           (get_2d_vector<int>(getRoot(root, "con"))),
   dur           (get_2d_vector<int>(getRoot(root, "dur"))),
+  off           (get_2d_vector<int>(getRoot(root, "off"))),
 
   // Objective function parameters
 
@@ -937,7 +938,8 @@ string Parameters::emit_json() {
        << emit_json_line("lat", lat)
        << emit_json_line("cap", cap)
        << emit_json_line("con", con)
-       << emit_json_line("dur", dur);
+       << emit_json_line("dur", dur)
+       << emit_json_line("off", off);
   return json.str();
 }
 
@@ -1052,6 +1054,8 @@ Parameters Parameters::make_local(block b) {
   local.con = con;
 
   local.dur = dur;
+
+  local.off = off;
 
   return local;
 }

@@ -441,7 +441,10 @@ int Model::worst(operation o) const {
     instruction i = input->instructions[o][ii];
     vector<int> opdurs;
 
-    int maxdur = max_of(input->dur[i]);
+    vector<int> duroff;
+    for (resource r : input->R)
+      duroff.push_back(input->dur[i][r] + input->off[i][r]);
+    int maxdur = max_of(duroff);
     opdurs.push_back(maxdur);
 
     int maxuselat = 0, maxdeflat = 0;
@@ -1102,10 +1105,12 @@ void Model::post_processor_resources_constraints(block b) {
 
   for (operation o : input->ops[b]) {
 
+    typedef int instruction_index;
+
     // Map from consumption to tasks for each resource
-    vector<map<int, vector<pair<int, int> > > > ru2tasks;
-    map<int, vector<pair<int, int> > > emptyMap;
-    init_vector(ru2tasks, input->R.size(), emptyMap);
+    vector<map<int, vector<instruction_index> > > rc2tasks;
+    map<int, vector<instruction_index> > emptyMap;
+    init_vector(rc2tasks, input->R.size(), emptyMap);
 
     // Complete map with tasks grouped by consumption
     for (unsigned int ii = 0; ii < input->instructions[o].size(); ii++) {
@@ -1113,31 +1118,49 @@ void Model::post_processor_resources_constraints(block b) {
       for (resource r : input->R) {
         int con = input->con[i][r],
             dur = input->dur[i][r];
-        if (con > 0 && dur > 0) ru2tasks[r][con].push_back(make_pair(ii, dur));
+        if (con > 0 && dur > 0)
+          rc2tasks[r][con].push_back(ii);
       }
     }
 
-    // For each operation, resource and consumption, define a task (possibly
-    // related to several instructions)
+    // For each operation, resource and consumption, define a task possibly
+    // related to several instructions
     for (resource r : input->R) {
-      map<int, vector<pair<int, int> > >::iterator it;
-      for (it = ru2tasks[r].begin(); it != ru2tasks[r].end(); it++) {
-        int maxdur = -1;
-        IntArgs durs = IntArgs::create(input->instructions[o].size(), 0, 0);
+      for (auto ctts : rc2tasks[r]) {
         IntArgs iis;
-        typedef pair<int, int> OpDur;
-        for (OpDur ou : it->second) {
-          durs[ou.first] = ou.second;
-          iis << ou.first;
-          if (ou.second > maxdur) maxdur = ou.second;
+        vector<int> durs, offs;
+        set<instruction> involved;
+        vector<int> involved_durs;
+        for (instruction_index ii : ctts.second) {
+          iis << ii;
+          instruction i = input->instructions[o][ii];
+          involved.insert(i);
+          int dur = input->dur[i][r];
+          involved_durs.push_back(dur);
+        }
+        for (instruction i : input->instructions[o]) {
+          int dur = input->dur[i][r],
+              off = input->off[i][r];
+          offs.push_back(off);
+          if (involved.count(i)) {
+            durs.push_back(dur);
+          } else { // Optimization: the duration of an instruction that is not
+                   // involved is set to the minimum of the involved durations
+                   // (for better propagation of the element constraint)
+            durs.push_back(min_of(involved_durs));
+          }
         }
         UsageTask task;
-        task.c = c(o);
-        IntVar dur(*this, 0, maxdur);
-        element(*this, durs, i(o), dur);
+        IntVar off(*this, min_of(offs), max_of(offs));
+        element(*this, IntArgs(offs), i(o), off);
+        IntVar tc(*this, min_of(offs), input->maxc[b]);
+        constraint(tc == c(o) + off);
+        task.c = tc;
+        IntVar dur(*this, min_of(durs), max_of(durs));
+        element(*this, IntArgs(durs), i(o), dur);
         task.dur = dur;
-        task.e = var(c(o) + task.dur);
-        task.con = it->first;
+        task.e = var(tc + task.dur);
+        task.con = ctts.first;
         BoolVar opc(*this, 0, 1);
         Gecode::dom(*this, i(o), IntSet(iis), opc);
         task.o = opc;

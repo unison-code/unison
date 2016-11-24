@@ -47,6 +47,7 @@ parameters scaleFreq (_, dgs, _, _, _) Function {fCode = code} target =
       cap           = toValueList r2cap
       con           = toValueList $ operationUsages units rm im
       dur           = toValueList $ operationUsages occupation rm im
+      off           = toValueList $ operationUsages offset rm im
       factor        = if scaleFreq
                       then scaleFactor (rm, oif, dgs) code else 1.0
       freq          = map (scaleDown factor . blockFreq) code :: [Frequency]
@@ -121,6 +122,10 @@ parameters scaleFreq (_, dgs, _, _, _) Function {fCode = code} target =
       -- duration of usage of each processor resource by each instruction
       -- example: dur[4][2]: consumption of r2 by i4
       ("dur", toJSON dur),
+
+      -- offset of usage of each processor resource by each instruction
+      -- example: off[2][3]: consumption of r3 by i2
+      ("off", toJSON off),
 
 
       -- Additional parameters
