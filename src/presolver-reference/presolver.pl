@@ -329,11 +329,11 @@ presolve_avl(AVL0, AVL24, Quota) :-
 	gen_before_precedences(Before, BeforePrecedences1),
 	gen_before_precedences(CondBefore5, CondBeforePrecedences1),
 	gen_fixed_precedences(AVL1, FixedPrecedences1, []),
-	gen_data_precedences(AVL1, MAXI, Opnd2Lat, LastUse, DataPrecedences1, []),
+	% gen_data_precedences(AVL1, MAXI, Opnd2Lat, LastUse, DataPrecedences1, []), % obsolete since slack variables were added
 	gen_region_precedences(AVL1, RegionPrecedences1),
 	% including CondBeforePrecedences gives LOTS of spurious cycles,
 	% too many to be useful
-	append([BeforePrecedences1,FixedPrecedences1,DataPrecedences1,RegionPrecedences1], Precedences1),
+	append([BeforePrecedences1,FixedPrecedences1/*,DataPrecedences1*/,RegionPrecedences1], Precedences1),
 	sort(Precedences1, Precedences2), % there are duplicates
 	findall([P,Q,N,BP2],
 		(member([P,Q,N,BP1],Precedences2), filter_condition(BP1,JNogoods5s,BP2), BP2\==[]),
