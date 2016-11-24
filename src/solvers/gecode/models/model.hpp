@@ -191,6 +191,8 @@ public:
 
   BoolVar presolver_lit_var(presolver_lit &l);
 
+  IntVar slack(operand p);
+
   // High-level constraints
 
   // Post distinct propagator with optional elements

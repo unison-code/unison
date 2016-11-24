@@ -135,6 +135,10 @@ BoolVar Model::presolver_lit_var(presolver_lit &l) {
   }
 }
 
+IntVar Model::slack(operand p) {
+  return input->global_operand[p] ? s(p) : var(0);
+}
+
 void Model::distinct(Home home, const IntVarArgs & x, const BoolVarArgs & m,
                      IntPropLevel ipl) {
 
@@ -865,7 +869,7 @@ void Model::post_temporary_use_latency_definition(block b) {
         for (temporary t : input->temps[q])
           if (t != NULL_TEMPORARY) {
             operand p = input->definer[t];
-            constraint(lat(q, t) == lt(p) + s(p) + lt(q) + s(q));
+            constraint(lat(q, t) == lt(p) + slack(p) + lt(q) + slack(q));
           }
 
 }
@@ -1090,7 +1094,8 @@ void Model::post_data_precedences_constraints(block b) {
           } else {
             operand p = input->definer[t];
             operation d = input->oper[p];
-            cs << var(c(d) + max(input->min_active_lat[p], lt(p)) + s(p) + lt(q) + s(q));
+            cs << var(c(d) + max(input->min_active_lat[p], lt(p)) + slack(p) +
+                      lt(q) + slack(q));
           }
 
         constraint(c(u) >= element(cs, y(q)));
