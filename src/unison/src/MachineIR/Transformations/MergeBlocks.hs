@@ -11,20 +11,22 @@ This file is part of Unison, see http://unison-code.github.io
 -}
 module MachineIR.Transformations.MergeBlocks (mergeBlocks) where
 
+import Data.List
 import qualified Data.Set as S
 
 import Unison
 import Unison.Target.API
 import MachineIR
 
-mergeBlocks mf target =
+mergeBlocks mf @ MachineFunction {mfBlocks = mbs, mfProperties = mps} target =
   let itf = instructionType target
       oif = operandInfo target
       bif = branchInfo target
       fs  = (itf, oif, bif)
-      mbs = mfBlocks mf
-      rbs = S.fromList $
+      bbs = S.fromList $
             concatMap (branchTargets fs) (flattenMachineFunction mf)
+      jbs = S.fromList $ jtTargets (find isMachineFunctionPropertyJumpTable mps)
+      rbs = S.union bbs jbs
       mf' = mf {mfBlocks = doMergeBlocks itf rbs mbs}
   in mf'
 
@@ -48,3 +50,7 @@ branchTargets (itf, oif, bif) mi @ MachineSingle {}
           Just (BranchInfo _ (Just l)) -> [l]
           _ -> []
   | otherwise = []
+
+jtTargets Nothing = []
+jtTargets (Just (MachineFunctionPropertyJumpTable _ es)) =
+  concatMap (map mbrId . mjtBlocks) es
