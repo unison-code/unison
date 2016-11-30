@@ -1237,16 +1237,24 @@ toMachineInstruction :: Show i => Show r => BlockOperation i r ->
 toMachineInstruction Bundle {bundleOs = os} =
   let mis = map toMachineInstruction os
   in mkMachineBundle mis
-toMachineInstruction o @ SingleOperation {} =
+toMachineInstruction o @ SingleOperation {oAs = attrs} =
   let mopc = toMachineOpcode o
+      mps  = toMachineInstructionProperties attrs
       os   = oDefs o ++ oUses o
       mos  = map toMachineOperand os
-  in mkMachineSingle mopc [] mos
+  in mkMachineSingle mopc mps mos
 
 toMachineOpcode :: Show i => BlockOperation i r -> MachineOpcode i
 toMachineOpcode o
     | isPhi o = mkMachineVirtualOpc PHI
     | otherwise = mkMachineTargetOpc $ targetInst $ oInstructions o
+
+toMachineInstructionProperties :: Attributes i r ->
+                                  [MachineInstructionProperty r]
+toMachineInstructionProperties Attributes {aJTBlocks = bs}
+  | null bs = []
+  | otherwise = [mkMachineInstructionPropertyJTIBlocks
+                 (map mkMachineBlockRef bs)]
 
 toMachineOperand :: Show r => Operand r -> MachineOperand r
 toMachineOperand (Register (TargetRegister r)) = mkMachineReg r
