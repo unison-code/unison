@@ -236,7 +236,7 @@ void CompleteModel::post_slack_lower_bound_constraints(void) {
       IntVarArgs lats;
       for (operand p : ins) {
         temporary t = input->single_temp[p];
-        for (operand q : input->users[t]) lats << var(lt(q));
+        for (operand q : input->users[t]) lats << lt(q);
       }
       for (operand p : ins) {
         constraint(s(p) >= - max(lats));
@@ -245,25 +245,14 @@ void CompleteModel::post_slack_lower_bound_constraints(void) {
 
     if (outs.size() > 0) {
       IntVarArgs lats;
-      bool potentially_parallel_definer = false;
       for (operand p : outs) {
         for (temporary t : input->real_temps[p]) {
-          operation o = input->def_opr[t];
-          if (input->type[o] != LINEAR &&
-              input->type[o] != BRANCH &&
-              input->type[o] != CALL &&
-              input->type[o] != TAILCALL &&
-              input->type[o] != COPY &&
-              input->type[o] != IN) {
-            potentially_parallel_definer = true;
-          }
           operand q = input->definer[t];
-          lats << var(lt(q));
+          lats << lt(q);
         }
       }
       for (operand p : outs) {
-        constraint(s(p) >= - max(lats) +
-                   (potentially_parallel_definer ? 0 : 1));
+        constraint(s(p) >= - max(lats));
       }
     }
 
