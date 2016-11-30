@@ -463,7 +463,7 @@ mirCFIDef =
      reg <- mirReg
      string ", "
      off <- signedDecimal
-     return (mkMachineCFIDef (mrName reg) off)
+     return (mkMachineCFIDef (mfrRegName reg) off)
 
 mirCFIDefOffset =
   do string ".cfi_def_cfa_offset"
@@ -475,7 +475,7 @@ mirCFIDefReg =
   do string ".cfi_def_cfa_register"
      whiteSpace
      reg <- mirReg
-     return (mkMachineCFIDefReg (mrName reg))
+     return (mkMachineCFIDefReg (mfrRegName reg))
 
 mirCFIOffset =
   do string ".cfi_offset"
