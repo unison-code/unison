@@ -465,9 +465,38 @@ As usual in compiler construction, Unison is organized as a chain of
 transformation components through which the program flows.
 %
 Each intermediate representation of the program is stored in a file.
+%
+Unison takes a mandatory and an optional file as input.
+%
+The mandatory file is a function in LLVM's
+\href{http://llvm.org/docs/MIRLangRef.html}{Machine IR format} (\code{.mir})
+where:
+%
+\begin{itemize}
+\item instructions of a certain processor have already been selected,
+\item the code is in
+  \href{https://en.wikipedia.org/wiki/Static_single_assignment_form}{Static
+    Single Assignment} (SSA) form,
+\item instructions use and define temporaries (program variables at the code
+  generation level) rather than processor registers, and
+\item instructions are not yet scheduled.
+\end{itemize}
+%
+The optional file (\code{.asm.mir}) is also in Machine IR format and represents
+the same function where register allocation and instruction scheduling has
+already been applied by an external tool (typically \code{llc}).
+%
+This file contains as a structured representation of assembly code that Unison
+can take as a starting solution within the optimization process.
+%
+Unison generates as output a single function (\code{.unison.mir}) with the given
+function after register allocation and instruction scheduling.
+%
+If Unison cannot improve the initial solution provided in the \code{.asm.mir}
+file, this is just shown as output.
 
 Figure~\ref{fig:components} shows the main components involved in compilation of
-intermediate code to assembly code.
+intermediate (\code{.mir}) code to assembly (\code{.unison.mir}) code.
 %
 Arcs between components are labeled with the file extension corresponding to the
 shared data file.
@@ -503,10 +532,13 @@ The function of each component is:
 
 \item [\code{gecode-solver}:] solve the combinatorial problem;
 
-\item [\code{uni export}:] generate the assembly program with the solution to
-  the combinatorial problem.
+\item [\code{uni export}:] generate the almost-assembly program with the
+  solution to the combinatorial problem.
 
 \end{description}
+
+Chapter~\ref{sec:unison-ir} gives further detail on the Unison IR (\code{.uni})
+and the different transformations that are applied to it.
 
 \chapter{Unison IR}
 \label{sec:unison-ir}
