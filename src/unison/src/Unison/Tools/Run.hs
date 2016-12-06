@@ -37,27 +37,28 @@ run (estimateFreq, noCC, noReserved, maxBlockSize, implementFrames, function,
   do tmp <- getTemporaryDirectory
      prefix <- unisonPrefixFile tmp
      let maybePutStrLn = when verbose . hPutStrLn stderr
+         lintPragma    = True
 
      mirInput <- readFile inFile
      let uniFile = addExtension prefix "uni"
      maybePutStrLn "Running 'uni import'..."
      Import.run
        (estimateFreq, noCC, noReserved, maxBlockSize, implementFrames, function,
-        goal, inFile, debug, intermediate, lint, Just uniFile)
+        goal, inFile, debug, intermediate, lint, lintPragma, Just uniFile)
        mirInput targetWithOption
      uniInput <- readFile uniFile
 
      let lssaUniFile = addExtension prefix "lssa.uni"
      maybePutStrLn "Running 'uni linearize'..."
      Linearize.run
-       (uniFile, debug, intermediate, lint, Just lssaUniFile)
+       (uniFile, debug, intermediate, lint, lintPragma, Just lssaUniFile)
        uniInput targetWithOption
      lssaUniInput <- readFile lssaUniFile
 
      let extUniFile = addExtension prefix "ext.uni"
      maybePutStrLn "Running 'uni extend'..."
      Extend.run
-       (lssaUniFile, debug, intermediate, lint, Just extUniFile)
+       (lssaUniFile, debug, intermediate, lint, lintPragma, Just extUniFile)
        lssaUniInput targetWithOption
      extUniInput <- readFile extUniFile
 
@@ -65,7 +66,7 @@ run (estimateFreq, noCC, noReserved, maxBlockSize, implementFrames, function,
      maybePutStrLn "Running 'uni augment'..."
      Augment.run
        (implementFrames, noCross, oldModel, expandCopies, rematerialize,
-        extUniFile, debug, intermediate, lint, Just altUniFile)
+        extUniFile, debug, intermediate, lint, lintPragma, Just altUniFile)
        extUniInput targetWithOption
      altUniInput <- readFile altUniFile
 

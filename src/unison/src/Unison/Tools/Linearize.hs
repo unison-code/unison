@@ -32,11 +32,11 @@ import Unison.Tools.Linearize.RemovePhis
 import Unison.Tools.Linearize.NormalizeCongruences
 import Unison.Tools.Linearize.AddReflexiveCongruences
 
-run (uniFile, debug, intermediate, lint, lssaUniFile) uni target =
+run (uniFile, debug, intermediate, lint, lintPragma, lssaUniFile) uni target =
     let f = parse target uni
         (lssaF, partialLssaFs) =
             applyTransformations
-            (linearizerTransformations)
+            (linearizerTransformations lintPragma)
             target f
         baseName = takeBaseName uniFile
     in do when debug $
@@ -47,7 +47,7 @@ run (uniFile, debug, intermediate, lint, lssaUniFile) uni target =
           when lint $
                invokeLint lssaF target
 
-linearizerTransformations =
+linearizerTransformations lintPragma =
     [(propagatePhiCongruences, "propagatePhiCongruences", True),
      (removePhis, "removePhis", True),
      (sinkLiveOuts, "sinkLiveOuts", True),
@@ -58,7 +58,7 @@ linearizerTransformations =
      (addReflexiveCongruences, "addReflexiveCongruences", True),
      (renameOperations, "renameOperations", True),
      (cleanPragmas linearizePragmaTools, "cleanPragmas", True),
-     (addPragmas linearizePragmas, "addPragmas", True)]
+     (addPragmas linearizePragmas, "addPragmas", lintPragma)]
 
 linearizePragmas =
     [("lint",

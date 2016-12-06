@@ -19,19 +19,21 @@ import System.Console.CmdArgs
 data Uni =
     Import    {targetName :: String, inFile :: FilePath, targetOption :: [String],
                outFile :: Maybe FilePath, debug :: Bool, intermediate :: Bool,
-               lint :: Bool, estimateFreq :: Bool, implementFrames :: Bool,
-               noCC :: Bool, noReserved :: Bool, maxBlockSize :: Maybe Integer,
-               function :: Maybe String, goal :: Maybe String} |
+               lint :: Bool, lintPragma :: Bool, estimateFreq :: Bool,
+               implementFrames :: Bool, noCC :: Bool, noReserved :: Bool,
+               maxBlockSize :: Maybe Integer, function :: Maybe String,
+               goal :: Maybe String} |
     Linearize {targetName :: String, inFile :: FilePath, targetOption :: [String],
                outFile :: Maybe FilePath, debug :: Bool, intermediate :: Bool,
-               lint :: Bool} |
+               lint :: Bool, lintPragma :: Bool} |
     Extend    {targetName :: String, inFile :: FilePath, targetOption :: [String],
                outFile :: Maybe FilePath, debug :: Bool, intermediate :: Bool,
-               lint :: Bool} |
+               lint :: Bool, lintPragma :: Bool} |
     Augment   {targetName :: String, inFile :: FilePath, targetOption :: [String],
                outFile :: Maybe FilePath, debug :: Bool, intermediate :: Bool,
-               lint :: Bool, implementFrames :: Bool, noCross :: Bool,
-               oldModel :: Bool, expandCopies :: Bool, rematerialize :: Bool} |
+               lint :: Bool, lintPragma :: Bool, implementFrames :: Bool,
+               noCross :: Bool, oldModel :: Bool, expandCopies :: Bool,
+               rematerialize :: Bool} |
     Model     {targetName :: String, inFile :: FilePath, targetOption :: [String],
                outFile :: Maybe FilePath, baseFile :: Maybe FilePath,
                scaleFreq :: Bool, oldModel :: Bool, applyBaseFile :: Bool,
@@ -98,6 +100,7 @@ import' = Import {
   debug           = False &= name "d" &= help "Print output of each pass",
   intermediate    = False &= name "i" &= help "Generate intermediate file after each pass",
   lint            = False &= name "l" &= help "Verify that the output is correct by invoking the lint tool",
+  lintPragma      = True &= help "Embed lint pragma in Unison IR to disable specific tests",
   estimateFreq    = False &= help "Estimate block execution frequency if it is not provided",
   implementFrames = True &= help "Implement stack frame handling",
   noCC            = False &= help "Do not enforce calling convention",

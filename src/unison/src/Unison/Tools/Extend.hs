@@ -29,11 +29,11 @@ import Unison.Tools.Extend.ExtendWithCopies
 import Unison.Tools.Extend.SortCopies
 import Unison.Tools.Extend.GroupCalls
 
-run (uniFile, debug, intermediate, lint, extUniFile) uni target =
+run (uniFile, debug, intermediate, lint, lintPragma, extUniFile) uni target =
     let f = parse target uni
         (extF, partialExtFs) =
             applyTransformations
-            extenderTransformations
+            (extenderTransformations lintPragma)
             target f
         baseName = takeBaseName uniFile
     in do when debug $
@@ -44,7 +44,7 @@ run (uniFile, debug, intermediate, lint, extUniFile) uni target =
           when lint $
                invokeLint extF target
 
-extenderTransformations =
+extenderTransformations lintPragma =
     [(extendWithCopies, "extendWithCopies", True),
      (sortCopies, "sortCopies", True),
      (postponeBranches, "postponeBranches", True),
@@ -52,7 +52,7 @@ extenderTransformations =
      (renameTemps, "renameTemps", True),
      (renameOperations, "renameOperations", True),
      (cleanPragmas extendPragmaTools, "cleanPragmas", True),
-     (addPragmas extendPragmas, "addPragmas", True)]
+     (addPragmas extendPragmas, "addPragmas", lintPragma)]
 
 extendPragmas =
     [("lint",

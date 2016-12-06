@@ -40,12 +40,13 @@ import Unison.Tools.Augment.AddReadWrites
 import Unison.Tools.Augment.LiftMemInfo
 
 run (implementFrames, noCross, oldModel, expandCopies', rematerialize,
-     uniFile, debug, intermediate, lint, altUniFile) uni target =
+     uniFile, debug, intermediate, lint, lintPragma, altUniFile) uni target =
     let f = parse target uni
         (altF, partialAltFs) =
             applyTransformations
             (augmenterTransformations (implementFrames, noCross, oldModel,
-                                       expandCopies', rematerialize))
+                                       expandCopies', rematerialize,
+                                       lintPragma))
             target f
         baseName = takeBaseName uniFile
     in do when debug $
@@ -57,7 +58,7 @@ run (implementFrames, noCross, oldModel, expandCopies', rematerialize,
                invokeLint altF target
 
 augmenterTransformations (implementFrames, noCross, oldModel, expandCopies',
-                          rematerialize) =
+                          rematerialize, lintPragma) =
     [(generalizeOperands, "generalizeOperands", True),
      (generalizeCongruences, "generalizeCongruences", True),
      (augmentOperands noCross oldModel, "augmentOperands", True),
@@ -75,7 +76,7 @@ augmenterTransformations (implementFrames, noCross, oldModel, expandCopies',
      (renameMOperands, "renameMOperands", True),
      (renameOperations, "renameOperations", True),
      (cleanPragmas augmentPragmaTools, "cleanPragmas", True),
-     (addPragmas augmentPragmas, "addPragmas", True)]
+     (addPragmas augmentPragmas, "addPragmas", lintPragma)]
 
 augmentPragmas =
     [("lint",

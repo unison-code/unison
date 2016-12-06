@@ -46,21 +46,21 @@ mainWithTargets targets = do
                  Import.run
                  (estimateFreq, noCC, noReserved, maxBlockSize, implementFrames,
                   function, goal,
-                  inFile, debug, intermediate, lint, outFile)
+                  inFile, debug, intermediate, lint, lintPragma, outFile)
                  input (target, targetOption)
     Linearize{..} ->
         do input <- readFile inFile
            case pickTarget targetName targets of
              (Any target) ->
                  Linearize.run
-                 (inFile, debug, intermediate, lint, outFile)
+                 (inFile, debug, intermediate, lint, lintPragma, outFile)
                  input (target, targetOption)
     Extend{..} ->
         do input <- readFile inFile
            case pickTarget targetName targets of
              (Any target) ->
                  Extend.run
-                 (inFile, debug, intermediate, lint, outFile)
+                 (inFile, debug, intermediate, lint, lintPragma, outFile)
                  input (target, targetOption)
     Augment{..} ->
         do input <- readFile inFile
@@ -69,7 +69,7 @@ mainWithTargets targets = do
                  Augment.run
                  (implementFrames, noCross, oldModel, expandCopies,
                   rematerialize,
-                  inFile, debug, intermediate, lint, outFile)
+                  inFile, debug, intermediate, lint, lintPragma, outFile)
                  input (target, targetOption)
     Model{..} ->
         do input <- readFile inFile
