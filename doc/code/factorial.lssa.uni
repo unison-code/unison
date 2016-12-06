@@ -1,0 +1,28 @@
+function: factorial
+b0 (entry, freq: 4):
+    o0: [t0:r0,t1:r31] <- (in) []
+    o1: [t2] <- A2_tfrsi [1]
+    o2: [t3] <- C2_cmpgti [t0,0]
+    o3: [] <- J2_jumpf [t3,b2]
+    o4: [] <- (out) [t0,t1,t2]
+b1 (freq: 85):
+    o5: [t4,t5,t6] <- (in) []
+    o6: [t7] <- A2_addi [t5,-1]
+    o7: [t8] <- M2_mpyi [t5,t4]
+    o8: [t9] <- C2_cmpgti [t5,1]
+    o9: [] <- J2_jumpt [t9,b1]
+    o10: [] <- (out) [t6,t7,t8]
+b2 (exit, return, freq: 4):
+    o11: [t10,t11] <- (in) []
+    o12: [] <- JMPret [t11]
+    o13: [] <- (out) [t10:r0]
+adjacent:
+    t0 -> t5, t1 -> t6, t1 -> t11, t2 -> t4, t2 -> t10, t6 -> t6, t6 -> t11,
+    t7 -> t5, t8 -> t4, t8 -> t10
+fixed-frame:
+frame:
+stack-pointer-offset: 0
+jump-table:
+goal:
+source:
+; ModuleID = (...)

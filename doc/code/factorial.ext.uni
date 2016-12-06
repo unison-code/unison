@@ -1,0 +1,45 @@
+function: factorial
+b0 (entry, freq: 4):
+    o0: [t0:r0,t1:r31] <- (in) []
+    o1: [t2] <- {-, MVW, STW} [t0]
+    o2: [t3] <- A2_tfrsi [1]
+    o3: [t4] <- {-, MVW, STW, STW_nv} [t3]
+    o4: [t5] <- {-, MVW, LDW} [t2]
+    o5: [t6] <- C2_cmpgti [t5,0]
+    o6: [t7] <- {-, MVW, LDW} [t2]
+    o7: [t8] <- {-, MVW, LDW} [t4]
+    o8: [] <- J2_jumpf [t6,b2]
+    o9: [] <- (out) [t7,t1,t8]
+b1 (freq: 85):
+    o10: [t9,t10,t11] <- (in) []
+    o11: [t12] <- {-, MVW, STW} [t9]
+    o12: [t13] <- {-, MVW, STW} [t10]
+    o13: [t14] <- {-, MVW, LDW} [t13]
+    o14: [t15] <- A2_addi [t14,-1]
+    o15: [t16] <- {-, MVW, STW, STW_nv} [t15]
+    o16: [t17] <- {-, MVW, LDW} [t12]
+    o17: [t18] <- {-, MVW, LDW} [t13]
+    o18: [t19] <- M2_mpyi [t18,t17]
+    o19: [t20] <- {-, MVW, STW, STW_nv} [t19]
+    o20: [t21] <- {-, MVW, LDW} [t13]
+    o21: [t22] <- C2_cmpgti [t21,1]
+    o22: [t23] <- {-, MVW, LDW} [t16]
+    o23: [t24] <- {-, MVW, LDW} [t20]
+    o24: [] <- J2_jumpt [t22,b1]
+    o25: [] <- (out) [t11,t23,t24]
+b2 (exit, return, freq: 4):
+    o26: [t25,t26] <- (in) []
+    o27: [t27] <- {-, MVW, STW} [t25]
+    o28: [t28] <- {-, MVW, LDW} [t27]
+    o29: [] <- JMPret [t26]
+    o30: [] <- (out) [t28:r0]
+adjacent:
+    t1 -> t11, t1 -> t26, t7 -> t10, t8 -> t9, t8 -> t25, t11 -> t11,
+    t11 -> t26, t23 -> t10, t24 -> t9, t24 -> t25
+fixed-frame:
+frame:
+stack-pointer-offset: 0
+jump-table:
+goal:
+source:
+; ModuleID = (...)
