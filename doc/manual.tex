@@ -352,16 +352,6 @@ produce assembly code all the way from source code.
 %
 Arcs between components are labeled with the file extension corresponding to the
 shared data file.
-%
-Unison uses LLVM's \href{http://llvm.org/docs/MIRLangRef.html}{Machine IR format
-  (MIR)} as the interface language.
-%
-Unison takes as input a function in MIR format (\code{.mir}) and the function
-where LLVM has already performed register allocation and instruction scheduling
-(\code{.asm.mir}) as a starting point for the optimization algorithm.
-%
-The result of running Unison (\code{.unison.mir}) is sent back to \code{llc}
-where the final assembly code is emitted.
 
 \begin{figure}[H]
   \centering
@@ -369,6 +359,24 @@ where the final assembly code is emitted.
   \caption{design of the LLVM driver}
   \label{fig:llvm}
 \end{figure}
+
+Unison uses LLVM's \href{http://llvm.org/docs/MIRLangRef.html}{Machine IR format
+  (MIR)} as the interface language.
+%
+Unison takes as input a function in MIR format (\code{.mir}) and the function
+where LLVM has already performed register allocation and instruction scheduling
+(\code{.asm.mir}) as a starting point for the optimization algorithm.
+%
+For our running example, the starting solution \code{factorial.asm.mir} looks as
+follows:
+%
+\fvset{fontsize=\small}
+\begin{codeBox}
+\BVerbatimInput{code/factorial.asm.mir}
+\end{codeBox}
+%
+The result of running Unison (\code{.unison.mir}) is sent back to \code{llc}
+where the final assembly code is emitted.
 
 As for the core Unison tool, the driver must be built from source as we do not
 yet provide precompiled packages.

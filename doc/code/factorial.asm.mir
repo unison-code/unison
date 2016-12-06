@@ -1,97 +1,37 @@
 --- |
-  ; ModuleID = 'factorial.ll'
-  target datalayout = "e-m:e-p:32:32:32-i64:64:64-i32:32:32-i16:16:16-i1:8:8-f64:64:64-f32:32:32-v64:64:64-v32:32:32-a:0-n16:32"
-  target triple = "hexagon"
-  
-  ; Function Attrs: norecurse nounwind readnone
-  define i32 @factorial(i32 %n) #0 {
-  entry:
-    %cmp4 = icmp sgt i32 %n, 0
-    br i1 %cmp4, label %while.body, label %while.end
-  
-  while.body:                                       ; preds = %entry, %while.body
-    %f.06 = phi i32 [ %mul, %while.body ], [ 1, %entry ]
-    %n.addr.05 = phi i32 [ %dec, %while.body ], [ %n, %entry ]
-    %dec = add nsw i32 %n.addr.05, -1
-    %mul = mul nsw i32 %n.addr.05, %f.06
-    %0 = add i32 %dec, 1
-    %cmp = icmp sgt i32 %0, 1
-    br i1 %cmp, label %while.body, label %while.end
-  
-  while.end:                                        ; preds = %while.body, %entry
-    %f.0.lcssa = phi i32 [ 1, %entry ], [ %mul, %while.body ]
-    ret i32 %f.0.lcssa
-  }
-  
-  attributes #0 = { norecurse nounwind readnone "disable-tail-calls"="false" "less-precise-fpmad"="false" "no-frame-pointer-elim"="true" "no-frame-pointer-elim-non-leaf" "no-infs-fp-math"="false" "no-nans-fp-math"="false" "stack-protector-buffer-size"="8" "target-cpu"="hexagonv4" "unsafe-fp-math"="false" "use-soft-float"="false" }
-  
-  !llvm.ident = !{!0}
-  
-  !0 = !{!"clang version 3.8.0"}
-
+  ; ModuleID = (...)
 ...
 ---
 name:            factorial
-alignment:       4
-exposesReturnsTwice: false
-hasInlineAsm:    false
-isSSA:           false
-tracksRegLiveness: true
-tracksSubRegLiveness: false
-liveins:         
-  - { reg: '%r0' }
-frameInfo:       
-  isFrameAddressTaken: false
-  isReturnAddressTaken: false
-  hasStackMap:     false
-  hasPatchPoint:   false
-  stackSize:       0
-  offsetAdjustment: 0
-  maxAlignment:    0
-  adjustsStack:    false
-  hasCalls:        false
-  maxCallFrameSize: 0
-  hasOpaqueSPAdjustment: false
-  hasVAStart:      false
-  hasMustTailInVarArgFunc: false
 body:             |
-  bb.0.entry (freq 12):
-    successors: %bb.1(62), %bb.3.while.end(37)
-    liveins: %r0
-  
-    BUNDLE implicit-def %r1, implicit-def %r0, implicit %r0 {
+  bb.0 (freq 12):
+    successors: %bb.2(1), %bb.1(1)
+
+    BUNDLE {
       %r1 = A2_tfr %r0
       %r0 = A2_tfrsi 1
     }
-    BUNDLE implicit-def dead %p0, implicit-def %pc, implicit %r1 {
+    BUNDLE {
       %p0 = C2_cmpgti %r1, 0
-      J2_jumpfnew internal killed %p0, %bb.3.while.end, implicit-def %pc
+      J2_jumpfnew %p0, %bb.1, implicit %pc, implicit-def %pc
     }
-  
-  bb.1 (freq 8):
-    successors: %bb.2.while.body(100)
-    liveins: %r0, %r1
-  
-  
-  bb.2.while.body (freq 255):
-    successors: %bb.2.while.body(96), %bb.3.while.end(3)
-    liveins: %r0, %r1
-  
-    BUNDLE implicit-def %r2, implicit-def %r0, implicit-def %p0, implicit killed %r1, implicit killed %r0 {
+
+  bb.1 (freq 255):
+    successors: %bb.1(1), %bb.2(1)
+
+    BUNDLE {
       %r2 = A2_addi %r1, -1
-      %r0 = M2_mpyi %r1, killed %r0
-      %p0 = C2_cmpgti killed %r1, 1
+      %r0 = M2_mpyi %r1, %r0
+      %p0 = C2_cmpgti %r1, 1
     }
-    BUNDLE implicit-def %r1, implicit-def dead %pc, implicit %r2, implicit killed %p0 {
+    BUNDLE {
       %r1 = A2_tfr %r2
-      J2_jumpt killed %p0, %bb.2.while.body, implicit-def dead %pc
+      J2_jumpt %p0, %bb.1, implicit %pc, implicit-def %pc
     }
-    J2_jump %bb.3.while.end, implicit-def dead %pc
-  
-  bb.3.while.end (freq 12):
-    liveins: %r0
-    liveouts: %r0
-  
-    JMPret killed %r31, implicit-def dead %pc, implicit killed %r0
+    J2_jump %bb.2, implicit-def %pc
+
+  bb.2 (freq 12):
+
+    JMPret %r31, implicit %pc, implicit-def %pc
 
 ...
