@@ -79,13 +79,13 @@
 
   \tableSpace
 
-  \parameter{\packRegisterClass{p}{q}}{pack register class of packed operands $p$ and $q$}
-  \json{pclass}{[13, 24, 13]}
+  \parameter{\packInstructions{p}{q}}{pack instructions of packed operands $p$ and $q$}
+  \json{pinstrs}{[[10, 17], [11, 15], [5]]}
   \jsonComment{Note: this parameter is encoded with the same structure
     as \code{packed}: each packed operand pair and its corresponding
-    pack register class are found in the same positions of their
+    pack instructions are found in the same positions of their
     respective JSON arrays (example: \code{packed[1]~=~[34, 35]},
-    \code{pclass[1]~=~24}.)}
+    \code{pinstrs[1]~=~[11, 15]}.)}
 
   \tableSpace
 

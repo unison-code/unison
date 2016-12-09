@@ -163,7 +163,7 @@
 \begin{equation}\textstyle\label{eq:packing}
   \begin{aligned}
     \connectedOperand{p} \land
-    \temporaryRegister{\operandTemporary{p}} &\in \atoms{\packRegisterClass{p}{q}}
+    &\operationInstruction{\operandOperation{\definer{\operandTemporary{p}}}} \in \packInstructions{p}{q}
     \implies\\
     &\temporaryRegister{\operandTemporary{q}} =
     \temporaryRegister{\operandTemporary{p}} +

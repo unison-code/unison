@@ -176,7 +176,8 @@ showMachineOperand (MachineTemp id td) = "%" ++ show id ++ showTiedDef td
 showMachineOperand (MachineFrameIndex idx fixed) =
   "%" ++ (if fixed then "fixed-" else "") ++ "stack." ++ show idx
 showMachineOperand MachineFrameSize = "%frame-size"
-showMachineOperand (MachineRegClass name) = "%reg-class." ++ name
+showMachineOperand (MachineInstructions is) =
+  "%instructions.[" ++ showCS id is ++ "]"
 showMachineOperand (MachineMemPartition address partition) =
   "<0x" ++ showHex address "" ++ "> = !{!\"unison-memory-partition\", i32 " ++
   show partition ++ "}"
@@ -231,7 +232,6 @@ instance Show r => Show (MachineOperand r) where
   show (MachineRegMask list) = inBraces ["rmask", list]
   show (MachineConstantPoolIndex index) = inBraces ["cpi", index]
   show (MachineCFIIndex index) = inBraces ["cfi", show index]
-  show (MachineRegClass name) = inBraces ["mrc", name]
   show (MachineMemPartition address id) = inBraces ["mmp", show address, show id]
   show MachineNullReg = inBraces ["reg", "-"]
   show (MachineDebugLocation index) = inBraces ["mdl", show index]

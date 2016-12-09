@@ -279,13 +279,13 @@ data VirtualOperation r =
     -- temporary depending on the register class of the latter
     Pack {
       -- | Pack instructions
-      oPackIs       :: [GeneralInstruction],
+      oPackIs           :: [GeneralInstruction],
       -- | Bound use
-      oPackBoundU   :: Operand r,
+      oPackBoundU       :: Operand r,
       -- | Free use
-      oPackFreeU    :: Operand r,
-      -- | Register class of the bound temporary to activate packing
-      oPackRegClass :: Operand r
+      oPackFreeU        :: Operand r,
+      -- | Definer instructions that activate packing
+      oPackInstructions :: Operand r
     } |
     -- | Operation that defines a temporary to be assigned at the low register
     -- atom(s) of its used temporary

@@ -88,10 +88,10 @@ mkDefine id ts = mkSingleOperation id (Virtual Define {oDefineDs = ts})
 mkCombine id lu hu d = mkSingleOperation id
       (Virtual Combine {oCombineLowU = lu, oCombineHighU = hu, oCombineD = d})
 
-mkPack id is bu fu rc =
+mkPack id is bu fu pis =
   mkSingleOperation id
   (Virtual Pack {oPackIs = is, oPackBoundU = bu, oPackFreeU = fu,
-                 oPackRegClass = rc})
+                 oPackInstructions = pis})
 
 mkLow id is u d = mkSingleOperation id (Virtual Low {oLowIs = is, oLowU = u, oLowD = d})
 

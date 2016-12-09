@@ -174,5 +174,5 @@ isMachinePreUnisonOperand MachineSubRegIndex {} = True
 isMachinePreUnisonOperand MachineFrameIndex {} = True
 isMachinePreUnisonOperand MachineFrameObject {} = True
 isMachinePreUnisonOperand MachineFrameSize {} = True
-isMachinePreUnisonOperand MachineRegClass {} = True
+isMachinePreUnisonOperand MachineInstructions {} = True
 isMachinePreUnisonOperand _ = False

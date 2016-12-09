@@ -457,9 +457,9 @@ mapToVirtualOprOperands f g o @ Combine {oCombineLowU = lu, oCombineHighU = hu,
      oCombineHighU = mapSingle f hu,
      oCombineD     = mapSingle g d}
 mapToVirtualOprOperands f _ o @ Pack {oPackBoundU = bu, oPackFreeU = fu,
-                                      oPackRegClass = rc} =
+                                      oPackInstructions = is} =
   o {oPackBoundU = mapSingle f bu, oPackFreeU = mapSingle f fu,
-     oPackRegClass = mapSingle f rc}
+     oPackInstructions = mapSingle f is}
 mapToVirtualOprOperands f g o @ Low {oLowU = u, oLowD = d} =
   o {oLowU = mapSingle f u, oLowD = mapSingle g d}
 mapToVirtualOprOperands f g o @ High {oHighU = u, oHighD = d} =
@@ -923,7 +923,7 @@ oOprUses (Virtual (o @ Kill {})) = oKillUs o
 oOprUses (Virtual (Define {})) = []
 oOprUses (Virtual (o @ Combine {})) = [oCombineLowU o, oCombineHighU o]
 oOprUses (Virtual (o @ Pack {})) =
-    [oPackBoundU o, oPackFreeU o, oPackRegClass o]
+    [oPackBoundU o, oPackFreeU o, oPackInstructions o]
 oOprUses (Virtual (o @ Low {})) = [oLowU o]
 oOprUses (Virtual (o @ High {})) = [oHighU o]
 oOprUses (Virtual (o @ VirtualCopy {})) = [oVirtualCopyS o]

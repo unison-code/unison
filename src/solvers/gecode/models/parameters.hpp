@@ -117,8 +117,8 @@ public:
   // packed operand pairs
   vector<vector<operand> > packed;
 
-  // register class of each packed operand pair
-  vector<register_class> pclass;
+  // pack instructions of each packed operand pair
+  vector<vector<instruction> > pinstrs;
 
   // minimum live range duration of each temporary
   vector<int> minlive;
@@ -404,8 +404,8 @@ public:
   // packed operand pairs in each block
   vector<vector<vector<operand> > > bpacked;
 
-  // register class of each packed operand pair in each block
-  vector<vector<register_class> > bpclass;
+  // pack instructions of each packed operand pair in each block
+  vector<vector<vector<instruction> > > bpinstrs;
 
   // top representative operand of each copy-related class
   vector<operand> copyreltop;

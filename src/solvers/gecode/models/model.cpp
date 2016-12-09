@@ -592,25 +592,6 @@ interchangeable_atoms(bool global, block b) const {
     class_atoms.insert(set<register_atom>(input->calleesaved.begin(),
                                           input->calleesaved.end()));
 
-  // add individual atoms in pack register classes
-  set<pair<register_class, int> > rcws;
-  for (block b : B) {
-    for (unsigned int pi = 0; pi < input->bpacked[b].size(); pi++) {
-      operand p = input->bpacked[b][pi][0];
-      register_class rc = input->bpclass[b][pi];
-      rcws.insert(make_pair(rc, input->operand_width[p]));
-    }
-  }
-  for (pair<register_class, int> rcw : rcws) {
-    for (register_atom ra : input->atoms[rcw.first]) {
-      set<register_atom> rc_atoms;
-      for (int w = 0; w < rcw.second; w++) {
-        rc_atoms.insert(ra + w);
-      }
-      class_atoms.insert(rc_atoms);
-    }
-  }
-
   set<register_atom> finite;
   for (auto ra : interchangeable) finite.insert(ra.first);
 
@@ -1032,32 +1013,47 @@ void Model::post_alignment_constraints(block b) {
 
 void Model::post_packing_constraints(block b) {
 
-  // Bound operands are packed together with free operands assigned to
-  // pack register classes:
+  // Bound operands are packed together with free operands if the definer
+  // operation is implemented by a pack instruction:
 
   for (unsigned int pi = 0; pi < input->bpacked[b].size(); pi++) {
     operand p = input->bpacked[b][pi][0], q = input->bpacked[b][pi][1];
-    register_class rc = input->bpclass[b][pi];
     int w = input->operand_width[p];
+    vector<instruction> pis = input->bpinstrs[b][pi];
+
+    // instruction that defines the temporary connected to p
+    IntVar di(*this, 0, input->I.size() - 1);
+    IntVarArgs is;
+    for (temporary t : input->temps[p]) {
+      if (t == NULL_TEMPORARY) {
+        is << var(NULL_INSTRUCTION);
+      } else {
+        operation d = input->def_opr[t];
+        IntVar instr(*this, 0, input->I.size() - 1);
+        element(*this, IntArgs(input->instructions[d]), i(d), instr);
+        is << instr;
+      }
+    }
+    element(*this, is, y(p), di);
+    BoolVar pack_definer(*this, 0, 1);
+    IntArgs pack_is(pis);
+    dom(*this, di, IntSet(pack_is), pack_definer, ipl);
 
     BoolVarArgs cases;
     IntVarArgs ryps;
-    BoolVar ryp_in_rc(*this, 0, 1);
-    IntArgs rc_atoms(input->atoms[rc]);
-    dom(*this, ry(p), IntSet(rc_atoms), ryp_in_rc, ipl);
 
     // first case:  bound operand packed in high component
-    cases << var(x(p) && ryp_in_rc && ((ry(p) % (w*2)) == 0));
+    cases << var(x(p) && pack_definer && ((ry(p) % (w*2)) == 0));
     ryps << var(ry(p) + w);
 
     // second case: bound operand packed in low component
-    cases << var(x(p) && ryp_in_rc && ((ry(p) % (w*2)) != 0));
+    cases << var(x(p) && pack_definer && ((ry(p) % (w*2)) != 0));
     ryps << var(ry(p) - w);
 
     // third case:  bound operand not packed
     BoolVarArgs conds;
     conds << x(p);
-    conds << ryp_in_rc;
+    conds << pack_definer;
     cases << var(sum(conds) < 2);
     IntVar any(*this, Gecode::Int::Limits::min, Gecode::Int::Limits::max);
     ryps << any;

@@ -65,7 +65,7 @@ parameters (cg, _, t2w, ra, _) f @ Function {fCode = code} target =
         (aligned,
          adist)     = unzip $ sort $ alignedTuples apf im t2w fCode
         (packed,
-         pclass)    = unzip $ sort $ packedTuples ra fCode
+         pinstrs)   = unzip $ sort $ packedTuples im fCode
 
         pp          = map S.fromList congr
         adjacent    = sort $ BCFG.eqvNeighborTemps bcfg pp
@@ -156,9 +156,9 @@ parameters (cg, _, t2w, ra, _) f @ Function {fCode = code} target =
       --          pack[3][1]: free operand in the fourth packed pair
       ("packed", toJSON packed),
 
-      -- register class of each packed operand pair
-      -- example: pclass[3]: register class of the fourth packed pair
-      ("pclass", toJSON pclass),
+      -- pack instructions of each packed operand pair
+      -- example: pinstrs[3][0]: first pack instr. of the fourth packed pair
+      ("pinstrs", toJSON pinstrs),
 
       -- Processor parameters
 
@@ -310,12 +310,13 @@ oprAlignedTuples apf iif t2w o
   | otherwise = [((p, iif i, q, iif i), 0)
                 | (p, q, i) <- apf o]
 
-packedTuples ra fcode = sort [packTuple ra (oOpr o) | o <- fcode, isPack o]
+packedTuples im fcode = sort [packTuple im (oOpr o) | o <- fcode, isPack o]
 
-packTuple ra (Virtual Pack {oPackBoundU = bu, oPackFreeU = fu,
-                            oPackRegClass = Bound (MachineRegClass rc)}) =
-    let irc = raIndexedRc ra (RegisterClass (read rc))
-    in ((bu, fu), irc)
+packTuple im (Virtual Pack {oPackBoundU = bu, oPackFreeU = fu,
+                            oPackInstructions =
+                              Bound (MachineInstructions is)}) =
+    let is' = map (toIndexedInstruction im . TargetInstruction . read) is
+    in ((bu, fu), is')
 
 operationClass oif ra om o =
     map (instructionClass oif ra o) (oIInstructions om o)

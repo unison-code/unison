@@ -186,7 +186,7 @@ oMaybePackUser code o =
 packProperties code o =
   let defs = [[oInstructions $ potentialDefiner t code | t <- ts]
              | ts <- oUseTemps o]
-      rc   = packRegClass $ oOpr o
-  in (defs, rc)
+      is   = packInstructions $ oOpr o
+  in (defs, is)
 
-packRegClass (Virtual Pack {oPackRegClass = mrc}) = mrc
+packInstructions (Virtual Pack {oPackInstructions = mis}) = mis

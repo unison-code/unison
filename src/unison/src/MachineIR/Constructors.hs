@@ -57,7 +57,7 @@ module MachineIR.Constructors
          mkMachineRegMask,
          mkMachineConstantPoolIndex,
          mkMachineCFIIndex,
-         mkMachineRegClass,
+         mkMachineInstructions,
          mkMachineMemPartition,
          mkMachineProperty,
          mkMachineNullReg,
@@ -121,7 +121,7 @@ mkMachineJumpTableIndex = MachineJumpTableIndex
 mkMachineRegMask = MachineRegMask
 mkMachineConstantPoolIndex = MachineConstantPoolIndex
 mkMachineCFIIndex = MachineCFIIndex
-mkMachineRegClass = MachineRegClass
+mkMachineInstructions = MachineInstructions
 mkMachineMemPartition = MachineMemPartition
 mkMachineProperty = MachineProperty
 mkMachineNullReg = MachineNullReg
