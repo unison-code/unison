@@ -26,7 +26,7 @@ computeFrameOffsets f @ Function {fCode = code, fFixedStackFrame = fobjs,
                                   fStackFrame = objs,
                                   fStackPointerOffset = off} _ =
   let (_, objs') = mapAccumL allocateObject (slotSet fobjs) objs
-      size       = frameSize (fobjs ++ objs')
+      size       = frameSize (fobjs ++ objs') - off
       mfsToImm = M.fromList
                  [(mkBound mkMachineFrameSize, mkBound (mkMachineImm size))]
       code'    = mapToOperationInBlocks (applyMapToOperands mfsToImm) code
