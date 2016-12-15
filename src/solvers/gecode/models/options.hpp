@@ -105,6 +105,7 @@ protected:
   Driver::BoolOption _disable_copy_dominance_constraints; // Disable copy dominance constraints
   Driver::BoolOption _disable_space_capacity_constraints; // Disable space capacity constraints
   Driver::BoolOption _disable_operand_symmetry_breaking_constraints; // Disable operand symmetry breaking constraints
+  Driver::BoolOption _disable_register_symmetry_breaking_constraints; // Disable register symmetry breaking constraints
   Driver::BoolOption _disable_presolver_constraints; // Disable presolver constraints
   Driver::BoolOption _disable_minimum_number_of_optional_operations_constraints; // Disable minimum number of optional operations constraints
   Driver::BoolOption _disable_allowed_activation_constraints; // Disable allowed activation constraints
@@ -175,6 +176,7 @@ public:
   bool disable_copy_dominance_constraints(void) const {return _disable_copy_dominance_constraints.value();}
   bool disable_space_capacity_constraints(void) const {return _disable_space_capacity_constraints.value();}
   bool disable_operand_symmetry_breaking_constraints(void) const {return _disable_operand_symmetry_breaking_constraints.value();}
+  bool disable_register_symmetry_breaking_constraints(void) const {return _disable_register_symmetry_breaking_constraints.value();}
   bool disable_presolver_constraints(void) const {return _disable_presolver_constraints.value();}
   bool disable_minimum_number_of_optional_operations_constraints(void) const {return _disable_minimum_number_of_optional_operations_constraints.value();}
   bool disable_allowed_activation_constraints(void) const {return _disable_allowed_activation_constraints.value();}

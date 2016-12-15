@@ -88,6 +88,7 @@ ModelOptions::ModelOptions(void)
     _disable_copy_dominance_constraints("--disable-copy-dominance-constraints", "disable copy dominance constraints", false),
     _disable_space_capacity_constraints("--disable-space-capacity-constraints", "disable space capacity constraints", false),
     _disable_operand_symmetry_breaking_constraints("--disable-operand-symmetry-breaking-constraints", "disable operand symmetry breaking constraints", false),
+    _disable_register_symmetry_breaking_constraints("--disable-register-symmetry-breaking-constraints", "disable register symmetry breaking constraints", true),
     _disable_presolver_constraints("--disable-presolver-constraints", "disable presolver constraints", false),
     _disable_minimum_number_of_optional_operations_constraints("--disable-minimum-number-of-optional-operations-constraints", "disable minimum number of optional operations constraints", false),
     _disable_allowed_activation_constraints("--disable-allowed-activation-constraints", "disable allowed activation constraints", false),
@@ -155,6 +156,7 @@ ModelOptions::ModelOptions(void)
   add(_disable_copy_dominance_constraints);
   add(_disable_space_capacity_constraints);
   add(_disable_operand_symmetry_breaking_constraints);
+  add(_disable_register_symmetry_breaking_constraints);
   add(_disable_presolver_constraints);
   add(_disable_minimum_number_of_optional_operations_constraints);
   add(_disable_allowed_activation_constraints);

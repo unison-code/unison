@@ -239,7 +239,8 @@ GlobalModel::GlobalModel(Parameters * p_input, ModelOptions * p_options,
   // constraints)
   if (!options->disable_improving()) {
     Gecode::SpaceStatus ss = status();
-    if (ss != SS_FAILED) {
+    if (ss != SS_FAILED &&
+        !options->disable_register_symmetry_breaking_constraints()) {
       post_register_symmetry_breaking_constraints();
     }
   }

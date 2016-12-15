@@ -149,7 +149,8 @@ LocalModel::LocalModel(Parameters * p_input, ModelOptions * p_options,
       post_operand_symmetry_breaking_constraints(b);
     ss = status();
     if (ss == SS_FAILED) return;
-    post_register_symmetry_breaking_constraints(b);
+    if (!options->disable_register_symmetry_breaking_constraints())
+      post_register_symmetry_breaking_constraints(b);
   }
 
 }
@@ -261,6 +262,7 @@ void LocalModel::post_register_symmetry_breaking_constraints(block b) {
     for (vector<register_atom> rs : vpc.rss) {
       IntArgs ras(rs.begin(), rs.end());
       precede(*this, rts, ras);
+      assert(status() != SS_FAILED);
     }
   }
 }
