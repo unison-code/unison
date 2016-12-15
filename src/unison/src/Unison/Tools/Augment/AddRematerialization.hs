@@ -72,10 +72,6 @@ applyOpMap p2t (OperandRef p) = p2t M.! p
 inCongruents cs b = [(t, tempCongruents t cs) | t <- oDefs (blockIn b)]
 tempCongruents t cs = [t' | (t', t'') <- cs, toCongruenceOp t == t'']
 
--- TODO: we are missing some useful remats, e.g. that from mv40Imm 2147483647 in
--- ull1pe_dem_chanlen.ULL1PE_DEM_calcResidualNoiseVar (because it is only used
--- by a copy). This rematerialization is actually performed by LLVM!
-
 isUsefulRemat Function {fCode = code} rt = any (isUsefulRematInBlock rt) code
 
 isUsefulRematInBlock rt Block {bCode = code} =
