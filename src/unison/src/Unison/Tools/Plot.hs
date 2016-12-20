@@ -30,7 +30,7 @@ import qualified Unison.Graphs.SG as SG
 import qualified Unison.Graphs.OG as OG
 import qualified Unison.Graphs.PG as PG
 
-run (genBcfg, genIcfg, genBdt, genDg, genCg, genSg, genOg, genPg,
+run (genBcfg, genIcfg, genBdt, genDg, genCg, genSg, genOg, genPg, genPpg,
      graphBlock, simpleGraph, uniFile) uni target =
   let bif      = branchInfo target
       rwlf    = readWriteLatency target
@@ -52,6 +52,7 @@ run (genBcfg, genIcfg, genBdt, genDg, genCg, genSg, genOg, genPg,
         Nothing  -> OG.fromFunction f
         (Just b) -> OG.fromBlock (fCode f !! b) (fCongruences f)
       pg      = PG.fromDependencyGraph rm oif dg
+      ppg     = PG.mandatory $ PG.positive $ PG.fromDependencyGraph rm oif dg
       outBcfg = BCFG.toDot bcfg (fCongruences f) simpleGraph
       outIcfg = ICFG.toDot icfg
       outBdt  = BCFG.toDot bdt (fCongruences f) simpleGraph
@@ -60,6 +61,7 @@ run (genBcfg, genIcfg, genBdt, genDg, genCg, genSg, genOg, genPg,
       outSg   = (if isAugmented f then SG.toOperandDot else SG.toTempDot) sg
       outOg   = OG.toDot og
       outPg   = PG.toDot pg
+      outPpg  = PG.toDot ppg
       baseName = takeBaseName uniFile
   in do when genBcfg $ writeGraphFile baseName "b.cfg" outBcfg
         when genIcfg $ writeGraphFile baseName "i.cfg" outIcfg
@@ -69,6 +71,7 @@ run (genBcfg, genIcfg, genBdt, genDg, genCg, genSg, genOg, genPg,
         when genSg   $ writeGraphFile baseName "sg" outSg
         when genOg   $ writeGraphFile baseName (graphExt graphBlock "og") outOg
         when genPg   $ writeGraphFile baseName (graphExt graphBlock "pg") outPg
+        when genPpg  $ writeGraphFile baseName (graphExt graphBlock "ppg") outPpg
 
 writeGraphFile base g = writeDotFile (addExtension base ("." ++ g ++ ".dot"))
 

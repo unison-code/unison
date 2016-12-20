@@ -128,7 +128,7 @@ mainWithTargets targets = do
              (Any target) ->
                  Plot.run
                  (genBcfg, genIcfg, genBdt, genDg, genCg, genSg, genOg, genPg,
-                  graphBlock, simpleGraph, inFile)
+                  genPpg, graphBlock, simpleGraph, inFile)
                  input (target, targetOption)
     Run{..} ->
       case pickTarget targetName targets of

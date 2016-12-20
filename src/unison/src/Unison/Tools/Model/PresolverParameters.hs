@@ -40,7 +40,7 @@ parameters oldModel (_, dgs, _, ra, _)
                     else sort $ concatMap dominatedUses pgs
       r2as        = regAtoms ra
       precs       = if oldModel then []
-                    else concatMap (mandatoryPrecedences . PG.positive) pgs
+                    else concatMap (pgPrecs . PG.mandatory . PG.positive) pgs
       assignhints = [(p, head $ r2as M.! r) | (p, r) <- assignmentHints f]
       interchangeable = sort $ concatMap interchangeableCopies code
       -- Default (empty presolver parameters)
@@ -140,11 +140,7 @@ dominatedUseTriples pg (t, d, us) =
 
 precedesInPG pg i i' = PG.toNodeId i' `elem` suc pg (PG.toNodeId i)
 
-mandatoryPrecedences pg =
-  let man = S.fromList $ [PG.toNodeId i | i <- PG.toCode pg, isMandatory i]
-  in nub $ sort $ [(i, j) | (i, j, _) <- labEdges pg, all (contains man) [i, j]]
-
-contains = flip S.member
+pgPrecs pg = nub $ sort $ [(i, j) | (i, j, _) <- labEdges pg]
 
 assignmentHints Function { fCode = code } =
   let ts    = tUniqueOps $ flatten code

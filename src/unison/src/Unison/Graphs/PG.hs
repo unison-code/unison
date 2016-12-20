@@ -13,11 +13,12 @@ Main authors:
 This file is part of Unison, see http://unison-code.github.io
 -}
 module Unison.Graphs.PG
-       (fromDependencyGraph, nonNegative, positive, toNodeId, toCode,
+       (fromDependencyGraph, nonNegative, positive, mandatory, toNodeId, toCode,
         toDot) where
 
 import Data.List
 import qualified Data.Map as M
+import qualified Data.Set as S
 import Data.Maybe
 import Data.Graph.Inductive
 import Data.GraphViz hiding (toDot)
@@ -45,7 +46,8 @@ fromDependencyGraph rm oif dg =
       pg'  = insEdges dps pg
       rdps = nub (concatMap (revDataPrecedences ptf t2us) code) \\ labEdges pg'
       pg'' = insEdges rdps pg'
-  in pg''
+      upg  = removeDuplicateEdges pg''
+  in upg
 
 tempMap f code ts = M.fromList [(t, f t code) | t <- ts]
 
@@ -76,8 +78,11 @@ revOperandPrecedence ptf t2us i p =
     [u] -> Just (toNodeId i, toNodeId u, ptf [t] i u)
     _   -> Nothing
 
-nonNegative pg = labFilter ((/=) NegativePrecedence) pg
-positive pg = labFilter ((==) PositivePrecedence) pg
+nonNegative pg = elfilter ((/=) NegativePrecedence) pg
+positive pg = elfilter ((==) PositivePrecedence) pg
+mandatory pg =
+  let man = S.fromList $ [toNodeId i | i <- toCode pg, isMandatory i]
+  in efilter (\(i, j, _) -> all ((flip S.member) man) [i, j]) pg
 
 toNodeId = fromIntegral . oId
 

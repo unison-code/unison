@@ -70,7 +70,7 @@ data Uni =
     Plot      {targetName :: String, inFile :: FilePath, targetOption :: [String],
                genBcfg :: Bool, genIcfg :: Bool, genBdt :: Bool, genDg :: Bool,
                genCg :: Bool, genSg :: Bool, genOg :: Bool, genPg :: Bool,
-               graphBlock :: Maybe Int, simpleGraph :: Bool} |
+               genPpg :: Bool, graphBlock :: Maybe Int, simpleGraph :: Bool} |
     Run       {targetName :: String, inFile :: FilePath, targetOption :: [String],
                outFile :: Maybe FilePath, debug :: Bool, verbose :: Bool,
                intermediate :: Bool, lint :: Bool, estimateFreq :: Bool,
@@ -189,6 +189,7 @@ plot' = Plot {
   genSg       = False &= help "Generate a congruence graph",
   genOg       = False &= help "Generate an operand graph",
   genPg       = False &= help "Generate a precedence graph",
+  genPpg      = False &= help "Generate a precedence graph with positive, mandatory precedences only",
   graphBlock  = Nothing &= help "Block for which the graph should be generated",
   simpleGraph = False &= help "Generate simplified version"}
   &= help "Plot a Unison function in GraphViz format"

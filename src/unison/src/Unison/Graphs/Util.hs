@@ -14,8 +14,8 @@ This file is part of Unison, see http://unison-code.github.io
 -}
 module Unison.Graphs.Util
        (isLoop, isLoopEdge, pathToLEdges, inGraph, nodeLabMap, edgeLabMap,
-        rootNode, removeDeeperThan, concatGraphs, edgeLab, labFilter, labels,
-        graphFontName) where
+        rootNode, removeDeeperThan, concatGraphs, edgeLab, labels,
+        removeDuplicateEdges, graphFontName) where
 
 import Data.Maybe
 import Data.List
@@ -67,10 +67,13 @@ concatGraphs dgs =
 -- | Gives the label of a given labeled edge
 edgeLab (_, _, l) = l
 
--- | Filters the edges of the given graph according to a label predicate f
-labFilter f = efilter (f . edgeLab)
-
 -- | Gives all labels of the graph
 labels g = map snd $ labNodes g
+
+-- | Remove edges with the same source, target, and label
+removeDuplicateEdges g =
+  let nodes = labNodes g
+      edges = nub $ labEdges g
+  in mkGraph nodes edges
 
 graphFontName = fromString "Courier New" :: T.Text
