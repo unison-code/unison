@@ -323,18 +323,20 @@ void presolve_global_activation_shaving(GlobalModel * base) {
     operation o = base->input->activation_class_representative[ac];
     GlobalModel * g = (GlobalModel*) base->clone();
     g->post_active_operation(o);
+    Gecode::SpaceStatus ss = SS_BRANCH;
     if (g->status() == SS_FAILED) {
       base->post_inactive_operation(o);
-      base->status();
+      ss = base->status();
       if (base->options->verbose())
         cerr << pre() << "activation class disabled" << endl;
     } else if (g->cost().min() > base->cost().min()) {
       base->post_activation_nogood(o, g->cost().min());
-      base->status();
+      ss = base->status();
       if (base->options->verbose())
         cerr << pre() << "activation class increases cost lower bound" << endl;
     }
     delete g;
+    if (ss == SS_FAILED) return; // Proof that there is no solution
   }
 
 }
