@@ -31,6 +31,7 @@ module MachineIR.Predicates
          isMachineRegSequence,
          isMachinePhi,
          isMachineCopy,
+         isMachineCFIInstruction,
          isMachineEHLabel,
          -- * MachineInstructionProperty predicates
          isMachineInstructionPropertyMem,
@@ -109,6 +110,10 @@ isMachinePhi _ = False
 
 isMachineCopy MachineSingle {msOpcode = MachineVirtualOpc COPY} = True
 isMachineCopy _ = False
+
+isMachineCFIInstruction
+  MachineSingle {msOpcode = MachineVirtualOpc CFI_INSTRUCTION} = True
+isMachineCFIInstruction _ = False
 
 isMachineEHLabel MachineSingle {msOpcode = MachineVirtualOpc EH_LABEL} = True
 isMachineEHLabel _ = False

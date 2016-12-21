@@ -115,6 +115,7 @@ Library
                    MachineIR.Transformations.RemoveEmptyBlocks
                    MachineIR.Transformations.SimplifyFallthroughs
                    MachineIR.Transformations.MergeBlocks
+                   MachineIR.Transformations.DropUnsupportedPseudos
                    MachineIR.Transformations.PrepareForEmission
 
                    Common.Util
@@ -124,7 +125,6 @@ Library
                   Unison.Tools.Import.DropDebugLocations
                   Unison.Tools.Import.NormalizePhis
                   Unison.Tools.Import.LiftMemoryPartitions
-                  Unison.Tools.Import.DropEHLabels
                   Unison.Tools.Import.EnforceCalleeSaved
                   Unison.Tools.Import.EnforceCallerSaved
                   Unison.Tools.Import.ExtractCallRegs

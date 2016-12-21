@@ -24,6 +24,7 @@ import MachineIR.Transformations.LiftJumpTables
 import MachineIR.Transformations.SimplifyFallthroughs
 import MachineIR.Transformations.SplitTerminators
 import MachineIR.Transformations.RenameMachineBlocks
+import MachineIR.Transformations.DropUnsupportedPseudos
 import MachineIR.Transformations.PrepareForEmission
 import Unison.Transformations.FinalizeOperations
 import Unison.Transformations.EstimateFrequency
@@ -36,13 +37,14 @@ run (estimateFreq, debug, normMirFile) mir target =
       mf2 = simplifyFallthroughs mf1 target
       mf3 = splitTerminators estimateFreq mf2 target
       mf4 = renameMachineBlocks mf3 target
-      f   = buildFunction target mf4
+      mf5 = dropUnsupportedPseudos mf4 target
+      f   = buildFunction target mf5
       f1  = if estimateFreq then estimateFrequency f target else f
       f2  = NF.normalizeFrequency f1 target
       f3  = finalizeOperations f2 target
-      mf5 = toMachineFunction f3
-      mf6 = MIR.runMachineTransformations (postProcess target) mf5
-      mf7 = prepareForEmission mf6 target
+      mf6 = toMachineFunction f3
+      mf7 = MIR.runMachineTransformations (postProcess target) mf6
+      mf8 = prepareForEmission mf7 target
   in do
      when debug $
           putStr $ toPlainText $
@@ -51,11 +53,12 @@ run (estimateFreq, debug, normMirFile) mir target =
            ("simplifyFallthroughs", Just $ show mf2),
            ("splitTerminators", Just $ show mf3),
            ("renameMachineBlocks", Just $ show mf4),
+           ("dropUnsupportedPseudos", Just $ show mf5),
            ("buildFunction", Just $ show f),
            ("estimateFrequency", Just $ show f1),
            ("normalizeFrequency", Just $ show f2),
            ("finalizeOperations", Just $ show f3),
-           ("toMachineFunction", Just $ show mf5),
-           ("postProcess", Just $ show mf6),
-           ("prepareForEmission", Just $ show mf7)]
-     emitOutput normMirFile (show mf7)
+           ("toMachineFunction", Just $ show mf6),
+           ("postProcess", Just $ show mf7),
+           ("prepareForEmission", Just $ show mf8)]
+     emitOutput normMirFile (show mf8)

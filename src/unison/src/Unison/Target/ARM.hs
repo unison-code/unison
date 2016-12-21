@@ -320,8 +320,7 @@ stackDirection = API.StackGrowsDown
 -- | Target dependent pre-processing functions
 
 preProcess = [cleanConstPoolBlocks, hideCPSRRegister,
-              addFrameIndex, processTailCalls, dropUnneededInstructions,
-              reorderImplicitOperands]
+              addFrameIndex, processTailCalls, reorderImplicitOperands]
 
 cleanConstPoolBlocks mf @ MachineFunction {mfBlocks = mbs} =
   mf {mfBlocks = filter (not . isConstPoolBlock) mbs}
@@ -371,11 +370,6 @@ processTailCallsInInstr mi @ MachineSingle {msOpcode   = MachineTargetOpc i,
   | i == TCRETURNri = mi {msOpcode = mkMachineTargetOpc TTAILJMPr}
 
 processTailCallsInInstr mi = mi
-
-dropUnneededInstructions =
-  filterMachineInstructions
-  (\mi -> not (isMachineTarget mi &&
-               mopcTarget (msOpcode mi) == CFI_INSTRUCTION))
 
 reorderImplicitOperands = mapToMachineInstruction reorderImplicitOperandsInInstr
 

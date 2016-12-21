@@ -253,6 +253,7 @@ mirVirtualOpcode =
   try (mirVOpc ("COMBINE", COMBINE)) <|>
   try (mirVOpc ("ADJCALLSTACKUP", ADJCALLSTACKUP)) <|>
   try (mirVOpc ("ADJCALLSTACKDOWN", ADJCALLSTACKDOWN)) <|>
+  try (mirVOpc ("CFI_INSTRUCTION", CFI_INSTRUCTION)) <|>
   try (mirVOpc ("EH_LABEL", EH_LABEL)) <|>
   try (mirVOpc ("BLOCK_MARKER", BLOCK_MARKER)) <|>
   try (mirVOpc ("BUNDLE", BUNDLE))

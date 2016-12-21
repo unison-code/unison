@@ -32,6 +32,7 @@ import MachineIR.Transformations.LiftJumpTables
 import MachineIR.Transformations.SimplifyFallthroughs
 import MachineIR.Transformations.SplitTerminators
 import MachineIR.Transformations.RenameMachineBlocks
+import MachineIR.Transformations.DropUnsupportedPseudos
 
 import Unison.Transformations.RenameBlocks
 import Unison.Transformations.PostponeBranches
@@ -46,7 +47,6 @@ import Unison.Transformations.RunTargetTransforms
 import Unison.Tools.Import.DropDebugLocations
 import Unison.Tools.Import.NormalizePhis
 import Unison.Tools.Import.LiftMemoryPartitions
-import Unison.Tools.Import.DropEHLabels
 import Unison.Tools.Import.ExtractSubRegs
 import Unison.Tools.Import.LowerInsertSubRegs
 import Unison.Tools.Import.LowerSubRegVirtuals
@@ -103,7 +103,7 @@ mirTransformations estimateFreq =
      (renameMachineBlocks, "renameMachineBlocks", True),
      (splitTerminators estimateFreq, "splitTerminators", True),
      (renameMachineBlocks, "renameMachineBlocks", True),
-     (dropEHLabels, "dropEHLabels", True),
+     (dropUnsupportedPseudos, "dropUnsupportedPseudos", True),
      (extractSubRegs, "extractSubRegs", True),
      (lowerInsertSubRegs, "lowerInsertSubRegs", True),
      (lowerSubRegVirtuals, "lowerSubRegVirtuals", True),
