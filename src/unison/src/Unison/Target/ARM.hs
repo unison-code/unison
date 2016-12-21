@@ -22,6 +22,7 @@ import Unison
 import qualified Unison.Target.API as API
 import Unison.Target.RegisterArray
 import Unison.Analysis.TemporaryType
+import Unison.Transformations.FoldReservedRegisters
 
 import Unison.Target.ARM.Common
 import Unison.Target.ARM.Registers
@@ -484,8 +485,7 @@ removeFrameIndexInstr mi @ MachineSingle {msOpcode = MachineTargetOpc i}
 
 -- | Gives a list of function transformers
 transforms ImportPreLift = [peephole extractReturnRegs,
-                            peephole foldResRegAssignment,
-                            peephole cleanResRegCopies,
+                            (\f -> foldReservedRegisters f (target, [])),
                             mapToOperationWithGoal addThumbAlternatives]
 transforms ImportPostLift = [peephole handlePromotedOperands]
 transforms _ = []

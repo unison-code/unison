@@ -11,8 +11,6 @@ This file is part of Unison, see http://unison-code.github.io
 -}
 module Unison.Target.ARM.Transforms
     (extractReturnRegs,
-     foldResRegAssignment,
-     cleanResRegCopies,
      addThumbAlternatives,
      handlePromotedOperands) where
 
@@ -25,7 +23,6 @@ import Unison
 import MachineIR
 import Unison.Target.Query
 import Unison.Target.ARM.Common
-import Unison.Target.ARM.Registers
 import Unison.Target.ARM.OperandInfo
 import Unison.Target.ARM.Usages
 import Unison.Target.ARM.ARMResourceDecl
@@ -91,32 +88,6 @@ extractReturnRegs _ (
    )
 
 extractReturnRegs _ (o : rest) _ = (rest, [o])
-
-foldResRegAssignment f (o : rest) _ =
-  let fcode = flatCode f
-      o'    = mapToOperandIf (isReservedTemp fcode) (foldTempReg fcode) o
-  in (rest, [o'])
-
-isReservedTemp fcode t @ Temporary {} =
-  case definer t fcode of
-    SingleOperation {
-      oOpr = Virtual (VirtualCopy {oVirtualCopyS = r @ Register {}})}
-      | isReservedReg r -> True
-    _ ->  False
-isReservedTemp _ _ = False
-
-isReservedReg r = rTargetReg (regId r) `elem` reserved
-
-foldTempReg fcode t = oSingleUse $ definer t fcode
-
-cleanResRegCopies _ (
-  SingleOperation {oOpr = Virtual (VirtualCopy {oVirtualCopyS = r,
-                                                oVirtualCopyD = r'})}
-  :
-  rest) _ | isRegister r && isRegister r' && r == r' && isReservedReg r =
-  (rest, [])
-
-cleanResRegCopies _ (o : rest) _ = (rest, [o])
 
 -- This transformation adds 16-bits Thumb alternatives when possible, according
 -- to the logic in Thumb2SizeReduction

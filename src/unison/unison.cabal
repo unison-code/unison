@@ -65,6 +65,7 @@ Library
                    Unison.Transformations.EstimateFrequency
                    Unison.Transformations.NormalizeFrequency
                    Unison.Transformations.FinalizeOperations
+                   Unison.Transformations.FoldReservedRegisters
                    Unison.Transformations.UnbundleSingletons
                    Unison.Transformations.CleanPragmas
                    Unison.Transformations.AddPragmas
