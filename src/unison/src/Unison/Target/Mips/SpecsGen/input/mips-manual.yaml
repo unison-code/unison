@@ -15,6 +15,7 @@ instruction-set:
           defines:            [rd]
           affects:
           affected-by:
+           - SP:              register
 
         - id:                 LOAD
           parent:             LW
@@ -26,6 +27,7 @@ instruction-set:
           defines:            [rd]
           affects:
           affected-by:
+           - SP:              register
 
         - id:                 MOVE
           parent:             ADD
@@ -47,6 +49,8 @@ instruction-set:
           uses:               [rt]
           defines:            [rd]
           affects:
+          affected-by:
+           - SP:              register
 
         - id:                 LOAD_D
           parent:             LDC1
@@ -56,7 +60,9 @@ instruction-set:
            - rt:              [register, use, m64]
           uses:               [rt]
           defines:            [rd]
+          affects:
           affected-by:
+           - SP:              register
 
         - id:                 MOVE_D
           parent:             FMOV_D32
@@ -78,6 +84,8 @@ instruction-set:
           uses:               [rt]
           defines:            [rd]
           affects:
+          affected-by:
+           - SP:              register
 
         - id:                 LOAD_F
           parent:             LWC1
@@ -87,7 +95,9 @@ instruction-set:
            - rt:              [register, use, m32]
           uses:               [rt]
           defines:            [rd]
+          affects:
           affected-by:
+           - SP:              register
 
         - id:                 MOVE_F
           parent:             FMOV_S
@@ -129,3 +139,44 @@ instruction-set:
 
         - id:                 LWC1_fi
           parent:             LWC1
+
+        - id:                 ADDiu_sp
+          parent:             ADDiu
+          operands:
+           - imm16:           bound
+          uses:               [imm16]
+          defines:            []
+          affects:
+           - SP:              register
+          affected-by:
+           - SP:              register
+
+        - id:                 ADDiu_negsp
+          parent:             ADDiu
+          operands:
+           - imm16:           bound
+          uses:               [imm16]
+          defines:            []
+          affects:
+           - SP:              register
+          affected-by:
+           - SP:              register
+
+        - id:                 SW_sp
+          parent:             SW
+          operands:
+           - rt:              [register, use, GPR32Opnd]
+           - addr1:           bound
+          uses:               [rt, addr1]
+          affected-by:
+           - SP:              register
+
+
+        - id:                 SWC1_sp
+          parent:             SWC1
+          operands:
+           - rt:              [register, use, FGR32Opnd]
+           - addr1:           bound
+          uses:               [rt, addr1]
+          affected-by:
+           - SP:              register

@@ -98,7 +98,7 @@ infRegClassBound (InfiniteRegisterClass M64) = Nothing
 
 -- | Registers whose value cannot be moved around
 
-reserved = [ZERO]
+reserved = [ZERO, SP]
 
 -- | Index type (low/high/copy) of subregisters
 

@@ -2250,5 +2250,9 @@ data MipsInstruction = ABSQ_S_PH
                      | LH_fi
                      | SWC1_fi
                      | LWC1_fi
+                     | ADDiu_sp
+                     | ADDiu_negsp
+                     | SW_sp
+                     | SWC1_sp
                      deriving (Eq, Ord)
 

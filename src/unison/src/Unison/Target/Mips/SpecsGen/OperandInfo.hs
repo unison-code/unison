@@ -413,6 +413,8 @@ operandInfo i
       TemporaryInfo (RegisterClass GPR64Opnd) 0,
       TemporaryInfo (RegisterClass FGR32Opnd) 0],
      [TemporaryInfo (RegisterClass FGR32Opnd) 1])
+  | i `elem` [SWC1_sp] =
+    ([TemporaryInfo (RegisterClass FGR32Opnd) 0, BoundInfo], [])
   | i `elem` [SWC1, SWC1_MM, SWC1_fi, SWXC1, SWXC1_MM] =
     ([TemporaryInfo (RegisterClass FGR32Opnd) 0, BoundInfo, BoundInfo],
      [])
@@ -755,8 +757,9 @@ operandInfo i
       TemporaryInfo (RegisterClass GPR64Opnd) 0],
      [TemporaryInfo (RegisterClass GPR64Opnd) 1])
   | i `elem`
-      [JIALC, JIALC_MMR6, TEQI, TEQI_MM, TGEI, TGEIU, TGEIU_MM, TGEI_MM,
-       TLTI, TLTIU_MM, TLTI_MM, TNEI, TNEI_MM, TTLTIU, WRDSP, WRDSP_MM]
+      [JIALC, JIALC_MMR6, SW_sp, TEQI, TEQI_MM, TGEI, TGEIU, TGEIU_MM,
+       TGEI_MM, TLTI, TLTIU_MM, TLTI_MM, TNEI, TNEI_MM, TTLTIU, WRDSP,
+       WRDSP_MM]
     = ([TemporaryInfo (RegisterClass GPR32Opnd) 0, BoundInfo], [])
   | i `elem` [MTC0] =
     ([TemporaryInfo (RegisterClass GPR32Opnd) 0, BoundInfo],
@@ -1392,11 +1395,11 @@ operandInfo i
     ([TemporaryInfo (InfiniteRegisterClass M64) 0],
      [TemporaryInfo (RegisterClass AFGR64Opnd) 1])
   | i `elem`
-      [ADDIUSP_MM, ADJCALLSTACKDOWN, AddiuSpImm16, AddiuSpImmX16,
-       BREAK16_MM, BREAK16_MMR6, BUNDLE, Bteqz16, BteqzX16, Btnez16,
-       BtnezX16, CFI_INSTRUCTION, Constant32, DBG_VALUE, EH_LABEL,
-       GC_LABEL, INLINEASM, JAL, JALS_MM, JALX, JALX_MM, JAL_MM, Jal16,
-       JalB16, KILL, LIFETIME_END, LIFETIME_START, PHI, Restore16,
+      [ADDIUSP_MM, ADDiu_negsp, ADDiu_sp, ADJCALLSTACKDOWN, AddiuSpImm16,
+       AddiuSpImmX16, BREAK16_MM, BREAK16_MMR6, BUNDLE, Bteqz16, BteqzX16,
+       Btnez16, BtnezX16, CFI_INSTRUCTION, Constant32, DBG_VALUE,
+       EH_LABEL, GC_LABEL, INLINEASM, JAL, JALS_MM, JALX, JALX_MM, JAL_MM,
+       Jal16, JalB16, KILL, LIFETIME_END, LIFETIME_START, PHI, Restore16,
        RestoreX16, SDBBP, SDBBP16_MM, SDBBP16_MMR6, SDBBP_MM, SDBBP_MMR6,
        SDBBP_R6, STATEPOINT, SYNC, SYNC_MM, SYNC_MMR6, SYSCALL,
        SYSCALL_MM, Save16, SaveX16, TAILCALL, WAIT_MM, WAIT_MMR6]

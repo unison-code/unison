@@ -12,6 +12,8 @@ This file is part of Unison, see http://unison-code.github.io
 module Unison.Target.Mips (target) where
 
 import qualified Data.Set as S
+import Data.Maybe
+import Data.List.Split
 
 import MachineIR hiding (parse)
 
@@ -20,7 +22,7 @@ import qualified Unison.Target.API as API
 import Unison.Target.RegisterArray
 import Unison.Analysis.TemporaryType
 import Unison.Analysis.TransitiveOperations
-import Data.Maybe
+import Unison.Transformations.FoldReservedRegisters
 
 import Unison.Target.Mips.Registers
 import Unison.Target.Mips.Transforms
@@ -220,13 +222,29 @@ nop = Linear [TargetInstruction NOP] [] []
 
 implementFrame = const []
 
+mkOpt oid i us ds =
+  let o  = mkLinear oid [mkNullInstruction, TargetInstruction i] us ds
+      o' = addActivators (map TargetInstruction spUsers) o
+  in o'
+
+addActivators = mapToActivators . (++)
+
 -- | Adds function prologue
 
-addPrologue _ code = code
+addPrologue oid (e:code) =
+  let addNegSp = mkOpt oid ADDiu_negsp [Bound mkMachineFrameSize] []
+  in [e, addNegSp] ++ code
 
 -- | Adds function epilogue
 
-addEpilogue _ code = code
+addEpilogue oid code =
+    let [f, e] = split (keepDelimsL $ whenElt isBranch) code
+        addSp = mkOpt oid ADDiu_sp [Bound mkMachineFrameSize] []
+    in f ++ [addSp] ++ e
+
+spUsers = filter isSPUser SpecsGen.allInstructions
+isSPUser = readsObject (OtherSideEffect SP)
+readsObject rwo i = rwo `elem` (fst $ SpecsGen.readWriteInfo i)
 
 -- | Direction in which the stack grows
 stackDirection = API.StackGrowsDown
@@ -260,18 +278,40 @@ postProcess = [expandPseudos]
 
 expandPseudos = mapToMachineBlock (expandBlockPseudos expandPseudo)
 
-expandPseudo mi @ MachineSingle {msOpcode = MachineTargetOpc RetRA} =
-  let mi' = mi {msOpcode = MachineTargetOpc PseudoReturn,
-                msOperands = [mkMachineReg RA]}
-  in [[mi']]
-
+expandPseudo mi @ MachineSingle {msOpcode   = MachineTargetOpc i,
+                                 msOperands = mos} =
+  [[expandSimple mi (i, mos)]]
 expandPseudo mi = [[mi]]
+
+expandSimple mi (RetRA, _) =
+  mi {msOpcode = MachineTargetOpc PseudoReturn,
+      msOperands = [mkMachineReg RA]}
+
+expandSimple mi (i, [MachineImm mfs])
+  | i `elem` [ADDiu_sp, ADDiu_negsp] =
+      let mfs' = if i == ADDiu_negsp then (-mfs) else mfs
+      in  mi {msOpcode   = MachineTargetOpc ADDiu,
+              msOperands = [mkMachineReg SP, mkMachineReg SP,
+                            mkMachineImm mfs']}
+
+expandSimple mi (i, [v, off])
+  | i `elem` [SW_sp, SWC1_sp] =
+    mi {msOpcode   = MachineTargetOpc (fromJust $ SpecsGen.parent i),
+        msOperands = [v, mkMachineReg SP, off]}
+
+expandSimple mi (MOVE, [d, s]) =
+  mi {msOpcode   = MachineTargetOpc OR,
+      msOperands = [d, s, mkMachineReg ZERO]}
+
+expandSimple mi _ = mi
 
 -- | Gives a list of function transformers
 transforms ImportPreLift = [peephole rs2ts,
                             peephole normalizeCallPrologue,
                             peephole normalizeCallEpilogue,
-                            peephole extractReturnRegs]
+                            peephole extractReturnRegs,
+                            (\f -> foldReservedRegisters f (target, [])),
+                            mapToOperation hideStackPointer]
 transforms _ = []
 
 -- | Latency of read-write dependencies

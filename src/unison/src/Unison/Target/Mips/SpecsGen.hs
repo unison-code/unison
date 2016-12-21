@@ -14,6 +14,7 @@ module Unison.Target.Mips.SpecsGen (module X) where
   import Unison.Target.Mips.SpecsGen.OperandInfo as X
   import Unison.Target.Mips.SpecsGen.ReadOp as X
   import Unison.Target.Mips.SpecsGen.ShowInstance()
+  import Unison.Target.Mips.SpecsGen.AllInstructions as X
   import Unison.Target.Mips.SpecsGen.Itinerary as X
   import Unison.Target.Mips.SpecsGen.InstructionType as X
   import Unison.Target.Mips.SpecsGen.AlignedPairs as X

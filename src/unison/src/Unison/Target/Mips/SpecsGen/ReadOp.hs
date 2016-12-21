@@ -2249,5 +2249,9 @@ readOp "SH_fi" = SH_fi
 readOp "LH_fi" = LH_fi
 readOp "SWC1_fi" = SWC1_fi
 readOp "LWC1_fi" = LWC1_fi
+readOp "ADDiu_sp" = ADDiu_sp
+readOp "ADDiu_negsp" = ADDiu_negsp
+readOp "SW_sp" = SW_sp
+readOp "SWC1_sp" = SWC1_sp
 readOp a = error ("unmatched: readOp " ++ show a)
 

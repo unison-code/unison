@@ -380,6 +380,7 @@ parent i
        XOR_V_W_PSEUDO, XORi, XORi64, XORi_MM, XorRxRxRy16]
     = Nothing
   | i `elem` [MOVE] = Just ADD
+  | i `elem` [ADDiu_negsp, ADDiu_sp] = Just ADDiu
   | i `elem` [MOVE_D] = Just FMOV_D32
   | i `elem` [MOVE_F] = Just FMOV_S
   | i `elem` [LBu_fi] = Just LBu
@@ -391,6 +392,6 @@ parent i
   | i `elem` [SB_fi] = Just SB
   | i `elem` [STORE_D] = Just SDC1
   | i `elem` [SH_fi] = Just SH
-  | i `elem` [STORE, SW_fi] = Just SW
-  | i `elem` [STORE_F, SWC1_fi] = Just SWC1
+  | i `elem` [STORE, SW_fi, SW_sp] = Just SW
+  | i `elem` [STORE_F, SWC1_fi, SWC1_sp] = Just SWC1
 

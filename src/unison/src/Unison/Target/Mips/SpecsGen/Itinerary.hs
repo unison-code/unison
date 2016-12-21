@@ -78,7 +78,7 @@ itinerary i
       [ABS_D_MMR6, ABS_S_MMR6, FABS_D32, FABS_D64, FABS_MM, FABS_S,
        FABS_S_MM]
     = II_ABS
-  | i `elem` [ADDiu] = II_ADDIU
+  | i `elem` [ADDiu, ADDiu_negsp, ADDiu_sp] = II_ADDIU
   | i `elem` [ADDU16_MM, ADDU16_MMR6, ADDu, ADDu_MM] = II_ADDU
   | i `elem` [FADD_D32, FADD_D64, FADD_D_MMR6, FADD_MM] = II_ADD_D
   | i `elem` [FADD_S, FADD_S_MM, FADD_S_MMR6] = II_ADD_S
@@ -317,9 +317,9 @@ itinerary i
   | i `elem` [SUXC1, SUXC164, SUXC1_MM] = II_SUXC1
   | i `elem`
       [STORE, SW, SW16_MM, SW16_MMR6, SW64, SWSP_MM, SWSP_MMR6, SW_fi,
-       SwRxRyOffMemX16, SwRxSpImmX16]
+       SW_sp, SwRxRyOffMemX16, SwRxSpImmX16]
     = II_SW
-  | i `elem` [STORE_F, SWC1, SWC1_MM, SWC1_fi] = II_SWC1
+  | i `elem` [STORE_F, SWC1, SWC1_MM, SWC1_fi, SWC1_sp] = II_SWC1
   | i `elem` [SWL, SWL64] = II_SWL
   | i `elem` [SWR, SWR64] = II_SWR
   | i `elem` [SWXC1, SWXC1_MM] = II_SWXC1

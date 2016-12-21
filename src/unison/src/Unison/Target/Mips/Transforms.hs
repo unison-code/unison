@@ -13,7 +13,8 @@ module Unison.Target.Mips.Transforms
     (rs2ts,
      normalizeCallPrologue,
      normalizeCallEpilogue,
-     extractReturnRegs) where
+     extractReturnRegs,
+     hideStackPointer) where
 
 import Unison
 import MachineIR
@@ -311,3 +312,17 @@ extractReturnRegs _ (
    )
 
 extractReturnRegs _ (inst : rest) _ = (rest, [inst])
+
+hideStackPointer o @ SingleOperation {
+  oOpr = Natural no @ Linear {oIs = [TargetInstruction i], oUs = us}}
+  | any isStackPointer us =
+    let i'  = hiddenStackPointerInstr i
+        us' = filter (not . isStackPointer) us
+    in o {oOpr = Natural (no {oIs = [TargetInstruction i'], oUs = us'})}
+hideStackPointer o = o
+
+isStackPointer (Register (TargetRegister SP)) = True
+isStackPointer _ = False
+
+hiddenStackPointerInstr SW   = SW_sp
+hiddenStackPointerInstr SWC1 = SWC1_sp

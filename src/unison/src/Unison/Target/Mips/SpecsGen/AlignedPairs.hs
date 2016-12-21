@@ -256,7 +256,8 @@ alignedPairs i ([_], [_])
 alignedPairs i ([_, _], [_]) | i `elem` [LwConstant32] = []
 alignedPairs i ([_, _], [_])
   | i `elem` [LwRxPcTcp16, LwRxPcTcpX16] = []
-alignedPairs i ([_], []) | i `elem` [Bimm16, BimmX16] = []
+alignedPairs i ([_], [])
+  | i `elem` [ADDiu_negsp, ADDiu_sp, Bimm16, BimmX16] = []
 alignedPairs i ([_], [_])
   | i `elem` [LUI_MMR6, LUi, LUi64, LUi_MM] = []
 alignedPairs i ([_], [_])
@@ -518,6 +519,7 @@ alignedPairs i ([_], [_])
        SEB, SEB64, SEB_MM, SEB_MMR6, SEH, SEH64, SEH_MM, SEH_MMR6,
        SLL64_32, SLL64_64, STORE, STORE_D, STORE_F, WSBH, WSBH_MM]
     = []
+alignedPairs i ([_, _], []) | i `elem` [SWC1_sp, SW_sp] = []
 alignedPairs i ([_, _, _], [])
   | i `elem`
       [SB, SB16_MM, SB16_MMR6, SB64, SBE, SBE_MM, SBE_MMR6, SB_MM,
