@@ -416,12 +416,6 @@ postProcess = [expandPseudos, removeAllNops, removeFrameIndex,
 
 expandPseudos = mapToMachineBlock (expandBlockPseudos expandPseudo)
 
-expandBlockPseudos f mi @ MachineBlock {mbInstructions = mis} =
-    let mis'   = map miToList mis
-        mis''  = expand f mis'
-        mis''' = map listToMi mis''
-    in mi {mbInstructions = mis'''}
-
 expandPseudo mi @ MachineSingle {
   msOpcode   = MachineTargetOpc T2MOVi32imm,
   msOperands = [dst, ga @ MachineGlobalAddress {}]} =

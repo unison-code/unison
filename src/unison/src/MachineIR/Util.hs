@@ -29,6 +29,7 @@ module MachineIR.Util
          filterMachineInstructions,
          filterMachineInstructionsBlock,
          runMachineTransformations,
+         expandBlockPseudos,
          miToList,
          listToMi,
          fallthroughBlock
@@ -146,6 +147,12 @@ filterInstruction f mb @ MachineBundle {mbInstrs = mis} =
 filterInstruction f ms @ MachineSingle {} = if f ms then [ms] else []
 
 runMachineTransformations ts mf = foldl (\mf f -> f mf) mf ts
+
+expandBlockPseudos f mi @ MachineBlock {mbInstructions = mis} =
+    let mis'   = map miToList mis
+        mis''  = expand f mis'
+        mis''' = map listToMi mis''
+    in mi {mbInstructions = mis'''}
 
 miToList MachineBundle {mbInstrs = mis} = mis
 miToList mi @ MachineSingle {}          = [mi]
