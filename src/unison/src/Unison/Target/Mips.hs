@@ -256,7 +256,16 @@ serializeDelaySlot MachineBundle {mbInstrs = mis} = mis
 
 -- | Target dependent post-processing functions
 
-postProcess = []
+postProcess = [expandPseudos]
+
+expandPseudos = mapToMachineBlock (expandBlockPseudos expandPseudo)
+
+expandPseudo mi @ MachineSingle {msOpcode = MachineTargetOpc RetRA} =
+  let mi' = mi {msOpcode = MachineTargetOpc PseudoReturn,
+                msOperands = [mkMachineReg RA]}
+  in [[mi']]
+
+expandPseudo mi = [[mi]]
 
 -- | Gives a list of function transformers
 transforms ImportPreLift = [peephole rs2ts,

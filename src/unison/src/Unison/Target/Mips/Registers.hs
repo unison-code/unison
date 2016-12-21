@@ -109,10 +109,11 @@ subRegIndexType subreg = error ("unmatched: subRegIndexType " ++ show subreg)
 
 -- | Registers that are not preserved across calls
 callerSaved = [T0, T1, T2, T3, T4, T5, T6, T7, T8, T9,
-               D0, D1, D2, D3, D4, D5, D6, D7, D8, D9]
+               D0, D1, D2, D3, D4, D5, D6, D7, D8, D9,
+               RA]
 
 -- | Registers that are preserved across calls
-calleeSaved = [S0, S1, S2, S3, S4, S5, S6, S7,
+calleeSaved = [S0, S1, S2, S3, S4, S5, S6, S7, RA,
                D10, D11, D12, D13, D14, D15]
 
 instance Read MipsRegister where
