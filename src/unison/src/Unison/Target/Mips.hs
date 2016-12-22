@@ -254,7 +254,7 @@ stackDirection = API.StackGrowsDown
 
 -- | Target dependent pre-processing functions
 
-preProcess = [addFrameIndex, serializeDelaySlots]
+preProcess = [addFrameIndex]
 
 addFrameIndex = mapToTargetMachineInstruction addFrameIndexInstr
 
@@ -266,14 +266,6 @@ addFrameIndexInstr mi @ MachineSingle {msOpcode = opcode,
   | otherwise = mi
 
 liftToTOpc f = mkMachineTargetOpc . f . mopcTarget
-
-serializeDelaySlots = mapToMachineBlock serializeDelaySlotInBlock
-
-serializeDelaySlotInBlock mb @ MachineBlock {mbInstructions = mis} =
-  mb {mbInstructions = concatMap serializeDelaySlot mis}
-
-serializeDelaySlot mi @ MachineSingle {} = [mi]
-serializeDelaySlot MachineBundle {mbInstrs = mis} = mis
 
 -- | Target dependent post-processing functions
 
