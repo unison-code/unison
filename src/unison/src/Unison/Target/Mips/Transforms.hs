@@ -14,7 +14,9 @@ module Unison.Target.Mips.Transforms
      normalizeCallPrologue,
      normalizeCallEpilogue,
      extractReturnRegs,
-     hideStackPointer) where
+     hideStackPointer,
+     insertGPDisp,
+     markBarriers) where
 
 import Unison
 import MachineIR
@@ -140,7 +142,7 @@ rs2ts _ (
      ]
    )
 
-rs2ts _ (inst : rest) _ = (rest, [inst])
+rs2ts _ (o : rest) _ = (rest, [o])
 
 -- | Matches call prologues and pre-assigns a temp to the return address
 
@@ -243,7 +245,7 @@ normalizeCallPrologue _ (
       j {oOpr = Natural ji {oCallUs = [preAssign t (Register r)]}}]
     )
 
-normalizeCallPrologue _ (inst : rest) _ = (rest, [inst])
+normalizeCallPrologue _ (o : rest) _ = (rest, [o])
 
 -- | Matches call epilogues
 
@@ -277,7 +279,7 @@ normalizeCallEpilogue _ (
   :
   rest) _ | isTemporary t = (rest, [c, lw])
 
-normalizeCallEpilogue _ (inst : rest) _ = (rest, [inst])
+normalizeCallEpilogue _ (o : rest) _ = (rest, [o])
 
 {-
     o41: [V0] <- (copy) [t5]
@@ -311,7 +313,7 @@ extractReturnRegs _ (
                             oOuts = [preAssign t (Register ret)]})}]
    )
 
-extractReturnRegs _ (inst : rest) _ = (rest, [inst])
+extractReturnRegs _ (o : rest) _ = (rest, [o])
 
 hideStackPointer o @ SingleOperation {
   oOpr = Natural no @ Linear {oIs = [TargetInstruction i], oUs = us}}
@@ -321,8 +323,32 @@ hideStackPointer o @ SingleOperation {
     in o {oOpr = Natural (no {oIs = [TargetInstruction i'], oUs = us'})}
 hideStackPointer o = o
 
-isStackPointer (Register (TargetRegister SP)) = True
-isStackPointer _ = False
+isStackPointer = isTargetReg SP
 
 hiddenStackPointerInstr SW   = SW_sp
 hiddenStackPointerInstr SWC1 = SWC1_sp
+
+insertGPDisp _ (
+  e @ SingleOperation {oOpr = Virtual (Delimiter (In {oIns = ins}))}
+  :
+  rest) (_, oid, _)
+  | all (\r -> any (isPreAssignedTo r) ins) [T9, V0] =
+    let lgp = mkLinear oid [TargetInstruction LoadGPDisp] [] []
+    in (rest, [e, lgp])
+
+insertGPDisp _ (o : rest) _ = (rest, [o])
+
+isPreAssignedTo r p =
+  case preAssignment p of
+   (Just r') -> isTargetReg r r'
+   Nothing -> False
+
+isTargetReg r (Register (TargetRegister r')) = r == r'
+isTargetReg _ _ = False
+
+markBarriers o @ SingleOperation {
+    oOpr = Natural (Linear {oIs = [TargetInstruction i]}), oAs = as}
+  | isBarrierInstr i = o {oAs = as {aReads = [], aWrites = [ControlSideEffect]}}
+markBarriers o = o
+
+isBarrierInstr i = i `elem` [LoadGPDisp]

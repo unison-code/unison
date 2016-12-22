@@ -8,9 +8,9 @@ operandInfo i
   | i `elem`
       [Break16, DERET, DERET_MM, DERET_MMR6, EHB, EHB_MM, EHB_MMR6, ERET,
        ERETNC, ERETNC_MMR6, ERET_MM, ERET_MMR6, ERet, JrRa16, JrcRa16,
-       NOP, PAUSE, PAUSE_MM, PAUSE_MMR6, RetRA, RetRA16, SSNOP, SSNOP_MM,
-       SSNOP_MMR6, TLBINV, TLBINVF, TLBP, TLBP_MM, TLBR, TLBR_MM, TLBWI,
-       TLBWI_MM, TLBWR, TLBWR_MM, TRAP, WAIT]
+       LoadGPDisp, NOP, PAUSE, PAUSE_MM, PAUSE_MMR6, RetRA, RetRA16,
+       SSNOP, SSNOP_MM, SSNOP_MMR6, TLBINV, TLBINVF, TLBP, TLBP_MM, TLBR,
+       TLBR_MM, TLBWI, TLBWI_MM, TLBWR, TLBWR_MM, TRAP, WAIT]
     = ([], [])
   | i `elem` [Mfhi16, Mflo16] =
     ([], [TemporaryInfo (RegisterClass CPU16Regs) 1])

@@ -171,7 +171,6 @@ instruction-set:
           affected-by:
            - SP:              register
 
-
         - id:                 SWC1_sp
           parent:             SWC1
           operands:
@@ -180,3 +179,9 @@ instruction-set:
           uses:               [rt, addr1]
           affected-by:
            - SP:              register
+
+        - id:                 LoadGPDisp
+          parent:             LoadAddrImm32
+          operands:
+          uses:               []
+          defines:            []

@@ -212,7 +212,8 @@ resources = [Resource BundleWidth 1]
 
 -- | Declares resource usages of each instruction
 
-usages = const [mkUsage BundleWidth 1 1]
+usages LoadGPDisp = [mkUsage BundleWidth 1 2]
+usages _ = [mkUsage BundleWidth 1 1]
 
 -- | No-operation instruction
 
@@ -231,9 +232,11 @@ addActivators = mapToActivators . (++)
 
 -- | Adds function prologue
 
-addPrologue oid (e:code) =
-  let addNegSp = mkOpt oid ADDiu_negsp [Bound mkMachineFrameSize] []
-  in [e, addNegSp] ++ code
+addPrologue oid (e:l:code)
+  | isMandNaturalWith ((==) LoadGPDisp) l = [e, l, mkAddiu_negsp oid] ++ code
+addPrologue oid (e:code) = [e, mkAddiu_negsp oid] ++ code
+
+mkAddiu_negsp oid = mkOpt oid ADDiu_negsp [Bound mkMachineFrameSize] []
 
 -- | Adds function epilogue
 
@@ -278,6 +281,13 @@ postProcess = [expandPseudos]
 
 expandPseudos = mapToMachineBlock (expandBlockPseudos expandPseudo)
 
+expandPseudo mi @ MachineSingle {msOpcode = MachineTargetOpc LoadGPDisp} =
+  let v0  = mkMachineReg V0
+      gpd = mkMachineExternal "_gp_disp"
+      mi1 = mi {msOpcode = mkMachineTargetOpc LUi, msOperands = [v0, gpd]}
+      mi2 = mi {msOpcode = mkMachineTargetOpc ADDiu, msOperands = [v0, v0, gpd]}
+  in [[mi1],[mi2]]
+
 expandPseudo mi @ MachineSingle {msOpcode   = MachineTargetOpc i,
                                  msOperands = mos} =
   [[expandSimple mi (i, mos)]]
@@ -312,6 +322,11 @@ transforms ImportPreLift = [peephole rs2ts,
                             peephole extractReturnRegs,
                             (\f -> foldReservedRegisters f (target, [])),
                             mapToOperation hideStackPointer]
+
+transforms AugmentPreRW = [peephole insertGPDisp]
+
+transforms AugmentPostRW = [mapToOperation markBarriers]
+
 transforms _ = []
 
 -- | Latency of read-write dependencies

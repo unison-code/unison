@@ -2254,5 +2254,6 @@ data MipsInstruction = ABSQ_S_PH
                      | ADDiu_negsp
                      | SW_sp
                      | SWC1_sp
+                     | LoadGPDisp
                      deriving (Eq, Ord)
 

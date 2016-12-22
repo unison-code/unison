@@ -2253,5 +2253,6 @@ readOp "ADDiu_sp" = ADDiu_sp
 readOp "ADDiu_negsp" = ADDiu_negsp
 readOp "SW_sp" = SW_sp
 readOp "SWC1_sp" = SWC1_sp
+readOp "LoadGPDisp" = LoadGPDisp
 readOp a = error ("unmatched: readOp " ++ show a)
 

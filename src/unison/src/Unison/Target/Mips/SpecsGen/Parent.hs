@@ -389,6 +389,7 @@ parent i
   | i `elem` [LHu_fi] = Just LHu
   | i `elem` [LOAD, LW_fi] = Just LW
   | i `elem` [LOAD_F, LWC1_fi] = Just LWC1
+  | i `elem` [LoadGPDisp] = Just LoadAddrImm32
   | i `elem` [SB_fi] = Just SB
   | i `elem` [STORE_D] = Just SDC1
   | i `elem` [SH_fi] = Just SH

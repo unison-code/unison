@@ -53,7 +53,7 @@ itinerary i
        INSERT_W_VIDX64_PSEUDO, INSERT_W_VIDX_PSEUDO, JalOneReg, JalTwoReg,
        LONG_BRANCH_ADDiu, LONG_BRANCH_DADDiu, LONG_BRANCH_LUi, LWM_MM,
        LoadAddrImm32, LoadAddrImm64, LoadAddrReg32, LoadAddrReg64,
-       LoadImm32, LoadImm64, LwConstant32, MIPSeh_return32,
+       LoadGPDisp, LoadImm32, LoadImm64, LwConstant32, MIPSeh_return32,
        MIPSeh_return64, MultRxRy16, MultRxRyRz16, MultuRxRy16,
        MultuRxRyRz16, NOP, NORImm, NOR_V_D_PSEUDO, NOR_V_H_PSEUDO,
        NOR_V_W_PSEUDO, OR_V_D_PSEUDO, OR_V_H_PSEUDO, OR_V_W_PSEUDO,
