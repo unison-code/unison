@@ -20,6 +20,7 @@ module Unison.Target.Mips.Transforms
 
 import Unison
 import MachineIR
+import Unison.Target.Mips.Common
 import Unison.Target.Mips.MipsRegisterDecl
 import Unison.Target.Mips.SpecsGen.MipsInstructionDecl
 
@@ -318,15 +319,12 @@ extractReturnRegs _ (o : rest) _ = (rest, [o])
 hideStackPointer o @ SingleOperation {
   oOpr = Natural no @ Linear {oIs = [TargetInstruction i], oUs = us}}
   | any isStackPointer us =
-    let i'  = hiddenStackPointerInstr i
+    let i'  = hiddenStackPointerInstruction i
         us' = filter (not . isStackPointer) us
     in o {oOpr = Natural (no {oIs = [TargetInstruction i'], oUs = us'})}
 hideStackPointer o = o
 
 isStackPointer = isTargetReg SP
-
-hiddenStackPointerInstr SW   = SW_sp
-hiddenStackPointerInstr SWC1 = SWC1_sp
 
 insertGPDisp _ (
   e @ SingleOperation {oOpr = Virtual (Delimiter (In {oIns = ins}))}
@@ -350,5 +348,3 @@ markBarriers o @ SingleOperation {
     oOpr = Natural (Linear {oIs = [TargetInstruction i]}), oAs = as}
   | isBarrierInstr i = o {oAs = as {aReads = [], aWrites = [ControlSideEffect]}}
 markBarriers o = o
-
-isBarrierInstr i = i `elem` [LoadGPDisp]
