@@ -55,4 +55,4 @@ install:
 # Build and test Unison
 
 script:
-  - travis_wait cd src && make build test && cd -
+  - travis_wait ./.travis/build-test-unison.sh
