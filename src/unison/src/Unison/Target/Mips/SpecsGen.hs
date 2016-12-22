@@ -19,3 +19,4 @@ module Unison.Target.Mips.SpecsGen (module X) where
   import Unison.Target.Mips.SpecsGen.InstructionType as X
   import Unison.Target.Mips.SpecsGen.AlignedPairs as X
   import Unison.Target.Mips.SpecsGen.Parent as X
+  import Unison.Target.Mips.SpecsGen.Size as X

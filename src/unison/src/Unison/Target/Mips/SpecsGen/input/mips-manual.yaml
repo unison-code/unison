@@ -30,15 +30,13 @@ instruction-set:
            - SP:              register
 
         - id:                 MOVE
-          parent:             ADD
+          parent:             OR
           type:               copy
           operands:
            - rd:              [register, def, GPR32Opnd]
            - rt:              [register, use, GPR32Opnd]
           uses:               [rt]
           defines:            [rd]
-          affects:
-          affected-by:
 
         - id:                 STORE_D
           parent:             SDC1

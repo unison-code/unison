@@ -1,5 +1,5 @@
 module Unison.Target.Mips.Common
-       (isBarrierInstr, hiddenStackPointerInstruction) where
+       (isBarrierInstr, hiddenStackPointerInstruction, isDelaySlotInstr) where
 
 import qualified Data.Map as M
 
@@ -18,3 +18,9 @@ hiddenStackPointerInstruction i =
 hiddenStackPointerVersions = M.fromList
   [(SW, SW_sp),
    (SWC1, SWC1_sp)]
+
+isDelaySlotInstr i = i `elem` delaySlotInstrs
+
+delaySlotInstrs =
+  [B, BC1F, BC1T, BEQ, BGEZ, BGTZ, BLEZ, BLTZ, BNE, JALRPseudo,
+   PseudoIndirectBranch, PseudoReturn, RetRA]

@@ -226,8 +226,10 @@ Library
                   Unison.Target.Mips.Common
                   Unison.Target.Mips.Registers
                   Unison.Target.Mips.Transforms
+                  Unison.Target.Mips.Usages
                   Unison.Target.Mips.MipsRegisterDecl
                   Unison.Target.Mips.MipsRegisterClassDecl
+                  Unison.Target.Mips.MipsResourceDecl
                   Unison.Target.Mips.SpecsGen
                   Unison.Target.Mips.SpecsGen.MipsInstructionDecl
                   Unison.Target.Mips.SpecsGen.MipsItineraryDecl

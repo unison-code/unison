@@ -98,7 +98,7 @@ body:             |
 ---
 unison-test-target: Mips
 unison-test-goal: speed
-unison-test-expected-cost: 17
-unison-test-expected-proven: true
+unison-test-expected-cost: 35
+unison-test-expected-proven: false
 unison-test-expected-has-solution: true
 ...

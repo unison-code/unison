@@ -26,8 +26,10 @@ import Unison.Transformations.FoldReservedRegisters
 
 import Unison.Target.Mips.Registers
 import Unison.Target.Mips.Transforms
+import Unison.Target.Mips.Usages
 import Unison.Target.Mips.MipsRegisterDecl
 import Unison.Target.Mips.MipsRegisterClassDecl
+import Unison.Target.Mips.MipsResourceDecl
 import Unison.Target.Mips.SpecsGen.MipsInstructionDecl
 import qualified Unison.Target.Mips.SpecsGen as SpecsGen
 
@@ -206,14 +208,15 @@ isReservedRegister _ = False
 
 -- | Declares target architecture resources
 
-data MipsResource = BundleWidth deriving (Eq, Ord, Show, Read)
-
-resources = [Resource BundleWidth 1]
-
--- | Declares resource usages of each instruction
-
-usages LoadGPDisp = [mkUsage BundleWidth 1 2]
-usages _ = [mkUsage BundleWidth 1 1]
+resources =
+  [
+    -- Upper bound of what can be issued in parallel
+    Resource BundleWidth 2,
+    Resource Issue 1,
+    Resource LongDuration 1,
+    Resource ALU 1,
+    Resource IMULDIV 1
+  ]
 
 -- | No-operation instruction
 

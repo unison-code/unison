@@ -379,7 +379,6 @@ parent i
        XORI_MMR6, XOR_MM, XOR_MMR6, XOR_V, XOR_V_D_PSEUDO, XOR_V_H_PSEUDO,
        XOR_V_W_PSEUDO, XORi, XORi64, XORi_MM, XorRxRxRy16]
     = Nothing
-  | i `elem` [MOVE] = Just ADD
   | i `elem` [ADDiu_negsp, ADDiu_sp] = Just ADDiu
   | i `elem` [MOVE_D] = Just FMOV_D32
   | i `elem` [MOVE_F] = Just FMOV_S
@@ -390,6 +389,7 @@ parent i
   | i `elem` [LOAD, LW_fi] = Just LW
   | i `elem` [LOAD_F, LWC1_fi] = Just LWC1
   | i `elem` [LoadGPDisp] = Just LoadAddrImm32
+  | i `elem` [MOVE] = Just OR
   | i `elem` [SB_fi] = Just SB
   | i `elem` [STORE_D] = Just SDC1
   | i `elem` [SH_fi] = Just SH

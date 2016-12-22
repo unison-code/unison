@@ -268,7 +268,8 @@ itinerary i
   | i `elem` [NMSUB_D32, NMSUB_D32_MM, NMSUB_D64] = II_NMSUB_D
   | i `elem` [NMSUB_S, NMSUB_S_MM] = II_NMSUB_S
   | i `elem` [NOR, NOR64, NOR_MM] = II_NOR
-  | i `elem` [OR, OR16_MM, OR16_MMR6, OR64, OR_MM, ORi64] = II_OR
+  | i `elem` [MOVE, OR, OR16_MM, OR16_MMR6, OR64, OR_MM, ORi64] =
+    II_OR
   | i `elem` [ORi] = II_ORI
   | i `elem` [DPOP, POP] = II_POP
   | i `elem` [RDHWR, RDHWR64, RDHWR_MM, RDHWR_MMR6] = II_RDHWR
@@ -467,7 +468,7 @@ itinerary i
        MIN_A_H, MIN_A_W, MIN_D, MIN_D_MMR6, MIN_S, MIN_S_B, MIN_S_D,
        MIN_S_H, MIN_S_MMR6, MIN_S_W, MIN_U_B, MIN_U_D, MIN_U_H, MIN_U_W,
        MOD, MODSUB, MODU, MODU_MMR6, MOD_MMR6, MOD_S_B, MOD_S_D, MOD_S_H,
-       MOD_S_W, MOD_U_B, MOD_U_D, MOD_U_H, MOD_U_W, MOVE, MOVE16_MM,
+       MOD_S_W, MOD_U_B, MOD_U_D, MOD_U_H, MOD_U_W, MOVE16_MM,
        MOVE16_MMR6, MOVEP_MM, MOVE_V, MOVN_I_MM, MOVZ_I_MM, MSUBF_D,
        MSUBF_D_MMR6, MSUBF_S, MSUBF_S_MMR6, MSUBR_Q_H, MSUBR_Q_W,
        MSUBU_DSP, MSUBU_DSP_MM, MSUBV_B, MSUBV_D, MSUBV_H, MSUBV_W,
