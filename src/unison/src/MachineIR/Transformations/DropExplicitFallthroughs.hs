@@ -22,7 +22,9 @@ dropExplicitFallthroughs mf target =
   let itf = instructionType target
       oif = operandInfo target
       bif = branchInfo target
-      fs  = (itf, oif, bif)
+      (Natural nf) = nop target
+      n = oTargetInstr $ fromSingleton $ oIs nf
+      fs  = (itf, oif, bif, n)
       mbs = mfBlocks mf
       ftb = buildFallThroughMap mbs
       mf' = mf {mfBlocks = map (dropExplicitFallthrough fs ftb) mbs}
@@ -40,9 +42,12 @@ dropExplicitFallthrough fs ftb
     let mis' = concatMap (filterUnconditionalJumps fs (ftb M.! id)) mis
     in mb {mbInstructions = mis'}
 
-filterUnconditionalJumps fs l mb @ MachineBundle {mbInstrs = mis} =
+filterUnconditionalJumps fs @ (_, _, _, n) l
+  mb @ MachineBundle {mbInstrs = mis} =
     case filter (not . isUnconditionalJumpTo fs l) mis of
       []   -> []
+      [MachineSingle {msOpcode = MachineTargetOpc i}]
+        | i == n -> []
       [mi] -> [mi]
       mis' -> [mb {mbInstrs = mis'}]
 filterUnconditionalJumps fs l mi
@@ -51,7 +56,7 @@ filterUnconditionalJumps fs l mi
 
 isUnconditionalJumpTo fs l MachineBundle {mbInstrs = mis} =
     any (isUnconditionalJumpTo fs l) mis
-isUnconditionalJumpTo (itf, oif, bif) l mi
+isUnconditionalJumpTo (itf, oif, bif, _) l mi
   | isMachineBranch itf mi =
     let i = fromMachineInstruction itf oif (-1, mi)
     in case bif i of
