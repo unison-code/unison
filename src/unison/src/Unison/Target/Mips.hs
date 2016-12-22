@@ -27,6 +27,7 @@ import Unison.Transformations.FoldReservedRegisters
 import Unison.Target.Mips.Registers
 import Unison.Target.Mips.Transforms
 import Unison.Target.Mips.Usages
+import Unison.Target.Mips.Common
 import Unison.Target.Mips.MipsRegisterDecl
 import Unison.Target.Mips.MipsRegisterClassDecl
 import Unison.Target.Mips.MipsResourceDecl
@@ -272,7 +273,7 @@ liftToTOpc f = mkMachineTargetOpc . f . mopcTarget
 
 -- | Target dependent post-processing functions
 
-postProcess = [expandPseudos]
+postProcess = [expandPseudos, cleanNops, normalizeDelaySlots]
 
 expandPseudos = mapToMachineBlock (expandBlockPseudos expandPseudo)
 
@@ -309,6 +310,22 @@ expandSimple mi (MOVE, [d, s]) =
       msOperands = [d, s, mkMachineReg ZERO]}
 
 expandSimple mi _ = mi
+
+cleanNops = filterMachineInstructions (not . isSingleNop)
+
+isSingleNop MachineSingle {msOpcode = MachineTargetOpc NOP} = True
+isSingleNop _ = False
+
+normalizeDelaySlots = mapToMachineBlock normalizeDelaySlotInBlock
+
+normalizeDelaySlotInBlock mb @ MachineBlock {mbInstructions = mis} =
+  let mis' = map normalizeDelaySlot mis
+  in mb {mbInstructions = mis'}
+
+normalizeDelaySlot mb @ MachineBundle {
+  mbInstrs = [mi, mbi @ MachineSingle {msOpcode = MachineTargetOpc i}]}
+  | isDelaySlotInstr i = mb {mbInstrs = [mbi, mi]}
+normalizeDelaySlot mi = mi
 
 -- | Gives a list of function transformers
 transforms ImportPreLift = [peephole rs2ts,
