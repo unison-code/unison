@@ -106,6 +106,7 @@ module Unison.Util
         isPotentialDefiner,
         isEquivalentTo,
         isMandatory,
+        isMandNaturalWith,
         accessType,
         isReadOf,
         isWriteOf,
@@ -1008,6 +1009,15 @@ isEquivalentTo _ _ = False
 
 isMandatory ::  Eq i => BlockOperation i r -> Bool
 isMandatory o = none isNullInstruction (oInstructions o)
+
+-- | Predicate on a processor instruction
+type TargetInstructionPredicate i = (i -> Bool)
+
+isMandNaturalWith :: Eq i => TargetInstructionPredicate i ->
+                     BlockOperation i r -> Bool
+isMandNaturalWith p o =
+  let is = oInstructions o
+  in isNatural o && isMandatory o && all p (map oTargetInstr is)
 
 isDelimiterOperand ::  [BlockOperation i r] -> Operand r -> Bool
 isDelimiterOperand code t = any isDelimiter (definer t code : users t code)
