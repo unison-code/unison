@@ -92,7 +92,7 @@ body:             |
 ---
 unison-test-target: Mips
 unison-test-goal: size
-unison-test-expected-cost: 7
+unison-test-expected-cost: 6
 unison-test-expected-proven: true
 unison-test-expected-has-solution: true
 ...
