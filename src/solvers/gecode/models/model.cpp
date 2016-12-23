@@ -1084,11 +1084,10 @@ void Model::post_data_precedences_constraints(block b) {
           } else {
             operand p = input->definer[t];
             operation d = input->oper[p];
-            cs << var(c(d) + max(input->min_active_lat[p], lt(p)) + slack(p) +
-                      lt(q) + slack(q));
+            cs << var(c(d) + max(input->min_active_lat[p], lt(p)) + slack(p));
           }
 
-        constraint(c(u) >= element(cs, y(q)));
+        constraint(c(u) >= element(cs, y(q)) + lt(q) + slack(q));
       }
 
 }
