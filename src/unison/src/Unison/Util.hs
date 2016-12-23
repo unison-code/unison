@@ -156,6 +156,7 @@ module Unison.Util
         oActivators,
         foMaybeSize,
         newFrameIndex,
+        applyToLatency,
         -- * Comparators
         alternativeCopies,
         -- * Conversion functions
@@ -1062,6 +1063,10 @@ foMaybeSize fo =
 newFrameIndex :: [FrameObject] -> Integer
 newFrameIndex []   = 0
 newFrameIndex objs = maximum (map foIndex objs) + 1
+
+applyToLatency :: (Latency -> Latency) -> OperandInfo rc -> OperandInfo rc
+applyToLatency f (TemporaryInfo rc l) = (TemporaryInfo rc (f l))
+applyToLatency _ op = op
 
 oType :: BlockOperation i r -> OperationT
 oType (SingleOperation {oOpr = inst}) = oOprType inst

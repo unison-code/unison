@@ -1,4 +1,4 @@
-module Unison.Target.Mips.Usages (usages) where
+module Unison.Target.Mips.Usages (usages, latency) where
 
 import Unison
 
@@ -84,3 +84,5 @@ size i =
 issue i
   | isDelaySlotInstr i = 0
   | otherwise = 1
+
+latency i = maybeMax 0 $ map occupation (usages i)

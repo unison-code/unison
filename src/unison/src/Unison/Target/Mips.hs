@@ -14,6 +14,7 @@ module Unison.Target.Mips (target) where
 import qualified Data.Set as S
 import Data.Maybe
 import Data.List.Split
+import Control.Arrow
 
 import MachineIR hiding (parse)
 
@@ -360,7 +361,9 @@ alternativeTemps _ _ _ ts = map fst ts
 
 expandCopy _ _ o = [o]
 
-operandInfo i
+operandInfo i = adjustDefLatency i $ correctUses i $ SpecsGen.operandInfo i
+
+correctUses i info
     | i `elem` [LW, LH, LBu, LB, LHu] =
         ([TemporaryInfo (RegisterClass GPR32Opnd) 0, BoundInfo],
          [TemporaryInfo (RegisterClass GPR32Opnd) 1])
@@ -401,4 +404,6 @@ operandInfo i
           TemporaryInfo (RegisterClass GPR32Opnd) 0,
           TemporaryInfo (RegisterClass GPR32Opnd) 0],
          [])
-operandInfo a = SpecsGen.operandInfo a
+    | otherwise = info
+
+adjustDefLatency i = second (map (applyToLatency (const (latency i))))
