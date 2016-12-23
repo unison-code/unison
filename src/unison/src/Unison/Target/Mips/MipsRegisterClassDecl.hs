@@ -14,11 +14,14 @@ module Unison.Target.Mips.MipsRegisterClassDecl (MipsRegisterClass (..)) where
 data MipsRegisterClass =
     GPR32Opnd |
     GPR32 |
+    GPR256_CS |
+    GPR64_CS |
     ACC64 |
     FGR32Opnd |
     FGR32 |
     AFGR64Opnd |
     AFGR64 |
+    AFGR640_CS |
     FCCRegsOpnd |
     MSA128BOpnd |
     DSPCC |

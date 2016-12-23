@@ -33,8 +33,8 @@ registerArray =
 -- | Register classes
 regClasses =
   map RegisterClass
-  [GPR32Opnd, GPR32, ACC64, FGR32Opnd, FGR32, AFGR64Opnd, AFGR64, FCCRegsOpnd,
-   DSPCC] ++
+  [GPR32Opnd, GPR32, GPR256_CS, GPR64_CS, ACC64, FGR32Opnd, FGR32, AFGR64Opnd,
+   AFGR64, AFGR640_CS, FCCRegsOpnd, DSPCC] ++
   map InfiniteRegisterClass [M32, M64]
 
 -- | Register atoms of 1-width registers
@@ -63,6 +63,12 @@ registerAtoms D13 = (F26, F27)
 registerAtoms D14 = (F28, F29)
 registerAtoms D15 = (F30, F31)
 
+-- | Register atoms of wider registers
+
+registerAtoms T07 = (T0, T7)
+registerAtoms T89 = (T8, T9)
+registerAtoms D09 = (F0, F19)
+
 -- | Individual registers of each register class
 
 registers (RegisterClass rc)
@@ -74,6 +80,8 @@ registers (RegisterClass rc)
      T8, T9,
      K0, K1,
      GP, SP, FP, RA]
+  | rc `elem` [GPR256_CS] = [T07]
+  | rc `elem` [GPR64_CS] = [T89]
   | rc `elem` [ACC64] = [AC0]
   | rc `elem` [FGR32Opnd, FGR32] =
       [F0, F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15,
@@ -81,6 +89,7 @@ registers (RegisterClass rc)
        F30, F31]
   | rc `elem` [AFGR64Opnd, AFGR64] =
       [D0, D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12, D13, D14, D15]
+  | rc `elem` [AFGR640_CS] = [D09]
  -- Only the first register since the class is reserved and FCC0 is the
  -- only register that appears in the input MIR:
   | rc `elem` [FCCRegsOpnd] = [FCC0]
@@ -108,9 +117,7 @@ subRegIndexType subreg = error ("unmatched: subRegIndexType " ++ show subreg)
 -- BINARY INTERFACE MIPS RISC Processor Supplement", 3rd Edition, 1996)
 
 -- | Registers that are not preserved across calls
-callerSaved = [T0, T1, T2, T3, T4, T5, T6, T7, T8, T9,
-               D0, D1, D2, D3, D4, D5, D6, D7, D8, D9,
-               RA]
+callerSaved = [T07, T89, RA, D09]
 
 -- | Registers that are preserved across calls
 calleeSaved = [S0, S1, S2, S3, S4, S5, S6, S7, RA,
@@ -161,11 +168,14 @@ regStrings = M.fromList $
    (SP, "sp"),
    (FP, "fp"),
    (RA, "ra")] ++
+  [(T07, "t07")] ++
+  [(T89, "t89")] ++
   [(AC0, "ac0"),
    (HI0, "hi0"),
    (LO0, "lo0")] ++
   regStringsWithIndex "f" FGR32Opnd ++
   regStringsWithIndex "d" AFGR64Opnd ++
+  [(D09, "d09")] ++
   [(FCC0, "fcc0")] ++
   [(DSPCCond, "dspccond"),
    (DSPCarry, "dspcarry"),

@@ -34,6 +34,7 @@ data MipsRegister =
     D7 |
     D8 |
     D9 |
+    D09 |
     DSPCCond |
     F0 |
     F1 |
@@ -95,6 +96,8 @@ data MipsRegister =
     V0 |
     V1 |
     ZERO |
+    T07 |
+    T89 |
     HI0 |
     LO0 |
     AC0_64 |
