@@ -117,7 +117,7 @@ subRegIndexType subreg = error ("unmatched: subRegIndexType " ++ show subreg)
 -- BINARY INTERFACE MIPS RISC Processor Supplement", 3rd Edition, 1996)
 
 -- | Registers that are not preserved across calls
-callerSaved = [T07, T89, RA, D09]
+callerSaved = [T07, T89, GP, RA, D09]
 
 -- | Registers that are preserved across calls
 calleeSaved = [S0, S1, S2, S3, S4, S5, S6, S7, RA,
