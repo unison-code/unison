@@ -96,8 +96,9 @@ data MipsRegister =
     V0 |
     V1 |
     ZERO |
-    T07 |
+    ATT7 |
     T89 |
+    FPRA |
     HI0 |
     LO0 |
     AC0_64 |
