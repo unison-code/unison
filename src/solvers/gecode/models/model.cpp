@@ -1070,6 +1070,18 @@ void Model::post_data_precedences_constraints(block b) {
 
   // An operation that uses a temporary must be preceded by its definer:
 
+  // Cycle in which t is defined (taking into account its definition latency)
+  IntVarArgs ct;
+  map<temporary, unsigned int> ctindex;
+  unsigned int i = 0;
+  for (temporary t : input->tmp[b]) {
+    operand p = input->definer[t];
+    operation d = input->oper[p];
+    ct << var(c(d) + max(input->min_active_lat[p], lt(p)) + slack(p));
+    ctindex[t] = i;
+    i++;
+  }
+
   for (operation u : input->ops[b])
     for (operand q : input->operands[u])
       if (input->use[q]) {
@@ -1082,9 +1094,12 @@ void Model::post_data_precedences_constraints(block b) {
               pcs << var(c(input->def_opr[t1]));
             cs << var(min(pcs));
           } else {
-            operand p = input->definer[t];
-            operation d = input->oper[p];
-            cs << var(c(d) + max(input->min_active_lat[p], lt(p)) + slack(p));
+            // Maximum of the definition cycle of t and the definition cycle of
+            // the ultimate source of t
+            IntVarArgs cts;
+            cts << ct[ctindex[t]];
+            cts << ct[ctindex[input->ultimate_source[t]]];
+            cs << var(max(cts));
           }
 
         constraint(c(u) >= element(cs, y(q)) + lt(q) + slack(q));
