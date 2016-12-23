@@ -107,7 +107,7 @@ infRegClassBound (InfiniteRegisterClass M64) = Nothing
 
 -- | Registers whose value cannot be moved around
 
-reserved = [ZERO, SP]
+reserved = [ZERO, K0, K1, SP]
 
 -- | Index type (low/high/copy) of subregisters
 
@@ -117,7 +117,8 @@ subRegIndexType subreg = error ("unmatched: subRegIndexType " ++ show subreg)
 -- BINARY INTERFACE MIPS RISC Processor Supplement", 3rd Edition, 1996)
 
 -- | Registers that are not preserved across calls
-callerSaved = [T07, T89, GP, RA, D09]
+-- FIXME: check out the specifics of FP
+callerSaved = [AT, V0, V1, A0, A1, A2, A3, T07, T89, GP, FP, RA, D09]
 
 -- | Registers that are preserved across calls
 calleeSaved = [S0, S1, S2, S3, S4, S5, S6, S7, RA,
