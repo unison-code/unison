@@ -551,14 +551,69 @@ and the different transformations that are applied to it.
 \chapter{Unison IR}
 \label{sec:unison-ir}
 
+The intermediate representation (IR) used in Unison is simply referred to as
+\emph{Unison IR}.
+%
+Unison IR is a low-level,
+\href{https://en.wikipedia.org/wiki/Control_flow_graph}{control-flow
+  graph}-based IR (just like LLVM's Machine IR) that exposes the structure of
+the program and the multiple register allocation and instruction scheduling
+decisions to be formulated in the combinatorial model.
+%
+Unison IR has the following distinguishing features:
+%
+\begin{description}
+\item [linear static single assignment form (LSSA)] LSSA is a program form in
+  which temporaries (program variables at Unison IR's level) are local to
+  \href{https://en.wikipedia.org/wiki/Basic_block}{basic blocks} (\emph{blocks}
+  for short) and relations across temporaries from different blocks are made
+  explicit.
+\item [optional copies] Unison IR includes optional copy operations that can be
+  deactivated or implemented by alternative instructions.
+\item [alternative temporaries] Unison IR allows operations to use alternative
+  temporaries that hold the same value.
+\end{description}
+
+Unison IR as required for the combinatorial model formulation is constructed
+incrementally in four transformations as shown in Figure~\ref{fig:components}.
+%
+This section introduces the elements of Unison IR progressively by following the
+transformation chain for the running example.
+
 \section{Initial Unison IR}
+
+The initial Unison IR (\code{.uni}) after running the \code{uni import}
+component has a very similar structure to the input MIR function (\code{.mir}).
+%
+This is how \code{factorial.uni} looks like:
 
 \fvset{fontsize=\small}
 \begin{codeBox}
 \BVerbatimInput{code/factorial.uni}
 \end{codeBox}
 
-\section{Linearized Unison IR}
+A Unison IR file consists of multiple sections:
+
+\begin{description}
+\item [\code{function}:] name of the function.
+\item [code:] actual code of the function (more details are given below).
+\item [\code{adjacent}:] relations among temporaries from different blocks (more
+  details are given in Section~\ref{sec:lssa}).
+\item [\code{fixed-frame}:] frame objects (such as arguments passed by the
+  \href{https://en.wikipedia.org/wiki/Call_stack}{stack}) with a fixed position.
+\item [\code{frame}:] frame objects with a variable position.
+\item [\code{stack-pointer-offset}:] offset to add to the positions of the frame
+  objects in the stack frame.
+\item [\code{jump-table}:] blocks to which
+  \href{https://en.wikipedia.org/wiki/Branch_table}{jump tables} in the code can
+  jump.
+\item [\code{goal}:] optimization goal for Unison (either \code{speed} or
+  \code{size}).
+\item [\code{source}:] source code from which the function originates (typically
+  LLVM IR).
+\end{description}
+
+\section{Linearized Unison IR}\label{sec:lssa}
 
 \fvset{fontsize=\small}
 \begin{codeBox}
