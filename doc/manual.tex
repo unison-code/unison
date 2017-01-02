@@ -656,10 +656,41 @@ definition operands \code{t0:r0} in the \code{(in)} delimiter of the entry block
 
 \section{Linearized Unison IR}\label{sec:lssa}
 
+The linearized Unison IR (\code{.lssa.uni}) after running the \code{uni
+  linearize} component is in Linear Static Single Assignment (LSSA) form.
+%
+This is how \code{factorial.lssa.uni} looks like:
+
 \fvset{fontsize=\small}
 \begin{codeBox}
 \BVerbatimInput{code/factorial.lssa.uni}
 \end{codeBox}
+
+The difference with the initial Unison IR is that each temporary \code{t} (for
+example \code{t1} in \code{factorial.uni}) is decomposed into one temporary per
+block where \code{t} is live (for example \code{t1} in \code{b0}, \code{t6} in
+\code{b1}, and \code{t11} in \code{b2}).
+%
+The congruence among LSSA temporaries that originate from the same temporary is
+kept in the \code{adjacent} section.
+%
+The fact that a temporary \code{t} in a block is congruent to another temporary
+\code{t'} in an immediate successor block is represented by \code{t -> t'} (for
+example \code{t1 -> t6} indicates that \code{t1} in \code{b0} is congruent to
+\code{t6} in the immediate successor block \code{b1}).
+
+In the linearized Unison IR, liveness information is made explicit by defining
+and using the decomposed temporaries in \code{(out)} and \code{(in)} delimiter
+operations.
+%
+In this form, \code{(phi)} operations are no longer necessary as the information
+that they convey is captured by the new elements in the IR.
+%
+For example, the relation between \code{t9}, \code{t2}, and \code{t7} in
+\code{factorial.uni} is captured by \code{t2 -> t10} and \code{t8 -> t10} in
+\code{factorial.lssa.uni} (\code{t2}, \code{t7}, and \code{t9} in
+\code{factorial.uni} correspond to \code{t2}, \code{t8}, and \code{t10} in
+\code{factorial.lssa.uni}).
 
 \section{Extended Unison IR}
 
