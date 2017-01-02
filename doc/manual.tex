@@ -613,6 +613,47 @@ A Unison IR file consists of multiple sections:
   LLVM IR).
 \end{description}
 
+The code section consists of a list of blocks.
+%
+Each block has some attributes (whether it is the entry or exit point of the
+function, whether it returns to its caller function, and its estimated or
+profiled execution frequency) and a list of operations.
+%
+An operation consists of an identifier (for example \code{o8}), a list of
+definition operands (\code{[t6]}), an instruction that implements the operation
+(\code{A2\_addi}), and a list of use operands (\code{[t5, -1]}).
+%
+Definition operands are always temporaries (\code{t6}); use operands can be
+temporaries (\code{t5}), block references (\code{b2} in \code{o3}, or Machine IR
+operands (\code{-1} in \code{o8}) that are only passed through by Unison.
+
+Some Unison IR operations are virtual, that is, they contribute to the
+definition of the function semantics but do not appear in Unison's output.
+%
+An example is the \code{in} and \code{out} delimiter operations, which define
+(use) temporaries that are
+\href{https://en.wikipedia.org/wiki/Live_variable_analysis}{live-in} (out) at
+the entry (exit) point of each block.
+%
+Another example is the \code{phi} operations in blocks \code{b1} and \code{b2}
+(the initial Unison IR is in
+\href{https://en.wikipedia.org/wiki/Static_single_assignment_form}{Static Single
+  Assignment} (SSA) form).
+%
+A \code{phi} operation (for example \code{o14}) at the beginning of a block
+defines a temporary with the value of different temporaries depending on the
+preceding block that is executed (for example \code{t9} is set to the value of
+\code{t2} if \code{b0} is the preceding block or \code{t7} if \code{b1} is the
+preceding block).
+
+In the Unison IR, a preassignment of a temporary \code{t} to a register \code{r}
+at a certain point is represented by \code{t:r}.
+%
+For example, the calling convention in Hexagon dictates that the first argument
+of a function is passed in register \code{r0}, which is modeled by the
+definition operands \code{t0:r0} in the \code{(in)} delimiter of the entry block
+\code{b0}.
+
 \section{Linearized Unison IR}\label{sec:lssa}
 
 \fvset{fontsize=\small}
