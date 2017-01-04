@@ -148,8 +148,9 @@ array[int] of int: temp_minlive; % temp -> minlive
 array[int] of bool: temp_unsafe; % temp -> unsafe
 array[int] of set of int: temp_uses; % temp -> set of use operands
 
-%% see JSON packed, pclass
-array[int,int] of int: packed_pqc;
+%% see JSON packed, pinstrs
+array[int,int] of int: packed_pq;
+array[int] of set of int: packed_is;
 
 %% see JSON before
 array[int] of int: before_pred;
@@ -800,15 +801,15 @@ constraint
 
 %% packing constraints
 constraint
-    forall(k in index_set_1of2(packed_pqc)) (
-      let {int: p = packed_pqc[k,1],
-           int: q = packed_pqc[k,2],
-           int: c = packed_pqc[k,3],
+    forall(k in index_set_1of2(packed_pq)) (
+      let {int: p = packed_pq[k,1],
+           int: q = packed_pq[k,2],
+           set of int: insns = packed_is[k],
 	   int: w = temp_width[single_temp(p)],
 	   set of int: odd = {y | y in 0..MAXR where y mod (2*w) = w},
 	   var int: rtq} in (
 	  ite(ry[p] in odd, ry[p]-w, ry[p]+w, rtq) /\
-	  (ry[p] in atom_regs[c] -> ry[q] = rtq)
+	  (i[operand_definer[p]] in insns -> ry[q] = rtq)
       )
     );
 
@@ -1253,19 +1254,14 @@ constraint
 	 	       	    	   	          q in temp_uses[single_temp(p)]],
          array[int] of var int: outlats = [lt[q] | p in outs,
 	 	       	    	   	           t in real_temps(p),
-	 	       	    	   	           q in {temp_def[t]}],
-         array[int] of int: par_defs = [ o | p in outs,
-	 	       	    	   	     t in real_temps(p),
-	 	       	    	   	     o in {temp_definer[t]},
-	 	       	    	       where not (op_type[o] in {TYPE_LINEAR,TYPE_BRANCH,TYPE_CALL,TYPE_TAIL,TYPE_COPY,TYPE_IN})
-				       ]} in
+	 	       	    	   	           q in {temp_def[t]}]} in
       if (length(ins)>0) then
         let {var int: maxinlat = max(inlats)} in
           forall(p in ins)(s[p] >= - maxinlat)
       else true endif /\
       if (length(outs)>0) then
         let {var int: maxoutlat = max(outlats)} in
-          forall(p in outs)(s[p] >= - maxoutlat + if length(par_defs)>0 then 0 else 1 endif)
+          forall(p in outs)(s[p] >= - maxoutlat)
       else true endif
   );
 

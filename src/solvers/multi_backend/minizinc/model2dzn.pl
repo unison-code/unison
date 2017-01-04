@@ -257,13 +257,13 @@ model2dzn(AVL0) :-
 	write_array(temp_uses, array(0..MAXT,set(int)), OperandsArray),
 	%
 	avl_fetch(packed, AVL, Packed),
-	avl_fetch(pclass, AVL, Pclass),
-	(   Packed = []
-	->  write_array(packed_pqc, array(1..0,1..0,int), [])
-	;   transpose(Packed, [Packed1,Packed2]),
-	    transpose([Packed1,Packed2,Pclass], Packed123),
-	    write_array(packed_pqc, array(1.._,1.._,int), Packed123)
+	avl_fetch(pinstrs, AVL, Pinstrs1),
+	(   foreach(PL,Pinstrs1),
+	    foreach(PS,Pinstrs2)
+	do  encode(list(int), set(int), PL, PS)
 	),
+	write_array(packed_pq, array(1.._,1.._,int), Packed),
+	write_array(packed_is, array(1.._,set(int)), Pinstrs2),
 	%
 	avl_fetch(before, AVL, Before1),
 	avl_fetch(before2, AVL, Before2),
