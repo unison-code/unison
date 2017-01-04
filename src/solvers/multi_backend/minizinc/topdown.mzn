@@ -39,7 +39,7 @@
 %      | b in bb_order] ++
 %      [int_search([i[o] | o in bb_ops[b]], input_order, indomain_min, complete)
 %      | b in bb_order] ++
-%      [int_search([t[p] | p in bb_operands[b]], input_order, indomain_min, complete)
+%      [int_search([y[p] | p in bb_operands[b]], input_order, indomain_min, complete)
 %      | b in bb_order] ++
 %      [int_search([c[o] | o in bb_ops[b]], smallest, indomain_min, complete)
 %      | b in bb_order] ++
@@ -53,10 +53,10 @@
 %                   input_order, indomain_max, complete)] ++
 %      [seq_search([int_search([c[max(bb_ops[b])] , copysum[b]],
 %                              input_order, indomain_min, complete)] ++
-%                  [int_search([t[p] | p in bb_operands[b]
+%                  [int_search([y[p] | p in bb_operands[b]
 % 		 		   where operand_use[p] /\ op_mand[operand_definer[p]]],
 % 		  first_fail, indomain_min, complete)] ++
-% 		 [int_search([0]++[t[p] | p in bb_operands[b]
+% 		 [int_search([0]++[y[p] | p in bb_operands[b]
 % 		                        where operand_use[p] /\ not op_mand[operand_definer[p]]],
 % 		  first_fail, indomain_min, complete)])
 %      | b in bb_order] ++
@@ -75,9 +75,9 @@
 %      [int_search([c[max(bb_ops[b])] , copysum[b]],
 %                  input_order, indomain_min, complete)
 %      | b in bb_order] ++
-%      [int_search([t[p] | p in 0..MAXP where operand_use[p] /\ op_mand[operand_definer[p]]],
+%      [int_search([y[p] | p in 0..MAXP where operand_use[p] /\ op_mand[operand_definer[p]]],
 % 		 first_fail, indomain_min, complete)] ++
-%      [int_search([0]++[t[p] | p in 0..MAXP where operand_use[p] /\ not op_mand[operand_definer[p]]],
+%      [int_search([0]++[y[p] | p in 0..MAXP where operand_use[p] /\ not op_mand[operand_definer[p]]],
 % 		 first_fail, indomain_min, complete)] ++
 %      [int_search([i[o] | o in 0..MAXO],
 %                  input_order, indomain_min, complete)] ++
@@ -93,10 +93,10 @@
 %                   input_order, indomain_max, complete)] ++
 %      [seq_search([int_search([c[max(bb_ops[b])] , copysum[b]],
 %                              input_order, indomain_min, complete)] ++
-%                  [int_search([t[p] | p in bb_operands[b]
+%                  [int_search([y[p] | p in bb_operands[b]
 % 		 		   where operand_use[p] /\ op_mand[operand_definer[p]]],
 % 		  first_fail, indomain_min, complete)] ++
-% 		 [int_search([0]++[t[p] | p in bb_operands[b]
+% 		 [int_search([0]++[y[p] | p in bb_operands[b]
 % 		                        where operand_use[p] /\ not op_mand[operand_definer[p]]],
 % 		  first_fail, indomain_min, complete)] ++
 % 		 [int_search([i[o] | o in bb_ops[b]], input_order, indomain_min, complete)] ++
@@ -109,10 +109,10 @@
 % solve :: seq_search(
 %      [bool_search([a[min(calleesaved_spill[i])] | i in index_set(calleesaved_spill)]++[true],
 %                   input_order, indomain_max, complete)] ++
-%      [seq_search([int_search([t[p] | p in bb_operands[b]
+%      [seq_search([int_search([y[p] | p in bb_operands[b]
 % 		 		   where operand_use[p] /\ op_mand[operand_definer[p]]],
 % 		  first_fail, indomain_min, complete)] ++
-% 		 [int_search([0]++[t[p] | p in bb_operands[b]
+% 		 [int_search([0]++[y[p] | p in bb_operands[b]
 % 		                        where operand_use[p] /\ not op_mand[operand_definer[p]]],
 % 		  first_fail, indomain_min, complete)])
 %      | b in bb_order] ++
@@ -135,10 +135,10 @@ solve
      % can help, but far from always
      % [bool_search([a[min(activator_ops[i])] | i in index_set(activator_ops)]++[true],
      %              input_order, indomain_max, complete)] ++
-     [seq_search([int_search([t[p] | p in bb_operands[b]
+     [seq_search([int_search([y[p] | p in bb_operands[b]
     		 		   where operand_use[p] /\ op_mand[operand_definer[p]]],
     		  first_fail, indomain_min, complete)] ++
-    		 [int_search([0]++[t[p] | p in bb_operands[b]
+    		 [int_search([0]++[y[p] | p in bb_operands[b]
     		                        where operand_use[p] /\ not op_mand[operand_definer[p]]],
     		  first_fail, indomain_min, complete)])
      | b in bb_order] ++

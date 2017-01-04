@@ -124,6 +124,9 @@ model2dzn(AVL0) :-
 	avl_fetch(dur, AVL, Dur),
 	transpose(Dur, DurT),
 	write_array(res_dur, array(1..Nres,0..MAXI,int), DurT),
+	avl_fetch(off, AVL, Off),
+	transpose(Off, OffT),
+	write_array(res_off, array(1..Nres,0..MAXI,int), OffT),
 	%
 	avl_fetch(strictly_congr, AVL, Congr1),
 	(   foreach(L2,Congr1),
@@ -478,6 +481,14 @@ model2dzn(AVL0) :-
 	write_array(value_precede_regs, array(1.._,set(int)), VPRegs),
 	write_array(value_precede_temps, array(1.._,int), VPTemps),
 	%
+	compute_lat_table(AVL, LatTable, []),
+	length(LatTable, NLatTable),
+	write_array(lat_table, array(1..NLatTable,1..4,int), LatTable),
+	transpose(LatTable, [_,_,_,Lats]),
+	min_member(MinLat, Lats),
+	max_member(MaxLat, Lats),
+	format('MINL = ~d;\nMAXL = ~d;\n', [MinLat,MaxLat]),
+	%
 	literals_postlude(LOp, LArg1, LArg2),
 	length(LOp, Nliteral),
 	write_array(literal_op, array(1..Nliteral,int), LOp),
@@ -733,6 +744,25 @@ compute_operands_array(Tempss, OperandsArray) :-
 	    foreach(Set,OperandsArray),
 	    count(Q,0,_)
 	do  encode(list(int), set(int), Clump, Set)
+	).
+
+compute_lat_table(AVL) -->
+	{avl_fetch(lat, AVL, Lat)},
+	{avl_fetch(instructions, AVL, Ins)},
+	{avl_fetch(operands, AVL, Opnd)},
+	(   foreach(LatO,Lat),
+	    foreach(InsO,Ins),
+	    foreach(OpndO,Opnd),
+	    count(O,0,_)
+	do  (   foreach(I,InsO),
+		foreach(LatOI,LatO),
+		param(OpndO,O)
+	    do  (   foreach(P,OpndO),
+		    foreach(L,LatOI),
+		    param(O,I)
+		do  [[O,I,P,L]]
+		)
+	    )
 	).
 
 int2bool(0, false).

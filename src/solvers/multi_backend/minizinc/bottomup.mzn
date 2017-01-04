@@ -42,7 +42,7 @@
 % 		              input_order, indomain_min, complete)]) | b in bb_order] ++
 %      [int_search([i[o] | o in bb_ops[b]], input_order, indomain_min, complete)
 %      | b in bb_order] ++
-%      [int_search([t[p] | p in bb_operands[b]], input_order, indomain_min, complete)
+%      [int_search([y[p] | p in bb_operands[b]], input_order, indomain_min, complete)
 %      | b in bb_order] ++
 %      [int_search([c[o] | o in bb_ops[b]], smallest, indomain_min, complete)
 %      | b in bb_order] ++
@@ -58,10 +58,10 @@ solve :: seq_search(
                   input_order, indomain_max, complete)] ++
      [seq_search([int_search([c[max(bb_ops[b])] , copysum[b]],
                              input_order, indomain_min, complete)] ++
-                 [int_search([t[p] | p in bb_operands[b]
+                 [int_search([y[p] | p in bb_operands[b]
 		 		   where operand_use[p] /\ op_mand[operand_definer[p]]],
 		  first_fail, indomain_min, complete)] ++
-		 [int_search([0]++[t[p] | p in bb_operands[b]
+		 [int_search([0]++[y[p] | p in bb_operands[b]
 		                        where operand_use[p] /\ not op_mand[operand_definer[p]]],
 		  first_fail, indomain_min, complete)])
      | b in bb_order] ++
