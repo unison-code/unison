@@ -230,6 +230,14 @@ value_precede_chains(Parameters & input, Model * m, bool global, block b) {
     operation inop = input.ops[b][0];
     operation outop = max_of(input.ops[b]);
     for (operand p : input.operands[inop]) {
+      if (!m->ry(p).assigned())
+	return chains;
+    }
+    for (operand p : input.operands[outop]) {
+      if (!m->ry(p).assigned())
+	return chains;
+    }
+    for (operand p : input.operands[inop]) {
       if (m->ry(p).assigned() &&
 	  !infinite_register_atom(input, m->ry(p).val()) &&
           !binary_search(PreP.begin(), PreP.end(), p)) {
