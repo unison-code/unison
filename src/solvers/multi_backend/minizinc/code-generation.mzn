@@ -542,9 +542,8 @@ constraint
 
 %% congruences
 constraint
-    forall(j in index_set(congr)) (
-        let {set of int: cgr = congr[j],
-	     int: junior = min(cgr)} in (
+    forall(cgr in congr) (
+        let {int: junior = min(cgr)} in (
 	    forall(j in cgr where j>junior) (ry[junior] = ry[j])
  	)
     );
@@ -618,11 +617,8 @@ constraint
 
 %% disjoint live ranges
 constraint
-    forall(b in index_set(bb_temps)) (
-	sliced_diffn([r[t] | t in bb_temps[b]],
-	      [ls[t] | t in bb_temps[b]],
-	      [temp_width[t] | t in bb_temps[b]],
-	      [ld[t] | t in bb_temps[b]])
+    forall(T in bb_temps) (
+	sliced_diffn([r[t] | t in T], [ls[t] | t in T], [temp_width[t] | t in T], [ld[t] | t in T])
     );
 
 %% precedences (with conditions added by presolver)
@@ -850,21 +846,21 @@ constraint
 
 %% disjoint registers
 constraint
-    forall(i in index_set(diffreg)) (
-        noverlap([ry[j] | j in diffreg[i]],
-	         [temp_width[min(operand_temps[j])] | j in diffreg[i]])
+    forall(R in diffreg) (
+        noverlap([ry[j] | j in R],
+	         [temp_width[min(operand_temps[j])] | j in R])
     );
 
 %% different temporaries
 constraint
-    forall(i in index_set(difftemp)) (
-        all_different([y[j] | j in difftemp[i]])
+    forall(T in difftemp) (
+        all_different([y[j] | j in T])
     );
 
 %% nogoods
 constraint
-    forall(i in index_set(nogood)) (
-        not eval_conjunction(nogood[i])
+    forall(N in nogood) (
+        not eval_conjunction(N)
     );
 
 %% live temporary
@@ -872,8 +868,8 @@ bool: hairy_live_temporary = false;
 
 constraint
   if hairy_live_temporary then
-    forall(i in index_set(related_temps)) (
-        let {set of int: tset = related_temps[i], % set of copy-related temps
+    forall(T in related_temps) (
+        let {set of int: tset = T, % set of copy-related temps
 	     set of int: irange = 1..card(tset),
 	     array[irange] of var 0..card(tset): count,
 	     array[irange] of int: tarr = [x | x in tset]} in (
@@ -899,10 +895,10 @@ constraint
 %% disjoint live ranges projected on callee-saved regs
 constraint
     if good_cumulative then
-	forall(b in index_set(bb_temps)) (
-	    cumulative([ls[t] | t in bb_temps[b]],
-		       [ld[t] | t in bb_temps[b]],
-		       [temp_width[t]*bool2int(r[t] in calleesaved) | t in bb_temps[b]],
+	forall(T in bb_temps) (
+	    cumulative([ls[t] | t in T],
+		       [ld[t] | t in T],
+		       [temp_width[t]*bool2int(r[t] in calleesaved) | t in T],
 		       card(calleesaved)) :: domain
 	)
     else true endif;
@@ -948,14 +944,14 @@ constraint
 
 %% active_table, tmp_table
 constraint
-    forall(i in index_set(table_exists_ops)) (
-        exists(j in table_exists_ops[i])(a[j])
+    forall(E in table_exists_ops) (
+        exists(j in E)(a[j])
     );
 
 constraint
-    forall(i in index_set(table_iffall_ops)) (
-        let {int: j = min(table_iffall_ops[i]),
-	     int: k = max(table_iffall_ops[i])} in (
+    forall(XOR in table_iffall_ops) (
+        let {int: j = min(XOR),
+	     int: k = max(XOR)} in (
 	    a[j] <-> a[k]
 	)
     );
@@ -1007,8 +1003,8 @@ constraint
 
 %% useless memory stores
 constraint
-    forall(i in index_set(related_temps)) (
-	sum([bool2int(r[v] in infinite) | v in related_temps[i]]) <= 1
+    forall(T in related_temps) (
+	sum([bool2int(r[v] in infinite) | v in T]) <= 1
     );
 
 %% across
@@ -1258,17 +1254,18 @@ constraint
          array[int] of var int: outlats = [lt[q] | p in outs,
 	 	       	    	   	           t in real_temps(p),
 	 	       	    	   	           q in {temp_def[t]}],
-         array[int] of int: virt_defs = [o | p in outs,
+         array[int] of int: par_defs = [ o | p in outs,
 	 	       	    	   	     t in real_temps(p),
 	 	       	    	   	     o in {temp_definer[t]},
-	 	       	    	   	     where not isreal(o)]} in
+	 	       	    	       where not (op_type[o] in {TYPE_LINEAR,TYPE_BRANCH,TYPE_CALL,TYPE_TAIL,TYPE_COPY,TYPE_IN})
+				       ]} in
       if (length(ins)>0) then
         let {var int: maxinlat = max(inlats)} in
           forall(p in ins)(s[p] >= - maxinlat)
       else true endif /\
       if (length(outs)>0) then
         let {var int: maxoutlat = max(outlats)} in
-          forall(p in outs)(s[p] >= - maxoutlat + if length(virt_defs)>0 then 0 else 1 endif)
+          forall(p in outs)(s[p] >= - maxoutlat + if length(par_defs)>0 then 0 else 1 endif)
       else true endif
   );
 
