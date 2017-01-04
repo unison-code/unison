@@ -262,7 +262,7 @@ model2dzn(AVL0) :-
 	    foreach(PS,Pinstrs2)
 	do  encode(list(int), set(int), PL, PS)
 	),
-	write_array(packed_pq, array(1.._,1.._,int), Packed),
+	write_array(packed_pq, array(1.._,1..2,int), Packed),
 	write_array(packed_is, array(1.._,set(int)), Pinstrs2),
 	%
 	avl_fetch(before, AVL, Before1),
@@ -465,11 +465,13 @@ model2dzn(AVL0) :-
 	do  length(VPTs, VPTsn),
 	    Cum1 is Cum0+1,
 	    Cum2 is Cum0+VPTsn,
-	    (   foreach(VPRs,VPRss),
-		fromto(Trip2,Trip3,Trip4,Trip5),
-		param(Cum1,Cum2)
-	    do  Trip3 = [[Cum1,Cum2,VPRset]|Trip4],
-		encode(list(int), set(int), VPRs, VPRset)
+	    (   VPTs = [] -> Trip2 = Trip5
+	    ;   (   foreach(VPRs,VPRss),
+		    fromto(Trip2,Trip3,Trip4,Trip5),
+		    param(Cum1,Cum2)
+		do  Trip3 = [[Cum1,Cum2,VPRset]|Trip4],
+		    encode(list(int), set(int), VPRs, VPRset)
+		)
 	    )
 	),
 	append(VPTss, VPTemps),
