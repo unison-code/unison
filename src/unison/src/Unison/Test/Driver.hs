@@ -100,7 +100,7 @@ runUnison unisonTargets testArgs mirFile =
                    strictlyBetter args,
                    removeReds args,
                    keepNops args,
-                   "--local-limit 2000",
+                   "--local-limit 3000",
                    mirFile,
                    False,
                    verb,
