@@ -694,17 +694,66 @@ For example, the relation between \code{t9}, \code{t2}, and \code{t7} in
 
 \section{Extended Unison IR}
 
-\fvset{fontsize=\small}
+The transformation performed by \code{uni extend} (\code{.ext.uni}) extends the
+IR with optional copy operations that can be deactivated by the solver or used
+to support register allocation decisions such as spilling and live-range
+splitting.
+%
+This is how \code{factorial.ext.uni} looks like:
+
+\fvset{fontsize=\scriptsize}
 \begin{codeBox}
 \BVerbatimInput{code/factorial.ext.uni}
 \end{codeBox}
 
+A copy operation can be discarded or implemented by alternative instructions.
+%
+For example, \code{o15} can be deactivated if implemented by the special
+\emph{null} instruction (\code{-}), or implemented by a register-to-register
+move (\code{MVW}), a regular store (\code{STW}), or a zero-read-latency store
+(\code{STW\_nv}).
+%
+The particular strategy to extend functions with copies is processor-specific
+(see Chapter~\ref{sec:target-description}), but it is common to insert a copy
+including store instructions after each temporary definition and a copy
+including load instructions after each temporary use.
+%
+For example, \code{o15} and \code{o22} are inserted after the definition and
+before a use of \code{t25} and \code{t23} which correspond to \code{t7} in
+\code{factorial.lssa.uni}.
+
 \section{Augmented Unison IR}
+
+The augmented IR (\code{.alt.uni}) allows operations to use alternative
+temporaries that hold the same value.
+%
+This is how factorial.alt.uni looks like:
 
 \fvset{fontsize=\tiny}
 \begin{codeBox}
 \BVerbatimInput{code/factorial.alt.uni}
 \end{codeBox}
+
+The main change in the augmented Unison IR is the introduction of operand
+identifiers (for example \code{p47}) and temporaries that can be
+\emph{connected} to them (for example \code{\{-, t12, t15, ...\}}) where the
+special \emph{null} connection (\code{-}) indicates that the operand is not
+connected to any temporary because its operation is inactive.
+
+Another difference is the annotation of operations with side effects.
+%
+A side effect reads or writes an abstract object (for example, \code{control}
+for control flow or \code{pc} for Hexagon's program counter).
+%
+Multiple reads and writes to the same object cause dependencies among the
+operations (for example, \code{o2} must be issued before \code{o8} provided the
+latter is active as \code{o2} reads and \code{o8} writes the \code{control}
+object.
+
+Finally, a Hexagon specific transformation is performed where an alternative way
+of implementing compare-and-jump operations (\code{o5} and \code{o8}; \code{o21}
+and \code{o24}) is introduced (see the Hexagon Programmer's Reference Manual or
+the comments in LLVM's \code{HexagonNewValueJump.cpp} file for further detail).
 
 \chapter{Combinatorial Model}\label{sec:combinatorial-model}
 
