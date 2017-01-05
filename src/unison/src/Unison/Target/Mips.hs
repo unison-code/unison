@@ -24,6 +24,7 @@ import Unison.Target.RegisterArray
 import Unison.Analysis.TemporaryType
 import Unison.Analysis.TransitiveOperations
 import Unison.Transformations.FoldReservedRegisters
+import MachineIR.Transformations.AddImplicitRegs
 
 import Unison.Target.Mips.Registers
 import Unison.Target.Mips.Transforms
@@ -274,7 +275,8 @@ liftToTOpc f = mkMachineTargetOpc . f . mopcTarget
 
 -- | Target dependent post-processing functions
 
-postProcess = [expandPseudos, cleanNops, normalizeDelaySlots]
+postProcess = [expandPseudos, cleanNops, normalizeDelaySlots,
+               flip addImplicitRegs (target, [])]
 
 expandPseudos = mapToMachineBlock (expandBlockPseudos expandPseudo)
 

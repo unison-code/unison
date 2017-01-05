@@ -19,6 +19,7 @@ import Data.Maybe
 import Common.Util
 
 import MachineIR hiding (parse)
+import MachineIR.Transformations.AddImplicitRegs
 
 import Unison
 import qualified Unison.Target.API as API
@@ -462,7 +463,7 @@ isConstExtendedProperty =
 -- | Target dependent post-processing functions
 
 postProcess = [constantDeExtend, removeFrameIndex, normalizeJumpMerges,
-               normalizeNVJumps, addImplicitRegs]
+               normalizeNVJumps, flip addImplicitRegs (target, [])]
 
 constantDeExtend = mapToTargetMachineInstruction constantDeExtendInstr
 
@@ -547,18 +548,6 @@ mayStore i =
   let ws  = snd (SpecsGen.readWriteInfo i) :: [RWObject HexagonRegister]
       mem = Memory "mem" :: RWObject HexagonRegister
   in mem `elem` ws
-
-addImplicitRegs = mapToMachineInstruction addImplicitRegsToInstr
-
-addImplicitRegsToInstr mi @ MachineSingle {msOpcode = MachineTargetOpc i,
-                                           msOperands = mos} =
-  let rws   = SpecsGen.readWriteInfo i
-      imp   = [MachineReg u [mkMachineRegImplicit] |
-               (OtherSideEffect u) <- fst rws ++ snd rws] ++
-              [MachineReg d [mkMachineRegImplicitDefine] |
-               (OtherSideEffect d) <- snd rws]
-      mos'  = mos ++ imp
-  in mi {msOperands = mos'}
 
 -- | Gives a list of function transformers
 transforms ImportPreLift = [peephole extractReturnRegs,

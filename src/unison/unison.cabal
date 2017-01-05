@@ -117,6 +117,7 @@ Library
                    MachineIR.Transformations.SimplifyFallthroughs
                    MachineIR.Transformations.MergeBlocks
                    MachineIR.Transformations.DropUnsupportedPseudos
+                   MachineIR.Transformations.AddImplicitRegs
                    MachineIR.Transformations.PrepareForEmission
 
                    Common.Util
