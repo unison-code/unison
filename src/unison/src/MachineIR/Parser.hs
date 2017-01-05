@@ -664,8 +664,8 @@ readTargetOpcode mi = mi
 readOperand (MachineFreeReg name) = mkMachineReg (read name)
 readOperand mo = mo
 
+mkMachineBundleWithHeader
+  MachineSingle {msOpcode = MachineVirtualOpc BUNDLE} instructions =
+    mkMachineBundle instructions
 mkMachineBundleWithHeader instruction instructions =
-  let head = case instruction of
-              MachineSingle {msOpcode = MachineVirtualOpc BUNDLE} -> []
-              ms -> [ms]
-  in mkMachineBundle (head ++ instructions)
+  MachineBundle False (instruction : instructions)

@@ -93,7 +93,7 @@ mkMachineBlock = MachineBlock
 mkMachineBlockPropertyFreq = MachineBlockPropertyFreq
 mkMachineBlockPropertySuccs = MachineBlockPropertySuccs
 
-mkMachineBundle = MachineBundle
+mkMachineBundle = MachineBundle True
 mkMachineSingle = MachineSingle
 mkBlockMarker id =
     mkMachineSingle (mkMachineVirtualOpc BLOCK_MARKER) [] [mkMachineBlockRef id]

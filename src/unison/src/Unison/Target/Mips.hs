@@ -322,13 +322,17 @@ isSingleNop _ = False
 normalizeDelaySlots = mapToMachineBlock normalizeDelaySlotInBlock
 
 normalizeDelaySlotInBlock mb @ MachineBlock {mbInstructions = mis} =
-  let mis' = map normalizeDelaySlot mis
-  in mb {mbInstructions = mis'}
+  let mis1 = map normalizeDelaySlot mis
+      mis2 = map removeBundleHead mis1
+  in mb {mbInstructions = mis2}
 
 normalizeDelaySlot mb @ MachineBundle {
   mbInstrs = [mi, mbi @ MachineSingle {msOpcode = MachineTargetOpc i}]}
   | isDelaySlotInstr i = mb {mbInstrs = [mbi, mi]}
 normalizeDelaySlot mi = mi
+
+removeBundleHead mb @ MachineBundle {} = mb {mbHead = False}
+removeBundleHead mi = mi
 
 -- | Gives a list of function transformers
 transforms ImportPreLift = [peephole rs2ts,

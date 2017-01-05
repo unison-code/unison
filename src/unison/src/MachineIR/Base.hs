@@ -112,6 +112,10 @@ data MachineInstruction i r =
   -- | Machine IR bundle instruction containing single machine instructions
   -- (corresponds to a LLVM @MachineInstr@ where @isBundle() == true@)
   MachineBundle {
+    -- | Whether the LLVM's pseudo-opcode 'BUNDLE' is the header (otherwise the
+    -- first instruction in 'mbInstrs' is the bundle header)
+    mbHead :: Bool,
+    -- | Instructions in the bundle
     mbInstrs :: [MachineInstruction i r]
     } |
   -- | Machine IR primitive instruction

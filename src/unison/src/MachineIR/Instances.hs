@@ -118,19 +118,28 @@ doubleQuoted f s = "\"" ++ f s ++ "\""
 
 showMachineBasicBlockBody mis = concatMap showMachineInstruction mis
 
-showMachineInstruction (MachineBundle mis) =
-  "BUNDLE {" ++ newLine ++
-  nest' 2 (concatMap showMachineInstruction mis) ++
-  "}" ++ newLine
+showMachineInstruction (MachineBundle {mbHead = True, mbInstrs = mis}) =
+  "BUNDLE" ++ showMachineBundleTail mis
 
-showMachineInstruction (MachineSingle mopc mps mops) =
+showMachineInstruction (MachineBundle {mbHead = False, mbInstrs = mi:mis}) =
+  showInlineMachineSingle mi ++ showMachineBundleTail mis
+
+showMachineInstruction ms @ MachineSingle {} =
+  showInlineMachineSingle ms ++ newLine
+
+showInlineMachineSingle (MachineSingle mopc mps mops) =
   let  n        = case find isMachineInstructionPropertyDefs mps of
                     (Just (MachineInstructionPropertyDefs n')) -> fromInteger n'
                     Nothing -> 0
        (ds, us) = splitAt n mops
   in (if null ds then "" else showCS showMachineOperand ds ++ " = ") ++
      show mopc ++
-     (if null us then "" else " " ++ showCS showMachineOperand us) ++ newLine
+     (if null us then "" else " " ++ showCS showMachineOperand us)
+
+showMachineBundleTail mis =
+  " {" ++ newLine ++
+  nest' 2 (concatMap showMachineInstruction mis) ++
+  "}" ++ newLine
 
 instance Show r => Show (MachineFunctionProperty r) where
   show (MachineFunctionPropertyTriple triple) =
