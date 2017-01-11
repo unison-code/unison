@@ -89,11 +89,43 @@ multimap<PrecedenceEdge, presolver_conj> gen_before_precedences1(const Parameter
 
 void gen_region_precedences(const Parameters& input, precedence_set& PI);
 
+bool distinct_cycle(const Parameters& input,
+		    operation i,
+		    operation j,
+		    const vector<vector<vector<int>>>& min_con_erg);
+
 void partition_nodes(Digraph& G, vector<operation>& pnodes);
 
-void gen_region_per_partition(const Parameters& input, const Digraph& G, const vector<operation>& pnodes, precedence_set& Pi, const vector<vector<int>>& minres);
+void gen_region_per_partition(const Parameters& input,
+			      const Digraph& G,
+			      const vector<operation>& pnodes,
+			      precedence_set& PI,
+			      const vector<vector<vector<int>>>& min_con_erg);
 
-void gen_region(const Parameters& input, operation vj, operation vi, Digraph& G, Digraph& H, precedence_set& Pi, const vector<vector<int>>& minres);
+void gen_region(const Parameters& input,
+		operation src, operation sink,
+		Digraph& G, // forward
+		Digraph& H, // backward
+		precedence_set& PI,
+		const vector<vector<vector<int>>>& min_con_erg,
+		map<int,int>& pweights);
+
+map<operation,int> dag_longest_paths_fwd(vector<operation>& region, map<int,int>& pweights);
+
+map<operation,int> dag_longest_paths_bwd(vector<operation>& region, map<int,int>& pweights);
+
+vector<operation> region_finishers(Digraph &R,
+				   resource r, int cap,
+				   const vector<vector<vector<int>>>& min_con_erg);
+
+void region_finishers_rec(vector<operation>& In,
+			  vector<operation>& Out,
+			  int load,
+			  int decr,
+			  pair<int,vector<operation>>& incumbent,
+		          Digraph &R,
+			  resource r, int cap,
+			  const vector<vector<vector<int>>>& min_con_erg);
 
 void normalize_precedences(const Parameters& input, const precedence_set& P, precedence_set& P1);
 

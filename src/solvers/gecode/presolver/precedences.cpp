@@ -217,24 +217,32 @@ multimap<operation, instruction> build_oI (const presolver_disj& Y) {
 
 void gen_region_precedences(const Parameters& input, precedence_set& PI) {
     map<block,vector<vector<operation>>> M;
-    vector<vector<int>> minres = vector<vector<int>>(input.O.size());
+    vector<vector<vector<int>>> min_con_erg = vector<vector<vector<int>>>(input.O.size());
     for(operation o : input.O) {
-      minres[o] = vector<int>(input.R.size());
+      min_con_erg[o] = vector<vector<int>>(input.R.size());
       for(resource r : input.R) {
-	int minr = 9999;
+	int minc = 9999;
+	int mine = 9999;
 	for(instruction i : input.instructions[o]) {
-	  if(minr==0)
-	    break;
-	  else if(minr>input.con[i][r])
-	    minr = input.con[i][r];
+	  if(minc>input.con[i][r]) {
+	    minc = input.con[i][r];
+	    mine = minc * input.dur[i][r];
+	    if(minc==0)
+	      break;
+	  }
 	}
-	minres[o][r] = minr;
+	min_con_erg[o][r] = vector<int>(2);
+	min_con_erg[o][r][0] = minc;
+	min_con_erg[o][r][1] = mine;
       }
     }
     for(const vector<operation>& edge : input.precs) {
       operation i = edge[0];
       operation j = edge[1];
       if (input.type[i] == FUN && input.type[j] == FUN) {
+      } else if (input.type[j] == FUN && i+1 != j && distinct_cycle(input, i, j, min_con_erg)) {
+	M[input.oblock[j]].push_back({i,j-1});
+	cerr << "* OPT EDGE " << i << " " << j-1 << endl;
       } else if (input.type[i] == CALL && i+1 != j) {
 	M[input.oblock[j]].push_back({i+1,j});
       } else if (input.type[i] != DEFINE && input.type[j] != KILL && input.type[j] != PACK) {
@@ -245,8 +253,18 @@ void gen_region_precedences(const Parameters& input, precedence_set& PI) {
       vector<operation> pnodes;
       Digraph G = Digraph(b_edges.second).reduction();
       partition_nodes(G, pnodes);
-      gen_region_per_partition(input, G, pnodes, PI, minres);
+      gen_region_per_partition(input, G, pnodes, PI, min_con_erg);
     }
+}
+
+bool distinct_cycle(const Parameters& input,
+		    operation i,
+		    operation j,
+		    const vector<vector<vector<int>>>& min_con_erg) {
+  for (resource r : input.R)
+    if (min_con_erg[i][r][0] + min_con_erg[j][r][0] > input.cap[r])
+      return true;
+  return false;
 }
 
 void partition_nodes(Digraph& G, vector<operation>& pnodes) {
@@ -259,7 +277,14 @@ void partition_nodes(Digraph& G, vector<operation>& pnodes) {
   }
 }
 
-void gen_region_per_partition(const Parameters& input, const Digraph& G, const vector<operation>& pnodes, precedence_set& PI, const vector<vector<int>>& minres) {
+#define FastPair(o1,o2) (((o1)<<20) + (o2))
+
+void gen_region_per_partition(const Parameters& input,
+			      const Digraph& G, // "precs" edges for 1 block
+			      const vector<operation>& pnodes,
+			      precedence_set& PI,
+			      const vector<vector<vector<int>>>& min_con_erg) {
+  map<int,int> pweights;
   map<operation,vector<pair<operation,operation>>> M;
   int multiplier = input.O.size();
   presolver_conj ConjTrue;
@@ -275,6 +300,21 @@ void gen_region_per_partition(const Parameters& input, const Digraph& G, const v
       }
     }
   }
+
+#if 1
+  for (const PresolverPrecedence& p : PI) {
+    operation src = p.i;
+    operation dest = p.j;
+    int d = p.n;
+    presolver_disj D = p.d;
+    if (src<dest && D==DisjTrue && vector_contains(G.vertices(),src) && vector_contains(G.vertices(),dest)) {
+      int key = FastPair(src,dest);
+      if (pweights.find(key) == pweights.end() || pweights[key] < d)
+	pweights[key] = d;
+    }
+  }
+#endif
+
   for(const pair<operation,vector<pair<operation,operation>>>& b_edges : M) {
     Digraph G = Digraph(b_edges.second);
     Digraph H = G.transpose();
@@ -304,20 +344,28 @@ void gen_region_per_partition(const Parameters& input, const Digraph& G, const v
 	  R[vji] = r1;
 	} else {
 	  R[vji] = vi;
-	  gen_region(input, vj, vi, G, H, PI, minres);
+	  gen_region(input, vj, vi, G, H, PI, min_con_erg, pweights);
 	}
       }
     }
   }
 }
 
-void gen_region(const Parameters& input, operation vj, operation vi, Digraph& G, Digraph& H, precedence_set& PI, const vector<vector<int>>& minres) {
+#if 0
+
+void gen_region(const Parameters& input,
+		operation vj, operation vi,
+		Digraph& G,
+		Digraph& H,
+		precedence_set& PI,
+		const vector<vector<vector<int>>>& min_con_erg,
+		map<int,int>& pweights) {
   int glb = 0;
   vector<operation> inside = ord_intersection(G.reachables(vj), H.reachables(vi)); // excludes vj, vi
   for (resource r : input.R) {
     int lb = -1;
     for (operation o : inside)
-      lb += minres[o][r];
+      lb += min_con_erg[o][r][0];
     lb = lb / input.cap[r] + 2;
     glb = lb > glb ? lb : glb;
   }
@@ -325,9 +373,187 @@ void gen_region(const Parameters& input, operation vj, operation vi, Digraph& G,
     presolver_conj Conj;
     PresolverPrecedence pred(vj, vi, glb, presolver_disj({Conj}));
     PI.push_back(pred);
-    // cerr << "* REGION source=" << vj << " sink=" << vi << " lat=" << glb << " inside=" << show(inside) << endl;
+    cerr << "* REGION source=" << vj << " sink=" << vi << " lat=" << glb << " inside=" << show(inside) << endl;
   }
 }
+
+#else
+
+/* A rewrite of the above:
+ * - use the Van Beek approx: max_r (r1(src,sink,r) + r2(src,sink,r) + r3(src,sink,r) - 1)
+ * 
+ * - onpath(src,sink,r) = {i | i uses resource r and is in src-sink region}
+ * 
+ * - r1(src,sink,r) = min{cp(src,k) | k in onpath(src,sink,r)}
+ * 
+ * - r3(src,sink,r) = min{cp(k,sink) | k in onpath(src,sink,r)}
+ * 
+ * - r2(src,sink,r) = min #cycles to issue onpath(src,sink,r) =
+ *     G <- onpath(src,sink,r) as a digraph
+ *     F <- finishers({},{},0,G,r)
+ *     return ceiling((sum(k in F)(con_r(k)) + sum(k in V(G)\F)(dur_r(k)*con_r(k))) / cap_r)
+ *
+ * - finishers(G,r) =
+ *     FF <- finishers({},{},0,G,r)
+ *     return F in FF with max sum(k in F)(dur_r(k)*con_r(k) - con_r(k))
+ *
+ * - finishers(I,O,C,G,r) =
+ *     find k in V(G) | k not_in I /\ k not_in O /\ G.succ(k) subset I /\ C+con_r(k) <= cap_r
+ *     if (no such k)
+ *       return {I}
+ *     else
+ *       return finishers(I+k,O,C+con_r(k),G,r) union finishers(I,O+k,C,G,r)
+ *
+ */
+
+void gen_region(const Parameters& input,
+		operation src, operation sink,
+		Digraph& G, // forward
+		Digraph& H, // backward
+		precedence_set& PI,
+		const vector<vector<vector<int>>>& min_con_erg,
+		map<int,int>& pweights) {
+  int glb = 0;
+  vector<operation> inside = ord_intersection(G.reachables(src), H.reachables(sink)); // excludes src, sink
+  vector<operation> region = ord_union(inside, {src,sink});
+  vector<operation> reverse = vector<operation>(region.size());
+  unsigned int rs = region.size();
+
+  for (unsigned int ii = 0; ii < rs; ii++)
+    reverse[rs-ii-1] = region[ii];
+
+  map<operation,int> src_cps = dag_longest_paths_fwd(region, pweights);
+  map<operation,int> sink_cps = dag_longest_paths_bwd(reverse, pweights);
+  for (resource r : input.R) {
+    vector<pair<int,int>> edges;
+    for (operation o1 : G.vertices())
+      if (ord_contains(region,o1) && min_con_erg[o1][r][1]>0)
+	for (operation o2 : G.neighbors(o1))
+	  if (ord_contains(region,o2) && min_con_erg[o2][r][1]>0)
+	    edges.push_back(make_pair(o1,o2));
+    Digraph R = Digraph(edges);
+    vector<operation> RV = R.vertices();
+    if (RV.size()>0) {
+      int r1=0, r2=0, r3=0;
+      vector<operation> F;
+      if (min_con_erg[src][r][1]==0) {
+	r1 = 1000000000;
+	for (operation o : RV) {
+	  int cp = src_cps[o];
+	  r1 = cp < r1 ? cp : r1;
+	}
+      }
+      if (min_con_erg[sink][r][1]==0) {
+	r3 = 1000000000;
+	for (operation o : RV) {
+	  int cp = sink_cps[o];
+	  r3 = cp < r3 ? cp : r3;
+	}
+      }
+      for (operation o : RV)
+	if (min_con_erg[o][r][0] < min_con_erg[o][r][1]) {
+	  F = region_finishers(R, r, input.cap[r], min_con_erg);
+	  break;
+	}
+      for (operation o : RV)
+	if (ord_contains(F,o))
+	  r2 = r2 + min_con_erg[o][r][0];
+        else
+	  r2 = r2 + min_con_erg[o][r][1];
+      r2 = (r2-1)/input.cap[r]+1;
+      cerr << "* GEN_REGION region=" << show(region) << " r=" << r << " r1=" << r1 << " r2=" << r2 << " r3=" << r3 << " cp=" << src_cps[sink] << endl;
+      r2 = r1+r2+r3-1;
+      glb = r2 > glb ? r2 : glb;
+    }
+  }
+  if (glb > src_cps[sink]) {
+    presolver_conj Conj;
+    PresolverPrecedence pred(src, sink, glb, presolver_disj({Conj}));
+    PI.push_back(pred);
+    pweights[FastPair(src,sink)] = glb;
+    cerr << "* DISTANCE source=" << src << " sink=" << sink << " lat=" << glb << " inside=" << show(inside) << endl;
+  }
+}
+
+// Find all longest paths from implicit src, assuming we have a DAG, assuming ascending vertices by top sort
+map<operation,int> dag_longest_paths_fwd(vector<operation>& region, map<int,int>& pweights) {
+  map<operation,int> L;
+
+  for(operation v : region)
+    L[v] = 0;
+  for(operation b : region)
+    for(operation v : region)
+      if(b<v) {
+	int key = FastPair(b,v);
+	if(pweights.find(key) != pweights.end()) {
+	  int w = pweights[key];
+	  if(L[v] < L[b]+w)
+	    L[v] = L[b]+w;
+	}
+      }
+  return L;
+}
+
+// Find all longest paths from implicit src, assuming we have a DAG, assuming ascending vertices by top sort
+map<operation,int> dag_longest_paths_bwd(vector<operation>& region, map<int,int>& pweights) {
+  map<operation,int> L;
+
+  for(operation v : region)
+    L[v] = 0;
+  for(operation b : region)
+    for(operation v : region)
+      if(b>v) {
+	int key = FastPair(v,b);
+	if(pweights.find(key) != pweights.end()) {
+	  int w = pweights[key];
+	  if(L[v] < L[b]+w)
+	    L[v] = L[b]+w;
+	}
+      }
+  return L;
+}
+
+vector<operation> region_finishers(Digraph &R,
+				   resource r, int cap,
+				   const vector<vector<vector<int>>>& min_con_erg) {
+  vector<operation> In;
+  vector<operation> Out;
+  vector<operation> Empty;
+  pair<int,vector<operation>> incumbent;
+  incumbent = make_pair(-1,Empty);
+  region_finishers_rec(In, Out, 0, 0, incumbent, R, r, cap, min_con_erg);
+  return incumbent.second;
+}
+
+void region_finishers_rec(vector<operation>& In,
+			  vector<operation>& Out,
+			  int load,
+			  int decr,
+			  pair<int,vector<operation>>& incumbent,
+		          Digraph &R,
+			  resource r, int cap,
+			  const vector<vector<vector<int>>>& min_con_erg) {
+  if (incumbent.first<decr) {
+    incumbent.first = decr;
+    incumbent.second.clear();
+    for (operation o : In)
+      incumbent.second.push_back(o);
+  }
+  for (operation o : R.vertices()) {
+    int inc = min_con_erg[o][r][0];
+    if (load+inc <= cap &&
+	!ord_contains(In,o) && !ord_contains(Out,o) && ord_difference(R.neighbors(o),In).size()==0) {
+      vector_insert(In,o);
+      region_finishers_rec(In, Out, load+inc, decr + min_con_erg[o][r][1] - min_con_erg[o][r][0], incumbent, R, r, cap, min_con_erg);
+      vector_erase(In,o);
+      vector_insert(Out,o);
+      region_finishers_rec(In, Out, load, decr, incumbent, R, r, cap, min_con_erg);
+      vector_erase(Out,o);
+    }
+  }
+}
+
+#endif
 
 void normalize_precedences(const Parameters& input, const precedence_set& P, precedence_set& P1) {
     // M <- P' <- empty

@@ -123,6 +123,16 @@ void vector_insert(vector<T>& v, const T& e){
   }
 }
 
+// Deletes e from v, if in v.
+// v is a set stored in a vector
+template<typename T>
+void vector_erase(vector<T>& v, const T& e){
+  typename vector<T>::iterator it = lower_bound(v.begin(), v.end(), e);
+  if(it != v.end()){
+    v.erase(it);
+  }
+}
+
 // return first def operand of operation o
 operand first_def(const Parameters& input, operation o);
 

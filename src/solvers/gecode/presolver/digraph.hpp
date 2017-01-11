@@ -107,7 +107,10 @@ public:
   vector<vector<vertex>> max_cliques();
 
   // Return longest path, assuming we have a DAG, assuming ascending vertices by top sort
-  int dag_longest_path(vertex source, vertex sink, vector<vertex> between);
+  int dag_longest_path(vertex source, vertex sink, vector<vertex>& between);
+
+  // Find all longest paths from implicit src, assuming we have a DAG, assuming ascending vertices by top sort
+  map<vertex,int> dag_longest_paths(vector<vertex>& region, map<pair<operation,operation>,int>& pweights);
 
   // Returns all strongly connected components.
   // Each component is represented by a set of its vertices.
