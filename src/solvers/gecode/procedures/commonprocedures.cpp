@@ -133,11 +133,15 @@ value_precede_chains(Parameters & input, Model * m, bool global, block b) {
   vector<PresolverValuePrecedeChain> chains;
   map<vector<temporary>,vector<vector<register_atom>>> Ts2Rss;
   map<register_atom,vector<register_class>> R2Cs;
-  map<vector<register_class>,vector<register_atom>> Cs2Rs;
   vector<temporary> PreT;
   vector<operand> PreP;
   vector<block> B(global ? input.B : vector<block>({b}));
   vector<temporary> T(global ? input.T : input.tmp[b]);
+  int maxw = 1;
+
+  // find largest relevant width
+  for (temporary t : T)
+    maxw = max(input.width[t],maxw);
 
   // collect register classes and their sizes
   map<register_class,int> C2W;
@@ -258,44 +262,53 @@ value_precede_chains(Parameters & input, Model * m, bool global, block b) {
       }
     }
   }
-  // regroup by set of register class
-  for(const pair<register_atom,vector<register_class>>& RCs : R2Cs)
-    Cs2Rs[RCs.second].push_back(RCs.first);
+  
+  for (int curw = 1; curw <= maxw; curw = 2*curw) {
+    // merge unaligned (wrt. curw) R2Cs items into aligned ones
+    vector<register_atom> odd;
+    for(const pair<register_atom,vector<register_class>>& RCs : R2Cs)
+      if (RCs.first % curw > 0)
+	odd.push_back(RCs.first);
+    for(register_atom a : odd) {
+      register_atom e = a - (a % curw);
+      vector<register_class> U;
+      set_union(R2Cs[e].begin(), R2Cs[e].end(), R2Cs[a].begin(), R2Cs[a].end(), back_inserter(U));
+      R2Cs[e] = U;
+      R2Cs.erase(a);
+    }
+    
+    map<vector<register_class>,vector<register_atom>> Cs2Rs;
+    
+    // regroup by set of register class
+    for(const pair<register_atom,vector<register_class>>& RCs : R2Cs)
+      Cs2Rs[RCs.second].push_back(RCs.first);
 
-  // build the chains
-  for(const pair<vector<register_class>,vector<register_atom>>& CsRs : Cs2Rs) {
-    vector<register_class> Cs = CsRs.first;
-    vector<register_atom> Rs = CsRs.second;
-    int sz = Rs.size();
-    int maxw = 1;
-    if (sz>1) {
-      vector<temporary> Ts;
-      for(temporary t : T) {
-	int ty = input.type[input.def_opr[t]];
-	if (input.width[t]<sz &&
-	    (ty == LINEAR || ty == COPY) &&
-	    !binary_search(PreT.begin(), PreT.end(), t)) {
-	  operand p = input.definer[t];
-	  operation o = input.oper[p];
-	  unsigned pi = p - input.operands[o][0];
-	  maxw = max(input.width[t],maxw);
-	  for (unsigned int ii = 0; ii < input.instructions[o].size(); ii++) {
-	    register_class rc = input.rclass[o][ii][pi];
-	    if (binary_search(Cs.begin(), Cs.end(), rc)) {
-	      Ts.push_back(t);
-	      goto nextt;
+    // build the chains
+    for(const pair<vector<register_class>,vector<register_atom>>& CsRs : Cs2Rs) {
+      vector<register_class> Cs = CsRs.first;
+      vector<register_atom> Rs = CsRs.second;
+      if ((int)Rs.size()>curw) {
+	vector<temporary> Ts;
+	for(temporary t : T) {
+	  int ty = input.type[input.def_opr[t]];
+	  if (input.width[t]==curw &&
+	      (ty == LINEAR || ty == COPY) &&
+	      !binary_search(PreT.begin(), PreT.end(), t)) {
+	    operand p = input.definer[t];
+	    operation o = input.oper[p];
+	    unsigned pi = p - input.operands[o][0];
+	    for (unsigned int ii = 0; ii < input.instructions[o].size(); ii++) {
+	      register_class rc = input.rclass[o][ii][pi];
+	      if (binary_search(Cs.begin(), Cs.end(), rc)) {
+		Ts.push_back(t);
+		goto nextt;
+	      }
 	    }
 	  }
+	nextt: ;
 	}
-      nextt: ;
-      }
-      if (!Ts.empty()) {
-	vector<temporary> BySize;
-	for (; maxw>0; maxw >>= 1)
-	  for(temporary t : Ts)
-	    if (input.width[t]==maxw)
-	      BySize.push_back(t);
-	Ts2Rss[BySize].push_back(Rs);
+	if (!Ts.empty())
+	  Ts2Rss[Ts].push_back(Rs);
       }
     }
   }
@@ -311,6 +324,7 @@ value_precede_chains(Parameters & input, Model * m, bool global, block b) {
     vpc.rss = TsRs.second;
     sort(vpc.rss.begin(), vpc.rss.end()); // canonicalize
     chains.push_back(vpc);
+    // cerr << "* VPC block " << b << " = " << show(vpc) << endl;
   }
   return chains;
 }
