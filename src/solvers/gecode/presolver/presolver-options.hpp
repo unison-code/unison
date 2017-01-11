@@ -49,6 +49,7 @@ protected:
   Driver::StringValueOption _output_file; // Output file
   Driver::DoubleOption _timeout; // Timeout
   Driver::BoolOption _verbose; // Verbose mode
+  Driver::BoolOption _regions; // Find regions
 
   // Testing
 
@@ -61,6 +62,7 @@ public:
   string output_file(void) const {return _output_file.value();}
   double timeout(void) const {return _timeout.value();}
   bool verbose(void) const {return _verbose.value();}
+  bool regions(void) const {return _regions.value();}
 
   bool test(void) const {return _test.value();}
 

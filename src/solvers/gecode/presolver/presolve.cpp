@@ -250,7 +250,8 @@ void presolve(Parameters & input, PresolverOptions & options) {
   gen_before_precedences(input, input.before, precedences);
   gen_fixed_precedences(input, precedences);
   // gen_data_precedences(input, opnd2lat, precedences); // defer to solver!
-  gen_region_precedences(input, precedences);
+  if (options.regions())
+    gen_region_precedences(input, precedences);
   sort(precedences.begin(), precedences.end());
   precedences.erase(unique(precedences.begin(), precedences.end()), precedences.end());
   if (timeout(t, options, "Precedences")) return;

@@ -39,14 +39,14 @@ PresolverOptions::PresolverOptions(void)
 
     _output_file("-o", "output file", ""),
     _timeout("-t", "timeout", 30000.0),
-    _verbose("--verbose", "verbose mode", false),
-
-    _test("--test", "test the generated parameters against the input ones", false)
+    _verbose("--verbose", "verbose mode (false)", false),
+    _regions("--regions", "find regions (true)", true),
+    _test("--test", "test the generated parameters against the input ones (false)", false)
 
 {
   add(_output_file);
   add(_timeout);
   add(_verbose);
-
+  add(_regions);
   add(_test);
 }

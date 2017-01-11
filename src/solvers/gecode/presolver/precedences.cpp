@@ -240,9 +240,8 @@ void gen_region_precedences(const Parameters& input, precedence_set& PI) {
       operation i = edge[0];
       operation j = edge[1];
       if (input.type[i] == FUN && input.type[j] == FUN) {
-      } else if (input.type[j] == FUN && i+1 != j && distinct_cycle(input, i, j, min_con_erg)) {
+      } else if (input.type[j] == FUN && i+1 != j && distinct_cycle(input, i, j-1, min_con_erg)) {
 	M[input.oblock[j]].push_back({i,j-1});
-	cerr << "* OPT EDGE " << i << " " << j-1 << endl;
       } else if (input.type[i] == CALL && i+1 != j) {
 	M[input.oblock[j]].push_back({i+1,j});
       } else if (input.type[i] != DEFINE && input.type[j] != KILL && input.type[j] != PACK) {
@@ -301,7 +300,6 @@ void gen_region_per_partition(const Parameters& input,
     }
   }
 
-#if 1
   for (const PresolverPrecedence& p : PI) {
     operation src = p.i;
     operation dest = p.j;
@@ -313,7 +311,6 @@ void gen_region_per_partition(const Parameters& input,
 	pweights[key] = d;
     }
   }
-#endif
 
   for(const pair<operation,vector<pair<operation,operation>>>& b_edges : M) {
     Digraph G = Digraph(b_edges.second);
@@ -351,36 +348,7 @@ void gen_region_per_partition(const Parameters& input,
   }
 }
 
-#if 0
-
-void gen_region(const Parameters& input,
-		operation vj, operation vi,
-		Digraph& G,
-		Digraph& H,
-		precedence_set& PI,
-		const vector<vector<vector<int>>>& min_con_erg,
-		map<int,int>& pweights) {
-  int glb = 0;
-  vector<operation> inside = ord_intersection(G.reachables(vj), H.reachables(vi)); // excludes vj, vi
-  for (resource r : input.R) {
-    int lb = -1;
-    for (operation o : inside)
-      lb += min_con_erg[o][r][0];
-    lb = lb / input.cap[r] + 2;
-    glb = lb > glb ? lb : glb;
-  }
-  if (glb > G.dag_longest_path(vj,vi,inside)) {
-    presolver_conj Conj;
-    PresolverPrecedence pred(vj, vi, glb, presolver_disj({Conj}));
-    PI.push_back(pred);
-    cerr << "* REGION source=" << vj << " sink=" << vi << " lat=" << glb << " inside=" << show(inside) << endl;
-  }
-}
-
-#else
-
-/* A rewrite of the above:
- * - use the Van Beek approx: max_r (r1(src,sink,r) + r2(src,sink,r) + r3(src,sink,r) - 1)
+/* - use the Van Beek approx: max_r (r1(src,sink,r) + r2(src,sink,r) + r3(src,sink,r) - 1)
  * 
  * - onpath(src,sink,r) = {i | i uses resource r and is in src-sink region}
  * 
@@ -461,7 +429,7 @@ void gen_region(const Parameters& input,
         else
 	  r2 = r2 + min_con_erg[o][r][1];
       r2 = (r2-1)/input.cap[r]+1;
-      cerr << "* GEN_REGION region=" << show(region) << " r=" << r << " r1=" << r1 << " r2=" << r2 << " r3=" << r3 << " cp=" << src_cps[sink] << endl;
+      // cerr << "* GEN_REGION region=" << show(region) << " r=" << r << " r1=" << r1 << " r2=" << r2 << " r3=" << r3 << " cp=" << src_cps[sink] << endl;
       r2 = r1+r2+r3-1;
       glb = r2 > glb ? r2 : glb;
     }
@@ -471,7 +439,7 @@ void gen_region(const Parameters& input,
     PresolverPrecedence pred(src, sink, glb, presolver_disj({Conj}));
     PI.push_back(pred);
     pweights[FastPair(src,sink)] = glb;
-    cerr << "* DISTANCE source=" << src << " sink=" << sink << " lat=" << glb << " inside=" << show(inside) << endl;
+    // cerr << "* DISTANCE source=" << src << " sink=" << sink << " lat=" << glb << " inside=" << show(inside) << endl;
   }
 }
 
@@ -549,11 +517,10 @@ void region_finishers_rec(vector<operation>& In,
       vector_insert(Out,o);
       region_finishers_rec(In, Out, load, decr, incumbent, R, r, cap, min_con_erg);
       vector_erase(Out,o);
+      return;
     }
   }
 }
-
-#endif
 
 void normalize_precedences(const Parameters& input, const precedence_set& P, precedence_set& P1) {
     // M <- P' <- empty
