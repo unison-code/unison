@@ -394,9 +394,9 @@ void gen_region(const Parameters& input,
   map<operation,int> sink_cps = dag_longest_paths_bwd(reverse, pweights);
   for (resource r : input.R) {
     vector<pair<int,int>> edges;
-    for (operation o1 : G.vertices())
-      if (ord_contains(region,o1) && min_con_erg[o1][r][1]>0)
-	for (operation o2 : G.neighbors(o1))
+    for (operation o1 : region)
+      if (min_con_erg[o1][r][1]>0)
+	for (operation o2 : G.reachables(o1))
 	  if (ord_contains(region,o2) && min_con_erg[o2][r][1]>0)
 	    edges.push_back(make_pair(o1,o2));
     Digraph R = Digraph(edges);

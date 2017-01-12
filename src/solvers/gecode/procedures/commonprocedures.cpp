@@ -219,12 +219,21 @@ value_precede_chains(Parameters & input, Model * m, bool global, block b) {
 	  if (t != NULL_TEMPORARY)
 	    PreT.push_back(t);
 
-  // prevent (pack) 2nd operand temporaries from occurring in symmetry chains
+  // prevent (pack) operand temporaries from occurring in symmetry chains
   for (block b : B)
     for (vector<operand> ps : input.bpacked[b])
-      for (temporary t : input.temps[ps[1]])
-	if (t != NULL_TEMPORARY)
-	  PreT.push_back(t);
+      for (operand p : ps)
+	for (temporary t : input.temps[p])
+	  if (t != NULL_TEMPORARY)
+	    PreT.push_back(t);
+
+  // FIXME: this check is added temporarily, needs investigation
+  // prevent temps defined by callee-saved-load from occurring in symmetry chains
+  for (operation o : input.callee_saved_loads)
+    if (global || input.oblock[o]==b)
+      for (operand p : input.operands[o])
+	if (!input.use[p])
+	  PreT.push_back(input.single_temp[p]);
 
   sort(PreT.begin(), PreT.end()); // will search
   sort(PreP.begin(), PreP.end()); // will search
@@ -242,8 +251,7 @@ value_precede_chains(Parameters & input, Model * m, bool global, block b) {
 	return chains;
     }
     for (operand p : input.operands[inop]) {
-      if (m->ry(p).assigned() &&
-	  !infinite_register_atom(input, m->ry(p).val()) &&
+      if (!infinite_register_atom(input, m->ry(p).val()) &&
           !binary_search(PreP.begin(), PreP.end(), p)) {
 	int w = input.operand_width[p];
 	for (int d=0; d<w; d++)
@@ -252,8 +260,7 @@ value_precede_chains(Parameters & input, Model * m, bool global, block b) {
       }
     }
     for (operand p : input.operands[outop]) {
-      if (m->ry(p).assigned() &&
-	  !infinite_register_atom(input, m->ry(p).val()) &&
+      if (!infinite_register_atom(input, m->ry(p).val()) &&
           !binary_search(PreP.begin(), PreP.end(), p)) {
 	int w = input.operand_width[p];
 	for (int d=0; d<w; d++)
@@ -287,7 +294,7 @@ value_precede_chains(Parameters & input, Model * m, bool global, block b) {
     for(const pair<vector<register_class>,vector<register_atom>>& CsRs : Cs2Rs) {
       vector<register_class> Cs = CsRs.first;
       vector<register_atom> Rs = CsRs.second;
-      if ((int)Rs.size()>curw) {
+      if ((int)Rs.size()>1) {
 	vector<temporary> Ts;
 	for(temporary t : T) {
 	  int ty = input.type[input.def_opr[t]];
@@ -315,16 +322,10 @@ value_precede_chains(Parameters & input, Model * m, bool global, block b) {
 
   for(const pair<vector<temporary>,vector<vector<register_atom>>>& TsRs : Ts2Rss) {
     PresolverValuePrecedeChain vpc;
-    for (temporary t : TsRs.first) {
-      // FIXME: this check is added temporarily, needs investigation
-      if (!contains(input.callee_saved_loads, input.def_opr[t])) {
-        vpc.ts.push_back(t);
-      }
-    }
+    vpc.ts = TsRs.first;
     vpc.rss = TsRs.second;
     sort(vpc.rss.begin(), vpc.rss.end()); // canonicalize
     chains.push_back(vpc);
-    // cerr << "* VPC block " << b << " = " << show(vpc) << endl;
   }
   return chains;
 }
