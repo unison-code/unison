@@ -37,7 +37,8 @@ data Uni =
     Model     {targetName :: String, inFile :: FilePath, targetOption :: [String],
                outFile :: Maybe FilePath, baseFile :: Maybe FilePath,
                scaleFreq :: Bool, oldModel :: Bool, applyBaseFile :: Bool,
-               tightPressureBound :: Bool, strictlyBetter :: Bool} |
+               tightPressureBound :: Bool, strictlyBetter :: Bool,
+               unsatisfiable :: Bool} |
     Export    {targetName :: String, inFile :: FilePath, targetOption :: [String],
                outFile :: Maybe FilePath, debug :: Bool, removeReds :: Bool,
                keepNops :: Bool, baseFile :: Maybe FilePath,
@@ -80,9 +81,10 @@ data Uni =
                expandCopies :: Bool, rematerialize :: Bool,
                baseFile :: Maybe FilePath, scaleFreq :: Bool,
                applyBaseFile :: Bool, tightPressureBound :: Bool,
-               strictlyBetter :: Bool, removeReds :: Bool, keepNops :: Bool,
-               solverFlags :: String, outTemp :: Bool,
-               presolver :: Maybe FilePath, solver :: Maybe FilePath}
+               strictlyBetter :: Bool, unsatisfiable :: Bool,
+               removeReds :: Bool, keepNops :: Bool, solverFlags :: String,
+               outTemp :: Bool, presolver :: Maybe FilePath,
+               solver :: Maybe FilePath}
     deriving (Data, Typeable, Show, Eq)
 
 allModes = [import', linearize', extend', augment', model', export', analyze',
@@ -126,7 +128,8 @@ model' = Model {
   scaleFreq          = True  &= help "Scale down block frequencies if there is a potential cost function overflow",
   applyBaseFile      = True &= help "Apply base file to limit the maximum cost of the function",
   tightPressureBound = False &= help "Compute a tight bound of the register atoms contained in an infinite register space (incompatible with presolver's infinite register dominance constraints)",
-  strictlyBetter     = True &= help "Require the solver to find a strictly better solution than the base (as opposed to better or equal)"}
+  strictlyBetter     = True &= help "Require the solver to find a strictly better solution than the base (as opposed to better or equal)",
+  unsatisfiable      = False &= help "Make the constraint problem trivially unsatisfiable"}
   &= help "Generate a code generation problem for a Unison function"
 
 export' = Export {

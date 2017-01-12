@@ -29,9 +29,9 @@ import qualified Unison.Tools.Normalize as Normalize
 
 run (estimateFreq, noCC, noReserved, maxBlockSize, implementFrames, function,
      goal, noCross, oldModel, expandCopies, rematerialize, baseFile, scaleFreq,
-     applyBaseFile, tightPressureBound, strictlyBetter, removeReds, keepNops,
-     solverFlags, inFile, debug, verbose, intermediate, lint, outFile, outTemp,
-     presolver, solver)
+     applyBaseFile, tightPressureBound, strictlyBetter, unsatisfiable,
+     removeReds, keepNops, solverFlags, inFile, debug, verbose, intermediate,
+     lint, outFile, outTemp, presolver, solver)
      targetWithOption =
 
   do tmp <- getTemporaryDirectory
@@ -78,7 +78,7 @@ run (estimateFreq, noCC, noReserved, maxBlockSize, implementFrames, function,
      maybePutStrLn "Running 'uni model'..."
      Model.run
        (baseFile', scaleFreq, oldModel, applyBaseFile, tightPressureBound,
-        strictlyBetter, Just jsonFile)
+        strictlyBetter, unsatisfiable, Just jsonFile)
        altUniInput targetWithOption
 
      let extJsonFile   = addExtension prefix "ext.json"

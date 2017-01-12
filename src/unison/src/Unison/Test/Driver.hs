@@ -98,6 +98,7 @@ runUnison unisonTargets testArgs mirFile =
                    applyBaseFile args,
                    tightPressureBound args,
                    strictlyBetter args,
+                   unsatisfiable args,
                    removeReds args,
                    keepNops args,
                    "--local-limit 3000",

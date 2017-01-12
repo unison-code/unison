@@ -77,7 +77,7 @@ mainWithTargets targets = do
              (Any target) ->
                  Model.run
                  (baseFile, scaleFreq, oldModel, applyBaseFile,
-                  tightPressureBound, strictlyBetter, outFile)
+                  tightPressureBound, strictlyBetter, unsatisfiable, outFile)
                  input (target, targetOption)
     Export{..} ->
         do input <- readFile inFile
@@ -137,7 +137,8 @@ mainWithTargets targets = do
            (estimateFreq, noCC, noReserved, maxBlockSize, implementFrames,
             function, goal, noCross, oldModel, expandCopies, rematerialize,
             baseFile, scaleFreq, applyBaseFile, tightPressureBound,
-            strictlyBetter, removeReds, keepNops, solverFlags, inFile, debug,
-            verbose, intermediate, lint, outFile, outTemp, presolver, solver)
+            strictlyBetter, unsatisfiable, removeReds, keepNops, solverFlags,
+            inFile, debug, verbose, intermediate, lint, outFile, outTemp,
+            presolver, solver)
            (target, targetOption)
          return ()

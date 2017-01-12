@@ -48,14 +48,15 @@ import qualified Unison.Tools.Model.InstructionScheduling as IS
 import qualified Unison.Tools.Model.RegisterAllocation as RA
 
 run (baseFile, scaleFreq, oldModel, applyBaseFile, tightPressureBound,
-     strictlyBetter, jsonFile)
+     strictlyBetter, unsatisfiable, jsonFile)
     extUni target =
   do baseMir <- maybeReadFile baseFile
      let f    = parse target extUni
          base = maybeNothing applyBaseFile baseMir
          aux  = auxiliarDataStructures target tightPressureBound base f
          ps   = modeler scaleFreq aux target f
-         ps'  = optimization strictlyBetter scaleFreq aux target f ps
+         ps'  = optimization (strictlyBetter, unsatisfiable, scaleFreq)
+                aux target f ps
          ps'' = presolver oldModel aux target f ps'
      emitOutput jsonFile ((BSL.unpack (encodePretty' jsonConfig ps'')))
 
@@ -78,27 +79,25 @@ auxiliarDataStructures target tight baseMir f @ Function {fCode = code} =
       ra'   = mkRegisterArray target inf
   in (cg, dgs, t2w, ra', baseMir)
 
-optimization strictlyBetter scaleFreq aux
-  target f ps =
-    let ops = toJSON (M.fromList (optimizationParameters
-                                  strictlyBetter scaleFreq
-                                  aux target f))
+optimization flags aux target f ps =
+    let ops = toJSON (M.fromList (optimizationParameters flags aux target f))
     in unionMaps ps ops
 
-optimizationParameters strictlyBetter scaleFreq (_, dgs, _, _, baseMir)
-                       target Function {fCode = code, fGoal = goal} =
-    let rm   = resourceManager target
-        cf   = capacityMap target
-        r2id = M.fromList [(resName (res ir), resId ir) | ir <- iResources rm]
-        gl   = mkGoal goal
-        od   = isDynamic gl :: Bool
-        or   = optResource r2id gl :: ResourceId
-        maxf = case baseMir of
+optimizationParameters (strictlyBetter, unsatisfiable, scaleFreq)
+  (_, dgs, _, _, baseMir) target Function {fCode = code, fGoal = goal} =
+    let rm    = resourceManager target
+        cf    = capacityMap target
+        r2id  = M.fromList [(resName (res ir), resId ir) | ir <- iResources rm]
+        gl    = mkGoal goal
+        od    = isDynamic gl :: Bool
+        or    = optResource r2id gl :: ResourceId
+        maxf0 = case baseMir of
                  (Just mir) ->
                      let mf = fromSingleton $ MIR.parse mir
                      in maximumCost strictlyBetter scaleFreq cf gl (mir, mf) dgs
                         target code
                  Nothing -> maxInt
+        maxf  = if unsatisfiable then 0 else maxf0
     in
       [
       -- Parameters related to the objective function
