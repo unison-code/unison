@@ -272,10 +272,12 @@ draw_horizontal_double_arrow(QPointF left, QPointF right, QColor color) {
 }
 
 void ModelInspector::
-draw_horizontal_register_array_label(const Model & m, QPointF & topLeft,
-                                     bool nullReg) {
-  deque<register_atom> RA(m.input->RA.begin(), m.input->RA.end());
-  if (nullReg) RA.push_front(-1);
+draw_horizontal_register_array_label(const Model & m, register_atom max,
+                                     QPointF & topLeft, bool nullReg) {
+  vector<register_atom> RA;
+  if (nullReg) RA.push_back(-1);
+  for (register_atom ra = 0; ra < max; ra++) RA.push_back(ra);
+
   // x label (register atoms)
   for (register_atom a : RA) {
     QPointF topClp = topLeft + (QPointF(a, 0) * DPI);

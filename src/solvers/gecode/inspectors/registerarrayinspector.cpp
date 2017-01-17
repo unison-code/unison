@@ -36,6 +36,22 @@
 
 std::string RegisterArrayInspector::name(void) { return "Register array"; }
 
+register_atom RegisterArrayInspector::max_atom(const Model& m, block b) {
+  register_atom max = 0;
+  for (temporary t : m.input->tmp[b]) {
+    if (m.l(t).assigned() && m.l(t).val() && m.r(t).assigned()) {
+      register_atom right = m.r(t).val() + m.input->width[t];
+      if (right > max) max = right;
+    }
+  }
+  for (register_space rs : m.input->RS) {
+    if (rs == 0) continue; // "all" register space
+    register_atom right = m.input->range[rs][1];
+    if (!m.input->infinite[rs] && right > max) max = right;
+  }
+  return max;
+}
+
 void RegisterArrayInspector::inspectb(const Model& m, block b, QPointF& topLeft) {
 
   QPen spen;
@@ -43,8 +59,8 @@ void RegisterArrayInspector::inspectb(const Model& m, block b, QPointF& topLeft)
 
   operation out = m.input->out[b];
 
-  draw_horizontal_register_array_label(m, topLeft);
-  draw_grid(m.input->RA.size(), m.c(out).max(), topLeft, "cycle");
+  draw_horizontal_register_array_label(m, max_atom(m, b), topLeft);
+  draw_grid(max_atom(m, b), m.c(out).max(), topLeft, "cycle");
 
   // Rows (cycles)
   for (int c = 0; c < m.c(out).max(); c++) {
@@ -95,12 +111,11 @@ void GlobalRegisterArrayInspector::inspect(const Space& s) {
   int xoff = 2,
       yoff = 2;
 
-  int w = m.input->RA.size() + xoff;
-
   Dot cfg;
 
   // Add getNodes() and set their size
   for (block b : m.input->B) {
+    int w = max_atom(m, b) + xoff;
     int cycles = m.c(m.input->out[b]).max();
     int h = cycles + yoff;
     QString bn = QString::number(b);
@@ -141,7 +156,7 @@ void LocalRegisterArrayInspector::inspect(const Space& s) {
   inspectb(m, m.b, topLeft);
 
   int cycles = m.c(m.input->out[m.b]).max();
-  int w = m.input->RA.size() + xoff;
+  int w = max_atom(m, m.b) + xoff;
   int h = cycles + yoff;
 
   QRectF boundRect = QRectF(QPointF(0, 0), (QSizeF(w, h) * DPI));

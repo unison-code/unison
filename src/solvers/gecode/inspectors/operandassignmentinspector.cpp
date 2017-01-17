@@ -46,7 +46,8 @@ OperandAssignmentInspector::inspectb(const Model& m, block b, QPointF& topLeft) 
   spen.setWidth(2);
 
   QPointF gridTopLeft = topLeft + QPointF(1 * DPI, 0);
-  draw_horizontal_register_array_label(m, gridTopLeft, true);
+  draw_horizontal_register_array_label(
+    m, m.input->RA.size(), gridTopLeft, true);
 
   vector<operand> ps = operands(m, b);
 

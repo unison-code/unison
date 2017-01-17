@@ -46,6 +46,7 @@
 class RegisterArrayInspector : public ModelInspector {
 public:
   std::string name(void);
+  register_atom max_atom(const Model& m, block b);
   void inspectb(const Model& m, block b, QPointF& topLeft);
 };
 

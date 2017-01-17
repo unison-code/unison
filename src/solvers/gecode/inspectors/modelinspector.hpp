@@ -115,8 +115,9 @@ public:
   void draw_horizontal_double_arrow(QPointF left, QPointF right, QColor color);
 
   // Draw the horizontal register array label
-  void draw_horizontal_register_array_label(const Model & m, QPointF & topLeft,
-                                            bool nullReg = false);
+  void draw_horizontal_register_array_label(
+       const Model & m, register_atom max, QPointF & topLeft,
+       bool nullReg = false);
 
   // Draw register atom label for array label
   void draw_atom_label(const Model & m, QPointF & topClp, register_atom a);
