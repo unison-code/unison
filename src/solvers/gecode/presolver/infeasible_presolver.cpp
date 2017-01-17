@@ -492,16 +492,16 @@ void InfeasiblePresolver::dominsn_nogoods(vector<nogood>& Nogoods) {
   map<PresolverInsn2Class2,vector<operation>> M;
   for(operation o : input.O) {
     vector<instruction> is(input.instructions[o]);
-    for(unsigned i=0; i<is.size(); i++)
-      if(!ord_contains(A, is[i]))
-	for(unsigned j=i+1; j<is.size(); j++)
-	  if(!ord_contains(A, is[j]))
-	    if(input.lat[o][i] == input.lat[o][j]) {
+    for(unsigned ii=0; ii<is.size(); ii++)
+      if(!ord_contains(A, is[ii]))
+	for(unsigned jj=ii+1; jj<is.size(); jj++)
+	  if(!ord_contains(A, is[jj]))
+	    if(input.lat[o][ii] == input.lat[o][jj]) {
 	      PresolverInsn2Class2 iicc;
-	      iicc.insn1 = is[i];
-	      iicc.insn2 = is[j];
-	      iicc.class1 = input.rclass[o][i];
-	      iicc.class2 = input.rclass[o][j];
+	      iicc.insn1 = is[ii];
+	      iicc.insn2 = is[jj];
+	      iicc.class1 = input.rclass[o][ii];
+	      iicc.class2 = input.rclass[o][jj];
 	      M[iicc].push_back(o);
 	    }
   }
@@ -516,8 +516,8 @@ void InfeasiblePresolver::dominsn_nogoods(vector<nogood>& Nogoods) {
     for(resource r : input.R)
       if(input.con[i1][r] > input.con[i2][r] || input.dur[i1][r] > input.dur[i2][r])
 	goto next1;
-    for(unsigned j=0; j<c1.size(); j++)
-      if(!subseteq(input.atoms[c1[j]], input.atoms[c2[j]]))
+    for(unsigned jj=0; jj<c1.size(); jj++)
+      if(!subseteq(input.atoms[c1[jj]], input.atoms[c2[jj]]))
 	goto next1;
     ic.insn = i2;
     ic.rclass = c1;
@@ -527,8 +527,8 @@ void InfeasiblePresolver::dominsn_nogoods(vector<nogood>& Nogoods) {
     for(resource r : input.R)
       if(input.con[i2][r] > input.con[i1][r] || input.dur[i2][r] > input.dur[i1][r])
 	goto next2;
-    for(unsigned j=0; j<c1.size(); j++)
-      if(!subseteq(input.atoms[c2[j]], input.atoms[c1[j]]))
+    for(unsigned jj=0; jj<c1.size(); jj++)
+      if(!subseteq(input.atoms[c2[jj]], input.atoms[c1[jj]]))
 	goto next2;
     ic.insn = i1;
     ic.rclass = c2;
@@ -539,11 +539,17 @@ void InfeasiblePresolver::dominsn_nogoods(vector<nogood>& Nogoods) {
   // emit nogoods
   for(const pair<PresolverInsnClass,vector<operation>>& ic_os : R) {
     for(operation o : ic_os.second) {
+      unsigned ii;
+      vector<instruction> is(input.instructions[o]);
+      for(ii=0; ii<is.size(); ii++)
+	if (is[ii]==ic_os.first.insn)
+	  break;
       nogood c = {{PRESOLVER_OPERATION, o, ic_os.first.insn}};
       vector<operand> ps = input.operands[o];
       vector<register_class> rc = ic_os.first.rclass;
-      for(unsigned j=0; j<ps.size(); j++) 
-	c.push_back({PRESOLVER_OPERAND_CLASS, ps[j], rc[j]});
+      for(unsigned jj=0; jj<ps.size(); jj++)
+	if (rc[jj]!=input.rclass[o][ii][jj])
+	  c.push_back({PRESOLVER_OPERAND_CLASS, ps[jj], rc[jj]});
       Nogoods.push_back(c);
     }
   }
