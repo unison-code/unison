@@ -445,8 +445,8 @@ constraint
     forall(o in 0..MAXO where op_mand[o]) (a[o]) /\
     forall(o in 0..MAXO) (i[o] >= 1 <-> a[o]) /\
     forall(o in 0..MAXO) (c[o] >= 0 <-> a[o]) /\
-    forall(p in 0..MAXP where operand_use[p]) (ry[p] = r[y[p]]) /\
-    forall(p in 0..MAXP where not operand_use[p]) (ry[p] = r[single_temp(p)]) /\
+    forall(p in 0..MAXP where card(operand_temps[p])>1) (ry[p] = r[y[p]]) /\
+    forall(p in 0..MAXP where card(operand_temps[p])=1) (ry[p] = r[single_temp(p)]) /\
     forall(p in 0..MAXP where not (op_type[operand_definer[p]] in {TYPE_IN,TYPE_OUT})) % rematerialization
           (y[p] >= 0 <-> a[operand_definer[p]]) /\
     forall(v in 0..MAXT) (ls[v]+ld[v] = le[v]) /\

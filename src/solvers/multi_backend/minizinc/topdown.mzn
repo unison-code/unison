@@ -125,10 +125,7 @@
 %     ) minimize(obj);
 
 % "c[(out)] later"
-solve
-    ::
-    % cpx_warm_start(30000,
-      seq_search(
+solve :: seq_search(
      % can help, but far from always
      % [bool_search([a[min(calleesaved_spill[i])] | i in index_set(calleesaved_spill)]++[true],
      %              input_order, indomain_max, complete)] ++
@@ -150,5 +147,4 @@ solve
      [int_search([r[t] | t in bb_temps[b] where op_type[temp_definer[t]] != TYPE_IN]++[0], first_fail, indomain_min, complete)
      | b in bb_order]
     )
-    % )
     minimize(obj);

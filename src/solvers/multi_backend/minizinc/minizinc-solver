@@ -6,6 +6,7 @@ mzn='mzn-gecode'
 cumulative='false'
 ncores='1'
 statflag='-s'
+toprefix='-time '
 toflag=''
 freeflag=''
 while [ $# -gt  1 ]; do
@@ -40,6 +41,7 @@ while [ $# -gt  1 ]; do
         mzn='mzn-chuffed'
         cumulative='false'
         statflag='--fzn-flag -verbosity=3'
+	toprefix='-time_out='
       ;;
       --cumulative)
         cumulative='true'
@@ -54,7 +56,7 @@ while [ $# -gt  1 ]; do
         freeflag='--fzn-flag -vsids=true'
       ;;
       --to)
-	toflag='--fzn-flag -time_out='$1
+	toflag='--fzn-flag '$toprefix$1
 	shift
       ;;
       -o)
