@@ -38,11 +38,15 @@ PRESOLVERMAIN = $(PRESOLVERDIR)/presolver
 
 SOLVERCOMMONDIR := $(PRESOLVERDIR)/common
 SOLVERMODELSDIR := $(PRESOLVERDIR)/models
+SOLVERBRANCHERSDIR := $(SOLVERDIR)/branchers
 SOLVERPROCEDURESDIR := $(PRESOLVERDIR)/procedures
 SOLVERPRESOLVERDIR := $(PRESOLVERDIR)/presolver
 
 SOLVERCOMMON := definitions util jsonutil
-SOLVERMODELS := parameters options model relaxedmodel completemodel
+SOLVERMODELS := parameters options model relaxedmodel completemodel localmodel \
+globalmodel
+SOLVERBRANCHERS := filters merit value printers pressureschedulingbrancher \
+routingbrancher
 SOLVERPROCEDURES := presolverprocedures commonprocedures
 SOLVERPRESOLVER := presolver-options presolve before_presolver diff_temps	\
 dominance infeasible_presolver last_use precedences unsafe_temp auxiliary congr	\
@@ -50,6 +54,7 @@ digraph
 
 PRESOLVERCLASSES := $(addprefix $(SOLVERCOMMONDIR)/, $(SOLVERCOMMON))	\
 $(addprefix $(SOLVERMODELSDIR)/, $(SOLVERMODELS)) $(addprefix		\
+$(SOLVERBRANCHERSDIR)/, $(SOLVERBRANCHERS)) $(addprefix			\
 $(SOLVERPROCEDURESDIR)/, $(SOLVERPROCEDURES)) $(addprefix		\
 $(SOLVERPRESOLVERDIR)/, $(SOLVERPRESOLVER))
 

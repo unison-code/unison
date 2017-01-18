@@ -43,6 +43,7 @@
 
 #include <algorithm>
 #include "models/parameters.hpp"
+#include "models/globalmodel.hpp"
 #include "procedures/commonprocedures.hpp"
 #include "presolver-options.hpp"
 #include "across.hpp"

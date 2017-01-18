@@ -42,6 +42,14 @@ HEADERS += common/definitions.hpp \
            models/model.hpp \
            models/relaxedmodel.hpp \
            models/completemodel.hpp \
+           models/localmodel.hpp \
+           models/globalmodel.hpp \
+           branchers/filters.hpp \
+           branchers/merit.hpp \
+           branchers/value.hpp \
+           branchers/printers.hpp \
+           branchers/pressureschedulingbrancher.hpp \
+           branchers/routingbrancher.hpp \
            procedures/commonprocedures.hpp \
            procedures/presolverprocedures.hpp \
            presolver/presolver-options.hpp \
@@ -67,6 +75,14 @@ SOURCES += common/definitions.cpp \
            models/model.cpp \
            models/relaxedmodel.cpp \
            models/completemodel.cpp \
+           models/localmodel.cpp \
+           models/globalmodel.cpp \
+           branchers/filters.cpp \
+           branchers/merit.cpp \
+           branchers/value.cpp \
+           branchers/printers.cpp \
+           branchers/pressureschedulingbrancher.cpp \
+           branchers/routingbrancher.cpp \
            procedures/commonprocedures.cpp \
            procedures/presolverprocedures.cpp \
            presolver/presolver-options.cpp \
