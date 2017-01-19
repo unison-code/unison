@@ -1,0 +1,6 @@
+#!/bin/bash
+# Assumes that the environment variable UNISON_DIR is set to the top of the
+# Unison repo
+MULTIBACKEND_DIR=$UNISON_DIR/src/solvers/multi_backend
+ghc -O2 --make -threaded $MULTIBACKEND_DIR/portfolio.hs
+$MULTIBACKEND_DIR/portfolio "$@" +RTS -N2
