@@ -128,7 +128,7 @@ model2dzn(AVL0) :-
 	transpose(Off, OffT),
 	write_array(res_off, array(1..Nres,0..MAXI,int), OffT),
 	%
-	avl_fetch(strictly_congr, AVL, Congr1),
+	avl_fetch(congr, AVL, Congr1),
 	(   foreach(L2,Congr1),
 	    fromto(Congr2,Congr3,Congr4,[])
 	do  (   L2 = [_] -> Congr3 = Congr4
@@ -138,6 +138,17 @@ model2dzn(AVL0) :-
 	),
 	length(Congr2, Ncongr),
 	write_array(congr, array(1..Ncongr,set(int)), Congr2),
+	%
+	avl_fetch(strictly_congr, AVL, SCongr1),
+	(   foreach(SL2,SCongr1),
+	    fromto(SCongr2,SCongr3,SCongr4,[])
+	do  (   SL2 = [_] -> SCongr3 = SCongr4
+	    ;   encode(list(int), set(int), SL2, SS2),
+		SCongr3 = [SS2|SCongr4]
+	    )
+	),
+	length(SCongr2, NScongr),
+	write_array(strictly_congr, array(1..NScongr,set(int)), SCongr2),
 	%
 	avl_fetch(preassign, AVL, Preassign),
 	(   foreach([X1,Y1],Preassign),
@@ -171,14 +182,8 @@ model2dzn(AVL0) :-
 	    fromto(AdjX1,AdjX2,AdjX3,[]),
 	    fromto(AdjY1,AdjY2,AdjY3,[]),
 	    param(Temps)
-	do  nth0(X5, Temps, TX5),
-	    nth0(Y5, Temps, TY5),
-	    (   TX5 = [-1|_]
-	    ->  AdjX2 = [X5|AdjX3], AdjY2 = [Y5|AdjY3]
-	    ;   TY5 = [-1|_]
-	    ->  AdjX2 = [X5|AdjX3], AdjY2 = [Y5|AdjY3]
-	    ;   AdjX2 = AdjX3, AdjY2 = AdjY3
-	    )
+	do  AdjX2 = [X5|AdjX3],
+	    AdjY2 = [Y5|AdjY3]
 	),
 	length(AdjX1, Nadj),
 	write_array(adj_from, array(1..Nadj,int), AdjX1),

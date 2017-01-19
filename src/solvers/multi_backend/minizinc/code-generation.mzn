@@ -103,6 +103,9 @@ array[int,int] of int: res_off;
 %% see JSON congr
 array[int] of set of int: congr;
 
+%% see JSON strictly_congr
+array[int] of set of int: strictly_congr;
+
 %% see JSON preassign
 array[int] of int: preassign_operand;
 array[int] of int: preassign_reg;
@@ -114,7 +117,7 @@ array[int] of int: aligned_usei;
 array[int] of int: aligned_defi;
 array[int] of int: aligned_dist;
 
-%% see JSON adjacent, only the subset that is not covered by congr
+%% see JSON adjacent
 array[int] of int: adj_from;
 array[int] of int: adj_to;
 
@@ -543,7 +546,7 @@ constraint
 
 %% congruences
 constraint
-    forall(cgr in congr) (
+    forall(cgr in strictly_congr) (
         let {int: junior = min(cgr)} in (
 	    forall(j in cgr where j>junior) (ry[junior] = ry[j])
  	)
@@ -551,7 +554,9 @@ constraint
 
 %% adjacencies NEW FOR REMATERIALIZATION
 constraint
-    forall(j in index_set(adj_from)) (
+    forall(     j in index_set(adj_from)
+          where not({adj_from[j],adj_to[j]} subset array_union(strictly_congr))
+          ) (
         let {int: p = adj_from[j],
 	     int: q = adj_to[j]} in
             (y[q] >= 0 -> y[p] >= 0 /\ ry[p] = ry[q]) /\
@@ -653,7 +658,9 @@ constraint
 %% slack and balancing
 
 %% Model::global_operand
-test global_operand(int: p) = has_element(p,adj_from++adj_to);
+test global_operand(int: p) = 
+  exists(i in index_set(adj_from))(adj_from[i]=p) \/
+  exists(i in index_set(adj_to))(adj_to[i]=p);
 
 %% Model::slack
 constraint
@@ -703,21 +710,24 @@ var -MAXL..3*MAXL: lat(int: q, int: t) =
 
 %% data precedences with slack and everything
 
+array[int] of var int: opnd_lbs(int: q) =
+  [ if v = -1 then -1
+    else c[temp_definer[v]] + max(min_active_lat(temp_def[v]), lt[temp_def[v]]) + s[temp_def[v]] + lt[q] + s[q]
+    endif
+  | v in operand_temps[q]
+  ];
+
+predicate post_data_prec(int: q) =
+    let {int: nalts = card(operand_temps[q]),
+    	 int: u = operand_definer[q],
+         var 1..nalts: ky,
+         array[int] of var int: lbs = opnd_lbs(q)} in
+      y[q] = operand_temps[q][ky] /\
+      c[u] >= lbs[ky];
+
 %% Model::post_data_precedences_constraints
 constraint
-  forall(u in 0..MAXO, q in op_operands[u] where operand_use[q])(
-    let {int: nalts = card(operand_temps[q]),
-         var 1..nalts: key,
-         array[1..nalts] of var int: lbs = if min(operand_temps[q]) = -1 then [-1] else [] endif
-	 		    	     	   ++
-	 		    	     	   [ c[d] + max(min_active_lat(p), lt[p]) + s[p] + lt[q] + s[q]
-					   | t in real_temps(q),
-					     p in {temp_def[t]},
-					     d in {operand_definer[p]}
-					   ]} in
-      y[q] = operand_temps[q][key] /\
-      c[u] >= lbs[key]
-  );
+  forall(q in 0..MAXP where operand_use[q])(post_data_prec(q));
 
 %% Model::post_reverse_data_precedences_constraints
 set of int: global_definers(int: q) = {pd |     t1 in real_temps(q),
@@ -740,10 +750,6 @@ constraint
         c[o] <= max(acs)
       else true endif
   );
-
-
-
-
 
 %% resources
 
@@ -1252,7 +1258,11 @@ constraint
 	 set of int: o1s = {temp_definer[t] | q in op_operands[o2],
 					      t in {single_temp(q)}}} in
       if cards = {1} then
-        c[o2] = c[min(o1s)] + max(lats)
+        if op_mand[o2] then
+          c[o2] = c[min(o1s)] + max(lats)
+        else
+          a[o2] -> (c[o2] = c[min(o1s)] + max(lats))
+        endif
       else true endif
   );
 
