@@ -653,7 +653,7 @@ constraint
 %% slack and balancing
 
 %% Model::global_operand
-test global_operand(int: p) = op_type[operand_definer[p]] in {TYPE_IN,TYPE_OUT};
+test global_operand(int: p) = has_element(p,adj_from++adj_to);
 
 %% Model::slack
 constraint
@@ -668,15 +668,26 @@ constraint
 %% Model::post_operand_latency_definition
 constraint
   forall(o in 0..MAXO, p in op_operands[o])(
-    let {array[int] of int: o_p_lat = [     lat_table[i,2*k]
-    		      	   	      |     i in index_set_1of2(lat_table), k in 1..2
-				      where lat_table[i,1] = o /\ lat_table[i,3] = p
-				      ],
-	 int: nrows = length(o_p_lat) div 2} in
-      if forall(r in 1..nrows)(o_p_lat[2*r] = o_p_lat[2]) then
-        lt[p] = o_p_lat[2]
+    let {array[int] of int: icol = [     lat_table[i,2]
+    		       	           |     i in index_set_1of2(lat_table)
+				   where lat_table[i,1] = o /\ lat_table[i,3] = p
+				   ],
+         array[int] of int: lcol = [     lat_table[i,4]
+    		       	           |     i in index_set_1of2(lat_table)
+				   where lat_table[i,1] = o /\ lat_table[i,3] = p
+				   ],
+         int: n = length(icol),
+	 bool: simple = if icol[1]=0 then
+	                  forall(k in 2..n)(lcol[k]=lcol[2])
+			else
+			  forall(k in 1..n)(lcol[k]=lcol[1])
+			endif} in
+      if simple then
+        lt[p] = lcol[n]
       else
-        table([i[o],lt[p]], array2d(1..nrows, 1..2, o_p_lat))
+        table([i[o],lt[p]], array2d(1..n, 1..2, [ if k=1 then icol[j] else lcol[j] endif
+			    		      	| j in 1..n, k in 1..2
+			    		      	]))
       endif
   );
 

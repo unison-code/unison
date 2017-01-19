@@ -834,12 +834,25 @@ void Model::post_operand_latency_definition(block b) {
   for (operation o : input->ops[b])
     for (unsigned pi = 0; pi < input->operands[o].size(); pi++) {
       operand p = input->operands[o][pi];
-      IntArgs lats;
-      for (unsigned int ii = 0; ii < input->instructions[o].size(); ii++)
-        lats << input->lat[o][ii][pi];
-      constraint(lt(p) == element(lats, i(o)));
+      int samelat = -1;
+      for (unsigned int ii = 0; ii < input->instructions[o].size(); ii++) {
+        int l = input->lat[o][ii][pi];
+    	/*if (input->instructions[o][ii]>0) - can't do that - apparently lt(p) can be used even if i(o) == 0 */ {
+    	  if (samelat==l || samelat==-1)
+    	    samelat = l;
+    	  else
+    	    samelat = -2;
+    	}
+      }
+      if (samelat>=0) {
+    	constraint(lt(p) == samelat);
+      } else {
+    	IntArgs lats;
+    	for (unsigned int ii = 0; ii < input->instructions[o].size(); ii++)
+    	  lats << input->lat[o][ii][pi];
+    	constraint(lt(p) == element(lats, i(o)));
+      }
     }
-
 }
 
 void Model::post_temporary_use_latency_definition(block b) {
