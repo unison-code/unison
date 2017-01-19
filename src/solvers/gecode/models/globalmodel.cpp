@@ -601,6 +601,11 @@ void GlobalModel::post_local_solution_cost(LocalModel * l) {
     for (operation o : input->activation_class_operations[ac])
       if (contains(input->ops[b], o))
         if (!a(o).assigned()) lits << var(a(o) == l->a(o));
+  if (input->B.size() == 1) {
+    for (operation o : input->callee_saved_stores) {
+      lits << var(a(o) == l->a(o).val());
+    }
+  }
   BoolVar local_solution(*this, 0, 1);
   if (lits.size() > 0)
     rel(*this, BOT_AND, lits, local_solution);
