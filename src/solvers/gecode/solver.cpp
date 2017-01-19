@@ -150,6 +150,7 @@ string produce_json(const ResultData& rd,
     if (rd.solution) ss << ", ";
     ss << "\"has_solution\": " << (rd.solution ? "true" : "false");
     ss << ", \"proven\": " << (rd.proven ? "true" : "false");
+    ss << ", \"cost\": " << (rd.solution ? rd.solution->cost().val() : -1);
     if (rd.fail >= 0) {
       ss << ", \"failures\": " << rd.fail;
     }

@@ -1269,7 +1269,7 @@ constraint
 %% output
 
 output
-    ["\"objective\": "]   ++ [show(obj)] ++ ["\n"] ++
+    ["\"cost\": "]   ++ [show(obj)] ++ ["\n"] ++
     ["\"cycles\": "]      ++ [show(c)]   ++ ["\n"] ++
     ["\"instructions\": "]  ++ [show(i)]   ++ ["\n"] ++
     ["\"temporaries\": "] ++ [show(y)]   ++ ["\n"] ++
