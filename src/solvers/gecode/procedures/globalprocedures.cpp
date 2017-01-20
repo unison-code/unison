@@ -472,7 +472,8 @@ Solution<GlobalModel> solve_monolithic(GlobalModel * base, GIST_OPTIONS * go) {
 
   SEBs sebs;
   for (unsigned int t = 0; t < threads; t++) sebs << rbs<GlobalModel, BAB>(ro);
-  PBS<GlobalModel> e(m, sebs, o);
+  ro.stop = monolithicStop;
+  RBS<GlobalModel, BAB> e(m, ro);
 
   bool found_solution = false;
   while (GlobalModel* nextm = e.next()) {
