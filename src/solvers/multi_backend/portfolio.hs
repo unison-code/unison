@@ -29,21 +29,23 @@ import Data.List.Split
 
 data Portfolio =
   Portfolio {inFile  :: FilePath,
-             outFile :: FilePath}
+             outFile :: FilePath,
+             verbose :: Bool}
   deriving (Data, Typeable, Show)
 
 portfolioArgs = cmdArgsMode $ Portfolio
     {
      inFile  = "" &= argPos 1 &= typFile,
-     outFile = "" &= name "o" &= help "Output file name" &= typFile
+     outFile = "" &= name "o" &= help "Output file name" &= typFile,
+     verbose = False &= name "v" &= help "Run solvers in verbose mode"
     }
 
 gecodeFile outJsonFile = outJsonFile ++ ".gecode"
 chuffedFile outJsonFile = outJsonFile ++ ".chuffed"
 
-runGecode extJson outJsonFile =
+runGecode v extJson outJsonFile =
   do callProcess "gecode-solver"
-       ["-o", outJsonFile, "--verbose", extJson]
+       ["-o", outJsonFile] ++ ["--verbose" | v] ++ [extJson]
      return outJsonFile
 
 runChuffed extJson outJsonFile =
@@ -56,7 +58,7 @@ main =
        let gecodeOutFile  = outFile ++ ".gecode"
            chuffedOutFile = outFile ++ ".chuffed"
        result <- race
-                 (runGecode inFile gecodeOutFile)
+                 (runGecode verbose inFile gecodeOutFile)
                  (runChuffed inFile chuffedOutFile)
        -- FIXME: this is too brutal (and platform-specific), find out instead
        -- why the process spawned by 'minizinc-solver' are not killed
