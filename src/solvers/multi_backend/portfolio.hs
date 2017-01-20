@@ -16,11 +16,15 @@ Main authors:
 This file is part of Unison, see http://unison-code.github.io
 -}
 
-{-# LANGUAGE DeriveDataTypeable, RecordWildCards #-}
+{-# LANGUAGE DeriveDataTypeable, RecordWildCards, OverloadedStrings #-}
 
+import Data.Aeson
+import qualified Data.ByteString.Lazy.Char8 as BSL
+import qualified Data.HashMap.Strict as HM
 import Control.Concurrent
 import Control.Concurrent.Async
 import Control.Monad
+import Control.Exception
 import System.Console.CmdArgs
 import System.Process
 import System.Process.Internals
@@ -40,7 +44,9 @@ portfolioArgs = cmdArgsMode $ Portfolio
      verbose = False &= name "v" &= help "Run solvers in verbose mode"
     }
 
+gecodeFile :: FilePath -> String
 gecodeFile outJsonFile = outJsonFile ++ ".gecode"
+chuffedFile :: FilePath -> String
 chuffedFile outJsonFile = outJsonFile ++ ".chuffed"
 
 runGecode v extJson outJsonFile =
@@ -51,7 +57,22 @@ runGecode v extJson outJsonFile =
 runChuffed extJson outJsonFile =
   do callProcess "minizinc-solver"
        ["--topdown", "--chuffed", "--free", "-o", outJsonFile, extJson]
+     out <- readFile outJsonFile
+     -- if chuffed terminated without a proof, that means there was an error
+     when (not (proven out)) $ forever $ threadDelay 10000
      return outJsonFile
+
+proven json =
+  let sol    = case decode (BSL.pack json) of
+                Nothing -> error ("error parsing JSON output")
+                Just (Object s) -> s
+      proven = sol HM.! "proven"
+  in (solutionFromJson proven) :: Bool
+
+solutionFromJson object =
+  case fromJSON object of
+   Error e -> error ("error converting JSON input:\n" ++ show e)
+   Success s -> s
 
 main =
     do Portfolio{..} <- cmdArgsRun portfolioArgs
