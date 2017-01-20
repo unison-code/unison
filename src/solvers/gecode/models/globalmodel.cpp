@@ -729,13 +729,13 @@ void GlobalModel::post_callee_saved_branchers(void) {
 
 }
 
-void GlobalModel::post_complete_branchers(void) {
+void GlobalModel::post_complete_branchers(unsigned int s) {
 
   branch(*this, cost(), INT_VAL_MIN(),
          &print_global_cost_decision);
 
   Rnd r;
-  r.time();
+  r.seed(s);
   branch(*this, v_a, INT_VAR_NONE(), INT_VAL_RND(r),
          NULL, &print_global_inactive_decision);
 
@@ -752,6 +752,29 @@ void GlobalModel::post_complete_branchers(void) {
          &global_assignable, &print_global_register_decision);
 
 
+}
+
+bool GlobalModel::master(const MetaInfo& mi) {
+  if (mi.type() == MetaInfo::PORTFOLIO) {
+    assert(mi.type() == MetaInfo::PORTFOLIO);
+    return true; // default return value for portfolio master (no meaning)
+  } else if (mi.type() == MetaInfo::RESTART) {
+    if (mi.last() != NULL)
+      constrain(*mi.last());
+    mi.nogoods().post(* this);
+    return true; // forces a restart even if a solution has been found
+  }
+  GECODE_NEVER;
+}
+
+bool GlobalModel::slave(const MetaInfo& mi) {
+  if (mi.type() == MetaInfo::PORTFOLIO) {
+    post_complete_branchers(mi.asset());
+    return true; // default return value for portfolio slave (no meaning)
+  } else if (mi.type() == MetaInfo::RESTART) {
+    return true; // the search space in the slave space is complete
+  }
+  GECODE_NEVER;
 }
 
 void GlobalModel::compare(const Space& sp, std::ostream& pOs) const {

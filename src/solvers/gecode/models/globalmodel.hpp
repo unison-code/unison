@@ -170,7 +170,12 @@ public:
 
   void post_branchers(void);
   void post_callee_saved_branchers(void);
-  void post_complete_branchers(void);
+  void post_complete_branchers(unsigned int s);
+
+  // Master and slave configuration
+
+  bool master(const MetaInfo& mi);
+  bool slave(const MetaInfo& mi);
 
   // Other methods
 

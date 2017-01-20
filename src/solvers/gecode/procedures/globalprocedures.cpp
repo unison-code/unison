@@ -445,9 +445,9 @@ SolverResult shave_local_costs(GlobalModel * base) {
 Solution<GlobalModel> solve_monolithic(GlobalModel * base, GIST_OPTIONS * go) {
 
   GlobalModel * m = (GlobalModel*) base->clone();
-  m->post_complete_branchers();
 
 #ifdef GRAPHICS
+  m->post_complete_branchers(0);
   if (base->options->gist_global()) Gist::bab(m, *go);
 #endif
 
@@ -455,6 +455,11 @@ Solution<GlobalModel> solve_monolithic(GlobalModel * base, GIST_OPTIONS * go) {
   Search::Cutoff* c = Search::Cutoff::luby(scale);
   if (base->options->verbose())
     cerr << monolithic() << "Luby scale: " << scale << endl;
+  Search::Options ro;
+  ro.cutoff = c;
+  ro.nogoods_limit = 128;
+
+  unsigned int threads = 1; // FIXME: increasing this yields segmentation fault
   unsigned int FACTOR = 10;
   double limit =
     base->options->monolithic_budget() * base->input->O.size() * FACTOR;
@@ -462,11 +467,12 @@ Solution<GlobalModel> solve_monolithic(GlobalModel * base, GIST_OPTIONS * go) {
   if (base->options->verbose())
     cerr << monolithic() << "time limit: " << limit << endl;
   Search::Options o;
-  o.cutoff = c;
-  o.nogoods_limit = 128;
+  o.threads = threads;
   o.stop = monolithicStop;
 
-  RBS<GlobalModel, BAB> e(m, o);
+  SEBs sebs;
+  for (unsigned int t = 0; t < threads; t++) sebs << rbs<GlobalModel, BAB>(ro);
+  PBS<GlobalModel> e(m, sebs, o);
 
   bool found_solution = false;
   while (GlobalModel* nextm = e.next()) {
@@ -480,7 +486,7 @@ Solution<GlobalModel> solve_monolithic(GlobalModel * base, GIST_OPTIONS * go) {
   }
 
   SolverResult r;
-  if (monolithicStop->stop(e.statistics(), o))
+  if (monolithicStop->stop(e.statistics(), ro))
     r = found_solution ? SOME_SOLUTION : LIMIT;
   else
     r = found_solution ? OPTIMAL_SOLUTION : UNSATISFIABLE;
