@@ -45,7 +45,7 @@ chuffedFile outJsonFile = outJsonFile ++ ".chuffed"
 
 runGecode v extJson outJsonFile =
   do callProcess "gecode-solver"
-       ["-o", outJsonFile] ++ ["--verbose" | v] ++ [extJson]
+       (["-o", outJsonFile] ++ ["--verbose" | v] ++ [extJson])
      return outJsonFile
 
 runChuffed extJson outJsonFile =
