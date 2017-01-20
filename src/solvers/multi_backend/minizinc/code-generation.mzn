@@ -730,26 +730,27 @@ constraint
   forall(q in 0..MAXP where operand_use[q])(post_data_prec(q));
 
 %% Model::post_reverse_data_precedences_constraints
-set of int: global_definers(int: q) = {pd |     t1 in real_temps(q),
-                                                pd in {temp_def[t1]}
-					  where global_operand(pd)
-				      };
+%% DISABLED, because it seems to clash with my slack fixing stuff
+% set of int: global_definers(int: q) = {pd |     t1 in real_temps(q),
+%                                                 pd in {temp_def[t1]}
+% 					  where global_operand(pd)
+% 				      };
 				     
-var -MAXL..MAXL: slack_of_global_definer(int: q) =
-  let {set of int: gds = global_definers(q)} in
-    if card(gds)>0 then s[min(gds)] else 0 endif;
+% var -MAXL..MAXL: slack_of_global_definer(int: q) =
+%   let {set of int: gds = global_definers(q)} in
+%     if card(gds)>0 then s[min(gds)] else 0 endif;
 
 
-constraint
-  forall(o in 0..MAXO, p in op_operands[o], v in operand_temps[p] where v >= 0 /\ not operand_use[p])(
-    let {array[int] of var int: acs = [ if y[q] = v then c[j] - lat(q,v) - slack_of_global_definer(q) else 0 endif
-    		       	   	      | q in temp_uses[v],
-    		       	   	        j in {operand_definer[q]}
-				      ]} in
-      if r[v] >= 0 then
-        c[o] <= max(acs)
-      else true endif
-  );
+% constraint
+%   forall(o in 0..MAXO, p in op_operands[o] where not operand_use[p])(
+%     let {int: v = single_temp(p),
+%          array[int] of var int: acs = [ if y[q] = v then c[operand_definer[q]] - lat(q,v) - slack_of_global_definer(q) else 0 endif
+%     		       	   	      | q in temp_uses[v]
+% 				      ]} in
+%       if r[v] >= 0 then
+%         c[o] <= max(acs)
+%       else true endif
+%   );
 
 %% resources
 
@@ -822,12 +823,10 @@ constraint
       let {int: p = packed_pq[k,1],
            int: q = packed_pq[k,2],
            set of int: insns = packed_is[k],
-	   int: w = temp_width[single_temp(p)],
-	   set of int: odd = {y | y in 0..MAXR where y mod (2*w) = w},
-	   var int: rtq} in (
-	  ite(ry[p] in odd, ry[p]-w, ry[p]+w, rtq) /\
-	  (i[operand_definer[p]] in insns -> ry[q] = rtq)
-      )
+	   int: pt = single_temp(p),
+	   int: w = temp_width[pt],
+	   set of int: odd = {y | y in 0..MAXR where y mod (2*w) = w}} in
+	  i[temp_definer[pt]] in insns -> ry[q] = if r[pt] in odd then r[pt]-w else r[pt]+w endif
     );
 
 %% activators
@@ -1114,23 +1113,6 @@ constraint
 	)
     );
 
-%% definer's reg must be user's
-%% hasn't yet shown any effect
-% constraint
-%     forall(v in index_set(temp_uses)) (
-%         let {set of int: tuv = temp_uses[v]} in (
-%             if card(tuv) > 1 then
-% 	        let {array[1..card(tuv)] of var int: rs,
-% 		     array[int] of int: tuva = [x | x in tuv]} in (
-% 		    forall(i in index_set(rs)) (
-% 		        ite(y[tuva[i]]=v, ry[tuva[i]], -1, rs[i])
-% 		    ) /\
-% 	    	    member(rs, r[v])
-% 		)
-% 	    else true endif
-% 	)
-%     );
-
 %% spill callee-saved if and only if some temp interfers with it
 constraint
     if card(index_set(calleesaved_spill))>0 then
@@ -1267,25 +1249,41 @@ constraint
   );
 
 %% Model::post_slack_lower_bound_constraints
+% constraint
+%   forall(C in congr)(
+%     let {set of int: CG  = {p | p in C where global_operand(p)},
+% 	 array[int] of int: ins  = [p | p in CG where op_type[operand_definer[p]] = TYPE_IN],
+% 	 array[int] of int: outs = [p | p in CG where op_type[operand_definer[p]] = TYPE_OUT],
+% 	 array[int] of var int: inlats = [lt[q] | p in ins,
+% 						  q in temp_uses[single_temp(p)]],
+% 	 array[int] of var int: outlats = [lt[q] | p in outs,
+% 						   t in real_temps(p),
+% 						   q in {temp_def[t]}]} in
+%       if (length(ins)>0) then
+% 	let {var int: maxinlat = max(inlats)} in
+% 	  forall(p in ins)(trace("s[\(p)] >= -max(\(inlats))\n", s[p] >= - maxinlat))
+%       else true endif /\
+%       if (length(outs)>0) then
+% 	let {var int: maxoutlat = max(outlats)} in
+% 	  forall(p in outs)(trace("s[\(p)] >= -max(\(outlats))\n", s[p] >= - maxoutlat))
+%       else true endif
+%   );
+
+%% [matsc] domination constraint for slack, in fact make it a functional dependency
+%% N.B. Clashes with post_slack_lower_bound_constraints
+%% N.B. Clashes with post_reverse_data_precedences_constraints
 constraint
-  forall(C in congr)(
-    let {array[int] of int: ins  = [p | p in C where op_type[operand_definer[p]] = TYPE_IN],
-         array[int] of int: outs = [p | p in C where op_type[operand_definer[p]] = TYPE_OUT],
-         array[int] of var int: inlats = [lt[q] | p in ins,
-	 	       	    	   	          q in temp_uses[single_temp(p)]],
-         array[int] of var int: outlats = [lt[q] | p in outs,
-	 	       	    	   	           t in real_temps(p),
-	 	       	    	   	           q in {temp_def[t]}]} in
-      if (length(ins)>0) then
-        let {var int: maxinlat = max(inlats)} in
-          forall(p in ins)(s[p] >= - maxinlat)
-      else true endif /\
-      if (length(outs)>0) then
-        let {var int: maxoutlat = max(outlats)} in
-          forall(p in outs)(s[p] >= - maxoutlat)
+  forall(opnds in congr)(
+    let {set of int: inps = {p | p in opnds where op_type[operand_definer[p]] = TYPE_IN},
+         array[int] of var int: ubs = [ if y[p2]=single_temp(p) then c[operand_definer[p2]] - lt[p2] - s[p2] - lt[p] else MAXC endif
+	 	                      | p in inps,
+				        p2 in p..MAXP
+				      where can_use(p2,single_temp(p))
+				      ]} in				      
+      if card(inps)>0 then
+        s[min(inps)] = min([MAXL]++ubs)
       else true endif
   );
-
 
 %% output
 
@@ -1297,5 +1295,9 @@ output
     ["\"registers\": "]   ++ [show([r[t] | t in 0..MAXT])] ++ ["\n"] ++
     ["\"live start\": "]   ++ [show([ls[t] | t in 0..MAXT])] ++ ["\n"] ++
     ["\"live duration\": "]   ++ [show([ld[t] | t in 0..MAXT])] ++ ["\n"] ++
-    ["\"live end\": "]   ++ [show([le[t] | t in 0..MAXT])] ++ ["\n"];
-
+    ["\"live end\": "]   ++ [show([le[t] | t in 0..MAXT])] ++ ["\n"] ++
+    % handy for debugging
+    % ["lt[\(p)] = \(lt[p])\n" | p in 0..MAXP] ++
+    % ["s[\(p)] = \(s[p])\n" | p in 0..MAXP where global_operand(p)] ++
+    % ["c[\(o)] = \(c[o])\n" | o in 0..MAXO where fix(c[o])>=0] ++
+    [];
