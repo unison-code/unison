@@ -44,6 +44,6 @@ fixed-frame:
 frame:
 stack-pointer-offset: 0
 jump-table:
-goal:
+goal: speed
 source:
 ; ModuleID = (...)

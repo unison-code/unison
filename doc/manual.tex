@@ -5,6 +5,7 @@
 \usepackage[english]{babel}
 \usepackage[hidelinks,breaklinks]{hyperref}
 \usepackage{fancyvrb}
+\usepackage{longtable}
 \usepackage{tcolorbox}
 \tcbuselibrary{skins,breakable}
 \usepackage{etoolbox}
@@ -757,9 +758,25 @@ the comments in LLVM's \code{HexagonNewValueJump.cpp} file for further detail).
 
 \chapter{Combinatorial Model}\label{sec:combinatorial-model}
 
+This chapter formulates the combinatorial model of register allocation and
+instruction scheduling that is at the core of Unison.
+%
+The combinatorial model consists of parameters (Section~\ref{sec:parameters})
+describing the input program, processor, and objective; variables
+(Section~\ref{sec:variables}) capturing the different decisions involved in
+register allocation and instruction scheduling; constraints
+(Section~\ref{sec:constraints}) relating and limiting the decisions; and an
+objective function (Section~\ref{sec:objective}) to optimize for.
+%
+This chapter provides a raw but formal description of the model, for further
+explanations please consult~\cite{Castaneda2014c}.
+
 \section{Parameters}\label{sec:parameters}
 
-\boolfalse{showJson}
+This section lists the parameters of the combinatorial model with examples from
+\code{factorial.json} (see Figure~\ref{fig:components}).
+
+\booltrue{showJson}
 
 \subsection{Program}
 
@@ -773,11 +790,11 @@ the comments in LLVM's \code{HexagonNewValueJump.cpp} file for further detail).
 
 \input{objective-parameters}
 
-\section{Variables}
+\section{Variables}\label{sec:variables}
 
 \input{model-variables}
 
-\section{Constraints}
+\section{Constraints}\label{sec:constraints}
 
 \input{constraints}
 
@@ -843,7 +860,7 @@ where
 \constraintComment{slack balancing}{the slack of adjacent operands is balanced}
 \slackBalancingEquation
 
-\section{Objective}
+\section{Objective}\label{sec:objective}
 
 The objective is to minimize the sum of the weighted costs of each block:
 %
@@ -873,5 +890,8 @@ parameter $\optimizeResource{}$).
 
 \chapter{Further Reading}
 \label{sec:further-reading}
+
+\bibliographystyle{plain}
+\bibliography{manual}
 
 \end{document}

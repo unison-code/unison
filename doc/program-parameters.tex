@@ -1,15 +1,15 @@
-\begin{tabular}{ l p{12cm} }
+\begin{longtable}{ l p{12cm} }
 
   \parameter{B, O, P, T}{sets of blocks, operations, operands and temporaries}
   \json{B}{[0, 1, 2]}
-  \json{O}{[0, 1, 2, \dots, 29, 30]}
-  \json{P}{[0, 1, 2, \dots, 59, 60]}
-  \json{T}{[0, 1, 2, \dots, 27, 28]}
+  \json{O}{[0, 1, 2, \dots, 33, 34]}
+  \json{P}{[0, 1, 2, \dots, 67, 68]}
+  \json{T}{[0, 1, 2, \dots, 31, 32]}
 
   \tableSpace
 
   \parameter{\operationBlock{o}}{block to which operation $o$ belongs}
-  \json{block}{[0, 0, \dots, 1, 1, 2, 2, 2, 2, 2]}
+  \json{block}{[0, 0, \dots, 1, 1, 1, 2, 2, 2, 2, 2]}
 
   \tableSpace
 
@@ -107,4 +107,4 @@
   \jsonComment{Note: the example JSON array is extracted from a different
     program (Hexagon programs do not yet yield activation constraints)}
 
-\end{tabular}
+\end{longtable}

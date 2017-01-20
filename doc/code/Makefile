@@ -1,10 +1,10 @@
 UNIARGS = --lintpragma=false
 
-.PRECIOUS: %.uni %.lssa.uni %.ext.uni %.alt.uni
+.PRECIOUS: %.uni %.lssa.uni %.ext.uni %.alt.uni %.json
 
 factorial-examples: factorial.mir
-	rm -f *.uni
-	make factorial.alt.uni
+	rm -f *.uni *.json
+	make factorial.json
 
 %.alt.uni: %.ext.uni
 	uni augment $(UNIARGS) $< -o $@
@@ -16,4 +16,10 @@ factorial-examples: factorial.mir
 	uni linearize $(UNIARGS) $< -o $@
 
 %.uni: %.mir
-	uni import $(UNIARGS) --nocc --noreserved $< -o $@
+	uni import $(UNIARGS) --nocc --noreserved --goal=speed $< -o $@
+
+%.json : %.alt.uni %.llvm.mir
+	uni model --basefile=$*.llvm.mir $< | aeson-pretty -c > $@
+
+%.llvm.mir : %.asm.mir
+	uni normalize $< -o $@
