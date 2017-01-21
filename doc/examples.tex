@@ -1,0 +1,23 @@
+\newcommand{\exampleLabel}{\text{\emph{example:}} \quad}
+
+\newcommand{\connectedOperandExample}{
+  \begin{equation*}\textstyle
+    \exampleLabel{}
+    \connectedOperand{\operand{5}} \iff \operandTemporary{\operand{5}} \neq \nullConnection{}
+  \end{equation*}
+}
+
+\newcommand{\connectedUsersExample}{
+  \begin{equation*}\textstyle
+    \exampleLabel{}
+    \liveTemporary{\temporary{4}} \iff \existsIn{p}{\set{\operand{13}, \operand{22}}} \suchThat
+    \operandTemporary{p} = \temporary{4}
+  \end{equation*}
+}
+
+\newcommand{\connectedDefinerExample}{
+  \begin{equation*}\textstyle
+    \exampleLabel{}
+    \liveTemporary{\temporary{19}} \iff \connectedOperand{\operand{37}}
+  \end{equation*}
+}

@@ -19,7 +19,7 @@ factorial-examples: factorial.mir
 	uni import $(UNIARGS) --nocc --noreserved --goal=speed $< -o $@
 
 %.json : %.alt.uni %.llvm.mir
-	uni model --basefile=$*.llvm.mir $< | aeson-pretty -c > $@
+	uni model --basefile=$*.llvm.mir $< | aeson-pretty -c | sed 's/,/, /g' | sed 's/:/: /g' | sed 's/, "/,\n"/g' > $@
 
 %.llvm.mir : %.asm.mir
 	uni normalize $< -o $@

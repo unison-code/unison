@@ -797,19 +797,23 @@ This section lists the parameters of the combinatorial model with examples from
 \section{Constraints}\label{sec:constraints}
 
 \input{constraints}
+\input{examples}
 
-\subsection{Register allocation}
+\subsection{Register Allocation}
 
 \constraintComment{connected operands}{operands cannot be connected to null temporaries}
 \connectedOperandEquation
+\connectedOperandExample
 \constraintComment{connected users}{a temporary is live iff it is connected to a user}
 \connectedUsersEquation
 where
 \usersEquation
+\connectedUsersExample
 \constraintComment{connected definers}{a temporary is live iff it is connected to its definer}
 \connectedDefinerEquation
 where
 \definerEquation
+\connectedDefinerExample
 \constraintComment{local operand connections}{local operands are connected iff their operations are active}
 \localOperandConnectionEquation
 where

@@ -14,7 +14,7 @@
   \ifbool{showJson}{\tt #1 & \tt #2 \\}{}
 }
 \newcommand{\jsonComment}[1]{
-  \ifbool{showJson}{& #1 \\}{}
+  \ifbool{showJson}{& \emph{#1} \\}{}
 }
 \newcommand{\operator}[1]{\operatorname{#1}\,}
 
@@ -243,6 +243,8 @@
 \newcommand{\minimumLiveDuration}[1]{\minimumLiveDurationSymbol(#1)}
 \newcommand{\activators}[1]{\activatorsSymbol(#1)}
 \newcommand{\globalOperand}[1]{\globalOperandSymbol(#1)}
+\newcommand{\operand}[1]{p_{\hspace{0.03cm}#1}}
+\newcommand{\temporary}[1]{t_{\hspace{0.02cm}#1}}
 
 % Variables
 

@@ -109,11 +109,11 @@
   \disjoint{
     \set{\tuple{
         \temporaryRegister{t},
-        \temporaryRegister{t} \squeeze{+} \width{t} \times \liveTemporary{t},
+        \temporaryRegister{t} + \width{t} \times \liveTemporary{t},
         \temporaryLiveStart{t},
         \temporaryLiveEnd{t}}
       \! \suchThat \!
-      t \squeeze{\in} \temporaries{b}}}
+      t \in \temporaries{b}}}
   \;\;
   \forallIn{b}{\allBlocks{}}
 \end{equation}
@@ -128,7 +128,7 @@
 \newcommand{\registerClassEquation}{
 \begin{equation}\textstyle\label{eq:instruction-selection}
   \temporaryRegister{\operandTemporary{p}}
-  \squeeze{\in}
+  \in
   \registerClass{o}{\operationInstruction{o}}{p}
   \quad
   \forallIn{o}{\allOperations{}}, \,
@@ -237,7 +237,7 @@
               \units{\operationInstruction{o}}{\processorResource{r}},
               \duration{\operationInstruction{o}}{\processorResource{r}}
               \eat}}
-          {\eat o \squeeze{\in} \operations{b}},
+          {\eat o \in \operations{b}},
           \capacity{\processorResource{r}}}\notag{}\hspace{-0.5cm}\\
     \forallIn{b}{\allBlocks{}}, \forallIn{\processorResource{r}}{R}
   \end{eqnarray}

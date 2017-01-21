@@ -8,8 +8,8 @@
 
   \parameter{\minimumDistance{o_1}{o_2}{\instruction{i}}}{min.~issue distance of
     ops.~$o_1$ and $o_2$ when $o_1$ is implemented by $\instruction{i}$}
-  \json{dist}{[[[1], \dots, [0, 0, 0], \dots, [1, 1]], [\dots], [\dots]]}
-  \jsonComment{Note: this parameter is encoded with the same structure as
+  \json{dist}{[[[1], \dots, [0, 0, 0], \dots, [1]], [\dots], [\dots]]}
+  \jsonComment{note: this parameter is encoded with the same structure as
     \code{dep}: each dependency and its corresponding distance array are found
     in the same positions of their respective JSON arrays (example:
     \code{dep[0][2]~=~[0, 3]}, \code{dist[0][2] = [1]}).}
@@ -23,7 +23,7 @@
   \tableSpace
 
   \parameter{\atoms{rc}}{atoms of register class $rc$}
-  \json{atoms}{[[0, 1, 2, \dots, 52], \dots, [37, 39, 41, \dots, 51]]}
+  \json{atoms}{[[0, 1, 2, \dots, 76], \dots, [37, 39, 41, \dots, 75]]}
 
   \tableSpace
 
