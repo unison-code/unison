@@ -131,6 +131,9 @@ void presolve(Parameters & input, PresolverOptions & options) {
       cerr << pre()
            << "proven absence of solutions with cost less or equal than "
            << input.maxf << endl;
+    // ensure infeasible MiniZinc model
+    presolver_conj c;
+    input.nogoods.push_back(c);
     return;
   }
 

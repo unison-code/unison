@@ -712,7 +712,7 @@ var -MAXL..3*MAXL: lat(int: q, int: t) =
 
 array[int] of var int: opnd_lbs(int: q) =
   [ if v = -1 then -1
-    else c[temp_definer[v]] + max(min_active_lat(temp_def[v]), lt[temp_def[v]]) + s[temp_def[v]] + lt[q] + s[q]
+    else c[temp_definer[v]] + lat(q,v)
     endif
   | v in operand_temps[q]
   ];
@@ -824,9 +824,12 @@ constraint
            int: q = packed_pq[k,2],
            set of int: insns = packed_is[k],
 	   int: pt = single_temp(p),
+	   int: qt = single_temp(q),
 	   int: w = temp_width[pt],
+	   int: pi = operand_definer[p],
 	   set of int: odd = {y | y in 0..MAXR where y mod (2*w) = w}} in
-	  i[temp_definer[pt]] in insns -> ry[q] = if r[pt] in odd then r[pt]-w else r[pt]+w endif
+	  (i[temp_definer[pt]] in insns <-> a[pi]) /\
+	  a[pi] -> ry[q] = if ry[p] in odd then ry[p]-w else ry[p]+w endif
     );
 
 %% activators
