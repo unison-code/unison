@@ -34,14 +34,18 @@ import Data.List.Split
 data Portfolio =
   Portfolio {inFile  :: FilePath,
              outFile :: FilePath,
-             verbose :: Bool}
+             verbose :: Bool,
+             gecodeFlags :: String,
+             chuffedFlags :: String}
   deriving (Data, Typeable, Show)
 
 portfolioArgs = cmdArgsMode $ Portfolio
     {
      inFile  = "" &= argPos 1 &= typFile,
      outFile = "" &= name "o" &= help "Output file name" &= typFile,
-     verbose = False &= name "v" &= help "Run solvers in verbose mode"
+     verbose = False &= name "v" &= help "Run solvers in verbose mode",
+     gecodeFlags = "" &= help "Flags passed to the Gecode solver",
+     chuffedFlags = "" &= help "Flags passed to the Chuffed solver"
     }
 
 gecodeFile :: FilePath -> String
@@ -49,18 +53,26 @@ gecodeFile outJsonFile = outJsonFile ++ ".gecode"
 chuffedFile :: FilePath -> String
 chuffedFile outJsonFile = outJsonFile ++ ".chuffed"
 
-runGecode v extJson outJsonFile =
+runGecode flags v extJson outJsonFile =
   do callProcess "gecode-solver"
-       (["-o", outJsonFile] ++ ["--verbose" | v] ++ [extJson])
+       (["-o", outJsonFile] ++ ["--verbose" | v] ++ (splitFlags flags) ++
+        [extJson])
      return outJsonFile
 
-runChuffed extJson outJsonFile =
+runChuffed flags extJson outJsonFile =
   do callProcess "minizinc-solver"
-       ["--topdown", "--chuffed", "--free", "-o", outJsonFile, extJson]
+       (["--topdown", "--chuffed", "--free", "-o", outJsonFile] ++
+        (splitFlags flags) ++
+        [extJson])
      out <- readFile outJsonFile
      -- if chuffed terminated without a proof, that means there was an error
      when (not (proven out)) $ forever $ threadDelay 10000
      return outJsonFile
+
+splitFlags :: String -> [String]
+splitFlags flags =
+  let flags' = map replaceFlagChar flags
+  in [flag | flag <- splitOn " " flags', not (null flag)]
 
 proven json =
   let sol    = case decode (BSL.pack json) of
@@ -79,8 +91,8 @@ main =
        let gecodeOutFile  = outFile ++ ".gecode"
            chuffedOutFile = outFile ++ ".chuffed"
        result <- race
-                 (runGecode verbose inFile gecodeOutFile)
-                 (runChuffed inFile chuffedOutFile)
+                 (runGecode gecodeFlags verbose inFile gecodeOutFile)
+                 (runChuffed chuffedFlags inFile chuffedOutFile)
        -- FIXME: this is too brutal (and platform-specific), find out instead
        -- why the process spawned by 'minizinc-solver' are not killed
        createProcess
@@ -93,6 +105,10 @@ main =
        removeIfExists gecodeOutFile
        removeIfExists chuffedOutFile
        return ()
+
+replaceFlagChar '=' = ' '
+replaceFlagChar ';' = ' '
+replaceFlagChar c = c
 
 removeIfExists file =
   do fileExists <- doesFileExist file
