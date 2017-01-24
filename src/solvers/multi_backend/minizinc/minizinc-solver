@@ -10,8 +10,8 @@ mzn='mzn-gecode'
 cumulative='false'
 ncores='1'
 statflag='-s'
-toprefix='-time '
 toflag=''
+toprefix='--fzn-flag --time-out --fzn-flag '
 freeflag=''
 while [ $# -gt  1 ]; do
     opt="$1"
@@ -35,17 +35,17 @@ while [ $# -gt  1 ]; do
       ;;
       --g12cpx)
         mzn='mzn-g12cpx'
-        cumulative='false'
       ;;
       --cpx)
         mzn='mzn-cpx'
-        cumulative='false'
       ;;
-      --chuffed)
+      --chuffed | --chuffed21)
         mzn='mzn-chuffed'
-        cumulative='false'
+      ;;
+      --chuffed20)
+        mzn='mzn-chuffed'
         statflag='--fzn-flag -verbosity=3'
-	toprefix='-time_out='
+	toprefix='--fzn-flag -time_out='
       ;;
       --cumulative)
         cumulative='true'
@@ -60,7 +60,7 @@ while [ $# -gt  1 ]; do
         freeflag='--fzn-flag -vsids=true'
       ;;
       --to)
-	toflag='--fzn-flag '$toprefix$1
+	toflag=$toprefix$1
 	shift
       ;;
       -o)
@@ -86,5 +86,5 @@ else
   pflag=''
   pvalue=''
 fi
-echo ${mzn} -k ${statflag} ${pflag} ${pvalue} ${freeflag} ${toflag} ${allsolns} --no-optimize -D good_cumulative=${cumulative} code-generation.mzn $DIRBASENAME.dzn | $COMMON_DIR/outfilter.pl > ${OUTJSON}
-time ${mzn} -k ${statflag} ${pflag} ${pvalue} ${freeflag} ${toflag} ${allsolns} --no-optimize -D good_cumulative=${cumulative} code-generation.mzn $DIRBASENAME.dzn | $COMMON_DIR/outfilter.pl > ${OUTJSON}
+set -x
+time ${mzn} -k ${statflag} ${pflag} ${pvalue} ${freeflag} ${toflag} ${allsolns} -D good_cumulative=${cumulative} code-generation.mzn $DIRBASENAME.dzn | $COMMON_DIR/outfilter.pl > ${OUTJSON}

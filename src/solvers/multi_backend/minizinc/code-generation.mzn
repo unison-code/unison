@@ -481,21 +481,10 @@ constraint
 
 constraint
     forall(b in 1..MAXB) (
-	let {int: copysize = min(o in bb_ops[b], x in op_instructions[o]
-				 where not op_mand[o] /\ x>0)(res_con[1,x])
-	     % int: bundlesize = max(x in 0..MAXI)(res_con[1,x]),
-	     % int: realsum = sum(o in bb_ops[b] where isreal(o))(1),
-	     % int: realtotal = sum(o in bb_ops[b] where isreal(o))
-	     % 		     (min(x in op_instructions[o])(res_con[1,x]))
-				 } in (
-	    forall(o in bb_ops[b])(c[o] in -1..bb_maxcycle[b]) /\
-	    c[min(bb_ops[b])] = 0 /\
-	    copysum[b] = sum(o in bb_ops[b] where not op_mand[o])(bool2int(a[o])) /\
-	    copysum[b] >= bb_optional_min[b]
-	    % wrong e.g. for ARM
-	    % copysum[b] + realsum + 2 >= c[max(bb_ops[b])] /\
-	    % copysize*copysum[b] + realtotal <= bundlesize*(c[max(bb_ops[b])]-1)
-	)
+	forall(o in bb_ops[b])(c[o] in -1..bb_maxcycle[b]) /\
+	c[min(bb_ops[b])] = 0 /\
+	copysum[b] = sum(o in bb_ops[b] where not op_mand[o])(bool2int(a[o])) /\
+	copysum[b] >= bb_optional_min[b]
     ) /\
     if optimize_cycles then
       obj = sum(b in 1..MAXB) (bb_frequency[b] * c[max(bb_ops[b])])
@@ -697,12 +686,6 @@ constraint
 			    		      	]))
       endif
   );
-
-MINL..MAXL: min_active_lat(int: p) =
-    min({     lat_table[i,4]
-        |     i in index_set_1of2(lat_table)
-	where lat_table[i,2] > 0 /\ lat_table[i,3] = p
-	});
 
 %% Model::post_temporary_use_latency_definition
 var -MAXL..3*MAXL: lat(int: q, int: t) =
