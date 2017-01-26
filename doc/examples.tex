@@ -21,3 +21,70 @@
     \liveTemporary{\temporary{19}} \iff \connectedOperand{\operand{37}}
   \end{equation*}
 }
+
+\newcommand{\localOperandConnectionExample}{
+  \begin{equation*}\textstyle
+    \exampleLabel{}
+    \connectedOperand{\operand{45}} \iff \activeOperation{\operation{22}}
+  \end{equation*}
+}
+
+\newcommand{\globalOperandConnectionExample}{
+  \begin{equation*}\textstyle
+    \exampleLabel{}
+    \begin{aligned}
+      \connectedOperand{\operand{21}} \iff
+      \existsIn{q}{\set{\operand{25}, \operand{62}}} \suchThat
+      \connectedOperand{q}
+    \end{aligned}
+  \end{equation*}
+}
+
+\newcommand{\activeInstructionExample}{
+  \begin{equation*}\textstyle
+    \exampleLabel{}
+    \activeOperation{\operation{15}} \iff \operationInstruction{\operation{15}} \neq \nullInstruction
+  \end{equation*}
+}
+
+\newcommand{\registerClassExample}{
+  \begin{equation*}\textstyle
+    \exampleLabel{}
+    \temporaryRegister{\operandTemporary{\operand{14}}}
+    \in
+    \registerClass{\operation{7}}{\operationInstruction{\operation{7}}}{\operand{14}}
+  \end{equation*}
+}
+
+\newcommand{\disjointLiveRangesExample}{
+  \begin{equation*}\textstyle
+    \exampleLabel{}
+    \disjoint{
+      \set{\tuple{
+          \temporaryRegister{\temporary{0}},
+          \temporaryRegister{\temporary{0}} + 1 \times \liveTemporary{\temporary{0}},
+          \temporaryLiveStart{\temporary{0}},
+          \temporaryLiveEnd{\temporary{0}}}, \, \dots, \,
+        \tuple{
+          \temporaryRegister{\temporary{10}},
+          \temporaryRegister{\temporary{10}} + 1 \times \liveTemporary{\temporary{10}},
+          \temporaryLiveStart{\temporary{10}},
+          \temporaryLiveEnd{\temporary{10}}}}}
+  \end{equation*}
+}
+
+\newcommand{\preAssignmentExample}{
+  \begin{equation*}\textstyle
+    \exampleLabel{}
+    \temporaryRegister{\operandTemporary{\operand{1}}} = \register{r31}
+  \end{equation*}
+}
+
+\newcommand{\congruenceExample}{
+  \begin{equation*}\textstyle
+    \exampleLabel{}
+    \connectedOperand{\operand{21}} \land
+    \connectedOperand{\operand{25}} \implies
+    \temporaryRegister{\operandTemporary{\operand{21}}} = \temporaryRegister{\operandTemporary{\operand{25}}}
+  \end{equation*}
+}

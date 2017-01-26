@@ -820,21 +820,28 @@ where
 \globalEquation
 and
 \operandOperationEquation
+\localOperandConnectionExample
 \constraintComment{global operand connections}{global operands are connected iff any of their successors is connected}
 \globalOperandConnectionEquation
+\globalOperandConnectionExample
 \constraintComment{active instructions}{active operations are implemented by non-null instructions}
 \activeInstructionEquation
+\activeInstructionExample
 \constraintComment{register class}{The instruction that implements an
   operation determines the register class to which its operands are allocated}
 \registerClassEquation
+\registerClassExample
 \constraintComment{disjoint live ranges}{temporaries whose live ranges overlap are assigned to different register atoms}
 \disjointLiveRangesEquation
 where
 \blockTemporariesEquation
+\disjointLiveRangesExample
 \constraintComment{preassignment}{certain operands are preassigned to registers}
 \preAssignmentEquation
+\preAssignmentExample
 \constraintComment{congruence}{connected adjacent operands are assigned to the same register}
 \congruenceEquation
+\congruenceExample
 \constraintComment{alignment}{aligned operands are assigned to registers at a
   given relative distance}
 \alignmentEquation
