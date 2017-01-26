@@ -257,7 +257,7 @@ Library
                  text >= 1.0,
                  cmdargs >= 0.10,
                  aeson >= 0.7,
-                 aeson-pretty >= 0.7,
+                 aeson-pretty >= 0.8.1,
                  bytestring >= 0.9,
                  unordered-containers >= 0.2,
                  yaml >= 0.8,
