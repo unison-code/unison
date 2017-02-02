@@ -342,8 +342,8 @@ resources =
      -- only be up to two regular stores or a single new-value store per bundle
      Resource Store 2,    -- Used by ST and NVST
 
-     -- Artificial resource to disallow jump merges to be scheduled together
-     -- with (out)-delimiters
+     -- Artificial resource to disallow jump merges and ENDLOOP instructions to
+     -- be scheduled together with (out)-delimiters
      Resource BlockEnd 1
 
     ]
@@ -394,7 +394,10 @@ itineraryUsage i it
     | it `elem` [ST_tc_st_SLOT0, ST_tc_ld_SLOT0, V2LDST_tc_st_SLOT0] =
       itineraryUsage i LD_tc_ld_SLOT01 ++
       [mkUsage Slot0 1 1, mkUsage Store 1 1]
-    | it `elem` [J_tc_2early_SLOT0123, NoItinerary] = []
+      -- ENDLOOP instructions are encoded in the bits 14:15 of the preceeding
+      -- instruction in the bundle
+    | it `elem` [J_tc_2early_SLOT0123] = [mkUsage BlockEnd 1 1]
+    | it `elem` [NoItinerary] = []
 
 itineraryUsage _ it = error ("unmatched: itineraryUsage " ++ show it)
 
