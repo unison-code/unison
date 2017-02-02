@@ -11,7 +11,7 @@ This file is part of Unison, see http://unison-code.github.io
 -}
 module Unison.Target.Hexagon.Common
     (isNVJmpInstr, isNVJmp, isCmp, isCmpInstr, isJmp, isJmpInstr,
-     isLinearJump, isLinearNewValueCmpJump) where
+     isLinearJump, isLinearNewValueCmpJump, isNewValueCmpJump, isJumpNew) where
 
 import Data.List
 
@@ -49,3 +49,6 @@ isSingleTargetOf is ms =
 isLinearJump i = i `elem` [J2_jumpt_linear, J2_jumpt_nv_linear, J2_jumpf_linear,
                            J2_jumpf_nv_linear]
 isLinearNewValueCmpJump i = "_jumpnv_t_linear" `isSuffixOf` (show i)
+
+isNewValueCmpJump i = "_jumpnv_t" `isSuffixOf` (show i)
+isJumpNew i = i `elem` [J2_jumptnew, J2_jumpfnew]

@@ -467,7 +467,8 @@ isConstExtendedProperty =
 -- | Target dependent post-processing functions
 
 postProcess = [constantDeExtend, removeFrameIndex, normalizeJumpMerges,
-               normalizeNVJumps, flip addImplicitRegs (target, [])]
+               normalizeNVJumps, addJumpHints,
+               flip addImplicitRegs (target, [])]
 
 constantDeExtend = mapToTargetMachineInstruction constantDeExtendInstr
 
@@ -515,26 +516,23 @@ normalizeJumpMerges = mapToMachineBlock normalizeJumpMergesInBlock
 
 normalizeJumpMergesInBlock mb @ MachineBlock {mbInstructions = mis} =
   case find isJumpMerge (concatMap miToList mis) of
-   Just MachineSingle {msOperands = [_, l]} ->
+   Just MachineSingle {msOperands = [_, l], msProperties = mps} ->
      let mb1 = filterMachineInstructionsBlock (not . isJumpMerge) mb
-         mb2 = concatMapToMachineInstructionBlock (normalizeLinearJump l) mb1
+         mb2 = concatMapToMachineInstructionBlock
+               (normalizeLinearJump mps l) mb1
      in mb2
    _ -> mb
 
 isJumpMerge MachineSingle {msOpcode = MachineTargetOpc Jump_merge} = True
 isJumpMerge _ = False
 
-normalizeLinearJump l mi @ MachineSingle {msOpcode = MachineTargetOpc i,
-                                          msOperands = [_, p1, p2]}
-  | isLinearNewValueCmpJump i =
+normalizeLinearJump mps l mi @ MachineSingle {msOpcode = MachineTargetOpc i,
+                                              msOperands = (_:mops)}
+  | isLinearNewValueCmpJump i || isLinearJump i =
     [mi {msOpcode = mkMachineTargetOpc $ branchJump i,
-         msOperands = [p1, p2, l]}]
-normalizeLinearJump l mi @ MachineSingle {msOpcode = MachineTargetOpc i,
-                                          msOperands = [_, p1]}
-  | isLinearJump i =
-    [mi {msOpcode = mkMachineTargetOpc $ branchJump i,
-         msOperands = [p1, l]}]
-normalizeLinearJump _ mi = [mi]
+         msOperands = mops ++ [l],
+         msProperties = mps}]
+normalizeLinearJump _ _ mi = [mi]
 
 branchJump jmp = read $ dropSuffix "_linear" (show jmp)
 
@@ -547,6 +545,22 @@ normalizeNVJump mi = mi
 
 externalNewValueJump J2_jumpt_nv = J2_jumptnew
 externalNewValueJump J2_jumpf_nv = J2_jumpfnew
+
+addJumpHints = mapToTargetMachineInstruction addJumpHint
+
+addJumpHint mi @ MachineSingle {msOpcode = MachineTargetOpc i,
+                                msProperties = mps}
+  | isJumpNew i || isNewValueCmpJump i =
+    case find isMachineInstructionPropertyBranchTaken mps of
+     Just (MachineInstructionPropertyBranchTaken taken) ->
+       mi {msOpcode = mkMachineTargetOpc (addHint taken i)}
+     Nothing -> mi
+addJumpHint mi = mi
+
+addHint True J2_jumptnew = J2_jumptnewpt
+addHint True J2_jumpfnew = J2_jumpfnewpt
+addHint False i | isNewValueCmpJump i = read (init (show i) ++ "nt")
+addHint _ i = i
 
 mayStore i =
   let ws  = snd (SpecsGen.readWriteInfo i) :: [RWObject HexagonRegister]
