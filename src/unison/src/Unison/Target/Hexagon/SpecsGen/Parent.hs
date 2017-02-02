@@ -1074,10 +1074,12 @@ parent i
   | i `elem` [MVD] = Just A2_tfrp
   | i `elem` [MVPR] = Just C2_tfrpr
   | i `elem` [MVRP] = Just C2_tfrrp
-  | i `elem` [J2_jumpf_linear, J2_jumpf_nv, J2_jumpf_nv_ce] =
-    Just J2_jumpf
-  | i `elem` [J2_jumpt_linear, J2_jumpt_nv, J2_jumpt_nv_ce] =
-    Just J2_jumpt
+  | i `elem`
+      [J2_jumpf_linear, J2_jumpf_nv, J2_jumpf_nv_ce, J2_jumpf_nv_linear]
+    = Just J2_jumpf
+  | i `elem`
+      [J2_jumpt_linear, J2_jumpt_nv, J2_jumpt_nv_ce, J2_jumpt_nv_linear]
+    = Just J2_jumpt
   | i `elem` [J4_cmpeq_f_jumpnv_t_linear] = Just J4_cmpeq_f_jumpnv_t
   | i `elem` [J4_cmpeq_t_jumpnv_t_linear] = Just J4_cmpeq_t_jumpnv_t
   | i `elem`

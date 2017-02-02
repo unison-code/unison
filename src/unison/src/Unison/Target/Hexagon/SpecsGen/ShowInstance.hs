@@ -2605,6 +2605,8 @@ instance Show HexagonInstruction where
         show J4_cmpgtn1_t_jumpnv_t_linear = "J4_cmpgtn1_t_jumpnv_t_linear"
         show J2_jumpt_linear = "J2_jumpt_linear"
         show J2_jumpf_linear = "J2_jumpf_linear"
+        show J2_jumpt_nv_linear = "J2_jumpt_nv_linear"
+        show J2_jumpf_nv_linear = "J2_jumpf_nv_linear"
         show J2_jumpt_nv = "J2_jumpt_nv"
         show J2_jumpf_nv = "J2_jumpf_nv"
         show Jump_merge = "jump_merge"

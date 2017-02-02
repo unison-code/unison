@@ -46,5 +46,6 @@ jmpInstrs = [J2_jumpt, J2_jumpf]
 isSingleTargetOf is ms =
     isMachineTarget ms && mopcTarget (msOpcode ms) `elem` is
 
-isLinearJump i = i `elem` [J2_jumpt_linear, J2_jumpf_linear]
+isLinearJump i = i `elem` [J2_jumpt_linear, J2_jumpt_nv_linear, J2_jumpf_linear,
+                           J2_jumpf_nv_linear]
 isLinearNewValueCmpJump i = "_jumpnv_t_linear" `isSuffixOf` (show i)

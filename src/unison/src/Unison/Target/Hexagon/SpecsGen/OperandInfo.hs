@@ -1115,7 +1115,7 @@ operandInfo i
   | i `elem` [J4_jumpsetr, J4_jumpsetr_ce] =
     ([TemporaryInfo (RegisterClass IntRegs) 0, BlockRefInfo],
      [TemporaryInfo (RegisterClass IntRegs) 1])
-  | i `elem` [J2_jumpf_linear, J2_jumpt_linear] =
+  | i `elem` [J2_jumpf_nv_linear, J2_jumpt_nv_linear] =
     ([TemporaryInfo (RegisterClass PredRegs) (-1)],
      [TemporaryInfo (RegisterClass F32) 1])
   | i `elem`
@@ -1128,6 +1128,9 @@ operandInfo i
   | i `elem` [C2_mask] =
     ([TemporaryInfo (RegisterClass PredRegs) 0],
      [TemporaryInfo (RegisterClass DoubleRegs) 1])
+  | i `elem` [J2_jumpf_linear, J2_jumpt_linear] =
+    ([TemporaryInfo (RegisterClass PredRegs) 0],
+     [TemporaryInfo (RegisterClass F32) 1])
   | i `elem` [C2_tfrpr, MVPR] =
     ([TemporaryInfo (RegisterClass PredRegs) 0],
      [TemporaryInfo (RegisterClass IntRegs) 1])

@@ -140,8 +140,8 @@ expandJumps f (
                                         oIs = [TargetInstruction ci]})})
              -- A new-value compare and jump can be used
              | isNewValueJumpCandidateInstr ci ->
-               let ji  = linearJump i
-                   jl  = mkLinear oid [TargetInstruction ji] [p1]
+               let jis = linearJumps i
+                   jl  = mkLinear oid (map TargetInstruction jis) [p1]
                          [mkMOp pid [mkTemp tid]]
                    cji = linearNewValueCmpJump ci i
                    cjl = mkLinear (oid + 1) [TargetInstruction cji]
@@ -167,8 +167,8 @@ blockOf code o = find (\b -> any (isIdOf o) (bCode b)) code
 updateMOperandId (pid, p @ MOperand {}) = p {operandId = pid}
 updateMOperandId (_, p) = p
 
-linearJump J2_jumpt = J2_jumpt_linear
-linearJump J2_jumpf = J2_jumpf_linear
+linearJumps J2_jumpt = [J2_jumpt_linear, J2_jumpt_nv_linear]
+linearJumps J2_jumpf = [J2_jumpf_linear, J2_jumpf_nv_linear]
 
 newValueJump J2_jumpt = J2_jumpt_nv
 newValueJump J2_jumpf = J2_jumpf_nv

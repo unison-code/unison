@@ -377,12 +377,30 @@ instruction-set:
         parent: J2_jumpt
         << :    [*linear-jump]
         operands:
-         - src:             [register, use, PredRegs, -1]
+         - src:             [register, use, PredRegs]
          - dst:             [register, def, F32]
         uses:               [src]
         defines:            [dst]
 
       - id:     J2_jumpf_linear
+        parent: J2_jumpf
+        << :    [*linear-jump]
+        operands:
+         - src:             [register, use, PredRegs]
+         - dst:             [register, def, F32]
+        uses:               [src]
+        defines:            [dst]
+
+      - id:     J2_jumpt_nv_linear
+        parent: J2_jumpt
+        << :    [*linear-jump]
+        operands:
+         - src:             [register, use, PredRegs, -1]
+         - dst:             [register, def, F32]
+        uses:               [src]
+        defines:            [dst]
+
+      - id:     J2_jumpf_nv_linear
         parent: J2_jumpf
         << :    [*linear-jump]
         operands:

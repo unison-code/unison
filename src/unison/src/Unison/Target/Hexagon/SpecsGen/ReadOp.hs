@@ -2610,6 +2610,8 @@ readOp "J4_cmpgtn1_t_jumpnv_t_linear"
   = J4_cmpgtn1_t_jumpnv_t_linear
 readOp "J2_jumpt_linear" = J2_jumpt_linear
 readOp "J2_jumpf_linear" = J2_jumpf_linear
+readOp "J2_jumpt_nv_linear" = J2_jumpt_nv_linear
+readOp "J2_jumpf_nv_linear" = J2_jumpf_nv_linear
 readOp "J2_jumpt_nv" = J2_jumpt_nv
 readOp "J2_jumpf_nv" = J2_jumpf_nv
 readOp "jump_merge" = Jump_merge
