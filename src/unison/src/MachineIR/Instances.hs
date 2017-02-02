@@ -185,8 +185,6 @@ showMachineOperand (MachineTemp id td) = "%" ++ show id ++ showTiedDef td
 showMachineOperand (MachineFrameIndex idx fixed) =
   "%" ++ (if fixed then "fixed-" else "") ++ "stack." ++ show idx
 showMachineOperand MachineFrameSize = "%frame-size"
-showMachineOperand (MachineInstructions is) =
-  "%instructions.[" ++ showCS id is ++ "]"
 showMachineOperand (MachineMemPartition address partition) =
   "<0x" ++ showHex address "" ++ "> = !{!\"unison-memory-partition\", i32 " ++
   show partition ++ "}"

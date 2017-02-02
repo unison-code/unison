@@ -128,7 +128,6 @@ module Unison.Util
         foldFunction,
         foldBlock,
         peephole,
-        minLiveOfDefs,
         makeOptional,
         addNullTemp,
         -- * Accessors
@@ -458,10 +457,6 @@ mapToVirtualOprOperands f g o @ Combine {oCombineLowU = lu, oCombineHighU = hu,
   o {oCombineLowU  = mapSingle f lu,
      oCombineHighU = mapSingle f hu,
      oCombineD     = mapSingle g d}
-mapToVirtualOprOperands f _ o @ Pack {oPackBoundU = bu, oPackFreeU = fu,
-                                      oPackInstructions = is} =
-  o {oPackBoundU = mapSingle f bu, oPackFreeU = mapSingle f fu,
-     oPackInstructions = mapSingle f is}
 mapToVirtualOprOperands f g o @ Low {oLowU = u, oLowD = d} =
   o {oLowU = mapSingle f u, oLowD = mapSingle g d}
 mapToVirtualOprOperands f g o @ High {oHighU = u, oHighD = d} =
@@ -505,7 +500,7 @@ mapToNaturalOprInstructions f o @ Call {oCallIs = is} = o {oCallIs = f is}
 mapToNaturalOprInstructions f o @ TailCall {oTailCallIs = is} = o {oTailCallIs = f is}
 
 mapToVirtualOprInstructions :: InstructionsMap i -> VirtualOperation r -> VirtualOperation r
-mapToVirtualOprInstructions f o @ Pack {oPackIs = is} = o {oPackIs = applyToGeneral f is}
+mapToVirtualOprInstructions f o @ Kill {oKillIs = is} = o {oKillIs = applyToGeneral f is}
 mapToVirtualOprInstructions f o @ Low {oLowIs = is} = o {oLowIs = applyToGeneral f is}
 mapToVirtualOprInstructions f o @ High {oHighIs = is} = o {oHighIs = applyToGeneral f is}
 mapToVirtualOprInstructions _ _ = error ("unmatched mapToVirtualOprInstructions")
@@ -852,13 +847,6 @@ foldBlock fun (accCode, acc) b @ Block {bCode = code} =
   let (code', acc') = foldl fun (code, acc) code
   in (accCode ++ [b {bCode = code'}], acc')
 
-minLiveOfDefs :: BlockOperation i r -> Integer
-minLiveOfDefs o
-  | isIn o      = 1
-  | isFun  o    = 1
-  | isVirtual o = 0
-  | otherwise   = 1
-
 makeOptional :: BlockOperation i r -> BlockOperation i r
 makeOptional o =
   let o'  = addNullInstruction o
@@ -924,8 +912,6 @@ oOprUses (Virtual (Delimiter (Exit {}))) = []
 oOprUses (Virtual (o @ Kill {})) = oKillUs o
 oOprUses (Virtual (Define {})) = []
 oOprUses (Virtual (o @ Combine {})) = [oCombineLowU o, oCombineHighU o]
-oOprUses (Virtual (o @ Pack {})) =
-    [oPackBoundU o, oPackFreeU o, oPackInstructions o]
 oOprUses (Virtual (o @ Low {})) = [oLowU o]
 oOprUses (Virtual (o @ High {})) = [oHighU o]
 oOprUses (Virtual (o @ VirtualCopy {})) = [oVirtualCopyS o]
@@ -948,7 +934,6 @@ oOprDefs (Virtual (Delimiter (Exit {}))) = []
 oOprDefs (Virtual (Kill {})) = []
 oOprDefs (Virtual (o @ Define {})) = oDefineDs o
 oOprDefs (Virtual (o @ Combine {})) = [oCombineD o]
-oOprDefs (Virtual (Pack {})) = []
 oOprDefs (Virtual (o @ Low {})) = [oLowD o]
 oOprDefs (Virtual (o @ High {})) = [oHighD o]
 oOprDefs (Virtual (o @ VirtualCopy {})) = [oVirtualCopyD o]
@@ -1035,7 +1020,7 @@ oOprInstructions (Natural (o @ Linear {})) = oIs o
 oOprInstructions (Natural (o @ Branch {})) = oBranchIs o
 oOprInstructions (Natural (o @ Call {})) = oCallIs o
 oOprInstructions (Natural (o @ TailCall {})) = oTailCallIs o
-oOprInstructions (Virtual (o @ Pack {})) = map General (oPackIs o)
+oOprInstructions (Virtual (o @ Kill {})) = map General (oKillIs o)
 oOprInstructions (Virtual (o @ Low {})) = map General (oLowIs o)
 oOprInstructions (Virtual (o @ High {})) = map General (oHighIs o)
 oOprInstructions (Virtual Fun {}) = [mkBarrierInstruction]
@@ -1088,7 +1073,6 @@ oVirtualType (Delimiter o)  = DelimiterType (oDelimiterType o)
 oVirtualType Kill {}        = KillType
 oVirtualType Define {}      = DefineType
 oVirtualType Combine {}     = CombineType
-oVirtualType Pack {}        = PackType
 oVirtualType Low {}         = LowType
 oVirtualType High {}        = HighType
 oVirtualType VirtualCopy {} = VirtualCopyType
@@ -1293,7 +1277,6 @@ showVirtualOpc o
     | isKillOpr         o = "kill"
     | isDefineOpr       o = "define"
     | isCombineOpr      o = "combine"
-    | isPackOpr         o = "pack"
     | isLowOpr          o = "low"
     | isHighOpr         o = "high"
     | isVirtualCopyOpr  o = "copy"
@@ -1307,7 +1290,6 @@ toVirtualType "out"     = DelimiterType OutType
 toVirtualType "kill"    = KillType
 toVirtualType "define"  = DefineType
 toVirtualType "combine" = CombineType
-toVirtualType "pack"    = PackType
 toVirtualType "low"     = LowType
 toVirtualType "high"    = HighType
 toVirtualType "phi"     = PhiType

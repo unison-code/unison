@@ -22,7 +22,6 @@ module Unison.Constructors
         mkKill,
         mkDefine,
         mkCombine,
-        mkPack,
         mkLow,
         mkHigh,
         mkIn,
@@ -81,17 +80,13 @@ mkSingleOperation id inst =
 
 mkPhi id us d = mkSingleOperation id (Virtual Phi {oPhiUs = us, oPhiD = d})
 
-mkKill id ts = mkSingleOperation id (Virtual Kill {oKillUs = ts})
+mkKill id is ts = mkSingleOperation id
+                  (Virtual Kill {oKillIs = is, oKillUs = ts})
 
 mkDefine id ts = mkSingleOperation id (Virtual Define {oDefineDs = ts})
 
 mkCombine id lu hu d = mkSingleOperation id
       (Virtual Combine {oCombineLowU = lu, oCombineHighU = hu, oCombineD = d})
-
-mkPack id is bu fu pis =
-  mkSingleOperation id
-  (Virtual Pack {oPackIs = is, oPackBoundU = bu, oPackFreeU = fu,
-                 oPackInstructions = pis})
 
 mkLow id is u d = mkSingleOperation id (Virtual Low {oLowIs = is, oLowU = u, oLowD = d})
 

@@ -18,6 +18,7 @@ module Unison.Target.API (
   ReadWriteLatencyFunction,
   OperandInfoFunction,
   AlignedPairsFunction,
+  PackedPairsFunction,
   CopyInstructions,
   TargetDescription(..),
   TargetOptions,
@@ -43,6 +44,7 @@ module Unison.Target.API (
   fromCopy,
   operandInfo,
   alignedPairs,
+  packedPairs,
   resources,
   usages,
   nop,
@@ -123,6 +125,8 @@ type OperandInfoFunction i rc = i -> ([OperandInfo rc], [OperandInfo rc])
 -- | Function that gives aligned pairs of different instructions in an operation
 type AlignedPairsFunction i r =
   BlockOperation i r -> [(Operand r, Operand r, Instruction i)]
+-- | Function that gives packed pairs in an operation
+type PackedPairsFunction i r = BlockOperation i r -> [(Operand r, Operand r)]
 -- | Copy instructions after the definition and before each use of a
 -- temporary
 type CopyInstructions i = ([Instruction i], [[Instruction i]])
@@ -163,6 +167,9 @@ alignedPairs (ti, to) o @ SingleOperation {oOpr = (Natural {})} =
   concat [[(p, q, tai) | (p, q) <- tAlignedPairs ti to i (oUses o, oDefs o)]
          | tai @ (TargetInstruction i) <- oInstructions o]
 alignedPairs _ _ = []
+packedPairs (ti, to) o =
+  nub $ concat [tPackedPairs ti to i (oUses o, oDefs o) |
+                TargetInstruction i <- oInstructions o]
 resources (ti, to) = tResources ti to
 usages (ti, to) op = tUsages ti to op
 nop (ti, to) = Natural (tNop ti to)
@@ -246,6 +253,10 @@ data TargetDescription i r rc s = TargetDescription {
       -- given instruction and used and defined operands
       tAlignedPairs     :: TargetOptions -> i -> ([Operand r], [Operand r]) ->
                            [(Operand r, Operand r)],
+      -- | Pairs of packed operands for the given instruction and used and
+      -- defined operands
+      tPackedPairs     :: TargetOptions -> i -> ([Operand r], [Operand r]) ->
+                          [(Operand r, Operand r)],
       -- | Processor resources
       tResources        :: TargetOptions -> [Resource s],
       -- | Usages of the processor resources by the given instruction

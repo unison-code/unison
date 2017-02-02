@@ -257,6 +257,8 @@ data VirtualOperation r =
     Delimiter (DelimiterOperation r) |
     -- | Operation that forces the use of some temporaries
     Kill {
+      -- | Kill instructions
+      oKillIs :: [GeneralInstruction],
       -- | Uses
       oKillUs :: [Operand r]
     } |
@@ -274,18 +276,6 @@ data VirtualOperation r =
       oCombineHighU :: Operand r,
       -- | Combined definition
       oCombineD     :: Operand r
-    } |
-    -- | Operation that packs a free temporary together with a bound
-    -- temporary depending on the register class of the latter
-    Pack {
-      -- | Pack instructions
-      oPackIs           :: [GeneralInstruction],
-      -- | Bound use
-      oPackBoundU       :: Operand r,
-      -- | Free use
-      oPackFreeU        :: Operand r,
-      -- | Definer instructions that activate packing
-      oPackInstructions :: Operand r
     } |
     -- | Operation that defines a temporary to be assigned at the low register
     -- atom(s) of its used temporary
@@ -613,7 +603,6 @@ data VirtualT =
     KillType |
     DefineType |
     CombineType |
-    PackType |
     LowType |
     HighType |
     VirtualCopyType |

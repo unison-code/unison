@@ -41,16 +41,16 @@ fromFunction rwlf rm oif Function {fCode = code} =
   let dgs = map (fromBlock rwlf rm oif) code
   in concatGraphs dgs
 
-fromBlock :: Show i => Eq i => Ord i => Ord r => ReadWriteLatencyFunction i r ->
-             ResourceManager i s -> OperandInfoFunction i rc -> Block i r ->
-             DGraph i r
+fromBlock :: Show i => Eq i => Ord i => Show r => Ord r =>
+             ReadWriteLatencyFunction i r -> ResourceManager i s ->
+             OperandInfoFunction i rc -> Block i r -> DGraph i r
 fromBlock rwlf rm oif Block {bCode = code} =
   let lfs      = latencies rm
       t2ls     = tempLatencies oif
       dg       = mkGraph (map toLNode code) []
       edg      = foldl (insertEdges code) dg
                   [
-                   dataEdges lfs t2ls,
+                   dataEdges t2ls,
                    readWriteEdges rwlf,
                    -- TODO: boundary edges are just a type of "readWrite" edges,
                    -- that would also possibly make the extended edges
@@ -67,12 +67,12 @@ insertEdges code dg f =
 
 toLNode i = (toNodeId i, i)
 
-dataEdges lfs t2ls _ code =
+dataEdges t2ls _ code =
     let dts   = [(d, oDefs d) | d <- code]
         deps  = concat [[(d, u, [t]) | t <- ts, u <- code, isUser t u]
                        | (d, ts) <- dts]
         deps' = concentrate deps
-    in map (toDataEdge lfs t2ls) deps'
+    in map (toDataEdge t2ls) deps'
 
 concentrate deps =
   let dm = M.fromListWith (++) [((d, u), [t]) | (d, u, [t]) <- deps]
@@ -155,8 +155,8 @@ callFunctionEdges _ code =
 
 mandatoryIds code = [toNodeId i | i <- code, isMandatory i]
 
-toDataEdge lfs t2ls (p, c, ts) =
-  mkLEdge (dataLatency lfs t2ls ts) (DataDependency ts) (p, c)
+toDataEdge t2ls (p, c, ts) =
+  mkLEdge (dataLatency t2ls ts) (DataDependency ts) (p, c)
 toReadWriteEdge rwlf (p, c, rwo, a) =
   mkLEdge (readWriteLat rwlf rwo a) (ReadWriteDependency rwo a) (p, c)
 toControlEdge lfs (p, c) = mkLEdge (controlLatency lfs) ControlDependency (p, c)

@@ -367,7 +367,6 @@ string show_instruction(instruction i, operation o, const Parameters * p) {
   case KILL:    return "(kill)";
   case DEFINE:  return "(define)";
   case COMBINE: return "(combine)";
-  case PACK:    return "(pack)";
   case LOW:     return "(low)";
   case HIGH:    return "(high)";
   default:      return p->insname[i];

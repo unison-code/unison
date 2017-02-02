@@ -281,7 +281,6 @@ mirTargetFlags = string "target-flags(<unknown>)"
 
 mirActualOperand =
   try mirConstantPoolIndex <|>
-  try mirInstructions <|>
   try mirBlockRef <|>
   try mirJTI <|>
   try mirFI <|>
@@ -453,11 +452,6 @@ mirFPImm =
      exp <- mirOffset
      return (mkMachineFPImm int fr exp)
 
-mirInstructions =
-  do string "%instructions."
-     is <- brakets (many1 alphaNumDashDotUnderscore `sepBy` comma)
-     return (mkMachineInstructions is)
-
 mirCFIDef =
   do string ".cfi_def_cfa"
      whiteSpace
@@ -596,8 +590,7 @@ decimal = T.decimal lexer
 hexadecimal = T.hexadecimal lexer
 comma = T.comma lexer
 
-parens  = between (char '(') (char ')')
-brakets = between (char '[') (char ']')
+parens = between (char '(') (char ')')
 
 alphaNumDashDotUnderscore =
   satisfy isAlphaNumDashDotUnderscore <?> "letter, digit, dash, dot or underscore symbol"

@@ -31,16 +31,15 @@ import Unison.Graphs.Util
 import Unison.Target.API
 import Unison.Target.Query
 
-fromDependencyGraph :: Show i => Eq i => Ord i => Ord r =>
-                       ResourceManager i s -> OperandInfoFunction i rc ->
-                       DGraph i r -> PGraph i r
-fromDependencyGraph rm oif dg =
+fromDependencyGraph :: Show i => Eq i => Ord i => Ord r => Show r =>
+                       OperandInfoFunction i rc -> DGraph i r -> PGraph i r
+fromDependencyGraph oif dg =
   let pg   = emap (\(_, _, ls) -> precedenceType ls) dg
       code = toCode pg
       ts   = sort $ map undoPreAssign $ tUniqueOps code
       t2d  = tempMap potentialDefiner code ts
       t2us = tempMap potentialUsers code ts
-      dlf  = dataLatency (latencies rm) (tempLatencies oif)
+      dlf  = dataLatency (tempLatencies oif)
       ptf  = dataPrecedenceType dlf
       dps  = nub (concatMap (dataPrecedences ptf t2d) code) \\ labEdges pg
       pg'  = insEdges dps pg
@@ -55,7 +54,7 @@ dataPrecedenceType dlf ts p c = precedenceType $ dlf ts p c
 
 precedenceType ls =
   let lats = map (fromMaybe 0) ls
-  in case (any (< 0) lats, any (> 0) lats) of
+  in case (any (< 0) lats, all (> 0) lats) of
     (True , _    ) -> NegativePrecedence
     (_    , True ) -> PositivePrecedence
     (False, False) -> Precedence

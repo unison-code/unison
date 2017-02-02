@@ -13,7 +13,7 @@ Main authors:
 This file is part of Unison, see http://unison-code.github.io
 -}
 module Unison.Analysis.MakespanBounds
-    (computeMaxC, maxCost, maxInt, scaleFactor, scaleDown) where
+    (computeMaxC, maxCost, maxInt, scaleFactor, scaleDown, minLiveOfDef) where
 
 import Data.Maybe
 import Data.Int
@@ -45,7 +45,10 @@ worst (rm, oif, dgs) o ti @ (TargetInstruction i) =
         outgoing   = [dist !! ii | (p, _, dist) <- deps, oId o == p]
         incoming   = [dist | (_, s, dist) <- deps, oId o == s]
         maxDist    = maxOrZero $ catMaybes $ concat incoming ++ outgoing
-        maxMinLive = if any isModelOperand (oDefs o) then minLiveOfDefs o else 0
+        maxMinLive = if any isModelOperand (oDefs o) then
+                       maximum [minLiveOfDef oif t o
+                                 | t <- concatMap extractTemps $ oDefs o]
+                     else 0
     in Just $ maximum [maxDur, maxOperLat, maxDist, maxMinLive]
 
 operandLats oifs = [l | TemporaryInfo {oiLatency = l} <- oifs]
@@ -71,3 +74,14 @@ scaleDown factor = atLeast 1 . floor . (*) factor . toRational
 atLeast k n
   | n < k     = k
   | otherwise = n
+
+minLiveOfDef oif t o
+  | isIn o      = 1
+  | isFun  o    = 1
+  | isVirtual o = 0
+  | otherwise =
+      let lats = [latOf t (tempLatencies oif o i)
+                   | TargetInstruction i <- oInstructions o]
+      in if any ((==) 0) lats then 0 else 1 :: Latency
+
+latOf t p2l = snd $ fromJust $ find (\(p, _) -> t `elem` extractTemps p) p2l

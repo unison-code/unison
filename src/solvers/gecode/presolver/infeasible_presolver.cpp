@@ -108,7 +108,6 @@ void InfeasiblePresolver::setup(void) {
                         Temporand::p(ods[0])});
     } else if (o != 0 &&
                oper_type(input, o) != FUN &&
-               oper_type(input, o) != PACK &&
                oper_type(input, o) != KILL) {
       auto U_D = alldiffs_for_co_use(Du,Dd,U,D);
       U = U_D.first;

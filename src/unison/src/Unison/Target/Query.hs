@@ -125,11 +125,24 @@ instrLatency _ (General _, _) = Just 0
 instrLatency rm (ti @ TargetInstruction {}, _) =
     Just $ maybeMax 0 $ map (occupation . usage) (iUsages rm ti)
 
--- | Gives the data latency for temporaries ts between instructions p and c.
-dataLatency lfs t2ls ts p c =
-  let t2l = M.fromListWith min $ concatMap (t2ls c) $ oTargetInstrs c
-      l   = maximum $ map (operandLatency t2l) ts
-  in map (fmap (+l)) (lfs p)
+-- | Gives the minimum data latency for the temporaries ts between instructions p
+-- and c, for each instruction in p
+dataLatency t2ls ts p c =
+  minimum [tempDataLatency t2ls p t c | t <- ts, isPotentialDefiner t p]
+
+-- | Gives the minimum data latency for the temporary t between instructions p
+-- and c, for each instruction in p
+tempDataLatency t2ls p t c =
+  let u2l  = M.fromListWith min $ concatMap (t2ls c) $ oTargetInstrs c
+      -- minimum use latency of t
+      mul  = operandLatency u2l t
+      -- minimum def latency of t for each instruction in p
+      mdls = [opLatency (t2ls p) i t | i <- oInstructions p]
+  in map (Just . (+mul)) mdls
+
+opLatency f (TargetInstruction i) t = operandLatency (M.fromList $ f i) t
+opLatency _ (General BarrierInstruction) _ = 1
+opLatency _ _ _ = 0
 
 oTargetInstrs i = [o | (TargetInstruction o) <- oInstructions i]
 

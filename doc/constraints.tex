@@ -162,9 +162,8 @@
 \newcommand{\packingEquation}{
 \begin{equation}\textstyle\label{eq:packing}
   \begin{aligned}
-    \connectedOperand{p} \land
-    &\operationInstruction{\operandOperation{\definer{\operandTemporary{p}}}} \in \packInstructions{p}{q}
-    \implies\\
+    \connectedOperand{p} \land \connectedOperand{q}
+    \implies
     &\temporaryRegister{\operandTemporary{q}} =
     \temporaryRegister{\operandTemporary{p}} +
     \begin{cases}

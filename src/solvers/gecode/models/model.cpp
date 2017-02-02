@@ -1026,48 +1026,25 @@ void Model::post_alignment_constraints(block b) {
 
 void Model::post_packing_constraints(block b) {
 
-  // Bound operands are packed together with free operands if the definer
-  // operation is implemented by a pack instruction:
+  // Packed operands are assigned to contiguous, complementary registers:
 
-  for (unsigned int pi = 0; pi < input->bpacked[b].size(); pi++) {
-    operand p = input->bpacked[b][pi][0], q = input->bpacked[b][pi][1];
+  for (vector<operand> ps : input->bpacked[b]) {
+    operand p = ps[0], q = ps[1];
     int w = input->operand_width[p];
-    vector<instruction> pis = input->bpinstrs[b][pi];
-
-    // instruction that defines the temporary connected to p
-    IntVar di(*this, 0, input->I.size() - 1);
-    IntVarArgs is;
-    for (temporary t : input->temps[p]) {
-      if (t == NULL_TEMPORARY) {
-        is << var(NULL_INSTRUCTION);
-      } else {
-        operation d = input->def_opr[t];
-        IntVar instr(*this, 0, input->I.size() - 1);
-        element(*this, IntArgs(input->instructions[d]), i(d), instr);
-        is << instr;
-      }
-    }
-    element(*this, is, y(p), di);
-    BoolVar pack_definer(*this, 0, 1);
-    IntArgs pack_is(pis);
-    dom(*this, di, IntSet(pack_is), pack_definer, ipl);
 
     BoolVarArgs cases;
     IntVarArgs ryps;
 
     // first case:  bound operand packed in high component
-    cases << var(x(p) && pack_definer && ((ry(p) % (w*2)) == 0));
+    cases << var(x(p) && ((ry(p) % (w*2)) == 0));
     ryps << var(ry(p) + w);
 
     // second case: bound operand packed in low component
-    cases << var(x(p) && pack_definer && ((ry(p) % (w*2)) != 0));
+    cases << var(x(p) && ((ry(p) % (w*2)) != 0));
     ryps << var(ry(p) - w);
 
     // third case:  bound operand not packed
-    BoolVarArgs conds;
-    conds << x(p);
-    conds << pack_definer;
-    cases << var(sum(conds) < 2);
+    cases << var(!x(p));
     IntVar any(*this, Gecode::Int::Limits::min, Gecode::Int::Limits::max);
     ryps << any;
 
@@ -1252,7 +1229,7 @@ void Model::post_improved_model_constraints(block b) {
     post_reverse_data_precedence_constraints(b);
     post_minimum_temporary_duration_constraints(b);
     post_define_issue_cycle_constraints(b);
-    post_kill_pack_issue_cycle_constraints(b);
+    post_kill_issue_cycle_constraints(b);
 #if !MCMOD // subsumed
     if (!options->disable_partially_ordered_live_range_constraints()) {
       // This is subsumed by the partially ordered live range constraints
@@ -1277,7 +1254,6 @@ void Model::post_improved_model_constraints(block b) {
     post_cost_domain_constraints(b);
     post_local_congruence_constraints(b);
     post_ultimate_source_constraints(b);
-    post_pack_sink_constraints(b);
   }
 
 }
@@ -1501,13 +1477,13 @@ void Model::post_define_issue_cycle_constraints(block b) {
 
 }
 
-void Model::post_kill_pack_issue_cycle_constraints(block b) {
+void Model::post_kill_issue_cycle_constraints(block b) {
 
-  // Kill and pack operations are issued together with the
-  // corresponding producer operations:
+  // Kill and operations are issued together with the corresponding producer
+  // operations:
 
   for (operation o2 : input->ops[b])
-    if (input->type[o2] == KILL || input->type[o2] == PACK) {
+    if (input->type[o2] == KILL) {
       operation o1 = -1;
       IntVarArgs lats;
       bool multiple_producers = false;
@@ -1887,29 +1863,6 @@ void Model::post_ultimate_source_constraints(block b) {
         }
       }
     }
-
-}
-
-void Model::post_pack_sink_constraints(block b) {
-
-  // Pack operations cannot be the only users of their free temporaries:
-
-  for (temporary t : input->tmp[b]) {
-    if (input->type[input->def_opr[t]] == COPY) {
-      BoolVarArgs uses_but_pack;
-      bool used_by_pack = false;
-      for (operand p : input->users[t]) {
-        if (input->type[input->oper[p]] == PACK) {
-          used_by_pack = true;
-        } else {
-          uses_but_pack << u(p, t);
-        }
-      }
-      if (used_by_pack && uses_but_pack.size() > 0) {
-        constraint(l(t) == (sum(uses_but_pack) > 0));
-      }
-    }
-  }
 
 }
 

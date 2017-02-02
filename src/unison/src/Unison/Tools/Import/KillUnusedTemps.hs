@@ -35,4 +35,4 @@ killUnusedDefs uses (accCode, id) i
     in (accCode ++ [i] ++ maybeToList kills, id')
 
 mkKills [] id = (Nothing, id)
-mkKills ws id = (Just (mkKill id ws), id + 1)
+mkKills ws id = (Just (mkKill id [VirtualInstruction] ws), id + 1)

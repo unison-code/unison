@@ -33,7 +33,6 @@ import Unison.Analysis.CopyRelated
 import qualified Unison.Graphs.SG as SG
 import qualified Unison.Graphs.BCFG as BCFG
 import qualified Unison.Graphs.Partition as P
-import MachineIR
 
 import Unison.Tools.Model.Definitions
 
@@ -41,6 +40,7 @@ parameters (cg, _, t2w, ra, _) f @ Function {fCode = code} target =
     let oif         = operandInfo target
         bif         = branchInfo target
         apf         = alignedPairs target
+        ppf         = packedPairs target
         bcfg        = BCFG.fromFunction bif f
         fCode       = sortBy (comparing oId) (flatten code)
         im          = instructionManager fCode
@@ -64,8 +64,7 @@ parameters (cg, _, t2w, ra, _) f @ Function {fCode = code} target =
         width       = toValueListM t2w
         (aligned,
          adist)     = unzip $ sort $ alignedTuples apf im t2w fCode
-        (packed,
-         pinstrs)   = unzip $ sort $ packedTuples im fCode
+        packed      = packedTuples ppf fCode
 
         pp          = map S.fromList congr
         adjacent    = sort $ BCFG.eqvNeighborTemps bcfg pp
@@ -155,10 +154,6 @@ parameters (cg, _, t2w, ra, _) f @ Function {fCode = code} target =
       -- example: pack[3][0]: bound operand in the fourth packed pair
       --          pack[3][1]: free operand in the fourth packed pair
       ("packed", toJSON packed),
-
-      -- pack instructions of each packed operand pair
-      -- example: pinstrs[3][0]: first pack instr. of the fourth packed pair
-      ("pinstrs", toJSON pinstrs),
 
       -- Processor parameters
 
@@ -310,13 +305,7 @@ oprAlignedTuples apf iif t2w o
   | otherwise = [((p, iif i, q, iif i), 0)
                 | (p, q, i) <- apf o]
 
-packedTuples im fcode = sort [packTuple im (oOpr o) | o <- fcode, isPack o]
-
-packTuple im (Virtual Pack {oPackBoundU = bu, oPackFreeU = fu,
-                            oPackInstructions =
-                              Bound (MachineInstructions is)}) =
-    let is' = map (toIndexedInstruction im . TargetInstruction . read) is
-    in ((bu, fu), is')
+packedTuples ppf fcode = sort $ concatMap ppf fcode
 
 operationClass oif ra om o =
     map (instructionClass oif ra o) (oIInstructions om o)

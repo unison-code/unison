@@ -275,10 +275,6 @@ data MachineOperand r =
   MachineCFIIndex {
     mcfiIndex :: Integer
     } |
-  -- | Instruction list (does not correspond to any LLVM operand)
-  MachineInstructions {
-    mriList :: [String]
-    } |
   -- | Memory partition (does not correspond to any LLVM operand, we represent
   -- it in LLVM with a metadata operand)
   MachineMemPartition {

@@ -161,7 +161,6 @@ Library
                   Unison.Tools.Augment.GeneralizeOperands
                   Unison.Tools.Augment.LiftMemInfo
                   Unison.Tools.Augment.AugmentOperands
-                  Unison.Tools.Augment.MoveUpPacks
                   Unison.Tools.Augment.ExpandCopies
                   Unison.Tools.Augment.AddRematerialization
                   Unison.Tools.Augment.AddPrologueEpilogue

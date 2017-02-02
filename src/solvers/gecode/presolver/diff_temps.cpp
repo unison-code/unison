@@ -46,10 +46,10 @@ void diff_temps(Parameters& input) {
     vector<vector<temporary>> M_keys; // Keys stored for convenience
 
     // For all o in JSON.O where o is mandatory and OperType(o)
-    // is not (in) or (kill) or (pack)
+    // is not (in) or (kill)
     for(operation o : input.O) {
         if(is_mandatory(input, o)) {
-            if(oper_type(input, o) != IN && oper_type(input, o) != KILL && oper_type(input, o) != PACK) {
+            if(oper_type(input, o) != IN && oper_type(input, o) != KILL) {
                 // For all p in OperUses(o)
               for(operand p : oper_uses(input, o)) {
                 // AddToMap(OpndTemps(p) -> <o,p>, M)

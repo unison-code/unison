@@ -37,7 +37,7 @@ splitBlock maxSize acc b @ Block {bCode = code} =
       []      -> (acc, [b])
       lengths -> splitIntoBlocks lengths acc b
 
-data SplitState i = Splittable | WithinPack | WithinCall | PostCall Integer
+data SplitState i = Splittable | WithinCall | PostCall Integer
 
 {-
 This assumes the following code sequence for function calls:
@@ -52,17 +52,7 @@ splittable _ WithinCall (p, o) | isFun o = (PostCall p, [])
 splittable _ (PostCall p') (p, o)
     | isKill o  = (Splittable, [p])
     | otherwise = (Splittable, [p', p])
-splittable code Splittable (_, o) | isPacked code o = (WithinPack, [])
-splittable _ WithinPack (p, o)
-     | isPack o = (Splittable, [p])
-     | otherwise = (WithinPack, [])
 splittable _ Splittable (p, _) = (Splittable, [p])
-
-isPacked code o = any (isPackedTemp code) $ filter isTemporary (oDefs o)
-
-isPackedTemp code t =
-  let t' = undoPreAssign t
-  in any isPack $users t' code
 
 distanceTo x y = abs (y - x)
 

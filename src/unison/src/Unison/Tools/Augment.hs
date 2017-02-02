@@ -31,7 +31,6 @@ import Unison.Transformations.RunTargetTransforms
 import Unison.Tools.Augment.GeneralizeOperands
 import Unison.Tools.Augment.GeneralizeCongruences
 import Unison.Tools.Augment.AugmentOperands
-import Unison.Tools.Augment.MoveUpPacks
 import Unison.Tools.Augment.ExpandCopies
 import Unison.Tools.Augment.AddRematerialization
 import Unison.Tools.Augment.AddPrologueEpilogue
@@ -62,7 +61,6 @@ augmenterTransformations (implementFrames, noCross, oldModel, expandCopies',
     [(generalizeOperands, "generalizeOperands", True),
      (generalizeCongruences, "generalizeCongruences", True),
      (augmentOperands noCross oldModel, "augmentOperands", True),
-     (moveUpPacks, "moveUpPacks", True),
      (expandCopies, "expandCopies", expandCopies'),
      (addRematerialization, "addRematerialization", rematerialize),
      (postponeBranches, "postponeBranches", True),

@@ -33,7 +33,6 @@ module Unison.Predicates
         isCombine,
         isCombineLowOf,
         isCombineHighOf,
-        isPack,
         isLow,
         isHigh,
         isDelimiter,
@@ -74,7 +73,6 @@ module Unison.Predicates
         isKillOpr,
         isDefineOpr,
         isCombineOpr,
-        isPackOpr,
         isLowOpr,
         isHighOpr,
         isVirtualCopyOpr,
@@ -176,7 +174,6 @@ isExit           = isExitOpr . iSingleInst
 isKill           = isKillOpr . iSingleInst
 isDefine         = isDefineOpr . iSingleInst
 isCombine        = isCombineOpr . iSingleInst
-isPack           = isPackOpr . iSingleInst
 isLow            = isLowOpr . iSingleInst
 isHigh           = isHighOpr . iSingleInst
 isVirtualCopy    = isVirtualCopyOpr . iSingleInst
@@ -232,9 +229,6 @@ isDefineOpr _                     = False
 
 isCombineOpr (Virtual (Combine {})) = True
 isCombineOpr _                      = False
-
-isPackOpr (Virtual (Pack {})) = True
-isPackOpr _                   = False
 
 isLowOpr (Virtual (Low {})) = True
 isLowOpr _                  = False

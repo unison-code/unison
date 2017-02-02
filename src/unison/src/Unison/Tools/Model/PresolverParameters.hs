@@ -23,7 +23,6 @@ import Common.Util
 
 import Unison
 import Unison.Target.API
-import Unison.Target.Query
 import qualified Unison.Graphs.PG as PG
 
 import Unison.Tools.Model.Definitions()
@@ -33,9 +32,8 @@ import qualified Data.Set as S
 
 parameters oldModel (_, dgs, _, ra, _)
   f @ Function {fCode = code} target _ps =
-  let rm          = resourceManager target
-      oif         = operandInfo target
-      pgs         = map (PG.nonNegative . PG.fromDependencyGraph rm oif) dgs
+  let oif         = operandInfo target
+      pgs         = map (PG.nonNegative . PG.fromDependencyGraph oif) dgs
       domuses     = if oldModel then []
                     else sort $ concatMap dominatedUses pgs
       r2as        = regAtoms ra
@@ -160,29 +158,14 @@ blockLimit = 500
 interchangeableCopies Block {bCode = code} =
     let copies = filter isCopy code
         int    = fromListMult
-                 [((oInstructions o, oUseTemps o, oUsersButPack code o,
-                    oMaybePackUser code o), oId o)
+                 [((oInstructions o, oUseTemps o, oUsers code o), oId o)
                  | o <- copies]
     in [sort os | (_, os) <- M.toList int, length os > 1]
 
 oUseTemps = map extractTemps . oUses
 
-oUsersButPack code o =
-  let [t]   = extractTemps $ copyDestination o
-      code' = filter (not . isPack) code
+oUsers code o =
+  let [t] = extractTemps $ copyDestination o
   in S.fromList $
      filter (not . null)
-     [[p | p <- oUseOperands o, isMOperand p, t `elem` altTemps p] | o <- code']
-
-oMaybePackUser code o =
-  let [t] = extractTemps $ copyDestination o
-  in fmap (packProperties code) $
-     find (\o' -> isPack o' && isPotentialUser t o') code
-
-packProperties code o =
-  let defs = [[oInstructions $ potentialDefiner t code | t <- ts]
-             | ts <- oUseTemps o]
-      is   = packInstructions $ oOpr o
-  in (defs, is)
-
-packInstructions (Virtual Pack {oPackInstructions = mis}) = mis
+     [[p | p <- oUseOperands o, isMOperand p, t `elem` altTemps p] | o <- code]

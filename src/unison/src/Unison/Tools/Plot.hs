@@ -51,8 +51,8 @@ run (genBcfg, genIcfg, genBdt, genDg, genCg, genSg, genOg, genPg, genPpg,
       og      = case graphBlock of
         Nothing  -> OG.fromFunction f
         (Just b) -> OG.fromBlock (fCode f !! b) (fCongruences f)
-      pg      = PG.fromDependencyGraph rm oif dg
-      ppg     = PG.mandatory $ PG.positive $ PG.fromDependencyGraph rm oif dg
+      pg      = PG.fromDependencyGraph oif dg
+      ppg     = PG.mandatory $ PG.positive $ PG.fromDependencyGraph oif dg
       outBcfg = BCFG.toDot bcfg (fCongruences f) simpleGraph
       outIcfg = ICFG.toDot icfg
       outBdt  = BCFG.toDot bdt (fCongruences f) simpleGraph

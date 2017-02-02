@@ -390,7 +390,7 @@ public:
   void post_reverse_data_precedence_constraints(block b);
   void post_minimum_temporary_duration_constraints(block b);
   void post_define_issue_cycle_constraints(block b);
-  void post_kill_pack_issue_cycle_constraints(block b);
+  void post_kill_issue_cycle_constraints(block b);
   void post_disjoint_congruent_operand_constraints(block b);
   void post_disjoint_component_operand_constraints(block b);
   void post_space_capacity_constraints(block b);
@@ -405,7 +405,6 @@ public:
   void post_cost_domain_constraints(block b);
   void post_local_congruence_constraints(block b);
   void post_ultimate_source_constraints(block b);
-  void post_pack_sink_constraints(block b);
 
   void post_presolver_constraints(block b);
   void post_minimum_number_of_optional_operations_constraints(block b);

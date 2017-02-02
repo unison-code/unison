@@ -54,7 +54,6 @@ Parameters::Parameters(JSONVALUE root) :
   aligned       (get_2d_vector<int>(getRoot(root, "aligned"))),
   adist         (get_vector<int>(getRoot(root, "adist"))),
   packed        (get_2d_vector<int>(getRoot(root, "packed"))),
-  pinstrs       (get_2d_vector<int>(getRoot(root, "pinstrs"))),
   minlive       (get_vector<int>(getRoot(root, "minlive"))),
   dep           (get_3d_vector<int>(getRoot(root, "dep"))),
   activators    (get_2d_vector<int>(getRoot(root, "activators"))),
@@ -162,7 +161,6 @@ void Parameters::compute_derived() {
   baligned.clear();
   badist.clear();
   bpacked.clear();
-  bpinstrs.clear();
   copyreltop.clear();
   def_opr.clear();
   copies.clear();
@@ -337,14 +335,10 @@ void Parameters::compute_derived() {
     badist[b].push_back(adist[a]);
   }
 
-  vector<vector<instruction> > emptypinstrs;
   init_vector(bpacked, B.size(), empty);
-  init_vector(bpinstrs, B.size(), emptypinstrs);
-  for (unsigned int p = 0; p < packed.size(); p++) {
-    vector<operand> pa = packed[p];
+  for (vector<operand> pa : packed) {
     block b = pb[pa[0]];
     bpacked[b].push_back(pa);
-    bpinstrs[b].push_back(pinstrs[p]);
   }
 
   init_vector(copyreltop, P.size(), -1);

@@ -42,7 +42,7 @@ parameters scaleFreq (_, dgs, _, _, _) Function {fCode = code} target =
       dist          = map (map (\(_, _, ls) -> map modelLatency ls)) deps
       im            = instructionManager fCode
       lat           = map (operationLatency oif im) fCode
-      minlive       = map (minLive fCode) (sort $ tUniqueOps fCode)
+      minlive       = map (minLive oif fCode) (sort $ tUniqueOps fCode)
       r2cap         = [(resId ir, resCapacity (res ir)) | ir <- iResources rm]
       cap           = toValueList r2cap
       con           = toValueList $ operationUsages units rm im
@@ -148,11 +148,10 @@ parameters scaleFreq (_, dgs, _, _, _) Function {fCode = code} target =
       -- 6:  kill
       -- 7:  define
       -- 8:  combine
-      -- 9:  pack
-      -- 10: low
-      -- 11: high
-      -- 12: function
-      -- 13: copy
+      -- 9:  low
+      -- 10: high
+      -- 11: function
+      -- 12: copy
       -- example: type[17]: type of o17
       ("type", toJSON itype),
 
@@ -181,8 +180,7 @@ barrierLatency = 1
 
 mapLatencies (ulf, dlf) i = map ulf (oUseOperands i) ++ map dlf (oDefOperands i)
 
-minLive :: [BlockOperation i r] -> Operand r -> Integer
-minLive code t = minLiveOfDefs $ potentialDefiner t code
+minLive oif code t = minLiveOfDef oif t $ potentialDefiner t code
 
 operationUsages f rm im =
   [(ioId io, resourceUsages f rm (ioInstruction io)) | io <- indexedInstructions im]
@@ -206,6 +204,6 @@ naturalTypes = [LinearType, BranchType, CallType, TailCallType]
 
 virtualTypes =
   map DelimiterType delimiterTypes ++
-  [KillType, DefineType, CombineType, PackType, LowType, HighType, FunType]
+  [KillType, DefineType, CombineType, LowType, HighType, FunType]
 
 delimiterTypes = [InType, OutType]

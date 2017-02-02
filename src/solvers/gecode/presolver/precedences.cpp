@@ -68,11 +68,8 @@ void gen_fixed_precedences(const Parameters& input, precedence_set& PI) {
             bool same_all_dij = all_of(dij.begin(), dij.end(),
                     [d1](int v){ return v == d1;});
 
-	    // IF{either $o$ or $o'$ is a $\Pack$}
-	    if(oper_type(input, o) == PACK) {
-	    } else if(oper_type(input, o1) == PACK) {
-            // else if o is a branch and all values of dij are the same d1
-	    } else if(oper_type(input, o) == BRANCH && same_all_dij) {
+            // if o is a branch and all values of dij are the same d1
+	    if(oper_type(input, o) == BRANCH && same_all_dij) {
 	        // PI <- PI U {<o, o', d', {}>,<o, o',-d', {}}
                 PresolverPrecedence pred(o, o1, d1, {{}});
                 PresolverPrecedence pred1(o1, o, -d1, {{}});
@@ -117,24 +114,11 @@ void gen_data_precedences(const Parameters& input,
 		// p <- TempDef(t)
 		operation d = temp_oper(input, t);
 		operand   p = temp_def(input, t);
-		bool o_is_pack   = oper_type(input, o) == PACK;
 		bool o_is_kill   = oper_type(input, o) == KILL;
 		bool d_is_define = oper_type(input, d) == DEFINE;
 		bool q_in_last_use = ord_contains(input.last_use, q);
-		// If o is (pack)
-		if(o_is_pack) {
-		  // l <- JSON.minlive[t]
-		  int l = input.minlive[t];
-		  // PI <- PI U {<d, o, l, {{A(d)}}>,<d, o,-l, {{A(d)}}}
-		  presolver_conj c;
-		  c.push_back(presolver_lit({PRESOLVER_ACTIVENESS, d}));
-		  PresolverPrecedence pred(d, o, l, presolver_disj({c}));
-		  PresolverPrecedence pred1(o, d, -l, presolver_disj({c}));
-
-		  PI.push_back(pred);
-		  PI.push_back(pred1);
-		  // else if o is (kill) or (d is (define) and q in JSON.last_use)
-		} else if(o_is_kill || (d_is_define && q_in_last_use)) {
+                // if o is (kill) or (d is (define) and q in JSON.last_use)
+		if(o_is_kill || (d_is_define && q_in_last_use)) {
 		  // l <- JSON.minlive[t]
 		  int l = input.minlive[t];
 		  // PI <- PI U {<d, o, l, {}>,<d, o,-l, {}}
@@ -244,7 +228,7 @@ void gen_region_precedences(const Parameters& input, precedence_set& PI) {
 	M[input.oblock[j]].push_back({i,j-1});
       } else if (input.type[i] == CALL && i+1 != j) {
 	M[input.oblock[j]].push_back({i+1,j});
-      } else if (input.type[i] != DEFINE && input.type[j] != KILL && input.type[j] != PACK) {
+      } else if (input.type[i] != DEFINE && input.type[j] != KILL) {
 	M[input.oblock[j]].push_back(edge);
       }
     }
@@ -703,8 +687,8 @@ void before_rule(const Parameters& input,
 		 const operation o1,
 		 const presolver_conj& conj,
 		 std::multimap<PrecedenceEdge, presolver_conj>& map) {
-    // if o != o' \land \OperType(o)\neq\Pack
-    if(o != o1 && oper_type(input, o) != PACK) {
+    // if o != o'
+    if(o != o1) {
         // AddToMap(<o,o',0> -> Conj' U Conj)
         PrecedenceEdge e;
         e.i = o;

@@ -63,8 +63,8 @@ typedef int latency;
 typedef int global_cluster;
 
 enum OperationType
-  { LINEAR, BRANCH, CALL, TAILCALL, IN, OUT, KILL, DEFINE, COMBINE, PACK, LOW,
-    HIGH, FUN, COPY };
+  { LINEAR, BRANCH, CALL, TAILCALL, IN, OUT, KILL, DEFINE, COMBINE, LOW, HIGH,
+    FUN, COPY };
 
 const instruction NULL_INSTRUCTION = 0;
 const temporary NULL_TEMPORARY = -1;
