@@ -73,9 +73,9 @@ mkBundle = Bundle
 
 mkSingleOperation id inst =
     SingleOperation {
-      oId   = id,
+      oId  = id,
       oOpr = inst,
-      oAs   = mkNullAttributes
+      oAs  = mkNullAttributes
     }
 
 mkPhi id us d = mkSingleOperation id (Virtual Phi {oPhiUs = us, oPhiD = d})
@@ -145,12 +145,12 @@ mkBlock = Block
 
 mkDummyBlock = mkBlock (-1) mkNullBlockAttributes
 
-mkAttributes reads writes call mem acts vcopy remat jtblocks =
+mkAttributes reads writes call mem acts vcopy remat jtblocks btaken =
     Attributes {aReads = reads, aWrites = writes, aCall = call,
                 aMem = mem, aActivators = acts, aVirtualCopy = vcopy,
-                aRemat = remat, aJTBlocks = jtblocks}
+                aRemat = remat, aJTBlocks = jtblocks, aBranchTaken = btaken}
 
-mkNullAttributes = mkAttributes [] [] Nothing Nothing [] False False []
+mkNullAttributes = mkAttributes [] [] Nothing Nothing [] False False [] Nothing
 
 mkBlockAttributes entry exit return freq split =
     BlockAttributes {aEntry = entry, aExit = exit, aReturn = return,

@@ -129,7 +129,8 @@ expandJumps _ (
 expandJumps f (
   j @ SingleOperation {oOpr = Natural jo @ (Branch {
                          oBranchIs = [TargetInstruction i],
-                         oBranchUs = [p1 @ MOperand {altTemps = [t1]}, l]})}
+                         oBranchUs = [p1 @ MOperand {altTemps = [t1]}, l]}),
+                       oAs = as}
   :
   os) (tid, oid, pid)
   | isConditionalBranchInstr i =
@@ -147,8 +148,9 @@ expandJumps f (
                    cjl = mkLinear (oid + 1) [TargetInstruction cji]
                          (map updateMOperandId (zip [pid + 1 ..] (oUses c)))
                          [mkMOp (pid + 3) [mkTemp tid + 1]]
-                   jm  = mkBranch (oid + 2) [TargetInstruction Jump_merge]
-                         [mkMOp (pid + 4) (map mkTemp [tid, tid + 1]), l]
+                   jm  = (mkBranch (oid + 2) [TargetInstruction Jump_merge]
+                          [mkMOp (pid + 4) (map mkTemp [tid, tid + 1]), l])
+                         {oAs = as}
                in map makeOptional [jl, cjl] ++ [jm]
              -- Still allow the jump to fetch its input in the same cycle. TODO:
              -- this is pessimistic w.r.t. size, study better how to create and

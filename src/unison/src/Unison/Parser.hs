@@ -60,6 +60,7 @@ data LsOperand r =
 data LsAttributes r =
   LsAttributes (LsAttribute r) (LsAttribute r) (LsAttribute r) (LsAttribute r)
                (LsAttribute r) (LsAttribute r) (LsAttribute r) (LsAttribute r)
+               (LsAttribute r)
   deriving (Show)
 
 data LsAttribute r =
@@ -70,7 +71,8 @@ data LsAttribute r =
   LsActivators [LsInstruction] |
   LsVirtualCopy Bool |
   LsRemat Bool |
-  LsJTBlocks [LsOperand r]
+  LsJTBlocks [LsOperand r] |
+  LsBranchTaken (Maybe Bool)
   deriving (Show)
 
 data LsRWObject =
@@ -272,7 +274,8 @@ attributes =
                             (fetchAttr (LsActivators []) isLsActivators attrs)
                             (fetchAttr (LsVirtualCopy False) isLsVirtualCopy attrs)
                             (fetchAttr (LsRemat False) isLsRemat attrs)
-                            (fetchAttr (LsJTBlocks []) isLsJTBlocks attrs))
+                            (fetchAttr (LsJTBlocks []) isLsJTBlocks attrs)
+                            (fetchAttr (LsBranchTaken Nothing) isLsBranchTaken attrs))
 
 attribute = try (sideEffectListAttribute "reads" LsReads)
             <|> sideEffectListAttribute "writes" LsWrites
@@ -282,10 +285,23 @@ attribute = try (sideEffectListAttribute "reads" LsReads)
             <|> simpleAttribute "virtualcopy" (LsVirtualCopy True)
             <|> simpleAttribute "remat" (LsRemat True)
             <|> operandListAttribute "jtblocks" LsJTBlocks
+            <|> boolAttribute "taken" (LsBranchTaken . Just)
 
 sideEffectListAttribute = attributeList sideEffect
 
 integerAttribute = attributeItem decimal
+
+boolAttribute = attributeItem bool
+
+bool = trueValue <|> falseValue
+
+trueValue =
+  do string "true"
+     return True
+
+falseValue =
+  do string "false"
+     return False
 
 operationIdAttribute = attributeItem operationId
 
@@ -503,6 +519,9 @@ isLsRemat _           = False
 isLsJTBlocks (LsJTBlocks _) = True
 isLsJTBlocks _              = False
 
+isLsBranchTaken (LsBranchTaken _) = True
+isLsBranchTaken _              = False
+
 toFunction target
   (cmms, name, body, cs, ffobjs, fobjs, sp, (jtk, jt), goal, src) =
   let cms   = [cm | (LsComment cm) <- cmms]
@@ -590,9 +609,9 @@ readInstr (LsTargetInstruction i) = TargetInstruction (read i)
 
 toAttributes (LsAttributes (LsReads reads) (LsWrites writes) (LsAttrCall call)
               (LsMem mem) (LsActivators acs) (LsVirtualCopy vcopy)
-              (LsRemat rm) (LsJTBlocks bs)) =
+              (LsRemat rm) (LsJTBlocks bs) (LsBranchTaken bt)) =
   mkAttributes (map toRWObject reads) (map toRWObject writes) call mem
-               (map readInstr acs) vcopy rm (map lsBlockRefId bs)
+               (map readInstr acs) vcopy rm (map lsBlockRefId bs) bt
 
 lsBlockRefId (LsBlockRef bid) = bid
 
@@ -605,6 +624,7 @@ toRWObject (LsOtherSideEffect r) = OtherSideEffect (read r)
 mkNullLsAttributes =
   LsAttributes (LsReads []) (LsWrites []) (LsAttrCall Nothing) (LsMem Nothing)
   (LsActivators []) (LsVirtualCopy False) (LsRemat False) (LsJTBlocks [])
+  (LsBranchTaken Nothing)
 
 mkNullLsBlockAttributes = LsBlockAttributes []
 

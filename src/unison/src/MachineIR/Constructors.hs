@@ -39,6 +39,7 @@ module MachineIR.Constructors
          mkMachineInstructionPropertyOpFlags,
          mkMachineInstructionPropertyJTIBlocks,
          mkMachineInstructionPropertyDefs,
+         mkMachineInstructionPropertyBranchTaken,
          -- * MachineOperand constructors
          mkMachineTemp,
          mkMachineSubTemp,
@@ -102,6 +103,7 @@ mkMachineInstructionPropertyCustom = MachineInstructionPropertyCustom
 mkMachineInstructionPropertyOpFlags = MachineInstructionPropertyOpFlags
 mkMachineInstructionPropertyJTIBlocks = MachineInstructionPropertyJTIBlocks
 mkMachineInstructionPropertyDefs = MachineInstructionPropertyDefs
+mkMachineInstructionPropertyBranchTaken = MachineInstructionPropertyBranchTaken
 
 mkMachineTemp = MachineTemp
 mkMachineSubTemp = MachineSubTemp

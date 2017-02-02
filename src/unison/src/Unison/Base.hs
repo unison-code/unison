@@ -438,7 +438,10 @@ data Attributes i r = Attributes {
   -- | Whether the operation rematerializes a value
   aRemat       :: Bool,
   -- | Jump table target blocks, if any
-  aJTBlocks    :: [BlockId]
+  aJTBlocks    :: [BlockId],
+  -- | Whether the branch is predicted to be taken (only applies to conditional
+  -- branches)
+  aBranchTaken :: Maybe Bool
 } deriving (Eq)
 
 -- | Object representing the side-effect of an 'Operation'. Operations can write

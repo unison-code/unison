@@ -227,12 +227,13 @@ freqToTuple Nothing  = []
 instance (Show i, Show r) => Show (Attributes i r) where
     show (Attributes {aReads = reads, aWrites = writes, aCall = call,
                       aMem = mem, aActivators = act, aVirtualCopy = vc,
-                      aRemat = rm, aJTBlocks = jtbs}) =
+                      aRemat = rm, aJTBlocks = jtbs, aBranchTaken = bt}) =
         let attrs = catMaybes
                     [maybeShowReads reads, maybeShowWrites writes,
                      maybeShowCall call, maybeShowMem mem,
                      maybeShowActivators act, maybeShowVirtualCopy vc,
-                     maybeShowRemat rm, maybeShowJTBlocks jtbs]
+                     maybeShowRemat rm, maybeShowJTBlocks jtbs,
+                     maybeShowBranchTaken bt]
         in (if null attrs then ""
             else " (" ++ render (cs id attrs) ++ ")")
 
@@ -259,6 +260,12 @@ maybeShowRemat True = Just $ "remat"
 
 maybeShowJTBlocks [] = Nothing
 maybeShowJTBlocks jtbs = Just $ showAttr "jtblocks" "" (map SimpleBlockRef jtbs)
+
+maybeShowBranchTaken Nothing = Nothing
+maybeShowBranchTaken (Just bt) = Just $ "taken: " ++ showBool bt
+
+showBool True  = "true"
+showBool False = "false"
 
 showAttr :: Show a => String -> String -> a -> String
 showAttr n p a = n ++ ": " ++ p ++ show a

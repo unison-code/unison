@@ -1182,7 +1182,9 @@ buildInstructionAttributes ips =
              fromMaybe [] $
              fmap msPropertyJTIBlocks $
              find isMachineInstructionPropertyJTIBlocks ips
-  in mkNullAttributes {aMem = m, aJTBlocks = jtbs}
+      bt   = fmap msPropertyBranchTaken $
+             find isMachineInstructionPropertyBranchTaken ips
+  in mkNullAttributes {aMem = m, aJTBlocks = jtbs, aBranchTaken = bt}
 
 toMachineFunction :: Show i => Show r => Function i r -> MachineFunction i r
 toMachineFunction
@@ -1250,10 +1252,10 @@ toMachineOpcode o
 
 toMachineInstructionProperties :: Attributes i r ->
                                   [MachineInstructionProperty r]
-toMachineInstructionProperties Attributes {aJTBlocks = bs}
-  | null bs = []
-  | otherwise = [mkMachineInstructionPropertyJTIBlocks
-                 (map mkMachineBlockRef bs)]
+toMachineInstructionProperties Attributes {aJTBlocks = bs, aBranchTaken = bt} =
+  [mkMachineInstructionPropertyJTIBlocks (map mkMachineBlockRef bs)
+  | not (null bs)] ++
+  [mkMachineInstructionPropertyBranchTaken (fromJust bt) | isJust bt]
 
 toMachineOperand :: Show r => Operand r -> MachineOperand r
 toMachineOperand (Register (TargetRegister r)) = mkMachineReg r

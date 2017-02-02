@@ -126,6 +126,7 @@ Library
                   Unison.Tools.Import.CorrectDoubleBranches
                   Unison.Tools.Import.DropDebugLocations
                   Unison.Tools.Import.NormalizePhis
+                  Unison.Tools.Import.LiftBranchPredictions
                   Unison.Tools.Import.LiftMemoryPartitions
                   Unison.Tools.Import.EnforceCalleeSaved
                   Unison.Tools.Import.EnforceCallerSaved

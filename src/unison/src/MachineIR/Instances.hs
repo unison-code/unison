@@ -109,7 +109,7 @@ showMachineBasicBlock
              _ -> "") ++ newLine ++
      nest' 2 (showMachineBasicBlockBody mis)
 
-showSuccessor bid = "%bb." ++ show bid ++ "(1)"
+showSuccessor (bid, p) = "%bb." ++ show bid ++ "(" ++ show p ++ ")"
 
 showCS f l = renderStyle lineStyle (cs f l)
 

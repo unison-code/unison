@@ -36,7 +36,7 @@ liftJumpTablesInBlock fs mb @ MachineBlock {mbProperties   = mps,
     -- Block successors are only required to support jump tables
     Nothing -> mb
     (Just ps) ->
-      let succs = mbPropertySuccs ps
+      let succs = map fst $ mbPropertySuccs ps
           mis'  = map (liftJumpTablesInInstruction fs succs) mis
       in mb {mbInstructions = mis'}
 

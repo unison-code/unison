@@ -33,7 +33,7 @@ prepareForEmission mf target =
 addBlockSuccessor (itf, bif, oif, fts, lastId)
   mb @ MachineBlock {mbProperties = mbps} =
   let succs = blockSuccessor itf bif oif fts lastId mb
-      mbps' = mbps ++ [mkMachineBlockPropertySuccs succs]
+      mbps' = mbps ++ [mkMachineBlockPropertySuccs (zip succs [1..])]
   in mb {mbProperties = mbps'}
 
 addDefs oif

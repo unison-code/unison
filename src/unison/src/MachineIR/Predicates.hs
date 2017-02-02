@@ -39,6 +39,7 @@ module MachineIR.Predicates
          isMachineInstructionPropertyCustomOf,
          isMachineInstructionPropertyJTIBlocks,
          isMachineInstructionPropertyDefs,
+         isMachineInstructionPropertyBranchTaken,
          -- * MachineOperand predicates
          isMachineReg,
          isMachineImm,
@@ -134,6 +135,9 @@ isMachineInstructionPropertyJTIBlocks _ = False
 
 isMachineInstructionPropertyDefs MachineInstructionPropertyDefs {} = True
 isMachineInstructionPropertyDefs _ = False
+
+isMachineInstructionPropertyBranchTaken MachineInstructionPropertyBranchTaken {} = True
+isMachineInstructionPropertyBranchTaken _ = False
 
 isMachineReg MachineReg {} = True
 isMachineReg _ = False

@@ -46,6 +46,7 @@ import Unison.Transformations.RunTargetTransforms
 
 import Unison.Tools.Import.DropDebugLocations
 import Unison.Tools.Import.NormalizePhis
+import Unison.Tools.Import.LiftBranchPredictions
 import Unison.Tools.Import.LiftMemoryPartitions
 import Unison.Tools.Import.ExtractSubRegs
 import Unison.Tools.Import.LowerInsertSubRegs
@@ -96,7 +97,8 @@ run (estimateFreq, noCC, noReserved, maxBlockSize, implementFrames, function,
 mirTransformations estimateFreq =
     [(dropDebugLocations, "dropDebugLocations", True),
      (normalizePhis, "normalizePhis", True),
-     (liftCustomProperties, "liftMemoryPartitions", True),
+     (liftCustomProperties, "liftCustomProperties", True),
+     (liftBranchPredictions, "liftBranchPredictions", True),
      (liftJumpTables, "liftJumpTables", True),
      (liftMemoryPartitions, "liftMemoryPartitions", True),
      (simplifyFallthroughs, "simplifyFallthroughs", True),

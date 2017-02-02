@@ -178,12 +178,12 @@ mirBlockSuccessors =
      whiteSpace
      bs <- mirBlockSuccessor `sepBy` comma
      eol
-     return (mkMachineBlockPropertySuccs (map mbrId bs))
+     return (mkMachineBlockPropertySuccs bs)
 
 mirBlockSuccessor =
   do mbr <- mirBlockRef
-     parens decimal
-     return mbr
+     prob <- parens decimal
+     return (mbrId mbr, prob)
 
 mirBlockLiveIns =
   do whiteSpaces 2

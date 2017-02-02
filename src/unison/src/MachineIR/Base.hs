@@ -93,6 +93,9 @@ data MachineBlock i r = MachineBlock {
   mbInstructions :: [MachineInstruction i r]
   } deriving (Eq, Ord)
 
+-- | Successor (block id and probability)
+type MachineSuccessor = (Integer, Integer)
+
 -- | Machine block-level properties.
 
 data MachineBlockProperty =
@@ -102,7 +105,7 @@ data MachineBlockProperty =
     } |
   -- | Block's successors
   MachineBlockPropertySuccs {
-    mbPropertySuccs :: [Integer]
+    mbPropertySuccs :: [MachineSuccessor]
     }
   deriving (Eq, Ord)
 
@@ -192,6 +195,11 @@ data MachineInstructionProperty r =
   -- | Number of definition operands (for pretty-printing purposes)
   MachineInstructionPropertyDefs {
     msPropertyDefs :: Integer
+    } |
+  -- | Whether the branch is predicted to be taken (only applies to conditional
+  -- branches)
+  MachineInstructionPropertyBranchTaken {
+    msPropertyBranchTaken :: Bool
     }
   deriving (Eq, Ord)
 
