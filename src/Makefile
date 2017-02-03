@@ -60,7 +60,7 @@ prepare-unison:
 test:
 	cd $(UNISONDIR); \
 	$(CABALBIN) test --show-details=$(UNISON_SHOW_DETAILS) \
-	--test-option=--directory=$(CURDIR)/$(UNISONDIR)/test \
+	--test-option=--directory=$(CURDIR)/$(UNISONDIR)/test/fast \
 	--test-option=--presolver=$(CURDIR)/$(PRESOLVERBIN) \
 	--test-option=--solver=$(CURDIR)/$(SOLVERBIN) \
 	--test-option=--showprogress
