@@ -41,6 +41,7 @@
 #ifndef __PRESOLVER_AUXILIARY__
 #define __PRESOLVER_AUXILIARY__
 
+#include <iostream>
 #include "models/parameters.hpp"
 #include "common/util.hpp"
 #include "presolver-options.hpp"
@@ -76,7 +77,8 @@ bool subsumes(const presolver_conj& a, const presolver_conj& b);
 
 // Generates the union of disj and sos with any subsumed nogoods removed
 vector<nogood> kernel_set(const vector<nogood>& disj,
-			  const vector<nogood>& sos);
+			  const vector<nogood>& sos,
+			  int cutoff);
 
 // Compute the disjunction of elements of Disj that are not subsumed by any
 // element of Nogoods.

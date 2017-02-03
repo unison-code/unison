@@ -205,7 +205,7 @@ void presolve(Parameters & input, PresolverOptions & options) {
   set_union(n0.begin(), n0.end(),
 	    Nogoods2.begin(), Nogoods2.end(),
 	    back_inserter(n1));
-  Nogoods = kernel_set(n1, {});
+  Nogoods = kernel_set(n1, {}, -1);
 
   if (timeout(t, options, "Nogoods3")) return;
 
@@ -233,7 +233,7 @@ void presolve(Parameters & input, PresolverOptions & options) {
 
   // 13: Nogoods <- KERNELSET(DNogoods, Nogoods3)
 
-  Nogoods = kernel_set(DNogoods, Nogoods);
+  Nogoods = kernel_set(DNogoods, Nogoods, -1);
   if (timeout(t, options, "Nogoods")) return;
 
   // 14: JSON.across <- AcrossToJson(Across, Nogoods)
@@ -243,7 +243,7 @@ void presolve(Parameters & input, PresolverOptions & options) {
 
   // 15: MoreNogoods <- KernelSet(Assert.more_nogood, Nogoods)
 
-  vector<nogood> MoreNogoods = kernel_set(PA.more_nogoods, Nogoods);
+  vector<nogood> MoreNogoods = kernel_set(PA.more_nogoods, Nogoods, -1);
   if (timeout(t, options, "MoreNogoods")) return;
 
   // 16: JSON.nogoods2 <- MoreNogoods \ Nogoods
@@ -351,14 +351,11 @@ void presolve(Parameters & input, PresolverOptions & options) {
   // 27: DETECTCYCLES(Nogoods)
 
   vector<nogood> Nogoods3, n3;
+  int cutoff = (options.timeout() - t.stop()) / 2;
 
   ip.pass2(Nogoods3);
-
-  set_union(Nogoods.begin(), Nogoods.end(),
-	    Nogoods3.begin(), Nogoods3.end(),
-	    back_inserter(n3));
-  Nogoods = kernel_set(n3, {});
-
+  n3 = ord_difference(Nogoods3, Nogoods);
+  Nogoods = kernel_set(n3, Nogoods, cutoff);
   if (timeout(t, options, "gen_infeasible pass 2")) return;
 
   ip.detect_cycles();
@@ -367,7 +364,8 @@ void presolve(Parameters & input, PresolverOptions & options) {
 
   // 28: JSON.nogoods <- KERNELSET(Assert.new_nogood, Nogoods) \ DNogoods
 
-  input.nogoods = ord_difference(kernel_set(PA.new_nogood, Nogoods), DNogoods);
+  cutoff = (options.timeout() - t.stop()) / 2;
+  input.nogoods = ord_difference(kernel_set(PA.new_nogood, Nogoods, cutoff), DNogoods);
   if (timeout(t, options, "nogoods")) return;
 
   // 29: GENACTIVETABLES(), JSON.tmp_tables

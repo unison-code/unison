@@ -301,7 +301,7 @@ presolver_disj merge_disjunctions(const Parameters& input,
       d12.push_back(normal_conjunction(input, c12));
     }
   }
-  return kernel_set(d12, {});
+  return kernel_set(d12, {}, -1);
 }
 
 void nogoods_or_across(const Parameters& input,
@@ -338,7 +338,7 @@ void nogoods_or_across(const Parameters& input,
   PresolverAcrossTuple acr1;
   acr1.o = acr.o;
   acr1.t = acr.t;
-  acr1.d = kernel_set(Disj, {});
+  acr1.d = kernel_set(Disj, {}, -1);
   Across.push_back(acr1);
 }
 
@@ -435,14 +435,14 @@ void cond_before_items(PresolverAsserts& PA,
     temporary t = bef.first;
     operand p = temp_def(input, t);
     if(is_preassigned_not(input, p)) { // not preassigned
-      t2before[t] = kernel_set(bef.second, {});
+      t2before[t] = kernel_set(bef.second, {}, -1);
       t2either[t] = 0;
     }
   }
   for(const pair<temporary,presolver_disj>& aft : cond_before_filter(input, After,  successors)) {
     temporary t = aft.first;
     operand p = temp_def(input, t);
-    presolver_disj kern = kernel_set(aft.second, {});
+    presolver_disj kern = kernel_set(aft.second, {}, -1);
     if(!is_preassigned_not(input, p)) { // preassigned
       goto nexta;
     }

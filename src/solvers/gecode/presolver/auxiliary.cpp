@@ -108,30 +108,37 @@ bool subsumes(const presolver_conj& a, const presolver_conj& b) {
 
 
 vector<nogood> kernel_set(const vector<nogood>& disj,
-			  const vector<nogood>& sos) {
+			  const vector<nogood>& sos,
+			  int cutoff) {
+  vector<nogood> d(disj.begin(), disj.end());
   vector<nogood> s(sos.begin(), sos.end());
+  Support::Timer t;
+  t.start();
 
-  for(const presolver_conj& conj : disj) {
+  while (!d.empty()) {
+    if(cutoff >= 0 && t.stop() >= cutoff)
+      return ord_union(d,s);
+
+    presolver_conj conj = d.back();
     bool is_subsumed = false;
-
+    vector<nogood> RC;
+    
+    d.pop_back();
     for(const presolver_conj& c : s) {
       if(subsumes(c, conj)) {
   	is_subsumed = true;
   	break;
+      } else if(subsumes(conj, c)) {
+	RC.push_back(c);
       }
     }
 
     if(!is_subsumed) {
-      vector<nogood> RC;
-      for(const presolver_conj& c : s) {
-  	if(subsumes(conj, c)) {
-  	  vector_insert(RC, c);
-  	}
-      }
-
       vector_insert(s, conj);
-      vector<nogood> x = ord_difference(s, RC);
-      s.swap(x);
+      if (!RC.empty()) {
+	vector<nogood> x = ord_difference(s, RC);
+	s.swap(x);
+      }
     }
   }
 

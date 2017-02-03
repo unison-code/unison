@@ -559,7 +559,7 @@ void normalize_precedences(const Parameters& input, const precedence_set& P, pre
 	D = {*it};
       } else {
 	// D <- KernelSet(D, empty);
-	D = kernel_set(D, presolver_disj());
+	D = kernel_set(D, presolver_disj(), -1);
 	// K <- intersection of all conjunctions in D
 	// i.e. the set of literals present in every conjunction in D
 	vector<presolver_lit> K = std::accumulate(D.begin(), D.end(), D.front(),
@@ -676,7 +676,7 @@ void gen_before_precedences(const Parameters& input,
         for(auto it = range.first; it != range.second; ++it) {
             disj.push_back(it->second);
         }
-        PresolverPrecedence e(k.i, k.j, k.n, kernel_set(disj, {}));
+        PresolverPrecedence e(k.i, k.j, k.n, kernel_set(disj, {}, -1));
         PI.push_back(e);
     }
 }

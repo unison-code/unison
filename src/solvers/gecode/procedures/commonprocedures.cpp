@@ -127,6 +127,7 @@ bool infinite_register_atom(Parameters & input, register_atom ra) {
   return false;
 }
 
+#if 0
 
 vector<PresolverValuePrecedeChain>
 value_precede_chains(Parameters & input, Model * m, bool global, block b) {
@@ -329,3 +330,228 @@ value_precede_chains(Parameters & input, Model * m, bool global, block b) {
   }
   return chains;
 }
+
+#else
+
+// Idea: values v[1],...,v[n] are symmetric if:
+// - they can be taken by the same set of classes
+// - no _other_ class take a value that _conflicts_ with any of v[1],...,v[n-1]
+vector<PresolverValuePrecedeChain>
+value_precede_chains(Parameters & input, Model * m, bool global, block b) {
+  vector<PresolverValuePrecedeChain> chains;
+  map<vector<temporary>,vector<vector<register_atom>>> SymChainsOfTemps;
+  map<register_atom,vector<register_class>> InClassesOfReg;
+  map<register_atom,vector<register_class>> CoveringClassesOfReg;
+  vector<temporary> PreT;
+  vector<operand> PreP;
+  vector<block> B(global ? input.B : vector<block>({b}));
+  vector<temporary> T(global ? input.T : input.tmp[b]);
+
+  // collect register classes and their sizes
+  map<register_class,int> C2W;
+  for (block b : B) {
+    for (operation o : input.ops[b]) {
+      for (unsigned int ii = 0; ii < input.instructions[o].size(); ii++) {
+        for (unsigned pi = 0; pi < input.operands[o].size(); pi++) {
+          operand p = input.operands[o][pi];
+	  if (input.instructions[o][ii] != NULL_INSTRUCTION) {
+	    register_class rc = input.rclass[o][ii][pi];
+	    C2W[rc] = input.operand_width[p];
+	  }
+	}
+      }
+    }
+  }
+  for(const pair<register_class,int>& CW : C2W) {
+    register_class C = CW.first;
+    int w = CW.second;
+    vector<register_atom> ras = input.atoms[C];
+    if (!infinite_register_atom(input, max_of(ras)))
+      for (register_atom r : ras) {
+	InClassesOfReg[r].push_back(C);
+	for (int d=0; d<w; d++)
+	  CoveringClassesOfReg[r+d].push_back(C);
+      }
+  }
+  register_class C = input.atoms.size();
+
+  // more register classes from preassignments
+  map<operation,vector<vector<int>>> defer;
+  for(const vector<int>& pr : input.preassign) {
+    operand p = pr[0];
+    register_atom r = pr[1];
+    if (global || input.pb[p] == b) {
+      operation o = input.oper[p];
+      temporary t = input.temps[p][0];
+      vector<operand> us = input.users[t];
+      int ty = input.type[o];
+      PreP.push_back(p);
+      if (!input.use[p])
+	PreT.push_back(t);
+      if (!input.use[p] &&
+	  us.size() == 1 &&
+	  input.type[input.oper[us[0]]] == KILL) {
+	defer[o].push_back(pr);
+      } else if (binary_search(input.calleesaved.begin(), input.calleesaved.end(), r) &&
+		 (ty == IN || ty == OUT)) {
+	defer[o].push_back(pr);
+      } else {
+	int w = input.operand_width[p];
+	C2W[C] = w;
+	InClassesOfReg[r].push_back(C);
+	for (int d=0; d<w; d++)
+	  CoveringClassesOfReg[r+d].push_back(C);
+	C++;
+      }
+    }
+  }
+
+  // deferred caller-saved that are dead upon funcall, grouped per call
+  // deferred callee-saved preassignments in (in), (out)
+  for (const pair<operation,vector<vector<int>>>& percall : defer) {
+    for (const vector<int>& pr : percall.second) {
+      operand p = pr[0];
+      register_atom r = pr[1];
+      int w = input.operand_width[p];
+      C2W[C] = w;
+      InClassesOfReg[r].push_back(C);
+      for (int d=0; d<w; d++)
+	CoveringClassesOfReg[r+d].push_back(C);
+    }
+    C++;
+  }
+
+  // prevent redefined temporaries from occurring in symmetry chains
+  for (block b : B)
+    for (operation o : input.ops[b])
+      for (const pair<operand,operand>& pp : input.redefined[o])
+	for (temporary t : input.temps[pp.second])
+	  if (t != NULL_TEMPORARY)
+	    PreT.push_back(t);
+
+  // prevent (pack) operand temporaries from occurring in symmetry chains
+  for (block b : B)
+    for (vector<operand> ps : input.bpacked[b])
+      for (operand p : ps)
+	for (temporary t : input.temps[p])
+	  if (t != NULL_TEMPORARY)
+	    PreT.push_back(t);
+
+  // FIXME: this check is added temporarily, needs investigation
+  // prevent temps defined by callee-saved-load from occurring in symmetry chains
+  for (operation o : input.callee_saved_loads)
+    if (global || input.oblock[o]==b)
+      for (operand p : input.operands[o])
+	if (!input.use[p])
+	  PreT.push_back(input.single_temp[p]);
+
+  sort(PreT.begin(), PreT.end()); // will search
+  sort(PreP.begin(), PreP.end()); // will search
+
+  // more register classes from fixed (in), (out), except preassigned
+  if (!global) {
+    operation inop = input.ops[b][0];
+    operation outop = max_of(input.ops[b]);
+    for (operand p : input.operands[inop]) {
+      if (!m->ry(p).assigned())
+	return chains;
+    }
+    for (operand p : input.operands[outop]) {
+      if (!m->ry(p).assigned())
+	return chains;
+    }
+    for (operand p : input.operands[inop]) {
+      if (!infinite_register_atom(input, m->ry(p).val()) &&
+          !binary_search(PreP.begin(), PreP.end(), p)) {
+	int w = input.operand_width[p];
+	int r = m->ry(p).val();
+	C2W[C] = w;
+	InClassesOfReg[r].push_back(C);
+	for (int d=0; d<w; d++)
+	  CoveringClassesOfReg[r+d].push_back(C);
+	C++;
+      }
+    }
+    for (operand p : input.operands[outop]) {
+      if (!infinite_register_atom(input, m->ry(p).val()) &&
+          !binary_search(PreP.begin(), PreP.end(), p)) {
+	int w = input.operand_width[p];
+	int r = m->ry(p).val();
+	C2W[C] = w;
+	InClassesOfReg[r].push_back(C);
+	for (int d=0; d<w; d++)
+	  CoveringClassesOfReg[r+d].push_back(C);
+	C++;
+      }
+    }
+  }
+    
+  map<vector<register_class>,vector<register_atom>> RegsOfClasses;
+    
+  // for(const pair<register_atom,vector<register_class>>& RCs : InClassesOfReg)
+  //   cerr << "InClassesOfReg[" << RCs.first << "] = " << show(RCs.second) << endl;
+  // for(const pair<register_atom,vector<register_class>>& RCs : CoveringClassesOfReg)
+  //   cerr << "CoveringClassesOfReg[" << RCs.first << "] = " << show(RCs.second) << endl;
+
+  // regroup by set of register class
+  for(const pair<register_atom,vector<register_class>>& RCs : InClassesOfReg)
+    RegsOfClasses[RCs.second].push_back(RCs.first);
+
+  // build the chains
+  for(const pair<vector<register_class>,vector<register_atom>>& CsRs : RegsOfClasses) {
+    int w = 0;
+    vector<register_class> Cs = CsRs.first;
+    vector<register_atom> Rs = CsRs.second;
+    vector<register_atom> Rs2;
+    for (register_class C : Cs)
+      w = max(w,C2W[C]);
+    for (unsigned int ii = 0; ii < Rs.size(); ii++)
+      if (ii==Rs.size()-1 || no_conflict(Rs[ii], Cs, w, CoveringClassesOfReg))
+	Rs2.push_back(Rs[ii]);
+    if ((int)Rs2.size()>1) {
+      vector<temporary> Ts;
+      for(temporary t : T) {
+	int ty = input.type[input.def_opr[t]];
+	if ((ty == LINEAR || ty == COPY) &&
+	    !binary_search(PreT.begin(), PreT.end(), t)) {
+	  operand p = input.definer[t];
+	  operation o = input.oper[p];
+	  unsigned pi = p - input.operands[o][0];
+	  for (unsigned int ii = 0; ii < input.instructions[o].size(); ii++) {
+	    register_class rc = input.rclass[o][ii][pi];
+	    if (binary_search(Cs.begin(), Cs.end(), rc)) {
+	      Ts.push_back(t);
+	      goto nextt;
+	    }
+	  }
+	}
+      nextt: ;
+      }
+      if (!Ts.empty())
+	SymChainsOfTemps[Ts].push_back(Rs2);
+    }
+  }
+
+  for(const pair<vector<temporary>,vector<vector<register_atom>>>& TsRs : SymChainsOfTemps) {
+    PresolverValuePrecedeChain vpc;
+    vpc.ts = TsRs.first;
+    vpc.rss = TsRs.second;
+    sort(vpc.rss.begin(), vpc.rss.end()); // canonicalize
+    // cerr << "SYMMETRY " << show(vpc) << endl;
+    chains.push_back(vpc);
+  }
+  return chains;
+}
+
+bool
+no_conflict(register_atom a,
+	    vector<register_class> Cs,
+	    int w,
+	    map<register_atom,vector<register_class>> CoveringClassesOfReg) {
+  for (register_atom b = a; b < a+w; b++)
+    if (!subseteq(CoveringClassesOfReg[b],Cs))
+      return false;
+  return true;
+}
+
+#endif

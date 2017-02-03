@@ -305,7 +305,6 @@ void InfeasiblePresolver::pass2(vector<nogood>& Nogoods) {
     // F <- F union single_nogoods(D_5, U,[G])
     single_nogoods(D_5[b], D_5_Cands[b], &R, true, Nogoods);
   }
-
   // F <- F union single_nogoods(D_4, U, true)
   single_nogoods(D_4, D_4_Cands, nullptr, false, Nogoods);
 

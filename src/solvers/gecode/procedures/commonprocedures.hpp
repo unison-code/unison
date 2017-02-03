@@ -119,4 +119,10 @@ vector<InstructionAssignment> shave_instructions(
 vector<PresolverValuePrecedeChain>
 value_precede_chains(Parameters & input, Model * m, bool global, block b);
 
+bool
+no_conflict(register_atom a,
+	    vector<register_class> Cs,
+	    int w,
+	    map<register_atom,vector<register_class>> CoveringClassesOfReg);
+
 #endif
