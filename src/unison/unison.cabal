@@ -203,6 +203,7 @@ Library
                   Unison.Target.Hexagon.SpecsGen.InstructionType
                   Unison.Target.Hexagon.SpecsGen.AlignedPairs
                   Unison.Target.Hexagon.SpecsGen.Parent
+                  Unison.Target.Hexagon.SpecsGen.AllInstructions
 
                   Unison.Target.ARM.Common
                   Unison.Target.ARM.Registers

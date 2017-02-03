@@ -15,6 +15,8 @@ import Data.List
 import qualified Data.Map as M
 import qualified Data.Set as S
 import Data.Maybe
+import Data.List.Split
+import Control.Arrow
 
 import Common.Util
 
@@ -64,7 +66,7 @@ target =
       API.tResources        = const resources,
       API.tUsages           = const usages,
       API.tNop              = const nop,
-      API.tReadWriteInfo    = const SpecsGen.readWriteInfo,
+      API.tReadWriteInfo    = const readWriteInfo,
       API.tImplementFrame   = const implementFrame,
       API.tAddPrologue      = const addPrologue,
       API.tAddEpilogue      = const addEpilogue,
@@ -405,6 +407,13 @@ itineraryUsage _ it = error ("unmatched: itineraryUsage " ++ show it)
 
 nop = Linear [TargetInstruction A2_nop] [] []
 
+readWriteInfo i
+  | i `elem` [JMPret] =
+      addRegRead R31 $ SpecsGen.readWriteInfo i
+  | otherwise = SpecsGen.readWriteInfo i
+
+addRegRead r = first (++ [OtherSideEffect r])
+
 -- | Implementation of frame setup and destroy operations, see corresponding
 -- logic in HexagonFrameLowering.cpp ("eliminateCallFramePseudoInstr")
 
@@ -413,10 +422,33 @@ implementFrame = const []
 -- | Adds function prologue, see corresponding logic in HexagonFrameLowering.cpp
 -- ("emitPrologue")
 
-addPrologue _ code = code
+addPrologue id (e:code) =
+  let af = mkOpt id S2_allocframe [Bound mkMachineFrameSize]
+  in [e, af] ++ code
 
 -- | Adds function epilogue (TODO: investigate crashes for Hexagon, see "emitEpilogue" in HexagonFrameLowering.cpp)
-addEpilogue _ code = code
+addEpilogue id code =
+  let [f, e] = split (keepDelimsL $ whenElt isBranch) code
+      df     = mkOpt id L2_deallocframe []
+  in f ++ [df] ++ e
+
+mkOpt id inst us =
+  let o  = mkLinear id [mkNullInstruction, TargetInstruction inst] us []
+      o' = addActivators (map TargetInstruction stackAccessors) o
+  in o'
+
+addActivators = mapToActivators . (++)
+
+-- We need a stack frame iff:
+stackAccessors =
+  -- there are function calls,
+  [J2_call] ++
+  -- there are instructions referring to frame objects, or
+  fiInstrs ++
+  -- there are spills.
+  [STW, STD, STW_nv, LDW, LDD]
+
+fiInstrs = filter (\i -> "_fi" `isSuffixOf` (show i)) SpecsGen.allInstructions
 
 -- | Direction in which the stack grows
 stackDirection = API.StackGrowsDown
@@ -492,7 +524,7 @@ removeFrameIndexInstr
       msOperands = [r, mkMachineRegSP, off]}
 removeFrameIndexInstr mi @ MachineSingle {msOpcode = MachineTargetOpc i,
                                           msOperands = mops}
-  | "_fi" `isSuffixOf` (show i) =
+  | i `elem` fiInstrs =
       let mopc' = mkMachineTargetOpc $ read $ dropSuffix "_fi" (show i)
           mops' = case mops of
                     [off @ MachineImm {}, MachineImm {miValue = 0},
