@@ -49,11 +49,10 @@ int: TYPE_OUT     = 5;
 int: TYPE_KILL    = 6;
 int: TYPE_DEFINE  = 7;
 int: TYPE_COMBINE = 8;
-int: TYPE_PACK    = 9;
-int: TYPE_LOW     = 10;
-int: TYPE_HIGH    = 11;
-int: TYPE_FUN     = 12;
-int: TYPE_COPY    = 13;
+int: TYPE_LOW     = 9;
+int: TYPE_HIGH    = 10;
+int: TYPE_FUN     = 11;
+int: TYPE_COPY    = 12;
 
 %% problem parameters
 
@@ -153,7 +152,6 @@ array[int] of set of int: temp_uses; % temp -> set of use operands
 
 %% see JSON packed, pinstrs
 array[int,int] of int: packed_pq;
-array[int] of set of int: packed_is;
 
 %% see JSON before
 array[int] of int: before_pred;
@@ -689,7 +687,8 @@ constraint
 
 %% Model::post_temporary_use_latency_definition
 var -MAXL..3*MAXL: lat(int: q, int: t) =
-  let {int: p = temp_def[t]} in lt[p] + s[p] + lt[q] + s[q];
+  let {int: p = temp_def[t]} in
+    lt[p] + s[p] + lt[q] + s[q];
 
 %% data precedences with slack and everything
 
@@ -710,7 +709,7 @@ predicate post_data_prec(int: q) =
 
 %% Model::post_data_precedences_constraints
 constraint
-  forall(q in 0..MAXP where operand_use[q])(post_data_prec(q));
+  forall(q in 0..MAXP where operand_use[q] /\ op_type[operand_definer[q]]!=TYPE_KILL)(post_data_prec(q));
 
 %% Model::post_reverse_data_precedences_constraints
 %% DISABLED, because it seems to clash with my slack fixing stuff
@@ -801,19 +800,20 @@ constraint
 
 
 %% packing constraints
+%% see Model::post_packing_constraints()
 constraint
-    forall(k in index_set_1of2(packed_pq)) (
-      let {int: p = packed_pq[k,1],
-           int: q = packed_pq[k,2],
-           set of int: insns = packed_is[k],
-	   int: pt = single_temp(p),
-	   int: qt = single_temp(q),
-	   int: w = temp_width[pt],
-	   int: pi = operand_definer[p],
-	   set of int: odd = {y | y in 0..MAXR where y mod (2*w) = w}} in
-	  (i[temp_definer[pt]] in insns <-> a[pi]) /\
-	  a[pi] -> ry[q] = if ry[p] in odd then ry[p]-w else ry[p]+w endif
-    );
+  forall(k in index_set_1of2(packed_pq)) (
+    let {int: p = packed_pq[k,1],
+	 int: q = packed_pq[k,2],
+	 int: w = temp_width[single_temp(p)],
+	 array[int] of int: modtab = [-1,-1]++[ if k=1 then v else v + w - 2*(v mod 2*w) endif
+					      | v in 0..MAXR, k in 1..2
+					      where v mod w = 0
+					      ],
+	 int: nt = length(modtab) div 2,
+	 } in
+       table([ry[p], ry[q]], array2d(1..nt, 1..2, modtab))
+  );
 
 %% activators
 constraint
@@ -970,17 +970,6 @@ constraint
 	                                     [y[j] | j in temps]} in (
 	   table(vars, array2d(1..nt,irange,[ints[j] | j in range]))
 	)
-    );
-
-%% pack operations cannot be the only users of their free temporaries
-%% see Model::post_pack_sink_constraints()
-constraint
-    forall(v in 0..MAXT where op_type[temp_definer[v]]==TYPE_COPY)(
-        let {bool: used_by_pack = exists(p in temp_uses[v])(op_type[operand_definer[p]]==TYPE_PACK),
-	     set of int: uses_but_pack = {p | p in temp_uses[v] where op_type[operand_definer[p]]!=TYPE_PACK}} in
-	    if used_by_pack /\ card(uses_but_pack)>0 then
-	        y[temp_def[v]] >= 0 <-> exists(p in uses_but_pack)(y[p]=v)
-	    else true endif
     );
 
 %% combine
@@ -1217,21 +1206,35 @@ constraint
       else true endif
   );
         
-%% Model::post_kill_pack_issue_cycle_constraints
+%% Model::post_kill_issue_cycle_constraints
 constraint
-  forall(o2 in 0..MAXO where op_type[o2] in {TYPE_KILL,TYPE_PACK})(
-    let {set of int: cards = {card(real_temps(q)) | q in op_operands[o2]},
-	 array[int] of var int: lats = [lat(q,t) | q in op_operands[o2],
-						   t in {single_temp(q)}],
-	 set of int: o1s = {temp_definer[t] | q in op_operands[o2],
-					      t in {single_temp(q)}}} in
-      if cards = {1} then
-        if op_mand[o2] then
-          c[o2] = c[min(o1s)] + max(lats)
-        else
-          a[o2] -> (c[o2] = c[min(o1s)] + max(lats))
-        endif
-      else true endif
+  forall(o2 in 0..MAXO where op_type[o2] = TYPE_KILL)(
+    if op_mand[o2] then % e.g. after function call, multiple operands
+      let {array[int] of var int: lats = [lat(q,t) | q in op_operands[o2],
+						     t in {single_temp(q)}],
+	   set of int: o1s = {temp_definer[t] | q in op_operands[o2],
+						t in {single_temp(q)}},
+      } in
+	c[o2] = c[min(o1s)] + max(lats)
+    else % e.g. after move subject to pack, one operand, multiple temps
+      let {int: q1 = min(op_operands[o2]),
+           int: p1 = temp_def[single_temp(q1)],
+	   set of int: o1s = {temp_definer[t] | t in real_temps(q1)},
+      } in
+        card(op_operands[o2]) = 1 /\
+        exists(t in operand_temps[q1])(
+	  if t=-1 then 
+	    y[q1]=t
+	  else
+	    y[q1]=t /\ c[o2] = c[temp_definer[t]] + lat(q1,t)
+	  endif
+	) /\
+	if card(real_temps(q1))=1 then
+	  y[p1] = y[q1] /\ ry[p1] = ry[q1]
+	else
+	  sum(o in o1s)(a[o]) <= 1
+	endif
+    endif
   );
 
 %% Model::post_slack_lower_bound_constraints
