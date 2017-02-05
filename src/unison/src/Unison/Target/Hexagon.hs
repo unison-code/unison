@@ -276,34 +276,37 @@ fromCopyInstr LDD = L2_loadrd_io
 -- TODO: this is terrible! we need to respecify the operand info of all
 -- instructions with use latency -1... can we do this better? (e.g. via custom
 -- Haskell functions specified in hexagon-manual.yaml).
-operandInfo op
-  | op `elem`
+operandInfo i
+  | i `elem`
       [J2_jumpfnew, J2_jumpfnewpt, J2_jumptnew, J2_jumptnewpt]
     = ([TemporaryInfo (RegisterClass F32) (-1), BlockRefInfo], [])
-  | op `elem` [A2_tfrt, A2_tfrf] =
+  | i `elem` [A2_tfrt, A2_tfrf] =
     ([TemporaryInfo (RegisterClass PredRegs) (-1),
       TemporaryInfo (RegisterClass IntRegs) 0],
      [TemporaryInfo (RegisterClass IntRegs) 1])
   -- New-value stores (the last use of class IntRegs has latency -1)
-  | op `elem` [S2_storerinew_io, S2_storerbnew_io, S2_storerhnew_io,
-               S2_storerinew_io_ce, S2_storerbnew_io_ce, S2_storerhnew_io_ce] =
+  | baseInstr i `elem` [S2_storerinew_io, S2_storerbnew_io, S2_storerhnew_io] =
     ([TemporaryInfo (RegisterClass IntRegs) 0, BoundInfo,
       TemporaryInfo (RegisterClass IntRegs) (-1)],
      [])
-  | op `elem` [S2_storerbnew_pi, S2_storerhnew_pi, S2_storerinew_pi] =
+  | baseInstr i `elem` [S2_storerbnew_pi, S2_storerhnew_pi, S2_storerinew_pi] =
     ([TemporaryInfo (RegisterClass IntRegs) 0, BoundInfo,
       TemporaryInfo (RegisterClass IntRegs) (-1)],
      [TemporaryInfo (RegisterClass IntRegs) 1])
-  | op `elem` [S2_storerinewabs] =
+  | baseInstr i `elem` [S2_storerinewabs] =
     ([BoundInfo, TemporaryInfo (RegisterClass IntRegs) (-1)], [])
-  | op `elem` [S2_storerinew_io_fi] =
+  | baseInstr i `elem` [S2_storerinew_io_fi] =
     ([BoundInfo, BoundInfo, TemporaryInfo (RegisterClass IntRegs) (-1)], [])
-  | op `elem` [S4_storerhnew_rr, S4_storerinew_rr] =
+  | i `elem` [S4_storerhnew_rr, S4_storerinew_rr] =
     ([TemporaryInfo (RegisterClass IntRegs) 0,
       TemporaryInfo (RegisterClass IntRegs) 0, BoundInfo,
       TemporaryInfo (RegisterClass IntRegs) (-1)],
      [])
-  | otherwise = SpecsGen.operandInfo op
+  | otherwise = SpecsGen.operandInfo i
+
+baseInstr i
+  | isConstantExtended i = nonConstantExtendedInstr i
+  | otherwise = i
 
 -- | Declares target architecture resources
 
