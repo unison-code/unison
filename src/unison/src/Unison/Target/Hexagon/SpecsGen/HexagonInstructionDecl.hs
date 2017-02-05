@@ -2604,6 +2604,12 @@ data HexagonInstruction = A2_abs
                         | J2_jumpt_nv
                         | J2_jumpf_nv
                         | Jump_merge
+                        | L2_deallocframe_linear
+                        | JMPret_dealloc_linear
+                        | L4_return_linear
+                        | Ret_dealloc_merge
+                        | JMPret_linear
+                        | Jr_merge
                         | A2_addi_ce
                         | A2_andir_ce
                         | A2_combineii_ce

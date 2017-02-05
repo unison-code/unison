@@ -17,13 +17,13 @@ import Unison.Target.API
 addPrologueEpilogue f @ Function {fCode = code} target =
     let apf    = addPrologue target
         aef    = addEpilogue target
-        id     = newId code
-        code'  = mapToEntryBlock (apf id) code
+        ids    = newIndexes $ flatten code
+        code'  = mapToEntryBlock (apf ids) code
         outBs  = returnBlockIds code'
         code'' = foldl (addEpilogueInBlock aef) code' outBs
     in f {fCode = code''}
 
 addEpilogueInBlock aef code l =
-    let id    = newId code
-        code' = mapToBlock (aef id) l code
+    let ids   = newIndexes $ flatten code
+        code' = mapToBlock (aef ids) l code
     in code'

@@ -24,8 +24,8 @@ alignedPairs i ([], [_])
 alignedPairs i ([], [_])
   | i `elem`
       [HEXAGON_V6_vd0_pseudo, HEXAGON_V6_vd0_pseudo_128B, IMPLICIT_DEF,
-       IMPLICIT_DEF_ce, LOAD_STACK_GUARD, LOAD_STACK_GUARD_ce,
-       TFR_PdFalse, TFR_PdTrue]
+       IMPLICIT_DEF_ce, L2_deallocframe_linear, L4_return_linear,
+       LOAD_STACK_GUARD, LOAD_STACK_GUARD_ce, TFR_PdFalse, TFR_PdTrue]
     = []
 alignedPairs i ([_], [_]) | i `elem` [ALIGNA, ALIGNA_ce] = []
 alignedPairs i ([_], [_])
@@ -719,6 +719,9 @@ alignedPairs i ([_], [])
        SAVE_REGISTERS_CALL_V4_EXT, SAVE_REGISTERS_CALL_V4_EXT_ce,
        SAVE_REGISTERS_CALL_V4_ce, TCRETURNi, TCRETURNi_ce, TCRETURNr]
     = []
+alignedPairs i ([_], [_]) | i `elem` [JMPret_linear] = []
+alignedPairs i ([_, _], [_])
+  | i `elem` [JMPret_dealloc_linear] = []
 alignedPairs i ([dst2, _, _], [dst2'])
   | i `elem`
       [F2_sffma, F2_sffma_lib, F2_sffms, F2_sffms_lib, M2_cmaci_s0,
@@ -849,7 +852,7 @@ alignedPairs i ([_, _], [_])
 alignedPairs i ([_], [])
   | i `elem`
       [L4_return_f, L4_return_fnew_pnt, L4_return_fnew_pt, L4_return_t,
-       L4_return_tnew_pnt, L4_return_tnew_pt]
+       L4_return_tnew_pnt, L4_return_tnew_pt, Jr_merge]
     = []
 alignedPairs i ([_], [_])
   | i `elem`
@@ -864,7 +867,7 @@ alignedPairs i ([_], [_])
        S2_svsathub, S2_vrndpackwh, S2_vrndpackwhs, S2_vsathb, S2_vsathub,
        S2_vsatwh, S2_vsatwuh, S2_vsplatrb, S2_vsplatrh, S2_vsxtbh,
        S2_vsxthw, S2_vtrunehb, S2_vtrunohb, S2_vzxtbh, S2_vzxthw, STD,
-       STW, STW_nv]
+       STW, STW_nv, Ret_dealloc_merge]
     = []
 alignedPairs i ([_, _], [])
   | i `elem`

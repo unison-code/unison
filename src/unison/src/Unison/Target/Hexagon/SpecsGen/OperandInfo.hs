@@ -18,6 +18,10 @@ operandInfo i
        V4_SL2_return_tnew, V6_vhist, Y2_barrier, Y2_isync, Y2_syncht,
        Y5_l2gclean, Y5_l2gcleaninv, Y5_l2gunlock]
     = ([], [])
+  | i `elem` [L4_return_linear] =
+    ([], [TemporaryInfo (RegisterClass F32) 0])
+  | i `elem` [L2_deallocframe_linear] =
+    ([], [TemporaryInfo (RegisterClass F32) 1])
   | i `elem`
       [V4_SA1_clrf, V4_SA1_clrfnew, V4_SA1_clrt, V4_SA1_clrtnew,
        V4_SA1_setin1]
@@ -288,6 +292,10 @@ operandInfo i
      [TemporaryInfo (RegisterClass DoubleRegs) 1])
   | i `elem` [Jump_merge, Jump_merge_ce] =
     ([TemporaryInfo (RegisterClass F32) (-1), BlockRefInfo], [])
+  | i `elem` [Jr_merge] = ([TemporaryInfo (RegisterClass F32) 0], [])
+  | i `elem` [Ret_dealloc_merge] =
+    ([TemporaryInfo (RegisterClass F32) 0],
+     [TemporaryInfo (RegisterClass F32) 0])
   | i `elem`
       [J4_cmpeqn1_t_jumpnv_t_linear, J4_cmpgtn1_t_jumpnv_t_linear]
     =
@@ -332,6 +340,9 @@ operandInfo i
     =
     ([TemporaryInfo (RegisterClass IntRegs) 0],
      [TemporaryInfo (RegisterClass DoubleRegs) 1])
+  | i `elem` [JMPret_linear] =
+    ([TemporaryInfo (RegisterClass IntRegs) 0],
+     [TemporaryInfo (RegisterClass F32) 0])
   | i `elem`
       [A2_abs, A2_abssat, A2_aslh, A2_asrh, A2_negsat, A2_not, A2_satb,
        A2_sath, A2_satub, A2_satuh, A2_swiz, A2_sxtb, A2_sxth, A2_tfr,
@@ -392,6 +403,10 @@ operandInfo i
       TemporaryInfo (RegisterClass DoubleRegs) 0,
       TemporaryInfo (RegisterClass IntRegs) 0, BoundInfo],
      [TemporaryInfo (RegisterClass IntRegs) 1])
+  | i `elem` [JMPret_dealloc_linear] =
+    ([TemporaryInfo (RegisterClass IntRegs) 0,
+      TemporaryInfo (RegisterClass F32) 0],
+     [TemporaryInfo (RegisterClass F32) 0])
   | i `elem` [Y4_l2fetch] =
     ([TemporaryInfo (RegisterClass IntRegs) 0,
       TemporaryInfo (RegisterClass IntRegs) 0],

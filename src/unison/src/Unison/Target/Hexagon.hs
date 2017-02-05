@@ -117,11 +117,8 @@ branchInfo (Branch {oBranchIs = ops, oBranchUs = [BlockRef l]})
 branchInfo (Branch {oBranchIs = ops})
   | targetInst ops `elem`  [JMPret, JMPrett, JMPretf, JMPrettnew, JMPretfnew,
                             L4_return, L4_return_t, L4_return_f,
-                            L4_return_tnew_pt, L4_return_fnew_pt] =
-    BranchInfo Unconditional Nothing
-
-branchInfo (Branch {oBranchIs = ops})
-  | targetInst ops `elem`  [J2_jumpr] =
+                            L4_return_tnew_pt, L4_return_fnew_pt, J2_jumpr,
+                            Jr_merge] =
     BranchInfo Unconditional Nothing
 
 branchInfo (Branch {oBranchIs = ops})
@@ -352,7 +349,8 @@ resources =
 
 -- | Declares resource usages of each instruction
 
-usages Jump_merge = [mkUsage BlockEnd 1 1]
+usages i
+  | i `elem` [Jump_merge, Jr_merge] = [mkUsage BlockEnd 1 1]
 usages i
   | isConstantExtended i =
     let it = SpecsGen.itinerary (nonConstantExtendedInstr i)
@@ -410,6 +408,9 @@ nop = Linear [TargetInstruction A2_nop] [] []
 readWriteInfo i
   | i `elem` [JMPret] =
       addRegRead R31 $ SpecsGen.readWriteInfo i
+  | i `elem` [JMPret_dealloc_linear, L4_return_linear, JMPret_linear,
+              Ret_dealloc_merge] =
+      second (++ [ControlSideEffect]) $ SpecsGen.readWriteInfo i
   | otherwise = SpecsGen.readWriteInfo i
 
 addRegRead r = first (++ [OtherSideEffect r])
@@ -419,23 +420,44 @@ addRegRead r = first (++ [OtherSideEffect r])
 
 implementFrame = const []
 
--- | Adds function prologue, see corresponding logic in HexagonFrameLowering.cpp
--- ("emitPrologue")
-
-addPrologue id (e:code) =
-  let af = mkOpt id S2_allocframe [Bound mkMachineFrameSize]
+-- | Adds function prologue, see HexagonFrameLowering.cpp
+addPrologue (_, oid, _) (e:code) =
+  let af = mkAct $ mkOpt oid S2_allocframe [Bound mkMachineFrameSize] []
   in [e, af] ++ code
 
--- | Adds function epilogue (TODO: investigate crashes for Hexagon, see "emitEpilogue" in HexagonFrameLowering.cpp)
-addEpilogue id code =
-  let [f, e] = split (keepDelimsL $ whenElt isBranch) code
-      df     = mkOpt id L2_deallocframe []
-  in f ++ [df] ++ e
+-- | Adds function epilogue, see HexagonFrameLowering.cpp
+addEpilogue (tid, oid, pid) code =
+  case split (keepDelimsL $ whenElt isBranch) code of
+   [f,
+    SingleOperation {oOpr = Natural Branch {
+                        oBranchIs = [TargetInstruction JMPret],
+                        oBranchUs = [MOperand {altTemps = [t]}]}}
+    :
+    e] ->
+     let mkOper id ts = mkMOperand (pid + id) ts Nothing
+         [t1, t2, t3, t4, t5] = map mkTemp [tid .. tid + 4]
+         dfl  = mkOpt oid L2_deallocframe_linear [] [mkOper 0 [t1]]
+         jrdl = mkOpt (oid + 1) JMPret_dealloc_linear
+                [mkOper 1 [t], mkOper 2 [t1]] [mkOper 3 [t2]]
+         rl   = mkOpt (oid + 2) L4_return_linear [] [mkOper 4 [t3]]
+         rdm  = mkAct $ mkOpt (oid + 3) Ret_dealloc_merge [mkOper 5 [t2, t3]]
+                [mkOper 6 [t4]]
+         jrl  = mkOpt (oid + 4) JMPret_linear [mkOper 7 [t]] [mkOper 8 [t5]]
+         jrm  = mkBranch (oid + 5) [TargetInstruction Jr_merge]
+                [mkOper 9 [t4, t5]]
+     in f ++ [dfl, jrdl, rl, rdm, jrl, jrm] ++ e
+   [code'] ->
+     -- TODO: check if this is the correct handling (see gcc.xexit.xexit.uni and
+     -- gobmk.interface.init_gnugo)
+     let [f, o] = split (keepDelimsL $ whenElt isOut) code'
+         df     = mkOpt oid L2_deallocframe [] []
+     in f ++ [df] ++ o
 
-mkOpt id inst us =
-  let o  = mkLinear id [mkNullInstruction, TargetInstruction inst] us []
-      o' = addActivators (map TargetInstruction stackAccessors) o
-  in o'
+
+mkOpt oid inst us ds =
+  makeOptional $ mkLinear oid [TargetInstruction inst] us ds
+
+mkAct = addActivators (map TargetInstruction stackAccessors)
 
 addActivators = mapToActivators . (++)
 
@@ -499,7 +521,7 @@ isConstExtendedProperty =
 -- | Target dependent post-processing functions
 
 postProcess = [constantDeExtend, removeFrameIndex, normalizeJumpMerges,
-               normalizeNVJumps, addJumpHints,
+               normalizeNVJumps, normalizeJRInstrs, addJumpHints,
                flip addImplicitRegs (target, [])]
 
 constantDeExtend = mapToTargetMachineInstruction constantDeExtendInstr
@@ -577,6 +599,26 @@ normalizeNVJump mi = mi
 
 externalNewValueJump J2_jumpt_nv = J2_jumptnew
 externalNewValueJump J2_jumpf_nv = J2_jumpfnew
+
+normalizeJRInstrs = concatMapToMachineInstruction normalizeJR
+
+normalizeJR mi @ MachineSingle {msOpcode   = MachineTargetOpc i,
+                                msOperands = mops}
+  | i == L2_deallocframe_linear =
+    [mi {msOpcode = mkMachineTargetOpc L2_deallocframe, msOperands = []}]
+  | i == JMPret_dealloc_linear =
+      case mops of
+       [_, dst, _] -> [mi {msOpcode = mkMachineTargetOpc JMPret,
+                           msOperands = [dst]}]
+  | i == L4_return_linear =
+    [mi {msOpcode = mkMachineTargetOpc L4_return, msOperands = []}]
+  | i == JMPret_linear =
+      case mops of
+       [_, dst] -> [mi {msOpcode = mkMachineTargetOpc JMPret,
+                        msOperands = [dst]}]
+normalizeJR MachineSingle {msOpcode = MachineTargetOpc i}
+  | i `elem` [Ret_dealloc_merge, Jr_merge] = []
+normalizeJR mi = [mi]
 
 addJumpHints = mapToTargetMachineInstruction addJumpHint
 

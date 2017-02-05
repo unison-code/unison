@@ -1068,7 +1068,8 @@ parent i
        Y2_isync, Y2_syncht, Y4_l2fetch, Y4_trace, Y5_l2fetch, Y5_l2gclean,
        Y5_l2gcleaninv, Y5_l2gunlock, Y5_l2locka, Y5_l2unlocka,
        Y6_l2gcleaninvpa, Y6_l2gcleanpa, Dep_A2_addsat, Dep_A2_subsat,
-       Dep_S2_packhl, Jump_merge, Jump_merge_ce]
+       Dep_S2_packhl, Jr_merge, Jump_merge, Jump_merge_ce,
+       Ret_dealloc_merge]
     = Nothing
   | i `elem` [MVW] = Just A2_tfr
   | i `elem` [MVD] = Just A2_tfrp
@@ -1116,6 +1117,9 @@ parent i
     Just J4_cmpltu_f_jumpnv_t
   | i `elem` [J4_cmpltu_t_jumpnv_t_linear] =
     Just J4_cmpltu_t_jumpnv_t
+  | i `elem` [JMPret_dealloc_linear, JMPret_linear] = Just JMPret
+  | i `elem` [L2_deallocframe_linear] = Just L2_deallocframe
+  | i `elem` [L4_return_linear] = Just L4_return
   | i `elem` [S2_storerf_io_fi, S2_storerf_io_fi_ce] =
     Just S2_storerf_io
 

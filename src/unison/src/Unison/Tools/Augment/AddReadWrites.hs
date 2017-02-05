@@ -41,6 +41,7 @@ addProgramCounterWrites o
 addControlReadWrites code o
   | isBranch o || isTailCallFun code o = addWrites [controlObject] o
   | isVirtual o = o
+  | controlObject `elem` oWriteObjects o = o
   | otherwise = addReads [controlObject] o
 
 -- | The side effects of an operation o are the union of the side effects of all

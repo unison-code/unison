@@ -889,8 +889,8 @@ type OperationTransform i r =
 -- given some context.
 
 type BlockTransform i r =
-    OperationId
-    -- ^ Identifier not yet used by any operation in the current function
+    (TemporaryId, OperationId, MoperandId)
+    -- ^ Identifiers not yet used in the current function
     -> [BlockOperation i r]
     -- ^ Input block
     -> [BlockOperation i r]

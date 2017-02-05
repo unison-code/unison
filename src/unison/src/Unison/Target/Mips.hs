@@ -239,15 +239,15 @@ addActivators = mapToActivators . (++)
 
 -- | Adds function prologue
 
-addPrologue oid (e:l:code)
+addPrologue (_, oid, _) (e:l:code)
   | isMandNaturalWith ((==) LoadGPDisp) l = [e, l, mkAddiu_negsp oid] ++ code
-addPrologue oid (e:code) = [e, mkAddiu_negsp oid] ++ code
+addPrologue (_, oid, _) (e:code) = [e, mkAddiu_negsp oid] ++ code
 
 mkAddiu_negsp oid = mkOpt oid ADDiu_negsp [Bound mkMachineFrameSize] []
 
 -- | Adds function epilogue
 
-addEpilogue oid code =
+addEpilogue (_, oid, _) code =
     let [f, e] = split (keepDelimsL $ whenElt isBranch) code
         addSp = mkOpt oid ADDiu_sp [Bound mkMachineFrameSize] []
     in f ++ [addSp] ++ e

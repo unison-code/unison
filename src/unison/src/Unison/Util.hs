@@ -37,6 +37,7 @@ module Unison.Util
         newTempIndex,
         newOprIndex,
         newOperIndex,
+        newIndexes,
         mapToOperands,
         mapToOperandIf,
         mapToOprOperands,
@@ -582,6 +583,10 @@ newOperIndex code =
     let ps = sort $ map operandId $ concatMap oAllOperands code
     in if null ps then 0 else last ps + 1
 
+newIndexes :: Eq r => [BlockOperation i r] ->
+              (TemporaryId, OperationId, MoperandId)
+newIndexes code = (newTempIndex code, newOprIndex code, newOperIndex code)
+
 newId ::  [Block i r] -> OperationId
 newId = newOprIndex . flatten
 
@@ -865,8 +870,7 @@ addNullTemp p @ MOperand {altTemps = ts} = p {altTemps = [mkNullTemp] ++ ts}
 
 peephole :: Eq r => OperationTransform i r -> FunctionTransform i r
 peephole tf f @ Function {fCode = code} =
-  let fcode      = flatten code
-      ids        = (newTempIndex fcode, newOprIndex fcode, newOperIndex fcode)
+  let ids        = newIndexes $ flatten code
       (_, code') = foldl (peepholeBlock (tf f)) (ids, []) code
   in f {fCode = code'}
 

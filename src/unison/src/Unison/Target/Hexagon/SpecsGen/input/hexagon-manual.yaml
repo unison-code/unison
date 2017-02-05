@@ -430,3 +430,70 @@ instruction-set:
         defines:            []
         size:               0
         itinerary:          NoItinerary
+
+      - id:                 L2_deallocframe_linear
+        parent:             L2_deallocframe
+        operands:
+         - dst:             [register, def, F32]
+        defines:            [dst]
+        affects:
+        affected-by:
+
+      - id:                 JMPret_dealloc_linear
+        parent:             JMPret
+        type:               linear
+        operands:
+         - dst:             [register, use, IntRegs]
+         - src:             [register, use, F32]
+         - dst':            [register, def, F32, -1]
+        uses:               [dst, src]
+        defines:            [dst']
+        affects:
+        affected-by:
+
+      - id:                 L4_return_linear
+        parent:             L4_return
+        type:               linear
+        operands:
+         - dst:             [register, def, F32, -1]
+        defines:            [dst]
+        affects:
+        affected-by:
+
+      - id:                 ret_dealloc_merge
+        type:               linear
+        operands:
+         - src:             [register, use, F32]
+         - dst:             [register, def, F32, -1]
+        uses:               [src]
+        defines:            [dst]
+        size:               0
+        itinerary:          NoItinerary
+        affects:
+         - R29:             register
+         - R30:             register
+         - R31:             register
+        affected-by:
+         - mem:             memory
+         - R30:             register
+
+      - id:                 JMPret_linear
+        parent:             JMPret
+        type:               linear
+        operands:
+         - dst:             [register, use, IntRegs]
+         - dst':            [register, def, F32, -1]
+        defines:            [dst']
+        affects:
+        affected-by:
+
+      - id:                 jr_merge
+        type:               branch
+        operands:
+         - src:             [register, use, F32]
+        uses:               [src]
+        defines:            []
+        size:               0
+        affects:
+         - PC:              register
+        itinerary:          NoItinerary

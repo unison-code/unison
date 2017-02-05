@@ -527,9 +527,10 @@ itinerary i
   | i `elem`
       [CALLRv3nr, EH_RETURN_JMPR, J2_callr, J2_callrf, J2_callrt,
        J2_jumpr, J2_jumprf, J2_jumprfnew, J2_jumprfnewpt, J2_jumprt,
-       J2_jumprtnew, J2_jumprtnewpt, J4_hintjumpr, JMPret, JMPretf,
-       JMPretfnew, JMPretfnewpt, JMPrett, JMPrettnew, JMPrettnewpt,
-       TCRETURNr, Y2_icinva, Y2_isync]
+       J2_jumprtnew, J2_jumprtnewpt, J4_hintjumpr, JMPret,
+       JMPret_dealloc_linear, JMPret_linear, JMPretf, JMPretfnew,
+       JMPretfnewpt, JMPrett, JMPrettnew, JMPrettnewpt, TCRETURNr,
+       Y2_icinva, Y2_isync]
     = J_tc_2early_SLOT2
   | i `elem`
       [CALLv3nr, CALLv3nr_ce, J2_call, J2_call_ce, J2_callf, J2_callf_ce,
@@ -558,7 +559,8 @@ itinerary i
     = J_tc_2early_SLOT23
   | i `elem`
       [L4_return, L4_return_f, L4_return_fnew_pnt, L4_return_fnew_pt,
-       L4_return_t, L4_return_tnew_pnt, L4_return_tnew_pt]
+       L4_return_linear, L4_return_t, L4_return_tnew_pnt,
+       L4_return_tnew_pt]
     = LD_tc_3or4stall_SLOT0
   | i `elem`
       [L2_loadw_locked, L4_loadd_locked, V6_extractw, V6_extractw_128B,
@@ -569,18 +571,19 @@ itinerary i
        CONST32_Int_Real, CONST32_Int_Real_ce, CONST32_ce,
        CONST64_Float_Real, CONST64_Float_Real_ce, CONST64_Int_Real,
        CONST64_Int_Real_ce, FCONST32_nsdata, FCONST32_nsdata_ce,
-       L2_deallocframe, L2_loadalignb_io, L2_loadalignb_io_ce,
-       L2_loadalignb_pbr, L2_loadalignb_pci, L2_loadalignb_pci_ce,
-       L2_loadalignb_pcr, L2_loadalignb_pi, L2_loadalignb_pi_ce,
-       L2_loadalignb_pr, L2_loadalignh_io, L2_loadalignh_io_ce,
-       L2_loadalignh_pbr, L2_loadalignh_pci, L2_loadalignh_pci_ce,
-       L2_loadalignh_pcr, L2_loadalignh_pi, L2_loadalignh_pi_ce,
-       L2_loadalignh_pr, L2_loadbsw2_io, L2_loadbsw2_io_ce,
-       L2_loadbsw2_pbr, L2_loadbsw2_pci, L2_loadbsw2_pci_ce,
-       L2_loadbsw2_pcr, L2_loadbsw2_pi, L2_loadbsw2_pi_ce, L2_loadbsw2_pr,
-       L2_loadbsw4_io, L2_loadbsw4_io_ce, L2_loadbsw4_pbr,
-       L2_loadbsw4_pci, L2_loadbsw4_pci_ce, L2_loadbsw4_pcr,
-       L2_loadbsw4_pi, L2_loadbsw4_pi_ce, L2_loadbsw4_pr, L2_loadbzw2_io,
+       L2_deallocframe, L2_deallocframe_linear, L2_loadalignb_io,
+       L2_loadalignb_io_ce, L2_loadalignb_pbr, L2_loadalignb_pci,
+       L2_loadalignb_pci_ce, L2_loadalignb_pcr, L2_loadalignb_pi,
+       L2_loadalignb_pi_ce, L2_loadalignb_pr, L2_loadalignh_io,
+       L2_loadalignh_io_ce, L2_loadalignh_pbr, L2_loadalignh_pci,
+       L2_loadalignh_pci_ce, L2_loadalignh_pcr, L2_loadalignh_pi,
+       L2_loadalignh_pi_ce, L2_loadalignh_pr, L2_loadbsw2_io,
+       L2_loadbsw2_io_ce, L2_loadbsw2_pbr, L2_loadbsw2_pci,
+       L2_loadbsw2_pci_ce, L2_loadbsw2_pcr, L2_loadbsw2_pi,
+       L2_loadbsw2_pi_ce, L2_loadbsw2_pr, L2_loadbsw4_io,
+       L2_loadbsw4_io_ce, L2_loadbsw4_pbr, L2_loadbsw4_pci,
+       L2_loadbsw4_pci_ce, L2_loadbsw4_pcr, L2_loadbsw4_pi,
+       L2_loadbsw4_pi_ce, L2_loadbsw4_pr, L2_loadbzw2_io,
        L2_loadbzw2_io_ce, L2_loadbzw2_pbr, L2_loadbzw2_pci,
        L2_loadbzw2_pci_ce, L2_loadbzw2_pcr, L2_loadbzw2_pi,
        L2_loadbzw2_pi_ce, L2_loadbzw2_pr, L2_loadbzw4_io,
@@ -840,8 +843,8 @@ itinerary i
        LOAD_STACK_GUARD, LOAD_STACK_GUARD_ce, LOCAL_ESCAPE,
        LOCAL_ESCAPE_ce, PATCHPOINT, PATCHPOINT_ce, PHI, PHI_ce,
        REG_SEQUENCE, REG_SEQUENCE_ce, STACKMAP, STACKMAP_ce, STATEPOINT,
-       STATEPOINT_ce, SUBREG_TO_REG, SUBREG_TO_REG_ce, Jump_merge,
-       Jump_merge_ce]
+       STATEPOINT_ce, SUBREG_TO_REG, SUBREG_TO_REG_ce, Jr_merge,
+       Jump_merge, Jump_merge_ce, Ret_dealloc_merge]
     = NoItinerary
   | i `elem`
       [V4_SA1_addi, V4_SA1_addi_ce, V4_SA1_addrx, V4_SA1_addsp,
