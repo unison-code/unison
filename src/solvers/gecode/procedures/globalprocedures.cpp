@@ -165,53 +165,126 @@ presolve_relaxation(GlobalModel * base, GIST_OPTIONS * go, GIST_OPTIONS * lo) {
 }
 
 void presolve_shaving(GlobalModel * base) {
-  for (block b : base->input->B) {
-    if (base->input->ops[b].size() > base->options->shaving_threshold()) {
-      if (base->options->verbose())
-        cerr << pre() << "large block (" << base->input->ops[b].size()
-             << " operations), skipping shaving" << endl;
-      continue;
-    }
-    if (base->options->verbose())
-      cerr << pre()
-           << "computing instruction nogoods for b" << b << "..." << endl;
-    Search::Stop * stop =
-      new_stop(base->options->global_shaving_limit(), base->options);
-    Search::Statistics stats;
-    Search::Options dummyOpts;
-    LocalModel * l = base->make_local(b, IPL_DOM);
-    Gecode::SpaceStatus lss = l->status();
-    if (lss == SS_FAILED) { // A local problem failed, force failure in global
-      base->constrain_local_cost(b, IRT_LE, -1);
-      assert(base->status() == SS_FAILED);
-      return;
-    }
-    for (int cost = l->cost().min() + 1; cost <= l->cost().max(); cost++) {
-      LocalModel * l1 = (LocalModel*) l->clone();
-      l1->constrain_cost(IRT_LE, cost);
-      Gecode::SpaceStatus ss = l1->status();
-      if (ss == SS_FAILED) {
-        delete l1;
-        base->constrain_local_cost(b, IRT_GQ, cost);
-      } else {
-        vector<InstructionAssignment> forbidden =
-          shave_instructions(l1, stop, stats);
-        delete l1;
-        for (InstructionAssignment fb : forbidden)
-          base->post_instruction_nogood(cost, fb);
-        if (forbidden.empty()) break;
-      }
-      if (stop->stop(stats, dummyOpts)) {
+
+  class ShavingResults {
+  public:
+    block b;
+    int local_cost_lb;
+    vector<pair<int, InstructionAssignment> > forbidden;
+    ShavingResults (block b0) : b(b0), local_cost_lb(0) {}
+  };
+
+  class PresolveShavingJob : public Support::Job<Solution<ShavingResults> > {
+  public:
+    GlobalModel * base;
+    block b;
+    PresolveShavingJob(GlobalModel * base0, block b0) : base(base0), b(b0) {}
+    virtual Solution<ShavingResults> run(int) {
+      Solution<ShavingResults> rs;
+      rs.result = UNKNOWN;
+      rs.solution = new ShavingResults(b);
+      if (base->input->ops[b].size() > base->options->shaving_threshold()) {
         if (base->options->verbose())
-          cerr << pre() << "limit" << endl;
-        break;
+          cerr << pre() << "large block (" << base->input->ops[b].size()
+               << " operations), skipping shaving" << endl;
+        return rs;
       }
+      Search::Stop * stop =
+        new_stop(base->options->global_shaving_limit(), base->options);
+      Search::Statistics stats;
+      Search::Options dummyOpts;
+      LocalModel * l = base->make_local(b, IPL_DOM);
+      Gecode::SpaceStatus lss = l->status();
+      if (lss == SS_FAILED) { // A local problem failed, return
+        rs.result = UNSATISFIABLE;
+        delete l;
+        delete stop;
+        return rs;
+      }
+      for (int cost = l->cost().min() + 1; cost <= l->cost().max(); cost++) {
+        LocalModel * l1 = (LocalModel*) l->clone();
+        l1->constrain_cost(IRT_LE, cost);
+        Gecode::SpaceStatus ss = l1->status();
+        if (ss == SS_FAILED) {
+          delete l1;
+          rs.solution->local_cost_lb = cost;
+        } else {
+          vector<InstructionAssignment> forbidden =
+            shave_instructions(l1, stop, stats);
+          delete l1;
+          if (forbidden.empty()) break;
+          for (InstructionAssignment fb : forbidden)
+            rs.solution->forbidden.push_back(make_pair(cost, fb));
+        }
+        if (stop->stop(stats, dummyOpts)) {
+          if (base->options->verbose())
+            cerr << pre() << "limit" << endl;
+          break;
+        }
+      }
+      delete l;
+      delete stop;
+      return rs;
     }
-    delete l;
-    delete stop;
-    Gecode::SpaceStatus ss = base->status();
-    if (ss == SS_FAILED) return;
+  };
+
+  class PresolveShavingJobs {
+  protected:
+    // global space from which the presolving problems are generated
+    GlobalModel * base;
+    // current block index
+    unsigned int k;
+  public:
+    PresolveShavingJobs(GlobalModel * base0) : base(base0), k(0) {}
+    bool operator ()(void) const {
+      return k < base->input->B.size();
+    }
+    PresolveShavingJob * job(void) {
+      if (base->options->verbose())
+        cerr << pre()
+             << "computing instruction nogoods for b" << k << "..." << endl;
+      PresolveShavingJob * psj = new PresolveShavingJob(base, k);
+      k++;
+      return psj;
+    }
+  };
+
+  map<block, Solution<ShavingResults> > local_results;
+  PresolveShavingJobs pjs(base);
+  Support::RunJobs<PresolveShavingJobs, Solution<ShavingResults> >
+    p(pjs, base->options->total_threads());
+  Solution<ShavingResults> lr;
+  while (p.run(lr)) {
+    int i;
+    Solution<ShavingResults> flr;
+    if (p.stopped(i, flr)) { // job stopped
+      block b = flr.solution->b;
+      local_results[b] = flr;
+      break;
+    } else { // job finished
+      block b = lr.solution->b;
+      local_results[b] = lr;
+    }
   }
+
+  for (block b : base->input->B) {
+    Solution<ShavingResults> srs = local_results[b];
+    // A local problem failed, force failure in global
+    if (srs.result == UNSATISFIABLE) {
+      base->constrain_local_cost(b, IRT_LE, -1);
+    } else {
+      ShavingResults * rs = srs.solution;
+      base->constrain_local_cost(b, IRT_GQ, rs->local_cost_lb);
+      for (pair<int, InstructionAssignment> fb : rs->forbidden)
+        base->post_instruction_nogood(fb.first, fb.second);
+    }
+    Gecode::SpaceStatus ss = base->status();
+    if (ss == SS_FAILED) break;
+  }
+
+  for (block b : base->input->B) delete local_results[b].solution;
+
+  return;
 }
 
 void presolve_global_cluster_impact(GlobalModel * base, GIST_OPTIONS * lo) {
