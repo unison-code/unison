@@ -285,6 +285,15 @@ test fixedop(int: o) = (
 
 var 0..MAXI: insn(int: o) = if fixedop(o) then min(op_instructions[o]) else i[o] endif;
 
+predicate smart_in(var int: x, set of int: s) =
+  if card(s)=0 then
+    false
+  else if card(s)=1 then 
+    x = min(s)
+  else
+    x in s
+  endif endif;
+
 predicate sliced_diffn(array[int] of var int: x,
                        array[int] of var int: y,
                        array[int] of var int: dx,
@@ -820,7 +829,7 @@ constraint
   forall(x in index_set(activator_insns))(
     let {set of int: is = activator_insns[x],
          set of int: os = activator_ops[x]} in (
-	(a[min(os)] <-> exists(o in 0..MAXO)(i[o] in is)) /\
+	(a[min(os)] <-> exists(o in 0..MAXO)(smart_in(i[o],op_instructions[o] intersect is))) /\
 	forall(i2 in os where i2>min(os))(a[i2] <-> a[min(os)])
     )
   );
@@ -843,7 +852,7 @@ constraint
 	     int: edsrc = min(op_operands[ed]),
 	     set of int: iset = dominate_instructions[k],
 	     set of int: tset = dominate_temps[k]} in (
-	    a[ing] \/ not a[ed] \/ i[ed] in iset \/ y[edsrc] in tset
+	    a[ing] \/ not a[ed] \/ smart_in(i[ed],iset) \/ smart_in(y[edsrc],tset)
  	)
     );
 
@@ -927,7 +936,7 @@ constraint
 		  forall(atm in index_set(atom_regs))(
 		      let {set of int: insns = {ii | ii in op_instructions[I] where ii>0 /\ operand_atom[P,ii]=atm}} in (
 		          if (card(insns)>=1) then
-			      (y[Q]=T /\ i[I] in insns /\ r[T] in atom_regs[atm] -> y[P]=T)
+			      (y[Q]=T /\ smart_in(i[I],insns) /\ r[T] in atom_regs[atm] -> y[P]=T)
 			  else true endif
 		      )
 		  )

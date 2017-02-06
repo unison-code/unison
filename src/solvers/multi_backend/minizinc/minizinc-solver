@@ -13,6 +13,7 @@ statflag='-s'
 toflag=''
 toprefix='--fzn-flag --time-out --fzn-flag '
 freeflag=''
+nogoods=''
 while [ $# -gt  1 ]; do
     opt="$1"
     shift
@@ -62,6 +63,9 @@ while [ $# -gt  1 ]; do
       --to)
 	toflag=$toprefix$1
 	shift
+	;;
+      --nogoods)
+	  nogoods='--fzn-flag --learnt-stats-nogood'
       ;;
       -o)
 	OUTJSON=$1
@@ -87,4 +91,4 @@ else
   pvalue=''
 fi
 set -x
-time ${mzn} -k ${statflag} ${pflag} ${pvalue} ${freeflag} ${toflag} ${allsolns} -D good_cumulative=${cumulative} code-generation.mzn $DIRBASENAME.dzn | $COMMON_DIR/outfilter.pl > ${OUTJSON}
+time ${mzn} -k ${statflag} ${pflag} ${pvalue} ${freeflag} ${toflag} ${allsolns} ${nogoods} -D good_cumulative=${cumulative} code-generation.mzn $DIRBASENAME.dzn | $COMMON_DIR/outfilter.pl > ${OUTJSON}
