@@ -83,7 +83,8 @@ solve_generic_portfolio(LocalModel * base, GIST_OPTIONS * lo, int iteration) {
     new_stop(base->options->local_limit(), base->options);
   Search::Options localOptions;
   localOptions.stop = localStop;
-  int n = base->options->local_portfolio().size();
+  int n = std::min(base->options->portfolio_threads(),
+                   (unsigned int) base->options->local_portfolio().size());
   localOptions.assets = n;
   localOptions.threads = n;
 

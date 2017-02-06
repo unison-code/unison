@@ -48,6 +48,7 @@
 
 #include <gecode/search.hh>
 #include <gecode/driver.hh>
+#include <gecode/kernel.hh>
 
 #ifdef GRAPHICS
 #include <gecode/gist.hh>
@@ -90,6 +91,84 @@
 
 using namespace Gecode;
 using namespace std;
+
+class LocalJob : public Support::Job<Solution<LocalModel> > {
+protected:
+  // Base local space to accumulate bounds while the portfolio is applied
+  Solution<LocalModel> ls;
+  // visualization options (if any)
+  GIST_OPTIONS * lo;
+  // current iteration
+  int iteration;
+  // local solutions in earlier iterations
+  vector<vector<LocalModel *> > * local_solutions;
+public:
+  LocalJob(Solution<LocalModel> ls0, GIST_OPTIONS * lo0, int iteration0,
+           vector<vector<LocalModel *> > * local_solutions0) :
+    ls(ls0), lo(lo0), iteration(iteration0),
+    local_solutions(local_solutions0) {}
+  virtual Solution<LocalModel> run(int) {
+    block b = ls.solution->b;
+    if (ls.result != UNSATISFIABLE) {
+      LocalModel * base_local = ls.solution;
+      Gecode::SpaceStatus lss = base_local->status();
+      assert(lss != SS_FAILED);
+      bool single_block = base_local->input->B.size() == 1;
+      ls = solved(base_local, (*local_solutions)[b]) && !single_block ?
+        // if the local problem is already solved, fetch the cached solution
+        fetch_solution(base_local, (*local_solutions)[b]) :
+        // otherwise solve
+        solve_local_portfolio(base_local, lo, iteration);
+      delete base_local;
+    }
+    if (ls.solution->options->verbose()) {
+      if (ls.result == LIMIT) {
+        cerr << local(b) << "could not find solution" << endl;
+      } else if (ls.result == UNSATISFIABLE) {
+        cerr << local(b) << "could not find solution (unsatisfiable)" << endl;
+      } else if (ls.result == CACHED_SOLUTION) {
+        cerr << local(b) << "repeated solution" << endl;
+      }
+    }
+    if (ls.result == LIMIT || ls.result == UNSATISFIABLE) {
+      throw Support::JobStop<Solution<LocalModel> >(ls);
+    }
+    return ls;
+  }
+};
+
+class LocalJobs {
+protected:
+  // global solution from which the local problems are generated
+  Solution<GlobalModel> gs;
+  // visualization options (if any)
+  GIST_OPTIONS * lo;
+  // current iteration
+  int iteration;
+  // local solutions in earlier iterations
+  vector<vector<LocalModel *> > * local_solutions;
+  // blocks sorted in descending priority
+  vector<block> blocks;
+  // current block index
+  unsigned int k;
+public:
+  LocalJobs(Solution<GlobalModel> gs0, GIST_OPTIONS * lo0, int iteration0,
+            vector<vector<LocalModel *> > * local_solutions0,
+            vector<block> blocks0) :
+    gs(gs0), lo(lo0), iteration(iteration0), local_solutions(local_solutions0),
+    blocks(blocks0), k(0) {}
+  bool operator ()(void) const {
+    return k < blocks.size();
+  }
+  LocalJob * job(void) {
+    // FIXME: fork jobs in the order of blocks[b], use blocks[k] instead of k
+    block b = k;
+    // Base local space to accumulate bounds while the portfolio is applied
+    Solution<LocalModel> ls = local_problem(gs.solution, b);
+    k++;
+    return new LocalJob(ls, lo, iteration, local_solutions);
+  }
+};
 
 class ResultData {
 
@@ -707,57 +786,51 @@ int main(int argc, char* argv[]) {
         // hardest problems first.
         vector<block> blocks = sorted_blocks(base->input, latest_result);
 
-        // Solve the local problems
+        map<block, Solution<LocalModel> > latest_local_solutions;
+        set<block> solved_blocks;
+        LocalJobs ljs(gs, lo, iteration, &local_solutions, blocks);
         bool found_all_local = true, unsat = false;
-        for (block b : blocks) {
+        unsigned int top_threads =
+          options.total_threads() / options.portfolio_threads();
 
-          // Base local space to accumulate bounds while the portfolio is applied
-          Solution<LocalModel> ls = local_problem(gs.solution, b);
-
-          if (ls.result != UNSATISFIABLE) {
-            LocalModel * base_local = ls.solution;
-            Gecode::SpaceStatus lss = base_local->status();
-            assert(lss != SS_FAILED);
-
-            // Possibly output local problem
-            if (base->options->output_local_problems() &&
-                (!solved(base_local, local_solutions[b]) || single_block))
-              emit_local(base_local, iteration, prefix);
-
-            ls =
-              solved(base_local, local_solutions[b]) && !single_block ?
-              // If the local problem is already solved, fetch the cached solution
-              fetch_solution(base_local, local_solutions[b]) :
-              // Otherwise solve
-              solve_local_portfolio(base_local, lo, iteration);
-            delete base_local;
-            iteration_failed += ls.failures;
-            iteration_nodes += ls.nodes;
+        // Solve the local problems
+        Support::RunJobs<LocalJobs, Solution<LocalModel> > p(ljs, top_threads);
+        Solution<LocalModel> ls;
+        while (p.run(ls)) {
+          int i;
+          Solution<LocalModel> fls;
+          if (p.stopped(i, fls)) { // job stopped
+            block b = fls.solution->b;
+            latest_local_solutions[b] = fls;
+            solved_blocks.insert(b);
+            break;
+          } else { // job finished
+            block b = ls.solution->b;
+            latest_local_solutions[b] = ls;
+            solved_blocks.insert(b);
           }
+        }
 
+        // Process the local solutions
+        for (block b : solved_blocks) {
+          Solution<LocalModel> ls = latest_local_solutions[b];
+          iteration_failed += ls.failures;
+          iteration_nodes += ls.nodes;
           // Store the result of solving the local problem
           latest_result[b] = ls.result;
 
           if (ls.result == LIMIT) {
             found_all_local = false;
-            if (options.verbose())
-              cerr << local(b) << "could not find solution" << endl;
             break;
           } else if (ls.result == UNSATISFIABLE) {
             found_all_local = false;
             unsat = true;
-            if (options.verbose())
-              cerr << local(b) << "could not find solution (unsatisfiable)"
-                   << endl;
             break;
-          } else {
+          } else { // a solution is found
             // Extend the global solution with the newly found local solution
             GECODE_NOT_NULL(ls.solution);
             gs.solution->apply_solution(ls.solution);
-            if (ls.result == CACHED_SOLUTION) {
-              if (options.verbose())
-                cerr << local(b) << "repeated solution" << endl;
-            } else if (ls.result == OPTIMAL_SOLUTION) {
+            if (ls.result == OPTIMAL_SOLUTION) {
               local_solutions[b].push_back(ls.solution);
               base->post_local_solution_cost(ls.solution);
             }

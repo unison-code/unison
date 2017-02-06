@@ -42,7 +42,6 @@ ModelOptions::ModelOptions(void)
 
     _output_file("-o", "output file", ""),
     _output_every_iteration("--output-every-iteration", "produce an output file every iteration (only works if an output file is set)", false),
-    _output_local_problems("--output-local-problems", "produce a parameters file for every local problem (only works if an output file is set)", false),
     _verbose("--verbose", "verbose mode", false),
 #ifdef GRAPHICS
     _gist_global("--gist-global", "run Gist for global problems", false),
@@ -61,6 +60,8 @@ ModelOptions::ModelOptions(void)
     _post_global_shaving_limit("--post-global-shaving-limit", "global shaving limit after global solver", 1000.0),
     _local_shaving_limit("--local-shaving-limit", "local shaving limit", 2000.0),
 
+    _total_threads("--total-threads", "total number of threads", 5),
+    _portfolio_threads("--portfolio-threads", "threads for each portfolio", 5),
     _decomposition("--decomposition", "run decomposition", true),
     _monolithic("--monolithic", "run monolithic solver", true),
     _initial_aggressiveness("--initial-aggressiveness", "initial aggressiveness", 0.0),
@@ -110,7 +111,6 @@ ModelOptions::ModelOptions(void)
 {
   add(_output_file);
   add(_output_every_iteration);
-  add(_output_local_problems);
   add(_verbose);
 #ifdef GRAPHICS
   add(_gist_global);
@@ -129,6 +129,8 @@ ModelOptions::ModelOptions(void)
   add(_post_global_shaving_limit);
   add(_local_shaving_limit);
 
+  add(_total_threads);
+  add(_portfolio_threads);
   add(_decomposition);
   add(_monolithic);
   add(_initial_aggressiveness);

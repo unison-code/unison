@@ -51,7 +51,6 @@ protected:
 
   Driver::StringValueOption _output_file; // Output file
   Driver::BoolOption _output_every_iteration; // Dump an output every iteration
-  Driver::BoolOption _output_local_problems; // Dump all local problems
   Driver::BoolOption _verbose; // Verbose mode
 #ifdef GRAPHICS
   Driver::BoolOption _gist_global; // Run Gist for global problems
@@ -74,6 +73,8 @@ protected:
 
   // Solving
 
+  Driver::UnsignedIntOption _total_threads; // Total number of threads
+  Driver::UnsignedIntOption _portfolio_threads; // Threads for each portfolio
   Driver::BoolOption _decomposition; // Run decomposition
   Driver::BoolOption _monolithic; // Run monolithic solver
   Driver::DoubleOption _initial_aggressiveness; // Initial aggressiveness
@@ -130,7 +131,6 @@ public:
 
   string output_file(void) const {return _output_file.value();}
   bool output_every_iteration(void) const {return _output_every_iteration.value();}
-  bool output_local_problems(void) const {return _output_local_problems.value();}
   bool verbose(void) const {return _verbose.value();}
 #ifdef GRAPHICS
   bool gist_global(void) const {return _gist_global.value();}
@@ -149,6 +149,8 @@ public:
   double post_global_shaving_limit(void) const {return _post_global_shaving_limit.value();}
   double local_shaving_limit(void) const {return _local_shaving_limit.value();}
 
+  unsigned int total_threads(void) const {return _total_threads.value();}
+  unsigned int portfolio_threads(void) const {return _portfolio_threads.value();}
   bool decomposition(void) const {return _decomposition.value();}
   bool monolithic(void) const {return _monolithic.value();}
   double initial_aggressiveness(void) const {return _initial_aggressiveness.value();}

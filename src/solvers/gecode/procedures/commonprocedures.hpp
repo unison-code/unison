@@ -61,6 +61,7 @@ public:
   T * solution;
   unsigned long int failures;
   unsigned long int nodes;
+  Solution() : result(UNKNOWN), solution(0), failures(0), nodes(0) {}
   Solution(SolverResult result1, T * solution1, unsigned long int failures1,
            unsigned long int nodes1) :
     result(result1), solution(solution1), failures(failures1), nodes(nodes1) {}

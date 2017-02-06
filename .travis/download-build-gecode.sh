@@ -1,7 +1,7 @@
 #!/bin/bash
-wget http://www.gecode.org/download/gecode-5.0.0.tar.gz
-tar -zxf gecode-5.0.0.tar.gz
-cd gecode-5.0.0
+./.accept-svn-certificate anonymous robcasloz@gmail.com https://svn.gecode.org/svn/gecode/trunk
+svn --non-interactive --username anonymous --password robcasloz@gmail.com checkout -r15375 https://svn.gecode.org/svn/gecode/trunk gecode-trunk
+cd gecode-trunk
 ./configure --disable-examples --disable-float --disable-flatzinc
 make
 cd -
