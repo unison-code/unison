@@ -664,7 +664,7 @@ int main(int argc, char* argv[]) {
       exit(EXIT_SUCCESS);
     }
 
-    if (!single_block) presolve_relaxation(base, go, lo);
+    if (!single_block) presolve_relaxation(base, lo);
 
     Gecode::SpaceStatus ss3 = base->status();
     if (ss3 == SS_FAILED) { // The problem has no solution

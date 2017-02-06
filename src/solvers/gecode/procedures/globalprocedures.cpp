@@ -99,68 +99,141 @@ void presolve_minimum_consumption(GlobalModel * base) {
   }
 }
 
-void
-presolve_relaxation(GlobalModel * base, GIST_OPTIONS * go, GIST_OPTIONS * lo) {
-  for (operation co : concat({NULL_OPERATION},
-                             base->input->callee_saved_stores)) {
-    for (activation_class ac : concat({NULL_ACTIVATION_CLASS},
-                                      base->input->AC)) {
+void presolve_relaxation(GlobalModel * base, GIST_OPTIONS * lo) {
+
+  class RelaxationResult {
+  public:
+    operation co;
+    operation oo;
+    block b;
+    int lb;
+    RelaxationResult() : co(NULL_OPERATION), oo(NULL_OPERATION), b(-1), lb(0) {}
+    RelaxationResult(operation co0, operation oo0, block b0) :
+      co(co0), oo(oo0), b(b0) {}
+  };
+
+  class PresolveRelaxationJob : public Support::Job<RelaxationResult> {
+  public:
+    LocalModel * ls;
+    GIST_OPTIONS * lo;
+    operation co;
+    activation_class ac;
+    block b;
+    PresolveRelaxationJob(LocalModel * ls0, GIST_OPTIONS * lo0,
+                          operation co0, activation_class ac0, block b0) :
+      ls(ls0), lo(lo0), co(co0), ac(ac0), b(b0) {}
+    virtual RelaxationResult run(int) {
+      operation oo = ac == NULL_ACTIVATION_CLASS ? NULL_OPERATION :
+        ls->input->activation_class_representative[ac];
+      RelaxationResult rs(co, oo, b);
+      ls->post_minimum_cost_branchers();
+#ifdef GRAPHICS
+      if (ls->options->gist_presolving() && ls->options->gist_block() == b)
+        Gist::bab(ls, *lo);
+#endif
+      Search::Stop * preStop = new_stop(2000, ls->options);
+      Search::Options preOptions;
+      preOptions.stop = preStop;
+      BAB<LocalModel> e(ls, preOptions);
+      while (LocalModel* nextls = e.next()) {
+        LocalModel * oldls = ls;
+        ls = nextls;
+        delete oldls;
+      }
+      int lb = 0;
+      if (!preStop->stop(e.statistics(), preOptions) &&
+          ls->status() == SS_SOLVED)
+        lb = ls->cost().val();
+      rs.lb = lb;
+      if (ls != NULL) delete ls;
+      delete preStop;
+      return rs;
+    }
+  };
+
+  class PresolveRelaxationJobs {
+  protected:
+    // global space from which the presolving problems are generated
+    GlobalModel * base;
+    // local visualization options (if any)
+    GIST_OPTIONS * lo;
+    // current job index
+    unsigned int k;
+    // pool of jobs
+    vector<tuple<operation, activation_class, block> > jobs;
+  public:
+    PresolveRelaxationJobs(GlobalModel * base0, GIST_OPTIONS * lo0) :
+      base(base0), lo(lo0), k(0) {
+      for (operation co : concat({NULL_OPERATION},
+                                 base->input->callee_saved_stores)) {
+        for (activation_class ac : concat({NULL_ACTIVATION_CLASS},
+                                          base->input->AC)) {
+          if (base->options->verbose()) {
+            operation oo = ac == NULL_ACTIVATION_CLASS ? NULL_OPERATION :
+              base->input->activation_class_representative[ac];
+            cerr << pre() << "computing lower bounds"
+                 << (co == NULL_OPERATION ? "" : (" assuming a(o" + to_string(co) + ")"))
+                 << (oo == NULL_OPERATION ? "" : (" assuming a(o" + to_string(oo) + ")"))
+                 << "..." << endl;
+          }
+          set<block> ac_blocks;
+          if (ac != NULL_ACTIVATION_CLASS)
+            for (operation o : base->input->activation_class_operations[ac])
+              ac_blocks.insert(base->input->oblock[o]);
+          for (block b : base->input->B) {
+            // If the activation class does not affect b, we can skip the relaxation
+            if (ac == NULL_ACTIVATION_CLASS || contains(ac_blocks, b)) {
+              jobs.push_back(make_tuple(co, ac, b));
+            }
+          }
+        }
+      }
+    }
+    bool operator ()(void) const {
+      return k < jobs.size();
+    }
+    PresolveRelaxationJob * job(void) {
+      auto j = jobs[k];
+      operation co = get<0>(j);
+      activation_class ac = get<1>(j);
+      block b = get<2>(j);
       operation oo = ac == NULL_ACTIVATION_CLASS ? NULL_OPERATION :
         base->input->activation_class_representative[ac];
-      if (base->options->verbose()) {
-        cerr << pre() << "computing lower bounds"
-             << (co == NULL_OPERATION ? "" : (" assuming a(o" + to_string(co) + ")"))
-             << (oo == NULL_OPERATION ? "" : (" assuming a(o" + to_string(oo) + ")"))
-             << "..." << endl;
-      }
-      GlobalModel * g = (GlobalModel*) base->clone();
+      GlobalModel * g = (GlobalModel*) base->clone(false);
       g->post_active_operation(co);
       g->post_active_operation(oo);
       g->status();
+      LocalModel * ls = g->make_local(b, IPL_DOM);
+      ls->status();
+      PresolveRelaxationJob * psj =
+        new PresolveRelaxationJob(ls, lo, co, ac, b);
+      k++;
+      return psj;
+    }
+  };
 
-#ifdef GRAPHICS
-      if (base->options->gist_presolving() && base->options->gist_global())
-        Gist::dfs(g, *go);
-#endif
-
-      set<block> ac_blocks;
-      if (ac != NULL_ACTIVATION_CLASS)
-        for (operation o : base->input->activation_class_operations[ac])
-          ac_blocks.insert(base->input->oblock[o]);
-
-      for (block b : base->input->B) {
-
-        // If the activation class does not affect b, we can skip the relaxation
-        if (ac != NULL_ACTIVATION_CLASS && !contains(ac_blocks, b)) continue;
-
-        LocalModel * ls = g->make_local(b, IPL_DOM);
-        ls->post_minimum_cost_branchers();
-#ifdef GRAPHICS
-        if (base->options->gist_presolving() && base->options->gist_block() == b)
-          Gist::bab(ls, *lo);
-#endif
-        Search::Stop * preStop = new_stop(2000, base->options);
-        Search::Options preOptions;
-        preOptions.stop = preStop;
-        BAB<LocalModel> e(ls, preOptions);
-        while (LocalModel* nextls = e.next()) {
-          LocalModel * oldls = ls;
-          ls = nextls;
-          delete oldls;
-        }
-        int lb = 0;
-        if (!preStop->stop(e.statistics(), preOptions) &&
-            ls->status() == SS_SOLVED)
-          lb = ls->cost().val();
-        if (ls != NULL) delete ls;
-        delete preStop;
-        base->post_lower_bounds(co, oo, b, lb);
-      }
-      delete g;
-      Gecode::SpaceStatus ss = base->status();
-      if (ss == SS_FAILED) return; // Proof that there is no solution
+  vector<RelaxationResult> results;
+  PresolveRelaxationJobs pjs(base, lo);
+  Support::RunJobs<PresolveRelaxationJobs, RelaxationResult>
+    p(pjs, base->options->total_threads());
+  RelaxationResult rr;
+  while (p.run(rr)) {
+    int i;
+    RelaxationResult frr;
+    if (p.stopped(i, frr)) { // job stopped
+      results.push_back(frr);
+      break;
+    } else { // job finished
+      results.push_back(rr);
     }
   }
+
+  for (RelaxationResult rs : results) {
+    base->post_lower_bounds(rs.co, rs.oo, rs.b, rs.lb);
+    Gecode::SpaceStatus ss = base->status();
+    if (ss == SS_FAILED) break; // Proof that there is no solution
+  }
+
   return;
 }
 
@@ -168,21 +241,21 @@ void presolve_shaving(GlobalModel * base) {
 
   class ShavingResults {
   public:
+    SolverResult result;
     block b;
     int local_cost_lb;
     vector<pair<int, InstructionAssignment> > forbidden;
-    ShavingResults (block b0) : b(b0), local_cost_lb(0) {}
+    ShavingResults() : result(UNKNOWN), b(-1), local_cost_lb(0) {}
+    ShavingResults(block b0) : ShavingResults() {b = b0;}
   };
 
-  class PresolveShavingJob : public Support::Job<Solution<ShavingResults> > {
+  class PresolveShavingJob : public Support::Job<ShavingResults> {
   public:
     GlobalModel * base;
     block b;
     PresolveShavingJob(GlobalModel * base0, block b0) : base(base0), b(b0) {}
-    virtual Solution<ShavingResults> run(int) {
-      Solution<ShavingResults> rs;
-      rs.result = UNKNOWN;
-      rs.solution = new ShavingResults(b);
+    virtual ShavingResults run(int) {
+      ShavingResults rs(b);
       if (base->input->ops[b].size() > base->options->shaving_threshold()) {
         if (base->options->verbose())
           cerr << pre() << "large block (" << base->input->ops[b].size()
@@ -207,14 +280,14 @@ void presolve_shaving(GlobalModel * base) {
         Gecode::SpaceStatus ss = l1->status();
         if (ss == SS_FAILED) {
           delete l1;
-          rs.solution->local_cost_lb = cost;
+          rs.local_cost_lb = cost;
         } else {
           vector<InstructionAssignment> forbidden =
             shave_instructions(l1, stop, stats);
           delete l1;
           if (forbidden.empty()) break;
           for (InstructionAssignment fb : forbidden)
-            rs.solution->forbidden.push_back(make_pair(cost, fb));
+            rs.forbidden.push_back(make_pair(cost, fb));
         }
         if (stop->stop(stats, dummyOpts)) {
           if (base->options->verbose())
@@ -243,46 +316,44 @@ void presolve_shaving(GlobalModel * base) {
       if (base->options->verbose())
         cerr << pre()
              << "computing instruction nogoods for b" << k << "..." << endl;
-      PresolveShavingJob * psj = new PresolveShavingJob(base, k);
+      GlobalModel * base0 = (GlobalModel*) base->clone(false);
+      PresolveShavingJob * psj = new PresolveShavingJob(base0, k);
       k++;
       return psj;
     }
   };
 
-  map<block, Solution<ShavingResults> > local_results;
+  map<block, ShavingResults> local_results;
   PresolveShavingJobs pjs(base);
-  Support::RunJobs<PresolveShavingJobs, Solution<ShavingResults> >
+  Support::RunJobs<PresolveShavingJobs, ShavingResults>
     p(pjs, base->options->total_threads());
-  Solution<ShavingResults> lr;
+  ShavingResults lr;
   while (p.run(lr)) {
     int i;
-    Solution<ShavingResults> flr;
+    ShavingResults flr;
     if (p.stopped(i, flr)) { // job stopped
-      block b = flr.solution->b;
+      block b = flr.b;
       local_results[b] = flr;
       break;
     } else { // job finished
-      block b = lr.solution->b;
+      block b = lr.b;
       local_results[b] = lr;
     }
   }
 
   for (block b : base->input->B) {
-    Solution<ShavingResults> srs = local_results[b];
+    ShavingResults srs = local_results[b];
     // A local problem failed, force failure in global
     if (srs.result == UNSATISFIABLE) {
       base->constrain_local_cost(b, IRT_LE, -1);
     } else {
-      ShavingResults * rs = srs.solution;
-      base->constrain_local_cost(b, IRT_GQ, rs->local_cost_lb);
-      for (pair<int, InstructionAssignment> fb : rs->forbidden)
+      base->constrain_local_cost(b, IRT_GQ, srs.local_cost_lb);
+      for (pair<int, InstructionAssignment> fb : srs.forbidden)
         base->post_instruction_nogood(fb.first, fb.second);
     }
     Gecode::SpaceStatus ss = base->status();
     if (ss == SS_FAILED) break;
   }
-
-  for (block b : base->input->B) delete local_results[b].solution;
 
   return;
 }
