@@ -723,6 +723,10 @@ int main(int argc, char* argv[]) {
 
   int presolving_time = ceil(t_pre.stop());
 
+  if (options.verbose()) {
+    cerr << pre() << "presolving time: " << presolving_time << " ms" << endl;
+  }
+
   Support::Timer t_solver;
   t_solver.start();
 
