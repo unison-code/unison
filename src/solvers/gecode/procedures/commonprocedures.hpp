@@ -44,6 +44,7 @@
 #include "models/options.hpp"
 #include "models/parameters.hpp"
 #include "models/model.hpp"
+#include "models/localmodel.hpp"
 
 using namespace std;
 using namespace Gecode;
@@ -115,6 +116,10 @@ int score(SolverResult r);
 // Gives assignments of operations to instructions forbidden by shaving
 vector<InstructionAssignment> shave_instructions(
   Model * base, Search::Stop * stop, Search::Statistics & stats);
+
+// Makes a new local space out of a global one
+LocalModel * make_local(const GlobalModel * gs, block b);
+LocalModel * make_local(const GlobalModel * gs, block b, IntPropLevel p_ipl);
 
 // register symmetry breaking
 vector<PresolverValuePrecedeChain>

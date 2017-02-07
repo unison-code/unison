@@ -93,7 +93,7 @@ public:
   // Gecode space methods
 
   LocalModel(Parameters * p_input, ModelOptions * p_options, IntPropLevel p_ipl,
-             GlobalModel * gs, block b);
+             const GlobalModel * gs, block b);
 
   LocalModel(bool share, LocalModel& cg);
 
@@ -143,7 +143,7 @@ public:
 
   void print(ostream & pOs) const;
 
-  void apply_solution(GlobalModel * gs);
+  void apply_solution(const GlobalModel * gs);
 
   bool equal_to(const LocalModel * ls) const;
 

@@ -797,14 +797,6 @@ void GlobalModel::compare(const Space& sp, std::ostream& pOs) const {
 
 }
 
-LocalModel * GlobalModel::make_local(block b) {
-  return make_local(b, ipl);
-}
-
-LocalModel * GlobalModel::make_local(block b, IntPropLevel p_ipl) {
-  return new LocalModel(input, options, p_ipl, this, b);
-}
-
 bool GlobalModel::equal_to(const GlobalModel * gs) const {
   for (global_congruence g : input->G) {
     operand p = input->representative[input->regular[g]];

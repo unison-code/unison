@@ -42,7 +42,7 @@ Solution<LocalModel> local_problem(GlobalModel * g1, block b) {
       cerr << local(b) << "large block (" << g1->input->ops[b].size()
            << " operations), reducing consistency level" << endl;
   }
-  LocalModel * l = g1->make_local(b, ipl);
+  LocalModel * l = make_local(g1, b, ipl);
   Gecode::SpaceStatus lss = l->status();
   SolverResult r;
   r = lss == SS_FAILED ? UNSATISFIABLE : UNKNOWN;

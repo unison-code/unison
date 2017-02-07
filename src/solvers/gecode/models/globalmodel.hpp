@@ -181,9 +181,6 @@ public:
 
   void compare(const Space& s, ostream& os) const;
 
-  LocalModel * make_local(block b);
-  LocalModel * make_local(block b, IntPropLevel p_ipl);
-
   // Whether gs contains the same global solution
   bool equal_to(const GlobalModel * gs) const;
 
