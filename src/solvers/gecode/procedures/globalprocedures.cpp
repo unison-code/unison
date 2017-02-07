@@ -214,8 +214,8 @@ void presolve_relaxation(GlobalModel * base, GIST_OPTIONS * lo) {
 
   vector<RelaxationResult> results;
   PresolveRelaxationJobs pjs(*base, lo);
-  Support::RunJobs<PresolveRelaxationJobs, RelaxationResult>
-    p(pjs, base->options->total_threads());
+  // FIXME: running in more threads yields segfaults :(
+  Support::RunJobs<PresolveRelaxationJobs, RelaxationResult> p(pjs, 1);
   RelaxationResult rr;
   while (p.run(rr)) {
     int i;
@@ -325,8 +325,8 @@ void presolve_shaving(GlobalModel * base) {
 
   map<block, ShavingResults> local_results;
   PresolveShavingJobs pjs(*base);
-  Support::RunJobs<PresolveShavingJobs, ShavingResults>
-    p(pjs, base->options->total_threads());
+  // FIXME: running in more threads yields segfaults :(
+  Support::RunJobs<PresolveShavingJobs, ShavingResults> p(pjs, 1);
   ShavingResults lr;
   while (p.run(lr)) {
     int i;
