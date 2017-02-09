@@ -1518,6 +1518,7 @@ void Model::post_kill_issue_cycle_constraints(block b) {
 	  operand p = input->definer[t];
 	  lats << lat(q, t);
 	  o1 = input->oper[p];
+	  post_kill_live_range(t);
 	}
         constraint(c(o2) == c(o1) + max(lats));
       } else {
@@ -1534,6 +1535,7 @@ void Model::post_kill_issue_cycle_constraints(block b) {
 	    operand p = input->definer[t];
 	    cs << var(c(input->oper[p]) + max(input->min_active_lat[p], lt(p)) + slack(p));
 	    os.push_back(input->oper[p]);
+	    post_kill_live_range(t);
 	  }
 	}
 	constraint(c(o2) == element(cs, y(q)) + lt(q) + slack(q));
@@ -1550,6 +1552,16 @@ void Model::post_kill_issue_cycle_constraints(block b) {
     }
 
 }
+
+void Model::post_kill_live_range(temporary t) {
+
+  // Functionally fix live range of given temp.
+
+  operand p = input->definer[t];
+  constraint(ld(t) == lt(p));
+
+}
+
 
 void Model::post_disjoint_congruent_operand_constraints(block b) {
 

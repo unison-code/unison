@@ -393,6 +393,7 @@ public:
   void post_minimum_temporary_duration_constraints(block b);
   void post_define_issue_cycle_constraints(block b);
   void post_kill_issue_cycle_constraints(block b);
+  void post_kill_live_range(temporary t);
   void post_disjoint_congruent_operand_constraints(block b);
   void post_disjoint_component_operand_constraints(block b);
   void post_space_capacity_constraints(block b);
