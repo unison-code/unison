@@ -4,6 +4,7 @@
  *
  *  Contributing authors:
  *    Mats Carlsson <matsc@sics.se>
+ *    Daniel Lundén <daniel.lunden@sics.se>
  *
  *  This file is part of Unison, see http://unison-code.github.io
  *
@@ -377,6 +378,7 @@ public:
   void post_data_precedences_constraints(block b);
   void post_processor_resources_constraints(block b);
   void post_fixed_precedences_constraints(block b);
+  void post_participative_instructions_constraints(block b);
 
   void post_improved_model_constraints(block b);
   void post_null_register_constraints(block b);

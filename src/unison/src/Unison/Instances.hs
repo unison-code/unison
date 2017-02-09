@@ -10,6 +10,9 @@ Instance declarations for the Unison program representation.
 Main authors:
   Roberto Castaneda Lozano <rcas@sics.se>
 
+Contributing authors:
+  Daniel Lundén <daniel.lunden@sics.se>
+
 This file is part of Unison, see http://unison-code.github.io
 -}
 module Unison.Instances
@@ -227,13 +230,13 @@ freqToTuple Nothing  = []
 instance (Show i, Show r) => Show (Attributes i r) where
     show (Attributes {aReads = reads, aWrites = writes, aCall = call,
                       aMem = mem, aActivators = act, aVirtualCopy = vc,
-                      aRemat = rm, aJTBlocks = jtbs, aBranchTaken = bt}) =
+                      aRemat = rm, aJTBlocks = jtbs, aBranchTaken = bt, aPart = pa}) =
         let attrs = catMaybes
                     [maybeShowReads reads, maybeShowWrites writes,
                      maybeShowCall call, maybeShowMem mem,
                      maybeShowActivators act, maybeShowVirtualCopy vc,
                      maybeShowRemat rm, maybeShowJTBlocks jtbs,
-                     maybeShowBranchTaken bt]
+                     maybeShowBranchTaken bt, maybeShowPart pa]
         in (if null attrs then ""
             else " (" ++ render (cs id attrs) ++ ")")
 
@@ -266,6 +269,9 @@ maybeShowBranchTaken (Just bt) = Just $ "taken: " ++ showBool bt
 
 showBool True  = "true"
 showBool False = "false"
+
+maybeShowPart Nothing = Nothing
+maybeShowPart (Just c) = Just $ showAttr "part" "" c
 
 showAttr :: Show a => String -> String -> a -> String
 showAttr n p a = n ++ ": " ++ p ++ show a

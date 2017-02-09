@@ -3,6 +3,9 @@
  *    Roberto Castaneda Lozano <rcas@sics.se>
  *    Mats Carlsson <matsc@sics.se>
  *
+ *  Contributing authors:
+ *    Daniel Lundén <daniel.lunden@sics.se>
+ *
  *  This file is part of Unison, see http://unison-code.github.io
  *
  *  Copyright (c) 2016, SICS Swedish ICT AB
@@ -57,6 +60,7 @@ Parameters::Parameters(JSONVALUE root) :
   minlive       (get_vector<int>(getRoot(root, "minlive"))),
   dep           (get_3d_vector<int>(getRoot(root, "dep"))),
   activators    (get_2d_vector<int>(getRoot(root, "activators"))),
+  part          (get_2d_vector<int>(getRoot(root, "part"))),
 
   // Processor parameters
 

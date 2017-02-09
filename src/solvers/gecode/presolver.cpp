@@ -3,6 +3,9 @@
  *    Roberto Castaneda Lozano <rcas@sics.se>
  *    Mats Carlsson <matsc@sics.se>
  *
+ *  Contributing authors:
+ *    Daniel Lundén <daniel.lunden@sics.se>
+ *
  *  This file is part of Unison, see http://unison-code.github.io
  *
  *  Copyright (c) 2016, SICS Swedish ICT AB
@@ -161,7 +164,8 @@ string produce_json(Parameters &input)
        << emit_json_line("successors", input.successors)
        << emit_json_line("instr_cond", input.instr_cond)
        << emit_json_line("value_precede_chains", input.value_precede_chains)
-       << emit_json_line_last("quasi_adjacent", input.quasi_adjacent)
+       << emit_json_line("quasi_adjacent", input.quasi_adjacent)
+       << emit_json_line_last("part", input.part)
        << "}\n";
   return json.str();
 }

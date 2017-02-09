@@ -10,6 +10,9 @@ Basic definitions for the Unison program representation.
 Main authors:
   Roberto Castaneda Lozano <rcas@sics.se>
 
+Contributing authors:
+  Daniel Lundén <daniel.lunden@sics.se>
+
 This file is part of Unison, see http://unison-code.github.io
 -}
 {-# LANGUAGE DeriveDataTypeable #-}
@@ -27,6 +30,7 @@ module Unison.Base
         RegisterSpaceName,
         InstructionId,
         Latency,
+        IssueCycle,
         Frequency,
         -- * Program types
         Function (..),
@@ -125,6 +129,8 @@ type RegisterSpaceName = String
 type InstructionId     = Integer
 -- | Latency of a precedence.
 type Latency           = Integer
+-- | Operation issue cycle
+type IssueCycle        = Integer
 -- | Execution frequency.
 type Frequency         = Integer
 
@@ -441,7 +447,9 @@ data Attributes i r = Attributes {
   aJTBlocks    :: [BlockId],
   -- | Whether the branch is predicted to be taken (only applies to conditional
   -- branches)
-  aBranchTaken :: Maybe Bool
+  aBranchTaken :: Maybe Bool,
+  -- | Whether the operation is participative and in what issue cycle
+  aPart        :: Maybe IssueCycle
 } deriving (Eq)
 
 -- | Object representing the side-effect of an 'Operation'. Operations can write

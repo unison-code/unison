@@ -10,11 +10,14 @@ Block Control-Flow Graph.
 Main authors:
   Roberto Castaneda Lozano <rcas@sics.se>
 
+Contributing authors:
+  Daniel Lundén <daniel.lunden@sics.se>
+
 This file is part of Unison, see http://unison-code.github.io
 -}
 module Unison.Graphs.BCFG (fromFunction, isLiveIn, isLiveOut,
 immediatePredecessor, immediateSuccessors, toNode, fromNode, eqvNeighborTemps,
-toDot) where
+toDot, predecessorIds, successorIds) where
 
 import Data.String
 import Data.List
@@ -71,6 +74,12 @@ label bcfg n =
 
 toNode = fromIntegral
 fromNode = toInteger
+
+predecessorIds :: BCFGraph i r -> BlockId -> [BlockId]
+predecessorIds bcfg id = map fromNode (pre bcfg $ toNode id)
+
+successorIds :: BCFGraph i r -> BlockId -> [BlockId]
+successorIds bcfg id = map fromNode (suc bcfg $ toNode id)
 
 -- | Given a list of list representing a partition of temporaries, gives all
 -- | pairs of temporaries (t1, t2) such that:

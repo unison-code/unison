@@ -3,6 +3,9 @@
  *    Roberto Castaneda Lozano <rcas@sics.se>
  *    Mats Carlsson <matsc@sics.se>
  *
+ *  Contributing authors:
+ *    Daniel Lundén <daniel.lunden@sics.se>
+ *
  *  This file is part of Unison, see http://unison-code.github.io
  *
  *  Copyright (c) 2016, SICS Swedish ICT AB
@@ -907,6 +910,7 @@ void Model::post_basic_model_constraints(block b) {
   post_initial_precedence_constraints(b);
   post_data_precedences_constraints(b);
   post_fixed_precedences_constraints(b);
+  post_participative_instructions_constraints(b);
 }
 
 void Model::post_connected_users_constraints(block b) {
@@ -1207,6 +1211,25 @@ void Model::post_fixed_precedences_constraints(block b) {
     constraint((a(d) && a(u)) >> (c(u) >= c(d) + element(dist, i(d))));
   }
 
+}
+
+void Model::post_participative_instructions_constraints(block b) {
+  // Certain operations are "participative", meaning that they have a
+  // preassigned issue cycle and must be active if scheduled before the last
+  // active operation in the block.
+
+  for (vector<int> v : input->part) {
+    operation p = v[0];
+    issue_cycle i = v[1];
+
+    if (input->oblock[p] != b)
+        continue;
+
+    constraint(a(p) >> (c(p) == i));
+
+    // cycle <= max cycle
+    constraint(a(p) == (i < c(input->out[b])));
+  }
 }
 
 void Model::post_improved_model_constraints(block b) {

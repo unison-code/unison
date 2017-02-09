@@ -10,6 +10,9 @@ Functions to construct the Unison program representation.
 Main authors:
   Roberto Castaneda Lozano <rcas@sics.se>
 
+Contributing authors:
+  Daniel Lundén <daniel.lunden@sics.se>
+
 This file is part of Unison, see http://unison-code.github.io
 -}
 module Unison.Constructors
@@ -145,12 +148,13 @@ mkBlock = Block
 
 mkDummyBlock = mkBlock (-1) mkNullBlockAttributes
 
-mkAttributes reads writes call mem acts vcopy remat jtblocks btaken =
+mkAttributes reads writes call mem acts vcopy remat jtblocks btaken part =
     Attributes {aReads = reads, aWrites = writes, aCall = call,
                 aMem = mem, aActivators = acts, aVirtualCopy = vcopy,
-                aRemat = remat, aJTBlocks = jtblocks, aBranchTaken = btaken}
+                aRemat = remat, aJTBlocks = jtblocks, aBranchTaken = btaken,
+                aPart = part}
 
-mkNullAttributes = mkAttributes [] [] Nothing Nothing [] False False [] Nothing
+mkNullAttributes = mkAttributes [] [] Nothing Nothing [] False False [] Nothing Nothing
 
 mkBlockAttributes entry exit return freq split =
     BlockAttributes {aEntry = entry, aExit = exit, aReturn = return,
