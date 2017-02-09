@@ -149,15 +149,23 @@ propagateInstruction _ _ _ (op, rc) =
 -- | previous width and the edge type and direction
 pathWidth w (_, _, CongruenceEdge _) = w
 pathWidth w (_, _, CopyEdge _) = w
-pathWidth w (p, _, LowEdge i) = lowHighWidth w p i
-pathWidth w (p, _, HighEdge i) = lowHighWidth w p i
-pathWidth w (p, _, CombineEdge i) =
-    if p `elem` useTempIds i then w * 2 else w `div` 2
+pathWidth w (p, _, LowEdge o) = lowHighWidth w p o
+pathWidth w (p, _, HighEdge o) = lowHighWidth w p o
+pathWidth w (p, _, SplitEdge o) = lowHighWidth w p o
+pathWidth w (p, _, CombineEdge o) =
+    if p `elem` useTempIds o then w * 2 else w `div` 2
 
-lowHighWidth w p i =
-    if p `elem` useTempIds i then w `div` 2 else w * 2
+lowHighWidth w p o =
+  if p `elem` useTempIds o then w `div` f else w * f
+  where f = widthFactor o
 
 useTempIds = map CG.toNodeId . concatMap extractTemps . oUses
+
+widthFactor o
+  | isLow o = 2
+  | isHigh o = 2
+  | isSplit2 o = 2
+  | isSplit4 o = 4
 
 -- | Gives the width of temporary t, trying to infer it first from instructions
 -- is and falling back to a general analysis only if needed

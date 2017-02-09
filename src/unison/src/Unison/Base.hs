@@ -303,6 +303,32 @@ data VirtualOperation r =
       -- | High definition
       oHighD :: Operand r
     } |
+    -- | Operation that defines two temporaries, to be assigned at the low and
+    -- high register atom(s) of its used temporary (can be seen as a combined
+    -- (high) and (low) operation)
+    Split2 {
+      -- | Double-width use
+      oSplit2U :: Operand r,
+      -- | Low definition
+      oSplit2LowD :: Operand r,
+      -- | High definition
+      oSplit2HighD :: Operand r
+    } |
+    -- | Operation that defines for temporaries, to be assigned at different
+    -- atom(s) of its used temporary (can be seen as two combined (split2)
+    -- operations)
+    Split4 {
+      -- | Four-width use
+      oSplit4U :: Operand r,
+      -- | Low-low definition
+      oSplit4LowLowD :: Operand r,
+      -- | Low-high definition
+      oSplit4LowHighD :: Operand r,
+      -- | High-low definition
+      oSplit4HighLowD :: Operand r,
+      -- | High-high definition
+      oSplit4HighHighD :: Operand r
+    } |
     -- | Operation representing an abstract copy from a source to a destination
     -- temporary which has not yet been assigned alternative copy instructions
     -- from the target processor
@@ -616,6 +642,8 @@ data VirtualT =
     CombineType |
     LowType |
     HighType |
+    Split2Type |
+    Split4Type |
     VirtualCopyType |
     FunType |
     FrameType FrameT
@@ -841,7 +869,9 @@ data CGEdgeLabel i r =
     -- | Low part of an operand
     LowEdge (BlockOperation i r) |
     -- | High part of an operand
-    HighEdge (BlockOperation i r)
+    HighEdge (BlockOperation i r) |
+    -- | Arbitrary part of an operand
+    SplitEdge (BlockOperation i r)
 -- | Label of a 'OGraph'.
 data OGEdgeLabel i r =
     -- | Flow of data across operands

@@ -185,6 +185,8 @@ void gen_calleesaved_spill(Parameters& input) {
 
 vector<temporary> callee_saved_temps(const Parameters& input) {
   vector<temporary> Temps;
+  if (input.calleesaved.empty() || input.callersaved.empty()) return Temps;
+
   set<register_atom> safe;
   for(register_atom r : input.calleesaved) safe.insert(r);
   for(const vector<int>& PR : input.preassign) {

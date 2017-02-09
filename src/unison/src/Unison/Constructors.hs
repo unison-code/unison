@@ -27,6 +27,8 @@ module Unison.Constructors
         mkCombine,
         mkLow,
         mkHigh,
+        mkSplit2,
+        mkSplit4,
         mkIn,
         mkOut,
         mkEntry,
@@ -94,6 +96,13 @@ mkCombine id lu hu d = mkSingleOperation id
 mkLow id is u d = mkSingleOperation id (Virtual Low {oLowIs = is, oLowU = u, oLowD = d})
 
 mkHigh id is u d = mkSingleOperation id (Virtual High {oHighIs = is, oHighU = u, oHighD = d})
+
+mkSplit2 id u ld hd =
+  mkSingleOperation id (Virtual Split2 {oSplit2U = u, oSplit2LowD = ld, oSplit2HighD = hd})
+
+mkSplit4 id u lld lhd hld hhd =
+  mkSingleOperation id (Virtual Split4 {oSplit4U = u, oSplit4LowLowD = lld, oSplit4LowHighD = lhd,
+                                                      oSplit4HighLowD = hld, oSplit4HighHighD = hhd})
 
 mkIn id ins = mkSingleOperation id (Virtual (Delimiter In {oIns = ins}))
 

@@ -110,6 +110,7 @@ instance (Eq i) => Eq (CGEdgeLabel i r) where
     (CombineEdge bi) == (CombineEdge bi')     = bi == bi'
     (LowEdge bi) == (LowEdge bi')             = bi == bi'
     (HighEdge bi) == (HighEdge bi')           = bi == bi'
+    (SplitEdge bi) == (SplitEdge bi')         = bi == bi'
     _ == _                                    = False
 
 instance (Eq i, Eq r) => Eq (OGEdgeLabel i r) where
@@ -186,7 +187,8 @@ instance (Show i) => Show (CGEdgeLabel i r) where
     show (CongruenceEdge b) = "congruence" ++ if b then " (boundary)" else ""
     show (CombineEdge bi)   = "combine (" ++ show (oId bi) ++ ")"
     show (LowEdge bi)       = "low (" ++ show (oId bi) ++ ")"
-    show (HighEdge bi)      = "high(" ++ show (oId bi) ++ ")"
+    show (HighEdge bi)      = "high (" ++ show (oId bi) ++ ")"
+    show (SplitEdge bi)     = "split (" ++ show (oId bi) ++ ")"
 
 instance (Show i, Show r) => Show (OGEdgeLabel i r) where
     show (DataFlowEdge o)        = "dataflow (" ++ show o ++ ")"

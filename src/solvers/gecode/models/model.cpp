@@ -291,6 +291,8 @@ bool Model::half_congruent(operand p, operand q) const {
       if (o1 == o2)
         if (input->type[o1] == LOW ||
             input->type[o1] == HIGH ||
+            input->type[o1] == SPLIT2 ||
+            input->type[o1] == SPLIT4 ||
             (input->type[o1] == COMBINE && input->use[p1] != input->use[q1]))
           return true;
     }
@@ -2366,6 +2368,7 @@ void Model::post_mandatory_reuse_constraints(block b) {
     }
 
     if (input->type[o] == LOW || input->type[o] == HIGH ||
+        input->type[o] == SPLIT2 || input->type[o] == SPLIT4 ||
 	input->type[o] == COMBINE) continue;
 
     if (p_preassigned) continue;

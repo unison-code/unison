@@ -296,6 +296,18 @@ oprAlignedTuples apf iif t2w o
     let u = oSingleUse o
     in [((oSingleDef o, iif i, u, iif i), operandWidth t2w u `div` 2)
        | i <- oInstructions o, not (isNullInstruction i)]
+  | isSplit2 o  =
+    let u = oSingleUse o
+        w = operandWidth t2w u `div` 2
+    in concat [[((oDefs o !! fromInteger idx, iif i, u, iif i), w * idx)
+               | idx <- [0..1]]
+              | i <- oInstructions o, not (isNullInstruction i)]
+  | isSplit4 o  =
+    let u = oSingleUse o
+        w = operandWidth t2w u `div` 4
+    in concat [[((oDefs o !! fromInteger idx, iif i, u, iif i), w * idx)
+               | idx <- [0..3]]
+              | i <- oInstructions o, not (isNullInstruction i)]
   | isCombine o =
     let d = oSingleDef o
     in concat

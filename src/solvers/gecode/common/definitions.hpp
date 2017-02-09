@@ -66,7 +66,7 @@ typedef int issue_cycle;
 
 enum OperationType
   { LINEAR, BRANCH, CALL, TAILCALL, IN, OUT, KILL, DEFINE, COMBINE, LOW, HIGH,
-    FUN, COPY };
+    SPLIT2, SPLIT4, FUN, COPY };
 
 const instruction NULL_INSTRUCTION = 0;
 const temporary NULL_TEMPORARY = -1;

@@ -152,8 +152,10 @@ parameters scaleFreq (_, dgs, _, _, _) Function {fCode = code} target =
       -- 8:  combine
       -- 9:  low
       -- 10: high
-      -- 11: function
-      -- 12: copy
+      -- 11: split2
+      -- 12: split4
+      -- 13: function
+      -- 14: copy
       -- example: type[17]: type of o17
       ("type", toJSON itype),
 
@@ -211,6 +213,7 @@ naturalTypes = [LinearType, BranchType, CallType, TailCallType]
 
 virtualTypes =
   map DelimiterType delimiterTypes ++
-  [KillType, DefineType, CombineType, LowType, HighType, FunType]
+  [KillType, DefineType, CombineType, LowType, HighType, Split2Type,
+   Split4Type, FunType]
 
 delimiterTypes = [InType, OutType]

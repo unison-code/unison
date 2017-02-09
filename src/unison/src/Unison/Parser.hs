@@ -607,6 +607,9 @@ mkVirtualOperation id _  DefineType ([], ds) = mkDefine id ds
 mkVirtualOperation id _  CombineType ([lu, hi], [d]) = mkCombine id lu hi d
 mkVirtualOperation id is LowType ([u], [d]) = mkLow id is u d
 mkVirtualOperation id is HighType ([u], [d]) = mkHigh id is u d
+mkVirtualOperation id _  Split2Type ([u], [ld, hd]) = mkSplit2 id u ld hd
+mkVirtualOperation id _  Split4Type ([u], [lld, lhd, hld, hhd]) =
+  mkSplit4 id u lld lhd hld hhd
 mkVirtualOperation id _  VirtualCopyType ([s], [d]) = mkVirtualCopy id s d
 mkVirtualOperation id _  FunType (us, ds) = mkFun id us ds
 mkVirtualOperation id _  (FrameType SetupType) ([s], []) = mkFrameSetup id s

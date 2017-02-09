@@ -51,8 +51,10 @@ int: TYPE_DEFINE  = 7;
 int: TYPE_COMBINE = 8;
 int: TYPE_LOW     = 9;
 int: TYPE_HIGH    = 10;
-int: TYPE_FUN     = 11;
-int: TYPE_COPY    = 12;
+int: TYPE_SPLIT2  = 11;
+int: TYPE_SPLIT4  = 12;
+int: TYPE_FUN     = 13;
+int: TYPE_COPY    = 14;
 
 %% problem parameters
 

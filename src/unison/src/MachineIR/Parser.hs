@@ -247,6 +247,8 @@ mirVirtualOpcode =
   try (mirVOpc ("EXTRACT_SUBREG", EXTRACT_SUBREG)) <|>
   try (mirVOpc ("LOW", LOW)) <|>
   try (mirVOpc ("HIGH", HIGH)) <|>
+  try (mirVOpc ("SPLIT2", SPLIT2)) <|>
+  try (mirVOpc ("SPLIT4", SPLIT4)) <|>
   try (mirVOpc ("IMPLICIT_DEF", IMPLICIT_DEF)) <|>
   try (mirVOpc ("INSERT_SUBREG", INSERT_SUBREG)) <|>
   try (mirVOpc ("REG_SEQUENCE", REG_SEQUENCE)) <|>

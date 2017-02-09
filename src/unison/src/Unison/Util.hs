@@ -461,6 +461,16 @@ mapToVirtualOprOperands f g o @ Low {oLowU = u, oLowD = d} =
   o {oLowU = mapSingle f u, oLowD = mapSingle g d}
 mapToVirtualOprOperands f g o @ High {oHighU = u, oHighD = d} =
   o {oHighU = mapSingle f u, oHighD = mapSingle g d}
+mapToVirtualOprOperands f g o @ Split2 {oSplit2U = u, oSplit2LowD = ld,
+                                        oSplit2HighD = hd} =
+  o {oSplit2U = mapSingle f u,
+     oSplit2LowD = mapSingle g ld, oSplit2HighD = mapSingle g hd}
+mapToVirtualOprOperands f g o @ Split4 {
+  oSplit4U = u, oSplit4LowLowD = lld, oSplit4LowHighD = lhd,
+  oSplit4HighLowD = hld, oSplit4HighHighD = hhd} =
+  o {oSplit4U = mapSingle f u, oSplit4LowLowD = mapSingle g lld,
+     oSplit4LowHighD = mapSingle g lhd, oSplit4HighLowD = mapSingle g hld,
+     oSplit4HighHighD = mapSingle g hhd}
 mapToVirtualOprOperands f g
   o @ VirtualCopy {oVirtualCopyS = u, oVirtualCopyD = d} =
   o {oVirtualCopyS = mapSingle f u, oVirtualCopyD = mapSingle g d}
@@ -914,6 +924,8 @@ oOprUses (Virtual (Define {})) = []
 oOprUses (Virtual (o @ Combine {})) = [oCombineLowU o, oCombineHighU o]
 oOprUses (Virtual (o @ Low {})) = [oLowU o]
 oOprUses (Virtual (o @ High {})) = [oHighU o]
+oOprUses (Virtual (o @ Split2 {})) = [oSplit2U o]
+oOprUses (Virtual (o @ Split4 {})) = [oSplit4U o]
 oOprUses (Virtual (o @ VirtualCopy {})) = [oVirtualCopyS o]
 oOprUses (Virtual (o @ Fun {})) = oFunctionUs o
 oOprUses (Virtual (Frame (o @ Setup {}))) = [oSetupU o]
@@ -936,6 +948,9 @@ oOprDefs (Virtual (o @ Define {})) = oDefineDs o
 oOprDefs (Virtual (o @ Combine {})) = [oCombineD o]
 oOprDefs (Virtual (o @ Low {})) = [oLowD o]
 oOprDefs (Virtual (o @ High {})) = [oHighD o]
+oOprDefs (Virtual (o @ Split2 {})) = [oSplit2LowD o, oSplit2HighD o]
+oOprDefs (Virtual (o @ Split4 {})) = [oSplit4LowLowD o, oSplit4LowHighD o,
+                                      oSplit4HighLowD o, oSplit4HighHighD o]
 oOprDefs (Virtual (o @ VirtualCopy {})) = [oVirtualCopyD o]
 oOprDefs (Virtual (o @ Fun {})) = oFunctionDs o
 oOprDefs (Virtual (Frame (Setup {}))) = []
@@ -1075,6 +1090,8 @@ oVirtualType Define {}      = DefineType
 oVirtualType Combine {}     = CombineType
 oVirtualType Low {}         = LowType
 oVirtualType High {}        = HighType
+oVirtualType Split2 {}      = Split2Type
+oVirtualType Split4 {}      = Split4Type
 oVirtualType VirtualCopy {} = VirtualCopyType
 oVirtualType Fun {}         = FunType
 oVirtualType (Frame o)      = FrameType (oFrameType o)
@@ -1123,6 +1140,8 @@ fromMachineInstruction itf oif
                   COPY             -> mkVirtualCopy id (head us') (head ds')
                   LOW              -> mkLow id [VirtualInstruction] (head us') (head ds')
                   HIGH             -> mkHigh id [VirtualInstruction] (head us') (head ds')
+                  SPLIT2           -> mkSplit2 id (head us') (ds' !! 0) (ds' !! 1)
+                  SPLIT4           -> mkSplit4 id (head us') (ds' !! 0) (ds' !! 1) (ds' !! 2) (ds' !! 3)
                   IMPLICIT_DEF     -> mkDefine id [head ds']
                   ENTRY            -> mkEntry id ds'
                   RETURN           -> mkReturn id us'
@@ -1168,6 +1187,10 @@ splitMachineVirtualOperands opcode operands
   | opcode `elem` [RETURN] = (operands, [])
 splitMachineVirtualOperands opcode [d, s]
   | opcode `elem` [COPY, LOW, HIGH] = ([s], [d])
+splitMachineVirtualOperands opcode [ld, hd, u]
+  | opcode `elem` [SPLIT2] = ([u], [ld, hd])
+splitMachineVirtualOperands opcode [lld, lhd, hld, hhd, u]
+  | opcode `elem` [SPLIT4] = ([u], [lld, lhd, hld, hhd])
 splitMachineVirtualOperands opcode operands
   | opcode `elem` [IMPLICIT_DEF] = ([], operands)
 splitMachineVirtualOperands opcode (operand:operands)
@@ -1281,6 +1304,8 @@ showVirtualOpc o
     | isCombineOpr      o = "combine"
     | isLowOpr          o = "low"
     | isHighOpr         o = "high"
+    | isSplit2Opr       o = "split2"
+    | isSplit4Opr       o = "split4"
     | isVirtualCopyOpr  o = "copy"
     | isFunOpr          o = "fun"
     | isFrameSetupOpr   o = "setup"
@@ -1294,6 +1319,8 @@ toVirtualType "define"  = DefineType
 toVirtualType "combine" = CombineType
 toVirtualType "low"     = LowType
 toVirtualType "high"    = HighType
+toVirtualType "split2"  = Split2Type
+toVirtualType "split4"  = Split4Type
 toVirtualType "phi"     = PhiType
 toVirtualType "copy"    = VirtualCopyType
 toVirtualType "fun"     = FunType
