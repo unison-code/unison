@@ -513,7 +513,7 @@ mapToVirtualOprInstructions :: InstructionsMap i -> VirtualOperation r -> Virtua
 mapToVirtualOprInstructions f o @ Kill {oKillIs = is} = o {oKillIs = applyToGeneral f is}
 mapToVirtualOprInstructions f o @ Low {oLowIs = is} = o {oLowIs = applyToGeneral f is}
 mapToVirtualOprInstructions f o @ High {oHighIs = is} = o {oHighIs = applyToGeneral f is}
-mapToVirtualOprInstructions _ _ = error ("unmatched mapToVirtualOprInstructions")
+mapToVirtualOprInstructions _ o = o
 
 applyToGeneral :: InstructionsMap i -> [GeneralInstruction] -> [GeneralInstruction]
 applyToGeneral f is =
