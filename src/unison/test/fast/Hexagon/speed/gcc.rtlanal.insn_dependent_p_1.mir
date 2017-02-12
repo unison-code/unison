@@ -109,7 +109,7 @@ body:             |
 ---
 unison-test-target: Hexagon
 unison-test-goal: speed
-unison-test-expected-cost: 18
+unison-test-expected-cost: 23
 unison-test-expected-proven: true
-unison-test-expected-has-solution: true
+unison-test-expected-has-solution: false
 ...
