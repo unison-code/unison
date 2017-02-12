@@ -245,8 +245,9 @@ data MachineOperand r =
     } |
   -- | Frame index corresponding to LLVM's @MO_FrameIndex@
   MachineFrameIndex {
-    mfiIndex :: Integer,
-    mfiFixed :: Bool
+    mfiIndex  :: Integer,
+    mfiFixed  :: Bool,
+    mfiOffset :: Integer
     } |
   -- | Frame object (internal use, does not correspond to any LLVM type)
   MachineFrameObject {

@@ -953,8 +953,12 @@ data TransformPhase =
     AugmentPreRW |
     -- | During augment phase, after adding read/write objects
     AugmentPostRW |
-    -- | During export phase
-    Export
+    -- | During export phase, before computing frame offsets
+    ExportPreOffs |
+    -- | During export phase, after computing frame offsets
+    ExportPostOffs |
+    -- | During export phase, before lowering frame objects
+    ExportPreLow
     deriving Show
 
 -- | Description of an objective goal to optimize for.

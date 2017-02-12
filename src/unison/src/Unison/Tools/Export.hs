@@ -33,6 +33,7 @@ import Unison.Tools.Export.BundleOperations
 import Unison.Tools.Export.SelectInstructions
 import Unison.Tools.Export.LiftFrameObjects
 import Unison.Tools.Export.ComputeFrameOffsets
+import Unison.Tools.Export.LowerFrameSize
 import Unison.Tools.Export.DirectFrame
 import Unison.Tools.Export.LowerFrameIndices
 import Unison.Tools.Export.RemoveNops
@@ -103,13 +104,16 @@ synthesizerTransformations (cycles, instructions, registers, temporaries)
     [(assignRegisters tight registers, "assignRegisters", True),
      (selectTemporaries temporaries, "selectTemporaries", True),
      (selectInstructions instructions, "selectInstructions", True),
-     (runTargetTransforms Export, "runTargetTransforms", True),
+     (runTargetTransforms ExportPreOffs, "runTargetTransforms", True),
      (liftFrameObjects, "liftFrameObjects", True),
      (computeFrameOffsets, "computeFrameOffsets", True),
+     (runTargetTransforms ExportPostOffs, "runTargetTransforms", True),
+     (lowerFrameSize, "lowerFrameSize", True),
      (directFrame, "directFrame", True),
-     (lowerFrameIndices, "lowerFrameIndices", True),
      (bundleOperations cycles, "bundleOperations", True),
      (removeRedundancies, "removeRedundancies", removeReds),
+     (runTargetTransforms ExportPreLow, "runTargetTransforms", True),
+     (lowerFrameIndices, "lowerFrameIndices", True),
      (finalizeOperations, "finalizeOperations", True),
      (removeNops, "removeNops", not keepNops),
      (unbundleSingletons, "unbundleSingletons", True)]

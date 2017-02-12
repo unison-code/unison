@@ -26,7 +26,12 @@ lowerFrameIndices f @ Function {fCode = code, fFixedStackFrame = fobjs,
   in f {fCode = code''}
 
 replaceFIsByImms fixed objs code =
-  let idxToOff = M.fromList [(mkBound (mkMachineFrameIndex (foIndex fo) fixed),
-                              mkBound (mkMachineImm (foOffset fo)))
-                            | fo <- objs]
-  in mapToOperationInBlocks (applyMapToOperands idxToOff) code
+  let idxToOff = M.fromList [(foIndex fo, foOffset fo) | fo <- objs]
+  in mapToOperationInBlocks
+     (mapToOperandIf (isFixedType fixed) (liftFI idxToOff)) code
+
+isFixedType fixed (Bound (MachineFrameIndex _ fixed' _)) = fixed == fixed'
+isFixedType _ _ = False
+
+liftFI idxToOff (Bound (MachineFrameIndex idx _ off)) =
+  mkBound (mkMachineImm $ (idxToOff M.! idx) + off)

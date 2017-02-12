@@ -324,13 +324,13 @@ mirFI = try fixedMirFI <|> try varMirFI
 fixedMirFI =
   do string "%fixed-stack."
      idx <- decimal
-     return (mkMachineFrameIndex idx True)
+     return (mkMachineFrameIndex idx True 0)
 
 varMirFI =
   do string "%stack."
      idx <- decimal
      optional (try fIName)
-     return (mkMachineFrameIndex idx False)
+     return (mkMachineFrameIndex idx False 0)
 
 mirMFS =
   do string "%frame-size"

@@ -431,6 +431,8 @@ type OperandsMap r = ([Operand r] -> [Operand r])
 mapToOperands :: OperandsMap r -> OperandsMap r -> BlockOperation i r -> BlockOperation i r
 mapToOperands f g bi @ SingleOperation {oOpr = o} =
   bi {oOpr = mapToOprOperands f g o}
+mapToOperands f g bu @ Bundle {bundleOs = os} =
+  bu {bundleOs = map (mapToOperands f g) os}
 
 mapToOprOperands :: OperandsMap r -> OperandsMap r -> Operation i r -> Operation i r
 mapToOprOperands f g (Natural o) = Natural (mapToNaturalOprOperands f g o)

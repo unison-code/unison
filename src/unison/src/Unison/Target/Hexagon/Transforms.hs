@@ -14,13 +14,17 @@ module Unison.Target.Hexagon.Transforms
      foldStackPointerCopy,
      addAlternativeInstructions,
      expandJumps,
-     addControlBarrier) where
+     addControlBarrier,
+     alignAllocFrame,
+     shiftFrameOffsets) where
 
 import Data.List
 import Data.Maybe
 import qualified Data.Map as M
 
+import MachineIR
 import Unison
+import Unison.Analysis.FrameOffsets
 import Unison.Target.Hexagon.Common
 import Unison.Target.Hexagon.Registers
 import Unison.Target.Hexagon.SpecsGen.HexagonInstructionDecl
@@ -198,6 +202,47 @@ addControlBarrier o @ SingleOperation {oOpr = Natural Linear {oIs = is},
        o {oAs = as {aReads = [], aWrites = [ControlSideEffect]}}
      else o
 addControlBarrier o = o
+
+-- Introduce "slack" frame object to align the offset of 'allocframe' to 8 bytes
+
+alignAllocFrame f @ Function {fFixedStackFrame = fobjs,
+                              fStackFrame = objs} =
+  let size  = frameSize (fobjs ++ objs)
+      r     = size `rem` 8
+  in case r of
+      0 -> f
+      _ ->
+        let fstIdx = newFrameIndex objs
+            fobjs' = map (reoffset r) fobjs
+            objs'  = map (reoffset r) objs ++
+                     [mkFrameObject fstIdx 0 (Just r) 4]
+        in f {fFixedStackFrame = fobjs', fStackFrame = objs'}
+
+-- Offset frame indices before (-8) and after (+d) 'allocframe'
+
+shiftFrameOffsets f @ Function {fCode = code,
+                                fFixedStackFrame = fobjs,
+                                fStackFrame = objs} =
+  let d     = maximum $ (map (abs . foOffset) (fobjs ++ objs)) ++ [0]
+      code' = map (shiftFrameOffsetsInBlock d) code
+  in f {fCode = code'}
+
+shiftFrameOffsetsInBlock d b @ Block {bCode = code} =
+  let ini = if isEntryBlock b then -8 else d
+      (_, code') = mapAccumL (shiftFrameOffsetsInOpr d) ini code
+  in b {bCode = code'}
+
+shiftFrameOffsetsInOpr d off o =
+  let o'   = mapToOperandIf always (shiftFrameOffset off) o
+      off' = if any isAllocFrameOpr (linearizeOpr o) then d else off
+  in (off', o')
+
+shiftFrameOffset off (Bound mfi @ (MachineFrameIndex {})) =
+  Bound $ mfi {mfiOffset = off}
+shiftFrameOffset _ p = p
+
+isAllocFrameOpr o =
+  isNatural o && targetInst (oInstructions o) == S2_allocframe
 
 -- | Gives alternative instructions with the same semantics
 

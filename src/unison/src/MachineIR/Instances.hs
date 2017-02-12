@@ -182,8 +182,9 @@ showMachineOperand (MachineSymbol name) = "<mcsymbol " ++ name ++ ">"
 showMachineOperand (MachineJumpTableIndex index) = jumpTablePrefix ++ show index
 showMachineOperand (MachineExternal name) = "$" ++ name
 showMachineOperand (MachineTemp id td) = "%" ++ show id ++ showTiedDef td
-showMachineOperand (MachineFrameIndex idx fixed) =
-  "%" ++ (if fixed then "fixed-" else "") ++ "stack." ++ show idx
+showMachineOperand (MachineFrameIndex idx fixed offset) =
+  "%" ++ (if fixed then "fixed-" else "") ++ "stack." ++ show idx ++
+  (if offset == 0 then "" else ("+" ++ show offset))
 showMachineOperand MachineFrameSize = "%frame-size"
 showMachineOperand (MachineMemPartition address partition) =
   "<0x" ++ showHex address "" ++ "> = !{!\"unison-memory-partition\", i32 " ++
@@ -227,7 +228,8 @@ instance Show r => Show (MachineOperand r) where
   show (MachineImm value) = inBraces ["imm", show value]
   show (MachineFPImm int fr exp) = inBraces ["fpi", show int, show fr, show exp]
   show (MachineBlockRef id) = inBraces ["mbb", show id]
-  show (MachineFrameIndex index fixed) = inBraces ["fi", show index, show fixed]
+  show (MachineFrameIndex index fixed offset) =
+    inBraces ["fi", show index, show fixed, show offset]
   show (MachineFrameObject off size align) =
     inBraces ["mfo", show off, show size, show align]
   show MachineFrameSize = inBraces ["mfs"]

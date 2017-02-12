@@ -40,5 +40,5 @@ toFrameIndexOperand ::  Ord r => M.Map (MachineOperand r) FrameObject ->
 toFrameIndexOperand = mapToOperandIf always . toFrameIndex
 
 toFrameIndex objMap (Bound mfo) | isMachineFrameObject mfo =
-  mkBound (mkMachineFrameIndex (foIndex (objMap M.! mfo)) True)
+  mkBound (mkMachineFrameIndex (foIndex (objMap M.! mfo)) True 0)
 toFrameIndex _ op = op

@@ -650,6 +650,8 @@ transforms ImportPreLift = [peephole extractReturnRegs,
                             mapToOperation addAlternativeInstructions]
 transforms AugmentPreRW = [peephole expandJumps]
 transforms AugmentPostRW = [mapToOperation addControlBarrier]
+transforms ExportPostOffs = [alignAllocFrame]
+transforms ExportPreLow = [shiftFrameOffsets]
 transforms _ = []
 
 -- | Latency of read-write dependencies

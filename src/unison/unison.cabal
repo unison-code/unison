@@ -178,6 +178,7 @@ Library
                   Unison.Tools.Export.SelectInstructions
                   Unison.Tools.Export.LiftFrameObjects
                   Unison.Tools.Export.ComputeFrameOffsets
+                  Unison.Tools.Export.LowerFrameSize
                   Unison.Tools.Export.DirectFrame
                   Unison.Tools.Export.LowerFrameIndices
                   Unison.Tools.Export.RemoveNops
