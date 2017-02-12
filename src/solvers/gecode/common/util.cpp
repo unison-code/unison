@@ -369,6 +369,8 @@ string show_instruction(instruction i, operation o, const Parameters * p) {
   case COMBINE: return "(combine)";
   case LOW:     return "(low)";
   case HIGH:    return "(high)";
+  case SPLIT2:  return "(split2)";
+  case SPLIT4:  return "(split4)";
   default:      return p->insname[i];
   }
 }

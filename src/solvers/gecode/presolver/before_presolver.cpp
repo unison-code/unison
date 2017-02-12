@@ -201,11 +201,11 @@ void BeforePresolver::gen_before(beforeset& B) {
 
 void BeforePresolver::before1(operand p, operand q, vector<PresolverBefore>& B) {
 
-  // LH <- {OperOpnds(o) | o in Input.O and OperType(o) in {LOW, HIGH}}
+  // LH <- {OperOpnds(o) | o in Input.O and OperType(o) in {LOW, HIGH, SPLIT2, SPLIT4}}
   vector<vector<operand> > LH;
   for(const operation o : input.O) {
     int type = input.type[o];
-    if(type == LOW || type == HIGH) {
+    if(type == LOW || type == HIGH || type == SPLIT2 || type == SPLIT4) {
       vector_insert(LH, input.operands[o]);
     }
   }

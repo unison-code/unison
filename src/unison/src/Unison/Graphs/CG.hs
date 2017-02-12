@@ -82,6 +82,16 @@ mkLEdges bi @ SingleOperation {oOpr = Virtual Low {oLowU = u, oLowD = d}} =
 mkLEdges bi @ SingleOperation {oOpr = Virtual High {oHighU = u, oHighD = d}} =
     mkEdges (HighEdge bi) u d
 
+mkLEdges bi @ SingleOperation {
+  oOpr = Virtual Split2 {oSplit2U = u, oSplit2LowD = ld, oSplit2HighD = hd}} =
+    concatMap (mkEdges (SplitEdge bi) u) [ld, hd]
+
+mkLEdges bi @ SingleOperation {
+  oOpr = Virtual Split4 {oSplit4U = u, oSplit4LowLowD = lld,
+                         oSplit4LowHighD = lhd, oSplit4HighLowD = hld,
+                         oSplit4HighHighD = hhd}} =
+    concatMap (mkEdges (SplitEdge bi) u) [lld, lhd, hld, hhd]
+
 mkLEdges po @ SingleOperation {oOpr = Virtual Phi {oPhiD = d}} =
     let us' = map fst (phiUses po)
     in concat [mkEdges (CopyEdge po) u d | u <- us']
@@ -141,4 +151,8 @@ cgEdgeAttributes (_, _, LowEdge i) =
 
 cgEdgeAttributes (_, _, HighEdge i) =
     [toLabel $ "high (o" ++ show (oId i) ++ ")", FontName graphFontName,
+     Style [SItem Dotted []]]
+
+cgEdgeAttributes (_, _, SplitEdge i) =
+    [toLabel $ "split (o" ++ show (oId i) ++ ")", FontName graphFontName,
      Style [SItem Dotted []]]

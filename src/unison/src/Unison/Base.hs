@@ -10,6 +10,9 @@ Basic definitions for the Unison program representation.
 Main authors:
   Roberto Castaneda Lozano <rcas@sics.se>
 
+Contributing authors:
+  Daniel Lundén <daniel.lunden@sics.se>
+
 This file is part of Unison, see http://unison-code.github.io
 -}
 {-# LANGUAGE DeriveDataTypeable #-}
@@ -27,6 +30,7 @@ module Unison.Base
         RegisterSpaceName,
         InstructionId,
         Latency,
+        IssueCycle,
         Frequency,
         -- * Program types
         Function (..),
@@ -125,6 +129,8 @@ type RegisterSpaceName = String
 type InstructionId     = Integer
 -- | Latency of a precedence.
 type Latency           = Integer
+-- | Operation issue cycle
+type IssueCycle        = Integer
 -- | Execution frequency.
 type Frequency         = Integer
 
@@ -297,6 +303,32 @@ data VirtualOperation r =
       -- | High definition
       oHighD :: Operand r
     } |
+    -- | Operation that defines two temporaries, to be assigned at the low and
+    -- high register atom(s) of its used temporary (can be seen as a combined
+    -- (high) and (low) operation)
+    Split2 {
+      -- | Double-width use
+      oSplit2U :: Operand r,
+      -- | Low definition
+      oSplit2LowD :: Operand r,
+      -- | High definition
+      oSplit2HighD :: Operand r
+    } |
+    -- | Operation that defines for temporaries, to be assigned at different
+    -- atom(s) of its used temporary (can be seen as two combined (split2)
+    -- operations)
+    Split4 {
+      -- | Four-width use
+      oSplit4U :: Operand r,
+      -- | Low-low definition
+      oSplit4LowLowD :: Operand r,
+      -- | Low-high definition
+      oSplit4LowHighD :: Operand r,
+      -- | High-low definition
+      oSplit4HighLowD :: Operand r,
+      -- | High-high definition
+      oSplit4HighHighD :: Operand r
+    } |
     -- | Operation representing an abstract copy from a source to a destination
     -- temporary which has not yet been assigned alternative copy instructions
     -- from the target processor
@@ -441,7 +473,9 @@ data Attributes i r = Attributes {
   aJTBlocks    :: [BlockId],
   -- | Whether the branch is predicted to be taken (only applies to conditional
   -- branches)
-  aBranchTaken :: Maybe Bool
+  aBranchTaken :: Maybe Bool,
+  -- | Whether the operation is participative and in what issue cycle
+  aPart        :: Maybe IssueCycle
 } deriving (Eq)
 
 -- | Object representing the side-effect of an 'Operation'. Operations can write
@@ -608,6 +642,8 @@ data VirtualT =
     CombineType |
     LowType |
     HighType |
+    Split2Type |
+    Split4Type |
     VirtualCopyType |
     FunType |
     FrameType FrameT
@@ -833,7 +869,9 @@ data CGEdgeLabel i r =
     -- | Low part of an operand
     LowEdge (BlockOperation i r) |
     -- | High part of an operand
-    HighEdge (BlockOperation i r)
+    HighEdge (BlockOperation i r) |
+    -- | Arbitrary part of an operand
+    SplitEdge (BlockOperation i r)
 -- | Label of a 'OGraph'.
 data OGEdgeLabel i r =
     -- | Flow of data across operands

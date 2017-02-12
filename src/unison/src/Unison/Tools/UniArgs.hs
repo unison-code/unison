@@ -63,7 +63,7 @@ data Uni =
                allExitOpsPreAssigned :: Bool, noComponentConflicts :: Bool,
                noCostOverflow :: Bool, noAmbiguousPhis :: Bool,
                allResourcesDefined :: Bool, allRegClassesReal :: Bool,
-               noReservedRegRedef :: Bool} |
+               noReservedRegRedef :: Bool, noEmptyBlock :: Bool} |
     Count     {targetName :: String, inFile :: FilePath, targetOption :: [String],
                outFile :: Maybe FilePath, singleRow :: Bool} |
     Legalize  {targetName :: String, inFile :: FilePath, targetOption :: [String],
@@ -173,7 +173,8 @@ lint' = Lint {
   noAmbiguousPhis          = True,
   allResourcesDefined      = True,
   allRegClassesReal        = True,
-  noReservedRegRedef       = True
+  noReservedRegRedef       = True,
+  noEmptyBlock             = True
 }
   &= help "Lint a Unison function"
 

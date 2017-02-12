@@ -49,11 +49,12 @@ int: TYPE_OUT     = 5;
 int: TYPE_KILL    = 6;
 int: TYPE_DEFINE  = 7;
 int: TYPE_COMBINE = 8;
-int: TYPE_PACK    = 9;
-int: TYPE_LOW     = 10;
-int: TYPE_HIGH    = 11;
-int: TYPE_FUN     = 12;
-int: TYPE_COPY    = 13;
+int: TYPE_LOW     = 9;
+int: TYPE_HIGH    = 10;
+int: TYPE_SPLIT2  = 11;
+int: TYPE_SPLIT4  = 12;
+int: TYPE_FUN     = 13;
+int: TYPE_COPY    = 14;
 
 %% problem parameters
 
@@ -67,6 +68,7 @@ int: MAXR;
 int: MAXB = max(index_set(bb_ops));
 int: MINL;
 int: MAXL;
+int: MAXCARD = max(p in 0..MAXP)(card(operand_temps[p]));
 
 set of int: conjunction = index_set(sets);
 
@@ -153,7 +155,6 @@ array[int] of set of int: temp_uses; % temp -> set of use operands
 
 %% see JSON packed, pinstrs
 array[int,int] of int: packed_pq;
-array[int] of set of int: packed_is;
 
 %% see JSON before
 array[int] of int: before_pred;
@@ -261,10 +262,11 @@ var 0..MAXF: obj;
 array[0..MAXO] of var bool: a;
 array[0..MAXO] of var 0..MAXI: i;
 array[0..MAXO] of var -1..MAXC: c;
-array[0..MAXP] of var -1..MAXT: y;
-array[0..MAXP] of var -1..MAXR: ry;
+array[0..MAXP] of var -1..MAXT: t;
+array[0..MAXP] of var -1..MAXR: rt;
 array[0..MAXP] of var MINL..MAXL: lt; % operand latency
 array[0..MAXP] of var -MAXL..MAXL: s; % global operand slack
+array[0..MAXP] of var 1..MAXCARD: y; % same as in gecode-solver
 array[-1..MAXT] of var -1..MAXR: r;
 array[-1..MAXT] of var -1..MAXC: ls;
 array[-1..MAXT] of var 0..MAXC: ld;
@@ -287,107 +289,30 @@ test fixedop(int: o) = (
 
 var 0..MAXI: insn(int: o) = if fixedop(o) then min(op_instructions[o]) else i[o] endif;
 
+predicate smart_in(var int: x, set of int: S) =
+  if card(S)=0 then
+    false
+  else if card(S)=1 then 
+    x = min(S)
+  else
+    x in S
+  endif endif;
+
 predicate sliced_diffn(array[int] of var int: x,
-                       array[int] of var int: y,
+                       array[int] of var int: z,
                        array[int] of var int: dx,
                        array[int] of var int: dy) =
-    diffn(x, y, [dx[t]*bool2int(dy[t]>0) | t in index_set(dx)], dy) :: domain
+  diffn(x, z, [dx[j]*bool2int(dy[j]>0) | j in index_set(dx)], dy) :: domain
 ;
 
-% stronger, non-scalable variant
-% predicate sliced_diffn(array[int] of var int: x,
-%                        array[int] of var int: y,
-%                        array[int] of var int: dx,
-%                        array[int] of var int: dy) =
-%     let {set of int: I = index_set(x),
-%          int: mint = min([lb(y[i]) | i in I]),
-%          int: maxt = max([ub(y[i])+ub(dy[i])-1 | i in I])} in (
-%         forall(t in mint..maxt)(
-%            let {array[I] of var int: x0,
-%                 array[I] of var int: x1,
-%                 array[I] of var int: x2,
-%                 array[I] of var int: x3,
-%                 array[I] of var int: x4,
-%                 array[I] of var int: x5,
-%                 array[I] of var int: x6,
-%                 array[I] of var int: x7} in (
-% 	       forall(j in I)(
-%                    let {var bool: precond = t>=y[j] /\ t<y[j]+dy[j]} in (
-% 		       ite(precond /\ dx[j]>=1, x[j]  , -8*j  , x0[j]) /\
-% 		       ite(precond /\ dx[j]>=2, x[j]+1, -8*j+1, x1[j]) /\
-% 		       ite(precond /\ dx[j]>=3, x[j]+2, -8*j+2, x2[j]) /\
-% 		       ite(precond /\ dx[j]>=4, x[j]+3, -8*j+3, x3[j]) /\
-% 		       ite(precond /\ dx[j]>=5, x[j]+4, -8*j+4, x4[j]) /\
-% 		       ite(precond /\ dx[j]>=6, x[j]+5, -8*j+5, x5[j]) /\
-% 		       ite(precond /\ dx[j]>=7, x[j]+6, -8*j+6, x6[j]) /\
-% 		       ite(precond /\ dx[j]>=8, x[j]+7, -8*j+7, x7[j])
-% 	           )
-% 	       ) /\
-% 	       all_different(x0 ++ x1 ++ x2 ++ x3 ++ x4 ++ x5 ++ x6 ++ x7) :: domain
-% 	   )
-%         )
-%     );
-
-
-% standard variant
 predicate disjoint1(array[int] of var int: x,
                       array[int] of var int: w) =
-	    diffn(x, [1 | i in index_set(x)], w, [1 | i in index_set(x)]) :: domain
+  diffn(x, [1 | i in index_set(x)], w, [1 | i in index_set(x)]) :: domain
 ;
-
-% stronger, non-scalable variant
-% predicate disjoint1(array[int] of var int: x,
-%                     array[int] of var int: w) = (
-%     let {int: maxw = max([ub(y) | y in w])} in (
-%         if maxw=1 then
-% 	    all_different(x) :: domain
-%         else if maxw=2 then
-%            let {set of int: isetx = index_set(x),
-%                 array[isetx] of var int: x1} in (
-% 	       forall(j in isetx)(
-% 		   ite(w[j]>=2, x[j]+1, -8*j+1, x1[j])
-%                ) /\
-% 	       all_different(x ++ x1) :: domain
-% 	   )
-%         else if maxw=4 then
-%            let {set of int: isetx = index_set(x),
-%                 array[isetx] of var int: x1,
-%                 array[isetx] of var int: x2,
-%                 array[isetx] of var int: x3} in (
-% 	       forall(j in isetx)(
-% 		   ite(w[j]>=2, x[j]+1, -8*j+1, x1[j]) /\
-% 		   ite(w[j]>=4, x[j]+2, -8*j+2, x2[j]) /\
-% 		   ite(w[j]>=4, x[j]+3, -8*j+3, x3[j])
-% 	       ) /\
-% 	       all_different(x ++ x1 ++ x2 ++ x3) :: domain
-% 	   )
-%         else if maxw=8 then
-%            let {set of int: isetx = index_set(x),
-%                 array[isetx] of var int: x1,
-%                 array[isetx] of var int: x2,
-%                 array[isetx] of var int: x3,
-%                 array[isetx] of var int: x4,
-%                 array[isetx] of var int: x5,
-%                 array[isetx] of var int: x6,
-%                 array[isetx] of var int: x7} in (
-% 	       forall(j in isetx)(
-% 		   ite(w[j]>=2, x[j]+1, -8*j+1, x1[j]) /\
-% 		   ite(w[j]>=4, x[j]+2, -8*j+2, x2[j]) /\
-% 		   ite(w[j]>=4, x[j]+3, -8*j+3, x3[j]) /\
-% 		   ite(w[j]>=8, x[j]+4, -8*j+4, x4[j]) /\
-% 		   ite(w[j]>=8, x[j]+5, -8*j+5, x5[j]) /\
-% 		   ite(w[j]>=8, x[j]+6, -8*j+6, x6[j]) /\
-% 		   ite(w[j]>=8, x[j]+7, -8*j+7, x7[j])
-% 	       ) /\
-% 	       all_different(x ++ x1 ++ x2 ++ x3 ++ x4 ++ x5 ++ x6 ++ x7) :: domain
-% 	   )
-%         else true endif endif endif endif
-%     )
-% );
 
 predicate noverlap(array[int] of var int: x,
                    array[int] of var int: w) = (
-	if min([lb(y) | y in w]) < max([ub(y) | y in w]) then
+	if min([lb(z) | z in w]) < max([ub(z) | z in w]) then
 	    disjoint1(x, w)
 	else if length(x) = 2 then
 	    x[1] != x[2]
@@ -396,21 +321,21 @@ predicate noverlap(array[int] of var int: x,
 	endif endif
     );
 
-predicate live_overlap(var int: i, var int: j) = (ls[i] < le[j] /\ ls[j] < le[i]);
+predicate live_overlap(var int: k, var int: j) = (ls[k] < le[j] /\ ls[j] < le[k]);
 
 predicate eval_literal(int: l) = (
     let {int: tag = literal_op[l],
          int: arg1 = literal_arg1[l],
          int: arg2 = literal_arg2[l]} in (
-	if tag=0 then y[arg1] = y[arg2]
-	else if tag=1 then y[arg1] = arg2
+	if tag=0 then t[arg1] = t[arg2]
+	else if tag=1 then t[arg1] = arg2
 	else if tag=2 then a[arg1]
 	else if tag=3 then i[arg1] = arg2
-	else if tag=4 then live_overlap(y[arg1],y[arg2])
+	else if tag=4 then live_overlap(t[arg1],t[arg2])
 	else if tag=5 then live_overlap(arg1,arg2)
 	else if tag=6 then r[arg1] in callersaved
 	else if tag=7 then i[arg1] != arg2
-	else if tag=8 then ry[arg1] in atom_regs[arg2]
+	else if tag=8 then rt[arg1] in atom_regs[arg2]
         else false endif endif endif endif endif endif endif endif endif
     )
 );
@@ -448,10 +373,10 @@ constraint
     forall(o in 0..MAXO where op_mand[o]) (a[o]) /\
     forall(o in 0..MAXO) (i[o] >= 1 <-> a[o]) /\
     forall(o in 0..MAXO) (c[o] >= 0 <-> a[o]) /\
-    forall(p in 0..MAXP where card(operand_temps[p])>1) (ry[p] = r[y[p]]) /\
-    forall(p in 0..MAXP where card(operand_temps[p])=1) (ry[p] = r[single_temp(p)]) /\
+    forall(p in 0..MAXP where card(operand_temps[p])>1) (rt[p] = [r[v] | v in operand_temps[p]][y[p]]) /\
+    forall(p in 0..MAXP where card(operand_temps[p])=1) (rt[p] = r[single_temp(p)]) /\
     forall(p in 0..MAXP where not (op_type[operand_definer[p]] in {TYPE_IN,TYPE_OUT})) % rematerialization
-          (y[p] >= 0 <-> a[operand_definer[p]]) /\
+          (t[p] >= 0 <-> a[operand_definer[p]]) /\
     forall(v in 0..MAXT) (ls[v]+ld[v] = le[v]) /\
     forall(v in 0..MAXT where op_type[temp_definer[v]] != TYPE_IN) % rematerialization
           (ls[v] = c[temp_definer[v]] /\
@@ -459,14 +384,14 @@ constraint
     forall(v in 0..MAXT where op_type[temp_definer[v]] = TYPE_IN) % rematerialization
           (ls[v] in -1 .. 0 /\
 	   (r[v] >= 0 <-> ls[v]=0) /\
-	   (r[v] >= 0 <-> y[temp_def[v]] = v)) /\
+	   (r[v] >= 0 <-> t[temp_def[v]] = v)) /\
     forall(v in 0..MAXT) (
 	let {set of int: pset = {p | p in 0..MAXP where can_use(p,v)},
 	     set of int: prange = 1..card(pset),
 	     array[prange] of int: parr = [p | p in pset],
 	     array[prange] of var -1..MAXC: carr} in (
-	    forall(i in prange)
-		  (ite((y[parr[i]]=v), c[operand_definer[parr[i]]], -1, carr[i])) /\
+	    forall(p in prange)
+		  (ite((t[parr[p]]=v), c[operand_definer[parr[p]]], -1, carr[p])) /\
 	    if card(pset)=1 /\ not temp_unsafe[v] then
 	      le[v] = carr[1]
 	    else
@@ -495,13 +420,14 @@ constraint
 %% domains
 constraint
     forall(o in 0..MAXO) (i[o] in op_instructions[o]) /\
-    forall(p in 0..MAXP) (y[p] in operand_temps[p]) /\
+    forall(p in 0..MAXP) (t[p] in operand_temps[p]) /\
+    forall(q in 0..MAXP) (operand_temps[q][y[q]] = t[q]) /\
     forall(v in 0..MAXT) (
         let {int: p = temp_def[v],
 	     set of int: rdom = array_union([atom_regs[operand_atom[p,q]] | q in 1..MAXI]),
     	     set of int: joker = if min(operand_temps[p])>=0 then {} else {-1} endif, % rematerialization
 	     set of int: mdom =
-	                 {memassign_regs[i] | i in index_set(memassign_temps) where memassign_temps[i]=v}} in (
+	                 {memassign_regs[j] | j in index_set(memassign_temps) where memassign_temps[j]=v}} in (
     	    if card(mdom)=0 then
     	      r[v] in rdom union joker
     	    else
@@ -516,13 +442,13 @@ constraint
           (let {int: o = operand_definer[p],
 	  	set of int: joker = if min(operand_temps[p])>=0 then {} else {-1} endif} in (
 	       if fixedop(o) then
-	           ry[p] in atom_regs[operand_atom[p,min(op_instructions[o])]] union joker % rematerialization
+	           rt[p] in atom_regs[operand_atom[p,min(op_instructions[o])]] union joker % rematerialization
 	       else
 		   forall(insn in op_instructions[o])
 			 (if insn=0 then
-			     i[o] = 0 -> ry[p] = -1
+			     i[o] = 0 -> rt[p] = -1
 			  else
-			     i[o] = insn -> ry[p] in atom_regs[operand_atom[p,insn]]
+			     i[o] = insn -> rt[p] in atom_regs[operand_atom[p,insn]]
 			  endif)
 	       endif
            )
@@ -531,13 +457,13 @@ constraint
 %% preassignments
 constraint
     forall(j in index_set(preassign_reg))
-          (ry[preassign_operand[j]] = preassign_reg[j]);
+          (rt[preassign_operand[j]] = preassign_reg[j]);
 
 %% congruences
 constraint
     forall(cgr in strictly_congr) (
         let {int: junior = min(cgr)} in (
-	    forall(j in cgr where j>junior) (ry[junior] = ry[j])
+	    forall(j in cgr where j>junior) (rt[junior] = rt[j])
  	)
     );
 
@@ -548,15 +474,15 @@ constraint
           ) (
         let {int: p = adj_from[j],
 	     int: q = adj_to[j]} in
-            (y[q] >= 0 -> y[p] >= 0 /\ ry[p] = ry[q]) /\
-            (y[p] >= 0 -> exists(k in index_set(adj_from) where adj_from[k] = p)(y[adj_to[k]] >= 0))
+            (t[q] >= 0 -> t[p] >= 0 /\ rt[p] = rt[q]) /\
+            (t[p] >= 0 -> exists(k in index_set(adj_from) where adj_from[k] = p)(t[adj_to[k]] >= 0))
     );
 
 constraint
     forall(j in index_set(quasi_adj_from)) (
         let {int: p = quasi_adj_from[j],
 	     int: q = quasi_adj_to[j]} in
-            y[q] >= 0 -> y[p] >= 0
+            t[q] >= 0 -> t[p] >= 0
     );
 
 % DISABLED, in favor of quasi_adjacent
@@ -570,7 +496,7 @@ constraint
 % 	     set of int: tsin = operand_temps[pin],
 % 	     set of int: tsc = {v | v in tsoutbutnull where op_type[temp_definer[v]] in {TYPE_IN,TYPE_COPY}}} in
 % 	    if min(tsout) = -1 /\ min(tsin) = -1 /\ op_type[oin] = TYPE_IN then
-% 	       y[pout] in tsc -> y[pin] >= 0
+% 	       t[pout] in tsc -> t[pin] >= 0
 % 	    else true endif
 %     );
 
@@ -578,7 +504,7 @@ constraint
 %?%     forall(j in index_set(adj_from)) (
 %?%         let {int: p = adj_from[j],
 %?% 	     int: q = adj_to[j]} in (
-%?%             ry[p] = -1 \/ ry[q] = -1 \/ ry[p] = ry[q] :: domain
+%?%             rt[p] = -1 \/ rt[q] = -1 \/ rt[p] = rt[q] :: domain
 %?%  	)
 %?%     );
 
@@ -586,7 +512,7 @@ constraint
 %?% constraint
 %?%     forall(j in index_set(adj_from)) (
 %?%         let {int: p = adj_from[j]} in (
-%?% 	    ry[p] != -1 <-> exists(k in index_set(adj_from) where adj_from[k] = p)(ry[adj_to[k]] != -1)
+%?% 	    rt[p] != -1 <-> exists(k in index_set(adj_from) where adj_from[k] = p)(rt[adj_to[k]] != -1)
 %?% 	)
 %?%     );
 
@@ -594,7 +520,7 @@ constraint
 %?% constraint
 %?%     forall(j in index_set(adj_to)) (
 %?%         let {int: p = adj_to[j]} in (
-%?% 	    ry[p] != -1 <-> forall(k in index_set(adj_to) where adj_to[k] = p)(ry[adj_from[k]] != -1)
+%?% 	    rt[p] != -1 <-> forall(k in index_set(adj_to) where adj_to[k] = p)(rt[adj_from[k]] != -1)
 %?% 	)
 %?%     );
 
@@ -606,23 +532,23 @@ constraint
 	     int: pi = aligned_usei[j],
 	     int: qi = aligned_defi[j],
 	     int: offset = aligned_dist[j]} in (
-	    i[operand_definer[p]] = pi /\ i[operand_definer[q]] = qi -> ry[p] + offset = ry[q] :: domain
+	    i[operand_definer[p]] = pi /\ i[operand_definer[q]] = qi -> rt[p] + offset = rt[q] :: domain
 	)
     );
 
 %% disjoint live ranges
 constraint
     forall(T in bb_temps) (
-	sliced_diffn([r[t] | t in T], [ls[t] | t in T], [temp_width[t] | t in T], [ld[t] | t in T])
+	sliced_diffn([r[v] | v in T], [ls[v] | v in T], [temp_width[v] | v in T], [ld[v] | v in T])
     );
 
 %% precedences (with conditions added by presolver)
 constraint
-    forall(i in index_set(precedence_pred)) (
-          let {int: pred = precedence_pred[i],
-	       int: succ = precedence_succ[i],
-	       int: dist = precedence_diff[i],
-	       set of conjunction: cond = precedence_cond[i]} in (
+    forall(j in index_set(precedence_pred)) (
+          let {int: pred = precedence_pred[j],
+	       int: succ = precedence_succ[j],
+	       int: dist = precedence_diff[j],
+	       set of conjunction: cond = precedence_cond[j]} in (
 	      eval_disjunction(cond) -> c[pred] + dist <= c[succ]
 	  )
     );
@@ -637,7 +563,7 @@ constraint
 		           if card(temps) = 1 then
 		               c[idef] + ld[v] >= c[iuse]
 		           else
-		               y[p] = v -> c[idef] + ld[v] >= c[iuse]
+		               t[p] = v -> c[idef] + ld[v] >= c[iuse]
 		   	   endif
 		       )
 		   )
@@ -648,8 +574,8 @@ constraint
 
 %% Model::global_operand
 test global_operand(int: p) = 
-  exists(i in index_set(adj_from))(adj_from[i]=p) \/
-  exists(i in index_set(adj_to))(adj_to[i]=p);
+  exists(j in index_set(adj_from))(adj_from[j]=p) \/
+  exists(j in index_set(adj_to))(adj_to[j]=p);
 
 %% Model::slack
 constraint
@@ -664,13 +590,13 @@ constraint
 %% Model::post_operand_latency_definition
 constraint
   forall(o in 0..MAXO, p in op_operands[o])(
-    let {array[int] of int: icol = [     lat_table[i,2]
-    		       	           |     i in index_set_1of2(lat_table)
-				   where lat_table[i,1] = o /\ lat_table[i,3] = p
+    let {array[int] of int: icol = [     lat_table[j,2]
+    		       	           |     j in index_set_1of2(lat_table)
+				   where lat_table[j,1] = o /\ lat_table[j,3] = p
 				   ],
-         array[int] of int: lcol = [     lat_table[i,4]
-    		       	           |     i in index_set_1of2(lat_table)
-				   where lat_table[i,1] = o /\ lat_table[i,3] = p
+         array[int] of int: lcol = [     lat_table[j,4]
+    		       	           |     j in index_set_1of2(lat_table)
+				   where lat_table[j,1] = o /\ lat_table[j,3] = p
 				   ],
          int: n = length(icol),
 	 bool: simple = if icol[1]=0 then
@@ -688,8 +614,9 @@ constraint
   );
 
 %% Model::post_temporary_use_latency_definition
-var -MAXL..3*MAXL: lat(int: q, int: t) =
-  let {int: p = temp_def[t]} in lt[p] + s[p] + lt[q] + s[q];
+var -MAXL..3*MAXL: lat(int: q, int: v) =
+  let {int: p = temp_def[v]} in
+    lt[p] + s[p] + lt[q] + s[q];
 
 %% data precedences with slack and everything
 
@@ -703,14 +630,13 @@ array[int] of var int: opnd_lbs(int: q) =
 predicate post_data_prec(int: q) =
     let {int: nalts = card(operand_temps[q]),
     	 int: u = operand_definer[q],
-         var 1..nalts: ky,
          array[int] of var int: lbs = opnd_lbs(q)} in
-      y[q] = operand_temps[q][ky] /\
-      c[u] >= lbs[ky];
+      t[q] = operand_temps[q][y[q]] /\
+      c[u] >= lbs[y[q]];
 
 %% Model::post_data_precedences_constraints
 constraint
-  forall(q in 0..MAXP where operand_use[q])(post_data_prec(q));
+  forall(q in 0..MAXP where operand_use[q] /\ op_type[operand_definer[q]]!=TYPE_KILL)(post_data_prec(q));
 
 %% Model::post_reverse_data_precedences_constraints
 %% DISABLED, because it seems to clash with my slack fixing stuff
@@ -727,7 +653,7 @@ constraint
 % constraint
 %   forall(o in 0..MAXO, p in op_operands[o] where not operand_use[p])(
 %     let {int: v = single_temp(p),
-%          array[int] of var int: acs = [ if y[q] = v then c[operand_definer[q]] - lat(q,v) - slack_of_global_definer(q) else 0 endif
+%          array[int] of var int: acs = [ if t[q] = v then c[operand_definer[q]] - lat(q,v) - slack_of_global_definer(q) else 0 endif
 %     		       	   	      | q in temp_uses[v]
 % 				      ]} in
 %       if r[v] >= 0 then
@@ -737,62 +663,62 @@ constraint
 
 %% resources
 
-test unit_res_dur_cap(int: r, set of int: active) = (
+test unit_res_dur_cap(int: res, set of int: active) = (
     forall(o in active)(
         fixedop(o) /\
-	res_con[r,min(op_instructions[o])]=1 /\
-	res_dur[r,min(op_instructions[o])]=1 /\
-	res_off[r,min(op_instructions[o])]=0
+	res_con[res,min(op_instructions[o])]=1 /\
+	res_dur[res,min(op_instructions[o])]=1 /\
+	res_off[res,min(op_instructions[o])]=0
     ) /\
-    res_cap[r]=1
+    res_cap[res]=1
 );
 
-test unit_res_dur(int: r, int: o) = (
-    forall(oi in op_instructions[o])(res_dur[r,oi]=1)
+test unit_res_dur(int: res, int: o) = (
+    forall(oi in op_instructions[o])(res_dur[res,oi]=1)
 );
 
-test zero_res_off(int: r, int: o) = (
-    forall(oi in op_instructions[o])(res_off[r,oi]=0)
+test zero_res_off(int: res, int: o) = (
+    forall(oi in op_instructions[o])(res_off[res,oi]=0)
 );
 
-int: max_res_dur(int: r, int: o) = (
-    max(oi in op_instructions[o])(res_dur[r,oi])
+int: max_res_dur(int: res, int: o) = (
+    max(oi in op_instructions[o])(res_dur[res,oi])
 );
 
-int: max_res_off(int: r, int: o) = (
-    max(oi in op_instructions[o])(res_off[r,oi])
+int: max_res_off(int: res, int: o) = (
+    max(oi in op_instructions[o])(res_off[res,oi])
 );
 
 constraint
-    forall(r in index_set(res_cap), b in 1..MAXB) (
+    forall(res in index_set(res_cap), b in 1..MAXB) (
         let {set of int: active = {o | o in bb_ops[b] where
 	                               exists(q in op_instructions[o])
-				             (res_con[r,q]>0)}} in (
+				             (res_con[res,q]>0)}} in (
             if card(active)<=1 then true
-            else if unit_res_dur_cap(r,active) then
+            else if unit_res_dur_cap(res,active) then
 	        all_different([c[o] | o in active])
             else if good_cumulative then
-		cumulative([ if zero_res_off(r,o) then c[o] else c[o]+res_off[r,insn(o)] endif
+		cumulative([ if zero_res_off(res,o) then c[o] else c[o]+res_off[res,insn(o)] endif
 			   | o in active
 			   ],
-			   [ if unit_res_dur(r,o) then 1 else res_dur[r,insn(o)] endif
+			   [ if unit_res_dur(res,o) then 1 else res_dur[res,insn(o)] endif
 			   | o in active
 			   ],
-			   [ res_con[r,insn(o)]
+			   [ res_con[res,insn(o)]
 			   | o in active
 			   ],
-			   res_cap[r]) :: domain
+			   res_cap[res]) :: domain
 	    else let {int: inf = min([lb(c[o]) | o in active]),
 	              int: sup = max([ub(c[o]) | o in active])
-		               + max([max_res_dur(r,o) | o in active])
-		               + max([max_res_off(r,o) | o in active])
+		               + max([max_res_dur(res,o) | o in active])
+		               + max([max_res_off(res,o) | o in active])
 			       } in (
 		     forall(j in inf..sup)(
 		         sum(o in active,
 			     io in op_instructions[o],
-			     k in j-res_dur[r,io]-res_off[r,io]+1..j-res_off[r,io]
-			     where res_con[r,io]>0 /\ k in lb(c[o])..ub(c[o]))
-			    (res_con[r,io]*bool2int(c[o]=k /\ i[o]=io)) <= res_cap[r]
+			     k in j-res_dur[res,io]-res_off[res,io]+1..j-res_off[res,io]
+			     where res_con[res,io]>0 /\ k in lb(c[o])..ub(c[o]))
+			    (res_con[res,io]*bool2int(c[o]=k /\ i[o]=io)) <= res_cap[res]
 		     )
 		 )
             endif endif endif
@@ -801,26 +727,27 @@ constraint
 
 
 %% packing constraints
+%% see Model::post_packing_constraints()
 constraint
-    forall(k in index_set_1of2(packed_pq)) (
-      let {int: p = packed_pq[k,1],
-           int: q = packed_pq[k,2],
-           set of int: insns = packed_is[k],
-	   int: pt = single_temp(p),
-	   int: qt = single_temp(q),
-	   int: w = temp_width[pt],
-	   int: pi = operand_definer[p],
-	   set of int: odd = {y | y in 0..MAXR where y mod (2*w) = w}} in
-	  (i[temp_definer[pt]] in insns <-> a[pi]) /\
-	  a[pi] -> ry[q] = if ry[p] in odd then ry[p]-w else ry[p]+w endif
-    );
+  forall(k in index_set_1of2(packed_pq)) (
+    let {int: p = packed_pq[k,1],
+	 int: q = packed_pq[k,2],
+	 int: w = temp_width[single_temp(p)],
+	 array[int] of int: modtab = [-1,-1]++[ if k=1 then v else v + w - 2*(v mod 2*w) endif
+					      | v in 0..MAXR, k in 1..2
+					      where v mod w = 0
+					      ],
+	 int: nt = length(modtab) div 2,
+	 } in
+       table([rt[p], rt[q]], array2d(1..nt, 1..2, modtab))
+  );
 
 %% activators
 constraint
   forall(x in index_set(activator_insns))(
     let {set of int: is = activator_insns[x],
          set of int: os = activator_ops[x]} in (
-	(a[min(os)] <-> exists(o in 0..MAXO)(i[o] in is)) /\
+	(a[min(os)] <-> exists(o in 0..MAXO)(smart_in(i[o],op_instructions[o] intersect is))) /\
 	forall(i2 in os where i2>min(os))(a[i2] <-> a[min(os)])
     )
   );
@@ -832,7 +759,7 @@ constraint
     forall(o in 0..MAXO where op_type[o] = TYPE_COPY)(
         let {int: src = min([p | p in op_operands[o] where operand_use[p]]),
 	     int: dst = min([p | p in op_operands[o] where not operand_use[p]])} in
-          a[o] -> ry[src] != ry[dst]
+          a[o] -> rt[src] != rt[dst]
     );
 
 %% dominating copies
@@ -843,21 +770,21 @@ constraint
 	     int: edsrc = min(op_operands[ed]),
 	     set of int: iset = dominate_instructions[k],
 	     set of int: tset = dominate_temps[k]} in (
-	    a[ing] \/ not a[ed] \/ i[ed] in iset \/ y[edsrc] in tset
+	    a[ing] \/ not a[ed] \/ smart_in(i[ed],iset) \/ smart_in(t[edsrc],tset)
  	)
     );
 
 %% disjoint registers
 constraint
     forall(R in diffreg) (
-        noverlap([ry[j] | j in R],
+        noverlap([rt[j] | j in R],
 	         [temp_width[min(operand_temps[j])] | j in R])
     );
 
 %% different temporaries
 constraint
     forall(T in difftemp) (
-        all_different([y[j] | j in T])
+        all_different([t[j] | j in T])
     );
 
 %% nogoods
@@ -877,14 +804,14 @@ constraint
 	     array[irange] of var 0..card(tset): count,
 	     array[irange] of int: tarr = [x | x in tset]} in (
 	    forall(j in irange)(count[j] >= bool2int(a[temp_definer[tarr[j]]])) /\
-	    global_cardinality([y[p] | p in 0..MAXP where can_use(p,tarr[1])],
+	    global_cardinality([t[p] | p in 0..MAXP where can_use(p,tarr[1])],
 		               tarr, count) :: domain
  	)
     )
   else
     forall(p in 0..MAXP where not operand_use[p])(
         let {int: v = single_temp(p)} in (
-            y[p]>=0 <-> member([y[q] | q in 0..MAXP where can_use(q,v)], v)
+            t[p]>=0 <-> member([t[q] | q in 0..MAXP where can_use(q,v)], v)
         )
     )
   endif;
@@ -892,16 +819,16 @@ constraint
 %% last use
 constraint
     forall(p in 0..MAXP where operand_use[p])
-          (y[p] != -1 -> le[y[p]] >= c[operand_definer[p]]) % rematerialization
+          (t[p]>=0 -> le[t[p]] >= c[operand_definer[p]]) % rematerialization
     ;
 
 %% disjoint live ranges projected on callee-saved regs
 constraint
     if good_cumulative then
 	forall(T in bb_temps) (
-	    cumulative([ls[t] | t in T],
-		       [ld[t] | t in T],
-		       [temp_width[t]*bool2int(r[t] in calleesaved) | t in T],
+	    cumulative([ls[v] | v in T],
+		       [ld[v] | v in T],
+		       [temp_width[v]*bool2int(r[v] in calleesaved) | v in T],
 		       card(calleesaved)) :: domain
 	)
     else true endif;
@@ -909,7 +836,7 @@ constraint
 %% temp symmetry breaking among interchangeable temporaries in their potential use operands
 constraint
     forall(j in index_set(domop_operands)) (
-        value_precede_chain(domop_temps[j], [y[o] | o in domop_operands[j]])
+        value_precede_chain(domop_temps[j], [t[o] | o in domop_operands[j]])
     );
 
 %% mandatory temporary reuse (hairy!)
@@ -927,7 +854,7 @@ constraint
 		  forall(atm in index_set(atom_regs))(
 		      let {set of int: insns = {ii | ii in op_instructions[I] where ii>0 /\ operand_atom[P,ii]=atm}} in (
 		          if (card(insns)>=1) then
-			      (y[Q]=T /\ i[I] in insns /\ r[T] in atom_regs[atm] -> y[P]=T)
+			      (t[Q]=T /\ smart_in(i[I],insns) /\ r[T] in atom_regs[atm] -> t[P]=T)
 			  else true endif
 		      )
 		  )
@@ -937,11 +864,11 @@ constraint
 
 %% before
 constraint
-    forall(i in index_set(before_pred)) (
-        let {int: p = before_pred[i],
-	     int: q = before_succ[i],
-	     set of int: cond = before_cond[i]} in (
-            eval_disjunction(cond) -> le[y[p]] <= ls[y[q]]
+    forall(j in index_set(before_pred)) (
+        let {int: p = before_pred[j],
+	     int: q = before_succ[j],
+	     set of int: cond = before_cond[j]} in (
+            eval_disjunction(cond) -> le[t[p]] <= ls[t[q]]
 	)
     );
 
@@ -960,27 +887,16 @@ constraint
     );
 
 constraint
-    forall(i in index_set(relation_ops)) (
-        let{set of int: ops = relation_ops[i],
-	    set of int: temps = relation_temps[i],
-	    int: nt = relation_ntuples[i],
-	    set of int: range = relation_range[i],
+    forall(j in index_set(relation_ops)) (
+        let{set of int: ops = relation_ops[j],
+	    set of int: temps = relation_temps[j],
+	    int: nt = relation_ntuples[j],
+	    set of int: range = relation_range[j],
 	    set of int: irange = 1..(card(ops)+card(temps)),
 	    array[irange] of var int: vars = [bool2int(a[j]) | j in ops]++
-	                                     [y[j] | j in temps]} in (
+	                                     [t[j] | j in temps]} in (
 	   table(vars, array2d(1..nt,irange,[ints[j] | j in range]))
 	)
-    );
-
-%% pack operations cannot be the only users of their free temporaries
-%% see Model::post_pack_sink_constraints()
-constraint
-    forall(v in 0..MAXT where op_type[temp_definer[v]]==TYPE_COPY)(
-        let {bool: used_by_pack = exists(p in temp_uses[v])(op_type[operand_definer[p]]==TYPE_PACK),
-	     set of int: uses_but_pack = {p | p in temp_uses[v] where op_type[operand_definer[p]]!=TYPE_PACK}} in
-	    if used_by_pack /\ card(uses_but_pack)>0 then
-	        y[temp_def[v]] >= 0 <-> exists(p in uses_but_pack)(y[p]=v)
-	    else true endif
     );
 
 %% combine
@@ -990,8 +906,8 @@ constraint
 	     int: src1 = opnds[1],
 	     int: src2 = opnds[2],
 	     int: def  = opnds[3]} in (
-	    minimum(ls[y[def]], [le[y[src1]], le[y[def]]]) /\
-	    minimum(ls[y[def]], [le[y[src2]], le[y[def]]])
+	    minimum(ls[t[def]], [le[t[src1]], le[t[def]]]) /\
+	    minimum(ls[t[def]], [le[t[src2]], le[t[def]]])
 	)
     );
 
@@ -1000,7 +916,7 @@ constraint
     forall(o in 0..MAXO where op_type[o] in {TYPE_HIGH, TYPE_LOW})(
 	let {int: src  = min(op_operands[o]),
 	     int: def  = max(op_operands[o])} in (
-	    minimum(ls[y[def]], [le[y[src]], le[y[def]]])
+	    minimum(ls[t[def]], [le[t[src]], le[t[def]]])
 	)
     );
 
@@ -1011,15 +927,14 @@ constraint
     );
 
 %% across
-% this version seems marginally better
 constraint
-    forall(i in index_set(across_op)) (
-	let {int: opi = across_op[i],
+    forall(j in index_set(across_op)) (
+	let {int: opi = across_op[j],
 	     int: maxwidth = max(temp_width),
-             set of int: regs = across_regs[i],
-             set of int: items = across_items[i],
+             set of int: regs = across_regs[j],
+             set of int: items = across_items[j],
 	     array[items] of int: cand =
-	         array1d(items, [across_item_temp[j] | j in items]),
+	         array1d(items, [across_item_temp[k] | k in items]),
 	     array[items] of var bool: active,
 	     array[items] of var -maxwidth*(MAXT+1)..MAXR: selected,
 	     array[int] of var int: allreg =
@@ -1027,71 +942,42 @@ constraint
 	     array[int] of int: allwidth =
 	         [1 | x in callersaved] ++
 	         [1 | x in regs] ++
-		 [temp_width[cand[j]] | j in items]} in (
-	    forall(j in items)(
-	        let {int: cj = cand[j]} in (
-		    (   active[j] <->
-			    eval_disjunction(across_item_cond[j]) \/
-			    (ls[cj] <= c[opi] /\ c[opi] < le[cj])) /\
-		    ite(active[j], r[cj], -maxwidth*(cj+1), selected[j])
+		 [temp_width[cand[k]] | k in items]} in (
+	    forall(k in items)(
+	        let {int: ck = cand[k]} in (
+		    (   active[k] <->
+			    eval_disjunction(across_item_cond[k]) \/
+			    (ls[ck] <= c[opi] /\ c[opi] < le[ck])) /\
+		    ite(active[k], r[ck], -maxwidth*(ck+1), selected[k])
 		)
 	    ) /\
 	    noverlap(allreg, allwidth)
 	)
     );
 
-% this version seems marginally worse
-% constraint
-%     forall(i in index_set(across_op)) (
-% 	let {int: opi = across_op[i],
-% 	     int: maxwidth = max(temp_width),
-%              set of int: regs = across_regs[i],
-%              set of int: items = across_items[i],
-% 	     array[items] of int: cand =
-% 	         array1d(items, [across_item_temp[j] | j in items]),
-% 	     array[items] of var bool: active,
-% 	     array[items] of var -1..MAXR: selected,
-% 	     array[int] of var int: allreg =
-% 	         [x | x in callersaved] ++ [x | x in regs] ++ selected,
-% 	     array[int] of var int: allwidth =
-% 	         [1 | x in callersaved] ++
-% 	         [1 | x in regs] ++
-% 		 [temp_width[cand[j]]*bool2int(active[j]) | j in items]} in (
-% 	    forall(j in items)(
-% 	        let {int: cj = cand[j]} in (
-% 		    (   active[j] <->
-% 			    eval_disjunction(across_item_cond[j]) \/
-% 			    (ls[cj] <= c[opi] /\ c[opi] < le[cj])) /\
-% 		    selected[j] = r[cj]
-% 		)
-% 	    ) /\
-% 	    noverlap(allreg, allwidth)
-% 	)
-%     );
-
 %% set_across
 constraint
-    forall(i in index_set(setacross_op)) (
-	let {int: opi = setacross_op[i],
-             set of int: regs = setacross_regs[i],
-             set of int: itemsset = setacross_tempsets[i],
+    forall(j in index_set(setacross_op)) (
+	let {int: opi = setacross_op[j],
+             set of int: regs = setacross_regs[j],
+             set of int: itemsset = setacross_tempsets[j],
 	     set of int: items = 1..card(itemsset),
-	     array[items] of set of int: cands = [sets[j] | j in itemsset],
+	     array[items] of set of int: cands = [sets[it] | it in itemsset],
 	     array[items] of var 0..MAXR: selected,
 	     array[items] of var 0..max(temp_width): width,
 	     array[int] of var int: allreg =
 	         [x | x in callersaved] ++ [x | x in regs] ++ selected,
 	     array[int] of var int: allwidth =
 	         [1 | x in callersaved] ++ [1 | x in regs] ++ width} in (
-	    forall(j in items)(
-	        let {set of int: cj = cands[j],
-		     array[int] of int: ws  = [temp_width[k] | k in cj],
-		     array[int] of var int: rs  = [r[k] | k in cj],
-		     array[int] of var int: lss = [ls[k] | k in cj],
-		     array[int] of var int: les = [le[k] | k in cj],
-		     var 1..card(cj): k} in (
-		  width[j] = ws[k] /\
-		  selected[j] = rs[k] /\
+	    forall(it in items)(
+	        let {set of int: cit = cands[it],
+		     array[int] of int: ws  = [temp_width[k] | k in cit],
+		     array[int] of var int: rs  = [r[k] | k in cit],
+		     array[int] of var int: lss = [ls[k] | k in cit],
+		     array[int] of var int: les = [le[k] | k in cit],
+		     var 1..card(cit): k} in (
+		  width[it] = ws[k] /\
+		  selected[it] = rs[k] /\
 		  lss[k] <= c[opi] /\ c[opi] < les[k]
 		)
 	    ) /\
@@ -1104,9 +990,9 @@ constraint
     if card(index_set(calleesaved_spill))>0 then
 	let {int: nrows = card(index_set_1of2(cs_spill_transpose)),
 	     int: ncols = card(index_set_2of2(cs_spill_transpose)),
-             set of int: css_ops = {cs_spill_transpose[i,j] | i in 1..nrows, j in 1..ncols},
-             set of int: preass_ops = {y | y in 0..MAXO where op_type[y] in {TYPE_IN,TYPE_CALL,TYPE_TAIL,TYPE_FUN}},
-	     set of int: tcands = {y | y in 0..MAXT where not (temp_definer[y] in css_ops union preass_ops)}} in (
+             set of int: css_ops = {cs_spill_transpose[j,k] | j in 1..nrows, k in 1..ncols},
+             set of int: preass_ops = {o | o in 0..MAXO where op_type[o] in {TYPE_IN,TYPE_CALL,TYPE_TAIL,TYPE_FUN}},
+	     set of int: tcands = {o | o in 0..MAXT where not (temp_definer[o] in css_ops union preass_ops)}} in (
 	    forall(j in 1..ncols) (
 	        let {int: theop = cs_spill_transpose[1,j],
 		     int: thepu = min(op_operands[theop]),
@@ -1114,7 +1000,6 @@ constraint
 		     int: thepd = temp_def[thetu],
 		     int: thea = min(k in index_set(preassign_reg) where preassign_operand[k]=thepd)(preassign_reg[k]),
 		     int: thew = temp_width[thetu]} in (
-		    % trace("a[\(theop)] <-> exists(ti in \(tcands))(r[ti]+temp_width[ti] > \(thea) && r[ti] in 0..\(thea+thew-1))\n",true)
 		    a[theop] <-> exists(ti in tcands)(r[ti]+temp_width[ti] > thea /\ r[ti] in 0..thea+thew-1)
 		)
 	    )
@@ -1124,8 +1009,8 @@ constraint
 %% break symmetries among which callee-saved to spill
 constraint
     if card(index_set(calleesaved_spill))>0 then
-	forall(i in index_set(calleesaved_spill)) (
-	    let {set of int: cgr = calleesaved_spill[i],
+	forall(j in index_set(calleesaved_spill)) (
+	    let {set of int: cgr = calleesaved_spill[j],
 		 int: cur = min(cgr)} in (
 		forall(x in cgr where x>cur) (a[cur] <-> a[x])
 	    )
@@ -1136,21 +1021,21 @@ constraint
 				 else {} endif,
 	     set of int: unspill = if nrows>=2 then {cs_spill_transpose[2,j] | j in 1..ncols}
 				   else {} endif} in (
-	    forall(i in 1..nrows)(
-		decreasing([a[cs_spill_transpose[i,j]] | j in 1..ncols]) /\
-		forall(j in 2..ncols)(
-		  if i=1 then % spill
-		    a[cs_spill_transpose[i,j]] -> c[cs_spill_transpose[i,j-1]] <= c[cs_spill_transpose[i,j]]
+	    forall(j in 1..nrows)(
+		decreasing([a[cs_spill_transpose[j,k]] | k in 1..ncols]) /\
+		forall(k in 2..ncols)(
+		  if j=1 then % spill
+		    a[cs_spill_transpose[j,k]] -> c[cs_spill_transpose[j,k-1]] <= c[cs_spill_transpose[j,k]]
 		  else % unspill
-		    a[cs_spill_transpose[i,j]] -> c[cs_spill_transpose[i,j-1]] >= c[cs_spill_transpose[i,j]]
+		    a[cs_spill_transpose[j,k]] -> c[cs_spill_transpose[j,k-1]] >= c[cs_spill_transpose[j,k]]
 		  endif
 		)
 	    ) /\
 	    if spill subset bb_ops[1] /\ unspill subset bb_ops[1] then
-		forall(j in 1..ncols)(
-		    let {int: u = cs_spill_transpose[2,j],
-			 int: s = cs_spill_transpose[1,j]} in (
-			a[u] -> c[s] < c[u]
+		forall(k in 1..ncols)(
+		    let {int: u = cs_spill_transpose[2,k],
+			 int: v = cs_spill_transpose[1,k]} in (
+			a[u] -> c[v] < c[u]
 		    )
 		)
 	    else true endif
@@ -1162,20 +1047,20 @@ constraint
   forall(x in index_set(value_precede_min))(
     let {set of int: js = value_precede_min[x]..value_precede_max[x],
          int: nt = sum(j in js)(temp_width[value_precede_temps[j]]),
-         array[1..nt] of var int: chain = [r[t]+d | j in js, t in {value_precede_temps[j]}, d in 0..temp_width[t]-1]} in
+         array[1..nt] of var int: chain = [r[v]+d | j in js, v in {value_precede_temps[j]}, d in 0..temp_width[v]-1]} in
 	value_precede_chain([v | v in value_precede_regs[x]], chain)
   );
 
 %% predecessors -- DISABLED
 constraint
   forall(x in index_set(predecessors_preds))(
-    min([c[y] | y in predecessors_preds[x]]) + predecessors_lat[x] <= c[predecessors_succ[x]]
+    min([c[o] | o in predecessors_preds[x]]) + predecessors_lat[x] <= c[predecessors_succ[x]]
   );
 
 %% successors -- DISABLED
 constraint
   forall(x in index_set(successors_succs))(
-     c[successors_pred[x]] + successors_lat[x] <= max([c[y] | y in successors_succs[x]])
+     c[successors_pred[x]] + successors_lat[x] <= max([c[o] | o in successors_succs[x]])
   );
 
 %% instr_cond
@@ -1184,7 +1069,7 @@ constraint
     let {int: ox = instr_cond[x,1],
          int: ix = instr_cond[x,2],
          int: px = instr_cond[x,3]} in (
-      i[ox] = ix -> ls[y[px]] = c[ox]
+      i[ox] = ix -> ls[t[px]] = c[ox]
     )
   );
 
@@ -1198,40 +1083,57 @@ constraint
 %% Model::post_minimum_temporary_duration_constraints
 constraint
   forall(o in 0..MAXO, dp in op_operands[o] where not operand_use[dp])(
-    let {int: t = single_temp(dp)} in
-	(y[dp]=t -> ld[t] >= temp_minlive[t]) /\
-	forall(up in temp_uses[t])(y[up]=t -> ld[t] >= lat(up,t))
+    let {int: v = single_temp(dp)} in
+	(t[dp]=v -> ld[v] >= temp_minlive[v]) /\
+	forall(up in temp_uses[v])(t[up]=v -> ld[v] >= lat(up,v))
   );
         
 %% Model::post_define_issue_cycle_constraints
 constraint
   forall(o in 0..MAXO where op_type[o]=TYPE_DEFINE)(
     let {set of int: js = {operand_definer[q] | p in op_operands[o],
-	                                        t in {single_temp(p)},
-    	     	     	                        q in temp_uses[t]},
-         array[int] of var int: lats = [lat(q,t) | p in op_operands[o],
-	                                           t in {single_temp(p)},
-    	     	     	                           q in temp_uses[t]]} in
+	                                        v in {single_temp(p)},
+    	     	     	                        q in temp_uses[v]},
+         array[int] of var int: lats = [lat(q,v) | p in op_operands[o],
+	                                           v in {single_temp(p)},
+    	     	     	                           q in temp_uses[v]]} in
       if card(js) = 1 then
         c[min(js)] = c[o] + max(lats)
       else true endif
   );
         
-%% Model::post_kill_pack_issue_cycle_constraints
+%% DOMINATION: live range of temp occurring in (kill)
+predicate kill_live_range(int: v) =
+  (ld[v] = lt[temp_def[v]]);
+
+%% Model::post_kill_issue_cycle_constraints
 constraint
-  forall(o2 in 0..MAXO where op_type[o2] in {TYPE_KILL,TYPE_PACK})(
-    let {set of int: cards = {card(real_temps(q)) | q in op_operands[o2]},
-	 array[int] of var int: lats = [lat(q,t) | q in op_operands[o2],
-						   t in {single_temp(q)}],
-	 set of int: o1s = {temp_definer[t] | q in op_operands[o2],
-					      t in {single_temp(q)}}} in
-      if cards = {1} then
-        if op_mand[o2] then
-          c[o2] = c[min(o1s)] + max(lats)
-        else
-          a[o2] -> (c[o2] = c[min(o1s)] + max(lats))
-        endif
-      else true endif
+  forall(o2 in 0..MAXO where op_type[o2] = TYPE_KILL)(
+    if op_mand[o2] then % e.g. after function call, multiple operands
+      let {array[int] of var int: lats = [lat(q,v) | q in op_operands[o2],
+						     v in {single_temp(q)}],
+	   array[int] of int: ts = [v | q in op_operands[o2],
+					v in {single_temp(q)}],
+	   set of int: o1s = {temp_definer[v] | q in op_operands[o2],
+						v in {single_temp(q)}},
+      } in
+        forall(v in ts)(kill_live_range(v)) /\
+	c[o2] = c[min(o1s)] + max(lats)
+    else % e.g. after move subject to pack, one operand, multiple temps
+      let {int: q1 = min(op_operands[o2]),
+           int: p1 = temp_def[single_temp(q1)],
+	   set of int: o1s = {temp_definer[v] | v in real_temps(q1)},
+	   array[int] of var int: issue = [-1] ++ [c[temp_definer[v]] + lat(q1,v) | v in real_temps(q1)],
+      } in
+        card(op_operands[o2]) = 1 /\ % sanity check
+        forall(v in real_temps(q1))(kill_live_range(v)) /\
+	c[o2] = issue[y[q1]] /\
+	if card(real_temps(q1))=1 then
+	  t[p1] = t[q1] /\ rt[p1] = rt[q1]
+	else
+	  sum(o in o1s)(a[o]) <= 1
+	endif
+    endif
   );
 
 %% Model::post_slack_lower_bound_constraints
@@ -1243,8 +1145,8 @@ constraint
 % 	 array[int] of var int: inlats = [lt[q] | p in ins,
 % 						  q in temp_uses[single_temp(p)]],
 % 	 array[int] of var int: outlats = [lt[q] | p in outs,
-% 						   t in real_temps(p),
-% 						   q in {temp_def[t]}]} in
+% 						   v in real_temps(p),
+% 						   q in {temp_def[v]}]} in
 %       if (length(ins)>0) then
 % 	let {var int: maxinlat = max(inlats)} in
 % 	  forall(p in ins)(trace("s[\(p)] >= -max(\(inlats))\n", s[p] >= - maxinlat))
@@ -1261,11 +1163,11 @@ constraint
 constraint
   forall(opnds in congr)(
     let {set of int: inps = {p | p in opnds where op_type[operand_definer[p]] = TYPE_IN},
-         array[int] of var int: ubs = [ if y[p2]=single_temp(p) then c[operand_definer[p2]] - lt[p2] - s[p2] - lt[p] else MAXC endif
+         array[int] of var int: ubs = [ if t[p2]=single_temp(p) then c[operand_definer[p2]] - lt[p2] - s[p2] - lt[p] else MAXC endif
 	 	                      | p in inps,
 				        p2 in p..MAXP
 				      where can_use(p2,single_temp(p))
-				      ]} in				      
+				      ]} in
       if card(inps)>0 then
         s[min(inps)] = min([MAXL]++ubs)
       else true endif
@@ -1277,13 +1179,16 @@ output
     ["\"cost\": "]   ++ [show(obj)] ++ ["\n"] ++
     ["\"cycles\": "]      ++ [show(c)]   ++ ["\n"] ++
     ["\"instructions\": "]  ++ [show(i)]   ++ ["\n"] ++
-    ["\"temporaries\": "] ++ [show(y)]   ++ ["\n"] ++
-    ["\"registers\": "]   ++ [show([r[t] | t in 0..MAXT])] ++ ["\n"] ++
-    ["\"live start\": "]   ++ [show([ls[t] | t in 0..MAXT])] ++ ["\n"] ++
-    ["\"live duration\": "]   ++ [show([ld[t] | t in 0..MAXT])] ++ ["\n"] ++
-    ["\"live end\": "]   ++ [show([le[t] | t in 0..MAXT])] ++ ["\n"] ++
+    ["\"temporaries\": "] ++ [show(t)]   ++ ["\n"] ++
+    ["\"registers\": "]   ++ [show([r[v] | v in 0..MAXT])] ++ ["\n"] ++
+    ["\"live start\": "]   ++ [show([ls[v] | v in 0..MAXT])] ++ ["\n"] ++
+    ["\"live duration\": "]   ++ [show([ld[v] | v in 0..MAXT])] ++ ["\n"] ++
+    ["\"live end\": "]   ++ [show([le[v] | v in 0..MAXT])] ++ ["\n"] ++
     % handy for debugging
-    % ["lt[\(p)] = \(lt[p])\n" | p in 0..MAXP] ++
-    % ["s[\(p)] = \(s[p])\n" | p in 0..MAXP where global_operand(p)] ++
+    % ["\"active\": "]      ++ [show(a)]   ++ ["\n"] ++
+    % ["\"regs of temporaries\": "] ++ [show(rt)]   ++ ["\n"] ++
+    % ["\"lat\": "] ++ [show(lt)]   ++ ["\n"] ++
+    % ["\"slack\": "] ++ [show(s)]   ++ ["\n"] ++
+    % ["\"temp nb\": "] ++ [show(y)]   ++ ["\n"] ++
     % ["c[\(o)] = \(c[o])\n" | o in 0..MAXO where fix(c[o])>=0] ++
     [];

@@ -118,6 +118,14 @@ vector<InstructionAssignment> shave_instructions(Model * base,
   return forbidden;
 }
 
+LocalModel * make_local(const GlobalModel * gs, block b) {
+  return make_local(gs, b, gs->ipl);
+}
+
+LocalModel * make_local(const GlobalModel * gs, block b, IntPropLevel p_ipl) {
+  return new LocalModel(gs->input, gs->options, p_ipl, gs, b);
+}
+
 bool infinite_register_atom(Parameters & input, register_atom ra) {
   for (register_space rs : input.RS)
     if (input.infinite[rs] &&

@@ -42,7 +42,7 @@ Solution<LocalModel> local_problem(GlobalModel * g1, block b) {
       cerr << local(b) << "large block (" << g1->input->ops[b].size()
            << " operations), reducing consistency level" << endl;
   }
-  LocalModel * l = g1->make_local(b, ipl);
+  LocalModel * l = make_local(g1, b, ipl);
   Gecode::SpaceStatus lss = l->status();
   SolverResult r;
   r = lss == SS_FAILED ? UNSATISFIABLE : UNKNOWN;
@@ -83,7 +83,8 @@ solve_generic_portfolio(LocalModel * base, GIST_OPTIONS * lo, int iteration) {
     new_stop(base->options->local_limit(), base->options);
   Search::Options localOptions;
   localOptions.stop = localStop;
-  int n = base->options->local_portfolio().size();
+  int n = std::min(base->options->portfolio_threads(),
+                   (unsigned int) base->options->local_portfolio().size());
   localOptions.assets = n;
   localOptions.threads = n;
 

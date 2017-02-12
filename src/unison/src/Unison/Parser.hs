@@ -10,6 +10,9 @@ Support to parse Unison functions.
 Main authors:
   Roberto Castaneda Lozano <rcas@sics.se>
 
+Contributing authors:
+  Daniel Lundén <daniel.lunden@sics.se>
+
 This file is part of Unison, see http://unison-code.github.io
 -}
 {-# LANGUAGE FlexibleContexts #-}
@@ -60,7 +63,7 @@ data LsOperand r =
 data LsAttributes r =
   LsAttributes (LsAttribute r) (LsAttribute r) (LsAttribute r) (LsAttribute r)
                (LsAttribute r) (LsAttribute r) (LsAttribute r) (LsAttribute r)
-               (LsAttribute r)
+               (LsAttribute r) (LsAttribute r)
   deriving (Show)
 
 data LsAttribute r =
@@ -72,7 +75,8 @@ data LsAttribute r =
   LsVirtualCopy Bool |
   LsRemat Bool |
   LsJTBlocks [LsOperand r] |
-  LsBranchTaken (Maybe Bool)
+  LsBranchTaken (Maybe Bool) |
+  LsPart (Maybe IssueCycle)
   deriving (Show)
 
 data LsRWObject =
@@ -275,17 +279,19 @@ attributes =
                             (fetchAttr (LsVirtualCopy False) isLsVirtualCopy attrs)
                             (fetchAttr (LsRemat False) isLsRemat attrs)
                             (fetchAttr (LsJTBlocks []) isLsJTBlocks attrs)
-                            (fetchAttr (LsBranchTaken Nothing) isLsBranchTaken attrs))
+                            (fetchAttr (LsBranchTaken Nothing) isLsBranchTaken attrs)
+                            (fetchAttr (LsPart Nothing) isLsPart attrs))
 
 attribute = try (sideEffectListAttribute "reads" LsReads)
             <|> sideEffectListAttribute "writes" LsWrites
-            <|> operationIdAttribute "call" (LsAttrCall . Just)
+            <|> try (operationIdAttribute "call" (LsAttrCall . Just))
             <|> integerAttribute "mem" (LsMem . Just)
             <|> instructionListAttribute "activators" LsActivators
             <|> simpleAttribute "virtualcopy" (LsVirtualCopy True)
             <|> simpleAttribute "remat" (LsRemat True)
             <|> operandListAttribute "jtblocks" LsJTBlocks
             <|> boolAttribute "taken" (LsBranchTaken . Just)
+            <|> integerAttribute "part" (LsPart . Just)
 
 sideEffectListAttribute = attributeList sideEffect
 
@@ -522,6 +528,9 @@ isLsJTBlocks _              = False
 isLsBranchTaken (LsBranchTaken _) = True
 isLsBranchTaken _              = False
 
+isLsPart (LsPart _) = True
+isLsPart _           = False
+
 toFunction target
   (cmms, name, body, cs, ffobjs, fobjs, sp, (jtk, jt), goal, src) =
   let cms   = [cm | (LsComment cm) <- cmms]
@@ -598,6 +607,9 @@ mkVirtualOperation id _  DefineType ([], ds) = mkDefine id ds
 mkVirtualOperation id _  CombineType ([lu, hi], [d]) = mkCombine id lu hi d
 mkVirtualOperation id is LowType ([u], [d]) = mkLow id is u d
 mkVirtualOperation id is HighType ([u], [d]) = mkHigh id is u d
+mkVirtualOperation id _  Split2Type ([u], [ld, hd]) = mkSplit2 id u ld hd
+mkVirtualOperation id _  Split4Type ([u], [lld, lhd, hld, hhd]) =
+  mkSplit4 id u lld lhd hld hhd
 mkVirtualOperation id _  VirtualCopyType ([s], [d]) = mkVirtualCopy id s d
 mkVirtualOperation id _  FunType (us, ds) = mkFun id us ds
 mkVirtualOperation id _  (FrameType SetupType) ([s], []) = mkFrameSetup id s
@@ -609,9 +621,9 @@ readInstr (LsTargetInstruction i) = TargetInstruction (read i)
 
 toAttributes (LsAttributes (LsReads reads) (LsWrites writes) (LsAttrCall call)
               (LsMem mem) (LsActivators acs) (LsVirtualCopy vcopy)
-              (LsRemat rm) (LsJTBlocks bs) (LsBranchTaken bt)) =
+              (LsRemat rm) (LsJTBlocks bs) (LsBranchTaken bt) (LsPart pa)) =
   mkAttributes (map toRWObject reads) (map toRWObject writes) call mem
-               (map readInstr acs) vcopy rm (map lsBlockRefId bs) bt
+               (map readInstr acs) vcopy rm (map lsBlockRefId bs) bt pa
 
 lsBlockRefId (LsBlockRef bid) = bid
 
@@ -624,7 +636,7 @@ toRWObject (LsOtherSideEffect r) = OtherSideEffect (read r)
 mkNullLsAttributes =
   LsAttributes (LsReads []) (LsWrites []) (LsAttrCall Nothing) (LsMem Nothing)
   (LsActivators []) (LsVirtualCopy False) (LsRemat False) (LsJTBlocks [])
-  (LsBranchTaken Nothing)
+  (LsBranchTaken Nothing) (LsPart Nothing)
 
 mkNullLsBlockAttributes = LsBlockAttributes []
 

@@ -24,6 +24,7 @@
 \newcommand{\Tm}[2]{\preAssigned{\T{#1}}{#2}}
 \newcommand{\preAssigned}[2]{#1\hspace{-0.06cm}\triangleright\hspace{-0.06cm}\register{#2}}
 \newcommand{\register}[1]{\texttt{#1}}
+\newcommand{\cycle}[1]{\texttt{#1}}
 \newcommand{\nullConnection}{\inactive{\bot}}
 \newcommand{\instruction}[1]{\mathtt{#1}}
 \newcommand{\nullInstruction}{\inactive{\instruction{\boldsymbol{\bot}}}}
@@ -115,6 +116,7 @@
 \newcommand{\sourceSymbol}{\operator{src}}
 \newcommand{\destinationSymbol}{\operator{dst}}
 \newcommand{\widthSymbol}{\operator{width}}
+\newcommand{\participativeSymbol}{\operatorname{part}}
 \newcommand{\forbiddenRegisterAtomsSymbol}{\operator{forbidden}}
 \newcommand{\dependencyGraphSymbol}{\operator{dep}}
 \newcommand{\minimumDistanceSymbol}{\operator{dist}}
@@ -187,6 +189,7 @@
 \newcommand{\source}[1]{\sourceSymbol(#1)}
 \newcommand{\destination}[1]{\destinationSymbol(#1)}
 \newcommand{\width}[1]{\widthSymbol(#1)}
+\newcommand{\participative}[2]{\participativeSymbol(#1, \cycle{#2})}
 \newcommand{\forbiddenRegisterAtoms}[1]{\forbiddenRegisterAtomsSymbol(#1)}
 \newcommand{\dependencyGraph}[1]{\dependencyGraphSymbol(#1)}
 \newcommand{\minimumDistance}[3]{\minimumDistanceSymbol(#1, #2, #3)}

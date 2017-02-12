@@ -7,6 +7,7 @@
  *    Noric Couderc <noric@sics.se>
  *    Mikael Almgren <mialmg@kth.se>
  *    Erik Ekstrom <eeks@sics.se>
+ *    Daniel Lundén <daniel.lunden@sics.se>
  *
  *  This file is part of Unison, see http://unison-code.github.io
  *
@@ -61,10 +62,11 @@ typedef int global_congruence;
 typedef int activation_class;
 typedef int latency;
 typedef int global_cluster;
+typedef int issue_cycle;
 
 enum OperationType
   { LINEAR, BRANCH, CALL, TAILCALL, IN, OUT, KILL, DEFINE, COMBINE, LOW, HIGH,
-    FUN, COPY };
+    SPLIT2, SPLIT4, FUN, COPY };
 
 const instruction NULL_INSTRUCTION = 0;
 const temporary NULL_TEMPORARY = -1;

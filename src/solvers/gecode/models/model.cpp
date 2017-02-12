@@ -3,6 +3,9 @@
  *    Roberto Castaneda Lozano <rcas@sics.se>
  *    Mats Carlsson <matsc@sics.se>
  *
+ *  Contributing authors:
+ *    Daniel Lundén <daniel.lunden@sics.se>
+ *
  *  This file is part of Unison, see http://unison-code.github.io
  *
  *  Copyright (c) 2016, SICS Swedish ICT AB
@@ -288,6 +291,8 @@ bool Model::half_congruent(operand p, operand q) const {
       if (o1 == o2)
         if (input->type[o1] == LOW ||
             input->type[o1] == HIGH ||
+            input->type[o1] == SPLIT2 ||
+            input->type[o1] == SPLIT4 ||
             (input->type[o1] == COMBINE && input->use[p1] != input->use[q1]))
           return true;
     }
@@ -907,6 +912,7 @@ void Model::post_basic_model_constraints(block b) {
   post_initial_precedence_constraints(b);
   post_data_precedences_constraints(b);
   post_fixed_precedences_constraints(b);
+  post_participative_instructions_constraints(b);
 }
 
 void Model::post_connected_users_constraints(block b) {
@@ -1073,27 +1079,28 @@ void Model::post_data_precedences_constraints(block b) {
   }
 
   for (operation u : input->ops[b])
-    for (operand q : input->operands[u])
-      if (input->use[q]) {
-        IntVarArgs cs;
-        for (temporary t : input->temps[q])
-          if (t == NULL_TEMPORARY) {
-            IntVarArgs pcs;
-            // TODO: can we use a tighter bound here?
-            for (temporary t1 : input->real_temps[q])
-              pcs << var(c(input->def_opr[t1]));
-            cs << var(min(pcs));
-          } else {
-            // Maximum of the definition cycle of t and the definition cycle of
-            // the ultimate source of t
-            IntVarArgs cts;
-            cts << ct[ctindex[t]];
-            cts << ct[ctindex[input->ultimate_source[t]]];
-            cs << var(max(cts));
-          }
+    if (input->type[u] != KILL)	// handled in post_kill_issue_cycle_constraints()
+      for (operand q : input->operands[u])
+	if (input->use[q]) {
+	  IntVarArgs cs;
+	  for (temporary t : input->temps[q])
+	    if (t == NULL_TEMPORARY) {
+	      IntVarArgs pcs;
+	      // TODO: can we use a tighter bound here?
+	      for (temporary t1 : input->real_temps[q])
+		pcs << var(c(input->def_opr[t1]));
+	      cs << var(min(pcs));
+	    } else {
+	      // Maximum of the definition cycle of t and the definition cycle of
+	      // the ultimate source of t
+	      IntVarArgs cts;
+	      cts << ct[ctindex[t]];
+	      cts << ct[ctindex[input->ultimate_source[t]]];
+	      cs << var(max(cts));
+	    }
 
-        constraint(c(u) >= element(cs, y(q)) + lt(q) + slack(q));
-      }
+	  constraint(c(u) >= element(cs, y(q)) + lt(q) + slack(q));
+	}
 
 }
 
@@ -1206,6 +1213,25 @@ void Model::post_fixed_precedences_constraints(block b) {
     constraint((a(d) && a(u)) >> (c(u) >= c(d) + element(dist, i(d))));
   }
 
+}
+
+void Model::post_participative_instructions_constraints(block b) {
+  // Certain operations are "participative", meaning that they have a
+  // preassigned issue cycle and must be active if scheduled before the last
+  // active operation in the block.
+
+  for (vector<int> v : input->part) {
+    operation p = v[0];
+    issue_cycle i = v[1];
+
+    if (input->oblock[p] != b)
+        continue;
+
+    constraint(a(p) >> (c(p) == i));
+
+    // cycle <= max cycle
+    constraint(a(p) == (i < c(input->out[b])));
+  }
 }
 
 void Model::post_improved_model_constraints(block b) {
@@ -1479,30 +1505,63 @@ void Model::post_define_issue_cycle_constraints(block b) {
 
 void Model::post_kill_issue_cycle_constraints(block b) {
 
-  // Kill and operations are issued together with the corresponding producer
+  // Kill operations are issued together with the corresponding producer
   // operations:
 
   for (operation o2 : input->ops[b])
     if (input->type[o2] == KILL) {
-      operation o1 = -1;
-      IntVarArgs lats;
-      bool multiple_producers = false;
-      for (operand q : input->operands[o2]) {
-        if (input->real_temps[q].size() > 1) {
-          multiple_producers = true;
-          break;
-        }
-        temporary t = input->single_temp[q];
-        lats << lat(q, t);
-        operand p = input->definer[t];
-        o1 = input->oper[p];
-      }
-      if (!multiple_producers) {
+      if (input->mandatory_index[o2]>=0) {
+	operation o1 = -1;
+	IntVarArgs lats;
+	for (operand q : input->operands[o2]) {
+	  temporary t = input->single_temp[q];
+	  operand p = input->definer[t];
+	  lats << lat(q, t);
+	  o1 = input->oper[p];
+	  post_kill_live_range(t);
+	}
         constraint(c(o2) == c(o1) + max(lats));
+      } else {
+	operand q = input->operands[o2][0];
+	IntVarArgs cs;
+	vector<operation>os;
+	for (temporary t : input->temps[q]) {
+          if (t == NULL_TEMPORARY) {
+	    IntVarArgs pcs;
+            for (temporary t1 : input->real_temps[q])
+              pcs << var(c(input->def_opr[t1]));
+            cs << var(min(pcs));
+	  } else {
+	    operand p = input->definer[t];
+	    cs << var(c(input->oper[p]) + max(input->min_active_lat[p], lt(p)) + slack(p));
+	    os.push_back(input->oper[p]);
+	    post_kill_live_range(t);
+	  }
+	}
+	constraint(c(o2) == element(cs, y(q)) + lt(q) + slack(q));
+	if (os.size()==1) {
+	  operand p1 = input->definer[input->single_temp[q]];
+	  constraint(y(p1) == y(q));
+	  constraint(ry(p1) == ry(q));
+	} else {
+	  BoolVarArgs as;
+	  for (operation o : os) as << a(o);
+	  rel(*this, as, IRT_LQ, 1, ipl);
+	}
       }
     }
 
 }
+
+void Model::post_kill_live_range(temporary t) {
+
+  // Functionally fix live range of given temp.
+
+  operand p = input->definer[t];
+  constraint(ld(t) == lt(p));
+
+}
+
 
 void Model::post_disjoint_congruent_operand_constraints(block b) {
 
@@ -2321,6 +2380,7 @@ void Model::post_mandatory_reuse_constraints(block b) {
     }
 
     if (input->type[o] == LOW || input->type[o] == HIGH ||
+        input->type[o] == SPLIT2 || input->type[o] == SPLIT4 ||
 	input->type[o] == COMBINE) continue;
 
     if (p_preassigned) continue;

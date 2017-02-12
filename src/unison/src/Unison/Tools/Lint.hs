@@ -60,7 +60,8 @@ runLint rawArgs f target =
                    (I.noAmbiguousPhis, noAmbiguousPhis args),
                    (I.allResourcesDefined, allResourcesDefined args),
                    (I.allRegClassesReal, allRegClassesReal args),
-                   (I.noReservedRegRedef, noReservedRegRedef args)]
+                   (I.noReservedRegRedef, noReservedRegRedef args),
+                   (I.noEmptyBlock, noEmptyBlock args)]
      emitOutput (outFile args) (showProblems result)
      return $ null $ concat result
 

@@ -79,7 +79,7 @@ IntVar LocalModel::s(operand p) const {
 
 LocalModel::LocalModel(Parameters * p_input, ModelOptions * p_options,
                        IntPropLevel p_ipl,
-                       GlobalModel * gs, block p_b) :
+                       const GlobalModel * gs, block p_b) :
   Model(p_input, p_options, p_ipl),
   b(p_b)
 {
@@ -452,7 +452,7 @@ void LocalModel::print(ostream & pOs) const {
 
 }
 
-void LocalModel::apply_solution(GlobalModel * gs) {
+void LocalModel::apply_solution(const GlobalModel * gs) {
 
   for (operation o : input->ops[b]) {
     copy_domain(*this, gs->i(o), i(o));

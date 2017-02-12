@@ -51,8 +51,7 @@ void presolve_minimum_consumption(GlobalModel * base);
 
 // Computes, posts and propagates local cost lower bounds by relaxation assuming
 // different levels of callee-saved spilling
-void
-presolve_relaxation(GlobalModel * base, GIST_OPTIONS * go, GIST_OPTIONS * lo);
+void presolve_relaxation(GlobalModel * base, GIST_OPTIONS * lo);
 
 // Computes, posts and propagates instruction nogoods conditioned to local costs
 void presolve_shaving(GlobalModel * base);

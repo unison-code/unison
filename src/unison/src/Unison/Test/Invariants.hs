@@ -35,7 +35,8 @@ module Unison.Test.Invariants
      allResourcesDefined,
      noEmptyRegClass,
      allRegClassesReal,
-     noReservedRegRedef
+     noReservedRegRedef,
+     noEmptyBlock
     )
     where
 
@@ -504,6 +505,30 @@ regClassReal (op, TemporaryInfo rc _)
   | isModelOperand op && isAbstractRegisterClass rc =
     Just ("operand " ++ show op ++ " is bound to " ++ show rc)
 regClassReal _ = Nothing
+
+noEmptyBlock f _ =
+  let p = showProblem "noEmptyBlock"
+  in map p $
+     testAllElements testOneIn (fCode f) ++
+     testAllElements testOneOut (fCode f)
+
+testOneIn b @ Block {bLab = bid, bCode = code} =
+  case filter isIn code of
+    [o] | not (isIn $ blockIn b) ->
+      Just ("operation o" ++ show (oId o) ++
+            " (in) should be the first one in b" ++ show bid)
+    [_] -> Nothing
+    ins -> Just ("b" ++ show bid ++ " has " ++ show (length ins) ++
+                 " (in) operations")
+
+testOneOut b @ Block {bLab = bid, bCode = code} =
+  case filter isOut code of
+    [o] | not (isOut $ blockOut b) ->
+      Just ("operation o" ++ show (oId o) ++
+            " (out) should be the last one in b" ++ show bid)
+    [_]  -> Nothing
+    outs -> Just ("b" ++ show bid ++ " has " ++ show (length outs) ++
+                  " (out) operations")
 
 noReservedRegRedef Function {fCode = code} target =
   let rr = map (mkRegister . mkTargetRegister) $ reserved target

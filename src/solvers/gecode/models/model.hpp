@@ -4,6 +4,7 @@
  *
  *  Contributing authors:
  *    Mats Carlsson <matsc@sics.se>
+ *    Daniel Lundén <daniel.lunden@sics.se>
  *
  *  This file is part of Unison, see http://unison-code.github.io
  *
@@ -377,6 +378,7 @@ public:
   void post_data_precedences_constraints(block b);
   void post_processor_resources_constraints(block b);
   void post_fixed_precedences_constraints(block b);
+  void post_participative_instructions_constraints(block b);
 
   void post_improved_model_constraints(block b);
   void post_null_register_constraints(block b);
@@ -391,6 +393,7 @@ public:
   void post_minimum_temporary_duration_constraints(block b);
   void post_define_issue_cycle_constraints(block b);
   void post_kill_issue_cycle_constraints(block b);
+  void post_kill_live_range(temporary t);
   void post_disjoint_congruent_operand_constraints(block b);
   void post_disjoint_component_operand_constraints(block b);
   void post_space_capacity_constraints(block b);

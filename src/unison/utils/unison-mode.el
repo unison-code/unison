@@ -37,7 +37,7 @@
 '("\\mem-[0-9]+\\b" . font-lock-builtin-face)
 `(,(regexp-opt '("entry" "freq" "exit" "return" "freq" "writes" "reads" "activators" "mem" "virtualcopy" "remat" "jtblocks" "split") 'symbol) . font-lock-builtin-face)
 ;; Virtual operations
-`(,(regexp-opt '("define" "in" "out" "combine" "kill" "copy" "fun" "pack" "high" "low" "destroy" "setup") 'symbol) . font-lock-builtin-face)
+`(,(regexp-opt '("define" "in" "out" "combine" "kill" "copy" "fun" "pack" "high" "low" "destroy" "setup" "split2" "split4") 'symbol) . font-lock-builtin-face)
 )
 "Syntax highlighting for Unison."
 )

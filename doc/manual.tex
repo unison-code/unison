@@ -868,6 +868,11 @@ where
 \activationEquation
 \constraintComment{slack balancing}{the slack of adjacent operands is balanced}
 \slackBalancingEquation
+\constraintComment{participative operations}{certain operations are
+\emph{participative}, which means that they have a preassigned issue cycle and
+must be active if the preassigned issue cycle is lower than the issue cycle for
+the last active operation in the block}
+\participativeEquation
 
 \section{Objective}\label{sec:objective}
 

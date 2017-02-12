@@ -10,6 +10,9 @@ Functions to construct the Unison program representation.
 Main authors:
   Roberto Castaneda Lozano <rcas@sics.se>
 
+Contributing authors:
+  Daniel Lundén <daniel.lunden@sics.se>
+
 This file is part of Unison, see http://unison-code.github.io
 -}
 module Unison.Constructors
@@ -24,6 +27,8 @@ module Unison.Constructors
         mkCombine,
         mkLow,
         mkHigh,
+        mkSplit2,
+        mkSplit4,
         mkIn,
         mkOut,
         mkEntry,
@@ -92,6 +97,13 @@ mkLow id is u d = mkSingleOperation id (Virtual Low {oLowIs = is, oLowU = u, oLo
 
 mkHigh id is u d = mkSingleOperation id (Virtual High {oHighIs = is, oHighU = u, oHighD = d})
 
+mkSplit2 id u ld hd =
+  mkSingleOperation id (Virtual Split2 {oSplit2U = u, oSplit2LowD = ld, oSplit2HighD = hd})
+
+mkSplit4 id u lld lhd hld hhd =
+  mkSingleOperation id (Virtual Split4 {oSplit4U = u, oSplit4LowLowD = lld, oSplit4LowHighD = lhd,
+                                                      oSplit4HighLowD = hld, oSplit4HighHighD = hhd})
+
 mkIn id ins = mkSingleOperation id (Virtual (Delimiter In {oIns = ins}))
 
 mkOut id outs = mkSingleOperation id (Virtual (Delimiter Out {oOuts = outs}))
@@ -145,12 +157,13 @@ mkBlock = Block
 
 mkDummyBlock = mkBlock (-1) mkNullBlockAttributes
 
-mkAttributes reads writes call mem acts vcopy remat jtblocks btaken =
+mkAttributes reads writes call mem acts vcopy remat jtblocks btaken part =
     Attributes {aReads = reads, aWrites = writes, aCall = call,
                 aMem = mem, aActivators = acts, aVirtualCopy = vcopy,
-                aRemat = remat, aJTBlocks = jtblocks, aBranchTaken = btaken}
+                aRemat = remat, aJTBlocks = jtblocks, aBranchTaken = btaken,
+                aPart = part}
 
-mkNullAttributes = mkAttributes [] [] Nothing Nothing [] False False [] Nothing
+mkNullAttributes = mkAttributes [] [] Nothing Nothing [] False False [] Nothing Nothing
 
 mkBlockAttributes entry exit return freq split =
     BlockAttributes {aEntry = entry, aExit = exit, aReturn = return,

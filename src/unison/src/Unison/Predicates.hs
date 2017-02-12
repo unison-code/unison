@@ -35,6 +35,8 @@ module Unison.Predicates
         isCombineHighOf,
         isLow,
         isHigh,
+        isSplit2,
+        isSplit4,
         isDelimiter,
         isVirtualCopy,
         isFun,
@@ -75,6 +77,8 @@ module Unison.Predicates
         isCombineOpr,
         isLowOpr,
         isHighOpr,
+        isSplit2Opr,
+        isSplit4Opr,
         isVirtualCopyOpr,
         isFunOpr,
         isFrameSetupOpr,
@@ -176,6 +180,8 @@ isDefine         = isDefineOpr . iSingleInst
 isCombine        = isCombineOpr . iSingleInst
 isLow            = isLowOpr . iSingleInst
 isHigh           = isHighOpr . iSingleInst
+isSplit2         = isSplit2Opr . iSingleInst
+isSplit4         = isSplit4Opr . iSingleInst
 isVirtualCopy    = isVirtualCopyOpr . iSingleInst
 isFun            = isFunOpr . iSingleInst
 isFrameSetup     = isFrameSetupOpr . iSingleInst
@@ -236,6 +242,12 @@ isLowOpr _                  = False
 isHighOpr (Virtual (High {})) = True
 isHighOpr _                   = False
 
+isSplit2Opr (Virtual (Split2 {})) = True
+isSplit2Opr _                     = False
+
+isSplit4Opr (Virtual (Split4 {})) = True
+isSplit4Opr _                     = False
+
 isVirtualCopyOpr (Virtual (VirtualCopy {})) = True
 isVirtualCopyOpr _                          = False
 
@@ -291,7 +303,7 @@ isCopyInstOf f ts i
     | f i `elem` ts      = True
     | otherwise          = False
 
-isComponent o = isLow o || isHigh o || isCombine o
+isComponent o = isLow o || isHigh o || isSplit2 o || isSplit4 o || isCombine o
 
 isBarrier o = isFun o || isIn o || isOut o
 

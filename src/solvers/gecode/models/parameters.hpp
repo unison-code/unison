@@ -3,6 +3,9 @@
  *    Roberto Castaneda Lozano <rcas@sics.se>
  *    Mats Carlsson <matsc@sics.se>
  *
+ *  Contributing authors:
+ *    Daniel Lundén <daniel.lunden@sics.se>
+ *
  *  This file is part of Unison, see http://unison-code.github.io
  *
  *  Copyright (c) 2016, SICS Swedish ICT AB
@@ -125,6 +128,9 @@ public:
 
   // instructions that activate each operation
   vector<vector<instruction> > activators;
+
+  // participative instructions
+  vector<vector<int> > part;
 
   // Processor parameters
 

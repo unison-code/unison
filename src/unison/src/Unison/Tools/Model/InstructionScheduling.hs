@@ -9,6 +9,7 @@ Main authors:
 
 Contributing authors:
   Patric Hedlin <patric.hedlin@ericsson.com>
+  Daniel Lundén <daniel.lunden@sisc.se>
 
 This file is part of Unison, see http://unison-code.github.io
 -}
@@ -58,6 +59,7 @@ parameters scaleFreq (_, dgs, _, _, _) Function {fCode = code} target =
       maxc          = map (computeMaxC (rm, oif, dgs)) code
       itype         = map ((M.!) typeNumbers . oType) fCode
       insname       = map (show . ioInstruction) i
+      part          = map (\o -> (oId o, (aPart (oAs o)))) $ filter (\o -> isJust (aPart (oAs o))) fCode
     in
      [
       -- Program parameters
@@ -150,14 +152,21 @@ parameters scaleFreq (_, dgs, _, _, _) Function {fCode = code} target =
       -- 8:  combine
       -- 9:  low
       -- 10: high
-      -- 11: function
-      -- 12: copy
+      -- 11: split2
+      -- 12: split4
+      -- 13: function
+      -- 14: copy
       -- example: type[17]: type of o17
       ("type", toJSON itype),
 
       -- name of each instruction
       -- example: insname[4]: name of i4
-      ("insname", toJSON insname)
+      ("insname", toJSON insname),
+
+      -- participative instructions
+      -- example: cycle[2][0]: the third participative operation
+      --          cycle[2][1]: issue cycle of the third participative operation
+      ("part", toJSON part)
      ]
 
 operationLatency oif im o = map (instructionLatency oif o) (oIInstructions im o)
@@ -204,6 +213,7 @@ naturalTypes = [LinearType, BranchType, CallType, TailCallType]
 
 virtualTypes =
   map DelimiterType delimiterTypes ++
-  [KillType, DefineType, CombineType, LowType, HighType, FunType]
+  [KillType, DefineType, CombineType, LowType, HighType, Split2Type,
+   Split4Type, FunType]
 
 delimiterTypes = [InType, OutType]

@@ -39,7 +39,6 @@ ModelOptions::ModelOptions(void)
 
     _output_file("-o", "output file", ""),
     _output_every_iteration("--output-every-iteration", "produce an output file every iteration (only works if an output file is set)", false),
-    _output_local_problems("--output-local-problems", "produce a parameters file for every local problem (only works if an output file is set)", false),
     _verbose("--verbose", "verbose mode", false),
 #ifdef GRAPHICS
     _gist_global("--gist-global", "run Gist for global problems", false),
@@ -103,7 +102,6 @@ ModelOptions::ModelOptions(void)
 {
   add(_output_file);
   add(_output_every_iteration);
-  add(_output_local_problems);
   add(_verbose);
 #ifdef GRAPHICS
   add(_gist_global);

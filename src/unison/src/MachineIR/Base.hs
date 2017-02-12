@@ -159,6 +159,8 @@ data MachineVirtualOpcode =
   EXTRACT_SUBREG |
   LOW |
   HIGH |
+  SPLIT2 |
+  SPLIT4 |
   IMPLICIT_DEF |
   INSERT_SUBREG |
   REG_SEQUENCE |
