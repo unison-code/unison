@@ -35,6 +35,7 @@ include "globals.mzn";
 %% solver parameters
 
 bool: good_cumulative;
+bool: good_diffn;
 bool: optimize_cycles;
 
 %% some constants
@@ -298,17 +299,24 @@ predicate smart_in(var int: x, set of int: S) =
     x in S
   endif endif;
 
-predicate sliced_diffn(array[int] of var int: x,
-                       array[int] of var int: z,
-                       array[int] of var int: dx,
-                       array[int] of var int: dy) =
-  diffn(x, z, [dx[j]*bool2int(dy[j]>0) | j in index_set(dx)], dy) :: domain
-;
+predicate ra_diffn(array[int] of var int: R,
+                   array[int] of var int: W,
+                   array[int] of var int: LS,
+                   array[int] of var int: LD,
+                   array[int] of var int: LE) =
+  if good_diffn then
+    diffn_nonstrict(R, LS, W, LD)
+  else
+    forall(i,j in index_set(R) where i < j)(
+        LD[i] = 0 \/ LD[j] = 0 \/
+        R[i] + W[i] <= R[j] \/ LE[i] <= LS[j] \/
+        R[j] + W[j] <= R[i] \/ LE[j] <= LS[i]
+    )
+  endif ;
 
 predicate disjoint1(array[int] of var int: x,
                       array[int] of var int: w) =
-  diffn(x, [1 | i in index_set(x)], w, [1 | i in index_set(x)]) :: domain
-;
+  diffn(x, [1 | i in index_set(x)], w, [1 | i in index_set(x)]) ;
 
 predicate noverlap(array[int] of var int: x,
                    array[int] of var int: w) = (
@@ -365,6 +373,10 @@ set of 0..MAXT: real_temps(int: p) = operand_temps[p] intersect 0..MAXT;
 
 %% basic invariants, null instructions
 
+predicate opt_in_temporary(int: v) = 
+    let {int: p = temp_def[v]} in
+    op_type[temp_definer[v]] = TYPE_IN /\ card(operand_temps[p])>1;
+
 constraint
     r[-1] = -1 /\
     ls[-1] = -1 /\
@@ -378,10 +390,10 @@ constraint
     forall(p in 0..MAXP where not (op_type[operand_definer[p]] in {TYPE_IN,TYPE_OUT})) % rematerialization
           (t[p] >= 0 <-> a[operand_definer[p]]) /\
     forall(v in 0..MAXT) (ls[v]+ld[v] = le[v]) /\
-    forall(v in 0..MAXT where op_type[temp_definer[v]] != TYPE_IN) % rematerialization
+    forall(v in 0..MAXT where not opt_in_temporary(v)) % rematerialization
           (ls[v] = c[temp_definer[v]] /\
 	   (r[v] >= 0 <-> a[temp_definer[v]])) /\
-    forall(v in 0..MAXT where op_type[temp_definer[v]] = TYPE_IN) % rematerialization
+    forall(v in 0..MAXT where opt_in_temporary(v)) % rematerialization
           (ls[v] in -1 .. 0 /\
 	   (r[v] >= 0 <-> ls[v]=0) /\
 	   (r[v] >= 0 <-> t[temp_def[v]] = v)) /\
@@ -539,7 +551,7 @@ constraint
 %% disjoint live ranges
 constraint
     forall(T in bb_temps) (
-	sliced_diffn([r[v] | v in T], [ls[v] | v in T], [temp_width[v] | v in T], [ld[v] | v in T])
+	ra_diffn([r[v] | v in T], [temp_width[v] | v in T], [ls[v] | v in T], [ld[v] | v in T], [le[v] | v in T])
     );
 
 %% precedences (with conditions added by presolver)
@@ -553,22 +565,22 @@ constraint
 	  )
     );
 
-%% ensure that all uses are within the live range
-constraint
-    forall(p in 0..MAXP where operand_use[p])
-          (let {int: iuse = operand_definer[p],
-	        set of int: temps = operand_temps[p]} in (
-	           forall(v in temps where v >= 0)(
-		       let {int: idef = temp_definer[v]} in (
-		           if card(temps) = 1 then
-		               c[idef] + ld[v] >= c[iuse]
-		           else
-		               t[p] = v -> c[idef] + ld[v] >= c[iuse]
-		   	   endif
-		       )
-		   )
-	   )
-    );
+%% ensure that all uses are within the live range -- pretty much subsumed by maximum(le[v], ...)
+% constraint
+%     forall(p in 0..MAXP where operand_use[p])
+%           (let {int: iuse = operand_definer[p],
+% 	        set of int: temps = operand_temps[p]} in (
+% 	           forall(v in temps where v >= 0)(
+% 		       let {int: idef = temp_definer[v]} in (
+% 		           if card(temps) = 1 then
+% 		               c[idef] + ld[v] >= c[iuse]
+% 		           else
+% 		               t[p] = v -> c[idef] + ld[v] >= c[iuse]
+% 		   	   endif
+% 		       )
+% 		   )
+% 	   )
+%     );
 
 %% slack and balancing
 
@@ -816,11 +828,11 @@ constraint
     )
   endif;
 
-%% last use
-constraint
-    forall(p in 0..MAXP where operand_use[p])
-          (t[p]>=0 -> le[t[p]] >= c[operand_definer[p]]) % rematerialization
-    ;
+%% last use -- pretty much subsumed by maximum(le[v], ...)
+% constraint
+%     forall(p in 0..MAXP where operand_use[p])
+%           (t[p]>=0 -> le[t[p]] >= c[operand_definer[p]]) % rematerialization
+%     ;
 
 %% disjoint live ranges projected on callee-saved regs
 constraint
