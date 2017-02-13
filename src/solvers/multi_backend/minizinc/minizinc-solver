@@ -7,7 +7,8 @@ COMMON_DIR=$MULTIBACKEND_DIR/common
 search='topdown.mzn'
 allsolns='-a'
 mzn='mzn-gecode'
-cumulative='false'
+cumulative='true'
+diffn='true'
 ncores='1'
 statflag='-s'
 toflag=''
@@ -28,11 +29,9 @@ while [ $# -gt  1 ]; do
       ;;
       --gecode)
         mzn='mzn-gecode'
-        cumulative='true'
       ;;
       --sicstus)
         mzn='mzn-sicstus'
-        cumulative='true'
       ;;
       --g12cpx)
         mzn='mzn-g12cpx'
@@ -53,6 +52,12 @@ while [ $# -gt  1 ]; do
       ;;
       --no-cumulative)
         cumulative='false'
+      ;;
+      --diffn)
+        diffn='true'
+      ;;
+      --no-diffn)
+        diffn='false'
       ;;
       --free)
         freeflag='--fzn-flag -f'
@@ -91,4 +96,4 @@ else
   pvalue=''
 fi
 set -x
-time ${mzn} -k ${statflag} ${pflag} ${pvalue} ${freeflag} ${toflag} ${allsolns} ${nogoods} -D good_cumulative=${cumulative} code-generation.mzn $DIRBASENAME.dzn | $COMMON_DIR/outfilter.pl > ${OUTJSON}
+time ${mzn} ${allsolns} -k ${statflag} ${pflag} ${pvalue} ${freeflag} ${toflag} ${nogoods} -D good_cumulative=${cumulative} -D good_diffn=${diffn} code-generation.mzn $DIRBASENAME.dzn | $COMMON_DIR/outfilter.pl > ${OUTJSON}
