@@ -24,4 +24,5 @@ computeFrameOffsets f @ Function {fFixedStackFrame = fobjs, fStackFrame = objs,
   let (_, objs') = mapAccumL allocateObject (slotSet fobjs) objs
       fobjs'   = map (reoffset (- off)) fobjs
       objs''   = map (reoffset (- off)) objs'
-  in f {fFixedStackFrame = fobjs', fStackFrame = objs''}
+  in f {fFixedStackFrame = fobjs', fStackFrame = objs'',
+        fStackPointerOffset = 0}
