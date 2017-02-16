@@ -89,6 +89,10 @@ SolverResult shave_local_costs(GlobalModel * base);
 // Solves the entire problem without a decomposition scheme
 Solution<GlobalModel> solve_monolithic(GlobalModel * base, GIST_OPTIONS * go);
 
+// Solves the entire problem without a decomposition scheme in parallel
+Solution<GlobalModel>
+solve_monolithic_parallel(GlobalModel * base, GIST_OPTIONS * go);
+
 // Prefix for debug output
 string global();
 

@@ -642,6 +642,67 @@ Solution<GlobalModel> solve_monolithic(GlobalModel * base, GIST_OPTIONS * go) {
 
 }
 
+Solution<GlobalModel>
+solve_monolithic_parallel(GlobalModel * base, GIST_OPTIONS *) {
+
+  // space to be searched on
+  GlobalModel * m = (GlobalModel*) base->clone();
+
+  // N is the number of threads to be used
+  unsigned int N = base->options->total_threads();
+
+  // initialize N search engine builders
+  unsigned int scale = base->input->O.size() / 10;
+  Search::Cutoff* c = Search::Cutoff::luby(scale);
+  if (base->options->verbose())
+    cerr << monolithic() << "Luby scale: " << scale << endl;
+  SEBs sebs;
+  for (unsigned int t = 0; t < N; t++) {
+    Search::Options ro;
+    ro.cutoff = c;
+    ro.nogoods_limit = 128;
+    sebs << rbs<GlobalModel, DFS>(ro);
+  }
+
+  // initialize options of the portfolio engine
+  unsigned int FACTOR = 10;
+  double limit =
+    base->options->monolithic_budget() * base->input->O.size() * FACTOR;
+  Search::Stop * monolithicStop = new_stop(limit, base->options);
+  if (base->options->verbose())
+    cerr << monolithic() << "time limit: " << limit << endl;
+  Search::Options po;
+  po.threads = N;
+  po.stop = monolithicStop;
+
+  // define the portfolio engine itself and iterate through solutions
+  PBS<GlobalModel> e(m, sebs, po);
+  bool found_solution = false;
+  while (GlobalModel* nextm = e.next()) {
+    found_solution = true;
+    if (base->options->verbose())
+      cerr << monolithic()
+           << "found solution with cost " << nextm->cost() << endl;
+    GlobalModel * oldm = m;
+    m = nextm;
+    delete oldm;
+  }
+
+  SolverResult r;
+  if (monolithicStop->stop(e.statistics(), po))
+    r = found_solution ? SOME_SOLUTION : LIMIT;
+  else
+    r = found_solution ? OPTIMAL_SOLUTION : UNSATISFIABLE;
+
+  delete monolithicStop;
+
+  return Solution<GlobalModel>(
+           r, found_solution ? m : NULL,
+           e.statistics().fail,
+           e.statistics().node);
+
+}
+
 string global() { return "[global] "; }
 
 string pre() { return "[pre]\t "; }
