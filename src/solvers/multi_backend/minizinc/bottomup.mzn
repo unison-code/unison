@@ -32,26 +32,6 @@
 %
 %% go directly for optimal solution
 
-% solve :: seq_search(
-%      [int_search([obj], input_order, indomain_min, complete)] ++
-%      [bool_search([a[min(calleesaved_spill[i])] | i in index_set(calleesaved_spill)]++[true],
-%                   input_order, indomain_max, complete)] ++
-%      [seq_search([int_search([c[max(bb_ops[b])] , copysum[b]],
-%                              input_order, indomain_min, complete)] ++
-%                  [bool_search([a[op_order[o]] | o in bb_ops[b]],
-% 		              input_order, indomain_min, complete)]) | b in bb_order] ++
-%      [int_search([i[o] | o in bb_ops[b]], input_order, indomain_min, complete)
-%      | b in bb_order] ++
-%      [int_search([y[p] | p in bb_operands[b]], input_order, indomain_min, complete)
-%      | b in bb_order] ++
-%      [int_search([c[o] | o in bb_ops[b]], smallest, indomain_min, complete)
-%      | b in bb_order] ++
-%      [int_search([r[t] | t in bb_temps[b]], first_fail, indomain_min, complete)
-%      | b in bb_order]
-%     ) minimize(obj);
-
-% experiment: labeling T before A, since A is a function of T
-% also, don't label r[t] where t's definer is (in)
 solve :: seq_search(
      [int_search([obj], input_order, indomain_min, complete)] ++
      [bool_search([a[min(calleesaved_spill[i])] | i in index_set(calleesaved_spill)]++[true],
@@ -65,7 +45,7 @@ solve :: seq_search(
 		                        where operand_use[p] /\ not op_mand[operand_definer[p]]],
 		  first_fail, indomain_min, complete)])
      | b in bb_order] ++
-     [int_search([i[o] | o in bb_ops[b]], first_fail, indomain_min, complete)
+     [int_search([ii[o] | o in bb_ops[b]], first_fail, indomain_min, complete)
      | b in bb_order] ++
      [int_search([c[o] | o in bb_ops[b]], smallest, indomain_min, complete)
      | b in bb_order] ++

@@ -69,7 +69,8 @@ int: MAXR;
 int: MAXB = max(index_set(bb_ops));
 int: MINL;
 int: MAXL;
-int: MAXCARD = max(p in 0..MAXP)(card(operand_temps[p]));
+int: MAXINSNS = max(o in 0..MAXO)(card(op_instructions[o]));
+int: MAXTEMPS = max(p in 0..MAXP)(card(operand_temps[p]));
 
 set of int: conjunction = index_set(sets);
 
@@ -261,12 +262,12 @@ array[int] of set of int: sets;
 
 var 0..MAXF: obj;
 array[0..MAXO] of var bool: a;
-array[0..MAXO] of var 0..MAXI: i;
+array[0..MAXO] of var 1..MAXINSNS: ii; % same as in gecode-solver
 array[0..MAXO] of var -1..MAXC: c;
 array[0..MAXP] of var -1..MAXR: rt;
 array[0..MAXP] of var MINL..MAXL: lt; % operand latency
 array[0..MAXP] of var -MAXL..MAXL: s; % global operand slack
-array[0..MAXP] of var 1..MAXCARD: y; % same as in gecode-solver
+array[0..MAXP] of var 1..MAXTEMPS: y; % same as in gecode-solver
 array[-1..MAXT] of var -1..MAXR: r;
 array[-1..MAXT] of var -1..MAXC: ls;
 array[-1..MAXT] of var 0..MAXC: ld;
@@ -287,15 +288,36 @@ test fixedop(int: o) = (
     op_instructions[o] != {0} /\ card(op_instructions[o]) = 1
 );
 
-var 0..MAXI: insn(int: o) = if fixedop(o) then min(op_instructions[o]) else i[o] endif;
+test all_equal_ints(array[int] of int: x) =
+	forall(i, j in index_set(x) where i < j) ( x[i] = x[j] );
 
-predicate smart_in(var int: x, set of int: S) =
-  if card(S)=0 then
+var int: res_con_of_op(int: res, int: o) =
+  let {array[int] of int: I = op_instructions[o]} in
+  let {array[int] of int: ints = [res_con[res,I[i]] | i in index_set(I)]} in
+  if all_equal_ints(ints) then ints[1] else ints[ii[o]] endif;
+
+var int: res_dur_of_op(int: res, int: o) =
+  let {array[int] of int: I = op_instructions[o]} in
+  let {array[int] of int: ints = [res_dur[res,I[i]] | i in index_set(I)]} in
+  if all_equal_ints(ints) then ints[1] else ints[ii[o]] endif;
+
+var int: res_off_of_op(int: res, int: o) =
+  let {array[int] of int: I = op_instructions[o]} in
+  let {array[int] of int: ints = [res_off[res,I[i]] | i in index_set(I)]} in
+  if all_equal_ints(ints) then ints[1] else ints[ii[o]] endif;
+
+predicate insn_eq(int: o, int: x) =
+  let {array[int] of int: I = op_instructions[o]} in
+  exists(j in index_set(I) where I[j]=x)(ii[o]=j);
+
+predicate insn_in(int: o, set of int: X) =
+  if card(X)=0 then
     false
-  else if card(S)=1 then 
-    x = min(S)
+  else if card(X)=1 then
+    insn_eq(o, min(X))
   else
-    x in S
+    let {array[int] of int: I = op_instructions[o]} in
+    ii[o] in {j | j in index_set(I) where I[j] in X}
   endif endif;
 
 predicate smart_alldiff(array[int] of var int: X) =
@@ -374,6 +396,13 @@ predicate temp_is_real(int: p) =
     y[p]>=2
   endif;
 
+predicate insn_is_real(int: o) =
+  if min(op_instructions[o])>=1 then
+    true
+  else
+    ii[o]>=2
+  endif;
+
 predicate temp_member(set of int: P, int: t) =
   exists(p in P)(temp_eq(p,t));
 
@@ -390,11 +419,11 @@ predicate eval_literal(int: l) = (
 	if tag=0 then same_temp(arg1,arg2)
 	else if tag=1 then temp_eq(arg1,arg2)
 	else if tag=2 then a[arg1]
-	else if tag=3 then i[arg1] = arg2
+	else if tag=3 then insn_eq(arg1,arg2)
 	else if tag=4 then operand_live_overlap(arg1,arg2)
 	else if tag=5 then live_overlap(arg1,arg2)
 	else if tag=6 then r[arg1] in callersaved
-	else if tag=7 then i[arg1] != arg2
+	else if tag=7 then not insn_eq(arg1,arg2)
 	else if tag=8 then rt[arg1] in atom_regs[arg2]
         else false endif endif endif endif endif endif endif endif endif
     )
@@ -408,13 +437,9 @@ predicate eval_disjunction(set of int: disj) = (
     exists(d in disj)(eval_conjunction(d))
 );
 
-predicate ite(var bool: cond,
-              var int: thenval,
-	      var int: elseval,
-	      var int: value) = (
-    let {array[0..1] of var int: ar = array1d(0..1, [elseval,thenval])} in (
-        value = ar[bool2int(cond)]
-    )
+var int: ite(var bool: cond, var int: thenval, var int: elseval) = (
+         let {array[0..1] of var int: ar = array1d(0..1, [elseval,thenval])} in
+         ar[bool2int(cond)]
 );
 
 0..MAXT: single_temp(int: p) = max(operand_temps[p]);
@@ -435,7 +460,7 @@ constraint
     ld[-1] = 0 /\
     le[-1] = -1 /\
     forall(o in 0..MAXO where op_mand[o]) (a[o]) /\
-    forall(o in 0..MAXO) (i[o] >= 1 <-> a[o]) /\
+    forall(o in 0..MAXO where not op_mand[o]) (insn_is_real(o) <-> a[o]) /\
     forall(o in 0..MAXO) (c[o] >= 0 <-> a[o]) /\
     forall(p in 0..MAXP where card(operand_temps[p])>1) (rt[p] = [r[v] | v in operand_temps[p]][y[p]]) /\
     forall(p in 0..MAXP where card(operand_temps[p])=1) (rt[p] = r[single_temp(p)]) /\
@@ -454,8 +479,7 @@ constraint
 	     set of int: prange = 1..card(pset),
 	     array[prange] of int: parr = [p | p in pset],
 	     array[prange] of var -1..MAXC: carr} in (
-	    forall(p in prange)
-		  (ite(temp_eq(parr[p],v), c[operand_definer[parr[p]]], -1, carr[p])) /\
+	    forall(p in prange) (carr[p] = ite(temp_eq(parr[p],v), c[operand_definer[parr[p]]], -1)) /\
 	    if card(pset)=1 /\ not temp_unsafe[v] then
 	      le[v] = carr[1]
 	    else
@@ -478,13 +502,13 @@ constraint
     if optimize_cycles then
       obj = sum(b in 1..MAXB) (bb_frequency[b] * c[max(bb_ops[b])])
     else
-      obj = sum(o in 0..MAXO)(res_con[1,insn(o)])
+      obj = sum(o in 0..MAXO)(res_con_of_op(1,o))
     endif;
 
 %% domains
 constraint
-    forall(o in 0..MAXO) (i[o] in op_instructions[o]) /\
-    forall(q in 0..MAXP) (y[q] in 1..length(operand_temps[q])) /\
+    forall(o in 0..MAXO) (ii[o] in 1..card(op_instructions[o])) /\
+    forall(q in 0..MAXP) (y[q] in 1..card(operand_temps[q])) /\
     forall(v in 0..MAXT) (
         let {int: p = temp_def[v],
 	     set of int: rdom = array_union([atom_regs[operand_atom[p,q]] | q in 1..MAXI]),
@@ -509,9 +533,9 @@ constraint
 	       else
 		   forall(insn in op_instructions[o])
 			 (if insn=0 then
-			     i[o] = 0 -> rt[p] = -1
+			     insn_eq(o,0) -> rt[p] = -1
 			  else
-			     i[o] = insn -> rt[p] in atom_regs[operand_atom[p,insn]]
+			     insn_eq(o,insn) -> rt[p] in atom_regs[operand_atom[p,insn]]
 			  endif)
 	       endif
            )
@@ -595,7 +619,7 @@ constraint
 	     int: pi = aligned_usei[j],
 	     int: qi = aligned_defi[j],
 	     int: offset = aligned_dist[j]} in (
-	    i[operand_definer[p]] = pi /\ i[operand_definer[q]] = qi -> rt[p] + offset = rt[q]
+	    insn_eq(operand_definer[p],pi) /\ insn_eq(operand_definer[q],qi) -> rt[p] + offset = rt[q]
 	)
     );
 
@@ -653,16 +677,12 @@ constraint
 %% Model::post_operand_latency_definition
 constraint
   forall(o in 0..MAXO, p in op_operands[o])(
-    let {array[int] of int: icol = [     lat_table[j,2]
+    let {array[int] of int: lcol = [     lat_table[j,4]
     		       	           |     j in index_set_1of2(lat_table)
 				   where lat_table[j,1] = o /\ lat_table[j,3] = p
 				   ],
-         array[int] of int: lcol = [     lat_table[j,4]
-    		       	           |     j in index_set_1of2(lat_table)
-				   where lat_table[j,1] = o /\ lat_table[j,3] = p
-				   ],
-         int: n = length(icol),
-	 bool: simple = if icol[1]=0 then
+         int: n = length(lcol),
+	 bool: simple = if not op_mand[o] then
 	                  forall(k in 2..n)(lcol[k]=lcol[2])
 			else
 			  forall(k in 1..n)(lcol[k]=lcol[1])
@@ -670,9 +690,7 @@ constraint
       if simple then
         lt[p] = lcol[n]
       else
-        table([i[o],lt[p]], array2d(1..n, 1..2, [ if k=1 then icol[j] else lcol[j] endif
-			    		      	| j in 1..n, k in 1..2
-			    		      	]))
+        lt[p] = lcol[ii[o]]
       endif
   );
 
@@ -758,13 +776,13 @@ constraint
             else if unit_res_dur_cap(res,active) then
 	        smart_alldiff([c[o] | o in active])
             else if good_cumulative then
-		cumulative([ if zero_res_off(res,o) then c[o] else c[o]+res_off[res,insn(o)] endif
+		cumulative([ if zero_res_off(res,o) then c[o] else c[o]+res_off_of_op(res,o) endif
 			   | o in active
 			   ],
-			   [ if unit_res_dur(res,o) then 1 else res_dur[res,insn(o)] endif
+			   [ if unit_res_dur(res,o) then 1 else res_dur_of_op(res,o) endif
 			   | o in active
 			   ],
-			   [ res_con[res,insn(o)]
+			   [ res_con_of_op(res,o)
 			   | o in active
 			   ],
 			   res_cap[res])
@@ -778,7 +796,7 @@ constraint
 			     io in op_instructions[o],
 			     k in j-res_dur[res,io]-res_off[res,io]+1..j-res_off[res,io]
 			     where res_con[res,io]>0 /\ k in lb(c[o])..ub(c[o]))
-			    (res_con[res,io]*bool2int(c[o]=k /\ i[o]=io)) <= res_cap[res]
+			    (res_con[res,io]*bool2int(c[o]=k /\ insn_eq(o,io))) <= res_cap[res]
 		     )
 		 )
             endif endif endif
@@ -807,7 +825,7 @@ constraint
   forall(x in index_set(activator_insns))(
     let {set of int: is = activator_insns[x],
          set of int: os = activator_ops[x]} in (
-	(a[min(os)] <-> exists(o in 0..MAXO)(smart_in(i[o],op_instructions[o] intersect is))) /\
+	(a[min(os)] <-> exists(o in 0..MAXO)(insn_in(o,op_instructions[o] intersect is))) /\
 	forall(i2 in os where i2>min(os))(a[i2] <-> a[min(os)])
     )
   );
@@ -830,7 +848,7 @@ constraint
 	     int: edsrc = min(op_operands[ed]),
 	     set of int: iset = dominate_instructions[k],
 	     set of int: tset = dominate_temps[k]} in (
-	    a[ing] \/ not a[ed] \/ smart_in(i[ed],iset) \/ temp_in(edsrc,tset)
+	    a[ing] \/ not a[ed] \/ insn_in(ed,iset) \/ temp_in(edsrc,tset)
  	)
     );
 
@@ -916,9 +934,9 @@ constraint
 		 % and forall(j in index_set(preassign_reg))(preassign_operand[j]!=P) % guaranteed by model2dzn
 	      then
 		  forall(atm in index_set(atom_regs))(
-		      let {set of int: insns = {ii | ii in op_instructions[I] where ii>0 /\ operand_atom[P,ii]=atm}} in (
+		      let {set of int: insns = {i | i in op_instructions[I] where i>0 /\ operand_atom[P,i]=atm}} in (
 		          if (card(insns)>=1) then
-			      (temp_eq(Q,T) /\ smart_in(i[I],insns) /\ r[T] in atom_regs[atm] -> temp_eq(P,T))
+			      (temp_eq(Q,T) /\ insn_in(I,insns) /\ r[T] in atom_regs[atm] -> temp_eq(P,T))
 			  else true endif
 		      )
 		  )
@@ -1012,7 +1030,7 @@ constraint
 		    (   active[k] <->
 			    eval_disjunction(across_item_cond[k]) \/
 			    (ls[ck] <= c[opi] /\ c[opi] < le[ck])) /\
-		    ite(active[k], r[ck], -maxwidth*(ck+1), selected[k])
+		    selected[k] = ite(active[k], r[ck], -maxwidth*(ck+1))
 		)
 	    ) /\
 	    noverlap(allreg, allwidth)
@@ -1133,7 +1151,7 @@ constraint
     let {int: ox = instr_cond[x,1],
          int: ix = instr_cond[x,2],
          int: px = instr_cond[x,3]} in (
-      i[ox] = ix -> ls_t(px) = c[ox]
+      insn_eq(ox,ix) -> ls_t(px) = c[ox]
     )
   );
 
@@ -1242,7 +1260,7 @@ constraint
 output
     ["\"cost\": "]   ++ [show(obj)] ++ ["\n"] ++
     ["\"cycles\": "]      ++ [show(c)]   ++ ["\n"] ++
-    ["\"instructions\": "]  ++ [show(i)]   ++ ["\n"] ++
+    ["\"instructions\": "]  ++ [show([op_instructions[o][fix(ii[o])] | o in 0..MAXO])]   ++ ["\n"] ++
     ["\"temporaries\": "] ++ [show([operand_temps[p][fix(y[p])] | p in 0..MAXP])]   ++ ["\n"] ++
     ["\"registers\": "]   ++ [show([r[v] | v in 0..MAXT])] ++ ["\n"] ++
     ["\"live start\": "]   ++ [show([ls[v] | v in 0..MAXT])] ++ ["\n"] ++
@@ -1256,3 +1274,4 @@ output
     % ["\"temp nb\": "] ++ [show(y)]   ++ ["\n"] ++
     % ["c[\(o)] = \(c[o])\n" | o in 0..MAXO where fix(c[o])>=0] ++
     [];
+

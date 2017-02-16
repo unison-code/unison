@@ -32,99 +32,6 @@
 %
 %% normal branch & bound search
 
-% solve :: seq_search(
-%      [bool_search([a[min(calleesaved_spill[i])] | i in index_set(calleesaved_spill)]++[true],
-%                   input_order, indomain_max, complete)] ++
-%      [bool_search([a[op_order[o]] | o in bb_ops[b]], input_order, indomain_min, complete)
-%      | b in bb_order] ++
-%      [int_search([i[o] | o in bb_ops[b]], input_order, indomain_min, complete)
-%      | b in bb_order] ++
-%      [int_search([y[p] | p in bb_operands[b]], input_order, indomain_min, complete)
-%      | b in bb_order] ++
-%      [int_search([c[o] | o in bb_ops[b]], smallest, indomain_min, complete)
-%      | b in bb_order] ++
-%      [int_search([r[t] | t in bb_temps[b]], first_fail, indomain_min, complete)
-%      | b in bb_order]
-%     ) minimize(obj);
-
-% "baseline"
-% solve :: seq_search(
-%      [bool_search([a[min(calleesaved_spill[i])] | i in index_set(calleesaved_spill)]++[true],
-%                   input_order, indomain_max, complete)] ++
-%      [seq_search([int_search([c[max(bb_ops[b])] , copysum[b]],
-%                              input_order, indomain_min, complete)] ++
-%                  [int_search([y[p] | p in bb_operands[b]
-% 		 		   where operand_use[p] /\ op_mand[operand_definer[p]]],
-% 		  first_fail, indomain_min, complete)] ++
-% 		 [int_search([0]++[y[p] | p in bb_operands[b]
-% 		                        where operand_use[p] /\ not op_mand[operand_definer[p]]],
-% 		  first_fail, indomain_min, complete)])
-%      | b in bb_order] ++
-%      [int_search([i[o] | o in bb_ops[b]], input_order, indomain_min, complete)
-%      | b in bb_order] ++
-%      [int_search([c[o] | o in bb_ops[b]], smallest, indomain_min, complete)
-%      | b in bb_order] ++
-%      [int_search([r[t] | t in bb_temps[b] where temp_definer[t] != min(bb_ops[b])]++[0], first_fail, indomain_min, complete)
-%      | b in bb_order]
-%     ) minimize(obj);
-
-% "all basic blocks in parallel"
-% solve :: seq_search(
-%      [bool_search([a[min(calleesaved_spill[i])] | i in index_set(calleesaved_spill)]++[true],
-%                   input_order, indomain_max, complete)] ++
-%      [int_search([c[max(bb_ops[b])] , copysum[b]],
-%                  input_order, indomain_min, complete)
-%      | b in bb_order] ++
-%      [int_search([y[p] | p in 0..MAXP where operand_use[p] /\ op_mand[operand_definer[p]]],
-% 		 first_fail, indomain_min, complete)] ++
-%      [int_search([0]++[y[p] | p in 0..MAXP where operand_use[p] /\ not op_mand[operand_definer[p]]],
-% 		 first_fail, indomain_min, complete)] ++
-%      [int_search([i[o] | o in 0..MAXO],
-%                  input_order, indomain_min, complete)] ++
-%      [int_search([c[o] | o in 0..MAXO],
-%                  smallest, indomain_min, complete)] ++
-%      [int_search([r[t] | t in 0..MAXT where op_type[temp_definer[t]] != TYPE_IN]++[0],
-%                  first_fail, indomain_min, complete)]
-%     ) minimize(obj);
-
-% "one bb at a time"
-% solve :: seq_search(
-%      [bool_search([a[min(calleesaved_spill[i])] | i in index_set(calleesaved_spill)]++[true],
-%                   input_order, indomain_max, complete)] ++
-%      [seq_search([int_search([c[max(bb_ops[b])] , copysum[b]],
-%                              input_order, indomain_min, complete)] ++
-%                  [int_search([y[p] | p in bb_operands[b]
-% 		 		   where operand_use[p] /\ op_mand[operand_definer[p]]],
-% 		  first_fail, indomain_min, complete)] ++
-% 		 [int_search([0]++[y[p] | p in bb_operands[b]
-% 		                        where operand_use[p] /\ not op_mand[operand_definer[p]]],
-% 		  first_fail, indomain_min, complete)] ++
-% 		 [int_search([i[o] | o in bb_ops[b]], input_order, indomain_min, complete)] ++
-% 		 [int_search([c[o] | o in bb_ops[b]], smallest, indomain_min, complete)] ++
-% 		 [int_search([r[t] | t in bb_temps[b] where temp_definer[t] != min(bb_ops[b])]++[0], first_fail, indomain_min, complete)])
-%      | b in bb_order]
-%     ) minimize(obj);
-
-% "free c[(out)], copysum"
-% solve :: seq_search(
-%      [bool_search([a[min(calleesaved_spill[i])] | i in index_set(calleesaved_spill)]++[true],
-%                   input_order, indomain_max, complete)] ++
-%      [seq_search([int_search([y[p] | p in bb_operands[b]
-% 		 		   where operand_use[p] /\ op_mand[operand_definer[p]]],
-% 		  first_fail, indomain_min, complete)] ++
-% 		 [int_search([0]++[y[p] | p in bb_operands[b]
-% 		                        where operand_use[p] /\ not op_mand[operand_definer[p]]],
-% 		  first_fail, indomain_min, complete)])
-%      | b in bb_order] ++
-%      [int_search([i[o] | o in bb_ops[b]], input_order, indomain_min, complete)
-%      | b in bb_order] ++
-%      [int_search([c[o] | o in bb_ops[b]], smallest, indomain_min, complete)
-%      | b in bb_order] ++
-%      [int_search([r[t] | t in bb_temps[b] where op_type[temp_definer[t]] != TYPE_IN]++[0], first_fail, indomain_min, complete)
-%      | b in bb_order]
-%     ) minimize(obj);
-
-% "c[(out)] later"
 solve :: seq_search(
      % can help, but far from always
      % [bool_search([a[min(calleesaved_spill[i])] | i in index_set(calleesaved_spill)]++[true],
@@ -139,7 +46,7 @@ solve :: seq_search(
     		                        where operand_use[p] /\ not op_mand[operand_definer[p]]],
     		  first_fail, indomain_min, complete)])
      | b in bb_order] ++
-     [int_search([i[o] | o in bb_ops[b]], input_order, indomain_min, complete)
+     [int_search([ii[o] | o in bb_ops[b]], input_order, indomain_min, complete)
      | b in bb_order] ++
      [seq_search([int_search([c[max(bb_ops[b])]], input_order, indomain_min, complete),
                   int_search([c[o] | o in bb_ops[b]], smallest, indomain_min, complete)])
