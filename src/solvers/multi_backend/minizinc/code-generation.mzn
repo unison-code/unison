@@ -263,7 +263,6 @@ var 0..MAXF: obj;
 array[0..MAXO] of var bool: a;
 array[0..MAXO] of var 0..MAXI: i;
 array[0..MAXO] of var -1..MAXC: c;
-array[0..MAXP] of var -1..MAXT: t;
 array[0..MAXP] of var -1..MAXR: rt;
 array[0..MAXP] of var MINL..MAXL: lt; % operand latency
 array[0..MAXP] of var -MAXL..MAXL: s; % global operand slack
@@ -299,6 +298,16 @@ predicate smart_in(var int: x, set of int: S) =
     x in S
   endif endif;
 
+predicate smart_alldiff(array[int] of var int: X) =
+  if length(X)<2 then
+    true
+  else if length(X)=2 then
+    let {set of int: S = index_set(X)} in
+    X[min(S)] != X[max(S)]
+  else
+    all_different(X)
+  endif endif;
+
 predicate ra_diffn(array[int] of var int: R,
                    array[int] of var int: W,
                    array[int] of var int: LS,
@@ -325,21 +334,64 @@ predicate noverlap(array[int] of var int: x,
 	else if length(x) = 2 then
 	    x[1] != x[2]
 	else
-	    all_different(x) :: domain
+	    smart_alldiff(x)
 	endif endif
     );
 
-predicate live_overlap(var int: k, var int: j) = (ls[k] < le[j] /\ ls[j] < le[k]);
+predicate live_overlap(int: k, int: j) = (ls[k] < le[j] /\ ls[j] < le[k]);
+
+predicate operand_live_overlap(int: p, int: q) = (ls_t(p) < le_t(q) /\ ls_t(q) < le_t(p));
+
+predicate operand_live_before(int: p, int: q) = (le_t(p) <= ls_t(q));
+
+test operand_related(int: p, int: q) =
+  operand_temps[p] subset operand_temps[q] \/ operand_temps[q] subset operand_temps[p];
+
+predicate same_temp(int: p, int: q) =
+  assert(operand_related(p,q), "same_temp[\(p),\(q)] with unrelated operands") /\
+  y[p] = y[q];
+  % let {array[int] of int: ts = operand_temps[p] intersect operand_temps[q]} in
+  % exists(t in ts)(temp_eq(p,t) /\ temp_eq(q,t));
+
+predicate temp_eq(int: p, int: t) =
+  let {array[int] of int: ts = operand_temps[p]} in
+  exists(j in index_set(ts) where ts[j]=t)(y[p]=j);
+
+predicate temp_in(int: p, set of int: T) =
+  if card(T)=0 then
+    false
+  else if card(T)=1 then
+    temp_eq(p, min(T))
+  else
+    let {array[int] of int: ts = operand_temps[p]} in
+    y[p] in {j | j in index_set(ts) where ts[j] in T}
+  endif endif;
+
+predicate temp_is_real(int: p) =
+  if min(operand_temps[p])>=0 then
+    true
+  else
+    y[p]>=2
+  endif;
+
+predicate temp_member(set of int: P, int: t) =
+  exists(p in P)(temp_eq(p,t));
+
+var int: t(int: p) = operand_temps[p][y[p]];
+
+var int: ls_t(int: p) = [ls[t] | t in operand_temps[p]][y[p]];
+
+var int: le_t(int: p) = [le[t] | t in operand_temps[p]][y[p]];
 
 predicate eval_literal(int: l) = (
     let {int: tag = literal_op[l],
          int: arg1 = literal_arg1[l],
          int: arg2 = literal_arg2[l]} in (
-	if tag=0 then t[arg1] = t[arg2]
-	else if tag=1 then t[arg1] = arg2
+	if tag=0 then same_temp(arg1,arg2)
+	else if tag=1 then temp_eq(arg1,arg2)
 	else if tag=2 then a[arg1]
 	else if tag=3 then i[arg1] = arg2
-	else if tag=4 then live_overlap(t[arg1],t[arg2])
+	else if tag=4 then operand_live_overlap(arg1,arg2)
 	else if tag=5 then live_overlap(arg1,arg2)
 	else if tag=6 then r[arg1] in callersaved
 	else if tag=7 then i[arg1] != arg2
@@ -387,8 +439,8 @@ constraint
     forall(o in 0..MAXO) (c[o] >= 0 <-> a[o]) /\
     forall(p in 0..MAXP where card(operand_temps[p])>1) (rt[p] = [r[v] | v in operand_temps[p]][y[p]]) /\
     forall(p in 0..MAXP where card(operand_temps[p])=1) (rt[p] = r[single_temp(p)]) /\
-    forall(p in 0..MAXP where not (op_type[operand_definer[p]] in {TYPE_IN,TYPE_OUT})) % rematerialization
-          (t[p] >= 0 <-> a[operand_definer[p]]) /\
+    forall(p in 0..MAXP where not op_mand[operand_definer[p]]) % rematerialization
+          (y[p] >= 2 <-> a[operand_definer[p]]) /\
     forall(v in 0..MAXT) (ls[v]+ld[v] = le[v]) /\
     forall(v in 0..MAXT where not opt_in_temporary(v)) % rematerialization
           (ls[v] = c[temp_definer[v]] /\
@@ -396,14 +448,14 @@ constraint
     forall(v in 0..MAXT where opt_in_temporary(v)) % rematerialization
           (ls[v] in -1 .. 0 /\
 	   (r[v] >= 0 <-> ls[v]=0) /\
-	   (r[v] >= 0 <-> t[temp_def[v]] = v)) /\
+	   (r[v] >= 0 <-> temp_eq(temp_def[v],v))) /\
     forall(v in 0..MAXT) (
 	let {set of int: pset = {p | p in 0..MAXP where can_use(p,v)},
 	     set of int: prange = 1..card(pset),
 	     array[prange] of int: parr = [p | p in pset],
 	     array[prange] of var -1..MAXC: carr} in (
 	    forall(p in prange)
-		  (ite((t[parr[p]]=v), c[operand_definer[parr[p]]], -1, carr[p])) /\
+		  (ite(temp_eq(parr[p],v), c[operand_definer[parr[p]]], -1, carr[p])) /\
 	    if card(pset)=1 /\ not temp_unsafe[v] then
 	      le[v] = carr[1]
 	    else
@@ -432,8 +484,7 @@ constraint
 %% domains
 constraint
     forall(o in 0..MAXO) (i[o] in op_instructions[o]) /\
-    forall(p in 0..MAXP) (t[p] in operand_temps[p]) /\
-    forall(q in 0..MAXP) (operand_temps[q][y[q]] = t[q]) /\
+    forall(q in 0..MAXP) (y[q] in 1..length(operand_temps[q])) /\
     forall(v in 0..MAXT) (
         let {int: p = temp_def[v],
 	     set of int: rdom = array_union([atom_regs[operand_atom[p,q]] | q in 1..MAXI]),
@@ -486,15 +537,15 @@ constraint
           ) (
         let {int: p = adj_from[j],
 	     int: q = adj_to[j]} in
-            (t[q] >= 0 -> t[p] >= 0 /\ rt[p] = rt[q]) /\
-            (t[p] >= 0 -> exists(k in index_set(adj_from) where adj_from[k] = p)(t[adj_to[k]] >= 0))
+            (temp_is_real(q) -> temp_is_real(p) /\ rt[p] = rt[q]) /\
+            (temp_is_real(p) -> exists(k in index_set(adj_from) where adj_from[k] = p)(temp_is_real(adj_to[k])))
     );
 
 constraint
     forall(j in index_set(quasi_adj_from)) (
         let {int: p = quasi_adj_from[j],
 	     int: q = quasi_adj_to[j]} in
-            t[q] >= 0 -> t[p] >= 0
+            temp_is_real(q) -> temp_is_real(p)
     );
 
 % DISABLED, in favor of quasi_adjacent
@@ -516,7 +567,7 @@ constraint
 %?%     forall(j in index_set(adj_from)) (
 %?%         let {int: p = adj_from[j],
 %?% 	     int: q = adj_to[j]} in (
-%?%             rt[p] = -1 \/ rt[q] = -1 \/ rt[p] = rt[q] :: domain
+%?%             rt[p] = -1 \/ rt[q] = -1 \/ rt[p] = rt[q]
 %?%  	)
 %?%     );
 
@@ -544,7 +595,7 @@ constraint
 	     int: pi = aligned_usei[j],
 	     int: qi = aligned_defi[j],
 	     int: offset = aligned_dist[j]} in (
-	    i[operand_definer[p]] = pi /\ i[operand_definer[q]] = qi -> rt[p] + offset = rt[q] :: domain
+	    i[operand_definer[p]] = pi /\ i[operand_definer[q]] = qi -> rt[p] + offset = rt[q]
 	)
     );
 
@@ -640,10 +691,8 @@ array[int] of var int: opnd_lbs(int: q) =
   ];
 
 predicate post_data_prec(int: q) =
-    let {int: nalts = card(operand_temps[q]),
-    	 int: u = operand_definer[q],
+    let {int: u = operand_definer[q],
          array[int] of var int: lbs = opnd_lbs(q)} in
-      t[q] = operand_temps[q][y[q]] /\
       c[u] >= lbs[y[q]];
 
 %% Model::post_data_precedences_constraints
@@ -678,11 +727,10 @@ constraint
 test unit_res_dur_cap(int: res, set of int: active) = (
     forall(o in active)(
         fixedop(o) /\
-	res_con[res,min(op_instructions[o])]=1 /\
+	res_con[res,min(op_instructions[o])]=res_cap[res] /\
 	res_dur[res,min(op_instructions[o])]=1 /\
 	res_off[res,min(op_instructions[o])]=0
-    ) /\
-    res_cap[res]=1
+    )
 );
 
 test unit_res_dur(int: res, int: o) = (
@@ -708,7 +756,7 @@ constraint
 				             (res_con[res,q]>0)}} in (
             if card(active)<=1 then true
             else if unit_res_dur_cap(res,active) then
-	        all_different([c[o] | o in active])
+	        smart_alldiff([c[o] | o in active])
             else if good_cumulative then
 		cumulative([ if zero_res_off(res,o) then c[o] else c[o]+res_off[res,insn(o)] endif
 			   | o in active
@@ -719,7 +767,7 @@ constraint
 			   [ res_con[res,insn(o)]
 			   | o in active
 			   ],
-			   res_cap[res]) :: domain
+			   res_cap[res])
 	    else let {int: inf = min([lb(c[o]) | o in active]),
 	              int: sup = max([ub(c[o]) | o in active])
 		               + max([max_res_dur(res,o) | o in active])
@@ -782,7 +830,7 @@ constraint
 	     int: edsrc = min(op_operands[ed]),
 	     set of int: iset = dominate_instructions[k],
 	     set of int: tset = dominate_temps[k]} in (
-	    a[ing] \/ not a[ed] \/ smart_in(i[ed],iset) \/ smart_in(t[edsrc],tset)
+	    a[ing] \/ not a[ed] \/ smart_in(i[ed],iset) \/ temp_in(edsrc,tset)
  	)
     );
 
@@ -796,7 +844,11 @@ constraint
 %% different temporaries
 constraint
     forall(T in difftemp) (
-        all_different([t[j] | j in T])
+      let {array[int] of int: TA = T} in
+      forall(j in index_set(TA), k in index_set(TA) where j<k)(
+        assert(operand_related(TA[j],TA[k]), "difftemp(\(T)) with unrelated operands")
+      ) /\
+      smart_alldiff([y[p] | p in T])
     );
 
 %% nogoods
@@ -816,14 +868,14 @@ constraint
 	     array[irange] of var 0..card(tset): count,
 	     array[irange] of int: tarr = [x | x in tset]} in (
 	    forall(j in irange)(count[j] >= bool2int(a[temp_definer[tarr[j]]])) /\
-	    global_cardinality([t[p] | p in 0..MAXP where can_use(p,tarr[1])],
-		               tarr, count) :: domain
+	    global_cardinality([t(p) | p in 0..MAXP where can_use(p,tarr[1])],
+		               tarr, count)
  	)
     )
   else
     forall(p in 0..MAXP where not operand_use[p])(
         let {int: v = single_temp(p)} in (
-            t[p]>=0 <-> member([t[q] | q in 0..MAXP where can_use(q,v)], v)
+            temp_is_real(p) <-> temp_member({q | q in 0..MAXP where can_use(q,v)}, v)
         )
     )
   endif;
@@ -841,14 +893,14 @@ constraint
 	    cumulative([ls[v] | v in T],
 		       [ld[v] | v in T],
 		       [temp_width[v]*bool2int(r[v] in calleesaved) | v in T],
-		       card(calleesaved)) :: domain
+		       card(calleesaved))
 	)
     else true endif;
 
 %% temp symmetry breaking among interchangeable temporaries in their potential use operands
 constraint
     forall(j in index_set(domop_operands)) (
-        value_precede_chain(domop_temps[j], [t[o] | o in domop_operands[j]])
+        value_precede_chain(domop_temps[j], [t(o) | o in domop_operands[j]])
     );
 
 %% mandatory temporary reuse (hairy!)
@@ -866,7 +918,7 @@ constraint
 		  forall(atm in index_set(atom_regs))(
 		      let {set of int: insns = {ii | ii in op_instructions[I] where ii>0 /\ operand_atom[P,ii]=atm}} in (
 		          if (card(insns)>=1) then
-			      (t[Q]=T /\ smart_in(i[I],insns) /\ r[T] in atom_regs[atm] -> t[P]=T)
+			      (temp_eq(Q,T) /\ smart_in(i[I],insns) /\ r[T] in atom_regs[atm] -> temp_eq(P,T))
 			  else true endif
 		      )
 		  )
@@ -880,7 +932,7 @@ constraint
         let {int: p = before_pred[j],
 	     int: q = before_succ[j],
 	     set of int: cond = before_cond[j]} in (
-            eval_disjunction(cond) -> le[t[p]] <= ls[t[q]]
+            eval_disjunction(cond) -> operand_live_before(p,q)
 	)
     );
 
@@ -906,7 +958,7 @@ constraint
 	    set of int: range = relation_range[j],
 	    set of int: irange = 1..(card(ops)+card(temps)),
 	    array[irange] of var int: vars = [bool2int(a[j]) | j in ops]++
-	                                     [t[j] | j in temps]} in (
+	                                     [t(j) | j in temps]} in (
 	   table(vars, array2d(1..nt,irange,[ints[j] | j in range]))
 	)
     );
@@ -918,8 +970,8 @@ constraint
 	     int: src1 = opnds[1],
 	     int: src2 = opnds[2],
 	     int: def  = opnds[3]} in (
-	    minimum(ls[t[def]], [le[t[src1]], le[t[def]]]) /\
-	    minimum(ls[t[def]], [le[t[src2]], le[t[def]]])
+	    minimum(ls_t(def), [le_t(src1), le_t(def)]) /\
+	    minimum(ls_t(def), [le_t(src2), le_t(def)])
 	)
     );
 
@@ -928,7 +980,7 @@ constraint
     forall(o in 0..MAXO where op_type[o] in {TYPE_HIGH, TYPE_LOW})(
 	let {int: src  = min(op_operands[o]),
 	     int: def  = max(op_operands[o])} in (
-	    minimum(ls[t[def]], [le[t[src]], le[t[def]]])
+	    minimum(ls_t(def), [le_t(src), le_t(def)])
 	)
     );
 
@@ -1081,7 +1133,7 @@ constraint
     let {int: ox = instr_cond[x,1],
          int: ix = instr_cond[x,2],
          int: px = instr_cond[x,3]} in (
-      i[ox] = ix -> ls[t[px]] = c[ox]
+      i[ox] = ix -> ls_t(px) = c[ox]
     )
   );
 
@@ -1096,8 +1148,8 @@ constraint
 constraint
   forall(o in 0..MAXO, dp in op_operands[o] where not operand_use[dp])(
     let {int: v = single_temp(dp)} in
-	(t[dp]=v -> ld[v] >= temp_minlive[v]) /\
-	forall(up in temp_uses[v])(t[up]=v -> ld[v] >= lat(up,v))
+	(temp_eq(dp,v) -> ld[v] >= temp_minlive[v]) /\
+	forall(up in temp_uses[v])(temp_eq(up,v) -> ld[v] >= lat(up,v))
   );
         
 %% Model::post_define_issue_cycle_constraints
@@ -1141,7 +1193,7 @@ constraint
         forall(v in real_temps(q1))(kill_live_range(v)) /\
 	c[o2] = issue[y[q1]] /\
 	if card(real_temps(q1))=1 then
-	  t[p1] = t[q1] /\ rt[p1] = rt[q1]
+	  same_temp(p1,q1) /\ rt[p1] = rt[q1]
 	else
 	  sum(o in o1s)(a[o]) <= 1
 	endif
@@ -1175,7 +1227,7 @@ constraint
 constraint
   forall(opnds in congr)(
     let {set of int: inps = {p | p in opnds where op_type[operand_definer[p]] = TYPE_IN},
-         array[int] of var int: ubs = [ if t[p2]=single_temp(p) then c[operand_definer[p2]] - lt[p2] - s[p2] - lt[p] else MAXC endif
+         array[int] of var int: ubs = [ if temp_eq(p2,single_temp(p)) then c[operand_definer[p2]] - lt[p2] - s[p2] - lt[p] else MAXC endif
 	 	                      | p in inps,
 				        p2 in p..MAXP
 				      where can_use(p2,single_temp(p))
@@ -1191,7 +1243,7 @@ output
     ["\"cost\": "]   ++ [show(obj)] ++ ["\n"] ++
     ["\"cycles\": "]      ++ [show(c)]   ++ ["\n"] ++
     ["\"instructions\": "]  ++ [show(i)]   ++ ["\n"] ++
-    ["\"temporaries\": "] ++ [show(t)]   ++ ["\n"] ++
+    ["\"temporaries\": "] ++ [show([operand_temps[p][fix(y[p])] | p in 0..MAXP])]   ++ ["\n"] ++
     ["\"registers\": "]   ++ [show([r[v] | v in 0..MAXT])] ++ ["\n"] ++
     ["\"live start\": "]   ++ [show([ls[v] | v in 0..MAXT])] ++ ["\n"] ++
     ["\"live duration\": "]   ++ [show([ld[v] | v in 0..MAXT])] ++ ["\n"] ++
