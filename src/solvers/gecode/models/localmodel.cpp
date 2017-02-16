@@ -463,6 +463,9 @@ void LocalModel::apply_solution(const GlobalModel * gs) {
   for (operand p : input->ope[b]) {
     copy_domain(*this, gs->ry(p), ry(p));
     copy_domain(*this, gs->y(p), y(p));
+    if (input->global_operand[p]) {
+      copy_domain(*this, gs->s(p), s(p));
+    }
   }
 
   for (temporary t : input->tmp[b]) {
@@ -479,8 +482,12 @@ void LocalModel::apply_solution(const GlobalModel * gs) {
 
 bool LocalModel::equal_to(const LocalModel * ls) const {
   for (operation o : {input->in[b], input->out[b]})
-    for (operand p : input->operands[o])
+    for (operand p : input->operands[o]) {
       if (ry(p).val() != ls->ry(p).val()) return false;
+      if (input->global_operand[p]) {
+        if (s(p).val() != ls->s(p).val()) return false;
+      }
+    }
   for (activation_class ac : input->AC)
     for (operation o : input->activation_class_operations[ac])
       if (contains(input->ops[b], o))

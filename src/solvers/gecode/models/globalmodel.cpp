@@ -576,6 +576,10 @@ void GlobalModel::post_different_solution(GlobalModel * g1, bool unsat) {
       operand p = input->representative[input->regular[g]];
       lits << var(ry(p) == g1->ry(p).val());
     }
+  for (operand p : input->P)
+    if (input->global_operand[p]) {
+      lits << var(slack(p) == g1->slack(p).val());
+    }
   if (input->B.size() > 1 || (input->B.size() == 1 && unsat)) {
     for (activation_class ac : input->AC) {
       operation o = input->activation_class_representative[ac];
@@ -802,6 +806,10 @@ bool GlobalModel::equal_to(const GlobalModel * gs) const {
     operand p = input->representative[input->regular[g]];
     if (ry(p).val() != gs->ry(p).val()) return false;
   }
+  for (operand p : input->P)
+    if (input->global_operand[p]) {
+      if (s(p).val() != gs->s(p).val()) return false;
+    }
   for (activation_class ac : input->AC) {
     operation o = input->activation_class_representative[ac];
     if (a(o).val() != gs->a(o).val()) return false;
@@ -855,8 +863,10 @@ apply_solution_and_deactivate(GlobalModel * gs,
     if (input->global_operand[p]) {
       assert(gs->ry(p).assigned());
       assert(gs->x(p).assigned());
+      assert(gs->slack(p).assigned());
       constraint(x(p) == gs->x(p));
       constraint(ry(p) == gs->ry(p));
+      constraint(slack(p) == gs->slack(p));
     }
   }
   for (activation_class ac : input->AC) {
