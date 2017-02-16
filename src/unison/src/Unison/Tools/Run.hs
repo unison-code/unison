@@ -27,11 +27,11 @@ import qualified Unison.Tools.Model as Model
 import qualified Unison.Tools.Export as Export
 import qualified Unison.Tools.Normalize as Normalize
 
-run (estimateFreq, noCC, noReserved, maxBlockSize, implementFrames, function,
-     goal, noCross, oldModel, expandCopies, rematerialize, baseFile, scaleFreq,
-     applyBaseFile, tightPressureBound, strictlyBetter, unsatisfiable,
-     removeReds, keepNops, solverFlags, inFile, debug, verbose, intermediate,
-     lint, outFile, outTemp, presolver, solver)
+run (estimateFreq, simplifyControlFlow, noCC, noReserved, maxBlockSize,
+     implementFrames, function, goal, noCross, oldModel, expandCopies,
+     rematerialize, baseFile, scaleFreq, applyBaseFile, tightPressureBound,
+     strictlyBetter, unsatisfiable, removeReds, keepNops, solverFlags, inFile,
+     debug, verbose, intermediate, lint, outFile, outTemp, presolver, solver)
      targetWithOption =
 
   do tmp <- getTemporaryDirectory
@@ -43,7 +43,7 @@ run (estimateFreq, noCC, noReserved, maxBlockSize, implementFrames, function,
      let uniFile = addExtension prefix "uni"
      maybePutStrLn "Running 'uni import'..."
      Import.run
-       (estimateFreq, noCC, noReserved, maxBlockSize, implementFrames, function,
+       (estimateFreq, simplifyControlFlow, noCC, noReserved, maxBlockSize, implementFrames, function,
         goal, inFile, debug, intermediate, lint, lintPragma, Just uniFile)
        mirInput targetWithOption
      uniInput <- readFile uniFile
@@ -70,9 +70,8 @@ run (estimateFreq, noCC, noReserved, maxBlockSize, implementFrames, function,
        extUniInput targetWithOption
      altUniInput <- readFile altUniFile
 
-     baseFile' <-
-       normalize (prefix, estimateFreq, debug, verbose, targetWithOption)
-       baseFile
+     baseFile' <- normalize (prefix, estimateFreq, simplifyControlFlow, debug,
+                             verbose, targetWithOption) baseFile
 
      let jsonFile = addExtension prefix "json"
      maybePutStrLn "Running 'uni model'..."
@@ -116,12 +115,12 @@ run (estimateFreq, noCC, noReserved, maxBlockSize, implementFrames, function,
 addExtension prefix ext = prefix ++ "." ++ ext
 
 normalize _ Nothing = return Nothing
-normalize (prefix, estimateFreq, debug, verbose, targetWithOption)
-  (Just baseFile) =
+normalize (prefix, estimateFreq, simplifyControlFlow, debug, verbose,
+           targetWithOption) (Just baseFile) =
   do let llvmMirFile = addExtension prefix "llvm.mir"
      asmMirInput <- readFile baseFile
      when verbose $ hPutStrLn stderr "Running 'uni normalize'..."
      Normalize.run
-       (estimateFreq, debug, Just llvmMirFile)
+       (estimateFreq, simplifyControlFlow, debug, Just llvmMirFile)
        asmMirInput targetWithOption
      return (Just llvmMirFile)

@@ -72,12 +72,13 @@ import Unison.Tools.Import.SplitBlocks
 import Unison.Tools.Import.RepairCSSA
 import Unison.Tools.Import.AdvancePhis
 
-run (estimateFreq, noCC, noReserved, maxBlockSize, implementFrames, function,
-     goal, mirFile, debug, intermediate, lint, lintPragma, uniFile) mir target =
+run (estimateFreq, simplifyControlFlow, noCC, noReserved, maxBlockSize,
+     implementFrames, function, goal, mirFile, debug, intermediate, lint,
+     lintPragma, uniFile) mir target =
     let mf = selectFunction function $ MachineIR.parse mir
         (mf', partialMfs) =
             applyTransformations
-            (mirTransformations estimateFreq)
+            (mirTransformations (estimateFreq, simplifyControlFlow))
             target mf
         ff = buildFunction target mf'
         (f, partialFs) =
@@ -94,14 +95,14 @@ run (estimateFreq, noCC, noReserved, maxBlockSize, implementFrames, function,
           when lint $
                invokeLint f target
 
-mirTransformations estimateFreq =
+mirTransformations (estimateFreq, simplifyControlFlow) =
     [(dropDebugLocations, "dropDebugLocations", True),
      (normalizePhis, "normalizePhis", True),
      (liftCustomProperties, "liftCustomProperties", True),
      (liftBranchPredictions, "liftBranchPredictions", True),
      (liftJumpTables, "liftJumpTables", True),
      (liftMemoryPartitions, "liftMemoryPartitions", True),
-     (simplifyFallthroughs, "simplifyFallthroughs", True),
+     (simplifyFallthroughs, "simplifyFallthroughs", simplifyControlFlow),
      (renameMachineBlocks, "renameMachineBlocks", True),
      (splitTerminators estimateFreq, "splitTerminators", True),
      (renameMachineBlocks, "renameMachineBlocks", True),

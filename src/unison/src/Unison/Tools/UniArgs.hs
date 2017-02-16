@@ -20,9 +20,9 @@ data Uni =
     Import    {targetName :: String, inFile :: FilePath, targetOption :: [String],
                outFile :: Maybe FilePath, debug :: Bool, intermediate :: Bool,
                lint :: Bool, lintPragma :: Bool, estimateFreq :: Bool,
-               implementFrames :: Bool, noCC :: Bool, noReserved :: Bool,
-               maxBlockSize :: Maybe Integer, function :: Maybe String,
-               goal :: Maybe String} |
+               simplifyControlFlow :: Bool, implementFrames :: Bool,
+               noCC :: Bool, noReserved :: Bool, maxBlockSize :: Maybe Integer,
+               function :: Maybe String, goal :: Maybe String} |
     Linearize {targetName :: String, inFile :: FilePath, targetOption :: [String],
                outFile :: Maybe FilePath, debug :: Bool, intermediate :: Bool,
                lint :: Bool, lintPragma :: Bool} |
@@ -48,7 +48,8 @@ data Uni =
                goals :: String, estimateFreq :: Bool,
                simulateStalls :: Bool, modelCost :: Bool} |
     Normalize {targetName :: String, inFile :: FilePath, targetOption :: [String],
-               outFile :: Maybe FilePath, debug :: Bool, estimateFreq :: Bool} |
+               outFile :: Maybe FilePath, debug :: Bool, estimateFreq :: Bool,
+               simplifyControlFlow :: Bool} |
     Lint      {targetName :: String, inFile :: FilePath, targetOption :: [String],
                outFile :: Maybe FilePath, allTemporariesDefined :: Bool,
                singleDefinitions :: Bool, allTemporariesUsed :: Bool,
@@ -75,8 +76,8 @@ data Uni =
     Run       {targetName :: String, inFile :: FilePath, targetOption :: [String],
                outFile :: Maybe FilePath, debug :: Bool, verbose :: Bool,
                intermediate :: Bool, lint :: Bool, estimateFreq :: Bool,
-               implementFrames :: Bool, noCC :: Bool, noReserved :: Bool,
-               maxBlockSize :: Maybe Integer, function :: Maybe String,
+               simplifyControlFlow :: Bool, implementFrames :: Bool, noCC :: Bool,
+               noReserved :: Bool, maxBlockSize :: Maybe Integer, function :: Maybe String,
                goal :: Maybe String, noCross :: Bool, oldModel :: Bool,
                expandCopies :: Bool, rematerialize :: Bool,
                baseFile :: Maybe FilePath, scaleFreq :: Bool,
@@ -104,6 +105,7 @@ import' = Import {
   lint            = False &= name "l" &= help "Verify that the output is correct by invoking the lint tool",
   lintPragma      = True &= help "Embed lint pragma in Unison IR to disable specific tests",
   estimateFreq    = False &= help "Estimate block execution frequency if it is not provided",
+  simplifyControlFlow = True &= help "Simplify the function's control flow",
   implementFrames = True &= help "Implement stack frame handling",
   noCC            = False &= help "Do not enforce calling convention",
   noReserved      = False &= help "Do not enforce reserved registers",

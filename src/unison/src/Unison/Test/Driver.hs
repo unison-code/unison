@@ -83,6 +83,7 @@ runUnison unisonTargets testArgs mirFile =
       (Any target) -> do
         prefix <- Run.run
                   (estimateFreq args,
+                   simplifyControlFlow args,
                    noCC args,
                    noReserved args,
                    maxBlockSize args,
