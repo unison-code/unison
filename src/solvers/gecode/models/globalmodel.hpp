@@ -156,6 +156,7 @@ public:
   void post_active_operation(operation o);
   void post_inactive_operation(operation o);
   void post_lower_bounds(operation o1, operation o2, block b, int lb);
+  void post_relaxation_nogood(operation o1, operation o2);
   void post_connection_lower_bound(operand p, bool connect, block b, int lb);
   void post_instruction_nogood(int cost, InstructionAssignment forbidden);
   void post_activation_nogood(operation o, int lb);

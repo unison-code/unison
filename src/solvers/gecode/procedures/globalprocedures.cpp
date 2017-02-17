@@ -101,13 +101,16 @@ void presolve_minimum_consumption(GlobalModel * base) {
 
 class RelaxationResult {
 public:
+  SolverResult result;
   operation co;
   operation oo;
   block b;
   int lb;
-  RelaxationResult() : co(NULL_OPERATION), oo(NULL_OPERATION), b(-1), lb(0) {}
-  RelaxationResult(operation co0, operation oo0, block b0) :
-    co(co0), oo(oo0), b(b0) {}
+  RelaxationResult() :
+    result(UNKNOWN), co(NULL_OPERATION), oo(NULL_OPERATION), b(-1), lb(0) {}
+  RelaxationResult(SolverResult result0, operation co0, operation oo0,
+                   block b0) :
+    result(result0), co(co0), oo(oo0), b(b0) {}
 };
 
 class PresolveRelaxationJob : public Support::Job<RelaxationResult> {
@@ -123,7 +126,7 @@ public:
   virtual RelaxationResult run(int) {
     operation oo = ac == NULL_ACTIVATION_CLASS ? NULL_OPERATION :
       ls->input->activation_class_representative[ac];
-    RelaxationResult rs(co, oo, b);
+    RelaxationResult rs(UNKNOWN, co, oo, b);
     ls->post_minimum_cost_branchers();
 #ifdef GRAPHICS
     if (ls->options->gist_presolving() && ls->options->gist_block() == b)
@@ -133,14 +136,24 @@ public:
     Search::Options preOptions;
     preOptions.stop = preStop;
     BAB<LocalModel> e(ls, preOptions);
+    bool found_solution = false;
     while (LocalModel* nextls = e.next()) {
+      found_solution = true;
       LocalModel * oldls = ls;
       ls = nextls;
       delete oldls;
     }
     int lb = 0;
-    if (!preStop->stop(e.statistics(), preOptions) && ls->status() == SS_SOLVED)
-      lb = ls->cost().val();
+    SolverResult result = UNKNOWN;
+    if (preStop->stop(e.statistics(), preOptions)) {
+      result = LIMIT;
+    } else if (found_solution) {
+        result = OPTIMAL_SOLUTION;
+        lb = ls->cost().val();
+    } else {
+      result = UNSATISFIABLE;
+    }
+    rs.result = result;
     rs.lb = lb;
     if (ls != NULL) delete ls;
     delete preStop;
@@ -227,7 +240,11 @@ void presolve_relaxation(GlobalModel * base, GIST_OPTIONS * lo) {
   }
 
   for (RelaxationResult rs : results) {
-    base->post_lower_bounds(rs.co, rs.oo, rs.b, rs.lb);
+    if (rs.result == OPTIMAL_SOLUTION) {
+      base->post_lower_bounds(rs.co, rs.oo, rs.b, rs.lb);
+    } else if (rs.result == UNSATISFIABLE) {
+      base->post_relaxation_nogood(rs.co, rs.oo);
+    }
     Gecode::SpaceStatus ss = base->status();
     if (ss == SS_FAILED) break; // Proof that there is no solution
   }

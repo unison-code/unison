@@ -512,6 +512,16 @@ post_lower_bounds(operation o1, operation o2, block b, int lb) {
 }
 
 void GlobalModel::
+post_relaxation_nogood(operation o1, operation o2) {
+  BoolVar all_active(*this, 0, 1);
+  BoolVarArgs as;
+  if (o1 != NULL_OPERATION) as << a(o1);
+  if (o2 != NULL_OPERATION) as << a(o2);
+  rel(*this, BOT_AND, as, all_active);
+  constraint(!all_active);
+}
+
+void GlobalModel::
 post_connection_lower_bound(operand p, bool connect, block b, int lb) {
   BoolVar cond = connect ? x(p) : var(!x(p));
   constraint(cond >> (f(b) >= lb));
