@@ -69,10 +69,10 @@ run (removeReds, keepNops, baseFile, tight, debug, outJsonFile, unisonMirFile)
      when debug $
           do putStr (toPlainText partialFs)
              putStr $ toPlainText $
-               [("toMachineFunction", Just $ show mf1),
-                ("runPostProcess", Just $ show mf2),
-                ("cleanNops", Just $ show mf3),
-                ("prepareForEmission", Just $ show mf4)]
+               [("toMachineFunction", Just $ showSimple mf1),
+                ("runPostProcess", Just $ showSimple mf2),
+                ("cleanNops", Just $ showSimple mf3),
+                ("prepareForEmission", Just $ showSimple mf4)]
      when (isJust sol) $
           emitOutput unisonMirFile (show mf4)
      when (not $ isJust sol) $
