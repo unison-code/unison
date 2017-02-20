@@ -389,27 +389,29 @@ value_precede_chains(Parameters & input, Model * m, bool global, block b) {
     operand p = pr[0];
     register_atom r = pr[1];
     if (global || input.pb[p] == b) {
-      operation o = input.oper[p];
       temporary t = input.temps[p][0];
-      vector<operand> us = input.users[t];
-      int ty = input.type[o];
-      PreP.push_back(p);
-      if (!input.use[p])
-	PreT.push_back(t);
-      if (!input.use[p] &&
-	  us.size() == 1 &&
-	  input.type[input.oper[us[0]]] == KILL) {
-	defer[o].push_back(pr);
-      } else if (binary_search(input.calleesaved.begin(), input.calleesaved.end(), r) &&
-		 (ty == IN || ty == OUT)) {
-	defer[o].push_back(pr);
-      } else {
-	int w = input.operand_width[p];
-	C2W[C] = w;
-	InClassesOfReg[r].push_back(C);
-	for (int d=0; d<w; d++)
-	  CoveringClassesOfReg[r+d].push_back(C);
-	C++;
+      if (t != NULL_TEMPORARY) {
+	vector<operand> us = input.users[t];
+	operation o = input.oper[p];
+	int ty = input.type[o];
+	PreP.push_back(p);
+	if (!input.use[p])
+	  PreT.push_back(t);
+	if (!input.use[p] &&
+	    us.size() == 1 &&
+	    input.type[input.oper[us[0]]] == KILL) {
+	  defer[o].push_back(pr);
+	} else if (binary_search(input.calleesaved.begin(), input.calleesaved.end(), r) &&
+		   (ty == IN || ty == OUT)) {
+	  defer[o].push_back(pr);
+	} else {
+	  int w = input.operand_width[p];
+	  C2W[C] = w;
+	  InClassesOfReg[r].push_back(C);
+	  for (int d=0; d<w; d++)
+	    CoveringClassesOfReg[r+d].push_back(C);
+	  C++;
+	}
       }
     }
   }
@@ -469,10 +471,11 @@ value_precede_chains(Parameters & input, Model * m, bool global, block b) {
 	return chains;
     }
     for (operand p : input.operands[inop]) {
-      if (!infinite_register_atom(input, m->ry(p).val()) &&
+      int r = m->ry(p).val();
+      if (r >= 0 &&
+	  !infinite_register_atom(input, m->ry(p).val()) &&
           !binary_search(PreP.begin(), PreP.end(), p)) {
 	int w = input.operand_width[p];
-	int r = m->ry(p).val();
 	C2W[C] = w;
 	InClassesOfReg[r].push_back(C);
 	for (int d=0; d<w; d++)
@@ -481,10 +484,11 @@ value_precede_chains(Parameters & input, Model * m, bool global, block b) {
       }
     }
     for (operand p : input.operands[outop]) {
-      if (!infinite_register_atom(input, m->ry(p).val()) &&
+      int r = m->ry(p).val();
+      if (r >= 0 &&
+	  !infinite_register_atom(input, m->ry(p).val()) &&
           !binary_search(PreP.begin(), PreP.end(), p)) {
 	int w = input.operand_width[p];
-	int r = m->ry(p).val();
 	C2W[C] = w;
 	InClassesOfReg[r].push_back(C);
 	for (int d=0; d<w; d++)
