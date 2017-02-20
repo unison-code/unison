@@ -157,6 +157,9 @@ public:
     rs.lb = lb;
     if (ls != NULL) delete ls;
     delete preStop;
+    if (rs.result == UNSATISFIABLE) {
+      throw Support::JobStop<RelaxationResult>(rs);
+    }
     return rs;
   }
 };
