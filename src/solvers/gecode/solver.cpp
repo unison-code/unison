@@ -630,7 +630,16 @@ int main(int argc, char* argv[]) {
 
   if (!options.disable_presolving()) {
 
+    double tpre;
+
+    Support::Timer t_pre1;
+    t_pre1.start();
     presolve_effective_callee_saved_spilling(base);
+    tpre = t_pre1.stop();
+    if (options.verbose()) {
+      cerr << pre() << "presolving time (effective callee-saved spilling): "
+           << ceil(tpre) << " ms" << endl;
+    }
 
     if (base->status() == SS_FAILED) { // The problem has no solution
       double execution_time = t.stop();
@@ -646,8 +655,16 @@ int main(int argc, char* argv[]) {
       exit(EXIT_SUCCESS);
     }
 
-    if (input.optimize_resource != ISSUE_CYCLES)
+    if (input.optimize_resource != ISSUE_CYCLES) {
+      Support::Timer t_pre2;
+      t_pre2.start();
       presolve_minimum_consumption(base);
+      tpre = t_pre2.stop();
+      if (options.verbose()) {
+        cerr << pre() << "presolving time (minimum consumption): "
+             << ceil(tpre) << " ms" << endl;
+      }
+    }
 
     Gecode::SpaceStatus ss2 = base->status();
     if (ss2 == SS_FAILED) { // The problem has no solution
@@ -664,7 +681,16 @@ int main(int argc, char* argv[]) {
       exit(EXIT_SUCCESS);
     }
 
-    if (!single_block) presolve_relaxation(base, lo);
+    if (!single_block) {
+      Support::Timer t_pre3;
+      t_pre3.start();
+      presolve_relaxation(base, lo);
+      tpre = t_pre3.stop();
+      if (options.verbose()) {
+        cerr << pre() << "presolving time (relaxation): "
+             << ceil(tpre) << " ms" << endl;
+      }
+    }
 
     Gecode::SpaceStatus ss3 = base->status();
     if (ss3 == SS_FAILED) { // The problem has no solution
@@ -681,11 +707,32 @@ int main(int argc, char* argv[]) {
       exit(EXIT_SUCCESS);
     }
 
+    Support::Timer t_pre4;
+    t_pre4.start();
     presolve_global_cluster_impact(base, lo);
+    tpre = t_pre4.stop();
+    if (options.verbose()) {
+      cerr << pre() << "presolving time (global cluster impact): "
+           << ceil(tpre) << " ms" << endl;
+    }
 
+    Support::Timer t_pre5;
+    t_pre5.start();
     presolve_global_shaving(base);
+    tpre = t_pre5.stop();
+    if (options.verbose()) {
+      cerr << pre() << "presolving time (global shaving): "
+           << ceil(tpre) << " ms" << endl;
+    }
 
+    Support::Timer t_pre6;
+    t_pre6.start();
     presolve_shaving(base);
+    tpre = t_pre6.stop();
+    if (options.verbose()) {
+      cerr << pre() << "presolving time (shaving): "
+           << ceil(tpre) << " ms" << endl;
+    }
 
     Gecode::SpaceStatus ss4 = base->status();
     if (ss4 == SS_FAILED) { // The problem has no solution
@@ -702,7 +749,14 @@ int main(int argc, char* argv[]) {
       exit(EXIT_SUCCESS);
     }
 
+    Support::Timer t_pre7;
+    t_pre7.start();
     presolve_global_activation_shaving(base);
+    tpre = t_pre7.stop();
+    if (options.verbose()) {
+      cerr << pre() << "presolving time (global activation shaving): "
+           << ceil(tpre) << " ms" << endl;
+    }
 
     Gecode::SpaceStatus ss5 = base->status();
     if (ss5 == SS_FAILED) { // The problem has no solution
