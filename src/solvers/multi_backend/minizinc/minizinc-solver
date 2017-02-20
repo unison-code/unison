@@ -96,4 +96,4 @@ else
   pvalue=''
 fi
 set -x
-time ${mzn} ${allsolns} -k ${statflag} ${pflag} ${pvalue} ${freeflag} ${toflag} ${nogoods} -D good_cumulative=${cumulative} -D good_diffn=${diffn} code-generation.mzn $DIRBASENAME.dzn | $COMMON_DIR/outfilter.pl > ${OUTJSON}
+time ${mzn} ${allsolns} -k ${statflag} ${pflag} ${pvalue} ${freeflag} ${toflag} ${nogoods} -D good_cumulative=${cumulative} -D good_diffn=${diffn} code-generation.mzn $DIRBASENAME.dzn | $COMMON_DIR/outfilter.pl ${OUTJSON}.last > ${OUTJSON}

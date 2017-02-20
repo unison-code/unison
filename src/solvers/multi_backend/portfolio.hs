@@ -19,6 +19,7 @@ This file is part of Unison, see http://unison-code.github.io
 {-# LANGUAGE DeriveDataTypeable, RecordWildCards, OverloadedStrings #-}
 
 import Data.Aeson
+import Data.Int
 import qualified Data.ByteString.Lazy.Char8 as BSL
 import qualified Data.HashMap.Strict as HM
 import Control.Concurrent
@@ -38,6 +39,8 @@ data Portfolio =
              gecodeFlags :: String,
              chuffedFlags :: String}
   deriving (Data, Typeable, Show)
+
+data Solver = Gecode | Chuffed deriving Eq
 
 portfolioArgs = cmdArgsMode $ Portfolio
     {
@@ -75,11 +78,14 @@ splitFlags flags =
   in [flag | flag <- splitOn " " flags', not (null flag)]
 
 proven json =
-  let sol    = case decode (BSL.pack json) of
-                Nothing -> error ("error parsing JSON output")
-                Just (Object s) -> s
+  let sol    = parseJson json
       proven = sol HM.! "proven"
   in (solutionFromJson proven) :: Bool
+
+parseJson json =
+  case decode (BSL.pack json) of
+   Nothing -> error ("error parsing JSON output")
+   Just (Object s) -> s
 
 solutionFromJson object =
   case fromJSON object of
@@ -90,6 +96,7 @@ main =
     do Portfolio{..} <- cmdArgsRun portfolioArgs
        let gecodeOutFile  = outFile ++ ".gecode"
            chuffedOutFile = outFile ++ ".chuffed"
+           chuffedLastOutFile = outFile ++ ".chuffed.last"
        result <- race
                  (runGecode gecodeFlags verbose inFile gecodeOutFile)
                  (runChuffed chuffedFlags inFile chuffedOutFile)
@@ -98,12 +105,25 @@ main =
        createProcess
          (proc "killall" ["sicstus", "mzn2fzn", "fzn-chuffed"])
          {std_out = CreatePipe, std_err = CreatePipe}
-       let finalOutFile = case result of
-                           Left  outFile1 -> outFile1
-                           Right outFile2 -> outFile2
+       let winner = case result of
+                      Left  _ -> Gecode
+                      Right _ -> Chuffed
+       finalOutFile <- if winner == Chuffed then return chuffedOutFile
+                       else
+                         do gecodeOut <- readFile gecodeOutFile
+                            if proven gecodeOut then return gecodeOutFile
+                            else
+                            -- gecode-solver timed out, the last solution
+                            -- provided by Chuffed might be actually better
+                                 do chuffedLastOut <- readIfExists
+                                                   chuffedLastOutFile
+                                    if chuffedLastOut `betterThan` gecodeOut
+                                       then return chuffedLastOutFile
+                                       else return gecodeOutFile
        renameFile finalOutFile outFile
        removeIfExists gecodeOutFile
        removeIfExists chuffedOutFile
+       removeIfExists chuffedLastOutFile
        return ()
 
 replaceFlagChar '=' = ' '
@@ -113,3 +133,18 @@ replaceFlagChar c = c
 removeIfExists file =
   do fileExists <- doesFileExist file
      when fileExists (removeFile file)
+
+readIfExists file =
+  do fileExists <- doesFileExist file
+     if fileExists then readFile file else return ""
+
+betterThan out1 out2 = cost out1 < cost out2
+
+cost "" = maxInt
+cost out =
+  let sol  = parseJson out
+      cost = sol HM.! "cost"
+      c    = (solutionFromJson cost) :: Integer
+  in if c == -1 then maxInt else c
+
+maxInt = toInteger (maxBound - 1 :: Int32)

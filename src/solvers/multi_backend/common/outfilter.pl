@@ -40,6 +40,8 @@
 use warnings;
 use strict;
 
+my $last = $ARGV[0];
+unlink $last;
 my $state = 1;
 my $soln = 0;
 my $proven = 0;
@@ -52,6 +54,23 @@ while (my $line = <STDIN>) {
 	$state = 1;
 	$proven = 1;
     } elsif ($line =~ "--------") {
+        open(my $log, '>', $last);
+        print $log "{\n";
+        foreach my $arg (@buf) {
+            print $log "$arg,\n";
+        }
+        if ($soln) {
+            print $log "\"has_solution\": true,\n";
+        } else {
+            print $log "\"has_solution\": false,\n";
+        }
+        if ($proven) {
+            print $log "\"proven\": true\n";
+        } else {
+            print $log "\"proven\": false\n";
+        }
+        print($log "}\n");
+        close $log;
 	$state = 2;
 	$soln = 1;
     } elsif ($line =~ "%") {

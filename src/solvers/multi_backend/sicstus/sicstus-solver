@@ -27,4 +27,4 @@ if [ $timeout -gt 0 ]; then
 fi
 BASENAME=$(basename $1 .ext.json)
 echo "json2pl('$BASENAME.ext.json',$obj)." | sicstus -f --nologo --noinfo -l solvers/multi_backend/sicstus/model2pl.pl
-echo top_down. | sicstus -f --nologo --noinfo -l $BASENAME.pl | solvers/multi_backend/common/outfilter.pl > ${OUTJSON}
+echo top_down. | sicstus -f --nologo --noinfo -l $BASENAME.pl | solvers/multi_backend/common/outfilter.pl ${OUTJSON}.last > ${OUTJSON}
