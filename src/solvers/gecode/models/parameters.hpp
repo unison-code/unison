@@ -65,6 +65,7 @@
 
 // Mats's code changes
 #define MCMOD 1
+#define MCSLACK 0
 
 using namespace Gecode;
 using namespace std;

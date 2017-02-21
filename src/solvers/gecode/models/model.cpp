@@ -1291,7 +1291,10 @@ void Model::post_improved_model_constraints(block b) {
       post_first_k_copies_constraints(b);
     }
 #endif
+#if MCSLACK
+#else
     post_reverse_data_precedence_constraints(b);
+#endif
     post_minimum_temporary_duration_constraints(b);
     post_define_issue_cycle_constraints(b);
     post_kill_issue_cycle_constraints(b);
@@ -1469,6 +1472,8 @@ void Model::post_first_k_copies_constraints(block b) {
 }
 
 
+#if MCSLACK
+#else
 void Model::post_reverse_data_precedence_constraints(block b) {
 
   // An operation that defines a temporary is issued before its last user:
@@ -1498,6 +1503,7 @@ void Model::post_reverse_data_precedence_constraints(block b) {
       }
 
 }
+#endif
 
 void Model::post_minimum_temporary_duration_constraints(block b) {
 

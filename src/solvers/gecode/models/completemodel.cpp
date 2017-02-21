@@ -211,8 +211,44 @@ void CompleteModel::post_slack_balancing_constraints(void) {
 void CompleteModel::post_improved_model_constraints(void) {
   for (block b : input->B)
     Model::post_improved_model_constraints(b);
+#if MCSLACK
+  post_slack_functional_constraints();
+#else
   post_slack_lower_bound_constraints();
+#endif
 }
+
+#if MCSLACK
+
+void CompleteModel::post_slack_functional_constraints(void) {
+
+  int maxc = max_of(input->maxc);
+  for (global_congruence g : input->G) {
+    congruence cg = input->regular[g];
+    vector<operand> ins;
+    for (operand p : input->congr[cg]) {
+      if (input->global_operand[p]) {
+        if (input->type[input->oper[p]] == IN) {
+          ins.push_back(p);
+        }
+      }
+    }
+
+    if (ins.size() > 0) {
+      IntVarArgs ubs;
+      ubs << var(input->max_lat);
+      for (operand p : ins) {
+        temporary t = input->single_temp[p];
+        for (operand q : input->users[t])
+	  ubs << var(ite(u(q, t), c(input->oper[q]) - lt(q) - slack(q) - lt(p), maxc));
+      }
+      constraint(s(ins[0]) == min(ubs));
+    }
+  }
+
+}
+
+#else
 
 void CompleteModel::post_slack_lower_bound_constraints(void) {
 
@@ -259,6 +295,8 @@ void CompleteModel::post_slack_lower_bound_constraints(void) {
   }
 
 }
+
+#endif
 
 void CompleteModel::post_presolver_constraints(void) {
   for (block b : input->B)
