@@ -137,7 +137,8 @@ Parameters::Parameters(JSONVALUE root) :
   successors      (get_vector<PresolverSucc>(getRoot(root, "successors"))),
   instr_cond      (get_vector<PresolverInstrCond>(getRoot(root, "instr_cond"))),
   value_precede_chains  (get_vector<PresolverValuePrecedeChain>(getRoot(root, "value_precede_chains"))),
-  quasi_adjacent  (get_2d_vector<int>(getRoot(root, "quasi_adjacent")))
+  quasi_adjacent  (get_2d_vector<int>(getRoot(root, "quasi_adjacent"))),
+  long_latency  (get_2d_vector<int>(getRoot(root, "long_latency")))
 {
   compute_derived();
 }

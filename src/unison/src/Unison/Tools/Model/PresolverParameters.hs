@@ -66,6 +66,7 @@ parameters oldModel (_, dgs, _, ra, _)
       successors = [] :: [Integer]
       instr_cond = [] :: [Integer]
       quasi_adjacent = [] :: [Integer]
+      long_latency = [] :: [Integer]
       value_precede_chains = [] :: [Integer]
   in
    [
@@ -117,6 +118,7 @@ parameters oldModel (_, dgs, _, ra, _)
       ("successors", toJSON successors),
       ("instr_cond", toJSON instr_cond),
       ("quasi_adjacent", toJSON quasi_adjacent),
+      ("long_latency", toJSON long_latency),
       ("value_precede_chains", toJSON value_precede_chains)
 
      ]

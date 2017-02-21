@@ -810,6 +810,93 @@ multimap<PrecedenceEdge, presolver_conj> gen_before_precedences1(const Parameter
     return M;
 }
 
+void gen_long_latency(Parameters& input) {
+  set<vector<operand>> seen;
+  vector<operand> queue;
+  for(operation o : input.O) {
+    block b = input.oblock[o];
+    vector<operand> operands = input.operands[o];
+    vector<instruction> instructions = input.instructions[o];
+    for(unsigned int i = 0; i < instructions.size(); ++i) {
+      for(unsigned int pp = 0; pp < operands.size(); ++pp) {
+	operand p = operands[pp];
+	if(!input.use[p] && input.lat[o][i][pp] > 1) {
+	  temporary t = input.single_temp[p];
+	  operation o2 = input.out[b];
+	  // cerr << "long latency real def " << p << " temp " << t << " (out) " << o2 << endl;
+	  for(operand q : input.operands[o2]) {
+	    if(ord_contains(input.temps[q],t)) {
+	      // cerr << "long latency use " << q << endl;
+	      vector<operand> pq = {p,q};
+	      if (seen.find(pq) == seen.end()) {
+		seen.insert(pq);
+		queue.push_back(q);
+		input.long_latency.push_back(pq);
+	      }
+	    }
+	  }
+	} else if(input.use[p] && input.lat[o][i][pp] > 0) {
+	  temporary t = input.real_temps[p][0];
+	  operation o2 = input.in[b];
+	  // cerr << "long latency real use " << p << " temp " << t << " (in) " << o2 << endl;
+	  for(operand q : input.operands[o2]) {
+	    if(input.single_temp[q]==t) {
+	      // cerr << "long latency def " << q << endl;
+	      vector<operand> pq = {q,p};
+	      if (seen.find(pq) == seen.end()) {
+		seen.insert(pq);
+		queue.push_back(q);
+		input.long_latency.push_back(pq);
+	      }
+	    }
+	  }
+	}
+      }
+    }
+  }
+  while(!queue.empty()) {
+    operand q = queue.back();
+    operation o0 = input.oper[q];
+    queue.pop_back();
+    for(operand p2 : input.congr[input.operand_congruence[q]]) {
+      operation o = input.oper[p2];
+      if(input.type[o0] == OUT && input.type[o] == IN) {
+	temporary t = input.single_temp[p2];
+	block b = input.oblock[o];
+	operation o2 = input.out[b];
+	// cerr << "long latency (in) def " << p2 << " temp " << t << " (out) " << o2 << endl;
+	for(operand q2 : input.operands[o2]) {
+	  if(ord_contains(input.temps[q2],t)) {
+	    // cerr << "long latency use " << q2 << endl;
+	    vector<operand> pq2 = {p2,q2};
+	    if (seen.find(pq2) == seen.end()) {
+	      seen.insert(pq2);
+	      queue.push_back(q2);
+	      input.long_latency.push_back(pq2);
+	    }
+	  }
+	}
+      } else if(input.type[o0] == IN && input.type[o] == OUT) {
+	temporary t = input.real_temps[p2][0];
+	block b = input.oblock[o];
+	operation o2 = input.in[b];
+	// cerr << "long latency (out) use " << p2 << " temp " << t << " (in) " << o2 << endl;
+	for(operand q2 : input.operands[o2]) {
+	  if(input.single_temp[q2]==t) {
+	    // cerr << "long latency def " << q2 << endl;
+	    vector<operand> pq2 = {q2,p2};
+	    if (seen.find(pq2) == seen.end()) {
+	      seen.insert(pq2);
+	      queue.push_back(q2);
+	      input.long_latency.push_back(pq2);
+	    }
+	  }
+	}
+      }
+    }
+  }
+}
+
 #if 0
 
 /*****************************************************************************

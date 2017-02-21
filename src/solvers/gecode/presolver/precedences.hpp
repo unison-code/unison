@@ -131,6 +131,8 @@ void normalize_precedences(const Parameters& input, const precedence_set& P, pre
 
 map<operand, map<instruction, latency>> compute_opnd_to_lat(const Parameters& input);
 
+void gen_long_latency(Parameters& input);
+
 #if 0
 
 void gen_predecessors_successors(Parameters& input);

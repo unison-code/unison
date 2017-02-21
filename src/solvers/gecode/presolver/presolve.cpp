@@ -90,6 +90,7 @@ void presolve(Parameters & input, PresolverOptions & options) {
   vector<PresolverPred> predecessors_ref = input.predecessors;
   vector<PresolverSucc> successors_ref = input.successors;
   vector<vector<operand> > quasi_adjacent_ref = input.quasi_adjacent;
+  vector<vector<operand> > long_latency_ref = input.long_latency;
   vector<PresolverActiveTable> active_tables_ref = input.active_tables;
   vector<PresolverCopyTmpTable> tmp_tables_ref = input.tmp_tables;
   vector<PresolverDominates> dominates_ref = input.dominates;
@@ -115,10 +116,15 @@ void presolve(Parameters & input, PresolverOptions & options) {
   input.predecessors.clear();
   input.successors.clear();
   input.quasi_adjacent.clear();
+  input.long_latency.clear();
   input.active_tables.clear();
   input.tmp_tables.clear();
   input.dominates.clear();
   if (timeout(t, options, "preparation")) return;
+
+  // JSON.long_latency: identify global operands that may need nonzero slack BEFORE unfeasibility test
+
+  gen_long_latency(input);
 
   // Abort if the problem is trivially unfeasible
   ModelOptions moptions;
@@ -410,6 +416,7 @@ void presolve(Parameters & input, PresolverOptions & options) {
     run_test("predecessors", predecessors_ref, input.predecessors);
     run_test("successors", successors_ref, input.successors);
     run_test("quasi_adjacent", quasi_adjacent_ref, input.quasi_adjacent);
+    run_test("long_latency", long_latency_ref, input.long_latency);
     run_test("dominates", dominates_ref, input.dominates);
     run_test("optional_min", optional_min_ref, input.optional_min);
     run_test("active_tables", active_tables_ref, input.active_tables);

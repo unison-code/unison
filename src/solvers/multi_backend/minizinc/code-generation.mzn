@@ -129,6 +129,10 @@ array[int] of int: adj_to;
 array[int] of int: quasi_adj_from;
 array[int] of int: quasi_adj_to;
 
+%% see JSON long_latency
+array[int] of int: long_latency_def;
+array[int] of int: long_latency_use;
+
 %% see JSON operands
 array[int] of int: operand_definer; % operand -> defining op
 
@@ -1240,19 +1244,37 @@ constraint
 %   );
 
 %% [matsc] domination constraint for slack, in fact make it a functional dependency
-%% N.B. Clashes with post_slack_lower_bound_constraints
-%% N.B. Clashes with post_reverse_data_precedences_constraints
+%% N.B. Subsumes post_slack_lower_bound_constraints
+%% N.B. MAY clash with post_reverse_data_precedences_constraints
 constraint
   forall(opnds in congr)(
     let {set of int: inps = {p | p in opnds where op_type[operand_definer[p]] = TYPE_IN},
-         array[int] of var int: ubs = [ if temp_eq(p2,single_temp(p)) then c[operand_definer[p2]] - lt[p2] - s[p2] - lt[p] else MAXC endif
-	 	                      | p in inps,
-				        p2 in p..MAXP
-				      where can_use(p2,single_temp(p))
-				      ]} in
-      if card(inps)>0 then
-        s[min(inps)] = min([MAXL]++ubs)
-      else true endif
+	 set of int: inix = {i | i in index_set(long_latency_def) where long_latency_def[i] in inps},
+         set of int: outps = {p | p in opnds where op_type[operand_definer[p]] = TYPE_OUT},
+	 set of int: outix = {i | i in index_set(long_latency_use) where long_latency_use[i] in outps},
+         array[int] of var int:  inubs = [ if temp_eq(q,single_temp(p)) then
+					     c[operand_definer[q]] - lt[q] - s[q] - lt[p] 
+					   else MAXL endif
+					 | i in inix,
+					   p in [long_latency_def[i]],
+					   q in [long_latency_use[i]]
+					 ],
+         array[int] of var int: outubs = [ if temp_eq(q,single_temp(p)) then
+	 	       	   	       	     ld[single_temp(p)] - lt[q] - lt[p] - s[p]
+					   else MAXL endif
+					 | i in outix,
+					   p in [long_latency_def[i]],
+					   q in [long_latency_use[i]]
+					 ]} in 
+      if card(inps)>0 /\ card(outps)>0 then
+        let {var int: outlb = if length( inubs)>0 then -min( inubs) else -MAXL endif,
+	     var int: outub = if length(outubs)>0 then  min(outubs) else  MAXL endif} in
+	outlb <= outub /\
+	s[min(outps)] = min(outub,max(outlb,0))
+	% trace("fixed slack of class \(opnds), #lbs = \(length(inubs)), #ubs = \(length(outubs))\n", true)
+      else /* no global operands */
+        true
+      endif
   );
 
 %% output

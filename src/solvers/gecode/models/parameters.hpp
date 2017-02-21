@@ -65,7 +65,7 @@
 
 // Mats's code changes
 #define MCMOD 1
-#define MCSLACK 0
+#define MCSLACK 1
 
 using namespace Gecode;
 using namespace std;
@@ -338,6 +338,9 @@ public:
 
   // [MC] quasi_adjacent operands
   vector<vector<operand> > quasi_adjacent;
+
+  // [MC] long_latency use-def hazards
+  vector<vector<operand> > long_latency;
 
   Parameters(JSONVALUE root);
 

@@ -176,32 +176,38 @@ model2dzn(AVL0) :-
 	write_array(aligned_usei, array(1..Naligned,int), AlignedYi),
 	write_array(aligned_dist, array(1..Naligned,int), ADist),
 	%
-	avl_fetch(temps, AVL, Temps),
 	avl_fetch(adjacent, AVL, Adjacent),
 	(   foreach([X5,Y5],Adjacent),
-	    fromto(AdjX1,AdjX2,AdjX3,[]),
-	    fromto(AdjY1,AdjY2,AdjY3,[]),
-	    param(Temps)
-	do  AdjX2 = [X5|AdjX3],
-	    AdjY2 = [Y5|AdjY3]
+	    foreach(X5,AdjFrom),
+	    foreach(Y5,AdjTo)
+	do  true
 	),
-	length(AdjX1, Nadj),
-	write_array(adj_from, array(1..Nadj,int), AdjX1),
-	write_array(adj_to, array(1..Nadj,int), AdjY1),
+	length(AdjFrom, Nadj),
+	write_array(adj_from, array(1..Nadj,int), AdjFrom),
+	write_array(adj_to, array(1..Nadj,int), AdjTo),
 	%
 	avl_fetch(quasi_adjacent, AVL, QAdjacent),
 	(   foreach([X6,Y6],QAdjacent),
-	    fromto(QAdjX1,QAdjX2,QAdjX3,[]),
-	    fromto(QAdjY1,QAdjY2,QAdjY3,[]),
-	    param(Temps)
-	do  QAdjX2 = [X6|QAdjX3],
-	    QAdjY2 = [Y6|QAdjY3]
+	    foreach(X6,QAdjFrom),
+	    foreach(Y6,QAdjTo)
+	do  true
 	),
-	length(QAdjX1, NQadj),
-	write_array(quasi_adj_from, array(1..NQadj,int), QAdjX1),
-	write_array(quasi_adj_to, array(1..NQadj,int), QAdjY1),
+	length(QAdjFrom, NQadj),
+	write_array(quasi_adj_from, array(1..NQadj,int), QAdjFrom),
+	write_array(quasi_adj_to, array(1..NQadj,int), QAdjTo),
+	%
+	avl_fetch(long_latency, AVL, LLatency),
+	(   foreach([X7,Y7],LLatency),
+	    foreach(X7,LLdef),
+	    foreach(Y7,LLuse)
+	do  true
+	),
+	length(LLdef, NLLdef),
+	write_array(long_latency_def, array(1..NLLdef,int), LLdef),
+	write_array(long_latency_use, array(1..NLLdef,int), LLuse),
 	%
 	avl_fetch(last_use, AVL, LastUse),
+	avl_fetch(temps, AVL, Temps),
 	findall(V, (nth0(P99,Temps,[-1,V]), nth0(P99,Use,0)), TOpt1),
 	sort(TOpt1, TOpt),	% all optional temps
 	(   foreach(Temps1,Temps),
