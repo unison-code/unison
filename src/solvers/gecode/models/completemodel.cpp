@@ -246,8 +246,6 @@ void CompleteModel::post_slack_functional_constraints(void) {
 	if (outps.find(du[1]) != outps.end())
 	  outix.push_back(ii);
       }
-      // cerr << " inps=" << show(inps) << " outps=" << show(outps) << " inix=" << show(inix) << " outix=" << show(outix) << endl;
-
       IntVarArgs inubs, outubs;
       for (unsigned int ii : inix) {
 	vector<operand>du = input->long_latency[ii];

@@ -413,7 +413,6 @@ void gen_region(const Parameters& input,
         else
 	  r2 = r2 + min_con_erg[o][r][1];
       r2 = (r2-1)/input.cap[r]+1;
-      // cerr << "* GEN_REGION region=" << show(region) << " r=" << r << " r1=" << r1 << " r2=" << r2 << " r3=" << r3 << " cp=" << src_cps[sink] << endl;
       r2 = r1+r2+r3-1;
       glb = r2 > glb ? r2 : glb;
     }
@@ -423,7 +422,6 @@ void gen_region(const Parameters& input,
     PresolverPrecedence pred(src, sink, glb, presolver_disj({Conj}));
     PI.push_back(pred);
     pweights[FastPair(src,sink)] = glb;
-    // cerr << "* DISTANCE source=" << src << " sink=" << sink << " lat=" << glb << " inside=" << show(inside) << endl;
   }
 }
 
@@ -521,7 +519,6 @@ void normalize_precedences(const Parameters& input, const precedence_set& P, pre
 	  const PresolverPrecedence& p2 = P[jj];
 	  if (p2.i!=src || p2.j!=dest) break;
 	  if (p2.n>=d && p2.d.size()==1 && p2.d[0].size()==0) {
-	    // cerr << "SUBSUMED precedence " << show(p) << endl;
 	    goto next;
 	  }
 	}
@@ -823,10 +820,8 @@ void gen_long_latency(Parameters& input) {
 	if(!input.use[p] && input.lat[o][i][pp] > 1) {
 	  temporary t = input.single_temp[p];
 	  operation o2 = input.out[b];
-	  // cerr << "long latency real def " << p << " temp " << t << " (out) " << o2 << endl;
 	  for(operand q : input.operands[o2]) {
 	    if(ord_contains(input.temps[q],t)) {
-	      // cerr << "long latency use " << q << endl;
 	      vector<operand> pq = {p,q};
 	      if (seen.find(pq) == seen.end()) {
 		seen.insert(pq);
@@ -838,10 +833,8 @@ void gen_long_latency(Parameters& input) {
 	} else if(input.use[p] && input.lat[o][i][pp] > 0) {
 	  temporary t = input.real_temps[p][0];
 	  operation o2 = input.in[b];
-	  // cerr << "long latency real use " << p << " temp " << t << " (in) " << o2 << endl;
 	  for(operand q : input.operands[o2]) {
 	    if(input.single_temp[q]==t) {
-	      // cerr << "long latency def " << q << endl;
 	      vector<operand> pq = {q,p};
 	      if (seen.find(pq) == seen.end()) {
 		seen.insert(pq);
@@ -864,10 +857,8 @@ void gen_long_latency(Parameters& input) {
 	temporary t = input.single_temp[p2];
 	block b = input.oblock[o];
 	operation o2 = input.out[b];
-	// cerr << "long latency (in) def " << p2 << " temp " << t << " (out) " << o2 << endl;
 	for(operand q2 : input.operands[o2]) {
 	  if(ord_contains(input.temps[q2],t)) {
-	    // cerr << "long latency use " << q2 << endl;
 	    vector<operand> pq2 = {p2,q2};
 	    if (seen.find(pq2) == seen.end()) {
 	      seen.insert(pq2);
@@ -880,10 +871,8 @@ void gen_long_latency(Parameters& input) {
 	temporary t = input.real_temps[p2][0];
 	block b = input.oblock[o];
 	operation o2 = input.in[b];
-	// cerr << "long latency (out) use " << p2 << " temp " << t << " (in) " << o2 << endl;
 	for(operand q2 : input.operands[o2]) {
 	  if(input.single_temp[q2]==t) {
-	    // cerr << "long latency def " << q2 << endl;
 	    vector<operand> pq2 = {q2,p2};
 	    if (seen.find(pq2) == seen.end()) {
 	      seen.insert(pq2);
