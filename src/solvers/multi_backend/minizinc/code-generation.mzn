@@ -1273,5 +1273,6 @@ output
     % ["\"slack\": "] ++ [show(s)]   ++ ["\n"] ++
     % ["\"temp nb\": "] ++ [show(y)]   ++ ["\n"] ++
     % ["c[\(o)] = \(c[o])\n" | o in 0..MAXO where fix(c[o])>=0] ++
+    % ["\"regs of globals\": "] ++ ["\n,[\(p),\(rt[p])]" | p in 0..MAXP where global_operand(p)]   ++ ["\n"] ++
     [];
 
