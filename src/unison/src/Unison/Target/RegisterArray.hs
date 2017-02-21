@@ -69,8 +69,9 @@ toIndexedRegisterClass rc2id rc = IndexedRegisterClass (rc2id M.! rc) rc
 -- | Gives an association list with temporaries in the instruction and register
 -- | classes corresponding to the given operation.
 tempsToRc oif i op =
-  nub $ sort $ [(op, rc) | (op, TemporaryInfo rc _) <- tempsToInfo oif i op,
-                isDefinedRegisterClass rc, isModelOperand op]
+  nub $ sort $ [(op, rc) | (op, TemporaryInfo {oiRegClass = rc})
+                           <- tempsToInfo oif i op,
+                           isDefinedRegisterClass rc, isModelOperand op]
 
 -- | Gives a map from (atom, width) to their corresponding register
 atomWidthToRegs ra =

@@ -131,7 +131,7 @@ allInstrOpRegClassesDefined oif rcs SingleOperation {oId = id}
                      " (instruction " ++ show i ++ "), "
     in map (showProblem "allRegClassesDefined" . (header ++)) result
 
-regClassDefined rcs (TemporaryInfo rc _) =
+regClassDefined rcs (TemporaryInfo {oiRegClass = rc}) =
   if not (rc `elem` rcs) then
     Just ("the register class " ++ show rc ++ " is not defined in the target description")
     else Nothing
@@ -208,9 +208,10 @@ consistentOperandGroup os wInfo oi =
         ["the number of operands and the number of operand info items from the target description do not match"]
     else mapMaybe (consistentOperand wInfo) (zip os oi)
 
-consistentOperand _ (_, TemporaryInfo AbstractRegisterClass {} _) = Nothing
-consistentOperand _ (Bound MachineNullReg, TemporaryInfo _ _) = Nothing
-consistentOperand (rc2u, t2w) (o, TemporaryInfo rc _) =
+consistentOperand _
+  (_, TemporaryInfo {oiRegClass = AbstractRegisterClass {}}) = Nothing
+consistentOperand _ (Bound MachineNullReg, TemporaryInfo {}) = Nothing
+consistentOperand (rc2u, t2w) (o, TemporaryInfo {oiRegClass = rc}) =
   let t     = firstTemp o
       width = t2w M.! t
   in if (t2w M.! t) /= (rc2u M.! rc) then
@@ -472,7 +473,7 @@ noEmptyRegClassInstr rf oif i =
 noEmptyRegClassOpr _ _ (General NullInstruction) = []
 noEmptyRegClassOpr rf oif (TargetInstruction op) =
     let (uoi, doi) = oif op
-        rcs        = [rc | (TemporaryInfo rc _) <- uoi ++ doi]
+        rcs        = [rc | (TemporaryInfo {oiRegClass = rc}) <- uoi ++ doi]
     in mapMaybe (noEmptyRC rf) rcs
 
 noEmptyRC _ InfiniteRegisterClass {} = Nothing
@@ -501,7 +502,7 @@ allOprInsRegClassesReal oif o @ SingleOperation {oId = id} (TargetInstruction i)
                      " (instruction " ++ show i ++ "), "
     in map (showProblem "allRegClassesReal" . (header ++)) result
 
-regClassReal (op, TemporaryInfo rc _)
+regClassReal (op, TemporaryInfo {oiRegClass = rc})
   | isModelOperand op && isAbstractRegisterClass rc =
     Just ("operand " ++ show op ++ " is bound to " ++ show rc)
 regClassReal _ = Nothing

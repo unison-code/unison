@@ -827,7 +827,7 @@ and
 \constraintComment{active instructions}{active operations are implemented by non-null instructions}
 \activeInstructionEquation
 \activeInstructionExample
-\constraintComment{register class}{The instruction that implements an
+\constraintComment{register class}{the instruction that implements an
   operation determines the register class to which its operands are allocated}
 \registerClassEquation
 \registerClassExample
@@ -873,6 +873,8 @@ where
 must be active if the preassigned issue cycle is lower than the issue cycle for
 the last active operation in the block}
 \participativeEquation
+\constraintComment{bypassing}{the operation of a bypassing operand is scheduled in parallel with its definer}
+\bypassingEquation
 
 \section{Objective}\label{sec:objective}
 

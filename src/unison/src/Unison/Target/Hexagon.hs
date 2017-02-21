@@ -279,28 +279,29 @@ fromCopyInstr LDD = L2_loadrd_io
 operandInfo i
   | i `elem`
       [J2_jumpfnew, J2_jumpfnewpt, J2_jumptnew, J2_jumptnewpt]
-    = ([TemporaryInfo (RegisterClass F32) (-1), BlockRefInfo], [])
+    = ([TemporaryInfo (RegisterClass F32) (-1) True, BlockRefInfo], [])
   | i `elem` [A2_tfrt, A2_tfrf] =
-    ([TemporaryInfo (RegisterClass PredRegs) (-1),
-      TemporaryInfo (RegisterClass IntRegs) 0],
-     [TemporaryInfo (RegisterClass IntRegs) 1])
+    ([TemporaryInfo (RegisterClass PredRegs) (-1) True,
+      TemporaryInfo (RegisterClass IntRegs) 0 False],
+     [TemporaryInfo (RegisterClass IntRegs) 1 False])
   -- New-value stores (the last use of class IntRegs has latency -1)
   | baseInstr i `elem` [S2_storerinew_io, S2_storerbnew_io, S2_storerhnew_io] =
-    ([TemporaryInfo (RegisterClass IntRegs) 0, BoundInfo,
-      TemporaryInfo (RegisterClass IntRegs) (-1)],
+    ([TemporaryInfo (RegisterClass IntRegs) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass IntRegs) (-1) True],
      [])
   | baseInstr i `elem` [S2_storerbnew_pi, S2_storerhnew_pi, S2_storerinew_pi] =
-    ([TemporaryInfo (RegisterClass IntRegs) 0, BoundInfo,
-      TemporaryInfo (RegisterClass IntRegs) (-1)],
-     [TemporaryInfo (RegisterClass IntRegs) 1])
+    ([TemporaryInfo (RegisterClass IntRegs) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass IntRegs) (-1) True],
+     [TemporaryInfo (RegisterClass IntRegs) 1 False])
   | baseInstr i `elem` [S2_storerinewabs] =
-    ([BoundInfo, TemporaryInfo (RegisterClass IntRegs) (-1)], [])
+    ([BoundInfo, TemporaryInfo (RegisterClass IntRegs) (-1) True], [])
   | baseInstr i `elem` [S2_storerinew_io_fi] =
-    ([BoundInfo, BoundInfo, TemporaryInfo (RegisterClass IntRegs) (-1)], [])
+    ([BoundInfo, BoundInfo, TemporaryInfo (RegisterClass IntRegs) (-1) True],
+     [])
   | i `elem` [S4_storerhnew_rr, S4_storerinew_rr] =
-    ([TemporaryInfo (RegisterClass IntRegs) 0,
-      TemporaryInfo (RegisterClass IntRegs) 0, BoundInfo,
-      TemporaryInfo (RegisterClass IntRegs) (-1)],
+    ([TemporaryInfo (RegisterClass IntRegs) 0 False,
+      TemporaryInfo (RegisterClass IntRegs) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass IntRegs) (-1) True],
      [])
   | otherwise = SpecsGen.operandInfo i
 

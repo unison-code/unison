@@ -157,6 +157,10 @@ public:
   // instruction
   vector<vector<vector<int> > > lat;
 
+  // whether each operand is bypassing when its operation is implemented by
+  // each instruction
+  vector<vector<vector<bool> > > bypass;
+
   // capacity of each processor resource
   vector<int> cap;
 

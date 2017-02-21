@@ -379,6 +379,7 @@ public:
   void post_processor_resources_constraints(block b);
   void post_fixed_precedences_constraints(block b);
   void post_participative_instructions_constraints(block b);
+  void post_bypassing_constraints(block b);
 
   void post_improved_model_constraints(block b);
   void post_null_register_constraints(block b);

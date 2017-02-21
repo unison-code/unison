@@ -120,6 +120,16 @@ and
 \end{equation}
 }
 
+\newcommand{\bypassingEquation}{
+\begin{equation}\textstyle\label{eq:bypassing}
+  \bypassing{o}{\operationInstruction{o}}{p} \implies
+  \operationIssueCycle{o} = \operationIssueCycle{\operandOperation{\definer{\operandTemporary{p}}}}
+  \quad
+  \forallIn{o}{\allOperations{}}, \,
+  \forallIn{p}{\operands{o}}
+\end{equation}
+}
+
 \newcommand{\disjointLiveRangesEquation}{
 \begin{equation}\textstyle\label{eq:disjoint-live-ranges}
   \disjoint{

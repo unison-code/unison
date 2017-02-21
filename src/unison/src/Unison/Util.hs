@@ -1071,7 +1071,7 @@ newFrameIndex []   = 0
 newFrameIndex objs = maximum (map foIndex objs) + 1
 
 applyToLatency :: (Latency -> Latency) -> OperandInfo rc -> OperandInfo rc
-applyToLatency f (TemporaryInfo rc l) = (TemporaryInfo rc (f l))
+applyToLatency f ti @ TemporaryInfo {oiLatency = l} = ti {oiLatency = f l}
 applyToLatency _ op = op
 
 oType :: BlockOperation i r -> OperationT

@@ -21,6 +21,6 @@ import qualified Unison.Target.ARM.SpecsGen as SpecsGen
 operandInfo i
   -- The generated operandInfo is wrong for these instructions
   | i `elem` [TTAILJMPd, TTAILJMPdND] =
-    ([BoundInfo, BoundInfo, TemporaryInfo (RegisterClass CCR) 0],
+    ([BoundInfo, BoundInfo, TemporaryInfo (RegisterClass CCR) 0 False],
      [])
   | otherwise = SpecsGen.operandInfo i

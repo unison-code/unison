@@ -372,44 +372,44 @@ operandInfo i = adjustDefLatency i $ correctUses i $ SpecsGen.operandInfo i
 
 correctUses i info
     | i `elem` [LW, LH, LBu, LB, LHu] =
-        ([TemporaryInfo (RegisterClass GPR32Opnd) 0, BoundInfo],
-         [TemporaryInfo (RegisterClass GPR32Opnd) 1])
+        ([TemporaryInfo (RegisterClass GPR32Opnd) 0 False, BoundInfo],
+         [TemporaryInfo (RegisterClass GPR32Opnd) 1 False])
     | i `elem` [LWL, LWR] =
-        ([TemporaryInfo (RegisterClass GPR32Opnd) 0, BoundInfo,
-          TemporaryInfo (RegisterClass GPR32Opnd) 0],
-         [TemporaryInfo (RegisterClass GPR32Opnd) 1])
+        ([TemporaryInfo (RegisterClass GPR32Opnd) 0 False, BoundInfo,
+          TemporaryInfo (RegisterClass GPR32Opnd) 0 False],
+         [TemporaryInfo (RegisterClass GPR32Opnd) 1 False])
     | i `elem` [SW, SB, SH, SWL, SWR] =
-        ([TemporaryInfo (RegisterClass GPR32Opnd) 0,
-          TemporaryInfo (RegisterClass GPR32Opnd) 0, BoundInfo],
+        ([TemporaryInfo (RegisterClass GPR32Opnd) 0 False,
+          TemporaryInfo (RegisterClass GPR32Opnd) 0 False, BoundInfo],
          [])
     | i `elem` [LDC1] =
-        ([TemporaryInfo (RegisterClass GPR32Opnd) 0, BoundInfo],
-         [TemporaryInfo (RegisterClass AFGR64Opnd) 1])
+        ([TemporaryInfo (RegisterClass GPR32Opnd) 0 False, BoundInfo],
+         [TemporaryInfo (RegisterClass AFGR64Opnd) 1 False])
     | i `elem` [SWC1] =
-        ([TemporaryInfo (RegisterClass FGR32Opnd) 0,
-          TemporaryInfo (RegisterClass GPR32Opnd) 0,
+        ([TemporaryInfo (RegisterClass FGR32Opnd) 0 False,
+          TemporaryInfo (RegisterClass GPR32Opnd) 0 False,
           BoundInfo],
          [])
     | i `elem` [SDC1] =
-        ([TemporaryInfo (RegisterClass AFGR64Opnd) 0,
-          TemporaryInfo (RegisterClass GPR32Opnd) 0,
+        ([TemporaryInfo (RegisterClass AFGR64Opnd) 0 False,
+          TemporaryInfo (RegisterClass GPR32Opnd) 0 False,
           BoundInfo],
          [])
     | i `elem` [LWC1] =
-        ([TemporaryInfo (RegisterClass GPR32Opnd) 0, BoundInfo],
-         [TemporaryInfo (RegisterClass FGR32Opnd) 1])
+        ([TemporaryInfo (RegisterClass GPR32Opnd) 0 False, BoundInfo],
+         [TemporaryInfo (RegisterClass FGR32Opnd) 1 False])
     | i `elem` [LWXC1] =
-        ([TemporaryInfo (RegisterClass GPR32Opnd) 0,
-          TemporaryInfo (RegisterClass GPR32Opnd) 0],
-         [TemporaryInfo (RegisterClass FGR32Opnd) 1])
+        ([TemporaryInfo (RegisterClass GPR32Opnd) 0 False,
+          TemporaryInfo (RegisterClass GPR32Opnd) 0 False],
+         [TemporaryInfo (RegisterClass FGR32Opnd) 1 False])
     | i `elem` [LDXC1] =
-        ([TemporaryInfo (RegisterClass GPR32Opnd) 0,
-          TemporaryInfo (RegisterClass GPR32Opnd) 0],
-         [TemporaryInfo (RegisterClass AFGR64Opnd) 1])
+        ([TemporaryInfo (RegisterClass GPR32Opnd) 0 False,
+          TemporaryInfo (RegisterClass GPR32Opnd) 0 False],
+         [TemporaryInfo (RegisterClass AFGR64Opnd) 1 False])
     | i `elem` [SWXC1] =
-        ([TemporaryInfo (RegisterClass FGR32Opnd) 0,
-          TemporaryInfo (RegisterClass GPR32Opnd) 0,
-          TemporaryInfo (RegisterClass GPR32Opnd) 0],
+        ([TemporaryInfo (RegisterClass FGR32Opnd) 0 False,
+          TemporaryInfo (RegisterClass GPR32Opnd) 0 False,
+          TemporaryInfo (RegisterClass GPR32Opnd) 0 False],
          [])
     | otherwise = info
 

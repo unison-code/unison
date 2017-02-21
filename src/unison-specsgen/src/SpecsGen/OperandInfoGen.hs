@@ -62,7 +62,9 @@ toOperandInfoExp rcs l (TemporaryInfo rc d) =
         lf  = if lat < 0 then HsParen else id
     in HsApp (toHsCon "TemporaryInfo")
        (HsApp (HsParen (toRegClassExp rcs rc))
-        (lf (toHsInt (d + l))))
+              (HsApp (lf (toHsInt (d + l)))
+                     (toHsCon (if lat < 0 then "True" else "False"))))
+
 toOperandInfoExp _ _ BlockRefInfo = toHsCon "BlockRefInfo"
 
 toRegClassExp rcs rc =

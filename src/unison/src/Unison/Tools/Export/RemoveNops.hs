@@ -64,12 +64,13 @@ criticalDependencies ovf oif (cycle, bundle) deps =
 newDependencies oif index o =
   let uinfo = fst $ oif (targetInst (oInstructions o))
   in [(CRRegister r, Nothing, Just (index, l), Nothing) |
-      (TemporaryInfo _ l, r @ Register {}) <- zip uinfo (oUses o), l > 0]
+      (TemporaryInfo {oiLatency = l}, r @ Register {}) <- zip uinfo (oUses o),
+      l > 0]
 
 definedCRs oif o =
   let dinfo = snd $ oif (targetInst (oInstructions o))
   in [(CRRegister r, l)
-     | (TemporaryInfo _ l, r @ Register {}) <- zip dinfo (oDefs o)]
+     | (TemporaryInfo {oiLatency = l}, r @ Register {}) <- zip dinfo (oDefs o)]
 
 updateDependency _ _ dep @ (_, Just _, Just _, Just _) = dep
 updateDependency ovf (cycle, defs) (r, Nothing, Just (u, ul), Nothing) =

@@ -71,6 +71,7 @@ Parameters::Parameters(JSONVALUE root) :
   atoms         (get_2d_vector<int>(getRoot(root, "atoms"))),
   instructions  (get_2d_vector<int>(getRoot(root, "instructions"))),
   lat           (get_3d_vector<int>(getRoot(root, "lat"))),
+  bypass        (get_3d_vector<bool>(getRoot(root, "bypass"))),
   cap           (get_vector<int>(getRoot(root, "cap"))),
   con           (get_2d_vector<int>(getRoot(root, "con"))),
   dur           (get_2d_vector<int>(getRoot(root, "dur"))),
@@ -934,6 +935,7 @@ string Parameters::emit_json() {
        << emit_json_line("atoms", atoms)
        << emit_json_line("instructions", instructions)
        << emit_json_line("lat", lat)
+       << emit_json_line("bypass", bypass)
        << emit_json_line("cap", cap)
        << emit_json_line("con", con)
        << emit_json_line("dur", dur)

@@ -9,17 +9,19 @@ operandInfo i
       [CLREX, Int_eh_sjlj_dispatchsetup, Int_eh_sjlj_setup_dispatch, NOP,
        TRAP, TRAPNaCl, WIN__CHKSTK, TTRAP]
     = ([], [])
-  | i `elem` [VMOVD0] = ([], [TemporaryInfo (RegisterClass DPR) 1])
-  | i `elem` [VMOVQ0] = ([], [TemporaryInfo (RegisterClass QPR) 1])
+  | i `elem` [VMOVD0] =
+    ([], [TemporaryInfo (RegisterClass DPR) 1 False])
+  | i `elem` [VMOVQ0] =
+    ([], [TemporaryInfo (RegisterClass QPR) 1 False])
   | i `elem` [TPsoft, TTPsoft] =
-    ([], [TemporaryInfo (AbstractRegisterClass Unknown) 1])
+    ([], [TemporaryInfo (AbstractRegisterClass Unknown) 1 False])
   | i `elem` [IMPLICIT_DEF, LOAD_STACK_GUARD] = ([], [BoundInfo])
   | i `elem` [MOVE_ALL] =
-    ([TemporaryInfo (RegisterClass ALL) 0],
-     [TemporaryInfo (RegisterClass ALL) 1])
+    ([TemporaryInfo (RegisterClass ALL) 0 False],
+     [TemporaryInfo (RegisterClass ALL) 1 False])
   | i `elem` [TPUSHcs] =
-    ([TemporaryInfo (RegisterClass CS) 0],
-     [TemporaryInfo (InfiniteRegisterClass M128) 1])
+    ([TemporaryInfo (RegisterClass CS) 0 False],
+     [TemporaryInfo (InfiniteRegisterClass M128) 1 False])
   | i `elem`
       [MOVE_D, VCVTANSDf, VCVTANSDh, VCVTANUDf, VCVTANUDh, VCVTMNSDf,
        VCVTMNSDh, VCVTMNUDf, VCVTMNUDh, VCVTNNSDf, VCVTNNSDh, VCVTNNUDf,
@@ -28,27 +30,27 @@ operandInfo i
        VRINTNNDf, VRINTNNDh, VRINTPD, VRINTPNDf, VRINTPNDh, VRINTXNDf,
        VRINTXNDh, VRINTZNDf, VRINTZNDh]
     =
-    ([TemporaryInfo (RegisterClass DPR) 0],
-     [TemporaryInfo (RegisterClass DPR) 1])
+    ([TemporaryInfo (RegisterClass DPR) 0 False],
+     [TemporaryInfo (RegisterClass DPR) 1 False])
   | i `elem` [STORE_D] =
-    ([TemporaryInfo (RegisterClass DPR) 0],
-     [TemporaryInfo (InfiniteRegisterClass M64) 1])
+    ([TemporaryInfo (RegisterClass DPR) 0 False],
+     [TemporaryInfo (InfiniteRegisterClass M64) 1 False])
   | i `elem`
       [VCVTASD, VCVTAUD, VCVTMSD, VCVTMUD, VCVTNSD, VCVTNUD, VCVTPSD,
        VCVTPUD]
     =
-    ([TemporaryInfo (RegisterClass DPR) 0],
-     [TemporaryInfo (RegisterClass SPR) 1])
+    ([TemporaryInfo (RegisterClass DPR) 0 False],
+     [TemporaryInfo (RegisterClass SPR) 1 False])
   | i `elem`
       [VMAXNMD, VMAXNMNDf, VMAXNMNDh, VMINNMD, VMINNMNDf, VMINNMNDh]
     =
-    ([TemporaryInfo (RegisterClass DPR) 0,
-      TemporaryInfo (RegisterClass DPR) 0],
-     [TemporaryInfo (RegisterClass DPR) 1])
+    ([TemporaryInfo (RegisterClass DPR) 0 False,
+      TemporaryInfo (RegisterClass DPR) 0 False],
+     [TemporaryInfo (RegisterClass DPR) 1 False])
   | i `elem` [VMULLp64] =
-    ([TemporaryInfo (RegisterClass DPR) 0,
-      TemporaryInfo (RegisterClass DPR) 0],
-     [TemporaryInfo (RegisterClass QPR) 1])
+    ([TemporaryInfo (RegisterClass DPR) 0 False,
+      TemporaryInfo (RegisterClass DPR) 0 False],
+     [TemporaryInfo (RegisterClass QPR) 1 False])
   | i `elem`
       [VABAsv2i32, VABAsv4i16, VABAsv8i8, VABAuv2i32, VABAuv4i16,
        VABAuv8i8, VBIFd, VBITd, VBSLd, VFMAD, VFMAfd, VFMAhd, VFMSD,
@@ -57,38 +59,38 @@ operandInfo i
        VMLSv8i8, VNMLAD, VNMLSD, VQRDMLAHv2i32, VQRDMLAHv4i16,
        VQRDMLSHv2i32, VQRDMLSHv4i16]
     =
-    ([TemporaryInfo (RegisterClass DPR) 0,
-      TemporaryInfo (RegisterClass DPR) 0,
-      TemporaryInfo (RegisterClass DPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass DPR) 1])
+    ([TemporaryInfo (RegisterClass DPR) 0 False,
+      TemporaryInfo (RegisterClass DPR) 0 False,
+      TemporaryInfo (RegisterClass DPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass DPR) 1 False])
   | i `elem`
       [VMLAslhd, VMLAslv4i16, VMLSslhd, VMLSslv4i16, VQRDMLAHslv4i16,
        VQRDMLSHslv4i16]
     =
-    ([TemporaryInfo (RegisterClass DPR) 0,
-      TemporaryInfo (RegisterClass DPR) 0,
-      TemporaryInfo (RegisterClass DPR_8) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass DPR) 1])
+    ([TemporaryInfo (RegisterClass DPR) 0 False,
+      TemporaryInfo (RegisterClass DPR) 0 False,
+      TemporaryInfo (RegisterClass DPR_8) 0 False, BoundInfo, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass DPR) 1 False])
   | i `elem`
       [VMLAslfd, VMLAslv2i32, VMLSslfd, VMLSslv2i32, VQRDMLAHslv2i32,
        VQRDMLSHslv2i32]
     =
-    ([TemporaryInfo (RegisterClass DPR) 0,
-      TemporaryInfo (RegisterClass DPR) 0,
-      TemporaryInfo (RegisterClass DPR_VFP2) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass DPR) 1])
+    ([TemporaryInfo (RegisterClass DPR) 0 False,
+      TemporaryInfo (RegisterClass DPR) 0 False,
+      TemporaryInfo (RegisterClass DPR_VFP2) 0 False, BoundInfo,
+      BoundInfo, TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass DPR) 1 False])
   | i `elem` [VSELEQD, VSELGED, VSELGTD, VSELVSD] =
-    ([TemporaryInfo (RegisterClass DPR) 0,
-      TemporaryInfo (RegisterClass DPR) 0,
-      TemporaryInfo (AbstractRegisterClass Unknown) 0],
-     [TemporaryInfo (RegisterClass DPR) 1])
+    ([TemporaryInfo (RegisterClass DPR) 0 False,
+      TemporaryInfo (RegisterClass DPR) 0 False,
+      TemporaryInfo (AbstractRegisterClass Unknown) 0 False],
+     [TemporaryInfo (RegisterClass DPR) 1 False])
   | i `elem` [VCMPD, VCMPED] =
-    ([TemporaryInfo (RegisterClass DPR) 0,
-      TemporaryInfo (RegisterClass DPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
+    ([TemporaryInfo (RegisterClass DPR) 0 False,
+      TemporaryInfo (RegisterClass DPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
      [])
   | i `elem`
       [VABDfd, VABDhd, VABDsv2i32, VABDsv4i16, VABDsv8i8, VABDuv2i32,
@@ -124,18 +126,18 @@ operandInfo i
        VSHLuv4i16, VSHLuv8i8, VSUBD, VSUBfd, VSUBhd, VSUBv1i64, VSUBv2i32,
        VSUBv4i16, VSUBv8i8, VTSTv2i32, VTSTv4i16, VTSTv8i8]
     =
-    ([TemporaryInfo (RegisterClass DPR) 0,
-      TemporaryInfo (RegisterClass DPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass DPR) 1])
+    ([TemporaryInfo (RegisterClass DPR) 0 False,
+      TemporaryInfo (RegisterClass DPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass DPR) 1 False])
   | i `elem`
       [VSWPd, VTRNd16, VTRNd32, VTRNd8, VUZPd16, VUZPd8, VZIPd16, VZIPd8]
     =
-    ([TemporaryInfo (RegisterClass DPR) 0,
-      TemporaryInfo (RegisterClass DPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass DPR) 1,
-      TemporaryInfo (RegisterClass DPR) 1])
+    ([TemporaryInfo (RegisterClass DPR) 0 False,
+      TemporaryInfo (RegisterClass DPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass DPR) 1 False,
+      TemporaryInfo (RegisterClass DPR) 1 False])
   | i `elem`
       [VABDLsv2i64, VABDLsv4i32, VABDLsv8i16, VABDLuv2i64, VABDLuv4i32,
        VABDLuv8i16, VADDLsv2i64, VADDLsv4i32, VADDLsv8i16, VADDLuv2i64,
@@ -144,10 +146,10 @@ operandInfo i
        VQDMULLv4i32, VSUBLsv2i64, VSUBLsv4i32, VSUBLsv8i16, VSUBLuv2i64,
        VSUBLuv4i32, VSUBLuv8i16]
     =
-    ([TemporaryInfo (RegisterClass DPR) 0,
-      TemporaryInfo (RegisterClass DPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass QPR) 1])
+    ([TemporaryInfo (RegisterClass DPR) 0 False,
+      TemporaryInfo (RegisterClass DPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass QPR) 1 False])
   | i `elem`
       [VEXTd16, VEXTd32, VEXTd8, VRSRAsv1i64, VRSRAsv2i32, VRSRAsv4i16,
        VRSRAsv8i8, VRSRAuv1i64, VRSRAuv2i32, VRSRAuv4i16, VRSRAuv8i8,
@@ -155,75 +157,75 @@ operandInfo i
        VSRAsv4i16, VSRAsv8i8, VSRAuv1i64, VSRAuv2i32, VSRAuv4i16,
        VSRAuv8i8, VSRIv1i64, VSRIv2i32, VSRIv4i16, VSRIv8i8]
     =
-    ([TemporaryInfo (RegisterClass DPR) 0,
-      TemporaryInfo (RegisterClass DPR) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass DPR) 1])
+    ([TemporaryInfo (RegisterClass DPR) 0 False,
+      TemporaryInfo (RegisterClass DPR) 0 False, BoundInfo, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass DPR) 1 False])
   | i `elem` [VMULslhd, VMULslv4i16, VQDMULHslv4i16, VQRDMULHslv4i16]
     =
-    ([TemporaryInfo (RegisterClass DPR) 0,
-      TemporaryInfo (RegisterClass DPR_8) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass DPR) 1])
+    ([TemporaryInfo (RegisterClass DPR) 0 False,
+      TemporaryInfo (RegisterClass DPR_8) 0 False, BoundInfo, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass DPR) 1 False])
   | i `elem` [VMULLslsv4i16, VMULLsluv4i16, VQDMULLslv4i16] =
-    ([TemporaryInfo (RegisterClass DPR) 0,
-      TemporaryInfo (RegisterClass DPR_8) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass QPR) 1])
+    ([TemporaryInfo (RegisterClass DPR) 0 False,
+      TemporaryInfo (RegisterClass DPR_8) 0 False, BoundInfo, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass QPR) 1 False])
   | i `elem` [VMULslfd, VMULslv2i32, VQDMULHslv2i32, VQRDMULHslv2i32]
     =
-    ([TemporaryInfo (RegisterClass DPR) 0,
-      TemporaryInfo (RegisterClass DPR_VFP2) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass DPR) 1])
+    ([TemporaryInfo (RegisterClass DPR) 0 False,
+      TemporaryInfo (RegisterClass DPR_VFP2) 0 False, BoundInfo,
+      BoundInfo, TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass DPR) 1 False])
   | i `elem` [VMULLslsv2i32, VMULLsluv2i32, VQDMULLslv2i32] =
-    ([TemporaryInfo (RegisterClass DPR) 0,
-      TemporaryInfo (RegisterClass DPR_VFP2) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass QPR) 1])
+    ([TemporaryInfo (RegisterClass DPR) 0 False,
+      TemporaryInfo (RegisterClass DPR_VFP2) 0 False, BoundInfo,
+      BoundInfo, TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass QPR) 1 False])
   | i `elem` [VSTRD] =
-    ([TemporaryInfo (RegisterClass DPR) 0,
-      TemporaryInfo (RegisterClass GPR) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
+    ([TemporaryInfo (RegisterClass DPR) 0 False,
+      TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
      [])
   | i `elem` [VSETLNi16, VSETLNi32, VSETLNi8] =
-    ([TemporaryInfo (RegisterClass DPR) 0,
-      TemporaryInfo (RegisterClass GPR) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass DPR) 1])
+    ([TemporaryInfo (RegisterClass DPR) 0 False,
+      TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass DPR) 1 False])
   | i `elem` [VTBX3Pseudo, VTBX4Pseudo] =
-    ([TemporaryInfo (RegisterClass DPR) 0,
-      TemporaryInfo (RegisterClass QQPR) 0,
-      TemporaryInfo (RegisterClass DPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass DPR) 1])
+    ([TemporaryInfo (RegisterClass DPR) 0 False,
+      TemporaryInfo (RegisterClass QQPR) 0 False,
+      TemporaryInfo (RegisterClass DPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass DPR) 1 False])
   | i `elem` [VTBX2] =
-    ([TemporaryInfo (RegisterClass DPR) 0,
-      TemporaryInfo (RegisterClass VecListDPair) 0,
-      TemporaryInfo (RegisterClass DPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass DPR) 1])
+    ([TemporaryInfo (RegisterClass DPR) 0 False,
+      TemporaryInfo (RegisterClass VecListDPair) 0 False,
+      TemporaryInfo (RegisterClass DPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass DPR) 1 False])
   | i `elem` [VTBX4] =
-    ([TemporaryInfo (RegisterClass DPR) 0,
-      TemporaryInfo (RegisterClass VecListFourD) 0,
-      TemporaryInfo (RegisterClass DPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass DPR) 1])
+    ([TemporaryInfo (RegisterClass DPR) 0 False,
+      TemporaryInfo (RegisterClass VecListFourD) 0 False,
+      TemporaryInfo (RegisterClass DPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass DPR) 1 False])
   | i `elem` [VTBX1] =
-    ([TemporaryInfo (RegisterClass DPR) 0,
-      TemporaryInfo (RegisterClass VecListOneD) 0,
-      TemporaryInfo (RegisterClass DPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass DPR) 1])
+    ([TemporaryInfo (RegisterClass DPR) 0 False,
+      TemporaryInfo (RegisterClass VecListOneD) 0 False,
+      TemporaryInfo (RegisterClass DPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass DPR) 1 False])
   | i `elem` [VTBX3] =
-    ([TemporaryInfo (RegisterClass DPR) 0,
-      TemporaryInfo (RegisterClass VecListThreeD) 0,
-      TemporaryInfo (RegisterClass DPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass DPR) 1])
+    ([TemporaryInfo (RegisterClass DPR) 0 False,
+      TemporaryInfo (RegisterClass VecListThreeD) 0 False,
+      TemporaryInfo (RegisterClass DPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass DPR) 1 False])
   | i `elem` [VCMPEZD, VCMPZD] =
-    ([TemporaryInfo (RegisterClass DPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
+    ([TemporaryInfo (RegisterClass DPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
      [])
   | i `elem`
       [VABSD, VABSfd, VABShd, VABSv2i32, VABSv4i16, VABSv8i8, VCEQzv2f32,
@@ -242,27 +244,27 @@ operandInfo i
        VREV64d8, VRINTRD, VRINTXD, VRINTZD, VRSQRTEd, VRSQRTEfd,
        VRSQRTEhd, VSQRTD]
     =
-    ([TemporaryInfo (RegisterClass DPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass DPR) 1])
+    ([TemporaryInfo (RegisterClass DPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass DPR) 1 False])
   | i `elem` [VMOVRRD] =
-    ([TemporaryInfo (RegisterClass DPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass GPR) 1,
-      TemporaryInfo (RegisterClass GPR) 1])
+    ([TemporaryInfo (RegisterClass DPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass GPR) 1 False,
+      TemporaryInfo (RegisterClass GPR) 1 False])
   | i `elem`
       [VCVTh2f, VMOVLsv2i64, VMOVLsv4i32, VMOVLsv8i16, VMOVLuv2i64,
        VMOVLuv4i32, VMOVLuv8i16]
     =
-    ([TemporaryInfo (RegisterClass DPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass QPR) 1])
+    ([TemporaryInfo (RegisterClass DPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass QPR) 1 False])
   | i `elem`
       [VCVTBDH, VCVTSD, VCVTTDH, VTOSIRD, VTOSIZD, VTOUIRD, VTOUIZD]
     =
-    ([TemporaryInfo (RegisterClass DPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass SPR) 1])
+    ([TemporaryInfo (RegisterClass DPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass SPR) 1 False])
   | i `elem`
       [VLD1LNdWB_register_Asm_16, VLD1LNdWB_register_Asm_32,
        VLD1LNdWB_register_Asm_8, VLD2LNdWB_register_Asm_16,
@@ -283,10 +285,10 @@ operandInfo i
        VST4LNdWB_register_Asm_32, VST4LNdWB_register_Asm_8,
        VST4LNqWB_register_Asm_16, VST4LNqWB_register_Asm_32]
     =
-    ([TemporaryInfo (RegisterClass DPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass GPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass RGPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
+    ([TemporaryInfo (RegisterClass DPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass RGPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
      [])
   | i `elem`
       [VLD1LNdAsm_16, VLD1LNdAsm_32, VLD1LNdAsm_8,
@@ -313,9 +315,9 @@ operandInfo i
        VST4LNdWB_fixed_Asm_32, VST4LNdWB_fixed_Asm_8, VST4LNqAsm_16,
        VST4LNqAsm_32, VST4LNqWB_fixed_Asm_16, VST4LNqWB_fixed_Asm_32]
     =
-    ([TemporaryInfo (RegisterClass DPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass GPR) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
+    ([TemporaryInfo (RegisterClass DPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
      [])
   | i `elem`
       [VCVTf2xsd, VCVTf2xud, VCVTh2xsd, VCVTh2xud, VCVTxs2fd, VCVTxs2hd,
@@ -329,100 +331,100 @@ operandInfo i
        VSHRuv2i32, VSHRuv4i16, VSHRuv8i8, VSHTOD, VSLTOD, VTOSHD, VTOSLD,
        VTOUHD, VTOULD, VUHTOD, VULTOD]
     =
-    ([TemporaryInfo (RegisterClass DPR) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass DPR) 1])
+    ([TemporaryInfo (RegisterClass DPR) 0 False, BoundInfo, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass DPR) 1 False])
   | i `elem` [VGETLNi32, VGETLNs16, VGETLNs8, VGETLNu16, VGETLNu8] =
-    ([TemporaryInfo (RegisterClass DPR) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass GPR) 1])
+    ([TemporaryInfo (RegisterClass DPR) 0 False, BoundInfo, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass GPR) 1 False])
   | i `elem`
       [VDUPLN16q, VDUPLN32q, VDUPLN8q, VSHLLi16, VSHLLi32, VSHLLi8,
        VSHLLsv2i64, VSHLLsv4i32, VSHLLsv8i16, VSHLLuv2i64, VSHLLuv4i32,
        VSHLLuv8i16]
     =
-    ([TemporaryInfo (RegisterClass DPR) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass QPR) 1])
+    ([TemporaryInfo (RegisterClass DPR) 0 False, BoundInfo, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass QPR) 1 False])
   | i `elem` [VSTMQIA] =
-    ([TemporaryInfo (RegisterClass DPair) 0,
-      TemporaryInfo (RegisterClass GPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
+    ([TemporaryInfo (RegisterClass DPair) 0 False,
+      TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
      [])
   | i `elem`
       [BLX, BX, MOVPCRX, RFEDA, RFEDA_UPD, RFEDB, RFEDB_UPD, RFEIA,
        RFEIA_UPD, RFEIB, RFEIB_UPD]
-    = ([TemporaryInfo (RegisterClass GPR) 0], [])
+    = ([TemporaryInfo (RegisterClass GPR) 0 False], [])
   | i `elem` [MOVE] =
-    ([TemporaryInfo (RegisterClass GPR) 0],
-     [TemporaryInfo (RegisterClass GPR) 1])
+    ([TemporaryInfo (RegisterClass GPR) 0 False],
+     [TemporaryInfo (RegisterClass GPR) 1 False])
   | i `elem` [ABS, MOVsra_flag, MOVsrl_flag] =
-    ([TemporaryInfo (RegisterClass GPR) 0],
-     [TemporaryInfo (RegisterClass GPR) 1,
-      TemporaryInfo (AbstractRegisterClass Unknown) 1])
+    ([TemporaryInfo (RegisterClass GPR) 0 False],
+     [TemporaryInfo (RegisterClass GPR) 1 False,
+      TemporaryInfo (AbstractRegisterClass Unknown) 1 False])
   | i `elem` [STORE] =
-    ([TemporaryInfo (RegisterClass GPR) 0],
-     [TemporaryInfo (InfiniteRegisterClass M32) 1])
+    ([TemporaryInfo (RegisterClass GPR) 0 False],
+     [TemporaryInfo (InfiniteRegisterClass M32) 1 False])
   | i `elem` [WIN__DBZCHK] =
-    ([TemporaryInfo (RegisterClass GPR) 0],
-     [TemporaryInfo (AbstractRegisterClass Unknown) 1])
+    ([TemporaryInfo (RegisterClass GPR) 0 False],
+     [TemporaryInfo (AbstractRegisterClass Unknown) 1 False])
   | i `elem`
       [Int_eh_sjlj_longjmp, TInt_WIN_eh_sjlj_longjmp,
        TInt_eh_sjlj_longjmp]
     =
-    ([TemporaryInfo (RegisterClass GPR) 0,
-      TemporaryInfo (RegisterClass GPR) 0],
+    ([TemporaryInfo (RegisterClass GPR) 0 False,
+      TemporaryInfo (RegisterClass GPR) 0 False],
      [])
   | i `elem` [Int_eh_sjlj_setjmp, Int_eh_sjlj_setjmp_nofp] =
-    ([TemporaryInfo (RegisterClass GPR) 0,
-      TemporaryInfo (RegisterClass GPR) 0],
-     [TemporaryInfo (AbstractRegisterClass Unknown) 1])
+    ([TemporaryInfo (RegisterClass GPR) 0 False,
+      TemporaryInfo (RegisterClass GPR) 0 False],
+     [TemporaryInfo (AbstractRegisterClass Unknown) 1 False])
   | i `elem` [SMLAL, SMLALv5, UMLAL, UMLALv5] =
-    ([TemporaryInfo (RegisterClass GPR) 0,
-      TemporaryInfo (RegisterClass GPR) 0,
-      TemporaryInfo (RegisterClass GPR) 0,
-      TemporaryInfo (RegisterClass GPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass GPR) 1,
-      TemporaryInfo (RegisterClass GPR) 1])
+    ([TemporaryInfo (RegisterClass GPR) 0 False,
+      TemporaryInfo (RegisterClass GPR) 0 False,
+      TemporaryInfo (RegisterClass GPR) 0 False,
+      TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass GPR) 1 False,
+      TemporaryInfo (RegisterClass GPR) 1 False])
   | i `elem` [STRD] =
-    ([TemporaryInfo (RegisterClass GPR) 0,
-      TemporaryInfo (RegisterClass GPR) 0,
-      TemporaryInfo (RegisterClass GPR) 0,
-      TemporaryInfo (RegisterClass GPR) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
+    ([TemporaryInfo (RegisterClass GPR) 0 False,
+      TemporaryInfo (RegisterClass GPR) 0 False,
+      TemporaryInfo (RegisterClass GPR) 0 False,
+      TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
      [])
   | i `elem` [STRD_POST, STRD_PRE] =
-    ([TemporaryInfo (RegisterClass GPR) 0,
-      TemporaryInfo (RegisterClass GPR) 0,
-      TemporaryInfo (RegisterClass GPR) 0,
-      TemporaryInfo (RegisterClass GPR) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass GPR) 1])
+    ([TemporaryInfo (RegisterClass GPR) 0 False,
+      TemporaryInfo (RegisterClass GPR) 0 False,
+      TemporaryInfo (RegisterClass GPR) 0 False,
+      TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass GPR) 1 False])
   | i `elem` [MLS, SMMLA, SMMLAR, SMMLS, SMMLSR, USADA8] =
-    ([TemporaryInfo (RegisterClass GPR) 0,
-      TemporaryInfo (RegisterClass GPR) 0,
-      TemporaryInfo (RegisterClass GPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass GPR) 1])
+    ([TemporaryInfo (RegisterClass GPR) 0 False,
+      TemporaryInfo (RegisterClass GPR) 0 False,
+      TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass GPR) 1 False])
   | i `elem` [STRH] =
-    ([TemporaryInfo (RegisterClass GPR) 0,
-      TemporaryInfo (RegisterClass GPR) 0,
-      TemporaryInfo (RegisterClass GPR) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
+    ([TemporaryInfo (RegisterClass GPR) 0 False,
+      TemporaryInfo (RegisterClass GPR) 0 False,
+      TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
      [])
   | i `elem` [STRH_POST, STRH_PRE, STRH_preidx] =
-    ([TemporaryInfo (RegisterClass GPR) 0,
-      TemporaryInfo (RegisterClass GPR) 0,
-      TemporaryInfo (RegisterClass GPR) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass GPR) 1])
+    ([TemporaryInfo (RegisterClass GPR) 0 False,
+      TemporaryInfo (RegisterClass GPR) 0 False,
+      TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass GPR) 1 False])
   | i `elem` [STRrs] =
-    ([TemporaryInfo (RegisterClass GPR) 0,
-      TemporaryInfo (RegisterClass GPR) 0,
-      TemporaryInfo (RegisterClass GPRnopc) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
+    ([TemporaryInfo (RegisterClass GPR) 0 False,
+      TemporaryInfo (RegisterClass GPR) 0 False,
+      TemporaryInfo (RegisterClass GPRnopc) 0 False, BoundInfo,
+      BoundInfo, TemporaryInfo (RegisterClass CCR) 0 False],
      [])
   | i `elem`
       [STRBT_POST_IMM, STRBT_POST_REG, STRB_POST_IMM, STRB_POST_REG,
@@ -430,329 +432,329 @@ operandInfo i
        STRT_POST_REG, STR_POST_IMM, STR_POST_REG, STR_PRE_REG,
        STRi_preidx, STRr_preidx]
     =
-    ([TemporaryInfo (RegisterClass GPR) 0,
-      TemporaryInfo (RegisterClass GPR) 0,
-      TemporaryInfo (RegisterClass GPRnopc) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass GPR) 1])
+    ([TemporaryInfo (RegisterClass GPR) 0 False,
+      TemporaryInfo (RegisterClass GPR) 0 False,
+      TemporaryInfo (RegisterClass GPRnopc) 0 False, BoundInfo,
+      BoundInfo, TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass GPR) 1 False])
   | i `elem` [T2STRs] =
-    ([TemporaryInfo (RegisterClass GPR) 0,
-      TemporaryInfo (RegisterClass GPR) 0,
-      TemporaryInfo (RegisterClass RGPR) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
+    ([TemporaryInfo (RegisterClass GPR) 0 False,
+      TemporaryInfo (RegisterClass GPR) 0 False,
+      TemporaryInfo (RegisterClass RGPR) 0 False, BoundInfo, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
      [])
   | i `elem` [BR_JTadd, T2BR_JT] =
-    ([TemporaryInfo (RegisterClass GPR) 0,
-      TemporaryInfo (RegisterClass GPR) 0, BoundInfo],
+    ([TemporaryInfo (RegisterClass GPR) 0 False,
+      TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo],
      [])
   | i `elem` [STL, STLB, STLH] =
-    ([TemporaryInfo (RegisterClass GPR) 0,
-      TemporaryInfo (RegisterClass GPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
+    ([TemporaryInfo (RegisterClass GPR) 0 False,
+      TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
      [])
   | i `elem` [TCMPhir_cpsr] =
-    ([TemporaryInfo (RegisterClass GPR) 0,
-      TemporaryInfo (RegisterClass GPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass CCR) 1])
+    ([TemporaryInfo (RegisterClass GPR) 0 False,
+      TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass CCR) 1 False])
   | i `elem` [VMOVDRR] =
-    ([TemporaryInfo (RegisterClass GPR) 0,
-      TemporaryInfo (RegisterClass GPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass DPR) 1])
+    ([TemporaryInfo (RegisterClass GPR) 0 False,
+      TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass DPR) 1 False])
   | i `elem`
       [MOVCCr, SDIV, SEL, SMMUL, SMMULR, SMULBB, SMULBT, SMULTB, SMULTT,
        SMULWB, SMULWT, STLEX, STLEXB, STLEXH, STREX, STREXB, STREXH, UDIV,
        USAD8, T2SEL, TADDhirr]
     =
-    ([TemporaryInfo (RegisterClass GPR) 0,
-      TemporaryInfo (RegisterClass GPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass GPR) 1])
+    ([TemporaryInfo (RegisterClass GPR) 0 False,
+      TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass GPR) 1 False])
   | i `elem` [UMAAL] =
-    ([TemporaryInfo (RegisterClass GPR) 0,
-      TemporaryInfo (RegisterClass GPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass GPR) 1,
-      TemporaryInfo (RegisterClass GPR) 1])
+    ([TemporaryInfo (RegisterClass GPR) 0 False,
+      TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass GPR) 1 False,
+      TemporaryInfo (RegisterClass GPR) 1 False])
   | i `elem` [ADDSrr, SUBSrr] =
-    ([TemporaryInfo (RegisterClass GPR) 0,
-      TemporaryInfo (RegisterClass GPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass GPR) 1,
-      TemporaryInfo (AbstractRegisterClass Unknown) 1])
+    ([TemporaryInfo (RegisterClass GPR) 0 False,
+      TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass GPR) 1 False,
+      TemporaryInfo (AbstractRegisterClass Unknown) 1 False])
   | i `elem` [VMOVSRR] =
-    ([TemporaryInfo (RegisterClass GPR) 0,
-      TemporaryInfo (RegisterClass GPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass SPR) 1,
-      TemporaryInfo (RegisterClass SPR) 1])
+    ([TemporaryInfo (RegisterClass GPR) 0 False,
+      TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass SPR) 1 False,
+      TemporaryInfo (RegisterClass SPR) 1 False])
   | i `elem` [CMNzrr, CMPrr, TEQrr, TSTrr, TCMPhir] =
-    ([TemporaryInfo (RegisterClass GPR) 0,
-      TemporaryInfo (RegisterClass GPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (AbstractRegisterClass Unknown) 1])
+    ([TemporaryInfo (RegisterClass GPR) 0 False,
+      TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (AbstractRegisterClass Unknown) 1 False])
   | i `elem` [RRXi] =
-    ([TemporaryInfo (RegisterClass GPR) 0,
-      TemporaryInfo (RegisterClass GPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0,
-      TemporaryInfo (RegisterClass CCR) 0],
+    ([TemporaryInfo (RegisterClass GPR) 0 False,
+      TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False,
+      TemporaryInfo (RegisterClass CCR) 0 False],
      [])
   | i `elem`
       [ADDrr, ANDrr, BICrr, EORrr, ORRrr, RSBrr, SUBrr, TADDhirrs]
     =
-    ([TemporaryInfo (RegisterClass GPR) 0,
-      TemporaryInfo (RegisterClass GPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass GPR) 1])
+    ([TemporaryInfo (RegisterClass GPR) 0 False,
+      TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass GPR) 1 False])
   | i `elem` [SMULL, SMULLv5, UMULL, UMULLv5] =
-    ([TemporaryInfo (RegisterClass GPR) 0,
-      TemporaryInfo (RegisterClass GPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass GPR) 1,
-      TemporaryInfo (RegisterClass GPR) 1])
+    ([TemporaryInfo (RegisterClass GPR) 0 False,
+      TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass GPR) 1 False,
+      TemporaryInfo (RegisterClass GPR) 1 False])
   | i `elem` [ADCrr, RSCrr, SBCrr] =
-    ([TemporaryInfo (RegisterClass GPR) 0,
-      TemporaryInfo (RegisterClass GPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0,
-      TemporaryInfo (RegisterClass CCR) 0,
-      TemporaryInfo (AbstractRegisterClass Unknown) 0],
-     [TemporaryInfo (RegisterClass GPR) 1,
-      TemporaryInfo (AbstractRegisterClass Unknown) 1])
+    ([TemporaryInfo (RegisterClass GPR) 0 False,
+      TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False,
+      TemporaryInfo (RegisterClass CCR) 0 False,
+      TemporaryInfo (AbstractRegisterClass Unknown) 0 False],
+     [TemporaryInfo (RegisterClass GPR) 1 False,
+      TemporaryInfo (AbstractRegisterClass Unknown) 1 False])
   | i `elem`
       [BR_JTm, COPY_STRUCT_BYVAL_I32, STRBT_POST, STRT_POST, T2TBB_JT,
        T2TBH_JT]
     =
-    ([TemporaryInfo (RegisterClass GPR) 0,
-      TemporaryInfo (RegisterClass GPR) 0, BoundInfo, BoundInfo],
+    ([TemporaryInfo (RegisterClass GPR) 0 False,
+      TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo, BoundInfo],
      [])
   | i `elem` [MEMCPY] =
-    ([TemporaryInfo (RegisterClass GPR) 0,
-      TemporaryInfo (RegisterClass GPR) 0, BoundInfo, BoundInfo],
-     [TemporaryInfo (RegisterClass GPR) 1,
-      TemporaryInfo (RegisterClass GPR) 1])
+    ([TemporaryInfo (RegisterClass GPR) 0 False,
+      TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo, BoundInfo],
+     [TemporaryInfo (RegisterClass GPR) 1 False,
+      TemporaryInfo (RegisterClass GPR) 1 False])
   | i `elem` [PICSTR, PICSTRB, PICSTRH, STRi12, T2STRi12, T2STRi8] =
-    ([TemporaryInfo (RegisterClass GPR) 0,
-      TemporaryInfo (RegisterClass GPR) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
+    ([TemporaryInfo (RegisterClass GPR) 0 False,
+      TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
      [])
   | i `elem`
       [LDRH, LDRSB, LDRSH, MOVCCsi, STRB_PRE_IMM, STRHTi, STR_PRE_IMM]
     =
-    ([TemporaryInfo (RegisterClass GPR) 0,
-      TemporaryInfo (RegisterClass GPR) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass GPR) 1])
+    ([TemporaryInfo (RegisterClass GPR) 0 False,
+      TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass GPR) 1 False])
   | i `elem`
       [LDRD, LDRH_POST, LDRH_PRE, LDRSB_POST, LDRSB_PRE, LDRSH_POST,
        LDRSH_PRE]
     =
-    ([TemporaryInfo (RegisterClass GPR) 0,
-      TemporaryInfo (RegisterClass GPR) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass GPR) 1,
-      TemporaryInfo (RegisterClass GPR) 1])
+    ([TemporaryInfo (RegisterClass GPR) 0 False,
+      TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass GPR) 1 False,
+      TemporaryInfo (RegisterClass GPR) 1 False])
   | i `elem` [LDRD_POST, LDRD_PRE] =
-    ([TemporaryInfo (RegisterClass GPR) 0,
-      TemporaryInfo (RegisterClass GPR) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass GPR) 1,
-      TemporaryInfo (RegisterClass GPR) 1,
-      TemporaryInfo (RegisterClass GPR) 1])
+    ([TemporaryInfo (RegisterClass GPR) 0 False,
+      TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass GPR) 1 False,
+      TemporaryInfo (RegisterClass GPR) 1 False,
+      TemporaryInfo (RegisterClass GPR) 1 False])
   | i `elem` [ADDSrsi, RSBSrsi, SUBSrsi] =
-    ([TemporaryInfo (RegisterClass GPR) 0,
-      TemporaryInfo (RegisterClass GPR) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass GPR) 1,
-      TemporaryInfo (AbstractRegisterClass Unknown) 1])
+    ([TemporaryInfo (RegisterClass GPR) 0 False,
+      TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass GPR) 1 False,
+      TemporaryInfo (AbstractRegisterClass Unknown) 1 False])
   | i `elem` [CMNzrsi, CMPrsi, TEQrsi, TSTrsi] =
-    ([TemporaryInfo (RegisterClass GPR) 0,
-      TemporaryInfo (RegisterClass GPR) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (AbstractRegisterClass Unknown) 1])
+    ([TemporaryInfo (RegisterClass GPR) 0 False,
+      TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (AbstractRegisterClass Unknown) 1 False])
   | i `elem` [ASRi, LSLi, LSRi, RORi] =
-    ([TemporaryInfo (RegisterClass GPR) 0,
-      TemporaryInfo (RegisterClass GPR) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0,
-      TemporaryInfo (RegisterClass CCR) 0],
+    ([TemporaryInfo (RegisterClass GPR) 0 False,
+      TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False,
+      TemporaryInfo (RegisterClass CCR) 0 False],
      [])
   | i `elem` [ADDrsi, ANDrsi, BICrsi, EORrsi, ORRrsi, RSBrsi, SUBrsi]
     =
-    ([TemporaryInfo (RegisterClass GPR) 0,
-      TemporaryInfo (RegisterClass GPR) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass GPR) 1])
+    ([TemporaryInfo (RegisterClass GPR) 0 False,
+      TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass GPR) 1 False])
   | i `elem` [MOVsr] =
-    ([TemporaryInfo (RegisterClass GPR) 0,
-      TemporaryInfo (RegisterClass GPR) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass GPRnopc) 1])
+    ([TemporaryInfo (RegisterClass GPR) 0 False,
+      TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass GPRnopc) 1 False])
   | i `elem` [ADCrsi, RSCrsi, SBCrsi] =
-    ([TemporaryInfo (RegisterClass GPR) 0,
-      TemporaryInfo (RegisterClass GPR) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0,
-      TemporaryInfo (RegisterClass CCR) 0,
-      TemporaryInfo (AbstractRegisterClass Unknown) 0],
-     [TemporaryInfo (RegisterClass GPR) 1,
-      TemporaryInfo (AbstractRegisterClass Unknown) 1])
+    ([TemporaryInfo (RegisterClass GPR) 0 False,
+      TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False,
+      TemporaryInfo (RegisterClass CCR) 0 False,
+      TemporaryInfo (AbstractRegisterClass Unknown) 0 False],
+     [TemporaryInfo (RegisterClass GPR) 1 False,
+      TemporaryInfo (AbstractRegisterClass Unknown) 1 False])
   | i `elem` [MOVCCsr] =
-    ([TemporaryInfo (RegisterClass GPR) 0,
-      TemporaryInfo (RegisterClass GPRnopc) 0,
-      TemporaryInfo (RegisterClass GPRnopc) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass GPR) 1])
+    ([TemporaryInfo (RegisterClass GPR) 0 False,
+      TemporaryInfo (RegisterClass GPRnopc) 0 False,
+      TemporaryInfo (RegisterClass GPRnopc) 0 False, BoundInfo,
+      BoundInfo, TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass GPR) 1 False])
   | i `elem` [ADDSrsr, RSBSrsr, SUBSrsr] =
-    ([TemporaryInfo (RegisterClass GPR) 0,
-      TemporaryInfo (RegisterClass GPRnopc) 0,
-      TemporaryInfo (RegisterClass GPRnopc) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass GPR) 1,
-      TemporaryInfo (AbstractRegisterClass Unknown) 1])
+    ([TemporaryInfo (RegisterClass GPR) 0 False,
+      TemporaryInfo (RegisterClass GPRnopc) 0 False,
+      TemporaryInfo (RegisterClass GPRnopc) 0 False, BoundInfo,
+      BoundInfo, TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass GPR) 1 False,
+      TemporaryInfo (AbstractRegisterClass Unknown) 1 False])
   | i `elem` [ADDrsr, ANDrsr, BICrsr, EORrsr, ORRrsr, RSBrsr, SUBrsr]
     =
-    ([TemporaryInfo (RegisterClass GPR) 0,
-      TemporaryInfo (RegisterClass GPRnopc) 0,
-      TemporaryInfo (RegisterClass GPRnopc) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass GPR) 1])
+    ([TemporaryInfo (RegisterClass GPR) 0 False,
+      TemporaryInfo (RegisterClass GPRnopc) 0 False,
+      TemporaryInfo (RegisterClass GPRnopc) 0 False, BoundInfo,
+      BoundInfo, TemporaryInfo (RegisterClass CCR) 0 False,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass GPR) 1 False])
   | i `elem` [RSCrsr] =
-    ([TemporaryInfo (RegisterClass GPR) 0,
-      TemporaryInfo (RegisterClass GPRnopc) 0,
-      TemporaryInfo (RegisterClass GPRnopc) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0,
-      TemporaryInfo (RegisterClass CCR) 0,
-      TemporaryInfo (AbstractRegisterClass Unknown) 0],
-     [TemporaryInfo (RegisterClass GPR) 1,
-      TemporaryInfo (AbstractRegisterClass Unknown) 1])
+    ([TemporaryInfo (RegisterClass GPR) 0 False,
+      TemporaryInfo (RegisterClass GPRnopc) 0 False,
+      TemporaryInfo (RegisterClass GPRnopc) 0 False, BoundInfo,
+      BoundInfo, TemporaryInfo (RegisterClass CCR) 0 False,
+      TemporaryInfo (RegisterClass CCR) 0 False,
+      TemporaryInfo (AbstractRegisterClass Unknown) 0 False],
+     [TemporaryInfo (RegisterClass GPR) 1 False,
+      TemporaryInfo (AbstractRegisterClass Unknown) 1 False])
   | i `elem` [PLDWrs, PLDrs, PLIrs] =
-    ([TemporaryInfo (RegisterClass GPR) 0,
-      TemporaryInfo (RegisterClass GPRnopc) 0, BoundInfo],
+    ([TemporaryInfo (RegisterClass GPR) 0 False,
+      TemporaryInfo (RegisterClass GPRnopc) 0 False, BoundInfo],
      [])
   | i `elem` [LDRrs] =
-    ([TemporaryInfo (RegisterClass GPR) 0,
-      TemporaryInfo (RegisterClass GPRnopc) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass GPR) 1])
+    ([TemporaryInfo (RegisterClass GPR) 0 False,
+      TemporaryInfo (RegisterClass GPRnopc) 0 False, BoundInfo,
+      BoundInfo, TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass GPR) 1 False])
   | i `elem`
       [LDRBT_POST_IMM, LDRBT_POST_REG, LDRB_POST_IMM, LDRB_POST_REG,
        LDRB_PRE_REG, LDRT_POST_IMM, LDRT_POST_REG, LDR_POST_IMM,
        LDR_POST_REG, LDR_PRE_REG]
     =
-    ([TemporaryInfo (RegisterClass GPR) 0,
-      TemporaryInfo (RegisterClass GPRnopc) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass GPR) 1,
-      TemporaryInfo (RegisterClass GPR) 1])
+    ([TemporaryInfo (RegisterClass GPR) 0 False,
+      TemporaryInfo (RegisterClass GPRnopc) 0 False, BoundInfo,
+      BoundInfo, TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass GPR) 1 False,
+      TemporaryInfo (RegisterClass GPR) 1 False])
   | i `elem` [LDRBrs, SXTAB, SXTAB16, SXTAH, UXTAB, UXTAB16, UXTAH] =
-    ([TemporaryInfo (RegisterClass GPR) 0,
-      TemporaryInfo (RegisterClass GPRnopc) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass GPRnopc) 1])
+    ([TemporaryInfo (RegisterClass GPR) 0 False,
+      TemporaryInfo (RegisterClass GPRnopc) 0 False, BoundInfo,
+      BoundInfo, TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass GPRnopc) 1 False])
   | i `elem` [LDRHTr, LDRSBTr, LDRSHTr] =
-    ([TemporaryInfo (RegisterClass GPR) 0,
-      TemporaryInfo (RegisterClass GPRnopc) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass GPRnopc) 1,
-      TemporaryInfo (RegisterClass GPRnopc) 1])
+    ([TemporaryInfo (RegisterClass GPR) 0 False,
+      TemporaryInfo (RegisterClass GPRnopc) 0 False, BoundInfo,
+      BoundInfo, TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass GPRnopc) 1 False,
+      TemporaryInfo (RegisterClass GPRnopc) 1 False])
   | i `elem` [RRX] =
-    ([TemporaryInfo (RegisterClass GPR) 0,
-      TemporaryInfo (AbstractRegisterClass Unknown) 0],
-     [TemporaryInfo (RegisterClass GPR) 1])
+    ([TemporaryInfo (RegisterClass GPR) 0 False,
+      TemporaryInfo (AbstractRegisterClass Unknown) 0 False],
+     [TemporaryInfo (RegisterClass GPR) 1 False])
   | i `elem` [T2TBB, T2TBH] =
-    ([TemporaryInfo (RegisterClass GPR) 0,
-      TemporaryInfo (RegisterClass RGPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
+    ([TemporaryInfo (RegisterClass GPR) 0 False,
+      TemporaryInfo (RegisterClass RGPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
      [])
   | i `elem` [T2PLDWs, T2PLDs, T2PLIs] =
-    ([TemporaryInfo (RegisterClass GPR) 0,
-      TemporaryInfo (RegisterClass RGPR) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
+    ([TemporaryInfo (RegisterClass GPR) 0 False,
+      TemporaryInfo (RegisterClass RGPR) 0 False, BoundInfo, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
      [])
   | i `elem` [T2LDRs] =
-    ([TemporaryInfo (RegisterClass GPR) 0,
-      TemporaryInfo (RegisterClass RGPR) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass GPR) 1])
+    ([TemporaryInfo (RegisterClass GPR) 0 False,
+      TemporaryInfo (RegisterClass RGPR) 0 False, BoundInfo, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass GPR) 1 False])
   | i `elem` [T2LDRBs, T2LDRHs, T2LDRSBs, T2LDRSHs] =
-    ([TemporaryInfo (RegisterClass GPR) 0,
-      TemporaryInfo (RegisterClass RGPR) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass GPRnopc) 1])
+    ([TemporaryInfo (RegisterClass GPR) 0 False,
+      TemporaryInfo (RegisterClass RGPR) 0 False, BoundInfo, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass GPRnopc) 1 False])
   | i `elem` [BR_JTr, PLDWi12, PLDi12, PLIi12] =
-    ([TemporaryInfo (RegisterClass GPR) 0, BoundInfo], [])
+    ([TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo], [])
   | i `elem` [TPICADD] =
-    ([TemporaryInfo (RegisterClass GPR) 0, BoundInfo],
-     [TemporaryInfo (RegisterClass GPR) 1])
+    ([TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo],
+     [TemporaryInfo (RegisterClass GPR) 1 False])
   | i `elem`
       [BLX_pred, BXJ, BX_pred, VMSR, VMSR_FPEXC, VMSR_FPINST,
        VMSR_FPINST2, VMSR_FPSID, T2RFEDB, T2RFEDBW, T2RFEIA, T2RFEIAW,
        TBRIND, TBX]
     =
-    ([TemporaryInfo (RegisterClass GPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
+    ([TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
      [])
   | i `elem` [VDUP16d, VDUP32d, VDUP8d] =
-    ([TemporaryInfo (RegisterClass GPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass DPR) 1])
+    ([TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass DPR) 1 False])
   | i `elem` [VLDMQIA] =
-    ([TemporaryInfo (RegisterClass GPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass DPair) 1])
+    ([TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass DPair) 1 False])
   | i `elem`
       [CLZ, LDA, LDAB, LDAEX, LDAEXB, LDAEXH, LDAH, LDREX, LDREXB,
        LDREXH, RBIT, REV, REV16, REVSH, TMOVr]
     =
-    ([TemporaryInfo (RegisterClass GPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass GPR) 1])
+    ([TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass GPR) 1 False])
   | i `elem` [LDAEXD, LDREXD] =
-    ([TemporaryInfo (RegisterClass GPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass GPRPairOp) 1])
+    ([TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass GPRPairOp) 1 False])
   | i `elem` [VDUP16q, VDUP32q, VDUP8q] =
-    ([TemporaryInfo (RegisterClass GPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass QPR) 1])
+    ([TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass QPR) 1 False])
   | i `elem` [VMOVSR] =
-    ([TemporaryInfo (RegisterClass GPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass SPR) 1])
+    ([TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass SPR) 1 False])
   | i `elem`
       [T2LDA, T2LDAB, T2LDAEX, T2LDAEXB, T2LDAEXH, T2LDAH, T2LDREXB,
        T2LDREXH]
     =
-    ([TemporaryInfo (RegisterClass GPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass RGPR) 1])
+    ([TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass RGPR) 1 False])
   | i `elem` [T2LDAEXD, T2LDREXD] =
-    ([TemporaryInfo (RegisterClass GPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass RGPR) 1,
-      TemporaryInfo (RegisterClass RGPR) 1])
+    ([TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass RGPR) 1 False,
+      TemporaryInfo (RegisterClass RGPR) 1 False])
   | i `elem` [MOVr, MVNr] =
-    ([TemporaryInfo (RegisterClass GPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass GPR) 1])
+    ([TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass GPR) 1 False])
   | i `elem` [T2MOVr] =
-    ([TemporaryInfo (RegisterClass GPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass GPRnopc) 1])
+    ([TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass GPRnopc) 1 False])
   | i `elem`
       [FLDMXIA, FSTMXIA, LDMDA, LDMDB, LDMIA, LDMIB, STMDA, STMDB, STMIA,
        STMIB, VLDMDIA, VLDMSIA, VSTMDIA, VSTMSIA, SysLDMDA, SysLDMDB,
        SysLDMIA, SysLDMIB, SysSTMDA, SysSTMDB, SysSTMIA, SysSTMIB,
        T2LDMDB, T2LDMIA, T2STMDB, T2STMIA]
     =
-    ([TemporaryInfo (RegisterClass GPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0, BoundInfo, BoundInfo],
+    ([TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False, BoundInfo, BoundInfo],
      [])
   | i `elem`
       [FLDMXDB_UPD, FLDMXIA_UPD, FSTMXDB_UPD, FSTMXIA_UPD, LDMDA_UPD,
@@ -764,669 +766,669 @@ operandInfo i
        T2LDMDB_UPD, T2LDMIA_RET, T2LDMIA_UPD, T2STMDB_UPD, T2STMIA_UPD,
        TLDMIA_UPD, TSTMIA_UPD]
     =
-    ([TemporaryInfo (RegisterClass GPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0, BoundInfo, BoundInfo],
-     [TemporaryInfo (RegisterClass GPR) 1])
+    ([TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False, BoundInfo, BoundInfo],
+     [TemporaryInfo (RegisterClass GPR) 1 False])
   | i `elem` [VST4d16, VST4d32, VST4d8, VST4q16, VST4q32, VST4q8] =
-    ([TemporaryInfo (RegisterClass GPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass DPR) 0,
-      TemporaryInfo (RegisterClass DPR) 0,
-      TemporaryInfo (RegisterClass DPR) 0,
-      TemporaryInfo (RegisterClass DPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
+    ([TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass DPR) 0 False,
+      TemporaryInfo (RegisterClass DPR) 0 False,
+      TemporaryInfo (RegisterClass DPR) 0 False,
+      TemporaryInfo (RegisterClass DPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
      [])
   | i `elem` [VST4LNd16, VST4LNd32, VST4LNd8, VST4LNq16, VST4LNq32] =
-    ([TemporaryInfo (RegisterClass GPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass DPR) 0,
-      TemporaryInfo (RegisterClass DPR) 0,
-      TemporaryInfo (RegisterClass DPR) 0,
-      TemporaryInfo (RegisterClass DPR) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
+    ([TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass DPR) 0 False,
+      TemporaryInfo (RegisterClass DPR) 0 False,
+      TemporaryInfo (RegisterClass DPR) 0 False,
+      TemporaryInfo (RegisterClass DPR) 0 False, BoundInfo, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
      [])
   | i `elem` [VLD4LNd16, VLD4LNd32, VLD4LNd8, VLD4LNq16, VLD4LNq32] =
-    ([TemporaryInfo (RegisterClass GPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass DPR) 0,
-      TemporaryInfo (RegisterClass DPR) 0,
-      TemporaryInfo (RegisterClass DPR) 0,
-      TemporaryInfo (RegisterClass DPR) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass DPR) 1,
-      TemporaryInfo (RegisterClass DPR) 1,
-      TemporaryInfo (RegisterClass DPR) 1,
-      TemporaryInfo (RegisterClass DPR) 1])
+    ([TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass DPR) 0 False,
+      TemporaryInfo (RegisterClass DPR) 0 False,
+      TemporaryInfo (RegisterClass DPR) 0 False,
+      TemporaryInfo (RegisterClass DPR) 0 False, BoundInfo, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass DPR) 1 False,
+      TemporaryInfo (RegisterClass DPR) 1 False,
+      TemporaryInfo (RegisterClass DPR) 1 False,
+      TemporaryInfo (RegisterClass DPR) 1 False])
   | i `elem` [VST3d16, VST3d32, VST3d8, VST3q16, VST3q32, VST3q8] =
-    ([TemporaryInfo (RegisterClass GPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass DPR) 0,
-      TemporaryInfo (RegisterClass DPR) 0,
-      TemporaryInfo (RegisterClass DPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
+    ([TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass DPR) 0 False,
+      TemporaryInfo (RegisterClass DPR) 0 False,
+      TemporaryInfo (RegisterClass DPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
      [])
   | i `elem` [VST3LNd16, VST3LNd32, VST3LNd8, VST3LNq16, VST3LNq32] =
-    ([TemporaryInfo (RegisterClass GPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass DPR) 0,
-      TemporaryInfo (RegisterClass DPR) 0,
-      TemporaryInfo (RegisterClass DPR) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
+    ([TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass DPR) 0 False,
+      TemporaryInfo (RegisterClass DPR) 0 False,
+      TemporaryInfo (RegisterClass DPR) 0 False, BoundInfo, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
      [])
   | i `elem` [VLD3LNd16, VLD3LNd32, VLD3LNd8, VLD3LNq16, VLD3LNq32] =
-    ([TemporaryInfo (RegisterClass GPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass DPR) 0,
-      TemporaryInfo (RegisterClass DPR) 0,
-      TemporaryInfo (RegisterClass DPR) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass DPR) 1,
-      TemporaryInfo (RegisterClass DPR) 1,
-      TemporaryInfo (RegisterClass DPR) 1])
+    ([TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass DPR) 0 False,
+      TemporaryInfo (RegisterClass DPR) 0 False,
+      TemporaryInfo (RegisterClass DPR) 0 False, BoundInfo, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass DPR) 1 False,
+      TemporaryInfo (RegisterClass DPR) 1 False,
+      TemporaryInfo (RegisterClass DPR) 1 False])
   | i `elem` [VST2LNd16, VST2LNd32, VST2LNd8, VST2LNq16, VST2LNq32] =
-    ([TemporaryInfo (RegisterClass GPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass DPR) 0,
-      TemporaryInfo (RegisterClass DPR) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
+    ([TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass DPR) 0 False,
+      TemporaryInfo (RegisterClass DPR) 0 False, BoundInfo, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
      [])
   | i `elem` [VLD2LNd16, VLD2LNd32, VLD2LNd8, VLD2LNq16, VLD2LNq32] =
-    ([TemporaryInfo (RegisterClass GPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass DPR) 0,
-      TemporaryInfo (RegisterClass DPR) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass DPR) 1,
-      TemporaryInfo (RegisterClass DPR) 1])
+    ([TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass DPR) 0 False,
+      TemporaryInfo (RegisterClass DPR) 0 False, BoundInfo, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass DPR) 1 False,
+      TemporaryInfo (RegisterClass DPR) 1 False])
   | i `elem` [VST1LNd16, VST1LNd32, VST1LNd8] =
-    ([TemporaryInfo (RegisterClass GPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass DPR) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
+    ([TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass DPR) 0 False, BoundInfo, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
      [])
   | i `elem` [VLD1LNd16, VLD1LNd32, VLD1LNd8] =
-    ([TemporaryInfo (RegisterClass GPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass DPR) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass DPR) 1])
+    ([TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass DPR) 0 False, BoundInfo, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass DPR) 1 False])
   | i `elem`
       [VST4d16_UPD, VST4d32_UPD, VST4d8_UPD, VST4q16_UPD, VST4q32_UPD,
        VST4q8_UPD]
     =
-    ([TemporaryInfo (RegisterClass GPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass GPR) 0,
-      TemporaryInfo (RegisterClass DPR) 0,
-      TemporaryInfo (RegisterClass DPR) 0,
-      TemporaryInfo (RegisterClass DPR) 0,
-      TemporaryInfo (RegisterClass DPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass GPR) 1])
+    ([TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass GPR) 0 False,
+      TemporaryInfo (RegisterClass DPR) 0 False,
+      TemporaryInfo (RegisterClass DPR) 0 False,
+      TemporaryInfo (RegisterClass DPR) 0 False,
+      TemporaryInfo (RegisterClass DPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass GPR) 1 False])
   | i `elem`
       [VLD4LNd16_UPD, VLD4LNd32_UPD, VLD4LNd8_UPD, VLD4LNq16_UPD,
        VLD4LNq32_UPD]
     =
-    ([TemporaryInfo (RegisterClass GPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass GPR) 0,
-      TemporaryInfo (RegisterClass DPR) 0,
-      TemporaryInfo (RegisterClass DPR) 0,
-      TemporaryInfo (RegisterClass DPR) 0,
-      TemporaryInfo (RegisterClass DPR) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass DPR) 1,
-      TemporaryInfo (RegisterClass DPR) 1,
-      TemporaryInfo (RegisterClass DPR) 1,
-      TemporaryInfo (RegisterClass DPR) 1,
-      TemporaryInfo (RegisterClass GPR) 1])
+    ([TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass GPR) 0 False,
+      TemporaryInfo (RegisterClass DPR) 0 False,
+      TemporaryInfo (RegisterClass DPR) 0 False,
+      TemporaryInfo (RegisterClass DPR) 0 False,
+      TemporaryInfo (RegisterClass DPR) 0 False, BoundInfo, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass DPR) 1 False,
+      TemporaryInfo (RegisterClass DPR) 1 False,
+      TemporaryInfo (RegisterClass DPR) 1 False,
+      TemporaryInfo (RegisterClass DPR) 1 False,
+      TemporaryInfo (RegisterClass GPR) 1 False])
   | i `elem`
       [VST4LNd16_UPD, VST4LNd32_UPD, VST4LNd8_UPD, VST4LNq16_UPD,
        VST4LNq32_UPD]
     =
-    ([TemporaryInfo (RegisterClass GPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass GPR) 0,
-      TemporaryInfo (RegisterClass DPR) 0,
-      TemporaryInfo (RegisterClass DPR) 0,
-      TemporaryInfo (RegisterClass DPR) 0,
-      TemporaryInfo (RegisterClass DPR) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass GPR) 1])
+    ([TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass GPR) 0 False,
+      TemporaryInfo (RegisterClass DPR) 0 False,
+      TemporaryInfo (RegisterClass DPR) 0 False,
+      TemporaryInfo (RegisterClass DPR) 0 False,
+      TemporaryInfo (RegisterClass DPR) 0 False, BoundInfo, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass GPR) 1 False])
   | i `elem`
       [VST3d16_UPD, VST3d32_UPD, VST3d8_UPD, VST3q16_UPD, VST3q32_UPD,
        VST3q8_UPD]
     =
-    ([TemporaryInfo (RegisterClass GPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass GPR) 0,
-      TemporaryInfo (RegisterClass DPR) 0,
-      TemporaryInfo (RegisterClass DPR) 0,
-      TemporaryInfo (RegisterClass DPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass GPR) 1])
+    ([TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass GPR) 0 False,
+      TemporaryInfo (RegisterClass DPR) 0 False,
+      TemporaryInfo (RegisterClass DPR) 0 False,
+      TemporaryInfo (RegisterClass DPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass GPR) 1 False])
   | i `elem`
       [VLD3LNd16_UPD, VLD3LNd32_UPD, VLD3LNd8_UPD, VLD3LNq16_UPD,
        VLD3LNq32_UPD]
     =
-    ([TemporaryInfo (RegisterClass GPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass GPR) 0,
-      TemporaryInfo (RegisterClass DPR) 0,
-      TemporaryInfo (RegisterClass DPR) 0,
-      TemporaryInfo (RegisterClass DPR) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass DPR) 1,
-      TemporaryInfo (RegisterClass DPR) 1,
-      TemporaryInfo (RegisterClass DPR) 1,
-      TemporaryInfo (RegisterClass GPR) 1])
+    ([TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass GPR) 0 False,
+      TemporaryInfo (RegisterClass DPR) 0 False,
+      TemporaryInfo (RegisterClass DPR) 0 False,
+      TemporaryInfo (RegisterClass DPR) 0 False, BoundInfo, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass DPR) 1 False,
+      TemporaryInfo (RegisterClass DPR) 1 False,
+      TemporaryInfo (RegisterClass DPR) 1 False,
+      TemporaryInfo (RegisterClass GPR) 1 False])
   | i `elem`
       [VST3LNd16_UPD, VST3LNd32_UPD, VST3LNd8_UPD, VST3LNq16_UPD,
        VST3LNq32_UPD]
     =
-    ([TemporaryInfo (RegisterClass GPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass GPR) 0,
-      TemporaryInfo (RegisterClass DPR) 0,
-      TemporaryInfo (RegisterClass DPR) 0,
-      TemporaryInfo (RegisterClass DPR) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass GPR) 1])
+    ([TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass GPR) 0 False,
+      TemporaryInfo (RegisterClass DPR) 0 False,
+      TemporaryInfo (RegisterClass DPR) 0 False,
+      TemporaryInfo (RegisterClass DPR) 0 False, BoundInfo, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass GPR) 1 False])
   | i `elem`
       [VLD2LNd16_UPD, VLD2LNd32_UPD, VLD2LNd8_UPD, VLD2LNq16_UPD,
        VLD2LNq32_UPD]
     =
-    ([TemporaryInfo (RegisterClass GPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass GPR) 0,
-      TemporaryInfo (RegisterClass DPR) 0,
-      TemporaryInfo (RegisterClass DPR) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass DPR) 1,
-      TemporaryInfo (RegisterClass DPR) 1,
-      TemporaryInfo (RegisterClass GPR) 1])
+    ([TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass GPR) 0 False,
+      TemporaryInfo (RegisterClass DPR) 0 False,
+      TemporaryInfo (RegisterClass DPR) 0 False, BoundInfo, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass DPR) 1 False,
+      TemporaryInfo (RegisterClass DPR) 1 False,
+      TemporaryInfo (RegisterClass GPR) 1 False])
   | i `elem`
       [VST2LNd16_UPD, VST2LNd32_UPD, VST2LNd8_UPD, VST2LNq16_UPD,
        VST2LNq32_UPD]
     =
-    ([TemporaryInfo (RegisterClass GPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass GPR) 0,
-      TemporaryInfo (RegisterClass DPR) 0,
-      TemporaryInfo (RegisterClass DPR) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass GPR) 1])
+    ([TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass GPR) 0 False,
+      TemporaryInfo (RegisterClass DPR) 0 False,
+      TemporaryInfo (RegisterClass DPR) 0 False, BoundInfo, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass GPR) 1 False])
   | i `elem` [VLD1LNd16_UPD, VLD1LNd32_UPD, VLD1LNd8_UPD] =
-    ([TemporaryInfo (RegisterClass GPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass GPR) 0,
-      TemporaryInfo (RegisterClass DPR) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass DPR) 1,
-      TemporaryInfo (RegisterClass GPR) 1])
+    ([TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass GPR) 0 False,
+      TemporaryInfo (RegisterClass DPR) 0 False, BoundInfo, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass DPR) 1 False,
+      TemporaryInfo (RegisterClass GPR) 1 False])
   | i `elem` [VST1LNd16_UPD, VST1LNd32_UPD, VST1LNd8_UPD] =
-    ([TemporaryInfo (RegisterClass GPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass GPR) 0,
-      TemporaryInfo (RegisterClass DPR) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass GPR) 1])
+    ([TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass GPR) 0 False,
+      TemporaryInfo (RegisterClass DPR) 0 False, BoundInfo, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass GPR) 1 False])
   | i `elem`
       [VST1LNq16Pseudo_UPD, VST1LNq32Pseudo_UPD, VST1LNq8Pseudo_UPD,
        VST2LNd16Pseudo_UPD, VST2LNd32Pseudo_UPD, VST2LNd8Pseudo_UPD]
     =
-    ([TemporaryInfo (RegisterClass GPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass GPR) 0,
-      TemporaryInfo (RegisterClass QPR) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass GPR) 1])
+    ([TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass GPR) 0 False,
+      TemporaryInfo (RegisterClass QPR) 0 False, BoundInfo, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass GPR) 1 False])
   | i `elem`
       [VLD1LNq16Pseudo_UPD, VLD1LNq32Pseudo_UPD, VLD1LNq8Pseudo_UPD,
        VLD2LNd16Pseudo_UPD, VLD2LNd32Pseudo_UPD, VLD2LNd8Pseudo_UPD]
     =
-    ([TemporaryInfo (RegisterClass GPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass GPR) 0,
-      TemporaryInfo (RegisterClass QPR) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass QPR) 1,
-      TemporaryInfo (RegisterClass GPR) 1])
+    ([TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass GPR) 0 False,
+      TemporaryInfo (RegisterClass QPR) 0 False, BoundInfo, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass QPR) 1 False,
+      TemporaryInfo (RegisterClass GPR) 1 False])
   | i `elem`
       [VST1d64QPseudoWB_register, VST1d64TPseudoWB_register,
        VST3d16Pseudo_UPD, VST3d32Pseudo_UPD, VST3d8Pseudo_UPD,
        VST4d16Pseudo_UPD, VST4d32Pseudo_UPD, VST4d8Pseudo_UPD]
     =
-    ([TemporaryInfo (RegisterClass GPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass GPR) 0,
-      TemporaryInfo (RegisterClass QQPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass GPR) 1])
+    ([TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass GPR) 0 False,
+      TemporaryInfo (RegisterClass QQPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass GPR) 1 False])
   | i `elem`
       [VST2LNq16Pseudo_UPD, VST2LNq32Pseudo_UPD, VST3LNd16Pseudo_UPD,
        VST3LNd32Pseudo_UPD, VST3LNd8Pseudo_UPD, VST4LNd16Pseudo_UPD,
        VST4LNd32Pseudo_UPD, VST4LNd8Pseudo_UPD]
     =
-    ([TemporaryInfo (RegisterClass GPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass GPR) 0,
-      TemporaryInfo (RegisterClass QQPR) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass GPR) 1])
+    ([TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass GPR) 0 False,
+      TemporaryInfo (RegisterClass QQPR) 0 False, BoundInfo, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass GPR) 1 False])
   | i `elem`
       [VLD2LNq16Pseudo_UPD, VLD2LNq32Pseudo_UPD, VLD3LNd16Pseudo_UPD,
        VLD3LNd32Pseudo_UPD, VLD3LNd8Pseudo_UPD, VLD4LNd16Pseudo_UPD,
        VLD4LNd32Pseudo_UPD, VLD4LNd8Pseudo_UPD]
     =
-    ([TemporaryInfo (RegisterClass GPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass GPR) 0,
-      TemporaryInfo (RegisterClass QQPR) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass QQPR) 1,
-      TemporaryInfo (RegisterClass GPR) 1])
+    ([TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass GPR) 0 False,
+      TemporaryInfo (RegisterClass QQPR) 0 False, BoundInfo, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass QQPR) 1 False,
+      TemporaryInfo (RegisterClass GPR) 1 False])
   | i `elem`
       [VST3q16Pseudo_UPD, VST3q16oddPseudo_UPD, VST3q32Pseudo_UPD,
        VST3q32oddPseudo_UPD, VST3q8Pseudo_UPD, VST3q8oddPseudo_UPD,
        VST4q16Pseudo_UPD, VST4q16oddPseudo_UPD, VST4q32Pseudo_UPD,
        VST4q32oddPseudo_UPD, VST4q8Pseudo_UPD, VST4q8oddPseudo_UPD]
     =
-    ([TemporaryInfo (RegisterClass GPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass GPR) 0,
-      TemporaryInfo (RegisterClass QQQQPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass GPR) 1])
+    ([TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass GPR) 0 False,
+      TemporaryInfo (RegisterClass QQQQPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass GPR) 1 False])
   | i `elem`
       [VLD3q16Pseudo_UPD, VLD3q16oddPseudo_UPD, VLD3q32Pseudo_UPD,
        VLD3q32oddPseudo_UPD, VLD3q8Pseudo_UPD, VLD3q8oddPseudo_UPD,
        VLD4q16Pseudo_UPD, VLD4q16oddPseudo_UPD, VLD4q32Pseudo_UPD,
        VLD4q32oddPseudo_UPD, VLD4q8Pseudo_UPD, VLD4q8oddPseudo_UPD]
     =
-    ([TemporaryInfo (RegisterClass GPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass GPR) 0,
-      TemporaryInfo (RegisterClass QQQQPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass QQQQPR) 1,
-      TemporaryInfo (RegisterClass GPR) 1])
+    ([TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass GPR) 0 False,
+      TemporaryInfo (RegisterClass QQQQPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass QQQQPR) 1 False,
+      TemporaryInfo (RegisterClass GPR) 1 False])
   | i `elem`
       [VST3LNq16Pseudo_UPD, VST3LNq32Pseudo_UPD, VST4LNq16Pseudo_UPD,
        VST4LNq32Pseudo_UPD]
     =
-    ([TemporaryInfo (RegisterClass GPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass GPR) 0,
-      TemporaryInfo (RegisterClass QQQQPR) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass GPR) 1])
+    ([TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass GPR) 0 False,
+      TemporaryInfo (RegisterClass QQQQPR) 0 False, BoundInfo, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass GPR) 1 False])
   | i `elem`
       [VLD3LNq16Pseudo_UPD, VLD3LNq32Pseudo_UPD, VLD4LNq16Pseudo_UPD,
        VLD4LNq32Pseudo_UPD]
     =
-    ([TemporaryInfo (RegisterClass GPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass GPR) 0,
-      TemporaryInfo (RegisterClass QQQQPR) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass QQQQPR) 1,
-      TemporaryInfo (RegisterClass GPR) 1])
+    ([TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass GPR) 0 False,
+      TemporaryInfo (RegisterClass QQQQPR) 0 False, BoundInfo, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass QQQQPR) 1 False,
+      TemporaryInfo (RegisterClass GPR) 1 False])
   | i `elem`
       [VLD4DUPd16_UPD, VLD4DUPd32_UPD, VLD4DUPd8_UPD, VLD4DUPq16_UPD,
        VLD4DUPq32_UPD, VLD4DUPq8_UPD, VLD4d16_UPD, VLD4d32_UPD,
        VLD4d8_UPD, VLD4q16_UPD, VLD4q32_UPD, VLD4q8_UPD]
     =
-    ([TemporaryInfo (RegisterClass GPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass GPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass DPR) 1,
-      TemporaryInfo (RegisterClass DPR) 1,
-      TemporaryInfo (RegisterClass DPR) 1,
-      TemporaryInfo (RegisterClass DPR) 1,
-      TemporaryInfo (RegisterClass GPR) 1])
+    ([TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass DPR) 1 False,
+      TemporaryInfo (RegisterClass DPR) 1 False,
+      TemporaryInfo (RegisterClass DPR) 1 False,
+      TemporaryInfo (RegisterClass DPR) 1 False,
+      TemporaryInfo (RegisterClass GPR) 1 False])
   | i `elem`
       [VLD3DUPd16_UPD, VLD3DUPd32_UPD, VLD3DUPd8_UPD, VLD3DUPq16_UPD,
        VLD3DUPq32_UPD, VLD3DUPq8_UPD, VLD3d16_UPD, VLD3d32_UPD,
        VLD3d8_UPD, VLD3q16_UPD, VLD3q32_UPD, VLD3q8_UPD]
     =
-    ([TemporaryInfo (RegisterClass GPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass GPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass DPR) 1,
-      TemporaryInfo (RegisterClass DPR) 1,
-      TemporaryInfo (RegisterClass DPR) 1,
-      TemporaryInfo (RegisterClass GPR) 1])
+    ([TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass DPR) 1 False,
+      TemporaryInfo (RegisterClass DPR) 1 False,
+      TemporaryInfo (RegisterClass DPR) 1 False,
+      TemporaryInfo (RegisterClass GPR) 1 False])
   | i `elem`
       [VLD3DUPd16Pseudo_UPD, VLD3DUPd32Pseudo_UPD, VLD3DUPd8Pseudo_UPD,
        VLD3d16Pseudo_UPD, VLD3d32Pseudo_UPD, VLD3d8Pseudo_UPD,
        VLD4DUPd16Pseudo_UPD, VLD4DUPd32Pseudo_UPD, VLD4DUPd8Pseudo_UPD,
        VLD4d16Pseudo_UPD, VLD4d32Pseudo_UPD, VLD4d8Pseudo_UPD]
     =
-    ([TemporaryInfo (RegisterClass GPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass GPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass QQPR) 1,
-      TemporaryInfo (RegisterClass GPR) 1])
+    ([TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass QQPR) 1 False,
+      TemporaryInfo (RegisterClass GPR) 1 False])
   | i `elem`
       [VST1LNq16Pseudo, VST1LNq32Pseudo, VST1LNq8Pseudo, VST2LNd16Pseudo,
        VST2LNd32Pseudo, VST2LNd8Pseudo]
     =
-    ([TemporaryInfo (RegisterClass GPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass QPR) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
+    ([TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass QPR) 0 False, BoundInfo, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
      [])
   | i `elem`
       [VLD1LNq16Pseudo, VLD1LNq32Pseudo, VLD1LNq8Pseudo, VLD2LNd16Pseudo,
        VLD2LNd32Pseudo, VLD2LNd8Pseudo]
     =
-    ([TemporaryInfo (RegisterClass GPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass QPR) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass QPR) 1])
+    ([TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass QPR) 0 False, BoundInfo, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass QPR) 1 False])
   | i `elem`
       [VST1d64QPseudo, VST1d64TPseudo, VST2q16Pseudo, VST2q32Pseudo,
        VST2q8Pseudo, VST3d16Pseudo, VST3d32Pseudo, VST3d8Pseudo,
        VST4d16Pseudo, VST4d32Pseudo, VST4d8Pseudo]
     =
-    ([TemporaryInfo (RegisterClass GPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass QQPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
+    ([TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass QQPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
      [])
   | i `elem`
       [VST1d64QPseudoWB_fixed, VST1d64TPseudoWB_fixed,
        VST2q16PseudoWB_fixed, VST2q32PseudoWB_fixed, VST2q8PseudoWB_fixed]
     =
-    ([TemporaryInfo (RegisterClass GPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass QQPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass GPR) 1])
+    ([TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass QQPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass GPR) 1 False])
   | i `elem`
       [VST2LNq16Pseudo, VST2LNq32Pseudo, VST3LNd16Pseudo,
        VST3LNd32Pseudo, VST3LNd8Pseudo, VST4LNd16Pseudo, VST4LNd32Pseudo,
        VST4LNd8Pseudo]
     =
-    ([TemporaryInfo (RegisterClass GPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass QQPR) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
+    ([TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass QQPR) 0 False, BoundInfo, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
      [])
   | i `elem`
       [VLD2LNq16Pseudo, VLD2LNq32Pseudo, VLD3LNd16Pseudo,
        VLD3LNd32Pseudo, VLD3LNd8Pseudo, VLD4LNd16Pseudo, VLD4LNd32Pseudo,
        VLD4LNd8Pseudo]
     =
-    ([TemporaryInfo (RegisterClass GPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass QQPR) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass QQPR) 1])
+    ([TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass QQPR) 0 False, BoundInfo, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass QQPR) 1 False])
   | i `elem`
       [VST3q16oddPseudo, VST3q32oddPseudo, VST3q8oddPseudo,
        VST4q16oddPseudo, VST4q32oddPseudo, VST4q8oddPseudo]
     =
-    ([TemporaryInfo (RegisterClass GPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass QQQQPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
+    ([TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass QQQQPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
      [])
   | i `elem`
       [VLD3q16oddPseudo, VLD3q32oddPseudo, VLD3q8oddPseudo,
        VLD4q16oddPseudo, VLD4q32oddPseudo, VLD4q8oddPseudo]
     =
-    ([TemporaryInfo (RegisterClass GPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass QQQQPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass QQQQPR) 1])
+    ([TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass QQQQPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass QQQQPR) 1 False])
   | i `elem`
       [VST3LNq16Pseudo, VST3LNq32Pseudo, VST4LNq16Pseudo,
        VST4LNq32Pseudo]
     =
-    ([TemporaryInfo (RegisterClass GPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass QQQQPR) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
+    ([TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass QQQQPR) 0 False, BoundInfo, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
      [])
   | i `elem`
       [VLD3LNq16Pseudo, VLD3LNq32Pseudo, VLD4LNq16Pseudo,
        VLD4LNq32Pseudo]
     =
-    ([TemporaryInfo (RegisterClass GPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass QQQQPR) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass QQQQPR) 1])
+    ([TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass QQQQPR) 0 False, BoundInfo, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass QQQQPR) 1 False])
   | i `elem`
       [VST1q16, VST1q32, VST1q64, VST1q8, VST2d16, VST2d32, VST2d8]
     =
-    ([TemporaryInfo (RegisterClass GPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass VecListDPair) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
+    ([TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass VecListDPair) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
      [])
   | i `elem`
       [VST1q16wb_fixed, VST1q32wb_fixed, VST1q64wb_fixed, VST1q8wb_fixed,
        VST2d16wb_fixed, VST2d32wb_fixed, VST2d8wb_fixed]
     =
-    ([TemporaryInfo (RegisterClass GPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass VecListDPair) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass GPR) 1])
+    ([TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass VecListDPair) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass GPR) 1 False])
   | i `elem` [VST2b16, VST2b32, VST2b8] =
-    ([TemporaryInfo (RegisterClass GPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass VecListDPairSpaced) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
+    ([TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass VecListDPairSpaced) 0 False,
+      BoundInfo, TemporaryInfo (RegisterClass CCR) 0 False],
      [])
   | i `elem` [VST2b16wb_fixed, VST2b32wb_fixed, VST2b8wb_fixed] =
-    ([TemporaryInfo (RegisterClass GPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass VecListDPairSpaced) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass GPR) 1])
+    ([TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass VecListDPairSpaced) 0 False,
+      BoundInfo, TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass GPR) 1 False])
   | i `elem`
       [VST1d16Q, VST1d32Q, VST1d64Q, VST1d8Q, VST2q16, VST2q32, VST2q8]
     =
-    ([TemporaryInfo (RegisterClass GPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass VecListFourD) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
+    ([TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass VecListFourD) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
      [])
   | i `elem`
       [VST1d16Qwb_fixed, VST1d32Qwb_fixed, VST1d64Qwb_fixed,
        VST1d8Qwb_fixed, VST2q16wb_fixed, VST2q32wb_fixed, VST2q8wb_fixed]
     =
-    ([TemporaryInfo (RegisterClass GPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass VecListFourD) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass GPR) 1])
+    ([TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass VecListFourD) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass GPR) 1 False])
   | i `elem` [VST1d16, VST1d32, VST1d64, VST1d8] =
-    ([TemporaryInfo (RegisterClass GPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass VecListOneD) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
+    ([TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass VecListOneD) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
      [])
   | i `elem`
       [VST1d16wb_fixed, VST1d32wb_fixed, VST1d64wb_fixed, VST1d8wb_fixed]
     =
-    ([TemporaryInfo (RegisterClass GPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass VecListOneD) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass GPR) 1])
+    ([TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass VecListOneD) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass GPR) 1 False])
   | i `elem` [VST1d16T, VST1d32T, VST1d64T, VST1d8T] =
-    ([TemporaryInfo (RegisterClass GPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass VecListThreeD) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
+    ([TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass VecListThreeD) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
      [])
   | i `elem`
       [VST1d16Twb_fixed, VST1d32Twb_fixed, VST1d64Twb_fixed,
        VST1d8Twb_fixed]
     =
-    ([TemporaryInfo (RegisterClass GPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass VecListThreeD) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass GPR) 1])
+    ([TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass VecListThreeD) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass GPR) 1 False])
   | i `elem`
       [VST2q16PseudoWB_register, VST2q32PseudoWB_register,
        VST2q8PseudoWB_register]
     =
-    ([TemporaryInfo (RegisterClass GPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass RGPR) 0,
-      TemporaryInfo (RegisterClass QQPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass GPR) 1])
+    ([TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass RGPR) 0 False,
+      TemporaryInfo (RegisterClass QQPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass GPR) 1 False])
   | i `elem`
       [VST1q16wb_register, VST1q32wb_register, VST1q64wb_register,
        VST1q8wb_register, VST2d16wb_register, VST2d32wb_register,
        VST2d8wb_register]
     =
-    ([TemporaryInfo (RegisterClass GPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass RGPR) 0,
-      TemporaryInfo (RegisterClass VecListDPair) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass GPR) 1])
+    ([TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass RGPR) 0 False,
+      TemporaryInfo (RegisterClass VecListDPair) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass GPR) 1 False])
   | i `elem`
       [VST2b16wb_register, VST2b32wb_register, VST2b8wb_register]
     =
-    ([TemporaryInfo (RegisterClass GPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass RGPR) 0,
-      TemporaryInfo (RegisterClass VecListDPairSpaced) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass GPR) 1])
+    ([TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass RGPR) 0 False,
+      TemporaryInfo (RegisterClass VecListDPairSpaced) 0 False,
+      BoundInfo, TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass GPR) 1 False])
   | i `elem`
       [VST1d16Qwb_register, VST1d32Qwb_register, VST1d64Qwb_register,
        VST1d8Qwb_register, VST2q16wb_register, VST2q32wb_register,
        VST2q8wb_register]
     =
-    ([TemporaryInfo (RegisterClass GPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass RGPR) 0,
-      TemporaryInfo (RegisterClass VecListFourD) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass GPR) 1])
+    ([TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass RGPR) 0 False,
+      TemporaryInfo (RegisterClass VecListFourD) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass GPR) 1 False])
   | i `elem`
       [VST1d16wb_register, VST1d32wb_register, VST1d64wb_register,
        VST1d8wb_register]
     =
-    ([TemporaryInfo (RegisterClass GPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass RGPR) 0,
-      TemporaryInfo (RegisterClass VecListOneD) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass GPR) 1])
+    ([TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass RGPR) 0 False,
+      TemporaryInfo (RegisterClass VecListOneD) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass GPR) 1 False])
   | i `elem`
       [VST1d16Twb_register, VST1d32Twb_register, VST1d64Twb_register,
        VST1d8Twb_register]
     =
-    ([TemporaryInfo (RegisterClass GPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass RGPR) 0,
-      TemporaryInfo (RegisterClass VecListThreeD) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass GPR) 1])
+    ([TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass RGPR) 0 False,
+      TemporaryInfo (RegisterClass VecListThreeD) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass GPR) 1 False])
   | i `elem`
       [VLD1d64QPseudoWB_register, VLD1d64TPseudoWB_register,
        VLD2q16PseudoWB_register, VLD2q32PseudoWB_register,
        VLD2q8PseudoWB_register]
     =
-    ([TemporaryInfo (RegisterClass GPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass RGPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass QQPR) 1,
-      TemporaryInfo (RegisterClass GPR) 1])
+    ([TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass RGPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass QQPR) 1 False,
+      TemporaryInfo (RegisterClass GPR) 1 False])
   | i `elem`
       [VLD1q16wb_register, VLD1q32wb_register, VLD1q64wb_register,
        VLD1q8wb_register, VLD2d16wb_register, VLD2d32wb_register,
        VLD2d8wb_register]
     =
-    ([TemporaryInfo (RegisterClass GPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass RGPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass VecListDPair) 1,
-      TemporaryInfo (RegisterClass GPR) 1])
+    ([TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass RGPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass VecListDPair) 1 False,
+      TemporaryInfo (RegisterClass GPR) 1 False])
   | i `elem`
       [VLD1DUPq16wb_register, VLD1DUPq32wb_register,
        VLD1DUPq8wb_register, VLD2DUPd16wb_register, VLD2DUPd32wb_register,
        VLD2DUPd8wb_register]
     =
-    ([TemporaryInfo (RegisterClass GPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass RGPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass VecListDPairAllLanes) 1,
-      TemporaryInfo (RegisterClass GPR) 1])
+    ([TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass RGPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass VecListDPairAllLanes) 1 False,
+      TemporaryInfo (RegisterClass GPR) 1 False])
   | i `elem`
       [VLD2b16wb_register, VLD2b32wb_register, VLD2b8wb_register]
     =
-    ([TemporaryInfo (RegisterClass GPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass RGPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass VecListDPairSpaced) 1,
-      TemporaryInfo (RegisterClass GPR) 1])
+    ([TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass RGPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass VecListDPairSpaced) 1 False,
+      TemporaryInfo (RegisterClass GPR) 1 False])
   | i `elem`
       [VLD2DUPd16x2wb_register, VLD2DUPd32x2wb_register,
        VLD2DUPd8x2wb_register]
     =
-    ([TemporaryInfo (RegisterClass GPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass RGPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass VecListDPairSpacedAllLanes) 1,
-      TemporaryInfo (RegisterClass GPR) 1])
+    ([TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass RGPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass VecListDPairSpacedAllLanes) 1 False,
+      TemporaryInfo (RegisterClass GPR) 1 False])
   | i `elem`
       [VLD1d16Qwb_register, VLD1d32Qwb_register, VLD1d64Qwb_register,
        VLD1d8Qwb_register, VLD2q16wb_register, VLD2q32wb_register,
        VLD2q8wb_register]
     =
-    ([TemporaryInfo (RegisterClass GPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass RGPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass VecListFourD) 1,
-      TemporaryInfo (RegisterClass GPR) 1])
+    ([TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass RGPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass VecListFourD) 1 False,
+      TemporaryInfo (RegisterClass GPR) 1 False])
   | i `elem`
       [VLD1d16wb_register, VLD1d32wb_register, VLD1d64wb_register,
        VLD1d8wb_register]
     =
-    ([TemporaryInfo (RegisterClass GPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass RGPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass VecListOneD) 1,
-      TemporaryInfo (RegisterClass GPR) 1])
+    ([TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass RGPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass VecListOneD) 1 False,
+      TemporaryInfo (RegisterClass GPR) 1 False])
   | i `elem`
       [VLD1DUPd16wb_register, VLD1DUPd32wb_register,
        VLD1DUPd8wb_register]
     =
-    ([TemporaryInfo (RegisterClass GPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass RGPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass VecListOneDAllLanes) 1,
-      TemporaryInfo (RegisterClass GPR) 1])
+    ([TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass RGPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass VecListOneDAllLanes) 1 False,
+      TemporaryInfo (RegisterClass GPR) 1 False])
   | i `elem`
       [VLD1d16Twb_register, VLD1d32Twb_register, VLD1d64Twb_register,
        VLD1d8Twb_register]
     =
-    ([TemporaryInfo (RegisterClass GPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass RGPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass VecListThreeD) 1,
-      TemporaryInfo (RegisterClass GPR) 1])
+    ([TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass RGPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass VecListThreeD) 1 False,
+      TemporaryInfo (RegisterClass GPR) 1 False])
   | i `elem` [LDRBT_POST, LDRT_POST, MOVTi16_ga_pcrel] =
-    ([TemporaryInfo (RegisterClass GPR) 0, BoundInfo, BoundInfo],
-     [TemporaryInfo (RegisterClass GPR) 1])
+    ([TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo, BoundInfo],
+     [TemporaryInfo (RegisterClass GPR) 1 False])
   | i `elem`
       [T2LDRpcrel, T2PLDWi12, T2PLDWi8, T2PLDi12, T2PLDi8, T2PLIi12,
        T2PLIi8]
     =
-    ([TemporaryInfo (RegisterClass GPR) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
+    ([TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
      [])
   | i `elem` [VLDRD] =
-    ([TemporaryInfo (RegisterClass GPR) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass DPR) 1])
+    ([TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass DPR) 1 False])
   | i `elem`
       [VLD3DUPd16, VLD3DUPd32, VLD3DUPd8, VLD3DUPq16, VLD3DUPq32,
        VLD3DUPq8, VLD3d16, VLD3d32, VLD3d8, VLD3q16, VLD3q32, VLD3q8]
     =
-    ([TemporaryInfo (RegisterClass GPR) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass DPR) 1,
-      TemporaryInfo (RegisterClass DPR) 1,
-      TemporaryInfo (RegisterClass DPR) 1])
+    ([TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass DPR) 1 False,
+      TemporaryInfo (RegisterClass DPR) 1 False,
+      TemporaryInfo (RegisterClass DPR) 1 False])
   | i `elem`
       [VLD4DUPd16, VLD4DUPd32, VLD4DUPd8, VLD4DUPq16, VLD4DUPq32,
        VLD4DUPq8, VLD4d16, VLD4d32, VLD4d8, VLD4q16, VLD4q32, VLD4q8]
     =
-    ([TemporaryInfo (RegisterClass GPR) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass DPR) 1,
-      TemporaryInfo (RegisterClass DPR) 1,
-      TemporaryInfo (RegisterClass DPR) 1,
-      TemporaryInfo (RegisterClass DPR) 1])
+    ([TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass DPR) 1 False,
+      TemporaryInfo (RegisterClass DPR) 1 False,
+      TemporaryInfo (RegisterClass DPR) 1 False,
+      TemporaryInfo (RegisterClass DPR) 1 False])
   | i `elem`
       [BFC, LDRcp, LDRi12, MOVCCi, MOVCCi16, MOVCCi32imm, MVNCCi, PICADD,
        PICLDR, PICLDRB, PICLDRH, PICLDRSB, PICLDRSH, T2LDRi12, T2LDRi8]
     =
-    ([TemporaryInfo (RegisterClass GPR) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass GPR) 1])
+    ([TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass GPR) 1 False])
   | i `elem`
       [LDRB_PRE_IMM, LDRHTi, LDRSBTi, LDRSHTi, LDR_PRE_IMM, T2LDRB_POST,
        T2LDRB_PRE, T2LDRH_POST, T2LDRH_PRE, T2LDRSB_POST, T2LDRSB_PRE,
        T2LDRSH_POST, T2LDRSH_PRE, T2LDR_POST, T2LDR_PRE]
     =
-    ([TemporaryInfo (RegisterClass GPR) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass GPR) 1,
-      TemporaryInfo (RegisterClass GPR) 1])
+    ([TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass GPR) 1 False,
+      TemporaryInfo (RegisterClass GPR) 1 False])
   | i `elem` [ADDSri, RSBSri, SUBSri] =
-    ([TemporaryInfo (RegisterClass GPR) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass GPR) 1,
-      TemporaryInfo (AbstractRegisterClass Unknown) 1])
+    ([TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass GPR) 1 False,
+      TemporaryInfo (AbstractRegisterClass Unknown) 1 False])
   | i `elem`
       [LDRBi12, T2ADDri12, T2LDRBi12, T2LDRBi8, T2LDRHi12, T2LDRHi8,
        T2LDRSBi12, T2LDRSBi8, T2LDRSHi12, T2LDRSHi8, T2SUBri12]
     =
-    ([TemporaryInfo (RegisterClass GPR) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass GPRnopc) 1])
+    ([TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass GPRnopc) 1 False])
   | i `elem`
       [VLD1d64QPseudo, VLD1d64TPseudo, VLD2q16Pseudo, VLD2q32Pseudo,
        VLD2q8Pseudo, VLD3DUPd16Pseudo, VLD3DUPd32Pseudo, VLD3DUPd8Pseudo,
@@ -1434,230 +1436,230 @@ operandInfo i
        VLD4DUPd32Pseudo, VLD4DUPd8Pseudo, VLD4d16Pseudo, VLD4d32Pseudo,
        VLD4d8Pseudo]
     =
-    ([TemporaryInfo (RegisterClass GPR) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass QQPR) 1])
+    ([TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass QQPR) 1 False])
   | i `elem`
       [VLD1d64QPseudoWB_fixed, VLD1d64TPseudoWB_fixed,
        VLD2q16PseudoWB_fixed, VLD2q32PseudoWB_fixed, VLD2q8PseudoWB_fixed]
     =
-    ([TemporaryInfo (RegisterClass GPR) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass QQPR) 1,
-      TemporaryInfo (RegisterClass GPR) 1])
+    ([TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass QQPR) 1 False,
+      TemporaryInfo (RegisterClass GPR) 1 False])
   | i `elem` [VLDRS] =
-    ([TemporaryInfo (RegisterClass GPR) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass SPR) 1])
+    ([TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass SPR) 1 False])
   | i `elem` [CMNri, CMPri, TEQri, TSTri] =
-    ([TemporaryInfo (RegisterClass GPR) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (AbstractRegisterClass Unknown) 1])
+    ([TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (AbstractRegisterClass Unknown) 1 False])
   | i `elem`
       [VLD1q16, VLD1q32, VLD1q64, VLD1q8, VLD2d16, VLD2d32, VLD2d8]
     =
-    ([TemporaryInfo (RegisterClass GPR) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass VecListDPair) 1])
+    ([TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass VecListDPair) 1 False])
   | i `elem`
       [VLD1q16wb_fixed, VLD1q32wb_fixed, VLD1q64wb_fixed, VLD1q8wb_fixed,
        VLD2d16wb_fixed, VLD2d32wb_fixed, VLD2d8wb_fixed]
     =
-    ([TemporaryInfo (RegisterClass GPR) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass VecListDPair) 1,
-      TemporaryInfo (RegisterClass GPR) 1])
+    ([TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass VecListDPair) 1 False,
+      TemporaryInfo (RegisterClass GPR) 1 False])
   | i `elem`
       [VLD1DUPq16, VLD1DUPq32, VLD1DUPq8, VLD2DUPd16, VLD2DUPd32,
        VLD2DUPd8]
     =
-    ([TemporaryInfo (RegisterClass GPR) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass VecListDPairAllLanes) 1])
+    ([TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass VecListDPairAllLanes) 1 False])
   | i `elem`
       [VLD1DUPq16wb_fixed, VLD1DUPq32wb_fixed, VLD1DUPq8wb_fixed,
        VLD2DUPd16wb_fixed, VLD2DUPd32wb_fixed, VLD2DUPd8wb_fixed]
     =
-    ([TemporaryInfo (RegisterClass GPR) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass VecListDPairAllLanes) 1,
-      TemporaryInfo (RegisterClass GPR) 1])
+    ([TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass VecListDPairAllLanes) 1 False,
+      TemporaryInfo (RegisterClass GPR) 1 False])
   | i `elem` [VLD2b16, VLD2b32, VLD2b8] =
-    ([TemporaryInfo (RegisterClass GPR) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass VecListDPairSpaced) 1])
+    ([TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass VecListDPairSpaced) 1 False])
   | i `elem` [VLD2b16wb_fixed, VLD2b32wb_fixed, VLD2b8wb_fixed] =
-    ([TemporaryInfo (RegisterClass GPR) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass VecListDPairSpaced) 1,
-      TemporaryInfo (RegisterClass GPR) 1])
+    ([TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass VecListDPairSpaced) 1 False,
+      TemporaryInfo (RegisterClass GPR) 1 False])
   | i `elem` [VLD2DUPd16x2, VLD2DUPd32x2, VLD2DUPd8x2] =
-    ([TemporaryInfo (RegisterClass GPR) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass VecListDPairSpacedAllLanes) 1])
+    ([TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass VecListDPairSpacedAllLanes) 1 False])
   | i `elem`
       [VLD2DUPd16x2wb_fixed, VLD2DUPd32x2wb_fixed, VLD2DUPd8x2wb_fixed]
     =
-    ([TemporaryInfo (RegisterClass GPR) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass VecListDPairSpacedAllLanes) 1,
-      TemporaryInfo (RegisterClass GPR) 1])
+    ([TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass VecListDPairSpacedAllLanes) 1 False,
+      TemporaryInfo (RegisterClass GPR) 1 False])
   | i `elem`
       [VLD1d16Q, VLD1d32Q, VLD1d64Q, VLD1d8Q, VLD2q16, VLD2q32, VLD2q8]
     =
-    ([TemporaryInfo (RegisterClass GPR) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass VecListFourD) 1])
+    ([TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass VecListFourD) 1 False])
   | i `elem`
       [VLD1d16Qwb_fixed, VLD1d32Qwb_fixed, VLD1d64Qwb_fixed,
        VLD1d8Qwb_fixed, VLD2q16wb_fixed, VLD2q32wb_fixed, VLD2q8wb_fixed]
     =
-    ([TemporaryInfo (RegisterClass GPR) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass VecListFourD) 1,
-      TemporaryInfo (RegisterClass GPR) 1])
+    ([TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass VecListFourD) 1 False,
+      TemporaryInfo (RegisterClass GPR) 1 False])
   | i `elem` [VLD1d16, VLD1d32, VLD1d64, VLD1d8] =
-    ([TemporaryInfo (RegisterClass GPR) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass VecListOneD) 1])
+    ([TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass VecListOneD) 1 False])
   | i `elem`
       [VLD1d16wb_fixed, VLD1d32wb_fixed, VLD1d64wb_fixed, VLD1d8wb_fixed]
     =
-    ([TemporaryInfo (RegisterClass GPR) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass VecListOneD) 1,
-      TemporaryInfo (RegisterClass GPR) 1])
+    ([TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass VecListOneD) 1 False,
+      TemporaryInfo (RegisterClass GPR) 1 False])
   | i `elem` [VLD1DUPd16, VLD1DUPd32, VLD1DUPd8] =
-    ([TemporaryInfo (RegisterClass GPR) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass VecListOneDAllLanes) 1])
+    ([TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass VecListOneDAllLanes) 1 False])
   | i `elem`
       [VLD1DUPd16wb_fixed, VLD1DUPd32wb_fixed, VLD1DUPd8wb_fixed]
     =
-    ([TemporaryInfo (RegisterClass GPR) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass VecListOneDAllLanes) 1,
-      TemporaryInfo (RegisterClass GPR) 1])
+    ([TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass VecListOneDAllLanes) 1 False,
+      TemporaryInfo (RegisterClass GPR) 1 False])
   | i `elem` [VLD1d16T, VLD1d32T, VLD1d64T, VLD1d8T] =
-    ([TemporaryInfo (RegisterClass GPR) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass VecListThreeD) 1])
+    ([TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass VecListThreeD) 1 False])
   | i `elem`
       [VLD1d16Twb_fixed, VLD1d32Twb_fixed, VLD1d64Twb_fixed,
        VLD1d8Twb_fixed]
     =
-    ([TemporaryInfo (RegisterClass GPR) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass VecListThreeD) 1,
-      TemporaryInfo (RegisterClass GPR) 1])
+    ([TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass VecListThreeD) 1 False,
+      TemporaryInfo (RegisterClass GPR) 1 False])
   | i `elem`
       [T2LDRBT, T2LDRHT, T2LDRSBT, T2LDRSHT, T2LDRT, T2STRBT, T2STRHT,
        T2STRT]
     =
-    ([TemporaryInfo (RegisterClass GPR) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass RGPR) 1])
+    ([TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass RGPR) 1 False])
   | i `elem` [T2LDRDi8] =
-    ([TemporaryInfo (RegisterClass GPR) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass RGPR) 1,
-      TemporaryInfo (RegisterClass RGPR) 1])
+    ([TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass RGPR) 1 False,
+      TemporaryInfo (RegisterClass RGPR) 1 False])
   | i `elem` [T2LDRD_POST, T2LDRD_PRE] =
-    ([TemporaryInfo (RegisterClass GPR) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass RGPR) 1,
-      TemporaryInfo (RegisterClass RGPR) 1,
-      TemporaryInfo (RegisterClass GPR) 1])
+    ([TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass RGPR) 1 False,
+      TemporaryInfo (RegisterClass RGPR) 1 False,
+      TemporaryInfo (RegisterClass GPR) 1 False])
   | i `elem` [TLDRspi] =
-    ([TemporaryInfo (RegisterClass GPR) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass TGPR) 1])
+    ([TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass TGPR) 1 False])
   | i `elem`
       [ADDri, ANDri, BICri, EORri, MOVsi, MVNsi, ORRri, RSBri, SUBri]
     =
-    ([TemporaryInfo (RegisterClass GPR) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass GPR) 1])
+    ([TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass GPR) 1 False])
   | i `elem` [ADCri, RSCri, SBCri] =
-    ([TemporaryInfo (RegisterClass GPR) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0,
-      TemporaryInfo (RegisterClass CCR) 0,
-      TemporaryInfo (AbstractRegisterClass Unknown) 0],
-     [TemporaryInfo (RegisterClass GPR) 1,
-      TemporaryInfo (AbstractRegisterClass Unknown) 1])
+    ([TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False,
+      TemporaryInfo (RegisterClass CCR) 0 False,
+      TemporaryInfo (AbstractRegisterClass Unknown) 0 False],
+     [TemporaryInfo (RegisterClass GPR) 1 False,
+      TemporaryInfo (AbstractRegisterClass Unknown) 1 False])
   | i `elem` [T2STRi12_fi] =
-    ([TemporaryInfo (RegisterClass GPR) 0, BoundInfo, BoundInfo,
-      BoundInfo, TemporaryInfo (RegisterClass CCR) 0],
+    ([TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo, BoundInfo,
+      BoundInfo, TemporaryInfo (RegisterClass CCR) 0 False],
      [])
   | i `elem` [STLEXD, STREXD] =
-    ([TemporaryInfo (RegisterClass GPRPairOp) 0,
-      TemporaryInfo (RegisterClass GPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass GPR) 1])
+    ([TemporaryInfo (RegisterClass GPRPairOp) 0 False,
+      TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass GPR) 1 False])
   | i `elem` [STRBrs] =
-    ([TemporaryInfo (RegisterClass GPRnopc) 0,
-      TemporaryInfo (RegisterClass GPR) 0,
-      TemporaryInfo (RegisterClass GPRnopc) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
+    ([TemporaryInfo (RegisterClass GPRnopc) 0 False,
+      TemporaryInfo (RegisterClass GPR) 0 False,
+      TemporaryInfo (RegisterClass GPRnopc) 0 False, BoundInfo,
+      BoundInfo, TemporaryInfo (RegisterClass CCR) 0 False],
      [])
   | i `elem` [SWP, SWPB] =
-    ([TemporaryInfo (RegisterClass GPRnopc) 0,
-      TemporaryInfo (RegisterClass GPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass GPRnopc) 1])
+    ([TemporaryInfo (RegisterClass GPRnopc) 0 False,
+      TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass GPRnopc) 1 False])
   | i `elem` [STRBi12] =
-    ([TemporaryInfo (RegisterClass GPRnopc) 0,
-      TemporaryInfo (RegisterClass GPR) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
+    ([TemporaryInfo (RegisterClass GPRnopc) 0 False,
+      TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
      [])
   | i `elem` [BFI, T2STR_PRE] =
-    ([TemporaryInfo (RegisterClass GPRnopc) 0,
-      TemporaryInfo (RegisterClass GPR) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass GPRnopc) 1])
+    ([TemporaryInfo (RegisterClass GPRnopc) 0 False,
+      TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass GPRnopc) 1 False])
   | i `elem` [CRC32B, CRC32CB, CRC32CH, CRC32CW, CRC32H, CRC32W] =
-    ([TemporaryInfo (RegisterClass GPRnopc) 0,
-      TemporaryInfo (RegisterClass GPRnopc) 0],
-     [TemporaryInfo (RegisterClass GPRnopc) 1])
+    ([TemporaryInfo (RegisterClass GPRnopc) 0 False,
+      TemporaryInfo (RegisterClass GPRnopc) 0 False],
+     [TemporaryInfo (RegisterClass GPRnopc) 1 False])
   | i `elem`
       [SMLABB, SMLABT, SMLAD, SMLADX, SMLATB, SMLATT, SMLAWB, SMLAWT,
        SMLSD, SMLSDX]
     =
-    ([TemporaryInfo (RegisterClass GPRnopc) 0,
-      TemporaryInfo (RegisterClass GPRnopc) 0,
-      TemporaryInfo (RegisterClass GPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass GPRnopc) 1])
+    ([TemporaryInfo (RegisterClass GPRnopc) 0 False,
+      TemporaryInfo (RegisterClass GPRnopc) 0 False,
+      TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass GPRnopc) 1 False])
   | i `elem` [ASRr, LSLr, LSRr, RORr] =
-    ([TemporaryInfo (RegisterClass GPRnopc) 0,
-      TemporaryInfo (RegisterClass GPRnopc) 0,
-      TemporaryInfo (RegisterClass GPRnopc) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0,
-      TemporaryInfo (RegisterClass CCR) 0],
+    ([TemporaryInfo (RegisterClass GPRnopc) 0 False,
+      TemporaryInfo (RegisterClass GPRnopc) 0 False,
+      TemporaryInfo (RegisterClass GPRnopc) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False,
+      TemporaryInfo (RegisterClass CCR) 0 False],
      [])
   | i `elem` [MLA, MLAv5] =
-    ([TemporaryInfo (RegisterClass GPRnopc) 0,
-      TemporaryInfo (RegisterClass GPRnopc) 0,
-      TemporaryInfo (RegisterClass GPRnopc) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass GPRnopc) 1])
+    ([TemporaryInfo (RegisterClass GPRnopc) 0 False,
+      TemporaryInfo (RegisterClass GPRnopc) 0 False,
+      TemporaryInfo (RegisterClass GPRnopc) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass GPRnopc) 1 False])
   | i `elem` [CMNzrsr, CMPrsr, TEQrsr, TSTrsr] =
-    ([TemporaryInfo (RegisterClass GPRnopc) 0,
-      TemporaryInfo (RegisterClass GPRnopc) 0,
-      TemporaryInfo (RegisterClass GPRnopc) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (AbstractRegisterClass Unknown) 1])
+    ([TemporaryInfo (RegisterClass GPRnopc) 0 False,
+      TemporaryInfo (RegisterClass GPRnopc) 0 False,
+      TemporaryInfo (RegisterClass GPRnopc) 0 False, BoundInfo,
+      BoundInfo, TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (AbstractRegisterClass Unknown) 1 False])
   | i `elem` [ADCrsr, SBCrsr] =
-    ([TemporaryInfo (RegisterClass GPRnopc) 0,
-      TemporaryInfo (RegisterClass GPRnopc) 0,
-      TemporaryInfo (RegisterClass GPRnopc) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0,
-      TemporaryInfo (RegisterClass CCR) 0,
-      TemporaryInfo (AbstractRegisterClass Unknown) 0],
-     [TemporaryInfo (RegisterClass GPRnopc) 1,
-      TemporaryInfo (AbstractRegisterClass Unknown) 1])
+    ([TemporaryInfo (RegisterClass GPRnopc) 0 False,
+      TemporaryInfo (RegisterClass GPRnopc) 0 False,
+      TemporaryInfo (RegisterClass GPRnopc) 0 False, BoundInfo,
+      BoundInfo, TemporaryInfo (RegisterClass CCR) 0 False,
+      TemporaryInfo (RegisterClass CCR) 0 False,
+      TemporaryInfo (AbstractRegisterClass Unknown) 0 False],
+     [TemporaryInfo (RegisterClass GPRnopc) 1 False,
+      TemporaryInfo (AbstractRegisterClass Unknown) 1 False])
   | i `elem`
       [QADD, QADD16, QADD8, QASX, QDADD, QDSUB, QSAX, QSUB, QSUB16,
        QSUB8, SADD16, SADD8, SASX, SHADD16, SHADD8, SHASX, SHSAX, SHSUB16,
@@ -1666,159 +1668,159 @@ operandInfo i
        UQADD16, UQADD8, UQASX, UQSAX, UQSUB16, UQSUB8, USAX, USUB16,
        USUB8]
     =
-    ([TemporaryInfo (RegisterClass GPRnopc) 0,
-      TemporaryInfo (RegisterClass GPRnopc) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass GPRnopc) 1])
+    ([TemporaryInfo (RegisterClass GPRnopc) 0 False,
+      TemporaryInfo (RegisterClass GPRnopc) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass GPRnopc) 1 False])
   | i `elem`
       [SMLALBB, SMLALBT, SMLALD, SMLALDX, SMLALTB, SMLALTT, SMLSLD,
        SMLSLDX]
     =
-    ([TemporaryInfo (RegisterClass GPRnopc) 0,
-      TemporaryInfo (RegisterClass GPRnopc) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass GPRnopc) 1,
-      TemporaryInfo (RegisterClass GPRnopc) 1])
+    ([TemporaryInfo (RegisterClass GPRnopc) 0 False,
+      TemporaryInfo (RegisterClass GPRnopc) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass GPRnopc) 1 False,
+      TemporaryInfo (RegisterClass GPRnopc) 1 False])
   | i `elem` [MUL, MULv5] =
-    ([TemporaryInfo (RegisterClass GPRnopc) 0,
-      TemporaryInfo (RegisterClass GPRnopc) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass GPRnopc) 1])
+    ([TemporaryInfo (RegisterClass GPRnopc) 0 False,
+      TemporaryInfo (RegisterClass GPRnopc) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass GPRnopc) 1 False])
   | i `elem` [PKHBT, PKHTB, T2STR_POST] =
-    ([TemporaryInfo (RegisterClass GPRnopc) 0,
-      TemporaryInfo (RegisterClass GPRnopc) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass GPRnopc) 1])
+    ([TemporaryInfo (RegisterClass GPRnopc) 0 False,
+      TemporaryInfo (RegisterClass GPRnopc) 0 False, BoundInfo,
+      BoundInfo, TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass GPRnopc) 1 False])
   | i `elem` [MVNsr] =
-    ([TemporaryInfo (RegisterClass GPRnopc) 0,
-      TemporaryInfo (RegisterClass GPRnopc) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass GPR) 1])
+    ([TemporaryInfo (RegisterClass GPRnopc) 0 False,
+      TemporaryInfo (RegisterClass GPRnopc) 0 False, BoundInfo,
+      BoundInfo, TemporaryInfo (RegisterClass CCR) 0 False,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass GPR) 1 False])
   | i `elem` [T2CMPrr_cpsr, T2TEQrr_cpsr, T2TSTrr_cpsr] =
-    ([TemporaryInfo (RegisterClass GPRnopc) 0,
-      TemporaryInfo (RegisterClass RGPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass CCR) 1])
+    ([TemporaryInfo (RegisterClass GPRnopc) 0 False,
+      TemporaryInfo (RegisterClass RGPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass CCR) 1 False])
   | i `elem` [T2SUBrr_cpsr] =
-    ([TemporaryInfo (RegisterClass GPRnopc) 0,
-      TemporaryInfo (RegisterClass RGPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass GPRnopc) 1,
-      TemporaryInfo (RegisterClass CCR) 1])
+    ([TemporaryInfo (RegisterClass GPRnopc) 0 False,
+      TemporaryInfo (RegisterClass RGPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass GPRnopc) 1 False,
+      TemporaryInfo (RegisterClass CCR) 1 False])
   | i `elem` [T2CMNzrr, T2CMPrr, T2TEQrr, T2TSTrr] =
-    ([TemporaryInfo (RegisterClass GPRnopc) 0,
-      TemporaryInfo (RegisterClass RGPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (AbstractRegisterClass Unknown) 1])
+    ([TemporaryInfo (RegisterClass GPRnopc) 0 False,
+      TemporaryInfo (RegisterClass RGPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (AbstractRegisterClass Unknown) 1 False])
   | i `elem` [T2ADDSrr, T2SUBSrr] =
-    ([TemporaryInfo (RegisterClass GPRnopc) 0,
-      TemporaryInfo (RegisterClass RGPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass RGPR) 1,
-      TemporaryInfo (AbstractRegisterClass Unknown) 1])
+    ([TemporaryInfo (RegisterClass GPRnopc) 0 False,
+      TemporaryInfo (RegisterClass RGPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass RGPR) 1 False,
+      TemporaryInfo (AbstractRegisterClass Unknown) 1 False])
   | i `elem` [T2ADDrr, T2SUBrr] =
-    ([TemporaryInfo (RegisterClass GPRnopc) 0,
-      TemporaryInfo (RegisterClass RGPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass GPRnopc) 1])
+    ([TemporaryInfo (RegisterClass GPRnopc) 0 False,
+      TemporaryInfo (RegisterClass RGPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass GPRnopc) 1 False])
   | i `elem` [T2CMPrs_cpsr, T2TSTrs_cpsr] =
-    ([TemporaryInfo (RegisterClass GPRnopc) 0,
-      TemporaryInfo (RegisterClass RGPR) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass CCR) 1])
+    ([TemporaryInfo (RegisterClass GPRnopc) 0 False,
+      TemporaryInfo (RegisterClass RGPR) 0 False, BoundInfo, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass CCR) 1 False])
   | i `elem` [T2CMNzrs, T2CMPrs, T2TEQrs, T2TSTrs] =
-    ([TemporaryInfo (RegisterClass GPRnopc) 0,
-      TemporaryInfo (RegisterClass RGPR) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (AbstractRegisterClass Unknown) 1])
+    ([TemporaryInfo (RegisterClass GPRnopc) 0 False,
+      TemporaryInfo (RegisterClass RGPR) 0 False, BoundInfo, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (AbstractRegisterClass Unknown) 1 False])
   | i `elem` [T2ADDSrs, T2SUBSrs] =
-    ([TemporaryInfo (RegisterClass GPRnopc) 0,
-      TemporaryInfo (RegisterClass RGPR) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass RGPR) 1,
-      TemporaryInfo (AbstractRegisterClass Unknown) 1])
+    ([TemporaryInfo (RegisterClass GPRnopc) 0 False,
+      TemporaryInfo (RegisterClass RGPR) 0 False, BoundInfo, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass RGPR) 1 False,
+      TemporaryInfo (AbstractRegisterClass Unknown) 1 False])
   | i `elem` [T2ADDrs, T2SUBrs] =
-    ([TemporaryInfo (RegisterClass GPRnopc) 0,
-      TemporaryInfo (RegisterClass RGPR) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass GPRnopc) 1])
+    ([TemporaryInfo (RegisterClass GPRnopc) 0 False,
+      TemporaryInfo (RegisterClass RGPR) 0 False, BoundInfo, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass GPRnopc) 1 False])
   | i `elem` [T2BXJ] =
-    ([TemporaryInfo (RegisterClass GPRnopc) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
+    ([TemporaryInfo (RegisterClass GPRnopc) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
      [])
   | i `elem` [T2LDRBpcrel, T2LDRHpcrel, T2LDRSBpcrel, T2LDRSHpcrel] =
-    ([TemporaryInfo (RegisterClass GPRnopc) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
+    ([TemporaryInfo (RegisterClass GPRnopc) 0 False, BoundInfo,
+      BoundInfo, TemporaryInfo (RegisterClass CCR) 0 False],
      [])
   | i `elem` [T2CMNri_cpsr, T2CMPri_cpsr, T2TSTri_cpsr] =
-    ([TemporaryInfo (RegisterClass GPRnopc) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass CCR) 1])
+    ([TemporaryInfo (RegisterClass GPRnopc) 0 False, BoundInfo,
+      BoundInfo, TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass CCR) 1 False])
   | i `elem` [MOVTi16, SXTB, SXTB16, SXTH, UXTB, UXTB16, UXTH] =
-    ([TemporaryInfo (RegisterClass GPRnopc) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass GPRnopc) 1])
+    ([TemporaryInfo (RegisterClass GPRnopc) 0 False, BoundInfo,
+      BoundInfo, TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass GPRnopc) 1 False])
   | i `elem` [T2ADDri_cpsr, T2SUBri_cpsr] =
-    ([TemporaryInfo (RegisterClass GPRnopc) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass GPRnopc) 1,
-      TemporaryInfo (RegisterClass CCR) 1])
+    ([TemporaryInfo (RegisterClass GPRnopc) 0 False, BoundInfo,
+      BoundInfo, TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass GPRnopc) 1 False,
+      TemporaryInfo (RegisterClass CCR) 1 False])
   | i `elem` [T2CMNri, T2CMPri, T2TEQri, T2TSTri] =
-    ([TemporaryInfo (RegisterClass GPRnopc) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (AbstractRegisterClass Unknown) 1])
+    ([TemporaryInfo (RegisterClass GPRnopc) 0 False, BoundInfo,
+      BoundInfo, TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (AbstractRegisterClass Unknown) 1 False])
   | i `elem` [T2LDREX] =
-    ([TemporaryInfo (RegisterClass GPRnopc) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass RGPR) 1])
+    ([TemporaryInfo (RegisterClass GPRnopc) 0 False, BoundInfo,
+      BoundInfo, TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass RGPR) 1 False])
   | i `elem` [T2ADDSri, T2SUBSri] =
-    ([TemporaryInfo (RegisterClass GPRnopc) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass RGPR) 1,
-      TemporaryInfo (AbstractRegisterClass Unknown) 1])
+    ([TemporaryInfo (RegisterClass GPRnopc) 0 False, BoundInfo,
+      BoundInfo, TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass RGPR) 1 False,
+      TemporaryInfo (AbstractRegisterClass Unknown) 1 False])
   | i `elem` [T2ADDri, T2SUBri] =
-    ([TemporaryInfo (RegisterClass GPRnopc) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass GPRnopc) 1])
+    ([TemporaryInfo (RegisterClass GPRnopc) 0 False, BoundInfo,
+      BoundInfo, TemporaryInfo (RegisterClass CCR) 0 False,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass GPRnopc) 1 False])
   | i `elem` [SBFX, UBFX] =
-    ([TemporaryInfo (RegisterClass GPRnopc) 0, BoundInfo, BoundInfo,
-      BoundInfo, TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass GPRnopc) 1])
+    ([TemporaryInfo (RegisterClass GPRnopc) 0 False, BoundInfo,
+      BoundInfo, BoundInfo, TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass GPRnopc) 1 False])
   | i `elem` [TADDrSP] =
-    ([TemporaryInfo (RegisterClass GPRsp) 0,
-      TemporaryInfo (RegisterClass GPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass GPR) 1])
+    ([TemporaryInfo (RegisterClass GPRsp) 0 False,
+      TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass GPR) 1 False])
   | i `elem` [TADDspr] =
-    ([TemporaryInfo (RegisterClass GPRsp) 0,
-      TemporaryInfo (RegisterClass GPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass GPRsp) 1])
+    ([TemporaryInfo (RegisterClass GPRsp) 0 False,
+      TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass GPRsp) 1 False])
   | i `elem` [TADDspi, TSUBspi] =
-    ([TemporaryInfo (RegisterClass GPRsp) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass GPRsp) 1])
+    ([TemporaryInfo (RegisterClass GPRsp) 0 False, BoundInfo,
+      BoundInfo, TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass GPRsp) 1 False])
   | i `elem` [TADDrSPi] =
-    ([TemporaryInfo (RegisterClass GPRsp) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass TGPR) 1])
+    ([TemporaryInfo (RegisterClass GPRsp) 0 False, BoundInfo,
+      BoundInfo, TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass TGPR) 1 False])
   | i `elem` [TPOPcs, TPOPcs_free] =
-    ([TemporaryInfo (InfiniteRegisterClass M128) 0],
-     [TemporaryInfo (RegisterClass CS) 1])
+    ([TemporaryInfo (InfiniteRegisterClass M128) 0 False],
+     [TemporaryInfo (RegisterClass CS) 1 False])
   | i `elem` [LOAD] =
-    ([TemporaryInfo (InfiniteRegisterClass M32) 0],
-     [TemporaryInfo (RegisterClass GPR) 1])
+    ([TemporaryInfo (InfiniteRegisterClass M32) 0 False],
+     [TemporaryInfo (RegisterClass GPR) 1 False])
   | i `elem` [LOAD_T] =
-    ([TemporaryInfo (InfiniteRegisterClass M32t) 0],
-     [TemporaryInfo (RegisterClass TGPR) 1])
+    ([TemporaryInfo (InfiniteRegisterClass M32t) 0 False],
+     [TemporaryInfo (RegisterClass TGPR) 1 False])
   | i `elem` [LOAD_D] =
-    ([TemporaryInfo (InfiniteRegisterClass M64) 0],
-     [TemporaryInfo (RegisterClass DPR) 1])
+    ([TemporaryInfo (InfiniteRegisterClass M64) 0 False],
+     [TemporaryInfo (RegisterClass DPR) 1 False])
   | i `elem`
       [AESIMC, AESMC, SHA1H, VCVTANSQf, VCVTANSQh, VCVTANUQf, VCVTANUQh,
        VCVTMNSQf, VCVTMNSQh, VCVTMNUQf, VCVTMNUQh, VCVTNNSQf, VCVTNNSQh,
@@ -1826,8 +1828,8 @@ operandInfo i
        VRINTANQf, VRINTANQh, VRINTMNQf, VRINTMNQh, VRINTNNQf, VRINTNNQh,
        VRINTPNQf, VRINTPNQh, VRINTXNQf, VRINTXNQh, VRINTZNQf, VRINTZNQh]
     =
-    ([TemporaryInfo (RegisterClass QPR) 0],
-     [TemporaryInfo (RegisterClass QPR) 1])
+    ([TemporaryInfo (RegisterClass QPR) 0 False],
+     [TemporaryInfo (RegisterClass QPR) 1 False])
   | i `elem`
       [VABALsv2i64, VABALsv4i32, VABALsv8i16, VABALuv2i64, VABALuv4i32,
        VABALuv8i16, VMLALsv2i64, VMLALsv4i32, VMLALsv8i16, VMLALuv2i64,
@@ -1835,82 +1837,82 @@ operandInfo i
        VMLSLuv2i64, VMLSLuv4i32, VMLSLuv8i16, VQDMLALv2i64, VQDMLALv4i32,
        VQDMLSLv2i64, VQDMLSLv4i32]
     =
-    ([TemporaryInfo (RegisterClass QPR) 0,
-      TemporaryInfo (RegisterClass DPR) 0,
-      TemporaryInfo (RegisterClass DPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass QPR) 1])
+    ([TemporaryInfo (RegisterClass QPR) 0 False,
+      TemporaryInfo (RegisterClass DPR) 0 False,
+      TemporaryInfo (RegisterClass DPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass QPR) 1 False])
   | i `elem`
       [VMLALslsv4i16, VMLALsluv4i16, VMLSLslsv4i16, VMLSLsluv4i16,
        VQDMLALslv4i16, VQDMLSLslv4i16]
     =
-    ([TemporaryInfo (RegisterClass QPR) 0,
-      TemporaryInfo (RegisterClass DPR) 0,
-      TemporaryInfo (RegisterClass DPR_8) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass QPR) 1])
+    ([TemporaryInfo (RegisterClass QPR) 0 False,
+      TemporaryInfo (RegisterClass DPR) 0 False,
+      TemporaryInfo (RegisterClass DPR_8) 0 False, BoundInfo, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass QPR) 1 False])
   | i `elem`
       [VMLALslsv2i32, VMLALsluv2i32, VMLSLslsv2i32, VMLSLsluv2i32,
        VQDMLALslv2i32, VQDMLSLslv2i32]
     =
-    ([TemporaryInfo (RegisterClass QPR) 0,
-      TemporaryInfo (RegisterClass DPR) 0,
-      TemporaryInfo (RegisterClass DPR_VFP2) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass QPR) 1])
+    ([TemporaryInfo (RegisterClass QPR) 0 False,
+      TemporaryInfo (RegisterClass DPR) 0 False,
+      TemporaryInfo (RegisterClass DPR_VFP2) 0 False, BoundInfo,
+      BoundInfo, TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass QPR) 1 False])
   | i `elem`
       [VADDWsv2i64, VADDWsv4i32, VADDWsv8i16, VADDWuv2i64, VADDWuv4i32,
        VADDWuv8i16, VSUBWsv2i64, VSUBWsv4i32, VSUBWsv8i16, VSUBWuv2i64,
        VSUBWuv4i32, VSUBWuv8i16]
     =
-    ([TemporaryInfo (RegisterClass QPR) 0,
-      TemporaryInfo (RegisterClass DPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass QPR) 1])
+    ([TemporaryInfo (RegisterClass QPR) 0 False,
+      TemporaryInfo (RegisterClass DPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass QPR) 1 False])
   | i `elem` [VMULslhq, VMULslv8i16, VQDMULHslv8i16, VQRDMULHslv8i16]
     =
-    ([TemporaryInfo (RegisterClass QPR) 0,
-      TemporaryInfo (RegisterClass DPR_8) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass QPR) 1])
+    ([TemporaryInfo (RegisterClass QPR) 0 False,
+      TemporaryInfo (RegisterClass DPR_8) 0 False, BoundInfo, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass QPR) 1 False])
   | i `elem` [VMULslfq, VMULslv4i32, VQDMULHslv4i32, VQRDMULHslv4i32]
     =
-    ([TemporaryInfo (RegisterClass QPR) 0,
-      TemporaryInfo (RegisterClass DPR_VFP2) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass QPR) 1])
+    ([TemporaryInfo (RegisterClass QPR) 0 False,
+      TemporaryInfo (RegisterClass DPR_VFP2) 0 False, BoundInfo,
+      BoundInfo, TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass QPR) 1 False])
   | i `elem`
       [AESD, AESE, SHA1SU1, SHA256SU0, VMAXNMNQf, VMAXNMNQh, VMINNMNQf,
        VMINNMNQh]
     =
-    ([TemporaryInfo (RegisterClass QPR) 0,
-      TemporaryInfo (RegisterClass QPR) 0],
-     [TemporaryInfo (RegisterClass QPR) 1])
+    ([TemporaryInfo (RegisterClass QPR) 0 False,
+      TemporaryInfo (RegisterClass QPR) 0 False],
+     [TemporaryInfo (RegisterClass QPR) 1 False])
   | i `elem`
       [VMLAslhq, VMLAslv8i16, VMLSslhq, VMLSslv8i16, VQRDMLAHslv8i16,
        VQRDMLSHslv8i16]
     =
-    ([TemporaryInfo (RegisterClass QPR) 0,
-      TemporaryInfo (RegisterClass QPR) 0,
-      TemporaryInfo (RegisterClass DPR_8) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass QPR) 1])
+    ([TemporaryInfo (RegisterClass QPR) 0 False,
+      TemporaryInfo (RegisterClass QPR) 0 False,
+      TemporaryInfo (RegisterClass DPR_8) 0 False, BoundInfo, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass QPR) 1 False])
   | i `elem`
       [VMLAslfq, VMLAslv4i32, VMLSslfq, VMLSslv4i32, VQRDMLAHslv4i32,
        VQRDMLSHslv4i32]
     =
-    ([TemporaryInfo (RegisterClass QPR) 0,
-      TemporaryInfo (RegisterClass QPR) 0,
-      TemporaryInfo (RegisterClass DPR_VFP2) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass QPR) 1])
+    ([TemporaryInfo (RegisterClass QPR) 0 False,
+      TemporaryInfo (RegisterClass QPR) 0 False,
+      TemporaryInfo (RegisterClass DPR_VFP2) 0 False, BoundInfo,
+      BoundInfo, TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass QPR) 1 False])
   | i `elem`
       [SHA1C, SHA1M, SHA1P, SHA1SU0, SHA256H, SHA256H2, SHA256SU1]
     =
-    ([TemporaryInfo (RegisterClass QPR) 0,
-      TemporaryInfo (RegisterClass QPR) 0,
-      TemporaryInfo (RegisterClass QPR) 0],
-     [TemporaryInfo (RegisterClass QPR) 1])
+    ([TemporaryInfo (RegisterClass QPR) 0 False,
+      TemporaryInfo (RegisterClass QPR) 0 False,
+      TemporaryInfo (RegisterClass QPR) 0 False],
+     [TemporaryInfo (RegisterClass QPR) 1 False])
   | i `elem`
       [VABAsv16i8, VABAsv4i32, VABAsv8i16, VABAuv16i8, VABAuv4i32,
        VABAuv8i16, VBIFq, VBITq, VBSLq, VFMAfq, VFMAhq, VFMSfq, VFMShq,
@@ -1918,20 +1920,20 @@ operandInfo i
        VMLSv16i8, VMLSv4i32, VMLSv8i16, VQRDMLAHv4i32, VQRDMLAHv8i16,
        VQRDMLSHv4i32, VQRDMLSHv8i16]
     =
-    ([TemporaryInfo (RegisterClass QPR) 0,
-      TemporaryInfo (RegisterClass QPR) 0,
-      TemporaryInfo (RegisterClass QPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass QPR) 1])
+    ([TemporaryInfo (RegisterClass QPR) 0 False,
+      TemporaryInfo (RegisterClass QPR) 0 False,
+      TemporaryInfo (RegisterClass QPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass QPR) 1 False])
   | i `elem`
       [VADDHNv2i32, VADDHNv4i16, VADDHNv8i8, VRADDHNv2i32, VRADDHNv4i16,
        VRADDHNv8i8, VRSUBHNv2i32, VRSUBHNv4i16, VRSUBHNv8i8, VSUBHNv2i32,
        VSUBHNv4i16, VSUBHNv8i8]
     =
-    ([TemporaryInfo (RegisterClass QPR) 0,
-      TemporaryInfo (RegisterClass QPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass DPR) 1])
+    ([TemporaryInfo (RegisterClass QPR) 0 False,
+      TemporaryInfo (RegisterClass QPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass DPR) 1 False])
   | i `elem`
       [VABDfq, VABDhq, VABDsv16i8, VABDsv4i32, VABDsv8i16, VABDuv16i8,
        VABDuv4i32, VABDuv8i16, VACGEfq, VACGEhq, VACGTfq, VACGThq, VADDfq,
@@ -1963,19 +1965,19 @@ operandInfo i
        VSHLuv2i64, VSHLuv4i32, VSHLuv8i16, VSUBfq, VSUBhq, VSUBv16i8,
        VSUBv2i64, VSUBv4i32, VSUBv8i16, VTSTv16i8, VTSTv4i32, VTSTv8i16]
     =
-    ([TemporaryInfo (RegisterClass QPR) 0,
-      TemporaryInfo (RegisterClass QPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass QPR) 1])
+    ([TemporaryInfo (RegisterClass QPR) 0 False,
+      TemporaryInfo (RegisterClass QPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass QPR) 1 False])
   | i `elem`
       [VSWPq, VTRNq16, VTRNq32, VTRNq8, VUZPq16, VUZPq32, VUZPq8,
        VZIPq16, VZIPq32, VZIPq8]
     =
-    ([TemporaryInfo (RegisterClass QPR) 0,
-      TemporaryInfo (RegisterClass QPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass QPR) 1,
-      TemporaryInfo (RegisterClass QPR) 1])
+    ([TemporaryInfo (RegisterClass QPR) 0 False,
+      TemporaryInfo (RegisterClass QPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass QPR) 1 False,
+      TemporaryInfo (RegisterClass QPR) 1 False])
   | i `elem`
       [VEXTq16, VEXTq32, VEXTq64, VEXTq8, VRSRAsv16i8, VRSRAsv2i64,
        VRSRAsv4i32, VRSRAsv8i16, VRSRAuv16i8, VRSRAuv2i64, VRSRAuv4i32,
@@ -1984,18 +1986,18 @@ operandInfo i
        VSRAuv2i64, VSRAuv4i32, VSRAuv8i16, VSRIv16i8, VSRIv2i64,
        VSRIv4i32, VSRIv8i16]
     =
-    ([TemporaryInfo (RegisterClass QPR) 0,
-      TemporaryInfo (RegisterClass QPR) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass QPR) 1])
+    ([TemporaryInfo (RegisterClass QPR) 0 False,
+      TemporaryInfo (RegisterClass QPR) 0 False, BoundInfo, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass QPR) 1 False])
   | i `elem`
       [VCVTf2h, VMOVNv2i32, VMOVNv4i16, VMOVNv8i8, VQMOVNsuv2i32,
        VQMOVNsuv4i16, VQMOVNsuv8i8, VQMOVNsv2i32, VQMOVNsv4i16,
        VQMOVNsv8i8, VQMOVNuv2i32, VQMOVNuv4i16, VQMOVNuv8i8]
     =
-    ([TemporaryInfo (RegisterClass QPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass DPR) 1])
+    ([TemporaryInfo (RegisterClass QPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass DPR) 1 False])
   | i `elem`
       [VABSfq, VABShq, VABSv16i8, VABSv4i32, VABSv8i16, VCEQzv16i8,
        VCEQzv4f32, VCEQzv4i32, VCEQzv8f16, VCEQzv8i16, VCGEzv16i8,
@@ -2012,9 +2014,9 @@ operandInfo i
        VREV16q8, VREV32q16, VREV32q8, VREV64q16, VREV64q32, VREV64q8,
        VRSQRTEfq, VRSQRTEhq, VRSQRTEq]
     =
-    ([TemporaryInfo (RegisterClass QPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass QPR) 1])
+    ([TemporaryInfo (RegisterClass QPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass QPR) 1 False])
   | i `elem`
       [VQRSHRNsv2i32, VQRSHRNsv4i16, VQRSHRNsv8i8, VQRSHRNuv2i32,
        VQRSHRNuv4i16, VQRSHRNuv8i8, VQRSHRUNv2i32, VQRSHRUNv4i16,
@@ -2023,9 +2025,9 @@ operandInfo i
        VQSHRUNv4i16, VQSHRUNv8i8, VRSHRNv2i32, VRSHRNv4i16, VRSHRNv8i8,
        VSHRNv2i32, VSHRNv4i16, VSHRNv8i8]
     =
-    ([TemporaryInfo (RegisterClass QPR) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass DPR) 1])
+    ([TemporaryInfo (RegisterClass QPR) 0 False, BoundInfo, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass DPR) 1 False])
   | i `elem`
       [VCVTf2xsq, VCVTf2xuq, VCVTh2xsq, VCVTh2xuq, VCVTxs2fq, VCVTxs2hq,
        VCVTxu2fq, VCVTxu2hq, VQSHLsiv16i8, VQSHLsiv2i64, VQSHLsiv4i32,
@@ -2037,107 +2039,107 @@ operandInfo i
        VSHRsv4i32, VSHRsv8i16, VSHRuv16i8, VSHRuv2i64, VSHRuv4i32,
        VSHRuv8i16]
     =
-    ([TemporaryInfo (RegisterClass QPR) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass QPR) 1])
+    ([TemporaryInfo (RegisterClass QPR) 0 False, BoundInfo, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass QPR) 1 False])
   | i `elem` [VTBL3Pseudo, VTBL4Pseudo] =
-    ([TemporaryInfo (RegisterClass QQPR) 0,
-      TemporaryInfo (RegisterClass DPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass DPR) 1])
+    ([TemporaryInfo (RegisterClass QQPR) 0 False,
+      TemporaryInfo (RegisterClass DPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass DPR) 1 False])
   | i `elem`
       [VCVTASS, VCVTAUS, VCVTMSS, VCVTMUS, VCVTNSS, VCVTNUS, VCVTPSS,
        VCVTPUS, VRINTAS, VRINTMS, VRINTNS, VRINTPS]
     =
-    ([TemporaryInfo (RegisterClass SPR) 0],
-     [TemporaryInfo (RegisterClass SPR) 1])
+    ([TemporaryInfo (RegisterClass SPR) 0 False],
+     [TemporaryInfo (RegisterClass SPR) 1 False])
   | i `elem` [VSTRS] =
-    ([TemporaryInfo (RegisterClass SPR) 0,
-      TemporaryInfo (RegisterClass GPR) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
+    ([TemporaryInfo (RegisterClass SPR) 0 False,
+      TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
      [])
   | i `elem` [VMAXNMS, VMINNMS] =
-    ([TemporaryInfo (RegisterClass SPR) 0,
-      TemporaryInfo (RegisterClass SPR) 0],
-     [TemporaryInfo (RegisterClass SPR) 1])
+    ([TemporaryInfo (RegisterClass SPR) 0 False,
+      TemporaryInfo (RegisterClass SPR) 0 False],
+     [TemporaryInfo (RegisterClass SPR) 1 False])
   | i `elem`
       [VFMAS, VFMSS, VFNMAS, VFNMSS, VMLAS, VMLSS, VNMLAS, VNMLSS]
     =
-    ([TemporaryInfo (RegisterClass SPR) 0,
-      TemporaryInfo (RegisterClass SPR) 0,
-      TemporaryInfo (RegisterClass SPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass SPR) 1])
+    ([TemporaryInfo (RegisterClass SPR) 0 False,
+      TemporaryInfo (RegisterClass SPR) 0 False,
+      TemporaryInfo (RegisterClass SPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass SPR) 1 False])
   | i `elem` [VSELEQS, VSELGES, VSELGTS, VSELVSS] =
-    ([TemporaryInfo (RegisterClass SPR) 0,
-      TemporaryInfo (RegisterClass SPR) 0,
-      TemporaryInfo (AbstractRegisterClass Unknown) 0],
-     [TemporaryInfo (RegisterClass SPR) 1])
+    ([TemporaryInfo (RegisterClass SPR) 0 False,
+      TemporaryInfo (RegisterClass SPR) 0 False,
+      TemporaryInfo (AbstractRegisterClass Unknown) 0 False],
+     [TemporaryInfo (RegisterClass SPR) 1 False])
   | i `elem` [VCMPES, VCMPS] =
-    ([TemporaryInfo (RegisterClass SPR) 0,
-      TemporaryInfo (RegisterClass SPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
+    ([TemporaryInfo (RegisterClass SPR) 0 False,
+      TemporaryInfo (RegisterClass SPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
      [])
   | i `elem` [VMOVRRS] =
-    ([TemporaryInfo (RegisterClass SPR) 0,
-      TemporaryInfo (RegisterClass SPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass GPR) 1,
-      TemporaryInfo (RegisterClass GPR) 1])
+    ([TemporaryInfo (RegisterClass SPR) 0 False,
+      TemporaryInfo (RegisterClass SPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass GPR) 1 False,
+      TemporaryInfo (RegisterClass GPR) 1 False])
   | i `elem` [VADDS, VDIVS, VMOVScc, VMULS, VNMULS, VSUBS] =
-    ([TemporaryInfo (RegisterClass SPR) 0,
-      TemporaryInfo (RegisterClass SPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass SPR) 1])
+    ([TemporaryInfo (RegisterClass SPR) 0 False,
+      TemporaryInfo (RegisterClass SPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass SPR) 1 False])
   | i `elem` [VCMPEZS, VCMPZS] =
-    ([TemporaryInfo (RegisterClass SPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
+    ([TemporaryInfo (RegisterClass SPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
      [])
   | i `elem` [VCVTBHD, VCVTDS, VCVTTHD, VSITOD, VUITOD] =
-    ([TemporaryInfo (RegisterClass SPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass DPR) 1])
+    ([TemporaryInfo (RegisterClass SPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass DPR) 1 False])
   | i `elem` [VMOVRS] =
-    ([TemporaryInfo (RegisterClass SPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass GPR) 1])
+    ([TemporaryInfo (RegisterClass SPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass GPR) 1 False])
   | i `elem`
       [VABSS, VCVTBHS, VCVTBSH, VCVTTHS, VCVTTSH, VMOVS, VNEGS, VRINTRS,
        VRINTXS, VRINTZS, VSITOS, VSQRTS, VTOSIRS, VTOSIZS, VTOUIRS,
        VTOUIZS, VUITOS]
     =
-    ([TemporaryInfo (RegisterClass SPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass SPR) 1])
+    ([TemporaryInfo (RegisterClass SPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass SPR) 1 False])
   | i `elem`
       [VSHTOS, VSLTOS, VTOSHS, VTOSLS, VTOUHS, VTOULS, VUHTOS, VULTOS]
     =
-    ([TemporaryInfo (RegisterClass SPR) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass SPR) 1])
+    ([TemporaryInfo (RegisterClass SPR) 0 False, BoundInfo, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass SPR) 1 False])
   | i `elem` [VSTRS_fi] =
-    ([TemporaryInfo (RegisterClass SPR) 0, BoundInfo, BoundInfo,
-      BoundInfo, TemporaryInfo (RegisterClass CCR) 0],
+    ([TemporaryInfo (RegisterClass SPR) 0 False, BoundInfo, BoundInfo,
+      BoundInfo, TemporaryInfo (RegisterClass CCR) 0 False],
      [])
   | i `elem` [VTBL2] =
-    ([TemporaryInfo (RegisterClass VecListDPair) 0,
-      TemporaryInfo (RegisterClass DPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass DPR) 1])
+    ([TemporaryInfo (RegisterClass VecListDPair) 0 False,
+      TemporaryInfo (RegisterClass DPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass DPR) 1 False])
   | i `elem` [VTBL4] =
-    ([TemporaryInfo (RegisterClass VecListFourD) 0,
-      TemporaryInfo (RegisterClass DPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass DPR) 1])
+    ([TemporaryInfo (RegisterClass VecListFourD) 0 False,
+      TemporaryInfo (RegisterClass DPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass DPR) 1 False])
   | i `elem`
       [VLD4dWB_register_Asm_16, VLD4dWB_register_Asm_32,
        VLD4dWB_register_Asm_8, VST4dWB_register_Asm_16,
        VST4dWB_register_Asm_32, VST4dWB_register_Asm_8]
     =
-    ([TemporaryInfo (RegisterClass VecListFourD) 0,
-      TemporaryInfo (RegisterClass GPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass RGPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
+    ([TemporaryInfo (RegisterClass VecListFourD) 0 False,
+      TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass RGPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
      [])
   | i `elem`
       [VLD4dAsm_16, VLD4dAsm_32, VLD4dAsm_8, VLD4dWB_fixed_Asm_16,
@@ -2145,37 +2147,37 @@ operandInfo i
        VST4dAsm_32, VST4dAsm_8, VST4dWB_fixed_Asm_16,
        VST4dWB_fixed_Asm_32, VST4dWB_fixed_Asm_8]
     =
-    ([TemporaryInfo (RegisterClass VecListFourD) 0,
-      TemporaryInfo (RegisterClass GPR) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
+    ([TemporaryInfo (RegisterClass VecListFourD) 0 False,
+      TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
      [])
   | i `elem`
       [VLD4DUPdWB_register_Asm_16, VLD4DUPdWB_register_Asm_32,
        VLD4DUPdWB_register_Asm_8]
     =
-    ([TemporaryInfo (RegisterClass VecListFourDAllLanes) 0,
-      TemporaryInfo (RegisterClass GPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass RGPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
+    ([TemporaryInfo (RegisterClass VecListFourDAllLanes) 0 False,
+      TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass RGPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
      [])
   | i `elem`
       [VLD4DUPdAsm_16, VLD4DUPdAsm_32, VLD4DUPdAsm_8,
        VLD4DUPdWB_fixed_Asm_16, VLD4DUPdWB_fixed_Asm_32,
        VLD4DUPdWB_fixed_Asm_8]
     =
-    ([TemporaryInfo (RegisterClass VecListFourDAllLanes) 0,
-      TemporaryInfo (RegisterClass GPR) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
+    ([TemporaryInfo (RegisterClass VecListFourDAllLanes) 0 False,
+      TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
      [])
   | i `elem`
       [VLD4qWB_register_Asm_16, VLD4qWB_register_Asm_32,
        VLD4qWB_register_Asm_8, VST4qWB_register_Asm_16,
        VST4qWB_register_Asm_32, VST4qWB_register_Asm_8]
     =
-    ([TemporaryInfo (RegisterClass VecListFourQ) 0,
-      TemporaryInfo (RegisterClass GPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass RGPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
+    ([TemporaryInfo (RegisterClass VecListFourQ) 0 False,
+      TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass RGPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
      [])
   | i `elem`
       [VLD4qAsm_16, VLD4qAsm_32, VLD4qAsm_8, VLD4qWB_fixed_Asm_16,
@@ -2183,47 +2185,47 @@ operandInfo i
        VST4qAsm_32, VST4qAsm_8, VST4qWB_fixed_Asm_16,
        VST4qWB_fixed_Asm_32, VST4qWB_fixed_Asm_8]
     =
-    ([TemporaryInfo (RegisterClass VecListFourQ) 0,
-      TemporaryInfo (RegisterClass GPR) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
+    ([TemporaryInfo (RegisterClass VecListFourQ) 0 False,
+      TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
      [])
   | i `elem`
       [VLD4DUPqWB_register_Asm_16, VLD4DUPqWB_register_Asm_32,
        VLD4DUPqWB_register_Asm_8]
     =
-    ([TemporaryInfo (RegisterClass VecListFourQAllLanes) 0,
-      TemporaryInfo (RegisterClass GPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass RGPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
+    ([TemporaryInfo (RegisterClass VecListFourQAllLanes) 0 False,
+      TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass RGPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
      [])
   | i `elem`
       [VLD4DUPqAsm_16, VLD4DUPqAsm_32, VLD4DUPqAsm_8,
        VLD4DUPqWB_fixed_Asm_16, VLD4DUPqWB_fixed_Asm_32,
        VLD4DUPqWB_fixed_Asm_8]
     =
-    ([TemporaryInfo (RegisterClass VecListFourQAllLanes) 0,
-      TemporaryInfo (RegisterClass GPR) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
+    ([TemporaryInfo (RegisterClass VecListFourQAllLanes) 0 False,
+      TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
      [])
   | i `elem` [VTBL1] =
-    ([TemporaryInfo (RegisterClass VecListOneD) 0,
-      TemporaryInfo (RegisterClass DPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass DPR) 1])
+    ([TemporaryInfo (RegisterClass VecListOneD) 0 False,
+      TemporaryInfo (RegisterClass DPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass DPR) 1 False])
   | i `elem` [VTBL3] =
-    ([TemporaryInfo (RegisterClass VecListThreeD) 0,
-      TemporaryInfo (RegisterClass DPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass DPR) 1])
+    ([TemporaryInfo (RegisterClass VecListThreeD) 0 False,
+      TemporaryInfo (RegisterClass DPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass DPR) 1 False])
   | i `elem`
       [VLD3dWB_register_Asm_16, VLD3dWB_register_Asm_32,
        VLD3dWB_register_Asm_8, VST3dWB_register_Asm_16,
        VST3dWB_register_Asm_32, VST3dWB_register_Asm_8]
     =
-    ([TemporaryInfo (RegisterClass VecListThreeD) 0,
-      TemporaryInfo (RegisterClass GPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass RGPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
+    ([TemporaryInfo (RegisterClass VecListThreeD) 0 False,
+      TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass RGPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
      [])
   | i `elem`
       [VLD3dAsm_16, VLD3dAsm_32, VLD3dAsm_8, VLD3dWB_fixed_Asm_16,
@@ -2231,37 +2233,37 @@ operandInfo i
        VST3dAsm_32, VST3dAsm_8, VST3dWB_fixed_Asm_16,
        VST3dWB_fixed_Asm_32, VST3dWB_fixed_Asm_8]
     =
-    ([TemporaryInfo (RegisterClass VecListThreeD) 0,
-      TemporaryInfo (RegisterClass GPR) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
+    ([TemporaryInfo (RegisterClass VecListThreeD) 0 False,
+      TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
      [])
   | i `elem`
       [VLD3DUPdWB_register_Asm_16, VLD3DUPdWB_register_Asm_32,
        VLD3DUPdWB_register_Asm_8]
     =
-    ([TemporaryInfo (RegisterClass VecListThreeDAllLanes) 0,
-      TemporaryInfo (RegisterClass GPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass RGPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
+    ([TemporaryInfo (RegisterClass VecListThreeDAllLanes) 0 False,
+      TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass RGPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
      [])
   | i `elem`
       [VLD3DUPdAsm_16, VLD3DUPdAsm_32, VLD3DUPdAsm_8,
        VLD3DUPdWB_fixed_Asm_16, VLD3DUPdWB_fixed_Asm_32,
        VLD3DUPdWB_fixed_Asm_8]
     =
-    ([TemporaryInfo (RegisterClass VecListThreeDAllLanes) 0,
-      TemporaryInfo (RegisterClass GPR) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
+    ([TemporaryInfo (RegisterClass VecListThreeDAllLanes) 0 False,
+      TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
      [])
   | i `elem`
       [VLD3qWB_register_Asm_16, VLD3qWB_register_Asm_32,
        VLD3qWB_register_Asm_8, VST3qWB_register_Asm_16,
        VST3qWB_register_Asm_32, VST3qWB_register_Asm_8]
     =
-    ([TemporaryInfo (RegisterClass VecListThreeQ) 0,
-      TemporaryInfo (RegisterClass GPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass RGPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
+    ([TemporaryInfo (RegisterClass VecListThreeQ) 0 False,
+      TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass RGPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
      [])
   | i `elem`
       [VLD3qAsm_16, VLD3qAsm_32, VLD3qAsm_8, VLD3qWB_fixed_Asm_16,
@@ -2269,119 +2271,119 @@ operandInfo i
        VST3qAsm_32, VST3qAsm_8, VST3qWB_fixed_Asm_16,
        VST3qWB_fixed_Asm_32, VST3qWB_fixed_Asm_8]
     =
-    ([TemporaryInfo (RegisterClass VecListThreeQ) 0,
-      TemporaryInfo (RegisterClass GPR) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
+    ([TemporaryInfo (RegisterClass VecListThreeQ) 0 False,
+      TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
      [])
   | i `elem`
       [VLD3DUPqWB_register_Asm_16, VLD3DUPqWB_register_Asm_32,
        VLD3DUPqWB_register_Asm_8]
     =
-    ([TemporaryInfo (RegisterClass VecListThreeQAllLanes) 0,
-      TemporaryInfo (RegisterClass GPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass RGPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
+    ([TemporaryInfo (RegisterClass VecListThreeQAllLanes) 0 False,
+      TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass RGPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
      [])
   | i `elem`
       [VLD3DUPqAsm_16, VLD3DUPqAsm_32, VLD3DUPqAsm_8,
        VLD3DUPqWB_fixed_Asm_16, VLD3DUPqWB_fixed_Asm_32,
        VLD3DUPqWB_fixed_Asm_8]
     =
-    ([TemporaryInfo (RegisterClass VecListThreeQAllLanes) 0,
-      TemporaryInfo (RegisterClass GPR) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
+    ([TemporaryInfo (RegisterClass VecListThreeQAllLanes) 0 False,
+      TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
      [])
   | i `elem` [T2ABS] =
-    ([TemporaryInfo (RegisterClass RGPR) 0],
-     [TemporaryInfo (RegisterClass RGPR) 1,
-      TemporaryInfo (AbstractRegisterClass Unknown) 1])
+    ([TemporaryInfo (RegisterClass RGPR) 0 False],
+     [TemporaryInfo (RegisterClass RGPR) 1 False,
+      TemporaryInfo (AbstractRegisterClass Unknown) 1 False])
   | i `elem` [T2STRBs, T2STRHs] =
-    ([TemporaryInfo (RegisterClass RGPR) 0,
-      TemporaryInfo (RegisterClass GPR) 0,
-      TemporaryInfo (RegisterClass RGPR) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
+    ([TemporaryInfo (RegisterClass RGPR) 0 False,
+      TemporaryInfo (RegisterClass GPR) 0 False,
+      TemporaryInfo (RegisterClass RGPR) 0 False, BoundInfo, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
      [])
   | i `elem` [T2STL, T2STLB, T2STLH] =
-    ([TemporaryInfo (RegisterClass RGPR) 0,
-      TemporaryInfo (RegisterClass GPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
+    ([TemporaryInfo (RegisterClass RGPR) 0 False,
+      TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
      [])
   | i `elem` [T2STLEX, T2STLEXB, T2STLEXH, T2STREXB, T2STREXH] =
-    ([TemporaryInfo (RegisterClass RGPR) 0,
-      TemporaryInfo (RegisterClass GPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass RGPR) 1])
+    ([TemporaryInfo (RegisterClass RGPR) 0 False,
+      TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass RGPR) 1 False])
   | i `elem` [T2STRBi12, T2STRBi8, T2STRHi12, T2STRHi8] =
-    ([TemporaryInfo (RegisterClass RGPR) 0,
-      TemporaryInfo (RegisterClass GPR) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
+    ([TemporaryInfo (RegisterClass RGPR) 0 False,
+      TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
      [])
   | i `elem` [T2STRB_PRE, T2STRH_PRE] =
-    ([TemporaryInfo (RegisterClass RGPR) 0,
-      TemporaryInfo (RegisterClass GPR) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass GPRnopc) 1])
+    ([TemporaryInfo (RegisterClass RGPR) 0 False,
+      TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass GPRnopc) 1 False])
   | i `elem` [T2MOVSsr, T2MOVsr] =
-    ([TemporaryInfo (RegisterClass RGPR) 0,
-      TemporaryInfo (RegisterClass GPRnopc) 0,
-      TemporaryInfo (RegisterClass GPRnopc) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
+    ([TemporaryInfo (RegisterClass RGPR) 0 False,
+      TemporaryInfo (RegisterClass GPRnopc) 0 False,
+      TemporaryInfo (RegisterClass GPRnopc) 0 False, BoundInfo,
+      BoundInfo, TemporaryInfo (RegisterClass CCR) 0 False],
      [])
   | i `elem`
       [T2STRB_POST, T2STRB_preidx, T2STRH_POST, T2STRH_preidx,
        T2STR_preidx]
     =
-    ([TemporaryInfo (RegisterClass RGPR) 0,
-      TemporaryInfo (RegisterClass GPRnopc) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass GPRnopc) 1])
+    ([TemporaryInfo (RegisterClass RGPR) 0 False,
+      TemporaryInfo (RegisterClass GPRnopc) 0 False, BoundInfo,
+      BoundInfo, TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass GPRnopc) 1 False])
   | i `elem` [T2STREX] =
-    ([TemporaryInfo (RegisterClass RGPR) 0,
-      TemporaryInfo (RegisterClass GPRnopc) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass RGPR) 1])
+    ([TemporaryInfo (RegisterClass RGPR) 0 False,
+      TemporaryInfo (RegisterClass GPRnopc) 0 False, BoundInfo,
+      BoundInfo, TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass RGPR) 1 False])
   | i `elem`
       [T2CRC32B, T2CRC32CB, T2CRC32CH, T2CRC32CW, T2CRC32H, T2CRC32W]
     =
-    ([TemporaryInfo (RegisterClass RGPR) 0,
-      TemporaryInfo (RegisterClass RGPR) 0],
-     [TemporaryInfo (RegisterClass RGPR) 1])
+    ([TemporaryInfo (RegisterClass RGPR) 0 False,
+      TemporaryInfo (RegisterClass RGPR) 0 False],
+     [TemporaryInfo (RegisterClass RGPR) 1 False])
   | i `elem` [T2STLEXD, T2STREXD] =
-    ([TemporaryInfo (RegisterClass RGPR) 0,
-      TemporaryInfo (RegisterClass RGPR) 0,
-      TemporaryInfo (RegisterClass GPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass RGPR) 1])
+    ([TemporaryInfo (RegisterClass RGPR) 0 False,
+      TemporaryInfo (RegisterClass RGPR) 0 False,
+      TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass RGPR) 1 False])
   | i `elem` [T2STRDi8] =
-    ([TemporaryInfo (RegisterClass RGPR) 0,
-      TemporaryInfo (RegisterClass RGPR) 0,
-      TemporaryInfo (RegisterClass GPR) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
+    ([TemporaryInfo (RegisterClass RGPR) 0 False,
+      TemporaryInfo (RegisterClass RGPR) 0 False,
+      TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
      [])
   | i `elem` [T2STRD_POST, T2STRD_PRE] =
-    ([TemporaryInfo (RegisterClass RGPR) 0,
-      TemporaryInfo (RegisterClass RGPR) 0,
-      TemporaryInfo (RegisterClass GPR) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass GPR) 1])
+    ([TemporaryInfo (RegisterClass RGPR) 0 False,
+      TemporaryInfo (RegisterClass RGPR) 0 False,
+      TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass GPR) 1 False])
   | i `elem` [T2SMLAL, T2UMLAL] =
-    ([TemporaryInfo (RegisterClass RGPR) 0,
-      TemporaryInfo (RegisterClass RGPR) 0,
-      TemporaryInfo (RegisterClass RGPR) 0,
-      TemporaryInfo (RegisterClass RGPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass RGPR) 1,
-      TemporaryInfo (RegisterClass RGPR) 1])
+    ([TemporaryInfo (RegisterClass RGPR) 0 False,
+      TemporaryInfo (RegisterClass RGPR) 0 False,
+      TemporaryInfo (RegisterClass RGPR) 0 False,
+      TemporaryInfo (RegisterClass RGPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass RGPR) 1 False,
+      TemporaryInfo (RegisterClass RGPR) 1 False])
   | i `elem`
       [T2MLA, T2MLS, T2SMLABB, T2SMLABT, T2SMLAD, T2SMLADX, T2SMLATB,
        T2SMLATT, T2SMLAWB, T2SMLAWT, T2SMLSD, T2SMLSDX, T2SMMLA, T2SMMLAR,
        T2SMMLS, T2SMMLSR, T2USADA8]
     =
-    ([TemporaryInfo (RegisterClass RGPR) 0,
-      TemporaryInfo (RegisterClass RGPR) 0,
-      TemporaryInfo (RegisterClass RGPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass RGPR) 1])
+    ([TemporaryInfo (RegisterClass RGPR) 0 False,
+      TemporaryInfo (RegisterClass RGPR) 0 False,
+      TemporaryInfo (RegisterClass RGPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass RGPR) 1 False])
   | i `elem`
       [T2MOVCCr, T2MUL, T2QADD, T2QADD16, T2QADD8, T2QASX, T2QDADD,
        T2QDSUB, T2QSAX, T2QSUB, T2QSUB16, T2QSUB8, T2SADD16, T2SADD8,
@@ -2393,280 +2395,281 @@ operandInfo i
        T2UQADD8, T2UQASX, T2UQSAX, T2UQSUB16, T2UQSUB8, T2USAD8, T2USAX,
        T2USUB16, T2USUB8]
     =
-    ([TemporaryInfo (RegisterClass RGPR) 0,
-      TemporaryInfo (RegisterClass RGPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass RGPR) 1])
+    ([TemporaryInfo (RegisterClass RGPR) 0 False,
+      TemporaryInfo (RegisterClass RGPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass RGPR) 1 False])
   | i `elem` [T2ORRrr_cpsr] =
-    ([TemporaryInfo (RegisterClass RGPR) 0,
-      TemporaryInfo (RegisterClass RGPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass RGPR) 1,
-      TemporaryInfo (RegisterClass CCR) 1])
+    ([TemporaryInfo (RegisterClass RGPR) 0 False,
+      TemporaryInfo (RegisterClass RGPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass RGPR) 1 False,
+      TemporaryInfo (RegisterClass CCR) 1 False])
   | i `elem`
       [T2SMLALBB, T2SMLALBT, T2SMLALD, T2SMLALDX, T2SMLALTB, T2SMLALTT,
        T2SMLSLD, T2SMLSLDX, T2SMULL, T2UMAAL, T2UMULL]
     =
-    ([TemporaryInfo (RegisterClass RGPR) 0,
-      TemporaryInfo (RegisterClass RGPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass RGPR) 1,
-      TemporaryInfo (RegisterClass RGPR) 1])
+    ([TemporaryInfo (RegisterClass RGPR) 0 False,
+      TemporaryInfo (RegisterClass RGPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass RGPR) 1 False,
+      TemporaryInfo (RegisterClass RGPR) 1 False])
   | i `elem`
       [T2ANDrr, T2ASRrr, T2BICrr, T2EORrr, T2LSLrr, T2LSRrr, T2ORNrr,
        T2ORRrr, T2RORrr, T2RSBrr]
     =
-    ([TemporaryInfo (RegisterClass RGPR) 0,
-      TemporaryInfo (RegisterClass RGPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass RGPR) 1])
+    ([TemporaryInfo (RegisterClass RGPR) 0 False,
+      TemporaryInfo (RegisterClass RGPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass RGPR) 1 False])
   | i `elem` [T2ADCrr, T2SBCrr] =
-    ([TemporaryInfo (RegisterClass RGPR) 0,
-      TemporaryInfo (RegisterClass RGPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0,
-      TemporaryInfo (RegisterClass CCR) 0,
-      TemporaryInfo (AbstractRegisterClass Unknown) 0],
-     [TemporaryInfo (RegisterClass RGPR) 1,
-      TemporaryInfo (AbstractRegisterClass Unknown) 1])
+    ([TemporaryInfo (RegisterClass RGPR) 0 False,
+      TemporaryInfo (RegisterClass RGPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False,
+      TemporaryInfo (RegisterClass CCR) 0 False,
+      TemporaryInfo (AbstractRegisterClass Unknown) 0 False],
+     [TemporaryInfo (RegisterClass RGPR) 1 False,
+      TemporaryInfo (AbstractRegisterClass Unknown) 1 False])
   | i `elem` [T2MOVSsi, T2MOVsi] =
-    ([TemporaryInfo (RegisterClass RGPR) 0,
-      TemporaryInfo (RegisterClass RGPR) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
+    ([TemporaryInfo (RegisterClass RGPR) 0 False,
+      TemporaryInfo (RegisterClass RGPR) 0 False, BoundInfo, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
      [])
   | i `elem`
       [T2BFI, T2MOVCCasr, T2MOVCClsl, T2MOVCClsr, T2MOVCCror, T2PKHBT,
        T2PKHTB, T2SXTAB, T2SXTAB16, T2SXTAH, T2UXTAB, T2UXTAB16, T2UXTAH]
     =
-    ([TemporaryInfo (RegisterClass RGPR) 0,
-      TemporaryInfo (RegisterClass RGPR) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass RGPR) 1])
+    ([TemporaryInfo (RegisterClass RGPR) 0 False,
+      TemporaryInfo (RegisterClass RGPR) 0 False, BoundInfo, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass RGPR) 1 False])
   | i `elem` [T2RSBSrs] =
-    ([TemporaryInfo (RegisterClass RGPR) 0,
-      TemporaryInfo (RegisterClass RGPR) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass RGPR) 1,
-      TemporaryInfo (AbstractRegisterClass Unknown) 1])
+    ([TemporaryInfo (RegisterClass RGPR) 0 False,
+      TemporaryInfo (RegisterClass RGPR) 0 False, BoundInfo, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass RGPR) 1 False,
+      TemporaryInfo (AbstractRegisterClass Unknown) 1 False])
   | i `elem` [T2ANDrs, T2BICrs, T2EORrs, T2ORNrs, T2ORRrs, T2RSBrs] =
-    ([TemporaryInfo (RegisterClass RGPR) 0,
-      TemporaryInfo (RegisterClass RGPR) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass RGPR) 1])
+    ([TemporaryInfo (RegisterClass RGPR) 0 False,
+      TemporaryInfo (RegisterClass RGPR) 0 False, BoundInfo, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass RGPR) 1 False])
   | i `elem` [T2ADCrs, T2SBCrs] =
-    ([TemporaryInfo (RegisterClass RGPR) 0,
-      TemporaryInfo (RegisterClass RGPR) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0,
-      TemporaryInfo (RegisterClass CCR) 0,
-      TemporaryInfo (AbstractRegisterClass Unknown) 0],
-     [TemporaryInfo (RegisterClass RGPR) 1,
-      TemporaryInfo (AbstractRegisterClass Unknown) 1])
+    ([TemporaryInfo (RegisterClass RGPR) 0 False,
+      TemporaryInfo (RegisterClass RGPR) 0 False, BoundInfo, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False,
+      TemporaryInfo (RegisterClass CCR) 0 False,
+      TemporaryInfo (AbstractRegisterClass Unknown) 0 False],
+     [TemporaryInfo (RegisterClass RGPR) 1 False,
+      TemporaryInfo (AbstractRegisterClass Unknown) 1 False])
   | i `elem` [T2CLZ, T2RBIT, T2REV, T2REV16, T2REVSH] =
-    ([TemporaryInfo (RegisterClass RGPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass RGPR) 1])
+    ([TemporaryInfo (RegisterClass RGPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass RGPR) 1 False])
   | i `elem` [T2MOVsra_flag, T2MOVsrl_flag] =
-    ([TemporaryInfo (RegisterClass RGPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass RGPR) 1,
-      TemporaryInfo (AbstractRegisterClass Unknown) 1])
+    ([TemporaryInfo (RegisterClass RGPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass RGPR) 1 False,
+      TemporaryInfo (AbstractRegisterClass Unknown) 1 False])
   | i `elem` [T2MVNr] =
-    ([TemporaryInfo (RegisterClass RGPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass RGPR) 1])
+    ([TemporaryInfo (RegisterClass RGPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass RGPR) 1 False])
   | i `elem` [T2RRX] =
-    ([TemporaryInfo (RegisterClass RGPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0,
-      TemporaryInfo (RegisterClass CCR) 0,
-      TemporaryInfo (AbstractRegisterClass Unknown) 0],
-     [TemporaryInfo (RegisterClass RGPR) 1])
+    ([TemporaryInfo (RegisterClass RGPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False,
+      TemporaryInfo (RegisterClass CCR) 0 False,
+      TemporaryInfo (AbstractRegisterClass Unknown) 0 False],
+     [TemporaryInfo (RegisterClass RGPR) 1 False])
   | i `elem` [T2MOVTi16_ga_pcrel] =
-    ([TemporaryInfo (RegisterClass RGPR) 0, BoundInfo, BoundInfo],
-     [TemporaryInfo (RegisterClass RGPR) 1])
+    ([TemporaryInfo (RegisterClass RGPR) 0 False, BoundInfo,
+      BoundInfo],
+     [TemporaryInfo (RegisterClass RGPR) 1 False])
   | i `elem`
       [T2BFC, T2MOVCCi, T2MOVCCi16, T2MOVCCi32imm, T2MOVTi16, T2MVNCCi,
        T2SXTB, T2SXTB16, T2SXTH, T2UXTB, T2UXTB16, T2UXTH]
     =
-    ([TemporaryInfo (RegisterClass RGPR) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass RGPR) 1])
+    ([TemporaryInfo (RegisterClass RGPR) 0 False, BoundInfo, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass RGPR) 1 False])
   | i `elem` [T2ANDri_cpsr] =
-    ([TemporaryInfo (RegisterClass RGPR) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass RGPR) 1,
-      TemporaryInfo (RegisterClass CCR) 1])
+    ([TemporaryInfo (RegisterClass RGPR) 0 False, BoundInfo, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass RGPR) 1 False,
+      TemporaryInfo (RegisterClass CCR) 1 False])
   | i `elem` [T2RSBSri] =
-    ([TemporaryInfo (RegisterClass RGPR) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass RGPR) 1,
-      TemporaryInfo (AbstractRegisterClass Unknown) 1])
+    ([TemporaryInfo (RegisterClass RGPR) 0 False, BoundInfo, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass RGPR) 1 False,
+      TemporaryInfo (AbstractRegisterClass Unknown) 1 False])
   | i `elem`
       [T2ANDri, T2ASRri, T2BICri, T2EORri, T2LSLri, T2LSRri, T2MVNs,
        T2ORNri, T2ORRri, T2RORri, T2RSBri]
     =
-    ([TemporaryInfo (RegisterClass RGPR) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass RGPR) 1])
+    ([TemporaryInfo (RegisterClass RGPR) 0 False, BoundInfo, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass RGPR) 1 False])
   | i `elem` [T2ADCri, T2SBCri] =
-    ([TemporaryInfo (RegisterClass RGPR) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0,
-      TemporaryInfo (RegisterClass CCR) 0,
-      TemporaryInfo (AbstractRegisterClass Unknown) 0],
-     [TemporaryInfo (RegisterClass RGPR) 1,
-      TemporaryInfo (AbstractRegisterClass Unknown) 1])
+    ([TemporaryInfo (RegisterClass RGPR) 0 False, BoundInfo, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False,
+      TemporaryInfo (RegisterClass CCR) 0 False,
+      TemporaryInfo (AbstractRegisterClass Unknown) 0 False],
+     [TemporaryInfo (RegisterClass RGPR) 1 False,
+      TemporaryInfo (AbstractRegisterClass Unknown) 1 False])
   | i `elem` [T2STRBi12_fi, T2STRHi12_fi] =
-    ([TemporaryInfo (RegisterClass RGPR) 0, BoundInfo, BoundInfo,
-      BoundInfo, TemporaryInfo (RegisterClass CCR) 0],
+    ([TemporaryInfo (RegisterClass RGPR) 0 False, BoundInfo, BoundInfo,
+      BoundInfo, TemporaryInfo (RegisterClass CCR) 0 False],
      [])
   | i `elem` [T2SBFX, T2UBFX] =
-    ([TemporaryInfo (RegisterClass RGPR) 0, BoundInfo, BoundInfo,
-      BoundInfo, TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass RGPR) 1])
+    ([TemporaryInfo (RegisterClass RGPR) 0 False, BoundInfo, BoundInfo,
+      BoundInfo, TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass RGPR) 1 False])
   | i `elem` [BMOVPCRX_CALL, BX_CALL, TBX_CALL] =
-    ([TemporaryInfo (RegisterClass TGPR) 0], [])
+    ([TemporaryInfo (RegisterClass TGPR) 0 False], [])
   | i `elem` [STORE_T] =
-    ([TemporaryInfo (RegisterClass TGPR) 0],
-     [TemporaryInfo (InfiniteRegisterClass M32t) 1])
+    ([TemporaryInfo (RegisterClass TGPR) 0 False],
+     [TemporaryInfo (InfiniteRegisterClass M32t) 1 False])
   | i `elem` [TMOVSr] =
-    ([TemporaryInfo (RegisterClass TGPR) 0],
-     [TemporaryInfo (RegisterClass TGPR) 1,
-      TemporaryInfo (AbstractRegisterClass Unknown) 1])
+    ([TemporaryInfo (RegisterClass TGPR) 0 False],
+     [TemporaryInfo (RegisterClass TGPR) 1 False,
+      TemporaryInfo (AbstractRegisterClass Unknown) 1 False])
   | i `elem` [TSTRspi] =
-    ([TemporaryInfo (RegisterClass TGPR) 0,
-      TemporaryInfo (RegisterClass GPR) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
+    ([TemporaryInfo (RegisterClass TGPR) 0 False,
+      TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
      [])
   | i `elem`
       [T2Int_eh_sjlj_setjmp, T2Int_eh_sjlj_setjmp_nofp,
        TInt_eh_sjlj_setjmp]
     =
-    ([TemporaryInfo (RegisterClass TGPR) 0,
-      TemporaryInfo (RegisterClass TGPR) 0],
-     [TemporaryInfo (AbstractRegisterClass Unknown) 1])
+    ([TemporaryInfo (RegisterClass TGPR) 0 False,
+      TemporaryInfo (RegisterClass TGPR) 0 False],
+     [TemporaryInfo (AbstractRegisterClass Unknown) 1 False])
   | i `elem` [TSTRBr, TSTRHr, TSTRr] =
-    ([TemporaryInfo (RegisterClass TGPR) 0,
-      TemporaryInfo (RegisterClass TGPR) 0,
-      TemporaryInfo (RegisterClass TGPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
+    ([TemporaryInfo (RegisterClass TGPR) 0 False,
+      TemporaryInfo (RegisterClass TGPR) 0 False,
+      TemporaryInfo (RegisterClass TGPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
      [])
   | i `elem` [TSTRBrz, TSTRHrz, TSTRrz] =
-    ([TemporaryInfo (RegisterClass TGPR) 0,
-      TemporaryInfo (RegisterClass TGPR) 0,
-      TemporaryInfo (RegisterClass TGPR) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
+    ([TemporaryInfo (RegisterClass TGPR) 0 False,
+      TemporaryInfo (RegisterClass TGPR) 0 False,
+      TemporaryInfo (RegisterClass TGPR) 0 False, BoundInfo, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
      [])
   | i `elem` [TCMPr_cpsr, TTST_cpsr] =
-    ([TemporaryInfo (RegisterClass TGPR) 0,
-      TemporaryInfo (RegisterClass TGPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass CCR) 1])
+    ([TemporaryInfo (RegisterClass TGPR) 0 False,
+      TemporaryInfo (RegisterClass TGPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass CCR) 1 False])
   | i `elem` [TCMNz, TCMPr, TTST] =
-    ([TemporaryInfo (RegisterClass TGPR) 0,
-      TemporaryInfo (RegisterClass TGPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (AbstractRegisterClass Unknown) 1])
+    ([TemporaryInfo (RegisterClass TGPR) 0 False,
+      TemporaryInfo (RegisterClass TGPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (AbstractRegisterClass Unknown) 1 False])
   | i `elem`
       [TLDRBr, TLDRHr, TLDRSB, TLDRSH, TLDRr, TMOVCCr_pseudo, TMULz]
     =
-    ([TemporaryInfo (RegisterClass TGPR) 0,
-      TemporaryInfo (RegisterClass TGPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass TGPR) 1])
+    ([TemporaryInfo (RegisterClass TGPR) 0 False,
+      TemporaryInfo (RegisterClass TGPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass TGPR) 1 False])
   | i `elem`
       [TADDrr, TAND, TASRrr, TBIC, TEOR, TLSLrr, TLSRrr, TMUL, TORR,
        TROR, TSUBrr]
     =
-    ([TemporaryInfo (RegisterClass TGPR) 0,
-      TemporaryInfo (RegisterClass TGPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass TGPR) 1,
-      TemporaryInfo (RegisterClass CCR) 1])
+    ([TemporaryInfo (RegisterClass TGPR) 0 False,
+      TemporaryInfo (RegisterClass TGPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass TGPR) 1 False,
+      TemporaryInfo (RegisterClass CCR) 1 False])
   | i `elem`
       [TADDrrs, TANDs, TASRrrs, TBICs, TEORs, TLSLrrs, TLSRrrs, TORRs,
        TSUBrrs]
     =
-    ([TemporaryInfo (RegisterClass TGPR) 0,
-      TemporaryInfo (RegisterClass TGPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass TGPR) 1])
+    ([TemporaryInfo (RegisterClass TGPR) 0 False,
+      TemporaryInfo (RegisterClass TGPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass TGPR) 1 False])
   | i `elem` [TADC, TSBC] =
-    ([TemporaryInfo (RegisterClass TGPR) 0,
-      TemporaryInfo (RegisterClass TGPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0,
-      TemporaryInfo (AbstractRegisterClass Unknown) 0],
-     [TemporaryInfo (RegisterClass TGPR) 1,
-      TemporaryInfo (RegisterClass CCR) 1])
+    ([TemporaryInfo (RegisterClass TGPR) 0 False,
+      TemporaryInfo (RegisterClass TGPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False,
+      TemporaryInfo (AbstractRegisterClass Unknown) 0 False],
+     [TemporaryInfo (RegisterClass TGPR) 1 False,
+      TemporaryInfo (RegisterClass CCR) 1 False])
   | i `elem` [TSTRBi, TSTRHi, TSTRi] =
-    ([TemporaryInfo (RegisterClass TGPR) 0,
-      TemporaryInfo (RegisterClass TGPR) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
+    ([TemporaryInfo (RegisterClass TGPR) 0 False,
+      TemporaryInfo (RegisterClass TGPR) 0 False, BoundInfo, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
      [])
   | i `elem` [TLDRBrz, TLDRHrz, TLDRSHz, TLDRrz] =
-    ([TemporaryInfo (RegisterClass TGPR) 0,
-      TemporaryInfo (RegisterClass TGPR) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass TGPR) 1])
+    ([TemporaryInfo (RegisterClass TGPR) 0 False,
+      TemporaryInfo (RegisterClass TGPR) 0 False, BoundInfo, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass TGPR) 1 False])
   | i `elem` [TBR_JTr, TCBNZ, TCBZ] =
-    ([TemporaryInfo (RegisterClass TGPR) 0, BoundInfo], [])
+    ([TemporaryInfo (RegisterClass TGPR) 0 False, BoundInfo], [])
   | i `elem` [TBX_RET_vararg] =
-    ([TemporaryInfo (RegisterClass TGPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
+    ([TemporaryInfo (RegisterClass TGPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
      [])
   | i `elem` [TREV, TREV16, TREVSH, TSXTB, TSXTH, TUXTB, TUXTH] =
-    ([TemporaryInfo (RegisterClass TGPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass TGPR) 1])
+    ([TemporaryInfo (RegisterClass TGPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass TGPR) 1 False])
   | i `elem` [TMVN, TRSB] =
-    ([TemporaryInfo (RegisterClass TGPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass TGPR) 1,
-      TemporaryInfo (RegisterClass CCR) 1])
+    ([TemporaryInfo (RegisterClass TGPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass TGPR) 1 False,
+      TemporaryInfo (RegisterClass CCR) 1 False])
   | i `elem` [TMVNs] =
-    ([TemporaryInfo (RegisterClass TGPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass TGPR) 1])
+    ([TemporaryInfo (RegisterClass TGPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass TGPR) 1 False])
   | i `elem` [TLDMIA] =
-    ([TemporaryInfo (RegisterClass TGPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0, BoundInfo, BoundInfo],
+    ([TemporaryInfo (RegisterClass TGPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False, BoundInfo, BoundInfo],
      [])
   | i `elem` [TCMPi8_cpsr] =
-    ([TemporaryInfo (RegisterClass TGPR) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass CCR) 1])
+    ([TemporaryInfo (RegisterClass TGPR) 0 False, BoundInfo, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass CCR) 1 False])
   | i `elem` [TCMPi8] =
-    ([TemporaryInfo (RegisterClass TGPR) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (AbstractRegisterClass Unknown) 1])
+    ([TemporaryInfo (RegisterClass TGPR) 0 False, BoundInfo, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (AbstractRegisterClass Unknown) 1 False])
   | i `elem` [TLDRBi, TLDRHi, TLDRi, TSXTHz, TUXTBz, TUXTHz] =
-    ([TemporaryInfo (RegisterClass TGPR) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass TGPR) 1])
+    ([TemporaryInfo (RegisterClass TGPR) 0 False, BoundInfo, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass TGPR) 1 False])
   | i `elem` [TADDi3, TADDi8, TASRri, TLSLri, TLSRri, TSUBi3, TSUBi8]
     =
-    ([TemporaryInfo (RegisterClass TGPR) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass TGPR) 1,
-      TemporaryInfo (RegisterClass CCR) 1])
+    ([TemporaryInfo (RegisterClass TGPR) 0 False, BoundInfo, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass TGPR) 1 False,
+      TemporaryInfo (RegisterClass CCR) 1 False])
   | i `elem`
       [TADDi3s, TADDi8s, TASRris, TLSLris, TLSRris, TRSBs, TSUBi3s,
        TSUBi8s]
     =
-    ([TemporaryInfo (RegisterClass TGPR) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass TGPR) 1])
+    ([TemporaryInfo (RegisterClass TGPR) 0 False, BoundInfo, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass TGPR) 1 False])
   | i `elem` [TAILJMPr, TCRETURNri, TTAILJMPr] =
-    ([TemporaryInfo (RegisterClass TcGPR) 0], [])
+    ([TemporaryInfo (RegisterClass TcGPR) 0 False], [])
   | i `elem` [MOVr_TC] =
-    ([TemporaryInfo (RegisterClass TcGPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass TcGPR) 1])
+    ([TemporaryInfo (RegisterClass TcGPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass TcGPR) 1 False])
   | i `elem`
       [BKPT, BL, BLXi, BMOVPCB_CALL, BUNDLE, CFI_INSTRUCTION, CPS1p,
        DBG_VALUE, DMB, DSB, EH_LABEL, GC_LABEL, HLT, HVC, INLINEASM, ISB,
@@ -2678,101 +2681,104 @@ operandInfo i
   | i `elem`
       [LDRLIT_ga_abs, LDRLIT_ga_pcrel, LDRLIT_ga_pcrel_ldr, MOV_ga_pcrel,
        MOV_ga_pcrel_ldr, MOVi32imm]
-    = ([BoundInfo], [TemporaryInfo (RegisterClass GPR) 1])
+    = ([BoundInfo], [TemporaryInfo (RegisterClass GPR) 1 False])
   | i `elem` [T2MOV_ga_pcrel, T2MOVi32imm] =
-    ([BoundInfo], [TemporaryInfo (RegisterClass RGPR) 1])
+    ([BoundInfo], [TemporaryInfo (RegisterClass RGPR) 1 False])
   | i `elem` [TLDRLIT_ga_abs, TLDRLIT_ga_pcrel] =
-    ([BoundInfo], [TemporaryInfo (RegisterClass TGPR) 1])
+    ([BoundInfo], [TemporaryInfo (RegisterClass TGPR) 1 False])
   | i `elem` [COPY, FAULTING_LOAD_OP] = ([BoundInfo], [BoundInfo])
   | i `elem`
       [BX_RET, ERET, MOVPCLR, T2CLREX, T2DCPS1, T2DCPS2, T2DCPS3,
        TBX_RET]
-    = ([BoundInfo, TemporaryInfo (RegisterClass CCR) 0], [])
+    = ([BoundInfo, TemporaryInfo (RegisterClass CCR) 0 False], [])
   | i `elem` [FMSTAT_cpsr] =
-    ([BoundInfo, TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass CCR) 1])
+    ([BoundInfo, TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass CCR) 1 False])
   | i `elem`
       [VMRS, VMRS_FPEXC, VMRS_FPINST, VMRS_FPINST2, VMRS_FPSID,
        VMRS_MVFR0, VMRS_MVFR1, VMRS_MVFR2, T2MRS_AR, T2MRSsys_AR]
     =
-    ([BoundInfo, TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass GPR) 1])
+    ([BoundInfo, TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass GPR) 1 False])
   | i `elem` [MRS, MRSsys] =
-    ([BoundInfo, TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass GPRnopc) 1])
+    ([BoundInfo, TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass GPRnopc) 1 False])
   | i `elem` [FMSTAT] =
-    ([BoundInfo, TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (AbstractRegisterClass Unknown) 1])
+    ([BoundInfo, TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (AbstractRegisterClass Unknown) 1 False])
   | i `elem` [TBLXr] =
-    ([BoundInfo, TemporaryInfo (RegisterClass CCR) 0,
-      TemporaryInfo (RegisterClass GPR) 0],
+    ([BoundInfo, TemporaryInfo (RegisterClass CCR) 0 False,
+      TemporaryInfo (RegisterClass GPR) 0 False],
      [])
   | i `elem` [TBL, TBLXi] =
-    ([BoundInfo, TemporaryInfo (RegisterClass CCR) 0, BoundInfo], [])
+    ([BoundInfo, TemporaryInfo (RegisterClass CCR) 0 False, BoundInfo],
+     [])
   | i `elem` [TPOP, TPOP_RET, TPUSH] =
-    ([BoundInfo, TemporaryInfo (RegisterClass CCR) 0, BoundInfo,
+    ([BoundInfo, TemporaryInfo (RegisterClass CCR) 0 False, BoundInfo,
       BoundInfo],
      [])
   | i `elem` [VBICiv2i32, VBICiv4i16, VORRiv2i32, VORRiv4i16] =
-    ([BoundInfo, TemporaryInfo (RegisterClass DPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass DPR) 1])
+    ([BoundInfo, TemporaryInfo (RegisterClass DPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass DPR) 1 False])
   | i `elem` [SPACE] =
-    ([BoundInfo, TemporaryInfo (RegisterClass GPR) 0],
-     [TemporaryInfo (RegisterClass GPR) 1])
+    ([BoundInfo, TemporaryInfo (RegisterClass GPR) 0 False],
+     [TemporaryInfo (RegisterClass GPR) 1 False])
   | i `elem` [BCCi64] =
-    ([BoundInfo, TemporaryInfo (RegisterClass GPR) 0,
-      TemporaryInfo (RegisterClass GPR) 0,
-      TemporaryInfo (RegisterClass GPR) 0,
-      TemporaryInfo (RegisterClass GPR) 0, BlockRefInfo],
-     [TemporaryInfo (AbstractRegisterClass Unknown) 1])
+    ([BoundInfo, TemporaryInfo (RegisterClass GPR) 0 False,
+      TemporaryInfo (RegisterClass GPR) 0 False,
+      TemporaryInfo (RegisterClass GPR) 0 False,
+      TemporaryInfo (RegisterClass GPR) 0 False, BlockRefInfo],
+     [TemporaryInfo (AbstractRegisterClass Unknown) 1 False])
   | i `elem` [BCCZi64] =
-    ([BoundInfo, TemporaryInfo (RegisterClass GPR) 0,
-      TemporaryInfo (RegisterClass GPR) 0, BlockRefInfo],
-     [TemporaryInfo (AbstractRegisterClass Unknown) 1])
+    ([BoundInfo, TemporaryInfo (RegisterClass GPR) 0 False,
+      TemporaryInfo (RegisterClass GPR) 0 False, BlockRefInfo],
+     [TemporaryInfo (AbstractRegisterClass Unknown) 1 False])
   | i `elem` [MSR] =
-    ([BoundInfo, TemporaryInfo (RegisterClass GPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
+    ([BoundInfo, TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
      [])
   | i `elem` [MSRbanked] =
-    ([BoundInfo, TemporaryInfo (RegisterClass GPRnopc) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
+    ([BoundInfo, TemporaryInfo (RegisterClass GPRnopc) 0 False,
+      BoundInfo, TemporaryInfo (RegisterClass CCR) 0 False],
      [])
   | i `elem` [SSAT16, USAT16] =
-    ([BoundInfo, TemporaryInfo (RegisterClass GPRnopc) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass GPRnopc) 1])
+    ([BoundInfo, TemporaryInfo (RegisterClass GPRnopc) 0 False,
+      BoundInfo, TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass GPRnopc) 1 False])
   | i `elem` [SSAT, USAT] =
-    ([BoundInfo, TemporaryInfo (RegisterClass GPRnopc) 0, BoundInfo,
-      BoundInfo, TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass GPRnopc) 1])
+    ([BoundInfo, TemporaryInfo (RegisterClass GPRnopc) 0 False,
+      BoundInfo, BoundInfo, TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass GPRnopc) 1 False])
   | i `elem` [VBICiv4i32, VBICiv8i16, VORRiv4i32, VORRiv8i16] =
-    ([BoundInfo, TemporaryInfo (RegisterClass QPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass QPR) 1])
+    ([BoundInfo, TemporaryInfo (RegisterClass QPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass QPR) 1 False])
   | i `elem` [T2MSR_AR, T2MSR_M, T2MSRbanked] =
-    ([BoundInfo, TemporaryInfo (RegisterClass RGPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
+    ([BoundInfo, TemporaryInfo (RegisterClass RGPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
      [])
   | i `elem` [T2SSAT16, T2USAT16] =
-    ([BoundInfo, TemporaryInfo (RegisterClass RGPR) 0, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass RGPR) 1])
+    ([BoundInfo, TemporaryInfo (RegisterClass RGPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass RGPR) 1 False])
   | i `elem` [T2SSAT, T2USAT] =
-    ([BoundInfo, TemporaryInfo (RegisterClass RGPR) 0, BoundInfo,
-      BoundInfo, TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass RGPR) 1])
+    ([BoundInfo, TemporaryInfo (RegisterClass RGPR) 0 False, BoundInfo,
+      BoundInfo, TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass RGPR) 1 False])
   | i `elem`
       [CPS2p, ITasm, LOCAL_ESCAPE, T2CPS2p, T2IT, TADJCALLSTACKUP, TCPS]
     = ([BoundInfo, BoundInfo], [])
   | i `elem` [MOVi16_ga_pcrel, TLDRpci_pic] =
-    ([BoundInfo, BoundInfo], [TemporaryInfo (RegisterClass GPR) 1])
+    ([BoundInfo, BoundInfo],
+     [TemporaryInfo (RegisterClass GPR) 1 False])
   | i `elem` [T2LDRpci_pic, T2MOVi16_ga_pcrel] =
-    ([BoundInfo, BoundInfo], [TemporaryInfo (RegisterClass RGPR) 1])
+    ([BoundInfo, BoundInfo],
+     [TemporaryInfo (RegisterClass RGPR) 1 False])
   | i `elem` [TADDframe] =
     ([BoundInfo, BoundInfo],
-     [TemporaryInfo (RegisterClass TGPR) 1,
-      TemporaryInfo (AbstractRegisterClass Unknown) 1])
+     [TemporaryInfo (RegisterClass TGPR) 1 False,
+      TemporaryInfo (AbstractRegisterClass Unknown) 1 False])
   | i `elem` [COPY_TO_REGCLASS, EXTRACT_SUBREG, REG_SEQUENCE] =
     ([BoundInfo, BoundInfo], [BoundInfo])
   | i `elem`
@@ -2780,58 +2786,60 @@ operandInfo i
        T2DMB, T2DSB, T2HINT, T2ISB, T2PLDpci, T2PLIpci, T2SMC, T2SRSDB,
        T2SRSDB_UPD, T2SRSIA, T2SRSIA_UPD, T2SUBS_PC_LR, TBcc, TBfar,
        THINT, TSVC]
-    = ([BoundInfo, BoundInfo, TemporaryInfo (RegisterClass CCR) 0], [])
+    =
+    ([BoundInfo, BoundInfo, TemporaryInfo (RegisterClass CCR) 0 False],
+     [])
   | i `elem`
       [FCONSTD, VMOVv1i64, VMOVv2f32, VMOVv2i32, VMOVv4i16, VMOVv8i8,
        VMVNv2i32, VMVNv4i16]
     =
-    ([BoundInfo, BoundInfo, TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass DPR) 1])
+    ([BoundInfo, BoundInfo, TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass DPR) 1 False])
   | i `elem` [ADR, LEApcrel, LEApcrelJT, MOVi16, T2LDRpci] =
-    ([BoundInfo, BoundInfo, TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass GPR) 1])
+    ([BoundInfo, BoundInfo, TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass GPR) 1 False])
   | i `elem`
       [MRSbanked, T2LDRBpci, T2LDRHpci, T2LDRSBpci, T2LDRSHpci]
     =
-    ([BoundInfo, BoundInfo, TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass GPRnopc) 1])
+    ([BoundInfo, BoundInfo, TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass GPRnopc) 1 False])
   | i `elem`
       [VMOVv16i8, VMOVv2i64, VMOVv4f32, VMOVv4i32, VMOVv8i16, VMVNv4i32,
        VMVNv8i16]
     =
-    ([BoundInfo, BoundInfo, TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass QPR) 1])
+    ([BoundInfo, BoundInfo, TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass QPR) 1 False])
   | i `elem` [FCONSTS] =
-    ([BoundInfo, BoundInfo, TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass SPR) 1])
+    ([BoundInfo, BoundInfo, TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass SPR) 1 False])
   | i `elem`
       [T2ADR, T2LEApcrel, T2LEApcrelJT, T2MOVi16, T2MRS_M, T2MRSbanked]
     =
-    ([BoundInfo, BoundInfo, TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass RGPR) 1])
+    ([BoundInfo, BoundInfo, TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass RGPR) 1 False])
   | i `elem` [TADR, TLDRpci, TLEApcrel, TLEApcrelJT] =
-    ([BoundInfo, BoundInfo, TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass TGPR) 1])
+    ([BoundInfo, BoundInfo, TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass TGPR) 1 False])
   | i `elem` [TMOVi8] =
-    ([BoundInfo, BoundInfo, TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass TGPR) 1,
-      TemporaryInfo (RegisterClass CCR) 1])
+    ([BoundInfo, BoundInfo, TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass TGPR) 1 False,
+      TemporaryInfo (RegisterClass CCR) 1 False])
   | i `elem` [MOVi, MVNi] =
-    ([BoundInfo, BoundInfo, TemporaryInfo (RegisterClass CCR) 0,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass GPR) 1])
+    ([BoundInfo, BoundInfo, TemporaryInfo (RegisterClass CCR) 0 False,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass GPR) 1 False])
   | i `elem` [T2MOVi, T2MVNi] =
-    ([BoundInfo, BoundInfo, TemporaryInfo (RegisterClass CCR) 0,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass RGPR) 1])
+    ([BoundInfo, BoundInfo, TemporaryInfo (RegisterClass CCR) 0 False,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass RGPR) 1 False])
   | i `elem` [TMOVi8s] =
-    ([BoundInfo, BoundInfo, TemporaryInfo (RegisterClass CCR) 0,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass TGPR) 1])
+    ([BoundInfo, BoundInfo, TemporaryInfo (RegisterClass CCR) 0 False,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass TGPR) 1 False])
   | i `elem` [T2MCRR, T2MCRR2] =
-    ([BoundInfo, BoundInfo, TemporaryInfo (RegisterClass GPR) 0,
-      TemporaryInfo (RegisterClass GPR) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
+    ([BoundInfo, BoundInfo, TemporaryInfo (RegisterClass GPR) 0 False,
+      TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
      [])
   | i `elem`
       [LDC2L_OFFSET, LDC2L_OPTION, LDC2L_POST, LDC2L_PRE, LDC2_OFFSET,
@@ -2839,7 +2847,7 @@ operandInfo i
        STC2L_POST, STC2L_PRE, STC2_OFFSET, STC2_OPTION, STC2_POST,
        STC2_PRE]
     =
-    ([BoundInfo, BoundInfo, TemporaryInfo (RegisterClass GPR) 0,
+    ([BoundInfo, BoundInfo, TemporaryInfo (RegisterClass GPR) 0 False,
       BoundInfo],
      [])
   | i `elem`
@@ -2855,26 +2863,28 @@ operandInfo i
        T2STCL_OPTION, T2STCL_POST, T2STCL_PRE, T2STC_OFFSET, T2STC_OPTION,
        T2STC_POST, T2STC_PRE]
     =
-    ([BoundInfo, BoundInfo, TemporaryInfo (RegisterClass GPR) 0,
-      BoundInfo, BoundInfo, TemporaryInfo (RegisterClass CCR) 0],
+    ([BoundInfo, BoundInfo, TemporaryInfo (RegisterClass GPR) 0 False,
+      BoundInfo, BoundInfo, TemporaryInfo (RegisterClass CCR) 0 False],
      [])
   | i `elem` [MCR2] =
-    ([BoundInfo, BoundInfo, TemporaryInfo (RegisterClass GPR) 0,
+    ([BoundInfo, BoundInfo, TemporaryInfo (RegisterClass GPR) 0 False,
       BoundInfo, BoundInfo, BoundInfo],
      [])
   | i `elem` [MCR, T2MCR, T2MCR2] =
-    ([BoundInfo, BoundInfo, TemporaryInfo (RegisterClass GPR) 0,
+    ([BoundInfo, BoundInfo, TemporaryInfo (RegisterClass GPR) 0 False,
       BoundInfo, BoundInfo, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
+      TemporaryInfo (RegisterClass CCR) 0 False],
      [])
   | i `elem` [MCRR2, MRRC2] =
-    ([BoundInfo, BoundInfo, TemporaryInfo (RegisterClass GPRnopc) 0,
-      TemporaryInfo (RegisterClass GPRnopc) 0, BoundInfo],
+    ([BoundInfo, BoundInfo,
+      TemporaryInfo (RegisterClass GPRnopc) 0 False,
+      TemporaryInfo (RegisterClass GPRnopc) 0 False, BoundInfo],
      [])
   | i `elem` [MCRR] =
-    ([BoundInfo, BoundInfo, TemporaryInfo (RegisterClass GPRnopc) 0,
-      TemporaryInfo (RegisterClass GPRnopc) 0, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
+    ([BoundInfo, BoundInfo,
+      TemporaryInfo (RegisterClass GPRnopc) 0 False,
+      TemporaryInfo (RegisterClass GPRnopc) 0 False, BoundInfo,
+      BoundInfo, TemporaryInfo (RegisterClass CCR) 0 False],
      [])
   | i `elem`
       [CONSTPOOL_ENTRY, CPS3p, JUMPTABLE_ADDRS, JUMPTABLE_INSTS,
@@ -2884,42 +2894,42 @@ operandInfo i
     ([BoundInfo, BoundInfo, BoundInfo], [BoundInfo])
   | i `elem` [ADJCALLSTACKUP, MSRi] =
     ([BoundInfo, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
+      TemporaryInfo (RegisterClass CCR) 0 False],
      [])
   | i `elem` [VLDRD_cpi, VLDRD_fi] =
     ([BoundInfo, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass DPR) 1])
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass DPR) 1 False])
   | i `elem` [T2LDRi12_fi] =
     ([BoundInfo, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass GPR) 1])
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass GPR) 1 False])
   | i `elem` [T2LDRBi12_fi, T2LDRHi12_fi, T2LDRSHi12_fi] =
     ([BoundInfo, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass GPRnopc) 1])
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass GPRnopc) 1 False])
   | i `elem` [VLDRS_cpi, VLDRS_fi] =
     ([BoundInfo, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass SPR) 1])
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass SPR) 1 False])
   | i `elem` [T2ADDri_fi] =
     ([BoundInfo, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass GPRnopc) 1])
+      TemporaryInfo (RegisterClass CCR) 0 False,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass GPRnopc) 1 False])
   | i `elem` [T2MRRC, T2MRRC2] =
     ([BoundInfo, BoundInfo, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass GPR) 1,
-      TemporaryInfo (RegisterClass GPR) 1])
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass GPR) 1 False,
+      TemporaryInfo (RegisterClass GPR) 1 False])
   | i `elem` [MRRC] =
     ([BoundInfo, BoundInfo, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass GPRnopc) 1,
-      TemporaryInfo (RegisterClass GPRnopc) 1])
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass GPRnopc) 1 False,
+      TemporaryInfo (RegisterClass GPRnopc) 1 False])
   | i `elem` [MRC2] =
     ([BoundInfo, BoundInfo, BoundInfo, BoundInfo, BoundInfo],
-     [TemporaryInfo (RegisterClass GPRwithAPSR) 1])
+     [TemporaryInfo (RegisterClass GPRwithAPSR) 1 False])
   | i `elem` [CDP2] =
     ([BoundInfo, BoundInfo, BoundInfo, BoundInfo, BoundInfo,
       BoundInfo],
@@ -2930,14 +2940,15 @@ operandInfo i
      [BoundInfo])
   | i `elem` [MRC, T2MRC, T2MRC2] =
     ([BoundInfo, BoundInfo, BoundInfo, BoundInfo, BoundInfo, BoundInfo,
-      TemporaryInfo (RegisterClass CCR) 0],
-     [TemporaryInfo (RegisterClass GPRwithAPSR) 1])
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass GPRwithAPSR) 1 False])
   | i `elem` [CDP, T2CDP, T2CDP2] =
     ([BoundInfo, BoundInfo, BoundInfo, BoundInfo, BoundInfo, BoundInfo,
-      BoundInfo, TemporaryInfo (RegisterClass CCR) 0],
+      BoundInfo, TemporaryInfo (RegisterClass CCR) 0 False],
      [])
   | i `elem` [B, TAILJMPd] = ([BlockRefInfo], [])
   | i `elem` [Bcc, T2B, T2Bcc, TB, TTAILJMPd, TTAILJMPdND] =
-    ([BlockRefInfo, BoundInfo, TemporaryInfo (RegisterClass CCR) 0],
+    ([BlockRefInfo, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
      [])
 

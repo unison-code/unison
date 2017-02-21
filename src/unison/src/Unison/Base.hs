@@ -785,9 +785,11 @@ data OperandInfo rc =
     -- and gives some additional information
     TemporaryInfo {
       -- | Register class of the operand
-      oiRegClass :: RegisterClass rc,
+      oiRegClass  :: RegisterClass rc,
       -- | Latency of the operand
-      oiLatency  :: Latency
+      oiLatency   :: Latency,
+      -- | Whether the operand is bypassing
+      oiBypassing :: Bool
     } |
     -- | Specifies that the corresponding operand is a 'Bound'
     BoundInfo |

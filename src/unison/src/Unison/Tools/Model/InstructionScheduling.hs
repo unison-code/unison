@@ -43,6 +43,7 @@ parameters scaleFreq (_, dgs, _, _, _) Function {fCode = code} target =
       dist          = map (map (\(_, _, ls) -> map modelLatency ls)) deps
       im            = instructionManager fCode
       lat           = map (operationLatency oif im) fCode
+      bypass        = map (operationBypass oif im) fCode
       minlive       = map (minLive oif fCode) (sort $ tUniqueOps fCode)
       r2cap         = [(resId ir, resCapacity (res ir)) | ir <- iResources rm]
       cap           = toValueList r2cap
@@ -113,6 +114,12 @@ parameters scaleFreq (_, dgs, _, _, _) Function {fCode = code} target =
       -- third instruction
       ("lat", toJSON lat),
 
+      -- whether each operand is bypassing when its operation is
+      -- implemented by each instruction
+      -- example: bypass[5][2][3]: whether p3 is bypassing when o5 is
+      -- implemented by its third instruction
+      ("bypass", toJSON bypass),
+
       -- capacity of each processor resource
       -- example: cap[1]: capacity of r1
       ("cap", toJSON cap),
@@ -174,20 +181,35 @@ operationLatency oif im o = map (instructionLatency oif o) (oIInstructions im o)
 instructionLatency _ o instr
   | (ioInstruction instr == (General NullInstruction)) ||
     (ioInstruction instr == (General VirtualInstruction)) =
-      mapLatencies (const nullLatency, const nullLatency) o
+      mapToOps (const nullLatency, const nullLatency) o
 instructionLatency _ o instr
   | (ioInstruction instr == (General BarrierInstruction)) =
-  mapLatencies (const nullLatency, const barrierLatency) o
+      mapToOps (const nullLatency, const barrierLatency) o
 instructionLatency oif o
   (IndexedInstruction _ (TargetInstruction instr)) =
     let t2ls = M.fromList $ tempLatencies oif o instr
         p2ls = (M.!) t2ls
-    in mapLatencies (p2ls, p2ls) o
+    in mapToOps (p2ls, p2ls) o
 
 nullLatency = 0
 barrierLatency = 1
 
-mapLatencies (ulf, dlf) i = map ulf (oUseOperands i) ++ map dlf (oDefOperands i)
+mapToOps (ulf, dlf) i = map ulf (oUseOperands i) ++ map dlf (oDefOperands i)
+
+operationBypass oif im o = map (instructionBypass oif o) (oIInstructions im o)
+
+instructionBypass _ o instr
+  | (ioInstruction instr == (General NullInstruction)) ||
+    (ioInstruction instr == (General VirtualInstruction)) =
+      mapToOps (const False, const False) o
+instructionBypass _ o instr
+  | (ioInstruction instr == (General BarrierInstruction)) =
+      mapToOps (const False, const False) o
+instructionBypass oif o
+  (IndexedInstruction _ (TargetInstruction instr)) =
+    let t2bs = M.fromList $ tempBypasses oif o instr
+        p2bs = (M.!) t2bs
+    in mapToOps (p2bs, p2bs) o
 
 minLive oif code t = minLiveOfDef oif t $ potentialDefiner t code
 

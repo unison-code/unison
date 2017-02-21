@@ -80,12 +80,12 @@ insertNopsBefore fs @ (oif, ovf, uf, cf, nf, arf) (blocked, id)
 
 uses _ _ o | isVirtual o = []
 uses arf oif o = [BlockingResourceState (BlockingReg r) l 0
-                      | (TemporaryInfo _ l, r) <- zip (fst $ oif o) (oUses o),
-                                                  S.member r arf]
+                      | (TemporaryInfo {oiLatency =l}, r)
+                        <- zip (fst $ oif o) (oUses o), S.member r arf]
 defs _ _ o | isVirtual o = []
 defs arf oif o = [BlockingResourceState (BlockingReg r) l 0
-                      | (TemporaryInfo _ l, r) <- zip (snd $ oif o) (oDefs o),
-                                                  S.member r arf]
+                      | (TemporaryInfo {oiLatency = l}, r)
+                        <- zip (snd $ oif o) (oDefs o), S.member r arf]
 
 isBlockingRes (BlockingResourceState BlockingRes {} _ 0) = True
 isBlockingRes _ = False

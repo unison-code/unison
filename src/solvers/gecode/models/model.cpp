@@ -913,6 +913,7 @@ void Model::post_basic_model_constraints(block b) {
   post_data_precedences_constraints(b);
   post_fixed_precedences_constraints(b);
   post_participative_instructions_constraints(b);
+  post_bypassing_constraints(b);
 }
 
 void Model::post_connected_users_constraints(block b) {
@@ -1218,7 +1219,7 @@ void Model::post_fixed_precedences_constraints(block b) {
 void Model::post_participative_instructions_constraints(block b) {
   // Certain operations are "participative", meaning that they have a
   // preassigned issue cycle and must be active if scheduled before the last
-  // active operation in the block.
+  // active operation in the block:
 
   for (vector<int> v : input->part) {
     operation p = v[0];
@@ -1232,6 +1233,44 @@ void Model::post_participative_instructions_constraints(block b) {
     // cycle <= max cycle
     constraint(a(p) == (i < c(input->out[b])));
   }
+}
+
+void Model::post_bypassing_constraints(block b) {
+
+  // The operation of a bypassing operand is scheduled in parallel with its
+  // definer:
+
+  for (operation o : input->ops[b]) {
+    for (unsigned pi = 0; pi < input->operands[o].size(); pi++) {
+      bool any_bypass = false;
+      for (unsigned int ii = 0; ii < input->instructions[o].size(); ii++) {
+        if (input->bypass[o][ii][pi]) {
+           any_bypass = true;
+          break;
+        }
+      }
+      if (!any_bypass) continue;
+      IntVarArgs cs;
+      for (unsigned int ii = 0; ii < input->instructions[o].size(); ii++) {
+        if (input->bypass[o][ii][pi]) {
+          operand p = input->operands[o][pi];
+          IntVarArgs dcs;
+          for (temporary t : input->temps[p]) {
+            if (t == NULL_TEMPORARY) {
+              dcs << c(o);
+            } else {
+              dcs << c(input->oper[input->definer[t]]);
+            }
+          }
+          cs << var(element(dcs, y(p)));
+        } else {
+          cs << c(o);
+        }
+      }
+      constraint(c(o) == element(cs, i(o)));
+    }
+  }
+
 }
 
 void Model::post_improved_model_constraints(block b) {

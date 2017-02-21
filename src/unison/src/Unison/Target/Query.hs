@@ -16,6 +16,7 @@ module Unison.Target.Query
      InstructionManager(..),
      instructionManager,
      tempLatencies,
+     tempBypasses,
      latencies,
      dataLatency,
      tempsToInfo,
@@ -99,7 +100,14 @@ operationActivators i2ii o = map ((M.!) i2ii) (oActivators o)
 -- | Gives an association list with temporaries in the operation and operand
 -- latencies corresponding to the given instruction.
 tempLatencies oif o i =
-  nub $ sort $ [(i, l) | (i, TemporaryInfo _ l) <- tempsToInfo oif o i]
+  nub $ sort $
+  [(i, l) | (i, TemporaryInfo {oiLatency = l}) <- tempsToInfo oif o i]
+
+-- | Gives an association list with temporaries in the operation and operand
+-- bypass info corresponding to the given instruction.
+tempBypasses oif o i =
+  nub $ sort $
+  [(i, b) | (i, TemporaryInfo {oiBypassing = b}) <- tempsToInfo oif o i]
 
 -- | Gives an association list with temporaries in the operation and operand
 -- info corresponding to the given instruction.
