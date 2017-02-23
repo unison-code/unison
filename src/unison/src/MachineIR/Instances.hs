@@ -177,7 +177,7 @@ showMachineOperand (MachineReg name states) =
 showMachineOperand (MachineImm value) = show value
 showMachineOperand (MachineBlockRef id) = "%bb." ++ show id
 showMachineOperand (MachineGlobalAddress address offset) =
-  "@" ++ maybeEscape address ++ showOffset offset
+  "@" ++ maybeEscape address ++ maybeShowOffset offset
 showMachineOperand (MachineSymbol name) = "<mcsymbol " ++ name ++ ">"
 showMachineOperand (MachineJumpTableIndex index) = jumpTablePrefix ++ show index
 showMachineOperand (MachineExternal name) = "$" ++ name
@@ -200,6 +200,8 @@ showMachineOperand (MachineCFIDefReg reg) = ".cfi_def_cfa_register %" ++ reg
 showMachineOperand (MachineCFIOffset reg off) = ".cfi_offset %" ++ reg ++ ", " ++ show off
 showMachineOperand (MachineRegMask name) = "csr_" ++ name
 showMachineOperand (MachineConstantPoolIndex idx) = "%const." ++ idx
+showMachineOperand (MachineFPImm i f e) =
+  "float " ++ show i ++ "." ++ show f ++ "e" ++ showOffset e
 showMachineOperand mo = show mo
 
 jumpTablePrefix = "%jump-table."
@@ -214,10 +216,12 @@ maybeEscape ga @ (d:_)
   | isDigit d = doubleQuoted id ("\\" ++ ga)
 maybeEscape ga = ga
 
-showOffset 0 = ""
+maybeShowOffset 0 = ""
+maybeShowOffset n = showOffset n
+
 showOffset n
-  | n < 0 = "-" ++ show n
-  | n > 0 = "+" ++ show n
+  | n < 0  = "-" ++ show n
+  | n >= 0 = "+" ++ show n
 
 instance Show r => Show (MachineOperand r) where
   show (MachineTemp id _) = inBraces ["temp", show id]
