@@ -52,6 +52,7 @@ protected:
   Driver::StringValueOption _output_file; // Output file
   Driver::BoolOption _output_every_iteration; // Dump an output every iteration
   Driver::BoolOption _verbose; // Verbose mode
+  Driver::BoolOption _emit_improvement; // Emit estimated improvement
 #ifdef GRAPHICS
   Driver::BoolOption _gist_global; // Run Gist for global problems
   Driver::IntOption _gist_block; // Block on which to run Gist
@@ -132,6 +133,7 @@ public:
   string output_file(void) const {return _output_file.value();}
   bool output_every_iteration(void) const {return _output_every_iteration.value();}
   bool verbose(void) const {return _verbose.value();}
+  bool emit_improvement(void) const {return _emit_improvement.value();}
 #ifdef GRAPHICS
   bool gist_global(void) const {return _gist_global.value();}
   int gist_block(void) const {return _gist_block.value();}

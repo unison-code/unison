@@ -325,6 +325,10 @@ void emit_output(GlobalModel * base, vector<ResultData> & results,
       cerr << "upper bound: " << max_val
            << ", improvement: " << imp << "%" << endl;
     }
+    if (base->options->emit_improvement()) {
+      cerr << fixed << setprecision(1);
+      cerr << "improvement: " << imp << "%" << endl;
+    }
   }
 
   if (base->options->output_file() == "") {

@@ -43,6 +43,7 @@ ModelOptions::ModelOptions(void)
     _output_file("-o", "output file", ""),
     _output_every_iteration("--output-every-iteration", "produce an output file every iteration (only works if an output file is set)", false),
     _verbose("--verbose", "verbose mode", false),
+    _emit_improvement("--emit-improvement", "emit estimated improvement", false),
 #ifdef GRAPHICS
     _gist_global("--gist-global", "run Gist for global problems", false),
     _gist_block("--gist-block", "block on which to run Gist", -1),
@@ -112,6 +113,7 @@ ModelOptions::ModelOptions(void)
   add(_output_file);
   add(_output_every_iteration);
   add(_verbose);
+  add(_emit_improvement);
 #ifdef GRAPHICS
   add(_gist_global);
   add(_gist_block);
