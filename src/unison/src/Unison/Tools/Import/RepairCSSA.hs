@@ -24,6 +24,7 @@ import Unison.Target.API
 import qualified Unison.Graphs.BCFG as BCFG
 import Unison.Graphs.Hoopl
 import Unison.Graphs.Hoopl.Liveness
+import qualified Unison.Graphs.Partition as P
 import Unison.Transformations.PropagatePhiCongruences
 
 -- | This algorithm for CSSA reparation is based on Method III from (Sreedhar,
@@ -31,26 +32,26 @@ import Unison.Transformations.PropagatePhiCongruences
 -- end of a block is addressed in (Boissinot, 2009) but not currently handled
 -- here.
 
-repairCSSA :: (Ord i, Show i, Ord r) =>
+repairCSSA :: (Ord i, Show i, Ord r, Show r) =>
               Function i r -> TargetWithOptions i r rc s -> Function i r
 repairCSSA f @ Function {fCode = code} target =
     let bcfg          = BCFG.fromFunction (branchInfo target) f
-        phiOpers      = sort $ filter isPhi (flatten code)
-        phiCongrClass = mkPhiCongruenceMap phiOpers
+        phiInsts      = sort $ filter isPhi (flatten code)
+        phiCongrClass = mkPhiCongruenceMap phiInsts :: Partition TemporaryId
         live          = liveTemporaries f target
         (code', _, _) = foldl (repairCSSAForPhi bcfg)
-                              (code, live, phiCongrClass) phiOpers
+                              (code, live, phiCongrClass) phiInsts
     in f {fCode = code'}
 
 -- | Updates code, live and the phi-congruence classes with the copies
--- | necessaries to break interferences related to phiOper.
-repairCSSAForPhi bcfg (code, live, phiCongrClass) phiOper =
-    -- phiOper in the form of x0 = f(x1:l1, x2:l2, ..., xn:ln)
-    let phiId               = oId phiOper
+-- | necessaries to break interferences related to phiInst.
+repairCSSAForPhi bcfg (code, live, phiCongrClass) phiInst =
+    -- phiInst in the form of x0 = f(x1:l1, x2:l2, ..., xn:ln)
+    let phiId               = oId phiInst
         candidateResSet     = S.empty
-        xs                  = phiTemps phiOper code
+        xs                  = phiTemps phiInst code
         unresNeighborMap    = M.fromList [(x, S.empty) | (x, _) <- xs]
-        -- pairs of resources xi:li and xj:lj in phiOper, where xi != xj, such
+        -- pairs of resources xi:li and xj:lj in phiInst, where xi != xj, such
         -- that there exists yi in phiCongrClass[xi], yj in phiCongrClass[xj],
         -- and yi and yj interfere with each other
         phiPairs            = [((xi, li), (xj, lj))
@@ -64,19 +65,17 @@ repairCSSAForPhi bcfg (code, live, phiCongrClass) phiOper =
          phiCongrClass')    = foldl (insertCopy bcfg phiId xs)
                               (code, live, phiCongrClass)
                               (S.toList candidateResSet'')
-        -- Merge phiCongruenceClass's for all resources in phiOper
-        xs'                 = tOps [phiOper']
-        phiOper'            = findInstr phiId code'
-        cPhiCongrClass      = S.unions [phiCongrClass' M.! xi | xi <- xs']
-        -- Let phiCongruenceClass[xi] simply point to cPhiCongrClass
-        phiCongrClass''     = foldl (insert' cPhiCongrClass) phiCongrClass' xs'
+        -- Merge phiCongruenceClass's for all resources in phiInst
+        xs'                 = tOps [findOpr phiId code']
+        phiCongrClass''     = foldl P.connectElements phiCongrClass'
+                              [(tId xi, tId xj) | xi <- xs', xj <- xs']
     in (code', live', phiCongrClass'')
 
 -- | Whether there exists yi in phiCongrClass[xi], yj in phiCongrClass[xj] and
 -- yi and yj interfere with each other.
 interfere (liveIn, liveOut) phiCongrClass (xi, xj) =
-    let cxi  = phiCongrClass M.! xi
-        cxj  = phiCongrClass M.! xj
+    let cxi  = classTemps phiCongrClass xi
+        cxj  = classTemps phiCongrClass xj
         iIn  = any (tempIntersection (cxi, cxj)) (M.toList liveIn)
         iOut = any (tempIntersection (cxi, cxj)) (M.toList liveOut)
     in iIn || iOut
@@ -91,8 +90,8 @@ tempIntersection (cxi, cxj) (_, ts) =
 -- Section 4.3 of (Sreedhar, 1999).
 copiesForPair (_, liveOut) phiCongrClass (candidateResSet, unresNeighborMap)
                   ((xi, li), (xj, lj)) =
-    let intXi = S.intersection (phiCongrClass M.! xi) (liveOut M.! lj)
-        intXj = S.intersection (phiCongrClass M.! xj) (liveOut M.! li)
+    let intXi = S.intersection (classTemps phiCongrClass xi) (liveOut M.! lj)
+        intXj = S.intersection (classTemps phiCongrClass xj) (liveOut M.! li)
     in phiCopies (candidateResSet, unresNeighborMap) (xi, intXi) (xj, intXj)
 
 phiCopies (candidateResSet, unresNeighborMap) (xi, intXi) (xj, intXj)
@@ -156,27 +155,27 @@ resolve (candidateResSet, unresNeighborMap) x
         in (candidateResSet', unresNeighborMap')
 
 insertCopy bcfg phiId xs (code, live, phiCongrClass) xi =
-    let phiOper = findInstr phiId code
-    in if phiTarget phiOper == xi
-       then insertTargetCopy (oId phiOper) xi (code, live, phiCongrClass)
-       else -- For every lk associated with xi in the source list of phiOper
-       foldl (insertSourceCopy bcfg (oId phiOper) xi)
+    let phiInst = findOpr phiId code
+    in if phiTarget phiInst == xi
+       then insertTargetCopy (oId phiInst) xi (code, live, phiCongrClass)
+       else -- For every lk associated with xi in the source list of phiInst
+       foldl (insertSourceCopy bcfg (oId phiInst) xi)
                  (code, live, phiCongrClass) ls
            where ls = [lk | (x, lk) <- xs, x == xi]
 
 -- | Inserts a copy for x0 (the phi target)
 insertTargetCopy phiId x0 (code, (liveIn, liveOut), phiCongrClass) =
-    let xs             = phiTemps (findInstr phiId code) code
+    let xs             = phiTemps (findOpr phiId code) code
         --Insert a copy inst: x0 = xnew_0 at the beginning of L0
         xnew_0         = newTemp code
         l0             = fromSingleton [l | (x, l) <- xs, x == x0]
         code'          = insertCopyInBlock after thePhi code l0 (xnew_0, x0)
-        -- Replace x0 with xnew_0 as the target in phiOper
+        -- Replace x0 with xnew_0 as the target in phiInst
         code''         = mapToOperationInBlocks
                          (replacePhiTemp phiId xs (x0, l0) (xnew_0, l0))
                          code'
         -- Add xnew_0 in phiCongruenceClass[xnew_0]
-        phiCongrClass' = M.insert xnew_0 (S.fromList [xnew_0]) phiCongrClass
+        phiCongrClass' = P.addElement phiCongrClass (tId xnew_0)
         -- Update liveness information
         liveIn'        = M.adjust (S.delete x0) l0 liveIn
         liveIn''       = M.adjust (S.insert xnew_0) l0 liveIn'
@@ -184,16 +183,16 @@ insertTargetCopy phiId x0 (code, (liveIn, liveOut), phiCongrClass) =
 
 -- | Inserts a copy for xi (a source resource of the phi instruction)
 insertSourceCopy bcfg phiId xi (code, (liveIn, liveOut), phiCongrClass) lk =
-    let xs             = phiTemps (findInstr phiId code) code
+    let xs             = phiTemps (findOpr phiId code) code
         -- Insert a copy inst: xnew_i = xi at the end of lk
         xnew_i         = newTemp code
         code'          = insertCopyInBlock before theOut code lk (xi, xnew_i)
-        -- Replace xi with xnew_i in phiOper
+        -- Replace xi with xnew_i in phiInst
         code''         = mapToOperationInBlocks
                          (replacePhiTemp phiId xs (xi, lk) (xnew_i, lk))
                          code'
         -- Add xnew_i in phiCongruenceClass[xnew_i]
-        phiCongrClass' = M.insert xnew_i (S.fromList [xnew_i]) phiCongrClass
+        phiCongrClass' = P.addElement phiCongrClass (tId xnew_i)
         -- Update liveness information
         -- liveOut[lk] += xnew_i
         liveOut'       = M.adjust (S.insert xnew_i) lk liveOut
@@ -219,11 +218,11 @@ theOut = const isOut
 
 -- | Whether xi is in liveIn[lj] or used in a phi instruction associated with lk
 usedInBlock liveIn xi lk Block {bLab = lj, bCode = code} =
-    let phiOpers  = filter isPhi code
-        usedInPhi = any (phiUserOf (xi, lk)) phiOpers
+    let phiInsts  = filter isPhi code
+        usedInPhi = any (phiUserOf (xi, lk)) phiInsts
     in S.member xi (liveIn M.! lj) || usedInPhi
 
-phiUserOf (x, l) phiOper = (x, l) `elem` phiUses phiOper
+phiUserOf (x, l) phiInst = (x, l) `elem` phiUses phiInst
 
 -- | Replaces the given (temp, label) in the phiId
 replacePhiTemp phiId xs (x, l) (x', l') bi
@@ -238,9 +237,9 @@ replacePhiTemp phiId xs (x, l) (x', l') bi
 flattenPhiUses xs = concat [[xi, BlockRef li] | (xi, li) <- xs]
 
 -- | Constructs the initial phi-congruence class map
-mkPhiCongruenceMap phiOpers =
-    let xs = nub $ tOps phiOpers
-    in M.fromList [(x, S.fromList [x]) | x <- xs]
+mkPhiCongruenceMap phiInsts =
+    let xs = nub $ tOps phiInsts
+    in P.fromNodes (map tId xs)
 
 -- | Gives liveness information for code with phi instructions following the
 -- liveness definition given in Section 3 of (Sreedhar, 1999).
@@ -275,11 +274,12 @@ remove = flip S.difference
 
 newTemp = mkTemp . newTempIndex . flatten
 
-phiTemps phiOper code =
-    let x0 = phiTarget phiOper
+phiTemps phiInst code =
+    let x0 = phiTarget phiInst
         l0 = definerBlock code x0
-    in (x0, l0) : phiUses phiOper
+    in (x0, l0) : phiUses phiInst
 
-findInstr id code = fromJust $ find (isId id) (flatten code)
+findOpr id code = fromJust $ find (isId id) (flatten code)
 
-insert' v m k = M.insert k v m
+classTemps phiCongrClass =
+  S.fromList . map mkTemp . fromJust . P.equivalent phiCongrClass

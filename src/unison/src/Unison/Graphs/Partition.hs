@@ -15,8 +15,8 @@ This file is part of Unison, see http://unison-code.github.io
 module Unison.Graphs.Partition
        (fromPairList, fromNodes, toPairList, complete, toList, fromGraph,
         toGraph, fromPartitionMap, toPartitionMap, equivalent,
-        equivalentPartition, delElement, connectElements, disconnectElements,
-        size, toDot) where
+        equivalentPartition, addElement, delElement, connectElements,
+        disconnectElements, size, toDot) where
 
 import Data.Ord
 import Data.List
@@ -80,6 +80,9 @@ equivalentPartition p e =
     case find (\pc -> (toNode e) `elem` nodes pc) (componentsOf (graph p)) of
       Just g  -> Just (Partition g)
       Nothing -> Nothing
+
+addElement :: Partitionable a => Partition a -> a -> Partition a
+addElement p e = graphMap (insNode (toNode e, ())) p
 
 delElement p e = graphMap (delNode (toNode e)) p
 
