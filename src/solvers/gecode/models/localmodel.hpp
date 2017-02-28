@@ -114,7 +114,7 @@ public:
 
   void post_presolver_constraints(void);
 
-  static void post_prescheduling_constraints_in_space(Space& s);
+  static void post_before_scheduling_constraints_in_space(Space& s);
 
   void post_cost_definition(void);
 

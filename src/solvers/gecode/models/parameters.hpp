@@ -130,8 +130,8 @@ public:
   // instructions that activate each operation
   vector<vector<instruction> > activators;
 
-  // participative instructions
-  vector<vector<int> > part;
+  // prescheduling of operations into issue cycles
+  vector<vector<int> > prescheduled;
 
   // Processor parameters
 

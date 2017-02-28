@@ -868,11 +868,8 @@ where
 \activationEquation
 \constraintComment{slack balancing}{the slack of adjacent operands is balanced}
 \slackBalancingEquation
-\constraintComment{participative operations}{certain operations are
-\emph{participative}, which means that they have a preassigned issue cycle and
-must be active if the preassigned issue cycle is lower than the issue cycle for
-the last active operation in the block}
-\participativeEquation
+\constraintComment{prescheduling}{certain operations are prescheduled before the last operation issue}
+\preschedulingEquation
 \constraintComment{bypassing}{the operation of a bypassing operand is scheduled in parallel with its definer}
 \bypassingEquation
 
@@ -887,10 +884,7 @@ of block $b$.
 %
 To optimize for speed, $\blockWeight{b}$ is set to $\blockFrequency{b}$
 (corresponding to $\optimizeDynamic{} = \code{true}$), and $\blockCost{b}$ is
-defined as $\max_{o \in \operations{b} \suchThat
-  \activeOperation{o}}{\operationIssueCycle{o}}$ (or simply as
-$\operationIssueCycle{\operator{out}(b)}$ where $\operator{out}(b)$ is the
-out-delimiter of block $b$).
+defined as $\blockOut{b}$.
 %
 To optimize for code size, $\blockWeight{b}$ is disregarded (corresponding to
 $\optimizeDynamic{} = \code{false}$) and $\blockCost{b}$ is defined as $\sum_{o

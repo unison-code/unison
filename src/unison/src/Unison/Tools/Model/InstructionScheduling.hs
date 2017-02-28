@@ -60,7 +60,8 @@ parameters scaleFreq (_, dgs, _, _, _) Function {fCode = code} target =
       maxc          = map (computeMaxC (rm, oif, dgs)) code
       itype         = map ((M.!) typeNumbers . oType) fCode
       insname       = map (show . ioInstruction) i
-      part          = map (\o -> (oId o, (aPart (oAs o)))) $ filter (\o -> isJust (aPart (oAs o))) fCode
+      preschedule   = map (\o -> (oId o, (aPrescheduled (oAs o)))) $
+                      filter (\o -> isJust (aPrescheduled (oAs o))) fCode
     in
      [
       -- Program parameters
@@ -170,10 +171,10 @@ parameters scaleFreq (_, dgs, _, _, _) Function {fCode = code} target =
       -- example: insname[4]: name of i4
       ("insname", toJSON insname),
 
-      -- participative instructions
-      -- example: cycle[2][0]: the third participative operation
-      --          cycle[2][1]: issue cycle of the third participative operation
-      ("part", toJSON part)
+      -- prescheduling of operations into issue cycles
+      -- example: preschedule[2][0]: operation in the third prescheduling
+      --          preschedule[2][1]: issue cycle in the third prescheduling
+      ("preschedule", toJSON preschedule)
      ]
 
 operationLatency oif im o = map (instructionLatency oif o) (oIInstructions im o)

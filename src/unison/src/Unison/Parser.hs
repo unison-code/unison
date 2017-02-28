@@ -76,7 +76,7 @@ data LsAttribute r =
   LsRemat Bool |
   LsJTBlocks [LsOperand r] |
   LsBranchTaken (Maybe Bool) |
-  LsPart (Maybe IssueCycle)
+  LsPrescheduled (Maybe IssueCycle)
   deriving (Show)
 
 data LsRWObject =
@@ -280,7 +280,7 @@ attributes =
                             (fetchAttr (LsRemat False) isLsRemat attrs)
                             (fetchAttr (LsJTBlocks []) isLsJTBlocks attrs)
                             (fetchAttr (LsBranchTaken Nothing) isLsBranchTaken attrs)
-                            (fetchAttr (LsPart Nothing) isLsPart attrs))
+                            (fetchAttr (LsPrescheduled Nothing) isLsPrescheduled attrs))
 
 attribute = try (sideEffectListAttribute "reads" LsReads)
             <|> sideEffectListAttribute "writes" LsWrites
@@ -291,7 +291,7 @@ attribute = try (sideEffectListAttribute "reads" LsReads)
             <|> simpleAttribute "remat" (LsRemat True)
             <|> operandListAttribute "jtblocks" LsJTBlocks
             <|> boolAttribute "taken" (LsBranchTaken . Just)
-            <|> integerAttribute "part" (LsPart . Just)
+            <|> integerAttribute "part" (LsPrescheduled . Just)
 
 sideEffectListAttribute = attributeList sideEffect
 
@@ -526,10 +526,10 @@ isLsJTBlocks (LsJTBlocks _) = True
 isLsJTBlocks _              = False
 
 isLsBranchTaken (LsBranchTaken _) = True
-isLsBranchTaken _              = False
+isLsBranchTaken _                 = False
 
-isLsPart (LsPart _) = True
-isLsPart _           = False
+isLsPrescheduled (LsPrescheduled _) = True
+isLsPrescheduled _                  = False
 
 toFunction target
   (cmms, name, body, cs, ffobjs, fobjs, sp, (jtk, jt), goal, src) =
@@ -621,7 +621,8 @@ readInstr (LsTargetInstruction i) = TargetInstruction (read i)
 
 toAttributes (LsAttributes (LsReads reads) (LsWrites writes) (LsAttrCall call)
               (LsMem mem) (LsActivators acs) (LsVirtualCopy vcopy)
-              (LsRemat rm) (LsJTBlocks bs) (LsBranchTaken bt) (LsPart pa)) =
+              (LsRemat rm) (LsJTBlocks bs) (LsBranchTaken bt)
+              (LsPrescheduled pa)) =
   mkAttributes (map toRWObject reads) (map toRWObject writes) call mem
                (map readInstr acs) vcopy rm (map lsBlockRefId bs) bt pa
 
@@ -636,7 +637,7 @@ toRWObject (LsOtherSideEffect r) = OtherSideEffect (read r)
 mkNullLsAttributes =
   LsAttributes (LsReads []) (LsWrites []) (LsAttrCall Nothing) (LsMem Nothing)
   (LsActivators []) (LsVirtualCopy False) (LsRemat False) (LsJTBlocks [])
-  (LsBranchTaken Nothing) (LsPart Nothing)
+  (LsBranchTaken Nothing) (LsPrescheduled Nothing)
 
 mkNullLsBlockAttributes = LsBlockAttributes []
 

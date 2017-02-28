@@ -60,7 +60,7 @@ Parameters::Parameters(JSONVALUE root) :
   minlive       (get_vector<int>(getRoot(root, "minlive"))),
   dep           (get_3d_vector<int>(getRoot(root, "dep"))),
   activators    (get_2d_vector<int>(getRoot(root, "activators"))),
-  part          (get_2d_vector<int>(getRoot(root, "part"))),
+  prescheduled  (get_2d_vector<int>(getRoot(root, "preschedule"))),
 
   // Processor parameters
 

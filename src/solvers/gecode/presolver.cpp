@@ -100,6 +100,7 @@ string produce_json(Parameters &input)
        << emit_json_line("minlive", input.minlive)
        << emit_json_line("dep", input.dep)
        << emit_json_line("activators", input.activators)
+       << emit_json_line("preschedule", input.prescheduled)
        << emit_json_line("I", input.I)
        << emit_json_line("R", input.R)
        << emit_json_line("dist", input.dist)
@@ -166,8 +167,7 @@ string produce_json(Parameters &input)
        << emit_json_line("instr_cond", input.instr_cond)
        << emit_json_line("value_precede_chains", input.value_precede_chains)
        << emit_json_line("quasi_adjacent", input.quasi_adjacent)
-       << emit_json_line("long_latency", input.long_latency)
-       << emit_json_line_last("part", input.part)
+       << emit_json_line_last("long_latency", input.long_latency)
        << "}\n";
   return json.str();
 }

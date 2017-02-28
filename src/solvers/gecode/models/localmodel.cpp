@@ -189,9 +189,9 @@ void LocalModel::post_presolver_constraints(void) {
   Model::post_presolver_constraints(b);
 }
 
-void LocalModel::post_prescheduling_constraints_in_space(Space& s) {
+void LocalModel::post_before_scheduling_constraints_in_space(Space& s) {
   LocalModel& m = static_cast<LocalModel&>(s);
-  m.post_prescheduling_constraints(m.b);
+  m.post_before_scheduling_constraints(m.b);
 }
 
 void LocalModel::post_cost_definition(void) {
@@ -294,7 +294,7 @@ void LocalModel::post_aggressive_branchers(void) {
 
   post_routing_branchers(true);
 
-  branch(*this, &LocalModel::post_prescheduling_constraints_in_space);
+  branch(*this, &LocalModel::post_before_scheduling_constraints_in_space);
 
   branch_on_pressure_scheduling(*this, v_c);
 
@@ -316,7 +316,7 @@ void LocalModel::post_trivial_branchers(void) {
   branch(*this, ts, INT_VAR_NONE(), INT_VAL_MIN(),
          NULL, &print_temporary_decision);
 
-  branch(*this, &LocalModel::post_prescheduling_constraints_in_space);
+  branch(*this, &LocalModel::post_before_scheduling_constraints_in_space);
 
   branch(*this, v_c, INT_VAR_MIN_MIN(), INT_VAL_MIN(),
          &schedulable, &print_cycle_decision);
@@ -342,7 +342,7 @@ void LocalModel::post_minimum_cost_branchers(void) {
   branch(*this, ts, INT_VAR_NONE(), INT_VAL_MIN(),
          NULL, &print_temporary_decision);
 
-  branch(*this, &LocalModel::post_prescheduling_constraints_in_space);
+  branch(*this, &LocalModel::post_before_scheduling_constraints_in_space);
 
   branch(*this, v_c, INT_VAR_MIN_MIN(), INT_VAL_MIN(),
          &schedulable, &print_cycle_decision);
@@ -365,7 +365,7 @@ void LocalModel::post_fail_first_branchers(void) {
   branch(*this, ts, INT_VAR_NONE(), INT_VAL_MIN(),
          NULL, &print_temporary_decision);
 
-  branch(*this, &LocalModel::post_prescheduling_constraints_in_space);
+  branch(*this, &LocalModel::post_before_scheduling_constraints_in_space);
 
   branch(*this, v_c, INT_VAR_SIZE_MIN(), INT_VAL_MIN(),
          &schedulable, &print_cycle_decision);
@@ -379,7 +379,7 @@ void LocalModel::post_conservative_branchers(void) {
 
   post_routing_branchers(false);
 
-  branch(*this, &LocalModel::post_prescheduling_constraints_in_space);
+  branch(*this, &LocalModel::post_before_scheduling_constraints_in_space);
 
   branch_on_pressure_scheduling(*this, v_c);
 

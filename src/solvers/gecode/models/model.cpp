@@ -912,7 +912,7 @@ void Model::post_basic_model_constraints(block b) {
   post_initial_precedence_constraints(b);
   post_data_precedences_constraints(b);
   post_fixed_precedences_constraints(b);
-  post_participative_instructions_constraints(b);
+  post_prescheduling_constraints(b);
   post_bypassing_constraints(b);
 }
 
@@ -1216,23 +1216,21 @@ void Model::post_fixed_precedences_constraints(block b) {
 
 }
 
-void Model::post_participative_instructions_constraints(block b) {
-  // Certain operations are "participative", meaning that they have a
-  // preassigned issue cycle and must be active if scheduled before the last
-  // active operation in the block:
+void Model::post_prescheduling_constraints(block b) {
 
-  for (vector<int> v : input->part) {
-    operation p = v[0];
-    issue_cycle i = v[1];
+  // Certain operations are prescheduled before the last operation issue:
 
-    if (input->oblock[p] != b)
-        continue;
+  for (vector<int> v : input->prescheduled) {
+    operation o = v[0];
+    issue_cycle c0 = v[1];
 
-    constraint(a(p) >> (c(p) == i));
+    if (input->oblock[o] != b)
+      continue;
 
-    // cycle <= max cycle
-    constraint(a(p) == (i < c(input->out[b])));
+    constraint(a(o) >> (c(o) == c0));
+    constraint(a(o) == (c0 < c(input->out[b])));
   }
+
 }
 
 void Model::post_bypassing_constraints(block b) {
@@ -2455,7 +2453,7 @@ void Model::post_mandatory_reuse_constraints(block b) {
   }
 }
 
-void Model::post_prescheduling_constraints(block b) {
+void Model::post_before_scheduling_constraints(block b) {
 
   post_temporary_interference_constraints(b);
 

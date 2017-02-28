@@ -157,11 +157,11 @@ mkBlock = Block
 
 mkDummyBlock = mkBlock (-1) mkNullBlockAttributes
 
-mkAttributes reads writes call mem acts vcopy remat jtblocks btaken part =
+mkAttributes reads writes call mem acts vcopy remat jtblocks btaken pres =
     Attributes {aReads = reads, aWrites = writes, aCall = call,
                 aMem = mem, aActivators = acts, aVirtualCopy = vcopy,
                 aRemat = remat, aJTBlocks = jtblocks, aBranchTaken = btaken,
-                aPart = part}
+                aPrescheduled = pres}
 
 mkNullAttributes = mkAttributes [] [] Nothing Nothing [] False False [] Nothing Nothing
 

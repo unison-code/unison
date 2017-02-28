@@ -99,8 +99,17 @@
   \tableSpace
 
   \parameter
-  {\participative{o}{c}}
-    {whether operation $o$ is \emph{participative} with cycle $\cycle{c}$}
-  \json{part}{[[2, 3], [1, 1], [60, 24]]}
+  {\prescheduled{o}{c}}
+    {whether operation $o$ is \emph{prescheduled} to cycle $\cycle{c}$}
+  \json{preschedule}{[[2, 3], [1, 1], [60, 24]]}
+  \jsonComment{note: the example JSON array is extracted from a different
+    program (Hexagon programs do not yet yield prescheduling constraints)}
+
+  \tableSpace
+
+  \parameter
+  {\blockOut{b}}
+  {out-delimiter of block $b$}
+  \json{out}{[11, 29, 34]}
 
 \end{longtable}

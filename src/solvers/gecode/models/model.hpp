@@ -378,7 +378,7 @@ public:
   void post_data_precedences_constraints(block b);
   void post_processor_resources_constraints(block b);
   void post_fixed_precedences_constraints(block b);
-  void post_participative_instructions_constraints(block b);
+  void post_prescheduling_constraints(block b);
   void post_bypassing_constraints(block b);
 
   void post_improved_model_constraints(block b);
@@ -430,7 +430,7 @@ public:
   void post_initial_precedence_constraints(block b);
   void post_mandatory_reuse_constraints(block b);
 
-  void post_prescheduling_constraints(block b);
+  void post_before_scheduling_constraints(block b);
   void post_temporary_interference_constraints(block b);
   void post_instruction_assignment_constraints(
        const vector<InstructionAssignment> & forbidden);

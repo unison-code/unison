@@ -104,19 +104,17 @@
 \end{equation}
 }
 
-\newcommand{\participativeEquation}{
-\begin{equation}\textstyle\label{eq:participative}
-  \activeOperation{p} \implies \operationIssueCycle{p} = \cycle{c}
+\newcommand{\preschedulingEquation}{
+\begin{equation}\textstyle\label{eq:prescheduling}
+  \activeOperation{o} \implies \operationIssueCycle{o} = \cycle{c}
   \quad
-  \forallIn{p}{\allOperations{}} \suchThat \participative{p}{c}
+  \forallIn{o}{\allOperations{}} \suchThat \prescheduled{o}{c}
 \end{equation}
 and
 \begin{equation}
-  \activeOperation{p} \iff \cycle{c} <
-  \max_{o \in \operations{\operationBlock{p}} \suchThat
-  \activeOperation{o}}{\operationIssueCycle{o}}
+  \activeOperation{o} \iff \cycle{c} < \operationIssueCycle{\operator{out}(\operationBlock{o})}
   \quad
-  \forallIn{p}{\allOperations{}} \suchThat \participative{p}{c}
+  \forallIn{o}{\allOperations{}} \suchThat \prescheduled{o}{c}
 \end{equation}
 }
 

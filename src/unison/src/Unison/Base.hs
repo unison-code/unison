@@ -456,26 +456,26 @@ data BlockAttributes = BlockAttributes {
 
 data Attributes i r = Attributes {
   -- | Read objects
-  aReads       :: [RWObject r],
+  aReads        :: [RWObject r],
   -- | Written objects
-  aWrites      :: [RWObject r],
+  aWrites       :: [RWObject r],
   -- | Identifier of the related call operation, if any
-  aCall        :: Maybe OperationId,
+  aCall         :: Maybe OperationId,
   -- | Identifier of the memory section accessed by reads and writes, if any
-  aMem         :: Maybe Integer,
+  aMem          :: Maybe Integer,
   -- | Instructions that activate the operation
-  aActivators  :: [Instruction i],
+  aActivators   :: [Instruction i],
   -- | Whether the operation derives from a virtual copy
-  aVirtualCopy :: Bool,
+  aVirtualCopy  :: Bool,
   -- | Whether the operation rematerializes a value
-  aRemat       :: Bool,
+  aRemat        :: Bool,
   -- | Jump table target blocks, if any
-  aJTBlocks    :: [BlockId],
+  aJTBlocks     :: [BlockId],
   -- | Whether the branch is predicted to be taken (only applies to conditional
   -- branches)
-  aBranchTaken :: Maybe Bool,
-  -- | Whether the operation is participative and in what issue cycle
-  aPart        :: Maybe IssueCycle
+  aBranchTaken  :: Maybe Bool,
+  -- | Whether the operation is prescheduled and in what issue cycle
+  aPrescheduled :: Maybe IssueCycle
 } deriving (Eq)
 
 -- | Object representing the side-effect of an 'Operation'. Operations can write
