@@ -291,7 +291,7 @@ attribute = try (sideEffectListAttribute "reads" LsReads)
             <|> simpleAttribute "remat" (LsRemat True)
             <|> operandListAttribute "jtblocks" LsJTBlocks
             <|> boolAttribute "taken" (LsBranchTaken . Just)
-            <|> integerAttribute "part" (LsPrescheduled . Just)
+            <|> integerAttribute "cycle" (LsPrescheduled . Just)
 
 sideEffectListAttribute = attributeList sideEffect
 
