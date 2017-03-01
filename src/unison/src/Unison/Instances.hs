@@ -39,12 +39,7 @@ import Unison.Constructors
 
 import MachineIR.Instances
 
-instance Eq i => Eq (BlockOperation i r) where
-    SingleOperation {oId = i} == SingleOperation {oId = j} = i == j
-    (Bundle bi) == (Bundle bj)                             = bi == bj
-    _ == _                                                 = False
-
-instance Ord i => Ord (BlockOperation i r) where
+instance (Ord i, Eq r) => Ord (BlockOperation i r) where
     compare SingleOperation {oId = i} SingleOperation {oId = j} =
         compare i j
     compare (Bundle bi) (Bundle bj) = compare bi bj
@@ -104,7 +99,7 @@ instance Num RegisterAtom where
     signum (RegisterAtom a)             = RegisterAtom (signum a)
     fromInteger                         = RegisterAtom
 
-instance (Eq i) => Eq (CGEdgeLabel i r) where
+instance (Eq i, Eq r) => Eq (CGEdgeLabel i r) where
     (CopyEdge bi) == CopyEdge (bi')           = bi == bi'
     (CongruenceEdge b) == (CongruenceEdge b') = b == b'
     (CombineEdge bi) == (CombineEdge bi')     = bi == bi'

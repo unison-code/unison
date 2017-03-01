@@ -131,6 +131,7 @@ module Unison.Util
         peephole,
         makeOptional,
         addNullTemp,
+        foldVirtualCopy,
         -- * Accessors
         oAllOperands,
         oUseOperands,
@@ -657,7 +658,7 @@ insertWhen f g newCode code =
     let [preCode, postCode] = split (f $ whenElt g) code
     in preCode ++ newCode ++ postCode
 
-moveOperation :: Eq (BlockOperation i r) => BlockOperation i r ->
+moveOperation :: Eq i => Eq r => BlockOperation i r ->
                  BlockPosition i r -> BlockOperationPredicate i r ->
                  [BlockOperation i r] -> [BlockOperation i r]
 moveOperation o f g = insertWhen f g [o] .  delete o
@@ -667,7 +668,7 @@ before = keepDelimsL
 after ::  BlockPosition i r
 after = keepDelimsR
 
-moveOperations :: Eq (BlockOperation i r) => BlockOperationPredicate i r ->
+moveOperations :: Eq i => Eq r => BlockOperationPredicate i r ->
                   BlockPosition i r -> BlockOperationPredicate i r ->
                   Block i r -> Block i r
 moveOperations isCandidate relPos isTargetInst b @ Block {bCode = code}
@@ -677,7 +678,7 @@ moveOperations isCandidate relPos isTargetInst b @ Block {bCode = code}
           code'  = foldl (moveOpr relPos isTargetInst) code candidates
       in b {bCode = code'}
 
-moveOpr :: Eq (BlockOperation i r) => BlockPosition i r -> BlockOperationPredicate i r
+moveOpr :: Eq i => Eq r => BlockPosition i r -> BlockOperationPredicate i r
      -> [BlockOperation i r] -> BlockOperation i r -> [BlockOperation i r]
 moveOpr relPos isTargetInst code o = moveOperation o relPos isTargetInst code
 
@@ -879,6 +880,21 @@ addNullInstr is = [mkNullInstruction] ++ is
 
 addNullTemp :: Operand r -> Operand r
 addNullTemp p @ MOperand {altTemps = ts} = p {altTemps = [mkNullTemp] ++ ts}
+
+foldVirtualCopy :: Eq i => Eq r =>
+                   ([Block i r] -> BlockOperationPredicate i r) ->
+                   Function i r -> Function i r
+foldVirtualCopy p f @ Function {fCode = code, fCongruences = cs} =
+  case find (p code) (flatten code) of
+   Nothing -> f
+   Just c ->
+     let (d, s) = copyOps c
+         code'  = filterCode (not . (==) c) code
+         d2s    = M.fromList [(tId d, tId s)]
+         code'' = mapToOperationInBlocks
+                  (mapToModelOperand (applyTempIdMap d2s)) code'
+         cs'    = map (mapTuple (applyTempIdMap d2s)) cs
+     in f {fCode = code'', fCongruences = cs'}
 
 peephole :: Eq r => OperationTransform i r -> FunctionTransform i r
 peephole tf f @ Function {fCode = code} =

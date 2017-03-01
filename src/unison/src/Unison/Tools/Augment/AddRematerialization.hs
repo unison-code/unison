@@ -20,9 +20,6 @@ import Unison.Target.API
 import Unison.Graphs.Hoopl
 import Unison.Graphs.Hoopl.ReachingConstants
 
-instance Eq i => Eq (Block i r)
-  where b == b' = bCode b == bCode b'
-
 addRematerialization f target =
     let bif    = branchInfo target
         f'    = basicForm f

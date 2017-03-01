@@ -12,34 +12,11 @@ This file is part of Unison, see http://unison-code.github.io
 module Unison.Tools.Import.FoldCopies (foldCopies) where
 
 import Data.List
-import qualified Data.Map as M
 import qualified Data.Set as S
 
 import Unison
 
-instance Eq i => Eq (Function i r)
-  where f == f' = fCode f == fCode f'
-
-instance Eq i => Eq (Block i r)
-  where b == b' = bCode b == bCode b'
-
-foldCopies f _target = fixpoint removeCopy f
-
-removeCopy f @ Function {fCode = code}
-    | none (isFoldableVirtualCopy code) (flatten code) = f
-removeCopy f @ Function {fCode = code, fCongruences = cs} =
-    let (d, s) = findCopy code
-        code'  = filterCode (not . isCopyOf s d) code
-        d2s    = M.fromList [(tId d, tId s)]
-        code'' = mapToOperationInBlocks (mapToModelOperand (applyTempIdMap d2s)) code'
-        cs'    = map (mapTuple (applyTempIdMap d2s)) cs
-    in f {fCode = code'', fCongruences = cs'}
-
-findCopy code =
-  let fcode       = flatten code
-      (Just copy) = find (isFoldableVirtualCopy code) fcode
-      (s, d)      = copyOps copy
-  in (d, s)
+foldCopies f _target = fixpoint (foldVirtualCopy isFoldableVirtualCopy) f
 
 isFoldableVirtualCopy code o = isVirtualCopy o && isFoldable code o
 

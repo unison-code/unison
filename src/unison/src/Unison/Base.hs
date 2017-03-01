@@ -160,7 +160,7 @@ data Function i r = Function {
       fGoal        :: Maybe HighLevelGoal,
       -- | Source program (e.g. LLVM IR)
       fSource      :: String
-    }
+    } deriving Eq
 
 -- | Unison block.
 
@@ -171,7 +171,7 @@ data Block i r = Block {
       bAs   :: BlockAttributes,
       -- | Operations contained in the block
       bCode :: [BlockOperation i r]
-    }
+    } deriving Eq
 
 -- | Unison block operation. This data type acts as a container for an
 -- 'Operation' within a block.
@@ -189,7 +189,7 @@ data BlockOperation i r =
       oOpr :: Operation i r,
       -- | Single operation attributes
       oAs  :: Attributes i r
-    }
+    } deriving Eq
 
 -- | Unison operation.
 

@@ -16,9 +16,6 @@ import Data.Maybe
 
 import Unison
 
-instance Eq i => Eq (Block i r)
-  where b == b' = bCode b == bCode b'
-
 removeUselessVirtuals f @ Function {fCode = code} _target =
     let code' = fixpoint removeUseless code
     in f {fCode = code'}
