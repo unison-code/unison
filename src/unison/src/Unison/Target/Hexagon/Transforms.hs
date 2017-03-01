@@ -21,6 +21,7 @@ module Unison.Target.Hexagon.Transforms
 import Data.List
 import Data.Maybe
 import qualified Data.Map as M
+import Data.Word
 
 import MachineIR
 import Unison
@@ -92,10 +93,17 @@ addAlternativeInstructions
   in o {oOpr = Natural (ao {oIs = nub (TargetInstruction i : newIs)})}
 addAlternativeInstructions o = o
 
--- See `isNewValueJumpCandidate` in HexagonNewValueJump.cpp
-isNewValueJumpCandidateInstr i =
-  i `elem` [C2_cmpeq, C2_cmpeqi, C2_cmpgt, C2_cmpgti, C2_cmpgtu, C2_cmpgtui,
-            C4_cmpneq, C4_cmplte, C4_cmplteu]
+-- See `isNewValueJumpCandidate` and `canCompareBeNewValueJump` in
+-- HexagonNewValueJump.cpp
+isNewValueJumpCandidateInstr i _
+  | i `elem` [C2_cmpeq, C2_cmpgt, C2_cmpgtu, C4_cmpneq, C4_cmplte,
+              C4_cmplteu] =True
+isNewValueJumpCandidateInstr i (Bound MachineImm {miValue = v})
+  | i `elem` [C2_cmpeqi, C2_cmpgti, C2_cmpgtui] && isUInt 5 v = True
+  | i `elem` [C2_cmpeqi, C2_cmpgti] && v == -1 = True
+isNewValueJumpCandidateInstr _ _ = False
+
+isUInt n v = (fromInteger v :: Word64) < (2 ^ n)
 
 isConditionalBranchInstr i = i `elem` [J2_jumpt, J2_jumpf]
 
@@ -142,9 +150,10 @@ expandJumps f (
         ejs =
           case find (isPotentialDefiner t1) (bCode b) of
            Just (c @ SingleOperation {oOpr = Natural (Linear {
-                                        oIs = [TargetInstruction ci]})})
+                                        oIs = [TargetInstruction ci],
+                                        oUs = [_, u2]})})
              -- A new-value compare and jump can be used
-             | isNewValueJumpCandidateInstr ci ->
+             | isNewValueJumpCandidateInstr ci u2 ->
                let jis = linearJumps i
                    jl  = mkLinear oid (map TargetInstruction jis) [p1]
                          [mkMOp pid [mkTemp tid]]
