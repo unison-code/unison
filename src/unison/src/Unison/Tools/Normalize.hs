@@ -48,17 +48,17 @@ run (estimateFreq, simplifyControlFlow, debug, normMirFile) mir target =
   in do
      when debug $
           putStr $ toPlainText $
-          [("liftJumpTables", Just $ show mf0),
-           ("preProcess", Just $ show mf1),
-           ("simplifyFallthroughs", Just $ show mf2),
-           ("splitTerminators", Just $ show mf3),
-           ("renameMachineBlocks", Just $ show mf4),
-           ("dropUnsupportedPseudos", Just $ show mf5),
-           ("buildFunction", Just $ show f),
-           ("estimateFrequency", Just $ show f1),
-           ("normalizeFrequency", Just $ show f2),
-           ("finalizeOperations", Just $ show f3),
-           ("toMachineFunction", Just $ show mf6),
-           ("postProcess", Just $ show mf7),
-           ("prepareForEmission", Just $ show mf8)]
+          [("liftJumpTables", Just $ showSimple mf0),
+           ("preProcess", Just $ showSimple mf1),
+           ("simplifyFallthroughs", Just $ showSimple mf2),
+           ("splitTerminators", Just $ showSimple mf3),
+           ("renameMachineBlocks", Just $ showSimple mf4),
+           ("dropUnsupportedPseudos", Just $ showSimple mf5),
+           ("buildFunction", Just $ showSimple f),
+           ("estimateFrequency", Just $ showSimple f1),
+           ("normalizeFrequency", Just $ showSimple f2),
+           ("finalizeOperations", Just $ showSimple f3),
+           ("toMachineFunction", Just $ showSimple mf6),
+           ("postProcess", Just $ showSimple mf7),
+           ("prepareForEmission", Just $ showSimple mf8)]
      emitOutput normMirFile (show mf8)
