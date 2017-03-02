@@ -40,7 +40,7 @@ while [ $# -gt  1 ]; do
         mzn='mzn-cpx'
       ;;
       --chuffed | --chuffed21)
-        mzn='mzn-chuffed'
+        mzn='mzn-chuffed --fzn-flag --mdd --fzn-flag on'
       ;;
       --chuffed20)
         mzn='mzn-chuffed'

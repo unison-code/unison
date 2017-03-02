@@ -529,20 +529,27 @@ constraint
 
 %% operation selection (register set depending on operation)
 constraint
-    forall(p in 0..MAXP)
-          (let {int: o = operand_definer[p],
-	  	set of int: joker = if min(operand_temps[p])>=0 then {} else {-1} endif} in (
-	       if fixedop(o) then
-	           rt[p] in atom_regs[operand_atom[p,min(op_instructions[o])]] union joker % rematerialization
-	       else
-		   forall(insn in op_instructions[o])
-			 (if insn=0 then
-			     insn_eq(o,0) -> rt[p] = -1
-			  else
-			     insn_eq(o,insn) -> rt[p] in atom_regs[operand_atom[p,insn]]
-			  endif)
-	       endif
-           )
+    forall(p in 0..MAXP)(
+      let {int: o = operand_definer[p],
+	   set of int: joker = if min(operand_temps[p])>=0 then {} else {-1} endif} in
+	  if fixedop(o) then
+	    rt[p] in atom_regs[operand_atom[p,min(op_instructions[o])]] union joker % rematerialization
+	  else
+            let {array[int] of set of int: doms = [ if insn=0 then {-1} else atom_regs[operand_atom[p,insn]] endif
+	    		       	      	   	  | insn in op_instructions[o]
+						  ],
+	         array[int] of int: extension = [ if k=1 then j else r endif
+		 	       	    	        | j in index_set(op_instructions[o]),
+						  r in doms[j],
+						  k in 1..2
+						],
+		 int: nt = length(extension) div 2} in
+	    if forall(i in index_set(doms))(doms[i] = doms[1]) then
+	      rt[p] in doms[1]
+	    else
+	      table([ii[o],rt[p]], array2d(1..nt, 1..2, extension))
+	    endif
+	  endif
     );
 
 %% preassignments
