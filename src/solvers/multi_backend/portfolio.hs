@@ -64,7 +64,7 @@ runGecode flags v extJson outJsonFile =
 
 runChuffed flags extJson outJsonFile =
   do callProcess "minizinc-solver"
-       (["--topdown", "--chuffed", "--free", "-o", outJsonFile] ++
+       (["--topdown", "--chuffed", "--free", "--no-diffn", "--no-cumulative", "-o", outJsonFile] ++
         (splitFlags flags) ++
         [extJson])
      out <- readFile outJsonFile
