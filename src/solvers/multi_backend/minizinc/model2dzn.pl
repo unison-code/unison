@@ -150,15 +150,7 @@ model2dzn(AVL0) :-
 	length(SCongr2, NScongr),
 	write_array(strictly_congr, array(1..NScongr,set(int)), SCongr2),
 	%
-	avl_fetch(preassign, AVL, Preassign),
-	(   foreach([X1,Y1],Preassign),
-	    foreach(X1,PreassignX),
-	    foreach(Y1,PreassignY)
-	do  true
-	),
-	length(Preassign, Npreassign),
-	write_array(preassign_operand, array(1..Npreassign,int), PreassignX),
-	write_array(preassign_reg, array(1..Npreassign,int), PreassignY),
+	pairs_to_arrays(AVL, preassign, preassign_operand, preassign_reg),
 	%
 	avl_fetch(aligned, AVL, Aligned),
 	avl_fetch(adist, AVL, ADist),
@@ -176,35 +168,11 @@ model2dzn(AVL0) :-
 	write_array(aligned_usei, array(1..Naligned,int), AlignedYi),
 	write_array(aligned_dist, array(1..Naligned,int), ADist),
 	%
-	avl_fetch(adjacent, AVL, Adjacent),
-	(   foreach([X5,Y5],Adjacent),
-	    foreach(X5,AdjFrom),
-	    foreach(Y5,AdjTo)
-	do  true
-	),
-	length(AdjFrom, Nadj),
-	write_array(adj_from, array(1..Nadj,int), AdjFrom),
-	write_array(adj_to, array(1..Nadj,int), AdjTo),
+	pairs_to_arrays(AVL, adjacent, adj_from, adj_to),
 	%
-	avl_fetch(quasi_adjacent, AVL, QAdjacent),
-	(   foreach([X6,Y6],QAdjacent),
-	    foreach(X6,QAdjFrom),
-	    foreach(Y6,QAdjTo)
-	do  true
-	),
-	length(QAdjFrom, NQadj),
-	write_array(quasi_adj_from, array(1..NQadj,int), QAdjFrom),
-	write_array(quasi_adj_to, array(1..NQadj,int), QAdjTo),
+	pairs_to_arrays(AVL, quasi_adjacent, quasi_adj_from, quasi_adj_to),
 	%
-	avl_fetch(long_latency, AVL, LLatency),
-	(   foreach([X7,Y7],LLatency),
-	    foreach(X7,LLdef),
-	    foreach(Y7,LLuse)
-	do  true
-	),
-	length(LLdef, NLLdef),
-	write_array(long_latency_def, array(1..NLLdef,int), LLdef),
-	write_array(long_latency_use, array(1..NLLdef,int), LLuse),
+	pairs_to_arrays(AVL, long_latency, long_latency_def, long_latency_use),
 	%
 	avl_fetch(last_use, AVL, LastUse),
 	avl_fetch(temps, AVL, Temps),
@@ -346,15 +314,7 @@ model2dzn(AVL0) :-
 	write_array(domuse_q, array(1..Ndomuse,int), Qs1),
 	write_array(domuse_r, array(1..Ndomuse,int), Rs1),
 	%
-	avl_fetch(memassign, AVL, MemAssign),
-	(   foreach([MT,MR],MemAssign),
-	    fromto(MTs1,[MT|MTs2],MTs2,[]),
-	    fromto(MRs1,[MR|MRs2],MRs2,[])
-	do  true
-	),
-	length(MemAssign, Nmemassign),
-	write_array(memassign_temps, array(1..Nmemassign,int), MTs1),
-	write_array(memassign_regs, array(1..Nmemassign,int), MRs1),
+	pairs_to_arrays(AVL, memassign, memassign_temps, memassign_regs),
 	%
 	avl_fetch(dominates, AVL, Dominate),
 	(   foreach([I1,J1,L5,L6],Dominate),
@@ -496,6 +456,12 @@ model2dzn(AVL0) :-
 	max_member(MaxLat, Lats),
 	format('MINL = ~d;\nMAXL = ~d;\n', [MinLat,MaxLat]),
 	%
+	pairs_to_arrays(AVL, preschedule, preschedule_op, preschedule_cycle),
+	%
+	compute_bypass_table(AVL, BypassTable, []),
+	length(BypassTable, NBypassTable),
+	write_array(bypass_table, array(1..NBypassTable,1..3,int), BypassTable),
+	%
 	literals_postlude(LOp, LArg1, LArg2),
 	length(LOp, Nliteral),
 	write_array(literal_op, array(1..Nliteral,int), LOp),
@@ -504,6 +470,17 @@ model2dzn(AVL0) :-
 	sets_postlude(Sets),
 	length(Sets, Nset),
 	write_array(sets, array(1..Nset,set(int)), Sets).
+
+pairs_to_arrays(AVL, Tag, FirstArr, SecondArr) :-
+	avl_fetch(Tag, AVL, Data),
+	(   foreach([X1,Y1],Data),
+	    foreach(X1,DataX),
+	    foreach(Y1,DataY)
+	do  true
+	),
+	length(Data, N),
+	write_array(FirstArr, array(1..N,int), DataX),
+	write_array(SecondArr, array(1..N,int), DataY).
 
 compute_bb(AVL, MAXF, MAXO, MAXP, MAXT, MAXC, MAXI, MAXR,
 	   Insns, Operands, Temps, Frequency, MaxCycle, OptionalMin, BBOrder) :-
@@ -768,6 +745,25 @@ compute_lat_table(AVL) -->
 		    foreach(L,LatOI),
 		    param(O,I)
 		do  [[O,I,P,L]]
+		)
+	    )
+	).
+
+compute_bypass_table(AVL) -->
+	{avl_fetch(bypass, AVL, Bypass)},
+	{avl_fetch(instructions, AVL, Ins)},
+	{avl_fetch(operands, AVL, Opnd)},
+	(   foreach(BypassO,Bypass),
+	    foreach(InsO,Ins),
+	    foreach(OpndO,Opnd),
+	    count(O,0,_)
+	do  (   foreach(I,InsO),
+		foreach(BypassOI,BypassO),
+		param(OpndO,O)
+	    do  (   foreach(P,OpndO),
+		    foreach(L,BypassOI),
+		    param(O,I)
+		do  ({L=true} -> [[O,I,P]] ; [])
 		)
 	    )
 	).

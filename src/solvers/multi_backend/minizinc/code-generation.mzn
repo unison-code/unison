@@ -251,6 +251,13 @@ array[int] of int: value_precede_temps;
 %% see JSON lat
 array[int,int] of int: lat_table;
 
+%% see JSON preschedule
+array[int] of int: preschedule_op;
+array[int] of int: preschedule_cycle;
+
+%% see JSON bypass
+array[int,int] of int: bypass_table;
+
 %% extra storage for conjunctions and disjunctions
 array[int] of int: literal_op;
 array[int] of int: literal_arg1;
@@ -840,6 +847,39 @@ constraint
 	forall(i2 in os where i2>min(os))(a[i2] <-> a[min(os)])
     )
   );
+
+%% prescheduling
+constraint
+  forall(j in index_set(preschedule_op))(
+    let {int: oper = preschedule_op[j],
+         int: cycle = preschedule_cycle[j],
+         int: bb = min({k | k in index_set(bb_ops) where oper in bb_ops[k]}),
+         int: outop = max(bb_ops[bb])}
+    in (a[oper]  -> c[oper] = cycle) /\
+       (a[oper] <-> c[outop] > cycle)
+  );
+
+%% bypass
+constraint
+  forall(o in {bypass_table[j,1] | j in index_set_1of2(bypass_table)})(
+    forall(p in {bypass_table[j,3] | j in index_set_1of2(bypass_table) where bypass_table[j,1]=o})(
+      let {set of int: insns = { bypass_table[j,2]
+      	       	       	       | j in index_set_1of2(bypass_table)
+			       where bypass_table[j,1]=o
+			       /\    bypass_table[j,3]=p},
+           array[int] of int: opers = [ if k=1 then ix else if k=2 then px else ox endif endif
+				      | ix in 1..card(op_instructions[o]),
+					px in 1..card(operand_temps[p]),
+					ox in {if op_instructions[o][ix] in insns then temp_definer[operand_temps[p][px]] else o endif},
+					k in 1..3
+				      ],
+           int: nt = length(opers) div 3,
+           var 0..MAXC: oper}
+      in table([ii[o],y[p],oper], array2d(1..nt, 1..3, opers)) /\
+         c[o] = c[oper]
+    )
+  );
+				      
 
 %% IMPLIED CONSTRAINTS
 
