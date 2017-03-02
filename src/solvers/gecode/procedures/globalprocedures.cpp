@@ -218,6 +218,7 @@ public:
     g->post_active_operation(oo);
     g->status();
     LocalModel * ls = make_local(g, b, IPL_DOM);
+    delete g;
     ls->status();
     PresolveRelaxationJob * psj =
       new PresolveRelaxationJob(ls, lo, co, ac, b);
