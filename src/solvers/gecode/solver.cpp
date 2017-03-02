@@ -276,6 +276,23 @@ void emit_local(LocalModel * local, unsigned long int iteration, string prefix) 
   fout.close();
 }
 
+string cost_status_report(const GlobalModel * base, const GlobalModel * sol) {
+  int cost_lb  = base->cost().min(),
+      cost_ub  = base->input->maxf + 1,
+      max_cost = sol->cost().max();
+  double imp = ((((double)(cost_ub - max_cost)) / (double)max_cost) * 100.0),
+         rog = ((((double)(max_cost - cost_lb)) / (double)cost_lb) * 100.0);
+  stringstream ss;
+  ss << fixed << setprecision(2);
+  ss << "cost: " << sol->cost();
+  if (sol != base)
+    ss << ", improvement: " << imp << "%";
+  if (rog > 0.0)
+    ss << ", optimality gap: " << rog << "%";
+
+  return ss.str();
+}
+
 void emit_output(GlobalModel * base, vector<ResultData> & results,
                  GlobalData & gd, IterationState & state, string prefix,
                  GIST_OPTIONS * go) {
@@ -309,25 +326,13 @@ void emit_output(GlobalModel * base, vector<ResultData> & results,
     if (base->options->gist_solution()) Gist::dfs(best_rd.solution, *go);
 #endif
 
-    int best_val = best_rd.solution->cost().val(),
-        min_val  = base->cost().min(),
-        max_val  = base->input->maxf;
-    double rog = ((((double)(best_val - min_val))/(double)min_val) * 100.0),
-           imp = ((((double)(max_val - best_val))/(double)best_val) * 100.0);
     if (base->options->verbose()) {
-      cerr << fixed << setprecision(1);
-      cerr << (best_rd.proven ? "optimal" : "best found")
-           << " solution has cost " << best_val << endl;
-      if (!best_rd.proven) {
-        cerr << "lower bound: " << min_val
-             << ", optimality gap: " << rog << "%" << endl;
-      }
-      cerr << "upper bound: " << max_val
-           << ", improvement: " << imp << "%" << endl;
+      cerr << (best_rd.proven ? "optimal" : "best found") << " solution has "
+           << cost_status_report(base, best_rd.solution) << endl;
     }
     if (base->options->emit_improvement()) {
-      cerr << fixed << setprecision(1);
-      cerr << "improvement: " << imp << "%" << endl;
+      cerr << fixed << setprecision(2);
+      cerr << cost_status_report(base, best_rd.solution) << endl;
     }
   }
 
@@ -623,7 +628,7 @@ int main(int argc, char* argv[]) {
   }
 
   if (options.verbose())
-    cerr << global() << "cost: " << base->cost() << endl;
+    cerr << global() << cost_status_report(base, base) << endl;
 
   // Failure and node count for all problems
   long long int total_failed = 0;
@@ -781,7 +786,8 @@ int main(int argc, char* argv[]) {
 
   int presolving_time = ceil(t_pre.stop());
 
-  if (options.verbose()) {
+  if (options.verbose() && !options.disable_presolving()) {
+    cerr << pre() << cost_status_report(base, base) << endl;
     cerr << pre() << "presolving time: " << presolving_time << " ms" << endl;
   }
 
@@ -814,13 +820,10 @@ int main(int argc, char* argv[]) {
           cerr << global() << "deactivation of unnecessary operations" << endl;
         } else {
           cerr << global()
-               << "solving problem (i: " << iteration << ", state: " << state << ")"
-               << endl;
+               << "solving problem (i: " << iteration << ", state: " << state
+               << ", cost: " << base->cost() << ")" << endl;
         }
       }
-
-      if (options.verbose())
-        cerr << global() << "cost: " << base->cost() << endl;
 
       // If we are in a deactivation iteration, a solution from the previous
       // iteration must be available
@@ -923,9 +926,8 @@ int main(int argc, char* argv[]) {
           best_cost = gs.solution->cost().val();
 
           if (options.verbose()) {
-            cerr << global() << "found full solution (cost: " << best_cost
-                 << ", failures: " << iteration_failed
-                 << ", nodes: " << iteration_nodes << ")" << endl;
+            cerr << global() << "found full solution "
+                 << "(" << cost_status_report(base, gs.solution) << ")" << endl;
           }
 
           // Store the newly found solution
@@ -986,6 +988,8 @@ int main(int argc, char* argv[]) {
           // Remove results from the back until a solution is found
           while (!results.back().solution) results.pop_back();
           assert(results.back().solution);
+          delete base;
+          base = (GlobalModel*) results.back().solution->clone();
         } else {
           if (options.verbose()) {
             cerr << global()
@@ -1018,8 +1022,12 @@ int main(int argc, char* argv[]) {
     total_failed += ms.failures;
     total_nodes += ms.nodes;
     if (ms.result == OPTIMAL_SOLUTION) {
+      base->post_lower_bound(ms.solution->cost().val());
+      base->post_upper_bound(ms.solution->cost().val());
+      base->status();
       if (options.verbose())
-        cerr << monolithic() << "found optimal solution" << endl;
+        cerr << monolithic() << "found optimal solution "
+             << "(" << cost_status_report(base, ms.solution) << ")" << endl;
       results.push_back(ResultData(ms.solution, true, ms.failures, ms.nodes,
                                    presolver_time, presolving_time,
                                    solving_time, solving_time));
@@ -1028,7 +1036,7 @@ int main(int argc, char* argv[]) {
       // have found the optimal one
       if (has_solution(results)) {
         if (options.verbose())
-          cerr << monolithic() << "found optimal solution" << endl;
+          cerr << monolithic() << "proven optimality" << endl;
         // Remove results from the back until a solution is found
         while (!results.back().solution) results.pop_back();
         assert(results.back().solution);

@@ -639,9 +639,6 @@ Solution<GlobalModel> solve_monolithic(GlobalModel * base, GIST_OPTIONS * go) {
   bool found_solution = false;
   while (GlobalModel* nextm = e.next()) {
     found_solution = true;
-    if (base->options->verbose())
-      cerr << monolithic()
-           << "found solution with cost " << nextm->cost() << endl;
     GlobalModel * oldm = m;
     m = nextm;
     delete oldm;
