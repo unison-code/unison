@@ -276,12 +276,17 @@ void emit_local(LocalModel * local, unsigned long int iteration, string prefix) 
   fout.close();
 }
 
-string cost_status_report(const GlobalModel * base, const GlobalModel * sol) {
+double optimality_gap(const GlobalModel * base, const GlobalModel * sol) {
   int cost_lb  = base->cost().min(),
-      cost_ub  = base->input->maxf + 1,
+      max_cost = sol->cost().max();
+  return ((((double)(max_cost - cost_lb)) / (double)cost_lb) * 100.0);
+}
+
+string cost_status_report(const GlobalModel * base, const GlobalModel * sol) {
+  int cost_ub  = base->input->maxf + 1,
       max_cost = sol->cost().max();
   double imp = ((((double)(cost_ub - max_cost)) / (double)max_cost) * 100.0),
-         rog = ((((double)(max_cost - cost_lb)) / (double)cost_lb) * 100.0);
+         rog = optimality_gap(base, sol);
   stringstream ss;
   ss << fixed << setprecision(2);
   ss << "cost: " << sol->cost();
@@ -630,6 +635,16 @@ int main(int argc, char* argv[]) {
   if (options.verbose())
     cerr << global() << cost_status_report(base, base) << endl;
 
+  bool reached_acceptable_gap = false;
+  if (optimality_gap(base, base) <= base->options->acceptable_gap() &&
+      base->options->acceptable_gap() > 0.0) {
+    reached_acceptable_gap = true;
+    if (options.verbose())
+      cerr << global() << "reached acceptable optimality gap" << endl;
+    emit_output(base, results, gd, state, prefix, go);
+    exit(EXIT_SUCCESS);
+  }
+
   // Failure and node count for all problems
   long long int total_failed = 0;
   long long int total_nodes = 0;
@@ -789,6 +804,15 @@ int main(int argc, char* argv[]) {
   if (options.verbose() && !options.disable_presolving()) {
     cerr << pre() << cost_status_report(base, base) << endl;
     cerr << pre() << "presolving time: " << presolving_time << " ms" << endl;
+  }
+
+  if (optimality_gap(base, base) <= base->options->acceptable_gap() &&
+      base->options->acceptable_gap() > 0.0) {
+    reached_acceptable_gap = true;
+    if (options.verbose())
+      cerr << global() << "reached acceptable optimality gap" << endl;
+    emit_output(base, results, gd, state, prefix, go);
+    exit(EXIT_SUCCESS);
   }
 
   Support::Timer t_solver;
@@ -1006,6 +1030,19 @@ int main(int argc, char* argv[]) {
 
       if (has_solution(results) && options.first_solution()) break;
 
+      ResultData best = results.back();
+      for (ResultData rd : results)
+        if (rd.solution) best = rd;
+      if (!proven &&
+          best.solution &&
+          optimality_gap(base, best.solution) <=
+          base->options->acceptable_gap()) {
+        reached_acceptable_gap = true;
+        if (options.verbose())
+          cerr << global() << "reached acceptable optimality gap" << endl;
+        break;
+      }
+
       if (!deactivation) { // Update aggressiveness
         state.next(&options);
         iteration++;
@@ -1013,7 +1050,9 @@ int main(int argc, char* argv[]) {
     }
   }
 
-  if (!proven && options.monolithic() &&
+  if (!proven &&
+      !reached_acceptable_gap &&
+      options.monolithic() &&
       input.O.size() <= options.monolithic_threshold()) { // Run monolithic solver
     if (options.verbose())
       cerr << monolithic() << "running monolithic solver..." << endl;
