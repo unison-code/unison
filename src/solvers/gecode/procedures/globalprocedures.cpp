@@ -132,7 +132,8 @@ public:
     if (ls->options->gist_presolving() && ls->options->gist_block() == b)
       Gist::bab(ls, *lo);
 #endif
-    Search::Stop * preStop = new_stop(2000, ls->options);
+    Search::Stop * preStop =
+      new_stop(ls->options->local_relaxation_limit(), ls->options);
     Search::Options preOptions;
     preOptions.stop = preStop;
     BAB<LocalModel> e(ls, preOptions);
@@ -426,7 +427,8 @@ void presolve_global_cluster_impact(
     if (base->options->gist_presolving() && base->options->gist_block() == b)
       Gist::bab(ls, *lo);
 #endif
-    Search::Stop * preStop = new_stop(2000, base->options);
+    Search::Stop * preStop =
+      new_stop(base->options->local_relaxation_limit(), base->options);
     Search::Options preOptions;
     preOptions.stop = preStop;
     BAB<LocalModel> e(ls, preOptions);

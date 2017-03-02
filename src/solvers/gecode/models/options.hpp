@@ -71,6 +71,7 @@ protected:
   Driver::DoubleOption _global_shaving_limit; // Global shaving limit
   Driver::DoubleOption _post_global_shaving_limit; // Global shaving limit after global solver
   Driver::DoubleOption _local_shaving_limit; // Local shaving limit
+  Driver::DoubleOption _local_relaxation_limit; // Local relaxation limit
 
   // Solving
 
@@ -150,6 +151,7 @@ public:
   double global_shaving_limit(void) const {return _global_shaving_limit.value();}
   double post_global_shaving_limit(void) const {return _post_global_shaving_limit.value();}
   double local_shaving_limit(void) const {return _local_shaving_limit.value();}
+  double local_relaxation_limit(void) const {return _local_relaxation_limit.value();}
 
   unsigned int total_threads(void) const {return _total_threads.value();}
   unsigned int portfolio_threads(void) const {return _portfolio_threads.value();}
