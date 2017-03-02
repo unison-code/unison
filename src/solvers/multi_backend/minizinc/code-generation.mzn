@@ -870,16 +870,18 @@ constraint
            array[int] of int: opers = [ if k=1 then ix else if k=2 then px else ox endif endif
 				      | ix in 1..card(op_instructions[o]),
 					px in 1..card(operand_temps[p]),
-					ox in {if op_instructions[o][ix] in insns then temp_definer[operand_temps[p][px]] else o endif},
+					t in {operand_temps[p][px]},
+					ox in {if t>=0 /\ op_instructions[o][ix] in insns then temp_definer[t] else o endif},
 					k in 1..3
 				      ],
            int: nt = length(opers) div 3,
            var 0..MAXC: oper}
       in table([ii[o],y[p],oper], array2d(1..nt, 1..3, opers)) /\
+         % trace("table([ii[\(o)],y[\(p)],oper], \(array2d(1..nt, 1..3, opers)))\n", true) /\
          c[o] = c[oper]
     )
   );
-				      
+
 
 %% IMPLIED CONSTRAINTS
 
@@ -1317,8 +1319,7 @@ constraint
         let {var int: outlb = if length( inubs)>0 then -min( inubs) else -MAXL endif,
 	     var int: outub = if length(outubs)>0 then  min(outubs) else  MAXL endif} in
 	outlb <= outub /\
-	s[min(outps)] = min(outub,max(outlb,0))
-	% trace("fixed slack of class \(opnds), #lbs = \(length(inubs)), #ubs = \(length(outubs))\n", true)
+	forall(p in outps)(s[p] = min(outub,max(outlb,0)))
       else /* no global operands */
         true
       endif

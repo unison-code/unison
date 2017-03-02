@@ -227,14 +227,17 @@ void CompleteModel::post_slack_functional_constraints(void) {
   for (global_congruence g : input->G) {
     congruence cg = input->regular[g];
     set<operand> inps, outps;
+    vector<operand> outpv;
     vector<int> inix, outix;
 
     for (operand p : input->congr[cg]) {
       if (input->global_operand[p]) {
-	if (input->type[input->oper[p]] == IN)
+	if (input->type[input->oper[p]] == IN) {
 	  inps.insert(p); 
-	else
+	} else {
 	  outps.insert(p);
+	  outpv.push_back(p);
+	}
       }
     }
 
@@ -272,7 +275,10 @@ void CompleteModel::post_slack_functional_constraints(void) {
       else
 	constraint(outub == maxl);
       constraint(outlb <= outub);
-      constraint(s(*outps.rbegin()) == min(outub,max(outlb,0)));
+      constraint(s(outpv[0]) == min(outub,max(outlb,0)));
+      for (operand p : outpv)
+	if (p > outpv[0])
+	  constraint(s(p) == s(outpv[0]));
     }
   }
   
