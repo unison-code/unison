@@ -185,6 +185,7 @@ void RelaxedModel::post_core_constraints(void) {
     Model::post_effective_copy_constraints(b);
     // Model::post_local_congruence_constraints(b); // [MC]
     Model::post_alignment_constraints(b);
+    Model::post_packing_constraints(b);
     Model::post_preassignment_constraints(b);
     Model::post_temporary_symmetry_breaking_constraints(b);
   }
