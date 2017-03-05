@@ -179,7 +179,8 @@ regStrings = M.fromList $
    (SA1, "sa1"),
    (USR, "usr"),
    (USR_OVF, "usr_ovf"),
-   (CS, "cs")]
+   (CS, "cs"),
+   (GP, "gp")]
 
 regStringsWithIndex inc pre rc =
   [(r, pre ++ show idx ++
