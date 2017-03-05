@@ -222,10 +222,8 @@ alignAllocFrame f @ Function {fFixedStackFrame = fobjs,
       0 -> f
       _ ->
         let fstIdx = newFrameIndex objs
-            fobjs' = map (reoffset r) fobjs
-            objs'  = map (reoffset r) objs ++
-                     [mkFrameObject fstIdx 0 (Just r) 4]
-        in f {fFixedStackFrame = fobjs', fStackFrame = objs'}
+            objs'  = objs ++ [mkFrameObject fstIdx size (Just r) 4]
+        in f {fFixedStackFrame = fobjs, fStackFrame = objs'}
 
 -- Offset frame indices before (-8) and after (+d) 'allocframe'
 
