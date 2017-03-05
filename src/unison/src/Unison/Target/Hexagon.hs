@@ -670,6 +670,9 @@ transforms _ = []
 -- | Latency of read-write dependencies
 
 readWriteLatency _ (_, Read) (_, Write) = 0
+-- This is to allow dual stores (see 5.5 in "Hexagon V4 Programmer's Reference
+-- Manual" and "isLegalToPacketizeTogether" in HexagonVLIWPacketizer.cpp)
+readWriteLatency m (_, Write) (_, Write) | isMemoryObject m = 0
 -- This is so that linear jumps and merge jumps can be scheduled in parallel
 readWriteLatency ControlSideEffect (_, Write) (_, Write) = 0
 readWriteLatency _ ((_, VirtualType (DelimiterType InType)), _) (_, _) = 1
@@ -677,6 +680,10 @@ readWriteLatency _ ((_, VirtualType FunType), _) (_, _) = 1
 readWriteLatency _ ((_, VirtualType _), _) (_, _) = 0
 readWriteLatency _ ((TargetInstruction p, _), _) (_, _) =
     maybeMax 0 $ map occupation (usages p)
+
+isMemoryObject (Memory _) = True
+isMemoryObject AllMemory  = True
+isMemoryObject _          = False
 
 -- | Alternative temporaries of each operand
 
