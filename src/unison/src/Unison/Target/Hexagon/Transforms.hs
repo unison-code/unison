@@ -217,12 +217,13 @@ addControlBarrier o = o
 alignAllocFrame f @ Function {fFixedStackFrame = fobjs,
                               fStackFrame = objs} =
   let size  = frameSize (fobjs ++ objs)
-      r     = size `rem` 8
+      r     = case size `rem` 8 of
+               s -> 8 - s
   in case r of
-      0 -> f
+      8 -> f
       _ ->
         let fstIdx = newFrameIndex objs
-            objs'  = objs ++ [mkFrameObject fstIdx size (Just r) 4]
+            objs'  = objs ++ [mkFrameObject fstIdx size (Just r) 1]
         in f {fFixedStackFrame = fobjs, fStackFrame = objs'}
 
 -- Offset frame indices before (-8) and after (+d) 'allocframe'
