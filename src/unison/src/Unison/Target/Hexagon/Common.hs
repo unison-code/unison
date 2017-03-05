@@ -11,9 +11,11 @@ This file is part of Unison, see http://unison-code.github.io
 -}
 module Unison.Target.Hexagon.Common
     (isNVJmpInstr, isNVJmp, isCmp, isCmpInstr, isJmp, isJmpInstr,
-     isLinearJump, isLinearNewValueCmpJump, isNewValueCmpJump, isJumpNew) where
+     isLinearJump, isLinearNewValueCmpJump, isNewValueCmpJump, isJumpNew,
+     isMemAccessWithOff, memAccessAlignment) where
 
 import Data.List
+import qualified Data.Map as M
 
 import MachineIR
 import qualified Unison.Target.Hexagon.SpecsGen as SpecsGen
@@ -52,3 +54,20 @@ isLinearNewValueCmpJump i = "_jumpnv_t_linear" `isSuffixOf` (show i)
 
 isNewValueCmpJump i = "_jumpnv_t" `isSuffixOf` (show i)
 isJumpNew i = i `elem` [J2_jumptnew, J2_jumpfnew]
+
+isMemAccessWithOff i = M.member i memAccessAlignments
+
+memAccessAlignment i = memAccessAlignments M.! i
+
+memAccessAlignments = M.fromList
+  [(S2_storerd_io, 8),
+   (S2_storeri_io, 4),
+   (S2_storerinew_io, 4),
+   (S2_storerh_io, 2),
+   (S2_storerhnew_io, 2),
+   (S2_storerb_io, 1),
+   (S2_storerbnew_io, 1),
+   (L2_loadrd_io, 8),
+   (L2_loadri_io, 4),
+   (L2_loadrh_io, 2),
+   (L2_loadrb_io, 1)]

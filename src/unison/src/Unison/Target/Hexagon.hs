@@ -524,9 +524,21 @@ isConstExtendedProperty =
 
 -- | Target dependent post-processing functions
 
-postProcess = [constantDeExtend, removeFrameIndex, normalizeJumpMerges,
+postProcess = [lintStackAlignment,
+               constantDeExtend, removeFrameIndex, normalizeJumpMerges,
                normalizeNVJumps, normalizeJRInstrs, addJumpHints,
                flip addImplicitRegs (target, [])]
+
+lintStackAlignment = mapToTargetMachineInstruction lintStackAlignmentInInstr
+
+lintStackAlignmentInInstr
+  mi @ MachineSingle {msOpcode = MachineTargetOpc mopc, msOperands = mos}
+  | isMemAccessWithOff mopc =
+      let imm = miValue $ fromJust $ find isMachineImm mos
+          ali = memAccessAlignment mopc
+      in if (imm `rem` ali) == 0 then mi
+         else error ("missaligned memory access: " ++ show mi)
+lintStackAlignmentInInstr mi = mi
 
 constantDeExtend = mapToTargetMachineInstruction constantDeExtendInstr
 

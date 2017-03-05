@@ -118,6 +118,9 @@ doubleQuoted f s = "\"" ++ f s ++ "\""
 
 showMachineBasicBlockBody mis = concatMap showMachineInstruction mis
 
+instance (Show i, Show r) => Show (MachineInstruction i r) where
+    show = showMachineInstruction
+
 showMachineInstruction (MachineBundle {mbHead = True, mbInstrs = mis}) =
   "BUNDLE" ++ showMachineBundleTail mis
 
