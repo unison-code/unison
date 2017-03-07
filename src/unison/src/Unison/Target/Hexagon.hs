@@ -401,6 +401,8 @@ itineraryUsage i it
       -- ENDLOOP instructions are encoded in the bits 14:15 of the preceeding
       -- instruction in the bundle
     | it `elem` [J_tc_2early_SLOT0123] = [mkUsage BlockEnd 1 1]
+    | it `elem` [ALU32_SLOT0123_2] =
+      [mkUsage BundleWidth 2 1, mkUsage Slot0123 2 1]
     | it `elem` [NoItinerary] = []
 
 itineraryUsage _ it = error ("unmatched: itineraryUsage " ++ show it)
@@ -526,8 +528,8 @@ isConstExtendedProperty =
 
 postProcess = [lintStackAlignment,
                constantDeExtend, removeFrameIndex, normalizeJumpMerges,
-               normalizeNVJumps, normalizeJRInstrs, addJumpHints,
-               flip addImplicitRegs (target, [])]
+               normalizeNVJumps, normalizeJRInstrs, expandCondTransfers,
+               addJumpHints, flip addImplicitRegs (target, [])]
 
 lintStackAlignment = mapToTargetMachineInstruction lintStackAlignmentInInstr
 
@@ -635,6 +637,31 @@ normalizeJR mi @ MachineSingle {msOpcode   = MachineTargetOpc i,
 normalizeJR MachineSingle {msOpcode = MachineTargetOpc i}
   | i `elem` [Ret_dealloc_merge, Jr_merge] = []
 normalizeJR mi = [mi]
+
+expandCondTransfers = mapToMachineBlock (expandBlockPseudos expandCondTransfer)
+
+expandCondTransfer mi @ MachineSingle {msOpcode   = MachineTargetOpc i,
+                                       msOperands = [dst, cond, src1, src2]}
+  | isCondTransferInstr i =
+    let (_, new) = muxTransferInstr i
+        iT       = primitiveCondTransfer src1 True  new
+        iF       = primitiveCondTransfer src1 False new
+        mi1      = mi {msOpcode = mkMachineTargetOpc iT,
+                       msOperands = [dst, cond, src1]}
+        mi2      = mi {msOpcode = mkMachineTargetOpc iF,
+                       msOperands = [dst, cond, src2]}
+    in [[mi1, mi2]]
+
+expandCondTransfer mi = [[mi]]
+
+primitiveCondTransfer MachineReg {} True  False = A2_tfrt
+primitiveCondTransfer MachineReg {} True  True  = A2_tfrtnew
+primitiveCondTransfer MachineReg {} False False = A2_tfrf
+primitiveCondTransfer MachineReg {} False True  = A2_tfrfnew
+primitiveCondTransfer MachineImm {} True  False = C2_cmoveit
+primitiveCondTransfer MachineImm {} True  True  = C2_cmovenewit
+primitiveCondTransfer MachineImm {} False False = C2_cmoveif
+primitiveCondTransfer MachineImm {} False True  = C2_cmovenewif
 
 addJumpHints = mapToTargetMachineInstruction addJumpHint
 

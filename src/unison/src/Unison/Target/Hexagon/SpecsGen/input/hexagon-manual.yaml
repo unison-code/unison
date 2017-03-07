@@ -497,3 +497,63 @@ instruction-set:
         affects:
          - PC:              register
         itinerary:          NoItinerary
+
+      - id:                 C2_mux_tfr
+        parent:             C2_mux
+        size:               8
+        itinerary:          ALU32_SLOT0123_2
+
+      - id:                 C2_muxii_tfr
+        parent:             C2_muxii
+        size:               8
+        itinerary:          ALU32_SLOT0123_2
+
+      - id:                 C2_muxir_tfr
+        parent:             C2_muxir
+        size:               8
+        itinerary:          ALU32_SLOT0123_2
+
+      - id:                 C2_muxri_tfr
+        parent:             C2_muxri
+        size:               8
+        itinerary:          ALU32_SLOT0123_2
+
+      - id:                 C2_mux_tfr_new
+        parent:             C2_mux
+        operands:
+         - Rd:              [register, def, IntRegs]
+         - Pu:              [register, use, PredRegs, -1]
+         - Rs:              [register, use, IntRegs]
+         - Rt:              [register, use, IntRegs]
+        size:               8
+        itinerary:          ALU32_SLOT0123_2
+
+      - id:                 C2_muxii_tfr_new
+        parent:             C2_muxii
+        operands:
+         - Rd:              [register, def, IntRegs]
+         - Pu:              [register, use, PredRegs, -1]
+         - s8:              bound
+         - S8:              bound
+        size:               8
+        itinerary:          ALU32_SLOT0123_2
+
+      - id:                 C2_muxir_tfr_new
+        parent:             C2_muxir
+        operands:
+         - Rd:              [register, def, IntRegs]
+         - Pu:              [register, use, PredRegs, -1]
+         - Rs:              [register, use, IntRegs]
+         - s8:              bound
+        size:               8
+        itinerary:          ALU32_SLOT0123_2
+
+      - id:                 C2_muxri_tfr_new
+        parent:             C2_muxri
+        operands:
+         - Rd:              [register, def, IntRegs]
+         - Pu:              [register, use, PredRegs, -1]
+         - s8:              bound
+         - Rs:              [register, use, IntRegs]
+        size:               8
+        itinerary:          ALU32_SLOT0123_2

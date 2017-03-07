@@ -55,6 +55,13 @@ itinerary i
     ALU32_3op_tc_2early_SLOT0123
   | i `elem` [A2_addi, A2_addi_ce] = ALU32_ADDI_tc_1_SLOT0123
   | i `elem`
+      [C2_mux_tfr, C2_mux_tfr_new, C2_muxii_tfr, C2_muxii_tfr_ce,
+       C2_muxii_tfr_new, C2_muxii_tfr_new_ce, C2_muxir_tfr,
+       C2_muxir_tfr_ce, C2_muxir_tfr_new, C2_muxir_tfr_new_ce,
+       C2_muxri_tfr, C2_muxri_tfr_ce, C2_muxri_tfr_new,
+       C2_muxri_tfr_new_ce]
+    = ALU32_SLOT0123_2
+  | i `elem`
       [A2_addh_h16_hh, A2_addh_h16_hl, A2_addh_h16_lh, A2_addh_h16_ll,
        A2_addh_l16_hl, A2_addh_l16_ll, A2_addp, A2_addsp, A2_addsph,
        A2_addspl, A2_andp, A2_orp, A2_subh_h16_hh, A2_subh_h16_hl,

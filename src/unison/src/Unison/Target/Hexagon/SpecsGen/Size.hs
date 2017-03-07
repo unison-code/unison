@@ -1085,4 +1085,11 @@ size i
        Y6_l2gcleaninvpa, Y6_l2gcleanpa, Dep_A2_addsat, Dep_A2_subsat,
        Dep_S2_packhl]
     = 4
+  | i `elem`
+      [C2_mux_tfr, C2_mux_tfr_new, C2_muxii_tfr, C2_muxii_tfr_ce,
+       C2_muxii_tfr_new, C2_muxii_tfr_new_ce, C2_muxir_tfr,
+       C2_muxir_tfr_ce, C2_muxir_tfr_new, C2_muxir_tfr_new_ce,
+       C2_muxri_tfr, C2_muxri_tfr_ce, C2_muxri_tfr_new,
+       C2_muxri_tfr_new_ce]
+    = 8
 

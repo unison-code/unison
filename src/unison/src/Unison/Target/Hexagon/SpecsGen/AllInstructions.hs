@@ -711,7 +711,9 @@ allInstructions
      J2_jumpt_linear, J2_jumpf_linear, J2_jumpt_nv_linear,
      J2_jumpf_nv_linear, J2_jumpt_nv, J2_jumpf_nv, Jump_merge,
      L2_deallocframe_linear, JMPret_dealloc_linear, L4_return_linear,
-     Ret_dealloc_merge, JMPret_linear, Jr_merge, A2_addi_ce,
+     Ret_dealloc_merge, JMPret_linear, Jr_merge, C2_mux_tfr,
+     C2_muxii_tfr, C2_muxir_tfr, C2_muxri_tfr, C2_mux_tfr_new,
+     C2_muxii_tfr_new, C2_muxir_tfr_new, C2_muxri_tfr_new, A2_addi_ce,
      A2_andir_ce, A2_combineii_ce, A2_orir_ce, A2_paddif_ce,
      A2_paddifnew_ce, A2_paddit_ce, A2_padditnew_ce, A2_subri_ce,
      A2_tfrih_ce, A2_tfril_ce, A2_tfrpi_ce, A2_tfrsi_ce,
@@ -1080,5 +1082,7 @@ allInstructions
      J4_cmpeqi_t_jumpnv_t_linear_ce, J4_cmpeqi_f_jumpnv_t_linear_ce,
      J4_cmpgti_t_jumpnv_t_linear_ce, J4_cmpgti_f_jumpnv_t_linear_ce,
      J4_cmpgtui_t_jumpnv_t_linear_ce, J4_cmpgtui_f_jumpnv_t_linear_ce,
-     J2_jumpt_nv_ce, J2_jumpf_nv_ce, Jump_merge_ce]
+     J2_jumpt_nv_ce, J2_jumpf_nv_ce, Jump_merge_ce, C2_muxii_tfr_ce,
+     C2_muxir_tfr_ce, C2_muxri_tfr_ce, C2_muxii_tfr_new_ce,
+     C2_muxir_tfr_new_ce, C2_muxri_tfr_new_ce]
 

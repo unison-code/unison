@@ -2610,6 +2610,14 @@ data HexagonInstruction = A2_abs
                         | Ret_dealloc_merge
                         | JMPret_linear
                         | Jr_merge
+                        | C2_mux_tfr
+                        | C2_muxii_tfr
+                        | C2_muxir_tfr
+                        | C2_muxri_tfr
+                        | C2_mux_tfr_new
+                        | C2_muxii_tfr_new
+                        | C2_muxir_tfr_new
+                        | C2_muxri_tfr_new
                         | A2_addi_ce
                         | A2_andir_ce
                         | A2_combineii_ce
@@ -3623,5 +3631,11 @@ data HexagonInstruction = A2_abs
                         | J2_jumpt_nv_ce
                         | J2_jumpf_nv_ce
                         | Jump_merge_ce
+                        | C2_muxii_tfr_ce
+                        | C2_muxir_tfr_ce
+                        | C2_muxri_tfr_ce
+                        | C2_muxii_tfr_new_ce
+                        | C2_muxir_tfr_new_ce
+                        | C2_muxri_tfr_new_ce
                         deriving (Eq, Ord)
 

@@ -88,9 +88,9 @@ isCopyUsing r c = isVirtualCopy c && r `elem` oUses c
 
 addAlternativeInstructions
   o @ SingleOperation {
-          oOpr = Natural ao @ (Linear {oIs = [TargetInstruction i]})} =
-  let newIs = map TargetInstruction (alternativeInstructions i)
-  in o {oOpr = Natural (ao {oIs = nub (TargetInstruction i : newIs)})}
+          oOpr = Natural n @ (Linear {oIs = [TargetInstruction i], oUs = us})} =
+  let is = map TargetInstruction (alternativeInstructions i us)
+  in o {oOpr = Natural (n {oIs = nub is})}
 addAlternativeInstructions o = o
 
 -- See `isNewValueJumpCandidate` and `canCompareBeNewValueJump` in
@@ -254,31 +254,19 @@ isAllocFrameOpr o =
 
 -- | Gives alternative instructions with the same semantics
 
--- | New-value stores
+alternativeInstructions i us
+  | isOldValueStoreInstr i = [i, newValueStoreInstr i]
+  -- see HexagonExpandCondsets.cpp. TODO: handle MUX64_rr
+  | isMuxTransferInstr i =
+      let i' = if any isGTSigned8BitsImm us then [] else [i]
+      in i' ++ [condTransferInstr (i, False), condTransferInstr (i, True)]
+  | otherwise = [i]
 
-alternativeInstructions S2_storerb_io = [S2_storerbnew_io]
-alternativeInstructions S2_storerb_pi = [S2_storerbnew_pi]
-alternativeInstructions S2_storerh_io = [S2_storerhnew_io]
-alternativeInstructions S2_storerh_pi = [S2_storerhnew_pi]
-alternativeInstructions S2_storeriabs = [S2_storerinewabs]
-alternativeInstructions S2_storeri_io = [S2_storerinew_io]
-alternativeInstructions S2_storeri_io_fi = [S2_storerinew_io_fi]
-alternativeInstructions S2_storeri_pi = [S2_storerinew_pi]
-alternativeInstructions S4_storerh_rr = [S4_storerhnew_rr]
-alternativeInstructions S4_storeri_rr = [S4_storerinew_rr]
-alternativeInstructions S2_storerb_io_ce = [S2_storerbnew_io_ce]
-alternativeInstructions S2_storerb_pi_ce = [S2_storerbnew_pi_ce]
-alternativeInstructions S2_storerh_io_ce = [S2_storerhnew_io_ce]
-alternativeInstructions S2_storerh_pi_ce = [S2_storerhnew_pi_ce]
-alternativeInstructions S2_storeriabs_ce = [S2_storerinewabs_ce]
-alternativeInstructions S2_storeri_io_ce = [S2_storerinew_io_ce]
-alternativeInstructions S2_storeri_io_fi_ce = [S2_storerinew_io_fi_ce]
-alternativeInstructions S2_storeri_pi_ce = [S2_storerinew_pi_ce]
-alternativeInstructions S4_storerh_rr_ce = [S4_storerhnew_rr_ce]
-alternativeInstructions S4_storeri_rr_ce = [S4_storerinew_rr_ce]
+isGTSigned8BitsImm (Bound MachineImm {miValue = imm})
+  | not (isSInt 8 imm) = True
+isGTSigned8BitsImm _ = False
 
--- | New-value pairs of conditional transfers
-
--- TODO: look at HexagonExpandCondsets.cpp
-
-alternativeInstructions _ = []
+isSInt n v =
+  let v' = fromInteger v :: Word64
+      p  = 2 ^ (n - 1)
+  in v' >= (-p) && v' < p

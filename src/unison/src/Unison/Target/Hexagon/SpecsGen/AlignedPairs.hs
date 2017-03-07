@@ -58,13 +58,15 @@ alignedPairs i ([_, _, _], [_])
        A2_pandfnew, A2_pandt, A2_pandtnew, A2_porf, A2_porfnew, A2_port,
        A2_portnew, A2_psubf, A2_psubfnew, A2_psubt, A2_psubtnew, A2_pxorf,
        A2_pxorfnew, A2_pxort, A2_pxortnew, C2_ccombinewf,
-       C2_ccombinewnewf, C2_ccombinewnewt, C2_ccombinewt, C2_mux, C2_vmux,
-       MUX64_rr]
+       C2_ccombinewnewf, C2_ccombinewnewt, C2_ccombinewt, C2_mux,
+       C2_mux_tfr, C2_mux_tfr_new, C2_vmux, MUX64_rr]
     = []
 alignedPairs i ([_, _, _], [_])
   | i `elem`
       [A2_paddif, A2_paddif_ce, A2_paddifnew, A2_paddifnew_ce, A2_paddit,
-       A2_paddit_ce, A2_padditnew, A2_padditnew_ce, C2_muxir, C2_muxir_ce]
+       A2_paddit_ce, A2_padditnew, A2_padditnew_ce, C2_muxir, C2_muxir_ce,
+       C2_muxir_tfr, C2_muxir_tfr_ce, C2_muxir_tfr_new,
+       C2_muxir_tfr_new_ce]
     = []
 alignedPairs i ([_, _], [])
   | i `elem` [J2_callf, J2_callf_ce, J2_callt, J2_callt_ce] = []
@@ -74,9 +76,15 @@ alignedPairs i ([_, _], [_])
        C2_cmovenewif, C2_cmovenewif_ce, C2_cmovenewit, C2_cmovenewit_ce]
     = []
 alignedPairs i ([_, _, _], [_])
-  | i `elem` [C2_muxri, C2_muxri_ce] = []
+  | i `elem`
+      [C2_muxri, C2_muxri_ce, C2_muxri_tfr, C2_muxri_tfr_ce,
+       C2_muxri_tfr_new, C2_muxri_tfr_new_ce]
+    = []
 alignedPairs i ([_, _, _], [_])
-  | i `elem` [C2_muxii, C2_muxii_ce] = []
+  | i `elem`
+      [C2_muxii, C2_muxii_ce, C2_muxii_tfr, C2_muxii_tfr_ce,
+       C2_muxii_tfr_new, C2_muxii_tfr_new_ce]
+    = []
 alignedPairs i ([_, _, _, _, _], [])
   | i `elem`
       [S4_pstorerbnewf_rr, S4_pstorerbnewf_rr_ce, S4_pstorerbnewfnew_rr,

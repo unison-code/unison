@@ -12,11 +12,14 @@ This file is part of Unison, see http://unison-code.github.io
 module Unison.Target.Hexagon.Common
     (isNVJmpInstr, isNVJmp, isCmp, isCmpInstr, isJmp, isJmpInstr,
      isLinearJump, isLinearNewValueCmpJump, isNewValueCmpJump, isJumpNew,
-     isMemAccessWithOff, memAccessAlignment) where
+     isMemAccessWithOff, memAccessAlignment, isOldValueStoreInstr,
+     newValueStoreInstr, isMuxTransferInstr, isCondTransferInstr,
+     condTransferInstr, muxTransferInstr) where
 
 import Data.List
 import qualified Data.Map as M
 
+import Unison
 import MachineIR
 import qualified Unison.Target.Hexagon.SpecsGen as SpecsGen
 import Unison.Target.Hexagon.SpecsGen.HexagonInstructionDecl
@@ -71,3 +74,45 @@ memAccessAlignments = M.fromList
    (L2_loadri_io, 4),
    (L2_loadrh_io, 2),
    (L2_loadrb_io, 1)]
+
+isOldValueStoreInstr i = M.member i newValueStoreVersions
+
+newValueStoreInstr i = newValueStoreVersions M.! i
+
+newValueStoreVersions = M.fromList
+  [(S2_storerb_io, S2_storerbnew_io),
+   (S2_storerb_pi, S2_storerbnew_pi),
+   (S2_storerh_io, S2_storerhnew_io),
+   (S2_storerh_pi, S2_storerhnew_pi),
+   (S2_storeriabs, S2_storerinewabs),
+   (S2_storeri_io, S2_storerinew_io),
+   (S2_storeri_io_fi, S2_storerinew_io_fi),
+   (S2_storeri_pi, S2_storerinew_pi),
+   (S4_storerh_rr, S4_storerhnew_rr),
+   (S4_storeri_rr, S4_storerinew_rr),
+   (S2_storerb_io_ce, S2_storerbnew_io_ce),
+   (S2_storerb_pi_ce, S2_storerbnew_pi_ce),
+   (S2_storerh_io_ce, S2_storerhnew_io_ce),
+   (S2_storerh_pi_ce, S2_storerhnew_pi_ce),
+   (S2_storeriabs_ce, S2_storerinewabs_ce),
+   (S2_storeri_io_ce, S2_storerinew_io_ce),
+   (S2_storeri_io_fi_ce, S2_storerinew_io_fi_ce),
+   (S2_storeri_pi_ce, S2_storerinew_pi_ce),
+   (S4_storerh_rr_ce, S4_storerhnew_rr_ce),
+   (S4_storeri_rr_ce, S4_storerinew_rr_ce)]
+
+isMuxTransferInstr i = M.member (i, False) condTransferVersions
+isCondTransferInstr i = M.member i (inverseMap condTransferVersions)
+
+condTransferInstr (i, new) = condTransferVersions M.! (i, new)
+muxTransferInstr i = (inverseMap condTransferVersions) M.! i
+
+condTransferVersions = M.fromList
+  [((C2_mux, False), C2_mux_tfr),
+   ((C2_muxii, False), C2_muxii_tfr),
+   ((C2_muxir, False), C2_muxir_tfr),
+   ((C2_muxri, False), C2_muxri_tfr),
+   ((C2_mux, True), C2_mux_tfr_new),
+   ((C2_muxii, True), C2_muxii_tfr_new),
+   ((C2_muxir, True), C2_muxir_tfr_new),
+   ((C2_muxri, True), C2_muxri_tfr_new)]

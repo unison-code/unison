@@ -1140,6 +1140,23 @@ operandInfo i
   | i `elem` [J2_jumpf_nv_linear, J2_jumpt_nv_linear] =
     ([TemporaryInfo (RegisterClass PredRegs) (-1) True],
      [TemporaryInfo (RegisterClass F32) 1 False])
+  | i `elem` [C2_mux_tfr_new] =
+    ([TemporaryInfo (RegisterClass PredRegs) (-1) True,
+      TemporaryInfo (RegisterClass IntRegs) 0 False,
+      TemporaryInfo (RegisterClass IntRegs) 0 False],
+     [TemporaryInfo (RegisterClass IntRegs) 1 False])
+  | i `elem` [C2_muxir_tfr_new, C2_muxir_tfr_new_ce] =
+    ([TemporaryInfo (RegisterClass PredRegs) (-1) True,
+      TemporaryInfo (RegisterClass IntRegs) 0 False, BoundInfo],
+     [TemporaryInfo (RegisterClass IntRegs) 1 False])
+  | i `elem` [C2_muxri_tfr_new, C2_muxri_tfr_new_ce] =
+    ([TemporaryInfo (RegisterClass PredRegs) (-1) True, BoundInfo,
+      TemporaryInfo (RegisterClass IntRegs) 0 False],
+     [TemporaryInfo (RegisterClass IntRegs) 1 False])
+  | i `elem` [C2_muxii_tfr_new, C2_muxii_tfr_new_ce] =
+    ([TemporaryInfo (RegisterClass PredRegs) (-1) True, BoundInfo,
+      BoundInfo],
+     [TemporaryInfo (RegisterClass IntRegs) 1 False])
   | i `elem`
       [J2_jumpf_nv, J2_jumpf_nv_ce, J2_jumpt_nv, J2_jumpt_nv_ce]
     =
@@ -1200,7 +1217,7 @@ operandInfo i
       [A2_paddf, A2_paddfnew, A2_paddt, A2_paddtnew, A2_pandf,
        A2_pandfnew, A2_pandt, A2_pandtnew, A2_porf, A2_porfnew, A2_port,
        A2_portnew, A2_psubf, A2_psubfnew, A2_psubt, A2_psubtnew, A2_pxorf,
-       A2_pxorfnew, A2_pxort, A2_pxortnew, C2_mux]
+       A2_pxorfnew, A2_pxort, A2_pxortnew, C2_mux, C2_mux_tfr]
     =
     ([TemporaryInfo (RegisterClass PredRegs) 0 False,
       TemporaryInfo (RegisterClass IntRegs) 0 False,
@@ -1304,20 +1321,20 @@ operandInfo i
   | i `elem`
       [A2_paddif, A2_paddif_ce, A2_paddifnew, A2_paddifnew_ce, A2_paddit,
        A2_paddit_ce, A2_padditnew, A2_padditnew_ce, C2_muxir, C2_muxir_ce,
-       L2_ploadrbf_io, L2_ploadrbf_io_ce, L2_ploadrbfnew_io,
-       L2_ploadrbfnew_io_ce, L2_ploadrbt_io, L2_ploadrbt_io_ce,
-       L2_ploadrbtnew_io, L2_ploadrbtnew_io_ce, L2_ploadrhf_io,
-       L2_ploadrhf_io_ce, L2_ploadrhfnew_io, L2_ploadrhfnew_io_ce,
-       L2_ploadrht_io, L2_ploadrht_io_ce, L2_ploadrhtnew_io,
-       L2_ploadrhtnew_io_ce, L2_ploadrif_io, L2_ploadrif_io_ce,
-       L2_ploadrifnew_io, L2_ploadrifnew_io_ce, L2_ploadrit_io,
-       L2_ploadrit_io_ce, L2_ploadritnew_io, L2_ploadritnew_io_ce,
-       L2_ploadrubf_io, L2_ploadrubf_io_ce, L2_ploadrubfnew_io,
-       L2_ploadrubfnew_io_ce, L2_ploadrubt_io, L2_ploadrubt_io_ce,
-       L2_ploadrubtnew_io, L2_ploadrubtnew_io_ce, L2_ploadruhf_io,
-       L2_ploadruhf_io_ce, L2_ploadruhfnew_io, L2_ploadruhfnew_io_ce,
-       L2_ploadruht_io, L2_ploadruht_io_ce, L2_ploadruhtnew_io,
-       L2_ploadruhtnew_io_ce, MUX_ir_f, MUX_ir_f_ce]
+       C2_muxir_tfr, C2_muxir_tfr_ce, L2_ploadrbf_io, L2_ploadrbf_io_ce,
+       L2_ploadrbfnew_io, L2_ploadrbfnew_io_ce, L2_ploadrbt_io,
+       L2_ploadrbt_io_ce, L2_ploadrbtnew_io, L2_ploadrbtnew_io_ce,
+       L2_ploadrhf_io, L2_ploadrhf_io_ce, L2_ploadrhfnew_io,
+       L2_ploadrhfnew_io_ce, L2_ploadrht_io, L2_ploadrht_io_ce,
+       L2_ploadrhtnew_io, L2_ploadrhtnew_io_ce, L2_ploadrif_io,
+       L2_ploadrif_io_ce, L2_ploadrifnew_io, L2_ploadrifnew_io_ce,
+       L2_ploadrit_io, L2_ploadrit_io_ce, L2_ploadritnew_io,
+       L2_ploadritnew_io_ce, L2_ploadrubf_io, L2_ploadrubf_io_ce,
+       L2_ploadrubfnew_io, L2_ploadrubfnew_io_ce, L2_ploadrubt_io,
+       L2_ploadrubt_io_ce, L2_ploadrubtnew_io, L2_ploadrubtnew_io_ce,
+       L2_ploadruhf_io, L2_ploadruhf_io_ce, L2_ploadruhfnew_io,
+       L2_ploadruhfnew_io_ce, L2_ploadruht_io, L2_ploadruht_io_ce,
+       L2_ploadruhtnew_io, L2_ploadruhtnew_io_ce, MUX_ir_f, MUX_ir_f_ce]
     =
     ([TemporaryInfo (RegisterClass PredRegs) 0 False,
       TemporaryInfo (RegisterClass IntRegs) 0 False, BoundInfo],
@@ -1601,11 +1618,14 @@ operandInfo i
     ([TemporaryInfo (RegisterClass PredRegs) 0 False, BoundInfo,
       TemporaryInfo (RegisterClass IntRegs) 0 False],
      [])
-  | i `elem` [C2_muxri, C2_muxri_ce, MUX_ri_f, MUX_ri_f_ce] =
+  | i `elem`
+      [C2_muxri, C2_muxri_ce, C2_muxri_tfr, C2_muxri_tfr_ce, MUX_ri_f,
+       MUX_ri_f_ce]
+    =
     ([TemporaryInfo (RegisterClass PredRegs) 0 False, BoundInfo,
       TemporaryInfo (RegisterClass IntRegs) 0 False],
      [TemporaryInfo (RegisterClass IntRegs) 1 False])
-  | i `elem` [C2_muxii, C2_muxii_ce] =
+  | i `elem` [C2_muxii, C2_muxii_ce, C2_muxii_tfr, C2_muxii_tfr_ce] =
     ([TemporaryInfo (RegisterClass PredRegs) 0 False, BoundInfo,
       BoundInfo],
      [TemporaryInfo (RegisterClass IntRegs) 1 False])

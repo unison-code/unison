@@ -2621,6 +2621,14 @@ readOp "L4_return_linear" = L4_return_linear
 readOp "ret_dealloc_merge" = Ret_dealloc_merge
 readOp "JMPret_linear" = JMPret_linear
 readOp "jr_merge" = Jr_merge
+readOp "C2_mux_tfr" = C2_mux_tfr
+readOp "C2_muxii_tfr" = C2_muxii_tfr
+readOp "C2_muxir_tfr" = C2_muxir_tfr
+readOp "C2_muxri_tfr" = C2_muxri_tfr
+readOp "C2_mux_tfr_new" = C2_mux_tfr_new
+readOp "C2_muxii_tfr_new" = C2_muxii_tfr_new
+readOp "C2_muxir_tfr_new" = C2_muxir_tfr_new
+readOp "C2_muxri_tfr_new" = C2_muxri_tfr_new
 readOp "A2_addi_ce" = A2_addi_ce
 readOp "A2_andir_ce" = A2_andir_ce
 readOp "A2_combineii_ce" = A2_combineii_ce
@@ -3662,5 +3670,11 @@ readOp "J4_cmpgtui_f_jumpnv_t_linear_ce"
 readOp "J2_jumpt_nv_ce" = J2_jumpt_nv_ce
 readOp "J2_jumpf_nv_ce" = J2_jumpf_nv_ce
 readOp "jump_merge_ce" = Jump_merge_ce
+readOp "C2_muxii_tfr_ce" = C2_muxii_tfr_ce
+readOp "C2_muxir_tfr_ce" = C2_muxir_tfr_ce
+readOp "C2_muxri_tfr_ce" = C2_muxri_tfr_ce
+readOp "C2_muxii_tfr_new_ce" = C2_muxii_tfr_new_ce
+readOp "C2_muxir_tfr_new_ce" = C2_muxir_tfr_new_ce
+readOp "C2_muxri_tfr_new_ce" = C2_muxri_tfr_new_ce
 readOp a = error ("unmatched: readOp " ++ show a)
 
