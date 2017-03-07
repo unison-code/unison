@@ -28,7 +28,7 @@ splitBlocks maxBlockSize f @ Function {fCode = code} _target =
 
 splitBlock maxSize acc b @ Block {bCode = code} =
   let last     = toInteger $ length code - 3
-      (_, ps)  = mapAccumL (splittable code) Splittable (zip [0..] code)
+      (_, ps)  = mapAccumL splittable Splittable (zip [0..] code)
       possible = concat (init ps)
       ideal    = [maxSize, maxSize + maxSize .. last]
       final    = map (\i -> minimumBy (comparing (distanceTo i)) possible) ideal
@@ -37,7 +37,7 @@ splitBlock maxSize acc b @ Block {bCode = code} =
       []      -> (acc, [b])
       lengths -> splitIntoBlocks lengths acc b
 
-data SplitState i = Splittable | WithinCall | PostCall Integer
+data SplitState = Splittable | WithinCall | PostCall Integer | WithinPhi Integer
 
 {-
 This assumes the following code sequence for function calls:
@@ -46,13 +46,15 @@ This assumes the following code sequence for function calls:
   [] <- (kill) [t1, t2, ...] (optional)
 -}
 
-splittable _ Splittable (_, o) | isDelimiter o = (Splittable, [])
-splittable _ Splittable (_, o) | isCall o = (WithinCall, [])
-splittable _ WithinCall (p, o) | isFun o = (PostCall p, [])
-splittable _ (PostCall p') (p, o)
+splittable Splittable (_, o) | isDelimiter o = (Splittable, [])
+splittable Splittable (_, o) | isCall o = (WithinCall, [])
+splittable WithinCall (p, o) | isFun o = (PostCall p, [])
+splittable (PostCall p') (p, o)
     | isKill o  = (Splittable, [p])
     | otherwise = (Splittable, [p', p])
-splittable _ Splittable (p, _) = (Splittable, [p])
+splittable _ (p, o) | isPhi o = (WithinPhi p, [])
+splittable (WithinPhi p') (p, _) = (Splittable, [p', p])
+splittable Splittable (p, _) = (Splittable, [p])
 
 distanceTo x y = abs (y - x)
 
