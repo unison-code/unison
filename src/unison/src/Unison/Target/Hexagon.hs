@@ -341,8 +341,9 @@ resources =
      Resource Slot2 1,    -- Used by JR
      Resource Slot3 1,    -- Used by CR
 
-     -- Artificial resource to represent the fact that there can
-     -- only be up to two regular stores or a single new-value store per bundle
+     -- Artificial resource to represent the fact that there can only be up to
+     -- two regular stores or a single new-value store per bundle (see Section
+     -- 5.5 in Hexagon programmer's reference)
      Resource Store 2,    -- Used by ST and NVST
 
      -- Artificial resource to disallow jump merges and ENDLOOP instructions to
@@ -365,47 +366,47 @@ itineraryUsage i it
     | it `elem` [ALU32_2op_tc_1_SLOT0123, ALU32_2op_tc_2early_SLOT0123,
                  ALU32_3op_tc_1_SLOT0123, ALU32_3op_tc_2early_SLOT0123,
                  ALU32_ADDI_tc_1_SLOT0123, EXTENDER_tc_1_SLOT0123, PSEUDO] =
-        [mkUsage BundleWidth 1 1, mkUsage Slot0123 1 1]
+        baseUsage
     | it `elem` [ALU64_tc_1_SLOT23, ALU64_tc_2_SLOT23, ALU64_tc_3x_SLOT23,
                  J_tc_2early_SLOT23, M_tc_2_SLOT23, M_tc_3x_SLOT23,
                  S_2op_tc_1_SLOT23, S_2op_tc_2_SLOT23, S_2op_tc_2early_SLOT23,
                  S_3op_tc_1_SLOT23, S_3op_tc_2_SLOT23, S_3op_tc_2early_SLOT23,
-                 CR_tc_2early_SLOT23, ALU64_tc_2early_SLOT23] =
-      itineraryUsage i ALU32_2op_tc_1_SLOT0123 ++ [mkUsage Slot23 1 1]
-
-    | it `elem` [CR_tc_2early_SLOT3, CR_tc_3x_SLOT3] =
-      itineraryUsage i ALU64_tc_1_SLOT23 ++ [mkUsage Slot3 1 1]
-    | it `elem` [J_tc_2early_SLOT2] =
-      itineraryUsage i ALU64_tc_1_SLOT23 ++ [mkUsage Slot2 1 1]
+                 CR_tc_2early_SLOT23, ALU64_tc_2early_SLOT23] = oneOfSlot23
+    | it `elem` [CR_tc_2early_SLOT3, CR_tc_3x_SLOT3] = slot3
+    | it `elem` [J_tc_2early_SLOT2] = slot2
     | it `elem` [LD_tc_ld_SLOT01, V2LDST_tc_ld_SLOT01, V4LDST_tc_ld_SLOT01] =
-      itineraryUsage i ALU32_2op_tc_1_SLOT0123 ++ [mkUsage Slot01 1 1]
+      oneOfSlot01
+    | it `elem` [LD_tc_ld_SLOT0,  ST_tc_3stall_SLOT0, V4LDST_tc_st_SLOT0,
+                 NCJ_tc_3or4stall_SLOT0, LD_tc_3or4stall_SLOT0] = slot0
     | it `elem` [ST_tc_st_SLOT01, V2LDST_tc_st_SLOT01, V4LDST_tc_st_SLOT01] =
-      itineraryUsage i ALU32_2op_tc_1_SLOT0123 ++
-      [mkUsage Slot01 1 1, mkUsage Store 1 1]
+      oneOfSlot01 ++ store 1
+      -- New-value stores cannot be issued with other stores, we model this by
+      -- saturating the 'Store' resource.
     | it `elem` [NCJ_tc_3or4stall_SLOT0] && (mayStore i || i == STW_nv) =
-      itineraryUsage i LD_tc_ld_SLOT01 ++
-      [mkUsage Slot0 1 1, mkUsage Store 2 1]
+      slot0 ++ store 2
       -- A new-value compare and jump instruction i cannot be issued in parallel
       -- with stores as slot 0 will be occupied by i and slot 1 will be occupied
       -- by the instruction feeding i. We model this by saturating the 'Store'
       -- resource.
     | it `elem` [NCJ_tc_3or4stall_SLOT0] && (isLinearNewValueCmpJump i) =
-      itineraryUsage i LD_tc_ld_SLOT01 ++
-      [mkUsage Slot0 1 1, mkUsage Store 2 1]
-    | it `elem` [LD_tc_ld_SLOT0,  ST_tc_3stall_SLOT0, V4LDST_tc_st_SLOT0,
-                 NCJ_tc_3or4stall_SLOT0, LD_tc_3or4stall_SLOT0] =
-      itineraryUsage i LD_tc_ld_SLOT01 ++ [mkUsage Slot0 1 1]
+      slot0 ++ store 2
     | it `elem` [ST_tc_st_SLOT0, ST_tc_ld_SLOT0, V2LDST_tc_st_SLOT0] =
-      itineraryUsage i LD_tc_ld_SLOT01 ++
-      [mkUsage Slot0 1 1, mkUsage Store 1 1]
+      slot0 ++ store 1
       -- ENDLOOP instructions are encoded in the bits 14:15 of the preceeding
       -- instruction in the bundle
     | it `elem` [J_tc_2early_SLOT0123] = [mkUsage BlockEnd 1 1]
-    | it `elem` [ALU32_SLOT0123_2] =
-      [mkUsage BundleWidth 2 1, mkUsage Slot0123 2 1]
+    | it `elem` [ALU32_SLOT0123_2] = mergeUsages baseUsage baseUsage
     | it `elem` [NoItinerary] = []
 
 itineraryUsage _ it = error ("unmatched: itineraryUsage " ++ show it)
+
+baseUsage   = [mkUsage BundleWidth 1 1, mkUsage Slot0123 1 1]
+oneOfSlot01 = baseUsage ++ [mkUsage Slot01 1 1]
+slot0       = oneOfSlot01 ++ [mkUsage Slot0 1 1]
+oneOfSlot23 = baseUsage ++ [mkUsage Slot23 1 1]
+slot2       = oneOfSlot23 ++ [mkUsage Slot2 1 1]
+slot3       = oneOfSlot23 ++ [mkUsage Slot3 1 1]
+store n     = [mkUsage Store n 1]
 
 -- | No-operation instruction
 
