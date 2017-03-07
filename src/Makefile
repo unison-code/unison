@@ -45,7 +45,9 @@ SOLVERBIN := $(SOLVERDIR)/gecode-solver
 
 UNISON_SHOW_DETAILS ?= always
 
-build: build-unison build-presolver build-solver
+build:
+	$(MAKE) build-unison
+	$(MAKE) build-presolver build-solver
 
 build-solver: $(SOLVERBIN)
 
