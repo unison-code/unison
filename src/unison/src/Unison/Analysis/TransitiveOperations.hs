@@ -37,17 +37,21 @@ transitiveRegClasses
        OperandInfoFunction i rc -> BCFGraph i r -> Partition (Operand r) ->
        ReachabilityType -> Function i r -> Operand r -> [RegisterClass rc]
 transitiveRegClasses oif bcfg sg rt f t =
-    let fcode = flatCode f
-        ts    = fromJust $ find (\p -> t `elem` p) $ SG.sameTempPartitions sg
-        tos   = concatMap
-                (\t -> [(t, definer t fcode)] ++ [(t, u) | u <- users t fcode])
-                ts
-        tos1  = filter (isNatural . snd) tos
-        b     = tBlockLab f t
-        tos2  = [(t, o) | (t, o) <- tos1,
-                 evalRechability bcfg (oBlockLab f o) rt b]
-        rcs   = nub [regClassOf oif o t | (t, o) <- tos2]
-    in rcs
+  case findPartitionOf sg t of
+   Nothing -> []
+   Just ts ->
+     let fcode = flatCode f
+         tos   = concatMap
+                 (\t -> [(t, definer t fcode)] ++ [(t, u) | u <- users t fcode])
+                 ts
+         tos1  = filter (isNatural . snd) tos
+         b     = tBlockLab f t
+         tos2  = [(t, o) | (t, o) <- tos1,
+                  evalRechability bcfg (oBlockLab f o) rt b]
+         rcs   = nub [regClassOf oif o t | (t, o) <- tos2]
+     in rcs
+
+findPartitionOf sg t = find (\p -> t `elem` p) $ SG.sameTempPartitions sg
 
 tBlockLab Function {fCode = code} t =
     bLab $ fromJust $ find (\b -> t `elem` tOps (bCode b)) code
@@ -66,13 +70,14 @@ transitivePreAssignments
        Partition (Operand r) -> ReachabilityType -> Function i r -> Operand r ->
        [Operand r]
 transitivePreAssignments bcfg sg rt f t =
-    let fcode = flatCode f
-        ts    = fromJust $ find (\p -> t `elem` p) $ SG.sameTempPartitions sg
-        ros   = concat
+  case findPartitionOf sg t of
+   Nothing -> []
+   Just ts ->
+     let ros  = concat
                 [[(r, o) | t @ Temporary {tReg = Just r }
-                             <- oAllOps o, t `elem` ts] | o <- fcode]
-        b     = tBlockLab f t
-        ros1  = [(r, o) | (r, o) <- ros,
+                           <- oAllOps o, t `elem` ts] | o <- flatCode f]
+         b    = tBlockLab f t
+         ros1 = [(r, o) | (r, o) <- ros,
                  evalRechability bcfg (oBlockLab f o) rt b]
-        ros2  = nub (map fst ros1)
-    in ros2
+         ros2 = nub (map fst ros1)
+     in ros2
