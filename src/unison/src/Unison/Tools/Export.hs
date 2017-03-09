@@ -66,7 +66,7 @@ run (removeReds, keepNops, baseFile, tight, debug, outJsonFile, unisonMirFile)
          mf5 = case baseMir of
                  (Just base) -> base
                  Nothing     -> ""
-     when debug $
+     when (debug && (isJust sol)) $
           do putStr (toPlainText partialFs)
              putStr $ toPlainText $
                [("toMachineFunction", Just $ showSimple mf1),
