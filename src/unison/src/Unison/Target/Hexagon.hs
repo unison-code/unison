@@ -376,13 +376,14 @@ itineraryUsage i it
     | it `elem` [J_tc_2early_SLOT2] = slot2
     | it `elem` [LD_tc_ld_SLOT01, V2LDST_tc_ld_SLOT01, V4LDST_tc_ld_SLOT01] =
       oneOfSlot01
-    | it `elem` [LD_tc_ld_SLOT0,  ST_tc_3stall_SLOT0, V4LDST_tc_st_SLOT0,
-                 NCJ_tc_3or4stall_SLOT0, LD_tc_3or4stall_SLOT0] = slot0
+    | it `elem` [LD_tc_ld_SLOT0,  ST_tc_3stall_SLOT0, NCJ_tc_3or4stall_SLOT0,
+                 LD_tc_3or4stall_SLOT0] = slot0
     | it `elem` [ST_tc_st_SLOT01, V2LDST_tc_st_SLOT01, V4LDST_tc_st_SLOT01] =
       oneOfSlot01 ++ store 1
       -- New-value stores cannot be issued with other stores, we model this by
       -- saturating the 'Store' resource.
-    | it `elem` [NCJ_tc_3or4stall_SLOT0] && (mayStore i || i == STW_nv) =
+    | it `elem` [ST_tc_st_SLOT0, V2LDST_tc_st_SLOT0, V4LDST_tc_st_SLOT0,
+                 NCJ_tc_3or4stall_SLOT0] && mayStore i =
       slot0 ++ store 2
       -- A new-value compare and jump instruction i cannot be issued in parallel
       -- with stores as slot 0 will be occupied by i and slot 1 will be occupied
@@ -390,8 +391,7 @@ itineraryUsage i it
       -- resource.
     | it `elem` [NCJ_tc_3or4stall_SLOT0] && (isLinearNewValueCmpJump i) =
       slot0 ++ store 2
-    | it `elem` [ST_tc_st_SLOT0, ST_tc_ld_SLOT0, V2LDST_tc_st_SLOT0] =
-      slot0 ++ store 1
+    | it `elem` [ST_tc_ld_SLOT0] = slot0 ++ store 1
       -- ENDLOOP instructions are encoded in the bits 14:15 of the preceeding
       -- instruction in the bundle
     | it `elem` [J_tc_2early_SLOT0123] = [mkUsage BlockEnd 1 1]
@@ -680,6 +680,7 @@ addHint True J2_jumpfnew = J2_jumpfnewpt
 addHint False i | isNewValueCmpJump i = read (init (show i) ++ "nt")
 addHint _ i = i
 
+mayStore STW_nv = True
 mayStore i =
   let ws  = snd (SpecsGen.readWriteInfo i) :: [RWObject HexagonRegister]
       mem = Memory "mem" :: RWObject HexagonRegister
