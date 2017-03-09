@@ -17,6 +17,7 @@ import qualified Data.Set as S
 import Common.Util
 
 import MachineIR hiding (parse)
+import MachineIR.Transformations.AddImplicitRegs
 
 import Unison
 import qualified Unison.Target.API as API
@@ -321,8 +322,8 @@ stackDirection = API.StackGrowsDown
 
 -- | Target dependent pre-processing functions
 
-preProcess = [cleanConstPoolBlocks, hideCPSRRegister,
-              addFrameIndex, processTailCalls, reorderImplicitOperands]
+preProcess = [cleanConstPoolBlocks, promoteImplicitOperands, hideCPSRRegister,
+              addFrameIndex, processTailCalls]
 
 cleanConstPoolBlocks mf @ MachineFunction {mfBlocks = mbs} =
   mf {mfBlocks = filter (not . isConstPoolBlock) mbs}
@@ -332,6 +333,30 @@ isConstPoolBlock MachineBlock {mbInstructions = mis} =
   all (\mi ->
          (isMachineTarget mi && mopcTarget (msOpcode mi) == CONSTPOOL_ENTRY) ||
          (isMachineVirtual mi && mopcVirtual (msOpcode mi) == EXIT)) mis
+
+promoteImplicitOperands = mapToMachineInstruction promoteImplicitOperandsInInstr
+
+promoteImplicitOperandsInInstr
+  mi @ MachineSingle {msOpcode   = MachineTargetOpc i,
+                      msOperands = [o1, o2, o3, p1, p2,
+                                    cc @ MachineReg {mrName = CPSR}]}
+  | i `elem` [T2SUBrr, T2SUBri, T2ORRrr, T2ANDri, T2ADDri] =
+    let mos' = [o1, cc, o2, o3, p1, p2]
+    in mi {msOpcode = mkMachineTargetOpc (toExplicitCpsrDef i),
+           msOperands = mos'}
+
+promoteImplicitOperandsInInstr
+  mi @ MachineSingle {msOpcode = MachineTargetOpc i, msOperands = mos} =
+    let fu   = length $ snd $ operandInfo i
+        mos' = if writesSideEffect i CPSR
+               then insertAt (mkMachineReg CPSR) (fu - 1) mos
+               else mos
+    in mi {msOperands = mos'}
+
+promoteImplicitOperandsInInstr mi = mi
+
+writesSideEffect i eff =
+    (OtherSideEffect eff) `elem` (snd $ SpecsGen.readWriteInfo i)
 
 -- This is done to prevent 'extractCallRegs' adding the 'cpsr' register as
 -- argument to function calls
@@ -373,48 +398,11 @@ processTailCallsInInstr mi @ MachineSingle {msOpcode   = MachineTargetOpc i,
 
 processTailCallsInInstr mi = mi
 
-reorderImplicitOperands = mapToMachineInstruction reorderImplicitOperandsInInstr
-
-reorderImplicitOperandsInInstr
-  mi @ MachineSingle {msOpcode   = MachineTargetOpc i,
-                      msOperands = [o1, o2, p1, p2,
-                                    cc @ MachineReg {mrName = PRED}]}
-  | i `elem` [T2CMPri, T2TSTri, T2CMNri, T2CMPrr, T2TSTrr, T2SUBrr, T2TEQrr] =
-    let mos' = [cc, o1, o2, p1, p2]
-    in mi {msOperands = mos'}
-
-reorderImplicitOperandsInInstr
-  mi @ MachineSingle {msOpcode   = MachineTargetOpc i,
-                      msOperands = [o1, o2, o3, p1, p2,
-                                    cc @ MachineReg {mrName = PRED}]}
-  | i `elem` [T2CMPrs, T2TSTrs] =
-    let mos' = [cc, o1, o2, o3, p1, p2]
-    in mi {msOperands = mos'}
-
-reorderImplicitOperandsInInstr
-  mi @ MachineSingle {msOpcode   = MachineTargetOpc i,
-                      msOperands = [o1, o2, o3, p1, p2,
-                                    cc @ MachineReg {mrName = PRED}]}
-  | i `elem` [T2SUBrr, T2SUBri, T2ORRrr, T2ANDri, T2ADDri] =
-    let mos' = [o1, cc, o2, o3, p1, p2]
-    in mi {msOpcode = mkMachineTargetOpc (toExplicitCpsrDef i),
-           msOperands = mos'}
-
-reorderImplicitOperandsInInstr
-  mi @ MachineSingle {msOpcode   = MachineTargetOpc i,
-                      msOperands = [p1, p2,
-                                    cc @ MachineReg {mrName = PRED},
-                                    fp]}
-  | i `elem` [FMSTAT] =
-    let mos' = [cc, p1, p2, fp]
-    in mi {msOperands = mos'}
-
-reorderImplicitOperandsInInstr mi = mi
-
 -- | Target dependent post-processing functions
 
 postProcess = [expandPseudos, removeAllNops, removeFrameIndex,
-               postReorderImplicitOperands, exposeCPSRRegister]
+               reorderImplicitOperands, exposeCPSRRegister,
+               flip addImplicitRegs (target, []), demoteImplicitOperands]
 
 expandPseudos = mapToMachineBlock (expandBlockPseudos expandPseudo)
 
@@ -437,10 +425,9 @@ defaultPred = [mkMachineImm 14, mkMachineNullReg]
 
 defaultPred' = map mkBound defaultPred
 
-postReorderImplicitOperands =
-  mapToMachineInstruction postReorderImplicitOperandsInInstr
+reorderImplicitOperands = mapToMachineInstruction reorderImplicitOperandsInInstr
 
-postReorderImplicitOperandsInInstr
+reorderImplicitOperandsInInstr
   mi @ MachineSingle {msOpcode   = MachineTargetOpc i,
                       msOperands = [cc @ MachineReg {mrName = CPSR},
                                     o1, o2, p1, p2]}
@@ -450,19 +437,19 @@ postReorderImplicitOperandsInInstr
     in mi {msOpcode = mkMachineTargetOpc $ fromExplicitCpsrDef i,
            msOperands = mos'}
 
-postReorderImplicitOperandsInInstr
+reorderImplicitOperandsInInstr
   mi @ MachineSingle {msOpcode = MachineTargetOpc i}
   | i `elem` [T2CMPri_cpsr] =
     mi {msOpcode = MachineTargetOpc $ fromExplicitCpsrDef i}
 
-postReorderImplicitOperandsInInstr
+reorderImplicitOperandsInInstr
   mi @ MachineSingle {msOpcode   = MachineTargetOpc i,
                       msOperands = [d, u1, p1, p2, _]}
   | i == TMOVi8s =
     let mos' = [d, mkMachineReg CPSR, u1, p1, p2]
     in mi {msOpcode = mkMachineTargetOpc TMOVi8, msOperands = mos'}
 
-postReorderImplicitOperandsInInstr mi = mi
+reorderImplicitOperandsInInstr mi = mi
 
 exposeCPSRRegister = mapToMachineInstruction exposeCPSRRegisterInInstr
 
@@ -482,7 +469,30 @@ removeFrameIndexInstr mi @ MachineSingle {msOpcode = MachineTargetOpc i}
     mi {msOpcode = mkMachineTargetOpc $ read $ dropSuffix "_cpi" (show i)}
   | otherwise = mi
 
+-- This is the inverse of 'promoteImplicitOperands'. TODO: does this preclude
+-- 'reorderImplicitOperands'?
 
+demoteImplicitOperands = mapToMachineInstruction demoteImplicitOperandsInInstr
+
+demoteImplicitOperandsInInstr
+  mi @ MachineSingle {msOpcode = MachineTargetOpc i, msOperands = mos,
+                      msProperties = ps} =
+    let (mos', ps') =
+          if writesSideEffect i CPSR
+          then let (ds, us) = splitAt (nDefs i) mos
+                   ds' = filter (not . isCPSROrNullReg) ds
+               in (ds' ++ us,
+                   ps ++ [mkMachineInstructionPropertyDefs
+                          (toInteger $ length ds')])
+          else (mos, ps)
+    in mi {msOperands = mos', msProperties = ps'}
+
+nDefs = length . snd . operandInfo
+
+isCPSROrNullReg mo = isMachineCPSRReg mo || isMachineNullReg mo
+
+isMachineCPSRReg (MachineReg {mrName = CPSR}) = True
+isMachineCPSRReg _ = False
 
 -- | Gives a list of function transformers
 transforms ImportPreLift = [peephole extractReturnRegs,
