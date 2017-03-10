@@ -376,8 +376,6 @@ itineraryUsage i it
     | it `elem` [J_tc_2early_SLOT2] = slot2
     | it `elem` [LD_tc_ld_SLOT01, V2LDST_tc_ld_SLOT01, V4LDST_tc_ld_SLOT01] =
       oneOfSlot01
-    | it `elem` [LD_tc_ld_SLOT0,  ST_tc_3stall_SLOT0, NCJ_tc_3or4stall_SLOT0,
-                 LD_tc_3or4stall_SLOT0] = slot0
     | it `elem` [ST_tc_st_SLOT01, V2LDST_tc_st_SLOT01, V4LDST_tc_st_SLOT01] =
       oneOfSlot01 ++ store 1
       -- New-value stores cannot be issued with other stores, we model this by
@@ -392,6 +390,8 @@ itineraryUsage i it
     | it `elem` [NCJ_tc_3or4stall_SLOT0] && (isLinearNewValueCmpJump i) =
       slot0 ++ store 2
     | it `elem` [ST_tc_ld_SLOT0] = slot0 ++ store 1
+    | it `elem` [LD_tc_ld_SLOT0,  ST_tc_3stall_SLOT0, NCJ_tc_3or4stall_SLOT0,
+                 LD_tc_3or4stall_SLOT0] = slot0
       -- ENDLOOP instructions are encoded in the bits 14:15 of the preceeding
       -- instruction in the bundle
     | it `elem` [J_tc_2early_SLOT0123] = [mkUsage BlockEnd 1 1]
