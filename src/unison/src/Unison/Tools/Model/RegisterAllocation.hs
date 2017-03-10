@@ -243,9 +243,10 @@ parameters (cg, _, t2w, ra, _) f @ Function {fCode = code} target =
       -- example: def_opr[6]: operation that defines temporary t6
       ("def_opr", toJSON def_opr),
 
-      -- registers for temporaries assigned to infinite spaces
+      -- register atoms for temporaries assigned to infinite spaces
       -- example: memassign[2][0]: temporary of the third assignment
-      -- example: memassign[2][1]: register atom of the third assignment
+      -- example: memassign[2][1]: first register atom of the third assignment
+      -- example: memassign[2][2]: last register atom of the third assignment
       ("memassign", toJSON memassign)
 
      ]
@@ -446,7 +447,7 @@ memAssignForSpace ocf rcSpace ts def_opr rs2a t2w p2ts congr rs =
         cts5    = sortBy (comparing (\ts -> - t2w M.! head ts)) cts4
         fa      = fst $ rs2a M.! rs
         (_, ma) = mapAccumL (buildMemAssign t2w) fa cts5
-        ma'     = sort $ concat [zip ts (repeat a) | (ts, a) <- ma]
+        ma'     = sort $ concat [map (\t -> (t,a,la)) ts | (ts,(a,la)) <- ma]
     in ma'
 
 cfilter :: (a -> Bool) -> [[a]] -> [[a]]
@@ -463,4 +464,7 @@ isSpaceCandidate ocf rcSpace def_opr rs t =
         rcs  = [ircs !! tidx | ircs <- ocf $ def_opr M.! t]
     in any (\rc -> rs == (rcSpace M.! rc)) rcs
 
-buildMemAssign t2w a ts = (a + fromInteger (t2w M.! head ts), (ts, a))
+buildMemAssign t2w a ts =
+  let w = fromInteger (t2w M.! head ts)
+      n = fromInteger (toInteger (length ts))
+  in (a + (w * n), (ts, (a, a + w * (n - 1))))

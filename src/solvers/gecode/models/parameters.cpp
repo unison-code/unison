@@ -197,7 +197,7 @@ void Parameters::compute_derived() {
   activation_class_instructions.clear();
   activation_class_operations.clear();
   activation_class_representative.clear();
-  infinite_atom.clear();
+  infinite_atom_range.clear();
   congruent.clear();
   succ.clear();
   binterchangeable.clear();
@@ -565,11 +565,13 @@ void Parameters::compute_derived() {
     ac++;
   }
 
-  for (vector<int> ma: memassign) {
+  for (vector<int> ma : memassign) {
     temporary t = ma[0];
-    register_atom ra = ma[1];
-    assert(contains(RA, ra));
-    infinite_atom[t] = ra;
+    register_atom fra = ma[1];
+    register_atom lra = ma[2];
+    assert(contains(RA, fra));
+    assert(contains(RA, lra));
+    infinite_atom_range[t] = {fra, lra};
   }
 
   vector<vector<operation> > emptyint;

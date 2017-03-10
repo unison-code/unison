@@ -294,7 +294,7 @@ public:
   // presolver killer operands
   vector<operand> last_use;
 
-  // presolver registers for temporaries assigned to infinite spaces
+  // register atoms for temporaries assigned to infinite spaces
   vector<vector<int> > memassign;
 
   // set of dominated uses
@@ -505,8 +505,8 @@ public:
   // representative operation of each activation class
   vector<operation> activation_class_representative;
 
-  // infinite register atom assigned to each temporary
-  map<temporary, register_atom> infinite_atom;
+  // infinite register atom range assigned to each temporary
+  map<temporary, vector<register_atom> > infinite_atom_range;
 
   // operands participating in a congruence
   set<operand> congruent;

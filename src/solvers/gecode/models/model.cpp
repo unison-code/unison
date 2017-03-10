@@ -955,16 +955,17 @@ void Model::post_register_class_constraints(block b) {
           IntSet Drt = input->atom_set[rc];
 
           // If a definition temporary is allocated to an infinite space, its
-          // register can be pre-assigned:
+          // register can be pre-assigned to a narrow range:
           if (!options->disable_presolver_constraints() &&
               !options->disable_infinite_register_dominance_constraints() &&
               !input->use[p] &&
               input->infinite[input->space[rc]]) {
             temporary t = input->single_temp[p];
-            if (input->infinite_atom.count(t)) {
-              register_atom ra = input->infinite_atom[t];
-              assert(contains(input->RA, ra));
-              Drt = IntSet(IntArgs(1, ra));
+            if (input->infinite_atom_range.count(t)) {
+              register_atom fra = input->infinite_atom_range[t][0],
+                            lra = input->infinite_atom_range[t][1];
+              int n = ((lra - fra) / input->width[t]) + 1;
+              Drt = IntSet(IntArgs::create(n, fra, input->width[t]));
             }
           }
 
