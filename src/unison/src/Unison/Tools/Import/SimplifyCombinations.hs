@@ -55,7 +55,7 @@ isSimpleFoldable code o =
       (s, d) = (copySource o, copyDestination o)
   in all isSimpleTemp [s, d] &&
      isCombine (definer s fcode) &&
-     all (\o -> isHigh o || isLow o) (users d fcode)
+     all isExtract (users d fcode)
 
 isSimpleTemp t = isTemporary t && not (isPreAssigned t)
 
@@ -94,7 +94,7 @@ isSimplifiableCombine code o
       let fcode  = flatten code
           (d, l, h) = combineOperands o
       in all (\t -> users t fcode == [o]) [l, h] &&
-         all (\u -> isHigh u || isLow u) (users d fcode)
+         all isExtract (users d fcode)
   | otherwise = False
 
 combineOperands SingleOperation {oOpr = Virtual o} =
@@ -141,26 +141,21 @@ Transforms:
   [t9] <- (define) []
   [t16] <- (low or high) [t9]
 into:
+  [t9] <- (define) []
   [t16] <- (define) []
 -}
 
 simplifyDefine code =
   let fcode  = flatten code
-      isExtr = \o -> isHigh o || isLow o
-  in case find (\o -> isExtr o && isOnlyDefUser fcode o) fcode of
-    (Just e) ->
-      let d      = singleUseDefiner e fcode
-          code'  = filterCode (not . isIdOf d) code
-          code'' = mapToOperationInBlocks (mkDefineIf (isIdOf e)) code'
-      in code''
+  in case find (\o -> isExtract o && isDefUser fcode o) fcode of
+    (Just e) -> mapToOperationInBlocks (applyIf (isIdOf e) toDefine) code
     Nothing  -> code
 
-isOnlyDefUser fcode o =
-  let d = singleUseDefiner o fcode
-  in isDefine d && length (users (oSingleUse o) fcode) == 1
+isDefUser fcode e =
+  let t = oSingleUse e
+      d = definer t fcode
+  in isDefine d && all isExtract (users t fcode)
 
-singleUseDefiner o code = definer (oSingleUse o) code
+toDefine o = mkDefine (oId o) (oDefs o)
 
-mkDefineIf p o
-  | p o = mkDefine (oId o) (oDefs o)
-  | otherwise = o
+isExtract o = isHigh o || isLow o
