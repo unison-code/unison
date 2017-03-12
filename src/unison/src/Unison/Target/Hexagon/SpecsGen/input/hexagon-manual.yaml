@@ -437,6 +437,9 @@ instruction-set:
          - dst:             [register, def, F32]
         defines:            [dst]
         affects:
+           - R29:             register
+           - R30:             register
+           - R31:             register
         affected-by:
 
       - id:                 JMPret_dealloc_linear
@@ -458,6 +461,10 @@ instruction-set:
          - dst:             [register, def, F32, -1]
         defines:            [dst]
         affects:
+           - R29:             register
+           - R30:             register
+           - R31:             register
+           - PC:              register
         affected-by:
 
       - id:                 ret_dealloc_merge
