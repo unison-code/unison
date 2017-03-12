@@ -303,7 +303,13 @@ operandInfo i
       TemporaryInfo (RegisterClass IntRegs) 0 False, BoundInfo,
       TemporaryInfo (RegisterClass IntRegs) (-1) True],
      [])
+    -- Mark uses in merge return instructions as bypassing
+  | i `elem` [Jr_merge, Ret_dealloc_merge] =
+      first (map markAsBypass) $ SpecsGen.operandInfo i
   | otherwise = SpecsGen.operandInfo i
+
+markAsBypass ti @ TemporaryInfo {} = ti {oiBypassing = True}
+markAsBypass pi = pi
 
 baseInstr i
   | isConstantExtended i = nonConstantExtendedInstr i
