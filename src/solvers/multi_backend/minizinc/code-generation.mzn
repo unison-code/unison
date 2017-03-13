@@ -198,8 +198,9 @@ array[int] of int: domuse_q;
 array[int] of int: domuse_r;
 
 %% see JSON memassign
-array[int] of int: memassign_temps;
-array[int] of int: memassign_regs;
+array[int] of int: memassign_temp;
+array[int] of int: memassign_min;
+array[int] of int: memassign_max;
 
 %% see JSON dominates
 array[int] of int: dominate_ing;
@@ -522,16 +523,21 @@ constraint
     forall(q in 0..MAXP) (y[q] in 1..card(operand_temps[q])) /\
     forall(v in 0..MAXT) (
         let {int: p = temp_def[v],
+	     int: w = temp_width[v],
 	     set of int: rdom = array_union([atom_regs[operand_atom[p,q]] | q in 1..MAXI]),
     	     set of int: joker = if min(operand_temps[p])>=0 then {} else {-1} endif, % rematerialization
 	     set of int: mdom =
-	                 {memassign_regs[j] | j in index_set(memassign_temps) where memassign_temps[j]=v}} in (
+	                 { r
+			 | j in index_set(memassign_temp),
+			   r in memassign_min[j]..memassign_max[j]
+			 where memassign_temp[j]=v
+			 /\    r mod w = 0
+			 }} in
     	    if card(mdom)=0 then
     	      r[v] in rdom union joker
     	    else
     	      r[v] in (rdom diff infinite) union mdom union joker
     	    endif
-        )
     );
 
 %% operation selection (register set depending on operation)
