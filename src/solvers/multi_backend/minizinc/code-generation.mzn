@@ -240,9 +240,6 @@ array[int] of set of int: successors_succs;
 array[int] of int: successors_pred;
 array[int] of int: successors_lat;
 
-%% see JSON instr_cond
-array[int,int] of int: instr_cond;
-
 %% see JSON value_precede_chain
 array[int] of int: value_precede_min;
 array[int] of int: value_precede_max;
@@ -1188,16 +1185,6 @@ constraint
 constraint
   forall(x in index_set(successors_succs))(
      c[successors_pred[x]] + successors_lat[x] <= max([c[o] | o in successors_succs[x]])
-  );
-
-%% instr_cond
-constraint
-  forall(x in index_set_1of2(instr_cond))(
-    let {int: ox = instr_cond[x,1],
-         int: ix = instr_cond[x,2],
-         int: px = instr_cond[x,3]} in (
-      insn_eq(ox,ix) -> ls_t(px) = c[ox]
-    )
   );
 
 %% IMPORTED FROM Model::

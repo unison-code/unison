@@ -83,12 +83,6 @@ void gen_dominates(Parameters & input);
 
 /*****************************************************************************
     Code related to:
-    - JSON.instr_cond
-*****************************************************************************/
-void gen_instr_cond(Parameters & input);
-
-/*****************************************************************************
-    Code related to:
     - JSON.active_tables
     - JSON.optional_min
     - JSON.tmp_tables

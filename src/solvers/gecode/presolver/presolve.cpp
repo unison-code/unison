@@ -85,7 +85,6 @@ void presolve(Parameters & input, PresolverOptions & options) {
   vector<PresolverPrecedence> precedences_ref = input.precedences;
   vector<PresolverPrecedence> precedences2_ref = input.precedences2;
   vector<vector<operation>> calleesaved_spill_ref = input.calleesaved_spill;
-  vector<PresolverInstrCond> instr_cond_ref = input.instr_cond;
   vector<PresolverValuePrecedeChain> value_precede_chains_ref = input.value_precede_chains;
   vector<PresolverPred> predecessors_ref = input.predecessors;
   vector<PresolverSucc> successors_ref = input.successors;
@@ -111,7 +110,6 @@ void presolve(Parameters & input, PresolverOptions & options) {
   input.precedences.clear();
   input.precedences2.clear();
   input.calleesaved_spill.clear();
-  input.instr_cond.clear();
   input.value_precede_chains.clear();
   input.predecessors.clear();
   input.successors.clear();
@@ -328,11 +326,6 @@ void presolve(Parameters & input, PresolverOptions & options) {
 	input.dur[i][r] = 1;
   if (timeout(t, options, "dur")) return;
 
-  // 23: JSON.instr_cond
-
-  gen_instr_cond(input);
-  if (timeout(t, options, "instr_cond")) return;
-
   // 24: JSON.value_precede_chains
 
   input.value_precede_chains = value_precede_chains(input, NULL, true, -1);
@@ -411,7 +404,6 @@ void presolve(Parameters & input, PresolverOptions & options) {
     run_test("precedences", precedences_ref, input.precedences);
     run_test("precedences2", precedences2_ref, input.precedences2);
     run_test("calleesaved_spill", calleesaved_spill_ref, input.calleesaved_spill);
-    run_test("instr_cond", instr_cond_ref, input.instr_cond);
     run_test("value_precede_chains", value_precede_chains_ref, input.value_precede_chains);
     run_test("predecessors", predecessors_ref, input.predecessors);
     run_test("successors", successors_ref, input.successors);

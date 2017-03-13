@@ -429,9 +429,6 @@ model2dzn(AVL0) :-
 	write_array(successors_pred, array(1.._,int), PPreds2),
 	write_array(successors_lat, array(1.._,int), PLats2),
 	%
-	avl_fetch(instr_cond, AVL, InstrCond),
-	write_array(instr_cond, array(1.._,1..3,int), InstrCond),
-	%
 	avl_fetch(value_precede_chains, AVL, VPChain),
 	(   foreach([VPTs,VPRss],VPChain),
 	    foreach(VPTs,VPTss),
