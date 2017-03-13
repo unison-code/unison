@@ -135,7 +135,6 @@ Parameters::Parameters(JSONVALUE root) :
   strictly_congr    (get_2d_vector<int>(getRoot(root, "strictly_congr"))),
   predecessors      (get_vector<PresolverPred>(getRoot(root, "predecessors"))),
   successors      (get_vector<PresolverSucc>(getRoot(root, "successors"))),
-  instr_cond      (get_vector<PresolverInstrCond>(getRoot(root, "instr_cond"))),
   value_precede_chains  (get_vector<PresolverValuePrecedeChain>(getRoot(root, "value_precede_chains"))),
   quasi_adjacent  (get_2d_vector<int>(getRoot(root, "quasi_adjacent"))),
   long_latency  (get_2d_vector<int>(getRoot(root, "long_latency")))
@@ -240,7 +239,6 @@ void Parameters::compute_derived() {
   bdiffregs.clear();
   bpredecessors.clear();
   bsuccessors.clear();
-  binstr_cond.clear();
 
   for (unsigned int rc = 0; rc < space.size(); rc++) RC.push_back(rc);
 
@@ -890,12 +888,6 @@ void Parameters::compute_derived() {
   init_vector(bprecs, B.size(), empty);
   for (vector<operation> item : precs) {
     bprecs[oblock[item[0]]].push_back(item);
-  }
-
-  vector<PresolverInstrCond> empty_instr_cond;
-  init_vector(binstr_cond, B.size(), empty_instr_cond);
-  for (PresolverInstrCond item : instr_cond) {
-    binstr_cond[oblock[item.o]].push_back(item);
   }
 
   vector<PresolverPred> empty_predecessors;

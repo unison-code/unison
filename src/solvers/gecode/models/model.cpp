@@ -1994,7 +1994,6 @@ void Model::post_presolver_constraints(block b) {
     post_diffregs_constraints(b);
     post_difftemps_constraints(b);
     post_dominates_constraints(b);
-    post_def_in_cycle_constraints(b);
     post_predecessors_constraints(b);
     post_successors_constraints(b);
 #endif
@@ -2343,19 +2342,6 @@ void Model::post_diffregs_constraints(block b) {
 
   for(vector<operand> ps : input->bdiffregs[b])
     disjoint_operand_registers(ps);
-}
-
-void Model::post_def_in_cycle_constraints(block b) {
-
-  // Consider e.g.
-  // o31: [] <- {S2_storeri_io, S2_storerinew_io} [p79{t18, t19, t42},8,p80{t34, t41, t43, t62}] (reads: [control], writes: [mem-0])
-  // If p80's temp was defined in an earlier cycle, then both instructions can be used, except *new_io consumes more resources.
-  // But if p80's temp was defined in this cycle, then *new_io must be used.
-  // Hence we have a domination constraint: use *new_io _only if_ p80's temp was defined in this cycle.
-
-  for(PresolverInstrCond& ic : input->binstr_cond[b]) {
-    constraint((i(ic.o) == ic.i) >> (pls(ic.q) == c(ic.o)));
-  }
 }
 
 void Model::post_predecessors_constraints(block b) {

@@ -330,9 +330,6 @@ public:
   // [MC] set of predecessors or successors
   vector<PresolverSucc> successors;
 
-  // [MC] set of instr_cond
-  vector<PresolverInstrCond> instr_cond;
-
   // [MC] set of value_precede_chain
   vector<PresolverValuePrecedeChain> value_precede_chains;
 
@@ -644,9 +641,6 @@ public:
 
   // [MC] set of predecessors or successors, per block
   vector<vector<PresolverSucc>> bsuccessors;
-
-  // [MC] set of instr_cond, per block
-  vector<vector<PresolverInstrCond>> binstr_cond;
 
 protected:
 

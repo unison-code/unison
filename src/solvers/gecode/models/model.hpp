@@ -423,7 +423,6 @@ public:
   void post_dominates_constraints(block b);
   void post_difftemps_constraints(block b);
   void post_diffregs_constraints(block b);
-  void post_def_in_cycle_constraints(block b);
   void post_predecessors_constraints(block b);
   void post_successors_constraints(block b);
   void post_killer_operand_constraints(block b);

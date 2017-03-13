@@ -227,7 +227,7 @@ model2dzn(AVL0) :-
 	do  (ord_member(T,UnsafeTemp) -> Uns = true ; Uns = false),
 	    nth0(TDef1, DefinerArray, TDef2)
 	),
-	compute_operands_array(Temps, OperandsArray),
+	compute_operands_array(Temps, Use0, OperandsArray),
 	write_array(temp_definer, array(0..MAXT,int), TDefs), % defining operation
 	write_array(temp_def, array(0..MAXT,int), Definer),   % defining operand
 	write_array(temp_width, array(0..MAXT,int), Width),
@@ -314,7 +314,17 @@ model2dzn(AVL0) :-
 	write_array(domuse_q, array(1..Ndomuse,int), Qs1),
 	write_array(domuse_r, array(1..Ndomuse,int), Rs1),
 	%
-	pairs_to_arrays(AVL, memassign, memassign_temps, memassign_regs),
+	avl_fetch(memassign, AVL, MemAssign),
+	(   foreach([MA1,MA2,MA3],MemAssign),
+	    foreach(MA1,MemAssignTemp),
+	    foreach(MA2,MemAssignMin),
+	    foreach(MA3,MemAssignMax)
+	do  true
+	),
+	length(MemAssign, MALen),
+	write_array(memassign_temp, array(1..MALen,int), MemAssignTemp),
+	write_array(memassign_min, array(1..MALen,int), MemAssignMin),
+	write_array(memassign_max, array(1..MALen,int), MemAssignMax),
 	%
 	avl_fetch(dominates, AVL, Dominate),
 	(   foreach([I1,J1,L5,L6],Dominate),
@@ -418,9 +428,6 @@ model2dzn(AVL0) :-
 	write_array(successors_succs, array(1.._,set(int)), PSuccSets2),
 	write_array(successors_pred, array(1.._,int), PPreds2),
 	write_array(successors_lat, array(1.._,int), PLats2),
-	%
-	avl_fetch(instr_cond, AVL, InstrCond),
-	write_array(instr_cond, array(1.._,1..3,int), InstrCond),
 	%
 	avl_fetch(value_precede_chains, AVL, VPChain),
 	(   foreach([VPTs,VPRss],VPChain),
@@ -711,20 +718,23 @@ compute_regset(AVL, Regset1) :-
 	).
 
 % for temp_operands: compute sets of use operands
-compute_operands_array(Tempss, OperandsArray) :-
+compute_operands_array(Tempss, Uses, OperandsArray) :-
 	(   foreach(Temps,Tempss),
+	    foreach(Use,Uses),
 	    fromto(KL1,KL2,KL4,[]),
 	    count(P,0,_)
-	do  (   foreach(T,Temps),
-		fromto(KL2,[T-P|KL3],KL3,KL4),
-		param(P)
-	    do  true
+	do  (   Use = false -> KL2 = KL4
+	    ;   (   foreach(T,Temps),
+		    fromto(KL2,[T-P|KL3],KL3,KL4),
+		    param(P)
+		do  true
+		)
 	    )
 	),
 	keysort(KL1, KL5),
 	keyclumped(KL5, KL6),
 	KL6 = [-1-_|KL7],
-	(   foreach(Q-[_|Clump],KL7), % exclude the definer
+	(   foreach(Q-Clump,KL7),
 	    foreach(Set,OperandsArray),
 	    count(Q,0,_)
 	do  encode(list(int), set(int), Clump, Set)

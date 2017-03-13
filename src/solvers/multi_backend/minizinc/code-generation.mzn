@@ -198,8 +198,9 @@ array[int] of int: domuse_q;
 array[int] of int: domuse_r;
 
 %% see JSON memassign
-array[int] of int: memassign_temps;
-array[int] of int: memassign_regs;
+array[int] of int: memassign_temp;
+array[int] of int: memassign_min;
+array[int] of int: memassign_max;
 
 %% see JSON dominates
 array[int] of int: dominate_ing;
@@ -238,9 +239,6 @@ array[int] of int: predecessors_lat;
 array[int] of set of int: successors_succs;
 array[int] of int: successors_pred;
 array[int] of int: successors_lat;
-
-%% see JSON instr_cond
-array[int,int] of int: instr_cond;
 
 %% see JSON value_precede_chain
 array[int] of int: value_precede_min;
@@ -522,16 +520,21 @@ constraint
     forall(q in 0..MAXP) (y[q] in 1..card(operand_temps[q])) /\
     forall(v in 0..MAXT) (
         let {int: p = temp_def[v],
+	     int: w = temp_width[v],
 	     set of int: rdom = array_union([atom_regs[operand_atom[p,q]] | q in 1..MAXI]),
     	     set of int: joker = if min(operand_temps[p])>=0 then {} else {-1} endif, % rematerialization
 	     set of int: mdom =
-	                 {memassign_regs[j] | j in index_set(memassign_temps) where memassign_temps[j]=v}} in (
+	                 { r
+			 | j in index_set(memassign_temp),
+			   r in memassign_min[j]..memassign_max[j]
+			 where memassign_temp[j]=v
+			 /\    r mod w = 0
+			 }} in
     	    if card(mdom)=0 then
     	      r[v] in rdom union joker
     	    else
     	      r[v] in (rdom diff infinite) union mdom union joker
     	    endif
-        )
     );
 
 %% operation selection (register set depending on operation)
@@ -861,25 +864,11 @@ constraint
 
 %% bypass
 constraint
-  forall(o in {bypass_table[j,1] | j in index_set_1of2(bypass_table)})(
-    forall(p in {bypass_table[j,3] | j in index_set_1of2(bypass_table) where bypass_table[j,1]=o})(
-      let {set of int: insns = { bypass_table[j,2]
-      	       	       	       | j in index_set_1of2(bypass_table)
-			       where bypass_table[j,1]=o
-			       /\    bypass_table[j,3]=p},
-           array[int] of int: opers = [ if k=1 then ix else if k=2 then px else ox endif endif
-				      | ix in 1..card(op_instructions[o]),
-					px in 1..card(operand_temps[p]),
-					t in {operand_temps[p][px]},
-					ox in {if t>=0 /\ op_instructions[o][ix] in insns then temp_definer[t] else o endif},
-					k in 1..3
-				      ],
-           int: nt = length(opers) div 3,
-           var 0..MAXC: oper}
-      in table([ii[o],y[p],oper], array2d(1..nt, 1..3, opers)) /\
-         % trace("table([ii[\(o)],y[\(p)],oper], \(array2d(1..nt, 1..3, opers)))\n", true) /\
-         c[o] = c[oper]
-    )
+  forall(j in index_set_1of2(bypass_table))(
+    let {int: o = bypass_table[j,1],
+         int: insn = bypass_table[j,2],
+         int: p = bypass_table[j,3]}
+    in insn_eq(o,insn) -> c[o] = ls_t(p)
   );
 
 
@@ -1196,16 +1185,6 @@ constraint
 constraint
   forall(x in index_set(successors_succs))(
      c[successors_pred[x]] + successors_lat[x] <= max([c[o] | o in successors_succs[x]])
-  );
-
-%% instr_cond
-constraint
-  forall(x in index_set_1of2(instr_cond))(
-    let {int: ox = instr_cond[x,1],
-         int: ix = instr_cond[x,2],
-         int: px = instr_cond[x,3]} in (
-      insn_eq(ox,ix) -> ls_t(px) = c[ox]
-    )
   );
 
 %% IMPORTED FROM Model::
