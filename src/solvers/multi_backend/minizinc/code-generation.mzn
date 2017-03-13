@@ -861,25 +861,11 @@ constraint
 
 %% bypass
 constraint
-  forall(o in {bypass_table[j,1] | j in index_set_1of2(bypass_table)})(
-    forall(p in {bypass_table[j,3] | j in index_set_1of2(bypass_table) where bypass_table[j,1]=o})(
-      let {set of int: insns = { bypass_table[j,2]
-      	       	       	       | j in index_set_1of2(bypass_table)
-			       where bypass_table[j,1]=o
-			       /\    bypass_table[j,3]=p},
-           array[int] of int: opers = [ if k=1 then ix else if k=2 then px else ox endif endif
-				      | ix in 1..card(op_instructions[o]),
-					px in 1..card(operand_temps[p]),
-					t in {operand_temps[p][px]},
-					ox in {if t>=0 /\ op_instructions[o][ix] in insns then temp_definer[t] else o endif},
-					k in 1..3
-				      ],
-           int: nt = length(opers) div 3,
-           var 0..MAXC: oper}
-      in table([ii[o],y[p],oper], array2d(1..nt, 1..3, opers)) /\
-         % trace("table([ii[\(o)],y[\(p)],oper], \(array2d(1..nt, 1..3, opers)))\n", true) /\
-         c[o] = c[oper]
-    )
+  forall(j in index_set_1of2(bypass_table))(
+    let {int: o = bypass_table[j,1],
+         int: insn = bypass_table[j,2],
+         int: p = bypass_table[j,3]}
+    in insn_eq(o,insn) -> c[o] = ls_t(p)
   );
 
 
