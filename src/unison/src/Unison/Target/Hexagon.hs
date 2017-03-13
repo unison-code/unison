@@ -709,6 +709,7 @@ readWriteLatency _ (_, Read) (_, Write) = 0
 -- Manual" and "isLegalToPacketizeTogether" in HexagonVLIWPacketizer.cpp)
 readWriteLatency m (_, Write) (_, Write) | isMemoryObject m = 0
 -- This is so that linear jumps and merge jumps can be scheduled in parallel
+readWriteLatency ControlSideEffect (_, Write) (_, Write) = 0
 readWriteLatency _
   ((TargetInstruction p, _), Write) ((TargetInstruction c, _), Write)
   | p `elem` linearMergeJumps && c `elem` linearMergeJumps = 0
