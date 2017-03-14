@@ -294,7 +294,7 @@ public:
       return rs;
     }
     for (int cost = l->cost().min() + 1; cost <= l->cost().max(); cost++) {
-      LocalModel * l1 = (LocalModel*) l->clone();
+      LocalModel * l1 = (LocalModel*) l->clone(false);
       l1->constrain_cost(IRT_LE, cost);
       Gecode::SpaceStatus ss = l1->status();
       if (ss == SS_FAILED) {
