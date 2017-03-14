@@ -50,6 +50,7 @@ install:
   - cd gecode-trunk && sudo make install && cd -
   - export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib
   - cabal update
+  - cabal install cabal-install
   - cd src && make prepare-unison && cd -
 
 # Build and test Unison
