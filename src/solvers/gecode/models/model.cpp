@@ -952,7 +952,7 @@ void Model::post_register_class_constraints(block b) {
           atoms << var(NULL_REGISTER);
         } else {
           register_class rc = input->rclass[o][ii][pi];
-          IntSet Drt = input->atom_set[rc];
+          IntSet Drt;
 
           // If a definition temporary is allocated to an infinite space, its
           // register can be pre-assigned to a narrow range:
@@ -967,7 +967,10 @@ void Model::post_register_class_constraints(block b) {
               int n = ((lra - fra) / input->width[t]) + 1;
               Drt = IntSet(IntArgs::create(n, fra, input->width[t]));
             }
-          }
+          } else {
+	    IntSetRanges irs(input->atom_set[rc]);
+	    Drt = IntSet(irs);
+	  }
 
           atoms << IntVar(*this, Drt);
         }
