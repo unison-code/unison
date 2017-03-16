@@ -23,10 +23,12 @@ simplifyCombinations f @ Function {fCode = code1}  _target =
         code3 = map (fixpoint (simplifyExtract LowType)) code2
         code4 = map (fixpoint (simplifyExtract HighType)) code3
         code5 = fixpoint simplifyDefine code4
-    in f {fCode = code5}
+        code6 = fixpoint (liftToFunction f foldExtractCopy) code5
+        code7 = fixpoint factorExtracts code6
+    in f {fCode = code7}
 
 foldSimplifyCombines f code =
-  let Function {fCode = code1} = fixpoint foldSimpleCopy (f {fCode = code})
+  let code1 = fixpoint (liftToFunction f foldSimpleCopy) code
       code2 = fixpoint simplifyCombineComponents code1
   in code2
 
@@ -159,3 +161,76 @@ isDefUser fcode e =
 toDefine o = mkDefine (oId o) (oDefs o)
 
 isExtract o = isHigh o || isLow o
+
+{-
+Transforms:
+   [t2] <- (copy) [t1]
+        <- (low) [t2]
+        <- (low) [t2]
+        ...
+into:
+        <- (low) [t1]
+        <- (low) [t1]
+        ...
+-}
+
+foldExtractCopy :: Show i => Show r => Eq i => Eq r =>
+                   Function i r -> Function i r
+foldExtractCopy = foldVirtualCopy isExtractVirtualCopy
+
+isExtractVirtualCopy code o = isVirtualCopy o && isExtractCopy code o
+
+isExtractCopy code o =
+  let fcode  = flatten code
+      (s, d) = (copySource o, copyDestination o)
+  in all isSimpleTemp [s, d] &&
+     not (isPhi (definer s fcode)) &&
+     (all isLow (users d fcode) || all isHigh (users d fcode))
+
+liftToFunction f t code = fCode $ t (f {fCode = code})
+
+{-
+Transforms:
+  [t1] <- ..
+       ..
+  [t2] <- (low) [t1]
+       <- ..    [t2]
+       ..
+  [t3] <- (low) [t2]
+       <- ..    [t3]
+       ..
+into:
+  [t1] <- ..
+  [t2] <- (low) [t1]
+       ..
+       <- ..    [t2]
+       ..
+       <- ..    [t2]
+       ..
+-}
+
+factorExtracts code =
+  case find (isFactorizableExtract (flatten code)) (simpleTemps code) of
+   Just t ->
+     let fcode      = flatten code
+         (oid, tid) = (newOprIndex fcode, newTempIndex fcode)
+         t'         = mkTemp tid
+         mkExtract  = if all isLow (users t fcode) then mkLow else mkHigh
+         e          = mkExtract oid [VirtualInstruction] t t'
+         us         = users t fcode
+         tmap       = M.fromList [(dt, t') | dt <- map oSingleDef us]
+         code1      = insertInCodeWhen after (isIdOf (definer t fcode)) [e] code
+         code2      = foldl removeOpr code1 us
+         code3      = mapToOperationInBlocks (applyMapToOperands tmap) code2
+     in code3
+   Nothing -> code
+
+simpleTemps code = filter isSimpleTemp (tUniqueOps $ flatten code)
+
+isFactorizableExtract fcode t =
+  let us = users t fcode
+  in length us >= 2 && (all isLow us || all isHigh us)
+
+insertInCodeWhen w f os code =
+  [b {bCode = if any f bcode then insertWhen w f os bcode else bcode}
+  | b @ Block {bCode = bcode} <- code]
