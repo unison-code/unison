@@ -326,7 +326,7 @@ data HexagonResource =
   Slot2 |
   Slot3 |
   Store |
-  Nvcmp |
+  ConNewValue |
   BlockEnd
   deriving (Eq, Ord, Show, Read)
 
@@ -352,6 +352,12 @@ resources =
      -- 5.5 in Hexagon programmer's reference)
      Resource Store 2,    -- Used by ST and NVST
 
+     -- Artificial resource to forbid conditional instructions and new-value
+     -- stores in the same bundle where the former feeds the latter, which is
+     -- forbidded (TODO: this prevents some potentially legal bundles if there
+     -- is no data dependency, relate such instructions more directly)
+     Resource ConNewValue 1,
+
      -- Artificial resource to disallow jump merges and ENDLOOP instructions to
      -- be scheduled together with (out)-delimiters
      Resource BlockEnd 1
@@ -366,6 +372,8 @@ usages i
   | isConstantExtended i =
     let it = SpecsGen.itinerary (nonConstantExtendedInstr i)
     in mergeUsages (itineraryUsage i it) [mkUsage BundleWidth 1 1]
+  | i `elem` [C2_mux_tfr, C2_mux_tfr_new] =
+      mergeUsages (itineraryUsage i $ SpecsGen.itinerary i) conNewValue
   | otherwise = itineraryUsage i $ SpecsGen.itinerary i
 
 itineraryUsage i it
@@ -388,7 +396,7 @@ itineraryUsage i it
       -- saturating the 'Store' resource.
     | it `elem` [ST_tc_st_SLOT0, V2LDST_tc_st_SLOT0, V4LDST_tc_st_SLOT0,
                  NCJ_tc_3or4stall_SLOT0] && mayStore i =
-      slot0 ++ store 2
+      slot0 ++ store 2 ++ conNewValue
       -- A new-value compare and jump instruction i cannot be issued in parallel
       -- with stores as slot 0 will be occupied by i and slot 1 will be occupied
       -- by the instruction feeding i. We model this by saturating the 'Store'
@@ -413,6 +421,7 @@ oneOfSlot23 = baseUsage ++ [mkUsage Slot23 1 1]
 slot2       = oneOfSlot23 ++ [mkUsage Slot2 1 1]
 slot3       = oneOfSlot23 ++ [mkUsage Slot3 1 1]
 store n     = [mkUsage Store n 1]
+conNewValue = [mkUsage ConNewValue 1 1]
 
 -- | No-operation instruction
 
