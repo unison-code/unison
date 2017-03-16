@@ -661,7 +661,7 @@ expandCondTransfer mi @ MachineSingle {msOpcode   = MachineTargetOpc i,
   | isCondTransferInstr i =
     let (_, new) = muxTransferInstr i
         iT       = primitiveCondTransfer src1 True  new
-        iF       = primitiveCondTransfer src1 False new
+        iF       = primitiveCondTransfer src2 False new
         mi1      = mi {msOpcode = mkMachineTargetOpc iT,
                        msOperands = [dst, cond, src1]}
         mi2      = mi {msOpcode = mkMachineTargetOpc iF,
