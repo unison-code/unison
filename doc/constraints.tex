@@ -203,6 +203,14 @@ and
 \end{equation}
 }
 
+\newcommand{\extensionalEquation}{
+\begin{equation}\textstyle\label{eq:extensional}
+  \extensional{\tuple{p,q},\extensionalTable{p}{q}}
+  \quad
+  \forallIn{p, q}{\allOperands{}} \suchThat \extensionalOperands{p}{q}
+\end{equation}
+}
+
 \newcommand{\dataPrecedencesEquation}{
 \begin{equation}\textstyle\label{eq:data-precedences}
   \begin{aligned}

@@ -75,6 +75,7 @@ module Unison.Base
         Usage (..),
         IndexedResource (..),
         IndexedUsage (..),
+        RegisterTable (..),
         -- * Graph types
         BCFGraph,
         ICFGraph,
@@ -843,6 +844,17 @@ data ConditionType =
     -- | Unconditional branch
     Unconditional
     deriving (Eq, Show)
+
+-- | Relation among the registers of a pair of operands
+
+data RegisterTable r = RegisterTable {
+  -- | First involved operand
+  rrFirst  :: Operand r,
+  -- | Second involved operand
+  rrSecond :: Operand r,
+  -- | Relation tuples
+  rrTuples :: [(r, r)]
+  } deriving (Eq)
 
 -- | 'Block' control-flow graph.
 type BCFGraph i r = Gr (Block i r) ()

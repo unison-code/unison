@@ -63,6 +63,7 @@ target =
       API.tOperandInfo      = const operandInfo,
       API.tAlignedPairs     = const SpecsGen.alignedPairs,
       API.tPackedPairs      = const (const (const [])),
+      API.tRelatedPairs     = const (const []),
       API.tResources        = const resources,
       API.tUsages           = const usages,
       API.tNop              = const nop,

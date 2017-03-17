@@ -375,6 +375,7 @@ public:
   void post_preassignment_constraints(block b);
   void post_alignment_constraints(block b);
   void post_packing_constraints(block b);
+  void post_extensional_constraints(block b);
   void post_data_precedences_constraints(block b);
   void post_processor_resources_constraints(block b);
   void post_fixed_precedences_constraints(block b);

@@ -19,6 +19,7 @@ module Unison.Target.API (
   OperandInfoFunction,
   AlignedPairsFunction,
   PackedPairsFunction,
+  RelatedPairsFunction,
   CopyInstructions,
   TargetDescription(..),
   TargetOptions,
@@ -45,6 +46,7 @@ module Unison.Target.API (
   operandInfo,
   alignedPairs,
   packedPairs,
+  relatedPairs,
   resources,
   usages,
   nop,
@@ -127,6 +129,8 @@ type AlignedPairsFunction i r =
   BlockOperation i r -> [(Operand r, Operand r, Instruction i)]
 -- | Function that gives packed pairs in an operation
 type PackedPairsFunction i r = BlockOperation i r -> [(Operand r, Operand r)]
+-- | Function that gives related pairs in an operation
+type RelatedPairsFunction i r = BlockOperation i r -> [RegisterTable r]
 -- | Copy instructions after the definition and before each use of a
 -- temporary
 type CopyInstructions i = ([Instruction i], [[Instruction i]])
@@ -170,6 +174,8 @@ alignedPairs _ _ = []
 packedPairs (ti, to) o =
   nub $ concat [tPackedPairs ti to i (oUses o, oDefs o) |
                 TargetInstruction i <- oInstructions o]
+relatedPairs (ti, to) SingleOperation {oOpr = Natural i} = tRelatedPairs ti to i
+relatedPairs _ _ = []
 resources (ti, to) = tResources ti to
 usages (ti, to) op = tUsages ti to op
 nop (ti, to) = Natural (tNop ti to)
@@ -255,8 +261,11 @@ data TargetDescription i r rc s = TargetDescription {
                            [(Operand r, Operand r)],
       -- | Pairs of packed operands for the given instruction and used and
       -- defined operands
-      tPackedPairs     :: TargetOptions -> i -> ([Operand r], [Operand r]) ->
-                          [(Operand r, Operand r)],
+      tPackedPairs      :: TargetOptions -> i -> ([Operand r], [Operand r]) ->
+                           [(Operand r, Operand r)],
+      -- | Pairs of operands whose registers are related extensionally
+      tRelatedPairs     :: TargetOptions -> NaturalOperation i r ->
+                           [RegisterTable r],
       -- | Processor resources
       tResources        :: TargetOptions -> [Resource s],
       -- | Usages of the processor resources by the given instruction
@@ -264,7 +273,6 @@ data TargetDescription i r rc s = TargetDescription {
       -- | No-operation
       tNop              :: TargetOptions -> NaturalOperation i r,
       -- | Read and written 'RWObject' by the given instruction
--- instruction.
       tReadWriteInfo    :: TargetOptions -> i -> ([RWObject r], [RWObject r]),
       -- | Implementation of 'Frame' operations
       tImplementFrame   :: TargetOptions -> BlockOperation i r ->

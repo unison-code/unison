@@ -908,6 +908,7 @@ void Model::post_basic_model_constraints(block b) {
   post_preassignment_constraints(b);
   post_alignment_constraints(b);
   post_packing_constraints(b);
+  post_extensional_constraints(b);
   post_processor_resources_constraints(b);
   post_initial_precedence_constraints(b);
   post_data_precedences_constraints(b);
@@ -1063,6 +1064,25 @@ void Model::post_packing_constraints(block b) {
     channel(*this, cases, idx);
 
     constraint(ry(q) == element(ryps, idx));
+  }
+
+}
+
+void Model::post_extensional_constraints(block b) {
+
+  // The registers assigned to some pairs of operands are related extensionally:
+
+  for (unsigned int i = 0; i < input->exrelated.size(); i++) {
+    operand p = input->exrelated[i][0],
+            q = input->exrelated[i][1];
+    if (input->pb[p] == b) {
+      IntVarArgs rys;
+      rys << ry(p) << ry(q);
+      TupleSet ts;
+      for (vector<int> row : input->table[i]) ts.add(IntArgs(row));
+      ts.finalize();
+      extensional(*this, rys, ts);
+    }
   }
 
 }

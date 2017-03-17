@@ -112,23 +112,11 @@ public:
   // estimation of the execution frequency of each block
   vector<int> freq;
 
-  // aligned operand tuples
-  vector<vector<int> > aligned;
-
-  // alignment distance of each aligned operand tuple
-  vector<int> adist;
-
-  // packed operand pairs
-  vector<vector<operand> > packed;
-
   // minimum live range duration of each temporary
   vector<int> minlive;
 
   // fixed dependency graph
   vector<vector<vector<int> > > dep;
-
-  // instructions that activate each operation
-  vector<vector<instruction> > activators;
 
   // prescheduling of operations into issue cycles
   vector<vector<int> > prescheduled;
@@ -173,6 +161,24 @@ public:
 
   // offset of usage of each processor resource by each instruction
   vector<vector<int> > off;
+
+  // aligned operand tuples
+  vector<vector<int> > aligned;
+
+  // alignment distance of each aligned operand tuple
+  vector<int> adist;
+
+  // packed operand pairs
+  vector<vector<operand> > packed;
+
+  // operands related extensionally
+  vector<vector<operand> > exrelated;
+
+  // table of register assignments of each related operand pair
+  vector<vector<vector<register_atom> > > table;
+
+  // instructions that activate each operation
+  vector<vector<instruction> > activators;
 
   // Objective function parameters
 

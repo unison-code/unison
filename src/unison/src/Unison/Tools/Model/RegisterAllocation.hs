@@ -41,6 +41,7 @@ parameters (cg, _, t2w, ra, _) f @ Function {fCode = code} target =
         bif         = branchInfo target
         apf         = alignedPairs target
         ppf         = packedPairs target
+        rpf         = relatedPairs target
         bcfg        = BCFG.fromFunction bif f
         fCode       = sortBy (comparing oId) (flatten code)
         im          = instructionManager fCode
@@ -65,6 +66,8 @@ parameters (cg, _, t2w, ra, _) f @ Function {fCode = code} target =
         (aligned,
          adist)     = unzip $ sort $ alignedTuples apf im t2w fCode
         packed      = packedTuples ppf fCode
+        (exrelated,
+         table)     = unzip $ sort $ concatMap (relatedTuples rpf ra) fCode
 
         pp          = map S.fromList congr
         adjacent    = sort $ BCFG.eqvNeighborTemps bcfg pp
@@ -139,6 +142,19 @@ parameters (cg, _, t2w, ra, _) f @ Function {fCode = code} target =
       -- example: width[6]: number of register atoms that t6 occupies
       ("width", toJSON width),
 
+      -- Processor parameters
+
+      -- atoms of each register class
+      -- example: atoms[4][8]: eight atom of the register class rc4
+      ("atoms", toJSON atoms),
+
+      -- register class in which each operation implemented by each
+      --   instruction accesses its operands
+      -- example: class[14][0][2]: register class in which o14 accesses its
+      -- third operand when implemented by its first instruction in
+      -- "instructions"
+      ("class", toJSON rclass),
+
       -- aligned operand tuples
       -- example: aligned[5][0]: first operand in the sixth aligned tuple
       --          aligned[5][1]: instruction related to the first operand
@@ -155,19 +171,14 @@ parameters (cg, _, t2w, ra, _) f @ Function {fCode = code} target =
       --          pack[3][1]: free operand in the fourth packed pair
       ("packed", toJSON packed),
 
-      -- Processor parameters
+      -- operands related extensionally
+      -- example: erelated[5][0]: first operand in the sixth ext. related pair
+      --          erelated[5][1]: second operand in the sixth ext. related pair
+      ("exrelated", toJSON exrelated),
 
-      -- atoms of each register class
-      -- example: atoms[4][8]: eight atom of the register class rc4
-      ("atoms", toJSON atoms),
-
-      -- register class in which each operation implemented by each
-      --   instruction accesses its operands
-      -- example: class[14][0][2]: register class in which o14 accesses its
-      -- third operand when implemented by its first instruction in
-      -- "instructions"
-      ("class", toJSON rclass),
-
+      -- table of register assignments of each related operand pair
+      -- example: table[5][2][1]: register of second operand in the third row
+      ("table", toJSON table),
 
       -- Additional parameters
 
@@ -319,6 +330,11 @@ oprAlignedTuples apf iif t2w o
                 | (p, q, i) <- apf o]
 
 packedTuples ppf fcode = sort $ concatMap ppf fcode
+
+relatedTuples rpf ra o =
+  let r2a    = regFirstAtom ra
+      row2as = mapTuple (\p -> r2a M.! mkRegister (mkTargetRegister p))
+  in [((p, q), map row2as table) | (RegisterTable p q table) <- rpf o]
 
 operationClass oif ra om o =
     map (instructionClass oif ra o) (oIInstructions om o)

@@ -64,4 +64,53 @@
     resource $r$ by instruction $\instruction{i}$}
   \json{off}{[[0, 0, \dots, 0, 0], \dots, [0, 0, 0, 0, 0, 0, 0, 0, 0]]}
 
+  % Below parameters are not in LCTES2014 paper
+
+  \parameter{\alignedOperands{p}{i}{q}{j}}{whether operands $p$ and $q$ are
+    aligned when implemented by instructions $i$ and $j$}
+  \json{aligned}{[[69, 17, 71, 17], [70, 24, 71, 24]]}
+  \jsonComment{note: the example JSON arrays are extracted from a different
+    program (Hexagon programs do not yield alignment constraints)}
+
+  \tableSpace
+
+  \parameter{\alignmentDistance{p}{i}{q}{j}}{alignment distance of operands $p$
+    and $q$ when implemented by instructions $i$ and $j$}
+  \json{adist}{[0, 1, 1]}
+  \jsonComment{note: this parameter is encoded with the same structure as
+    \code{aligned}: each aligned operand tuple and its corresponding alignment
+    distance are found in the same positions of their respective JSON arrays
+    (example: \code{aligned[1]~=~[70, 24, 71, 24]}, \code{adist[1]~=~1}.)}
+
+  \tableSpace
+
+  \parameter{\packedOperands{p}{q}}{whether operands $p$ and $q$ are
+    packed}
+  \json{packed}{[[13, 14], [34, 35], [54, 55]]}
+  \jsonComment{note: the example JSON arrays are extracted from a different
+    program (Hexagon programs do not yield packing constraints)}
+
+  \tableSpace
+
+  \parameter{\extensionalOperands{p}{q}}{whether operands $p$ and $q$ are
+    related extensionally}
+  \json{exrelated}{[[4,5]]}
+  \jsonComment{note: the example JSON arrays are extracted from a different
+    program (Hexagon programs do not yield extensional constraints)}
+
+  \tableSpace
+
+  \parameter{\extensionalTable{p}{q}}{table of register assignments for
+    operands $p$ and $q$}
+  \json{table}{[[0,1],[2,3],[4,5],[6,7]]}
+  \jsonComment{note: the example JSON arrays are extracted from a different
+    program (Hexagon programs do not yield extensional constraints)}
+
+  \tableSpace
+
+  \parameter{\activators{o}}{set of instructions that activate operation $o$}
+  \json{activators}{[[], [10, 17, 13, 19], [10, 17, 13, 19], \dots, []]}
+  \jsonComment{note: the example JSON array is extracted from a different
+    program (Hexagon programs do not yet yield activation constraints)}
+
 \end{longtable}

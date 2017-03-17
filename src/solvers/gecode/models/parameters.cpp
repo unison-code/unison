@@ -54,12 +54,8 @@ Parameters::Parameters(JSONVALUE root) :
   preassign     (get_2d_vector<int>(getRoot(root, "preassign"))),
   width         (get_vector<int>(getRoot(root, "width"))),
   freq          (get_vector<int>(getRoot(root, "freq"))),
-  aligned       (get_2d_vector<int>(getRoot(root, "aligned"))),
-  adist         (get_vector<int>(getRoot(root, "adist"))),
-  packed        (get_2d_vector<int>(getRoot(root, "packed"))),
   minlive       (get_vector<int>(getRoot(root, "minlive"))),
   dep           (get_3d_vector<int>(getRoot(root, "dep"))),
-  activators    (get_2d_vector<int>(getRoot(root, "activators"))),
   prescheduled  (get_2d_vector<int>(getRoot(root, "preschedule"))),
 
   // Processor parameters
@@ -76,6 +72,12 @@ Parameters::Parameters(JSONVALUE root) :
   con           (get_2d_vector<int>(getRoot(root, "con"))),
   dur           (get_2d_vector<int>(getRoot(root, "dur"))),
   off           (get_2d_vector<int>(getRoot(root, "off"))),
+  aligned       (get_2d_vector<int>(getRoot(root, "aligned"))),
+  adist         (get_vector<int>(getRoot(root, "adist"))),
+  packed        (get_2d_vector<int>(getRoot(root, "packed"))),
+  exrelated     (get_2d_vector<int>(getRoot(root, "exrelated"))),
+  table         (get_3d_vector<int>(getRoot(root, "table"))),
+  activators    (get_2d_vector<int>(getRoot(root, "activators"))),
 
   // Objective function parameters
 

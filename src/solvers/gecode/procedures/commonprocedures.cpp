@@ -236,6 +236,13 @@ value_precede_chains(Parameters & input, Model * m, bool global, block b) {
 	  if (t != NULL_TEMPORARY)
 	    PreT.push_back(t);
 
+  // prevent ext. related operand temporaries from occurring in symmetry chains
+  for (vector<operand> ps : input.exrelated)
+    for (operand p : ps)
+      for (temporary t : input.temps[p])
+        if (t != NULL_TEMPORARY)
+          PreT.push_back(t);
+
   // FIXME: this check is added temporarily, needs investigation
   // prevent temps defined by callee-saved-load from occurring in symmetry chains
   for (operation o : input.callee_saved_loads)
@@ -446,6 +453,13 @@ value_precede_chains(Parameters & input, Model * m, bool global, block b) {
 	for (temporary t : input.temps[p])
 	  if (t != NULL_TEMPORARY)
 	    PreT.push_back(t);
+
+  // prevent ext. related operand temporaries from occurring in symmetry chains
+  for (vector<operand> ps : input.exrelated)
+    for (operand p : ps)
+      for (temporary t : input.temps[p])
+        if (t != NULL_TEMPORARY)
+          PreT.push_back(t);
 
   // FIXME: this check is added temporarily, needs investigation
   // prevent temps defined by callee-saved-load from occurring in symmetry chains
