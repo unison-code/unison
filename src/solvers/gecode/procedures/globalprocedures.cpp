@@ -213,7 +213,8 @@ public:
     block b = get<2>(j);
     operation oo = ac == NULL_ACTIVATION_CLASS ? NULL_OPERATION :
       base.input->activation_class_representative[ac];
-    GlobalModel * g = (GlobalModel*) base.clone(false);
+    // Can share data structures as everything happens within this thread
+    GlobalModel * g = (GlobalModel*) base.clone();
     g->post_active_operation(co);
     g->post_active_operation(oo);
     g->status();
@@ -230,8 +231,8 @@ public:
 void presolve_relaxation(GlobalModel * base, GIST_OPTIONS * lo) {
   vector<RelaxationResult> results;
   PresolveRelaxationJobs pjs(*base, lo);
-  // FIXME: running in more threads yields segfaults :(
-  Support::RunJobs<PresolveRelaxationJobs, RelaxationResult> p(pjs, 1);
+  Support::RunJobs<PresolveRelaxationJobs, RelaxationResult>
+    p(pjs, base->options->total_threads());
   RelaxationResult rr;
   while (p.run(rr)) {
     int i;
@@ -294,7 +295,8 @@ public:
       return rs;
     }
     for (int cost = l->cost().min() + 1; cost <= l->cost().max(); cost++) {
-      LocalModel * l1 = (LocalModel*) l->clone(false);
+      // Can share data structures as everything happens within a thread
+      LocalModel * l1 = (LocalModel*) l->clone();
       l1->constrain_cost(IRT_LE, cost);
       Gecode::SpaceStatus ss = l1->status();
       if (ss == SS_FAILED) {
@@ -344,8 +346,8 @@ public:
 void presolve_shaving(GlobalModel * base) {
   map<block, ShavingResults> local_results;
   PresolveShavingJobs pjs(*base);
-  // FIXME: running in more threads yields segfaults :(
-  Support::RunJobs<PresolveShavingJobs, ShavingResults> p(pjs, 1);
+  Support::RunJobs<PresolveShavingJobs, ShavingResults>
+    p(pjs, base->options->total_threads());
   ShavingResults lr;
   while (p.run(lr)) {
     int i;
