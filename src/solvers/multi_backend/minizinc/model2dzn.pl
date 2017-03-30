@@ -465,6 +465,21 @@ model2dzn(AVL0) :-
 	%
 	pairs_to_arrays(AVL, preschedule, preschedule_op, preschedule_cycle),
 	%
+	pairs_to_arrays(AVL, exrelated, exrelated_p, exrelated_q),
+	avl_fetch(table, AVL, ExTables),
+	(   foreach(ExTable,ExTables),
+	    foreach(ExMin..ExMax,ExRanges),
+	    fromto(0,SoFar1,SoFar2,_)
+	do  length(ExTable, ExLen),
+	    ExMin is SoFar1+1,
+	    ExMax is SoFar1+ExLen,
+	    SoFar2 = ExMax
+	),
+	write_array(exrelated_rows, array(1.._,set(int)), ExRanges),
+	append(ExTables, ExTableA),
+	length(ExTableA, ExLenA),
+	write_array(exrelated_ext, array(1..ExLenA,1..2,int), ExTableA),
+	%
 	compute_bypass_table(AVL, BypassTable, []),
 	length(BypassTable, NBypassTable),
 	write_array(bypass_table, array(1..NBypassTable,1..3,int), BypassTable),

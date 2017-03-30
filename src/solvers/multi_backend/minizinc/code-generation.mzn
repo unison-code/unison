@@ -256,6 +256,12 @@ array[int] of int: preschedule_cycle;
 %% see JSON bypass
 array[int,int] of int: bypass_table;
 
+%% see JSON exrelated, table
+array[int] of int: exrelated_p;
+array[int] of int: exrelated_q;
+array[int] of set of int: exrelated_rows;
+array[int,int] of int: exrelated_ext;
+
 %% extra storage for conjunctions and disjunctions
 array[int] of int: literal_op;
 array[int] of int: literal_arg1;
@@ -871,6 +877,14 @@ constraint
     in insn_eq(o,insn) -> c[o] = ls_t(p)
   );
 
+%% exrelated
+constraint
+  forall(j in index_set(exrelated_p))(
+    let {int: p = exrelated_p[j],
+         int: q = exrelated_q[j],
+	 array[int] of int: ext = [exrelated_ext[r,k] | r in exrelated_rows[j], k in 1..2]}
+    in table([rt[p],rt[q]], array2d(1..(length(ext) div 2), 1..2, ext))
+  );
 
 %% IMPLIED CONSTRAINTS
 
