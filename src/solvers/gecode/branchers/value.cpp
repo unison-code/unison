@@ -35,7 +35,7 @@
 #include "value.hpp"
 
 int most_effective_connection_decision(
-    const Space& s, IntVar, global_cluster gc) {
+    const Space& s, BoolVar, global_cluster gc) {
   const GlobalModel& m = static_cast<const GlobalModel&>(s);
 
   // Agressiveness factor (between 0 - least aggresive and 1 - most aggressive)
@@ -166,4 +166,13 @@ register_atom least_assigned(const Space& s, IntVar pr, global_congruence g) {
 
   return minasa;
 
+}
+
+// Value that is closest to zero
+int closest_to_zero(const Space&, IntVar x, unsigned int) {
+  int closest = numeric_limits<int>::max();
+  for (IntVarValues v(x); v(); ++v) {
+    if (abs(v.val()) < abs(closest)) closest = v.val();
+  }
+  return closest;
 }

@@ -47,7 +47,7 @@ using namespace Gecode;
 namespace Merit {
 
   // Energy of global cluster gc
-  double cluster_energy(const Space& s, IntVar x, global_cluster gc);
+  double cluster_energy(const Space& s, BoolVar x, global_cluster gc);
 
   // Energy of global congruence g
   double energy(const Space& s, SetVar pals, global_congruence g);

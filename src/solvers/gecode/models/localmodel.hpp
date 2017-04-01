@@ -86,7 +86,7 @@ public:
 
   // Gecode objects
 
-  IntActivity c_activity;
+  IntAction c_activity;
 
   // Auxiliary methods
 

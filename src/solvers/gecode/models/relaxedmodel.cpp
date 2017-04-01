@@ -255,7 +255,7 @@ void RelaxedModel::post_active_operation_branching(vector<operation> O) {
   BoolVarArgs as;
   for(operation o : O)
     as << a(o);
-  branch(*this, as, INT_VAR_NONE(), INT_VAL_MIN());
+  branch(*this, as, BOOL_VAR_NONE(), BOOL_VAL_MIN());
 }
 
 void RelaxedModel::post_operand_temporary_branching(vector<operand> P) {

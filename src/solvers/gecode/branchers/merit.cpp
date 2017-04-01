@@ -36,7 +36,7 @@
 
 namespace Merit {
 
-  double cluster_energy(const Space& s, IntVar, global_cluster gc) {
+  double cluster_energy(const Space& s, BoolVar, global_cluster gc) {
     const GlobalModel& m = static_cast<const GlobalModel&>(s);
     return m.cluster_energy(gc);
   }

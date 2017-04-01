@@ -123,7 +123,7 @@ CONFIG(graphics) {
   DEFINES += GRAPHICS NEWGV
 
   LIBS -= -ljson
-  LIBS += -lgecodegist -lgvc -lcgraph -lcdt
+  LIBS += -lgvc -lcgraph -lcdt
 
 }
 

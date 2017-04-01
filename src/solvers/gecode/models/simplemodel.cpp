@@ -70,7 +70,7 @@ SimpleModel* SimpleModel::copy(bool share) {
 
 void SimpleModel::post_trivial_branchers(void) {
 
-  branch(*this, v_a, INT_VAR_NONE(), INT_VAL_MIN());
+  branch(*this, v_a, BOOL_VAR_NONE(), BOOL_VAL_MIN());
 
   branch(*this, v_i, INT_VAR_NONE(), INT_VAL_MIN());
   branch(*this, v_y, INT_VAR_NONE(), INT_VAL_MAX());

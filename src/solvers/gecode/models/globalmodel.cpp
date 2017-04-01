@@ -639,15 +639,15 @@ void GlobalModel::post_branchers(void) {
   if (cf) {
     branch(*this,
            xs,
-           INT_VAR_MERIT_MAX(&Merit::cluster_energy),
-           INT_VAL_MAX(),
+           BOOL_VAR_MERIT_MAX(&Merit::cluster_energy),
+           BOOL_VAL_MAX(),
            NULL,
            &print_cluster_connection_decision);
   } else {
     branch(*this,
            xs,
-           INT_VAR_MERIT_MAX(&Merit::cluster_energy),
-           INT_VAL(&most_effective_connection_decision),
+           BOOL_VAR_MERIT_MAX(&Merit::cluster_energy),
+           BOOL_VAL(&most_effective_connection_decision),
            NULL,
            &print_cluster_disconnection_decision);
   }
@@ -668,7 +668,7 @@ void GlobalModel::post_branchers(void) {
     operation o = input->activation_class_representative[ac];
     as << a(o);
   }
-  branch(*this, as, INT_VAR_NONE(), INT_VAL_MAX(),
+  branch(*this, as, BOOL_VAR_NONE(), BOOL_VAL_MAX(),
          NULL, &print_activation_decision);
 
   if (!options->disable_hints()) {
@@ -685,7 +685,7 @@ void GlobalModel::post_branchers(void) {
       avoidhs << h;
     }
 
-    branch(*this, avoidhs, INT_VAR_NONE(), INT_VAL_MIN(),
+    branch(*this, avoidhs, BOOL_VAR_NONE(), BOOL_VAL_MIN(),
            NULL, &print_hinted_avoidance_decision);
 
     // hinted register assignment
@@ -698,21 +698,19 @@ void GlobalModel::post_branchers(void) {
       assignhs << var(ry(p) == a);
     }
 
-    branch(*this, assignhs, INT_VAR_NONE(), INT_VAL_MAX(),
+    branch(*this, assignhs, BOOL_VAR_NONE(), BOOL_VAL_MAX(),
            NULL, &print_hinted_assignment_decision);
 
   }
 
   // register alignment
 
-  branch(*this, v_oa, INT_VAR_NONE(), INT_VAL_MAX(),
+  branch(*this, v_oa, BOOL_VAR_NONE(), BOOL_VAL_MAX(),
          NULL, &print_alignment_decision);
 
   // slack assignment
 
-  IntArgs zeros(v_s.size());
-  for (int i = 0; i < v_s.size(); i++) zeros[i] = 0;
-  branch(*this, v_s, INT_VAR_NONE(), INT_VAL_NEAR_MIN(zeros),
+  branch(*this, v_s, INT_VAR_NONE(), INT_VAL(&closest_to_zero),
          NULL, &print_slack_assignment_decision);
 
   // register assignment
@@ -738,8 +736,8 @@ void GlobalModel::post_callee_saved_branchers(void) {
   BoolVarArgs as2;
   for(unsigned int oi = active; oi < cs.size(); oi++) as2 << a(cs[oi]);
 
-  branch(*this, as1, INT_VAR_NONE(), INT_VAL_MAX());
-  branch(*this, as2, INT_VAR_NONE(), INT_VAL_MIN());
+  branch(*this, as1, BOOL_VAR_NONE(), BOOL_VAL_MAX());
+  branch(*this, as2, BOOL_VAR_NONE(), BOOL_VAL_MIN());
 
 }
 
@@ -750,7 +748,7 @@ void GlobalModel::post_complete_branchers(unsigned int s) {
 
   Rnd r;
   r.seed(s);
-  branch(*this, v_a, INT_VAR_NONE(), INT_VAL_RND(r),
+  branch(*this, v_a, BOOL_VAR_NONE(), BOOL_VAL_RND(r),
          NULL, &print_global_inactive_decision);
 
   branch(*this, v_i, INT_VAR_NONE(), INT_VAL_MIN(),

@@ -47,12 +47,15 @@ using namespace Set;
 
 // Most cost-effective connection decision for the global cluster gc
 int most_effective_connection_decision(
-    const Space& s, IntVar x, global_cluster gc);
+    const Space& s, BoolVar x, global_cluster gc);
 
 // Most cost-benefit effective register space for the global congruence g
 register_space most_effective(const Space& s, SetVar pals, global_congruence g);
 
 // Least assigned register atom in the blocks of the global congruence g
 register_atom least_assigned(const Space& s, IntVar pr, global_congruence g);
+
+// Value that is closest to zero
+int closest_to_zero(const Space& s, IntVar x, unsigned int i);
 
 #endif

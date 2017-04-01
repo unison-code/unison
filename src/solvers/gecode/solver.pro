@@ -150,7 +150,7 @@ CONFIG(graphics) {
              inspectors/operandlatencyinspector.cpp
 
   LIBS -= -ljson
-  LIBS += -lgecodegist -lgvc -lcgraph -lcdt
+  LIBS += -lgvc -lcgraph -lcdt
 
 }
 
