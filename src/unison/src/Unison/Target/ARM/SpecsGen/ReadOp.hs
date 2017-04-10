@@ -2951,6 +2951,7 @@ readOp "VLDRD_fi" = VLDRD_fi
 readOp "VLDRS_fi" = VLDRS_fi
 readOp "VLDRD_cpi" = VLDRD_cpi
 readOp "VLDRS_cpi" = VLDRS_cpi
+readOp "t2LEApcrel_cpi" = T2LEApcrel_cpi
 readOp "MOVE" = MOVE
 readOp "MOVE_ALL" = MOVE_ALL
 readOp "MOVE_D" = MOVE_D

@@ -2813,7 +2813,8 @@ operandInfo i
     ([BoundInfo, BoundInfo, TemporaryInfo (RegisterClass CCR) 0 False],
      [TemporaryInfo (RegisterClass SPR) 1 False])
   | i `elem`
-      [T2ADR, T2LEApcrel, T2LEApcrelJT, T2MOVi16, T2MRS_M, T2MRSbanked]
+      [T2ADR, T2LEApcrel, T2LEApcrelJT, T2LEApcrel_cpi, T2MOVi16,
+       T2MRS_M, T2MRSbanked]
     =
     ([BoundInfo, BoundInfo, TemporaryInfo (RegisterClass CCR) 0 False],
      [TemporaryInfo (RegisterClass RGPR) 1 False])

@@ -174,34 +174,30 @@ instruction-set:
           itinerary:          IIC_fpLoad32
 
         - id:                 VLDRD_cpi
-          type:               linear
+          parent:             VLDRD
           operands:
            - Dd:              [register, def, DPR]
            - addr1:           bound
            - addr2:           bound
            - p1:              bound
            - p2:              bound
-          uses:               [addr1, addr2, p1, p2]
-          defines:            [Dd]
-          size:               4
-          affects:
-          affected-by:
-          itinerary:          IIC_fpLoad64
 
         - id:                 VLDRS_cpi
-          type:               linear
+          parent:             VLDRS
           operands:
            - Sd:              [register, def, SPR]
            - addr1:           bound
            - addr2:           bound
            - p1:              bound
            - p2:              bound
-          uses:               [addr1, addr2, p1, p2]
-          defines:            [Sd]
-          size:               4
-          affects:
-          affected-by:
-          itinerary:          IIC_fpLoad32
+
+        - id:                 t2LEApcrel_cpi
+          parent:             t2LEApcrel
+          operands:
+           - Rd:              [register, def, rGPR]
+           - label:           bound
+           - p1:              bound
+           - p2:              bound
 
         - id:                 MOVE
           type:               copy

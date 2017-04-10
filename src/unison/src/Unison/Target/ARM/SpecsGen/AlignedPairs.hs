@@ -1031,8 +1031,8 @@ alignedPairs i ([_, _, _], [])
     = []
 alignedPairs i ([_, _, _], [_])
   | i `elem`
-      [ADR, LEApcrel, LEApcrelJT, T2LEApcrel, T2LEApcrelJT, TLEApcrel,
-       TLEApcrelJT]
+      [ADR, LEApcrel, LEApcrelJT, T2LEApcrel, T2LEApcrelJT,
+       T2LEApcrel_cpi, TLEApcrel, TLEApcrelJT]
     = []
 alignedPairs i ([lhs, _], [lhs'])
   | i `elem` [TPICADD] = [(lhs, lhs')]

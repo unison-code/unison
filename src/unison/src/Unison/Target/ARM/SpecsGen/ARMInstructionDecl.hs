@@ -2952,6 +2952,7 @@ data ARMInstruction = ABS
                     | VLDRS_fi
                     | VLDRD_cpi
                     | VLDRS_cpi
+                    | T2LEApcrel_cpi
                     | MOVE
                     | MOVE_ALL
                     | MOVE_D

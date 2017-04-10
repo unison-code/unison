@@ -607,10 +607,10 @@ itinerary i
       [ADCri, ADDSri, ADDri, ADR, LEApcrel, LEApcrelJT, RSBSri, RSBri,
        RSCri, SBCri, SUBSri, SUBri, T2ADCri, T2ADDSri, T2ADDri, T2ADDri12,
        T2ADDri_cpsr, T2ADDri_fi, T2ADR, T2LEApcrel, T2LEApcrelJT,
-       T2RSBSri, T2RSBri, T2SBCri, T2SUBSri, T2SUBri, T2SUBri12,
-       T2SUBri_cpsr, TADDi3, TADDi3s, TADDi8, TADDi8s, TADDrSPi, TADDspi,
-       TADR, TLEApcrel, TLEApcrelJT, TRSB, TRSBs, TSUBi3, TSUBi3s, TSUBi8,
-       TSUBi8s, TSUBspi]
+       T2LEApcrel_cpi, T2RSBSri, T2RSBri, T2SBCri, T2SUBSri, T2SUBri,
+       T2SUBri12, T2SUBri_cpsr, TADDi3, TADDi3s, TADDi8, TADDi8s,
+       TADDrSPi, TADDspi, TADR, TLEApcrel, TLEApcrelJT, TRSB, TRSBs,
+       TSUBi3, TSUBi3s, TSUBi8, TSUBi8s, TSUBspi]
     = IIC_iALUi
   | i `elem`
       [ADCrr, ADDSrr, ADDrr, PICADD, QADD, QADD16, QADD8, QASX, QDADD,
