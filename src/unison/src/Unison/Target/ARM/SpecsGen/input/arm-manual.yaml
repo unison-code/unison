@@ -686,7 +686,7 @@ instruction-set:
           itinerary:          IIC_iMOVsr
 
         - id:                 tLDRSHz
-          type:               linear
+          parent:             tLDRSH
           operands:
            - Rt:              [register, def, tGPR]
            - addr1:           [register, use, tGPR]
@@ -695,11 +695,6 @@ instruction-set:
            - p1:              bound
            - p2:              bound
           uses:               [addr1, addr2, addr3, p1, p2]
-          defines:            [Rt]
-          size:               2
-          affects:
-          affected-by:
-          itinerary:          IIC_iLoad_bh_r
 
         - id:                 tLDRSBz
           parent:             tLDRSB
@@ -713,7 +708,7 @@ instruction-set:
           uses:               [addr1, addr2, addr3, p1, p2]
 
         - id:                 tLDRHrz
-          type:               linear
+          parent:             tLDRHr
           operands:
            - Rt:              [register, def, tGPR]
            - addr1:           [register, use, tGPR]
@@ -722,14 +717,9 @@ instruction-set:
            - p1:              bound
            - p2:              bound
           uses:               [addr1, addr2, addr3, p1, p2]
-          defines:            [Rt]
-          size:               2
-          affects:
-          affected-by:
-          itinerary:          IIC_iLoad_bh_r
 
         - id:                 tSTRHrz
-          type:               linear
+          parent:             tSTRHr
           operands:
            - Rt:              [register, use, tGPR]
            - addr1:           [register, use, tGPR]
@@ -738,14 +728,9 @@ instruction-set:
            - p1:              bound
            - p2:              bound
           uses:               [Rt, addr1, addr2, addr3, p1, p2]
-          defines:            []
-          size:               2
-          affects:
-          affected-by:
-          itinerary:          IIC_iStore_bh_r
 
         - id:                 tSTRrz
-          type:               linear
+          parent:             tSTRr
           operands:
            - Rt:              [register, use, tGPR]
            - addr1:           [register, use, tGPR]
@@ -754,14 +739,9 @@ instruction-set:
            - p1:              bound
            - p2:              bound
           uses:               [Rt, addr1, addr2, addr3, p1, p2]
-          defines:            []
-          size:               2
-          affects:
-          affected-by:
-          itinerary:          IIC_iStore_r
 
         - id:                 tLDRBrz
-          type:               linear
+          parent:             tLDRBr
           operands:
            - Rt:              [register, def, tGPR]
            - addr1:           [register, use, tGPR]
@@ -770,14 +750,9 @@ instruction-set:
            - p1:              bound
            - p2:              bound
           uses:               [addr1, addr2, addr3, p1, p2]
-          defines:            [Rt]
-          size:               2
-          affects:
-          affected-by:
-          itinerary:          IIC_iLoad_bh_r
 
         - id:                 tSTRBrz
-          type:               linear
+          parent:             tSTRBr
           operands:
            - Rt:              [register, use, tGPR]
            - addr1:           [register, use, tGPR]
@@ -786,14 +761,9 @@ instruction-set:
            - p1:              bound
            - p2:              bound
           uses:               [Rt, addr1, addr2, addr3, p1, p2]
-          defines:            []
-          size:               2
-          affects:
-          affected-by:
-          itinerary:          IIC_iStore_bh_r
 
         - id:                 tLDRrz
-          type:               linear
+          parent:             tLDRr
           operands:
            - Rt:              [register, def, tGPR]
            - addr1:           [register, use, tGPR]
@@ -802,11 +772,6 @@ instruction-set:
            - p1:              bound
            - p2:              bound
           uses:               [addr1, addr2, addr3, p1, p2]
-          defines:            [Rt]
-          size:               2
-          affects:
-          affected-by:
-          itinerary:          IIC_iLoad_r
 
         - id:                 tCMPi8_cpsr
           parent:             tCMPi8

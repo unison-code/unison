@@ -588,18 +588,17 @@ parent i
        TBcc, TBfar, TCBNZ, TCBZ, TCMNz, TCMPhir, TCMPi8, TCMPr, TCPS,
        TEOR, TEORs, THINT, THLT, TInt_WIN_eh_sjlj_longjmp,
        TInt_eh_sjlj_longjmp, TInt_eh_sjlj_setjmp, TLDMIA, TLDMIA_UPD,
-       TLDRBi, TLDRBr, TLDRBrz, TLDRHi, TLDRHr, TLDRHrz, TLDRLIT_ga_abs,
-       TLDRLIT_ga_pcrel, TLDRSB, TLDRSH, TLDRSHz, TLDRi, TLDRpci,
-       TLDRpci_pic, TLDRr, TLDRrz, TLDRspi, TLEApcrel, TLEApcrelJT,
-       TLSLri, TLSLris, TLSLrr, TLSLrrs, TLSRri, TLSRris, TLSRrr, TLSRrrs,
-       TMOVCCr_pseudo, TMOVSr, TMOVi8, TMOVi8s, TMOVr, TMUL, TMULz, TMVN,
-       TMVNs, TORR, TORRs, TPICADD, TPOP, TPOP_RET, TPOPcs, TPOPcs_free,
-       TPUSH, TPUSHcs, TREV, TREV16, TREVSH, TROR, TRSB, TRSBs, TSBC,
-       TSETEND, TSTMIA_UPD, TSTRBi, TSTRBr, TSTRBrz, TSTRHi, TSTRHr,
-       TSTRHrz, TSTRi, TSTRr, TSTRrz, TSTRspi, TSUBi3, TSUBi3s, TSUBi8,
-       TSUBi8s, TSUBrr, TSUBrrs, TSUBspi, TSVC, TSXTB, TSXTH, TSXTHz,
-       TTAILJMPd, TTAILJMPdND, TTAILJMPr, TTPsoft, TTRAP, TTST, TUDF,
-       TUXTB, TUXTBz, TUXTH, TUXTHz]
+       TLDRBi, TLDRBr, TLDRHi, TLDRHr, TLDRLIT_ga_abs, TLDRLIT_ga_pcrel,
+       TLDRSB, TLDRSH, TLDRi, TLDRpci, TLDRpci_pic, TLDRr, TLDRspi,
+       TLEApcrel, TLEApcrelJT, TLSLri, TLSLris, TLSLrr, TLSLrrs, TLSRri,
+       TLSRris, TLSRrr, TLSRrrs, TMOVCCr_pseudo, TMOVSr, TMOVi8, TMOVi8s,
+       TMOVr, TMUL, TMULz, TMVN, TMVNs, TORR, TORRs, TPICADD, TPOP,
+       TPOP_RET, TPOPcs, TPOPcs_free, TPUSH, TPUSHcs, TREV, TREV16,
+       TREVSH, TROR, TRSB, TRSBs, TSBC, TSETEND, TSTMIA_UPD, TSTRBi,
+       TSTRBr, TSTRHi, TSTRHr, TSTRi, TSTRr, TSTRspi, TSUBi3, TSUBi3s,
+       TSUBi8, TSUBi8s, TSUBrr, TSUBrrs, TSUBspi, TSVC, TSXTB, TSXTH,
+       TSXTHz, TTAILJMPd, TTAILJMPdND, TTAILJMPr, TTPsoft, TTRAP, TTST,
+       TUDF, TUXTB, TUXTBz, TUXTH, TUXTHz]
     = Nothing
   | i `elem` [FMSTAT_cpsr] = Just FMSTAT
   | i `elem` [VLDRD_cpi] = Just VLDRD
@@ -621,6 +620,13 @@ parent i
   | i `elem` [TCMPhir_cpsr] = Just TCMPhir
   | i `elem` [TCMPi8_cpsr] = Just TCMPi8
   | i `elem` [TCMPr_cpsr] = Just TCMPr
+  | i `elem` [TLDRBrz] = Just TLDRBr
+  | i `elem` [TLDRHrz] = Just TLDRHr
   | i `elem` [TLDRSBz] = Just TLDRSB
+  | i `elem` [TLDRSHz] = Just TLDRSH
+  | i `elem` [TLDRrz] = Just TLDRr
+  | i `elem` [TSTRBrz] = Just TSTRBr
+  | i `elem` [TSTRHrz] = Just TSTRHr
+  | i `elem` [TSTRrz] = Just TSTRr
   | i `elem` [TTST_cpsr] = Just TTST
 
