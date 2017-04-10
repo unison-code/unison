@@ -555,7 +555,10 @@ getElementPtr =
 mirMemOperandAttr =
   do char ','
      whiteSpace
-     attr <- try mirMemAlignment <|> try mirMemTbaa <|> try mirMemAliasScope
+     attr <- try mirMemAlignment <|>
+             try (mirMemAttr "tbaa") <|>
+             try (mirMemAttr "alias.scope") <|>
+             try (mirMemAttr "range")
      return attr
 
 mirMemAlignment =
@@ -564,19 +567,12 @@ mirMemAlignment =
      a <- decimal
      return a
 
-mirMemTbaa =
-  do string "!tbaa"
+mirMemAttr name =
+  do string ("!" ++ name)
      whiteSpace
      char '!'
-     tbaa <- decimal
-     return tbaa
-
-mirMemAliasScope =
-  do string "!alias.scope"
-     whiteSpace
-     char '!'
-     scope <- decimal
-     return scope
+     value <- decimal
+     return value
 
 whiteSpaces n = string (replicate n ' ')
 
