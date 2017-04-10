@@ -178,6 +178,15 @@ instruction-set:
           affected-by:
            - SP:              register
 
+        - id:                 SDC1_sp
+          parent:             SDC1
+          operands:
+           - rt:              [register, use, AFGR64Opnd]
+           - addr1:           bound
+          uses:               [rt, addr1]
+          affected-by:
+           - SP:              register
+
         - id:                 LoadGPDisp
           parent:             LoadAddrImm32
           operands:

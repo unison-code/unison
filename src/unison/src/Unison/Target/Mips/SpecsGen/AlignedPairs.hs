@@ -519,7 +519,8 @@ alignedPairs i ([_], [_])
        SEB, SEB64, SEB_MM, SEB_MMR6, SEH, SEH64, SEH_MM, SEH_MMR6,
        SLL64_32, SLL64_64, STORE, STORE_D, STORE_F, WSBH, WSBH_MM]
     = []
-alignedPairs i ([_, _], []) | i `elem` [SWC1_sp, SW_sp] = []
+alignedPairs i ([_, _], [])
+  | i `elem` [SDC1_sp, SWC1_sp, SW_sp] = []
 alignedPairs i ([_, _, _], [])
   | i `elem`
       [SB, SB16_MM, SB16_MMR6, SB64, SBE, SBE_MM, SBE_MMR6, SB_MM,

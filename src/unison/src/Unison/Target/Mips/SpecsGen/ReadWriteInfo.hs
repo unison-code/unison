@@ -467,7 +467,7 @@ readWriteInfo i
   | i `elem` [Mflo16] = ([OtherSideEffect LO0], [])
   | i `elem` [LOAD, LOAD_D, LOAD_F, STORE, STORE_D, STORE_F] =
     ([OtherSideEffect SP], [])
-  | i `elem` [SWC1_sp, SW_sp] =
+  | i `elem` [SDC1_sp, SWC1_sp, SW_sp] =
     ([OtherSideEffect SP], [Memory "mem"])
   | i `elem` [Bteqz16, BteqzX16, Btnez16, BtnezX16] =
     ([OtherSideEffect T8], [])

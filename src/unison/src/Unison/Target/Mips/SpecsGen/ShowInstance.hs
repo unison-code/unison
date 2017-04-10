@@ -2255,5 +2255,6 @@ instance Show MipsInstruction where
         show ADDiu_negsp = "ADDiu_negsp"
         show SW_sp = "SW_sp"
         show SWC1_sp = "SWC1_sp"
+        show SDC1_sp = "SDC1_sp"
         show LoadGPDisp = "LoadGPDisp"
 

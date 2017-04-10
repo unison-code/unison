@@ -17,7 +17,8 @@ hiddenStackPointerInstruction i =
 
 hiddenStackPointerVersions = M.fromList
   [(SW, SW_sp),
-   (SWC1, SWC1_sp)]
+   (SWC1, SWC1_sp),
+   (SDC1, SDC1_sp)]
 
 isDelaySlotInstr i = i `elem` delaySlotInstrs
 

@@ -120,6 +120,8 @@ operandInfo i
       TemporaryInfo (RegisterClass GPR32Opnd) 0 False,
       TemporaryInfo (RegisterClass AFGR64Opnd) 0 False],
      [TemporaryInfo (RegisterClass AFGR64Opnd) 1 False])
+  | i `elem` [SDC1_sp] =
+    ([TemporaryInfo (RegisterClass AFGR64Opnd) 0 False, BoundInfo], [])
   | i `elem` [ExtractElementF64] =
     ([TemporaryInfo (RegisterClass AFGR64Opnd) 0 False, BoundInfo],
      [TemporaryInfo (RegisterClass GPR32Opnd) 1 False])

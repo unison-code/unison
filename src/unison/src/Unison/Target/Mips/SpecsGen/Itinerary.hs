@@ -287,7 +287,7 @@ itinerary i
   | i `elem` [SB, SB16_MM, SB16_MMR6, SB64, SB_fi, SbRxRyOffMemX16] =
     II_SB
   | i `elem` [SD] = II_SD
-  | i `elem` [SDC1, SDC164, SDC1_MM, STORE_D] = II_SDC1
+  | i `elem` [SDC1, SDC164, SDC1_MM, SDC1_sp, STORE_D] = II_SDC1
   | i `elem` [SDL] = II_SDL
   | i `elem` [SDR] = II_SDR
   | i `elem` [SDXC1, SDXC164] = II_SDXC1
