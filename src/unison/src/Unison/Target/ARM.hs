@@ -323,8 +323,19 @@ stackDirection = API.StackGrowsDown
 
 -- | Target dependent pre-processing functions
 
-preProcess = [cleanConstPoolBlocks, promoteImplicitOperands, hideCPSRRegister,
-              addFrameIndex, processTailCalls]
+preProcess = [mapToTargetMachineInstruction instantiateVariantOperands,
+              cleanConstPoolBlocks,
+              mapToMachineInstruction promoteImplicitOperands,
+              mapToMachineInstruction hideCPSRRegister,
+              mapToTargetMachineInstruction addFrameIndex,
+              mapToTargetMachineInstruction processTailCalls]
+
+instantiateVariantOperands
+  mi @ MachineSingle {msOpcode = MachineTargetOpc i}
+  | i `elem` [MEMCPY] =
+      error ("FIXME: define MEMCPY with register side-effects and expand in transforms phase")
+      mi {msOpcode = mkMachineTargetOpc MEMCPY_0}
+  | otherwise = mi
 
 cleanConstPoolBlocks mf @ MachineFunction {mfBlocks = mbs} =
   mf {mfBlocks = filter (not . isConstPoolBlock) mbs}
@@ -335,9 +346,7 @@ isConstPoolBlock MachineBlock {mbInstructions = mis} =
          (isMachineTarget mi && mopcTarget (msOpcode mi) == CONSTPOOL_ENTRY) ||
          (isMachineVirtual mi && mopcVirtual (msOpcode mi) == EXIT)) mis
 
-promoteImplicitOperands = mapToMachineInstruction promoteImplicitOperandsInInstr
-
-promoteImplicitOperandsInInstr
+promoteImplicitOperands
   mi @ MachineSingle {msOpcode   = MachineTargetOpc i,
                       msOperands = [o1, o2, o3, p1, p2,
                                     cc @ MachineReg {mrName = CPSR}]}
@@ -346,7 +355,7 @@ promoteImplicitOperandsInInstr
     in mi {msOpcode = mkMachineTargetOpc (toExplicitCpsrDef i),
            msOperands = mos'}
 
-promoteImplicitOperandsInInstr
+promoteImplicitOperands
   mi @ MachineSingle {msOpcode = MachineTargetOpc i, msOperands = mos} =
     let fu   = length $ snd $ operandInfo i
         mos' = if writesSideEffect i CPSR
@@ -354,7 +363,7 @@ promoteImplicitOperandsInInstr
                else mos
     in mi {msOperands = mos'}
 
-promoteImplicitOperandsInInstr mi = mi
+promoteImplicitOperands mi = mi
 
 writesSideEffect i eff =
     (OtherSideEffect eff) `elem` (snd $ SpecsGen.readWriteInfo i)
@@ -362,9 +371,7 @@ writesSideEffect i eff =
 -- This is done to prevent 'extractCallRegs' adding the 'cpsr' register as
 -- argument to function calls
 
-hideCPSRRegister = mapToMachineInstruction hideCPSRRegisterInInstr
-
-hideCPSRRegisterInInstr mi @ MachineSingle {msOperands = mos} =
+hideCPSRRegister mi @ MachineSingle {msOperands = mos} =
   let mos' = mapIf isMachineReg hideCPSR mos
   in mi {msOperands = mos'}
 
@@ -373,31 +380,27 @@ hideCPSR mr = mr
 
 liftToTOpc f = mkMachineTargetOpc . f . mopcTarget
 
-addFrameIndex = mapToTargetMachineInstruction addFrameIndexInstr
-
-addFrameIndexInstr mi @ MachineSingle {msOpcode = opcode,
-                                       msOperands = operands}
+addFrameIndex mi @ MachineSingle {msOpcode = opcode,
+                                  msOperands = operands}
   | any isMachineConstantPoolIndex operands &&
     any isTemporaryInfo (fst $ operandInfo $ mopcTarget opcode) =
     mi {msOpcode = liftToTOpc (\i -> read (show i ++ "_cpi")) opcode}
 
-addFrameIndexInstr mi @ MachineSingle {msOpcode = opcode,
-                                       msOperands = operands}
+addFrameIndex mi @ MachineSingle {msOpcode = opcode,
+                                  msOperands = operands}
   | any isMachineFrameIndex operands &&
     any isTemporaryInfo (fst $ operandInfo $ mopcTarget opcode) =
       mi {msOpcode = liftToTOpc (\i -> read (show i ++ "_fi")) opcode}
   | otherwise = mi
 
-processTailCalls = mapToTargetMachineInstruction processTailCallsInInstr
-
-processTailCallsInInstr mi @ MachineSingle {msOpcode   = MachineTargetOpc i,
-                                            msOperands = s:mos}
+processTailCalls mi @ MachineSingle {msOpcode   = MachineTargetOpc i,
+                                     msOperands = s:mos}
   | i == TCRETURNdi =
     let mos' = [s] ++ defaultPred ++ mos
     in mi {msOpcode = mkMachineTargetOpc TTAILJMPdND, msOperands = mos'}
   | i == TCRETURNri = mi {msOpcode = mkMachineTargetOpc TTAILJMPr}
 
-processTailCallsInInstr mi = mi
+processTailCalls mi = mi
 
 -- | Target dependent post-processing functions
 

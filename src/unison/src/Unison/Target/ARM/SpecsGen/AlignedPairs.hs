@@ -973,6 +973,8 @@ alignedPairs i ([_], [])
     = []
 alignedPairs i ([_, _, _], [])
   | i `elem` [BX_pred, TTAILJMPd, TTAILJMPdND] = []
+alignedPairs i ([dst, src, _], [dst', src'])
+  | i `elem` [MEMCPY_0] = [(dst, dst'), (src, src')]
 alignedPairs i ([dst, src, _, _], [dst', src'])
   | i `elem` [MEMCPY] = [(dst, dst'), (src, src')]
 alignedPairs i ([_, _, _, _], [])

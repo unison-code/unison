@@ -54,7 +54,7 @@ instructionType i
        LDR_POST_REG, LDR_PRE_IMM, LDR_PRE_REG, LDRcp, LDRi12, LDRrs,
        LEApcrel, LEApcrelJT, LIFETIME_END, LIFETIME_START,
        LOAD_STACK_GUARD, LOCAL_ESCAPE, LSLi, LSLr, LSRi, LSRr, MCR, MCR2,
-       MCRR, MCRR2, MEMCPY, MLA, MLAv5, MLS, MOVCCi, MOVCCi16,
+       MCRR, MCRR2, MEMCPY, MEMCPY_0, MLA, MLAv5, MLS, MOVCCi, MOVCCi16,
        MOVCCi32imm, MOVCCr, MOVCCsi, MOVCCsr, MOVTi16, MOVTi16_ga_pcrel,
        MOV_ga_pcrel, MOV_ga_pcrel_ldr, MOVi, MOVi16, MOVi16_ga_pcrel,
        MOVi32imm, MOVr, MOVr_TC, MOVsi, MOVsr, MOVsra_flag, MOVsrl_flag,

@@ -3016,4 +3016,5 @@ instance Show ARMInstruction where
         show TPUSHcs = "tPUSHcs"
         show TPOPcs = "tPOPcs"
         show TPOPcs_free = "tPOPcs_free"
+        show MEMCPY_0 = "MEMCPY_0"
 

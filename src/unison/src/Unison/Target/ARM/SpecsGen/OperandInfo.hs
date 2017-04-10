@@ -447,6 +447,11 @@ operandInfo i
     ([TemporaryInfo (RegisterClass GPR) 0 False,
       TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo],
      [])
+  | i `elem` [MEMCPY_0] =
+    ([TemporaryInfo (RegisterClass GPR) 0 False,
+      TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo],
+     [TemporaryInfo (RegisterClass GPR) 1 False,
+      TemporaryInfo (RegisterClass GPR) 1 False])
   | i `elem` [STL, STLB, STLH] =
     ([TemporaryInfo (RegisterClass GPR) 0 False,
       TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo,

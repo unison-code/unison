@@ -1059,3 +1059,16 @@ instruction-set:
           affected-by:
            - SP:              register
           itinerary:          IIC_iPop
+
+        - id:                 MEMCPY_0
+          type:               linear
+          operands:
+           - dst:             [register, usedef, GPR]
+           - src:             [register, usedef, GPR]
+           - nreg:            bound
+          uses:               [dst, src, nreg]
+          defines:            [dst, src]
+          size:               0
+          affects:
+          affected-by:
+          itinerary:          NoItinerary
