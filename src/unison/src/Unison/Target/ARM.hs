@@ -198,17 +198,17 @@ isReserved r = r `elem` reserved
 fromCopy Copy {oCopyIs = [TargetInstruction i], oCopyS = s, oCopyD = d}
   | i `elem` [MOVE, MOVE_ALL, MOVE_D] =
     Linear {oIs = [TargetInstruction (fromCopyInstr i (s, d))],
-            oUs = [s] ++ defaultPred',
+            oUs = [s] ++ defaultUniPred,
             oDs = [d]}
   | i `elem` [STORE, STORE_T, STORE_D] =
     Linear {oIs = [TargetInstruction (fromCopyInstr i (s, d))],
             oUs  = [mkOprArmSP, mkBoundMachineFrameObject i d, s] ++
-                   defaultPred',
+                   defaultUniPred,
             oDs  = []}
   | i `elem` [LOAD, LOAD_T, LOAD_D] =
     Linear {oIs = [TargetInstruction (fromCopyInstr i (s, d))],
             oUs  = [mkOprArmSP, mkBoundMachineFrameObject i s] ++
-                   defaultPred',
+                   defaultUniPred,
             oDs  = [d]}
   | i `elem` [TPUSHcs] =
     Linear {oIs = [TargetInstruction i],
@@ -323,19 +323,21 @@ stackDirection = API.StackGrowsDown
 
 -- | Target dependent pre-processing functions
 
-preProcess = [mapToTargetMachineInstruction instantiateVariantOperands,
+preProcess = [mapToTargetMachineInstruction instantiateMEMCPY,
               cleanConstPoolBlocks,
               mapToMachineInstruction promoteImplicitOperands,
               mapToMachineInstruction hideCPSRRegister,
               mapToTargetMachineInstruction addFrameIndex,
               mapToTargetMachineInstruction processTailCalls]
 
-instantiateVariantOperands
-  mi @ MachineSingle {msOpcode = MachineTargetOpc i}
-  | i `elem` [MEMCPY] =
-      error ("FIXME: define MEMCPY with register side-effects and expand in transforms phase")
-      mi {msOpcode = mkMachineTargetOpc MEMCPY_0}
-  | otherwise = mi
+instantiateMEMCPY
+  mi @ MachineSingle {msOpcode = MachineTargetOpc i,
+                      msOperands = mos}
+  | i == MEMCPY = case miValue (mos !! 4) of
+    4 -> mi {msOpcode   = mkMachineTargetOpc MEMCPY_4,
+             msOperands = slice 0 1 mos ++ slice 5 8 mos ++ slice 2 4 mos}
+    n -> error ("FIXME: implement MEMCPY_" ++ show n)
+instantiateMEMCPY mi = mi
 
 cleanConstPoolBlocks mf @ MachineFunction {mfBlocks = mbs} =
   mf {mfBlocks = filter (not . isConstPoolBlock) mbs}
@@ -396,7 +398,7 @@ addFrameIndex mi @ MachineSingle {msOpcode = opcode,
 processTailCalls mi @ MachineSingle {msOpcode   = MachineTargetOpc i,
                                      msOperands = s:mos}
   | i == TCRETURNdi =
-    let mos' = [s] ++ defaultPred ++ mos
+    let mos' = [s] ++ defaultMIRPred ++ mos
     in mi {msOpcode = mkMachineTargetOpc TTAILJMPdND, msOperands = mos'}
   | i == TCRETURNri = mi {msOpcode = mkMachineTargetOpc TTAILJMPr}
 
@@ -414,9 +416,9 @@ expandPseudo mi @ MachineSingle {
   msOpcode   = MachineTargetOpc T2MOVi32imm,
   msOperands = [dst, ga @ MachineGlobalAddress {}]} =
   let mi1 = mi {msOpcode   = mkMachineTargetOpc T2MOVi16,
-                msOperands = [dst, ga] ++ defaultPred}
+                msOperands = [dst, ga] ++ defaultMIRPred}
       mi2 = mi {msOpcode   = mkMachineTargetOpc T2MOVTi16,
-                msOperands = [dst, dst, ga] ++ defaultPred}
+                msOperands = [dst, dst, ga] ++ defaultMIRPred}
   in [[mi1], [mi2]]
 
 expandPseudo mi = [[mi]]
@@ -424,10 +426,6 @@ expandPseudo mi = [[mi]]
 removeAllNops =
   filterMachineInstructions
   (\mi -> not (isMachineTarget mi && mopcTarget (msOpcode mi) == NOP))
-
-defaultPred = [mkMachineImm 14, mkMachineNullReg]
-
-defaultPred' = map mkBound defaultPred
 
 reorderImplicitOperands = mapToMachineInstruction reorderImplicitOperandsInInstr
 
@@ -501,7 +499,8 @@ isMachineCPSRReg _ = False
 -- | Gives a list of function transformers
 transforms ImportPreLift = [peephole extractReturnRegs,
                             (\f -> foldReservedRegisters f (target, [])),
-                            mapToOperationWithGoal addThumbAlternatives]
+                            mapToOperationWithGoal addThumbAlternatives,
+                            peephole expandMEMCPY]
 transforms ImportPostLift = [peephole handlePromotedOperands]
 transforms _ = []
 

@@ -3016,6 +3016,10 @@ data ARMInstruction = ABS
                     | TPUSHcs
                     | TPOPcs
                     | TPOPcs_free
-                    | MEMCPY_0
+                    | MEMCPY_4
+                    | T2LDMIA_4
+                    | T2LDMIA_UPD_4
+                    | T2STMIA_4
+                    | T2STMIA_UPD_4
                     deriving (Eq, Ord)
 

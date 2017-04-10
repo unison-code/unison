@@ -603,5 +603,6 @@ allInstructions
      T2CMNri_cpsr, T2CMPrr_cpsr, T2TSTrr_cpsr, T2CMPrs_cpsr,
      T2TSTrs_cpsr, T2SUBrr_cpsr, T2SUBri_cpsr, T2ORRrr_cpsr,
      T2ANDri_cpsr, T2ADDri_cpsr, FMSTAT_cpsr, TCMPr_cpsr, TCMPhir_cpsr,
-     TTST_cpsr, T2TEQrr_cpsr, TPUSHcs, TPOPcs, TPOPcs_free, MEMCPY_0]
+     TTST_cpsr, T2TEQrr_cpsr, TPUSHcs, TPOPcs, TPOPcs_free, MEMCPY_4,
+     T2LDMIA_4, T2LDMIA_UPD_4, T2STMIA_4, T2STMIA_UPD_4]
 

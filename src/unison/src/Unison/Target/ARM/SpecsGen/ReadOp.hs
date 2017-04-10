@@ -3015,6 +3015,10 @@ readOp "t2TEQrr_cpsr" = T2TEQrr_cpsr
 readOp "tPUSHcs" = TPUSHcs
 readOp "tPOPcs" = TPOPcs
 readOp "tPOPcs_free" = TPOPcs_free
-readOp "MEMCPY_0" = MEMCPY_0
+readOp "MEMCPY_4" = MEMCPY_4
+readOp "t2LDMIA_4" = T2LDMIA_4
+readOp "t2LDMIA_UPD_4" = T2LDMIA_UPD_4
+readOp "t2STMIA_4" = T2STMIA_4
+readOp "t2STMIA_UPD_4" = T2STMIA_UPD_4
 readOp a = error ("unmatched: readOp " ++ show a)
 

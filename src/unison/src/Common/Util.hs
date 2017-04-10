@@ -23,6 +23,7 @@ module Common.Util (
         expand,
         pairs,
         insertAt,
+        slice,
         -- * Map functions
         applyMap,
         fromListMult,
@@ -107,6 +108,8 @@ pairs xs = zip xs (tail xs)
 insertAt e n xs =
     let (ys, zs) = splitAt n xs
     in ys ++ [e] ++ zs
+
+slice b e l = drop b $ take (e + 1) l
 
 applyMap k2t k = fromMaybe k (M.lookup k k2t)
 

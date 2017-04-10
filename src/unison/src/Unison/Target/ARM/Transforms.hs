@@ -12,6 +12,7 @@ This file is part of Unison, see http://unison-code.github.io
 module Unison.Target.ARM.Transforms
     (extractReturnRegs,
      addThumbAlternatives,
+     expandMEMCPY,
      handlePromotedOperands) where
 
 import qualified Data.Map as M
@@ -361,6 +362,37 @@ reduceTable =
 
 i2b 0 = False
 i2b 1 = True
+
+{- see expandMEMCPY in ARMBaseInstrInfo.cpp:
+    [dst',src',r0,r1,r2,r3] <- MEMCPY_4 [dst,src,4]
+    ->
+    [[src',]r0,r1,r2,r3] <- T2LDMIA[UPD]_4 [src]
+    [[dst']] <- T2STMIA[UPD]_4 [dst,14,_,r0,r1,r2,r3]
+-}
+
+expandMEMCPY f (
+  SingleOperation {oOpr = Natural Linear {
+                      oIs = [TargetInstruction MEMCPY_4],
+                      oUs = [dst, src, _],
+                      oDs = [dst', src', r0, r1, r2, r3]}}
+  :
+  rest) (_, oid, _) =
+  let isUsed t = any (isUser t) (flatCode f)
+      (ldmi, ldmds) =
+        if isUsed src' then (T2LDMIA_UPD_4, [src']) else (T2LDMIA_4, [])
+      (stmi, stmds) =
+        if isUsed dst' then (T2STMIA_UPD_4, [dst']) else (T2STMIA_4, [])
+      scratch = [r0, r1, r2, r3]
+  in
+   (
+     rest,
+     [mkLinear oid       [TargetInstruction ldmi]
+      ([src] ++ defaultUniPred) (ldmds ++ scratch),
+      mkLinear (oid + 1) [TargetInstruction stmi]
+      ([dst] ++ defaultUniPred ++ scratch) stmds]
+   )
+
+expandMEMCPY _ (o : rest) _ = (rest, [o])
 
 handlePromotedOperands _ (
   o @ SingleOperation {

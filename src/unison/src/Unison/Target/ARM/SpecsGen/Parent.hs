@@ -37,7 +37,7 @@ parent i
        LDR_POST_REG, LDR_PRE_IMM, LDR_PRE_REG, LDRcp, LDRi12, LDRrs,
        LEApcrel, LEApcrelJT, LIFETIME_END, LIFETIME_START, LOAD, LOAD_D,
        LOAD_STACK_GUARD, LOAD_T, LOCAL_ESCAPE, LSLi, LSLr, LSRi, LSRr,
-       MCR, MCR2, MCRR, MCRR2, MEMCPY, MEMCPY_0, MLA, MLAv5, MLS, MOVCCi,
+       MCR, MCR2, MCRR, MCRR2, MEMCPY, MEMCPY_4, MLA, MLAv5, MLS, MOVCCi,
        MOVCCi16, MOVCCi32imm, MOVCCr, MOVCCsi, MOVCCsr, MOVE, MOVE_ALL,
        MOVE_D, MOVPCLR, MOVPCRX, MOVTi16, MOVTi16_ga_pcrel, MOV_ga_pcrel,
        MOV_ga_pcrel_ldr, MOVi, MOVi16, MOVi16_ga_pcrel, MOVi32imm, MOVr,
@@ -609,8 +609,12 @@ parent i
   | i `elem` [T2CMPri_cpsr] = Just T2CMPri
   | i `elem` [T2CMPrr_cpsr] = Just T2CMPrr
   | i `elem` [T2CMPrs_cpsr] = Just T2CMPrs
+  | i `elem` [T2LDMIA_4] = Just T2LDMIA
+  | i `elem` [T2LDMIA_UPD_4] = Just T2LDMIA_UPD
   | i `elem` [T2LEApcrel_cpi] = Just T2LEApcrel
   | i `elem` [T2ORRrr_cpsr] = Just T2ORRrr
+  | i `elem` [T2STMIA_4] = Just T2STMIA
+  | i `elem` [T2STMIA_UPD_4] = Just T2STMIA_UPD
   | i `elem` [T2SUBri_cpsr] = Just T2SUBri
   | i `elem` [T2SUBrr_cpsr] = Just T2SUBrr
   | i `elem` [T2TEQrr_cpsr] = Just T2TEQrr

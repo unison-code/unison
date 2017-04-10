@@ -238,7 +238,15 @@ alignedPairs i ([rn, _, _, _], [_, rn'])
 alignedPairs i ([_, _, _], [])
   | i `elem` [T2RFEDB, T2RFEDBW, T2RFEIA, T2RFEIAW] = []
 alignedPairs i ([_, _, _], [_, _]) | i `elem` [TMVN, TRSB] = []
+alignedPairs i ([rn, _, _], [rn', _, _, _, _])
+  | i `elem` [T2LDMIA_UPD_4] = [(rn, rn')]
 alignedPairs i ([_, _, _], [_]) | i `elem` [VLDMQIA] = []
+alignedPairs i ([_, _, _], [_, _, _, _])
+  | i `elem` [T2LDMIA_4] = []
+alignedPairs i ([_, _, _, _, _, _, _], [])
+  | i `elem` [T2STMIA_4] = []
+alignedPairs i ([rn, _, _, _, _, _, _], [rn'])
+  | i `elem` [T2STMIA_UPD_4] = [(rn, rn')]
 alignedPairs i ([_, _, _, _, _], [])
   | i `elem`
       [FLDMXIA, FSTMXIA, LDMDA, LDMDB, LDMIA, LDMIB, STMDA, STMDB, STMIA,
@@ -973,8 +981,8 @@ alignedPairs i ([_], [])
     = []
 alignedPairs i ([_, _, _], [])
   | i `elem` [BX_pred, TTAILJMPd, TTAILJMPdND] = []
-alignedPairs i ([dst, src, _], [dst', src'])
-  | i `elem` [MEMCPY_0] = [(dst, dst'), (src, src')]
+alignedPairs i ([dst, src, _], [dst', src', _, _, _, _])
+  | i `elem` [MEMCPY_4] = [(dst, dst'), (src, src')]
 alignedPairs i ([dst, src, _, _], [dst', src'])
   | i `elem` [MEMCPY] = [(dst, dst'), (src, src')]
 alignedPairs i ([_, _, _, _], [])

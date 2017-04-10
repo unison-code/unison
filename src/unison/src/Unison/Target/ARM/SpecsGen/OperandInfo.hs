@@ -447,10 +447,14 @@ operandInfo i
     ([TemporaryInfo (RegisterClass GPR) 0 False,
       TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo],
      [])
-  | i `elem` [MEMCPY_0] =
+  | i `elem` [MEMCPY_4] =
     ([TemporaryInfo (RegisterClass GPR) 0 False,
       TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo],
      [TemporaryInfo (RegisterClass GPR) 1 False,
+      TemporaryInfo (RegisterClass GPR) 1 False,
+      TemporaryInfo (RegisterClass GPR) 1 False,
+      TemporaryInfo (RegisterClass GPR) 1 False,
+      TemporaryInfo (RegisterClass GPR) 1 False,
       TemporaryInfo (RegisterClass GPR) 1 False])
   | i `elem` [STL, STLB, STLH] =
     ([TemporaryInfo (RegisterClass GPR) 0 False,
@@ -718,6 +722,21 @@ operandInfo i
     ([TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo,
       TemporaryInfo (RegisterClass CCR) 0 False],
      [TemporaryInfo (RegisterClass GPR) 1 False])
+  | i `elem` [T2LDMIA_4] =
+    ([TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass GPR) 1 False,
+      TemporaryInfo (RegisterClass GPR) 1 False,
+      TemporaryInfo (RegisterClass GPR) 1 False,
+      TemporaryInfo (RegisterClass GPR) 1 False])
+  | i `elem` [T2LDMIA_UPD_4] =
+    ([TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass GPR) 1 False,
+      TemporaryInfo (RegisterClass GPR) 1 False,
+      TemporaryInfo (RegisterClass GPR) 1 False,
+      TemporaryInfo (RegisterClass GPR) 1 False,
+      TemporaryInfo (RegisterClass GPR) 1 False])
   | i `elem` [LDAEXD, LDREXD] =
     ([TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo,
       TemporaryInfo (RegisterClass CCR) 0 False],
@@ -752,6 +771,22 @@ operandInfo i
       TemporaryInfo (RegisterClass CCR) 0 False,
       TemporaryInfo (RegisterClass CCR) 0 False],
      [TemporaryInfo (RegisterClass GPRnopc) 1 False])
+  | i `elem` [T2STMIA_4] =
+    ([TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False,
+      TemporaryInfo (RegisterClass GPR) 0 False,
+      TemporaryInfo (RegisterClass GPR) 0 False,
+      TemporaryInfo (RegisterClass GPR) 0 False,
+      TemporaryInfo (RegisterClass GPR) 0 False],
+     [])
+  | i `elem` [T2STMIA_UPD_4] =
+    ([TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False,
+      TemporaryInfo (RegisterClass GPR) 0 False,
+      TemporaryInfo (RegisterClass GPR) 0 False,
+      TemporaryInfo (RegisterClass GPR) 0 False,
+      TemporaryInfo (RegisterClass GPR) 0 False],
+     [TemporaryInfo (RegisterClass GPR) 1 False])
   | i `elem`
       [FLDMXIA, FSTMXIA, LDMDA, LDMDB, LDMIA, LDMIB, STMDA, STMDB, STMIA,
        STMIB, VLDMDIA, VLDMSIA, VSTMDIA, VSTMSIA, SysLDMDA, SysLDMDB,

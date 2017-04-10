@@ -1036,15 +1036,69 @@ instruction-set:
            - SP:              register
           itinerary:          IIC_iPop
 
-        - id:                 MEMCPY_0
+        - id:                 MEMCPY_4
           type:               linear
           operands:
            - dst:             [register, usedef, GPR]
            - src:             [register, usedef, GPR]
            - nreg:            bound
+           - reg0:            [register, def, GPR]
+           - reg1:            [register, def, GPR]
+           - reg2:            [register, def, GPR]
+           - reg3:            [register, def, GPR]
           uses:               [dst, src, nreg]
-          defines:            [dst, src]
+          defines:            [dst, src, reg0, reg1, reg2, reg3]
           size:               0
           affects:
           affected-by:
           itinerary:          NoItinerary
+
+        - id:                 t2LDMIA_4
+          parent:             t2LDMIA
+          operands:
+           - Rn:              [register, use, GPR]
+           - p1:              bound
+           - p2:              bound
+           - reg0:            [register, def, GPR]
+           - reg1:            [register, def, GPR]
+           - reg2:            [register, def, GPR]
+           - reg3:            [register, def, GPR]
+          uses:               [Rn, p1, p2]
+          defines:            [reg0, reg1, reg2, reg3]
+
+        - id:                 t2LDMIA_UPD_4
+          parent:             t2LDMIA_UPD
+          operands:
+           - Rn:              [register, usedef, GPR]
+           - p1:              bound
+           - p2:              bound
+           - reg0:            [register, def, GPR]
+           - reg1:            [register, def, GPR]
+           - reg2:            [register, def, GPR]
+           - reg3:            [register, def, GPR]
+          uses:               [Rn, p1, p2]
+          defines:            [Rn, reg0, reg1, reg2, reg3]
+
+        - id:                 t2STMIA_4
+          parent:             t2STMIA
+          operands:
+           - Rn:              [register, use, GPR]
+           - p1:              bound
+           - p2:              bound
+           - reg0:            [register, use, GPR]
+           - reg1:            [register, use, GPR]
+           - reg2:            [register, use, GPR]
+           - reg3:            [register, use, GPR]
+          uses:               [Rn, p1, p2, reg0, reg1, reg2, reg3]
+
+        - id:                 t2STMIA_UPD_4
+          parent:             t2STMIA_UPD
+          operands:
+           - Rn:              [register, usedef, GPR]
+           - p1:              bound
+           - p2:              bound
+           - reg0:            [register, use, GPR]
+           - reg1:            [register, use, GPR]
+           - reg2:            [register, use, GPR]
+           - reg3:            [register, use, GPR]
+          uses:               [Rn, p1, p2, reg0, reg1, reg2, reg3]

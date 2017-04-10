@@ -710,13 +710,13 @@ itinerary i
     IIC_iLoad_iu
   | i `elem`
       [LDMDA, LDMDB, LDMIA, LDMIB, SysLDMDA, SysLDMDB, SysLDMIA,
-       SysLDMIB, T2LDMDB, T2LDMIA, TLDMIA]
+       SysLDMIB, T2LDMDB, T2LDMIA, T2LDMIA_4, TLDMIA]
     = IIC_iLoad_m
   | i `elem` [LDMIA_RET, T2LDMIA_RET] = IIC_iLoad_mBr
   | i `elem`
       [LDMDA_UPD, LDMDB_UPD, LDMIA_UPD, LDMIB_UPD, SysLDMDA_UPD,
        SysLDMDB_UPD, SysLDMIA_UPD, SysLDMIB_UPD, T2LDMDB_UPD, T2LDMIA_UPD,
-       TLDMIA_UPD]
+       T2LDMIA_UPD_4, TLDMIA_UPD]
     = IIC_iLoad_mu
   | i `elem` [LDRcp, LDRi12, PICLDR, TLDRr, TLDRrz] = IIC_iLoad_r
   | i `elem`
@@ -800,12 +800,12 @@ itinerary i
     = IIC_iStore_iu
   | i `elem`
       [STMDA, STMDB, STMIA, STMIB, SysSTMDA, SysSTMDB, SysSTMIA,
-       SysSTMIB, T2STMDB, T2STMIA, TPUSH, TPUSHcs]
+       SysSTMIB, T2STMDB, T2STMIA, T2STMIA_4, TPUSH, TPUSHcs]
     = IIC_iStore_m
   | i `elem`
       [STMDA_UPD, STMDB_UPD, STMIA_UPD, STMIB_UPD, SysSTMDA_UPD,
        SysSTMDB_UPD, SysSTMIA_UPD, SysSTMIB_UPD, T2STMDB_UPD, T2STMIA_UPD,
-       TSTMIA_UPD]
+       T2STMIA_UPD_4, TSTMIA_UPD]
     = IIC_iStore_mu
   | i `elem` [PICSTR, STRi12, TSTRr, TSTRrz] = IIC_iStore_r
   | i `elem`
@@ -847,7 +847,7 @@ itinerary i
        LDC_OFFSET, LDC_OPTION, LDC_POST, LDC_PRE, LDRBT_POST, LDREX,
        LDREXB, LDREXD, LDREXH, LDRLIT_ga_pcrel_ldr, LDRT_POST,
        LIFETIME_END, LIFETIME_START, LOAD_STACK_GUARD, LOCAL_ESCAPE, LSLi,
-       LSLr, LSRi, LSRr, MCR, MCR2, MCRR, MCRR2, MEMCPY, MEMCPY_0, MRC,
+       LSLr, LSRi, LSRr, MCR, MCR2, MCRR, MCRR2, MEMCPY, MEMCPY_4, MRC,
        MRC2, MRRC, MRRC2, MRS, MRSbanked, MRSsys, MSR, MSRbanked, MSRi,
        PATCHPOINT, PHI, REG_SEQUENCE, RFEDA, RFEDA_UPD, RFEDB, RFEDB_UPD,
        RFEIA, RFEIA_UPD, RFEIB, RFEIB_UPD, RORi, RORr, RRXi, SEL, SETEND,

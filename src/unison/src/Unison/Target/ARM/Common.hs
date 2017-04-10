@@ -10,11 +10,14 @@ Main authors:
 This file is part of Unison, see http://unison-code.github.io
 -}
 module Unison.Target.ARM.Common
-    (isCpsrDef, toExplicitCpsrDef, fromExplicitCpsrDef) where
+    (isCpsrDef, toExplicitCpsrDef, fromExplicitCpsrDef, defaultMIRPred,
+     defaultUniPred) where
 
 import qualified Data.Map as M
 import Data.Tuple
 
+import MachineIR
+import Unison
 import Unison.Target.ARM.SpecsGen.ARMInstructionDecl
 
 isCpsrDef i = i `elem` (map fst cpsrMap)
@@ -40,3 +43,7 @@ cpsrMap =
    (T2TEQrr, T2TEQrr_cpsr),
    (FMSTAT, FMSTAT_cpsr),
    (T2ADDri, T2ADDri_cpsr)]
+
+defaultMIRPred = [mkMachineImm 14, mkMachineNullReg]
+
+defaultUniPred = map mkBound defaultMIRPred
