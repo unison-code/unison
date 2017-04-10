@@ -117,6 +117,12 @@ instruction-set:
         - id:                 SW_fi
           parent:             SW
 
+        - id:                 SWL_fi
+          parent:             SWL
+
+        - id:                 SWR_fi
+          parent:             SWR
+
         - id:                 SB_fi
           parent:             SB
 

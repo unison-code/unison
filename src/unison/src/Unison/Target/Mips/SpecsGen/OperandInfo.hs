@@ -810,8 +810,8 @@ operandInfo i
      [TemporaryInfo (RegisterClass GPR32Opnd) 1 False])
   | i `elem`
       [SB, SBE, SBE_MM, SB_MM, SB_MMR6, SB_fi, SH, SHE, SHE_MM, SH_MM,
-       SH_MMR6, SH_fi, SW, SWE, SWE_MM, SWE_MMR6, SWL, SWR, SW_MM,
-       SW_MMR6, SW_fi]
+       SH_MMR6, SH_fi, SW, SWE, SWE_MM, SWE_MMR6, SWL, SWL_fi, SWR,
+       SWR_fi, SW_MM, SW_MMR6, SW_fi]
     =
     ([TemporaryInfo (RegisterClass GPR32Opnd) 0 False, BoundInfo,
       BoundInfo],

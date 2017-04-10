@@ -529,8 +529,9 @@ alignedPairs i ([_, _, _], [])
        SHE_MMR6, SH_MM, SH_MMR6, SH_fi, STORE_ACC128, STORE_ACC64,
        STORE_ACC64DSP, STORE_CCOND_DSP, SW, SW16_MM, SW16_MMR6, SW64,
        SWC1, SWC1_MM, SWC1_fi, SWC2, SWC2_R6, SWC3, SWE, SWE_MM, SWE_MMR6,
-       SWL, SWL64, SWLE_MM, SWL_MM, SWM16_MM, SWM16_MMR6, SWM32_MM,
-       SWM_MM, SWR, SWR64, SWRE_MM, SWR_MM, SW_MM, SW_MMR6, SW_fi]
+       SWL, SWL64, SWLE_MM, SWL_MM, SWL_fi, SWM16_MM, SWM16_MMR6,
+       SWM32_MM, SWM_MM, SWR, SWR64, SWRE_MM, SWR_MM, SWR_fi, SW_MM,
+       SW_MMR6, SW_fi]
     = []
 alignedPairs i ([rt, _, _], [rt'])
   | i `elem` [SC, SCD, SCD_R6, SCE, SCE_MM, SC_MM, SC_R6] =

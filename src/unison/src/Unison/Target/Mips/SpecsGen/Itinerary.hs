@@ -321,8 +321,8 @@ itinerary i
        SW_sp, SwRxRyOffMemX16, SwRxSpImmX16]
     = II_SW
   | i `elem` [STORE_F, SWC1, SWC1_MM, SWC1_fi, SWC1_sp] = II_SWC1
-  | i `elem` [SWL, SWL64] = II_SWL
-  | i `elem` [SWR, SWR64] = II_SWR
+  | i `elem` [SWL, SWL64, SWL_fi] = II_SWL
+  | i `elem` [SWR, SWR64, SWR_fi] = II_SWR
   | i `elem` [SWXC1, SWXC1_MM] = II_SWXC1
   | i `elem`
       [RSQRT_D_MMR6, RSQRT_S_MMR6, TRUNC_L_D64, TRUNC_L_D_MMR6,

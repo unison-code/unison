@@ -2244,6 +2244,8 @@ instance Show MipsInstruction where
         show LW_fi = "LW_fi"
         show LHu_fi = "LHu_fi"
         show SW_fi = "SW_fi"
+        show SWL_fi = "SWL_fi"
+        show SWR_fi = "SWR_fi"
         show SB_fi = "SB_fi"
         show LDC1_fi = "LDC1_fi"
         show LBu_fi = "LBu_fi"

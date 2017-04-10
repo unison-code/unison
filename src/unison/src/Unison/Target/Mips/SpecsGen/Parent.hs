@@ -395,4 +395,6 @@ parent i
   | i `elem` [SH_fi] = Just SH
   | i `elem` [STORE, SW_fi, SW_sp] = Just SW
   | i `elem` [STORE_F, SWC1_fi, SWC1_sp] = Just SWC1
+  | i `elem` [SWL_fi] = Just SWL
+  | i `elem` [SWR_fi] = Just SWR
 

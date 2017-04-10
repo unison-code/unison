@@ -379,7 +379,7 @@ allInstructions
      XORI_MMR6, XOR_MM, XOR_MMR6, XOR_V, XOR_V_D_PSEUDO, XOR_V_H_PSEUDO,
      XOR_V_W_PSEUDO, XORi, XORi64, XORi_MM, XorRxRxRy16, STORE, LOAD,
      MOVE, STORE_D, LOAD_D, MOVE_D, STORE_F, LOAD_F, MOVE_F, LW_fi,
-     LHu_fi, SW_fi, SB_fi, LDC1_fi, LBu_fi, SH_fi, LH_fi, SWC1_fi,
-     LWC1_fi, ADDiu_sp, ADDiu_negsp, SW_sp, SWC1_sp, SDC1_sp,
-     LoadGPDisp]
+     LHu_fi, SW_fi, SWL_fi, SWR_fi, SB_fi, LDC1_fi, LBu_fi, SH_fi,
+     LH_fi, SWC1_fi, LWC1_fi, ADDiu_sp, ADDiu_negsp, SW_sp, SWC1_sp,
+     SDC1_sp, LoadGPDisp]
 

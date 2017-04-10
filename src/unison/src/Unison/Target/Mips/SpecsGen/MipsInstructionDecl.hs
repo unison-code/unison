@@ -2243,6 +2243,8 @@ data MipsInstruction = ABSQ_S_PH
                      | LW_fi
                      | LHu_fi
                      | SW_fi
+                     | SWL_fi
+                     | SWR_fi
                      | SB_fi
                      | LDC1_fi
                      | LBu_fi
