@@ -41,7 +41,7 @@ itineraryUsage _ it
       [mkUsage V6_Pipe 1 2]
   | it `elem` [IIC_iStore_mu, IIC_iStore_m, IIC_iLoad_mu, IIC_iLoad_m,
                IIC_fpStore_mu, IIC_fpLoad_mu, IIC_iPop, IIC_fpLoad_m,
-               IIC_fpStore_m] =
+               IIC_fpStore_m, IIC_iMUL64] =
       [mkUsage V6_Pipe 1 3]
   | it `elem` [IIC_iLoad_mBr, IIC_iPop_Br] =
       [mkUsage V6_Pipe 1 4]
