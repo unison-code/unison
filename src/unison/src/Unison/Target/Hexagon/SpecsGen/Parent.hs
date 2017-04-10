@@ -1133,6 +1133,8 @@ parent i
   | i `elem` [JMPret_dealloc_linear, JMPret_linear] = Just JMPret
   | i `elem` [L2_deallocframe_linear] = Just L2_deallocframe
   | i `elem` [L4_return_linear] = Just L4_return
+  | i `elem` [S2_pstorerif_io_fi, S2_pstorerif_io_fi_ce] =
+    Just S2_pstorerif_io
   | i `elem` [S2_storerf_io_fi, S2_storerf_io_fi_ce] =
     Just S2_storerf_io
 

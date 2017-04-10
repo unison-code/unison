@@ -2578,6 +2578,7 @@ readOp "S2_storerh_io_fi" = S2_storerh_io_fi
 readOp "S4_storeiri_io_fi" = S4_storeiri_io_fi
 readOp "S2_storerinew_io_fi" = S2_storerinew_io_fi
 readOp "S2_storerf_io_fi" = S2_storerf_io_fi
+readOp "S2_pstorerif_io_fi" = S2_pstorerif_io_fi
 readOp "STD" = STD
 readOp "STW" = STW
 readOp "STW_nv" = STW_nv
@@ -3654,6 +3655,7 @@ readOp "S2_storerh_io_fi_ce" = S2_storerh_io_fi_ce
 readOp "S4_storeiri_io_fi_ce" = S4_storeiri_io_fi_ce
 readOp "S2_storerinew_io_fi_ce" = S2_storerinew_io_fi_ce
 readOp "S2_storerf_io_fi_ce" = S2_storerf_io_fi_ce
+readOp "S2_pstorerif_io_fi_ce" = S2_pstorerif_io_fi_ce
 readOp "TFR_FI_fi_ce" = TFR_FI_fi_ce
 readOp "J4_cmpeqi_t_jumpnv_t_linear_ce"
   = J4_cmpeqi_t_jumpnv_t_linear_ce

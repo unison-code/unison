@@ -157,6 +157,15 @@ instruction-set:
         uses:            [src1, src2, src3]
         defines:         []
 
+    - instruction-attrs: &piir
+        operands:
+         - src1:            [register, use, PredRegs]
+         - src2:            bound
+         - src3:            bound
+         - src4:            [register, use, IntRegs]
+        uses:               [src1, src2, src3, src4]
+        defines:            []
+
     - instruction-attrs: &ir_nv
         operands:
           - src1:        bound
@@ -272,6 +281,10 @@ instruction-set:
       - id:     S2_storerf_io_fi
         parent: S2_storerf_io
         << :    [*iir]
+
+      - id:     S2_pstorerif_io_fi
+        parent: S2_pstorerif_io
+        << :    [*piir]
 
       - id:     STD
         << :    [*st, *d2M]

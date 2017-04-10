@@ -1629,6 +1629,10 @@ operandInfo i
     ([TemporaryInfo (RegisterClass PredRegs) 0 False, BoundInfo,
       BoundInfo],
      [TemporaryInfo (RegisterClass IntRegs) 1 False])
+  | i `elem` [S2_pstorerif_io_fi, S2_pstorerif_io_fi_ce] =
+    ([TemporaryInfo (RegisterClass PredRegs) 0 False, BoundInfo,
+      BoundInfo, TemporaryInfo (RegisterClass IntRegs) 0 False],
+     [])
   | i `elem`
       [J2_jump_extf, J2_jump_extf_ce, J2_jump_extfnew,
        J2_jump_extfnew_ce, J2_jump_extfnewpt, J2_jump_extfnewpt_ce,
