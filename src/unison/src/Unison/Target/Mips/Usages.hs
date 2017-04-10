@@ -57,6 +57,8 @@ itineraryUsage _ it
       [mkUsage ALU 1 7, Usage LongDuration 1 6 1]
   | it `elem` [II_MUL_D, II_MADD_D, II_MSUB_D, II_NMADD_D, II_NMSUB_D] =
       [mkUsage ALU 1 8, Usage LongDuration 1 7 1]
+  | it `elem` [II_SQRT_D] =
+      [mkUsage ALU 1 12, Usage LongDuration 1 11 1]
   | it `elem` [II_DIV_S] =
       [mkUsage ALU 1 23, Usage LongDuration 1 22 1]
   | it `elem` [II_DIV_D] =
