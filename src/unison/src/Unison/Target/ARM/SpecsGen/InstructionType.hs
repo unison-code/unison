@@ -603,7 +603,7 @@ instructionType i
        TCPS, TEOR, TEORs, THINT, THLT, TInt_WIN_eh_sjlj_longjmp,
        TInt_eh_sjlj_longjmp, TInt_eh_sjlj_setjmp, TLDMIA, TLDMIA_UPD,
        TLDRBi, TLDRBr, TLDRBrz, TLDRHi, TLDRHr, TLDRHrz, TLDRLIT_ga_abs,
-       TLDRLIT_ga_pcrel, TLDRSB, TLDRSH, TLDRSHz, TLDRi, TLDRpci,
+       TLDRLIT_ga_pcrel, TLDRSB, TLDRSBz, TLDRSH, TLDRSHz, TLDRi, TLDRpci,
        TLDRpci_pic, TLDRr, TLDRrz, TLDRspi, TLEApcrel, TLEApcrelJT,
        TLSLri, TLSLris, TLSLrr, TLSLrrs, TLSRri, TLSRris, TLSRrr, TLSRrrs,
        TMOVCCr_pseudo, TMOVSr, TMOVi8, TMOVi8s, TMOVr, TMUL, TMULz, TMVN,

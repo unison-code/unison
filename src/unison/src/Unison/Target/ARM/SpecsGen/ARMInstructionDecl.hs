@@ -2988,6 +2988,7 @@ data ARMInstruction = ABS
                     | TSXTHz
                     | TLSRrrs
                     | TLDRSHz
+                    | TLDRSBz
                     | TLDRHrz
                     | TSTRHrz
                     | TSTRrz

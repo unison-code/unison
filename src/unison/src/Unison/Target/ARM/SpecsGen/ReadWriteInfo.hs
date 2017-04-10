@@ -412,15 +412,15 @@ readWriteInfo i
        TBICs, TBKPT, TBRIND, TBR_JTr, TBX, TBX_RET, TBX_RET_vararg, TBcc,
        TCBNZ, TCBZ, TCMPhir_cpsr, TCMPi8_cpsr, TCMPr_cpsr, TCPS, TEOR,
        TEORs, THINT, THLT, TLDRBi, TLDRBr, TLDRBrz, TLDRHi, TLDRHr,
-       TLDRHrz, TLDRLIT_ga_abs, TLDRLIT_ga_pcrel, TLDRSB, TLDRSH, TLDRSHz,
-       TLDRi, TLDRpci, TLDRpci_pic, TLDRr, TLDRrz, TLDRspi, TLEApcrel,
-       TLEApcrelJT, TLSLri, TLSLris, TLSLrr, TLSLrrs, TLSRri, TLSRris,
-       TLSRrr, TLSRrrs, TMOVCCr_pseudo, TMOVi8, TMOVi8s, TMOVr, TMUL,
-       TMULz, TMVN, TMVNs, TORR, TORRs, TPICADD, TREV, TREV16, TREVSH,
-       TROR, TRSB, TRSBs, TSETEND, TSTRBi, TSTRBr, TSTRBrz, TSTRHi,
-       TSTRHr, TSTRHrz, TSTRi, TSTRr, TSTRrz, TSTRspi, TSUBi3, TSUBi3s,
-       TSUBi8, TSUBi8s, TSUBrr, TSUBrrs, TSUBspi, TSXTB, TSXTH, TSXTHz,
-       TTRAP, TTST_cpsr, TUDF, TUXTB, TUXTBz, TUXTH, TUXTHz]
+       TLDRHrz, TLDRLIT_ga_abs, TLDRLIT_ga_pcrel, TLDRSB, TLDRSBz, TLDRSH,
+       TLDRSHz, TLDRi, TLDRpci, TLDRpci_pic, TLDRr, TLDRrz, TLDRspi,
+       TLEApcrel, TLEApcrelJT, TLSLri, TLSLris, TLSLrr, TLSLrrs, TLSRri,
+       TLSRris, TLSRrr, TLSRrrs, TMOVCCr_pseudo, TMOVi8, TMOVi8s, TMOVr,
+       TMUL, TMULz, TMVN, TMVNs, TORR, TORRs, TPICADD, TREV, TREV16,
+       TREVSH, TROR, TRSB, TRSBs, TSETEND, TSTRBi, TSTRBr, TSTRBrz,
+       TSTRHi, TSTRHr, TSTRHrz, TSTRi, TSTRr, TSTRrz, TSTRspi, TSUBi3,
+       TSUBi3s, TSUBi8, TSUBi8s, TSUBrr, TSUBrrs, TSUBspi, TSXTB, TSXTH,
+       TSXTHz, TTRAP, TTST_cpsr, TUDF, TUXTB, TUXTBz, TUXTH, TUXTHz]
     = ([], [])
   | i `elem`
       [SPACE, STATEPOINT, STLEX, STLEXB, STLEXD, STLEXH, STMDA,

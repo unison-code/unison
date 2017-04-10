@@ -689,7 +689,7 @@ itinerary i
     = IIC_iLoad_bh_iu
   | i `elem`
       [LDRBi12, LDRH, LDRSB, LDRSH, PICLDRB, PICLDRH, PICLDRSB, PICLDRSH,
-       TLDRBr, TLDRBrz, TLDRHr, TLDRHrz, TLDRSB, TLDRSH, TLDRSHz]
+       TLDRBr, TLDRBrz, TLDRHr, TLDRHrz, TLDRSB, TLDRSBz, TLDRSH, TLDRSHz]
     = IIC_iLoad_bh_r
   | i `elem`
       [LDRBT_POST_IMM, LDRBT_POST_REG, LDRB_POST_REG, LDRB_PRE_REG,

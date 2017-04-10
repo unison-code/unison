@@ -778,7 +778,7 @@ alignedPairs i ([_, _, _, _, _], [])
 alignedPairs i ([_, _, _, _, _], [_])
   | i `elem`
       [LDRH, LDRSB, LDRSH, T2LDRBs, T2LDRHs, T2LDRSBs, T2LDRSHs, T2LDRs,
-       TLDRBrz, TLDRHrz, TLDRSHz, TLDRrz]
+       TLDRBrz, TLDRHrz, TLDRSBz, TLDRSHz, TLDRrz]
     = []
 alignedPairs i ([_, _, _, _, _], [_, _]) | i `elem` [LDRD] = []
 alignedPairs i ([_, _, _, _, _], [_, _, _])

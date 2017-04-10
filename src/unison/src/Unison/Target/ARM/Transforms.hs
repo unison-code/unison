@@ -347,7 +347,7 @@ reduceTable =
   ( T2LDRBs, TLDRBrz, NOP,       0,   0,   1,   0,  0,0, 0,1,0 ),
   ( T2LDRHi12,TLDRHi, NOP,       5,   0,   1,   0,  0,0, 0,1,0 ),
   ( T2LDRHs, TLDRHrz, NOP,       0,   0,   1,   0,  0,0, 0,1,0 ),
-  ( T2LDRSBs,TLDRSB,  NOP,       0,   0,   1,   0,  0,0, 0,1,0 ),
+  ( T2LDRSBs,TLDRSBz, NOP,       0,   0,   1,   0,  0,0, 0,1,0 ),
   ( T2LDRSHs,TLDRSHz, NOP,       0,   0,   1,   0,  0,0, 0,1,0 ),
   ( T2STRi12,TSTRi,   TSTRspi,   5,   8,   1,   0,  0,0, 0,1,0 ),
   ( T2STRs,  TSTRrz,  NOP,       0,   0,   1,   0,  0,0, 0,1,0 ),

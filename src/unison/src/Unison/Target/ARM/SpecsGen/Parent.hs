@@ -621,5 +621,6 @@ parent i
   | i `elem` [TCMPhir_cpsr] = Just TCMPhir
   | i `elem` [TCMPi8_cpsr] = Just TCMPi8
   | i `elem` [TCMPr_cpsr] = Just TCMPr
+  | i `elem` [TLDRSBz] = Just TLDRSB
   | i `elem` [TTST_cpsr] = Just TTST
 

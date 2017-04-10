@@ -2989,6 +2989,7 @@ instance Show ARMInstruction where
         show TSXTHz = "tSXTHz"
         show TLSRrrs = "tLSRrrs"
         show TLDRSHz = "tLDRSHz"
+        show TLDRSBz = "tLDRSBz"
         show TLDRHrz = "tLDRHrz"
         show TSTRHrz = "tSTRHrz"
         show TSTRrz = "tSTRrz"

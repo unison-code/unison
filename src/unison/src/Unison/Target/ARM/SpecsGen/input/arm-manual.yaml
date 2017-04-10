@@ -701,6 +701,17 @@ instruction-set:
           affected-by:
           itinerary:          IIC_iLoad_bh_r
 
+        - id:                 tLDRSBz
+          parent:             tLDRSB
+          operands:
+           - Rt:              [register, def, tGPR]
+           - addr1:           [register, use, tGPR]
+           - addr2:           [register, use, tGPR]
+           - addr3:           bound
+           - p1:              bound
+           - p2:              bound
+          uses:               [addr1, addr2, addr3, p1, p2]
+
         - id:                 tLDRHrz
           type:               linear
           operands:

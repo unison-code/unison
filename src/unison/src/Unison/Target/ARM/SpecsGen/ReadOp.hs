@@ -2987,6 +2987,7 @@ readOp "tEORs" = TEORs
 readOp "tSXTHz" = TSXTHz
 readOp "tLSRrrs" = TLSRrrs
 readOp "tLDRSHz" = TLDRSHz
+readOp "tLDRSBz" = TLDRSBz
 readOp "tLDRHrz" = TLDRHrz
 readOp "tSTRHrz" = TSTRHrz
 readOp "tSTRrz" = TSTRrz

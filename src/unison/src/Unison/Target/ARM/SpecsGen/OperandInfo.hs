@@ -2613,7 +2613,7 @@ operandInfo i
       TemporaryInfo (RegisterClass TGPR) 0 False, BoundInfo, BoundInfo,
       TemporaryInfo (RegisterClass CCR) 0 False],
      [])
-  | i `elem` [TLDRBrz, TLDRHrz, TLDRSHz, TLDRrz] =
+  | i `elem` [TLDRBrz, TLDRHrz, TLDRSBz, TLDRSHz, TLDRrz] =
     ([TemporaryInfo (RegisterClass TGPR) 0 False,
       TemporaryInfo (RegisterClass TGPR) 0 False, BoundInfo, BoundInfo,
       TemporaryInfo (RegisterClass CCR) 0 False],
