@@ -2979,6 +2979,7 @@ data ARMInstruction = ABS
                     | TADDrrs
                     | TADDhirrs
                     | TORRs
+                    | TRORs
                     | TBICs
                     | TUXTBz
                     | TMVNs

@@ -756,7 +756,7 @@ itinerary i
     = IIC_iMOVsi
   | i `elem`
       [MOVsi, MOVsr, T2ASRrr, T2LSLrr, T2LSRrr, T2RORrr, TASRrr, TASRrrs,
-       TLSLrr, TLSLrrs, TLSRrr, TLSRrrs, TROR]
+       TLSLrr, TLSLrrs, TLSRrr, TLSRrrs, TROR, TRORs]
     = IIC_iMOVsr
   | i `elem`
       [SMULBB, SMULBT, SMULTB, SMULTT, SMULWB, SMULWT, T2SMULBB,

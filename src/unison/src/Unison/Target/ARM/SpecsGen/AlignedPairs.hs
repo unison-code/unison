@@ -175,7 +175,8 @@ alignedPairs i ([_, _, _, _, _], [_, _])
   | i `elem` [SMULL, SMULLv5, UMULL, UMULLv5] = []
 alignedPairs i ([rn, _, _, _, _], [rn'])
   | i `elem`
-      [TADDhirrs, TANDs, TASRrrs, TBICs, TEORs, TLSLrrs, TLSRrrs, TORRs]
+      [TADDhirrs, TANDs, TASRrrs, TBICs, TEORs, TLSLrrs, TLSRrrs, TORRs,
+       TRORs]
     = [(rn, rn')]
 alignedPairs i ([_, _, _, _, _, _], [_, _])
   | i `elem` [ADCrr, RSCrr, SBCrr, T2ADCrr, T2SBCrr] = []

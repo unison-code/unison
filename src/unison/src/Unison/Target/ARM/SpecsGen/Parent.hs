@@ -629,6 +629,7 @@ parent i
   | i `elem` [TLDRSBz] = Just TLDRSB
   | i `elem` [TLDRSHz] = Just TLDRSH
   | i `elem` [TLDRrz] = Just TLDRr
+  | i `elem` [TRORs] = Just TROR
   | i `elem` [TSTRBrz] = Just TSTRBr
   | i `elem` [TSTRHrz] = Just TSTRHr
   | i `elem` [TSTRrz] = Just TSTRr

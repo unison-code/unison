@@ -2978,6 +2978,7 @@ readOp "tSUBrrs" = TSUBrrs
 readOp "tADDrrs" = TADDrrs
 readOp "tADDhirrs" = TADDhirrs
 readOp "tORRs" = TORRs
+readOp "tRORs" = TRORs
 readOp "tBICs" = TBICs
 readOp "tUXTBz" = TUXTBz
 readOp "tMVNs" = TMVNs

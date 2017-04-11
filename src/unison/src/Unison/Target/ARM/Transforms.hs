@@ -329,7 +329,7 @@ reduceTable =
   ( T2REV,   TREV,    NOP,       0,   0,   1,   0,  1,0, 0,0,0 ),
   ( T2REV16, TREV16,  NOP,       0,   0,   1,   0,  1,0, 0,0,0 ),
   ( T2REVSH, TREVSH,  NOP,       0,   0,   1,   0,  1,0, 0,0,0 ),
-  ( T2RORrr, NOP,     TROR,      0,   0,   0,   1,  0,0, 1,0,0 ),
+  ( T2RORrr, NOP,     TRORs,     0,   0,   0,   1,  0,0, 1,0,0 ),
   ( T2RSBri, TRSBs,   NOP,       0,   0,   1,   0,  0,0, 0,1,0 ),
   ( T2RSBSri,TRSBs,   NOP,       0,   0,   1,   0,  2,0, 0,1,0 ),
   ( T2SBCrr, NOP,     TSBC,      0,   0,   0,   1,  0,0, 0,0,0 ),

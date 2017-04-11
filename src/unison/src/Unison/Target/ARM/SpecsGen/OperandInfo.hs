@@ -2629,7 +2629,7 @@ operandInfo i
       TemporaryInfo (RegisterClass CCR) 1 False])
   | i `elem`
       [TADDrrs, TANDs, TASRrrs, TBICs, TEORs, TLSLrrs, TLSRrrs, TORRs,
-       TSUBrrs]
+       TRORs, TSUBrrs]
     =
     ([TemporaryInfo (RegisterClass TGPR) 0 False,
       TemporaryInfo (RegisterClass TGPR) 0 False, BoundInfo,

@@ -564,6 +564,17 @@ instruction-set:
           affected-by:
           itinerary:          IIC_iBITr
 
+        - id:                 tRORs
+          parent:             tROR
+          operands:
+           - Rn:              [register, usedef, tGPR]
+           - Rm:              [register, use, tGPR]
+           - p1:              bound
+           - p2:              bound
+           - s:               [register, def, CCR]
+          uses:               [Rn, Rm, p1, p2, s]
+          defines:            [Rn]
+
         - id:                 tBICs
           type:               linear
           operands:

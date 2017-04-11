@@ -2980,6 +2980,7 @@ instance Show ARMInstruction where
         show TADDrrs = "tADDrrs"
         show TADDhirrs = "tADDhirrs"
         show TORRs = "tORRs"
+        show TRORs = "tRORs"
         show TBICs = "tBICs"
         show TUXTBz = "tUXTBz"
         show TMVNs = "tMVNs"
