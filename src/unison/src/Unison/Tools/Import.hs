@@ -53,6 +53,7 @@ import Unison.Tools.Import.LowerInsertSubRegs
 import Unison.Tools.Import.LowerSubRegVirtuals
 
 import Unison.Tools.Import.RunPreProcess
+import Unison.Tools.Import.RemoveUnreachableBlocks
 import Unison.Tools.Import.CorrectDoubleBranches
 import Unison.Tools.Import.AdjustPhiLabels
 import Unison.Tools.Import.SimplifyCombinations
@@ -117,6 +118,8 @@ uniTransformations (goal, noCC, noReserved, maxBlockSize, estimateFreq,
     [(liftGoal goal, "liftGoal", True),
      (addDelimiters, "addDelimiters", True),
      (postponeBranches, "postponeBranches", True),
+     (removeUnreachableBlocks, "removeUnreachableBlocks", True),
+     (renameBlocks, "renameBlocks", True),
      (correctDoubleBranches, "correctDoubleBranches", True),
      (adjustPhiLabels, "adjustPhiLabels", True),
      (simplifyCombinations, "simplifyCombinations", True),

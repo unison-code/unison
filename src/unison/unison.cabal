@@ -123,6 +123,7 @@ Library
                    Common.Util
 
   Other-modules:  Unison.Tools.Import.AdjustPhiLabels
+                  Unison.Tools.Import.RemoveUnreachableBlocks
                   Unison.Tools.Import.CorrectDoubleBranches
                   Unison.Tools.Import.DropDebugLocations
                   Unison.Tools.Import.NormalizePhis
