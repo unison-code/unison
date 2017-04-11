@@ -550,7 +550,7 @@ instruction-set:
           itinerary:          IIC_iALUr
 
         - id:                 tORRs
-          type:               linear
+          parent:             tORR
           operands:
            - Rn:              [register, usedef, tGPR]
            - Rm:              [register, use, tGPR]
@@ -559,10 +559,6 @@ instruction-set:
            - s:               [register, use, CCR]
           uses:               [Rn, Rm, p1, p2, s]
           defines:            [Rn]
-          size:               2
-          affects:
-          affected-by:
-          itinerary:          IIC_iBITr
 
         - id:                 tRORs
           parent:             tROR
@@ -576,7 +572,7 @@ instruction-set:
           defines:            [Rn]
 
         - id:                 tBICs
-          type:               linear
+          parent:             tBIC
           operands:
            - Rn:              [register, usedef, tGPR]
            - Rm:              [register, use, tGPR]
@@ -585,13 +581,9 @@ instruction-set:
            - s:               [register, use, CCR]
           uses:               [Rn, Rm, p1, p2, s]
           defines:            [Rn]
-          size:               2
-          affects:
-          affected-by:
-          itinerary:          IIC_iBITr
 
         - id:                 tUXTBz
-          type:               linear
+          parent:             tUXTB
           operands:
            - Rd:              [register, def, tGPR]
            - Rm:              [register, use, tGPR]
@@ -600,13 +592,9 @@ instruction-set:
            - p2:              bound
           uses:               [Rm, rot, p1, p2]
           defines:            [Rd]
-          size:               2
-          affects:
-          affected-by:
-          itinerary:          IIC_iUNAr
 
         - id:                 tMVNs
-          type:               linear
+          parent:             tMVN
           operands:
            - Rd:              [register, def, tGPR]
            - s:               [register, def, CCR]
@@ -616,13 +604,9 @@ instruction-set:
            - s:               [register, use, CCR]
           uses:               [Rn, p1, p2, s]
           defines:            [Rd]
-          size:               2
-          affects:
-          affected-by:
-          itinerary:          IIC_iMVNr
 
         - id:                 tANDs
-          type:               linear
+          parent:             tAND
           operands:
            - Rn:              [register, usedef, tGPR]
            - Rm:              [register, use, tGPR]
@@ -631,13 +615,9 @@ instruction-set:
            - s:               [register, use, CCR]
           uses:               [Rn, Rm, p1, p2, s]
           defines:            [Rn]
-          size:               2
-          affects:
-          affected-by:
-          itinerary:          IIC_iBITr
 
         - id:                 tUXTHz
-          type:               linear
+          parent:             tUXTH
           operands:
            - Rd:              [register, def, tGPR]
            - Rm:              [register, use, tGPR]
@@ -646,13 +626,9 @@ instruction-set:
            - p2:              bound
           uses:               [Rm, rot, p1, p2]
           defines:            [Rd]
-          size:               2
-          affects:
-          affected-by:
-          itinerary:          IIC_iUNAr
 
         - id:                 tEORs
-          type:               linear
+          parent:             tEOR
           operands:
            - Rn:              [register, usedef, tGPR]
            - Rm:              [register, use, tGPR]
@@ -661,13 +637,9 @@ instruction-set:
            - s:               [register, use, CCR]
           uses:               [Rn, Rm, p1, p2, s]
           defines:            [Rn]
-          size:               2
-          affects:
-          affected-by:
-          itinerary:          IIC_iBITr
 
         - id:                 tSXTHz
-          type:               linear
+          parent:             tSXTH
           operands:
            - Rd:              [register, def, tGPR]
            - Rm:              [register, use, tGPR]
@@ -676,13 +648,9 @@ instruction-set:
            - p2:              bound
           uses:               [Rm, rot, p1, p2]
           defines:            [Rd]
-          size:               2
-          affects:
-          affected-by:
-          itinerary:          IIC_iUNAr
 
         - id:                 tLSRrrs
-          type:               linear
+          parent:             tLSRrr
           operands:
            - Rn:              [register, usedef, tGPR]
            - Rm:              [register, use, tGPR]
@@ -691,10 +659,6 @@ instruction-set:
            - s:               [register, use, CCR]
           uses:               [Rn, Rm, p1, p2, s]
           defines:            [Rn]
-          size:               2
-          affects:
-          affected-by:
-          itinerary:          IIC_iMOVsr
 
         - id:                 tLDRSHz
           parent:             tLDRSH

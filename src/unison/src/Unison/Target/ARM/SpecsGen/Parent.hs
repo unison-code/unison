@@ -582,23 +582,22 @@ parent i
        T2UXTAB, T2UXTAB16, T2UXTAH, T2UXTB, T2UXTB16, T2UXTH, TADC,
        TADDframe, TADDhirr, TADDhirrs, TADDi3, TADDi3s, TADDi8, TADDi8s,
        TADDrSP, TADDrSPi, TADDrr, TADDrrs, TADDspi, TADDspr,
-       TADJCALLSTACKDOWN, TADJCALLSTACKUP, TADR, TAND, TANDs, TASRri,
-       TASRris, TASRrr, TASRrrs, TB, TBIC, TBICs, TBKPT, TBL, TBLXi,
-       TBLXr, TBRIND, TBR_JTr, TBX, TBX_CALL, TBX_RET, TBX_RET_vararg,
-       TBcc, TBfar, TCBNZ, TCBZ, TCMNz, TCMPhir, TCMPi8, TCMPr, TCPS,
-       TEOR, TEORs, THINT, THLT, TInt_WIN_eh_sjlj_longjmp,
-       TInt_eh_sjlj_longjmp, TInt_eh_sjlj_setjmp, TLDMIA, TLDMIA_UPD,
-       TLDRBi, TLDRBr, TLDRHi, TLDRHr, TLDRLIT_ga_abs, TLDRLIT_ga_pcrel,
-       TLDRSB, TLDRSH, TLDRi, TLDRpci, TLDRpci_pic, TLDRr, TLDRspi,
-       TLEApcrel, TLEApcrelJT, TLSLri, TLSLris, TLSLrr, TLSLrrs, TLSRri,
-       TLSRris, TLSRrr, TLSRrrs, TMOVCCr_pseudo, TMOVSr, TMOVi8, TMOVi8s,
-       TMOVr, TMUL, TMULz, TMVN, TMVNs, TORR, TORRs, TPICADD, TPOP,
-       TPOP_RET, TPOPcs, TPOPcs_free, TPUSH, TPUSHcs, TREV, TREV16,
-       TREVSH, TROR, TRSB, TRSBs, TSBC, TSETEND, TSTMIA_UPD, TSTRBi,
-       TSTRBr, TSTRHi, TSTRHr, TSTRi, TSTRr, TSTRspi, TSUBi3, TSUBi3s,
-       TSUBi8, TSUBi8s, TSUBrr, TSUBrrs, TSUBspi, TSVC, TSXTB, TSXTH,
-       TSXTHz, TTAILJMPd, TTAILJMPdND, TTAILJMPr, TTPsoft, TTRAP, TTST,
-       TUDF, TUXTB, TUXTBz, TUXTH, TUXTHz]
+       TADJCALLSTACKDOWN, TADJCALLSTACKUP, TADR, TAND, TASRri, TASRris,
+       TASRrr, TASRrrs, TB, TBIC, TBKPT, TBL, TBLXi, TBLXr, TBRIND,
+       TBR_JTr, TBX, TBX_CALL, TBX_RET, TBX_RET_vararg, TBcc, TBfar,
+       TCBNZ, TCBZ, TCMNz, TCMPhir, TCMPi8, TCMPr, TCPS, TEOR, THINT,
+       THLT, TInt_WIN_eh_sjlj_longjmp, TInt_eh_sjlj_longjmp,
+       TInt_eh_sjlj_setjmp, TLDMIA, TLDMIA_UPD, TLDRBi, TLDRBr, TLDRHi,
+       TLDRHr, TLDRLIT_ga_abs, TLDRLIT_ga_pcrel, TLDRSB, TLDRSH, TLDRi,
+       TLDRpci, TLDRpci_pic, TLDRr, TLDRspi, TLEApcrel, TLEApcrelJT,
+       TLSLri, TLSLris, TLSLrr, TLSLrrs, TLSRri, TLSRris, TLSRrr,
+       TMOVCCr_pseudo, TMOVSr, TMOVi8, TMOVi8s, TMOVr, TMUL, TMULz, TMVN,
+       TORR, TPICADD, TPOP, TPOP_RET, TPOPcs, TPOPcs_free, TPUSH, TPUSHcs,
+       TREV, TREV16, TREVSH, TROR, TRSB, TRSBs, TSBC, TSETEND, TSTMIA_UPD,
+       TSTRBi, TSTRBr, TSTRHi, TSTRHr, TSTRi, TSTRr, TSTRspi, TSUBi3,
+       TSUBi3s, TSUBi8, TSUBi8s, TSUBrr, TSUBrrs, TSUBspi, TSVC, TSXTB,
+       TSXTH, TTAILJMPd, TTAILJMPdND, TTAILJMPr, TTPsoft, TTRAP, TTST,
+       TUDF, TUXTB, TUXTH]
     = Nothing
   | i `elem` [FMSTAT_cpsr] = Just FMSTAT
   | i `elem` [VLDRD_cpi] = Just VLDRD
@@ -621,17 +620,26 @@ parent i
   | i `elem` [T2TSTri_cpsr] = Just T2TSTri
   | i `elem` [T2TSTrr_cpsr] = Just T2TSTrr
   | i `elem` [T2TSTrs_cpsr] = Just T2TSTrs
+  | i `elem` [TANDs] = Just TAND
+  | i `elem` [TBICs] = Just TBIC
   | i `elem` [TCMPhir_cpsr] = Just TCMPhir
   | i `elem` [TCMPi8_cpsr] = Just TCMPi8
   | i `elem` [TCMPr_cpsr] = Just TCMPr
+  | i `elem` [TEORs] = Just TEOR
   | i `elem` [TLDRBrz] = Just TLDRBr
   | i `elem` [TLDRHrz] = Just TLDRHr
   | i `elem` [TLDRSBz] = Just TLDRSB
   | i `elem` [TLDRSHz] = Just TLDRSH
   | i `elem` [TLDRrz] = Just TLDRr
+  | i `elem` [TLSRrrs] = Just TLSRrr
+  | i `elem` [TMVNs] = Just TMVN
+  | i `elem` [TORRs] = Just TORR
   | i `elem` [TRORs] = Just TROR
   | i `elem` [TSTRBrz] = Just TSTRBr
   | i `elem` [TSTRHrz] = Just TSTRHr
   | i `elem` [TSTRrz] = Just TSTRr
+  | i `elem` [TSXTHz] = Just TSXTH
   | i `elem` [TTST_cpsr] = Just TTST
+  | i `elem` [TUXTBz] = Just TUXTB
+  | i `elem` [TUXTHz] = Just TUXTH
 
