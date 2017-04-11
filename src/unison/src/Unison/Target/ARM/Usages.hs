@@ -54,6 +54,7 @@ itineraryUsage _ it = error ("unmatched: itineraryUsage " ++ show it)
 
 size T2MOVi32imm = size T2MOVi16 + size T2MOVTi16
 size VMOVDcc = size VMOVD
+size VMOVScc = size VMOVS
 size TPOPcs_free = 0
 size JUMPTABLE_INSTS = 0
 size i =
