@@ -52,13 +52,14 @@ extractReturnRegs _ (
    )
 
 extractReturnRegs _ (
-  c @ SingleOperation {oOpr = Natural Call {
-                            oCallIs = [TargetInstruction J2_callr]}}
+  c @ SingleOperation {oOpr = Natural nc}
   :
   o @ SingleOperation {oOpr = Virtual
                                (Delimiter oi @ (Out {oOuts = outs}))}
   :
-  rest) _ | all isRegister outs =
+  rest) _ | all isRegister outs &&
+            ((isCall c && oCallIs nc == [TargetInstruction J2_callr]) ||
+             isTailCall c) =
    (
     rest,
     [c,
