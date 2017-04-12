@@ -276,9 +276,12 @@ noInterferences o2p id os =
 
 noMustConflicts f @ Function {fCode = code} target =
     let apf = alignedPairs target
+        ra  = mkRegisterArray target 0
+        ovf = regOverlap (regAtoms ra)
         sp  = samePartitions apf f
         c1  = mapMaybe (mustConflicts (preAssignments code)) sp
-        c2  = catMaybes $ concatMap instructionMustConflicts (flatten code)
+        c2  = catMaybes $ concatMap (instructionMustConflicts ovf)
+              (flatten code)
     in c1 ++ c2
 
 mustConflicts must sp =
@@ -301,17 +304,16 @@ mustReg (_, _, r) = r
 
 instrTemp (i, t, _) = (i, t)
 
-instructionMustConflicts i =
-  operandMustConflicts i (oUses i) ++ operandMustConflicts i (oDefs i)
+instructionMustConflicts ovf i =
+  operandMustConflicts ovf i (oUses i) ++ operandMustConflicts ovf i (oDefs i)
 
-operandMustConflicts i os =
+operandMustConflicts ovf i os =
   let os' = sortBy (comparing opReg) $ filter isPreAssigned os
-      gos = groupBy ((==) `on` opReg) os'
-      rcs = filter (\ts -> length ts > 1) gos
+      rcs = [[p1, p2] | p1 <- os', p2 <- os', p1 < p2, ovf (opReg p1) (opReg p2)]
   in map (Just . showProblem "noMustConflicts" . showOperandMustConflict i) rcs
 
 showOperandMustConflict i rc =
-  "conflicting pre-assignments are defined for operands in operation o" ++
+  "conflicting pre-assignments in o" ++
   show (oId i) ++ ": " ++ show rc
 
 opReg = fromJust . preAssignment
