@@ -145,24 +145,38 @@ copies (f, _, cg, ra, bcfg, sg) _ t _ d us =
       dors = transitivePreAssignments bcfg sg Reaching f t
       urcs = transitiveRegClasses operandInfo bcfg sg Reachable f t
       uors = transitivePreAssignments bcfg sg Reachable f t
-      (fpds, fpus) = (all isFGR32Class drcs && all isFGR32 dors,
-                      all isFGR32Class urcs && all isFGR32 uors)
-  in ((defCopies fpds w d),
-      map (useCopies fpus w) us)
+      rcType rcs ors
+        | null rcs && null ors = AnyRegClass
+        | any isFGR32Class rcs || any isFGR32 ors = FGR32RegClass
+        | any isAFGR64Class rcs || any isAFGR64 ors = AFGR64RegClass
+        | otherwise = GPR32RegClass
+      (drc, urc) = (rcType drcs dors, rcType urcs uors)
+  in ((defCopies drc w d),
+      map (useCopies urc w) us)
 
-defCopies False 1 _ = [mkNullInstruction] ++ map TargetInstruction [MOVE, STORE]
-defCopies True  1 _ = [mkNullInstruction] ++ map TargetInstruction [MOVE_F, STORE_F]
-defCopies _     2 _ = [mkNullInstruction] ++ map TargetInstruction [MOVE_D, STORE_D]
+data RegClassType =
+  AnyRegClass |
+  FGR32RegClass |
+  AFGR64RegClass |
+  GPR32RegClass
 
-useCopies False 1 _ = [mkNullInstruction] ++ map TargetInstruction [MOVE, LOAD]
-useCopies True  1 _ = [mkNullInstruction] ++ map TargetInstruction [MOVE_F, LOAD_F]
-useCopies _     2 _ = [mkNullInstruction] ++ map TargetInstruction [MOVE_D, LOAD_D]
+defCopies GPR32RegClass  1 _ = [mkNullInstruction] ++ map TargetInstruction [MOVE, STORE]
+defCopies FGR32RegClass  1 _ = [mkNullInstruction] ++ map TargetInstruction [MOVE_F, STORE_F]
+defCopies AnyRegClass    1 _ = [mkNullInstruction] ++ map TargetInstruction [MOVE, MOVE_F, STORE, STORE_F]
+defCopies AFGR64RegClass 2 _ = [mkNullInstruction] ++ map TargetInstruction [MOVE_D, STORE_D]
+
+useCopies GPR32RegClass  1 _ = [mkNullInstruction] ++ map TargetInstruction [MOVE, LOAD]
+useCopies FGR32RegClass  1 _ = [mkNullInstruction] ++ map TargetInstruction [MOVE_F, LOAD_F]
+useCopies AnyRegClass    1 _ = [mkNullInstruction] ++ map TargetInstruction [MOVE, MOVE_F, LOAD, LOAD_F]
+useCopies AFGR64RegClass 2 _ = [mkNullInstruction] ++ map TargetInstruction [MOVE_D, LOAD_D]
 
 widthOfTemp = widthOf (target, [])
 
 isFGR32Class rc = rc `elem` map RegisterClass [FGR32, FGR32Opnd]
-
 isFGR32 r = mipsReg r `elem` registers (RegisterClass FGR32Opnd)
+
+isAFGR64Class rc = rc `elem` map RegisterClass [AFGR64, AFGR64Opnd]
+isAFGR64 r = mipsReg r `elem` registers (RegisterClass AFGR64Opnd)
 
 mipsReg = rTargetReg . regId
 
