@@ -151,24 +151,27 @@ copies (f, _, cg, ra, bcfg, sg) _ t _ d us =
         | any isAFGR64Class rcs || any isAFGR64 ors = AFGR64RegClass
         | otherwise = GPR32RegClass
       (drc, urc) = (rcType drcs dors, rcType urcs uors)
-  in ((defCopies drc w d),
-      map (useCopies urc w) us)
+  in (defCopies drc w,
+      map (const (useCopies urc w)) us)
 
 data RegClassType =
   AnyRegClass |
   FGR32RegClass |
   AFGR64RegClass |
   GPR32RegClass
+  deriving Show
 
-defCopies GPR32RegClass  1 _ = [mkNullInstruction] ++ map TargetInstruction [MOVE, STORE]
-defCopies FGR32RegClass  1 _ = [mkNullInstruction] ++ map TargetInstruction [MOVE_F, STORE_F]
-defCopies AnyRegClass    1 _ = [mkNullInstruction] ++ map TargetInstruction [MOVE, MOVE_F, STORE, STORE_F]
-defCopies AFGR64RegClass 2 _ = [mkNullInstruction] ++ map TargetInstruction [MOVE_D, STORE_D]
+defCopies GPR32RegClass  1 = [mkNullInstruction] ++ map TargetInstruction [MOVE, STORE]
+defCopies FGR32RegClass  1 = [mkNullInstruction] ++ map TargetInstruction [MOVE_F, STORE_F]
+defCopies AnyRegClass    1 = [mkNullInstruction] ++ map TargetInstruction [MOVE, MOVE_F, STORE, STORE_F]
+defCopies _              2 = [mkNullInstruction] ++ map TargetInstruction [MOVE_D, STORE_D]
+defCopies rc w = error ("unmatched: defCopies " ++ show rc ++ " " ++ show w)
 
-useCopies GPR32RegClass  1 _ = [mkNullInstruction] ++ map TargetInstruction [MOVE, LOAD]
-useCopies FGR32RegClass  1 _ = [mkNullInstruction] ++ map TargetInstruction [MOVE_F, LOAD_F]
-useCopies AnyRegClass    1 _ = [mkNullInstruction] ++ map TargetInstruction [MOVE, MOVE_F, LOAD, LOAD_F]
-useCopies AFGR64RegClass 2 _ = [mkNullInstruction] ++ map TargetInstruction [MOVE_D, LOAD_D]
+useCopies GPR32RegClass  1 = [mkNullInstruction] ++ map TargetInstruction [MOVE, LOAD]
+useCopies FGR32RegClass  1 = [mkNullInstruction] ++ map TargetInstruction [MOVE_F, LOAD_F]
+useCopies AnyRegClass    1 = [mkNullInstruction] ++ map TargetInstruction [MOVE, MOVE_F, LOAD, LOAD_F]
+useCopies _              2 = [mkNullInstruction] ++ map TargetInstruction [MOVE_D, LOAD_D]
+useCopies rc w = error ("unmatched: useCopies " ++ show rc ++ " " ++ show w)
 
 widthOfTemp = widthOf (target, [])
 
