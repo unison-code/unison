@@ -653,6 +653,9 @@ normalizeJR mi @ MachineSingle {msOpcode   = MachineTargetOpc i,
                         msOperands = [dst]}]
 normalizeJR MachineSingle {msOpcode = MachineTargetOpc i}
   | i `elem` [Ret_dealloc_merge, Jr_merge] = []
+normalizeJR ms @ MachineSingle {msOpcode = MachineTargetOpc i}
+  | i `elem` [TCRETURNi, TCRETURNi_ce] =
+    [ms {msOpcode = mkMachineTargetOpc J2_jump}]
 normalizeJR mi = [mi]
 
 expandCondTransfers = mapToMachineBlock (expandBlockPseudos expandCondTransfer)
