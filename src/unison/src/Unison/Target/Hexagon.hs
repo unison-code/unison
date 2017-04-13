@@ -469,13 +469,12 @@ addEpilogue (tid, oid, pid) code =
          jrm  = mkBranch (oid + 5) [TargetInstruction Jr_merge]
                 [mkOper 9 [t4, t5]]
      in f ++ [dfl, jrdl, rl, rdm, jrl, jrm] ++ e
-   [code'] ->
-     -- TODO: check if this is the correct handling (see gcc.xexit.xexit.uni and
-     -- gobmk.interface.init_gnugo)
-     let [f, o] = split (keepDelimsL $ whenElt isOut) code'
-         df     = mkOpt oid L2_deallocframe [] []
-     in f ++ [df] ++ o
-
+   [_] ->
+     case split (keepDelimsL $ whenElt isTailCall) code of
+     [f, e] ->
+       let df = mkAct $ mkOpt oid L2_deallocframe [] []
+       in f ++ [df] ++ e
+     os -> error ("unhandled epilogue: " ++ show os)
 
 mkOpt oid inst us ds =
   makeOptional $ mkLinear oid [TargetInstruction inst] us ds
@@ -487,7 +486,7 @@ addActivators = mapToActivators . (++)
 -- We need a stack frame iff:
 stackAccessors =
   -- there are function calls,
-  [J2_call] ++
+  [J2_call, J2_callr] ++
   -- there are instructions referring to frame objects, or
   fiInstrs ++
   -- there are spills.
@@ -500,7 +499,15 @@ stackDirection = API.StackGrowsDown
 
 -- | Target dependent pre-processing functions
 
-preProcess = [foldSPCopies, addFrameIndex, constantExtend]
+preProcess = [mapToTargetMachineInstruction preprocessJRInstrs,
+              foldSPCopies, addFrameIndex, constantExtend]
+
+-- This is so that we take the additional call cost cost of tail-call jumps
+-- in LLVM solutions when we run 'uni analyze'
+preprocessJRInstrs mi @ MachineSingle {msOpcode   = MachineTargetOpc i,
+                                       msOperands = MachineGlobalAddress {} : _}
+  | i `elem` [J2_jump] = mi {msOpcode = mkMachineTargetOpc TCRETURNi}
+preprocessJRInstrs mi = mi
 
 foldSPCopies = mapToMachineBlock foldSPCopiesInBlock
 
