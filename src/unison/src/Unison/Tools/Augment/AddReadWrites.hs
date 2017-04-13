@@ -39,7 +39,7 @@ addProgramCounterWrites o
   | otherwise = o
 
 addControlReadWrites code o
-  | isBranch o || isTailCallFun code o = addWrites [controlObject] o
+  | isTerminator code o = addWrites [controlObject] o
   | isVirtual o = o
   | controlObject `elem` oWriteObjects o = o
   | otherwise = addReads [controlObject] o

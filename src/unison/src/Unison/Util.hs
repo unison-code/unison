@@ -51,6 +51,7 @@ module Unison.Util
         mapToAttrRemat,
         mapToAttrJTBlocks,
         isTailCallFun,
+        isTerminator,
         callOf,
         blockSucc,
         successors,
@@ -326,6 +327,9 @@ isTailCallFun :: [BlockOperation i r] -> BlockOperation i r -> Bool
 isTailCallFun code i
   | isFun i = isTailCall (callOf i code)
   | otherwise = False
+
+isTerminator :: [BlockOperation i r] -> BlockOperation i r -> Bool
+isTerminator code o = isBranch o || isTailCallFun code o
 
 callOf :: BlockOperation i r -> [BlockOperation i r] -> BlockOperation i r
 callOf SingleOperation {oAs = Attributes {aCall = Just c}}
