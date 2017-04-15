@@ -333,7 +333,14 @@ void assert_active_tables(Parameters & input,
 
     // Store result of no timeout
     if(result.timeout_status == RELAXED_NO_TIMEOUT) {
-      decompose_copy_set(input, O, result.labelings, active_tables);
+      // if no labeling is produced, fail and return
+      if (result.labelings.empty()) {
+        presolver_conj c;
+        input.nogoods.push_back(c);
+        return;
+      } else {
+        decompose_copy_set(input, O, result.labelings, active_tables);
+      }
     }
 
     else if(result.timeout_status == RELAXED_TIMEOUT)
@@ -455,8 +462,16 @@ void assert_tmp_tables(Parameters & input,
       timeout -= (int) t.stop();
 
       if(result.timeout_status == RELAXED_NO_TIMEOUT) {
-	PresolverCopyTmpTable tmp_table{O, P, trim_tmp_tables(result.labelings, k)};
-	tmp_tables.push_back(tmp_table);
+        // if no labeling is produced, fail and return
+        if (result.labelings.empty()) {
+          presolver_conj c;
+          input.nogoods.push_back(c);
+          return;
+        } else {
+          PresolverCopyTmpTable
+            tmp_table{O, P, trim_tmp_tables(result.labelings, k)};
+          tmp_tables.push_back(tmp_table);
+        }
       }
 
       else if(result.timeout_status == RELAXED_TIMEOUT)
