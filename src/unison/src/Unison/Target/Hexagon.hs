@@ -602,7 +602,10 @@ removeFrameIndexInstr mi @ MachineSingle {msOpcode = MachineTargetOpc i,
                       [mkMachineRegSP, off, r]
                     [r @ MachineReg {}, off @ MachineImm {}, MachineImm {}] ->
                       [r, mkMachineRegSP, off]
-                    _ -> error ("unmatched: removeFrameIndexInstr " ++ show i)
+                    [p @ MachineReg {}, off @ MachineImm {},
+                     MachineImm {miValue = 0}, r @ MachineReg {}] ->
+                      [p, mkMachineRegSP, off, r]
+                    _ -> error ("unmatched: removeFrameIndexInstr " ++ show mi)
       in mi {msOpcode = mopc', msOperands = mops'}
   | otherwise = mi
 
