@@ -30,62 +30,16 @@ import Unison.Target.ARM.ARMResourceDecl
 import Unison.Target.ARM.SpecsGen.ARMInstructionDecl
 
 extractReturnRegs _ (
-  c1 @ SingleOperation {oOpr = Virtual (co1 @ VirtualCopy {
-                                           oVirtualCopyD = Register r1})}
+  c
   :
-  c2 @ SingleOperation {oOpr = Virtual (co2 @ VirtualCopy {
-                                           oVirtualCopyD = Register r2})}
+  o @ SingleOperation {oOpr = Virtual
+                               (Delimiter oi @ (Out {oOuts = outs}))}
   :
-  c3 @ SingleOperation {oOpr = Virtual (co3 @ VirtualCopy {
-                                           oVirtualCopyD = Register r3})}
-  :
-  b @ SingleOperation {oOpr = Natural TailCall {}}
-  :
-  o @ SingleOperation {oOpr = Virtual (Delimiter Out {oOuts = outs})}
-  :
-  rest) (ti, _, _) | Register r1 `elem` outs &&
-                  Register r2 `elem` outs &&
-                  Register r3 `elem` outs =
-  let t1 = mkTemp ti
-      t2 = mkTemp (ti + 1)
-      t3 = mkTemp (ti + 2)
-      m = M.fromList [(Register r1, preAssign t1 (Register r1)),
-                      (Register r2, preAssign t2 (Register r2)),
-                      (Register r3, preAssign t3 (Register r3))]
-  in
+  rest) _ | isTailCall c && all isRegister outs =
    (
     rest,
-    [c1 {oOpr = Virtual co1 {oVirtualCopyD = t1}},
-     c2 {oOpr = Virtual co2 {oVirtualCopyD = t2}},
-     c3 {oOpr = Virtual co3 {oVirtualCopyD = t3}},
-     b,
-     mapToOperandIf isRegister (applyMap m) o]
-   )
-
-extractReturnRegs _ (
-  c1 @ SingleOperation {oOpr = Virtual (co1 @ VirtualCopy {
-                                           oVirtualCopyD = Register r1})}
-  :
-  c2 @ SingleOperation {oOpr = Virtual (co2 @ VirtualCopy {
-                                           oVirtualCopyD = Register r2})}
-  :
-  b @ SingleOperation {oOpr = Natural TailCall {}}
-  :
-  o @ SingleOperation {oOpr = Virtual (Delimiter Out {oOuts = outs})}
-  :
-  rest) (ti, _, _) | Register r1 `elem` outs &&
-                  Register r2 `elem` outs =
-  let t1 = mkTemp ti
-      t2 = mkTemp (ti + 1)
-      m = M.fromList [(Register r1, preAssign t1 (Register r1)),
-                      (Register r2, preAssign t2 (Register r2))]
-  in
-   (
-    rest,
-    [c1 {oOpr = Virtual co1 {oVirtualCopyD = t1}},
-     c2 {oOpr = Virtual co2 {oVirtualCopyD = t2}},
-     b,
-     mapToOperandIf isRegister (applyMap m) o]
+    [c,
+     o {oOpr = Virtual (Delimiter oi {oOuts = []})}]
    )
 
 extractReturnRegs _ (o : rest) _ = (rest, [o])
