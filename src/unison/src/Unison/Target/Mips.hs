@@ -199,7 +199,7 @@ popInstruction r
 -- | Transforms copy instructions into natural instructions
 
 fromCopy o @ Copy {oCopyIs = [TargetInstruction i], oCopyS = s, oCopyD = d}
-  | i `elem` [MOVE, MFLO, MFHI, MTLO, MTHI, MOVE_D] = toLinear o
+  | i `elem` [MOVE, MFLO, MFHI, MTLO, MTHI, MOVE_F, MOVE_D] = toLinear o
   | i `elem` [STORE, STORE_F, STORE_D] =
     Linear {oIs = [TargetInstruction (fromCopyInstr i)],
             oUs  = [s, mkOprMipsSP, mkBoundMachineFrameObject i d],

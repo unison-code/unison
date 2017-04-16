@@ -65,13 +65,6 @@ instruction-set:
         - id:                 MOVE_D
           parent:             FMOV_D32
           type:               copy
-          operands:
-           - rd:              [register, def, AFGR64Opnd]
-           - rt:              [register, use, AFGR64Opnd]
-          uses:               [rt]
-          defines:            [rd]
-          affects:
-          affected-by:
 
         - id:                 STORE_F
           parent:             SWC1
@@ -100,13 +93,6 @@ instruction-set:
         - id:                 MOVE_F
           parent:             FMOV_S
           type:               copy
-          operands:
-           - rd:              [register, def, FGR32Opnd]
-           - rt:              [register, use, FGR32Opnd]
-          uses:               [rt]
-          defines:            [rd]
-          affects:
-          affected-by:
 
         - id:                 LW_fi
           parent:             LW
