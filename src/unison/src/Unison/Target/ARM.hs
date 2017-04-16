@@ -421,7 +421,16 @@ expandPseudo mi @ MachineSingle {
                 msOperands = [dst, dst, ga] ++ defaultMIRPred}
   in [[mi1], [mi2]]
 
+expandPseudo mi @ MachineSingle {
+  msOpcode   = MachineTargetOpc TPUSHcs,
+  msOperands = [_, MachineReg {mrName = r}]} =
+  [[mi {msOpcode   = mkMachineTargetOpc TPUSH,
+        msOperands = defaultMIRPred ++ map mkMachineReg (pushRegs r)}]]
+
 expandPseudo mi = [[mi]]
+
+pushRegs R4_7  = [R4, R5, R6, R7]
+pushRegs R8_11 = [R8, R9, R10, R11]
 
 removeAllNops =
   filterMachineInstructions
