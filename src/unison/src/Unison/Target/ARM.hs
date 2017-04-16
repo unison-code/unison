@@ -440,18 +440,15 @@ reorderImplicitOperands = mapToMachineInstruction reorderImplicitOperandsInInstr
 
 reorderImplicitOperandsInInstr
   mi @ MachineSingle {msOpcode   = MachineTargetOpc i,
-                      msOperands = [cc @ MachineReg {mrName = CPSR},
-                                    o1, o2, p1, p2]}
+                      msOperands = MachineReg {mrName = CPSR} : _}
   | i `elem` [T2TSTri_cpsr, T2CMNri_cpsr, T2CMPrr_cpsr, T2TSTrr_cpsr,
               T2SUBrr_cpsr, TCMPi8_cpsr] =
-    let mos' = [o1, o2, p1, p2, cc]
-    in mi {msOpcode = mkMachineTargetOpc $ fromExplicitCpsrDef i,
-           msOperands = mos'}
+      mi {msOpcode = mkMachineTargetOpc $ fromExplicitCpsrDef i}
 
 reorderImplicitOperandsInInstr
   mi @ MachineSingle {msOpcode = MachineTargetOpc i}
   | i `elem` [T2CMPri_cpsr] =
-    mi {msOpcode = MachineTargetOpc $ fromExplicitCpsrDef i}
+      mi {msOpcode = mkMachineTargetOpc $ fromExplicitCpsrDef i}
 
 reorderImplicitOperandsInInstr
   mi @ MachineSingle {msOpcode   = MachineTargetOpc i,
