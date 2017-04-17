@@ -13,6 +13,7 @@ module Unison.Target.ARM (target) where
 
 import Data.List
 import qualified Data.Set as S
+import Control.Arrow
 
 import Common.Util
 
@@ -34,6 +35,7 @@ import Unison.Target.ARM.ARMRegisterDecl
 import Unison.Target.ARM.ARMRegisterClassDecl
 import Unison.Target.ARM.ARMResourceDecl
 import Unison.Target.ARM.SpecsGen.ARMInstructionDecl
+import Unison.Target.ARM.SpecsGen.ARMItineraryDecl
 import qualified Unison.Target.ARM.SpecsGen as SpecsGen
 
 target =
@@ -62,7 +64,7 @@ target =
       API.tResources        = const resources,
       API.tUsages           = const usages,
       API.tNop              = const nop,
-      API.tReadWriteInfo    = const SpecsGen.readWriteInfo,
+      API.tReadWriteInfo    = const readWriteInfo,
       API.tImplementFrame   = const implementFrame,
       API.tAddPrologue      = const addPrologue,
       API.tAddEpilogue      = const addEpilogue,
@@ -267,6 +269,26 @@ resources =
 -- | No-operation instruction
 
 nop = Linear [TargetInstruction NOP] [] []
+
+readWriteInfo i
+  -- complete memory side effects (some mayLoad/mayStore info is missing)
+  | SpecsGen.itinerary i `elem`
+    [IIC_iLoad_m, IIC_iLoad_mu, IIC_iLoad_mBr, IIC_iLoad_bh_ru, IIC_iLoad_bh_iu,
+     IIC_iLoad_bh_r, IIC_iLoad_bh_si, IIC_iLoad_d_r, IIC_iLoad_d_ru,
+     IIC_iLoad_i, IIC_iLoadiALU, IIC_iLoad_ru, IIC_iLoad_iu, IIC_iLoad_r,
+     IIC_iLoad_si, IIC_fpLoad_mu, IIC_fpLoad_m, IIC_fpLoad64, IIC_fpLoad32,
+     IIC_iLoad_bh_i, IIC_iLoad_d_i] =
+      first addMem $ SpecsGen.readWriteInfo i
+  | SpecsGen.itinerary i `elem`
+    [IIC_iStore_r, IIC_iStore_bh_r, IIC_iStore_m, IIC_iStore_mu,
+     IIC_iStore_bh_ru, IIC_iStore_bh_iu, IIC_iStore_ru, IIC_iStore_bh_si,
+     IIC_iStore_d_r, IIC_iStore_d_ru, IIC_iStore_iu, IIC_iStore_si,
+     IIC_fpStore_mu, IIC_fpStore_m, IIC_fpStore64, IIC_fpStore32,
+     IIC_iStore_bh_i, IIC_iStore_i] =
+      second addMem $ SpecsGen.readWriteInfo i
+  | otherwise = SpecsGen.readWriteInfo i
+
+addMem = (++ [Memory "mem"])
 
 -- | Implementation of frame setup and destroy operations. All functions
 -- observed so far have a reserved call frame (hasReservedCallFrame(MF)), which
