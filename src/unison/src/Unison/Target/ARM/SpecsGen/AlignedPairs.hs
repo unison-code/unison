@@ -10,7 +10,7 @@ alignedPairs i ([], [])
 alignedPairs i ([], [_]) | i `elem` [TPsoft, TTPsoft] = []
 alignedPairs i ([], [_]) | i `elem` [VMOVD0, VMOVQ0] = []
 alignedPairs i ([], [_])
-  | i `elem` [IMPLICIT_DEF, LOAD_STACK_GUARD] = []
+  | i `elem` [IMPLICIT_DEF, LOAD_STACK_GUARD, TBX_RET_linear] = []
 alignedPairs i ([_, _, _, _], []) | i `elem` [VCMPD, VCMPED] = []
 alignedPairs i ([_, _, _, _, _], []) | i `elem` [VSTRD] = []
 alignedPairs i ([_, _, _], []) | i `elem` [VCMPEZD, VCMPZD] = []
@@ -1189,6 +1189,7 @@ alignedPairs i ([_, _, _, _, _, _], [_]) | i `elem` [MVNsr] = []
 alignedPairs i ([_, _], [_]) | i `elem` [SPACE] = []
 alignedPairs i ([_, _, _, _], [_]) | i `elem` [TADDrSP] = []
 alignedPairs i ([_, _, _, _], [_]) | i `elem` [TADDrSPi] = []
+alignedPairs i ([_], []) | i `elem` [TRET_merge] = []
 alignedPairs i ([_], [_])
   | i `elem`
       [COPY, LDRLIT_ga_abs, LOAD, LOAD_D, LOAD_T, MOVE, MOVE_ALL, MOVE_D,
@@ -1197,6 +1198,7 @@ alignedPairs i ([_], [_])
     = []
 alignedPairs i ([_], [_, _])
   | i `elem` [ABS, MOVsra_flag, MOVsrl_flag, T2ABS] = []
+alignedPairs i ([_], [_, _]) | i `elem` [TPOP_RET_linear] = []
 alignedPairs i ([src, _, _, _, _], [src'])
   | i `elem` [BFI, T2BFI] = [(src, src')]
 alignedPairs i ([_, _, _, _], []) | i `elem` [VSTMQIA] = []

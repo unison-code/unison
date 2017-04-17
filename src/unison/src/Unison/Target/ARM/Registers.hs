@@ -24,13 +24,13 @@ import Unison.Target.ARM.ARMRegisterClassDecl
 -- | Register array
 
 registerArray = [RegisterClass GPR, RegisterClass SPR, RegisterClass CCR,
-                 InfiniteRegisterClass M32]
+                 RegisterClass F32, InfiniteRegisterClass M32]
 
 -- | Register atoms of 1-width registers
 
 registerAtoms ra
     | ra `elem` concatMap (registers . RegisterClass)
-      [GPR, RGPR, GPRnopc, TcGPR, SPR, CCR, TGPR] =
+      [GPR, RGPR, GPRnopc, TcGPR, SPR, CCR, TGPR, F32] =
       (ra, ra)
 
 -- | Register atoms of 2-width registers
@@ -62,8 +62,8 @@ registerAtoms r = error ("unmatched: registerAtoms " ++ show r)
 -- | Register classes
 regClasses =
     map RegisterClass
-    [GPR, RGPR, GPRnopc, TcGPR, SPR, DPR, CCR, TGPR, ALL, CS] ++
-    map InfiniteRegisterClass  [M32, M32t, M64, M128]
+    [GPR, RGPR, GPRnopc, TcGPR, SPR, DPR, CCR, TGPR, ALL, CS, F32] ++
+    map InfiniteRegisterClass [M32, M32t, M64, M128]
 
 -- | Individual registers of each register class
 
@@ -101,6 +101,8 @@ registers (RegisterClass CCR) = [CPSR]
 
 registers (RegisterClass QPR) =
     [Q0, Q1, Q2, Q3, Q4, Q5, Q6, Q7, Q8, Q9 ,Q10, Q11, Q12, Q13, Q14, Q15]
+
+registers (RegisterClass F32) = [F0]
 
 registers rc = error ("unmatched: registers " ++ show rc)
 
@@ -174,7 +176,8 @@ regStrings = M.fromList $
    (ITSTATE, "itstate"),
    (PRED, "pred"),
    (FPSCR, "fpscr")] ++
-  regStringsWithIndex "q" QPR
+  regStringsWithIndex "q" QPR ++
+  [(F0, "f0")]
 
 regStringsWithIndex pre rc =
   [(r, pre ++ show idx) | (r, idx) <- zip (registers (RegisterClass rc)) [0..]]

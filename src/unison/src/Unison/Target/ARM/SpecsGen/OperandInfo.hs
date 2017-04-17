@@ -11,6 +11,8 @@ operandInfo i
     = ([], [])
   | i `elem` [VMOVD0] =
     ([], [TemporaryInfo (RegisterClass DPR) 1 False])
+  | i `elem` [TBX_RET_linear] =
+    ([], [TemporaryInfo (RegisterClass F32) 0 False])
   | i `elem` [VMOVQ0] =
     ([], [TemporaryInfo (RegisterClass QPR) 1 False])
   | i `elem` [TPsoft, TTPsoft] =
@@ -351,6 +353,8 @@ operandInfo i
       TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo,
       TemporaryInfo (RegisterClass CCR) 0 False],
      [])
+  | i `elem` [TRET_merge] =
+    ([TemporaryInfo (RegisterClass F32) 0 False], [])
   | i `elem`
       [BLX, BX, MOVPCRX, RFEDA, RFEDA_UPD, RFEDB, RFEDB_UPD, RFEIA,
        RFEIA_UPD, RFEIB, RFEIB_UPD]
@@ -1852,6 +1856,10 @@ operandInfo i
   | i `elem` [TPOPcs, TPOPcs_free] =
     ([TemporaryInfo (InfiniteRegisterClass M128) 0 False],
      [TemporaryInfo (RegisterClass CS) 1 False])
+  | i `elem` [TPOP_RET_linear] =
+    ([TemporaryInfo (InfiniteRegisterClass M128) 0 False],
+     [TemporaryInfo (RegisterClass CS) 1 False,
+      TemporaryInfo (RegisterClass F32) 0 False])
   | i `elem` [LOAD] =
     ([TemporaryInfo (InfiniteRegisterClass M32) 0 False],
      [TemporaryInfo (RegisterClass GPR) 1 False])

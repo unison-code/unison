@@ -1077,3 +1077,33 @@ instruction-set:
            - reg2:            [register, use, GPR]
            - reg3:            [register, use, GPR]
           uses:               [Rn, p1, p2, reg0, reg1, reg2, reg3]
+
+        - id:                 tRET_merge
+          type:               branch
+          operands:
+           - src:             [register, use, F32]
+          uses:               [src]
+          defines:            []
+          size:               0
+          itinerary:          NoItinerary
+
+        - id:                 tBX_RET_linear
+          parent:             tBX_RET
+          type:               linear
+          operands:
+           - dst:             [register, def, F32, -1]
+          uses:               []
+          defines:            [dst]
+
+        - id:                 tPOP_RET_linear
+          type:               copy
+          operands:
+           - src:             [register, use, M128]
+           - dst:             [register, def, CS]
+           - dst':            [register, def, F32, -1]
+          uses:               [src]
+          defines:            [dst, dst']
+          size:               2
+          affects:
+          affected-by:
+          itinerary:          IIC_iPop_Br

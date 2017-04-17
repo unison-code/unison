@@ -107,26 +107,26 @@ size i
        T2MOVsi, T2MOVsr, TADDframe, TADJCALLSTACKDOWN, TADJCALLSTACKUP,
        TInt_WIN_eh_sjlj_longjmp, TInt_eh_sjlj_longjmp,
        TInt_eh_sjlj_setjmp, TLDRLIT_ga_abs, TLDRLIT_ga_pcrel, TLDRpci_pic,
-       TMOVCCr_pseudo, TPOPcs_free]
+       TMOVCCr_pseudo, TPOPcs_free, TRET_merge]
     = 0
   | i `elem`
       [LOAD_T, MOVE, STORE_T, T2IT, T2SETPAN, TADC, TADDhirr, TADDhirrs,
        TADDi3, TADDi3s, TADDi8, TADDi8s, TADDrSP, TADDrSPi, TADDrr,
        TADDrrs, TADDspi, TADDspr, TADR, TAND, TANDs, TASRri, TASRris,
        TASRrr, TASRrrs, TB, TBIC, TBICs, TBKPT, TBLXr, TBRIND, TBR_JTr,
-       TBX, TBX_RET, TBX_RET_vararg, TBcc, TCBNZ, TCBZ, TCMNz, TCMPhir,
-       TCMPhir_cpsr, TCMPi8, TCMPi8_cpsr, TCMPr, TCMPr_cpsr, TCPS, TEOR,
-       TEORs, THINT, THLT, TLDMIA, TLDMIA_UPD, TLDRBi, TLDRBr, TLDRBrz,
-       TLDRHi, TLDRHr, TLDRHrz, TLDRSB, TLDRSBz, TLDRSH, TLDRSHz, TLDRi,
-       TLDRpci, TLDRr, TLDRrz, TLDRspi, TLEApcrel, TLEApcrelJT, TLSLri,
-       TLSLris, TLSLrr, TLSLrrs, TLSRri, TLSRris, TLSRrr, TLSRrrs, TMOVSr,
-       TMOVi8, TMOVi8s, TMOVr, TMUL, TMULz, TMVN, TMVNs, TORR, TORRs,
-       TPICADD, TPOP, TPOP_RET, TPOPcs, TPUSH, TPUSHcs, TREV, TREV16,
-       TREVSH, TROR, TRORs, TRSB, TRSBs, TSBC, TSETEND, TSTMIA_UPD,
-       TSTRBi, TSTRBr, TSTRBrz, TSTRHi, TSTRHr, TSTRHrz, TSTRi, TSTRr,
-       TSTRrz, TSTRspi, TSUBi3, TSUBi3s, TSUBi8, TSUBi8s, TSUBrr, TSUBrrs,
-       TSUBspi, TSVC, TSXTB, TSXTH, TSXTHz, TTRAP, TTST, TTST_cpsr, TUDF,
-       TUXTB, TUXTBz, TUXTH, TUXTHz]
+       TBX, TBX_RET, TBX_RET_linear, TBX_RET_vararg, TBcc, TCBNZ, TCBZ,
+       TCMNz, TCMPhir, TCMPhir_cpsr, TCMPi8, TCMPi8_cpsr, TCMPr,
+       TCMPr_cpsr, TCPS, TEOR, TEORs, THINT, THLT, TLDMIA, TLDMIA_UPD,
+       TLDRBi, TLDRBr, TLDRBrz, TLDRHi, TLDRHr, TLDRHrz, TLDRSB, TLDRSBz,
+       TLDRSH, TLDRSHz, TLDRi, TLDRpci, TLDRr, TLDRrz, TLDRspi, TLEApcrel,
+       TLEApcrelJT, TLSLri, TLSLris, TLSLrr, TLSLrrs, TLSRri, TLSRris,
+       TLSRrr, TLSRrrs, TMOVSr, TMOVi8, TMOVi8s, TMOVr, TMUL, TMULz, TMVN,
+       TMVNs, TORR, TORRs, TPICADD, TPOP, TPOP_RET, TPOP_RET_linear,
+       TPOPcs, TPUSH, TPUSHcs, TREV, TREV16, TREVSH, TROR, TRORs, TRSB,
+       TRSBs, TSBC, TSETEND, TSTMIA_UPD, TSTRBi, TSTRBr, TSTRBrz, TSTRHi,
+       TSTRHr, TSTRHrz, TSTRi, TSTRr, TSTRrz, TSTRspi, TSUBi3, TSUBi3s,
+       TSUBi8, TSUBi8s, TSUBrr, TSUBrrs, TSUBspi, TSVC, TSXTB, TSXTH,
+       TSXTHz, TTRAP, TTST, TTST_cpsr, TUDF, TUXTB, TUXTBz, TUXTH, TUXTHz]
     = 2
   | i `elem`
       [ADCri, ADCrr, ADCrsi, ADCrsr, ADDSri, ADDSrr, ADDSrsi, ADDSrsr,

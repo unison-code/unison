@@ -13,7 +13,8 @@ module Unison.Target.ARM.Transforms
     (extractReturnRegs,
      addThumbAlternatives,
      expandMEMCPY,
-     handlePromotedOperands) where
+     handlePromotedOperands,
+     expandRets) where
 
 import qualified Data.Map as M
 import qualified Data.Set as S
@@ -363,3 +364,48 @@ handlePromotedOperands _ (
     )
 
 handlePromotedOperands _ (o : rest) _ = (rest, [o])
+
+{-
+ Transforms:
+
+bN (.., return, ..):
+    (..)
+    op: [p1{ -, t1}] <- { -, tPOPcs_free} [p0{ -, t0, t0'..}]
+    (..)
+    or: [] <- tBX_RET [14,_]
+    (..)
+
+into:
+
+bN (.., return, ..):
+    (..)
+    op: [p1{ -, t1}, p2{ -, t2}] <- { -, tPOP_RET_linear} <- [p0{ -, t0, t0'..}]
+    or: [p3{ -, t3}] <- { -, tBX_RET_linear} []
+    om: [] <- tRET_merge [p4{t2, t3}]
+    (..)
+-}
+
+expandRets _ (
+  SingleOperation {
+     oOpr = Copy {oCopyIs = [General NullInstruction,
+                             TargetInstruction TPOPcs_free],
+                  oCopyS = MOperand {altTemps = _ : t0s},
+                  oCopyD = MOperand {altTemps = [_, t1]}}}
+  :
+  code) (tid, oid, pid) =
+  let mkOper id ts = mkMOperand (pid + id) ts Nothing
+      isTBX_RET = isMandNaturalWith ((==) TBX_RET)
+      [t2, t3]  = map mkTemp [tid, tid + 1]
+      op        = mkOpt oid TPOP_RET_linear [mkOper 0 t0s]
+                  [mkOper 1 [t1], mkOper 2 [t2]]
+      or        = mkOpt (oid + 1) TBX_RET_linear [] [mkOper 3 [t3]]
+      om        = mkBranch (oid + 2) [TargetInstruction TRET_merge]
+                  [mkOper 4 [t2, t3]]
+      code'     = concatMap
+                  (\o -> if isTBX_RET o then [op, or, om] else [o]) code
+  in ([], code')
+
+expandRets _ (o : code) _ = (code, [o])
+
+mkOpt oid inst us ds =
+  makeOptional $ mkLinear oid [TargetInstruction inst] us ds

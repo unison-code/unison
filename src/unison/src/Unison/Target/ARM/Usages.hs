@@ -57,6 +57,7 @@ size VMOVDcc = size VMOVD
 size VMOVScc = size VMOVS
 size TPOPcs_free = 0
 size JUMPTABLE_INSTS = 0
+size TRET_merge = 0
 size i =
   case SpecsGen.size i of
    0 -> error ("size of instruction " ++ show i ++ " is 0")

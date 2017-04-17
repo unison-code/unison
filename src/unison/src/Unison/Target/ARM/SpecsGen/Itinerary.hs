@@ -10,9 +10,9 @@ itinerary i
        BX_pred, Bcc, MOVPCLR, MOVPCRX, SUBS_PC_LR, SVC, TAILJMPd,
        TAILJMPr, TCRETURNdi, TCRETURNri, TPsoft, T2B, T2BR_JT, T2Bcc,
        T2HVC, T2TBB, T2TBB_JT, T2TBH, T2TBH_JT, T2UDF, TB, TBL, TBLXi,
-       TBLXr, TBRIND, TBR_JTr, TBX, TBX_CALL, TBX_RET, TBX_RET_vararg,
-       TBcc, TBfar, TCBNZ, TCBZ, TSVC, TTAILJMPd, TTAILJMPdND, TTAILJMPr,
-       TTPsoft, TTRAP, TUDF]
+       TBLXr, TBRIND, TBR_JTr, TBX, TBX_CALL, TBX_RET, TBX_RET_linear,
+       TBX_RET_vararg, TBcc, TBfar, TCBNZ, TCBZ, TSVC, TTAILJMPd,
+       TTAILJMPdND, TTAILJMPr, TTPsoft, TTRAP, TUDF]
     = IIC_Br
   | i `elem`
       [PLDWi12, PLDWrs, PLDi12, PLDrs, PLIi12, PLIrs, T2PLDWi12,
@@ -772,7 +772,7 @@ itinerary i
   | i `elem` [T2MVNs] = IIC_iMVNsi
   | i `elem` [MVNsi, MVNsr] = IIC_iMVNsr
   | i `elem` [TPOP, TPOPcs, TPOPcs_free] = IIC_iPop
-  | i `elem` [TPOP_RET] = IIC_iPop_Br
+  | i `elem` [TPOP_RET, TPOP_RET_linear] = IIC_iPop_Br
   | i `elem`
       [T2STRBT, T2STRBi12, T2STRBi12_fi, T2STRBi8, T2STRHT, T2STRHi12,
        T2STRHi12_fi, T2STRHi8, TSTRBi, TSTRHi]
@@ -1001,6 +1001,7 @@ itinerary i
        T2USAT16, T2USAX, T2USUB16, T2USUB8, TADDframe, TADJCALLSTACKDOWN,
        TADJCALLSTACKUP, TBKPT, TCPS, THINT, THLT,
        TInt_WIN_eh_sjlj_longjmp, TInt_eh_sjlj_longjmp,
-       TInt_eh_sjlj_setjmp, TLDRpci_pic, TMOVCCr_pseudo, TSETEND]
+       TInt_eh_sjlj_setjmp, TLDRpci_pic, TMOVCCr_pseudo, TRET_merge,
+       TSETEND]
     = NoItinerary
 

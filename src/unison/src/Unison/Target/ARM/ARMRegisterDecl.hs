@@ -98,5 +98,6 @@ data ARMRegister =
     Q6 |
     Q7 |
     Q8 |
-    Q9
+    Q9 |
+    F0
     deriving (Eq, Ord)

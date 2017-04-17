@@ -96,12 +96,9 @@ branchInfo (Branch {oBranchIs = is, oBranchUs = [BlockRef l, _, _]})
   | targetInst is `elem` [T2B, TB] =
     BranchInfo Unconditional (Just l)
 
-branchInfo (Branch {oBranchIs = is, oBranchUs = [_, _]})
-  | targetInst is `elem`  [TBX_RET] =
-    BranchInfo Unconditional Nothing
-
-branchInfo (Branch {oBranchIs = is, oBranchUs = _})
-  | targetInst is `elem`  [T2LDMIA_RET, TPOP_RET, T2BR_JT, T2TBB_JT, T2TBH_JT] =
+branchInfo (Branch {oBranchIs = is})
+  | targetInst is `elem`  [TBX_RET, T2LDMIA_RET, TPOP_RET, T2BR_JT, T2TBB_JT,
+                           T2TBH_JT, TRET_merge] =
     BranchInfo Unconditional Nothing
 
 branchInfo o = error ("unmatched pattern: branchInfo " ++ show (mkSingleOperation (-1) (Natural o)))
@@ -218,7 +215,11 @@ fromCopy Copy {oCopyIs = [TargetInstruction i], oCopyS = s, oCopyD = d}
     Linear {oIs = [TargetInstruction i],
             oUs = [mkBound mkMachineNullReg],
             oDs = [d]}
-
+  | i `elem` [TPOP_RET_linear] =
+    Linear {oIs = [TargetInstruction TPOP_RET],
+            oUs = defaultUniPred ++
+                  map (Register . TargetRegister) (pushRegs R4_7),
+            oDs = []}
 fromCopy o = error ("unmatched pattern: fromCopy " ++ show o)
 
 mkOprArmSP = Register $ mkTargetRegister SP
@@ -407,8 +408,9 @@ processTailCalls mi = mi
 -- | Target dependent post-processing functions
 
 postProcess = [expandPseudos, removeAllNops, removeFrameIndex,
-               reorderImplicitOperands, exposeCPSRRegister,
-               flip addImplicitRegs (target, []), demoteImplicitOperands]
+               normalizeJumpMerges, removeEmptyBundles, reorderImplicitOperands,
+               exposeCPSRRegister, flip addImplicitRegs (target, []),
+               demoteImplicitOperands]
 
 expandPseudos = mapToMachineBlock (expandBlockPseudos expandPseudo)
 
@@ -477,6 +479,16 @@ removeFrameIndexInstr mi @ MachineSingle {msOpcode = MachineTargetOpc i}
     mi {msOpcode = mkMachineTargetOpc $ read $ dropSuffix "_cpi" (show i)}
   | otherwise = mi
 
+normalizeJumpMerges = concatMapToMachineInstruction normalizeJMs
+
+normalizeJMs mi @ MachineSingle {msOpcode = MachineTargetOpc TBX_RET_linear} =
+  [mi {msOpcode   = mkMachineTargetOpc TBX_RET,
+       msOperands = defaultMIRPred}]
+normalizeJMs MachineSingle {msOpcode = MachineTargetOpc TRET_merge} = []
+normalizeJMs mi = [mi]
+
+removeEmptyBundles = filterMachineInstructions (const True)
+
 -- This is the inverse of 'promoteImplicitOperands'. TODO: does this preclude
 -- 'reorderImplicitOperands'?
 
@@ -508,6 +520,7 @@ transforms ImportPreLift = [peephole extractReturnRegs,
                             mapToOperationWithGoal addThumbAlternatives,
                             peephole expandMEMCPY]
 transforms ImportPostLift = [peephole handlePromotedOperands]
+transforms AugmentPreRW = [peephole expandRets]
 transforms _ = []
 
 mapToOperationWithGoal t f @ Function {fCode = code, fGoal = Just goal} =

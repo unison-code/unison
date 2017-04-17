@@ -3022,5 +3022,8 @@ data ARMInstruction = ABS
                     | T2LDMIA_UPD_4
                     | T2STMIA_4
                     | T2STMIA_UPD_4
+                    | TRET_merge
+                    | TBX_RET_linear
+                    | TPOP_RET_linear
                     deriving (Eq, Ord)
 

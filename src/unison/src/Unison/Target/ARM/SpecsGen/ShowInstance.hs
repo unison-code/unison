@@ -3023,4 +3023,7 @@ instance Show ARMInstruction where
         show T2LDMIA_UPD_4 = "t2LDMIA_UPD_4"
         show T2STMIA_4 = "t2STMIA_4"
         show T2STMIA_UPD_4 = "t2STMIA_UPD_4"
+        show TRET_merge = "tRET_merge"
+        show TBX_RET_linear = "tBX_RET_linear"
+        show TPOP_RET_linear = "tPOP_RET_linear"
 

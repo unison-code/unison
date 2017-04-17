@@ -49,5 +49,6 @@ data ARMRegisterClass =
     VecListThreeDAllLanes |
     VecListThreeQ |
     VecListThreeQAllLanes |
-    Unknown
+    Unknown |
+    F32
     deriving (Eq, Ord, Show, Read)

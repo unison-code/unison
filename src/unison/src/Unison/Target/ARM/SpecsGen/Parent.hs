@@ -592,12 +592,12 @@ parent i
        TLDRpci, TLDRpci_pic, TLDRr, TLDRspi, TLEApcrel, TLEApcrelJT,
        TLSLri, TLSLris, TLSLrr, TLSLrrs, TLSRri, TLSRris, TLSRrr,
        TMOVCCr_pseudo, TMOVSr, TMOVi8, TMOVi8s, TMOVr, TMUL, TMULz, TMVN,
-       TORR, TPICADD, TPOP, TPOP_RET, TPOPcs, TPOPcs_free, TPUSH, TPUSHcs,
-       TREV, TREV16, TREVSH, TROR, TRSB, TRSBs, TSBC, TSETEND, TSTMIA_UPD,
-       TSTRBi, TSTRBr, TSTRHi, TSTRHr, TSTRi, TSTRr, TSTRspi, TSUBi3,
-       TSUBi3s, TSUBi8, TSUBi8s, TSUBrr, TSUBrrs, TSUBspi, TSVC, TSXTB,
-       TSXTH, TTAILJMPd, TTAILJMPdND, TTAILJMPr, TTPsoft, TTRAP, TTST,
-       TUDF, TUXTB, TUXTH]
+       TORR, TPICADD, TPOP, TPOP_RET, TPOP_RET_linear, TPOPcs,
+       TPOPcs_free, TPUSH, TPUSHcs, TRET_merge, TREV, TREV16, TREVSH,
+       TROR, TRSB, TRSBs, TSBC, TSETEND, TSTMIA_UPD, TSTRBi, TSTRBr,
+       TSTRHi, TSTRHr, TSTRi, TSTRr, TSTRspi, TSUBi3, TSUBi3s, TSUBi8,
+       TSUBi8s, TSUBrr, TSUBrrs, TSUBspi, TSVC, TSXTB, TSXTH, TTAILJMPd,
+       TTAILJMPdND, TTAILJMPr, TTPsoft, TTRAP, TTST, TUDF, TUXTB, TUXTH]
     = Nothing
   | i `elem` [FMSTAT_cpsr] = Just FMSTAT
   | i `elem` [VLDRD_cpi] = Just VLDRD
@@ -622,6 +622,7 @@ parent i
   | i `elem` [T2TSTrs_cpsr] = Just T2TSTrs
   | i `elem` [TANDs] = Just TAND
   | i `elem` [TBICs] = Just TBIC
+  | i `elem` [TBX_RET_linear] = Just TBX_RET
   | i `elem` [TCMPhir_cpsr] = Just TCMPhir
   | i `elem` [TCMPi8_cpsr] = Just TCMPi8
   | i `elem` [TCMPr_cpsr] = Just TCMPr
