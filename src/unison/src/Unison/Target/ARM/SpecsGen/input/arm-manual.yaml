@@ -969,7 +969,7 @@ instruction-set:
           defines:            [cpsr]
           affects:
 
-        - id:                 tPUSHcs
+        - id:                 tPUSH_r4_7
           type:               copy
           operands:
            - src:             [register, use, CS]
@@ -982,6 +982,20 @@ instruction-set:
           affected-by:
            - SP:              register
           itinerary:          IIC_iStore_m
+
+        - id:                 tPUSH_r8_11
+          type:               copy
+          operands:
+           - src:             [register, use, CS]
+           - dst:             [register, def, M128]
+          uses:               [src]
+          defines:            [dst]
+          size:               2
+          affects:
+           - SP:              register
+          affected-by:
+           - SP:              register
+          itinerary:          NoItinerary
 
         - id:                 tPOPcs
           type:               copy

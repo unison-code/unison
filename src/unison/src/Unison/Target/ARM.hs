@@ -145,7 +145,8 @@ copies (f, _, cg, ra, _, _) _ t _rs d us =
       )
 
 pushInstruction [r]
-  | r `elem` registers (RegisterClass CS) = TPUSHcs
+  | r == R4_7  = TPUSH_r4_7
+  | r == R8_11 = TPUSH_r8_11
   | r `elem` registers (RegisterClass DPR) = STORE_D
 
 popInstruction f t [r]
@@ -209,7 +210,7 @@ fromCopy Copy {oCopyIs = [TargetInstruction i], oCopyS = s, oCopyD = d}
             oUs  = [mkOprArmSP, mkBoundMachineFrameObject i s] ++
                    defaultUniPred,
             oDs  = [d]}
-  | i `elem` [TPUSHcs] =
+  | i `elem` [TPUSH_r4_7, TPUSH_r8_11] =
     Linear {oIs = [TargetInstruction i],
             oUs = [s],
             oDs = [mkBound mkMachineNullReg]}
@@ -446,10 +447,11 @@ expandPseudo mi @ MachineSingle {
   in [[mi1], [mi2]]
 
 expandPseudo mi @ MachineSingle {
-  msOpcode   = MachineTargetOpc TPUSHcs,
-  msOperands = [_, MachineReg {mrName = r}]} =
-  [[mi {msOpcode   = mkMachineTargetOpc TPUSH,
-        msOperands = defaultMIRPred ++ map mkMachineReg (pushRegs r)}]]
+  msOpcode   = MachineTargetOpc i,
+  msOperands = [_, MachineReg {mrName = r}]}
+  | i `elem` [TPUSH_r4_7, TPUSH_r8_11] =
+    [[mi {msOpcode   = mkMachineTargetOpc TPUSH,
+          msOperands = defaultMIRPred ++ map mkMachineReg (pushRegs r)}]]
 
 expandPseudo mi = [[mi]]
 
@@ -550,6 +552,10 @@ mapToOperationWithGoal t f @ Function {fCode = code, fGoal = Just goal} =
 
 -- | Latency of read-write dependencies
 
+-- Allow push instructions to be scheduled in parallel to simulate 'push.w'
+readWriteLatency _
+  ((TargetInstruction TPUSH_r4_7, _),  Write)
+  ((TargetInstruction TPUSH_r8_11, _), Write) = 0
 readWriteLatency _ (_, Read) (_, Write) = 0
 readWriteLatency _ ((_, VirtualType (DelimiterType InType)), _) (_, _) = 1
 readWriteLatency _ ((_, VirtualType FunType), _) (_, _) = 1

@@ -593,11 +593,12 @@ parent i
        TLSLri, TLSLris, TLSLrr, TLSLrrs, TLSRri, TLSRris, TLSRrr,
        TMOVCCr_pseudo, TMOVSr, TMOVi8, TMOVi8s, TMOVr, TMUL, TMULz, TMVN,
        TORR, TPICADD, TPOP, TPOP_RET, TPOP_RET_linear, TPOPcs,
-       TPOPcs_free, TPUSH, TPUSHcs, TRET_merge, TREV, TREV16, TREVSH,
-       TROR, TRSB, TRSBs, TSBC, TSETEND, TSTMIA_UPD, TSTRBi, TSTRBr,
-       TSTRHi, TSTRHr, TSTRi, TSTRr, TSTRspi, TSUBi3, TSUBi3s, TSUBi8,
-       TSUBi8s, TSUBrr, TSUBrrs, TSUBspi, TSVC, TSXTB, TSXTH, TTAILJMPd,
-       TTAILJMPdND, TTAILJMPr, TTPsoft, TTRAP, TTST, TUDF, TUXTB, TUXTH]
+       TPOPcs_free, TPUSH, TPUSH_r4_7, TPUSH_r8_11, TRET_merge, TREV,
+       TREV16, TREVSH, TROR, TRSB, TRSBs, TSBC, TSETEND, TSTMIA_UPD,
+       TSTRBi, TSTRBr, TSTRHi, TSTRHr, TSTRi, TSTRr, TSTRspi, TSUBi3,
+       TSUBi3s, TSUBi8, TSUBi8s, TSUBrr, TSUBrrs, TSUBspi, TSVC, TSXTB,
+       TSXTH, TTAILJMPd, TTAILJMPdND, TTAILJMPr, TTPsoft, TTRAP, TTST,
+       TUDF, TUXTB, TUXTH]
     = Nothing
   | i `elem` [FMSTAT_cpsr] = Just FMSTAT
   | i `elem` [VLDRD_cpi] = Just VLDRD

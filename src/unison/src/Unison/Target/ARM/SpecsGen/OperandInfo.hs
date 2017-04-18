@@ -21,7 +21,7 @@ operandInfo i
   | i `elem` [MOVE_ALL] =
     ([TemporaryInfo (RegisterClass ALL) 0 False],
      [TemporaryInfo (RegisterClass ALL) 1 False])
-  | i `elem` [TPUSHcs] =
+  | i `elem` [TPUSH_r4_7, TPUSH_r8_11] =
     ([TemporaryInfo (RegisterClass CS) 0 False],
      [TemporaryInfo (InfiniteRegisterClass M128) 1 False])
   | i `elem`

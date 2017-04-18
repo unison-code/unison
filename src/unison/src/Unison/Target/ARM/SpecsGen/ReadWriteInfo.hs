@@ -560,7 +560,7 @@ readWriteInfo i
     ([], [OtherSideEffect R7, OtherSideEffect LR, OtherSideEffect SP])
   | i `elem`
       [ADJCALLSTACKDOWN, ADJCALLSTACKUP, TADJCALLSTACKDOWN,
-       TADJCALLSTACKUP, TPOPcs, TPOPcs_free, TPUSHcs]
+       TADJCALLSTACKUP, TPOPcs, TPOPcs_free, TPUSH_r4_7, TPUSH_r8_11]
     = ([], [OtherSideEffect SP])
   | i `elem`
       [FAULTING_LOAD_OP, LDAEX, LDAEXB, LDAEXD, LDAEXH, LDMDA, LDMDA_UPD,

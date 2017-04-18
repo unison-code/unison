@@ -1194,7 +1194,7 @@ alignedPairs i ([_], [_])
   | i `elem`
       [COPY, LDRLIT_ga_abs, LOAD, LOAD_D, LOAD_T, MOVE, MOVE_ALL, MOVE_D,
        MOVi32imm, STORE, STORE_D, STORE_T, T2MOVi32imm, TLDRLIT_ga_abs,
-       TPOPcs, TPOPcs_free, TPUSHcs]
+       TPOPcs, TPOPcs_free, TPUSH_r4_7, TPUSH_r8_11]
     = []
 alignedPairs i ([_], [_, _])
   | i `elem` [ABS, MOVsra_flag, MOVsrl_flag, T2ABS] = []

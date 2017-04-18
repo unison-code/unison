@@ -800,7 +800,7 @@ itinerary i
     = IIC_iStore_iu
   | i `elem`
       [STMDA, STMDB, STMIA, STMIB, SysSTMDA, SysSTMDB, SysSTMIA,
-       SysSTMIB, T2STMDB, T2STMIA, T2STMIA_4, TPUSH, TPUSHcs]
+       SysSTMIB, T2STMDB, T2STMIA, T2STMIA_4, TPUSH, TPUSH_r4_7]
     = IIC_iStore_m
   | i `elem`
       [STMDA_UPD, STMDB_UPD, STMIA_UPD, STMIB_UPD, SysSTMDA_UPD,
@@ -1001,7 +1001,7 @@ itinerary i
        T2USAT16, T2USAX, T2USUB16, T2USUB8, TADDframe, TADJCALLSTACKDOWN,
        TADJCALLSTACKUP, TBKPT, TCPS, THINT, THLT,
        TInt_WIN_eh_sjlj_longjmp, TInt_eh_sjlj_longjmp,
-       TInt_eh_sjlj_setjmp, TLDRpci_pic, TMOVCCr_pseudo, TRET_merge,
-       TSETEND]
+       TInt_eh_sjlj_setjmp, TLDRpci_pic, TMOVCCr_pseudo, TPUSH_r8_11,
+       TRET_merge, TSETEND]
     = NoItinerary
 
