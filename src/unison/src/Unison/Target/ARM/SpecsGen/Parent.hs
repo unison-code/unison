@@ -621,6 +621,7 @@ parent i
   | i `elem` [T2TSTri_cpsr] = Just T2TSTri
   | i `elem` [T2TSTrr_cpsr] = Just T2TSTrr
   | i `elem` [T2TSTrs_cpsr] = Just T2TSTrs
+  | i `elem` [TFP] = Just TADDrSPi
   | i `elem` [TANDs] = Just TAND
   | i `elem` [TBICs] = Just TBIC
   | i `elem` [TBX_RET_linear] = Just TBX_RET

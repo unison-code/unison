@@ -14,6 +14,7 @@ module Unison.Target.ARM.Transforms
      addThumbAlternatives,
      expandMEMCPY,
      handlePromotedOperands,
+     defineFP,
      expandRets) where
 
 import qualified Data.Map as M
@@ -28,6 +29,7 @@ import Unison.Target.ARM.Common
 import Unison.Target.ARM.OperandInfo
 import Unison.Target.ARM.Usages
 import Unison.Target.ARM.ARMResourceDecl
+import Unison.Target.ARM.ARMRegisterDecl
 import Unison.Target.ARM.SpecsGen.ARMInstructionDecl
 
 extractReturnRegs _ (
@@ -364,6 +366,21 @@ handlePromotedOperands _ (
     )
 
 handlePromotedOperands _ (o : rest) _ = (rest, [o])
+
+defineFP f @ Function {fCode = code} =
+  let fcode = flatten code
+      isRegFun o = isFun o && not (isTailCallFun fcode o)
+  in if any isRegFun fcode then
+       let (tid, oid, _) = newIndexes fcode
+           pt    = mkPreAssignedTemp tid (mkRegister $ mkTargetRegister R7)
+           o     = mkLinear oid [TargetInstruction TFP]
+                   ([mkRegister (mkTargetRegister SP),
+                     mkBound (mkMachineImm 0)] ++ defaultUniPred) [pt]
+           code' = mapToEntryBlock (insertWhen after isIn [o]) code
+           f'    = mapToOperation (applyIf isRegFun (addOperands [pt] []))
+                   f {fCode = code'}
+       in f'
+     else f
 
 {-
  Transforms:

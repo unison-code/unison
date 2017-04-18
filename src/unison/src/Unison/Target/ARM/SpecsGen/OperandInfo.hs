@@ -1849,7 +1849,7 @@ operandInfo i
     ([TemporaryInfo (RegisterClass GPRsp) 0 False, BoundInfo,
       BoundInfo, TemporaryInfo (RegisterClass CCR) 0 False],
      [TemporaryInfo (RegisterClass GPRsp) 1 False])
-  | i `elem` [TADDrSPi] =
+  | i `elem` [TADDrSPi, TFP] =
     ([TemporaryInfo (RegisterClass GPRsp) 0 False, BoundInfo,
       BoundInfo, TemporaryInfo (RegisterClass CCR) 0 False],
      [TemporaryInfo (RegisterClass TGPR) 1 False])

@@ -969,6 +969,11 @@ instruction-set:
           defines:            [cpsr]
           affects:
 
+        - id:                 tFP
+          parent:             tADDrSPi
+          affected-by:
+           - SP:              register
+
         - id:                 tPUSH_r4_7
           type:               copy
           operands:

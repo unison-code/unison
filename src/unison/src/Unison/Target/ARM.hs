@@ -25,6 +25,7 @@ import qualified Unison.Target.API as API
 import Unison.Target.RegisterArray
 import Unison.Analysis.TemporaryType
 import Unison.Transformations.FoldReservedRegisters
+import Unison.Analysis.TransitiveOperations
 
 import Unison.Target.ARM.Common
 import Unison.Target.ARM.Registers
@@ -135,13 +136,15 @@ copies (f, _, _, _, _, _) False t [] d [u]
     | isIn d && isOut u && not (any isCall (bCode $ tempBlock (fCode f) t)) =
     ([], [[]])
 
-copies (f, _, cg, ra, _, _) _ t _rs d us =
+copies (f, _, cg, ra, bcfg, sg) _ t _rs d us =
   let is     = d:us
       w      = widthOfTemp ra cg f t is
+      dors   = transitivePreAssignments bcfg sg Reaching f t
+      uors   = transitivePreAssignments bcfg sg Reachable f t
       Just g = fGoal f
   in (
-      (defCopies g t w d),
-      map (useCopies g t w) us
+      (defCopies g w dors),
+      map (const (useCopies g w uors)) us
       )
 
 pushInstruction [r]
@@ -154,12 +157,14 @@ popInstruction f t [r]
   | r `elem` registers (RegisterClass CS) = TPOPcs
   | r `elem` registers (RegisterClass DPR) = LOAD_D
 
-defCopies g _ w _ =
+defCopies _ _ [Register (TargetRegister R7)] = []
+defCopies g w _ =
   [mkNullInstruction] ++
    map TargetInstruction (moveInstrs g w) ++
    map TargetInstruction (storeInstrs g w)
 
-useCopies g _ w _ =
+useCopies _ _ [Register (TargetRegister R7)] = []
+useCopies g w _ =
   [mkNullInstruction] ++
    map TargetInstruction (moveInstrs g w) ++
    map TargetInstruction (loadInstrs g w)
@@ -446,6 +451,9 @@ expandPseudo mi @ MachineSingle {
                 msOperands = [dst, dst, ga] ++ defaultMIRPred}
   in [[mi1], [mi2]]
 
+expandPseudo mi @ MachineSingle {msOpcode = MachineTargetOpc TFP} =
+  [[mi {msOpcode = mkMachineTargetOpc TADDrSPi}]]
+
 expandPseudo mi @ MachineSingle {
   msOpcode   = MachineTargetOpc i,
   msOperands = [_, MachineReg {mrName = r}]}
@@ -543,7 +551,8 @@ transforms ImportPreLift = [peephole extractReturnRegs,
                             (\f -> foldReservedRegisters f (target, [])),
                             mapToOperationWithGoal addThumbAlternatives,
                             peephole expandMEMCPY]
-transforms ImportPostLift = [peephole handlePromotedOperands]
+transforms ImportPostLift = [peephole handlePromotedOperands,
+                             defineFP]
 transforms AugmentPreRW = [peephole expandRets]
 transforms _ = []
 

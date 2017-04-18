@@ -3013,6 +3013,7 @@ readOp "tCMPr_cpsr" = TCMPr_cpsr
 readOp "tCMPhir_cpsr" = TCMPhir_cpsr
 readOp "tTST_cpsr" = TTST_cpsr
 readOp "t2TEQrr_cpsr" = T2TEQrr_cpsr
+readOp "tFP" = TFP
 readOp "tPUSH_r4_7" = TPUSH_r4_7
 readOp "tPUSH_r8_11" = TPUSH_r8_11
 readOp "tPOPcs" = TPOPcs

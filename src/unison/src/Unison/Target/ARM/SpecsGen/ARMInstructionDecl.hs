@@ -3014,6 +3014,7 @@ data ARMInstruction = ABS
                     | TCMPhir_cpsr
                     | TTST_cpsr
                     | T2TEQrr_cpsr
+                    | TFP
                     | TPUSH_r4_7
                     | TPUSH_r8_11
                     | TPOPcs

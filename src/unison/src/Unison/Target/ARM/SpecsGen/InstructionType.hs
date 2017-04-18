@@ -602,7 +602,7 @@ instructionType i
        TADJCALLSTACKDOWN, TADJCALLSTACKUP, TADR, TAND, TANDs, TASRri,
        TASRris, TASRrr, TASRrrs, TBIC, TBICs, TBKPT, TBX_RET_linear,
        TCMNz, TCMPhir, TCMPhir_cpsr, TCMPi8, TCMPi8_cpsr, TCMPr,
-       TCMPr_cpsr, TCPS, TEOR, TEORs, THINT, THLT,
+       TCMPr_cpsr, TCPS, TEOR, TEORs, TFP, THINT, THLT,
        TInt_WIN_eh_sjlj_longjmp, TInt_eh_sjlj_longjmp,
        TInt_eh_sjlj_setjmp, TLDMIA, TLDMIA_UPD, TLDRBi, TLDRBr, TLDRBrz,
        TLDRHi, TLDRHr, TLDRHrz, TLDRLIT_ga_abs, TLDRLIT_ga_pcrel, TLDRSB,

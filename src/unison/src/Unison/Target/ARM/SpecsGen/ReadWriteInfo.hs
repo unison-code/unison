@@ -668,8 +668,8 @@ readWriteInfo i
   | i `elem` [FMSTAT] =
     ([OtherSideEffect FPSCR_NZCV], [OtherSideEffect CPSR])
   | i `elem`
-      [SVC, TAILJMPd, TAILJMPr, TCRETURNdi, TCRETURNri, TSVC, TTAILJMPd,
-       TTAILJMPdND, TTAILJMPr]
+      [SVC, TAILJMPd, TAILJMPr, TCRETURNdi, TCRETURNri, TFP, TSVC,
+       TTAILJMPd, TTAILJMPdND, TTAILJMPr]
     = ([OtherSideEffect SP], [])
   | i `elem`
       [BL, BLX, BLX_pred, BL_pred, BMOVPCB_CALL, BMOVPCRX_CALL, BX_CALL,

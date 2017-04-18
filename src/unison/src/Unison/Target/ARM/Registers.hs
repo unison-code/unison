@@ -30,7 +30,7 @@ registerArray = [RegisterClass GPR, RegisterClass SPR, RegisterClass CCR,
 
 registerAtoms ra
     | ra `elem` concatMap (registers . RegisterClass)
-      [GPR, RGPR, GPRnopc, TcGPR, SPR, CCR, TGPR, F32] =
+      [GPR, RGPR, GPRnopc, TcGPR, GPRsp, SPR, CCR, TGPR, F32] =
       (ra, ra)
 
 -- | Register atoms of 2-width registers
@@ -62,7 +62,7 @@ registerAtoms r = error ("unmatched: registerAtoms " ++ show r)
 -- | Register classes
 regClasses =
     map RegisterClass
-    [GPR, RGPR, GPRnopc, TcGPR, SPR, DPR, CCR, TGPR, ALL, CS, F32] ++
+    [GPR, RGPR, GPRnopc, TcGPR, GPRsp, SPR, DPR, CCR, TGPR, ALL, CS, F32] ++
     map InfiniteRegisterClass [M32, M32t, M64, M128]
 
 -- | Individual registers of each register class
@@ -81,6 +81,8 @@ registers (RegisterClass GPRnopc) =
   registers (RegisterClass GPR) \\ [PC]
 
 registers (RegisterClass TcGPR) = [R0, R1, R2, R3, R12]
+
+registers (RegisterClass GPRsp) = [SP]
 
 registers (RegisterClass SPR) =
     [S0, S1, S2, S3, S4, S5, S6, S7,

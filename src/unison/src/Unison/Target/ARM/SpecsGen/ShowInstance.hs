@@ -3015,6 +3015,7 @@ instance Show ARMInstruction where
         show TCMPhir_cpsr = "tCMPhir_cpsr"
         show TTST_cpsr = "tTST_cpsr"
         show T2TEQrr_cpsr = "t2TEQrr_cpsr"
+        show TFP = "tFP"
         show TPUSH_r4_7 = "tPUSH_r4_7"
         show TPUSH_r8_11 = "tPUSH_r8_11"
         show TPOPcs = "tPOPcs"

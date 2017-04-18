@@ -1188,7 +1188,7 @@ alignedPairs i ([_, _, _, _, _], [_])
 alignedPairs i ([_, _, _, _, _, _], [_]) | i `elem` [MVNsr] = []
 alignedPairs i ([_, _], [_]) | i `elem` [SPACE] = []
 alignedPairs i ([_, _, _, _], [_]) | i `elem` [TADDrSP] = []
-alignedPairs i ([_, _, _, _], [_]) | i `elem` [TADDrSPi] = []
+alignedPairs i ([_, _, _, _], [_]) | i `elem` [TADDrSPi, TFP] = []
 alignedPairs i ([_], []) | i `elem` [TRET_merge] = []
 alignedPairs i ([_], [_])
   | i `elem`
