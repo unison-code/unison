@@ -127,7 +127,7 @@ copies (f, cst, _, _, _, _) False t rs _ [_] | not (null rs) && S.member t cst =
        then [mkNullInstruction, TargetInstruction (pushInstruction rs)]
        else [],
        [if isExitTemp (fCode f) t
-        then [mkNullInstruction, TargetInstruction (popInstruction f t rs)]
+        then [mkNullInstruction, TargetInstruction (popInstruction rs)]
         else []])
 
 -- Do not extend non-pre-allocated temporaries that are only "passed through" a
@@ -152,9 +152,9 @@ pushInstruction [r]
   | r == R8_11 = TPUSH_r8_11
   | r `elem` registers (RegisterClass DPR) = STORE_D
 
-popInstruction f t [r]
-  | r == R4_7 && (none isTailCall $ bCode $ tempBlock (fCode f) t) = TPOPcs_free
-  | r `elem` registers (RegisterClass CS) = TPOPcs
+popInstruction [r]
+  | r == R4_7  = TPOP_r4_7
+  | r == R8_11 = TPOP_r8_11
   | r `elem` registers (RegisterClass DPR) = LOAD_D
 
 defCopies _ _ [Register (TargetRegister R7)] = []
@@ -219,11 +219,11 @@ fromCopy Copy {oCopyIs = [TargetInstruction i], oCopyS = s, oCopyD = d}
     Linear {oIs = [TargetInstruction i],
             oUs = [s],
             oDs = [mkBound mkMachineNullReg]}
-  | i `elem` [TPOPcs, TPOPcs_free] =
+  | i `elem` [TPOP_r4_7, TPOP_r8_11] =
     Linear {oIs = [TargetInstruction i],
             oUs = [mkBound mkMachineNullReg],
             oDs = [d]}
-  | i `elem` [TPOP_RET_linear] =
+  | i `elem` [TPOP_RET_r4_7_linear] =
     Linear {oIs = [TargetInstruction TPOP_RET],
             oUs = defaultUniPred ++
                   map (Register . TargetRegister) (pushRegs R4_7),
@@ -561,10 +561,14 @@ mapToOperationWithGoal t f @ Function {fCode = code, fGoal = Just goal} =
 
 -- | Latency of read-write dependencies
 
--- Allow push instructions to be scheduled in parallel to simulate 'push.w'
+-- Allow push/pop instructions to be scheduled in parallel to simulate
+-- 'push.w'/'pop.w'
 readWriteLatency _
   ((TargetInstruction TPUSH_r4_7, _),  Write)
   ((TargetInstruction TPUSH_r8_11, _), Write) = 0
+readWriteLatency _
+  ((TargetInstruction TPOP_r4_7, _),  Write)
+  ((TargetInstruction TPOP_r8_11, _), Write) = 0
 readWriteLatency _ (_, Read) (_, Write) = 0
 readWriteLatency _ ((_, VirtualType (DelimiterType InType)), _) (_, _) = 1
 readWriteLatency _ ((_, VirtualType FunType), _) (_, _) = 1

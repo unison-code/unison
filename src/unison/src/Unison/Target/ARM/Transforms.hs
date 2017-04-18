@@ -387,7 +387,8 @@ defineFP f @ Function {fCode = code} =
 
 bN (.., return, ..):
     (..)
-    op: [p1{ -, t1}] <- { -, tPOPcs_free} [p0{ -, t0, t0'..}]
+    o1: [p1{ -, t1}]  <- { -, tPOP_r4_7}  [p0{ -, t0, t0'..}]
+    o2: [p4{ -, t4}]  <- { -, tPOP_r8_11} [p3{ -, t3, t3'..}]
     (..)
     or: [] <- tBX_RET [14,_]
     (..)
@@ -396,30 +397,39 @@ into:
 
 bN (.., return, ..):
     (..)
-    op: [p1{ -, t1}, p2{ -, t2}] <- { -, tPOP_RET_linear} <- [p0{ -, t0, t0'..}]
-    or: [p3{ -, t3}] <- { -, tBX_RET_linear} []
-    om: [] <- tRET_merge [p4{t2, t3}]
+    o1: [p1{ -, t1}, p2{ -, t2}] <- { -, tPOP_RET_r4_7_linear} <- [p0{ -, t0, t0'..}]
+    o2: [p4{ -, t4}]  <- { -, tPOP_r8_11} [p3{ -, t3, t3'..}]
+    or: [p5{ -, t5}] <- { -, tBX_RET_linear} []
+    om: [] <- tRET_merge [p6{t2, t5}]
     (..)
 -}
 
 expandRets _ (
   SingleOperation {
      oOpr = Copy {oCopyIs = [General NullInstruction,
-                             TargetInstruction TPOPcs_free],
+                             TargetInstruction TPOP_r4_7],
                   oCopyS = MOperand {altTemps = _ : t0s},
                   oCopyD = MOperand {altTemps = [_, t1]}}}
+  :
+  SingleOperation {
+    oOpr = Copy {oCopyIs = [General NullInstruction,
+                            TargetInstruction TPOP_r8_11],
+                 oCopyS = MOperand {altTemps = _ : t3s},
+                 oCopyD = MOperand {altTemps = [_, t4]}}}
   :
   code) (tid, oid, pid) =
   let mkOper id ts = mkMOperand (pid + id) ts Nothing
       isTBX_RET = isMandNaturalWith ((==) TBX_RET)
-      [t2, t3]  = map mkTemp [tid, tid + 1]
-      op        = mkOpt oid TPOP_RET_linear [mkOper 0 t0s]
+      [t2, t5]  = map mkTemp [tid, tid + 1]
+      o1        = mkOpt oid TPOP_RET_r4_7_linear [mkOper 0 t0s]
                   [mkOper 1 [t1], mkOper 2 [t2]]
-      or        = mkOpt (oid + 1) TBX_RET_linear [] [mkOper 3 [t3]]
-      om        = mkBranch (oid + 2) [TargetInstruction TRET_merge]
-                  [mkOper 4 [t2, t3]]
+      o2        = mkOpt (oid + 1) TPOP_r8_11 [mkOper 3 t3s]
+                  [mkOper 4 [t4]]
+      or        = mkOpt (oid + 2) TBX_RET_linear [] [mkOper 5 [t5]]
+      om        = mkBranch (oid + 3) [TargetInstruction TRET_merge]
+                  [mkOper 6 [t2, t5]]
       code'     = concatMap
-                  (\o -> if isTBX_RET o then [op, or, om] else [o]) code
+                  (\o -> if isTBX_RET o then [o1, o2, or, om] else [o]) code
   in ([], code')
 
 expandRets _ (o : code) _ = (code, [o])

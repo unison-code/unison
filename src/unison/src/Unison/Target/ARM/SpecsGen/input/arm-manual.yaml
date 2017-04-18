@@ -1002,7 +1002,7 @@ instruction-set:
            - SP:              register
           itinerary:          NoItinerary
 
-        - id:                 tPOPcs
+        - id:                 tPOP_r4_7
           type:               copy
           operands:
            - src:             [register, use, M128]
@@ -1016,19 +1016,19 @@ instruction-set:
            - SP:              register
           itinerary:          IIC_iPop
 
-        - id:                 tPOPcs_free
+        - id:                 tPOP_r8_11
           type:               copy
           operands:
            - src:             [register, use, M128]
            - dst:             [register, def, CS]
           uses:               [src]
           defines:            [dst]
-          size:               0
+          size:               2
           affects:
            - SP:              register
           affected-by:
            - SP:              register
-          itinerary:          IIC_iPop
+          itinerary:          NoItinerary
 
         - id:                 MEMCPY_4
           type:               linear
@@ -1114,7 +1114,7 @@ instruction-set:
           uses:               []
           defines:            [dst]
 
-        - id:                 tPOP_RET_linear
+        - id:                 tPOP_RET_r4_7_linear
           type:               copy
           operands:
            - src:             [register, use, M128]

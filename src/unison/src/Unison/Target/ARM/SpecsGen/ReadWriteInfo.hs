@@ -417,8 +417,8 @@ readWriteInfo i
        TLDRr, TLDRrz, TLDRspi, TLEApcrel, TLEApcrelJT, TLSLri, TLSLris,
        TLSLrr, TLSLrrs, TLSRri, TLSRris, TLSRrr, TLSRrrs, TMOVCCr_pseudo,
        TMOVi8, TMOVi8s, TMOVr, TMUL, TMULz, TMVN, TMVNs, TORR, TORRs,
-       TPICADD, TPOP_RET_linear, TRET_merge, TREV, TREV16, TREVSH, TROR,
-       TRORs, TRSB, TRSBs, TSETEND, TSTRBi, TSTRBr, TSTRBrz, TSTRHi,
+       TPICADD, TPOP_RET_r4_7_linear, TRET_merge, TREV, TREV16, TREVSH,
+       TROR, TRORs, TRSB, TRSBs, TSETEND, TSTRBi, TSTRBr, TSTRBrz, TSTRHi,
        TSTRHr, TSTRHrz, TSTRi, TSTRr, TSTRrz, TSTRspi, TSUBi3, TSUBi3s,
        TSUBi8, TSUBi8s, TSUBrr, TSUBrrs, TSUBspi, TSXTB, TSXTH, TSXTHz,
        TTRAP, TTST_cpsr, TUDF, TUXTB, TUXTBz, TUXTH, TUXTHz]
@@ -560,7 +560,7 @@ readWriteInfo i
     ([], [OtherSideEffect R7, OtherSideEffect LR, OtherSideEffect SP])
   | i `elem`
       [ADJCALLSTACKDOWN, ADJCALLSTACKUP, TADJCALLSTACKDOWN,
-       TADJCALLSTACKUP, TPOPcs, TPOPcs_free, TPUSH_r4_7, TPUSH_r8_11]
+       TADJCALLSTACKUP, TPOP_r4_7, TPOP_r8_11, TPUSH_r4_7, TPUSH_r8_11]
     = ([], [OtherSideEffect SP])
   | i `elem`
       [FAULTING_LOAD_OP, LDAEX, LDAEXB, LDAEXD, LDAEXH, LDMDA, LDMDA_UPD,

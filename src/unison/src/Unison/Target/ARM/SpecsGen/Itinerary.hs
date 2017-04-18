@@ -771,8 +771,8 @@ itinerary i
   | i `elem` [MVNr, T2MVNr, TMVN, TMVNs] = IIC_iMVNr
   | i `elem` [T2MVNs] = IIC_iMVNsi
   | i `elem` [MVNsi, MVNsr] = IIC_iMVNsr
-  | i `elem` [TPOP, TPOPcs, TPOPcs_free] = IIC_iPop
-  | i `elem` [TPOP_RET, TPOP_RET_linear] = IIC_iPop_Br
+  | i `elem` [TPOP, TPOP_r4_7] = IIC_iPop
+  | i `elem` [TPOP_RET, TPOP_RET_r4_7_linear] = IIC_iPop_Br
   | i `elem`
       [T2STRBT, T2STRBi12, T2STRBi12_fi, T2STRBi8, T2STRHT, T2STRHi12,
        T2STRHi12_fi, T2STRHi8, TSTRBi, TSTRHi]
@@ -1001,7 +1001,7 @@ itinerary i
        T2USAT16, T2USAX, T2USUB16, T2USUB8, TADDframe, TADJCALLSTACKDOWN,
        TADJCALLSTACKUP, TBKPT, TCPS, THINT, THLT,
        TInt_WIN_eh_sjlj_longjmp, TInt_eh_sjlj_longjmp,
-       TInt_eh_sjlj_setjmp, TLDRpci_pic, TMOVCCr_pseudo, TPUSH_r8_11,
-       TRET_merge, TSETEND]
+       TInt_eh_sjlj_setjmp, TLDRpci_pic, TMOVCCr_pseudo, TPOP_r8_11,
+       TPUSH_r8_11, TRET_merge, TSETEND]
     = NoItinerary
 

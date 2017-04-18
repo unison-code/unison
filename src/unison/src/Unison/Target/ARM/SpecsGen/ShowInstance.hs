@@ -3018,8 +3018,8 @@ instance Show ARMInstruction where
         show TFP = "tFP"
         show TPUSH_r4_7 = "tPUSH_r4_7"
         show TPUSH_r8_11 = "tPUSH_r8_11"
-        show TPOPcs = "tPOPcs"
-        show TPOPcs_free = "tPOPcs_free"
+        show TPOP_r4_7 = "tPOP_r4_7"
+        show TPOP_r8_11 = "tPOP_r8_11"
         show MEMCPY_4 = "MEMCPY_4"
         show T2LDMIA_4 = "t2LDMIA_4"
         show T2LDMIA_UPD_4 = "t2LDMIA_UPD_4"
@@ -3027,5 +3027,5 @@ instance Show ARMInstruction where
         show T2STMIA_UPD_4 = "t2STMIA_UPD_4"
         show TRET_merge = "tRET_merge"
         show TBX_RET_linear = "tBX_RET_linear"
-        show TPOP_RET_linear = "tPOP_RET_linear"
+        show TPOP_RET_r4_7_linear = "tPOP_RET_r4_7_linear"
 

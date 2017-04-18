@@ -3017,8 +3017,8 @@ data ARMInstruction = ABS
                     | TFP
                     | TPUSH_r4_7
                     | TPUSH_r8_11
-                    | TPOPcs
-                    | TPOPcs_free
+                    | TPOP_r4_7
+                    | TPOP_r8_11
                     | MEMCPY_4
                     | T2LDMIA_4
                     | T2LDMIA_UPD_4
@@ -3026,6 +3026,6 @@ data ARMInstruction = ABS
                     | T2STMIA_UPD_4
                     | TRET_merge
                     | TBX_RET_linear
-                    | TPOP_RET_linear
+                    | TPOP_RET_r4_7_linear
                     deriving (Eq, Ord)
 

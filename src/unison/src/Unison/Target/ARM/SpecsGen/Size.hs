@@ -107,7 +107,7 @@ size i
        T2MOVsi, T2MOVsr, TADDframe, TADJCALLSTACKDOWN, TADJCALLSTACKUP,
        TInt_WIN_eh_sjlj_longjmp, TInt_eh_sjlj_longjmp,
        TInt_eh_sjlj_setjmp, TLDRLIT_ga_abs, TLDRLIT_ga_pcrel, TLDRpci_pic,
-       TMOVCCr_pseudo, TPOPcs_free, TRET_merge]
+       TMOVCCr_pseudo, TRET_merge]
     = 0
   | i `elem`
       [LOAD_T, MOVE, STORE_T, T2IT, T2SETPAN, TADC, TADDhirr, TADDhirrs,
@@ -122,12 +122,12 @@ size i
        TLDRspi, TLEApcrel, TLEApcrelJT, TLSLri, TLSLris, TLSLrr, TLSLrrs,
        TLSRri, TLSRris, TLSRrr, TLSRrrs, TMOVSr, TMOVi8, TMOVi8s, TMOVr,
        TMUL, TMULz, TMVN, TMVNs, TORR, TORRs, TPICADD, TPOP, TPOP_RET,
-       TPOP_RET_linear, TPOPcs, TPUSH, TPUSH_r4_7, TPUSH_r8_11, TREV,
-       TREV16, TREVSH, TROR, TRORs, TRSB, TRSBs, TSBC, TSETEND,
-       TSTMIA_UPD, TSTRBi, TSTRBr, TSTRBrz, TSTRHi, TSTRHr, TSTRHrz,
-       TSTRi, TSTRr, TSTRrz, TSTRspi, TSUBi3, TSUBi3s, TSUBi8, TSUBi8s,
-       TSUBrr, TSUBrrs, TSUBspi, TSVC, TSXTB, TSXTH, TSXTHz, TTRAP, TTST,
-       TTST_cpsr, TUDF, TUXTB, TUXTBz, TUXTH, TUXTHz]
+       TPOP_RET_r4_7_linear, TPOP_r4_7, TPOP_r8_11, TPUSH, TPUSH_r4_7,
+       TPUSH_r8_11, TREV, TREV16, TREVSH, TROR, TRORs, TRSB, TRSBs, TSBC,
+       TSETEND, TSTMIA_UPD, TSTRBi, TSTRBr, TSTRBrz, TSTRHi, TSTRHr,
+       TSTRHrz, TSTRi, TSTRr, TSTRrz, TSTRspi, TSUBi3, TSUBi3s, TSUBi8,
+       TSUBi8s, TSUBrr, TSUBrrs, TSUBspi, TSVC, TSXTB, TSXTH, TSXTHz,
+       TTRAP, TTST, TTST_cpsr, TUDF, TUXTB, TUXTBz, TUXTH, TUXTHz]
     = 2
   | i `elem`
       [ADCri, ADCrr, ADCrsi, ADCrsr, ADDSri, ADDSrr, ADDSrsi, ADDSrsr,
