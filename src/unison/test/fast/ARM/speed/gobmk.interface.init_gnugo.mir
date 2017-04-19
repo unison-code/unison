@@ -73,7 +73,7 @@ body:             |
 ---
 unison-test-target: ARM
 unison-test-goal: speed
-unison-test-expected-cost: 4
+unison-test-expected-cost: 11
 unison-test-expected-proven: true
-unison-test-expected-has-solution: true
+unison-test-expected-has-solution: false
 ...

@@ -94,7 +94,7 @@ body:             |
 ---
 unison-test-target: ARM
 unison-test-goal: size
-unison-test-expected-cost: 13
+unison-test-expected-cost: 14
 unison-test-expected-proven: true
 unison-test-expected-has-solution: true
 ...
