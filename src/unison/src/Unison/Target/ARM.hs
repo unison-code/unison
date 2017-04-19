@@ -226,7 +226,8 @@ fromCopy Copy {oCopyIs = [TargetInstruction i], oCopyS = s, oCopyD = d}
   | i `elem` [TPOP_RET_r4_7_linear] =
     Linear {oIs = [TargetInstruction TPOP_RET],
             oUs = defaultUniPred ++
-                  map (Register . TargetRegister) (pushRegs R4_7),
+                  map (Register . TargetRegister)
+                  (pushRegs TPOP_RET_r4_7_linear),
             oDs = []}
 fromCopy o = error ("unmatched pattern: fromCopy " ++ show o)
 
@@ -435,7 +436,7 @@ processTailCalls mi = mi
 
 -- | Target dependent post-processing functions
 
-postProcess = [expandPseudos, removeAllNops, removeFrameIndex,
+postProcess = [expandPseudos, mergePushPops, removeAllNops, removeFrameIndex,
                normalizeJumpMerges, removeEmptyBundles, reorderImplicitOperands,
                exposeCPSRRegister, flip addImplicitRegs (target, []),
                demoteImplicitOperands]
@@ -454,17 +455,34 @@ expandPseudo mi @ MachineSingle {
 expandPseudo mi @ MachineSingle {msOpcode = MachineTargetOpc TFP} =
   [[mi {msOpcode = mkMachineTargetOpc TADDrSPi}]]
 
-expandPseudo mi @ MachineSingle {
-  msOpcode   = MachineTargetOpc i,
-  msOperands = [_, MachineReg {mrName = r}]}
-  | i `elem` [TPUSH_r4_7, TPUSH_r8_11] =
-    [[mi {msOpcode   = mkMachineTargetOpc TPUSH,
-          msOperands = defaultMIRPred ++ map mkMachineReg (pushRegs r)}]]
-
 expandPseudo mi = [[mi]]
 
-pushRegs R4_7  = [R4, R5, R6, R7]
-pushRegs R8_11 = [R8, R9, R10, R11]
+mergePushPops = mapToMachineBlock mergePushPopsInBlock
+
+mergePushPopsInBlock mb @ MachineBlock {mbInstructions = mis} =
+  let mis' = map mergePushPop mis
+  in mb {mbInstructions = mis'}
+
+mergePushPop
+  MachineBundle {mbInstrs =
+                  [MachineSingle {msOpcode = MachineTargetOpc TPUSH_r4_7},
+                   MachineSingle {msOpcode = MachineTargetOpc TPUSH_r8_11}]} =
+    let sp = mkMachineReg SP
+        rs = map mkMachineReg $
+             (pushRegs TPUSH_r4_7) ++ (pushRegs TPUSH_r8_11) ++ [LR]
+    in mkMachineSingle (mkMachineTargetOpc T2STMDB_UPD) []
+       ([sp, sp] ++ defaultMIRPred ++ rs)
+mergePushPop mi @ MachineBundle {mbInstrs = mis} =
+  mi {mbInstrs = map mergePushPop mis}
+mergePushPop mi @ MachineSingle {msOpcode = MachineTargetOpc TPUSH_r4_7} =
+  mi {msOpcode   = mkMachineTargetOpc TPUSH,
+      msOperands = defaultMIRPred ++
+                   map mkMachineReg (pushRegs TPUSH_r4_7 ++ [LR])}
+mergePushPop mi = mi
+
+pushRegs i
+  | i `elem` [TPUSH_r4_7, TPOP_RET_r4_7_linear] = [R4, R5, R6, R7]
+  | i `elem` [TPUSH_r8_11] = [R8, R9, R10, R11]
 
 removeAllNops =
   filterMachineInstructions
