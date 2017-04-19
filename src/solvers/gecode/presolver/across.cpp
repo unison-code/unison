@@ -88,7 +88,7 @@ void alt_across_to_json(Parameters& input,
     }
     PresolverSetAcross sa;
     sa.o = OT.first;
-    sa.ras = E;
+    // sa.ras = E; // [MC] 19 April 2017
     sa.tsets = copysets;
     input.set_across.push_back(sa);
   }
