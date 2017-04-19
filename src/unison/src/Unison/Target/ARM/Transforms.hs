@@ -417,9 +417,8 @@ expandRets _ (
                  oCopyS = MOperand {altTemps = _ : t3s},
                  oCopyD = MOperand {altTemps = [_, t4]}}}
   :
-  code) (tid, oid, pid) =
+  code) (tid, oid, pid) | any isTBX_RET code =
   let mkOper id ts = mkMOperand (pid + id) ts Nothing
-      isTBX_RET = isMandNaturalWith ((==) TBX_RET)
       [t2, t5]  = map mkTemp [tid, tid + 1]
       o1        = mkOpt oid TPOP_RET_r4_7_linear [mkOper 0 t0s]
                   [mkOper 1 [t1], mkOper 2 [t2]]
@@ -433,6 +432,8 @@ expandRets _ (
   in ([], code')
 
 expandRets _ (o : code) _ = (code, [o])
+
+isTBX_RET = isMandNaturalWith ((==) TBX_RET)
 
 mkOpt oid inst us ds =
   makeOptional $ mkLinear oid [TargetInstruction inst] us ds
