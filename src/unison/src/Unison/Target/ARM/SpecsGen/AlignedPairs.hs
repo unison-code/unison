@@ -1198,7 +1198,6 @@ alignedPairs i ([_], [_])
     = []
 alignedPairs i ([_], [_, _])
   | i `elem` [ABS, MOVsra_flag, MOVsrl_flag, T2ABS] = []
-alignedPairs i ([_], [_, _]) | i `elem` [TPOP_RET_r4_7_linear] = []
 alignedPairs i ([src, _, _, _, _], [src'])
   | i `elem` [BFI, T2BFI] = [(src, src')]
 alignedPairs i ([_, _, _, _], []) | i `elem` [VSTMQIA] = []
@@ -1277,6 +1276,11 @@ alignedPairs i ([src1, _, _, _, _], [src1'])
        VQRDMLAHv4i16, VQRDMLAHv4i32, VQRDMLAHv8i16, VQRDMLSHv2i32,
        VQRDMLSHv4i16, VQRDMLSHv4i32, VQRDMLSHv8i16]
     = [(src1, src1')]
+alignedPairs i ([_, _], [_, _])
+  | i `elem` [TPOP2_r4_11, TPOP2_r4_7, TPUSH2_r4_11, TPUSH2_r4_7] =
+    []
+alignedPairs i ([_, _], [_, _, _])
+  | i `elem` [TPOP2_r4_11_linear, TPOP2_r4_7_linear] = []
 alignedPairs i ([_, _, _, _], [_, _]) | i `elem` [VMOVRRS] = []
 alignedPairs i ([_, _, _, _], [_, _]) | i `elem` [VMOVSRR] = []
 alignedPairs i ([src1, src2, _, _], [src1', src2'])

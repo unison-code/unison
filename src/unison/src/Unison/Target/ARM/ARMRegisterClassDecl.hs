@@ -15,6 +15,8 @@ data ARMRegisterClass =
     ALL |
     CCR |
     CS |
+    CSL |
+    CSH |
     DPair |
     DPR |
     DPR_8 |

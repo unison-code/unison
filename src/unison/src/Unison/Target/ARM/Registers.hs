@@ -62,7 +62,7 @@ registerAtoms r = error ("unmatched: registerAtoms " ++ show r)
 -- | Register classes
 regClasses =
     map RegisterClass
-    [GPR, RGPR, GPRnopc, TcGPR, GPRsp, SPR, DPR, CCR, TGPR, ALL, CS, F32] ++
+    [GPR, RGPR, GPRnopc, TcGPR, GPRsp, SPR, DPR, CCR, TGPR, ALL, CS, CSL, CSH, F32] ++
     map InfiniteRegisterClass [M32, M32t, M64, M128]
 
 -- | Individual registers of each register class
@@ -98,6 +98,10 @@ registers (RegisterClass DPR) =
      D8, D9, D10, D11, D12, D13, D14, D15]
 
 registers (RegisterClass CS) = [R4_7, R8_11]
+
+registers (RegisterClass CSL) = [R4_7]
+
+registers (RegisterClass CSH) = [R8_11]
 
 registers (RegisterClass CCR) = [CPSR]
 

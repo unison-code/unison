@@ -771,8 +771,11 @@ itinerary i
   | i `elem` [MVNr, T2MVNr, TMVN, TMVNs] = IIC_iMVNr
   | i `elem` [T2MVNs] = IIC_iMVNsi
   | i `elem` [MVNsi, MVNsr] = IIC_iMVNsr
-  | i `elem` [TPOP, TPOP_r4_7] = IIC_iPop
-  | i `elem` [TPOP_RET, TPOP_RET_r4_7_linear] = IIC_iPop_Br
+  | i `elem`
+      [TPOP, TPOP2_r4_11, TPOP2_r4_11_linear, TPOP2_r4_7,
+       TPOP2_r4_7_linear, TPOP_r4_7]
+    = IIC_iPop
+  | i `elem` [TPOP_RET] = IIC_iPop_Br
   | i `elem`
       [T2STRBT, T2STRBi12, T2STRBi12_fi, T2STRBi8, T2STRHT, T2STRHi12,
        T2STRHi12_fi, T2STRHi8, TSTRBi, TSTRHi]
@@ -800,7 +803,8 @@ itinerary i
     = IIC_iStore_iu
   | i `elem`
       [STMDA, STMDB, STMIA, STMIB, SysSTMDA, SysSTMDB, SysSTMIA,
-       SysSTMIB, T2STMDB, T2STMIA, T2STMIA_4, TPUSH, TPUSH_r4_7]
+       SysSTMIB, T2STMDB, T2STMIA, T2STMIA_4, TPUSH, TPUSH2_r4_11,
+       TPUSH2_r4_7, TPUSH_r4_7]
     = IIC_iStore_m
   | i `elem`
       [STMDA_UPD, STMDB_UPD, STMIA_UPD, STMIB_UPD, SysSTMDA_UPD,

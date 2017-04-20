@@ -1002,6 +1002,38 @@ instruction-set:
            - SP:              register
           itinerary:          NoItinerary
 
+        - id:                 tPUSH2_r4_7
+          type:               copy
+          operands:
+           - src1:            [register, use, CSL]
+           - src2:            [register, use, CSH]
+           - dst1:            [register, def, M128]
+           - dst2:            [register, def, CSH]
+          uses:               [src1, src2]
+          defines:            [dst1, dst2]
+          size:               2
+          affects:
+           - SP:              register
+          affected-by:
+           - SP:              register
+          itinerary:          IIC_iStore_m
+
+        - id:                 tPUSH2_r4_11
+          type:               copy
+          operands:
+           - src1:            [register, use, CSL]
+           - src2:            [register, use, CSH]
+           - dst1:            [register, def, M128]
+           - dst2:            [register, def, M128]
+          uses:               [src1, src2]
+          defines:            [dst1, dst2]
+          size:               4
+          affects:
+           - SP:              register
+          affected-by:
+           - SP:              register
+          itinerary:          IIC_iStore_m
+
         - id:                 tPOP_r4_7
           type:               copy
           operands:
@@ -1029,6 +1061,58 @@ instruction-set:
           affected-by:
            - SP:              register
           itinerary:          NoItinerary
+
+        - id:                 tPOP2_r4_7
+          type:               copy
+          operands:
+           - src1:            [register, use, M128]
+           - src2:            [register, use, CSH]
+           - dst1:            [register, def, CSL]
+           - dst2:            [register, def, CSH]
+          uses:               [src1, src2]
+          defines:            [dst1, dst2]
+          size:               2
+          affects:
+           - SP:              register
+          affected-by:
+           - SP:              register
+          itinerary:          IIC_iPop
+
+        - id:                 tPOP2_r4_11
+          type:               copy
+          operands:
+           - src1:            [register, use, M128]
+           - src2:            [register, use, M128]
+           - dst1:            [register, def, CSL]
+           - dst2:            [register, def, CSH]
+          uses:               [src1, src2]
+          defines:            [dst1, dst2]
+          size:               4
+          affects:
+           - SP:              register
+          affected-by:
+           - SP:              register
+          itinerary:          IIC_iPop
+
+        - id:                 tPOP2_r4_7_linear
+          parent:             tPOP2_r4_7
+          operands:
+           - src1:            [register, use, M128]
+           - src2:            [register, use, CSH]
+           - dst1:            [register, def, CSL]
+           - dst2:            [register, def, CSH]
+           - dst':            [register, def, F32, -1]
+          defines:            [dst1, dst2, dst']
+
+        - id:                 tPOP2_r4_11_linear
+          parent:             tPOP2_r4_11
+          operands:
+           - src1:            [register, use, M128]
+           - src2:            [register, use, M128]
+           - dst1:            [register, def, CSL]
+           - dst2:            [register, def, CSH]
+           - dst':            [register, def, F32, -1]
+          defines:            [dst1, dst2, dst']
 
         - id:                 MEMCPY_4
           type:               linear
@@ -1113,16 +1197,3 @@ instruction-set:
            - dst:             [register, def, F32, -1]
           uses:               []
           defines:            [dst]
-
-        - id:                 tPOP_RET_r4_7_linear
-          type:               copy
-          operands:
-           - src:             [register, use, M128]
-           - dst:             [register, def, CS]
-           - dst':            [register, def, F32, -1]
-          uses:               [src]
-          defines:            [dst, dst']
-          size:               2
-          affects:
-          affected-by:
-          itinerary:          IIC_iPop_Br

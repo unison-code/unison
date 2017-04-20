@@ -20,8 +20,9 @@ instructionType i
     = CallInstructionType
   | i `elem`
       [LOAD, LOAD_D, LOAD_T, MOVE, MOVE_ALL, MOVE_D, STORE, STORE_D,
-       STORE_T, TPOP_RET_r4_7_linear, TPOP_r4_7, TPOP_r8_11, TPUSH_r4_7,
-       TPUSH_r8_11]
+       STORE_T, TPOP2_r4_11, TPOP2_r4_11_linear, TPOP2_r4_7,
+       TPOP2_r4_7_linear, TPOP_r4_7, TPOP_r8_11, TPUSH2_r4_11,
+       TPUSH2_r4_7, TPUSH_r4_7, TPUSH_r8_11]
     = CopyInstructionType
   | i `elem`
       [ABS, ADCri, ADCrr, ADCrsi, ADCrsr, ADDSri, ADDSrr, ADDSrsi,

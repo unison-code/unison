@@ -24,6 +24,16 @@ operandInfo i
   | i `elem` [TPUSH_r4_7, TPUSH_r8_11] =
     ([TemporaryInfo (RegisterClass CS) 0 False],
      [TemporaryInfo (InfiniteRegisterClass M128) 1 False])
+  | i `elem` [TPUSH2_r4_7] =
+    ([TemporaryInfo (RegisterClass CSL) 0 False,
+      TemporaryInfo (RegisterClass CSH) 0 False],
+     [TemporaryInfo (InfiniteRegisterClass M128) 1 False,
+      TemporaryInfo (RegisterClass CSH) 1 False])
+  | i `elem` [TPUSH2_r4_11] =
+    ([TemporaryInfo (RegisterClass CSL) 0 False,
+      TemporaryInfo (RegisterClass CSH) 0 False],
+     [TemporaryInfo (InfiniteRegisterClass M128) 1 False,
+      TemporaryInfo (InfiniteRegisterClass M128) 1 False])
   | i `elem`
       [MOVE_D, VCVTANSDf, VCVTANSDh, VCVTANUDf, VCVTANUDh, VCVTMNSDf,
        VCVTMNSDh, VCVTMNUDf, VCVTMNUDh, VCVTNNSDf, VCVTNNSDh, VCVTNNUDf,
@@ -1856,9 +1866,27 @@ operandInfo i
   | i `elem` [TPOP_r4_7, TPOP_r8_11] =
     ([TemporaryInfo (InfiniteRegisterClass M128) 0 False],
      [TemporaryInfo (RegisterClass CS) 1 False])
-  | i `elem` [TPOP_RET_r4_7_linear] =
-    ([TemporaryInfo (InfiniteRegisterClass M128) 0 False],
-     [TemporaryInfo (RegisterClass CS) 1 False,
+  | i `elem` [TPOP2_r4_7] =
+    ([TemporaryInfo (InfiniteRegisterClass M128) 0 False,
+      TemporaryInfo (RegisterClass CSH) 0 False],
+     [TemporaryInfo (RegisterClass CSL) 1 False,
+      TemporaryInfo (RegisterClass CSH) 1 False])
+  | i `elem` [TPOP2_r4_7_linear] =
+    ([TemporaryInfo (InfiniteRegisterClass M128) 0 False,
+      TemporaryInfo (RegisterClass CSH) 0 False],
+     [TemporaryInfo (RegisterClass CSL) 1 False,
+      TemporaryInfo (RegisterClass CSH) 1 False,
+      TemporaryInfo (RegisterClass F32) 0 False])
+  | i `elem` [TPOP2_r4_11] =
+    ([TemporaryInfo (InfiniteRegisterClass M128) 0 False,
+      TemporaryInfo (InfiniteRegisterClass M128) 0 False],
+     [TemporaryInfo (RegisterClass CSL) 1 False,
+      TemporaryInfo (RegisterClass CSH) 1 False])
+  | i `elem` [TPOP2_r4_11_linear] =
+    ([TemporaryInfo (InfiniteRegisterClass M128) 0 False,
+      TemporaryInfo (InfiniteRegisterClass M128) 0 False],
+     [TemporaryInfo (RegisterClass CSL) 1 False,
+      TemporaryInfo (RegisterClass CSH) 1 False,
       TemporaryInfo (RegisterClass F32) 0 False])
   | i `elem` [LOAD] =
     ([TemporaryInfo (InfiniteRegisterClass M32) 0 False],

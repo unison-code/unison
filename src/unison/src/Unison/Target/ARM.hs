@@ -215,20 +215,20 @@ fromCopy Copy {oCopyIs = [TargetInstruction i], oCopyS = s, oCopyD = d}
             oUs  = [mkOprArmSP, mkBoundMachineFrameObject i s] ++
                    defaultUniPred,
             oDs  = [d]}
-  | i `elem` [TPUSH_r4_7, TPUSH_r8_11] =
-    Linear {oIs = [TargetInstruction i],
-            oUs = [s],
-            oDs = [mkBound mkMachineNullReg]}
-  | i `elem` [TPOP_r4_7, TPOP_r8_11] =
-    Linear {oIs = [TargetInstruction i],
-            oUs = [mkBound mkMachineNullReg],
-            oDs = [d]}
-  | i `elem` [TPOP_RET_r4_7_linear] =
-    Linear {oIs = [TargetInstruction TPOP_RET],
-            oUs = defaultUniPred ++
-                  map (Register . TargetRegister)
-                  (pushRegs TPOP_RET_r4_7_linear),
-            oDs = []}
+  | i `elem` [TPUSH2_r4_7, TPUSH2_r4_11] =
+    let w = i == TPUSH2_r4_11
+    in Linear {oIs = [TargetInstruction (fromCopyInstr i (s, d))],
+               oUs = defaultUniPred ++
+                     map (Register . TargetRegister)
+                     ((if w then [SP] else []) ++ pushRegs i ++ [LR]),
+               oDs = if w then [mkOprArmSP] else []}
+  | i `elem` [TPOP2_r4_7, TPOP2_r4_7_linear, TPOP2_r4_11, TPOP2_r4_11_linear] =
+    let w = i `elem` [TPOP2_r4_11, TPOP2_r4_11_linear]
+    in Linear {oIs = [TargetInstruction (fromCopyInstr i (s, d))],
+               oUs = defaultUniPred ++
+                     map (Register . TargetRegister)
+                     ((if w then [SP] else []) ++ pushRegs i),
+               oDs = if w then [mkOprArmSP] else []}
 fromCopy o = error ("unmatched pattern: fromCopy " ++ show o)
 
 mkOprArmSP = Register $ mkTargetRegister SP
@@ -254,6 +254,12 @@ fromCopyInstr MOVE_ALL (s, d)
   | isGPR s && isSPR d = VMOVSR
   | isSPR s && isGPR d = VMOVRS
   | isSPR s && isSPR d = VMOVS
+fromCopyInstr TPUSH2_r4_7 _  = TPUSH
+fromCopyInstr TPUSH2_r4_11 _ = T2STMDB_UPD
+fromCopyInstr i _
+  | i `elem` [TPOP2_r4_7, TPOP2_r4_7_linear] = TPOP_RET
+fromCopyInstr i _
+  | i `elem` [TPOP2_r4_11, TPOP2_r4_11_linear] = T2LDMIA_RET
 
 isSPR r = rTargetReg (regId r) `elem` registers (RegisterClass SPR)
 isGPR r = rTargetReg (regId r) `elem` registers (RegisterClass GPR)
@@ -436,7 +442,7 @@ processTailCalls mi = mi
 
 -- | Target dependent post-processing functions
 
-postProcess = [expandPseudos, mergePushPops, removeAllNops, removeFrameIndex,
+postProcess = [expandPseudos, removeAllNops, removeFrameIndex,
                normalizeJumpMerges, removeEmptyBundles, reorderImplicitOperands,
                exposeCPSRRegister, flip addImplicitRegs (target, []),
                demoteImplicitOperands]
@@ -457,32 +463,12 @@ expandPseudo mi @ MachineSingle {msOpcode = MachineTargetOpc TFP} =
 
 expandPseudo mi = [[mi]]
 
-mergePushPops = mapToMachineBlock mergePushPopsInBlock
-
-mergePushPopsInBlock mb @ MachineBlock {mbInstructions = mis} =
-  let mis' = map mergePushPop mis
-  in mb {mbInstructions = mis'}
-
-mergePushPop
-  MachineBundle {mbInstrs =
-                  [MachineSingle {msOpcode = MachineTargetOpc TPUSH_r4_7},
-                   MachineSingle {msOpcode = MachineTargetOpc TPUSH_r8_11}]} =
-    let sp = mkMachineReg SP
-        rs = map mkMachineReg $
-             (pushRegs TPUSH_r4_7) ++ (pushRegs TPUSH_r8_11) ++ [LR]
-    in mkMachineSingle (mkMachineTargetOpc T2STMDB_UPD) []
-       ([sp, sp] ++ defaultMIRPred ++ rs)
-mergePushPop mi @ MachineBundle {mbInstrs = mis} =
-  mi {mbInstrs = map mergePushPop mis}
-mergePushPop mi @ MachineSingle {msOpcode = MachineTargetOpc TPUSH_r4_7} =
-  mi {msOpcode   = mkMachineTargetOpc TPUSH,
-      msOperands = defaultMIRPred ++
-                   map mkMachineReg (pushRegs TPUSH_r4_7 ++ [LR])}
-mergePushPop mi = mi
-
 pushRegs i
-  | i `elem` [TPUSH_r4_7, TPOP_RET_r4_7_linear] = [R4, R5, R6, R7]
-  | i `elem` [TPUSH_r8_11] = [R8, R9, R10, R11]
+  | i `elem` [TPUSH2_r4_7, TPOP2_r4_7, TPOP2_r4_7_linear] =
+      [R4, R5, R6, R7]
+  | i `elem` [TPUSH2_r4_11, TPOP2_r4_11, TPOP2_r4_11_linear] =
+      pushRegs TPUSH2_r4_7 ++ [R8, R9, R10, R11]
+pushRegs i = error ("unmatched: pushRegs " ++ show i)
 
 removeAllNops =
   filterMachineInstructions
@@ -571,7 +557,8 @@ transforms ImportPreLift = [peephole extractReturnRegs,
                             peephole expandMEMCPY]
 transforms ImportPostLift = [peephole handlePromotedOperands,
                              defineFP]
-transforms AugmentPreRW = [peephole expandRets]
+transforms AugmentPreRW = [peephole combinePushPops,
+                           peephole expandRets]
 transforms _ = []
 
 mapToOperationWithGoal t f @ Function {fCode = code, fGoal = Just goal} =
@@ -579,14 +566,6 @@ mapToOperationWithGoal t f @ Function {fCode = code, fGoal = Just goal} =
 
 -- | Latency of read-write dependencies
 
--- Allow push/pop instructions to be scheduled in parallel to simulate
--- 'push.w'/'pop.w'
-readWriteLatency _
-  ((TargetInstruction TPUSH_r4_7, _),  Write)
-  ((TargetInstruction TPUSH_r8_11, _), Write) = 0
-readWriteLatency _
-  ((TargetInstruction TPOP_r4_7, _),  Write)
-  ((TargetInstruction TPOP_r8_11, _), Write) = 0
 readWriteLatency _ (_, Read) (_, Write) = 0
 readWriteLatency _ ((_, VirtualType (DelimiterType InType)), _) (_, _) = 1
 readWriteLatency _ ((_, VirtualType FunType), _) (_, _) = 1
