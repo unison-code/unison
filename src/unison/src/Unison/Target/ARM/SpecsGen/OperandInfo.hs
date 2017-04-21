@@ -2369,6 +2369,9 @@ operandInfo i
       TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo, BoundInfo,
       TemporaryInfo (RegisterClass CCR) 0 False],
      [])
+  | i `elem` [Load_merge] =
+    ([TemporaryInfo (RegisterClass RGPR) 0 False],
+     [TemporaryInfo (RegisterClass RGPR) 1 False])
   | i `elem` [T2ABS] =
     ([TemporaryInfo (RegisterClass RGPR) 0 False],
      [TemporaryInfo (RegisterClass RGPR) 1 False,

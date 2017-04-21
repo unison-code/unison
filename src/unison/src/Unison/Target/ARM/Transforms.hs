@@ -16,7 +16,8 @@ module Unison.Target.ARM.Transforms
      handlePromotedOperands,
      defineFP,
      combinePushPops,
-     expandRets) where
+     expandRets,
+     combineLoadStores) where
 
 import qualified Data.Map as M
 import qualified Data.Set as S
@@ -387,7 +388,7 @@ defineFP f @ Function {fCode = code} =
  Transforms:
     o1: [p1{ -, t1}]  <- { -, tPUSH/POP_r4_7}  [p0{ -, t0}]
     o2: [p3{ -, t3}]  <- { -, tPUSH/POP_r8_11} [p2{ -, t2}]
-into:
+ into:
     o3: [p1{ -, t1}, p3{ -, t3}]  <- { -, tPUSH/POP2_r4_7, tPUSH/POP2_r4_11}  [p0{ -, t0}, p2{ -, t2}]
 -}
 
@@ -422,7 +423,7 @@ isTPop  i = i `elem` [TPOP_r4_7,  TPOP_r8_11]
     o1: [p1, p3]  <- { -, tPOP2_r4_7, tPOP2_r4_11}  [p0, p2]
     (..)
     or: [] <- tBX_RET [14,_]
-into:
+ into:
   bN (.., return, ..):
     o1: [p1, p3, p4{ -, t0}]  <- { -, tPOP2_r4_7_linear, tPOP2_r4_11_linear}  [p0, p2]
     or: [p5{ -, t1}] <- { -, tBX_RET_linear} []
@@ -452,3 +453,76 @@ expandRets _ (
 expandRets _ (o : code) _ = (code, [o])
 
 isTRET = isMandNaturalWith ((==) TBX_RET)
+
+{-
+ Transforms:
+    o11: [p37{ -, t25}] <- { -, MOVE_ALL, LOAD} [p36{ -, t0, t14}]
+    o12: [p39{t26}] <- t2LDRi12 [p38{t0, t14, t25, t28, t54},12,14,_]
+    o13: [p41{ -, t27}] <- { -, MOVE_ALL, STORE} [p40{ -, t26}]
+    o14: [p43{ -, t28}] <- { -, MOVE_ALL, LOAD} [p42{ -, t0, t14}]
+    o15: [p45{t29}] <- t2LDRi12 [p44{t0, t14, t25, t28, t54},16,14,_]
+    o16: [p47{ -, t30}] <- { -, MOVE_ALL, STORE} [p46{ -, t29}]
+ into:
+    o11: [p37{ -, t25}] <- { -, MOVE_ALL, LOAD} [p36{ -, t0, t14}]
+    o14: [p43{ -, t28}] <- { -, MOVE_ALL, LOAD} [p42{ -, t0, t14}]
+    o12: [p39{ -, t26'}] <- { - , t2LDRi12} [p38{ -, t0, t14, t25, t28, t54},12,14,_]
+    o15: [p45{ -, t29'}] <- { - , t2LDRi12} [p44{ -, t0, t14, t25, t28, t54},16,14,_]
+    od:  [p101{ -, t26''}, p102{ -, t29''}] <- { - , t2LDRDi8} [p100{ -, t0, t14, t25, t28, t54},12,14,_]
+    om1: [p104{t26} <- load_merge p103{t26', t26''}]
+    o13: [p41{ -, t27}] <- { -, MOVE_ALL, STORE} [p40{ -, t26}]
+    om2: [p106{t29} <- load_merge p105{t29', t29''}]
+    o16: [p47{ -, t30}] <- { -, MOVE_ALL, STORE} [p46{ -, t29}]
+ (see 'LoadStoreMultipleOpti' in ARMLoadStoreOptimizer.cpp)
+ -- TODO: perform equivalent transformation for 't2STRDi8'
+    (see e.g. hmmer.tophits.AllocFancyAli or sphinx3.profile.ptmr_init)
+-}
+
+combineLoadStores _ (
+  uc1
+  :
+  ld1 @ SingleOperation {oOpr = Natural Linear {
+                            oIs = [TargetInstruction T2LDRi12],
+                            oUs = MOperand {altTemps = uts1} : off1 : pred1,
+                            oDs = [MOperand {altTemps = [tr1]}]}}
+  :
+  dc1
+  :
+  uc2
+  :
+  ld2 @ SingleOperation {oOpr = Natural Linear {
+                            oIs = [TargetInstruction T2LDRi12],
+                            oUs = MOperand {altTemps = uts2} : off2 : pred2,
+                            oDs = [MOperand {altTemps = [tr2]}]}}
+  :
+  dc2
+  :
+  rest) (tid, oid, pid)
+  -- TODO: check offset (lines 2039-2042 in ARMLoadStoreOptimizer.cpp)
+  | all isCopy [uc1, dc1, uc2, dc2] && uts1 == uts2 && pred1 == pred2 &&
+    offBy 4 off1 off2 =
+  let mkOper id ts = mkMOperand (pid + id) ts Nothing
+      replaceDefTempBy t = mapToOperands id (applyToAltTemps (const [t]))
+      [tr1', tr1'', tr2', tr2''] = map (\id -> mkTemp (tid + id)) [0..3]
+      ld1' = makeOptional $ replaceDefTempBy tr1' ld1
+      ld2' = makeOptional $ replaceDefTempBy tr2' ld2
+      ldd  = makeOptional $
+             mkLinear oid       [TargetInstruction T2LDRDi8]
+             (mkOper 0 uts1 : off1 : pred1) [mkOper 1 [tr1''], mkOper 2 [tr2'']]
+      om1  = mkLinear (oid + 1) [TargetInstruction Load_merge]
+             [mkOper 3 [tr1', tr1'']] [mkOper 4 [tr1]]
+      om2  = mkLinear (oid + 2) [TargetInstruction Load_merge]
+             [mkOper 5 [tr2', tr2'']] [mkOper 6 [tr2]]
+  in
+     (
+      rest,
+      [uc1, uc2, ld1', ld2', ldd, om1, dc1, om2, dc2]
+     )
+
+combineLoadStores _ (o : code) _ = (code, [o])
+
+applyToAltTemps f [p @ MOperand {altTemps = ts}] = [p {altTemps = f ts}]
+
+offBy n (Bound MachineImm {miValue = off1})
+        (Bound MachineImm {miValue = off2}) =
+  off1 + n == off2
+offBy _ _ _ = False

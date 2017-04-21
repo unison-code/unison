@@ -1197,3 +1197,13 @@ instruction-set:
            - dst:             [register, def, F32, -1]
           uses:               []
           defines:            [dst]
+
+        - id:                 load_merge
+          type:               linear
+          operands:
+           - src:             [register, use, rGPR]
+           - dst:             [register, def, rGPR]
+          uses:               [src]
+          defines:            [dst]
+          size:               0
+          itinerary:          NoItinerary

@@ -3031,5 +3031,6 @@ readOp "t2STMIA_4" = T2STMIA_4
 readOp "t2STMIA_UPD_4" = T2STMIA_UPD_4
 readOp "tRET_merge" = TRET_merge
 readOp "tBX_RET_linear" = TBX_RET_linear
+readOp "load_merge" = Load_merge
 readOp a = error ("unmatched: readOp " ++ show a)
 

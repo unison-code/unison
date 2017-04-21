@@ -3032,5 +3032,6 @@ data ARMInstruction = ABS
                     | T2STMIA_UPD_4
                     | TRET_merge
                     | TBX_RET_linear
+                    | Load_merge
                     deriving (Eq, Ord)
 

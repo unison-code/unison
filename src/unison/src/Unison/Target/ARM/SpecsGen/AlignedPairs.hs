@@ -1193,8 +1193,8 @@ alignedPairs i ([_], []) | i `elem` [TRET_merge] = []
 alignedPairs i ([_], [_])
   | i `elem`
       [COPY, LDRLIT_ga_abs, LOAD, LOAD_D, LOAD_T, MOVE, MOVE_ALL, MOVE_D,
-       MOVi32imm, STORE, STORE_D, STORE_T, T2MOVi32imm, TLDRLIT_ga_abs,
-       TPOP_r4_7, TPOP_r8_11, TPUSH_r4_7, TPUSH_r8_11]
+       MOVi32imm, STORE, STORE_D, STORE_T, Load_merge, T2MOVi32imm,
+       TLDRLIT_ga_abs, TPOP_r4_7, TPOP_r8_11, TPUSH_r4_7, TPUSH_r8_11]
     = []
 alignedPairs i ([_], [_, _])
   | i `elem` [ABS, MOVsra_flag, MOVsrl_flag, T2ABS] = []

@@ -558,7 +558,8 @@ transforms ImportPreLift = [peephole extractReturnRegs,
 transforms ImportPostLift = [peephole handlePromotedOperands,
                              defineFP]
 transforms AugmentPreRW = [peephole combinePushPops,
-                           peephole expandRets]
+                           peephole expandRets,
+                           peephole combineLoadStores]
 transforms _ = []
 
 mapToOperationWithGoal t f @ Function {fCode = code, fGoal = Just goal} =

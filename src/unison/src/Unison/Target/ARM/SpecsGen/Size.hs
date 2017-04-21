@@ -100,7 +100,7 @@ size i
        VST4qAsm_32, VST4qAsm_8, VST4qWB_fixed_Asm_16,
        VST4qWB_fixed_Asm_32, VST4qWB_fixed_Asm_8, VST4qWB_register_Asm_16,
        VST4qWB_register_Asm_32, VST4qWB_register_Asm_8, WIN__CHKSTK,
-       WIN__DBZCHK, T2ABS, T2Int_eh_sjlj_setjmp,
+       WIN__DBZCHK, Load_merge, T2ABS, T2Int_eh_sjlj_setjmp,
        T2Int_eh_sjlj_setjmp_nofp, T2LDRBpcrel, T2LDRHpcrel, T2LDRSBpcrel,
        T2LDRSHpcrel, T2LDRpci_pic, T2LDRpcrel, T2MOVSsi, T2MOVSsr,
        T2MOVTi16_ga_pcrel, T2MOV_ga_pcrel, T2MOVi16_ga_pcrel, T2MOVi32imm,
