@@ -150,11 +150,15 @@ compensation cf gl fbs bbs
     | subset bbs fbs =
         let diff = difference fbs bbs
             fs   = [if isDynamic gl then f else 1 | f <- diff]
-        in sum [f * inOverhead cf (goalObject gl) | f <- fs]
+            go   = goalObject gl
+        in sum [f * (inOverhead cf go + outOverhead cf go) | f <- fs]
     | otherwise = - compensation cf gl bbs fbs
 
 inOverhead _ Cycles = 1
 inOverhead cf (ResourceUsage r) = cf M.! r
+
+outOverhead _ Cycles = 0
+outOverhead cf (ResourceUsage r) = cf M.! r
 
 subset l1 l2 = length (difference l2 l1) > 0
 
