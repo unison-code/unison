@@ -140,25 +140,13 @@ void BeforePresolver::gen_before(beforeset& B) {
     }
   }
 
-  // B <- B union {<p,q,{ø}> | p defines t, which can't be live past its
-  //                      signle obligatory use, which is in the operation
-  //                      defining q.}
+  // B <- B union {<p,q,{ø}> | p defines t, which is not unsafe and has its single use in the operation defining q.}
   for(operand p : input.P) {
     if(!input.use[p]) {
       vector<temporary> ts = input.temps[p];
 
       if(ts.size() == 1 && !ord_contains(input.unsafe_temp, ts[0])) {
-
-	// Uses is all operations that can use ts[0]
-	vector<operand> uses;
-	for(operand r : input.P) {
-	  if(input.use[r] && !input.temps[r].empty() &&
-	     input.temps[r][0] == ts[0]) {
-	    uses.push_back(r);
-	  }
-	}
-
-	// obligatory use of ts[0]
+	vector<operand> uses = input.users[ts[0]];
 	if(uses.size() == 1) {
           for(operand q : oper_defs(input, input.oper[uses[0]])) {
 	      PresolverBefore pb;
