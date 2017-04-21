@@ -43,11 +43,10 @@ void last_use(PresolverAsserts& PA, Parameters& input) {
       if(is_mandatory(input, o))
 	for (operand p : input.operands[o])
 	  if (input.use[p]) {
-	    // if TempDef(min(OpndTemps(p))) is mandatory
-	    temporary min_temp = first_temp(input, p);
-	    if(min_temp != NULL_TEMPORARY &&
-	       first_temp(input, input.definer[min_temp]) != NULL_TEMPORARY) {
-	      // AddToMap(min(OpndTemps(p)) -> p, M)
+	    // if TempDef(min(OpndTempsButNull(p))) is mandatory
+	    temporary min_temp = first_temp_but_null(input, p);
+	    if(first_temp(input, input.definer[min_temp]) != NULL_TEMPORARY) {
+	      // AddToMap(min(OpndTempsButNull(p)) -> p, M)
 	      M[min_temp].push_back(p);
 	    }
 	  }
