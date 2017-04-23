@@ -10,7 +10,7 @@ instructionType i
        BX_pred, Bcc, ERET, LDMIA_RET, MOVPCLR, MOVPCRX, SUBS_PC_LR, T2B,
        T2BR_JT, T2Bcc, T2LDMIA_RET, T2SUBS_PC_LR, T2TBB, T2TBB_JT, T2TBH,
        T2TBH_JT, TB, TBRIND, TBR_JTr, TBX, TBX_RET, TBX_RET_vararg, TBcc,
-       TBfar, TCBNZ, TCBZ, TPOP_RET, TRET_merge]
+       TBfar, TCBNZ, TCBZ, TPOP_RET]
     = BranchInstructionType
   | i `elem`
       [BL, BLX, BLX_pred, BLXi, BL_pred, BMOVPCB_CALL, BMOVPCRX_CALL,
@@ -20,9 +20,9 @@ instructionType i
     = CallInstructionType
   | i `elem`
       [LOAD, LOAD_D, LOAD_T, MOVE, MOVE_ALL, MOVE_D, STORE, STORE_D,
-       STORE_T, TPOP2_r4_11, TPOP2_r4_11_linear, TPOP2_r4_7,
-       TPOP2_r4_7_linear, TPOP_r4_7, TPOP_r8_11, TPUSH2_r4_11,
-       TPUSH2_r4_7, TPUSH_r4_7, TPUSH_r8_11]
+       STORE_T, TPOP2_r4_11, TPOP2_r4_11_RET, TPOP2_r4_7, TPOP2_r4_7_RET,
+       TPOP_r4_7, TPOP_r8_11, TPUSH2_r4_11, TPUSH2_r4_7, TPUSH_r4_7,
+       TPUSH_r8_11]
     = CopyInstructionType
   | i `elem`
       [ABS, ADCri, ADCrr, ADCrsi, ADCrsr, ADDSri, ADDSrr, ADDSrsi,
@@ -601,20 +601,20 @@ instructionType i
        TADC, TADDframe, TADDhirr, TADDhirrs, TADDi3, TADDi3s, TADDi8,
        TADDi8s, TADDrSP, TADDrSPi, TADDrr, TADDrrs, TADDspi, TADDspr,
        TADJCALLSTACKDOWN, TADJCALLSTACKUP, TADR, TAND, TANDs, TASRri,
-       TASRris, TASRrr, TASRrrs, TBIC, TBICs, TBKPT, TBX_RET_linear,
-       TCMNz, TCMPhir, TCMPhir_cpsr, TCMPi8, TCMPi8_cpsr, TCMPr,
-       TCMPr_cpsr, TCPS, TEOR, TEORs, TFP, THINT, THLT,
-       TInt_WIN_eh_sjlj_longjmp, TInt_eh_sjlj_longjmp,
-       TInt_eh_sjlj_setjmp, TLDMIA, TLDMIA_UPD, TLDRBi, TLDRBr, TLDRBrz,
-       TLDRHi, TLDRHr, TLDRHrz, TLDRLIT_ga_abs, TLDRLIT_ga_pcrel, TLDRSB,
-       TLDRSBz, TLDRSH, TLDRSHz, TLDRi, TLDRpci, TLDRpci_pic, TLDRr,
-       TLDRrz, TLDRspi, TLEApcrel, TLEApcrelJT, TLSLri, TLSLris, TLSLrr,
-       TLSLrrs, TLSRri, TLSRris, TLSRrr, TLSRrrs, TMOVCCr_pseudo, TMOVSr,
-       TMOVi8, TMOVi8s, TMOVr, TMUL, TMULz, TMVN, TMVNs, TORR, TORRs,
-       TPICADD, TPOP, TPUSH, TREV, TREV16, TREVSH, TROR, TRORs, TRSB,
-       TRSBs, TSBC, TSETEND, TSTMIA_UPD, TSTRBi, TSTRBr, TSTRBrz, TSTRHi,
-       TSTRHr, TSTRHrz, TSTRi, TSTRr, TSTRrz, TSTRspi, TSUBi3, TSUBi3s,
-       TSUBi8, TSUBi8s, TSUBrr, TSUBrrs, TSUBspi, TSXTB, TSXTH, TSXTHz,
-       TTRAP, TTST, TTST_cpsr, TUDF, TUXTB, TUXTBz, TUXTH, TUXTHz]
+       TASRris, TASRrr, TASRrrs, TBIC, TBICs, TBKPT, TCMNz, TCMPhir,
+       TCMPhir_cpsr, TCMPi8, TCMPi8_cpsr, TCMPr, TCMPr_cpsr, TCPS, TEOR,
+       TEORs, TFP, THINT, THLT, TInt_WIN_eh_sjlj_longjmp,
+       TInt_eh_sjlj_longjmp, TInt_eh_sjlj_setjmp, TLDMIA, TLDMIA_UPD,
+       TLDRBi, TLDRBr, TLDRBrz, TLDRHi, TLDRHr, TLDRHrz, TLDRLIT_ga_abs,
+       TLDRLIT_ga_pcrel, TLDRSB, TLDRSBz, TLDRSH, TLDRSHz, TLDRi, TLDRpci,
+       TLDRpci_pic, TLDRr, TLDRrz, TLDRspi, TLEApcrel, TLEApcrelJT,
+       TLSLri, TLSLris, TLSLrr, TLSLrrs, TLSRri, TLSRris, TLSRrr, TLSRrrs,
+       TMOVCCr_pseudo, TMOVSr, TMOVi8, TMOVi8s, TMOVr, TMUL, TMULz, TMVN,
+       TMVNs, TORR, TORRs, TPICADD, TPOP, TPUSH, TREV, TREV16, TREVSH,
+       TROR, TRORs, TRSB, TRSBs, TSBC, TSETEND, TSTMIA_UPD, TSTRBi,
+       TSTRBr, TSTRBrz, TSTRHi, TSTRHr, TSTRHrz, TSTRi, TSTRr, TSTRrz,
+       TSTRspi, TSUBi3, TSUBi3s, TSUBi8, TSUBi8s, TSUBrr, TSUBrrs,
+       TSUBspi, TSXTB, TSXTH, TSXTHz, TTRAP, TTST, TTST_cpsr, TUDF, TUXTB,
+       TUXTBz, TUXTH, TUXTHz]
     = LinearInstructionType
 

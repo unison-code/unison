@@ -102,7 +102,7 @@ branchInfo (Branch {oBranchIs = is, oBranchUs = [BlockRef l, _, _]})
 
 branchInfo (Branch {oBranchIs = is})
   | targetInst is `elem`  [TBX_RET, T2LDMIA_RET, TPOP_RET, T2BR_JT, T2TBB_JT,
-                           T2TBH_JT, TRET_merge] =
+                           T2TBH_JT] =
     BranchInfo Unconditional Nothing
 
 branchInfo o = error ("unmatched pattern: branchInfo " ++ show (mkSingleOperation (-1) (Natural o)))
@@ -223,8 +223,8 @@ fromCopy Copy {oCopyIs = [TargetInstruction i], oCopyS = s, oCopyD = d}
                      map (Register . TargetRegister)
                      ((if w then [SP] else []) ++ pushRegs i ++ [LR]),
                oDs = if w then [mkOprArmSP] else []}
-  | i `elem` [TPOP2_r4_7, TPOP2_r4_7_linear, TPOP2_r4_11, TPOP2_r4_11_linear] =
-    let w = i `elem` [TPOP2_r4_11, TPOP2_r4_11_linear]
+  | i `elem` [TPOP2_r4_7, TPOP2_r4_7_RET, TPOP2_r4_11, TPOP2_r4_11_RET] =
+    let w = i `elem` [TPOP2_r4_11, TPOP2_r4_11_RET]
     in Linear {oIs = [TargetInstruction (fromCopyInstr i (s, d))],
                oUs = defaultUniPred ++
                      map (Register . TargetRegister)
@@ -258,9 +258,9 @@ fromCopyInstr MOVE_ALL (s, d)
 fromCopyInstr TPUSH2_r4_7 _  = TPUSH
 fromCopyInstr TPUSH2_r4_11 _ = T2STMDB_UPD
 fromCopyInstr i _
-  | i `elem` [TPOP2_r4_7, TPOP2_r4_7_linear] = TPOP_RET
+  | i `elem` [TPOP2_r4_7, TPOP2_r4_7_RET] = TPOP_RET
 fromCopyInstr i _
-  | i `elem` [TPOP2_r4_11, TPOP2_r4_11_linear] = T2LDMIA_RET
+  | i `elem` [TPOP2_r4_11, TPOP2_r4_11_RET] = T2LDMIA_RET
 
 isSPR r = rTargetReg (regId r) `elem` registers (RegisterClass SPR)
 isGPR r = rTargetReg (regId r) `elem` registers (RegisterClass GPR)
@@ -444,7 +444,7 @@ processTailCalls mi = mi
 -- | Target dependent post-processing functions
 
 postProcess = [expandPseudos, removeAllNops, removeFrameIndex,
-               normalizeJumpMerges, removeEmptyBundles, reorderImplicitOperands,
+               removeEmptyBundles, reorderImplicitOperands,
                exposeCPSRRegister, flip addImplicitRegs (target, []),
                demoteImplicitOperands]
 
@@ -465,9 +465,9 @@ expandPseudo mi @ MachineSingle {msOpcode = MachineTargetOpc TFP} =
 expandPseudo mi = [[mi]]
 
 pushRegs i
-  | i `elem` [TPUSH2_r4_7, TPOP2_r4_7, TPOP2_r4_7_linear] =
+  | i `elem` [TPUSH2_r4_7, TPOP2_r4_7, TPOP2_r4_7_RET] =
       [R4, R5, R6, R7]
-  | i `elem` [TPUSH2_r4_11, TPOP2_r4_11, TPOP2_r4_11_linear] =
+  | i `elem` [TPUSH2_r4_11, TPOP2_r4_11, TPOP2_r4_11_RET] =
       pushRegs TPUSH2_r4_7 ++ [R8, R9, R10, R11]
 pushRegs i = error ("unmatched: pushRegs " ++ show i)
 
@@ -515,14 +515,6 @@ removeFrameIndexInstr mi @ MachineSingle {msOpcode = MachineTargetOpc i}
   | "_cpi" `isSuffixOf` (show i) =
     mi {msOpcode = mkMachineTargetOpc $ read $ dropSuffix "_cpi" (show i)}
   | otherwise = mi
-
-normalizeJumpMerges = concatMapToMachineInstruction normalizeJMs
-
-normalizeJMs mi @ MachineSingle {msOpcode = MachineTargetOpc TBX_RET_linear} =
-  [mi {msOpcode   = mkMachineTargetOpc TBX_RET,
-       msOperands = defaultMIRPred}]
-normalizeJMs MachineSingle {msOpcode = MachineTargetOpc TRET_merge} = []
-normalizeJMs mi = [mi]
 
 removeEmptyBundles = filterMachineInstructions (const True)
 
@@ -590,7 +582,26 @@ expandCopy _ _ o = [o]
 -- | Custom processor constraints
 
 constraints f =
+  foldMatch altRetConstraints [] f ++
   foldMatch altLoadStoreConstraints [] f
+
+altRetConstraints (
+  op @ SingleOperation {oOpr = Copy {
+       oCopyIs = [General NullInstruction,
+                  TargetInstruction TPOP2_r4_7_RET,
+                  TargetInstruction TPOP2_r4_11_RET]}}
+  :
+  or @ SingleOperation {oOpr = Natural Branch {
+       oBranchIs = [General NullInstruction, TargetInstruction TBX_RET]}}
+  :
+  code) constraints =
+  let alt =
+        XorExpr
+        (ActiveOperation (oId op))
+        (ActiveOperation (oId or))
+  in (code, constraints ++ [alt])
+
+altRetConstraints (_ : code) constraints = (code, constraints)
 
 altLoadStoreConstraints (
   s1 @ SingleOperation {oOpr = Natural Linear {

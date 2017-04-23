@@ -1745,12 +1745,12 @@ void Model::post_branch_issue_cycle_constraints(block b) {
     for (unsigned int e = 0; e < input->dep[b].size(); e++) {
       operation o1 = input->dep[b][e][0], o2 = input->dep[b][e][1];
       if (o1 == bi && o2 == oi) {
-        dist = input->dist[b][e][0];
+        dist = max_of(input->dist[b][e]);
         break;
       }
     }
     assert(dist != -1);
-    constraint(c(bi) == c(oi) - dist);
+    constraint(a(bi) >> (c(bi) == c(oi) - dist));
   }
 
 }

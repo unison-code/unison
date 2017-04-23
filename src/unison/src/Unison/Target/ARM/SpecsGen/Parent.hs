@@ -594,9 +594,9 @@ parent i
        TMOVCCr_pseudo, TMOVSr, TMOVi8, TMOVi8s, TMOVr, TMUL, TMULz, TMVN,
        TORR, TPICADD, TPOP, TPOP2_r4_11, TPOP2_r4_7, TPOP_RET, TPOP_r4_7,
        TPOP_r8_11, TPUSH, TPUSH2_r4_11, TPUSH2_r4_7, TPUSH_r4_7,
-       TPUSH_r8_11, TRET_merge, TREV, TREV16, TREVSH, TROR, TRSB, TRSBs,
-       TSBC, TSETEND, TSTMIA_UPD, TSTRBi, TSTRBr, TSTRHi, TSTRHr, TSTRi,
-       TSTRr, TSTRspi, TSUBi3, TSUBi3s, TSUBi8, TSUBi8s, TSUBrr, TSUBrrs,
+       TPUSH_r8_11, TREV, TREV16, TREVSH, TROR, TRSB, TRSBs, TSBC,
+       TSETEND, TSTMIA_UPD, TSTRBi, TSTRBr, TSTRHi, TSTRHr, TSTRi, TSTRr,
+       TSTRspi, TSUBi3, TSUBi3s, TSUBi8, TSUBi8s, TSUBrr, TSUBrrs,
        TSUBspi, TSVC, TSXTB, TSXTH, TTAILJMPd, TTAILJMPdND, TTAILJMPr,
        TTPsoft, TTRAP, TTST, TUDF, TUXTB, TUXTH]
     = Nothing
@@ -624,7 +624,6 @@ parent i
   | i `elem` [TFP] = Just TADDrSPi
   | i `elem` [TANDs] = Just TAND
   | i `elem` [TBICs] = Just TBIC
-  | i `elem` [TBX_RET_linear] = Just TBX_RET
   | i `elem` [TCMPhir_cpsr] = Just TCMPhir
   | i `elem` [TCMPi8_cpsr] = Just TCMPi8
   | i `elem` [TCMPr_cpsr] = Just TCMPr
@@ -637,8 +636,8 @@ parent i
   | i `elem` [TLSRrrs] = Just TLSRrr
   | i `elem` [TMVNs] = Just TMVN
   | i `elem` [TORRs] = Just TORR
-  | i `elem` [TPOP2_r4_11_linear] = Just TPOP2_r4_11
-  | i `elem` [TPOP2_r4_7_linear] = Just TPOP2_r4_7
+  | i `elem` [TPOP2_r4_11_RET] = Just TPOP2_r4_11
+  | i `elem` [TPOP2_r4_7_RET] = Just TPOP2_r4_7
   | i `elem` [TRORs] = Just TROR
   | i `elem` [TSTRBrz] = Just TSTRBr
   | i `elem` [TSTRHrz] = Just TSTRHr

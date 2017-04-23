@@ -68,8 +68,9 @@ void gen_fixed_precedences(const Parameters& input, precedence_set& PI) {
             bool same_all_dij = all_of(dij.begin(), dij.end(),
                     [d1](int v){ return v == d1;});
 
-            // if o is a branch and all values of dij are the same d1
-	    if(oper_type(input, o) == BRANCH && same_all_dij) {
+            // if o is a mandatory branch and all values of dij are the same d1
+	    if(is_mandatory(input, o) && oper_type(input, o) == BRANCH &&
+               same_all_dij) {
 	        // PI <- PI U {<o, o', d', {}>,<o, o',-d', {}}
                 PresolverPrecedence pred(o, o1, d1, {{}});
                 PresolverPrecedence pred1(o1, o, -d1, {{}});

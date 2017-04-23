@@ -605,7 +605,6 @@ allInstructions
      T2ANDri_cpsr, T2ADDri_cpsr, FMSTAT_cpsr, TCMPr_cpsr, TCMPhir_cpsr,
      TTST_cpsr, T2TEQrr_cpsr, TFP, TPUSH_r4_7, TPUSH_r8_11, TPUSH2_r4_7,
      TPUSH2_r4_11, TPOP_r4_7, TPOP_r8_11, TPOP2_r4_7, TPOP2_r4_11,
-     TPOP2_r4_7_linear, TPOP2_r4_11_linear, MEMCPY_4, T2LDMIA_4,
-     T2LDMIA_UPD_4, T2STMIA_4, T2STMIA_UPD_4, TRET_merge,
-     TBX_RET_linear, Load_merge]
+     TPOP2_r4_7_RET, TPOP2_r4_11_RET, MEMCPY_4, T2LDMIA_4,
+     T2LDMIA_UPD_4, T2STMIA_4, T2STMIA_UPD_4, Load_merge]
 

@@ -3022,15 +3022,13 @@ readOp "tPOP_r4_7" = TPOP_r4_7
 readOp "tPOP_r8_11" = TPOP_r8_11
 readOp "tPOP2_r4_7" = TPOP2_r4_7
 readOp "tPOP2_r4_11" = TPOP2_r4_11
-readOp "tPOP2_r4_7_linear" = TPOP2_r4_7_linear
-readOp "tPOP2_r4_11_linear" = TPOP2_r4_11_linear
+readOp "tPOP2_r4_7_RET" = TPOP2_r4_7_RET
+readOp "tPOP2_r4_11_RET" = TPOP2_r4_11_RET
 readOp "MEMCPY_4" = MEMCPY_4
 readOp "t2LDMIA_4" = T2LDMIA_4
 readOp "t2LDMIA_UPD_4" = T2LDMIA_UPD_4
 readOp "t2STMIA_4" = T2STMIA_4
 readOp "t2STMIA_UPD_4" = T2STMIA_UPD_4
-readOp "tRET_merge" = TRET_merge
-readOp "tBX_RET_linear" = TBX_RET_linear
 readOp "load_merge" = Load_merge
 readOp a = error ("unmatched: readOp " ++ show a)
 

@@ -10,9 +10,9 @@ itinerary i
        BX_pred, Bcc, MOVPCLR, MOVPCRX, SUBS_PC_LR, SVC, TAILJMPd,
        TAILJMPr, TCRETURNdi, TCRETURNri, TPsoft, T2B, T2BR_JT, T2Bcc,
        T2HVC, T2TBB, T2TBB_JT, T2TBH, T2TBH_JT, T2UDF, TB, TBL, TBLXi,
-       TBLXr, TBRIND, TBR_JTr, TBX, TBX_CALL, TBX_RET, TBX_RET_linear,
-       TBX_RET_vararg, TBcc, TBfar, TCBNZ, TCBZ, TSVC, TTAILJMPd,
-       TTAILJMPdND, TTAILJMPr, TTPsoft, TTRAP, TUDF]
+       TBLXr, TBRIND, TBR_JTr, TBX, TBX_CALL, TBX_RET, TBX_RET_vararg,
+       TBcc, TBfar, TCBNZ, TCBZ, TSVC, TTAILJMPd, TTAILJMPdND, TTAILJMPr,
+       TTPsoft, TTRAP, TUDF]
     = IIC_Br
   | i `elem`
       [PLDWi12, PLDWrs, PLDi12, PLDrs, PLIi12, PLIrs, T2PLDWi12,
@@ -772,8 +772,8 @@ itinerary i
   | i `elem` [T2MVNs] = IIC_iMVNsi
   | i `elem` [MVNsi, MVNsr] = IIC_iMVNsr
   | i `elem`
-      [TPOP, TPOP2_r4_11, TPOP2_r4_11_linear, TPOP2_r4_7,
-       TPOP2_r4_7_linear, TPOP_r4_7]
+      [TPOP, TPOP2_r4_11, TPOP2_r4_11_RET, TPOP2_r4_7, TPOP2_r4_7_RET,
+       TPOP_r4_7]
     = IIC_iPop
   | i `elem` [TPOP_RET] = IIC_iPop_Br
   | i `elem`
@@ -1006,6 +1006,6 @@ itinerary i
        TADJCALLSTACKUP, TBKPT, TCPS, THINT, THLT,
        TInt_WIN_eh_sjlj_longjmp, TInt_eh_sjlj_longjmp,
        TInt_eh_sjlj_setjmp, TLDRpci_pic, TMOVCCr_pseudo, TPOP_r8_11,
-       TPUSH_r8_11, TRET_merge, TSETEND]
+       TPUSH_r8_11, TSETEND]
     = NoItinerary
 

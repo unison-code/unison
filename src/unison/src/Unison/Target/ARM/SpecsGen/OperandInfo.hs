@@ -11,8 +11,6 @@ operandInfo i
     = ([], [])
   | i `elem` [VMOVD0] =
     ([], [TemporaryInfo (RegisterClass DPR) 1 False])
-  | i `elem` [TBX_RET_linear] =
-    ([], [TemporaryInfo (RegisterClass F32) 0 False])
   | i `elem` [VMOVQ0] =
     ([], [TemporaryInfo (RegisterClass QPR) 1 False])
   | i `elem` [TPsoft, TTPsoft] =
@@ -363,8 +361,6 @@ operandInfo i
       TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo,
       TemporaryInfo (RegisterClass CCR) 0 False],
      [])
-  | i `elem` [TRET_merge] =
-    ([TemporaryInfo (RegisterClass F32) 0 False], [])
   | i `elem`
       [BLX, BX, MOVPCRX, RFEDA, RFEDA_UPD, RFEDB, RFEDB_UPD, RFEIA,
        RFEIA_UPD, RFEIB, RFEIB_UPD]
@@ -1866,28 +1862,16 @@ operandInfo i
   | i `elem` [TPOP_r4_7, TPOP_r8_11] =
     ([TemporaryInfo (InfiniteRegisterClass M128) 0 False],
      [TemporaryInfo (RegisterClass CS) 1 False])
-  | i `elem` [TPOP2_r4_7] =
+  | i `elem` [TPOP2_r4_7, TPOP2_r4_7_RET] =
     ([TemporaryInfo (InfiniteRegisterClass M128) 0 False,
       TemporaryInfo (RegisterClass CSH) 0 False],
      [TemporaryInfo (RegisterClass CSL) 1 False,
       TemporaryInfo (RegisterClass CSH) 1 False])
-  | i `elem` [TPOP2_r4_7_linear] =
-    ([TemporaryInfo (InfiniteRegisterClass M128) 0 False,
-      TemporaryInfo (RegisterClass CSH) 0 False],
-     [TemporaryInfo (RegisterClass CSL) 1 False,
-      TemporaryInfo (RegisterClass CSH) 1 False,
-      TemporaryInfo (RegisterClass F32) 0 False])
-  | i `elem` [TPOP2_r4_11] =
+  | i `elem` [TPOP2_r4_11, TPOP2_r4_11_RET] =
     ([TemporaryInfo (InfiniteRegisterClass M128) 0 False,
       TemporaryInfo (InfiniteRegisterClass M128) 0 False],
      [TemporaryInfo (RegisterClass CSL) 1 False,
       TemporaryInfo (RegisterClass CSH) 1 False])
-  | i `elem` [TPOP2_r4_11_linear] =
-    ([TemporaryInfo (InfiniteRegisterClass M128) 0 False,
-      TemporaryInfo (InfiniteRegisterClass M128) 0 False],
-     [TemporaryInfo (RegisterClass CSL) 1 False,
-      TemporaryInfo (RegisterClass CSH) 1 False,
-      TemporaryInfo (RegisterClass F32) 0 False])
   | i `elem` [LOAD] =
     ([TemporaryInfo (InfiniteRegisterClass M32) 0 False],
      [TemporaryInfo (RegisterClass GPR) 1 False])

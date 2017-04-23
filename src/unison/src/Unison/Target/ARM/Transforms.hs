@@ -24,6 +24,7 @@ import qualified Data.Map as M
 import qualified Data.Set as S
 import Data.Word
 import Data.Bits
+import Data.List
 
 import Unison
 import MachineIR
@@ -421,35 +422,32 @@ isTPop  i = i `elem` [TPOP_r4_7,  TPOP_r8_11]
 {-
  Transforms:
   bN (.., return, ..):
-    o1: [p1, p3]  <- { -, tPOP2_r4_7, tPOP2_r4_11}  [p0, p2]
+    op: [p1, p3]  <- { -, tPOP2_r4_7, tPOP2_r4_11}  [p0, p2]
     (..)
     or: [] <- tBX_RET [14,_]
  into:
   bN (.., return, ..):
-    o1: [p1, p3, p4{ -, t0}]  <- { -, tPOP2_r4_7_linear, tPOP2_r4_11_linear}  [p0, p2]
-    or: [p5{ -, t1}] <- { -, tBX_RET_linear} []
-    om: [] <- tRET_merge [p6{t0, t1}]
+    op: [p1, p3]  <- { -, tPOP2_r4_7_RET, tPOP2_r4_11_RET}  [p0, p2]
+    or: [] <- { -, tBX_RET} [14,_]
 -}
 
 expandRets _ (
-  SingleOperation {
+  op @ SingleOperation {
      oOpr = Natural Linear {oIs = [General NullInstruction,
                                    TargetInstruction TPOP2_r4_7,
-                                   TargetInstruction TPOP2_r4_11],
-                            oUs = us, oDs = ds}}
+                                   TargetInstruction TPOP2_r4_11]}}
   :
-  code) (tid, oid, pid) | any isTRET code =
-  let mkOper id ts = mkMOperand (pid + id) ts Nothing
-      [t0, t1] = map mkTemp [tid, tid + 1]
-      o1is     = ([General NullInstruction] ++ map TargetInstruction
-                  [TPOP2_r4_7_linear,  TPOP2_r4_11_linear])
-      o1       = mkLinear oid       o1is us (ds ++ [mkOper 0 [mkNullTemp, t0]])
-      oris     = [General NullInstruction, TargetInstruction TBX_RET_linear]
-      or       = mkLinear (oid + 1) oris [] [mkOper 1 [mkNullTemp, t1]]
-      omis     = [TargetInstruction TRET_merge]
-      om       = mkBranch (oid + 2) omis [mkOper 2 [t0, t1]]
-      code'    = concatMap (\o -> if isTRET o then [o1, or, om] else [o]) code
-  in ([], code')
+  code) _ =
+  case find isTRET code of
+   Just or ->
+     let opis  = [General NullInstruction,
+                  TargetInstruction TPOP2_r4_7_RET,
+                  TargetInstruction TPOP2_r4_11_RET]
+         op'   = mapToInstructions (const opis) op
+         or'   = makeOptional or
+         code' = concatMap (\o -> if isTRET o then [op', or'] else [o]) code
+     in ([], code')
+   Nothing -> (code, [op])
 
 expandRets _ (o : code) _ = (code, [o])
 

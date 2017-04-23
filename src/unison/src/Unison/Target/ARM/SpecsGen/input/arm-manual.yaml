@@ -1094,25 +1094,11 @@ instruction-set:
            - SP:              register
           itinerary:          IIC_iPop
 
-        - id:                 tPOP2_r4_7_linear
+        - id:                 tPOP2_r4_7_RET
           parent:             tPOP2_r4_7
-          operands:
-           - src1:            [register, use, M128]
-           - src2:            [register, use, CSH]
-           - dst1:            [register, def, CSL]
-           - dst2:            [register, def, CSH]
-           - dst':            [register, def, F32, -1]
-          defines:            [dst1, dst2, dst']
 
-        - id:                 tPOP2_r4_11_linear
+        - id:                 tPOP2_r4_11_RET
           parent:             tPOP2_r4_11
-          operands:
-           - src1:            [register, use, M128]
-           - src2:            [register, use, M128]
-           - dst1:            [register, def, CSL]
-           - dst2:            [register, def, CSH]
-           - dst':            [register, def, F32, -1]
-          defines:            [dst1, dst2, dst']
 
         - id:                 MEMCPY_4
           type:               linear
@@ -1180,23 +1166,6 @@ instruction-set:
            - reg2:            [register, use, GPR]
            - reg3:            [register, use, GPR]
           uses:               [Rn, p1, p2, reg0, reg1, reg2, reg3]
-
-        - id:                 tRET_merge
-          type:               branch
-          operands:
-           - src:             [register, use, F32]
-          uses:               [src]
-          defines:            []
-          size:               0
-          itinerary:          NoItinerary
-
-        - id:                 tBX_RET_linear
-          parent:             tBX_RET
-          type:               linear
-          operands:
-           - dst:             [register, def, F32, -1]
-          uses:               []
-          defines:            [dst]
 
         - id:                 load_merge
           type:               linear

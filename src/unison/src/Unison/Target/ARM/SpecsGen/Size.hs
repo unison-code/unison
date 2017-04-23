@@ -107,28 +107,27 @@ size i
        T2MOVsi, T2MOVsr, TADDframe, TADJCALLSTACKDOWN, TADJCALLSTACKUP,
        TInt_WIN_eh_sjlj_longjmp, TInt_eh_sjlj_longjmp,
        TInt_eh_sjlj_setjmp, TLDRLIT_ga_abs, TLDRLIT_ga_pcrel, TLDRpci_pic,
-       TMOVCCr_pseudo, TRET_merge]
+       TMOVCCr_pseudo]
     = 0
   | i `elem`
       [LOAD_T, MOVE, STORE_T, T2IT, T2SETPAN, TADC, TADDhirr, TADDhirrs,
        TADDi3, TADDi3s, TADDi8, TADDi8s, TADDrSP, TADDrSPi, TADDrr,
        TADDrrs, TADDspi, TADDspr, TADR, TAND, TANDs, TASRri, TASRris,
        TASRrr, TASRrrs, TB, TBIC, TBICs, TBKPT, TBLXr, TBRIND, TBR_JTr,
-       TBX, TBX_RET, TBX_RET_linear, TBX_RET_vararg, TBcc, TCBNZ, TCBZ,
-       TCMNz, TCMPhir, TCMPhir_cpsr, TCMPi8, TCMPi8_cpsr, TCMPr,
-       TCMPr_cpsr, TCPS, TEOR, TEORs, TFP, THINT, THLT, TLDMIA,
-       TLDMIA_UPD, TLDRBi, TLDRBr, TLDRBrz, TLDRHi, TLDRHr, TLDRHrz,
-       TLDRSB, TLDRSBz, TLDRSH, TLDRSHz, TLDRi, TLDRpci, TLDRr, TLDRrz,
-       TLDRspi, TLEApcrel, TLEApcrelJT, TLSLri, TLSLris, TLSLrr, TLSLrrs,
-       TLSRri, TLSRris, TLSRrr, TLSRrrs, TMOVSr, TMOVi8, TMOVi8s, TMOVr,
-       TMUL, TMULz, TMVN, TMVNs, TORR, TORRs, TPICADD, TPOP, TPOP2_r4_7,
-       TPOP2_r4_7_linear, TPOP_RET, TPOP_r4_7, TPOP_r8_11, TPUSH,
-       TPUSH2_r4_7, TPUSH_r4_7, TPUSH_r8_11, TREV, TREV16, TREVSH, TROR,
-       TRORs, TRSB, TRSBs, TSBC, TSETEND, TSTMIA_UPD, TSTRBi, TSTRBr,
-       TSTRBrz, TSTRHi, TSTRHr, TSTRHrz, TSTRi, TSTRr, TSTRrz, TSTRspi,
-       TSUBi3, TSUBi3s, TSUBi8, TSUBi8s, TSUBrr, TSUBrrs, TSUBspi, TSVC,
-       TSXTB, TSXTH, TSXTHz, TTRAP, TTST, TTST_cpsr, TUDF, TUXTB, TUXTBz,
-       TUXTH, TUXTHz]
+       TBX, TBX_RET, TBX_RET_vararg, TBcc, TCBNZ, TCBZ, TCMNz, TCMPhir,
+       TCMPhir_cpsr, TCMPi8, TCMPi8_cpsr, TCMPr, TCMPr_cpsr, TCPS, TEOR,
+       TEORs, TFP, THINT, THLT, TLDMIA, TLDMIA_UPD, TLDRBi, TLDRBr,
+       TLDRBrz, TLDRHi, TLDRHr, TLDRHrz, TLDRSB, TLDRSBz, TLDRSH, TLDRSHz,
+       TLDRi, TLDRpci, TLDRr, TLDRrz, TLDRspi, TLEApcrel, TLEApcrelJT,
+       TLSLri, TLSLris, TLSLrr, TLSLrrs, TLSRri, TLSRris, TLSRrr, TLSRrrs,
+       TMOVSr, TMOVi8, TMOVi8s, TMOVr, TMUL, TMULz, TMVN, TMVNs, TORR,
+       TORRs, TPICADD, TPOP, TPOP2_r4_7, TPOP2_r4_7_RET, TPOP_RET,
+       TPOP_r4_7, TPOP_r8_11, TPUSH, TPUSH2_r4_7, TPUSH_r4_7, TPUSH_r8_11,
+       TREV, TREV16, TREVSH, TROR, TRORs, TRSB, TRSBs, TSBC, TSETEND,
+       TSTMIA_UPD, TSTRBi, TSTRBr, TSTRBrz, TSTRHi, TSTRHr, TSTRHrz,
+       TSTRi, TSTRr, TSTRrz, TSTRspi, TSUBi3, TSUBi3s, TSUBi8, TSUBi8s,
+       TSUBrr, TSUBrrs, TSUBspi, TSVC, TSXTB, TSXTH, TSXTHz, TTRAP, TTST,
+       TTST_cpsr, TUDF, TUXTB, TUXTBz, TUXTH, TUXTHz]
     = 2
   | i `elem`
       [ADCri, ADCrr, ADCrsi, ADCrsr, ADDSri, ADDSrr, ADDSrsi, ADDSrsr,
@@ -607,9 +606,8 @@ size i
        T2UMAAL, T2UMLAL, T2UMULL, T2UQADD16, T2UQADD8, T2UQASX, T2UQSAX,
        T2UQSUB16, T2UQSUB8, T2USAD8, T2USADA8, T2USAT, T2USAT16, T2USAX,
        T2USUB16, T2USUB8, T2UXTAB, T2UXTAB16, T2UXTAH, T2UXTB, T2UXTB16,
-       T2UXTH, TBL, TBLXi, TBX_CALL, TBfar, TPOP2_r4_11,
-       TPOP2_r4_11_linear, TPUSH2_r4_11, TTAILJMPd, TTAILJMPdND,
-       TTAILJMPr, TTPsoft]
+       T2UXTH, TBL, TBLXi, TBX_CALL, TBfar, TPOP2_r4_11, TPOP2_r4_11_RET,
+       TPUSH2_r4_11, TTAILJMPd, TTAILJMPdND, TTAILJMPr, TTPsoft]
     = 4
   | i `elem`
       [ABS, BMOVPCB_CALL, BMOVPCRX_CALL, BX_CALL, MOVCCi32imm,

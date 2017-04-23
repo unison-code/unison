@@ -3023,15 +3023,13 @@ data ARMInstruction = ABS
                     | TPOP_r8_11
                     | TPOP2_r4_7
                     | TPOP2_r4_11
-                    | TPOP2_r4_7_linear
-                    | TPOP2_r4_11_linear
+                    | TPOP2_r4_7_RET
+                    | TPOP2_r4_11_RET
                     | MEMCPY_4
                     | T2LDMIA_4
                     | T2LDMIA_UPD_4
                     | T2STMIA_4
                     | T2STMIA_UPD_4
-                    | TRET_merge
-                    | TBX_RET_linear
                     | Load_merge
                     deriving (Eq, Ord)
 
