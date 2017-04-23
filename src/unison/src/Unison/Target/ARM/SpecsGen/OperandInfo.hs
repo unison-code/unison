@@ -363,6 +363,12 @@ operandInfo i
       TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo,
       TemporaryInfo (RegisterClass CCR) 0 False],
      [])
+  | i `elem` [Store_merge] =
+    ([TemporaryInfo (RegisterClass F32) (-1) True], [])
+  | i `elem` [Single_store_merge] =
+    ([TemporaryInfo (RegisterClass F32) (-1) True,
+      TemporaryInfo (RegisterClass F32) (-1) True],
+     [TemporaryInfo (RegisterClass F32) 1 False])
   | i `elem` [TRET_merge] =
     ([TemporaryInfo (RegisterClass F32) 0 False], [])
   | i `elem`
@@ -563,6 +569,11 @@ operandInfo i
       TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo, BoundInfo,
       TemporaryInfo (RegisterClass CCR) 0 False],
      [])
+  | i `elem` [T2STRi12_linear] =
+    ([TemporaryInfo (RegisterClass GPR) 0 False,
+      TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass F32) 1 False])
   | i `elem`
       [LDRH, LDRSB, LDRSH, MOVCCsi, STRB_PRE_IMM, STRHTi, STR_PRE_IMM]
     =
@@ -2439,6 +2450,12 @@ operandInfo i
       TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo, BoundInfo,
       TemporaryInfo (RegisterClass CCR) 0 False],
      [])
+  | i `elem` [T2STRDi8_linear] =
+    ([TemporaryInfo (RegisterClass RGPR) 0 False,
+      TemporaryInfo (RegisterClass RGPR) 0 False,
+      TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass F32) 1 False])
   | i `elem` [T2STRD_POST, T2STRD_PRE] =
     ([TemporaryInfo (RegisterClass RGPR) 0 False,
       TemporaryInfo (RegisterClass RGPR) 0 False,

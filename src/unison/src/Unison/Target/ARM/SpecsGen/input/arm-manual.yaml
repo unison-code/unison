@@ -1207,3 +1207,46 @@ instruction-set:
           defines:            [dst]
           size:               0
           itinerary:          NoItinerary
+
+        - id:                 single_store_merge
+          type:               linear
+          operands:
+           - src1:            [register, use, F32, -1]
+           - src2:            [register, use, F32, -1]
+           - dst:             [register, def, F32]
+          uses:               [src1, src2]
+          defines:            [dst]
+          size:               0
+          itinerary:          NoItinerary
+
+        - id:                 store_merge
+          type:               linear
+          operands:
+           - src:             [register, use, F32, -1]
+          uses:               [src]
+          defines:            []
+          size:               0
+          itinerary:          NoItinerary
+
+        - id:                 t2STRi12_linear
+          parent:             t2STRi12
+          operands:
+           - Rt:              [register, use, GPR]
+           - addr1:           [register, use, GPR]
+           - addr2:           bound
+           - p1:              bound
+           - p2:              bound
+           - dst:             [register, def, F32]
+          defines:            [dst]
+
+        - id:                 t2STRDi8_linear
+          parent:             t2STRDi8
+          operands:
+           - Rt:              [register, use, rGPR]
+           - Rt2:             [register, use, rGPR]
+           - addr1:           [register, use, GPR]
+           - addr2:           bound
+           - p1:              bound
+           - p2:              bound
+           - dst:             [register, def, F32]
+          defines:            [dst]

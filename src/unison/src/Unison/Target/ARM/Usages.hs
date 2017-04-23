@@ -56,7 +56,8 @@ size T2MOVi32imm = size T2MOVi16 + size T2MOVTi16
 size VMOVDcc = size VMOVD
 size VMOVScc = size VMOVS
 size i
-  | i `elem` [JUMPTABLE_INSTS, TRET_merge, Load_merge] = 0
+  | i `elem` [JUMPTABLE_INSTS, TRET_merge, Load_merge, Single_store_merge,
+              Store_merge] = 0
 size i =
   case SpecsGen.size i of
    0 -> error ("size of instruction " ++ show i ++ " is 0")

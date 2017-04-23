@@ -17,6 +17,7 @@ module Unison.Target.ARM.Transforms
      defineFP,
      combinePushPops,
      expandRets,
+     normalizeLoadStores,
      combineLoadStores) where
 
 import qualified Data.Map as M
@@ -454,6 +455,18 @@ expandRets _ (o : code) _ = (code, [o])
 
 isTRET = isMandNaturalWith ((==) TBX_RET)
 
+-- Move remats out of store sequences to enable matching of 'combineLoadStores'
+
+normalizeLoadStores _ (c1 : c2 : r : s : rest) _
+  | all isCopy [c1, c2] && isRemat r && isSingleStore s = (rest, [r, c1, c2, s])
+
+normalizeLoadStores _ (s : r : rest) _
+  | isRemat r && isSingleStore s = (rest, [r, s])
+
+normalizeLoadStores _ (o : code) _ = (code, [o])
+
+isSingleStore = isMandNaturalWith ((==) T2STRi12)
+
 {-
  Transforms:
     o11: [p37{ -, t25}] <- { -, MOVE_ALL, LOAD} [p36{ -, t0, t14}]
@@ -500,7 +513,7 @@ combineLoadStores _ (
   -- TODO: check offset (lines 2039-2042 in ARMLoadStoreOptimizer.cpp)
   | all isCopy [uc1, dc1, uc2, dc2] && uts1 == uts2 && pred1 == pred2 &&
     offBy 4 off1 off2 =
-  let mkOper id ts = mkMOperand (pid + id) ts Nothing
+  let mkOper = mkOperand pid
       replaceDefTempBy t = mapToOperands id (applyToAltTemps (const [t]))
       [tr1', tr1'', tr2', tr2''] = map (\id -> mkTemp (tid + id)) [0..3]
       ld1' = makeOptional $ replaceDefTempBy tr1' ld1
@@ -512,17 +525,80 @@ combineLoadStores _ (
              [mkOper 3 [tr1', tr1'']] [mkOper 4 [tr1]]
       om2  = mkLinear (oid + 2) [TargetInstruction Load_merge]
              [mkOper 5 [tr2', tr2'']] [mkOper 6 [tr2]]
-  in
-     (
+  in (
       rest,
       [uc1, uc2, ld1', ld2', ldd, om1, dc1, om2, dc2]
      )
 
+{-
+ Transforms:
+    o45: [p119{ -, t63}] <- { -, MOVE_ALL, LOAD} [p118{ -, t33, t46}]
+    o46: [p121{ -, t64}] <- { -, MOVE_ALL, LOAD} [p120{ -, t22, t48}]
+    o48: [] <- t2STRi12 [p123{t22, .., t65, ..},p124{t33, ..},24,14,_]
+    o49: [p126{ -, t66}] <- { -, MOVE_ALL, LOAD} [p125{ -, t33, t46}]
+    o50: [p128{ -, t67}] <- { -, MOVE_ALL, LOAD} [p127{ -, t47, t48}]
+    o52: [] <- t2STRi12 [p130{t47, .., t65, .., t68, ..},p131{t33, ..},28,14,_]
+ into:
+    o45: [p119{ -, t63}] <- { -, MOVE_ALL, LOAD} [p118{ -, t33, t46}]
+    o46: [p121{ -, t64}] <- { -, MOVE_ALL, LOAD} [p120{ -, t22, t48}]
+    o49: [p126{ -, t66}] <- { -, MOVE_ALL, LOAD} [p125{ -, t33, t46}]
+    o50: [p128{ -, t67}] <- { -, MOVE_ALL, LOAD} [p127{ -, t47, t48}]
+    o48: [p100{ -, t100}] <- { -, t2STRi12_linear} [p123{ -, t22, .., t65, ..},p124{ -, t33, ..},24,14,_]
+    o52: [p101{ -, t101}] <- { -, t2STRi12_linear} [p130{ -, t47, .., t65, .., t68, ..},p131{ -, t33, ..},28,14,_]
+    osm: [p104{ -, t102}] <- { -, single_store_merge} [p102{ -, t100}, p103{ -, t101}]
+    od:  [p108{ -, t103}] <- { -, t2STRDi8_linear} [p105{ -, t22, ..}, p106{ -, t47, ..}, p107{ -, t33, ..}, 24, 14, _]
+    om:  [] <- store_merge [p109{t102, t103}]
+-}
+
+combineLoadStores _ (
+  uc11
+  :
+  uc12
+  :
+  st1 @ SingleOperation {oOpr = Natural Linear {
+                            oIs = [TargetInstruction T2STRi12],
+                            oUs = MOperand {altTemps = ts1} :
+                                  MOperand {altTemps = uts1} : off1 : pred1}}
+  :
+  uc21
+  :
+  uc22
+  :
+  st2 @ SingleOperation {oOpr = Natural Linear {
+                            oIs = [TargetInstruction T2STRi12],
+                            oUs = MOperand {altTemps = ts2} :
+                                  MOperand {altTemps = uts2} : off2 : pred2}}
+  :
+  rest) (tid, oid, pid)
+  -- TODO: check offset (lines 2039-2042 in ARMLoadStoreOptimizer.cpp)
+  | all isCopy [uc11, uc21, uc21, uc22] && uts1 == uts2 && pred1 == pred2 &&
+    offBy 4 off1 off2 =
+  let mkOper = mkOperand pid
+      mkStrLin = mapToInstructions (const [TargetInstruction T2STRi12_linear])
+      [t0, t1, t2, t3] = map (\id -> mkTemp (tid + id)) [0..3]
+      st1' = makeOptional $ addOperands [] [mkOper 0 [t0]] $ mkStrLin st1
+      st2' = makeOptional $ addOperands [] [mkOper 1 [t1]] $ mkStrLin st2
+      osm  = makeOptional $ mkLinear oid
+             [TargetInstruction Single_store_merge]
+             [mkOper 2 [t0], mkOper 3 [t1]] [mkOper 4 [t2]]
+      od   = makeOptional $ mkLinear (oid + 1)
+             [TargetInstruction T2STRDi8_linear]
+             (mkOper 5 ts1 : mkOper 6 ts2 : mkOper 7 uts1 : off1 : pred1)
+             [mkOper 8 [t3]]
+      om   = mkLinear (oid + 2) [TargetInstruction Store_merge]
+             [mkOper 9 [t2, t3]] []
+  in (
+      rest,
+      [uc11, uc12, uc21, uc22, st1', st2', osm, od, om]
+     )
+
 combineLoadStores _ (o : code) _ = (code, [o])
+
+mkOperand pid id ts = mkMOperand (pid + id) ts Nothing
 
 applyToAltTemps f [p @ MOperand {altTemps = ts}] = [p {altTemps = f ts}]
 
 offBy n (Bound MachineImm {miValue = off1})
         (Bound MachineImm {miValue = off2}) =
-  off1 + n == off2
+  abs (off1 - off2) == n
 offBy _ _ _ = False

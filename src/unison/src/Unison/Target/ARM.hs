@@ -559,6 +559,7 @@ transforms ImportPostLift = [peephole handlePromotedOperands,
                              defineFP]
 transforms AugmentPreRW = [peephole combinePushPops,
                            peephole expandRets,
+                           fixpoint (peephole normalizeLoadStores),
                            peephole combineLoadStores]
 transforms _ = []
 

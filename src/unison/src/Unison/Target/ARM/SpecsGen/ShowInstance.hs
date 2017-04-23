@@ -3034,4 +3034,8 @@ instance Show ARMInstruction where
         show TRET_merge = "tRET_merge"
         show TBX_RET_linear = "tBX_RET_linear"
         show Load_merge = "load_merge"
+        show Single_store_merge = "single_store_merge"
+        show Store_merge = "store_merge"
+        show T2STRi12_linear = "t2STRi12_linear"
+        show T2STRDi8_linear = "t2STRDi8_linear"
 
