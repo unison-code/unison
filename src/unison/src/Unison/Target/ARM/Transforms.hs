@@ -543,11 +543,9 @@ combineLoadStores _ (
     o46: [p121{ -, t64}] <- { -, MOVE_ALL, LOAD} [p120{ -, t22, t48}]
     o49: [p126{ -, t66}] <- { -, MOVE_ALL, LOAD} [p125{ -, t33, t46}]
     o50: [p128{ -, t67}] <- { -, MOVE_ALL, LOAD} [p127{ -, t47, t48}]
-    o48: [p100{ -, t100}] <- { -, t2STRi12_linear} [p123{ -, t22, .., t65, ..},p124{ -, t33, ..},24,14,_]
-    o52: [p101{ -, t101}] <- { -, t2STRi12_linear} [p130{ -, t47, .., t65, .., t68, ..},p131{ -, t33, ..},28,14,_]
-    osm: [p104{ -, t102}] <- { -, single_store_merge} [p102{ -, t100}, p103{ -, t101}]
-    od:  [p108{ -, t103}] <- { -, t2STRDi8_linear} [p105{ -, t22, ..}, p106{ -, t47, ..}, p107{ -, t33, ..}, 24, 14, _]
-    om:  [] <- store_merge [p109{t102, t103}]
+    o48: [] <- { -, t2STRi12} [p123{ -, t22, .., t65, ..},p124{ -, t33, ..},24,14,_]
+    o52: [] <- { -, t2STRi12} [p130{ -, t47, .., t65, .., t68, ..},p131{ -, t33, ..},28,14,_]
+    od:  [] <- { -, t2STRDi8} [p105{ -, t22, ..}, p106{ -, t47, ..}, p107{ -, t33, ..}, 24, 14, _]
 -}
 
 combineLoadStores _ (
@@ -569,27 +567,20 @@ combineLoadStores _ (
                             oUs = MOperand {altTemps = ts2} :
                                   MOperand {altTemps = uts2} : off2 : pred2}}
   :
-  rest) (tid, oid, pid)
+  rest) (_, oid, pid)
   -- TODO: check offset (lines 2039-2042 in ARMLoadStoreOptimizer.cpp)
   | all isCopy [uc11, uc21, uc21, uc22] && uts1 == uts2 && pred1 == pred2 &&
     offBy 4 off1 off2 =
   let mkOper = mkOperand pid
-      mkStrLin = mapToInstructions (const [TargetInstruction T2STRi12_linear])
-      [t0, t1, t2, t3] = map (\id -> mkTemp (tid + id)) [0..3]
-      st1' = makeOptional $ addOperands [] [mkOper 0 [t0]] $ mkStrLin st1
-      st2' = makeOptional $ addOperands [] [mkOper 1 [t1]] $ mkStrLin st2
-      osm  = makeOptional $ mkLinear oid
-             [TargetInstruction Single_store_merge]
-             [mkOper 2 [t0], mkOper 3 [t1]] [mkOper 4 [t2]]
-      od   = makeOptional $ mkLinear (oid + 1)
-             [TargetInstruction T2STRDi8_linear]
-             (mkOper 5 ts1 : mkOper 6 ts2 : mkOper 7 uts1 : off1 : pred1)
-             [mkOper 8 [t3]]
-      om   = mkLinear (oid + 2) [TargetInstruction Store_merge]
-             [mkOper 9 [t2, t3]] []
+      st1'   = makeOptional st1
+      st2'   = makeOptional st2
+      od     = makeOptional $ mkLinear oid
+               [TargetInstruction T2STRDi8]
+               (mkOper 5 ts1 : mkOper 6 ts2 : mkOper 7 uts1 : off1 : pred1)
+               []
   in (
       rest,
-      [uc11, uc12, uc21, uc22, st1', st2', osm, od, om]
+      [uc11, uc12, uc21, uc22, st1', st2', od]
      )
 
 combineLoadStores _ (o : code) _ = (code, [o])

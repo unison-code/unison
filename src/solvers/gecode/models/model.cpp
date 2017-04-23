@@ -54,6 +54,31 @@ Model::set_var_array(int n, const IntSet & glb, const IntSet & lub) {
   return SetVarArray(*this, n, glb, lub);
 }
 
+BoolVar Model::adhoc_constraint_var(UnisonConstraintExpr & e) {
+  BoolVar var(*this, 0, 1);
+  switch (e.id) {
+  case XOR_EXPR:
+    rel(*this,
+        adhoc_constraint_var(e.children[0]),
+        BOT_XOR,
+        adhoc_constraint_var(e.children[1]),
+        var,
+        ipl);
+    return var;
+  case AND_EXPR:
+    rel(*this,
+        adhoc_constraint_var(e.children[0]),
+        BOT_AND,
+        adhoc_constraint_var(e.children[1]),
+        var,
+        ipl);
+    return var;
+  case ACTIVE_OPERATION_EXPR:
+    return a(e.data[0]);
+  default: GECODE_NEVER;
+  }
+}
+
 BoolVar Model::presolver_disj_var(presolver_disj &d) {
   BoolVar disj(*this, 0, 1);
   if (d.empty()) {
@@ -915,6 +940,8 @@ void Model::post_basic_model_constraints(block b) {
   post_fixed_precedences_constraints(b);
   post_prescheduling_constraints(b);
   post_bypassing_constraints(b);
+  post_adhoc_constraints(b);
+
 }
 
 void Model::post_connected_users_constraints(block b) {
@@ -1290,6 +1317,15 @@ void Model::post_bypassing_constraints(block b) {
         }
       }
       constraint(c(o) == element(cs, i(o)));
+    }
+  }
+
+}
+
+void Model::post_adhoc_constraints(block b) {
+  for (UnisonConstraintExpr e : input->constraints) {
+    if (in_block(e, b, input)) {
+      constraint(adhoc_constraint_var(e));
     }
   }
 

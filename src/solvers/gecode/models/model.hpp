@@ -186,6 +186,8 @@ public:
 
   void constraint(const BoolExpr &e) {rel(*this, e, ipl);}
 
+  BoolVar adhoc_constraint_var(UnisonConstraintExpr & e);
+
   BoolVar presolver_disj_var(presolver_disj &d);
 
   BoolVar presolver_conj_var(presolver_conj &c);
@@ -381,6 +383,7 @@ public:
   void post_fixed_precedences_constraints(block b);
   void post_prescheduling_constraints(block b);
   void post_bypassing_constraints(block b);
+  void post_adhoc_constraints(block b);
 
   void post_improved_model_constraints(block b);
   void post_null_register_constraints(block b);

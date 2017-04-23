@@ -87,6 +87,8 @@ module Unison.Base
         CGEdgeLabel (..),
         OGEdgeLabel (..),
         DGEdgeLabel,
+        -- * Constraint types
+        ConstraintExpr (..),
         -- * Other types
         Dependency (..),
         PrecedenceType (..),
@@ -896,6 +898,17 @@ data OGEdgeLabel i r =
     OperandNaturalEdge (BlockOperation i r) |
     -- | Congruent operands
     OperandCongruenceEdge
+
+-- | Expression over a Unison IR function.
+
+data ConstraintExpr =
+    -- | Exclusive or
+    XorExpr ConstraintExpr ConstraintExpr |
+    -- | Conjunction
+    AndExpr ConstraintExpr ConstraintExpr |
+    -- | Literal expressing that a certain operation is active
+    ActiveOperation OperationId
+    deriving (Eq, Show)
 
 -- | Dependency among 'Operation's.
 

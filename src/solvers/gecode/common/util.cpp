@@ -327,6 +327,26 @@ string emit_json_object(const PresolverValuePrecedeChain pvc) {
   return ss.str();
 }
 
+string emit_json_object(const UnisonConstraintExpr e) {
+  stringstream ss;
+  ss << "["
+     << e.id
+     << ", ";
+  switch (e.id) {
+  case XOR_EXPR:
+  case AND_EXPR:
+    ss << emit_json_object(e.children[0]) << ", "
+       << emit_json_object(e.children[1]);
+    break;
+  case ACTIVE_OPERATION_EXPR:
+    ss << e.data[0];
+    break;
+  default: GECODE_NEVER;
+  }
+  ss << "]";
+  return ss.str();
+}
+
 string show_class(register_class rc, const Parameters * p) {
   stringstream s;
   s << "rc" << rc << ":" << p->classname[rc];
@@ -476,4 +496,18 @@ bool in_block(PresolverBefore & bf, block b, const Parameters * input) {
   if (input->pb[bf.p] != b) return false;
   if (input->pb[bf.q] != b) return false;
   return in_block(bf.d, b, input);
+}
+
+bool in_block(UnisonConstraintExpr & e, block b, const Parameters * input) {
+  switch (e.id) {
+  case XOR_EXPR:
+  case AND_EXPR:
+    return in_block(e.children[0], b, input) &&
+           in_block(e.children[1], b, input);
+  case ACTIVE_OPERATION_EXPR:
+    operation o = e.data[0];
+    return (input->oblock[o] == b);
+  }
+  GECODE_NEVER;
+  return true;
 }

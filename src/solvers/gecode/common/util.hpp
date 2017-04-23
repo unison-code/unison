@@ -258,6 +258,8 @@ string emit_json_object(const PresolverInstrCond at);
 
 string emit_json_object(const PresolverValuePrecedeChain at);
 
+string emit_json_object(const UnisonConstraintExpr e);
+
 template <typename C>
 string emit_json_object(const C& container) {
   stringstream s;
@@ -417,5 +419,7 @@ bool in_block(PresolverCopyTmpTable & ctt, block b, const Parameters * input);
 bool in_block(PresolverPrecedence & p, block b, const Parameters * input);
 
 bool in_block(PresolverBefore & bf, block b, const Parameters * input);
+
+bool in_block(UnisonConstraintExpr & e, block b, const Parameters * input);
 
 #endif

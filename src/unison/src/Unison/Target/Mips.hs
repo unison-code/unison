@@ -69,7 +69,8 @@ target =
       API.tStackDirection   = const stackDirection,
       API.tReadWriteLatency = const readWriteLatency,
       API.tAlternativeTemps = const alternativeTemps,
-      API.tExpandCopy       = const expandCopy
+      API.tExpandCopy       = const expandCopy,
+      API.tConstraints      = const (const [])
     }
 
 instance Read MipsInstruction where

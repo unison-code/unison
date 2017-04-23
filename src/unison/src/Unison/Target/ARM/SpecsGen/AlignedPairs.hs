@@ -478,8 +478,6 @@ alignedPairs i ([_, _, _, _, _, _, _], [_])
 alignedPairs i ([_, _, _, _, _, _], []) | i `elem` [T2STRDi8] = []
 alignedPairs i ([_, _, _, _, _, _], [_])
   | i `elem` [T2STRD_PRE] = []
-alignedPairs i ([_, _, _, _, _, _], [_])
-  | i `elem` [T2STRDi8_linear] = []
 alignedPairs i ([_, _, _, _], [_]) | i `elem` [VMOVDRR] = []
 alignedPairs i ([_, _, _, _, _, _], [_]) | i `elem` [STRHTr] = []
 alignedPairs i ([_, _, _, _, _], [_]) | i `elem` [STRHTi] = []
@@ -518,8 +516,6 @@ alignedPairs i ([_, _, _, _, _], [_])
   | i `elem`
       [STRB_PRE_IMM, STR_PRE_IMM, T2STRB_PRE, T2STRH_PRE, T2STR_PRE]
     = []
-alignedPairs i ([_, _, _, _, _], [_])
-  | i `elem` [T2STRi12_linear] = []
 alignedPairs i ([_, _, _], [_]) | i `elem` [VMOVSR] = []
 alignedPairs i ([_, _, _, _, _, _], [])
   | i `elem` [STRBrs, STRrs] = []
@@ -1193,7 +1189,7 @@ alignedPairs i ([_, _, _, _, _, _], [_]) | i `elem` [MVNsr] = []
 alignedPairs i ([_, _], [_]) | i `elem` [SPACE] = []
 alignedPairs i ([_, _, _, _], [_]) | i `elem` [TADDrSP] = []
 alignedPairs i ([_, _, _, _], [_]) | i `elem` [TADDrSPi, TFP] = []
-alignedPairs i ([_], []) | i `elem` [Store_merge, TRET_merge] = []
+alignedPairs i ([_], []) | i `elem` [TRET_merge] = []
 alignedPairs i ([_], [_])
   | i `elem`
       [COPY, LDRLIT_ga_abs, LOAD, LOAD_D, LOAD_T, MOVE, MOVE_ALL, MOVE_D,
@@ -1280,7 +1276,6 @@ alignedPairs i ([src1, _, _, _, _], [src1'])
        VQRDMLAHv4i16, VQRDMLAHv4i32, VQRDMLAHv8i16, VQRDMLSHv2i32,
        VQRDMLSHv4i16, VQRDMLSHv4i32, VQRDMLSHv8i16]
     = [(src1, src1')]
-alignedPairs i ([_, _], [_]) | i `elem` [Single_store_merge] = []
 alignedPairs i ([_, _], [_, _])
   | i `elem` [TPOP2_r4_11, TPOP2_r4_7, TPUSH2_r4_11, TPUSH2_r4_7] =
     []

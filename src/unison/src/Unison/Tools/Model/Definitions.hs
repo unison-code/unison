@@ -62,4 +62,14 @@ instance ToJSON (IndexedUsage s) where
 
 instance ToJSON (IndexedInstruction i) where toJSON = toJSON . ioId
 
+instance ToJSON ConstraintExpr where
+  toJSON e @ (XorExpr e1 e2) = toJSON (exprId e, e1, e2)
+  toJSON e @ (AndExpr e1 e2) = toJSON (exprId e, e1, e2)
+  toJSON e @ (ActiveOperation oid) = toJSON (exprId e, oid)
+
+exprId :: ConstraintExpr -> Integer
+exprId (XorExpr _ _)       = 0
+exprId (AndExpr _ _)       = 1
+exprId (ActiveOperation _) = 2
+
 unionMaps (Object m1) (Object m2) = Object (HM.union m1 m2)

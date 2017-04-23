@@ -57,7 +57,8 @@ module Unison.Target.API (
   stackDirection,
   readWriteLatency,
   alternativeTemps,
-  expandCopy
+  expandCopy,
+  constraints
   ) where
 
 import Data.List
@@ -191,6 +192,7 @@ readWriteLatency (ti, to) rwo (pi, pa) (ci, ca) =
     Just $ tReadWriteLatency ti to rwo (pi, pa) (ci, ca)
 alternativeTemps (ti, to) = tAlternativeTemps ti to
 expandCopy (ti, to) = tExpandCopy ti to
+constraints (ti, to) = tConstraints ti to
 
 -- | Container with information about a 'Function' along with the
 -- function itself.
@@ -297,7 +299,9 @@ data TargetDescription i r rc s = TargetDescription {
       tExpandCopy       :: TargetOptions ->
                            Block i r ->
                            (OperationId, MoperandId, TemporaryId) ->
-                           BlockOperation i r -> [BlockOperation i r]
+                           BlockOperation i r -> [BlockOperation i r],
+      -- | Custom processor constraints
+      tConstraints      :: TargetOptions -> Function i r -> [ConstraintExpr]
 }
 
 -- | Any 'TargetDescription'. Used to support multiple targets without

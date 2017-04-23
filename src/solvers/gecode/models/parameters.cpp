@@ -77,6 +77,7 @@ Parameters::Parameters(JSONVALUE root) :
   packed        (get_2d_vector<int>(getRoot(root, "packed"))),
   exrelated     (get_2d_vector<int>(getRoot(root, "exrelated"))),
   table         (get_3d_vector<int>(getRoot(root, "table"))),
+  constraints   (get_vector<UnisonConstraintExpr>(getRoot(root, "constraints"))),
   activators    (get_2d_vector<int>(getRoot(root, "activators"))),
 
   // Objective function parameters
@@ -1076,6 +1077,29 @@ void Parameters::get_element(QScriptValue root, int & i) {
 void Parameters::get_element(QScriptValue root, string & s) {
   assert(root.isString());
   s = root.toString().toStdString();
+}
+
+void Parameters::get_element(QScriptValue root, UnisonConstraintExpr & e) {
+  assert(root.isArray());
+  QScriptValueIterator iti(root);
+  iti.next();
+  e.id = (UnisonConstraintExprId) iti.value().toInt32();
+  iti.next();
+  UnisonConstraintExpr e1, e2;
+  switch (e.id) {
+  case XOR_EXPR:
+  case AND_EXPR:
+    get_element(iti.value(), e1);
+    e.children.push_back(e1);
+    iti.next();
+    get_element(iti.value(), e2);
+    e.children.push_back(e2);
+    break;
+  case ACTIVE_OPERATION_EXPR:
+    e.data.push_back(iti.value().toInt32());
+    break;
+  default: GECODE_NEVER;
+  }
 }
 
 void Parameters::get_element(QScriptValue root, PresolverActiveTable & at) {

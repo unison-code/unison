@@ -42,6 +42,7 @@ parameters (cg, _, t2w, ra, _) f @ Function {fCode = code} target =
         apf         = alignedPairs target
         ppf         = packedPairs target
         rpf         = relatedPairs target
+        cf          = constraints target
         bcfg        = BCFG.fromFunction bif f
         fCode       = sortBy (comparing oId) (flatten code)
         im          = instructionManager fCode
@@ -68,6 +69,8 @@ parameters (cg, _, t2w, ra, _) f @ Function {fCode = code} target =
         packed      = packedTuples ppf fCode
         (exrelated,
          table)     = unzip $ sort $ concatMap (relatedTuples rpf ra) fCode
+
+        constrs     = cf f
 
         pp          = map S.fromList congr
         adjacent    = sort $ BCFG.eqvNeighborTemps bcfg pp
@@ -179,6 +182,10 @@ parameters (cg, _, t2w, ra, _) f @ Function {fCode = code} target =
       -- table of register assignments of each related operand pair
       -- example: table[5][2][1]: register of second operand in the third row
       ("table", toJSON table),
+
+      -- ad-hoc processor constraints over the function
+      -- example: constraints[7]: eight ad-hoc constraint
+      ("constraints", toJSON constrs),
 
       -- Additional parameters
 

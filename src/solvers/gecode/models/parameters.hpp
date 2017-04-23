@@ -177,6 +177,9 @@ public:
   // table of register assignments of each related operand pair
   vector<vector<vector<register_atom> > > table;
 
+  // ad-hoc processor constraints over the function
+  vector<UnisonConstraintExpr> constraints;
+
   // instructions that activate each operation
   vector<vector<instruction> > activators;
 
@@ -656,6 +659,7 @@ protected:
   void get_element(JSONVALUE root, bool & b);
   void get_element(JSONVALUE root, int & i);
   void get_element(JSONVALUE root, string & s);
+  void get_element(JSONVALUE root, UnisonConstraintExpr & e);
   void get_element(JSONVALUE root, PresolverActiveTable & at);
   void get_element(JSONVALUE root, PresolverCopyTmpTable & ctt);
   void get_element(JSONVALUE root, PresolverPrecedence & p);

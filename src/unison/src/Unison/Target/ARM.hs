@@ -72,7 +72,8 @@ target =
       API.tStackDirection   = const stackDirection,
       API.tReadWriteLatency = const readWriteLatency,
       API.tAlternativeTemps = const alternativeTemps,
-      API.tExpandCopy       = const expandCopy
+      API.tExpandCopy       = const expandCopy,
+      API.tConstraints      = const constraints
     }
 
 instance Read ARMInstruction where
@@ -585,3 +586,30 @@ alternativeTemps _ _ _ ts = map fst ts
 -- | Copy expansion
 
 expandCopy _ _ o = [o]
+
+-- | Custom processor constraints
+
+constraints f =
+  foldMatch altLoadStoreConstraints [] f
+
+altLoadStoreConstraints (
+  s1 @ SingleOperation {oOpr = Natural Linear {
+       oIs = [General NullInstruction, TargetInstruction i1]}}
+  :
+  s2 @ SingleOperation {oOpr = Natural Linear {
+       oIs = [General NullInstruction, TargetInstruction i2]}}
+  :
+  ds @ SingleOperation {oOpr = Natural Linear {
+       oIs = [General NullInstruction, TargetInstruction dsi]}}
+  :
+  code) constraints | all isSingleLoadStore [i1, i2] && isDoubleLoadStore dsi =
+  let alt =
+        XorExpr
+        (AndExpr (ActiveOperation (oId s1)) (ActiveOperation (oId s2)))
+        (ActiveOperation (oId ds))
+  in (code, constraints ++ [alt])
+
+altLoadStoreConstraints (_ : code) constraints = (code, constraints)
+
+isSingleLoadStore i = i `elem` [T2LDRi12, T2STRi12]
+isDoubleLoadStore i = i `elem` [T2LDRDi8, T2STRDi8]

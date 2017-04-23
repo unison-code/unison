@@ -358,4 +358,20 @@ public:
   static Temporand n(int id);   // Id has no relevant type, just a number
 };
 
+// Numeric ID of a Unison constraint expresion
+
+enum UnisonConstraintExprId
+  { XOR_EXPR,
+    AND_EXPR,
+    ACTIVE_OPERATION_EXPR };
+
+// Unison constraint expression
+
+class UnisonConstraintExpr {
+public:
+  UnisonConstraintExprId id;
+  vector<int> data;
+  vector<UnisonConstraintExpr> children;
+};
+
 #endif

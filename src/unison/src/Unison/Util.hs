@@ -130,6 +130,7 @@ module Unison.Util
         foldFunction,
         foldBlock,
         peephole,
+        foldMatch,
         makeOptional,
         addNullTemp,
         foldVirtualCopy,
@@ -868,6 +869,17 @@ foldFunction fun acc f @ Function {fCode = code} =
 foldBlock fun (accCode, acc) b @ Block {bCode = code} =
   let (code', acc') = foldl fun (code, acc) code
   in (accCode ++ [b {bCode = code'}], acc')
+
+foldMatch :: ([BlockOperation i r] -> a -> ([BlockOperation i r], a)) ->
+             a -> Function i r -> a
+foldMatch f acc Function {fCode = code} = foldl (foldMatchBlock f) acc code
+
+foldMatchBlock f acc Block {bCode = code} = applyFoldMatch f acc code
+
+applyFoldMatch _ acc [] = acc
+applyFoldMatch f acc code =
+    let (code', acc') = f code acc
+    in applyFoldMatch f acc' code'
 
 makeOptional :: BlockOperation i r -> BlockOperation i r
 makeOptional o =

@@ -607,6 +607,5 @@ allInstructions
      TPUSH2_r4_11, TPOP_r4_7, TPOP_r8_11, TPOP2_r4_7, TPOP2_r4_11,
      TPOP2_r4_7_linear, TPOP2_r4_11_linear, MEMCPY_4, T2LDMIA_4,
      T2LDMIA_UPD_4, T2STMIA_4, T2STMIA_UPD_4, TRET_merge,
-     TBX_RET_linear, Load_merge, Single_store_merge, Store_merge,
-     T2STRi12_linear, T2STRDi8_linear]
+     TBX_RET_linear, Load_merge]
 
