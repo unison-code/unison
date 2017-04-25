@@ -455,7 +455,8 @@ mirFPImm =
      return (mkMachineFPImm int fr exp)
 
 mirCFIDef =
-  do string ".cfi_def_cfa"
+  do optional mirCFIPrefix
+     string "def_cfa"
      whiteSpace
      reg <- mirReg
      string ", "
@@ -463,19 +464,22 @@ mirCFIDef =
      return (mkMachineCFIDef (mfrRegName reg) off)
 
 mirCFIDefOffset =
-  do string ".cfi_def_cfa_offset"
+  do optional mirCFIPrefix
+     string "def_cfa_offset"
      whiteSpace
      off <- signedDecimal
      return (mkMachineCFIDefOffset off)
 
 mirCFIDefReg =
-  do string ".cfi_def_cfa_register"
+  do optional mirCFIPrefix
+     string "def_cfa_register"
      whiteSpace
      reg <- mirReg
      return (mkMachineCFIDefReg (mfrRegName reg))
 
 mirCFIOffset =
-  do string ".cfi_offset"
+  do optional mirCFIPrefix
+     string "offset"
      whiteSpace
      reg <- mirReg
      string ", "
@@ -492,6 +496,9 @@ mirMemOperands =
      whiteSpace
      ms <- mirMemOperand `sepBy` comma
      return ms
+
+-- This prefix is present only in LLVM <= 3.9
+mirCFIPrefix = string ".cfi_"
 
 mirMemOperand = parens nakedMirMemOperand
 
