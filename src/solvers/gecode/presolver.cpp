@@ -78,7 +78,7 @@ string write_json_vector_int(string label, vector<int> v)
   return ss.str();
 }
 
-string produce_json(Parameters &input)
+string produce_json(Parameters &input, int presolver_time)
 {
   stringstream json;
   json << "{"
@@ -169,7 +169,8 @@ string produce_json(Parameters &input)
        << emit_json_line("successors", input.successors)
        << emit_json_line("value_precede_chains", input.value_precede_chains)
        << emit_json_line("quasi_adjacent", input.quasi_adjacent)
-       << emit_json_line_last("long_latency", input.long_latency)
+       << emit_json_line("long_latency", input.long_latency)
+       << emit_json_line("presolver_time", presolver_time)
        << "}\n";
   return json.str();
 }
@@ -261,11 +262,11 @@ int main(int argc, char* argv[]) {
   t_presolver.start();
   presolve(input, options);
   double t_pre_ms = t_presolver.stop();
-  if (options.output_file() == "") {
-    cout << produce_json(input);
+  if (options.output_file().empty()) {
+    cout << produce_json(input, t_pre_ms);
   } else {
     fout.open(options.output_file());
-    fout << produce_json(input);
+    fout << produce_json(input, t_pre_ms);
     fout.close();
   }
   if (options.verbose())
