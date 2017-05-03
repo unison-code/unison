@@ -83,7 +83,7 @@ CONFIG(graphics) {
   LIBS += -lgecodegist
 }
 LIBS += -lgecodesearch -lgecodeminimodel -lgecodeset -lgecodefloat -lgecodeint \
-        -lgecodekernel -lgecodesupport -ljson
+        -lgecodekernel -lgecodesupport -ljsoncpp
 
 TARGET = gecode-solver
 CONFIG -= qt
@@ -149,7 +149,7 @@ CONFIG(graphics) {
              inspectors/usersinspector.cpp \
              inspectors/operandlatencyinspector.cpp
 
-  LIBS -= -ljson
+  LIBS -= -ljsoncpp
   LIBS += -lgvc -lcgraph -lcdt
 
 }

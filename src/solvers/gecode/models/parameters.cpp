@@ -1254,6 +1254,12 @@ void Parameters::get_element(Json::Value root, string & s) {
   s = root.asString();
 }
 
+void Parameters::get_element(Json::Value root, UnisonConstraintExpr & e) {
+  assert(root.isArray());
+  // FIXME
+  GECODE_NEVER;
+}
+
 void Parameters::get_element(Json::Value root, PresolverActiveTable & at) {
   assert(root.isArray());
   Json::ValueIterator iti = root.begin();
