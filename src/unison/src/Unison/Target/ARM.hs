@@ -219,17 +219,15 @@ fromCopy Copy {oCopyIs = [TargetInstruction i], oCopyS = s, oCopyD = d}
   | i `elem` [TPUSH2_r4_7, TPUSH2_r4_11] =
     let w = i == TPUSH2_r4_11
     in Linear {oIs = [TargetInstruction (fromCopyInstr i (s, d))],
-               oUs = defaultUniPred ++
-                     map (Register . TargetRegister)
-                     ((if w then [SP] else []) ++ pushRegs i ++ [LR]),
-               oDs = if w then [mkOprArmSP] else []}
+               oUs = [mkOprArmSP | w] ++ defaultUniPred ++
+                     map (Register . TargetRegister) (pushRegs i ++ [LR]),
+               oDs = [mkOprArmSP | w]}
   | i `elem` [TPOP2_r4_7, TPOP2_r4_7_RET, TPOP2_r4_11, TPOP2_r4_11_RET] =
     let w = i `elem` [TPOP2_r4_11, TPOP2_r4_11_RET]
     in Linear {oIs = [TargetInstruction (fromCopyInstr i (s, d))],
-               oUs = defaultUniPred ++
-                     map (Register . TargetRegister)
-                     ((if w then [SP] else []) ++ pushRegs i),
-               oDs = if w then [mkOprArmSP] else []}
+               oUs = [mkOprArmSP | w] ++ defaultUniPred ++
+                     map (Register . TargetRegister) (pushRegs i),
+               oDs = [mkOprArmSP | w]}
 fromCopy o = error ("unmatched pattern: fromCopy " ++ show o)
 
 mkOprArmSP = Register $ mkTargetRegister SP
@@ -257,10 +255,10 @@ fromCopyInstr MOVE_ALL (s, d)
   | isSPR s && isSPR d = VMOVS
 fromCopyInstr TPUSH2_r4_7 _  = TPUSH
 fromCopyInstr TPUSH2_r4_11 _ = T2STMDB_UPD
-fromCopyInstr i _
-  | i `elem` [TPOP2_r4_7, TPOP2_r4_7_RET] = TPOP_RET
-fromCopyInstr i _
-  | i `elem` [TPOP2_r4_11, TPOP2_r4_11_RET] = T2LDMIA_RET
+fromCopyInstr TPOP2_r4_7 _      = TPOP
+fromCopyInstr TPOP2_r4_7_RET _  = TPOP_RET
+fromCopyInstr TPOP2_r4_11 _     = T2LDMIA_UPD
+fromCopyInstr TPOP2_r4_11_RET _ = T2LDMIA_RET
 
 isSPR r = rTargetReg (regId r) `elem` registers (RegisterClass SPR)
 isGPR r = rTargetReg (regId r) `elem` registers (RegisterClass GPR)
