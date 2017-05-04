@@ -243,6 +243,6 @@ string pre();
 // Checks whether the presolver times out and prints a timeout message. If
 // verbose, prints the individual runtime of the pass given by t0
 bool timeout(Support::Timer & t, PresolverOptions & options, string pass,
-             Support::Timer & t0);
+             Support::Timer & t0, bool print_time = true);
 
 #endif

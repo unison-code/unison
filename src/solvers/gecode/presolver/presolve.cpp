@@ -293,11 +293,17 @@ void presolve(Parameters & input, PresolverOptions & options) {
   t0.start();
   map<operand, map<instruction, latency>> opnd2lat = compute_opnd_to_lat(input);
   precedence_set precedences;
-  gen_before_precedences(input, input.before, precedences);
+  gen_before_precedences(input, options, input.before, precedences, t);
+  if (timeout(t, options, "Precedences - gen_before_precedences", t0, false))
+    return;
   gen_fixed_precedences(input, precedences);
+  if (timeout(t, options, "Precedences - gen_fixed_precedences", t0, false))
+    return;
   // gen_data_precedences(input, opnd2lat, precedences); // defer to solver!
   if (options.regions())
     gen_region_precedences(input, precedences);
+  if (timeout(t, options, "Precedences - gen_region_precedences", t0, false))
+    return;
   sort(precedences.begin(), precedences.end());
   precedences.erase(unique(precedences.begin(), precedences.end()), precedences.end());
   if (timeout(t, options, "Precedences", t0)) return;
@@ -325,7 +331,9 @@ void presolve(Parameters & input, PresolverOptions & options) {
   t0.start();
   temp.clear();
   precedence_set precedences2;
-  gen_before_precedences(input, input.before2, precedences2);
+  gen_before_precedences(input, options, input.before2, precedences2, t);
+  if (timeout(t, options, "precedences2 - gen_before_precedences", t0, false))
+    return;
   for(const PresolverPrecedence& pred : precedences2) {
     operation p = pred.i;
     operation q = pred.j;

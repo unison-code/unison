@@ -79,8 +79,10 @@ class PrecedenceEdge {
 };
 
 void gen_before_precedences(const Parameters& input,
+                            PresolverOptions & options,
 			    const vector<PresolverBefore>& before,
-			    precedence_set& PI);
+			    precedence_set& PI,
+                            Support::Timer & t);
 
 multimap<PrecedenceEdge, presolver_conj> gen_before_precedences1(const Parameters& input,
 								 operand p,

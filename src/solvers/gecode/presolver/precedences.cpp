@@ -651,11 +651,14 @@ map<operand, map<instruction, latency>> compute_opnd_to_lat(const Parameters& in
 }
 
 void gen_before_precedences(const Parameters& input,
+                            PresolverOptions & options,
 			    const vector<PresolverBefore>& before,
-			    precedence_set& PI) {
+			    precedence_set& PI,
+                            Support::Timer & t) {
     // M <- empty
     multimap<PrecedenceEdge, presolver_conj> M;
     vector<PrecedenceEdge> M_keys; // Storing keys for convenience
+    unsigned int i = 0;
     // For all <p,q,Disj> in Before
     for(const PresolverBefore& b : before) {
         // M <- M U GenBeforePrecedences1(p,q,Disj)
@@ -665,7 +668,12 @@ void gen_before_precedences(const Parameters& input,
 	  M_keys.push_back(p.first);
 	  M.insert(p);
 	}
+        if ((i % 16 == 0) &&
+            timeout(t, options, "gen_before_precedences (1st loop)", t, false))
+          return;
+        i++;
     }
+    i = 0;
     // return {<p,s,n,KernelSet(Disj, empty)> | <p,s,n> -> Disj in M }
     for(const PrecedenceEdge& k : M_keys) {
         // Get Disj
@@ -676,6 +684,10 @@ void gen_before_precedences(const Parameters& input,
         }
         PresolverPrecedence e(k.i, k.j, k.n, kernel_set(disj, {}, -1));
         PI.push_back(e);
+        if ((i % 16 == 0) &&
+            timeout(t, options, "gen_before_precedences (2nd loop)", t, false))
+          return;
+        i++;
     }
 }
 
