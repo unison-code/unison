@@ -376,7 +376,12 @@ void deepsort(PresolverActiveTable & t) {
 
 string pre() { return "[pre]\t "; }
 
-bool timeout(Support::Timer & t, PresolverOptions & options, string pass) {
+bool timeout(Support::Timer & t, PresolverOptions & options, string pass,
+             Support::Timer & t0) {
+  if (options.verbose()) {
+    cerr << pre() << "presolving time (" << pass << "): " << ceil(t0.stop())
+         << " ms" << endl;
+  }
   if (t.stop() > options.timeout()) {
     cerr << pre() << "timeout after " << pass << endl;
     return true;
