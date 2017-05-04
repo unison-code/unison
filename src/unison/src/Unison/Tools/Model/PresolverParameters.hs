@@ -30,7 +30,7 @@ import Unison.Tools.Model.Definitions()
 import qualified Data.Map as M
 import qualified Data.Set as S
 
-parameters oldModel (_, dgs, _, ra, _)
+parameters oldModel (_, dgs, _, _, ra, _)
   f @ Function {fCode = code} target _ps =
   let oif         = operandInfo target
       pgs         = map (PG.nonNegative . PG.fromDependencyGraph oif) dgs

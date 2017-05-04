@@ -74,17 +74,18 @@ auxiliarDataStructures target tight baseMir f @ Function {fCode = code} =
       ra    = mkRegisterArray target 0
       cg    = CG.fromFunction f
       dgs   = map (DG.fromBlock rwlf rm oif) code
+      deps  = map DG.dependencies dgs
       t2w   = tempWidths ra oif fCode cg
       inf   = maxTempWidth tight code t2w
       ra'   = mkRegisterArray target inf
-  in (cg, dgs, t2w, ra', baseMir)
+  in (cg, dgs, deps, t2w, ra', baseMir)
 
 optimization flags aux target f ps =
     let ops = toJSON (M.fromList (optimizationParameters flags aux target f))
     in unionMaps ps ops
 
 optimizationParameters (strictlyBetter, unsatisfiable, scaleFreq)
-  (_, dgs, _, _, baseMir) target Function {fCode = code, fGoal = goal} =
+  (_, _, deps, _, _, baseMir) target Function {fCode = code, fGoal = goal} =
     let rm    = resourceManager target
         cf    = capacityMap target
         r2id  = M.fromList [(resName (res ir), resId ir) | ir <- iResources rm]
@@ -94,7 +95,7 @@ optimizationParameters (strictlyBetter, unsatisfiable, scaleFreq)
         maxf0 = case baseMir of
                  (Just mir) ->
                      let mf = fromSingleton $ MIR.parse mir
-                     in maximumCost strictlyBetter scaleFreq cf gl (mir, mf) dgs
+                     in maximumCost strictlyBetter scaleFreq cf gl (mir, mf) deps
                         target code
                  Nothing -> maxInt
         maxf  = if unsatisfiable then 0 else maxf0
@@ -128,14 +129,15 @@ maximumCost :: (Eq i, Show i, Read i, Ord r, Show r, Read r, Ord rc, Show rc,
                 Ord s, Show s) =>
                Bool -> Bool -> M.Map s Integer -> Goal s ->
                (String, MIR.MachineFunction i r) ->
-               [DGraph i r] -> TargetWithOptions i r rc s -> [Block i r] ->
+               [[(OperationId, OperationId, [Maybe Latency])]] ->
+               TargetWithOptions i r rc s -> [Block i r] ->
                Integer
-maximumCost strictlyBetter scaleFreq cf gl (mir, mf) dgs target code =
+maximumCost strictlyBetter scaleFreq cf gl (mir, mf) deps target code =
     let rm     = resourceManager target
         oif    = operandInfo target
         bbs    = map MIR.machineBlockFreq (MIR.mfBlocks mf)
         fbs    = map blockFreq code
-        factor = if scaleFreq then scaleFactor (rm, oif, dgs) code else 1.0
+        factor = if scaleFreq then scaleFactor (rm, oif, deps) code else 1.0
         nf     = sort . map (scaleDown factor)
         ([baseCost], _) = Analyze.analyze (False, True, True)
                           factor [gl] mir target

@@ -428,7 +428,8 @@ noCostOverflow Function {fCode = code} target =
       rwlf = readWriteLatency target
       oif  = operandInfo target
       dgs  = map (DG.fromBlock rwlf rm oif) code
-  in if maxCost (rm, oif, dgs) code > maxInt then
+      deps = map DG.dependencies dgs
+  in if maxCost (rm, oif, deps) code > maxInt then
        [showProblem "noCostOverflow" "maximum cost overflow"]
      else []
 

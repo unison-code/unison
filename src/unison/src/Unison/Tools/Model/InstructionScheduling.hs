@@ -24,12 +24,11 @@ import Data.Aeson (toJSON)
 import Unison
 import Unison.Target.API
 import Unison.Target.Query
-import qualified Unison.Graphs.DG as DG
 import Unison.Analysis.MakespanBounds
 
 import Unison.Tools.Model.Definitions
 
-parameters scaleFreq (_, dgs, _, _, _) Function {fCode = code} target =
+parameters scaleFreq (_, _, deps, _, _, _) Function {fCode = code} target =
   let oif           = operandInfo target
       rm            = resourceManager target
       fCode         = sortBy (comparing oId) (flatten code)
@@ -38,7 +37,6 @@ parameters scaleFreq (_, dgs, _, _, _) Function {fCode = code} target =
       block         = concatMap
                       (\b -> replicate (length (bCode b)) (bLab b)) code
       ops           = blockMap sort code
-      deps          = map DG.dependencies dgs
       dep           = map (map (\(p, c, _) -> (p, c))) deps
       dist          = map (map (\(_, _, ls) -> map modelLatency ls)) deps
       im            = instructionManager fCode
@@ -51,13 +49,13 @@ parameters scaleFreq (_, dgs, _, _, _) Function {fCode = code} target =
       dur           = toValueList $ operationUsages occupation rm im
       off           = toValueList $ operationUsages offset rm im
       factor        = if scaleFreq
-                      then scaleFactor (rm, oif, dgs) code else 1.0
+                      then scaleFactor (rm, oif, deps) code else 1.0
       freq          = map (scaleDown factor . blockFreq) code :: [Frequency]
       i             = indexedInstructions im
       r             = iResources rm
       instructions  = map (oIInstructions im) fCode
       activators    = map (activatorIInstructions im) fCode
-      maxc          = map (computeMaxC (rm, oif, dgs)) code
+      maxc          = map (computeMaxC (rm, oif)) (zip code deps)
       itype         = map ((M.!) typeNumbers . oType) fCode
       insname       = map (show . ioInstruction) i
       preschedule   = map (\o -> (oId o, (aPrescheduled (oAs o)))) $

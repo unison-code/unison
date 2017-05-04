@@ -36,7 +36,7 @@ import qualified Unison.Graphs.Partition as P
 
 import Unison.Tools.Model.Definitions
 
-parameters (cg, _, t2w, ra, _) f @ Function {fCode = code} target =
+parameters (cg, _, _, t2w, ra, _) f @ Function {fCode = code} target =
     let oif         = operandInfo target
         bif         = branchInfo target
         apf         = alignedPairs target

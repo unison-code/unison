@@ -18,14 +18,12 @@ module Unison.Analysis.MakespanBounds
 import Data.Maybe
 import Data.Int
 import Data.List
-import Data.Graph.Inductive
 
 import Unison
 import Unison.Target.Query
-import qualified Unison.Graphs.DG as DG
 
-computeMaxC targetFs Block {bCode = code} =
-    sum $ map (maxInstructionLatency targetFs) code
+computeMaxC (rm, oif) (Block {bCode = code}, deps) =
+  sum $ map (maxInstructionLatency (rm, oif, deps)) code
 
 maxInstructionLatency targetFs o
     | isVirtual o = 1
@@ -35,12 +33,11 @@ maxInstructionLatency targetFs o
         maximum $ mapMaybe (worst targetFs o) (oInstructions o)
 
 worst _ _ (General NullInstruction) = Nothing
-worst (rm, oif, dgs) o ti @ (TargetInstruction i) =
+worst (rm, oif, deps) o ti @ (TargetInstruction i) =
     let maxDur     = maxOrZero $ map (occupation . usage) (iUsages rm ti)
         useLats    = operandLats $ fst $ oif i
         defLats    = operandLats $ snd $ oif i
         maxOperLat = maxOrZero useLats + maxOrZero defLats
-        deps       = DG.dependencies $ fromJust $ find (containsOperation o) dgs
         ii         = fromJust $ elemIndex ti (oInstructions o)
         outgoing   = [dist !! ii | (p, _, dist) <- deps, oId o == p]
         incoming   = [dist | (_, s, dist) <- deps, oId o == s]
@@ -53,12 +50,10 @@ worst (rm, oif, dgs) o ti @ (TargetInstruction i) =
 
 operandLats oifs = [l | TemporaryInfo {oiLatency = l} <- oifs]
 
-containsOperation o dg = oId o `elem` map (oId . snd) (labNodes dg)
-
 maxOrZero = maybeMax 0
 
-maxCost targetFs code =
-  let maxc    = map (computeMaxC targetFs) code
+maxCost (rm, oif, deps) code =
+  let maxc    = map (computeMaxC (rm, oif)) (zip code deps)
       rawfreq = map blockFreq code
   in sum $ map (\(f, m) -> f * m) (zip rawfreq maxc)
 
