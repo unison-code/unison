@@ -70,6 +70,10 @@ data MachineFunctionProperty r =
     mfPropertyJumpTableKind :: String,
     -- | Jump table entries
     mfPropertyJumpTable :: [MachineJumpTableEntry r]
+    } |
+  -- | Frequencies of removed blocks
+  MachineFunctionPropertyRemovedFreqs {
+    mfPropertyRemovedFreqs :: [Integer]
     }
   deriving (Eq, Ord)
 

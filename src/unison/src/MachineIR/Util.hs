@@ -126,8 +126,7 @@ mapToMachineBlockIdPs _ p = p
 mapToMachineBlockIdProperty f
   (jt @ MachineFunctionPropertyJumpTable {mfPropertyJumpTable = es}) =
       jt {mfPropertyJumpTable = map (mapToMachineBlockIdJTE f) es}
-mapToMachineBlockIdProperty _ fs @ MachineFunctionPropertyFixedFrame {} = fs
-mapToMachineBlockIdProperty _ s  @ MachineFunctionPropertyFrame {} = s
+mapToMachineBlockIdProperty _ mbp = mbp
 
 mapToMachineBlockIdJTE f e @ MachineJumpTableEntry {mjtBlocks = bs} =
   e {mjtBlocks = map (mapToMachineBlockIdOperand f) bs}

@@ -125,11 +125,12 @@ sFile =
      jtk    <- option [] (jumpTableKindLine `endBy` newline)
      jtes   <- jumpTableEntryLine `endBy` newline
      goal   <- goalLine
+     rfs    <- removedFreqsLine
      sourceMarkerLine
      src    <- sourceLine `endBy` newline
      eof
      return (comms, name, body, listToMaybe cs, ffobjs, fobjs, sp,
-             (toKind jtk, jtes), goal, src)
+             (toKind jtk, jtes), goal, rfs, src)
 
 toKind [] = ""
 toKind [k] = k
@@ -159,6 +160,7 @@ sourceMarkerLine      = lineOf (marker "source")
 
 spOffsetLine = lineOf spOffset
 goalLine = lineOf goal
+removedFreqsLine = lineOf removedFreqs
 
 goal =
   do marker "goal"
@@ -166,6 +168,13 @@ goal =
      goal <- optionMaybe goalName
      whiteSpace
      return goal
+
+removedFreqs =
+  do marker "removed-freqs"
+     whiteSpace
+     rfs <- decimal `sepBy` comma
+     whiteSpace
+     return rfs
 
 spOffset =
   do marker "stack-pointer-offset"
@@ -532,13 +541,14 @@ isLsPrescheduled (LsPrescheduled _) = True
 isLsPrescheduled _                  = False
 
 toFunction target
-  (cmms, name, body, cs, ffobjs, fobjs, sp, (jtk, jt), goal, src) =
+  (cmms, name, body, cs, ffobjs, fobjs, sp, (jtk, jt), goal, rfs, src) =
   let cms   = [cm | (LsComment cm) <- cmms]
       code  = map (toBB target) (split (dWhen isLsBB) body)
       cs'   = map (mapTuple toOperand) $ fromMaybe [] cs
       goal' = fmap toHLGoal goal
       src'  = concat [l ++ "\n" | l <- src]
-  in mkCompleteFunction cms name code cs' ffobjs fobjs sp (jtk, jt) goal' src'
+  in mkCompleteFunction cms name code cs' ffobjs fobjs sp (jtk, jt) goal' rfs
+     src'
 
 toBB target (LsBlock l as : code) =
   Block l (toBlockAttributes as) (map (toOperation target) code)

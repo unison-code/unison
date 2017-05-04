@@ -18,6 +18,7 @@ module MachineIR.Predicates
          isMachineFunctionPropertyFixedFrame,
          isMachineFunctionPropertyFrame,
          isMachineFunctionPropertyJumpTable,
+         isMachineFunctionPropertyRemovedFreqs,
          -- * MachineBlockProperty predicates
          isMachineBlockPropertyFreq,
          isMachineBlockPropertySuccs,
@@ -68,6 +69,9 @@ isMachineFunctionPropertyFrame _ = False
 
 isMachineFunctionPropertyJumpTable MachineFunctionPropertyJumpTable {} = True
 isMachineFunctionPropertyJumpTable _ = False
+
+isMachineFunctionPropertyRemovedFreqs MachineFunctionPropertyRemovedFreqs {} = True
+isMachineFunctionPropertyRemovedFreqs _ = False
 
 isMachineBlockPropertyFreq MachineBlockPropertyFreq {} = True
 isMachineBlockPropertyFreq _ = False

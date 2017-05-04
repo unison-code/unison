@@ -161,6 +161,8 @@ data Function i r = Function {
       fJumpTable   :: (String, [JumpTableEntry]),
       -- | Goal for which the function is to be optimized
       fGoal        :: Maybe HighLevelGoal,
+      -- | Removed frequencies
+      fRemovedFreqs :: [Frequency],
       -- | Source program (e.g. LLVM IR)
       fSource      :: String
     } deriving Eq

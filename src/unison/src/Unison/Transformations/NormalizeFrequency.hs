@@ -15,8 +15,8 @@ module Unison.Transformations.NormalizeFrequency (normalizeFrequency)
 import Unison.Base
 import Unison.Util
 
-normalizeFrequency f @ Function {fCode = code} _ =
-  let rawfreq = map blockFreq code
+normalizeFrequency f @ Function {fCode = code, fRemovedFreqs = rfs} _ =
+  let rawfreq = map blockFreq code ++ rfs
       freq    = normalize rawfreq
       code'   = map updateBlockFreq (zip freq code)
   in f {fCode = code'}

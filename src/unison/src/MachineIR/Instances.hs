@@ -65,6 +65,11 @@ showMachineFunction (name, mps, mbs) =
           fill 17 "jumpTable:" ++ newLine ++
           nest' 2 (showMachineJumpTable mjt)
         Nothing -> "") ++
+    (case find isMachineFunctionPropertyRemovedFreqs mps of
+        (Just mrf) ->
+          fill 17 "removedFreqs:" ++
+          show (mfPropertyRemovedFreqs mrf) ++ newLine
+        Nothing -> "") ++
     fill 18 "body:" ++ "|" ++ newLine ++
     nest' 2 (showMachineBasicBlocks mbs) ++ newLine ++
     docEnd ++ newLine

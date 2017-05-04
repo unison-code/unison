@@ -121,12 +121,12 @@ instance (Show i, Show r) => ShowSimple (Function i r) where
   showSimple f = show (f {fSource = ""})
 
 instance (Show i, Show r) => Show (Function i r) where
-    show (Function comments name code cs ffobjs fobjs sp jt goal src) =
+    show (Function comments name code cs' ffobjs fobjs sp jt goal rfs src) =
       concatMap showComment comments ++
       showSectionName "function" ++ " " ++ name ++ newLine ++
       concatMap show code ++
       showSectionName "adjacent" ++ newLine ++
-      showCongruences cs lineWidth wsWidth ++
+      showCongruences cs' lineWidth wsWidth ++
       showSectionName "fixed-frame" ++ newLine ++
       showFrameObjects True ffobjs ++
       showSectionName "frame" ++ newLine ++
@@ -135,6 +135,7 @@ instance (Show i, Show r) => Show (Function i r) where
       showSectionName "jump-table" ++ newLine ++
       showJumpTableEntries jt ++
       showSectionName "goal" ++ maybeShowGoal goal ++ newLine ++
+      showSectionName "removed-freqs" ++ " " ++ render (cs show rfs) ++ newLine ++
       showSectionName "source" ++ newLine ++
       src
 
