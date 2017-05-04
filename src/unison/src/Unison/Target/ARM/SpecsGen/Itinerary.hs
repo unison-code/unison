@@ -771,11 +771,9 @@ itinerary i
   | i `elem` [MVNr, T2MVNr, TMVN, TMVNs] = IIC_iMVNr
   | i `elem` [T2MVNs] = IIC_iMVNsi
   | i `elem` [MVNsi, MVNsr] = IIC_iMVNsr
-  | i `elem`
-      [TPOP, TPOP2_r4_11, TPOP2_r4_11_RET, TPOP2_r4_7, TPOP2_r4_7_RET,
-       TPOP_r4_7]
-    = IIC_iPop
-  | i `elem` [TPOP_RET] = IIC_iPop_Br
+  | i `elem` [TPOP, TPOP2_r4_11, TPOP2_r4_7, TPOP_r4_7] = IIC_iPop
+  | i `elem` [TPOP2_r4_11_RET, TPOP2_r4_7_RET, TPOP_RET] =
+    IIC_iPop_Br
   | i `elem`
       [T2STRBT, T2STRBi12, T2STRBi12_fi, T2STRBi8, T2STRHT, T2STRHi12,
        T2STRHi12_fi, T2STRHi8, TSTRBi, TSTRHi]
