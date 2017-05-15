@@ -352,7 +352,7 @@ mirVirtualReg =
                (Just idx, Nothing) -> mkMachineSubTemp id idx)
 
 mirSubRegIndex =
-  do char ':'
+  do char ':' <|> char '.'
      idx <- many1 alphaNumDashDotUnderscore
      return idx
 
@@ -515,6 +515,7 @@ nakedMirMemOperand =
 mirMemOperandType =
     try (string "volatile") <|>
     try (string "non-temporal") <|>
+    try (string "dereferenceable") <|>
     try (string "invariant") <|>
     try (string "load") <|>
     try (string "store")
