@@ -94,7 +94,10 @@ maybeExpandInstr id2i i =
   case iParent i of
    Nothing -> i
    Just p ->
-     let i1 = id2i M.! p
+     let i1 = case M.lookup p id2i of
+               Just i1' -> i1'
+               Nothing ->
+                 error ("Parent instruction \'" ++ p ++ "\' does not exist")
          i2 = foldl replaceField i1 (yMap i)
          i3 = addField (YString "parent", YString p) i2
      in i3
