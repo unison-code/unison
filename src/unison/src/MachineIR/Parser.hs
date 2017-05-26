@@ -45,7 +45,8 @@ parseFunction (rawIR, rawMIR) =
       mfs = fmap toMachineFunctionPropertyFixedStack (fixedStack mir)
       ms  = fmap toMachineFunctionPropertyStack (stack mir)
       mf  = case P.parse mirBody "" (body mir) of
-        Left e -> error ("error parsing body:\n" ++ show e)
+        Left e -> error ("error parsing body of '"
+                         ++ name mir ++ "':\n" ++ show e)
         Right mf -> mf {mfName = name mir, mfIR = ir,
                         mfProperties = maybeToList mjt ++ maybeToList mfs ++
                                        maybeToList ms}
@@ -448,7 +449,7 @@ mirMCSymbol =
 mirFPImm =
   do string "float"
      whiteSpace
-     int <- decimal
+     int <- signedDecimal
      char '.'
      fr <- decimal
      char 'e'
