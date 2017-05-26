@@ -48,6 +48,7 @@ module MachineIR.Constructors
          mkMachineReg,
          mkMachineImm,
          mkMachineFPImm,
+         mkMachineRawFPImm,
          mkMachineBlockRef,
          mkMachineFrameIndex,
          mkMachineFrameObject,
@@ -113,6 +114,7 @@ mkMachineSubRegIndex = MachineSubRegIndex
 mkMachineReg name = MachineReg name []
 mkMachineImm = MachineImm
 mkMachineFPImm = MachineFPImm
+mkMachineRawFPImm = MachineRawFPImm
 mkMachineBlockRef = MachineBlockRef
 mkMachineFrameIndex = MachineFrameIndex
 mkMachineFrameObject = MachineFrameObject

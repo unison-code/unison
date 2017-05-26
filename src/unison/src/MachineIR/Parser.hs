@@ -297,6 +297,7 @@ mirActualOperand =
   try mirDebugLocation <|>
   try mirMCSymbol <|>
   try mirFPImm <|>
+  try mirRawFPImm <|>
   try mirCFIDef <|>
   try mirCFIDefOffset <|>
   try mirCFIDefReg <|>
@@ -453,6 +454,13 @@ mirFPImm =
      char 'e'
      exp <- mirOffset
      return (mkMachineFPImm int fr exp)
+
+mirRawFPImm =
+  do string "float"
+     whiteSpace
+     char '0'
+     imm <- hexadecimal
+     return (mkMachineRawFPImm imm)
 
 mirCFIDef =
   do optional mirCFIPrefix

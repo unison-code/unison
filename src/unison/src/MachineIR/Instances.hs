@@ -210,6 +210,7 @@ showMachineOperand (MachineRegMask name) = "csr_" ++ name
 showMachineOperand (MachineConstantPoolIndex idx) = "%const." ++ idx
 showMachineOperand (MachineFPImm i f e) =
   "float " ++ show i ++ "." ++ show f ++ "e" ++ showOffset e
+showMachineOperand (MachineRawFPImm imm) = "float " ++ "0x" ++ showHex imm ""
 showMachineOperand mo = show mo
 
 jumpTablePrefix = "%jump-table."
@@ -239,6 +240,7 @@ instance Show r => Show (MachineOperand r) where
   show (MachineReg name _) = inBraces ["reg", show name]
   show (MachineImm value) = inBraces ["imm", show value]
   show (MachineFPImm int fr exp) = inBraces ["fpi", show int, show fr, show exp]
+  show (MachineRawFPImm imm) = inBraces ["rfpi", show imm]
   show (MachineBlockRef id) = inBraces ["mbb", show id]
   show (MachineFrameIndex index fixed offset) =
     inBraces ["fi", show index, show fixed, show offset]

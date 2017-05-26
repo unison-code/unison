@@ -243,6 +243,11 @@ data MachineOperand r =
     mfpFractional :: Integer,
     mfpExponent   :: Integer
     } |
+  -- | "Raw" floating-point immediate in hexadecimal corresponding to
+  -- LLVM's @MO_FPImmediate@ in later versions of LLVM
+  MachineRawFPImm {
+    mrfpValue :: Integer
+    } |
   -- | Block reference corresponding to LLVM's @MO_MachineBasicBlock@
   MachineBlockRef {
     mbrId :: Integer
