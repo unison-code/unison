@@ -514,10 +514,7 @@ mirMemOperand = parens nakedMirMemOperand
 nakedMirMemOperand =
   do typ <- mirMemOperandType `endBy` whiteSpace
      size <- decimal
-     whiteSpace
-     string "from" <|> string "into"
-     whiteSpace
-     source <- mirMemSource
+     source <- mirMemSourceDecl
      attrs <- many mirMemOperandAttr
      return (typ, size, source, attrs)
 
@@ -528,6 +525,22 @@ mirMemOperandType =
     try (string "invariant") <|>
     try (string "load") <|>
     try (string "store")
+
+mirMemSourceDecl =
+  try unknownMemSourceDecl <|> knownMemSourceDecl
+
+unknownMemSourceDecl =
+  do string "unknown"
+     whiteSpace
+     o <- try (option 0 mirOffset)
+     return ("unknown", o)
+
+knownMemSourceDecl =
+  do whiteSpace
+     string "from" <|> string "into"
+     whiteSpace
+     source <- mirMemSource
+     return source
 
 mirMemSource =
     try mirPseudoSourceValue <|>
