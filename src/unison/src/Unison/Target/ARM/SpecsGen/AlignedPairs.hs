@@ -5,9 +5,8 @@ import Unison.Target.ARM.SpecsGen.ARMInstructionDecl
 alignedPairs i ([], [])
   | i `elem`
       [CLREX, Int_eh_sjlj_dispatchsetup, Int_eh_sjlj_setup_dispatch, NOP,
-       TRAP, TRAPNaCl, WIN__CHKSTK, TTRAP]
+       TPsoft, TRAP, TRAPNaCl, WIN__CHKSTK, TTPsoft, TTRAP]
     = []
-alignedPairs i ([], [_]) | i `elem` [TPsoft, TTPsoft] = []
 alignedPairs i ([], [_]) | i `elem` [VMOVD0, VMOVQ0] = []
 alignedPairs i ([], [_])
   | i `elem` [IMPLICIT_DEF, LOAD_STACK_GUARD] = []
@@ -927,8 +926,8 @@ alignedPairs i ([_, _, _], [_])
 alignedPairs i ([_, _, _, _], [])
   | i `elem` [T2TBB_JT, T2TBH_JT] = []
 alignedPairs i ([_, _], [_, _]) | i `elem` [TADDframe] = []
-alignedPairs i ([_, _, _, _], [_]) | i `elem` [BCCZi64] = []
-alignedPairs i ([_, _, _, _, _, _], [_]) | i `elem` [BCCi64] = []
+alignedPairs i ([_, _, _, _], []) | i `elem` [BCCZi64] = []
+alignedPairs i ([_, _, _, _, _, _], []) | i `elem` [BCCi64] = []
 alignedPairs i ([_, _], []) | i `elem` [ITasm, T2IT] = []
 alignedPairs i ([_, _, _, _], [])
   | i `elem` [LDC2L_POST, LDC2_POST, STC2L_POST, STC2_POST] = []

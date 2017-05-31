@@ -7,14 +7,12 @@ import Unison.Target.ARM.ARMRegisterClassDecl
 operandInfo i
   | i `elem`
       [CLREX, Int_eh_sjlj_dispatchsetup, Int_eh_sjlj_setup_dispatch, NOP,
-       TRAP, TRAPNaCl, WIN__CHKSTK, TTRAP]
+       TPsoft, TRAP, TRAPNaCl, WIN__CHKSTK, TTPsoft, TTRAP]
     = ([], [])
   | i `elem` [VMOVD0] =
     ([], [TemporaryInfo (RegisterClass DPR) 1 False])
   | i `elem` [VMOVQ0] =
     ([], [TemporaryInfo (RegisterClass QPR) 1 False])
-  | i `elem` [TPsoft, TTPsoft] =
-    ([], [TemporaryInfo (AbstractRegisterClass Unknown) 1 False])
   | i `elem` [IMPLICIT_DEF, LOAD_STACK_GUARD] = ([], [BoundInfo])
   | i `elem` [MOVE_ALL] =
     ([TemporaryInfo (RegisterClass ALL) 0 False],
@@ -2792,11 +2790,11 @@ operandInfo i
       TemporaryInfo (RegisterClass GPR) 0 False,
       TemporaryInfo (RegisterClass GPR) 0 False,
       TemporaryInfo (RegisterClass GPR) 0 False, BlockRefInfo],
-     [TemporaryInfo (AbstractRegisterClass Unknown) 1 False])
+     [])
   | i `elem` [BCCZi64] =
     ([BoundInfo, TemporaryInfo (RegisterClass GPR) 0 False,
       TemporaryInfo (RegisterClass GPR) 0 False, BlockRefInfo],
-     [TemporaryInfo (AbstractRegisterClass Unknown) 1 False])
+     [])
   | i `elem` [MSR] =
     ([BoundInfo, TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo,
       TemporaryInfo (RegisterClass CCR) 0 False],

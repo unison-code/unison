@@ -118,7 +118,9 @@ promote effectPats i =
 
 doPromote effs i =
     let rs    = sideEffects $ iAffectedBy i
-        ws    = sideEffects $ iAffects i
+        ws    = if iType i `elem` ["call", "branch"]
+                then [] -- calls and branches do not have definition operands
+                else sideEffects $ iAffects i
         i1    = foldl (explicateEffect (rs, ws)) i effs
     in i1
 
