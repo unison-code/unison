@@ -1105,7 +1105,7 @@ void Model::post_extensional_constraints(block b) {
     if (input->pb[p] == b) {
       IntVarArgs rys;
       rys << ry(p) << ry(q);
-      TupleSet ts;
+      TupleSet ts(input->table[i][0].size());
       for (vector<int> row : input->table[i]) ts.add(IntArgs(row));
       ts.finalize();
       extensional(*this, rys, ts);
@@ -2071,10 +2071,12 @@ void Model::post_allowed_activation_constraints(block b) {
 
   for (PresolverActiveTable table : input->bactive_tables[b]) {
 
+    if (table.tuples.empty()) continue;
+
     BoolVarArgs as;
     for (operation o : table.os) as << a(o);
 
-    TupleSet ts;
+    TupleSet ts(table.tuples[0].size());
     for (vector<int> tuple : table.tuples) ts.add(IntArgs(tuple));
     ts.finalize();
 
@@ -2091,6 +2093,8 @@ void Model::post_allowed_copy_activation_and_dataflow_constraints(block b) {
 
   for (PresolverCopyTmpTable table : input->btmp_tables[b]) {
 
+    if (table.tuples.empty()) continue;
+
     IntVarArgs ats;
     for (operation o : table.os) {
       IntVar ai(*this, 0, 1);
@@ -2099,7 +2103,7 @@ void Model::post_allowed_copy_activation_and_dataflow_constraints(block b) {
     }
     for (operand p : table.ps) ats << y(p);
 
-    TupleSet ts;
+    TupleSet ts(table.tuples[0].size());
     for (vector<int> tuple : table.tuples) {
       IntArgs tp;
       for (unsigned tpi = 0; tpi < table.os.size(); tpi++) tp << tuple[tpi];

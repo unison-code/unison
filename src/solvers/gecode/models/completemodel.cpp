@@ -356,9 +356,10 @@ void CompleteModel::post_presolver_constraints(void) {
 
     // cross-block active tables
     for (PresolverActiveTable table : input->gactive_tables) {
+      if (table.tuples.empty()) continue;
       BoolVarArgs as;
       for (operation o : table.os) as << a(o);
-      TupleSet ts;
+      TupleSet ts(table.tuples[0].size());
       for (vector<int> tuple : table.tuples) ts.add(IntArgs(tuple));
       ts.finalize();
       extensional(*this, as, ts);
