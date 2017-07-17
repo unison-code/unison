@@ -14,6 +14,7 @@ statflag='-s'
 toflag=''
 toprefix='--fzn-flag --time-out --fzn-flag '
 freeflag=''
+freedefault='--fzn-flag -f'
 nogoods=''
 while [ $# -gt  1 ]; do
     opt="$1"
@@ -47,6 +48,17 @@ while [ $# -gt  1 ]; do
         statflag='--fzn-flag -verbosity=3'
 	toprefix='--fzn-flag -time_out='
       ;;
+      --or-tools)
+          mzn='mzn-or-tools'
+	  freedefault='--fzn-flag --free_search'
+	  toprefix='--fzn-flag -time_limit --fzn-flag '
+      ;;
+      --or-tools-sat)
+          mzn='mzn-or-tools-sat'
+	  statflag='--fzn-flag --fz_logging'
+	  freedefault='--fzn-flag --free_search'
+	  toprefix='--fzn-flag -time_limit --fzn-flag '
+      ;;
       --cumulative)
         cumulative='true'
       ;;
@@ -60,7 +72,7 @@ while [ $# -gt  1 ]; do
         diffn='false'
       ;;
       --free)
-        freeflag='--fzn-flag -f'
+        freeflag=$freedefault
       ;;
       --vsids)
         freeflag='--fzn-flag -vsids=true'
