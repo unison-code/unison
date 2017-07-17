@@ -741,8 +741,9 @@ predicate post_data_prec(int: q) =
       c[u] >= lbs[y[q]];
 
 %% Model::post_data_precedences_constraints
+%%   redundant if op_type[operand_definer[q]]!=TYPE_KILL and implied constraints are being posted
 constraint
-  forall(q in 0..MAXP where operand_use[q] /\ op_type[operand_definer[q]]!=TYPE_KILL)(post_data_prec(q));
+  forall(q in 0..MAXP where operand_use[q])(post_data_prec(q));
 
 %% Model::post_reverse_data_precedences_constraints
 %% DISABLED, because it seems to clash with my slack fixing stuff
