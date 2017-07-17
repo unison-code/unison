@@ -346,13 +346,14 @@ predicate smart_alldiff(array[int] of var int: X) =
   endif endif;
 
 predicate ra_diffn(array[int] of var int: R,
-                   array[int] of var int: W,
+                   array[int] of int: W,
                    array[int] of var int: LS,
                    array[int] of var int: LD,
                    array[int] of var int: LE) =
   if good_cumulative then
     forall(v in 0..min(infinite)-1)(
-      cumulative(LS, LD, [R[i] in v-W[i]+1..v | i in index_set(R)], 1)
+      let {set of int: J = {i | i in index_set(R) where card(dom(R[i]) intersect max(0,v-W[i]+1)..v)>0}}
+      in cumulative([LS[i] | i in J], [LD[i] | i in J], [R[i] in max(0,v-W[i]+1)..v | i in J], 1)
   ) else if good_diffn then
     diffn_nonstrict(R, LS, W, LD)
   else
