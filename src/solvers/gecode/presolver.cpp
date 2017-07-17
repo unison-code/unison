@@ -170,7 +170,7 @@ string produce_json(Parameters &input, int presolver_time)
        << emit_json_line("value_precede_chains", input.value_precede_chains)
        << emit_json_line("quasi_adjacent", input.quasi_adjacent)
        << emit_json_line("long_latency", input.long_latency)
-       << emit_json_line("presolver_time", presolver_time)
+       << emit_json_line_last("presolver_time", presolver_time)
        << "}\n";
   return json.str();
 }
