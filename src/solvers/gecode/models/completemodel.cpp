@@ -116,15 +116,15 @@ CompleteModel::CompleteModel(Parameters * p_input, ModelOptions * p_options,
 
 }
 
-CompleteModel::CompleteModel(bool share, CompleteModel& cg) :
-  Model(share, cg)
+CompleteModel::CompleteModel(CompleteModel& cg) :
+  Model(cg)
 {
-  v_gf.update(*this, share, cg.v_gf);
-  v_f.update(*this, share, cg.v_f);
+  v_gf.update(*this, cg.v_gf);
+  v_f.update(*this, cg.v_f);
 }
 
-CompleteModel* CompleteModel::copy(bool share) {
-  return new CompleteModel(share, *this);
+CompleteModel* CompleteModel::copy(void) {
+  return new CompleteModel(*this);
 }
 
 IntVar CompleteModel::cost(void) const {

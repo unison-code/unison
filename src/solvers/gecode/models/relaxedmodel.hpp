@@ -90,9 +90,9 @@ public:
 
   RelaxedModel(Parameters * p_input, ModelOptions * p_options, IntPropLevel p_ipl);
 
-  RelaxedModel(bool share, RelaxedModel& cg);
+  RelaxedModel(RelaxedModel& cg);
 
-  RelaxedModel* copy(bool share);
+  RelaxedModel* copy(void);
 
   IntVar cost(void) const;
 

@@ -95,9 +95,9 @@ public:
   LocalModel(Parameters * p_input, ModelOptions * p_options, IntPropLevel p_ipl,
              const GlobalModel * gs, block b);
 
-  LocalModel(bool share, LocalModel& cg);
+  LocalModel(LocalModel& cg);
 
-  LocalModel* copy(bool share);
+  LocalModel* copy(void);
 
   IntVar cost(void) const;
 

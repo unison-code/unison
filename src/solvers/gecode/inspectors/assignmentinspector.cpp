@@ -78,7 +78,7 @@ void AssignmentInspector::inspectb(const Model& m, block b, QPointF& topLeft) {
       }
     } else { // Draw domain arrows
       IntVarRanges tregs(m.r(t));
-      Gecode::Region r(m);
+      Gecode::Region r;
       Iter::Ranges::RangeListIter ranges = extend(r, tregs, w);
       for (; ranges(); ++ranges) {
         QPointF left = (QPointF(ranges.min(), ti + 0.5) * DPI) + gridTopLeft;

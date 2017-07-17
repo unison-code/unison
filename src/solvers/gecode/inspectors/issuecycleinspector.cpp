@@ -81,7 +81,7 @@ void IssueCycleInspector::inspectb(const Model& m, block b, QPointF& topLeft) {
     operation o = os[oi];
     QColor arrowcolor = m.is_inactive(o) ? gridcolor : Qt::black;
     IntVarRanges ranges(m.c(o));
-    Gecode::Region r(m);
+    Gecode::Region r;
     for (; ranges(); ++ranges) {
       QPointF top = (QPointF(oi + 0.5, ranges.min()) * DPI) + gridTopLeft;
       QPointF bottom = (QPointF(oi + 0.5, ranges.max()) * DPI) + gridTopLeft;

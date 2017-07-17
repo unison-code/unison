@@ -247,19 +247,19 @@ GlobalModel::GlobalModel(Parameters * p_input, ModelOptions * p_options,
 #endif
 }
 
-GlobalModel::GlobalModel(bool share, GlobalModel& cg) :
-  CompleteModel(share, cg),
+GlobalModel::GlobalModel(GlobalModel& cg) :
+  CompleteModel(cg),
   af(cg.af),
   cf(cg.cf)
 {
-  v_pal.update(*this, share, cg.v_pal);
-  v_pals.update(*this, share, cg.v_pals);
-  v_oa.update(*this, share, cg.v_oa);
-  v_ali.update(*this, share, cg.v_ali);
+  v_pal.update(*this, cg.v_pal);
+  v_pals.update(*this, cg.v_pals);
+  v_oa.update(*this, cg.v_oa);
+  v_ali.update(*this, cg.v_ali);
 }
 
-GlobalModel* GlobalModel::copy(bool share) {
-  return new GlobalModel(share, *this);
+GlobalModel* GlobalModel::copy(void) {
+  return new GlobalModel(*this);
 }
 
 void GlobalModel::post_secondary_variable_definitions(void) {

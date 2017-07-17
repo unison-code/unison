@@ -48,9 +48,9 @@ public:
 
   SimpleModel(Parameters * p_input, ModelOptions * p_options, IntPropLevel p_ipl);
 
-  SimpleModel(bool share, SimpleModel& cg);
+  SimpleModel(SimpleModel& cg);
 
-  SimpleModel* copy(bool share);
+  SimpleModel* copy(void);
 
   // Branchers
 

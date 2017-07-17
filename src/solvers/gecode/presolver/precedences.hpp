@@ -165,9 +165,9 @@ public:
 
   MakeSpanModel(Parameters * p_input, ModelOptions * p_options, IntPropLevel p_ipl);
 
-  MakeSpanModel(bool share, MakeSpanModel& cg);
+  MakeSpanModel(MakeSpanModel& cg);
 
-  MakeSpanModel* copy(bool share);
+  MakeSpanModel* copy(void);
 
   IntVar cost(void) const;
 

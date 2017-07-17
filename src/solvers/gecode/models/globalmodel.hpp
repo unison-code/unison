@@ -133,9 +133,9 @@ public:
 
   GlobalModel(Parameters * p_input, ModelOptions * p_options, IntPropLevel p_ipl);
 
-  GlobalModel(bool share, GlobalModel& cg);
+  GlobalModel(GlobalModel& cg);
 
-  GlobalModel* copy(bool share);
+  GlobalModel* copy(void);
 
   // Constraints
 

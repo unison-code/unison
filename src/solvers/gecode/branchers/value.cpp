@@ -47,7 +47,7 @@ int most_effective_connection_decision(
   {
     operand p = m.input->clusters[gc][0];
     IntVarRanges gregs(m.ry(p));
-    Region region(s);
+    Region region;
     RangeListIter tA = extend(region, gregs, m.input->operand_width[p]);
 
     register_space rs = m.input->home[p];
@@ -93,7 +93,7 @@ register_space most_effective(const Space& s, SetVar pals, global_congruence g) 
   register_space maxers = -1;
 
   {
-    Region region(s);
+    Region region;
     RangeListIter tA = extend(region, gregs, m.input->operand_width[p]);
 
     for (register_space rs : urss) {

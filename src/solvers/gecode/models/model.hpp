@@ -345,7 +345,7 @@ public:
 
   Model(Parameters * p_input, ModelOptions * p_options, IntPropLevel p_ipl);
 
-  Model(bool share, Model& cg);
+  Model(Model& cg);
 
 
   // Constraints

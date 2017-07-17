@@ -61,11 +61,11 @@ SimpleModel::SimpleModel(Parameters * p_input, ModelOptions * p_options,
 
 }
 
-SimpleModel::SimpleModel(bool share, SimpleModel& cg) :
-  CompleteModel(share, cg) {}
+SimpleModel::SimpleModel(SimpleModel& cg) :
+  CompleteModel(cg) {}
 
-SimpleModel* SimpleModel::copy(bool share) {
-  return new SimpleModel(share, *this);
+SimpleModel* SimpleModel::copy(void) {
+  return new SimpleModel(*this);
 }
 
 void SimpleModel::post_trivial_branchers(void) {

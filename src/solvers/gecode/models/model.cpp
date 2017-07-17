@@ -380,7 +380,7 @@ saturation_likelihood(block b, pair<int,int> C, RangeListIter & A) const {
   for (temporary t : input->tmp[b]) if (!is_dead(t)) {
       int w = input->width[t];
       IntVarRanges tregs(r(t));
-      Region r1(*this);
+      Region r1;
       RangeListIter tAtoms = extend(r1, tregs, w);
       Inter<RangeListIter, RangeListIter> At(A, tAtoms);
       double t_in_A = (double)range_size(At) / (double)range_size(tAtoms);
@@ -514,7 +514,7 @@ bool Model::may_saturate(block b, register_atom fa, register_atom la) const {
   pair<int,int> C = make_pair(0, c(input->out[b]).max());
   // TODO: there should be a better way
   Singleton rsA(fa, la);
-  Region r1(*this);
+  Region r1;
   NaryUnion A(r1, &rsA, 1);
   return (saturation_likelihood(b, C, A) > 0.01);
 }
@@ -659,32 +659,32 @@ Model::Model(Parameters * p_input, ModelOptions * p_options, IntPropLevel p_ipl)
   zero(*this, 0, 0),
   one(*this, 1, 1) {}
 
-Model::Model(bool share, Model& m) :
-  MinimizeSpace(share, m),
+Model::Model(Model& m) :
+  MinimizeSpace(m),
   input(m.input),
   options(m.options),
   ipl(m.ipl)
 {
-  v_r.update(*this, share, m.v_r);
-  v_i.update(*this, share, m.v_i);
-  v_c.update(*this, share, m.v_c);
-  v_y.update(*this, share, m.v_y);
-  v_x.update(*this, share, m.v_x);
-  v_ry.update(*this, share, m.v_ry);
-  v_a.update(*this, share, m.v_a);
-  v_ls.update(*this, share, m.v_ls);
-  v_ld.update(*this, share, m.v_ld);
-  v_le.update(*this, share, m.v_le);
-  v_al.update(*this, share, m.v_al);
-  v_u.update(*this, share, m.v_u);
-  v_us.update(*this, share, m.v_us);
-  v_lt.update(*this, share, m.v_lt);
-  v_lat.update(*this, share, m.v_lat);
-  v_p.update(*this, share, m.v_p);
-  v_users.update(*this, share, m.v_users);
-  v_s.update(*this, share, m.v_s);
-  zero.update(*this, share, m.zero);
-  one.update(*this, share, m.one);
+  v_r.update(*this, m.v_r);
+  v_i.update(*this, m.v_i);
+  v_c.update(*this, m.v_c);
+  v_y.update(*this, m.v_y);
+  v_x.update(*this, m.v_x);
+  v_ry.update(*this, m.v_ry);
+  v_a.update(*this, m.v_a);
+  v_ls.update(*this, m.v_ls);
+  v_ld.update(*this, m.v_ld);
+  v_le.update(*this, m.v_le);
+  v_al.update(*this, m.v_al);
+  v_u.update(*this, m.v_u);
+  v_us.update(*this, m.v_us);
+  v_lt.update(*this, m.v_lt);
+  v_lat.update(*this, m.v_lat);
+  v_p.update(*this, m.v_p);
+  v_users.update(*this, m.v_users);
+  v_s.update(*this, m.v_s);
+  zero.update(*this, m.zero);
+  one.update(*this, m.one);
 }
 
 void Model::post_decision_variable_domain_definitions(block b) {

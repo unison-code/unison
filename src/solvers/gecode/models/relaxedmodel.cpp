@@ -152,11 +152,11 @@ RelaxedModel::RelaxedModel(Parameters * p_input, ModelOptions * p_options,
   post_instruction_constraints();
 }
 
-RelaxedModel::RelaxedModel(bool share, RelaxedModel& cg) :
-  Model(share, cg){}
+RelaxedModel::RelaxedModel(RelaxedModel& cg) :
+  Model(cg){}
 
-RelaxedModel* RelaxedModel::copy(bool share) {
-  return new RelaxedModel(share, *this);
+RelaxedModel* RelaxedModel::copy(void) {
+  return new RelaxedModel(*this);
 }
 
 // Not used but needed since inherited from Model

@@ -73,14 +73,14 @@ public:
     return sizeof(*this);
   }
 
-  PressureSchedulingBrancher(Space& home, bool share, PressureSchedulingBrancher& b)
-    : Brancher(home,share,b), so(b.so), sn(b.sn), decision(b.decision)
+  PressureSchedulingBrancher(Space& home, PressureSchedulingBrancher& b)
+    : Brancher(home,b), so(b.so), sn(b.sn), decision(b.decision)
   {
-    c.update(home, share, b.c);
+    c.update(home, b.c);
   }
 
-  virtual Brancher* copy(Space& home, bool share) {
-    return new (home) PressureSchedulingBrancher(home, share, *this);
+  virtual Brancher* copy(Space& home) {
+    return new (home) PressureSchedulingBrancher(home, *this);
   }
 
   virtual bool status(const Space& home) const {

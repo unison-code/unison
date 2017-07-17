@@ -78,9 +78,9 @@ public:
 
   CompleteModel(Parameters * p_input, ModelOptions * p_options, IntPropLevel p_ipl);
 
-  CompleteModel(bool share, CompleteModel& cg);
+  CompleteModel(CompleteModel& cg);
 
-  CompleteModel* copy(bool share);
+  CompleteModel* copy(void);
 
   IntVar cost(void) const;
 

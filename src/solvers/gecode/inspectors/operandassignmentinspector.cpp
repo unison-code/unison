@@ -82,7 +82,7 @@ OperandAssignmentInspector::inspectb(const Model& m, block b, QPointF& topLeft) 
       }
     } else { // Draw domain arrows
       IntVarRanges pregs(m.ry(p));
-      Gecode::Region r(m);
+      Gecode::Region r;
       Iter::Ranges::RangeListIter ranges = extend(r, pregs, w);
       for (; ranges(); ++ranges) {
         QPointF left = (QPointF(ranges.min(), pi + 0.5) * DPI) + gridTopLeft;

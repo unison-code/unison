@@ -155,16 +155,16 @@ LocalModel::LocalModel(Parameters * p_input, ModelOptions * p_options,
 
 }
 
-LocalModel::LocalModel(bool share, LocalModel& cg) :
-  Model(share, cg),
+LocalModel::LocalModel(LocalModel& cg) :
+  Model(cg),
   b(cg.b),
   c_activity(cg.c_activity)
 {
-  v_f.update(*this, share, cg.v_f);
+  v_f.update(*this, cg.v_f);
 }
 
-LocalModel* LocalModel::copy(bool share) {
-  return new LocalModel(share, *this);
+LocalModel* LocalModel::copy(void) {
+  return new LocalModel(*this);
 }
 
 void LocalModel::post_decision_variable_domain_definitions(void) {

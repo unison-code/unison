@@ -92,17 +92,17 @@ public:
     return sizeof(*this);
   }
 
-  RoutingBrancher(Space& home, bool share, RoutingBrancher& b)
-    : Brancher(home,share,b), decision(b.decision), oi(b.oi), pi(b.pi),
+  RoutingBrancher(Space& home, RoutingBrancher& b)
+    : Brancher(home,b), decision(b.decision), oi(b.oi), pi(b.pi),
       aggressive(b.aggressive), os(b.os), ps(b.ps)
   {
-    a.update(home, share, b.a);
-    i.update(home, share, b.i);
-    t.update(home, share, b.t);
+    a.update(home, b.a);
+    i.update(home, b.i);
+    t.update(home, b.t);
   }
 
-  virtual Brancher* copy(Space& home, bool share) {
-    return new (home) RoutingBrancher(home, share, *this);
+  virtual Brancher* copy(Space& home) {
+    return new (home) RoutingBrancher(home, *this);
   }
 
   virtual bool status(const Space&) const {

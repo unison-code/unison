@@ -967,19 +967,19 @@ MakeSpanModel::MakeSpanModel(Parameters * p_input, ModelOptions * p_options, Int
   ipl(p_ipl) {
 }
 
-MakeSpanModel::MakeSpanModel(bool share, MakeSpanModel& m) :
-  MinimizeSpace(share, m),
+MakeSpanModel::MakeSpanModel(MakeSpanModel& m) :
+  MinimizeSpace(m),
   input(m.input),
   options(m.options),
   ipl(m.ipl)
 {
-  v_c.update(*this, share, m.v_c);
-  v_i.update(*this, share, m.v_i);
-  v_span.update(*this, share, m.v_span);
+  v_c.update(*this, m.v_c);
+  v_i.update(*this, m.v_i);
+  v_span.update(*this, m.v_span);
 }
 
-MakeSpanModel* MakeSpanModel::copy(bool share) {
-  return new MakeSpanModel(share, *this);
+MakeSpanModel* MakeSpanModel::copy(void) {
+  return new MakeSpanModel(*this);
 }
 
 // Not used but needed, since inheriting from MinimizeSpace
