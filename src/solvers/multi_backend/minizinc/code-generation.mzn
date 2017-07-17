@@ -350,7 +350,10 @@ predicate ra_diffn(array[int] of var int: R,
                    array[int] of var int: LS,
                    array[int] of var int: LD,
                    array[int] of var int: LE) =
-  if good_diffn then
+  if good_cumulative then
+    forall(v in 0..min(infinite)-1)(
+      cumulative(LS, LD, [R[i] in v-W[i]+1..v | i in index_set(R)], 1)
+  ) else if good_diffn then
     diffn_nonstrict(R, LS, W, LD)
   else
     forall(i,j in index_set(R) where i < j)(
@@ -358,7 +361,7 @@ predicate ra_diffn(array[int] of var int: R,
         R[i] + W[i] <= R[j] \/ LE[i] <= LS[j] \/
         R[j] + W[j] <= R[i] \/ LE[j] <= LS[i]
     )
-  endif ;
+  endif endif ;
 
 predicate disjoint1(array[int] of var int: x,
                       array[int] of var int: w) =
@@ -421,7 +424,15 @@ predicate insn_is_real(int: o) =
 predicate temp_member(set of int: P, int: t) =
   exists(p in P)(temp_eq(p,t));
 
-var int: t(int: p) = operand_temps[p][y[p]];
+var int: t(int: p) =
+  if card(operand_temps[p])=1 then min(operand_temps[p])
+  else if card(operand_temps[p])=2 then
+    let {int: a = min(operand_temps[p]),
+         int: b = max(operand_temps[p])}
+    in (b-a)*y[p] -b+a+a
+  else
+    operand_temps[p][y[p]]
+  endif endif;
 
 var int: ls_t(int: p) = [ls[t] | t in operand_temps[p]][y[p]];
 
@@ -1115,7 +1126,7 @@ constraint
 		     array[int] of var int: lss = [ls[k] | k in cit],
 		     array[int] of var int: les = [le[k] | k in cit],
 		     var 1..card(cit): k} in (
-		  width[it] = ws[k] /\
+		  width[it] = if min(ws) < max(ws) then ws[k] else min(ws) endif /\
 		  selected[it] = rs[k] /\
 		  lss[k] <= c[opi] /\ c[opi] < les[k]
 		)
