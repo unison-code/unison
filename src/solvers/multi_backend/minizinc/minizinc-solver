@@ -15,6 +15,7 @@ toflag=''
 toprefix='--fzn-flag --time-out --fzn-flag '
 freeflag=''
 freedefault='--fzn-flag -f'
+rndflag=''
 nogoods=''
 while [ $# -gt  1 ]; do
     opt="$1"
@@ -74,6 +75,9 @@ while [ $# -gt  1 ]; do
       --free)
         freeflag=$freedefault
       ;;
+      --rnd)
+        rndflag='--fzn-flag --rnd-seed --fzn-flag 123456'
+      ;;
       --vsids)
         freeflag='--fzn-flag -vsids=true'
       ;;
@@ -108,4 +112,4 @@ else
   pvalue=''
 fi
 set -x
-time ${mzn} ${allsolns} -k ${statflag} ${pflag} ${pvalue} ${freeflag} ${toflag} ${nogoods} -D good_cumulative=${cumulative} -D good_diffn=${diffn} code-generation.mzn $DIRBASENAME.dzn | $COMMON_DIR/outfilter.pl ${OUTJSON}.last > ${OUTJSON}
+time ${mzn} ${allsolns} -k ${statflag} ${pflag} ${pvalue} ${freeflag} ${rndflag} ${toflag} ${nogoods} -D good_cumulative=${cumulative} -D good_diffn=${diffn} code-generation.mzn $DIRBASENAME.dzn | $COMMON_DIR/outfilter.pl ${OUTJSON}.last > ${OUTJSON}
