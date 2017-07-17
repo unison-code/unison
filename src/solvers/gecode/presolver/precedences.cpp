@@ -221,14 +221,26 @@ void gen_region_precedences(const Parameters& input, precedence_set& PI) {
 	min_con_erg[o][r][1] = mine;
       }
     }
+    // FUN-FUN, DEFINE-*, and *-KILL precedences are useless here
+    // X-FUN ---> X-[TAIL]CALL if X is not [TAIL]CALL and can't be issued with [TAIL]CALL
+    // [TAIL]CALL-X ---> FUN-X if X is not FUN
     for(const vector<operation>& edge : input.precs) {
       operation i = edge[0];
       operation j = edge[1];
+      operation isucc = i;
+      operation jpred = j;
+      if (input.type[i] == CALL || input.type[i] == TAILCALL)
+	while (input.type[isucc] != FUN)
+	  isucc++;
+      if (input.type[j] == FUN)
+	while (input.type[jpred] != CALL && input.type[jpred] != TAILCALL)
+	  jpred--;
       if (input.type[i] == FUN && input.type[j] == FUN) {
-      } else if (input.type[j] == FUN && i+1 != j && distinct_cycle(input, i, j-1, min_con_erg)) {
-	M[input.oblock[j]].push_back({i,j-1});
-      } else if (input.type[i] == CALL && i+1 != j) {
-	M[input.oblock[j]].push_back({i+1,j});
+      } else if (input.type[i] != CALL && input.type[i] != TAILCALL && input.type[j] == FUN &&
+		 distinct_cycle(input, i, jpred, min_con_erg)) {
+	M[input.oblock[j]].push_back({i,jpred});
+      } else if ((input.type[i] == CALL || input.type[i] == TAILCALL) && input.type[j] != FUN) {
+	M[input.oblock[j]].push_back({isucc,j});
       } else if (input.type[i] != DEFINE && input.type[j] != KILL) {
 	M[input.oblock[j]].push_back(edge);
       }
