@@ -103,6 +103,8 @@ DIRBASENAME=${1%.ext.json}
 EXTJSON=$1
 shift
 echo "json2dzn('${EXTJSON}')." | sicstus -f --nologo --noinfo -l $MINIZINC_DIR/model2dzn.pl
+# for first solution:
+# cat $MINIZINC_DIR/code-generation.mzn $MINIZINC_DIR/${search} | sed 's/minimize(obj)/satisfy/' > code-generation.mzn
 cat $MINIZINC_DIR/code-generation.mzn $MINIZINC_DIR/${search} > code-generation.mzn
 if [ '$mzn' = 'mzn-gecode' ]; then
   pflag='-p'

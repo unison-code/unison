@@ -353,7 +353,9 @@ predicate ra_diffn(array[int] of var int: R,
   if good_cumulative then
     forall(v in 0..min(infinite)-1)(
       let {set of int: J = {i | i in index_set(R) where card(dom(R[i]) intersect max(0,v-W[i]+1)..v)>0}}
-      in cumulative([LS[i] | i in J], [LD[i] | i in J], [R[i] in max(0,v-W[i]+1)..v | i in J], 1)
+      in cumulative([LS[i] | i in J], [LD[i] | i in J],
+                    [if W[i]=1 then R[i]=v else R[i] in max(0,v-W[i]+1)..v endif | i in J],
+                    1)
   ) else if good_diffn then
     diffn_nonstrict(R, LS, W, LD)
   else
@@ -408,22 +410,32 @@ predicate temp_in(int: p, set of int: T) =
     y[p] in {j | j in index_set(ts) where ts[j] in T}
   endif endif;
 
+test temp_must_be_real(int: p) =
+  min(operand_temps[p])>=0;
+
 predicate temp_is_real(int: p) =
   if min(operand_temps[p])>=0 then
     true
   else
-    y[p]>=2
+    y[p]!=1
   endif;
 
-predicate insn_is_real(int: o) =
-  if min(op_instructions[o])>=1 then
-    true
+predicate temp_is_real_reif(int: p, var bool: re) =
+  if min(operand_temps[p])>=0 then
+    re
   else
-    ii[o]>=2
+    re <-> y[p]!=1
   endif;
 
-predicate temp_member(set of int: P, int: t) =
-  exists(p in P)(temp_eq(p,t));
+predicate insn_is_real_reif(int: o, var bool: re) =
+  if min(op_instructions[o])>=1 then
+    re
+  else
+    re <-> ii[o]!=1
+  endif;
+
+predicate temp_member_reif(set of int: P, int: t, var bool: re) =
+  (re <-> exists(p in P)(temp_eq(p,t)));
 
 var int: t(int: p) =
   if card(operand_temps[p])=1 then min(operand_temps[p])
@@ -465,8 +477,8 @@ predicate eval_disjunction(set of int: disj) = (
 );
 
 var int: ite(var bool: cond, var int: thenval, var int: elseval) = (
-         let {array[0..1] of var int: ar = array1d(0..1, [elseval,thenval])} in
-         ar[bool2int(cond)]
+         let {array[1..2] of var int: ar = [elseval,thenval]} in
+         ar[cond+1]
 );
 
 0..MAXT: single_temp(int: p) = max(operand_temps[p]);
@@ -477,7 +489,7 @@ set of 0..MAXT: real_temps(int: p) = operand_temps[p] intersect 0..MAXT;
 
 %% basic invariants, null instructions
 
-predicate opt_in_temporary(int: v) = 
+test opt_in_temporary(int: v) = 
     let {int: p = temp_def[v]} in
     op_type[temp_definer[v]] = TYPE_IN /\ card(operand_temps[p])>1;
 
@@ -487,16 +499,16 @@ constraint
     ld[-1] = 0 /\
     le[-1] = -1 /\
     forall(o in 0..MAXO where op_mand[o]) (a[o]) /\
-    forall(o in 0..MAXO where not op_mand[o]) (insn_is_real(o) <-> a[o]) /\
-    forall(o in 0..MAXO) (c[o] >= 0 <-> a[o]) /\
+    forall(o in 0..MAXO where not op_mand[o]) (insn_is_real_reif(o,a[o])) /\
+    forall(o in 0..MAXO) (a[o] <-> c[o] >= 0) /\
     forall(p in 0..MAXP where card(operand_temps[p])>1) (rt[p] = [r[v] | v in operand_temps[p]][y[p]]) /\
     forall(p in 0..MAXP where card(operand_temps[p])=1) (rt[p] = r[single_temp(p)]) /\
     forall(p in 0..MAXP where not op_mand[operand_definer[p]]) % rematerialization
-          (y[p] >= 2 <-> a[operand_definer[p]]) /\
+          (temp_is_real_reif(p,a[operand_definer[p]])) /\
     forall(v in 0..MAXT) (ls[v]+ld[v] = le[v]) /\
     forall(v in 0..MAXT where not opt_in_temporary(v)) % rematerialization
           (ls[v] = c[temp_definer[v]] /\
-	   (r[v] >= 0 <-> a[temp_definer[v]])) /\
+	   (a[temp_definer[v]] <-> r[v] >= 0)) /\
     forall(v in 0..MAXT where opt_in_temporary(v)) % rematerialization
           (ls[v] in -1 .. 0 /\
 	   (r[v] >= 0 <-> ls[v]=0) /\
@@ -600,7 +612,8 @@ constraint
           ) (
         let {int: p = adj_from[j],
 	     int: q = adj_to[j]} in
-            (temp_is_real(q) -> temp_is_real(p) /\ rt[p] = rt[q]) /\
+            (temp_is_real(q) -> temp_is_real(p)) /\
+            (temp_is_real(q) -> rt[p] = rt[q]) /\
             (temp_is_real(p) -> exists(k in index_set(adj_from) where adj_from[k] = p)(temp_is_real(adj_to[k])))
     );
 
@@ -962,7 +975,15 @@ constraint
   else
     forall(p in 0..MAXP where not operand_use[p])(
         let {int: v = single_temp(p)} in (
-            temp_is_real(p) <-> temp_member({q | q in 0..MAXP where can_use(q,v)}, v)
+	    if temp_must_be_real(p) then
+	      temp_member_reif({q | q in 0..MAXP where can_use(q,v)}, v, true)
+	    else if opt_in_temporary(v) then
+	      let {var bool: rp}
+              in  (temp_is_real_reif(p,rp)) /\
+                  (temp_member_reif({q | q in 0..MAXP where can_use(q,v)}, v, rp))
+	    else
+                  temp_member_reif({q | q in 0..MAXP where can_use(q,v)}, v, a[operand_definer[p]])
+	    endif endif
         )
     )
   endif;
