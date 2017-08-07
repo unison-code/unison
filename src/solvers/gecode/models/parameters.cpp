@@ -77,8 +77,8 @@ Parameters::Parameters(JSONVALUE root) :
   packed        (get_2d_vector<int>(getRoot(root, "packed"))),
   exrelated     (get_2d_vector<int>(getRoot(root, "exrelated"))),
   table         (get_3d_vector<int>(getRoot(root, "table"))),
-  constraints   (get_vector<UnisonConstraintExpr>(getRoot(root, "constraints"))),
   activators    (get_2d_vector<int>(getRoot(root, "activators"))),
+  E             (get_vector<UnisonConstraintExpr>(getRoot(root, "E"))),
 
   // Objective function parameters
 

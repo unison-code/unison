@@ -177,11 +177,11 @@ public:
   // table of register assignments of each related operand pair
   vector<vector<vector<register_atom> > > table;
 
-  // ad-hoc processor constraints over the function
-  vector<UnisonConstraintExpr> constraints;
-
   // instructions that activate each operation
   vector<vector<instruction> > activators;
+
+  // set of ad-hoc processor constraints
+  vector<UnisonConstraintExpr> E;
 
   // Objective function parameters
 

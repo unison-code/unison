@@ -28,8 +28,9 @@ import Unison.Analysis.MakespanBounds
 
 import Unison.Tools.Model.Definitions
 
-parameters scaleFreq (_, _, deps, _, _, _) Function {fCode = code} target =
+parameters scaleFreq (_, _, deps, _, _, _) f @ Function {fCode = code} target =
   let oif           = operandInfo target
+      cf            = constraints target
       rm            = resourceManager target
       fCode         = sortBy (comparing oId) (flatten code)
       b             = code
@@ -60,6 +61,7 @@ parameters scaleFreq (_, _, deps, _, _, _) Function {fCode = code} target =
       insname       = map (show . ioInstruction) i
       preschedule   = map (\o -> (oId o, (aPrescheduled (oAs o)))) $
                       filter (\o -> isJust (aPrescheduled (oAs o))) fCode
+      e             = cf f
     in
      [
       -- Program parameters
@@ -135,6 +137,9 @@ parameters scaleFreq (_, _, deps, _, _, _) Function {fCode = code} target =
       -- example: off[2][3]: consumption of r3 by i2
       ("off", toJSON off),
 
+      -- set of ad hoc processor constraints
+      -- example: E[7]: eight ad-hoc processor constraint
+      ("E", toJSON e),
 
       -- Additional parameters
 

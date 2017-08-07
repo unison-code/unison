@@ -1323,7 +1323,7 @@ void Model::post_bypassing_constraints(block b) {
 }
 
 void Model::post_adhoc_constraints(block b) {
-  for (UnisonConstraintExpr e : input->constraints) {
+  for (UnisonConstraintExpr e : input->E) {
     if (in_block(e, b, input)) {
       constraint(adhoc_constraint_var(e));
     }
