@@ -94,7 +94,7 @@
 
   \parameter{\extensionalOperands{p}{q}}{whether operands $p$ and $q$ are
     related extensionally}
-  \json{exrelated}{[[4,5]]}
+  \json{exrelated}{[[4, 5]]}
   \jsonComment{note: the example JSON arrays are extracted from a different
     program (Hexagon programs do not yield extensional constraints)}
 
@@ -102,7 +102,7 @@
 
   \parameter{\extensionalTable{p}{q}}{table of register assignments for
     operands $p$ and $q$}
-  \json{table}{[[0,1],[2,3],[4,5],[6,7]]}
+  \json{table}{[[0, 1],[2, 3],[4, 5],[6, 7]]}
   \jsonComment{note: the example JSON arrays are extracted from a different
     program (Hexagon programs do not yield extensional constraints)}
 
@@ -112,5 +112,26 @@
   \json{activators}{[[], [10, 17, 13, 19], [10, 17, 13, 19], \dots, []]}
   \jsonComment{note: the example JSON array is extracted from a different
     program (Hexagon programs do not yet yield activation constraints)}
+
+  \tableSpace
+
+  \parameter{\allAdhocConstraints{}}{set of ad hoc processor constraints}
+  \json{E}{[[0, [1, [2, 13], [2, 14]], [2, 15]], \dots]}
+  \jsonComment{note: constraints are encoded as trees of expression tuples,
+    where the first element of each expression tuple encodes its type as
+    follows:}
+  \jsonComment{%
+    \mbox{%
+      \begin{tabular}{| l l |}
+        \hline
+        \code{0} & \code{xor}\\
+        \code{1} & \code{and}\\
+        \code{2} & \code{active}\\
+        \hline
+      \end{tabular}
+    }
+  }
+  \jsonComment{note: the example JSON array is extracted from a different
+    program (Hexagon programs do not yet yield ad hoc constraints)}
 
 \end{longtable}

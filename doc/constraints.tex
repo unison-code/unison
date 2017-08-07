@@ -128,6 +128,24 @@ and
 \end{equation}
 }
 
+\newcommand{\adhocEquation}{
+\begin{equation}\textstyle\label{eq:adhoc}
+  \satisfy{e}
+  \quad
+  \forallIn{e}{\allAdhocConstraints{}}
+\end{equation}
+}
+
+\newcommand{\satisfyEquation}{
+  \begin{equation*}\textstyle\label{eq:satisfy}
+    \begin{aligned}
+      \satisfy{\tuple{\code{xor}, e_1, e_2}} & \iff \satisfy{e_1} \xor \satisfy{e_2}\\
+      \satisfy{\tuple{\code{and}, e_1, e_2}} & \iff \satisfy{e_1} \land \satisfy{e_2}\\
+      \satisfy{\tuple{\code{active}, o}} & \iff \activeOperation{o}\\
+    \end{aligned}
+  \end{equation*}
+}
+
 \newcommand{\disjointLiveRangesEquation}{
 \begin{equation}\textstyle\label{eq:disjoint-live-ranges}
   \disjoint{
