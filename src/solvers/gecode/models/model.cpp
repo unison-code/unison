@@ -55,27 +55,42 @@ Model::set_var_array(int n, const IntSet & glb, const IntSet & lub) {
 }
 
 BoolVar Model::adhoc_constraint_var(UnisonConstraintExpr & e) {
-  BoolVar var(*this, 0, 1);
+  BoolVar v(*this, 0, 1);
   switch (e.id) {
   case XOR_EXPR:
     rel(*this,
         adhoc_constraint_var(e.children[0]),
         BOT_XOR,
         adhoc_constraint_var(e.children[1]),
-        var,
+        v,
         ipl);
-    return var;
+    return v;
   case AND_EXPR:
     rel(*this,
         adhoc_constraint_var(e.children[0]),
         BOT_AND,
         adhoc_constraint_var(e.children[1]),
-        var,
+        v,
         ipl);
-    return var;
+    return v;
+  case IMPL_EXPR:
+    rel(*this,
+        adhoc_constraint_var(e.children[0]),
+        BOT_IMP,
+        adhoc_constraint_var(e.children[1]),
+        v,
+        ipl);
+    return v;
   case ACTIVE_OPERATION_EXPR:
     return a(e.data[0]);
-  default: GECODE_NEVER;
+  case TEMPORARY_CONNECTION_EXPR:
+    return u(e.data[0], e.data[1]);
+  case OPERATION_IMPLEMENTATION_EXPR:
+    return imp(e.data[0], e.data[1]);
+  case MINIMUM_DISTANCE_EXPR:
+    return var(c(e.data[1]) >= (c(e.data[0]) + e.data[2]));
+  default:
+    GECODE_NEVER;
   }
 }
 

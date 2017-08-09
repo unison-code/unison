@@ -61,7 +61,7 @@ parameters scaleFreq (_, _, deps, _, _, _) f @ Function {fCode = code} target =
       insname       = map (show . ioInstruction) i
       preschedule   = map (\o -> (oId o, (aPrescheduled (oAs o)))) $
                       filter (\o -> isJust (aPrescheduled (oAs o))) fCode
-      e             = cf f
+      e             = map (lowerConstraintExpr im) $ cf f
     in
      [
       -- Program parameters
@@ -243,3 +243,15 @@ virtualTypes =
    Split4Type, FunType]
 
 delimiterTypes = [InType, OutType]
+
+lowerConstraintExpr im (XorExpr e1 e2) =
+  (XorExpr (lowerConstraintExpr im e1) (lowerConstraintExpr im e2))
+lowerConstraintExpr im (AndExpr e1 e2) =
+  (AndExpr (lowerConstraintExpr im e1) (lowerConstraintExpr im e2))
+lowerConstraintExpr im (ImplExpr e1 e2) =
+  (ImplExpr (lowerConstraintExpr im e1) (lowerConstraintExpr im e2))
+lowerConstraintExpr _ e @ ActiveOperation {} = e
+lowerConstraintExpr _ e @ TemporaryConnection {} = e
+lowerConstraintExpr im (OperationImplementation oid i) =
+  (EOperationImplementation oid (toIndexedInstruction im i))
+lowerConstraintExpr _ e @ MinimumDistance {} = e

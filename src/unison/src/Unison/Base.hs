@@ -903,14 +903,27 @@ data OGEdgeLabel i r =
 
 -- | Expression over a Unison IR function.
 
-data ConstraintExpr =
+data ConstraintExpr i =
     -- | Exclusive or
-    XorExpr ConstraintExpr ConstraintExpr |
+    XorExpr (ConstraintExpr i) (ConstraintExpr i) |
     -- | Conjunction
-    AndExpr ConstraintExpr ConstraintExpr |
+    AndExpr (ConstraintExpr i) (ConstraintExpr i) |
+    -- | Implication
+    ImplExpr (ConstraintExpr i) (ConstraintExpr i) |
     -- | Literal expressing that a certain operation is active
-    ActiveOperation OperationId
-    deriving (Eq, Show)
+    ActiveOperation OperationId |
+    -- | Literal expressing that a certain operand is connected to a
+    -- certain temporary
+    TemporaryConnection MoperandId TemporaryId |
+    -- | Literal expressing that a certain operation is implemented by a
+    -- certain instruction
+    OperationImplementation OperationId (Instruction i) |
+    -- | Literal expressing that two instructions are issued at least n
+    -- cycles from each other
+    MinimumDistance OperationId OperationId Latency |
+    -- | Emission-only, internal version of operation implementation literal
+    EOperationImplementation OperationId (IndexedInstruction i)
+    deriving Eq
 
 -- | Dependency among 'Operation's.
 

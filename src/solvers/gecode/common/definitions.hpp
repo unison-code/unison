@@ -363,7 +363,11 @@ public:
 enum UnisonConstraintExprId
   { XOR_EXPR,
     AND_EXPR,
-    ACTIVE_OPERATION_EXPR };
+    IMPL_EXPR,
+    ACTIVE_OPERATION_EXPR,
+    TEMPORARY_CONNECTION_EXPR,
+    OPERATION_IMPLEMENTATION_EXPR,
+    MINIMUM_DISTANCE_EXPR };
 
 // Unison constraint expression
 

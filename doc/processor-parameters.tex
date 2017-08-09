@@ -116,7 +116,7 @@
   \tableSpace
 
   \parameter{\allAdhocConstraints{}}{set of ad hoc processor constraints}
-  \json{E}{[[0, [1, [2, 13], [2, 14]], [2, 15]], \dots]}
+  \json{E}{[[0, [1, [3, 13], [3, 14]], [3, 15]], \dots]}
   \jsonComment{note: constraints are encoded as trees of expression tuples,
     where the first element of each expression tuple encodes its type as
     follows:}
@@ -126,7 +126,11 @@
         \hline
         \code{0} & \code{xor}\\
         \code{1} & \code{and}\\
-        \code{2} & \code{active}\\
+        \code{2} & \code{implies}\\
+        \code{3} & \code{active}\\
+        \code{4} & \code{connects}\\
+        \code{5} & \code{implements}\\
+        \code{6} & \code{distance}\\
         \hline
       \end{tabular}
     }

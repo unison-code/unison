@@ -62,14 +62,22 @@ instance ToJSON (IndexedUsage s) where
 
 instance ToJSON (IndexedInstruction i) where toJSON = toJSON . ioId
 
-instance ToJSON ConstraintExpr where
+instance ToJSON (ConstraintExpr i) where
   toJSON e @ (XorExpr e1 e2) = toJSON (exprId e, e1, e2)
   toJSON e @ (AndExpr e1 e2) = toJSON (exprId e, e1, e2)
+  toJSON e @ (ImplExpr e1 e2) = toJSON (exprId e, e1, e2)
   toJSON e @ (ActiveOperation oid) = toJSON (exprId e, oid)
+  toJSON e @ (TemporaryConnection pid tid) = toJSON (exprId e, pid, tid)
+  toJSON e @ (EOperationImplementation oid ii) = toJSON (exprId e, oid, ii)
+  toJSON e @ (MinimumDistance oid1 oid2 d) = toJSON (exprId e, oid1, oid2, d)
 
-exprId :: ConstraintExpr -> Integer
-exprId (XorExpr _ _)       = 0
-exprId (AndExpr _ _)       = 1
-exprId (ActiveOperation _) = 2
+exprId :: ConstraintExpr i -> Integer
+exprId XorExpr {}                  = 0
+exprId AndExpr {}                  = 1
+exprId ImplExpr {}                 = 2
+exprId ActiveOperation {}          = 3
+exprId TemporaryConnection {}      = 4
+exprId EOperationImplementation {} = 5
+exprId MinimumDistance {}          = 6
 
 unionMaps (Object m1) (Object m2) = Object (HM.union m1 m2)

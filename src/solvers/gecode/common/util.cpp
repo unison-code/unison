@@ -335,11 +335,19 @@ string emit_json_object(const UnisonConstraintExpr e) {
   switch (e.id) {
   case XOR_EXPR:
   case AND_EXPR:
+  case IMPL_EXPR:
     ss << emit_json_object(e.children[0]) << ", "
        << emit_json_object(e.children[1]);
     break;
   case ACTIVE_OPERATION_EXPR:
     ss << e.data[0];
+    break;
+  case TEMPORARY_CONNECTION_EXPR:
+  case OPERATION_IMPLEMENTATION_EXPR:
+    ss << e.data[0] << ", " << e.data[1];
+    break;
+  case MINIMUM_DISTANCE_EXPR:
+    ss << e.data[0] << ", " << e.data[1] << ", " << e.data[2];
     break;
   default: GECODE_NEVER;
   }
@@ -502,11 +510,16 @@ bool in_block(UnisonConstraintExpr & e, block b, const Parameters * input) {
   switch (e.id) {
   case XOR_EXPR:
   case AND_EXPR:
+  case IMPL_EXPR:
     return in_block(e.children[0], b, input) &&
            in_block(e.children[1], b, input);
   case ACTIVE_OPERATION_EXPR:
-    operation o = e.data[0];
-    return (input->oblock[o] == b);
+  case OPERATION_IMPLEMENTATION_EXPR:
+  case MINIMUM_DISTANCE_EXPR:
+    return (input->oblock[e.data[0]] == b);
+  case TEMPORARY_CONNECTION_EXPR:
+    operand p = e.data[0];
+    return (input->pb[p] == b);
   }
   GECODE_NEVER;
   return true;

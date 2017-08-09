@@ -301,7 +301,7 @@ data TargetDescription i r rc s = TargetDescription {
                            (OperationId, MoperandId, TemporaryId) ->
                            BlockOperation i r -> [BlockOperation i r],
       -- | Custom processor constraints
-      tConstraints      :: TargetOptions -> Function i r -> [ConstraintExpr]
+      tConstraints      :: TargetOptions -> Function i r -> [ConstraintExpr i]
 }
 
 -- | Any 'TargetDescription'. Used to support multiple targets without

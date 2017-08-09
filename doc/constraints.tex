@@ -141,7 +141,11 @@ and
     \begin{aligned}
       \satisfy{\tuple{\code{xor}, e_1, e_2}} & \iff \satisfy{e_1} \xor \satisfy{e_2}\\
       \satisfy{\tuple{\code{and}, e_1, e_2}} & \iff \satisfy{e_1} \land \satisfy{e_2}\\
+      \satisfy{\tuple{\code{implies}, e_1, e_2}} & \iff \satisfy{e_1} \implies \satisfy{e_2}\\
       \satisfy{\tuple{\code{active}, o}} & \iff \activeOperation{o}\\
+      \satisfy{\tuple{\code{connects}, p, t}} & \iff \operandTemporary{p} = t\\
+      \satisfy{\tuple{\code{implements}, o, \code{i}}} & \iff \operationInstruction{o} = \code{i}\\
+      \satisfy{\tuple{\code{distance}, d, u, n}} & \iff \operationIssueCycle{u} \ge \operationIssueCycle{d} + n\\
     \end{aligned}
   \end{equation*}
 }

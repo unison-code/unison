@@ -1089,6 +1089,7 @@ void Parameters::get_element(QScriptValue root, UnisonConstraintExpr & e) {
   switch (e.id) {
   case XOR_EXPR:
   case AND_EXPR:
+  case IMPL_EXPR:
     get_element(iti.value(), e1);
     e.children.push_back(e1);
     iti.next();
@@ -1096,6 +1097,19 @@ void Parameters::get_element(QScriptValue root, UnisonConstraintExpr & e) {
     e.children.push_back(e2);
     break;
   case ACTIVE_OPERATION_EXPR:
+    e.data.push_back(iti.value().toInt32());
+    break;
+  case TEMPORARY_CONNECTION_EXPR:
+  case OPERATION_IMPLEMENTATION_EXPR:
+    e.data.push_back(iti.value().toInt32());
+    iti.next();
+    e.data.push_back(iti.value().toInt32());
+    break;
+  case MINIMUM_DISTANCE_EXPR:
+    e.data.push_back(iti.value().toInt32());
+    iti.next();
+    e.data.push_back(iti.value().toInt32());
+    iti.next();
     e.data.push_back(iti.value().toInt32());
     break;
   default: GECODE_NEVER;
@@ -1253,13 +1267,6 @@ void Parameters::get_element(Json::Value root, string & s) {
   assert(root.isString());
   s = root.asString();
 }
-
-void Parameters::get_element(Json::Value root, UnisonConstraintExpr & e) {
-  assert(root.isArray());
-  // FIXME
-  GECODE_NEVER;
-}
-
 
 void Parameters::get_element(Json::Value root, UnisonConstraintExpr & e) {
   assert(root.isArray());
