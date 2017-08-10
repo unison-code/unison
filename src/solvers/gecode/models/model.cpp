@@ -1955,10 +1955,12 @@ void Model::post_cost_domain_constraints(block b) {
   // cycles, allow only multiples of the greatest common divisor of the
   // consumptions:
 
-  resource r = input->optimize_resource[0];
-  if (r != ISSUE_CYCLES) {
-    IntArgs cons = consumption_domain(r, input->ops[b]);
-    dom(*this, f(b), IntSet(cons));
+  for (unsigned int n = 0; n < input->N; n++) {
+    resource r = input->optimize_resource[n];
+    if (r != ISSUE_CYCLES) {
+      IntArgs cons = consumption_domain(r, input->ops[b]);
+      dom(*this, f(b, n), IntSet(cons));
+    }
   }
 
 }
@@ -2550,18 +2552,19 @@ void Model::post_cost_definition(block b) {
   // The cost of a block is either its number of issue cycles (makespan) or the
   // total consumption of a given resource:
 
-  resource r = input->optimize_resource[0];
-
-  if (r == ISSUE_CYCLES) {
-    constraint(f(b) == c(input->out[b]));
-  } else {
-    IntVarArgs cons;
-    for (operation o : input->ops[b]) {
-      IntArgs icons;
-      for (instruction i : input->instructions[o]) icons << input->con[i][r];
-      cons << var(element(icons, i(o)));
+  for (unsigned int n = 0; n < input->N; n++) {
+    resource r = input->optimize_resource[n];
+    if (r == ISSUE_CYCLES) {
+      constraint(f(b, n) == c(input->out[b]));
+    } else {
+      IntVarArgs cons;
+      for (operation o : input->ops[b]) {
+        IntArgs icons;
+        for (instruction i : input->instructions[o]) icons << input->con[i][r];
+        cons << var(element(icons, i(o)));
+      }
+      rel(*this, f(b, n) == sum(cons), IPL_BND);
     }
-    rel(*this, f(b) == sum(cons), IPL_BND);
   }
 
 }

@@ -508,7 +508,7 @@ post_lower_bounds(operation o1, operation o2, block b, int lb) {
   if (o1 != NULL_OPERATION) as << a(o1);
   if (o2 != NULL_OPERATION) as << a(o2);
   rel(*this, BOT_AND, as, all_active);
-  constraint(all_active >> (f(b) >= lb));
+  constraint(all_active >> (f(b, 0) >= lb));
 }
 
 void GlobalModel::
@@ -524,7 +524,7 @@ post_relaxation_nogood(operation o1, operation o2) {
 void GlobalModel::
 post_connection_lower_bound(operand p, bool connect, block b, int lb) {
   BoolVar cond = connect ? x(p) : var(!x(p));
-  constraint(cond >> (f(b) >= lb));
+  constraint(cond >> (f(b, 0) >= lb));
 }
 
 void GlobalModel::
@@ -532,7 +532,7 @@ post_instruction_nogood(int cost, InstructionAssignment forbidden) {
   operation o = forbidden.first;
   unsigned int ii = forbidden.second;
   block b = input->oblock[o];
-  constraint((f(b) < cost) >> (i(o) != ii));
+  constraint((f(b, 0) < cost) >> (i(o) != ii));
 }
 
 void GlobalModel::
@@ -575,7 +575,7 @@ void GlobalModel::post_effective_callee_saved_spilling(operation o) {
 }
 
 void GlobalModel::constrain_local_cost(block b, IntRelType irt, int cost) {
-  rel(*this, f(b), irt, cost, ipl);
+  rel(*this, f(b, 0), irt, cost, ipl);
 }
 
 void GlobalModel::post_different_solution(GlobalModel * g1, bool unsat) {
@@ -623,7 +623,7 @@ void GlobalModel::post_local_solution_cost(LocalModel * l) {
   BoolVar local_solution(*this, 0, 1);
   if (lits.size() > 0)
     rel(*this, BOT_AND, lits, local_solution);
-  constraint(local_solution >> (f(b) == l->cost()));
+  constraint(local_solution >> (f(b, 0) == l->cost()));
 }
 
 void GlobalModel::post_branchers(void) {

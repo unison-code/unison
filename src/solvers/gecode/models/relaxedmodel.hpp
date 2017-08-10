@@ -70,7 +70,7 @@ public:
   IntVar s(operand p) const;
 
   // This is needed since inherited from Model
-  IntVar f(block) const { GECODE_NEVER; return v_i[0]; };
+  IntVar f(block, unsigned int) const { GECODE_NEVER; return v_i[0]; };
 
   // Auxiliary
 

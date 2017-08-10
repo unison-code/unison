@@ -111,9 +111,8 @@ CompleteModel::CompleteModel(Parameters * p_input, ModelOptions * p_options,
                             IntSet(min_of(input->P), max_of(input->P)));
   }
   v_s = int_var_array(sum_of(input->n_global), -input->max_lat, input->max_lat);
-  v_gf  = int_var_array(input->N, 0, Int::Limits::max);
-  v_f   = int_var_array(input->B.size() * input->N, 0, Int::Limits::max);
-
+  v_gf = int_var_array(input->N, 0, Int::Limits::max);
+  v_f  = int_var_array(input->B.size() * input->N, 0, Int::Limits::max);
 }
 
 CompleteModel::CompleteModel(CompleteModel& cg) :
@@ -128,7 +127,7 @@ CompleteModel* CompleteModel::copy(void) {
 }
 
 IntVar CompleteModel::cost(void) const {
-  return gf();
+  return gf()[0];
 }
 
 void CompleteModel::constrain(const Space & _s) {
@@ -378,13 +377,14 @@ void CompleteModel::post_global_cost_definition(void) {
   // The objective is to minimize the cost of each block possibly weighted by
   // the estimated execution frequency:
 
-  IntVarArgs fs;
-  for (block b : input->B) fs << f(b);
-  if (input->optimize_dynamic[0])
-    linear(*this, IntArgs(input->freq), fs, IRT_EQ, gf());
-  else
-    linear(*this, fs, IRT_EQ, gf());
-
+  for (unsigned int n = 0; n < input->N; n++) {
+    IntVarArgs fs;
+    for (block b : input->B) fs << f(b, n);
+    if (input->optimize_dynamic[n])
+      linear(*this, IntArgs(input->freq), fs, IRT_EQ, gf()[n]);
+    else
+      linear(*this, fs, IRT_EQ, gf()[n]);
+  }
 }
 
 void CompleteModel::post_cost_definition(void) {
@@ -393,11 +393,11 @@ void CompleteModel::post_cost_definition(void) {
 }
 
 void CompleteModel::post_upper_bound(int maxcost) {
-  constraint(gf() <= maxcost);
+  constraint(cost() <= maxcost);
 }
 
 void CompleteModel::post_lower_bound(int mincost) {
-  constraint(gf() >= mincost);
+  constraint(cost() >= mincost);
 }
 
 void CompleteModel::post_standalone_constraints(void) {

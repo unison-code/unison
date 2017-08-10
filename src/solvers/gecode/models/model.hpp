@@ -256,7 +256,7 @@ public:
 
   virtual IntVar s(operand p) const = 0;
 
-  virtual IntVar f(block b) const = 0;
+  virtual IntVar f(block b, unsigned int n) const = 0;
 
   // Auxiliary methods
 

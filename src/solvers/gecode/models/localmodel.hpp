@@ -82,7 +82,7 @@ public:
 
   IntVar s(operand p) const;
 
-  IntVar f(block) const { return v_f[0]; };
+  IntVar f(block, unsigned int n) const { return v_f[n]; };
 
   // Gecode objects
 

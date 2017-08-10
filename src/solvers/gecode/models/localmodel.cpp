@@ -265,7 +265,7 @@ void LocalModel::post_register_symmetry_breaking_constraints(block b) {
 #endif
 
 void LocalModel::constrain_cost(IntRelType irt, int cost) {
-  rel(*this, f(b), irt, cost, ipl);
+  rel(*this, f(b, 0), irt, cost, ipl);
 }
 
 void LocalModel::post_branchers(char search) {
@@ -328,8 +328,12 @@ void LocalModel::post_trivial_branchers(void) {
 
 void LocalModel::post_minimum_cost_branchers(void) {
 
-  branch(*this, f(b), INT_VAL_MIN(),
-         &print_cost_decision);
+  IntVarArgs fs;
+  for (unsigned int n = 0; n < input->N; n++) {
+    fs << f(b, n);
+  }
+  branch(*this, fs, INT_VAR_NONE(), INT_VAL_MIN(),
+         NULL, &print_cost_decision);
 
   branch(*this, v_a, BOOL_VAR_ACTION_MAX(c_activity), BOOL_VAL_MIN(),
          NULL, &print_inactive_decision);
@@ -437,7 +441,7 @@ bool LocalModel::slave(const MetaInfo& mi) {
 }
 
 IntVar LocalModel::cost(void) const {
-  return f(b);
+  return f(b, 0);
 }
 
 void LocalModel::constrain(const Space & _s) {
@@ -447,7 +451,7 @@ void LocalModel::constrain(const Space & _s) {
 
 void LocalModel::print(ostream & pOs) const {
 
-  pOs << "estimated cost: " << f(b);
+  pOs << "estimated cost: " << f(b, 0);
 
   pOs << endl << endl;
 
@@ -481,7 +485,9 @@ void LocalModel::apply_solution(const GlobalModel * gs) {
     copy_domain(*this, gs->le(t), le(t));
   }
 
-  copy_domain(*this, gs->f(b), f(b));
+  for (unsigned int n = 0; n < input->N; n++) {
+    copy_domain(*this, gs->f(b, n), f(b, n));
+  }
 
 }
 

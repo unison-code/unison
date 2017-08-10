@@ -70,9 +70,11 @@ public:
 
   IntVar s(operand p) const;
 
-  IntVar gf() const { return v_gf[0]; }
+  IntVarArray gf() const { return v_gf; }
 
-  IntVar f(block b) const { return v_f[b * input->N]; };
+  IntVar f(block b, unsigned int n) const {
+    return v_f[(b * input->N) + n];
+  };
 
   // Gecode space methods
 

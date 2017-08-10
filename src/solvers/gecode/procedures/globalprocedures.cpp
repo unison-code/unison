@@ -446,7 +446,7 @@ void presolve_global_cluster_impact(
       lb = ls->cost().val();
     if (ls != NULL) delete ls;
     delete preStop;
-    if (lb > base->f(b).min()) {
+    if (lb > base->f(b, 0).min()) {
       base->post_connection_lower_bound(p, connect, b, lb);
       base->status();
     }
@@ -576,7 +576,7 @@ SolverResult shave_local_costs(GlobalModel * base) {
       new_stop(base->options->post_global_shaving_limit(), base->options);
     Search::Statistics stats;
     Search::Options dummyOpts;
-    for (int cost = base->f(b).min(); cost < base->f(b).max(); cost++) {
+    for (int cost = base->f(b, 0).min(); cost < base->f(b, 0).max(); cost++) {
       GlobalModel * g1 = (GlobalModel*) base->clone();
       g1->constrain_local_cost(b, IRT_GR, cost);
       if (g1->status() == SS_FAILED) {
