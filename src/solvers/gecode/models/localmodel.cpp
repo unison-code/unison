@@ -440,6 +440,11 @@ IntVar LocalModel::cost(void) const {
   return f(b);
 }
 
+void LocalModel::constrain(const Space & _s) {
+  const LocalModel & ls = static_cast<const LocalModel &>(_s);
+  constraint(cost() < ls.cost().val());
+}
+
 void LocalModel::print(ostream & pOs) const {
 
   pOs << "estimated cost: " << f(b);

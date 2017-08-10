@@ -980,7 +980,7 @@ MakeSpanModel::MakeSpanModel(Parameters * p_input, ModelOptions * p_options, Int
 }
 
 MakeSpanModel::MakeSpanModel(MakeSpanModel& m) :
-  MinimizeSpace(m),
+  Space(m),
   input(m.input),
   options(m.options),
   ipl(m.ipl)
@@ -993,9 +993,6 @@ MakeSpanModel::MakeSpanModel(MakeSpanModel& m) :
 MakeSpanModel* MakeSpanModel::copy(void) {
   return new MakeSpanModel(*this);
 }
-
-// Not used but needed, since inheriting from MinimizeSpace
-IntVar MakeSpanModel::cost(void) const { return v_span; }
 
 void MakeSpanModel::post(const vector<operation>& ops) {
   int n = ops.size();

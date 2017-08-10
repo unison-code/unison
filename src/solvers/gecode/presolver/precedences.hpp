@@ -141,7 +141,7 @@ void gen_predecessors_successors(Parameters& input);
 
 int makespan(Parameters& input, const vector<operation>& N);
 
-class MakeSpanModel : public MinimizeSpace {
+class MakeSpanModel : public Space {
 
 public:
 
@@ -168,8 +168,6 @@ public:
   MakeSpanModel(MakeSpanModel& cg);
 
   MakeSpanModel* copy(void);
-
-  IntVar cost(void) const;
 
   // constraints
 

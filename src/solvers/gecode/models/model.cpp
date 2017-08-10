@@ -675,7 +675,7 @@ Model::Model(Parameters * p_input, ModelOptions * p_options, IntPropLevel p_ipl)
   one(*this, 1, 1) {}
 
 Model::Model(Model& m) :
-  MinimizeSpace(m),
+  Space(m),
   input(m.input),
   options(m.options),
   ipl(m.ipl)

@@ -63,7 +63,7 @@ using namespace std;
 using namespace Gecode;
 using namespace Iter::Ranges;
 
-class Model : public MinimizeSpace {
+class Model : public Space {
 
 public:
 

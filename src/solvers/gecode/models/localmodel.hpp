@@ -101,6 +101,7 @@ public:
 
   IntVar cost(void) const;
 
+  virtual void constrain(const Space & _s);
 
   // Constraints
 

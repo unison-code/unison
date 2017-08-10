@@ -131,6 +131,11 @@ IntVar CompleteModel::cost(void) const {
   return gf();
 }
 
+void CompleteModel::constrain(const Space & _s) {
+  const CompleteModel & gs = static_cast<const CompleteModel &>(_s);
+  constraint(cost() < gs.cost().val());
+}
+
 void CompleteModel::post_decision_variable_domain_definitions(void) {
   for (block b : input->B)
     Model::post_decision_variable_domain_definitions(b);
