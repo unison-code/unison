@@ -90,15 +90,15 @@ optimizationParameters (strictlyBetter, unsatisfiable, scaleFreq)
         cf    = capacityMap target
         r2id  = M.fromList [(resName (res ir), resId ir) | ir <- iResources rm]
         gl    = mkGoal goal
-        od    = isDynamic gl :: Bool
-        or    = optResource r2id gl :: ResourceId
+        od    = map isDynamic gl :: [Bool]
+        or    = map (optResource r2id) gl :: [ResourceId]
         maxf0 = case baseMir of
                  (Just mir) ->
                      let mf = fromSingleton $ MIR.parse mir
-                     in maximumCost strictlyBetter scaleFreq cf gl (mir, mf) deps
-                        target code
-                 Nothing -> maxInt
-        maxf  = if unsatisfiable then 0 else maxf0
+                         mc = maximumCost strictlyBetter scaleFreq cf
+                     in map (\g -> mc g (mir, mf) deps target code) gl
+                 Nothing -> replicate (length gl) maxInt
+        maxf  = if unsatisfiable then replicate (length gl) 0 else maxf0
     in
       [
       -- Parameters related to the objective function
@@ -109,12 +109,12 @@ optimizationParameters (strictlyBetter, unsatisfiable, scaleFreq)
       -- resource whose consumption is to be optimized
       ("optimize_resource", toJSON or),
 
-      -- upper bound of the objective
+      -- upper bound of each objective
       ("maxf", toJSON maxf)
       ]
 
-mkGoal Nothing = error ("optimization goal is missing")
-mkGoal (Just goal) = lowerGoal goal
+mkGoal [] = error ("optimization goal is missing")
+mkGoal goal = map lowerGoal goal
 
 isDynamic (DynamicGoal _) = True
 isDynamic _ = False

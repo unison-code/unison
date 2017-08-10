@@ -307,3 +307,29 @@ and
     \summation{b \in B}{\blockWeight{b} \times \blockCost{b}}
   \end{equation*}
 }
+
+\newcommand{\blockWeigthEquation}{
+  \begin{equation}\textstyle\label{eq:block-weight}
+    \blockWeight{b} =
+    \begin{cases}
+      \displaystyle{} \blockFrequency{b} &
+      \text{if }
+      \optimizeDynamic{0} \\
+      \displaystyle{} 1 &
+      \text{otherwise}
+    \end{cases}
+  \end{equation}
+}
+
+\newcommand{\blockCostEquation}{
+  \begin{equation}\textstyle\label{eq:block-cost}
+    \blockCost{b} =
+    \begin{cases}
+      \displaystyle{} \operationIssueCycle{\blockOut{b}} &
+      \text{if }
+      \optimizeResource{0} = \code{cycles} \\
+      \textstyle{} \sum_{o \in \operations{b}}{\units{\operationInstruction{o}}{\optimizeResource{0}}} &
+      \text{otherwise}
+    \end{cases}
+  \end{equation}
+}

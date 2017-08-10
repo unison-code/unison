@@ -885,23 +885,26 @@ where
 
 \section{Objective}\label{sec:objective}
 
-The objective is to minimize the sum of the weighted costs of each block:
+The objective is to minimize the sum of the weighted costs of each block
+according to the first objective (multi-objective optimization is not yet
+supported):
 %
 \genericObjectiveEquation
 %
-where $\blockWeight{b}$ and $\blockCost{b}$ give the weight and estimated cost
-of block $b$.
+where $\blockWeight{b}$ gives the weight of block $b$:
 %
-To optimize for speed, $\blockWeight{b}$ is set to $\blockFrequency{b}$
-(corresponding to $\optimizeDynamic{} = \code{true}$), and $\blockCost{b}$ is
-defined as $\blockOut{b}$.
+\blockWeigthEquation
 %
-To optimize for code size, $\blockWeight{b}$ is disregarded (corresponding to
-$\optimizeDynamic{} = \code{false}$) and $\blockCost{b}$ is defined as $\sum_{o
-  \in \operations{b}}{\units{\operationInstruction{o}}{\bits{}}}$, where the
-processor resource $\bits{}$ represents the bits with which instructions are
-encoded (the particular resource to be optimized for is determined by the
-parameter $\optimizeResource{}$).
+and $\blockCost{b}$ gives the estimated cost of block $b$:
+%
+\blockCostEquation
+
+To optimize for speed, $\optimizeDynamic{0}$ is set to $\code{true}$ and
+$\optimizeResource{0}$ is set to the special resource $\code{cycles}$.
+%
+To optimize for code size, $\optimizeDynamic{0}$ is set to $\code{false}$
+and $\optimizeResource{0}$ is set to the processor resource $\code{bits}$
+representing the bits with which instructions are encoded.
 
 \chapter{Target Description}
 \label{sec:target-description}

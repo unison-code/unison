@@ -1955,7 +1955,7 @@ void Model::post_cost_domain_constraints(block b) {
   // cycles, allow only multiples of the greatest common divisor of the
   // consumptions:
 
-  resource r = input->optimize_resource;
+  resource r = input->optimize_resource[0];
   if (r != ISSUE_CYCLES) {
     IntArgs cons = consumption_domain(r, input->ops[b]);
     dom(*this, f(b), IntSet(cons));
@@ -2550,7 +2550,7 @@ void Model::post_cost_definition(block b) {
   // The cost of a block is either its number of issue cycles (makespan) or the
   // total consumption of a given resource:
 
-  resource r = input->optimize_resource;
+  resource r = input->optimize_resource[0];
 
   if (r == ISSUE_CYCLES) {
     constraint(f(b) == c(input->out[b]));

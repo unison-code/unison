@@ -98,9 +98,10 @@ data LsBlockAttribute =
   LsSplit
   deriving (Eq, Show)
 
-data LsHighLevelGoals =
+data LsHighLevelGoal =
   LsSpeed |
-  LsSize
+  LsSize |
+  LsSpill
   deriving (Eq, Show)
 
 parse :: Read i => Read r =>
@@ -165,9 +166,9 @@ removedFreqsLine = lineOf removedFreqs
 goal =
   do marker "goal"
      whiteSpace
-     goal <- optionMaybe goalName
+     goals <- goalName `sepBy` comma
      whiteSpace
-     return goal
+     return goals
 
 removedFreqs =
   do marker "removed-freqs"
@@ -183,7 +184,7 @@ spOffset =
      whiteSpace
      return sp
 
-goalName = try speedGoal <|> try sizeGoal
+goalName = try speedGoal <|> try sizeGoal <|> try spillGoal
 
 speedGoal =
   do string "speed"
@@ -192,6 +193,10 @@ speedGoal =
 sizeGoal =
   do string "size"
      return LsSize
+
+spillGoal =
+  do string "spill"
+     return LsSpill
 
 lineOf e =
   do whiteSpace
@@ -545,7 +550,7 @@ toFunction target
   let cms   = [cm | (LsComment cm) <- cmms]
       code  = map (toBB target) (split (dWhen isLsBB) body)
       cs'   = map (mapTuple toOperand) $ fromMaybe [] cs
-      goal' = fmap toHLGoal goal
+      goal' = map toHLGoal goal
       src'  = concat [l ++ "\n" | l <- src]
   in mkCompleteFunction cms name code cs' ffobjs fobjs sp (jtk, jt) goal' rfs
      src'
@@ -591,6 +596,7 @@ toOperand (LsOperandRef pid) = mkOperandRef pid
 
 toHLGoal LsSpeed = Speed
 toHLGoal LsSize = Size
+toHLGoal LsSpill = Spill
 
 operationType _ [LsVirtualInstruction i] = VirtualType (toVirtualType i)
 operationType itf is =

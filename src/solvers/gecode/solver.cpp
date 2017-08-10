@@ -283,7 +283,7 @@ double optimality_gap(const GlobalModel * base, const GlobalModel * sol) {
 }
 
 string cost_status_report(const GlobalModel * base, const GlobalModel * sol) {
-  int cost_ub  = base->input->maxf + 1,
+  int cost_ub  = base->input->maxf[0] + 1,
       max_cost = sol->cost().max();
   double imp = ((((double)(cost_ub - max_cost)) / (double)max_cost) * 100.0),
          rog = optimality_gap(base, sol);
@@ -614,14 +614,14 @@ int main(int argc, char* argv[]) {
          << gd.global_n_set_vars << " set" << endl;
 
   // Post cost upper bound
-  base->post_upper_bound(input.maxf);
+  base->post_upper_bound(input.maxf[0]);
   Gecode::SpaceStatus ss1 = base->status();
   if (ss1 == SS_FAILED) { // The problem has no solution
     double execution_time = t.stop();
     if (options.verbose()) {
       cerr << global()
            << "proven absence of solutions with cost less or equal than "
-           << input.maxf << endl;
+           << input.maxf[0] << endl;
       cerr << "execution time: " << execution_time << " ms" << endl;
     }
     results.push_back(ResultData(NULL, true, 1, 1, presolver_time,
@@ -670,7 +670,7 @@ int main(int argc, char* argv[]) {
       if (options.verbose()) {
         cerr << pre()
              << "proven absence of solutions with cost less or equal than "
-             << input.maxf << endl;
+             << input.maxf[0] << endl;
         cerr << "execution time: " << execution_time << " ms" << endl;
       }
       results.push_back(ResultData(NULL, true, 0, 0, presolver_time, 0, 0,
@@ -679,7 +679,7 @@ int main(int argc, char* argv[]) {
       exit(EXIT_SUCCESS);
     }
 
-    if (input.optimize_resource != ISSUE_CYCLES) {
+    if (input.optimize_resource[0] != ISSUE_CYCLES) {
       Support::Timer t_pre2;
       t_pre2.start();
       presolve_minimum_consumption(base);
@@ -696,7 +696,7 @@ int main(int argc, char* argv[]) {
       if (options.verbose()) {
         cerr << pre()
              << "proven absence of solutions with cost less or equal than "
-             << input.maxf << endl;
+             << input.maxf[0] << endl;
         cerr << "execution time: " << execution_time << " ms" << endl;
       }
       results.push_back(ResultData(NULL, true, 0, 0, presolver_time, 0, 0,
@@ -722,7 +722,7 @@ int main(int argc, char* argv[]) {
       if (options.verbose()) {
         cerr << pre()
              << "proven absence of solutions with cost less or equal than "
-             << input.maxf << endl;
+             << input.maxf[0] << endl;
         cerr << "execution time: " << execution_time << " ms" << endl;
       }
       results.push_back(ResultData(NULL, true, 0, 0, presolver_time, 0, 0,
@@ -764,7 +764,7 @@ int main(int argc, char* argv[]) {
       if (options.verbose()) {
         cerr << pre()
              << "proven absence of solutions with cost less or equal than "
-             << input.maxf << endl;
+             << input.maxf[0] << endl;
         cerr << "execution time: " << execution_time << " ms" << endl;
       }
       results.push_back(ResultData(NULL, true, 0, 0, presolver_time, 0, 0,
@@ -788,7 +788,7 @@ int main(int argc, char* argv[]) {
       if (options.verbose()) {
         cerr << pre()
              << "proven absence of solutions with cost less or equal than "
-             << input.maxf << endl;
+             << input.maxf[0] << endl;
         cerr << "execution time: " << execution_time << " ms" << endl;
       }
       results.push_back(ResultData(NULL, true, 0, 0, presolver_time, 0, 0,
@@ -1018,7 +1018,7 @@ int main(int argc, char* argv[]) {
           if (options.verbose()) {
             cerr << global()
                  << "proven absence of solutions with cost less or equal than "
-                 << input.maxf << endl;
+                 << input.maxf[0] << endl;
           }
         }
         proven = true;
@@ -1083,7 +1083,7 @@ int main(int argc, char* argv[]) {
         if (options.verbose()) {
           cerr << monolithic()
                << "proven absence of solutions with cost less or equal than "
-               << input.maxf << endl;
+               << input.maxf[0] << endl;
         }
       }
       results.back().proven = true;

@@ -1384,3 +1384,4 @@ toSubRegIndex mop = error ("unmatched: toSubRegIndex " ++ show mop)
 lowerGoal :: Read s => HighLevelGoal -> Goal s
 lowerGoal Speed = DynamicGoal Cycles
 lowerGoal Size  = StaticGoal (ResourceUsage (read "BundleWidth"))
+lowerGoal Spill = DynamicGoal (ResourceUsage (read "SpillCost"))

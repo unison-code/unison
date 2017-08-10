@@ -82,9 +82,9 @@ Parameters::Parameters(JSONVALUE root) :
 
   // Objective function parameters
 
-  optimize_dynamic (get_scalar<bool>(getRoot(root, "optimize_dynamic"))),
-  optimize_resource (get_scalar<int>(getRoot(root, "optimize_resource"))),
-  maxf          (get_scalar<int>(getRoot(root, "maxf"))),
+  optimize_dynamic (get_vector<bool>(getRoot(root, "optimize_dynamic"))),
+  optimize_resource (get_vector<int>(getRoot(root, "optimize_resource"))),
+  maxf          (get_vector<int>(getRoot(root, "maxf"))),
 
   // Additional parameters
 

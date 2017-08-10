@@ -57,7 +57,7 @@ void presolve_effective_callee_saved_spilling(GlobalModel * base) {
 }
 
 void presolve_minimum_consumption(GlobalModel * base) {
-  resource r = base->input->optimize_resource;
+  resource r = base->input->optimize_resource[0];
   assert(r != ISSUE_CYCLES);
   for (block b : base->input->B) {
     int n = base->input->optional_min[b];

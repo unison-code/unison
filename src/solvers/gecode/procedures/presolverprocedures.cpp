@@ -176,7 +176,7 @@ bool propagate(Parameters& input) {
   m->post_standalone_constraints();
   Gecode::SpaceStatus ss = m->status();
   assert(ss != SS_FAILED); // At this point the problem should be solvable
-  m->post_upper_bound(input.maxf);
+  m->post_upper_bound(input.maxf[0]);
   Gecode::SpaceStatus ss1 = m->status();
   if (ss1 == SS_FAILED) {
     return false;

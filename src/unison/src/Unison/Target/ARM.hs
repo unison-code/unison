@@ -142,10 +142,10 @@ copies (f, _, cg, ra, bcfg, sg) _ t _rs d us =
       w      = widthOfTemp ra cg f t is
       dors   = transitivePreAssignments bcfg sg Reaching f t
       uors   = transitivePreAssignments bcfg sg Reachable f t
-      Just g = fGoal f
+      pg     = head $ fGoal f
   in (
-      (defCopies g w dors),
-      map (const (useCopies g w uors)) us
+      (defCopies pg w dors),
+      map (const (useCopies pg w uors)) us
       )
 
 pushInstruction [r]
@@ -554,8 +554,8 @@ transforms AugmentPreRW = [peephole combinePushPops,
                            peephole combineLoadStores]
 transforms _ = []
 
-mapToOperationWithGoal t f @ Function {fCode = code, fGoal = Just goal} =
-  f {fCode = map (mapToOperationInBlock (t goal)) code}
+mapToOperationWithGoal t f @ Function {fCode = code, fGoal = (pg:_)} =
+  f {fCode = map (mapToOperationInBlock (t pg)) code}
 
 -- | Latency of read-write dependencies
 

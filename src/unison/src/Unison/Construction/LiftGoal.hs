@@ -11,7 +11,13 @@ This file is part of Unison, see http://unison-code.github.io
 -}
 module Unison.Construction.LiftGoal (liftGoal) where
 
+import Data.List.Split
+
 import Unison.Base
 import Unison.Instances()
 
-liftGoal goal f _ = f {fGoal = fmap read goal}
+liftGoal maybeGoal f _ =
+  let hlgoal = case maybeGoal of
+                Nothing   -> []
+                Just goal -> map read (splitOn "," goal)
+  in f {fGoal = hlgoal}

@@ -186,13 +186,13 @@ public:
   // Objective function parameters
 
   // whether to use block frequencies as weight
-  bool optimize_dynamic;
+  vector<bool> optimize_dynamic;
 
   // resource whose consumption is to be optimized
-  resource optimize_resource;
+  vector<resource> optimize_resource;
 
-  // upper bound of the objective
-  int maxf;
+  // upper bound of each objective
+  vector<int> maxf;
 
 
   // Additional parameters

@@ -141,9 +141,15 @@ instance (Show i, Show r) => Show (Function i r) where
 
 showComment comment = "//" ++ comment ++ newLine
 
-maybeShowGoal Nothing = ""
-maybeShowGoal (Just Speed) = " speed"
-maybeShowGoal (Just Size) = " size"
+maybeShowGoal [] = ""
+maybeShowGoal gs = " " ++ render (cs show gs)
+--maybeShowGoal (Just Speed) = " speed"
+--maybeShowGoal (Just Size) = " size"
+
+instance Show HighLevelGoal where
+  show Speed = "speed"
+  show Size  = "size"
+  show Spill = "spill"
 
 instance (Show i, Show r) => Show (Block i r) where
   show (Block l as code) =
@@ -349,3 +355,5 @@ instance Read HighLevelGoal where
 
 readHighLevelGoal "speed" = Speed
 readHighLevelGoal "size"  = Size
+readHighLevelGoal "spill" = Spill
+readHighLevelGoal goal = error ("unmatched: readHighLevelGoal " ++ show goal)

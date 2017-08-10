@@ -159,8 +159,8 @@ data Function i r = Function {
       fStackPointerOffset :: Integer,
       -- | Jump table kind and entries
       fJumpTable   :: (String, [JumpTableEntry]),
-      -- | Goal for which the function is to be optimized
-      fGoal        :: Maybe HighLevelGoal,
+      -- | Goal(s) for which the function is to be optimized
+      fGoal        :: [HighLevelGoal],
       -- | Removed frequencies
       fRemovedFreqs :: [Frequency],
       -- | Source program (e.g. LLVM IR)
@@ -617,7 +617,9 @@ data HighLevelGoal =
   -- | Speed optimization (corresponds to 'DynamicGoal Cycles')
   Speed |
   -- | Code size optimization (corresponds to 'StaticGoal BundleWidth')
-  Size
+  Size |
+  -- | Spill code overhead optimization (corresponds to 'DynamicGoal Spill')
+  Spill
   deriving (Eq, Ord)
 
 -- | Types corresponding to 'Operation'.

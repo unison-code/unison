@@ -1,18 +1,21 @@
 \begin{longtable}{ l p{12cm} }
 
-  \parameter{\optimizeDynamic{}}{whether to use block frequencies as weight}
-  \json{optimize\_dynamic}{true}
+  \parameter{\optimizeDynamic{n}}{whether to use block frequencies as
+    weight for the $n$\textsuperscript{th} objective}
+  \json{optimize\_dynamic}{[true]}
 
   \tableSpace
 
-  \parameter{\optimizeResource{}}{resource whose consumption is to be optimized}
-  \json{optimize\_resource}{-1}
-  \jsonComment{note: the estimated number of cycles is encoded as resource
-    \code{-1}, otherwise the usual resource numbers in \code{R} are used}
+  \parameter{\optimizeResource{n}}{resource whose consumption is to be
+    optimized for the $n$\textsuperscript{th} objective}
+  \json{optimize\_resource}{[-1]}
+  \jsonComment{note: the estimated number of cycles (\code{cycles}) is
+    encoded as resource \code{-1} , otherwise the usual resource numbers in
+    \code{R} are used}
 
   \tableSpace
 
-  \parameter{\maxCost{}}{upper bound of the objective}
-  \json{maxf}{274}
+  \parameter{\maxCost{n}}{upper bound of the $n$\textsuperscript{th} objective}
+  \json{maxf}{[274]}
 
 \end{longtable}

@@ -33,7 +33,7 @@ buildFunction target MachineFunction {mfName = name, mfBlocks = blocks,
       fos  = buildStackFrame mps
       jt   = buildJumpTable (find isMachineFunctionPropertyJumpTable mps)
       rfs  = buildRemovedFreqs (find isMachineFunctionPropertyRemovedFreqs mps)
-      f    = mkCompleteFunction [] name code [] ffos fos 0 jt Nothing rfs ir
+      f    = mkCompleteFunction [] name code [] ffos fos 0 jt [] rfs ir
   in f
 
 buildBlock itf oif (id, code)

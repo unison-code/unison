@@ -375,7 +375,7 @@ void CompleteModel::post_global_cost_definition(void) {
 
   IntVarArgs fs;
   for (block b : input->B) fs << f(b);
-  if (input->optimize_dynamic)
+  if (input->optimize_dynamic[0])
     linear(*this, IntArgs(input->freq), fs, IRT_EQ, gf());
   else
     linear(*this, fs, IRT_EQ, gf());
