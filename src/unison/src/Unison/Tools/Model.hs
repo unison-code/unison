@@ -95,8 +95,9 @@ optimizationParameters (strictlyBetter, unsatisfiable, scaleFreq)
         maxf0 = case baseMir of
                  (Just mir) ->
                      let mf = fromSingleton $ MIR.parse mir
-                         mc = maximumCost strictlyBetter scaleFreq cf
-                     in map (\g -> mc g (mir, mf) deps target code) gl
+                         mc = maximumCost scaleFreq cf
+                         mx = map (\g -> mc g (mir, mf) deps target code) gl
+                     in if strictlyBetter then decrementLast mx else mx
                  Nothing -> replicate (length gl) maxInt
         maxf  = if unsatisfiable then replicate (length gl) 0 else maxf0
     in
@@ -113,6 +114,8 @@ optimizationParameters (strictlyBetter, unsatisfiable, scaleFreq)
       ("maxf", toJSON maxf)
       ]
 
+decrementLast l = init l ++ [(last l) - 1]
+
 mkGoal [] = error ("optimization goal is missing")
 mkGoal goal = map lowerGoal goal
 
@@ -127,12 +130,12 @@ optResource' r2id (ResourceUsage r) = r2id M.! r
 
 maximumCost :: (Eq i, Show i, Read i, Ord r, Show r, Read r, Ord rc, Show rc,
                 Ord s, Show s) =>
-               Bool -> Bool -> M.Map s Integer -> Goal s ->
+               Bool -> M.Map s Integer -> Goal s ->
                (String, MIR.MachineFunction i r) ->
                [[(OperationId, OperationId, [Maybe Latency])]] ->
                TargetWithOptions i r rc s -> [Block i r] ->
                Integer
-maximumCost strictlyBetter scaleFreq cf gl (mir, mf) deps target code =
+maximumCost scaleFreq cf gl (mir, mf) deps target code =
     let rm     = resourceManager target
         oif    = operandInfo target
         bbs    = map MIR.machineBlockFreq (MIR.mfBlocks mf)
@@ -142,8 +145,7 @@ maximumCost strictlyBetter scaleFreq cf gl (mir, mf) deps target code =
         ([baseCost], _) = Analyze.analyze (False, True, True)
                           factor [gl] mir target
         baseCost' = baseCost + compensation cf gl (nf fbs) (nf bbs)
-        maxCost = if strictlyBetter then baseCost' - 1 else baseCost'
-    in maxCost
+    in baseCost'
 
 -- Compensate from extra blocks in either side
 -- TODO: handle case where freqs are scaled down!
