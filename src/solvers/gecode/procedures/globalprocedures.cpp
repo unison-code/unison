@@ -704,7 +704,7 @@ solve_monolithic_parallel(GlobalModel * base, GIST_OPTIONS *) {
     found_solution = true;
     if (base->options->verbose())
       cerr << monolithic()
-           << "found solution with cost " << nextm->cost()[0] << endl;
+           << "found solution with cost " << nextm->cost() << endl;
     GlobalModel * oldm = m;
     m = nextm;
     delete oldm;

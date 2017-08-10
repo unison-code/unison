@@ -442,7 +442,7 @@ IntVarArray LocalModel::cost() const {
 
 void LocalModel::constrain(const Space & _s) {
   const LocalModel & ls = static_cast<const LocalModel &>(_s);
-  rel(*this, cost()[0], IRT_LE, ls.cost()[0]);
+  rel(*this, cost(), IRT_LE, ls.cost());
 }
 
 void LocalModel::print(ostream & pOs) const {

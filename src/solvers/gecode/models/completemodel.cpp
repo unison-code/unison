@@ -132,7 +132,7 @@ IntVarArray CompleteModel::cost() const {
 
 void CompleteModel::constrain(const Space & _s) {
   const CompleteModel & gs = static_cast<const CompleteModel &>(_s);
-  constraint(cost()[0] < gs.cost()[0].val());
+  rel(*this, cost(), IRT_LE, gs.cost());
 }
 
 void CompleteModel::post_decision_variable_domain_definitions(void) {

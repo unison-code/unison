@@ -623,7 +623,8 @@ void GlobalModel::post_local_solution_cost(LocalModel * l) {
   BoolVar local_solution(*this, 0, 1);
   if (lits.size() > 0)
     rel(*this, BOT_AND, lits, local_solution);
-  constraint(local_solution >> (f(b, 0) == l->cost()[0]));
+  for (unsigned int n = 0; n < input->N; n++)
+    constraint(local_solution >> (f(b, n) == l->cost()[n]));
 }
 
 void GlobalModel::post_branchers(void) {

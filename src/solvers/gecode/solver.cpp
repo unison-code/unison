@@ -289,7 +289,7 @@ string cost_status_report(const GlobalModel * base, const GlobalModel * sol) {
          rog = optimality_gap(base, sol);
   stringstream ss;
   ss << fixed << setprecision(2);
-  ss << "cost: " << sol->cost()[0];
+  ss << "cost: " << sol->cost();
   if (sol != base)
     ss << ", improvement: " << imp << "%";
   if (rog > 0.0)
@@ -845,7 +845,7 @@ int main(int argc, char* argv[]) {
         } else {
           cerr << global()
                << "solving problem (i: " << iteration << ", state: " << state
-               << ", cost: " << base->cost()[0] << ")" << endl;
+               << ", cost: " << base->cost() << ")" << endl;
         }
       }
 
