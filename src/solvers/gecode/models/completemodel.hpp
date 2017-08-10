@@ -47,7 +47,7 @@ public:
   // Variables
 
   // gf: global cost
-  IntVar v_gf;
+  IntVarArray v_gf;
 
   // f[b]: cost of block b
   IntVarArray v_f;
@@ -70,9 +70,9 @@ public:
 
   IntVar s(operand p) const;
 
-  IntVar gf() const { return v_gf; }
+  IntVar gf() const { return v_gf[0]; }
 
-  IntVar f(block b) const { return v_f[b]; };
+  IntVar f(block b) const { return v_f[b * input->N]; };
 
   // Gecode space methods
 

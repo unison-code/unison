@@ -651,6 +651,9 @@ public:
   // [MC] set of predecessors or successors, per block
   vector<vector<PresolverSucc>> bsuccessors;
 
+  // Number of objectives
+  unsigned int N;
+
 protected:
 
   Parameters() {};

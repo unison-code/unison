@@ -44,14 +44,6 @@ class RelaxedModel : public Model {
 
 public:
 
-  // Variables
-
-  // gf: global cost
-  IntVar v_gf;
-
-  // f[b]: cost of block b
-  IntVarArray v_f;
-
   // Parameters
 
   // af: aggressiveness factor in allocation branching
@@ -77,9 +69,8 @@ public:
 
   IntVar s(operand p) const;
 
-  IntVar gf() const { return v_gf; }
-
-  IntVar f(block b) const { return v_f[b]; };
+  // This is needed since inherited from Model
+  IntVar f(block) const { GECODE_NEVER; return v_i[0]; };
 
   // Auxiliary
 
@@ -93,8 +84,6 @@ public:
   RelaxedModel(RelaxedModel& cg);
 
   RelaxedModel* copy(void);
-
-  IntVar cost(void) const;
 
   // Constraint posters
   void post_relaxed_decision_variable_domain_definitions(void);

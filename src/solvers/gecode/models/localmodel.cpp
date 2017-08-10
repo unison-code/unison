@@ -111,7 +111,7 @@ LocalModel::LocalModel(Parameters * p_input, ModelOptions * p_options,
                                    max_of(input->ope[b])));
   }
   v_s = int_var_array(input->n_global[b], -input->max_lat, input->max_lat);
-  v_f   = IntVar(*this, 0, Int::Limits::max);
+  v_f = int_var_array(input->N, 0, Int::Limits::max);
   if (!options->disable_precedence_variables()) {
     v_p = bool_var_array(input->mandatory[b].size() *
                          input->mandatory[b].size(), 0, 1);

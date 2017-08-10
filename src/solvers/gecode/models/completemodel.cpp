@@ -111,8 +111,8 @@ CompleteModel::CompleteModel(Parameters * p_input, ModelOptions * p_options,
                             IntSet(min_of(input->P), max_of(input->P)));
   }
   v_s = int_var_array(sum_of(input->n_global), -input->max_lat, input->max_lat);
-  v_gf  = IntVar(*this, 0, Int::Limits::max);
-  v_f   = int_var_array(input->B.size(), 0, Int::Limits::max);
+  v_gf  = int_var_array(input->N, 0, Int::Limits::max);
+  v_f   = int_var_array(input->B.size() * input->N, 0, Int::Limits::max);
 
 }
 

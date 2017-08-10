@@ -142,9 +142,6 @@ RelaxedModel::RelaxedModel(Parameters * p_input, ModelOptions * p_options,
   v_u   = bool_var_array(input->nu, 0, 1);
   v_us  = int_var_array(T().size(), 0, O().size());
 
-  v_gf   = IntVar(*this, 0, Int::Limits::max);
-  v_f    = int_var_array(input->B.size(), 0, Int::Limits::max);
-
   // Constraint posters
   post_relaxed_decision_variable_domain_definitions();
   post_relaxed_secondary_variable_definitions();
@@ -158,9 +155,6 @@ RelaxedModel::RelaxedModel(RelaxedModel& cg) :
 RelaxedModel* RelaxedModel::copy(void) {
   return new RelaxedModel(*this);
 }
-
-// Not used but needed since inherited from Model
-IntVar RelaxedModel::cost(void) const { return gf(); }
 
 void RelaxedModel::post_relaxed_decision_variable_domain_definitions(void) {
   for(block b : input->B) {

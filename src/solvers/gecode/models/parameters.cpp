@@ -242,6 +242,7 @@ void Parameters::compute_derived() {
   bdiffregs.clear();
   bpredecessors.clear();
   bsuccessors.clear();
+  N = 0;
 
   for (unsigned int rc = 0; rc < space.size(); rc++) RC.push_back(rc);
 
@@ -905,6 +906,7 @@ void Parameters::compute_derived() {
     bsuccessors[oblock[item.p]].push_back(item);
   }
 
+  N = maxf.size();
 }
 
 string Parameters::emit_json() {

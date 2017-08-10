@@ -54,7 +54,7 @@ public:
   // Variables
 
   // f: cost of block
-  IntVar v_f;
+  IntVarArray v_f;
 
   // p[i][j]: whether operation o precedes operation j
   BoolVarArray v_p;
@@ -82,7 +82,7 @@ public:
 
   IntVar s(operand p) const;
 
-  IntVar f(block) const { return v_f; };
+  IntVar f(block) const { return v_f[0]; };
 
   // Gecode objects
 
