@@ -133,14 +133,14 @@ void presolve(Parameters & input, PresolverOptions & options) {
   // Abort if the problem is trivially unfeasible
   ModelOptions moptions;
   GlobalModel * base = new GlobalModel(&input, &moptions, IPL_DOM);
-  base->post_upper_bound(input.maxf[0]);
+  base->post_upper_bound(input.maxf);
   Gecode::SpaceStatus ss1 = base->status();
   delete base;
   if (ss1 == SS_FAILED) {
     if (options.verbose())
       cerr << pre()
            << "proven absence of solutions with cost less or equal than "
-           << input.maxf[0] << endl;
+           << show(input.maxf, ", ", "", "{}") << endl;
     // ensure infeasible MiniZinc model
     presolver_conj c;
     input.nogoods.push_back(c);

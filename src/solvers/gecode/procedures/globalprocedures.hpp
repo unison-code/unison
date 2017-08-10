@@ -75,7 +75,7 @@ global_timeout(Parameters * input, ModelOptions * options, int best);
 
 // Gives a global solution
 Solution<GlobalModel>
-solve_global(GlobalModel * base, IterationState & state, int best,
+solve_global(GlobalModel * base, IterationState & state, vector<int> & best,
              GIST_OPTIONS * go, int iteration);
 
 // Gives a global solution where the given activation classes are inactive

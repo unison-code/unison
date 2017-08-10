@@ -524,3 +524,11 @@ bool in_block(UnisonConstraintExpr & e, block b, const Parameters * input) {
   GECODE_NEVER;
   return true;
 }
+
+vector<int> var_vector(const IntVarArray & v) {
+  vector<int> x;
+  for (int i = 0; i < v.size(); i++) {
+    x.push_back(v[i].val());
+  }
+  return x;
+}

@@ -276,9 +276,9 @@ void print_cost_decision(const Space &s, const Brancher&,
 
 void print_global_cost_decision(const Space &, const Brancher&,
                                 unsigned int alternative,
-                                IntVar, int, const int& c,
+                                IntVar, int n, const int& c,
                                 std::ostream& out) {
-  out << "cost "
+  out << "cost(" << n << ") "
       << (alternative == 0 ? "=" : "!=")
       << " " << c;
 }

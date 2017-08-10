@@ -113,8 +113,8 @@ public:
 
   void post_cost_definition(void);
 
-  void post_upper_bound(int maxcost);
-  void post_lower_bound(int mincost);
+  void post_upper_bound(vector<int> maxcost);
+  void post_lower_bound(vector<int> mincost);
 
   void post_standalone_constraints(void);
 

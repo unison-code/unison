@@ -392,12 +392,12 @@ void CompleteModel::post_cost_definition(void) {
     Model::post_cost_definition(b);
 }
 
-void CompleteModel::post_upper_bound(int maxcost) {
-  constraint(cost()[0] <= maxcost);
+void CompleteModel::post_upper_bound(vector<int> maxcost) {
+  rel(*this, cost(), IRT_LQ, maxcost);
 }
 
-void CompleteModel::post_lower_bound(int mincost) {
-  constraint(cost()[0] >= mincost);
+void CompleteModel::post_lower_bound(vector<int> mincost) {
+  rel(*this, cost(), IRT_GQ, mincost);
 }
 
 void CompleteModel::post_standalone_constraints(void) {

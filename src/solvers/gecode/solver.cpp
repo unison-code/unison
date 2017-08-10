@@ -220,7 +220,8 @@ public:
 
 string produce_json(const ResultData& rd,
                     const GlobalData& gd,
-                    unsigned int it_num = 0)
+                    unsigned int N,
+                    unsigned int it_num)
 {
     string json;
     if (rd.solution) json = rd.solution->solution_to_json();
@@ -229,7 +230,10 @@ string produce_json(const ResultData& rd,
     if (rd.solution) ss << ", ";
     ss << "\"has_solution\": " << (rd.solution ? "true" : "false");
     ss << ", \"proven\": " << (rd.proven ? "true" : "false");
-    ss << ", \"cost\": " << (rd.solution ? rd.solution->cost()[0].val() : -1);
+    vector<int> ones;
+    init_vector(ones, N, -1);
+    ss << ", \"cost\": "
+       << (rd.solution ? show(var_vector(rd.solution->cost())) : show(ones));
     if (rd.fail >= 0) {
       ss << ", \"failures\": " << rd.fail;
     }
@@ -342,7 +346,7 @@ void emit_output(GlobalModel * base, vector<ResultData> & results,
   }
 
   if (base->options->output_file() == "") {
-    cout << produce_json(best_rd, gd) << endl;
+    cout << produce_json(best_rd, gd, base->input->N, 0) << endl;
   } else {
     ofstream fout;
     if (base->options->output_every_iteration()) {
@@ -356,12 +360,12 @@ void emit_output(GlobalModel * base, vector<ResultData> & results,
       }
       for (unsigned int i = 0; i < results.size(); i++) {
         fout.open ((prefix + "." + to_string(i) + ".out.json").c_str());
-        fout << produce_json(results[i], gd, i);
+        fout << produce_json(results[i], gd, base->input->N, i);
         fout.close();
       }
     }
     fout.open(base->options->output_file());
-    fout << produce_json(best_rd, gd);
+    fout << produce_json(best_rd, gd, base->input->N, 0);
     fout.close();
   }
 
@@ -576,7 +580,9 @@ int main(int argc, char* argv[]) {
     local_solutions.push_back(vector<LocalModel *>());
 
   // Best global cost so far
-  int best_cost = Int::Limits::max;
+  vector<int> best_cost;
+  for (unsigned int n = 0; n < input.N; n++)
+    best_cost.push_back(Int::Limits::max);
 
   // Whether the solver has proven optimality or that there is no solution
   bool proven = false;
@@ -614,14 +620,14 @@ int main(int argc, char* argv[]) {
          << gd.global_n_set_vars << " set" << endl;
 
   // Post cost upper bound
-  base->post_upper_bound(input.maxf[0]);
+  base->post_upper_bound(input.maxf);
   Gecode::SpaceStatus ss1 = base->status();
   if (ss1 == SS_FAILED) { // The problem has no solution
     double execution_time = t.stop();
     if (options.verbose()) {
       cerr << global()
            << "proven absence of solutions with cost less or equal than "
-           << input.maxf[0] << endl;
+           << show(input.maxf, ", ", "", "{}") << endl;
       cerr << "execution time: " << execution_time << " ms" << endl;
     }
     results.push_back(ResultData(NULL, true, 1, 1, presolver_time,
@@ -637,7 +643,7 @@ int main(int argc, char* argv[]) {
 
   bool reached_acceptable_gap = false;
   if (optimality_gap(base, base) <= base->options->acceptable_gap() &&
-      base->options->acceptable_gap() > 0.0) {
+      base->options->acceptable_gap() > 0) {
     reached_acceptable_gap = true;
     if (options.verbose())
       cerr << global() << "reached acceptable optimality gap" << endl;
@@ -807,7 +813,7 @@ int main(int argc, char* argv[]) {
   }
 
   if (optimality_gap(base, base) <= base->options->acceptable_gap() &&
-      base->options->acceptable_gap() > 0.0) {
+      base->options->acceptable_gap() > 0) {
     reached_acceptable_gap = true;
     if (options.verbose())
       cerr << global() << "reached acceptable optimality gap" << endl;
@@ -946,8 +952,12 @@ int main(int argc, char* argv[]) {
         if (found_all_local && gs.solution->status() != SS_FAILED) {
 
           // Update best found cost
-          assert(gs.solution->cost()[0].val() <= best_cost);
-          best_cost = gs.solution->cost()[0].val();
+          vector<int> new_best_cost = var_vector(gs.solution->cost());
+          assert((best_cost == new_best_cost) ||
+                 std::lexicographical_compare(
+                   &new_best_cost, &new_best_cost + input.N,
+                   &best_cost,     &best_cost     + input.N));
+          best_cost = new_best_cost;
 
           if (options.verbose()) {
             cerr << global() << "found full solution "
@@ -965,7 +975,7 @@ int main(int argc, char* argv[]) {
                                        t_it.stop()));
 
           // Tighten the objective function
-          best_cost--;
+          best_cost.back()--;
           base->post_upper_bound(best_cost);
           base->status();
 
@@ -1035,8 +1045,8 @@ int main(int argc, char* argv[]) {
         if (rd.solution) best = rd;
       if (!proven &&
           best.solution &&
-          optimality_gap(base, best.solution) <=
-          base->options->acceptable_gap()) {
+          optimality_gap(base, best.solution) <= base->options->acceptable_gap() &&
+          base->options->acceptable_gap() > 0) {
         reached_acceptable_gap = true;
         if (options.verbose())
           cerr << global() << "reached acceptable optimality gap" << endl;
@@ -1061,8 +1071,9 @@ int main(int argc, char* argv[]) {
     total_failed += ms.failures;
     total_nodes += ms.nodes;
     if (ms.result == OPTIMAL_SOLUTION) {
-      base->post_lower_bound(ms.solution->cost()[0].val());
-      base->post_upper_bound(ms.solution->cost()[0].val());
+      vector<int> ms_sol = var_vector(ms.solution->cost());
+      base->post_lower_bound(ms_sol);
+      base->post_upper_bound(ms_sol);
       base->status();
       if (options.verbose())
         cerr << monolithic() << "found optimal solution "

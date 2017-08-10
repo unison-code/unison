@@ -461,7 +461,11 @@ void presolve_global_shaving(GlobalModel * base) {
   while (l != h) {
     int m = (l + h)/2;
     GlobalModel * g = (GlobalModel*) base->clone();
-    g->post_upper_bound(m);
+    vector<int> maxf;
+    maxf.push_back(m);
+    for (unsigned int n = 1; n < base->input->N; n++)
+      maxf.push_back(Int::Limits::max);
+    g->post_upper_bound(maxf);
     Gecode::SpaceStatus ss = g->status();
     delete g;
     if (ss == SS_FAILED) { // cost >= m
@@ -471,7 +475,11 @@ void presolve_global_shaving(GlobalModel * base) {
     }
   }
   if (l > base->cost()[0].min()) {
-    base->post_lower_bound(l);
+    vector<int> minf;
+    minf.push_back(l);
+    for (unsigned int n = 1; n < base->input->N; n++)
+      minf.push_back(Int::Limits::min);
+    base->post_lower_bound(minf);
     base->status();
     if (base->options->verbose())
       cerr << "[pre]\t increased cost lower bound: " << l << endl;
@@ -516,7 +524,7 @@ global_limit(Parameters * input, ModelOptions * options, int best) {
 }
 
 Solution<GlobalModel>
-solve_global(GlobalModel * base, IterationState & state, int best,
+solve_global(GlobalModel * base, IterationState & state, vector<int> & best,
              GIST_OPTIONS * go, int iteration) {
 
   // Create global problem with aggressiveness a
@@ -534,7 +542,7 @@ solve_global(GlobalModel * base, IterationState & state, int best,
 
   // Global options
   Search::Stop * globalStop =
-    new_stop(global_limit(base->input, base->options, best), base->options);
+    new_stop(global_limit(base->input, base->options, best[0]), base->options);
   Search::Options globalOptions;
   globalOptions.stop = globalStop;
 
