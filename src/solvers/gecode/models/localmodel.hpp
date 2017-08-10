@@ -84,6 +84,8 @@ public:
 
   IntVar f(block, unsigned int n) const { return v_f[n]; };
 
+  IntVarArray cost() const;
+
   // Gecode objects
 
   IntAction c_activity;
@@ -98,9 +100,6 @@ public:
   LocalModel(LocalModel& cg);
 
   LocalModel* copy(void);
-
-  // Cost of the nth objective
-  IntVar cost(unsigned int n) const;
 
   virtual void constrain(const Space & _s);
 

@@ -150,7 +150,7 @@ public:
       result = LIMIT;
     } else if (found_solution) {
         result = OPTIMAL_SOLUTION;
-        lb = ls->cost(0).val();
+        lb = ls->cost()[0].val();
     } else {
       result = UNSATISFIABLE;
     }
@@ -294,7 +294,7 @@ public:
       delete stop;
       return rs;
     }
-    for (int cost = l->cost(0).min() + 1; cost <= l->cost(0).max(); cost++) {
+    for (int cost = l->cost()[0].min() + 1; cost <= l->cost()[0].max(); cost++) {
       // Can share data structures as everything happens within a thread
       LocalModel * l1 = (LocalModel*) l->clone();
       l1->constrain_cost(IRT_LE, cost);
@@ -443,7 +443,7 @@ void presolve_global_cluster_impact(
     int lb = 0;
     if (!preStop->stop(e.statistics(), preOptions) &&
       ls->status() == SS_SOLVED)
-      lb = ls->cost(0).val();
+      lb = ls->cost()[0].val();
     if (ls != NULL) delete ls;
     delete preStop;
     if (lb > base->f(b, 0).min()) {
@@ -457,7 +457,7 @@ void presolve_global_cluster_impact(
 }
 
 void presolve_global_shaving(GlobalModel * base) {
-  int l = base->cost(0).min(), h = base->cost(0).max();
+  int l = base->cost()[0].min(), h = base->cost()[0].max();
   while (l != h) {
     int m = (l + h)/2;
     GlobalModel * g = (GlobalModel*) base->clone();
@@ -470,7 +470,7 @@ void presolve_global_shaving(GlobalModel * base) {
       h = m;
     }
   }
-  if (l > base->cost(0).min()) {
+  if (l > base->cost()[0].min()) {
     base->post_lower_bound(l);
     base->status();
     if (base->options->verbose())
@@ -495,8 +495,8 @@ void presolve_global_activation_shaving(GlobalModel * base) {
       ss = base->status();
       if (base->options->verbose())
         cerr << pre() << "activation class disabled" << endl;
-    } else if (g->cost(0).min() > base->cost(0).min()) {
-      base->post_activation_nogood(o, g->cost(0).min());
+    } else if (g->cost()[0].min() > base->cost()[0].min()) {
+      base->post_activation_nogood(o, g->cost()[0].min());
       ss = base->status();
       if (base->options->verbose())
         cerr << pre() << "activation class increases cost lower bound" << endl;
@@ -704,7 +704,7 @@ solve_monolithic_parallel(GlobalModel * base, GIST_OPTIONS *) {
     found_solution = true;
     if (base->options->verbose())
       cerr << monolithic()
-           << "found solution with cost " << nextm->cost(0) << endl;
+           << "found solution with cost " << nextm->cost()[0] << endl;
     GlobalModel * oldm = m;
     m = nextm;
     delete oldm;

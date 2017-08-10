@@ -328,11 +328,7 @@ void LocalModel::post_trivial_branchers(void) {
 
 void LocalModel::post_minimum_cost_branchers(void) {
 
-  IntVarArgs fs;
-  for (unsigned int n = 0; n < input->N; n++) {
-    fs << f(b, n);
-  }
-  branch(*this, fs, INT_VAR_NONE(), INT_VAL_MIN(),
+  branch(*this, cost(), INT_VAR_NONE(), INT_VAL_MIN(),
          NULL, &print_cost_decision);
 
   branch(*this, v_a, BOOL_VAR_ACTION_MAX(c_activity), BOOL_VAL_MIN(),
@@ -440,13 +436,13 @@ bool LocalModel::slave(const MetaInfo& mi) {
   return true;
 }
 
-IntVar LocalModel::cost(unsigned int n) const {
-  return f(b, n);
+IntVarArray LocalModel::cost() const {
+  return v_f;
 }
 
 void LocalModel::constrain(const Space & _s) {
   const LocalModel & ls = static_cast<const LocalModel &>(_s);
-  constraint(cost(0) < ls.cost(0).val());
+  rel(*this, cost()[0], IRT_LE, ls.cost()[0]);
 }
 
 void LocalModel::print(ostream & pOs) const {

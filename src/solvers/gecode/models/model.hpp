@@ -256,6 +256,7 @@ public:
 
   virtual IntVar s(operand p) const = 0;
 
+  // Cost of block b for the nth objective
   virtual IntVar f(block b, unsigned int n) const = 0;
 
   // Auxiliary methods

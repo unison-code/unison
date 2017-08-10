@@ -229,7 +229,7 @@ string produce_json(const ResultData& rd,
     if (rd.solution) ss << ", ";
     ss << "\"has_solution\": " << (rd.solution ? "true" : "false");
     ss << ", \"proven\": " << (rd.proven ? "true" : "false");
-    ss << ", \"cost\": " << (rd.solution ? rd.solution->cost(0).val() : -1);
+    ss << ", \"cost\": " << (rd.solution ? rd.solution->cost()[0].val() : -1);
     if (rd.fail >= 0) {
       ss << ", \"failures\": " << rd.fail;
     }
@@ -277,19 +277,19 @@ void emit_local(LocalModel * local, unsigned long int iteration, string prefix) 
 }
 
 double optimality_gap(const GlobalModel * base, const GlobalModel * sol) {
-  int cost_lb  = base->cost(0).min(),
-      max_cost = sol->cost(0).max();
+  int cost_lb  = base->cost()[0].min(),
+      max_cost = sol->cost()[0].max();
   return ((((double)(max_cost - cost_lb)) / (double)cost_lb) * 100.0);
 }
 
 string cost_status_report(const GlobalModel * base, const GlobalModel * sol) {
   int cost_ub  = base->input->maxf[0] + 1,
-      max_cost = sol->cost(0).max();
+      max_cost = sol->cost()[0].max();
   double imp = ((((double)(cost_ub - max_cost)) / (double)max_cost) * 100.0),
          rog = optimality_gap(base, sol);
   stringstream ss;
   ss << fixed << setprecision(2);
-  ss << "cost: " << sol->cost(0);
+  ss << "cost: " << sol->cost()[0];
   if (sol != base)
     ss << ", improvement: " << imp << "%";
   if (rog > 0.0)
@@ -845,7 +845,7 @@ int main(int argc, char* argv[]) {
         } else {
           cerr << global()
                << "solving problem (i: " << iteration << ", state: " << state
-               << ", cost: " << base->cost(0) << ")" << endl;
+               << ", cost: " << base->cost()[0] << ")" << endl;
         }
       }
 
@@ -946,8 +946,8 @@ int main(int argc, char* argv[]) {
         if (found_all_local && gs.solution->status() != SS_FAILED) {
 
           // Update best found cost
-          assert(gs.solution->cost(0).val() <= best_cost);
-          best_cost = gs.solution->cost(0).val();
+          assert(gs.solution->cost()[0].val() <= best_cost);
+          best_cost = gs.solution->cost()[0].val();
 
           if (options.verbose()) {
             cerr << global() << "found full solution "
@@ -1061,8 +1061,8 @@ int main(int argc, char* argv[]) {
     total_failed += ms.failures;
     total_nodes += ms.nodes;
     if (ms.result == OPTIMAL_SOLUTION) {
-      base->post_lower_bound(ms.solution->cost(0).val());
-      base->post_upper_bound(ms.solution->cost(0).val());
+      base->post_lower_bound(ms.solution->cost()[0].val());
+      base->post_upper_bound(ms.solution->cost()[0].val());
       base->status();
       if (options.verbose())
         cerr << monolithic() << "found optimal solution "

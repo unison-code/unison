@@ -116,7 +116,7 @@ solve_generic_portfolio(LocalModel * base, GIST_OPTIONS * lo, int iteration) {
   if (base->options->verbose()) {
     if (ls.result == SOME_SOLUTION) {
       cerr << local(b) << "found limit solution (cost: "
-           << ls.solution->cost(0).val()
+           << ls.solution->cost()
            << ", failures: " << ls.failures
            << ", nodes: " << ls.nodes
            << ")" << endl;
@@ -127,7 +127,7 @@ solve_generic_portfolio(LocalModel * base, GIST_OPTIONS * lo, int iteration) {
            << ")" << endl;
     } else if (ls.result == OPTIMAL_SOLUTION) {
       cerr << local(b) << "found optimal solution (cost: "
-           << ls.solution->cost(0).val()
+           << ls.solution->cost()
            << ", failures: " << ls.failures
            << ", nodes: " << ls.nodes
            << ")" << endl;
@@ -193,7 +193,7 @@ solve_custom_portfolio(LocalModel * base, GIST_OPTIONS * lo, int iteration) {
 
       if (ls.result == SOME_SOLUTION || ls.result == OPTIMAL_SOLUTION) {
         if (best != NULL) {
-          assert(ls.solution->cost(0).val() < best->cost(0).val());
+          assert(ls.solution->cost()[0].val() < best->cost()[0].val());
           delete best;
         }
         best = ls.solution;
@@ -201,7 +201,7 @@ solve_custom_portfolio(LocalModel * base, GIST_OPTIONS * lo, int iteration) {
     }
 
     if (best != NULL) {
-      base->constrain_cost(IRT_LE, best->cost(0).val());
+      base->constrain_cost(IRT_LE, best->cost()[0].val());
       Gecode::SpaceStatus ss2 = base->status();
       // If the base space fails after constraining the cost, the solution found
       // was indeed optimal
@@ -213,7 +213,7 @@ solve_custom_portfolio(LocalModel * base, GIST_OPTIONS * lo, int iteration) {
 
     if (ls.result == SOME_SOLUTION) {
       improved = true;
-      cerr << local(b) << "found limit solution (cost: " << ls.solution->cost(0).val()
+      cerr << local(b) << "found limit solution (cost: " << ls.solution->cost()
            << ", failures: " << ls.failures
            << ", nodes: " << ls.nodes << ", branching: " << search << ")"
            << endl;
@@ -223,7 +223,7 @@ solve_custom_portfolio(LocalModel * base, GIST_OPTIONS * lo, int iteration) {
            << ", nodes: " << ls.nodes << ", branching: " << search << ")" << endl;
     } else if (ls.result == OPTIMAL_SOLUTION) {
       improved = true;
-      cerr << local(b) << "found optimal solution (cost: " << ls.solution->cost(0).val()
+      cerr << local(b) << "found optimal solution (cost: " << ls.solution->cost()
            << ", failures: " << ls.failures << ", nodes: " << ls.nodes
            << ", branching: " << search << ")" << endl;
     } else if (ls.result == UNSATISFIABLE && best != NULL) {

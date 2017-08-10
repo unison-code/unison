@@ -76,6 +76,8 @@ public:
     return v_f[(b * input->N) + n];
   };
 
+  IntVarArray cost() const;
+
   // Gecode space methods
 
   CompleteModel(Parameters * p_input, ModelOptions * p_options, IntPropLevel p_ipl);
@@ -83,9 +85,6 @@ public:
   CompleteModel(CompleteModel& cg);
 
   CompleteModel* copy(void);
-
-  // Cost of the nth objective
-  IntVar cost(unsigned int n) const;
 
   virtual void constrain(const Space & _s);
 
