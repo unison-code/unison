@@ -103,13 +103,13 @@ optimizationParameters (strictlyBetter, unsatisfiable, scaleFreq)
       [
       -- Parameters related to the objective function
 
-      -- whether to use block frequencies as weight
+      -- whether to use block frequencies as weight for the nth objective
       ("optimize_dynamic", toJSON od),
 
-      -- resource whose consumption is to be optimized
+      -- resource whose consumption is to be optimized for the nth objective
       ("optimize_resource", toJSON or),
 
-      -- upper bound of each objective
+      -- upper bound of the nth objective
       ("maxf", toJSON maxf)
       ]
 
