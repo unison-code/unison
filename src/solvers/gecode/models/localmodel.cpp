@@ -440,13 +440,13 @@ bool LocalModel::slave(const MetaInfo& mi) {
   return true;
 }
 
-IntVar LocalModel::cost(void) const {
-  return f(b, 0);
+IntVar LocalModel::cost(unsigned int n) const {
+  return f(b, n);
 }
 
 void LocalModel::constrain(const Space & _s) {
   const LocalModel & ls = static_cast<const LocalModel &>(_s);
-  constraint(cost() < ls.cost().val());
+  constraint(cost(0) < ls.cost(0).val());
 }
 
 void LocalModel::print(ostream & pOs) const {

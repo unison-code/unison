@@ -84,7 +84,8 @@ public:
 
   CompleteModel* copy(void);
 
-  IntVar cost(void) const;
+  // Cost of the nth objective
+  IntVar cost(unsigned int n) const;
 
   virtual void constrain(const Space & _s);
 

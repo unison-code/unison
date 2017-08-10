@@ -537,7 +537,7 @@ post_instruction_nogood(int cost, InstructionAssignment forbidden) {
 
 void GlobalModel::
 post_activation_nogood(operation o, int lb) {
-  constraint(a(o) >> (cost() >= lb));
+  constraint(a(o) >> (cost(0) >= lb));
 }
 
 void GlobalModel::post_cluster_connection_decision(
@@ -623,7 +623,7 @@ void GlobalModel::post_local_solution_cost(LocalModel * l) {
   BoolVar local_solution(*this, 0, 1);
   if (lits.size() > 0)
     rel(*this, BOT_AND, lits, local_solution);
-  constraint(local_solution >> (f(b, 0) == l->cost()));
+  constraint(local_solution >> (f(b, 0) == l->cost(0)));
 }
 
 void GlobalModel::post_branchers(void) {
@@ -743,8 +743,12 @@ void GlobalModel::post_callee_saved_branchers(void) {
 
 void GlobalModel::post_complete_branchers(unsigned int s) {
 
-  branch(*this, cost(), INT_VAL_MIN(),
-         &print_global_cost_decision);
+  IntVarArgs fs;
+  for (unsigned int n = 0; n < input->N; n++) {
+    fs << cost(n);
+  }
+  branch(*this, fs, INT_VAR_NONE(), INT_VAL_MIN(),
+         NULL, &print_global_cost_decision);
 
   Rnd r;
   r.seed(s);

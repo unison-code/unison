@@ -126,13 +126,13 @@ CompleteModel* CompleteModel::copy(void) {
   return new CompleteModel(*this);
 }
 
-IntVar CompleteModel::cost(void) const {
-  return gf()[0];
+IntVar CompleteModel::cost(unsigned int n) const {
+  return gf()[n];
 }
 
 void CompleteModel::constrain(const Space & _s) {
   const CompleteModel & gs = static_cast<const CompleteModel &>(_s);
-  constraint(cost() < gs.cost().val());
+  constraint(cost(0) < gs.cost(0).val());
 }
 
 void CompleteModel::post_decision_variable_domain_definitions(void) {
@@ -393,11 +393,11 @@ void CompleteModel::post_cost_definition(void) {
 }
 
 void CompleteModel::post_upper_bound(int maxcost) {
-  constraint(cost() <= maxcost);
+  constraint(cost(0) <= maxcost);
 }
 
 void CompleteModel::post_lower_bound(int mincost) {
-  constraint(cost() >= mincost);
+  constraint(cost(0) >= mincost);
 }
 
 void CompleteModel::post_standalone_constraints(void) {
