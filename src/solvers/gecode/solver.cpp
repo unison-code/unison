@@ -280,25 +280,62 @@ void emit_local(LocalModel * local, unsigned long int iteration, string prefix) 
   fout.close();
 }
 
-double optimality_gap(const GlobalModel * base, const GlobalModel * sol) {
-  int cost_lb  = base->cost()[0].min(),
-      max_cost = sol->cost()[0].max();
+double optimality_gap(GlobalModel * base, const GlobalModel * sol,
+                      unsigned int n) {
+  int cost_lb;
+  int max_cost = sol->cost()[n].max();
+  if (base->status() == SS_FAILED) {
+    // If the base space is failed that means we have proven optimality and
+    // the optimality gap should be 0%
+    assert(sol->cost()[n].assigned());
+    cost_lb = sol->cost()[n].val();
+  } else {
+    cost_lb = base->cost()[n].min();
+  }
   return ((((double)(max_cost - cost_lb)) / (double)cost_lb) * 100.0);
 }
 
-string cost_status_report(const GlobalModel * base, const GlobalModel * sol) {
-  int cost_ub  = base->input->maxf[0] + 1,
-      max_cost = sol->cost()[0].max();
-  double imp = ((((double)(cost_ub - max_cost)) / (double)max_cost) * 100.0),
-         rog = optimality_gap(base, sol);
+string unsat_report(const GlobalModel * base) {
   stringstream ss;
-  ss << fixed << setprecision(2);
-  ss << "cost: " << sol->cost();
-  if (sol != base)
-    ss << ", improvement: " << imp << "%";
-  if (rog > 0.0)
-    ss << ", optimality gap: " << rog << "%";
+  ss << "proven absence of solutions with cost less or equal than "
+     << show(base->input->maxf, ", ", "", "{}");
+  return ss.str();
+}
 
+string cost_status_report(GlobalModel * base, const GlobalModel * sol) {
+  vector<double> imps, ogs;
+  for (unsigned int n = 0; n < base->input->N; n++) {
+    int cost_ub  = base->input->maxf[n] + (n == (base->input->N - 1) ? 1 : 0),
+        max_cost = sol->cost()[n].max();
+    double imp = ((((double)(cost_ub - max_cost)) / (double)max_cost) * 100.0),
+      og  = optimality_gap(base, sol, n);
+    imps.push_back(imp);
+    ogs.push_back(og);
+  }
+  stringstream ss;
+  ss << "cost: " << sol->cost();
+  if (sol != base) {
+    ss << ", improvement: ";
+    vector<string> percents;
+    for (double imp : imps) {
+      stringstream ss0;
+      ss0 << fixed << setprecision(2);
+      ss0 << imp << "%";
+      percents.push_back(ss0.str());
+    }
+    ss << show(percents, ", ", "", "{}");
+  }
+  if (std::any_of(ogs.begin(), ogs.end(), [](double og){return og > 0.0;})) {
+    ss << ", optimality gap: ";
+    vector<string> percents;
+    for (double og : ogs) {
+      stringstream ss0;
+      ss0 << fixed << setprecision(2);
+      ss0 << og << "%";
+      percents.push_back(ss0.str());
+    }
+    ss << show(percents, ", ", "", "{}");
+  }
   return ss.str();
 }
 
@@ -625,9 +662,7 @@ int main(int argc, char* argv[]) {
   if (ss1 == SS_FAILED) { // The problem has no solution
     double execution_time = t.stop();
     if (options.verbose()) {
-      cerr << global()
-           << "proven absence of solutions with cost less or equal than "
-           << show(input.maxf, ", ", "", "{}") << endl;
+      cerr << global() << unsat_report(base) << endl;
       cerr << "execution time: " << execution_time << " ms" << endl;
     }
     results.push_back(ResultData(NULL, true, 1, 1, presolver_time,
@@ -642,7 +677,7 @@ int main(int argc, char* argv[]) {
     cerr << global() << cost_status_report(base, base) << endl;
 
   bool reached_acceptable_gap = false;
-  if (optimality_gap(base, base) <= base->options->acceptable_gap() &&
+  if (optimality_gap(base, base, 0) <= base->options->acceptable_gap() &&
       base->options->acceptable_gap() > 0) {
     reached_acceptable_gap = true;
     if (options.verbose())
@@ -674,9 +709,7 @@ int main(int argc, char* argv[]) {
     if (base->status() == SS_FAILED) { // The problem has no solution
       double execution_time = t.stop();
       if (options.verbose()) {
-        cerr << pre()
-             << "proven absence of solutions with cost less or equal than "
-             << input.maxf[0] << endl;
+        cerr << pre() << unsat_report(base) << endl;
         cerr << "execution time: " << execution_time << " ms" << endl;
       }
       results.push_back(ResultData(NULL, true, 0, 0, presolver_time, 0, 0,
@@ -700,9 +733,7 @@ int main(int argc, char* argv[]) {
     if (ss2 == SS_FAILED) { // The problem has no solution
       double execution_time = t.stop();
       if (options.verbose()) {
-        cerr << pre()
-             << "proven absence of solutions with cost less or equal than "
-             << input.maxf[0] << endl;
+        cerr << pre() << unsat_report(base) << endl;
         cerr << "execution time: " << execution_time << " ms" << endl;
       }
       results.push_back(ResultData(NULL, true, 0, 0, presolver_time, 0, 0,
@@ -726,9 +757,7 @@ int main(int argc, char* argv[]) {
     if (ss3 == SS_FAILED) { // The problem has no solution
       double execution_time = t.stop();
       if (options.verbose()) {
-        cerr << pre()
-             << "proven absence of solutions with cost less or equal than "
-             << input.maxf[0] << endl;
+        cerr << pre() << unsat_report(base) << endl;
         cerr << "execution time: " << execution_time << " ms" << endl;
       }
       results.push_back(ResultData(NULL, true, 0, 0, presolver_time, 0, 0,
@@ -768,9 +797,7 @@ int main(int argc, char* argv[]) {
     if (ss4 == SS_FAILED) { // The problem has no solution
       double execution_time = t.stop();
       if (options.verbose()) {
-        cerr << pre()
-             << "proven absence of solutions with cost less or equal than "
-             << input.maxf[0] << endl;
+        cerr << pre() << unsat_report(base) << endl;
         cerr << "execution time: " << execution_time << " ms" << endl;
       }
       results.push_back(ResultData(NULL, true, 0, 0, presolver_time, 0, 0,
@@ -792,9 +819,7 @@ int main(int argc, char* argv[]) {
     if (ss5 == SS_FAILED) { // The problem has no solution
       double execution_time = t.stop();
       if (options.verbose()) {
-        cerr << pre()
-             << "proven absence of solutions with cost less or equal than "
-             << input.maxf[0] << endl;
+        cerr << pre() << unsat_report(base) << endl;
         cerr << "execution time: " << execution_time << " ms" << endl;
       }
       results.push_back(ResultData(NULL, true, 0, 0, presolver_time, 0, 0,
@@ -812,7 +837,7 @@ int main(int argc, char* argv[]) {
     cerr << pre() << "presolving time: " << presolving_time << " ms" << endl;
   }
 
-  if (optimality_gap(base, base) <= base->options->acceptable_gap() &&
+  if (optimality_gap(base, base, 0) <= base->options->acceptable_gap() &&
       base->options->acceptable_gap() > 0) {
     reached_acceptable_gap = true;
     if (options.verbose())
@@ -1026,9 +1051,7 @@ int main(int argc, char* argv[]) {
           base = (GlobalModel*) results.back().solution->clone();
         } else {
           if (options.verbose()) {
-            cerr << global()
-                 << "proven absence of solutions with cost less or equal than "
-                 << input.maxf[0] << endl;
+            cerr << global() << unsat_report(base) << endl;
           }
         }
         proven = true;
@@ -1045,7 +1068,8 @@ int main(int argc, char* argv[]) {
         if (rd.solution) best = rd;
       if (!proven &&
           best.solution &&
-          optimality_gap(base, best.solution) <= base->options->acceptable_gap() &&
+          optimality_gap(base, best.solution, 0) <=
+          base->options->acceptable_gap() &&
           base->options->acceptable_gap() > 0) {
         reached_acceptable_gap = true;
         if (options.verbose())
@@ -1090,11 +1114,10 @@ int main(int argc, char* argv[]) {
         // Remove results from the back until a solution is found
         while (!results.back().solution) results.pop_back();
         assert(results.back().solution);
+        base->post_lower_bound(var_vector(results.back().solution->cost()));
       } else {
         if (options.verbose()) {
-          cerr << monolithic()
-               << "proven absence of solutions with cost less or equal than "
-               << input.maxf[0] << endl;
+          cerr << monolithic() << unsat_report(base) << endl;
         }
       }
       results.back().proven = true;
