@@ -142,10 +142,10 @@ copies (f, _, cg, ra, bcfg, sg) _ t _rs d us =
       w      = widthOfTemp ra cg f t is
       dors   = transitivePreAssignments bcfg sg Reaching f t
       uors   = transitivePreAssignments bcfg sg Reachable f t
-      pg     = head $ fGoal f
+      size   = any ((==) Size) $ fGoal f
   in (
-      (defCopies pg w dors),
-      map (const (useCopies pg w uors)) us
+      (defCopies size w dors),
+      map (const (useCopies size w uors)) us
       )
 
 pushInstruction [r]
@@ -159,16 +159,16 @@ popInstruction [r]
   | r `elem` registers (RegisterClass DPR) = LOAD_D
 
 defCopies _ _ [Register (TargetRegister R7)] = []
-defCopies g w _ =
+defCopies size w _ =
   [mkNullInstruction] ++
-   map TargetInstruction (moveInstrs g w) ++
-   map TargetInstruction (storeInstrs g w)
+   map TargetInstruction (moveInstrs size w) ++
+   map TargetInstruction (storeInstrs size w)
 
 useCopies _ _ [Register (TargetRegister R7)] = []
-useCopies g w _ =
+useCopies size w _ =
   [mkNullInstruction] ++
-   map TargetInstruction (moveInstrs g w) ++
-   map TargetInstruction (loadInstrs g w)
+   map TargetInstruction (moveInstrs size w) ++
+   map TargetInstruction (loadInstrs size w)
 
 widthOfTemp = widthOf (target, [])
 
@@ -177,23 +177,26 @@ widthOfTemp = widthOf (target, [])
 -- TMOVr, {TMOVr, VMOVS, VMOVSR, VMOVRS} (MOVE_ALL is instanciated after
 -- register allocation since their properties are all the same -- except TMOVr
 -- has size 2)
-moveInstrs g 1
-  | g == Speed = [MOVE_ALL]
-  | g == Size = [MOVE, MOVE_ALL]
+moveInstrs size 1
+  | size = [MOVE, MOVE_ALL]
+  | otherwise = [MOVE_ALL]
+
 -- VMOVD
 moveInstrs _ 2 = [MOVE_D]
 
 -- {T2STRi12, tSTRi}
-storeInstrs g 1
-  | g == Speed = [STORE]
-  | g == Size = [STORE, STORE_T]
+storeInstrs size 1
+  | size = [STORE, STORE_T]
+  | otherwise = [STORE]
+
 -- VSTRD
 storeInstrs _ 2 = [STORE_D]
 
 -- {T2LDRi12, tLDRi}
-loadInstrs g 1
-  | g == Speed = [LOAD]
-  | g == Size = [LOAD, LOAD_T]
+loadInstrs size 1
+  | size = [LOAD, LOAD_T]
+  | otherwise = [LOAD]
+
 -- VLDRD
 loadInstrs _ 2 = [LOAD_D]
 
@@ -544,7 +547,7 @@ isMachineCPSRReg _ = False
 -- | Gives a list of function transformers
 transforms ImportPreLift = [peephole extractReturnRegs,
                             (\f -> foldReservedRegisters f (target, [])),
-                            mapToOperationWithGoal addThumbAlternatives,
+                            mapToOperationWithGoals addThumbAlternatives,
                             peephole expandMEMCPY]
 transforms ImportPostLift = [peephole handlePromotedOperands,
                              defineFP]
@@ -554,8 +557,8 @@ transforms AugmentPreRW = [peephole combinePushPops,
                            peephole combineLoadStores]
 transforms _ = []
 
-mapToOperationWithGoal t f @ Function {fCode = code, fGoal = (pg:_)} =
-  f {fCode = map (mapToOperationInBlock (t pg)) code}
+mapToOperationWithGoals t f @ Function {fCode = code, fGoal = gs} =
+  f {fCode = map (mapToOperationInBlock (t gs)) code}
 
 -- | Latency of read-write dependencies
 

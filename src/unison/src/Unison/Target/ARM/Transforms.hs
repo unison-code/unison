@@ -54,14 +54,14 @@ extractReturnRegs _ (o : rest) _ = (rest, [o])
 -- This transformation adds 16-bits Thumb alternatives when possible, according
 -- to the logic in Thumb2SizeReduction
 
-addThumbAlternatives goal o @ SingleOperation {
+addThumbAlternatives goals o @ SingleOperation {
   oOpr = Natural Linear {oIs = [TargetInstruction i]}} =
   let o' = addThumbAlternative o (M.lookup i reduceMap) i
-  in case goal of
-      Size -> o'
-      -- if we optimize for speed, keep on Thumb alternatives if they can
-      -- improve latency
-      Speed -> if occupations o == occupations o' then o else o'
+  in if any ((==) Speed) goals then
+       -- if we optimize for speed, keep on Thumb alternatives if they can
+       -- improve latency
+       (if occupations o == occupations o' then o else o')
+     else o'
 addThumbAlternatives _ o = o
 
 occupations = S.fromList .
