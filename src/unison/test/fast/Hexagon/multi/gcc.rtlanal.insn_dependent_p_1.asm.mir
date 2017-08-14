@@ -1,0 +1,109 @@
+--- |
+  ; ModuleID = 'gcc.rtlanal.insn_dependent_p_1.ll'
+  target datalayout = "e-m:e-p:32:32:32-i64:64:64-i32:32:32-i16:16:16-i1:8:8-f64:64:64-f32:32:32-v64:64:64-v32:32:32-a:0-n16:32"
+  target triple = "hexagon"
+  
+  %struct.rtx_def.150 = type { i32, [1 x %union.rtunion_def.151] }
+  %union.rtunion_def.151 = type { i32 }
+  
+  ; Function Attrs: nounwind
+  declare i32 @reg_mentioned_p(%struct.rtx_def.150*, %struct.rtx_def.150*) #0
+  
+  ; Function Attrs: nounwind
+  define hidden void @insn_dependent_p_1(%struct.rtx_def.150* %x, %struct.rtx_def.150* nocapture readnone %pat, i8* nocapture %data) #0 {
+    %1 = bitcast i8* %data to %struct.rtx_def.150**
+    %2 = load %struct.rtx_def.150*, %struct.rtx_def.150** %1, align 4
+    %3 = icmp eq %struct.rtx_def.150* %2, null
+    br i1 %3, label %9, label %4
+  
+  ; <label>:4                                       ; preds = %0
+    %5 = tail call i32 @reg_mentioned_p(%struct.rtx_def.150* %x, %struct.rtx_def.150* nonnull %2)
+    %6 = icmp eq i32 %5, 0
+    br i1 %6, label %9, label %7
+  
+  ; <label>:7                                       ; preds = %4
+    %8 = bitcast i8* %data to %struct.rtx_def.150**
+    store %struct.rtx_def.150* null, %struct.rtx_def.150** %8, align 4
+    br label %9
+  
+  ; <label>:9                                       ; preds = %7, %4, %0
+    ret void
+  }
+  
+  attributes #0 = { nounwind "disable-tail-calls"="false" "less-precise-fpmad"="false" "no-frame-pointer-elim"="true" "no-frame-pointer-elim-non-leaf" "no-infs-fp-math"="false" "no-nans-fp-math"="false" "stack-protector-buffer-size"="8" "target-cpu"="hexagonv4" "target-features"="-hvx,-hvx-double" "unsafe-fp-math"="false" "use-soft-float"="false" }
+  
+  !llvm.ident = !{!0}
+  
+  !0 = !{!"clang version 3.8.0 (http://llvm.org/git/clang.git 2d49f0a0ae8366964a93e3b7b26e29679bee7160) (http://llvm.org/git/llvm.git 60bc66b44837125843b58ed3e0fd2e6bb948d839)"}
+
+...
+---
+name:            insn_dependent_p_1
+alignment:       4
+exposesReturnsTwice: false
+hasInlineAsm:    false
+isSSA:           false
+tracksRegLiveness: true
+tracksSubRegLiveness: false
+liveins:         
+  - { reg: '%r0' }
+  - { reg: '%r2' }
+frameInfo:       
+  isFrameAddressTaken: false
+  isReturnAddressTaken: false
+  hasStackMap:     false
+  hasPatchPoint:   false
+  stackSize:       8
+  offsetAdjustment: 0
+  maxAlignment:    0
+  adjustsStack:    true
+  hasCalls:        true
+  maxCallFrameSize: 0
+  hasOpaqueSPAdjustment: false
+  hasVAStart:      false
+  hasMustTailInVarArgFunc: false
+fixedStack:      
+  - { id: 0, type: spill-slot, offset: -8, size: 8, alignment: 8, callee-saved-register: '%d8' }
+body:             |
+  bb.0 (%ir-block.0, freq 20):
+    successors: %bb.3(37), %bb.1(62)
+    liveins: %r0, %r2, %d8, %d8
+  
+    BUNDLE implicit-def %r29, implicit-def %r30, implicit-def %r16, implicit %r29, implicit %r31, implicit %r30, implicit killed %d8, implicit %r2 {
+      S2_allocframe 8, implicit-def %r29, implicit-def %r30, implicit %r29, implicit %r31, implicit %r30 :: (store 4 into unknown)
+      S2_storerd_io internal %r29, -16, killed %d8 :: (store 8 into %fixed-stack.0)
+      %r16 = A2_tfr %r2
+    }
+    BUNDLE implicit-def %r1, implicit-def %pc, implicit %r16 {
+      %r1 = L2_loadri_io %r16, 0 :: (load 4 from %ir.1)
+      J4_cmpeqi_t_jumpnv_nt internal %r1, 0, %bb.3, implicit-def %pc
+    }
+    J2_jump %bb.1, implicit-def dead %pc
+  
+  bb.1 (%ir-block.4, freq 12):
+    successors: %bb.3(37), %bb.2(62)
+    liveins: %r0, %r1, %r16
+  
+    J2_call @reg_mentioned_p, implicit-def dead %d0, implicit-def dead %d1, implicit-def dead %d2, implicit-def dead %d3, implicit-def dead %d4, implicit-def dead %d5, implicit-def dead %d6, implicit-def dead %d7, implicit-def dead %r28, implicit-def dead %r31, implicit-def dead %p0, implicit-def dead %p1, implicit-def dead %p2, implicit-def dead %p3, implicit-def dead %m0, implicit-def dead %m1, implicit-def dead %lc0, implicit-def dead %lc1, implicit-def dead %sa0, implicit-def dead %sa1, implicit-def dead %usr, implicit-def %usr_ovf, implicit killed %r0, implicit killed %r1, implicit-def %r0
+    BUNDLE implicit-def dead %p0, implicit-def dead %pc, implicit killed %r0 {
+      %p0 = C2_cmpeqi killed %r0, 0
+      J2_jumptnew internal killed %p0, %bb.3, implicit-def dead %pc
+    }
+    J2_jump %bb.2, implicit-def dead %pc
+  
+  bb.2 (%ir-block.7, freq 8):
+    successors: %bb.3(100)
+    liveins: %r16, %r31
+  
+    S4_storeiri_io killed %r16, 0, 0 :: (store 4 into %ir.8)
+  
+  bb.3 (%ir-block.9, freq 20):
+    liveins: %r31
+    liveouts: %r29, %r30
+  
+    BUNDLE implicit-def %d8, implicit-def %r16, implicit-def %r17, implicit-def %r29, implicit-def %r30, implicit-def %r31, implicit-def %pc, implicit %r29, implicit %r30 {
+      %d8 = L2_loadrd_io %r29, 0 :: (load 8 from %fixed-stack.0)
+      L4_return implicit-def %r29, implicit-def %r30, implicit-def %r31, implicit-def %pc, implicit %r30, implicit-def dead %pc
+    }
+
+...

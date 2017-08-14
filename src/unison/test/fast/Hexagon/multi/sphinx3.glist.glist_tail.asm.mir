@@ -1,0 +1,94 @@
+--- |
+  ; ModuleID = 'sphinx3.glist.glist_tail.ll'
+  target datalayout = "e-m:e-p:32:32:32-i64:64:64-i32:32:32-i16:16:16-i1:8:8-f64:64:64-f32:32:32-v64:64:64-v32:32:32-a:0-n16:32"
+  target triple = "hexagon"
+  
+  %struct.gnode_s.40 = type { %union.anytype_s.41, %struct.gnode_s.40* }
+  %union.anytype_s.41 = type { double }
+  
+  ; Function Attrs: norecurse nounwind readonly
+  define %struct.gnode_s.40* @glist_tail(%struct.gnode_s.40* readonly %g) #0 {
+    %1 = icmp eq %struct.gnode_s.40* %g, null
+    br i1 %1, label %.loopexit, label %.preheader
+  
+  .preheader:                                       ; preds = %0, %.preheader
+    %gn.0 = phi %struct.gnode_s.40* [ %2, %.preheader ], [ %g, %0 ]
+    %cgep3 = bitcast %struct.gnode_s.40* %gn.0 to %struct.gnode_s.40*
+    %cgep2 = getelementptr %struct.gnode_s.40, %struct.gnode_s.40* %cgep3, i32 0, i32 1
+    %2 = load %struct.gnode_s.40*, %struct.gnode_s.40** %cgep2, align 8
+    %3 = icmp eq %struct.gnode_s.40* %2, null
+    br i1 %3, label %.loopexit, label %.preheader
+  
+  .loopexit:                                        ; preds = %.preheader, %0
+    %.0 = phi %struct.gnode_s.40* [ null, %0 ], [ %gn.0, %.preheader ]
+    ret %struct.gnode_s.40* %.0
+  }
+  
+  attributes #0 = { norecurse nounwind readonly "disable-tail-calls"="false" "less-precise-fpmad"="false" "no-frame-pointer-elim"="true" "no-frame-pointer-elim-non-leaf" "no-infs-fp-math"="false" "no-nans-fp-math"="false" "stack-protector-buffer-size"="8" "target-cpu"="hexagonv4" "target-features"="-hvx,-hvx-double" "unsafe-fp-math"="false" "use-soft-float"="false" }
+  
+  !llvm.ident = !{!0}
+  
+  !0 = !{!"clang version 3.8.0 (http://llvm.org/git/clang.git 2d49f0a0ae8366964a93e3b7b26e29679bee7160) (http://llvm.org/git/llvm.git 60bc66b44837125843b58ed3e0fd2e6bb948d839)"}
+
+...
+---
+name:            glist_tail
+alignment:       4
+exposesReturnsTwice: false
+hasInlineAsm:    false
+isSSA:           false
+tracksRegLiveness: true
+tracksSubRegLiveness: false
+liveins:         
+  - { reg: '%r0' }
+frameInfo:       
+  isFrameAddressTaken: false
+  isReturnAddressTaken: false
+  hasStackMap:     false
+  hasPatchPoint:   false
+  stackSize:       0
+  offsetAdjustment: 0
+  maxAlignment:    0
+  adjustsStack:    false
+  hasCalls:        false
+  maxCallFrameSize: 0
+  hasOpaqueSPAdjustment: false
+  hasVAStart:      false
+  hasMustTailInVarArgFunc: false
+body:             |
+  bb.0 (%ir-block.0, freq 12):
+    successors: %bb.3..loopexit(37), %bb.1(62)
+    liveins: %r0
+  
+    BUNDLE implicit-def %r1, implicit-def dead %p0, implicit-def %pc, implicit %r0 {
+      %r1 = A2_tfrsi 0
+      %p0 = C2_cmpeqi %r0, 0
+      J2_jumptnew internal killed %p0, %bb.3..loopexit, implicit-def %pc
+    }
+  
+  bb.1 (freq 8):
+    successors: %bb.2..preheader(100)
+    liveins: %r0
+  
+  
+  bb.2..preheader (freq 255):
+    successors: %bb.3..loopexit(3), %bb.2..preheader(96)
+    liveins: %r0
+  
+    BUNDLE implicit-def %r1, implicit-def %r0, implicit-def %pc, implicit killed %r0 {
+      %r1 = A2_tfr %r0
+      %r0 = L2_loadri_io killed %r0, 8 :: (load 4 from %ir.cgep2, align 8)
+      J4_cmpeqi_f_jumpnv_t internal %r0, 0, %bb.2..preheader, implicit-def %pc
+    }
+    J2_jump %bb.3..loopexit, implicit-def dead %pc
+  
+  bb.3..loopexit (freq 12):
+    liveins: %r1
+    liveouts: %r1, %r31
+  
+    BUNDLE implicit-def dead %r0, implicit-def dead %pc, implicit %r1, implicit killed %r31 {
+      %r0 = A2_tfr %r1
+      JMPret killed %r31, implicit-def dead %pc, implicit internal killed %r0
+    }
+
+...

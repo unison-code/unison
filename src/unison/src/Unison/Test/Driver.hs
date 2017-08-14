@@ -89,7 +89,7 @@ runUnison unisonTargets testArgs mirFile =
                    maxBlockSize args,
                    implementFrames args,
                    function args,
-                   Just (testGoal properties),
+                   Just (intercalate "," (testGoal properties)),
                    noCross args,
                    oldModel args,
                    expandCopies args,
@@ -145,7 +145,7 @@ guessTarget unisonTargets mirFile =
 
 guessGoal mirFile =
   case find (\g -> g `isInfixOf` mirFile) ["speed", "size"] of
-   Just goal -> goal
+   Just goal -> [goal]
    Nothing -> error ("File " ++ show mirFile ++ " does not specify the goal")
 
 updateProperties properties mirFile mir =
@@ -158,10 +158,10 @@ mkTestProperties = TestProperties
 
 data TestProperties = TestProperties {
   testTarget :: String,
-  testGoal :: String,
+  testGoal :: [String],
   testExpectedHasSolution :: Maybe Bool,
   testExpectedProven :: Maybe Bool,
-  testExpectedCost :: Maybe Integer
+  testExpectedCost :: Maybe [Integer]
   } deriving Show
 
 instance FromJSON TestProperties where
@@ -210,24 +210,22 @@ assertOutJson update properties prefix =
 
 assertCost update target properties unisonMirFile =
     do unisonMir <- readFile unisonMirFile
-       let gl = lowLevelGoal properties
-           ([expCost], _) =
-             Analyze.analyze (False, True, False) 1.0 [gl] unisonMir target
+       let gls = map lowLevelGoal (testGoal properties)
+           (expCosts, _) =
+             Analyze.analyze (False, True, False) 1.0 gls unisonMir target
            properties1 = if update then properties {testExpectedCost =
-                                                       Just expCost}
+                                                       Just expCosts}
                          else properties
-           cost = testExpectedCost properties1
-       when (isJust cost) $
+           costs = testExpectedCost properties1
+       when (isJust costs) $
          assertEqual
          "* unexpected 'cost' value"
-         (fromJust cost)
-         expCost
+         (fromJust costs)
+         expCosts
        return properties1
 
-lowLevelGoal properties =
-  case testGoal properties of
-   "speed" -> DynamicGoal Cycles
-   "size" -> StaticGoal (ResourceUsage (read "BundleWidth"))
+lowLevelGoal "speed" = DynamicGoal Cycles
+lowLevelGoal "size"  = StaticGoal (ResourceUsage (read "BundleWidth"))
 
 parseSolution json =
   case JSON.decode (BSL.pack json) of

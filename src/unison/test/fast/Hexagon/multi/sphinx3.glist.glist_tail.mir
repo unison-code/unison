@@ -1,0 +1,107 @@
+--- |
+  ; ModuleID = 'sphinx3.glist.glist_tail.ll'
+  target datalayout = "e-m:e-p:32:32:32-i64:64:64-i32:32:32-i16:16:16-i1:8:8-f64:64:64-f32:32:32-v64:64:64-v32:32:32-a:0-n16:32"
+  target triple = "hexagon"
+  
+  %struct.gnode_s.40 = type { %union.anytype_s.41, %struct.gnode_s.40* }
+  %union.anytype_s.41 = type { double }
+  
+  ; Function Attrs: norecurse nounwind readonly
+  define %struct.gnode_s.40* @glist_tail(%struct.gnode_s.40* readonly %g) #0 {
+    %1 = icmp eq %struct.gnode_s.40* %g, null
+    br i1 %1, label %.loopexit, label %.preheader
+  
+  .preheader:                                       ; preds = %0, %.preheader
+    %gn.0 = phi %struct.gnode_s.40* [ %2, %.preheader ], [ %g, %0 ]
+    %cgep3 = bitcast %struct.gnode_s.40* %gn.0 to %struct.gnode_s.40*
+    %cgep2 = getelementptr %struct.gnode_s.40, %struct.gnode_s.40* %cgep3, i32 0, i32 1
+    %2 = load %struct.gnode_s.40*, %struct.gnode_s.40** %cgep2, align 8
+    %3 = icmp eq %struct.gnode_s.40* %2, null
+    br i1 %3, label %.loopexit, label %.preheader
+  
+  .loopexit:                                        ; preds = %.preheader, %0
+    %.0 = phi %struct.gnode_s.40* [ null, %0 ], [ %gn.0, %.preheader ]
+    ret %struct.gnode_s.40* %.0
+  }
+  
+  attributes #0 = { norecurse nounwind readonly "disable-tail-calls"="false" "less-precise-fpmad"="false" "no-frame-pointer-elim"="true" "no-frame-pointer-elim-non-leaf" "no-infs-fp-math"="false" "no-nans-fp-math"="false" "stack-protector-buffer-size"="8" "target-cpu"="hexagonv4" "target-features"="-hvx,-hvx-double" "unsafe-fp-math"="false" "use-soft-float"="false" }
+  
+  !llvm.ident = !{!0}
+  
+  !0 = !{!"clang version 3.8.0 (http://llvm.org/git/clang.git 2d49f0a0ae8366964a93e3b7b26e29679bee7160) (http://llvm.org/git/llvm.git 60bc66b44837125843b58ed3e0fd2e6bb948d839)"}
+
+...
+---
+name:            glist_tail
+alignment:       4
+exposesReturnsTwice: false
+hasInlineAsm:    false
+isSSA:           true
+tracksRegLiveness: true
+tracksSubRegLiveness: false
+registers:       
+  - { id: 0, class: intregs }
+  - { id: 1, class: intregs }
+  - { id: 2, class: intregs }
+  - { id: 3, class: intregs }
+  - { id: 4, class: intregs }
+  - { id: 5, class: predregs }
+  - { id: 6, class: predregs }
+liveins:         
+  - { reg: '%r0', virtual-reg: '%3' }
+frameInfo:       
+  isFrameAddressTaken: false
+  isReturnAddressTaken: false
+  hasStackMap:     false
+  hasPatchPoint:   false
+  stackSize:       0
+  offsetAdjustment: 0
+  maxAlignment:    0
+  adjustsStack:    false
+  hasCalls:        false
+  maxCallFrameSize: 0
+  hasOpaqueSPAdjustment: false
+  hasVAStart:      false
+  hasMustTailInVarArgFunc: false
+body:             |
+  bb.0 (%ir-block.0, freq 12):
+    successors: %bb.2..loopexit(37), %bb.3(62)
+    liveins: %r0
+  
+    %3 = COPY %r0
+    %5 = C2_cmpeqi %3, 0
+    %4 = A2_tfrsi 0
+    J2_jumpt %5, %bb.2..loopexit, implicit-def %pc
+  
+  bb.3 (freq 8):
+    successors: %bb.1..preheader(100)
+  
+  
+  bb.1..preheader (freq 255):
+    successors: %bb.2..loopexit(3), %bb.1..preheader(96)
+  
+    %0 = PHI %3, %bb.3, %1, %bb.1..preheader
+    %1 = L2_loadri_io %0, 8, <0x250e630> = !{!"unison-memory-partition", i32 0} :: (load 4 from %ir.cgep2, align 8)
+    %6 = C2_cmpeqi %1, 0
+    J2_jumpf killed %6, %bb.1..preheader, implicit-def dead %pc
+    J2_jump %bb.2..loopexit, implicit-def dead %pc
+  
+  bb.2..loopexit (freq 12):
+    liveouts: %r0
+  
+    %2 = PHI %4, %bb.0, %0, %bb.1..preheader
+    %r0 = COPY %2
+    JMPret %r31, implicit-def dead %pc, implicit %r0
+
+...
+---
+unison-test-target: Hexagon
+unison-test-goal:
+- speed
+- size
+unison-test-expected-cost:
+- 279
+- 7
+unison-test-expected-proven: true
+unison-test-expected-has-solution: true
+...

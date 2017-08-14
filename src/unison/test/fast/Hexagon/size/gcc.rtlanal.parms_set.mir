@@ -138,8 +138,8 @@ body:             |
 ...
 ---
 unison-test-target: Hexagon
-unison-test-goal: size
-unison-test-expected-cost: 15
+unison-test-goal: [size]
+unison-test-expected-cost: [15]
 unison-test-expected-proven: true
 unison-test-expected-has-solution: false
 ...
