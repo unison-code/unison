@@ -427,10 +427,12 @@ void GlobalModel::post_global_cost_domain_constraints() {
   // cycles, allow only multiples of the greatest common divisor of the
   // consumptions:
 
-  resource r = input->optimize_resource[0];
-  if (r != ISSUE_CYCLES) {
-    IntArgs cons = consumption_domain(r, input->O);
-    dom(*this, gf(), IntSet(cons));
+  for (unsigned int n = 0; n < input->N; n++) {
+    resource r = input->optimize_resource[n];
+    if (r != ISSUE_CYCLES) {
+      IntArgs cons = consumption_domain(r, input->O);
+      dom(*this, gf()[n], IntSet(cons));
+    }
   }
 
 }
