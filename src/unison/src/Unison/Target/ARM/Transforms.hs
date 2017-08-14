@@ -57,9 +57,9 @@ extractReturnRegs _ (o : rest) _ = (rest, [o])
 addThumbAlternatives goals o @ SingleOperation {
   oOpr = Natural Linear {oIs = [TargetInstruction i]}} =
   let o' = addThumbAlternative o (M.lookup i reduceMap) i
-  in if any ((==) Speed) goals then
-       -- if we optimize for speed, keep on Thumb alternatives if they can
-       -- improve latency
+  in if none ((==) Size) goals then
+       -- if we do not optimize for size, keep on Thumb alternatives only
+       -- if they can improve latency
        (if occupations o == occupations o' then o else o')
      else o'
 addThumbAlternatives _ o = o
