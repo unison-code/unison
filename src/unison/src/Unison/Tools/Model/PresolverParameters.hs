@@ -55,7 +55,6 @@ parameters oldModel (_, dgs, _, _, ra, _)
       set_across = [] :: [Integer]
       domops = [] :: [Integer]
       last_use = [] :: [Integer]
-      memassign = [] :: [Integer]
       unsafe_temp = [] :: [Integer]
       dominates = [] :: [Integer]
       difftemps = [] :: [Integer]
@@ -106,7 +105,6 @@ parameters oldModel (_, dgs, _, _, ra, _)
       ("set_across", toJSON set_across),
       ("domops", toJSON domops),
       ("last_use", toJSON last_use),
-      ("memassign", toJSON memassign),
       ("unsafe_temp", toJSON unsafe_temp),
       ("dominates", toJSON dominates),
       ("difftemps", toJSON difftemps),

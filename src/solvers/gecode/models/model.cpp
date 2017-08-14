@@ -1002,14 +1002,13 @@ void Model::post_register_class_constraints(block b) {
           if (!options->disable_presolver_constraints() &&
               !options->disable_infinite_register_dominance_constraints() &&
               !input->use[p] &&
-              input->infinite[input->space[rc]]) {
+              input->infinite[input->space[rc]] &&
+              input->infinite_atom_range.count(input->single_temp[p])) {
             temporary t = input->single_temp[p];
-            if (input->infinite_atom_range.count(t)) {
-              register_atom fra = input->infinite_atom_range[t][0],
-                            lra = input->infinite_atom_range[t][1];
-              int n = ((lra - fra) / input->width[t]) + 1;
-              Drt = IntSet(IntArgs::create(n, fra, input->width[t]));
-            }
+            register_atom fra = input->infinite_atom_range[t][0],
+                          lra = input->infinite_atom_range[t][1];
+            int n = ((lra - fra) / input->width[t]) + 1;
+            Drt = IntSet(IntArgs::create(n, fra, input->width[t]));
           } else {
 	    IntSetRanges irs(input->atom_set[rc]);
 	    Drt = IntSet(irs);

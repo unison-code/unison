@@ -42,6 +42,7 @@ parameters (cg, _, _, t2w, ra, _) f @ Function {fCode = code} target =
         apf         = alignedPairs target
         ppf         = packedPairs target
         rpf         = relatedPairs target
+        ibf         = infRegClassBound target
 
         bcfg        = BCFG.fromFunction bif f
         fCode       = sortBy (comparing oId) (flatten code)
@@ -105,9 +106,11 @@ parameters (cg, _, _, t2w, ra, _) f @ Function {fCode = code} target =
         clusters    = computeRematClusters code adjacent
         def_opr'    = tempOprDefiners fCode
         def_opr     = toValueListM def_opr'
-        memassign   = concat [memAssignForSpace ocf (M.fromList classSpace)
-                              t def_opr' (M.fromList rs2a) t2w p2ts congr rs'
-                             | rs' <- rs, rsInfinite rs']
+        allClasses  = nub $ concat $ concat rclass
+        memassign   = if any (isBounded ibf) allClasses then [] else
+                        concat [memAssignForSpace ocf (M.fromList classSpace)
+                                t def_opr' (M.fromList rs2a) t2w p2ts congr rs'
+                               | rs' <- rs, rsInfinite rs']
     in
      [
       -- Program parameters
@@ -451,6 +454,10 @@ joinClusterCycles adj pr =
         conn   = concat [[(p, q) | p <- ps, q <- ps, p < q] | ps <- cycles]
         pr'    = foldl P.connectElements pr conn
     in pr'
+
+isBounded ibf irc =
+  let rc = rcClass irc
+  in isInfiniteRegisterClass rc && isJust (ibf rc)
 
 memAssignForSpace ocf rcSpace ts def_opr rs2a t2w p2ts congr rs =
     let cts1    = map (map mkTemp) $ P.toList $
