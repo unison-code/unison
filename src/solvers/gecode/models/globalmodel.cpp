@@ -423,13 +423,13 @@ void GlobalModel::post_preserved_space_capacity_constraints(void) {
 
 void GlobalModel::post_global_cost_domain_constraints() {
 
-  // If the resource whose consumption is to be optimized is other than issue
-  // cycles, allow only multiples of the greatest common divisor of the
-  // consumptions:
+  // If the objective is not weighted and the resource whose consumption is
+  // to be optimized is other than issue cycles, allow only multiples of
+  // the greatest common divisor of the consumptions:
 
   for (unsigned int n = 0; n < input->N; n++) {
     resource r = input->optimize_resource[n];
-    if (r != ISSUE_CYCLES) {
+    if (!input->optimize_dynamic[n] && r != ISSUE_CYCLES) {
       IntArgs cons = consumption_domain(r, input->O);
       dom(*this, gf()[n], IntSet(cons));
     }
