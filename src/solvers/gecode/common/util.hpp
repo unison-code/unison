@@ -228,49 +228,49 @@ string show(const C& container, string l = ",", string pre = "",
   return s.str();
 }
 
-string emit_json_object(const int i);
+string emit_json(const int i);
 
-string emit_json_object(const bool b);
+string emit_json(const bool b);
 
-string emit_json_object(const string s);
+string emit_json(const string s);
 
-string emit_json_object(const PresolverActiveTable at);
+string emit_json(const PresolverActiveTable at);
 
-string emit_json_object(const PresolverCopyTmpTable at);
+string emit_json(const PresolverCopyTmpTable at);
 
-string emit_json_object(const PresolverPrecedence at);
+string emit_json(const PresolverPrecedence at);
 
-string emit_json_object(const PresolverBefore at);
+string emit_json(const PresolverBefore at);
 
-string emit_json_object(const PresolverAcross at);
+string emit_json(const PresolverAcross at);
 
-string emit_json_object(const PresolverAcrossItem at);
+string emit_json(const PresolverAcrossItem at);
 
-string emit_json_object(const PresolverSetAcross at);
+string emit_json(const PresolverSetAcross at);
 
-string emit_json_object(const PresolverDominates at);
+string emit_json(const PresolverDominates at);
 
-string emit_json_object(const PresolverPred at);
+string emit_json(const PresolverPred at);
 
-string emit_json_object(const PresolverSucc at);
+string emit_json(const PresolverSucc at);
 
-string emit_json_object(const PresolverInstrCond at);
+string emit_json(const PresolverInstrCond at);
 
-string emit_json_object(const PresolverValuePrecedeChain at);
+string emit_json(const PresolverValuePrecedeChain at);
 
-string emit_json_object(const UnisonConstraintExpr e);
+string emit_json(const UnisonConstraintExpr e);
 
 template <typename C>
-string emit_json_object(const C& container) {
+string emit_json(const C& container) {
   stringstream s;
   s << "[";
   if (!container.empty()) {
     typename C::const_iterator it = container.begin();
     for (unsigned int i = 0; i < container.size() - 1; ++it) {
-      s << emit_json_object(*it) << ",";
+      s << emit_json(*it) << ",";
       i++;
     }
-    s << emit_json_object(*it);
+    s << emit_json(*it);
   }
   s << "]";
   return s.str();
@@ -278,12 +278,12 @@ string emit_json_object(const C& container) {
 
 template <class T>
 string emit_json_line(string e, const T o) {
-  return "\"" + e + "\": " + emit_json_object(o) + ",\n";
+  return "\"" + e + "\": " + emit_json(o) + ",\n";
 }
 
 template <class T>
 string emit_json_line_last(string e, const T o) {
-  return "\"" + e + "\": " + emit_json_object(o) + "\n";
+  return "\"" + e + "\": " + emit_json(o) + "\n";
 }
 
 template <typename C>

@@ -65,100 +65,61 @@ string show(const string s) {
 }
 
 string show(const PresolverBefore b) {
-  stringstream s;
-  s << "[" << b.p
-    << ", " << b.q
-    << ", " << show(b.d) << "]";
-  return s.str();
+  return show(vector<string>{show(b.p), show(b.q), show(b.d)}, ", ");
 }
 
 string show(const PresolverDominates d) {
-  stringstream s;
-  s << "[" << d.o1
-    << ", " << d.o2
-    << ", " << show(d.ins)
-    << ", " << show(d.temps) << "]";
-  return s.str();
+  return show(vector<string>{show(d.o1), show(d.o2), show(d.ins),
+        show(d.temps)}, ", ");
 }
 
 string show(const PresolverInstrCond ic) {
-  stringstream s;
-  s << "[" << ic.o
-    << ", " << ic.i
-    << ", " << ic.q << "]";
-  return s.str();
+  return show(vector<string>{show(ic.o), show(ic.i), show(ic.q)}, ", ");
 }
 
 string show(const PresolverValuePrecedeChain pvc) {
-  stringstream s;
-  s << "[" << show(pvc.ts)
-    << ", " << show(pvc.rss) << "]";
-  return s.str();
+  return show(vector<string>{show(pvc.ts), show(pvc.rss)}, ", ");
 }
 
 string show(const PresolverInsnClass t) {
-  stringstream s;
-  s << "[" << show(t.insn)
-    << ", " << show(t.rclass) << "]";
-  return s.str();
+  return show(vector<string>{show(t.insn), show(t.rclass)}, ", ");
 }
 
 string show(const PresolverInsn2Class2 t) {
-  stringstream s;
-  s << "[" << show(t.insn1)
-    << ", " << show(t.insn2)
-    << ", " << show(t.class1)
-    << ", " << show(t.class2)
-    << "]";
-  return s.str();
+  return show(vector<string>{show(t.insn1), show(t.insn2), show(t.class1),
+        show(t.class2)}, ", ");
 }
 
 string show(const PresolverActiveTable t) {
-  stringstream s;
-  s << "[" << show(t.os) << ", " << show(t.tuples) << "]";
-  return s.str();
+  return show(vector<string>{show(t.os), show(t.tuples)}, ", ");
 }
 
 string show(const PresolverCopyTmpTable t) {
-  stringstream s;
-  s << "[" << show(t.os) << ", " << show(t.ps) << ", " << show(t.tuples) << "]";
-  return s.str();
+  return show(vector<string>{show(t.os), show(t.ps), show(t.tuples)}, ", ");
 }
 
 string show(const PresolverPred p) {
-  stringstream s;
-  s << "[" << show(p.p) << ", " << p.q << ", " << p.d << "]";
-  return s.str();
+  return show(vector<string>{show(p.p), show(p.q), show(p.d)}, ", ");
 }
 
 string show(const PresolverSucc p) {
-  stringstream s;
-  s << "[" << p.p << ", " << show(p.q) << ", " << p.d << "]";
-  return s.str();
+  return show(vector<string>{show(p.p), show(p.q), show(p.d)}, ", ");
 }
 
 string show(const PresolverAcross x) {
-  stringstream s;
-  s << "[" << x.o << ", " << show(x.ras) << ", " << show(x.as) << "]";
-  return s.str();
+  return show(vector<string>{show(x.o), show(x.ras), show(x.as)}, ", ");
 }
 
 string show(const PresolverAcrossTuple x) {
-  stringstream s;
-  s << "[" << x.o << ", " << x.t << ", " << show(x.d) << "]";
-  return s.str();
+  return show(vector<string>{show(x.o), show(x.t), show(x.d)}, ", ");
 }
 
 string show(const PresolverAcrossItem x) {
-  stringstream s;
-  s << "[" << x.t << ", " << show(x.d) << "]";
-  return s.str();
+  return show(vector<string>{show(x.t), show(x.d)}, ", ");
 }
 
 string show(const PresolverSetAcross x) {
-  stringstream s;
-  s << "[" << x.o << ", " << show(x.ras) << ", " << show(x.tsets) << "]";
-  return s.str();
+  return show(vector<string>{show(x.o), show(x.ras), show(x.tsets)}, ", ");
 }
 
 string show(const Temporand t) {
@@ -167,167 +128,82 @@ string show(const Temporand t) {
   return s.str();
 }
 
-string emit_json_object(const int i) {
+string emit_json(const int i) {
   stringstream s;
   s << i;
   return s.str();
 }
 
-string emit_json_object(const bool b) {
+string emit_json(const bool b) {
   stringstream s;
   s << (b ? "true" : "false");
   return s.str();
 }
 
-string emit_json_object(const string s) {
+string emit_json(const string s) {
   stringstream ss;
   ss << "\"" << s << "\"";
   return ss.str();
 }
 
-string emit_json_object(const PresolverActiveTable at) {
-  stringstream ss;
-  ss << "["
-     << emit_json_object(at.os)
-     << ", "
-     << emit_json_object(at.tuples)
-     << "]";
-  return ss.str();
+string emit_json(const PresolverActiveTable x) {
+  return show(vector<string>{emit_json(x.os), emit_json(x.tuples)}, ", ");
 }
 
-string emit_json_object(const PresolverCopyTmpTable at) {
-  stringstream ss;
-  ss << "["
-     << emit_json_object(at.os)
-     << ", "
-     << emit_json_object(at.ps)
-     << ", "
-     << emit_json_object(at.tuples)
-     << "]";
-  return ss.str();
+string emit_json(const PresolverCopyTmpTable x) {
+  return show(vector<string>{emit_json(x.os), emit_json(x.ps),
+        emit_json(x.tuples)}, ", ");
 }
 
-string emit_json_object(const PresolverPrecedence at) {
-  stringstream ss;
-  ss << "["
-     << emit_json_object(at.i)
-     << ", "
-     << emit_json_object(at.j)
-     << ", "
-     << emit_json_object(at.n)
-     << ", "
-     << emit_json_object(at.d)
-     << "]";
-  return ss.str();
+string emit_json(const PresolverPrecedence x) {
+  return show(vector<string>{emit_json(x.i), emit_json(x.j),
+        emit_json(x.n), emit_json(x.d)}, ", ");
 }
 
-string emit_json_object(const PresolverBefore at) {
-  stringstream ss;
-  ss << "["
-     << emit_json_object(at.p)
-     << ", "
-     << emit_json_object(at.q)
-     << ", "
-     << emit_json_object(at.d)
-     << "]";
-  return ss.str();
+string emit_json(const PresolverBefore x) {
+  return show(vector<string>{emit_json(x.p), emit_json(x.q),
+        emit_json(x.d)}, ", ");
 }
 
-string emit_json_object(const PresolverAcross at) {
-  stringstream ss;
-  ss << "["
-     << emit_json_object(at.o)
-     << ", "
-     << emit_json_object(at.ras)
-     << ", "
-     << emit_json_object(at.as)
-     << "]";
-  return ss.str();
+string emit_json(const PresolverAcross x) {
+  return show(vector<string>{emit_json(x.o), emit_json(x.ras),
+        emit_json(x.as)}, ", ");
 }
 
-string emit_json_object(const PresolverAcrossItem at) {
-  stringstream ss;
-  ss << "["
-     << emit_json_object(at.t)
-     << ", "
-     << emit_json_object(at.d)
-     << "]";
-  return ss.str();
+string emit_json(const PresolverAcrossItem x) {
+  return show(vector<string>{emit_json(x.t), emit_json(x.d)}, ", ");
 }
 
-string emit_json_object(const PresolverSetAcross at) {
-  stringstream ss;
-  ss << "["
-     << emit_json_object(at.o)
-     << ", "
-     << emit_json_object(at.ras)
-     << ", "
-     << emit_json_object(at.tsets)
-     << "]";
-  return ss.str();
+string emit_json(const PresolverSetAcross x) {
+  return show(vector<string>{emit_json(x.o), emit_json(x.ras),
+        emit_json(x.tsets)}, ", ");
 }
 
-string emit_json_object(const PresolverDominates at) {
-  stringstream ss;
-  ss << "["
-     << emit_json_object(at.o1)
-     << ", "
-     << emit_json_object(at.o2)
-     << ", "
-     << emit_json_object(at.ins)
-     << ", "
-     << emit_json_object(at.temps)
-     << "]";
-  return ss.str();
+string emit_json(const PresolverDominates x) {
+  return show(vector<string>{emit_json(x.o1), emit_json(x.o2),
+        emit_json(x.ins), emit_json(x.temps)}, ", ");
 }
 
-string emit_json_object(const PresolverPred at) {
-  stringstream ss;
-  ss << "["
-     << emit_json_object(at.p)
-     << ", "
-     << emit_json_object(at.q)
-     << ", "
-     << emit_json_object(at.d)
-     << "]";
-  return ss.str();
+string emit_json(const PresolverPred x) {
+  return show(vector<string>{emit_json(x.p), emit_json(x.q),
+        emit_json(x.d)}, ", ");
 }
 
-string emit_json_object(const PresolverSucc at) {
-  stringstream ss;
-  ss << "["
-     << emit_json_object(at.p)
-     << ", "
-     << emit_json_object(at.q)
-     << ", "
-     << emit_json_object(at.d)
-     << "]";
-  return ss.str();
+string emit_json(const PresolverSucc x) {
+  return show(vector<string>{emit_json(x.p), emit_json(x.q),
+        emit_json(x.d)}, ", ");
 }
 
-string emit_json_object(const PresolverInstrCond at) {
-  stringstream ss;
-  ss << "["
-     << emit_json_object(at.o)
-     << ", "
-     << emit_json_object(at.i)
-     << ", "
-     << emit_json_object(at.q)
-     << "]";
-  return ss.str();
+string emit_json(const PresolverInstrCond x) {
+  return show(vector<string>{emit_json(x.o), emit_json(x.i),
+        emit_json(x.q)}, ", ");
 }
 
-string emit_json_object(const PresolverValuePrecedeChain pvc) {
-  stringstream ss;
-  ss << "["
-     << emit_json_object(pvc.ts)
-     << ", "
-     << emit_json_object(pvc.rss)
-     << "]";
-  return ss.str();
+string emit_json(const PresolverValuePrecedeChain pvc) {
+  return show(vector<string>{emit_json(pvc.ts), emit_json(pvc.rss)}, ", ");
 }
 
-string emit_json_object(const UnisonConstraintExpr e) {
+string emit_json(const UnisonConstraintExpr e) {
   vector<string> elements;
   stringstream ids;
   ids << e.id;
@@ -335,7 +211,7 @@ string emit_json_object(const UnisonConstraintExpr e) {
   for (int d : e.data)
     elements.push_back(show(d));
   for (UnisonConstraintExpr e0 : e.children)
-    elements.push_back(emit_json_object(e0));
+    elements.push_back(emit_json(e0));
   return show(elements, ", ");
 }
 
@@ -363,12 +239,7 @@ string show_register(register_atom ra, int w, const Parameters * p) {
 }
 
 string show(const PresolverPrecedence& p) {
-  stringstream s;
-  s << "[" << p.i
-    << ", " << p.j
-    << ", " << p.n
-    << ", " << show(p.d) << "]";
-  return s.str();
+  return show(vector<string>{show(p.i), show(p.j), show(p.n), show(p.d)}, ", ");
 }
 
 string show_instruction(instruction i, operation o, const Parameters * p) {
