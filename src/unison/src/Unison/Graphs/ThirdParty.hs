@@ -1,5 +1,5 @@
 {-|
-Maintainer  :  rcas@sics.se
+Maintainer  :  roberto.castaneda@ri.se
 
 Graph algorithms extracted from third-party components.
 

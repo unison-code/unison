@@ -3,8 +3,8 @@ Version:        0
 Cabal-Version:  >= 1.8
 License:        BSD3
 License-file:   LICENSE
-Author:         Roberto Castaneda Lozano <rcas@sics.se>
-Maintainer:     Roberto Castaneda Lozano <rcas@sics.se>
+Author:         Roberto Castaneda Lozano <roberto.castaneda@ri.se>
+Maintainer:     Roberto Castaneda Lozano <roberto.castaneda@ri.se>
 Synopsis:       An extension to the unison package with automatic generation of
                 target files from a specification
 Category:       Language, Compiler, Code generation, Program Transformation

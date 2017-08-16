@@ -1,9 +1,9 @@
 #!/usr/bin/env runhaskell
 
 {-|
-Copyright   :  Copyright (c) 2016, SICS Swedish ICT AB
+Copyright   :  Copyright (c) 2016, RISE SICS AB
 License     :  BSD3 (see the LICENSE file)
-Maintainer  :  rcas@sics.se
+Maintainer  :  roberto.castaneda@ri.se
 
 Runs 'gecode-solver' and 'minizinc-solver' (with 'chuffed') in parallel,
 returning the result of the fastest solver.
@@ -11,7 +11,7 @@ returning the result of the fastest solver.
 -}
 {-
 Main authors:
-  Roberto Castaneda Lozano <rcas@sics.se>
+  Roberto Castaneda Lozano <roberto.castaneda@ri.se>
 
 This file is part of Unison, see http://unison-code.github.io
 -}

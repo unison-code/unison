@@ -1,10 +1,10 @@
 %
 %  Main authors:
-%    Mats Carlsson <matsc@sics.se>
+%    Mats Carlsson <mats.carlsson@ri.se>
 %
 %  This file is part of Unison, see http://unison-code.github.io
 %
-%  Copyright (c) 2016, SICS Swedish ICT AB
+%  Copyright (c) 2016, RISE SICS AB
 %  All rights reserved.
 %
 %  Redistribution and use in source and binary forms, with or without
@@ -32,7 +32,7 @@
 %
 %   Generator of *.dzn from *.ext.json got code-generation.mzn
 %
-%   Mats Carlsson <matsc@sics.se>
+%   Mats Carlsson <mats.carlsson@ri.se>
 %   http://www.sics.se/people/matsc
 %
 %   TODO:

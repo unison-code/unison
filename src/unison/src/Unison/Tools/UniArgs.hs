@@ -1,11 +1,11 @@
 {-|
-Copyright   :  Copyright (c) 2016, SICS Swedish ICT AB
+Copyright   :  Copyright (c) 2016, RISE SICS AB
 License     :  BSD3 (see the LICENSE file)
-Maintainer  :  rcas@sics.se
+Maintainer  :  roberto.castaneda@ri.se
 -}
 {-
 Main authors:
-  Roberto Castaneda Lozano <rcas@sics.se>
+  Roberto Castaneda Lozano <roberto.castaneda@ri.se>
 
 This file is part of Unison, see http://unison-code.github.io
 -}
@@ -92,7 +92,7 @@ allModes = [import', linearize', extend', augment', model', export', analyze',
             normalize', lint', count', legalize', plot', run']
 
 uniArgs = cmdArgsMode $ modes allModes &= program "uni"
-          &= summary "Unison v0, Roberto Castaneda Lozano [rcas@sics.se]"
+          &= summary "Unison v0, Roberto Castaneda Lozano [roberto.castaneda@ri.se]"
           &= help "Generate assembly code using constraint programming"
 
 import' = Import {

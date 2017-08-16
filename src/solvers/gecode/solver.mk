@@ -1,10 +1,10 @@
 #
 #  Main authors:
-#    Roberto Castaneda Lozano <rcas@sics.se>
+#    Roberto Castaneda Lozano <roberto.castaneda@ri.se>
 #
 #  This file is part of Unison, see http://unison-code.github.io
 #
-#  Copyright (c) 2016, SICS Swedish ICT AB
+#  Copyright (c) 2016, RISE SICS AB
 #  All rights reserved.
 #
 #  Redistribution and use in source and binary forms, with or without
