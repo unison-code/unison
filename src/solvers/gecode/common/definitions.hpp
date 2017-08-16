@@ -361,13 +361,20 @@ public:
 // Numeric ID of a Unison constraint expresion
 
 enum UnisonConstraintExprId
-  { XOR_EXPR,
+  { OR_EXPR,
     AND_EXPR,
-    IMPL_EXPR,
-    ACTIVE_OPERATION_EXPR,
-    TEMPORARY_CONNECTION_EXPR,
-    OPERATION_IMPLEMENTATION_EXPR,
-    MINIMUM_DISTANCE_EXPR };
+    XOR_EXPR,
+    IMPLIES_EXPR,
+    NOT_EXPR,
+    ACTIVE_EXPR,
+    CONNECTS_EXPR,
+    IMPLEMENTS_EXPR,
+    DISTANCE_EXPR,
+    SHARE_EXPR,
+    OPERAND_OVERLAP_EXPR,
+    TEMPORARY_OVERLAP_EXPR,
+    CALLER_SAVED_EXPR,
+    ALLOCATED_EXPR };
 
 // Unison constraint expression
 

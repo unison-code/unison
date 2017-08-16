@@ -57,38 +57,58 @@ Model::set_var_array(int n, const IntSet & glb, const IntSet & lub) {
 BoolVar Model::adhoc_constraint_var(UnisonConstraintExpr & e) {
   BoolVar v(*this, 0, 1);
   switch (e.id) {
-  case XOR_EXPR:
-    rel(*this,
-        adhoc_constraint_var(e.children[0]),
-        BOT_XOR,
-        adhoc_constraint_var(e.children[1]),
-        v,
-        ipl);
-    return v;
+  case OR_EXPR:
   case AND_EXPR:
+    {
+      BoolVarArgs vs;
+      for (UnisonConstraintExpr e0 : e.children)
+        vs << adhoc_constraint_var(e0);
+      rel(*this, e.id == OR_EXPR ? BOT_OR : BOT_AND, vs, v, ipl);
+    }
+    return v;
+  case XOR_EXPR:
+  case IMPLIES_EXPR:
     rel(*this,
         adhoc_constraint_var(e.children[0]),
-        BOT_AND,
+        e.id == XOR_EXPR ? BOT_XOR : BOT_IMP,
         adhoc_constraint_var(e.children[1]),
         v,
         ipl);
     return v;
-  case IMPL_EXPR:
-    rel(*this,
-        adhoc_constraint_var(e.children[0]),
-        BOT_IMP,
-        adhoc_constraint_var(e.children[1]),
-        v,
-        ipl);
+  case NOT_EXPR:
+    rel(*this, adhoc_constraint_var(e.children[0]), IRT_NQ, v);
     return v;
-  case ACTIVE_OPERATION_EXPR:
+  case ACTIVE_EXPR:
     return a(e.data[0]);
-  case TEMPORARY_CONNECTION_EXPR:
+  case CONNECTS_EXPR:
     return u(e.data[0], e.data[1]);
-  case OPERATION_IMPLEMENTATION_EXPR:
+  case IMPLEMENTS_EXPR:
     return imp(e.data[0], e.data[1]);
-  case MINIMUM_DISTANCE_EXPR:
+  case DISTANCE_EXPR:
     return var(c(e.data[1]) >= (c(e.data[0]) + e.data[2]));
+  case SHARE_EXPR:
+    // This is fine because the temps of one will always be a prefix of the
+    // temps of the other
+    return var(y(e.data[0]) == y(e.data[1]));
+  case OPERAND_OVERLAP_EXPR:
+    return var((pls(e.data[0]) < ple(e.data[1])) &&
+               (pls(e.data[1]) < ple(e.data[0])));
+  case TEMPORARY_OVERLAP_EXPR:
+    return var((ls(e.data[0]) < le(e.data[1])) &&
+               (ls(e.data[1]) < le(e.data[0])));
+  case CALLER_SAVED_EXPR:
+    {
+      IntArgs cs(input->callersaved);
+      // TODO: this is correct, but should include temporaries wider than 1
+      dom(*this, r(e.data[0]), IntSet(cs), v);
+    }
+    return v;
+  case ALLOCATED_EXPR:
+    {
+      IntArgs cs(input->atoms[e.data[1]]);
+      dom(*this, ry(e.data[0]), IntSet(cs), v);
+    }
+    return v;
   default:
     GECODE_NEVER;
   }

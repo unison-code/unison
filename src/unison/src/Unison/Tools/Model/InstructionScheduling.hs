@@ -28,7 +28,7 @@ import Unison.Analysis.MakespanBounds
 
 import Unison.Tools.Model.Definitions
 
-parameters scaleFreq (_, _, deps, _, _, _) f @ Function {fCode = code} target =
+parameters scaleFreq (_, _, deps, _, ra, _) f @ Function {fCode = code} target =
   let oif           = operandInfo target
       cf            = constraints target
       rm            = resourceManager target
@@ -61,7 +61,7 @@ parameters scaleFreq (_, _, deps, _, _, _) f @ Function {fCode = code} target =
       insname       = map (show . ioInstruction) i
       preschedule   = map (\o -> (oId o, (aPrescheduled (oAs o)))) $
                       filter (\o -> isJust (aPrescheduled (oAs o))) fCode
-      e             = map (lowerConstraintExpr im) $ cf f
+      e             = map (lowerConstraintExpr (im, ra)) $ cf f
     in
      [
       -- Program parameters
@@ -244,14 +244,21 @@ virtualTypes =
 
 delimiterTypes = [InType, OutType]
 
-lowerConstraintExpr im (XorExpr e1 e2) =
-  (XorExpr (lowerConstraintExpr im e1) (lowerConstraintExpr im e2))
-lowerConstraintExpr im (AndExpr e1 e2) =
-  (AndExpr (lowerConstraintExpr im e1) (lowerConstraintExpr im e2))
-lowerConstraintExpr im (ImplExpr e1 e2) =
-  (ImplExpr (lowerConstraintExpr im e1) (lowerConstraintExpr im e2))
-lowerConstraintExpr _ e @ ActiveOperation {} = e
-lowerConstraintExpr _ e @ TemporaryConnection {} = e
-lowerConstraintExpr im (OperationImplementation oid i) =
-  (EOperationImplementation oid (toIndexedInstruction im i))
-lowerConstraintExpr _ e @ MinimumDistance {} = e
+lowerConstraintExpr fs (OrExpr es) = OrExpr (map (lowerConstraintExpr fs) es)
+lowerConstraintExpr fs (AndExpr es) = AndExpr (map (lowerConstraintExpr fs) es)
+lowerConstraintExpr fs (XorExpr e1 e2) =
+  XorExpr (lowerConstraintExpr fs e1) (lowerConstraintExpr fs e2)
+lowerConstraintExpr fs (ImpliesExpr e1 e2) =
+  ImpliesExpr (lowerConstraintExpr fs e1) (lowerConstraintExpr fs e2)
+lowerConstraintExpr fs (NotExpr e) = NotExpr (lowerConstraintExpr fs e)
+lowerConstraintExpr _ e @ ActiveExpr {} = e
+lowerConstraintExpr _ e @ ConnectsExpr {} = e
+lowerConstraintExpr (im, _) (ImplementsExpr oid i) =
+  EImplementsExpr oid (toIndexedInstruction im i)
+lowerConstraintExpr _ e @ DistanceExpr {} = e
+lowerConstraintExpr _ e @ ShareExpr {} = e
+lowerConstraintExpr _ e @ OperandOverlapExpr {} = e
+lowerConstraintExpr _ e @ TemporaryOverlapExpr {} = e
+lowerConstraintExpr _ e @ CallerSavedExpr {} = e
+lowerConstraintExpr (_, ra) (AllocatedExpr pid rc) =
+  EAllocatedExpr pid (raIndexedRc ra rc)

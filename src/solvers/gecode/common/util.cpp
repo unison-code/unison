@@ -328,31 +328,15 @@ string emit_json_object(const PresolverValuePrecedeChain pvc) {
 }
 
 string emit_json_object(const UnisonConstraintExpr e) {
-  stringstream ss;
-  ss << "["
-     << e.id
-     << ", ";
-  switch (e.id) {
-  case XOR_EXPR:
-  case AND_EXPR:
-  case IMPL_EXPR:
-    ss << emit_json_object(e.children[0]) << ", "
-       << emit_json_object(e.children[1]);
-    break;
-  case ACTIVE_OPERATION_EXPR:
-    ss << e.data[0];
-    break;
-  case TEMPORARY_CONNECTION_EXPR:
-  case OPERATION_IMPLEMENTATION_EXPR:
-    ss << e.data[0] << ", " << e.data[1];
-    break;
-  case MINIMUM_DISTANCE_EXPR:
-    ss << e.data[0] << ", " << e.data[1] << ", " << e.data[2];
-    break;
-  default: GECODE_NEVER;
-  }
-  ss << "]";
-  return ss.str();
+  vector<string> elements;
+  stringstream ids;
+  ids << e.id;
+  elements.push_back(ids.str());
+  for (int d : e.data)
+    elements.push_back(show(d));
+  for (UnisonConstraintExpr e0 : e.children)
+    elements.push_back(emit_json_object(e0));
+  return show(elements, ", ");
 }
 
 string show_class(register_class rc, const Parameters * p) {
@@ -508,18 +492,26 @@ bool in_block(PresolverBefore & bf, block b, const Parameters * input) {
 
 bool in_block(UnisonConstraintExpr & e, block b, const Parameters * input) {
   switch (e.id) {
-  case XOR_EXPR:
+  case OR_EXPR:
   case AND_EXPR:
-  case IMPL_EXPR:
-    return in_block(e.children[0], b, input) &&
-           in_block(e.children[1], b, input);
-  case ACTIVE_OPERATION_EXPR:
-  case OPERATION_IMPLEMENTATION_EXPR:
-  case MINIMUM_DISTANCE_EXPR:
+  case XOR_EXPR:
+  case IMPLIES_EXPR:
+  case NOT_EXPR:
+    for (UnisonConstraintExpr e0 : e.children)
+      if (!in_block(e0, b, input)) return false;
+    return true;
+  case ACTIVE_EXPR:
+  case IMPLEMENTS_EXPR:
+  case DISTANCE_EXPR:
     return (input->oblock[e.data[0]] == b);
-  case TEMPORARY_CONNECTION_EXPR:
-    operand p = e.data[0];
-    return (input->pb[p] == b);
+  case CONNECTS_EXPR:
+  case SHARE_EXPR:
+  case OPERAND_OVERLAP_EXPR:
+  case ALLOCATED_EXPR:
+    return (input->pb[e.data[0]] == b);
+  case TEMPORARY_OVERLAP_EXPR:
+  case CALLER_SAVED_EXPR:
+    return (input->tb[e.data[0]] == b);
   }
   GECODE_NEVER;
   return true;

@@ -139,13 +139,20 @@ and
 \newcommand{\satisfyEquation}{
   \begin{equation*}\textstyle\label{eq:satisfy}
     \begin{aligned}
+      \satisfy{\tuple{\code{or}, e_1, e_2, \ldots, e_n}} & \iff \satisfy{e_1} \lor \satisfy{e_2} \lor \ldots \lor \satisfy{e_n} \\
+      \satisfy{\tuple{\code{and}, e_1, e_2, \ldots, e_n}} & \iff \satisfy{e_1} \land \satisfy{e_2} \land \ldots \land \satisfy{e_n} \\
       \satisfy{\tuple{\code{xor}, e_1, e_2}} & \iff \satisfy{e_1} \xor \satisfy{e_2}\\
-      \satisfy{\tuple{\code{and}, e_1, e_2}} & \iff \satisfy{e_1} \land \satisfy{e_2}\\
       \satisfy{\tuple{\code{implies}, e_1, e_2}} & \iff \satisfy{e_1} \implies \satisfy{e_2}\\
+      \satisfy{\tuple{\code{not}, e}} & \iff \neg \satisfy{e}\\
       \satisfy{\tuple{\code{active}, o}} & \iff \activeOperation{o}\\
       \satisfy{\tuple{\code{connects}, p, t}} & \iff \operandTemporary{p} = t\\
       \satisfy{\tuple{\code{implements}, o, \code{i}}} & \iff \operationInstruction{o} = \code{i}\\
       \satisfy{\tuple{\code{distance}, d, u, n}} & \iff \operationIssueCycle{u} \ge \operationIssueCycle{d} + n\\
+      \satisfy{\tuple{\code{share}, p, q}} & \iff \operandTemporary{p} = \operandTemporary{q}\\
+      \satisfy{\tuple{\code{operand-overlap}, p, q}} & \iff \temporaryLiveStart{\operandTemporary{p}} < \temporaryLiveEnd{\operandTemporary{q}} \land \temporaryLiveStart{\operandTemporary{q}} < \temporaryLiveEnd{\operandTemporary{p}} \\
+      \satisfy{\tuple{\code{temporary-overlap}, t, t'}} & \iff \temporaryLiveStart{t} < \temporaryLiveEnd{t'} \land \temporaryLiveStart{t'} < \temporaryLiveEnd{t}\\
+      \satisfy{\tuple{\code{caller-saved}, t}} & \iff \temporaryRegister{t} \in \callerSavedAtoms{} \\
+      \satisfy{\tuple{\code{allocated}, p, rc}} & \iff \temporaryRegister{\operandTemporary{p}} \in \atoms{rc} \\
     \end{aligned}
   \end{equation*}
 }
@@ -175,7 +182,7 @@ and
 \begin{equation}\textstyle\label{eq:instruction-selection}
   \temporaryRegister{\operandTemporary{p}}
   \in
-  \registerClass{o}{\operationInstruction{o}}{p}
+  \atoms{\registerClass{o}{\operationInstruction{o}}{p}}
   \quad
   \forallIn{o}{\allOperations{}}, \,
   \forallIn{p}{\operands{o}}

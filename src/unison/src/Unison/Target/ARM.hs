@@ -596,10 +596,7 @@ altRetConstraints (
        oBranchIs = [General NullInstruction, TargetInstruction TBX_RET]}}
   :
   code) constraints =
-  let alt =
-        XorExpr
-        (ActiveOperation (oId op))
-        (ActiveOperation (oId or))
+  let alt = XorExpr (ActiveExpr (oId op)) (ActiveExpr (oId or))
   in (code, constraints ++ [alt])
 
 altRetConstraints (_ : code) constraints = (code, constraints)
@@ -617,8 +614,8 @@ altLoadStoreConstraints (
   code) constraints | all isSingleLoadStore [i1, i2] && isDoubleLoadStore dsi =
   let alt =
         XorExpr
-        (AndExpr (ActiveOperation (oId s1)) (ActiveOperation (oId s2)))
-        (ActiveOperation (oId ds))
+        (AndExpr [ActiveExpr (oId s1), ActiveExpr (oId s2)])
+        (ActiveExpr (oId ds))
   in (code, constraints ++ [alt])
 
 altLoadStoreConstraints (_ : code) constraints = (code, constraints)

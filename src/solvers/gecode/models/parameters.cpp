@@ -1086,33 +1086,66 @@ void Parameters::get_element(QScriptValue root, UnisonConstraintExpr & e) {
   QScriptValueIterator iti(root);
   iti.next();
   e.id = (UnisonConstraintExprId) iti.value().toInt32();
-  iti.next();
-  UnisonConstraintExpr e1, e2;
   switch (e.id) {
+    // unary expressions
+  case NOT_EXPR:
+    iti.next();
+    {
+      UnisonConstraintExpr e1;
+      get_element(iti.value(), e1);
+      e.children.push_back(e1);
+    }
+    break;
+    // binary expressions
   case XOR_EXPR:
+  case IMPLIES_EXPR:
+    for (unsigned int i = 0; i < 2; i++) {
+      iti.next();
+      {
+        UnisonConstraintExpr e2;
+        get_element(iti.value(), e2);
+        e.children.push_back(e2);
+      }
+    }
+    break;
+    // n-ary expressions
+  case OR_EXPR:
   case AND_EXPR:
-  case IMPL_EXPR:
-    get_element(iti.value(), e1);
-    e.children.push_back(e1);
-    iti.next();
-    get_element(iti.value(), e2);
-    e.children.push_back(e2);
+    while (iti.hasNext()) {
+      iti.next();
+      if (iti.name() != "length") {
+        {
+          UnisonConstraintExpr e3;
+          get_element(iti.value(), e3);
+          e.children.push_back(e3);
+        }
+      }
+    }
     break;
-  case ACTIVE_OPERATION_EXPR:
-    e.data.push_back(iti.value().toInt32());
-    break;
-  case TEMPORARY_CONNECTION_EXPR:
-  case OPERATION_IMPLEMENTATION_EXPR:
-    e.data.push_back(iti.value().toInt32());
+    // unary literals
+  case ACTIVE_EXPR:
+  case CALLER_SAVED_EXPR:
     iti.next();
     e.data.push_back(iti.value().toInt32());
     break;
-  case MINIMUM_DISTANCE_EXPR:
-    e.data.push_back(iti.value().toInt32());
-    iti.next();
-    e.data.push_back(iti.value().toInt32());
-    iti.next();
-    e.data.push_back(iti.value().toInt32());
+    // binary literals
+  case CONNECTS_EXPR:
+  case IMPLEMENTS_EXPR:
+  case SHARE_EXPR:
+  case OPERAND_OVERLAP_EXPR:
+  case TEMPORARY_OVERLAP_EXPR:
+  case ALLOCATED_EXPR:
+    for (unsigned int i = 0; i < 2; i++) {
+      iti.next();
+      e.data.push_back(iti.value().toInt32());
+    }
+    break;
+    // ternary literals
+  case DISTANCE_EXPR:
+    for (unsigned int i = 0; i < 3; i++) {
+      iti.next();
+      e.data.push_back(iti.value().toInt32());
+    }
     break;
   default: GECODE_NEVER;
   }

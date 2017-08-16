@@ -62,22 +62,35 @@ instance ToJSON (IndexedUsage s) where
 
 instance ToJSON (IndexedInstruction i) where toJSON = toJSON . ioId
 
-instance ToJSON (ConstraintExpr i) where
+instance ToJSON (ConstraintExpr i rc) where
+  toJSON e @ (OrExpr es) = toJSON ([toJSON (exprId e)] ++ map toJSON es)
+  toJSON e @ (AndExpr es) = toJSON ([toJSON (exprId e)] ++ map toJSON es)
   toJSON e @ (XorExpr e1 e2) = toJSON (exprId e, e1, e2)
-  toJSON e @ (AndExpr e1 e2) = toJSON (exprId e, e1, e2)
-  toJSON e @ (ImplExpr e1 e2) = toJSON (exprId e, e1, e2)
-  toJSON e @ (ActiveOperation oid) = toJSON (exprId e, oid)
-  toJSON e @ (TemporaryConnection pid tid) = toJSON (exprId e, pid, tid)
-  toJSON e @ (EOperationImplementation oid ii) = toJSON (exprId e, oid, ii)
-  toJSON e @ (MinimumDistance oid1 oid2 d) = toJSON (exprId e, oid1, oid2, d)
+  toJSON e @ (ImpliesExpr e1 e2) = toJSON (exprId e, e1, e2)
+  toJSON e @ (ActiveExpr oid) = toJSON (exprId e, oid)
+  toJSON e @ (ConnectsExpr pid tid) = toJSON (exprId e, pid, tid)
+  toJSON e @ (EImplementsExpr oid ii) = toJSON (exprId e, oid, ii)
+  toJSON e @ (DistanceExpr oid1 oid2 d) = toJSON (exprId e, oid1, oid2, d)
+  toJSON e @ (ShareExpr pid1 pid2) = toJSON (exprId e, pid1, pid2)
+  toJSON e @ (OperandOverlapExpr pid1 pid2) = toJSON (exprId e, pid1, pid2)
+  toJSON e @ (TemporaryOverlapExpr tid1 tid2) = toJSON (exprId e, tid1, tid2)
+  toJSON e @ (CallerSavedExpr tid) = toJSON (exprId e, tid)
+  toJSON e @ (EAllocatedExpr pid irc) = toJSON (exprId e, pid, irc)
 
-exprId :: ConstraintExpr i -> Integer
-exprId XorExpr {}                  = 0
-exprId AndExpr {}                  = 1
-exprId ImplExpr {}                 = 2
-exprId ActiveOperation {}          = 3
-exprId TemporaryConnection {}      = 4
-exprId EOperationImplementation {} = 5
-exprId MinimumDistance {}          = 6
+exprId :: ConstraintExpr i rc -> Integer
+exprId OrExpr {}               = 0
+exprId AndExpr {}              = 1
+exprId XorExpr {}              = 2
+exprId ImpliesExpr {}          = 3
+exprId NotExpr {}              = 4
+exprId ActiveExpr {}           = 5
+exprId ConnectsExpr {}         = 6
+exprId EImplementsExpr {}      = 7
+exprId DistanceExpr {}         = 8
+exprId ShareExpr {}            = 9
+exprId OperandOverlapExpr {}   = 10
+exprId TemporaryOverlapExpr {} = 11
+exprId CallerSavedExpr {}      = 12
+exprId EAllocatedExpr {}       = 13
 
 unionMaps (Object m1) (Object m2) = Object (HM.union m1 m2)

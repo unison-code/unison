@@ -905,27 +905,46 @@ data OGEdgeLabel i r =
 
 -- | Expression over a Unison IR function.
 
-data ConstraintExpr i =
-    -- | Exclusive or
-    XorExpr (ConstraintExpr i) (ConstraintExpr i) |
+data ConstraintExpr i rc =
+    -- | Disjunction
+    OrExpr [ConstraintExpr i rc] |
     -- | Conjunction
-    AndExpr (ConstraintExpr i) (ConstraintExpr i) |
+    AndExpr [ConstraintExpr i rc] |
+    -- | Exclusive or
+    XorExpr (ConstraintExpr i rc) (ConstraintExpr i rc) |
     -- | Implication
-    ImplExpr (ConstraintExpr i) (ConstraintExpr i) |
-    -- | Literal expressing that a certain operation is active
-    ActiveOperation OperationId |
-    -- | Literal expressing that a certain operand is connected to a
+    ImpliesExpr (ConstraintExpr i rc) (ConstraintExpr i rc) |
+    -- | Negation
+    NotExpr (ConstraintExpr i rc) |
+    -- | Literal expressing that an operation is active
+    ActiveExpr OperationId |
+    -- | Literal expressing that an operand is connected to a
     -- certain temporary
-    TemporaryConnection MoperandId TemporaryId |
-    -- | Literal expressing that a certain operation is implemented by a
-    -- certain instruction
-    OperationImplementation OperationId (Instruction i) |
+    ConnectsExpr MoperandId TemporaryId |
+    -- | Literal expressing that an operation is implemented by an
+    -- instruction
+    ImplementsExpr OperationId (Instruction i) |
     -- | Literal expressing that two instructions are issued at least n
     -- cycles from each other
-    MinimumDistance OperationId OperationId Latency |
+    DistanceExpr OperationId OperationId Latency |
+    -- | Literal expressing that two operands are connected to the same
+    -- temporary
+    ShareExpr MoperandId MoperandId |
+    -- | Literal expressing that the live ranges of the temporaries connected to
+    -- two operands overlap
+    OperandOverlapExpr MoperandId MoperandId |
+    -- | Literal expressing that the live ranges of two temporaries overlap
+    TemporaryOverlapExpr TemporaryId TemporaryId |
+    -- | Literal expressing that a temporary is assigned to a caller-saved
+    -- register
+    CallerSavedExpr TemporaryId |
+    -- | Literal expressing that the temporary connected to an operand is
+    -- assigned to a register class
+    AllocatedExpr MoperandId (RegisterClass rc) |
     -- | Emission-only, internal version of operation implementation literal
-    EOperationImplementation OperationId (IndexedInstruction i)
-    deriving Eq
+    EImplementsExpr OperationId (IndexedInstruction i) |
+    -- | Emission-only, internal version of temporary allocation literal
+    EAllocatedExpr MoperandId (IndexedRegisterClass rc)
 
 -- | Dependency among 'Operation's.
 
