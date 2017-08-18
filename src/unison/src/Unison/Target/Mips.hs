@@ -85,8 +85,8 @@ branchInfo (Branch {oBranchIs = ops, oBranchUs = [_, BlockRef l]})
     BranchInfo Conditional (Just l)
 branchInfo (Branch {oBranchIs = ops, oBranchUs = [_, _, BlockRef l]})
   | targetInst ops `elem` [BEQ, BNE] = BranchInfo Conditional (Just l)
-branchInfo (Branch {oBranchIs = [TargetInstruction B], oBranchUs = [BlockRef l]}) =
-    BranchInfo Unconditional (Just l)
+branchInfo (Branch {oBranchIs = [TargetInstruction i], oBranchUs = [BlockRef l]})
+  | i `elem` [B, J] = BranchInfo Unconditional (Just l)
 branchInfo (Branch {oBranchIs = [TargetInstruction JR]}) =
     BranchInfo Unconditional Nothing
 branchInfo (Branch {oBranchIs = [TargetInstruction RetRA]}) =
