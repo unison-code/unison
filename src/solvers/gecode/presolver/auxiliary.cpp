@@ -107,11 +107,11 @@ bool subsumes(const presolver_conj& a, const presolver_conj& b) {
 }
 
 
-vector<nogood> kernel_set(const vector<nogood>& disj,
-			  const vector<nogood>& sos,
+vector<presolver_conj> kernel_set(const vector<presolver_conj>& disj,
+			  const vector<presolver_conj>& sos,
 			  int cutoff) {
-  vector<nogood> d(disj.begin(), disj.end());
-  vector<nogood> s(sos.begin(), sos.end());
+  vector<presolver_conj> d(disj.begin(), disj.end());
+  vector<presolver_conj> s(sos.begin(), sos.end());
   Support::Timer t;
   t.start();
 
@@ -121,7 +121,7 @@ vector<nogood> kernel_set(const vector<nogood>& disj,
 
     presolver_conj conj = d.back();
     bool is_subsumed = false;
-    vector<nogood> RC;
+    vector<presolver_conj> RC;
     
     d.pop_back();
     for(const presolver_conj& c : s) {
@@ -136,7 +136,7 @@ vector<nogood> kernel_set(const vector<nogood>& disj,
     if(!is_subsumed) {
       vector_insert(s, conj);
       if (!RC.empty()) {
-	vector<nogood> x = ord_difference(s, RC);
+	vector<presolver_conj> x = ord_difference(s, RC);
 	s.swap(x);
       }
     }
@@ -146,7 +146,7 @@ vector<nogood> kernel_set(const vector<nogood>& disj,
 }
 
 presolver_disj filter_condition(const presolver_disj& disj,
-       const vector<nogood>& nogoods) {
+       const vector<presolver_conj>& nogoods) {
     presolver_disj result;
     std::copy_if(disj.begin(), disj.end(),
             std::back_inserter(result),

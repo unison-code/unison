@@ -67,7 +67,7 @@ private:
   BeforePresolver(Parameters& input);
 
   // Run before presolving
-  void presolve(vector<nogood>& Nogoods);
+  void presolve(vector<presolver_conj>& Nogoods);
 
   // Generate before constraints data.
   void gen_before(beforeset& B);
@@ -88,11 +88,11 @@ private:
   vector<vector<operand> > emit_before(const vector<vector<int> >& C);
 
   // Split beforeset into two pars, befores and nogoods
-  void before_vs_nogoods(beforeset& T, vector<nogood>& Nogoods);
+  void before_vs_nogoods(beforeset& T, vector<presolver_conj>& Nogoods);
 
 public:
   // Static member function, invoked to run before presolver
-  static void presolve(Parameters& input, vector<nogood>& Nogoods);
+  static void presolve(Parameters& input, vector<presolver_conj>& Nogoods);
 };
 
 #endif

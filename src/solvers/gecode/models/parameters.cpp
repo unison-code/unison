@@ -1179,20 +1179,6 @@ void Parameters::get_element(QScriptValue root, PresolverCopyTmpTable & ctt) {
   ctt.tuples = get_2d_vector<int>(iti.value());
 }
 
-
-// void Parameters::get_element(QScriptValue root, PresolverPrecedence & p) {
-//   assert(root.isArray());
-//   QScriptValueIterator iti(root);
-//   iti.next();
-//   p.i = iti.value().toInt32();
-//   iti.next();
-//   p.j = iti.value().toInt32();
-//   iti.next();
-//   p.n = iti.value().toInt32();
-//   iti.next();
-//   get_element(iti.value(), p.d);
-// }
-
 void Parameters::get_element(QScriptValue root, PresolverBeforeJSON & b) {
   assert(root.isArray());
   QScriptValueIterator iti(root);
@@ -1204,15 +1190,6 @@ void Parameters::get_element(QScriptValue root, PresolverBeforeJSON & b) {
   get_element(iti.value(), b.e);
 }
 
-// void Parameters::get_element(QScriptValue root, PresolverAcrossItem & ai) {
-//   assert(root.isArray());
-//   QScriptValueIterator iti(root);
-//   iti.next();
-//   ai.t = iti.value().toInt32();
-//   iti.next();
-//   get_element(iti.value(), ai.d);
-// }
-
 void Parameters::get_element(QScriptValue root, PresolverAcrossItemJSON & ai) {
   assert(root.isArray());
   QScriptValueIterator iti(root);
@@ -1221,17 +1198,6 @@ void Parameters::get_element(QScriptValue root, PresolverAcrossItemJSON & ai) {
   iti.next();
   get_element(iti.value(), ai.e);
 }
-
-// void Parameters::get_element(QScriptValue root, PresolverAcross & a) {
-//   assert(root.isArray());
-//   QScriptValueIterator iti(root);
-//   iti.next();
-//   a.o = iti.value().toInt32();
-//   iti.next();
-//   a.ras = get_vector<register_atom>(iti.value());
-//   iti.next();
-//   a.as = get_vector<PresolverAcrossItem>(iti.value());
-// }
 
 void Parameters::get_element(QScriptValue root, PresolverAcrossJSON & a) {
   assert(root.isArray());
@@ -1418,19 +1384,6 @@ void Parameters::get_element(Json::Value root, PresolverCopyTmpTable & ctt) {
   ctt.tuples = get_2d_vector<int>(*iti);
 }
 
-
-// void Parameters::get_element(Json::Value root, PresolverPrecedence & p) {
-//   assert(root.isArray());
-//   Json::ValueIterator iti = root.begin();
-//   p.i = (*iti).asInt();
-//   iti++;
-//   p.j = (*iti).asInt();
-//   iti++;
-//   p.n = (*iti).asInt();
-//   iti++;
-//   get_element(*iti, p.d);
-// }
-
 void Parameters::get_element(Json::Value root, PresolverBeforeJSON & b) {
   assert(root.isArray());
   Json::ValueIterator iti = root.begin();
@@ -1441,14 +1394,6 @@ void Parameters::get_element(Json::Value root, PresolverBeforeJSON & b) {
   get_element(*iti, b.e);
 }
 
-// void Parameters::get_element(Json::Value root, PresolverAcrossItem & ai) {
-//   assert(root.isArray());
-//   Json::ValueIterator iti = root.begin();
-//   ai.t = (*iti).asInt();
-//   iti++;
-//   get_element(*iti, ai.d);
-// }
-
 void Parameters::get_element(Json::Value root, PresolverAcrossItemJSON & ai) {
   assert(root.isArray());
   Json::ValueIterator iti = root.begin();
@@ -1456,16 +1401,6 @@ void Parameters::get_element(Json::Value root, PresolverAcrossItemJSON & ai) {
   iti++;
   get_element(*iti, ai.e);
 }
-
-// void Parameters::get_element(Json::Value root, PresolverAcross & a) {
-//   assert(root.isArray());
-//   Json::ValueIterator iti = root.begin();
-//   a.o = (*iti).asInt();
-//   iti++;
-//   a.ras = get_vector<register_atom>(*iti);
-//   iti++;
-//   a.as = get_vector<PresolverAcrossItem>(*iti);
-// }
 
 void Parameters::get_element(Json::Value root, PresolverAcrossJSON & a) {
   assert(root.isArray());

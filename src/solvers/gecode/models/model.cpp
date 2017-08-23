@@ -114,30 +114,6 @@ BoolVar Model::adhoc_constraint_var(UnisonConstraintExpr & e) {
   }
 }
 
-BoolVar Model::presolver_disj_var(presolver_disj &d) {
-  BoolVar disj(*this, 0, 1);
-  if (d.empty()) {
-    constraint(!disj); // TODO: does this happen by default?
-  } else {
-    BoolVarArgs presolver_conjs;
-    for (presolver_conj c : d) presolver_conjs << presolver_conj_var(c);
-    rel(*this, BOT_OR, presolver_conjs, disj, ipl);
-  }
-  return disj;
-}
-
-BoolVar Model::presolver_conj_var(presolver_conj &c) {
-  BoolVar conj(*this, 0, 1);
-  if (c.empty()) {
-    constraint(conj); // TODO: does this happen by default?
-  } else {
-    BoolVarArgs presolver_lits;
-    for (UnisonConstraintExpr l : c) presolver_lits << adhoc_constraint_var(l);
-    rel(*this, BOT_AND, presolver_lits, conj, ipl);
-  }
-  return conj;
-}
-
 IntVar Model::slack(operand p) {
   return input->global_operand[p] ? s(p) : var(0);
 }
@@ -2107,7 +2083,7 @@ void Model::post_nogood_constraints(block b) {
   if (!options->disable_additional_nogood_constraints())
     ngs = concat(ngs, input->bnogoods2[b]);
 
-  // Nogood conjunctions are false:
+  // All nogoods should be false:
 
   for (UnisonConstraintExpr ng : ngs) {
     constraint(!adhoc_constraint_var(ng));

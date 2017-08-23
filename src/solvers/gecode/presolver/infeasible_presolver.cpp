@@ -260,7 +260,7 @@ void InfeasiblePresolver::setup(void) {
   D_7_Cands = gen_candidates(D_7, U);
 }
 
-void InfeasiblePresolver::pass1(vector<temporand_set>& Alldiffs, vector<nogood>& Nogoods) {
+void InfeasiblePresolver::pass1(vector<temporand_set>& Alldiffs, vector<presolver_conj>& Nogoods) {
   // F <- F union redefined_operand_nogoods()
   redefined_operand_nogoods(Nogoods);
 
@@ -297,7 +297,7 @@ void InfeasiblePresolver::pass1(vector<temporand_set>& Alldiffs, vector<nogood>&
   }
 }
 
-void InfeasiblePresolver::pass2(vector<nogood>& Nogoods) {
+void InfeasiblePresolver::pass2(vector<presolver_conj>& Nogoods) {
 
   cutoff = (options.timeout() + timer.stop()) / 2;
 
@@ -327,7 +327,7 @@ void InfeasiblePresolver::pass2(vector<nogood>& Nogoods) {
   Nogoods.erase(unique(Nogoods.begin(), Nogoods.end()), Nogoods.end());
 }
 
-void InfeasiblePresolver::redefined_operand_nogoods(vector<nogood>& Nogoods) {
+void InfeasiblePresolver::redefined_operand_nogoods(vector<presolver_conj>& Nogoods) {
   vector<operation> Rs;
   for(const operation o : input.O) {
     if(!input.redefined[o].empty()) {
@@ -344,7 +344,7 @@ void InfeasiblePresolver::redefined_operand_nogoods(vector<nogood>& Nogoods) {
 	    unsigned int d1i = find_index(input.operands[o1], p2);
 	    unsigned int d2i = find_index(input.operands[o2], q2);
 	    if(!ord_intersection(input.temps[p], input.temps[q]).empty()) {
-	      vector<nogood> D;
+	      vector<presolver_conj> D;
 	      unsigned int n = 0;
 	      for (unsigned int i1i = 0; i1i < input.instructions[o1].size(); i1i++) {
 		for (unsigned int i2i = 0; i2i < input.instructions[o2].size(); i2i++) {
@@ -352,7 +352,7 @@ void InfeasiblePresolver::redefined_operand_nogoods(vector<nogood>& Nogoods) {
 		  if(input.lat[o1][i1i][d1i]>0 && input.lat[o2][i2i][d2i]>0) {
 		    instruction i1 = input.instructions[o1][i1i];
 		    instruction i2 = input.instructions[o2][i2i];
-		    nogood c;
+		    presolver_conj c;
 		    UnisonConstraintExpr e1(SHARE_EXPR, {p,q}, {});
 		    UnisonConstraintExpr e2(IMPLEMENTS_EXPR, {o1,i1}, {});
 		    UnisonConstraintExpr e3(IMPLEMENTS_EXPR, {o2,i2}, {});
@@ -371,7 +371,7 @@ void InfeasiblePresolver::redefined_operand_nogoods(vector<nogood>& Nogoods) {
 	  }
 }
 
-void InfeasiblePresolver::before_in_nogoods(vector<nogood>& Nogoods) {
+void InfeasiblePresolver::before_in_nogoods(vector<presolver_conj>& Nogoods) {
   for(const PresolverBeforeJSON& b : input.before) {
     vector<temporary> Ts = input.temps[b.q];
     temporary T1 = Ts[0];
@@ -380,13 +380,13 @@ void InfeasiblePresolver::before_in_nogoods(vector<nogood>& Nogoods) {
        input.type[input.oper[b.q]] == OUT &&
        input.type[input.def_opr[T1]] == IN) {
       UnisonConstraintExpr e(CONNECTS_EXPR, {b.q,T1}, {});
-      nogood c = {e};
+      presolver_conj c = {e};
       Nogoods.push_back(c);
     }
   }
 }
 
-void InfeasiblePresolver::xchg_nogoods(vector<nogood>& Nogoods) {
+void InfeasiblePresolver::xchg_nogoods(vector<presolver_conj>& Nogoods) {
   // Xchg basically reconstructs "interchangeable", which currently seems inaccurate
   map<vector<vector<int>>,vector<operation>> Xchg;
   for(const operation o : input.O) {
@@ -410,7 +410,7 @@ void InfeasiblePresolver::xchg_nogoods(vector<nogood>& Nogoods) {
 	for(unsigned int j=i; j<ts.size(); j++) {
 	  if(ord_contains(input.temps[p], ts[j])) {
 	    UnisonConstraintExpr e(CONNECTS_EXPR, {p,ts[j]}, {});
-	    nogood c = {e};
+	    presolver_conj c = {e};
 	    Nogoods.push_back(c);
 	  }
 	}
@@ -419,7 +419,7 @@ void InfeasiblePresolver::xchg_nogoods(vector<nogood>& Nogoods) {
   }
 }
 
-void InfeasiblePresolver::regdomain_nogoods(vector<nogood>& Nogoods) {
+void InfeasiblePresolver::regdomain_nogoods(vector<presolver_conj>& Nogoods) {
   map<vector<instruction>,vector<operation>> M;
   map<operand,vector<register_atom>> P2D;
   map<temporary,vector<register_atom>> T2D;
@@ -473,7 +473,7 @@ void InfeasiblePresolver::regdomain_nogoods(vector<nogood>& Nogoods) {
       for(temporary t : input.temps[p]) {
 	if(t != NULL_TEMPORARY && ord_intersection(pd, T2D[t]).empty()) {
 	  UnisonConstraintExpr e(CONNECTS_EXPR, {p,t}, {});
-	  nogood c = {e};
+	  presolver_conj c = {e};
 	  Nogoods.push_back(c);
 	}
       }
@@ -481,7 +481,7 @@ void InfeasiblePresolver::regdomain_nogoods(vector<nogood>& Nogoods) {
   }
 }
 
-void InfeasiblePresolver::dominsn_nogoods(vector<nogood>& Nogoods) {
+void InfeasiblePresolver::dominsn_nogoods(vector<presolver_conj>& Nogoods) {
   // exclude instructions that imply alignment and the null instruction
   vector<int> A;
   A.push_back(NULL_INSTRUCTION);
@@ -551,7 +551,7 @@ void InfeasiblePresolver::dominsn_nogoods(vector<nogood>& Nogoods) {
       vector<operand> ps = input.operands[o];
       vector<register_class> rc = ic_os.first.rclass;
       UnisonConstraintExpr e1(IMPLEMENTS_EXPR, {o, ic_os.first.insn}, {});
-      nogood c = {e1};
+      presolver_conj c = {e1};
       for(unsigned jj=0; jj<ps.size(); jj++)
 	if (rc[jj]!=input.rclass[o][ii][jj]) {
 	  UnisonConstraintExpr e2(ALLOCATED_EXPR, {ps[jj], rc[jj]}, {});
@@ -696,7 +696,7 @@ void InfeasiblePresolver::single_nogoods(const vector<temporand_set >& D,
 					 const vector<vector<nogood_cand_set> >& DCands,
 					 const vector<vector<operand> >* R,
 					 const bool filter_temps,
-					 vector<nogood>& nogoods) {
+					 vector<presolver_conj>& nogoods) {
   vector<temporand_set> DD(D.begin(), D.end());
 
   // for(int i = 0; i < B7.size(); i++){
@@ -732,7 +732,7 @@ void InfeasiblePresolver::single_nogoods(const vector<temporand_set >& D,
 						 SHARE_EXPR :
 						 CONNECTS_EXPR);
 	      UnisonConstraintExpr e(tag, {V3.id(), V4.id()}, {});
-	      nogood c = {e};
+	      presolver_conj c = {e};
 
 	      emit_nogood(R, c, V1, V2, nogoods);
 	    }
@@ -748,7 +748,7 @@ void InfeasiblePresolver::double_nogoods(const vector<temporand_set >& D,
 					 const vector<vector<nogood_cand_set> >& DCands,
 					 const vector<vector<operand> >* R,
 					 const bool filter_temps,
-					 vector<nogood>& nogoods) {
+					 vector<presolver_conj>& nogoods) {
   // By construction are the legnths of D and DCands equal, even for embedded sets/vectors.
   // This is a preconditon.
 
@@ -799,7 +799,7 @@ void InfeasiblePresolver::double_nogoods(const vector<temporand_set >& D,
 						       CONNECTS_EXPR);
 		  UnisonConstraintExpr lit34(tag34, {v3.id(), v4.id()}, {});
 		  UnisonConstraintExpr lit56(tag56, {v5.id(), v6.id()}, {});
-		  nogood c;
+		  presolver_conj c;
 		  if (lit34 < lit56)
 		    c = {lit34,lit56};
 		  else
@@ -817,10 +817,10 @@ void InfeasiblePresolver::double_nogoods(const vector<temporand_set >& D,
 
 
 void InfeasiblePresolver::emit_nogood(const vector<vector<operand> >* R,
-				      const nogood& Conj,
+				      const presolver_conj& Conj,
 				      const Temporand& v1,
 				      const Temporand& v2,
-				      vector<nogood>& Nogoods) {
+				      vector<presolver_conj>& Nogoods) {
   // G is true iff it is nullptr!
   if (R == nullptr) {
     Nogoods.push_back(Conj);
@@ -912,7 +912,7 @@ void InfeasiblePresolver::emit_nogood(const vector<vector<operand> >* R,
 	      operand p4 = max(minPs1, minPs2);
 
 	      UnisonConstraintExpr l(OPERAND_OVERLAP_EXPR, {p3,p4}, {});
-	      nogood C(Conj);
+	      presolver_conj C(Conj);
 
 	      // Conj union l
 	      vector_insert(C,l);
@@ -999,7 +999,7 @@ vector<vector<nogood_cand_set> > InfeasiblePresolver::gen_candidates(const vecto
 }
 
 
-bool InfeasiblePresolver::subsumed_nogood(const nogood& conj) {
+bool InfeasiblePresolver::subsumed_nogood(const presolver_conj& conj) {
   if(conj.size() > 6) return true;
   // Exists p,t,t' | {eq(p(p),t(t)),eq(p(p),t(t'))} subset of conj
   // Since conj is sorted, any such pair must be consecetive positioned in conj.
@@ -1012,7 +1012,7 @@ bool InfeasiblePresolver::subsumed_nogood(const nogood& conj) {
   }
 
   // Exists a N in assert.new_nogoods | N subset of conj
-  for(const nogood& N : PA.new_nogood) {
+  for(const presolver_conj& N : PA.new_nogood) {
     if(subsumes(N, conj)) {
       return true;
     }
@@ -1024,14 +1024,14 @@ bool InfeasiblePresolver::subsumed_nogood(const nogood& conj) {
 void InfeasiblePresolver::cycle_dfs(const operation i,
 				    const operation j,
 				    vector<vector<operation> > F,
-				    const nogood& conj,
-				    map<vector<operation>, vector<pair<int,vector<nogood> > > >& M) {
+				    const presolver_conj& conj,
+				    map<vector<operation>, vector<pair<int,vector<presolver_conj> > > >& M) {
   if(timer.stop() >= cutoff)
     return;
  start:
   if(subsumed_nogood(conj)) {
   } else if(i == j) {
-    vector<nogood> RC;
+    vector<presolver_conj> RC;
     for(const presolver_conj& c : PA.new_nogood) {
       if(subsumes(conj, c)) {
 	vector_insert(RC, c);
@@ -1039,7 +1039,7 @@ void InfeasiblePresolver::cycle_dfs(const operation i,
     }
 
     vector_insert(PA.new_nogood, conj);
-    vector<nogood> x = ord_difference(PA.new_nogood, RC);
+    vector<presolver_conj> x = ord_difference(PA.new_nogood, RC);
     PA.new_nogood.swap(x);
   } else if(!F.empty()) {
     //    vector<operation> e = F[0]; // Lex. smallest edge of F
@@ -1051,9 +1051,9 @@ void InfeasiblePresolver::cycle_dfs(const operation i,
     F.pop_back();
 
     if(i == ei && ej <= j) {
-      for(pair<int,vector<nogood> >& v: M[e]) {
-	for(const nogood& conj2 : v.second) {
-	  nogood conj3 = ord_union(conj, conj2);
+      for(pair<int,vector<presolver_conj> >& v: M[e]) {
+	for(const presolver_conj& conj2 : v.second) {
+	  presolver_conj conj3 = ord_union(conj, conj2);
 
 	  cycle_dfs(ej, j, F, conj3, M);
 	}
@@ -1069,7 +1069,7 @@ void InfeasiblePresolver::cycle_dfs(const operation i,
 
 void InfeasiblePresolver::break_cycle(const vector<operation>& scc,
 				      const vector<vector<operation> >& E,
-				      map<vector<operation>, vector<pair<int,vector<nogood> > > >& M) {
+				      map<vector<operation>, vector<pair<int,vector<presolver_conj> > > >& M) {
 
   vector<vector<operation> > F;
   vector<vector<operation> > B;
@@ -1100,8 +1100,8 @@ void InfeasiblePresolver::break_cycle(const vector<operation>& scc,
     if (options.verbose()) {
       cerr << "*  breaking cycle from " << e[1] << " to " << e[0] << " and back" << endl;
     }
-    for(const pair<int,vector<nogood> >& v: M[e]) {
-      for(const nogood& conj : v.second) {
+    for(const pair<int,vector<presolver_conj> >& v: M[e]) {
+      for(const presolver_conj& conj : v.second) {
 	cycle_dfs(e[1], e[0], F, conj, M);
 	if(timer.stop() >= cutoff)
 	  return;
@@ -1111,8 +1111,8 @@ void InfeasiblePresolver::break_cycle(const vector<operation>& scc,
 }
 
 void InfeasiblePresolver::detect_cycles(void) {
-  map<vector<operation>, vector<pair<int,vector<nogood> > > > M;
-  vector<UnisonConstraintExpr> T;
+  map<vector<operation>, vector<pair<int,vector<presolver_conj> > > > M;
+  presolver_conj T;
   vector<vector<operation> > E;
 
   cutoff = (options.timeout() + timer.stop()) / 2;

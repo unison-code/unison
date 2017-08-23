@@ -174,7 +174,7 @@ void presolve(Parameters & input, PresolverOptions & options) {
   // 4: <JSON.before, Nogoods0> <- BEFOREVSNOGOODS(GENBEFORE())
 
   t0.start();
-  vector<nogood> Nogoods;
+  vector<presolver_conj> Nogoods;
   BeforePresolver::presolve(input, Nogoods);
   if (timeout(t, options, "before", t0))
     return;
@@ -183,7 +183,7 @@ void presolve(Parameters & input, PresolverOptions & options) {
 
   t0.start();
   vector<temporand_set > Alldiffs;
-  vector<nogood> Nogoods1;
+  vector<presolver_conj> Nogoods1;
   InfeasiblePresolver ip = InfeasiblePresolver(PA, input, t, options);
   ip.setup();
   ip.pass1(Alldiffs, Nogoods1);
@@ -220,7 +220,7 @@ void presolve(Parameters & input, PresolverOptions & options) {
   vector<PresolverAcrossTuple> Across;
   vector<PresolverSetAcrossTuple> AltAcross;
   vector<PresolverBefore> CondBefore;
-  vector<nogood> Nogoods2;
+  vector<presolver_conj> Nogoods2;
   presolve_across(PA, input, Across, AltAcross, CondBefore, Nogoods2);
   alt_across_to_json(input, AltAcross);
   if (timeout(t, options, "set_across", t0))
@@ -229,7 +229,7 @@ void presolve(Parameters & input, PresolverOptions & options) {
   // 11: Nogoods3 <- KERNELSET (Nogoods UNION Nogoods1 UNION Nogoods2, {})
 
   t0.start();
-  vector<nogood> n0, n1;
+  vector<presolver_conj> n0, n1;
 
   set_union(Nogoods.begin(), Nogoods.end(),
 	    Nogoods1.begin(), Nogoods1.end(),
@@ -247,7 +247,7 @@ void presolve(Parameters & input, PresolverOptions & options) {
   //            | t in OPNDTEMPS(p) /\ {p, q} SUBSETOF c /\ c IN JSON.difftemps}
 
   t0.start();
-  vector<nogood> DNogoods;
+  vector<presolver_conj> DNogoods;
   for(const vector<operand>& c : input.difftemps) {
     if(c.size() >= 2) {
       for(unsigned i = 0; i < c.size(); i++) {
@@ -286,14 +286,14 @@ void presolve(Parameters & input, PresolverOptions & options) {
   // 15: MoreNogoods <- KernelSet(Assert.more_nogood, Nogoods)
 
   t0.start();
-  vector<nogood> MoreNogoods = kernel_set(PA.more_nogoods, Nogoods, -1);
+  vector<presolver_conj> MoreNogoods = kernel_set(PA.more_nogoods, Nogoods, -1);
   if (timeout(t, options, "MoreNogoods", t0))
     return;
 
   // 16: JSON.nogoods2 <- MoreNogoods \ Nogoods
 
   t0.start();
-  for (const nogood& ng : ord_difference(MoreNogoods, Nogoods)) {
+  for (const presolver_conj& ng : ord_difference(MoreNogoods, Nogoods)) {
     input.nogoods2.push_back(conj_to_expr(ng));
   }
   sort(input.nogoods2.begin(), input.nogoods2.end()); // canonicalize
@@ -422,7 +422,7 @@ void presolve(Parameters & input, PresolverOptions & options) {
   // 27: DETECTCYCLES(Nogoods)
 
   t0.start();
-  vector<nogood> Nogoods3, n3;
+  vector<presolver_conj> Nogoods3, n3;
   int cutoff = (options.timeout() - t.stop()) / 2;
 
   ip.pass2(Nogoods3);
@@ -440,7 +440,7 @@ void presolve(Parameters & input, PresolverOptions & options) {
 
   t0.start();
   cutoff = (options.timeout() - t.stop()) / 2;
-  for (const nogood& ng : ord_difference(kernel_set(PA.new_nogood, Nogoods, cutoff), DNogoods)) {
+  for (const presolver_conj& ng : ord_difference(kernel_set(PA.new_nogood, Nogoods, cutoff), DNogoods)) {
     input.nogoods.push_back(conj_to_expr(ng));
   }
   sort(input.nogoods.begin(), input.nogoods.end()); // canonicalize

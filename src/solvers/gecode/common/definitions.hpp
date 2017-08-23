@@ -135,8 +135,6 @@ typedef vector<UnisonConstraintExpr> presolver_conj;
 
 typedef vector<presolver_conj> presolver_disj;
 
-typedef presolver_conj nogood;
-
 class PresolverActiveTable {
 public:
   vector<operation> os;
@@ -160,41 +158,6 @@ public:
   }
 };
 
-class PresolverPrecedence {
-public:
-  operation i, j;
-  int n;
-  presolver_disj d;
-  // CONSTRUCTORS
-  PresolverPrecedence() : i(-1), j(-1), n(-1), d() { }
-  PresolverPrecedence(operation i, operation j, latency n, presolver_disj d):
-      i(i), j(j), n(n), d(d) { }
-  // OPERATORS
-  bool operator<(const PresolverPrecedence & p) const {
-    if(i != p.i) return i < p.i;
-    else if(j != p.j) return j < p.j;
-    else if(n != p.n) return n < p.n;
-    else return d < p.d;
-  }
-  bool operator==(const PresolverPrecedence & p) const {
-    return i == p.i && j == p.j && n == p.n && d == p.d;
-  }
-};
-
-class PresolverBefore {
-public:
-  operand p, q;
-  presolver_disj d;
-  bool operator<(const PresolverBefore &b) const {
-    if (p != b.p) return p < b.p;
-    else if (q != b.q) return q < b.q;
-    else return d < b.d;
-  }
-  bool operator==(const PresolverBefore& b) const {
-    return (p == b.p) && (q == b.q) && (d == b.d);
-  }
-};
-
 class PresolverBeforeJSON {
 public:
   operand p, q;
@@ -212,19 +175,6 @@ public:
   }
 };
 
-class PresolverAcrossItem {
-public:
-  temporary t;
-  presolver_disj d;
-  bool operator<(const PresolverAcrossItem& that) const {
-    if (t != that.t) return t < that.t;
-    return d < that.d;
-  }
-  bool operator==(const PresolverAcrossItem& that) const {
-    return (t == that.t) && (d == that.d);
-  }
-};
-
 class PresolverAcrossItemJSON {
 public:
   temporary t;
@@ -235,6 +185,19 @@ public:
   }
   bool operator==(const PresolverAcrossItemJSON& that) const {
     return (t == that.t) && (e == that.e);
+  }
+};
+
+class PresolverAcrossItem {
+public:
+  temporary t;
+  presolver_disj d;
+  bool operator<(const PresolverAcrossItem& that) const {
+    if (t != that.t) return t < that.t;
+    return d < that.d;
+  }
+  bool operator==(const PresolverAcrossItem& that) const {
+    return (t == that.t) && (d == that.d);
   }
 };
 
@@ -268,13 +231,6 @@ public:
   }
 };
 
-class PresolverAcrossTuple {
-public:
-  operation o;
-  temporary t;
-  presolver_disj d;
-};
-
 class PresolverSetAcross {
 public:
   operation o;
@@ -300,8 +256,6 @@ public:
     return (o1 == that.o1) && (o2 == that.o2) && (ins == that.ins) && (temps == that.temps);
   }
 };
-
-// [MC]
 
 class PresolverPred {
 public:
@@ -371,6 +325,49 @@ public:
     return (insn1 == that.insn1) && (insn2 == that.insn2) && (class1 == that.class1) && (class2 == that.class2);
   }
 };
+
+class PresolverPrecedence {
+public:
+  operation i, j;
+  int n;
+  presolver_disj d;
+  // CONSTRUCTORS
+  PresolverPrecedence() : i(-1), j(-1), n(-1), d() { }
+  PresolverPrecedence(operation i, operation j, latency n, presolver_disj d):
+      i(i), j(j), n(n), d(d) { }
+  // OPERATORS
+  bool operator<(const PresolverPrecedence & p) const {
+    if(i != p.i) return i < p.i;
+    else if(j != p.j) return j < p.j;
+    else if(n != p.n) return n < p.n;
+    else return d < p.d;
+  }
+  bool operator==(const PresolverPrecedence & p) const {
+    return i == p.i && j == p.j && n == p.n && d == p.d;
+  }
+};
+
+class PresolverBefore {
+public:
+  operand p, q;
+  presolver_disj d;
+  bool operator<(const PresolverBefore &b) const {
+    if (p != b.p) return p < b.p;
+    else if (q != b.q) return q < b.q;
+    else return d < b.d;
+  }
+  bool operator==(const PresolverBefore& b) const {
+    return (p == b.p) && (q == b.q) && (d == b.d);
+  }
+};
+
+class PresolverAcrossTuple {
+public:
+  operation o;
+  temporary t;
+  presolver_disj d;
+};
+
 
 typedef pair<operation, unsigned int> InstructionAssignment;
 

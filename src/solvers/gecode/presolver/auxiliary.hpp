@@ -76,14 +76,14 @@ vector<operand> strip(const temporand_set& C);
 bool subsumes(const presolver_conj& a, const presolver_conj& b);
 
 // Generates the union of disj and sos with any subsumed nogoods removed
-vector<nogood> kernel_set(const vector<nogood>& disj,
-			  const vector<nogood>& sos,
+vector<presolver_conj> kernel_set(const vector<presolver_conj>& disj,
+			  const vector<presolver_conj>& sos,
 			  int cutoff);
 
 // Compute the disjunction of elements of Disj that are not subsumed by any
 // element of Nogoods.
 presolver_disj filter_condition(const presolver_disj& disj,
-				const vector<nogood>& nogoods);
+				const vector<presolver_conj>& nogoods);
 
 // Returns the intersection of the sorted vectors v1 and v2
 template <typename T>

@@ -74,7 +74,6 @@ public:
 
   // Auxiliary
 
-  BoolVar relaxed_presolver_conj_var(presolver_conj c);
   BoolVar relaxed_adhoc_constraint_var(UnisonConstraintExpr & e);
 
   // Gecode space methods

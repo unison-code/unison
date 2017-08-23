@@ -51,8 +51,8 @@ public:
 
   vector<vector<operand> > cur_difftemp;
   vector<temporary> remat;
-  vector<nogood> more_nogoods;
-  vector<nogood> new_nogood;
+  vector<presolver_conj> more_nogoods;
+  vector<presolver_conj> new_nogood;
   vector<Digraph> dd_graph;
   vector<Digraph> dd_graph_transpose;
 };

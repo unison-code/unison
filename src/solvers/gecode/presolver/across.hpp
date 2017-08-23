@@ -60,14 +60,14 @@ void presolve_across(PresolverAsserts& PA,
 		     vector<PresolverAcrossTuple>& across,
 		     vector<PresolverSetAcrossTuple>& alt_across,
 		     vector<PresolverBefore>& cond_before,
-		     vector<nogood>& nogoods);
+		     vector<presolver_conj>& nogoods);
 
 void alt_across_to_json(Parameters& input,
 			const vector<PresolverSetAcrossTuple>& SetAcross);
 
 void across_to_json(Parameters& input,
 		    const vector<PresolverAcrossTuple>& Across,
-		    const vector<nogood>& Nogoods);
+		    const vector<presolver_conj>& Nogoods);
 
 void collect_at_call(const Parameters& input, operation o, vector<operand>& P, vector<temporary>& T);
 
@@ -96,7 +96,7 @@ presolver_disj merge_disjunctions(const Parameters& input,
 
 void nogoods_or_across(const Parameters& input,
 		       const PresolverAcrossTuple& acr,
-		       vector<nogood>& Nogoods,
+		       vector<presolver_conj>& Nogoods,
 		       vector<PresolverAcrossTuple>& Across);
 
 vector<temporary> across_candidates(PresolverAsserts& PA, const Parameters& input, operation o1, block b);

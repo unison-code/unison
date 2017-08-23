@@ -188,10 +188,6 @@ public:
 
   BoolVar adhoc_constraint_var(UnisonConstraintExpr & e);
 
-  BoolVar presolver_disj_var(presolver_disj &d);
-
-  BoolVar presolver_conj_var(presolver_conj &c);
-
   IntVar slack(operand p);
 
   // High-level constraints

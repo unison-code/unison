@@ -41,7 +41,7 @@
 BeforePresolver::BeforePresolver(Parameters& input) :
   input(input) { };
 
-void BeforePresolver::presolve(vector<nogood>& Nogoods) {
+void BeforePresolver::presolve(vector<presolver_conj>& Nogoods) {
 
   // Prebuild congr congr_map
   generate_congruence_operands(input, congr_map);
@@ -210,7 +210,7 @@ void BeforePresolver::before1(operand p, operand q, vector<PresolverBefore>& B) 
       pb.q = qc.first;
 
       // Only add non-empty
-      vector<UnisonConstraintExpr> conj;
+      presolver_conj conj;
       for(const UnisonConstraintExpr& lit : pc.second)
 	/* FIXME if(!lit.empty())*/ vector_insert(conj, lit);
       for(const UnisonConstraintExpr& lit : qc.second)
@@ -291,7 +291,7 @@ vector<vector<operand> > BeforePresolver::emit_before(const vector<vector<int> >
 }
 
 
-void BeforePresolver::before_vs_nogoods(beforeset& T, vector<nogood>& Nogoods) {
+void BeforePresolver::before_vs_nogoods(beforeset& T, vector<presolver_conj>& Nogoods) {
   for(PresolverBefore& t : T) {
     // before <- {t | t = <p,q,{ø}> in T}
     if(t.d.empty()) {
@@ -315,7 +315,7 @@ void BeforePresolver::before_vs_nogoods(beforeset& T, vector<nogood>& Nogoods) {
 }
 
 
-void BeforePresolver::presolve(Parameters& input, vector<nogood>& Nogoods) {
+void BeforePresolver::presolve(Parameters& input, vector<presolver_conj>& Nogoods) {
   BeforePresolver bg(input);
   bg.presolve(Nogoods);
 }

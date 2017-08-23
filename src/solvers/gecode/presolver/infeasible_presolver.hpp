@@ -101,15 +101,15 @@ private:
 
   vector<vector<nogood_cand_set> > D_7_Cands;
 
-  void redefined_operand_nogoods(vector<nogood>& Nogoods);
+  void redefined_operand_nogoods(vector<presolver_conj>& Nogoods);
 
-  void before_in_nogoods(vector<nogood>& Nogoods);
+  void before_in_nogoods(vector<presolver_conj>& Nogoods);
 
-  void xchg_nogoods(vector<nogood>& Nogoods);
+  void xchg_nogoods(vector<presolver_conj>& Nogoods);
 
-  void regdomain_nogoods(vector<nogood>& Nogoods);
+  void regdomain_nogoods(vector<presolver_conj>& Nogoods);
 
-  void dominsn_nogoods(vector<nogood>& Nogoods);
+  void dominsn_nogoods(vector<presolver_conj>& Nogoods);
 
   // Auguments U with possible assignments for related use operands,
   // auguments D with set of unrelated use operands.
@@ -149,7 +149,7 @@ private:
 		      const vector<vector<nogood_cand_set> >& DCands,
 		      const vector<vector<operand> >* R,
 		      const bool filter_temps,
-		      vector<nogood>& Nogoods1);
+		      vector<presolver_conj>& Nogoods1);
 
 
   // Generate nogood assignments that would unite members of some set in D
@@ -157,7 +157,7 @@ private:
 		      const vector<vector<nogood_cand_set> >& DCands,
 		      const vector<vector<operand> >* R,
 		      const bool filter_temps,
-		      vector<nogood>& Nogoods1);
+		      vector<presolver_conj>& Nogoods1);
 
 
   // Generate a set of nogoods from the given nogoods-candidates
@@ -165,7 +165,7 @@ private:
 		   const presolver_conj& Conj,
 		   const Temporand& v1,
 		   const Temporand& v2,
-		   vector<nogood>& Nogoods1);
+		   vector<presolver_conj>& Nogoods1);
 
 
   // Generate set of noggood candidates (see notes in cpp)
@@ -181,13 +181,13 @@ private:
 		 const operation j,
 		 vector<vector<operation> > F,
 		 const presolver_conj& conj,
-		 map<vector<operation>, vector<pair<int,vector<nogood> > > >& M);
+		 map<vector<operation>, vector<pair<int,vector<presolver_conj> > > >& M);
 
 
   // Generate nogoods to avoid cyclic precedences chanis for one SCC
   void break_cycle(const vector<operation>& scc,
 		   const vector<vector<operation> >& E,
-		   map<vector<operation>, vector<pair<int,vector<nogood> > > >& M);
+		   map<vector<operation>, vector<pair<int,vector<presolver_conj> > > >& M);
 
   // Generates the cartesian product of V
   vector<vector<Temporand> > cartesian_product(const vector<temporand_set >& V);
@@ -213,10 +213,10 @@ public:
   void setup(void);
 
   // member for generating infeasible nogoods, avoiding very expensive stuff
-  void pass1(vector<temporand_set>& Alldiffs, vector<nogood>& Nogoods);
+  void pass1(vector<temporand_set>& Alldiffs, vector<presolver_conj>& Nogoods);
 
   // member for generating infeasible nogoods, the expensive part
-  void pass2(vector<nogood>& Nogoods);
+  void pass2(vector<presolver_conj>& Nogoods);
 
   // member for detecting precedence cycles
   void detect_cycles(void);

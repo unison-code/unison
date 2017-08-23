@@ -41,7 +41,7 @@ void presolve_across(PresolverAsserts& PA,
 		     vector<PresolverAcrossTuple>& Across1,
 		     vector<PresolverSetAcrossTuple>& AltAcross,
 		     vector<PresolverBefore>& CondBefore,
-		     vector<nogood>& Nogoods) {
+		     vector<presolver_conj>& Nogoods) {
   vector<PresolverAcrossTuple> Across;
 
   for(block b : input.B) {
@@ -97,7 +97,7 @@ void alt_across_to_json(Parameters& input,
 
 void across_to_json(Parameters& input,
 		    const vector<PresolverAcrossTuple>& Across,
-		    const vector<nogood>& Nogoods) {
+		    const vector<presolver_conj>& Nogoods) {
   map<operation,vector<PresolverAcrossTuple>> M;
 
   for(const PresolverAcrossTuple& acr : Across)
@@ -307,7 +307,7 @@ presolver_disj merge_disjunctions(const Parameters& input,
 
 void nogoods_or_across(const Parameters& input,
 		       const PresolverAcrossTuple& acr,
-		       vector<nogood>& Nogoods,
+		       vector<presolver_conj>& Nogoods,
 		       vector<PresolverAcrossTuple>& Across) {
   presolver_disj Disj;
   temporary t = acr.t;
@@ -468,7 +468,7 @@ void cond_before_items(PresolverAsserts& PA,
 
     if(t2before.find(key.first)!=t2before.end()) {
       if(ord_contains(successors, o)) {
-	for(const nogood& n : t2before[t])
+	for(const presolver_conj& n : t2before[t])
 	  PA.more_nogoods.push_back(n);
       } else {
 	Tb.p = p;
@@ -479,7 +479,7 @@ void cond_before_items(PresolverAsserts& PA,
     }
     if(t2after.find(key.first)!=t2after.end()) {
       if(ord_contains(predecessors, o)) {
-	for(const nogood& n : t2after[t])
+	for(const presolver_conj& n : t2after[t])
 	  PA.more_nogoods.push_back(n);
       } else if(!ord_contains(successors, o)) {
 	Ta.p = pcs;

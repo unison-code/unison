@@ -75,17 +75,6 @@ IntVar RelaxedModel::s(operand) const {
 // Based on the function from model.cpp. This version ignores
 // PRESOLVER_OVERLAPPING_OPERANDS and PRESOLVER_OVERLAPPING_TEMPORARIES
 // by just returning a BoolVar in 0..1
-BoolVar RelaxedModel::relaxed_presolver_conj_var(presolver_conj c) {
-  BoolVar conj(*this, 0, 1);
-  BoolVarArgs lits;
-
-  for(UnisonConstraintExpr l : c)
-    lits << relaxed_adhoc_constraint_var(l);
-
-  rel(*this, BOT_AND, lits, conj);
-  return conj;
-}
-
 BoolVar RelaxedModel::relaxed_adhoc_constraint_var(UnisonConstraintExpr & e) {
   BoolVar v(*this, 0, 1);
   switch (e.id) {
