@@ -210,9 +210,17 @@ instruction-set:
         type:            linear
         affects:
 
-    - instruction-attrs: &linear-jump-rr
+    - instruction-attrs: &linear-jump-nvr-r
           operands:
            - src1:            [register, use, IntRegs, -1]
+           - src2:            [register, use, IntRegs]
+           - dst:             [register, def, F32]
+          uses:               [src1, src2]
+          defines:            [dst]
+
+    - instruction-attrs: &linear-jump-r-nvr
+          operands:
+           - src1:            [register, use, IntRegs]
            - src2:            [register, use, IntRegs, -1]
            - dst:             [register, def, F32]
           uses:               [src1, src2]
@@ -316,43 +324,43 @@ instruction-set:
 
       - id:     J4_cmpeq_f_jumpnv_t_linear
         parent: J4_cmpeq_f_jumpnv_t
-        << :    [*linear-jump, *linear-jump-rr]
+        << :    [*linear-jump, *linear-jump-nvr-r]
 
       - id:     J4_cmpeq_t_jumpnv_t_linear
         parent: J4_cmpeq_t_jumpnv_t
-        << :    [*linear-jump, *linear-jump-rr]
+        << :    [*linear-jump, *linear-jump-nvr-r]
 
       - id:     J4_cmpgt_f_jumpnv_t_linear
         parent: J4_cmpgt_f_jumpnv_t
-        << :    [*linear-jump, *linear-jump-rr]
+        << :    [*linear-jump, *linear-jump-nvr-r]
 
       - id:     J4_cmpgt_t_jumpnv_t_linear
         parent: J4_cmpgt_t_jumpnv_t
-        << :    [*linear-jump, *linear-jump-rr]
+        << :    [*linear-jump, *linear-jump-nvr-r]
 
       - id:     J4_cmpgtu_t_jumpnv_t_linear
         parent: J4_cmpgtu_t_jumpnv_t
-        << :    [*linear-jump, *linear-jump-rr]
+        << :    [*linear-jump, *linear-jump-nvr-r]
 
       - id:     J4_cmpgtu_f_jumpnv_t_linear
         parent: J4_cmpgtu_f_jumpnv_t
-        << :    [*linear-jump, *linear-jump-rr]
+        << :    [*linear-jump, *linear-jump-nvr-r]
 
       - id:     J4_cmplt_t_jumpnv_t_linear
         parent: J4_cmplt_t_jumpnv_t
-        << :    [*linear-jump, *linear-jump-rr]
+        << :    [*linear-jump, *linear-jump-r-nvr]
 
       - id:     J4_cmplt_f_jumpnv_t_linear
         parent: J4_cmplt_f_jumpnv_t
-        << :    [*linear-jump, *linear-jump-rr]
+        << :    [*linear-jump, *linear-jump-r-nvr]
 
       - id:     J4_cmpltu_t_jumpnv_t_linear
         parent: J4_cmpltu_t_jumpnv_t
-        << :    [*linear-jump, *linear-jump-rr]
+        << :    [*linear-jump, *linear-jump-r-nvr]
 
       - id:     J4_cmpltu_f_jumpnv_t_linear
         parent: J4_cmpltu_f_jumpnv_t
-        << :    [*linear-jump, *linear-jump-rr]
+        << :    [*linear-jump, *linear-jump-r-nvr]
 
       - id:     J4_cmpeqi_t_jumpnv_t_linear
         parent: J4_cmpeqi_t_jumpnv_t

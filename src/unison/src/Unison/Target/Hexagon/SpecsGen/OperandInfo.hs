@@ -309,12 +309,10 @@ operandInfo i
   | i `elem`
       [J4_cmpeq_f_jumpnv_t_linear, J4_cmpeq_t_jumpnv_t_linear,
        J4_cmpgt_f_jumpnv_t_linear, J4_cmpgt_t_jumpnv_t_linear,
-       J4_cmpgtu_f_jumpnv_t_linear, J4_cmpgtu_t_jumpnv_t_linear,
-       J4_cmplt_f_jumpnv_t_linear, J4_cmplt_t_jumpnv_t_linear,
-       J4_cmpltu_f_jumpnv_t_linear, J4_cmpltu_t_jumpnv_t_linear]
+       J4_cmpgtu_f_jumpnv_t_linear, J4_cmpgtu_t_jumpnv_t_linear]
     =
     ([TemporaryInfo (RegisterClass IntRegs) (-1) True,
-      TemporaryInfo (RegisterClass IntRegs) (-1) True],
+      TemporaryInfo (RegisterClass IntRegs) 0 False],
      [TemporaryInfo (RegisterClass F32) 1 False])
   | i `elem`
       [J4_cmpeqi_f_jumpnv_t_linear, J4_cmpeqi_f_jumpnv_t_linear_ce,
@@ -409,6 +407,13 @@ operandInfo i
     ([TemporaryInfo (RegisterClass IntRegs) 0 False,
       TemporaryInfo (RegisterClass F32) 0 False],
      [TemporaryInfo (RegisterClass F32) 0 False])
+  | i `elem`
+      [J4_cmplt_f_jumpnv_t_linear, J4_cmplt_t_jumpnv_t_linear,
+       J4_cmpltu_f_jumpnv_t_linear, J4_cmpltu_t_jumpnv_t_linear]
+    =
+    ([TemporaryInfo (RegisterClass IntRegs) 0 False,
+      TemporaryInfo (RegisterClass IntRegs) (-1) True],
+     [TemporaryInfo (RegisterClass F32) 1 False])
   | i `elem` [Y4_l2fetch] =
     ([TemporaryInfo (RegisterClass IntRegs) 0 False,
       TemporaryInfo (RegisterClass IntRegs) 0 False],
