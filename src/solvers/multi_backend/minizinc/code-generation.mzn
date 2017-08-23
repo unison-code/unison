@@ -167,6 +167,9 @@ array[int] of int: before_pred;
 array[int] of int: before_succ;
 array[int] of set of conjunction: before_cond;
 
+%% see JSON E
+array[int] of int: adhoc;
+
 %% see JSON nogoods
 array[int] of conjunction: nogood;
 
@@ -266,6 +269,7 @@ array[int,int] of int: exrelated_ext;
 array[int] of int: literal_op;
 array[int] of int: literal_arg1;
 array[int] of int: literal_arg2;
+array[int] of int: literal_arg3;
 
 %% extra store for relations in table constraints
 array[int] of int: ints;
@@ -454,17 +458,24 @@ var int: le_t(int: p) = [le[t] | t in operand_temps[p]][y[p]];
 predicate eval_literal(int: l) = (
     let {int: tag = literal_op[l],
          int: arg1 = literal_arg1[l],
-         int: arg2 = literal_arg2[l]} in (
-	if tag=0 then same_temp(arg1,arg2)
-	else if tag=1 then temp_eq(arg1,arg2)
-	else if tag=2 then a[arg1]
-	else if tag=3 then insn_eq(arg1,arg2)
-	else if tag=4 then operand_live_overlap(arg1,arg2)
-	else if tag=5 then live_overlap(arg1,arg2)
-	else if tag=6 then r[arg1] in callersaved
-	else if tag=7 then not insn_eq(arg1,arg2)
-	else if tag=8 then rt[arg1] in atom_regs[arg2]
-        else false endif endif endif endif endif endif endif endif endif
+         int: arg2 = literal_arg2[l],
+         int: arg3 = literal_arg3[l],
+	 } in (
+	     if tag=0 then if arg1<0 then false else eval_literal(arg1) \/ eval_literal(arg2) endif
+	else if tag=1 then if arg1<0 then true else eval_literal(arg1) /\ eval_literal(arg2) endif
+	else if tag=2 then eval_literal(arg1) xor eval_literal(arg2)
+	else if tag=3 then eval_literal(arg1) -> eval_literal(arg2)
+	else if tag=4 then not eval_literal(arg1)
+	else if tag=5 then a[arg1]
+	else if tag=6 then temp_eq(arg1,arg2)
+	else if tag=7 then insn_eq(arg1,arg2)
+	else if tag=8 then c[arg2] >= c[arg1] + arg3
+	else if tag=9 then same_temp(arg1,arg2)
+	else if tag=10 then operand_live_overlap(arg1,arg2)
+	else if tag=11 then live_overlap(arg1,arg2)
+	else if tag=12 then r[arg1] in callersaved
+	else if tag=13 then rt[arg1] in atom_regs[arg2]
+        else false endif endif endif endif endif endif endif endif endif endif endif endif endif endif
     )
 );
 
@@ -911,6 +922,12 @@ constraint
 	 array[int] of int: ext = [exrelated_ext[r,k] | r in exrelated_rows[j], k in 1..2]}
     in table([rt[p],rt[q]], array2d(1..(length(ext) div 2), 1..2, ext))
   );
+
+%% ad-hoc
+constraint
+    forall(L in adhoc) (
+        eval_literal(L)
+    );
 
 %% IMPLIED CONSTRAINTS
 

@@ -64,6 +64,16 @@ string show(const string s) {
   return s;
 }
 
+string show(const Temporand t) {
+  stringstream s;
+  s << t;
+  return s.str();
+}
+
+string show(const UnisonConstraintExpr e) {
+  return show(vector<string>{show((int)e.id), show(e.data), show(e.children)}, ", ");
+}
+
 string show(const PresolverBefore b) {
   return show(vector<string>{show(b.p), show(b.q), show(b.d)}, ", ");
 }
@@ -122,10 +132,8 @@ string show(const PresolverSetAcross x) {
   return show(vector<string>{show(x.o), show(x.ras), show(x.tsets)}, ", ");
 }
 
-string show(const Temporand t) {
-  stringstream s;
-  s << t;
-  return s.str();
+string show(const PresolverPrecedence& p) {
+  return show(vector<string>{show(p.i), show(p.j), show(p.n), show(p.d)}, ", ");
 }
 
 string emit_json(const int i) {
@@ -238,10 +246,6 @@ string show_register(register_atom ra, int w, const Parameters * p) {
   return raname;
 }
 
-string show(const PresolverPrecedence& p) {
-  return show(vector<string>{show(p.i), show(p.j), show(p.n), show(p.d)}, ", ");
-}
-
 string show_instruction(instruction i, operation o, const Parameters * p) {
   if (i == NULL_INSTRUCTION) return p->insname[i];
   switch (p->type[o]) {
@@ -297,45 +301,8 @@ bool in_block(presolver_disj & d, block b, const Parameters * input) {
 }
 
 bool in_block(presolver_conj & c, block b, const Parameters * input) {
-  for (presolver_lit l : c) if (!in_block(l, b, input)) return false;
+  for (UnisonConstraintExpr l : c) if (!in_block(l, b, input)) return false;
   return true;
-}
-
-bool in_block(presolver_lit & l, block b, const Parameters * input) {
-  if (l[0] == PRESOLVER_EQUAL_TEMPORARIES) {
-    operand p = l[1];
-    operand q = l[2];
-    return (input->pb[p] == b) && (input->pb[q] == b);
-  } else if (l[0] == PRESOLVER_OPERAND_TEMPORARY) {
-    operand p = l[1];
-    temporary t = l[2];
-    return (input->pb[p] == b) && (input->tb[t] == b);
-  } else if (l[0] == PRESOLVER_ACTIVENESS) {
-    operation o = l[1];
-    return (input->oblock[o] == b);
-  } else if (l[0] == PRESOLVER_OPERATION) {
-    operation o = l[1];
-    return (input->oblock[o] == b);
-  } else if (l[0] == PRESOLVER_OVERLAPPING_OPERANDS) {
-    operand p = l[1];
-    operand q = l[2];
-    return (input->pb[p] == b) && (input->pb[q] == b);
-  } else if (l[0] == PRESOLVER_OVERLAPPING_TEMPORARIES) {
-    temporary t = l[1];
-    temporary u = l[2];
-    return (input->tb[t] == b) && (input->tb[u] == b);
-  } else if (l[0] == PRESOLVER_CALLER_SAVED_TEMPORARY) {
-    temporary t = l[1];
-    return (input->tb[t] == b);
-  } else if (l[0] == PRESOLVER_NO_OPERATION) {
-    operation o = l[1];
-    return (input->oblock[o] == b);
-  } else if (l[0] == PRESOLVER_OPERAND_CLASS) {
-    operand p = l[1];
-    return (input->pb[p] == b);
-  } else {
-    GECODE_NEVER;
-  }
 }
 
 bool in_block(PresolverActiveTable & ct, block b, const Parameters * input) {

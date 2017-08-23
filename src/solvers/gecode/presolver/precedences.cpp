@@ -56,12 +56,12 @@ void gen_fixed_precedences(const Parameters& input, precedence_set& PI) {
                 Io.erase(Io.begin());
                 dij.erase(dij.begin());
                 // Conj <- Conj U {a(o)}
-                Conj.push_back(presolver_lit({PRESOLVER_ACTIVENESS, o}));
+                Conj.push_back(UnisonConstraintExpr(ACTIVE_EXPR, {o}, {}));
             }
             // If o' is optional
             if(!is_mandatory(input, o1)) {
                 // Conj <- Conj U {a(o)}
-                Conj.push_back(presolver_lit({PRESOLVER_ACTIVENESS, o1}));
+	      Conj.push_back(UnisonConstraintExpr(ACTIVE_EXPR, {o1}, {}));
             }
             // (First, I compute d1 and the condition)
             int d1 = dij.front();
@@ -89,7 +89,8 @@ void gen_fixed_precedences(const Parameters& input, precedence_set& PI) {
                     int d1 = dij[i];
                     // {Conj U {o(o, i')}}
                     presolver_conj c = Conj;
-                    vector_insert(c, {PRESOLVER_OPERATION, o, i1});
+		    UnisonConstraintExpr e(IMPLEMENTS_EXPR, {o,i1}, {});
+                    vector_insert(c, e);
                     PresolverPrecedence pred(o, o1, d1, presolver_disj({c}));
                     PI.push_back(pred);
                 }
@@ -134,7 +135,7 @@ void gen_data_precedences(const Parameters& input,
 		  // PI <- PI U
 		  // GenDataPrecedences1(d, o, p, q, {eq(p(q), t(t))},
 		  // OpndToLat)
-		  presolver_lit lit = {PRESOLVER_OPERAND_TEMPORARY, q, t};
+		  UnisonConstraintExpr lit(CONNECTS_EXPR, {q,t}, {});
 		  gen_data_precedences1(d, o, p, q, {lit}, opnd_to_lat, PI);
 		}
 	      }
@@ -170,8 +171,8 @@ void gen_data_precedences1(operation d, operation o,
             instruction iq = mq.first;
             latency lq     = mq.second;
             if(lp + lq > l) {
-                presolver_lit lit1 = {PRESOLVER_OPERATION, d, ip};
-                presolver_lit lit2 = {PRESOLVER_OPERATION, o, iq};
+	      UnisonConstraintExpr lit1(IMPLEMENTS_EXPR, {d,ip}, {});
+	      UnisonConstraintExpr lit2(IMPLEMENTS_EXPR, {o,iq}, {});
                 presolver_conj conj = Conj;
                 // conj.push_back(lit1);
 		// conj.push_back(lit2);
@@ -189,12 +190,12 @@ multimap<operation, instruction> build_oI (const presolver_disj& Y) {
   multimap<operation, instruction> oI;
 
     for(const presolver_conj& c : Y) {
-        for(const presolver_lit& l : c) {
+        for(const UnisonConstraintExpr& l : c) {
             // If I am not processing the right operation, continue
-            if(l[0] != PRESOLVER_OPERATION)
+            if(l.id != IMPLEMENTS_EXPR)
 	      continue;
             // Insert o, i
-            oI.insert(make_pair(l[1], l[2]));
+            oI.insert(make_pair(l.data[0], l.data[1]));
         }
     }
     return oI;
@@ -541,10 +542,10 @@ void normalize_precedences(const Parameters& input, const precedence_set& P, pre
             presolver_conj conj;
 
             std::copy_if(C.begin(), C.end(), std::back_inserter(conj),
-                    [&input](const presolver_lit L) {
-                        const int o = L[1];
-                        const int i = L[2];
-                        return L[0] != PRESOLVER_OPERATION ||
+                    [&input](const UnisonConstraintExpr L) {
+                        const int o = L.data[0];
+                        const int i = L.data[1];
+                        return L.id != IMPLEMENTS_EXPR ||
                             (oper_insns(input,o) != vector<instruction>({i}));
                     });
 
@@ -562,7 +563,7 @@ void normalize_precedences(const Parameters& input, const precedence_set& P, pre
       presolver_disj D = ed.second;
       // if {a(o)} in D
       presolver_disj::iterator it = std::find_if(D.begin(), D.end(),
-						 [](presolver_conj c){ return c.size()==1 && c[0][0] == PRESOLVER_ACTIVENESS; });
+						 [](presolver_conj c){ return c.size()==1 && c[0].id == ACTIVE_EXPR; });
 
       if(it != D.end()) {
 	// D <- {{a(o)}}
@@ -572,13 +573,13 @@ void normalize_precedences(const Parameters& input, const precedence_set& P, pre
 	D = kernel_set(D, presolver_disj(), -1);
 	// K <- intersection of all conjunctions in D
 	// i.e. the set of literals present in every conjunction in D
-	vector<presolver_lit> K = std::accumulate(D.begin(), D.end(), D.front(),
-						  [](vector<presolver_lit> acc, const presolver_conj c) {
+	vector<UnisonConstraintExpr> K = std::accumulate(D.begin(), D.end(), D.front(),
+						  [](vector<UnisonConstraintExpr> acc, const presolver_conj c) {
 						    // Return intersection of accumulator w/ the conjunction
 						    // c : filter acc from elements not in c;
-						    vector<presolver_lit> res;
+						    vector<UnisonConstraintExpr> res;
 						    std::copy_if(acc.begin(), acc.end(), std::back_inserter(res),
-								 [&c](presolver_lit lit){ return ord_contains(c, lit); });
+								 [&c](UnisonConstraintExpr lit){ return ord_contains(c, lit); });
 						    return res; });
 
 	// Y <- { C \ K | C in D }
@@ -589,7 +590,7 @@ void normalize_precedences(const Parameters& input, const precedence_set& P, pre
 			 // diff <- C \ K
 			 presolver_conj diff;
 			 std::copy_if(C.begin(), C.end(), std::back_inserter(diff),
-				      [&K](presolver_lit lit){ return !ord_contains(K, lit); });
+				      [&K](UnisonConstraintExpr lit){ return !ord_contains(K, lit); });
 			 return diff;
 		       });
 
@@ -623,12 +624,13 @@ void normalize_precedences(const Parameters& input, const precedence_set& P, pre
 
 	      presolver_conj conj;
 	      // Union with K
-	      for(const presolver_lit& k : K) {
+	      for(const UnisonConstraintExpr& k : K) {
 		conj.push_back(k);
 	      }
 	      // Negate o(o,i) where i in S and make it a conjunction
 	      for(instruction i : S) {
-		presolver_lit lit = { PRESOLVER_NO_OPERATION, o, i};
+		UnisonConstraintExpr nlit(IMPLEMENTS_EXPR, {o,i}, {});
+		UnisonConstraintExpr lit(NOT_EXPR, {}, {nlit});
 		conj.push_back(lit);
 	      }
 	      conj = normal_conjunction(input, conj);
@@ -717,12 +719,12 @@ void before_rule(const Parameters& input,
 	e.j = o1;
 	e.n = 0;
         presolver_conj u;
-        for(const presolver_lit& l : conj1) {
-	  if (l[0] != PRESOLVER_OPERAND_TEMPORARY || opnd_temps(input, l[1]).size() > 1) // not entailed?
+        for(const UnisonConstraintExpr& l : conj1) {
+	  if (l.id != CONNECTS_EXPR || opnd_temps(input, l.data[0]).size() > 1) // not entailed?
 	    vector_insert(u, l);
 	}
-        for(const presolver_lit& l : conj) {
-	  if (l[0] != PRESOLVER_OPERAND_TEMPORARY || opnd_temps(input, l[1]).size() > 1) // not entailed?
+        for(const UnisonConstraintExpr& l : conj) {
+	  if (l.id != CONNECTS_EXPR || opnd_temps(input, l.data[0]).size() > 1) // not entailed?
 	    vector_insert(u, l);
 	}
         map.insert(make_pair(e,u));
@@ -746,8 +748,8 @@ multimap<PrecedenceEdge, presolver_conj> gen_before_precedences1(const Parameter
             // For all Conj in Disj
             for(const presolver_conj& conj : disj) {
                 // M <- BeforeRule({eq(p(r), t(t))}, Or, OpndOper(q), Conj, M)
-                presolver_lit lit1 = {PRESOLVER_OPERAND_TEMPORARY, r, t};
-                before_rule(input, { lit1 }, o_r, opnd_oper(input, q), conj, M);
+	      UnisonConstraintExpr lit1(CONNECTS_EXPR, {r,t}, {});
+	      before_rule(input, { lit1 }, o_r, opnd_oper(input, q), conj, M);
             }
         }
     } else if (!input.use[p] && input.use[q]) {
@@ -764,9 +766,9 @@ multimap<PrecedenceEdge, presolver_conj> gen_before_precedences1(const Parameter
                 for(const presolver_conj& conj : disj) {
                     // M <- before_rule(input, {eq(p(r), t(t)), eq(p(q), t(t'))},
                     // or, TempOper(t'), Conj, M)
-                    presolver_lit lit1 = {PRESOLVER_OPERAND_TEMPORARY, r, t};
-                    presolver_lit lit2 = {PRESOLVER_OPERAND_TEMPORARY, q, t1};
-                    before_rule(input, {lit1, lit2}, o_r, temp_oper(input, t1), conj, M);
+		  UnisonConstraintExpr lit1(CONNECTS_EXPR, {r,t}, {});
+		  UnisonConstraintExpr lit2(CONNECTS_EXPR, {q,t1}, {});
+		  before_rule(input, {lit1, lit2}, o_r, temp_oper(input, t1), conj, M);
                 }
 	      }
             }
@@ -789,9 +791,9 @@ multimap<PrecedenceEdge, presolver_conj> gen_before_precedences1(const Parameter
                 for(const presolver_conj& conj : disj) {
                     // M <- BeforeRule({eq(p(r), t(t)), eq(p(p), t(t))}, or,
                     // OpndOper(q), Conj, M)
-                    presolver_lit lit1 = {PRESOLVER_OPERAND_TEMPORARY, r, t};
-                    presolver_lit lit2 = {PRESOLVER_OPERAND_TEMPORARY, p, t};
-                    before_rule(input, {lit1, lit2}, o_r, opnd_oper(input, q), conj, M);
+		  UnisonConstraintExpr lit1(CONNECTS_EXPR, {r,t}, {});
+		  UnisonConstraintExpr lit2(CONNECTS_EXPR, {p,t}, {});
+		  before_rule(input, {lit1, lit2}, o_r, opnd_oper(input, q), conj, M);
                 }
 	      }
             }
@@ -816,11 +818,11 @@ multimap<PrecedenceEdge, presolver_conj> gen_before_precedences1(const Parameter
 		    // for all Conj in Disj
 		    for(const presolver_conj& conj : disj) {
 		      // {eq(p(r), t(t))}
-		      presolver_lit lit1 = {PRESOLVER_OPERAND_TEMPORARY, r, t};
+		      UnisonConstraintExpr lit1(CONNECTS_EXPR, {r,t}, {});
 		      // {eq(p(p), t(t))}
-		      presolver_lit lit2 = {PRESOLVER_OPERAND_TEMPORARY, p, t};
+		      UnisonConstraintExpr lit2(CONNECTS_EXPR, {p,t}, {});
 		      // {eq(p(q), t(t'))}
-		      presolver_lit lit3 = {PRESOLVER_OPERAND_TEMPORARY, q, t1};
+		      UnisonConstraintExpr lit3(CONNECTS_EXPR, {q,t1}, {});
 		      before_rule(input, {lit1, lit2, lit3}, o_r, o_t1, conj, M);
 		    }
 		  }

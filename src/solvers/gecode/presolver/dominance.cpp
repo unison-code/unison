@@ -265,12 +265,12 @@ void gen_active_tables(Parameters & input, Support::Timer & t,
     }
   }
   for(const presolver_conj& n : input.nogoods) {
-    if(n.size() == 2 && n[0].size() == 3 && n[1].size() == 3
-       && n[0][0] == PRESOLVER_OPERAND_TEMPORARY
-       && n[1][0] == PRESOLVER_OPERAND_TEMPORARY) {
+    if(n.size() == 2
+       && n[0].id == CONNECTS_EXPR
+       && n[1].id == CONNECTS_EXPR) {
 
-      operand p1 = n[0][1];
-      operand p2 = n[1][1];
+      operand p1 = n[0].data[0];
+      operand p2 = n[1].data[0];
 
       temporary t1 = first_temp_but_null(input, p1);
       temporary t2 = first_temp_but_null(input, p2);

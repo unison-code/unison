@@ -116,8 +116,8 @@ Parameters::Parameters(JSONVALUE root) :
   optional_min  (get_vector<int>(getRoot(root, "optional_min"))),
   active_tables (get_vector<PresolverActiveTable>(getRoot(root, "active_tables"))),
   tmp_tables    (get_vector<PresolverCopyTmpTable>(getRoot(root, "tmp_tables"))),
-  nogoods       (get_3d_vector<int>(getRoot(root, "nogoods"))),
-  nogoods2      (get_3d_vector<int>(getRoot(root, "nogoods2"))),
+  nogoods       (get_vector<nogood>(getRoot(root, "nogoods"))),
+  nogoods2      (get_vector<nogood>(getRoot(root, "nogoods2"))),
   precedences   (get_vector<PresolverPrecedence>(getRoot(root, "precedences"))),
   precedences2  (get_vector<PresolverPrecedence>(getRoot(root, "precedences2"))),
   before        (get_vector<PresolverBefore>(getRoot(root, "before"))),
@@ -1182,7 +1182,7 @@ void Parameters::get_element(QScriptValue root, PresolverPrecedence & p) {
   iti.next();
   p.n = iti.value().toInt32();
   iti.next();
-  p.d = get_3d_vector<int>(iti.value());
+  get_element(iti.value(), p.d);
 }
 
 void Parameters::get_element(QScriptValue root, PresolverBefore & b) {
@@ -1193,7 +1193,7 @@ void Parameters::get_element(QScriptValue root, PresolverBefore & b) {
   iti.next();
   b.q = iti.value().toInt32();
   iti.next();
-  b.d = get_3d_vector<int>(iti.value());
+  get_element(iti.value(), b.d);
 }
 
 void Parameters::get_element(QScriptValue root, PresolverAcrossItem & ai) {
@@ -1202,7 +1202,7 @@ void Parameters::get_element(QScriptValue root, PresolverAcrossItem & ai) {
   iti.next();
   ai.t = iti.value().toInt32();
   iti.next();
-  ai.d = get_3d_vector<int>(iti.value());
+  get_element(iti.value(), ai.d);
 }
 
 void Parameters::get_element(QScriptValue root, PresolverAcross & a) {
@@ -1305,8 +1305,71 @@ void Parameters::get_element(Json::Value root, string & s) {
 
 void Parameters::get_element(Json::Value root, UnisonConstraintExpr & e) {
   assert(root.isArray());
-  // FIXME
-  GECODE_NEVER;
+  Json::ValueIterator iti = root.begin();
+  e.id = (UnisonConstraintExprId)(*iti).asInt();
+  switch (e.id) {
+    // unary expressions
+  case NOT_EXPR:
+    ini++;
+    {
+      UnisonConstraintExpr e1;
+      get_element(*iti, e1);
+      e.children.push_back(e1);
+    }
+    break;
+    // binary expressions
+  case XOR_EXPR:
+  case IMPLIES_EXPR:
+    for (unsigned int i = 0; i < 2; i++) {
+      ini++;
+      {
+        UnisonConstraintExpr e2;
+        get_element(*iti, e2);
+        e.children.push_back(e2);
+      }
+    }
+    break;
+    // n-ary expressions
+  case OR_EXPR:
+  case AND_EXPR:
+    while (iti.hasNext()) {
+      ini++;
+      if (iti.name() != "length") {
+        {
+          UnisonConstraintExpr e3;
+          get_element(*iti, e3);
+          e.children.push_back(e3);
+        }
+      }
+    }
+    break;
+    // unary literals
+  case ACTIVE_EXPR:
+  case CALLER_SAVED_EXPR:
+    ini++;
+    e.data.push_back(iti.value().toInt32());
+    break;
+    // binary literals
+  case CONNECTS_EXPR:
+  case IMPLEMENTS_EXPR:
+  case SHARE_EXPR:
+  case OPERAND_OVERLAP_EXPR:
+  case TEMPORARY_OVERLAP_EXPR:
+  case ALLOCATED_EXPR:
+    for (unsigned int i = 0; i < 2; i++) {
+      ini++;
+      e.data.push_back(iti.value().toInt32());
+    }
+    break;
+    // ternary literals
+  case DISTANCE_EXPR:
+    for (unsigned int i = 0; i < 3; i++) {
+      ini++;
+      e.data.push_back(iti.value().toInt32());
+    }
+    break;
+  default: GECODE_NEVER;
+  }
 }
 
 void Parameters::get_element(Json::Value root, PresolverActiveTable & at) {
@@ -1337,7 +1400,7 @@ void Parameters::get_element(Json::Value root, PresolverPrecedence & p) {
   iti++;
   p.n = (*iti).asInt();
   iti++;
-  p.d = get_3d_vector<int>(*iti);
+  get_element(*iti, p.d);
 }
 
 void Parameters::get_element(Json::Value root, PresolverBefore & b) {
@@ -1347,7 +1410,7 @@ void Parameters::get_element(Json::Value root, PresolverBefore & b) {
   iti++;
   b.q = (*iti).asInt();
   iti++;
-  b.d = get_3d_vector<int>(*iti);
+  get_element(*iti, b.d);
 }
 
 void Parameters::get_element(Json::Value root, PresolverAcrossItem & ai) {
@@ -1355,7 +1418,7 @@ void Parameters::get_element(Json::Value root, PresolverAcrossItem & ai) {
   Json::ValueIterator iti = root.begin();
   ai.t = (*iti).asInt();
   iti++;
-  ai.d = get_3d_vector<int>(*iti);
+  get_element(*iti, ai.d);
 }
 
 void Parameters::get_element(Json::Value root, PresolverAcross & a) {

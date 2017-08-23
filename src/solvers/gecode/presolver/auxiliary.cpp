@@ -348,8 +348,8 @@ bool is_mandatory(const Parameters& input, operation o) {
 presolver_conj normal_conjunction(const Parameters& input, const presolver_conj& c) {
   presolver_conj normal;
 
-  for(const presolver_lit& l : c) {
-    if (l[0] != PRESOLVER_OPERAND_TEMPORARY || opnd_temps(input, l[1]).size() > 1) // not entailed?
+  for(const UnisonConstraintExpr& l : c) {
+    if (l.id != CONNECTS_EXPR || opnd_temps(input, l.data[0]).size() > 1) // not entailed?
       vector_insert(normal, l);
   }
   return normal;
@@ -358,10 +358,7 @@ presolver_conj normal_conjunction(const Parameters& input, const presolver_conj&
 
 void deepsort(int) {return;};
 
-void deepsort(PresolverBefore & b) {
-  deepsort(b.d);
-  return;
-};
+void deepsort(PresolverBefore &) {return;};
 
 void deepsort(PresolverDominates & d) {
   deepsort(d.ins);

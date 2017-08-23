@@ -353,9 +353,12 @@ void InfeasiblePresolver::redefined_operand_nogoods(vector<nogood>& Nogoods) {
 		    instruction i1 = input.instructions[o1][i1i];
 		    instruction i2 = input.instructions[o2][i2i];
 		    nogood c;
-		    c.push_back({PRESOLVER_EQUAL_TEMPORARIES, p, q});
-		    c.push_back({PRESOLVER_OPERATION, o1, i1});
-		    c.push_back({PRESOLVER_OPERATION, o2, i2});
+		    UnisonConstraintExpr e1(SHARE_EXPR, {p,q}, {});
+		    UnisonConstraintExpr e2(IMPLEMENTS_EXPR, {o1,i1}, {});
+		    UnisonConstraintExpr e3(IMPLEMENTS_EXPR, {o2,i2}, {});
+		    c.push_back(e1);
+		    c.push_back(e2);
+		    c.push_back(e3);
 		    D.push_back(c);
 		  }
 		}
@@ -376,7 +379,8 @@ void InfeasiblePresolver::before_in_nogoods(vector<nogood>& Nogoods) {
        T1 >= 0 &&
        input.type[input.oper[b.q]] == OUT &&
        input.type[input.def_opr[T1]] == IN) {
-      nogood c = {{PRESOLVER_OPERAND_TEMPORARY, b.q, T1}};
+      UnisonConstraintExpr e(CONNECTS_EXPR, {b.q,T1}, {});
+      nogood c = {e};
       Nogoods.push_back(c);
     }
   }
@@ -405,7 +409,8 @@ void InfeasiblePresolver::xchg_nogoods(vector<nogood>& Nogoods) {
 	i++;
 	for(unsigned int j=i; j<ts.size(); j++) {
 	  if(ord_contains(input.temps[p], ts[j])) {
-	    nogood c = {{PRESOLVER_OPERAND_TEMPORARY, p, ts[j]}};
+	    UnisonConstraintExpr e(CONNECTS_EXPR, {p,ts[j]}, {});
+	    nogood c = {e};
 	    Nogoods.push_back(c);
 	  }
 	}
@@ -467,7 +472,8 @@ void InfeasiblePresolver::regdomain_nogoods(vector<nogood>& Nogoods) {
     if(input.use[p]) {
       for(temporary t : input.temps[p]) {
 	if(t != NULL_TEMPORARY && ord_intersection(pd, T2D[t]).empty()) {
-	  nogood c = {{PRESOLVER_OPERAND_TEMPORARY, p, t}};
+	  UnisonConstraintExpr e(CONNECTS_EXPR, {p,t}, {});
+	  nogood c = {e};
 	  Nogoods.push_back(c);
 	}
       }
@@ -542,12 +548,15 @@ void InfeasiblePresolver::dominsn_nogoods(vector<nogood>& Nogoods) {
       for(ii=0; ii<is.size(); ii++)
 	if (is[ii]==ic_os.first.insn)
 	  break;
-      nogood c = {{PRESOLVER_OPERATION, o, ic_os.first.insn}};
       vector<operand> ps = input.operands[o];
       vector<register_class> rc = ic_os.first.rclass;
+      UnisonConstraintExpr e1(IMPLEMENTS_EXPR, {o, ic_os.first.insn}, {});
+      nogood c = {e1};
       for(unsigned jj=0; jj<ps.size(); jj++)
-	if (rc[jj]!=input.rclass[o][ii][jj])
-	  c.push_back({PRESOLVER_OPERAND_CLASS, ps[jj], rc[jj]});
+	if (rc[jj]!=input.rclass[o][ii][jj]) {
+	  UnisonConstraintExpr e2(ALLOCATED_EXPR, {ps[jj], rc[jj]}, {});
+	  c.push_back(e2);
+	}
       Nogoods.push_back(c);
     }
   }
@@ -719,10 +728,11 @@ void InfeasiblePresolver::single_nogoods(const vector<temporand_set >& D,
 	      const Temporand& V3 = V34[0];
 	      const Temporand& V4 = V34[1];
 
-	      int tag = (V4.is_operand() ?
-                         PRESOLVER_EQUAL_TEMPORARIES :
-                         PRESOLVER_OPERAND_TEMPORARY);
-	      nogood c = {{tag, V3.id(), V4.id()}};
+	      enum UnisonConstraintExprId tag = (V4.is_operand() ?
+						 SHARE_EXPR :
+						 CONNECTS_EXPR);
+	      UnisonConstraintExpr e(tag, {V3.id(), V4.id()}, {});
+	      nogood c = {e};
 
 	      emit_nogood(R, c, V1, V2, nogoods);
 	    }
@@ -781,14 +791,14 @@ void InfeasiblePresolver::double_nogoods(const vector<temporand_set >& D,
 	      if((w2 == w6 || w2 == w5) && (v3 != v5)) {
 
 		if(w3 == w5 || w3 == w6 || w4 == w5 || w4 == w6) {
-		  int tag34 = (v4.is_operand() ?
-			       PRESOLVER_EQUAL_TEMPORARIES :
-			       PRESOLVER_OPERAND_TEMPORARY);
-		  int tag56 = (v6.is_operand() ?
-			       PRESOLVER_EQUAL_TEMPORARIES :
-			       PRESOLVER_OPERAND_TEMPORARY);
-		  presolver_lit lit34 = {tag34, v3.id(), v4.id()};
-		  presolver_lit lit56 = {tag56, v5.id(), v6.id()};
+		  enum UnisonConstraintExprId tag34 = (v4.is_operand() ?
+						       SHARE_EXPR :
+						       CONNECTS_EXPR);
+		  enum UnisonConstraintExprId tag56 = (v6.is_operand() ?
+						       SHARE_EXPR :
+						       CONNECTS_EXPR);
+		  UnisonConstraintExpr lit34(tag34, {v3.id(), v4.id()}, {});
+		  UnisonConstraintExpr lit56(tag56, {v5.id(), v6.id()}, {});
 		  nogood c;
 		  if (lit34 < lit56)
 		    c = {lit34,lit56};
@@ -830,17 +840,17 @@ void InfeasiblePresolver::emit_nogood(const vector<vector<operand> >* R,
       vector_insert(P, input.definer[v2.id()]);
     }
 
-    for(const presolver_lit& lit : Conj) {
+    for(const UnisonConstraintExpr& lit : Conj) {
       // P <- P union {p, definer[t] | eq(p(p),t(t)) in Conj}
-      if(lit[0] == PRESOLVER_OPERAND_TEMPORARY) {
-	vector_insert(P, lit[1]);
-	vector_insert(P, input.definer[lit[2]]);
+      if(lit.id == CONNECTS_EXPR) {
+	vector_insert(P, lit.data[0]);
+	vector_insert(P, input.definer[lit.data[1]]);
       }
 
       // P <- P union {p, q| eq(p(p),p(q)) in Conj}
-      else if(lit[0] == PRESOLVER_EQUAL_TEMPORARIES) {
-	vector_insert(P, lit[1]);
-	vector_insert(P, lit[2]);
+      else if(lit.id == SHARE_EXPR) {
+	vector_insert(P, lit.data[0]);
+	vector_insert(P, lit.data[1]);
       }
     }
 
@@ -851,10 +861,10 @@ void InfeasiblePresolver::emit_nogood(const vector<vector<operand> >* R,
     for(operand q : Q) {
 
       // There exists a t such that p(q)=t(t) in Conj
-      for(const presolver_lit& lit : Conj) {
+      for(const UnisonConstraintExpr& lit : Conj) {
 
-	if(lit[0] == PRESOLVER_OPERAND_TEMPORARY && lit[1] == q) {
-	  vector_insert(M[{lit[2]}], q);
+	if(lit.id == CONNECTS_EXPR && lit.data[0] == q) {
+	  vector_insert(M[{lit.data[1]}], q);
 	  goto nextq;
 	}
       }
@@ -901,7 +911,7 @@ void InfeasiblePresolver::emit_nogood(const vector<vector<operand> >* R,
 	      operand p3 = min(minPs1, minPs2);
 	      operand p4 = max(minPs1, minPs2);
 
-	      presolver_lit l = {PRESOLVER_OVERLAPPING_OPERANDS, p3, p4};
+	      UnisonConstraintExpr l(OPERAND_OVERLAP_EXPR, {p3,p4}, {});
 	      nogood C(Conj);
 
 	      // Conj union l
@@ -994,9 +1004,9 @@ bool InfeasiblePresolver::subsumed_nogood(const nogood& conj) {
   // Exists p,t,t' | {eq(p(p),t(t)),eq(p(p),t(t'))} subset of conj
   // Since conj is sorted, any such pair must be consecetive positioned in conj.
   for(unsigned i = 1; i < conj.size(); i++) {
-    if(conj[i-1][1] == conj[i][1] && // Equal p
-       conj[i-1][0] == PRESOLVER_OPERAND_TEMPORARY &&
-       conj[i][0] == PRESOLVER_OPERAND_TEMPORARY) {
+    if(conj[i-1].data[0] == conj[i].data[0] && // Equal p
+       conj[i-1].id == CONNECTS_EXPR &&
+       conj[i].id == CONNECTS_EXPR) {
       return true;
     }
   }
@@ -1110,7 +1120,8 @@ void InfeasiblePresolver::detect_cycles(void) {
   for(const PresolverPrecedence& prec : input.precedences) {
     // T <- {<j,i,-n,d> | <i,j,n,d> in input.precedences && i < j & (d = {ø} || d = {{a(i)}})}
 
-    presolver_conj a_i = {{PRESOLVER_ACTIVENESS, prec.i}};
+    UnisonConstraintExpr e(ACTIVE_EXPR, {prec.i}, {});
+    presolver_conj a_i = {e};
 
     if (prec.i < prec.j && prec.d.size() == 1 &&
         (prec.d[0].empty() || (prec.d[0] == a_i))) {

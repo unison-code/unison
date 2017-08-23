@@ -192,8 +192,6 @@ public:
 
   BoolVar presolver_conj_var(presolver_conj &c);
 
-  BoolVar presolver_lit_var(presolver_lit &l);
-
   IntVar slack(operand p);
 
   // High-level constraints

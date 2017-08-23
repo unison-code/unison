@@ -183,6 +183,8 @@ string show(const string);
 
 string show(const Temporand);
 
+string show(const UnisonConstraintExpr);
+
 string show(const PresolverBefore);
 
 string show(const PresolverDominates);
@@ -199,8 +201,6 @@ string show(const PresolverActiveTable);
 
 string show(const PresolverCopyTmpTable);
 
-string show(const PresolverPrecedence& p);
-
 string show(const PresolverPred);
 
 string show(const PresolverSucc);
@@ -212,6 +212,8 @@ string show(const PresolverAcrossTuple);
 string show(const PresolverAcrossItem);
 
 string show(const PresolverSetAcross);
+
+string show(const PresolverPrecedence& p);
 
 template <typename C>
 string show(const C& container, string l = ",", string pre = "",
@@ -409,8 +411,6 @@ string init(string s);
 bool in_block(presolver_disj & d, block b, const Parameters * input);
 
 bool in_block(presolver_conj & c, block b, const Parameters * input);
-
-bool in_block(presolver_lit & l, block b, const Parameters * input);
 
 bool in_block(PresolverActiveTable & ct, block b, const Parameters * input);
 

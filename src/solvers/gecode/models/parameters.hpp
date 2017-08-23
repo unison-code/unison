@@ -274,10 +274,10 @@ public:
   vector<PresolverCopyTmpTable> tmp_tables;
 
   // basic no-goods
-  vector<vector<vector<int> > > nogoods;
+  vector<nogood> nogoods;
 
   // additional no-goods
-  vector<vector<vector<int> > > nogoods2;
+  vector<nogood> nogoods2;
 
   // basic presolver precedences
   vector<PresolverPrecedence> precedences;

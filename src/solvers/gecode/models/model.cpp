@@ -132,70 +132,10 @@ BoolVar Model::presolver_conj_var(presolver_conj &c) {
     constraint(conj); // TODO: does this happen by default?
   } else {
     BoolVarArgs presolver_lits;
-    for (presolver_lit l : c) presolver_lits << presolver_lit_var(l);
+    for (UnisonConstraintExpr l : c) presolver_lits << adhoc_constraint_var(l);
     rel(*this, BOT_AND, presolver_lits, conj, ipl);
   }
   return conj;
-}
-
-BoolVar Model::presolver_lit_var(presolver_lit &l) {
-  if (l[0] == PRESOLVER_EQUAL_TEMPORARIES) {
-    assert(l.size() == 3);
-    operand p = l[1];
-    operand q = l[2];
-    // This is fine because the temps of one will always be a prefix
-    // of the temps of the other
-    return var(y(p) == y(q));
-  } else if (l[0] == PRESOLVER_OPERAND_TEMPORARY) {
-    assert(l.size() == 3);
-    operand p = l[1];
-    temporary t = l[2];
-    return u(p, t);
-  } else if (l[0] == PRESOLVER_ACTIVENESS) {
-    assert(l.size() == 2);
-    operation o = l[1];
-    return a(o);
-  } else if (l[0] == PRESOLVER_OPERATION) {
-    assert(l.size() == 3);
-    operation o = l[1];
-    instruction in = l[2];
-    unsigned int ii = find_index(input->instructions[o], in);
-    return var(i(o) == ii);
-  } else if (l[0] == PRESOLVER_OVERLAPPING_OPERANDS) {
-    assert(l.size() == 3);
-    operand p = l[1];
-    operand q = l[2];
-    return var((pls(p) < ple(q)) && (pls(q) < ple(p)));
-  } else if (l[0] == PRESOLVER_OVERLAPPING_TEMPORARIES) {
-    assert(l.size() == 3);
-    temporary t = l[1];
-    temporary u = l[2];
-    return var((ls(t) < le(u)) && (ls(u) < le(t)));
-  } else if (l[0] == PRESOLVER_CALLER_SAVED_TEMPORARY) {
-    assert(l.size() == 2);
-    temporary t = l[1];
-    IntArgs cs(input->callersaved);
-    BoolVar tcs(*this, 0, 1);
-    // TODO: this is correct, but should consider also temporaries wider than 1
-    dom(*this, r(t), IntSet(cs), tcs);
-    return tcs;
-  } else if (l[0] == PRESOLVER_NO_OPERATION) {
-    assert(l.size() == 3);
-    operation o = l[1];
-    instruction in = l[2];
-    unsigned int ii = find_index(input->instructions[o], in);
-    return var(i(o) != ii);
-  } else if (l[0] == PRESOLVER_OPERAND_CLASS) {
-    assert(l.size() == 3);
-    operand p = l[1];
-    register_class c = l[2];
-    IntArgs cs(input->atoms[c]);
-    BoolVar toc(*this, 0, 1);
-    dom(*this, ry(p), IntSet(cs), toc);
-    return toc;
-  } else {
-    GECODE_NEVER;
-  }
 }
 
 IntVar Model::slack(operand p) {

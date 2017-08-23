@@ -244,8 +244,11 @@ void presolve(Parameters & input, PresolverOptions & options) {
 	  operand p = c[i];
 	  operand q = c[j];
 	  for(temporary t : input.temps[p]) {
- 	    vector_insert(DNogoods, {{0, p, q}});
-	    vector_insert(DNogoods, {{1, p, t},{1, q, t}});
+	    UnisonConstraintExpr e1(SHARE_EXPR, {p,q}, {});
+	    UnisonConstraintExpr e2(CONNECTS_EXPR, {p,t}, {});
+	    UnisonConstraintExpr e3(CONNECTS_EXPR, {q,t}, {});
+ 	    vector_insert(DNogoods, {e1});
+	    vector_insert(DNogoods, {e2,e3});
 	  }
 	}
       }

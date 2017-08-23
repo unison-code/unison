@@ -79,53 +79,70 @@ BoolVar RelaxedModel::relaxed_presolver_conj_var(presolver_conj c) {
   BoolVar conj(*this, 0, 1);
   BoolVarArgs lits;
 
-  for(presolver_lit l : c)
-    lits << relaxed_presolver_lit_var(l);
+  for(UnisonConstraintExpr l : c)
+    lits << relaxed_adhoc_constraint_var(l);
 
   rel(*this, BOT_AND, lits, conj);
   return conj;
 }
 
-BoolVar RelaxedModel::relaxed_presolver_lit_var(presolver_lit l) {
-  if (l[0] == PRESOLVER_EQUAL_TEMPORARIES) {
-    operand p = l[1];
-    operand q = l[2];
-    return var(y(p) == y(q));
-  } else if (l[0] == PRESOLVER_OPERAND_TEMPORARY) {
-    operand p = l[1];
-    temporary t = l[2];
-    return u(p, t);
-  } else if (l[0] == PRESOLVER_ACTIVENESS) {
-    operation o = l[1];
-    return a(o);
-  } else if (l[0] == PRESOLVER_OPERATION) {
-    operation o = l[1];
-    instruction in = l[2];
-    unsigned int ii = find_index(input->instructions[o], in);
-    return var(i(o) == ii);
-  } else if (l[0] == PRESOLVER_CALLER_SAVED_TEMPORARY) {
-    temporary t = l[1];
-    IntArgs cs(input->callersaved);
-    BoolVar tcs(*this, 0, 1);
-    // TODO: this is correct, but should consider also temporaries wider than 1
-    dom(*this, r(t), IntSet(cs), tcs);
-    return tcs;
-  } else if (l[0] == PRESOLVER_NO_OPERATION) {
-    operation o = l[1];
-    instruction in = l[2];
-    unsigned int ii = find_index(input->instructions[o], in);
-    return var(i(o) != ii);
-  } else if (l[0] == PRESOLVER_OPERAND_CLASS) {
-    operand p = l[1];
-    register_class c = l[2];
-    IntArgs cs(input->atoms[c]);
-    BoolVar toc(*this, 0, 1);
-    dom(*this, ry(p), IntSet(cs), toc);
-    return toc;
-  } else {
+BoolVar RelaxedModel::relaxed_adhoc_constraint_var(UnisonConstraintExpr & e) {
+  BoolVar v(*this, 0, 1);
+  switch (e.id) {
+  case OR_EXPR:
+  case AND_EXPR:
+    {
+      BoolVarArgs vs;
+      for (UnisonConstraintExpr e0 : e.children)
+        vs << adhoc_constraint_var(e0);
+      rel(*this, e.id == OR_EXPR ? BOT_OR : BOT_AND, vs, v, ipl);
+    }
+    return v;
+  case XOR_EXPR:
+  case IMPLIES_EXPR:
+    rel(*this,
+        adhoc_constraint_var(e.children[0]),
+        e.id == XOR_EXPR ? BOT_XOR : BOT_IMP,
+        adhoc_constraint_var(e.children[1]),
+        v,
+        ipl);
+    return v;
+  case NOT_EXPR:
+    rel(*this, adhoc_constraint_var(e.children[0]), IRT_NQ, v);
+    return v;
+  case ACTIVE_EXPR:
+    return a(e.data[0]);
+  case CONNECTS_EXPR:
+    return u(e.data[0], e.data[1]);
+  case IMPLEMENTS_EXPR:
+    return imp(e.data[0], e.data[1]);
+  case DISTANCE_EXPR:
+    return var(c(e.data[1]) >= (c(e.data[0]) + e.data[2]));
+  case SHARE_EXPR:
+    // This is fine because the temps of one will always be a prefix of the
+    // temps of the other
+    return var(y(e.data[0]) == y(e.data[1]));
+  case OPERAND_OVERLAP_EXPR:
+  case TEMPORARY_OVERLAP_EXPR:
     return BoolVar(*this, 0, 1);
+  case CALLER_SAVED_EXPR:
+    {
+      IntArgs cs(input->callersaved);
+      // TODO: this is correct, but should include temporaries wider than 1
+      dom(*this, r(e.data[0]), IntSet(cs), v);
+    }
+    return v;
+  case ALLOCATED_EXPR:
+    {
+      IntArgs cs(input->atoms[e.data[1]]);
+      dom(*this, ry(e.data[0]), IntSet(cs), v);
+    }
+    return v;
+  default:
+    GECODE_NEVER;
   }
 }
+
 
 RelaxedModel::RelaxedModel(Parameters * p_input, ModelOptions * p_options,
                          IntPropLevel p_ipl) :

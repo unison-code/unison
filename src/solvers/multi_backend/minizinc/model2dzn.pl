@@ -75,7 +75,7 @@ model2dzn(AVL0) :-
 	format('MAXF = ~d;\nMAXO = ~d;\nMAXP = ~d;\nMAXT = ~d;\nMAXC = ~d;\nMAXI = ~d;\nMAXR = ~d;\n', [MAXF, MAXO, MAXP, MAXT, MAXC, MAXI, MAXR]),
 	length(BInsns, Nbb),
 	avl_fetch(optimize_resource, AVL0, OptRes),
-	(OptRes = -1 -> OptCyc = true ; OptCyc = false),
+	(OptRes = [-1] -> OptCyc = true ; OptCyc = false),
 	format('optimize_cycles = ~w;\n', [OptCyc]),
 	write_array(bb_ops, array(1..Nbb,set(int)), BInsns),
 	write_array(bb_operands, array(1..Nbb,set(int)), BOperands),
@@ -466,6 +466,7 @@ model2dzn(AVL0) :-
 	pairs_to_arrays(AVL, preschedule, preschedule_op, preschedule_cycle),
 	%
 	pairs_to_arrays(AVL, exrelated, exrelated_p, exrelated_q),
+	%
 	avl_fetch(table, AVL, ExTables),
 	(   foreach(ExTable,ExTables),
 	    foreach(ExMin..ExMax,ExRanges),
@@ -484,11 +485,20 @@ model2dzn(AVL0) :-
 	length(BypassTable, NBypassTable),
 	write_array(bypass_table, array(1..NBypassTable,1..3,int), BypassTable),
 	%
-	literals_postlude(LOp, LArg1, LArg2),
+	avl_fetch('E', AVL, Adhoc1),
+	(   foreach(Lit1,Adhoc1),
+	    foreach(Lit2,Adhoc2)
+	do  encode(literal, int, Lit1, Lit2)
+	),
+	length(Adhoc1, Nadhoc),
+	write_array(adhoc, array(1..Nadhoc,int), Adhoc2),
+	%
+	literals_postlude(LOp, LArg1, LArg2, LArg3),
 	length(LOp, Nliteral),
 	write_array(literal_op, array(1..Nliteral,int), LOp),
 	write_array(literal_arg1, array(1..Nliteral,int), LArg1),
 	write_array(literal_arg2, array(1..Nliteral,int), LArg2),
+	write_array(literal_arg3, array(1..Nliteral,int), LArg3),
 	sets_postlude(Sets),
 	length(Sets, Nset),
 	write_array(sets, array(1..Nset,set(int)), Sets).
@@ -830,25 +840,76 @@ encode(conj, int, Conj1, SetOfLit) :-
 	do  encode(literal, int, C1, C2)
 	),
 	encode(list(int), int, Conj2, SetOfLit).
+% encode(literal, int, Literal, Index) :-
+% 	term_hash(Literal, H),
+% 	(   cur_literal_index(H, Literal, Index) -> true
+% 	;   once(cur_literal_index(_, _, Index0)),
+% 	    Index is Index0+1,
+% 	    asserta(cur_literal_index(H, Literal, Index))
+% 	).
 encode(literal, int, Literal, Index) :-
-	term_hash(Literal, H),
-	(   cur_literal_index(H, Literal, Index) -> true
+	literal_quad(Literal, Quad),
+	encode_quad(Quad, Index).
+
+encode_quad(Quad, Index) :-
+	term_hash(Quad, H),
+	(   cur_literal_index(H, Quad, Index) -> true
 	;   once(cur_literal_index(_, _, Index0)),
 	    Index is Index0+1,
-	    asserta(cur_literal_index(H, Literal, Index))
+	    asserta(cur_literal_index(H, Quad, Index))
 	).
 
-literals_postlude(Ops, Args1, Args2) :-
+% 0..4 are connectives, 5..13 are true literals
+literal_quad([0|Args1], Quad) :- !, % OR
+	(   Args1 = [] -> Quad = [0,-1,-1,0] % FALSE
+	;   Args1 = [X]
+	->  literal_quad(X, Quad)
+	;   Args1 = [X,Y|Zs]
+	->  literal_quad(X, Quad1),
+	    literal_quad([0,Y|Zs], Quad2),
+	    encode_quad(Quad1, I1),
+	    encode_quad(Quad2, I2),
+	    Quad = [0,I1,I2,0]
+	).
+literal_quad([1|Args1], Quad) :- !, % AND
+	(   Args1 = [] -> Quad = [1,-1,-1,0] % TRUE
+	;   Args1 = [X]
+	->  literal_quad(X, Quad)
+	;   Args1 = [X,Y|Zs]
+	->  literal_quad(X, Quad1),
+	    literal_quad([1,Y|Zs], Quad2),
+	    encode_quad(Quad1, I1),
+	    encode_quad(Quad2, I2),
+	    Quad = [1,I1,I2,0]
+	).
+literal_quad([2,X,Y], Quad) :- !, % XOR
+	literal_quad(X, Quad1),
+	literal_quad(Y, Quad2),
+	encode_quad(Quad1, I1),
+	encode_quad(Quad2, I2),
+	Quad = [2,I1,I2,0].
+literal_quad([3,X,Y], Quad) :- !, % IMPLIES
+	literal_quad(X, Quad1),
+	literal_quad(Y, Quad2),
+	encode_quad(Quad1, I1),
+	encode_quad(Quad2, I2),
+	Quad = [3,I1,I2,0].
+literal_quad([4,X], Quad) :- !, % NOT
+	literal_quad(X, Quad1),
+	encode_quad(Quad1, I1),
+	Quad = [4,I1,0,0].
+literal_quad(Literal, Quad) :-	% literal proper
+	(   Literal = [T,X] -> Quad = [T,X,0,0]
+	;   Literal = [T,X,Y] -> Quad = [T,X,Y,0]
+	;   Literal = [T,X,Y,Z] -> Quad = [T,X,Y,Z]
+	).
+
+literals_postlude(Ops, Args1, Args2, Args3) :-
 	findall(Literal, cur_literal_index(_,Literal,_), Literals1),
 	reverse(Literals1, [_|Literals2]),
-	(   foreach(Lit,Literals2),
-	    foreach(Op, Ops),
-	    foreach(X, Args1),
-	    foreach(Y, Args2)
-	do  (   Lit = [Op,X,Y] -> true
-	    ;   Lit = [Op,X], Y = 0
-	    )
-	).
+	Literals2 \== [], !,
+	transpose(Literals2, [Ops,Args1,Args2,Args3]).
+literals_postlude([], [], [], []).
 
 sets_postlude(Sets2) :-
 	findall(Set, cur_set_index(_,Set,_), Sets1),

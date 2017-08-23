@@ -87,25 +87,54 @@ const char MINIMUM_COST_SEARCH = 'm';
 const char FAIL_FIRST_SEARCH = 'f';
 const char CONSERVATIVE_SEARCH = 'c';
 
+// Numeric ID of a Unison constraint expresion
+
+enum UnisonConstraintExprId
+  { OR_EXPR,
+    AND_EXPR,
+    XOR_EXPR,
+    IMPLIES_EXPR,
+    NOT_EXPR,
+    ACTIVE_EXPR,		// ex-PRESOLVER_ACTIVENESS
+    CONNECTS_EXPR,		// ex-PRESOLVER_OPERAND_TEMPORARY
+    IMPLEMENTS_EXPR,		// ex-PRESOLVER_OPERATION
+    DISTANCE_EXPR,
+    SHARE_EXPR,			// ex-PRESOLVER_EQUAL_TEMPORARIES
+    OPERAND_OVERLAP_EXPR,	// ex-PRESOLVER_OVERLAPPING_OPERANDS
+    TEMPORARY_OVERLAP_EXPR,	// ex-PRESOLVER_OVERLAPPING_TEMPORARIES
+    CALLER_SAVED_EXPR,		// ex-PRESOLVER_CALLER_SAVED_TEMPORARY
+    ALLOCATED_EXPR		// ex-PRESOLVER_OPERAND_CLASS
+  };
+
+
+// Unison constraint expression
+
+class UnisonConstraintExpr {
+public:
+ UnisonConstraintExpr() {};
+ UnisonConstraintExpr(UnisonConstraintExprId id0, vector<int> data0,
+                      vector<UnisonConstraintExpr> children0)
+   : id(id0), data(data0), children(children0) {}
+  UnisonConstraintExprId id;
+  vector<int> data;
+  vector<UnisonConstraintExpr> children;
+  bool operator<(const UnisonConstraintExpr & e) const {
+    if(id != e.id) return id < e.id;
+    else if(data != e.data) return data < e.data;
+    else return children < e.children;
+  }
+  bool operator==(const UnisonConstraintExpr& e) const {
+    return (id == e.id) && (data == e.data) && (children == e.children);
+  }
+};
+
 typedef tuple<operand, vector<register_atom> > AvoidHint;
 
-typedef vector<int> presolver_lit;
-
-typedef vector<presolver_lit> presolver_conj;
+typedef vector<UnisonConstraintExpr> presolver_conj;
 
 typedef vector<presolver_conj> presolver_disj;
 
 typedef presolver_conj nogood;
-
-const int PRESOLVER_EQUAL_TEMPORARIES = 0;
-const int PRESOLVER_OPERAND_TEMPORARY = 1;
-const int PRESOLVER_ACTIVENESS = 2;
-const int PRESOLVER_OPERATION = 3;
-const int PRESOLVER_OVERLAPPING_OPERANDS = 4;
-const int PRESOLVER_OVERLAPPING_TEMPORARIES = 5;
-const int PRESOLVER_CALLER_SAVED_TEMPORARY = 6;
-const int PRESOLVER_NO_OPERATION = 7;
-const int PRESOLVER_OPERAND_CLASS = 8;
 
 class PresolverActiveTable {
 public:
@@ -356,33 +385,6 @@ public:
 
   // Static member for instantiating a n temporand (no-type)
   static Temporand n(int id);   // Id has no relevant type, just a number
-};
-
-// Numeric ID of a Unison constraint expresion
-
-enum UnisonConstraintExprId
-  { OR_EXPR,
-    AND_EXPR,
-    XOR_EXPR,
-    IMPLIES_EXPR,
-    NOT_EXPR,
-    ACTIVE_EXPR,
-    CONNECTS_EXPR,
-    IMPLEMENTS_EXPR,
-    DISTANCE_EXPR,
-    SHARE_EXPR,
-    OPERAND_OVERLAP_EXPR,
-    TEMPORARY_OVERLAP_EXPR,
-    CALLER_SAVED_EXPR,
-    ALLOCATED_EXPR };
-
-// Unison constraint expression
-
-class UnisonConstraintExpr {
-public:
-  UnisonConstraintExprId id;
-  vector<int> data;
-  vector<UnisonConstraintExpr> children;
 };
 
 #endif

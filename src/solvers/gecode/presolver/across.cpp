@@ -209,7 +209,7 @@ void collect_before_call(PresolverAsserts& PA, const Parameters& input, operatio
 		for(operand q1 : oper_defs(input, o1)) {
 		  for(temporary td : opnd_temps(input, q1)) {
 		    if(td!=NULL_TEMPORARY) {
-		      presolver_lit lit = {PRESOLVER_OPERAND_TEMPORARY, q, tu};
+		      UnisonConstraintExpr lit(CONNECTS_EXPR, {q,tu}, {});
 		      presolver_conj Conj2 = {lit};
 		      Conj2.insert(Conj2.end(), BConj1.second.begin(), BConj1.second.end());
 		      Before[td].push_back(normal_conjunction(input, Conj2));
@@ -234,7 +234,7 @@ void collect_after_call(PresolverAsserts& PA, const Parameters& input, operation
     for(operand p : oper_uses(input, o)) {
       for(temporary tu : opnd_temps(input, p)) {
 	if(tu!=NULL_TEMPORARY) {
-	  presolver_lit lit = {PRESOLVER_OPERAND_TEMPORARY, p, tu};
+	  UnisonConstraintExpr lit(CONNECTS_EXPR, {p,tu}, {});
 	  presolver_conj Conj = {lit};
 	  After[tu].push_back(Conj);
 	}
@@ -248,8 +248,8 @@ void collect_after_call(PresolverAsserts& PA, const Parameters& input, operation
 		for(operand q : oper_uses(input, temp_oper(input, tu))) {
 		  for(temporary td : opnd_temps(input, q)) {
 		    if(td!=NULL_TEMPORARY) {
-		      presolver_lit lit1 = {PRESOLVER_OPERAND_TEMPORARY, q, td};
-		      presolver_lit lit2 = {PRESOLVER_OPERAND_TEMPORARY, p, tu};
+		      UnisonConstraintExpr lit1(CONNECTS_EXPR, {q,td}, {});
+		      UnisonConstraintExpr lit2(CONNECTS_EXPR, {p,tu}, {});
 		      presolver_conj Conj2 = {lit1,lit2};
 		      Conj2.insert(Conj2.end(), BConj1.second.begin(), BConj1.second.end());
 		      After[td].push_back(normal_conjunction(input, Conj2));
@@ -280,7 +280,8 @@ vector<pair<operation,presolver_conj>> extend_predecessors(const Parameters inpu
 	  first = false;
 	} else {
 	  operation o = temp_oper(input, t);
-	  presolver_conj Conj = {{PRESOLVER_OPERAND_TEMPORARY, p, t}};
+	  UnisonConstraintExpr e(CONNECTS_EXPR, {p,t}, {});
+	  presolver_conj Conj = {e};
 	  R.push_back(make_pair(o,Conj));
 	}
       }
@@ -315,13 +316,13 @@ void nogoods_or_across(const Parameters& input,
   for(const presolver_conj& c : acr.d) {
     presolver_conj c2;
     bool csopnd = false;
-    for(const presolver_lit& l : c) {
-      if(l[0]==PRESOLVER_OPERAND_TEMPORARY) {
-	operand p = l[1];
+    for(const UnisonConstraintExpr& l : c) {
+      if(l.id==CONNECTS_EXPR) {
+	operand p = l.data[0];
 	vector<temporary> ts = opnd_temps(input, p);
 	if(ts.size()==1 || (ts.size()==2 && ts[0]==NULL_TEMPORARY))
 	  continue;
-	if(l[2]==t) {
+	if(l.data[1]==t) {
 	  int pr = input.p_preassign[p];
 	  if(pr>=0 && !input.r_calleesaved[pr])
 	    csopnd = true;
@@ -389,9 +390,9 @@ pair<bool,presolver_conj> cond_caller_saved(const Parameters& input,
       return make_pair(true, c);
     }
   }
-  for(const presolver_lit& l : c) {
-    if(l[0]==PRESOLVER_OPERAND_TEMPORARY && l[2]==t) {
-      operand q = l[1];
+  for(const UnisonConstraintExpr& l : c) {
+    if(l.id==CONNECTS_EXPR && l.data[1]==t) {
+      operand q = l.data[0];
       if(!is_preassigned_not(input, q)) {
 	if(is_preassigned_callee_saved(input, q)) { // preassigned: non-caller-saved
 	  return make_pair(false, c);
@@ -401,7 +402,8 @@ pair<bool,presolver_conj> cond_caller_saved(const Parameters& input,
       }
     }
   }
-  presolver_conj c2 = {{PRESOLVER_CALLER_SAVED_TEMPORARY,t}};
+  UnisonConstraintExpr e(CALLER_SAVED_EXPR, {t}, {});
+  presolver_conj c2 = {e};
   c2.insert(c2.end(), c.begin(), c.end());
   return make_pair(true, normal_conjunction(input, c2));
 }
@@ -447,9 +449,9 @@ void cond_before_items(PresolverAsserts& PA,
       goto nexta;
     }
     if (kern.size()==1) {
-      for(const presolver_lit& l : kern[0]) {
-	if(l[0]==PRESOLVER_OPERAND_TEMPORARY && l[2]==aft.first &&
-	   !is_preassigned_not(input, l[1])) { // eq(p(p),t(t)) where p is preassigned
+      for(const UnisonConstraintExpr& l : kern[0]) {
+	if(l.id==CONNECTS_EXPR && l.data[1]==aft.first &&
+	   !is_preassigned_not(input, l.data[0])) { // eq(p(p),t(t)) where p is preassigned
 	  goto nexta;
 	}
       }
@@ -499,10 +501,11 @@ map<temporary,presolver_disj> cond_before_filter(const Parameters& input,
       Filtered[t] = {};
     } else {
       for(const presolver_conj& c : kv.second) {
-	presolver_conj c2 = {{PRESOLVER_CALLER_SAVED_TEMPORARY,t}};
-	for(const presolver_lit& l : c) {
-	  if(l[0]==PRESOLVER_OPERAND_TEMPORARY && l[2]==t && // eq(p(p),t(t)) where
-	     is_preassigned_callee_saved(input, l[1])) { // p preassigned non-caller-saved
+	UnisonConstraintExpr e(CALLER_SAVED_EXPR, {t}, {});
+	presolver_conj c2 = {e};
+	for(const UnisonConstraintExpr& l : c) {
+	  if(l.id==CONNECTS_EXPR && l.data[1]==t && // eq(p(p),t(t)) where
+	     is_preassigned_callee_saved(input, l.data[0])) { // p preassigned non-caller-saved
 	    goto nextc;
 	  }
 	}

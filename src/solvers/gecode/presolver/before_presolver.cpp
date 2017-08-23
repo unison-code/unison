@@ -175,9 +175,10 @@ void BeforePresolver::gen_before(beforeset& B) {
             // FIXME: fix spec (GENBEFORE()) when it says "p, q are def"!
             operand q = first_use(input, o);
             PresolverBefore pb;
+	    UnisonConstraintExpr e(CONNECTS_EXPR, {r,t}, {});
             pb.p = p;
             pb.q = q;
-            pb.d.push_back({{PRESOLVER_OPERAND_TEMPORARY,r,t}});
+            pb.d.push_back({e});
             B.push_back(pb);
           }
         }
@@ -209,11 +210,11 @@ void BeforePresolver::before1(operand p, operand q, vector<PresolverBefore>& B) 
       pb.q = qc.first;
 
       // Only add non-empty
-      vector<presolver_lit> conj;
-      for(const presolver_lit& lit : pc.second)
-	if(!lit.empty()) vector_insert(conj, lit);
-      for(const presolver_lit& lit : qc.second)
-	if(!lit.empty()) vector_insert(conj, lit);
+      vector<UnisonConstraintExpr> conj;
+      for(const UnisonConstraintExpr& lit : pc.second)
+	/* FIXME if(!lit.empty())*/ vector_insert(conj, lit);
+      for(const UnisonConstraintExpr& lit : qc.second)
+	/* FIXME if(!lit.empty())*/ vector_insert(conj, lit);
 
       if(!conj.empty()) {
 	pb.d.push_back(conj);
@@ -247,7 +248,7 @@ BeforePresolver::lh_descendants(const operand p,
       if(ord_intersection(tp,tu).size() > 0) {
 
 	if(tp != tu){
-	  presolver_lit _l = {PRESOLVER_EQUAL_TEMPORARIES,u,p};
+	  UnisonConstraintExpr _l(SHARE_EXPR, {u,p}, {});
 	  _C.push_back(_l);
 	}
 
@@ -302,7 +303,8 @@ void BeforePresolver::before_vs_nogoods(beforeset& T, vector<nogood>& Nogoods) {
     // nogoods <- {Conj union {overlap(p(p), p(q))} | <p,q,{conj}> in T
     //                                                      and conj != ø}
     else {
-      presolver_conj _conj = {{PRESOLVER_OVERLAPPING_OPERANDS, t.p, t.q}};
+      UnisonConstraintExpr e(OPERAND_OVERLAP_EXPR, {t.p,t.q}, {});
+      presolver_conj _conj = {e};
 
       for(const presolver_conj& c : t.d) {
 	_conj.insert(_conj.end(), c.begin(), c.end());
