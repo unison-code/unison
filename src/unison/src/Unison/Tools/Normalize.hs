@@ -34,7 +34,8 @@ run (estimateFreq, simplifyControlFlow, debug, normMirFile) mir target =
   let mf  = fromSingleton $ MIR.parse mir
       mf0 = liftJumpTables mf target
       mf1 = MIR.runMachineTransformations (preProcess target) mf0
-      mf2 = if simplifyControlFlow then simplifyFallthroughs mf1 target else mf1
+      mf2 = if simplifyControlFlow
+            then simplifyFallthroughs False mf1 target else mf1
       mf3 = splitTerminators estimateFreq mf2 target
       mf4 = renameMachineBlocks mf3 target
       mf5 = dropUnsupportedPseudos mf4 target

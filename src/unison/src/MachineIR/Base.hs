@@ -110,7 +110,9 @@ data MachineBlockProperty =
   -- | Block's successors
   MachineBlockPropertySuccs {
     mbPropertySuccs :: [MachineSuccessor]
-    }
+    } |
+  -- | Whether the block has been split
+  MachineBlockPropertySplit {}
   deriving (Eq, Ord)
 
 -- | Machine IR instruction corresponding to LLVM's @MachineInstr@.

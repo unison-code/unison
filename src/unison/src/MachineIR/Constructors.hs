@@ -30,6 +30,7 @@ module MachineIR.Constructors
          -- * MachineBlockProperty constructors
          mkMachineBlockPropertyFreq,
          mkMachineBlockPropertySuccs,
+         mkMachineBlockPropertySplit,
          -- * MachineInstruction constructors
          mkMachineBundle,
          mkMachineSingle,
@@ -95,6 +96,7 @@ mkMachineBlock = MachineBlock
 
 mkMachineBlockPropertyFreq = MachineBlockPropertyFreq
 mkMachineBlockPropertySuccs = MachineBlockPropertySuccs
+mkMachineBlockPropertySplit = MachineBlockPropertySplit
 
 mkMachineBundle = MachineBundle True
 mkMachineSingle = MachineSingle

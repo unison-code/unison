@@ -1291,8 +1291,9 @@ toMachineBlock Block {bLab = id, bAs = as, bCode = is} =
   in mkMachineBlock id mps mis
 
 toMachineBlockProperties :: BlockAttributes -> [MachineBlockProperty]
-toMachineBlockProperties BlockAttributes {aFreq = f} =
-  maybeToList $ fmap mkMachineBlockPropertyFreq f
+toMachineBlockProperties BlockAttributes {aFreq = f, aSplit = s} =
+  maybeToList (fmap mkMachineBlockPropertyFreq f) ++
+  [mkMachineBlockPropertySplit | s]
 
 toMachineInstruction :: Show i => Show r => BlockOperation i r ->
                         MachineInstruction i r

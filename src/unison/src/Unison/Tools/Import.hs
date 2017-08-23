@@ -103,7 +103,7 @@ mirTransformations (estimateFreq, simplifyControlFlow) =
      (liftBranchPredictions, "liftBranchPredictions", True),
      (liftJumpTables, "liftJumpTables", True),
      (liftMemoryPartitions, "liftMemoryPartitions", True),
-     (simplifyFallthroughs, "simplifyFallthroughs", simplifyControlFlow),
+     (simplifyFallthroughs False, "simplifyFallthroughs", simplifyControlFlow),
      (renameMachineBlocks, "renameMachineBlocks", True),
      (splitTerminators estimateFreq, "splitTerminators", True),
      (renameMachineBlocks, "renameMachineBlocks", True),

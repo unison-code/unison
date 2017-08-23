@@ -17,13 +17,17 @@ import qualified Data.ByteString.Lazy.Char8 as BSL
 import qualified Data.HashMap.Strict as HM
 import Control.Monad
 
+import MachineIR
 import Unison
 import Unison.Driver
 import Unison.Parser
+import Unison.Target.API
 
 import Unison.Transformations.FinalizeOperations
 import Unison.Transformations.UnbundleSingletons
 import Unison.Transformations.RunTargetTransforms
+import MachineIR.Transformations.SimplifyFallthroughs
+import MachineIR.Transformations.RenameMachineBlocks
 import MachineIR.Transformations.PrepareForEmission
 
 import Unison.Tools.Export.SelectTemporaries
@@ -52,31 +56,24 @@ run (removeReds, keepNops, baseFile, tight, debug, outJsonFile, unisonMirFile)
   extUni target =
   do outJson <- readFile outJsonFile
      baseMir <- maybeReadFile baseFile
-     let f   = parse target extUni
+     let f   = Unison.Parser.parse target extUni
          sol = parseSolution outJson
          (f', partialFs) =
            applyTransformations
-           (synthesizerTransformations
-            (fromJust sol) (removeReds, keepNops, tight))
+           (uniTransformations (fromJust sol) (removeReds, keepNops, tight))
            target f
-         mf1 = toMachineFunction f'
-         mf2 = runPostProcess mf1 target
-         mf3 = cleanNops mf2 target
-         mf4 = prepareForEmission mf3 target
-         mf5 = case baseMir of
+         mf = toMachineFunction f'
+         (mf', partialMfs) =
+           applyTransformations mirTransformations target mf
+         mfBase = case baseMir of
                  (Just base) -> base
                  Nothing     -> ""
      when (debug && (isJust sol)) $
-          do putStr (toPlainText partialFs)
-             putStr $ toPlainText $
-               [("toMachineFunction", Just $ showSimple mf1),
-                ("runPostProcess", Just $ showSimple mf2),
-                ("cleanNops", Just $ showSimple mf3),
-                ("prepareForEmission", Just $ showSimple mf4)]
+          putStr (toPlainText (partialFs ++ partialMfs))
      when (isJust sol) $
-          emitOutput unisonMirFile (show mf4)
+          emitOutput unisonMirFile (show mf')
      when (not $ isJust sol) $
-          emitOutput unisonMirFile mf5
+          emitOutput unisonMirFile mfBase
 
 parseSolution json =
     let sol          = case decode (BSL.pack json) of
@@ -99,7 +96,7 @@ solutionFromJson object =
       Error e -> error ("error converting JSON input:\n" ++ show e)
       Success s -> s
 
-synthesizerTransformations (cycles, instructions, registers, temporaries)
+uniTransformations (cycles, instructions, registers, temporaries)
                                (removeReds, keepNops, tight) =
     [(assignRegisters tight registers, "assignRegisters", True),
      (selectTemporaries temporaries, "selectTemporaries", True),
@@ -117,3 +114,13 @@ synthesizerTransformations (cycles, instructions, registers, temporaries)
      (finalizeOperations, "finalizeOperations", True),
      (removeNops, "removeNops", not keepNops),
      (unbundleSingletons, "unbundleSingletons", True)]
+
+mirTransformations :: (Eq i, Read i, Read r, Eq r) =>
+  [(MachineFunction i r -> TargetWithOptions i r rc s -> MachineFunction i r,
+    String, Bool)]
+mirTransformations =
+  [(simplifyFallthroughs True, "simplifyFallthroughs", True),
+   (renameMachineBlocks, "renameMachineBlocks", True),
+   (runPostProcess, "runPostProcess", True),
+   (cleanNops, "cleanNops", True),
+   (prepareForEmission, "prepareForEmission", True)]

@@ -104,6 +104,7 @@ showMachineBasicBlock
   MachineBlock {mbId = bid, mbProperties = mps, mbInstructions = mis} =
   let freq  = find isMachineBlockPropertyFreq mps
       succs = find isMachineBlockPropertySuccs mps
+      split = find isMachineBlockPropertySplit mps
   in "bb." ++ show bid ++
          (case freq of
             (Just (MachineBlockPropertyFreq f)) -> " (freq " ++ show f ++ ")"
@@ -111,7 +112,10 @@ showMachineBasicBlock
          (case succs of
              (Just (MachineBlockPropertySuccs s)) | not (null s) ->
                nest' 2 ("successors: " ++ (showCS showSuccessor s) ++ newLine)
-             _ -> "") ++ newLine ++
+             _ -> "") ++
+         (case split of
+             (Just {}) -> nest' 2 ("split" ++ newLine)
+             Nothing -> "") ++ newLine ++
      nest' 2 (showMachineBasicBlockBody mis)
 
 showSuccessor (bid, p) = "%bb." ++ show bid ++ "(" ++ show p ++ ")"

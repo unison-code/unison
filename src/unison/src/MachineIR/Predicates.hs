@@ -22,6 +22,7 @@ module MachineIR.Predicates
          -- * MachineBlockProperty predicates
          isMachineBlockPropertyFreq,
          isMachineBlockPropertySuccs,
+         isMachineBlockPropertySplit,
          -- * MachineInstruction predicates
          isMachineVirtual,
          isMachineTarget,
@@ -78,6 +79,9 @@ isMachineBlockPropertyFreq _ = False
 
 isMachineBlockPropertySuccs MachineBlockPropertySuccs {} = True
 isMachineBlockPropertySuccs _ = False
+
+isMachineBlockPropertySplit MachineBlockPropertySplit {} = True
+isMachineBlockPropertySplit _ = False
 
 isMachineVirtual MachineSingle {msOpcode = MachineVirtualOpc {}} = True
 isMachineVirtual _ = False
