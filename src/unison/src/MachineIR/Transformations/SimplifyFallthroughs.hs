@@ -21,7 +21,7 @@ simplifyFallthroughs onlySplits mf target =
   fixpoint (simplifyFallthroughsFor onlySplits target) mf
 
 simplifyFallthroughsFor onlySplits target mf =
-    let mf1 = removeEmptyBlocks mf target
+    let mf1 = removeEmptyBlocks onlySplits mf target
         mf2 = if onlySplits then mf1 else dropExplicitFallthroughs mf1 target
         mf3 = mergeBlocks onlySplits mf2 target
     in mf3

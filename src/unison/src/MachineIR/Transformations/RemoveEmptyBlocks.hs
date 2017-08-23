@@ -20,7 +20,7 @@ import qualified Data.Map as M
 import Common.Util
 import MachineIR
 
-removeEmptyBlocks mf @ MachineFunction {mfBlocks = code} _target =
+removeEmptyBlocks onlySplits mf @ MachineFunction {mfBlocks = code} _target =
     let ids    = map mbId code
         -- Blocks which are referred by phi instructions are forbidden as
         -- removing them might render the phi instructions ambiguous.
@@ -39,7 +39,8 @@ removeEmptyBlocks mf @ MachineFunction {mfBlocks = code} _target =
         mf3    = mapToMachineBlockId isPhi (applyMap pmap') mf2
         mf4    = mf3 {mfProperties =
                       addRemovedFreqs (mfProperties mf3) removedFreqs}
-    in mf4
+        mf5    = if onlySplits then mf3 else mf4
+    in mf5
 
 removeEmptyBlock forbid (ids, pmap, smap, removedFreqs)
   mb @ MachineBlock {mbId = id, mbInstructions = []}
