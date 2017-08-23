@@ -2101,7 +2101,7 @@ void Model::post_allowed_copy_activation_and_dataflow_constraints(block b) {
 
 void Model::post_nogood_constraints(block b) {
 
-  vector<nogood> ngs;
+  vector<UnisonConstraintExpr> ngs;
   if (!options->disable_basic_nogood_constraints())
     ngs = concat(ngs, input->bnogoods[b]);
   if (!options->disable_additional_nogood_constraints())
@@ -2109,36 +2109,32 @@ void Model::post_nogood_constraints(block b) {
 
   // Nogood conjunctions are false:
 
-  for (nogood ng : ngs) {
-    if (!ng.empty())
-      constraint(!presolver_conj_var(ng));
+  for (UnisonConstraintExpr ng : ngs) {
+    constraint(!adhoc_constraint_var(ng));
   }
 
 }
 
 void Model::post_conditional_precedence_constraints(block b) {
 
-  vector<PresolverPrecedence> ps;
+  vector<UnisonConstraintExpr> ps;
   if (!options->disable_basic_conditional_precedence_constraints())
     ps = concat(ps, input->bprecedences[b]);
   if (!options->disable_additional_conditional_precedence_constraints())
     ps = concat(ps, input->bprecedences2[b]);
-
+  
   // Some precedences apply if a given condition holds:
 
-  for (PresolverPrecedence p : ps) {
-    operation o = p.i, j = p.j;
-    int n = p.n;
-    presolver_disj d = p.d;
+  for (UnisonConstraintExpr p : ps) {
     // FIXME: take into account that dependencies involving delimiters can now
     // be shorter due to slack variables
-    constraint(presolver_disj_var(d) >> (c(o) + n <= c(j)));
+    constraint(adhoc_constraint_var(p));
   }
 }
 
 void Model::post_partially_ordered_live_range_constraints(block b) {
 
-  vector<PresolverBefore> bfs;
+  vector<PresolverBeforeJSON> bfs;
   if (!options->disable_basic_partially_ordered_live_range_constraints())
     bfs = concat(bfs, input->bbefore[b]);
   if (!options->disable_additional_partially_ordered_live_range_constraints())
@@ -2147,10 +2143,10 @@ void Model::post_partially_ordered_live_range_constraints(block b) {
   // The live ranges of two partially ordered operands do not overlap if a given
   // condition holds:
 
-  for (PresolverBefore bf : bfs) {
+  for (PresolverBeforeJSON bf : bfs) {
     operand p = bf.p, q = bf.q;
-    presolver_disj d = bf.d;
-    constraint(presolver_disj_var(d) >> (ple(p) <= pls(q)));
+    UnisonConstraintExpr e = bf.e;
+    constraint(adhoc_constraint_var(e) >> (ple(p) <= pls(q)));
   }
 
 }
@@ -2160,7 +2156,7 @@ void Model::post_across_call_disjoint_temporary_constraints(block b) {
   // Temporaries whose live range crosses a call operation must be assigned to
   // disjoint registers:
 
-  for (PresolverAcross sa : input->bacross[b]) {
+  for (PresolverAcrossJSON sa : input->bacross[b]) {
 
     operation o = sa.o;
 
@@ -2181,10 +2177,10 @@ void Model::post_across_call_disjoint_temporary_constraints(block b) {
     }
 
     // Temporaries
-    for (PresolverAcrossItem ai : sa.as) {
+    for (PresolverAcrossItemJSON ai : sa.as) {
       temporary t = ai.t;
-      presolver_disj d = ai.d;
-      if (in_block(d, b, input)) {
+      UnisonConstraintExpr e = ai.e;
+      if (in_block(e, b, input)) {
 	rs << r(t);
 	w << var(input->width[t]);
 	re << var(r(t) + input->width[t]);
@@ -2192,7 +2188,7 @@ void Model::post_across_call_disjoint_temporary_constraints(block b) {
 	h << one;
 	ye << one;
 	m << var((l(t) && (ld(t) > 0) && (ls(t) <= c(o)) && (le(t) > c(o)))
-		 || presolver_disj_var(d));
+		 || adhoc_constraint_var(e));
       }
     }
 

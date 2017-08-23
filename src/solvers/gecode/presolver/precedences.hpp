@@ -80,7 +80,7 @@ class PrecedenceEdge {
 
 void gen_before_precedences(const Parameters& input,
                             PresolverOptions & options,
-			    const vector<PresolverBefore>& before,
+			    const vector<PresolverBeforeJSON>& before,
 			    precedence_set& PI,
                             Support::Timer & t);
 
@@ -129,7 +129,7 @@ void region_finishers_rec(vector<operation>& In,
 			  resource r, int cap,
 			  const vector<vector<vector<int>>>& min_con_erg);
 
-void normalize_precedences(const Parameters& input, const precedence_set& P, precedence_set& P1);
+void normalize_precedences(const Parameters& input, const precedence_set& P, vector<UnisonConstraintExpr>& P1);
 
 map<operand, map<instruction, latency>> compute_opnd_to_lat(const Parameters& input);
 

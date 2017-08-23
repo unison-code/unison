@@ -106,19 +106,19 @@ void across_to_json(Parameters& input,
     vector<operand> Ps;
     vector<temporary> Ts;
     vector<register_atom> E;
-    vector<PresolverAcrossItem> F;
+    vector<PresolverAcrossItemJSON> F;
 
     collect_at_call(input, OT.first, Ps, Ts);
     across_extra_regs(input, Ps, E);
     for(const PresolverAcrossTuple& acr : OT.second) {
       if(!ord_contains(Ts, acr.t)) {
-	PresolverAcrossItem ai;
+	PresolverAcrossItemJSON ai;
 	ai.t = acr.t;
-	ai.d = filter_condition(acr.d, Nogoods);
+	ai.e = disj_to_expr(filter_condition(acr.d, Nogoods));
 	F.push_back(ai);
       }
     }
-    PresolverAcross a;
+    PresolverAcrossJSON a;
     a.o = OT.first;
     a.ras = E;
     a.as = F;

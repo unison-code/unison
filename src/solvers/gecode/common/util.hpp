@@ -185,7 +185,8 @@ string show(const Temporand);
 
 string show(const UnisonConstraintExpr);
 
-string show(const PresolverBefore);
+// string show(const PresolverBefore);
+string show(const PresolverBeforeJSON);
 
 string show(const PresolverDominates);
 
@@ -205,15 +206,17 @@ string show(const PresolverPred);
 
 string show(const PresolverSucc);
 
-string show(const PresolverAcross);
+// string show(const PresolverAcross);
+string show(const PresolverAcrossJSON);
 
 string show(const PresolverAcrossTuple);
 
-string show(const PresolverAcrossItem);
+// string show(const PresolverAcrossItem);
+string show(const PresolverAcrossItemJSON);
 
 string show(const PresolverSetAcross);
 
-string show(const PresolverPrecedence& p);
+// string show(const PresolverPrecedence& p);
 
 template <typename C>
 string show(const C& container, string l = ",", string pre = "",
@@ -240,13 +243,16 @@ string emit_json(const PresolverActiveTable at);
 
 string emit_json(const PresolverCopyTmpTable at);
 
-string emit_json(const PresolverPrecedence at);
+// string emit_json(const PresolverPrecedence at);
 
-string emit_json(const PresolverBefore at);
+// string emit_json(const PresolverBefore at);
+string emit_json(const PresolverBeforeJSON at);
 
-string emit_json(const PresolverAcross at);
+// string emit_json(const PresolverAcross at);
+string emit_json(const PresolverAcrossJSON at);
 
-string emit_json(const PresolverAcrossItem at);
+// string emit_json(const PresolverAcrossItem at);
+string emit_json(const PresolverAcrossItemJSON at);
 
 string emit_json(const PresolverSetAcross at);
 
@@ -416,9 +422,10 @@ bool in_block(PresolverActiveTable & ct, block b, const Parameters * input);
 
 bool in_block(PresolverCopyTmpTable & ctt, block b, const Parameters * input);
 
-bool in_block(PresolverPrecedence & p, block b, const Parameters * input);
+// bool in_block(PresolverPrecedence & p, block b, const Parameters * input);
 
-bool in_block(PresolverBefore & bf, block b, const Parameters * input);
+// bool in_block(PresolverBefore & bf, block b, const Parameters * input);
+bool in_block(PresolverBeforeJSON & bf, block b, const Parameters * input);
 
 bool in_block(UnisonConstraintExpr & e, block b, const Parameters * input);
 

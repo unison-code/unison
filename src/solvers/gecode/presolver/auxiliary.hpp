@@ -203,6 +203,16 @@ bool is_mandatory(const Parameters& input, operation o);
 
 presolver_conj normal_conjunction(const Parameters& input, const presolver_conj& c);
 
+UnisonConstraintExpr conj_to_expr(const presolver_conj& c);
+
+UnisonConstraintExpr disj_to_expr(const presolver_disj& d);
+
+presolver_disj expr_to_disj(const UnisonConstraintExpr& e);
+
+bool disj_is_true(const presolver_disj& d);
+
+bool disj_is_false(const presolver_disj& d);
+
 void deepsort(int);
 
 void deepsort(PresolverBefore&);

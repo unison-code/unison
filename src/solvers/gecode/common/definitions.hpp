@@ -111,7 +111,8 @@ enum UnisonConstraintExprId
 
 class UnisonConstraintExpr {
 public:
- UnisonConstraintExpr() {};
+  // default constructor means "true"
+ UnisonConstraintExpr() : id(AND_EXPR), data({}), children({}) {}
  UnisonConstraintExpr(UnisonConstraintExprId id0, vector<int> data0,
                       vector<UnisonConstraintExpr> children0)
    : id(id0), data(data0), children(children0) {}
@@ -194,6 +195,23 @@ public:
   }
 };
 
+class PresolverBeforeJSON {
+public:
+  operand p, q;
+  UnisonConstraintExpr e;
+  PresolverBeforeJSON() : p(-1), q(-1), e() {}
+  PresolverBeforeJSON(operation p, operation q, UnisonConstraintExpr e):
+    p(p), q(q), e(e) {}
+  bool operator<(const PresolverBeforeJSON &b) const {
+    if (p != b.p) return p < b.p;
+    else if (q != b.q) return q < b.q;
+    else return e < b.e;
+  }
+  bool operator==(const PresolverBeforeJSON& b) const {
+    return (p == b.p) && (q == b.q) && (e == b.e);
+  }
+};
+
 class PresolverAcrossItem {
 public:
   temporary t;
@@ -204,6 +222,19 @@ public:
   }
   bool operator==(const PresolverAcrossItem& that) const {
     return (t == that.t) && (d == that.d);
+  }
+};
+
+class PresolverAcrossItemJSON {
+public:
+  temporary t;
+  UnisonConstraintExpr e;
+  bool operator<(const PresolverAcrossItemJSON& that) const {
+    if (t != that.t) return t < that.t;
+    return e < that.e;
+  }
+  bool operator==(const PresolverAcrossItemJSON& that) const {
+    return (t == that.t) && (e == that.e);
   }
 };
 
@@ -218,6 +249,21 @@ public:
     return as < that.as;
   }
   bool operator==(const PresolverAcross& that) const {
+    return (o == that.o) && (ras == that.ras) && (as == that.as);
+  }
+};
+
+class PresolverAcrossJSON {
+public:
+  operation o;
+  vector<register_atom> ras;
+  vector<PresolverAcrossItemJSON> as;
+  bool operator<(const PresolverAcrossJSON &that) const {
+    if (o != that.o) return o < that.o;
+    if (ras != that.ras) return ras < that.ras;
+    return as < that.as;
+  }
+  bool operator==(const PresolverAcrossJSON& that) const {
     return (o == that.o) && (ras == that.ras) && (as == that.as);
   }
 };

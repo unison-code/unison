@@ -72,7 +72,7 @@ int: MAXL;
 int: MAXINSNS = max(o in 0..MAXO)(card(op_instructions[o]));
 int: MAXTEMPS = max(p in 0..MAXP)(card(operand_temps[p]));
 
-set of int: conjunction = index_set(sets);
+set of int: expr = index_set(expr_op);
 
 %% see JSON freq, maxc, ins, tmp, operands, optional_min
 array[int] of int: bb_order;
@@ -165,20 +165,20 @@ array[int,int] of int: packed_pq;
 %% see JSON before
 array[int] of int: before_pred;
 array[int] of int: before_succ;
-array[int] of set of conjunction: before_cond;
+array[int] of expr: before_cond;
 
 %% see JSON E
 array[int] of int: adhoc;
 
 %% see JSON nogoods
-array[int] of conjunction: nogood;
+array[int] of expr: nogood;
 
 %% see JSON across
 array[int] of int: across_op;
 array[int] of set of int: across_regs;
 array[int] of set of int: across_items;
 array[int] of int: across_item_temp;
-array[int] of set of conjunction: across_item_cond;
+array[int] of expr: across_item_cond;
 
 %% see JSON set_across
 array[int] of int: setacross_op;
@@ -212,10 +212,7 @@ array[int] of set of int: dominate_instructions;
 array[int] of set of int: dominate_temps;
 
 %% see JSON precedences
-array[int] of int: precedence_pred;
-array[int] of int: precedence_succ;
-array[int] of int: precedence_diff;
-array[int] of set of conjunction: precedence_cond;
+array[int] of expr: precedence;
 
 %% see JSON active_tables, tmp_tables
 array[int] of set of int: table_exists_ops;
@@ -265,16 +262,16 @@ array[int] of int: exrelated_q;
 array[int] of set of int: exrelated_rows;
 array[int,int] of int: exrelated_ext;
 
-%% extra storage for conjunctions and disjunctions
-array[int] of int: literal_op;
-array[int] of int: literal_arg1;
-array[int] of int: literal_arg2;
-array[int] of int: literal_arg3;
+%% extra storage for constraint expressions
+array[int] of int: expr_op;
+array[int] of int: expr_arg1;
+array[int] of int: expr_arg2;
+array[int] of int: expr_arg3;
 
 %% extra store for relations in table constraints
 array[int] of int: ints;
 
-%% extra storage: each set is either a conjunction or a set of temporaries
+%% extra storage: each set is a set of temporaries
 array[int] of set of int: sets;
 
 %% problem variables
@@ -455,17 +452,17 @@ var int: ls_t(int: p) = [ls[t] | t in operand_temps[p]][y[p]];
 
 var int: le_t(int: p) = [le[t] | t in operand_temps[p]][y[p]];
 
-predicate eval_literal(int: l) = (
-    let {int: tag = literal_op[l],
-         int: arg1 = literal_arg1[l],
-         int: arg2 = literal_arg2[l],
-         int: arg3 = literal_arg3[l],
+predicate eval_expr(int: l) = (
+    let {int: tag = expr_op[l],
+         int: arg1 = expr_arg1[l],
+         int: arg2 = expr_arg2[l],
+         int: arg3 = expr_arg3[l],
 	 } in (
-	     if tag=0 then if arg1<0 then false else eval_literal(arg1) \/ eval_literal(arg2) endif
-	else if tag=1 then if arg1<0 then true else eval_literal(arg1) /\ eval_literal(arg2) endif
-	else if tag=2 then eval_literal(arg1) xor eval_literal(arg2)
-	else if tag=3 then eval_literal(arg1) -> eval_literal(arg2)
-	else if tag=4 then not eval_literal(arg1)
+	     if tag=0 then if arg1<0 then false else eval_expr(arg1) \/ eval_expr(arg2) endif
+	else if tag=1 then if arg1<0 then true else eval_expr(arg1) /\ eval_expr(arg2) endif
+	else if tag=2 then eval_expr(arg1) xor eval_expr(arg2)
+	else if tag=3 then eval_expr(arg1) -> eval_expr(arg2)
+	else if tag=4 then not eval_expr(arg1)
 	else if tag=5 then a[arg1]
 	else if tag=6 then temp_eq(arg1,arg2)
 	else if tag=7 then insn_eq(arg1,arg2)
@@ -477,14 +474,6 @@ predicate eval_literal(int: l) = (
 	else if tag=13 then rt[arg1] in atom_regs[arg2]
         else false endif endif endif endif endif endif endif endif endif endif endif endif endif endif
     )
-);
-
-predicate eval_conjunction(int: conj) = (
-    forall(lit in sets[conj])(eval_literal(lit))
-);
-
-predicate eval_disjunction(set of int: disj) = (
-    exists(d in disj)(eval_conjunction(d))
 );
 
 var int: ite(var bool: cond, var int: thenval, var int: elseval) = (
@@ -694,13 +683,8 @@ constraint
 
 %% precedences (with conditions added by presolver)
 constraint
-    forall(j in index_set(precedence_pred)) (
-          let {int: pred = precedence_pred[j],
-	       int: succ = precedence_succ[j],
-	       int: dist = precedence_diff[j],
-	       set of conjunction: cond = precedence_cond[j]} in (
-	      eval_disjunction(cond) -> c[pred] + dist <= c[succ]
-	  )
+    forall(P in precedence) (
+        eval_expr(P)
     );
 
 %% ensure that all uses are within the live range -- pretty much subsumed by maximum(le[v], ...)
@@ -926,7 +910,7 @@ constraint
 %% ad-hoc
 constraint
     forall(L in adhoc) (
-        eval_literal(L)
+        eval_expr(L)
     );
 
 %% IMPLIED CONSTRAINTS
@@ -971,7 +955,7 @@ constraint
 %% nogoods
 constraint
     forall(N in nogood) (
-        not eval_conjunction(N)
+        not eval_expr(N)
     );
 
 %% live temporary
@@ -1056,8 +1040,8 @@ constraint
     forall(j in index_set(before_pred)) (
         let {int: p = before_pred[j],
 	     int: q = before_succ[j],
-	     set of int: cond = before_cond[j]} in (
-            eval_disjunction(cond) -> operand_live_before(p,q)
+	     expr: cond = before_cond[j]} in (
+            eval_expr(cond) -> operand_live_before(p,q)
 	)
     );
 
@@ -1135,7 +1119,7 @@ constraint
 	    forall(k in items)(
 	        let {int: ck = cand[k]} in (
 		    (   active[k] <->
-			    eval_disjunction(across_item_cond[k]) \/
+			    eval_expr(across_item_cond[k]) \/
 			    (ls[ck] <= c[opi] /\ c[opi] < le[ck])) /\
 		    selected[k] = ite(active[k], r[ck], -maxwidth*(ck+1))
 		)

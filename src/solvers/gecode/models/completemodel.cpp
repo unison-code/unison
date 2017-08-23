@@ -354,8 +354,8 @@ void CompleteModel::post_presolver_constraints(void) {
     }
 
     // cross-block nogoods
-    for (nogood ng : input->gnogoods) {
-      constraint(!presolver_conj_var(ng));
+    for (UnisonConstraintExpr ng : input->gnogoods) {
+      constraint(!adhoc_constraint_var(ng));
     }
 
     // cross-block active tables

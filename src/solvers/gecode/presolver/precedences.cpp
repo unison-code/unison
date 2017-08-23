@@ -518,7 +518,7 @@ void region_finishers_rec(vector<operation>& In,
   }
 }
 
-void normalize_precedences(const Parameters& input, const precedence_set& P, precedence_set& P1) {
+void normalize_precedences(const Parameters& input, const precedence_set& P, vector<UnisonConstraintExpr>& P1) {
     // M <- P' <- empty
     map<PrecedenceEdge, presolver_disj> M;
     // For all <src, dest, d, D> in P
@@ -532,7 +532,7 @@ void normalize_precedences(const Parameters& input, const precedence_set& P, pre
 	for(unsigned int jj=ii+1; jj<P.size(); jj++) {
 	  const PresolverPrecedence& p2 = P[jj];
 	  if (p2.i!=src || p2.j!=dest) break;
-	  if (p2.n>=d && p2.d.size()==1 && p2.d[0].size()==0) {
+	  if (p2.n>=d && disj_is_true(p2.d)) {
 	    goto next;
 	  }
 	}
@@ -563,7 +563,9 @@ void normalize_precedences(const Parameters& input, const precedence_set& P, pre
       presolver_disj D = ed.second;
       // if {a(o)} in D
       presolver_disj::iterator it = std::find_if(D.begin(), D.end(),
-						 [](presolver_conj c){ return c.size()==1 && c[0].id == ACTIVE_EXPR; });
+						 [](presolver_conj c){
+						   return c.size()==1 && c[0].id == ACTIVE_EXPR;
+						 });
 
       if(it != D.end()) {
 	// D <- {{a(o)}}
@@ -640,9 +642,13 @@ void normalize_precedences(const Parameters& input, const precedence_set& P, pre
 	}
       }
       // P' <- P' U {<src, dest, d, D>}
-      PresolverPrecedence precedence(e.i, e.j, e.n, D);
-      P1.push_back(precedence);
+      UnisonConstraintExpr expr(DISTANCE_EXPR, {e.i,e.j,e.n}, {});
+      if (!disj_is_true(D)) {
+	expr = UnisonConstraintExpr(IMPLIES_EXPR, {}, {disj_to_expr(D),expr});
+      } 
+      P1.push_back(expr);
     }
+    sort(P1.begin(), P1.end()); // canonicalize
 }
 
 map<operand, map<instruction, latency>> compute_opnd_to_lat(const Parameters& input) {
@@ -666,7 +672,7 @@ map<operand, map<instruction, latency>> compute_opnd_to_lat(const Parameters& in
 
 void gen_before_precedences(const Parameters& input,
                             PresolverOptions & options,
-			    const vector<PresolverBefore>& before,
+			    const vector<PresolverBeforeJSON>& before,
 			    precedence_set& PI,
                             Support::Timer & t) {
     // M <- empty
@@ -674,10 +680,10 @@ void gen_before_precedences(const Parameters& input,
     vector<PrecedenceEdge> M_keys; // Storing keys for convenience
     unsigned int i = 0;
     // For all <p,q,Disj> in Before
-    for(const PresolverBefore& b : before) {
+    for(const PresolverBeforeJSON& b : before) {
         // M <- M U GenBeforePrecedences1(p,q,Disj)
         multimap<PrecedenceEdge, presolver_conj> M1 =
-            gen_before_precedences1(input, b.p, b.q, b.d);
+	  gen_before_precedences1(input, b.p, b.q, expr_to_disj(b.e));
         for(auto p : M1) {
 	  M_keys.push_back(p.first);
 	  M.insert(p);

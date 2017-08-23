@@ -75,20 +75,20 @@ void presolve(Parameters & input, PresolverOptions & options) {
   }
 
   // Clear all fields that will be generated.
-  vector<PresolverBefore> before_ref = input.before;
-  vector<nogood> nogoods_ref = input.nogoods;
+  vector<PresolverBeforeJSON> before_ref = input.before;
+  vector<UnisonConstraintExpr> nogoods_ref = input.nogoods;
   vector<vector<operand> > congr_ref = input.strictly_congr;
   vector<operand> last_use_ref = input.last_use;
   vector<temporary> unsafe_temp_ref = input.unsafe_temp;
   vector<vector<operand> > difftemps_ref = input.difftemps;
   vector<vector<operand> > diffregs_ref = input.diffregs;
   vector<vector<vector<int> > > domops_ref = input.domops;
-  vector<PresolverAcross> across_ref = input.across;
+  vector<PresolverAcrossJSON> across_ref = input.across;
   vector<PresolverSetAcross> set_across_ref = input.set_across;
-  vector<PresolverBefore> before2_ref = input.before2;
-  vector<nogood> nogoods2_ref = input.nogoods2;
-  vector<PresolverPrecedence> precedences_ref = input.precedences;
-  vector<PresolverPrecedence> precedences2_ref = input.precedences2;
+  vector<PresolverBeforeJSON> before2_ref = input.before2;
+  vector<UnisonConstraintExpr> nogoods2_ref = input.nogoods2;
+  vector<UnisonConstraintExpr> precedences_ref = input.precedences;
+  vector<UnisonConstraintExpr> precedences2_ref = input.precedences2;
   vector<vector<operation>> calleesaved_spill_ref = input.calleesaved_spill;
   vector<PresolverValuePrecedeChain> value_precede_chains_ref = input.value_precede_chains;
   vector<PresolverPred> predecessors_ref = input.predecessors;
@@ -123,7 +123,8 @@ void presolve(Parameters & input, PresolverOptions & options) {
   input.active_tables.clear();
   input.tmp_tables.clear();
   input.dominates.clear();
-  if (timeout(t, options, "preparation", t0)) return;
+  if (timeout(t, options, "preparation", t0)) 
+    return;
 
   // JSON.long_latency: identify global operands that may need nonzero slack BEFORE unfeasibility test
 
@@ -142,37 +143,41 @@ void presolve(Parameters & input, PresolverOptions & options) {
            << "proven absence of solutions with cost less or equal than "
            << show(input.maxf, ", ", "", "{}") << endl;
     // ensure infeasible MiniZinc model
-    presolver_conj c;
-    input.nogoods.push_back(c);
+    input.nogoods.push_back(UnisonConstraintExpr(OR_EXPR, {}, {}));
     return;
   }
 
-  if (timeout(t, options, "trivial unfeasibility", t0)) return;
+  if (timeout(t, options, "trivial unfeasibility", t0))
+    return;
 
   // 1: JSON.strictly_congr <- GENCONGR()
 
   t0.start();
   gen_congr(input);
-  if (timeout(t, options, "congr", t0)) return;
+  if (timeout(t, options, "congr", t0))
+    return;
 
   // 2: JSON.last_use <- LASTUSE()
 
   t0.start();
   last_use(PA, input);
-  if (timeout(t, options, "last_use", t0)) return;
+  if (timeout(t, options, "last_use", t0))
+    return;
 
   // 3: JSON.unsafe_temp <- GENUNSAFETEMP()
 
   t0.start();
   gen_unsafe_temp(input);
-  if (timeout(t, options, "unsafe_temp", t0)) return;
+  if (timeout(t, options, "unsafe_temp", t0))
+    return;
 
   // 4: <JSON.before, Nogoods0> <- BEFOREVSNOGOODS(GENBEFORE())
 
   t0.start();
   vector<nogood> Nogoods;
   BeforePresolver::presolve(input, Nogoods);
-  if (timeout(t, options, "before", t0)) return;
+  if (timeout(t, options, "before", t0))
+    return;
 
   // 5: <Alldiffs, Nogoods1> <- GENINFEASIBLE()
 
@@ -183,27 +188,31 @@ void presolve(Parameters & input, PresolverOptions & options) {
   ip.setup();
   ip.pass1(Alldiffs, Nogoods1);
 
-  if (timeout(t, options, "gen_infeasible pass 1", t0)) return;
+  if (timeout(t, options, "gen_infeasible pass 1", t0))
+    return;
 
   // 6: JSON.difftemps <- DIFFTEMPS() UNION Assert.cur_difftemp
 
   t0.start();
   diff_temps(input);
   input.difftemps = ord_union(input.difftemps, PA.cur_difftemp);
-  if (timeout(t, options, "difftemps", t0)) return;
+  if (timeout(t, options, "difftemps", t0))
+    return;
 
   // 7: JSON.diffregs <- {STRIP(D) | D IN Alldiffs}
 
   t0.start();
   for (const temporand_set& D : Alldiffs)
     input.diffregs.push_back(strip(D));
-  if (timeout(t, options, "diffregs", t0)) return;
+  if (timeout(t, options, "diffregs", t0))
+    return;
 
   // 8: JSON.domops <- TEMPDOMINATION()
 
   t0.start();
   temp_domination(input);
-  if (timeout(t, options, "domops", t0)) return;
+  if (timeout(t, options, "domops", t0))
+    return;
 
   // 9, 10: JSON.set_across + <Across,AltAcross,CondBefore,Nogoods2>
 
@@ -214,7 +223,8 @@ void presolve(Parameters & input, PresolverOptions & options) {
   vector<nogood> Nogoods2;
   presolve_across(PA, input, Across, AltAcross, CondBefore, Nogoods2);
   alt_across_to_json(input, AltAcross);
-  if (timeout(t, options, "set_across", t0)) return;
+  if (timeout(t, options, "set_across", t0))
+    return;
 
   // 11: Nogoods3 <- KERNELSET (Nogoods UNION Nogoods1 UNION Nogoods2, {})
 
@@ -229,7 +239,8 @@ void presolve(Parameters & input, PresolverOptions & options) {
 	    back_inserter(n1));
   Nogoods = kernel_set(n1, {}, -1);
 
-  if (timeout(t, options, "Nogoods3", t0)) return;
+  if (timeout(t, options, "Nogoods3", t0))
+    return;
 
   // 12: DNogoods <-
   //     {{eq(p(p), p(q))}, {eq(p(p), t(t)), eq(p(q), t(t))}
@@ -255,41 +266,50 @@ void presolve(Parameters & input, PresolverOptions & options) {
     }
   }
 
-  if (timeout(t, options, "DNogoods", t0)) return;
+  if (timeout(t, options, "DNogoods", t0))
+    return;
 
   // 13: Nogoods <- KERNELSET(DNogoods, Nogoods3)
 
   t0.start();
   Nogoods = kernel_set(DNogoods, Nogoods, -1);
-  if (timeout(t, options, "Nogoods", t0)) return;
+  if (timeout(t, options, "Nogoods", t0))
+    return;
 
   // 14: JSON.across <- AcrossToJson(Across, Nogoods)
 
   t0.start();
   across_to_json(input, Across, Nogoods);
-  if (timeout(t, options, "across", t0)) return;
+  if (timeout(t, options, "across", t0))
+    return;
 
   // 15: MoreNogoods <- KernelSet(Assert.more_nogood, Nogoods)
 
   t0.start();
   vector<nogood> MoreNogoods = kernel_set(PA.more_nogoods, Nogoods, -1);
-  if (timeout(t, options, "MoreNogoods", t0)) return;
+  if (timeout(t, options, "MoreNogoods", t0))
+    return;
 
   // 16: JSON.nogoods2 <- MoreNogoods \ Nogoods
 
   t0.start();
-  input.nogoods2 = ord_difference(MoreNogoods, Nogoods);
-  if (timeout(t, options, "nogoods2", t0)) return;
+  for (const nogood& ng : ord_difference(MoreNogoods, Nogoods)) {
+    input.nogoods2.push_back(conj_to_expr(ng));
+  }
+  sort(input.nogoods2.begin(), input.nogoods2.end()); // canonicalize
+  if (timeout(t, options, "nogoods2", t0))
+    return;
 
   // 17: JSON.before2 <- {<p,q,d'> | <p,q,d> in CondBefore, d' = FilterCondition(d,MoreNogoods) where d' != {}}
 
   t0.start();
   for(PresolverBefore& bef : CondBefore) {
-    bef.d = filter_condition(bef.d, MoreNogoods);
-    if(bef.d.size()>0)
-      vector_insert(input.before2, bef);
+    PresolverBeforeJSON befJSON(bef.p, bef.q, disj_to_expr(filter_condition(bef.d, MoreNogoods)));
+    if(befJSON.e.id!=OR_EXPR || !befJSON.e.children.empty()) // not "false"
+      vector_insert(input.before2, befJSON);
   }
-  if (timeout(t, options, "before2", t0)) return;
+  if (timeout(t, options, "before2", t0))
+    return;
 
   // 18: Precedences <- GenBeforePrecedences() U GenFixedPrecedences() U GenDataPrecedences()
 
@@ -309,7 +329,8 @@ void presolve(Parameters & input, PresolverOptions & options) {
     return;
   sort(precedences.begin(), precedences.end());
   precedences.erase(unique(precedences.begin(), precedences.end()), precedences.end());
-  if (timeout(t, options, "Precedences", t0)) return;
+  if (timeout(t, options, "Precedences", t0))
+    return;
 
   // 19: JSON.precedences <- NormalizePrecedences()
 
@@ -327,7 +348,8 @@ void presolve(Parameters & input, PresolverOptions & options) {
     }
   }
   normalize_precedences(input, temp, input.precedences);
-  if (timeout(t, options, "precedences", t0)) return;
+  if (timeout(t, options, "precedences", t0))
+    return;
 
   // 20: JSON.precedences2 <- NormalizePrecedences()
 
@@ -349,13 +371,15 @@ void presolve(Parameters & input, PresolverOptions & options) {
     }
   }
   normalize_precedences(input, temp, input.precedences2);
-  if (timeout(t, options, "precedences2", t0)) return;
+  if (timeout(t, options, "precedences2", t0))
+    return;
 
   // 21: JSON.calleesaved_spill
 
   t0.start();
   gen_calleesaved_spill(input);
-  if (timeout(t, options, "calleesaved_spill", t0)) return;
+  if (timeout(t, options, "calleesaved_spill", t0))
+    return;
 
   // 22: JSON.dur
 
@@ -364,31 +388,36 @@ void presolve(Parameters & input, PresolverOptions & options) {
     for (resource r : input.R)
       if (input.con[i][r]==0)
 	input.dur[i][r] = 1;
-  if (timeout(t, options, "dur", t0)) return;
+  if (timeout(t, options, "dur", t0))
+    return;
 
   // 24: JSON.value_precede_chains
 
   t0.start();
   input.value_precede_chains = value_precede_chains(input, NULL, true, -1);
-  if (timeout(t, options, "value_precede_chains", t0)) return;
+  if (timeout(t, options, "value_precede_chains", t0))
+    return;
 
   // 25: JSON.predecessors
   // 26: JSON.successors
 
   // gen_predecessors_successors(input);
-  // if (timeout(t, options, "predecessors, successors", t0)) return;
+  // if (timeout(t, options, "predecessors, successors", t0))
+  //   return;
 
   // 25: JSON.quasi_adjacent
 
   t0.start();
   quasi_adjacent(input);
-  if (timeout(t, options, "quasi_adjacent", t0)) return;
+  if (timeout(t, options, "quasi_adjacent", t0))
+    return;
 
   // 26: GENDOMINATES()
 
   t0.start();
   gen_dominates(input);
-  if (timeout(t, options, "gen_dominates", t0)) return;
+  if (timeout(t, options, "gen_dominates", t0))
+    return;
 
   // 27: DETECTCYCLES(Nogoods)
 
@@ -399,31 +428,39 @@ void presolve(Parameters & input, PresolverOptions & options) {
   ip.pass2(Nogoods3);
   n3 = ord_difference(Nogoods3, Nogoods);
   Nogoods = kernel_set(n3, Nogoods, cutoff);
-  if (timeout(t, options, "gen_infeasible pass 2", t0)) return;
+  if (timeout(t, options, "gen_infeasible pass 2", t0))
+    return;
 
   ip.detect_cycles();
 
-  if (timeout(t, options, "detect_cycles", t0)) return;
+  if (timeout(t, options, "detect_cycles", t0))
+    return;
 
   // 28: JSON.nogoods <- KERNELSET(Assert.new_nogood, Nogoods) \ DNogoods
 
   t0.start();
   cutoff = (options.timeout() - t.stop()) / 2;
-  input.nogoods = ord_difference(kernel_set(PA.new_nogood, Nogoods, cutoff), DNogoods);
-  if (timeout(t, options, "nogoods", t0)) return;
+  for (const nogood& ng : ord_difference(kernel_set(PA.new_nogood, Nogoods, cutoff), DNogoods)) {
+    input.nogoods.push_back(conj_to_expr(ng));
+  }
+  sort(input.nogoods.begin(), input.nogoods.end()); // canonicalize
+  if (timeout(t, options, "nogoods", t0))
+    return;
 
   // 29: GENACTIVETABLES(), JSON.tmp_tables
 
   t0.start();
   input.compute_derived();	// refresh for Model:: methods
   gen_active_tables(input, t, options);
-  if (timeout(t, options, "gen_active_tables", t0)) return;
+  if (timeout(t, options, "gen_active_tables", t0))
+    return;
 
   // 30: FILTERACTIVETABLES(), JSON.active_tables, JSON.dominates
 
   t0.start();
   filter_active_tables(input);	// sets input.active_tables, input.dominates
-  if (timeout(t, options, "filter_active_tables", t0)) return;
+  if (timeout(t, options, "filter_active_tables", t0))
+    return;
 
   // 31: for all b ∈ JSON.B do
   // 32: JSON.optional_min[b] <- OPTIONALMINACTIVETABLES(b)
@@ -432,7 +469,8 @@ void presolve(Parameters & input, PresolverOptions & options) {
   t0.start();
   for(block b : input.B)
     input.optional_min[b] = optional_min_active_tables(input, b);
-  if (timeout(t, options, "optional_min", t0)) return;
+  if (timeout(t, options, "optional_min", t0))
+    return;
 
   // these can cause huge printouts and should be protected from timeouts
 

@@ -116,13 +116,13 @@ Parameters::Parameters(JSONVALUE root) :
   optional_min  (get_vector<int>(getRoot(root, "optional_min"))),
   active_tables (get_vector<PresolverActiveTable>(getRoot(root, "active_tables"))),
   tmp_tables    (get_vector<PresolverCopyTmpTable>(getRoot(root, "tmp_tables"))),
-  nogoods       (get_vector<nogood>(getRoot(root, "nogoods"))),
-  nogoods2      (get_vector<nogood>(getRoot(root, "nogoods2"))),
-  precedences   (get_vector<PresolverPrecedence>(getRoot(root, "precedences"))),
-  precedences2  (get_vector<PresolverPrecedence>(getRoot(root, "precedences2"))),
-  before        (get_vector<PresolverBefore>(getRoot(root, "before"))),
-  before2       (get_vector<PresolverBefore>(getRoot(root, "before2"))),
-  across        (get_vector<PresolverAcross>(getRoot(root, "across"))),
+  nogoods       (get_vector<UnisonConstraintExpr>(getRoot(root, "nogoods"))),
+  nogoods2      (get_vector<UnisonConstraintExpr>(getRoot(root, "nogoods2"))),
+  precedences   (get_vector<UnisonConstraintExpr>(getRoot(root, "precedences"))),
+  precedences2  (get_vector<UnisonConstraintExpr>(getRoot(root, "precedences2"))),
+  before        (get_vector<PresolverBeforeJSON>(getRoot(root, "before"))),
+  before2       (get_vector<PresolverBeforeJSON>(getRoot(root, "before2"))),
+  across        (get_vector<PresolverAcrossJSON>(getRoot(root, "across"))),
   set_across    (get_vector<PresolverSetAcross>(getRoot(root, "set_across"))),
   domops        (get_3d_vector<int>(getRoot(root, "domops"))),
   last_use      (get_vector<int>(getRoot(root, "last_use"))),
@@ -787,9 +787,9 @@ void Parameters::compute_derived() {
   assert(cnt == 0);
 
   cnt = nogoods.size();
-  vector<nogood> empty_nogoods;
+  vector<UnisonConstraintExpr> empty_nogoods;
   init_vector(bnogoods, B.size(), empty_nogoods);
-  for (nogood ng : nogoods) {
+  for (UnisonConstraintExpr ng : nogoods) {
     for (block b : B) {
       if (in_block(ng, b, input)) {
 	bnogoods[b].push_back(ng);
@@ -804,7 +804,7 @@ void Parameters::compute_derived() {
 
   cnt = nogoods2.size();
   init_vector(bnogoods2, B.size(), empty_nogoods);
-  for (nogood ng : nogoods2) {
+  for (UnisonConstraintExpr ng : nogoods2) {
     for (block b : B) {
       if (in_block(ng, b, input)) {
 	bnogoods2[b].push_back(ng);
@@ -815,9 +815,9 @@ void Parameters::compute_derived() {
   assert(cnt == 0);
 
   cnt = before.size();
-  vector<PresolverBefore> empty_before;
+  vector<PresolverBeforeJSON> empty_before;
   init_vector(bbefore, B.size(), empty_before);
-  for (PresolverBefore bef : before) {
+  for (PresolverBeforeJSON bef : before) {
     for (block b : B) {
       if (in_block(bef, b, input)) {
 	bbefore[b].push_back(bef);
@@ -829,7 +829,7 @@ void Parameters::compute_derived() {
 
   cnt = before2.size();
   init_vector(bbefore2, B.size(), empty_before);
-  for (PresolverBefore bef : before2) {
+  for (PresolverBeforeJSON bef : before2) {
     for (block b : B) {
       if (in_block(bef, b, input)) {
 	bbefore2[b].push_back(bef);
@@ -839,20 +839,28 @@ void Parameters::compute_derived() {
   }
   assert(cnt == 0);
 
-  vector<PresolverPrecedence> empty_precedences;
+  vector<UnisonConstraintExpr> empty_precedences;
   init_vector(bprecedences, B.size(), empty_precedences);
-  for (PresolverPrecedence p : precedences) {
-    bprecedences[oblock[p.i]].push_back(p);
+  for (UnisonConstraintExpr p : precedences) {
+    UnisonConstraintExpr d = p;
+    if (d.id == IMPLIES_EXPR)
+      d = d.children[1];
+    assert(d.id == DISTANCE_EXPR);
+    bprecedences[oblock[d.data[0]]].push_back(p);
   }
 
   init_vector(bprecedences2, B.size(), empty_precedences);
-  for (PresolverPrecedence p : precedences2) {
-    bprecedences2[oblock[p.i]].push_back(p);
+  for (UnisonConstraintExpr p : precedences2) {
+    UnisonConstraintExpr d = p;
+    if (d.id == IMPLIES_EXPR)
+      d = d.children[1];
+    assert(d.id == DISTANCE_EXPR);
+    bprecedences[oblock[d.data[0]]].push_back(p);
   }
 
-  vector<PresolverAcross> empty_across;
+  vector<PresolverAcrossJSON> empty_across;
   init_vector(bacross, B.size(), empty_across);
-  for (PresolverAcross acr : across) {
+  for (PresolverAcrossJSON acr : across) {
     bacross[oblock[acr.o]].push_back(acr);
   }
 
@@ -1172,20 +1180,20 @@ void Parameters::get_element(QScriptValue root, PresolverCopyTmpTable & ctt) {
 }
 
 
-void Parameters::get_element(QScriptValue root, PresolverPrecedence & p) {
-  assert(root.isArray());
-  QScriptValueIterator iti(root);
-  iti.next();
-  p.i = iti.value().toInt32();
-  iti.next();
-  p.j = iti.value().toInt32();
-  iti.next();
-  p.n = iti.value().toInt32();
-  iti.next();
-  get_element(iti.value(), p.d);
-}
+// void Parameters::get_element(QScriptValue root, PresolverPrecedence & p) {
+//   assert(root.isArray());
+//   QScriptValueIterator iti(root);
+//   iti.next();
+//   p.i = iti.value().toInt32();
+//   iti.next();
+//   p.j = iti.value().toInt32();
+//   iti.next();
+//   p.n = iti.value().toInt32();
+//   iti.next();
+//   get_element(iti.value(), p.d);
+// }
 
-void Parameters::get_element(QScriptValue root, PresolverBefore & b) {
+void Parameters::get_element(QScriptValue root, PresolverBeforeJSON & b) {
   assert(root.isArray());
   QScriptValueIterator iti(root);
   iti.next();
@@ -1193,19 +1201,39 @@ void Parameters::get_element(QScriptValue root, PresolverBefore & b) {
   iti.next();
   b.q = iti.value().toInt32();
   iti.next();
-  get_element(iti.value(), b.d);
+  get_element(iti.value(), b.e);
 }
 
-void Parameters::get_element(QScriptValue root, PresolverAcrossItem & ai) {
+// void Parameters::get_element(QScriptValue root, PresolverAcrossItem & ai) {
+//   assert(root.isArray());
+//   QScriptValueIterator iti(root);
+//   iti.next();
+//   ai.t = iti.value().toInt32();
+//   iti.next();
+//   get_element(iti.value(), ai.d);
+// }
+
+void Parameters::get_element(QScriptValue root, PresolverAcrossItemJSON & ai) {
   assert(root.isArray());
   QScriptValueIterator iti(root);
   iti.next();
   ai.t = iti.value().toInt32();
   iti.next();
-  get_element(iti.value(), ai.d);
+  get_element(iti.value(), ai.e);
 }
 
-void Parameters::get_element(QScriptValue root, PresolverAcross & a) {
+// void Parameters::get_element(QScriptValue root, PresolverAcross & a) {
+//   assert(root.isArray());
+//   QScriptValueIterator iti(root);
+//   iti.next();
+//   a.o = iti.value().toInt32();
+//   iti.next();
+//   a.ras = get_vector<register_atom>(iti.value());
+//   iti.next();
+//   a.as = get_vector<PresolverAcrossItem>(iti.value());
+// }
+
+void Parameters::get_element(QScriptValue root, PresolverAcrossJSON & a) {
   assert(root.isArray());
   QScriptValueIterator iti(root);
   iti.next();
@@ -1213,7 +1241,7 @@ void Parameters::get_element(QScriptValue root, PresolverAcross & a) {
   iti.next();
   a.ras = get_vector<register_atom>(iti.value());
   iti.next();
-  a.as = get_vector<PresolverAcrossItem>(iti.value());
+  a.as = get_vector<PresolverAcrossItemJSON>(iti.value());
 }
 
 void Parameters::get_element(QScriptValue root, PresolverSetAcross & sa) {
@@ -1391,44 +1419,62 @@ void Parameters::get_element(Json::Value root, PresolverCopyTmpTable & ctt) {
 }
 
 
-void Parameters::get_element(Json::Value root, PresolverPrecedence & p) {
-  assert(root.isArray());
-  Json::ValueIterator iti = root.begin();
-  p.i = (*iti).asInt();
-  iti++;
-  p.j = (*iti).asInt();
-  iti++;
-  p.n = (*iti).asInt();
-  iti++;
-  get_element(*iti, p.d);
-}
+// void Parameters::get_element(Json::Value root, PresolverPrecedence & p) {
+//   assert(root.isArray());
+//   Json::ValueIterator iti = root.begin();
+//   p.i = (*iti).asInt();
+//   iti++;
+//   p.j = (*iti).asInt();
+//   iti++;
+//   p.n = (*iti).asInt();
+//   iti++;
+//   get_element(*iti, p.d);
+// }
 
-void Parameters::get_element(Json::Value root, PresolverBefore & b) {
+void Parameters::get_element(Json::Value root, PresolverBeforeJSON & b) {
   assert(root.isArray());
   Json::ValueIterator iti = root.begin();
   b.p = (*iti).asInt();
   iti++;
   b.q = (*iti).asInt();
   iti++;
-  get_element(*iti, b.d);
+  get_element(*iti, b.e);
 }
 
-void Parameters::get_element(Json::Value root, PresolverAcrossItem & ai) {
+// void Parameters::get_element(Json::Value root, PresolverAcrossItem & ai) {
+//   assert(root.isArray());
+//   Json::ValueIterator iti = root.begin();
+//   ai.t = (*iti).asInt();
+//   iti++;
+//   get_element(*iti, ai.d);
+// }
+
+void Parameters::get_element(Json::Value root, PresolverAcrossItemJSON & ai) {
   assert(root.isArray());
   Json::ValueIterator iti = root.begin();
   ai.t = (*iti).asInt();
   iti++;
-  get_element(*iti, ai.d);
+  get_element(*iti, ai.e);
 }
 
-void Parameters::get_element(Json::Value root, PresolverAcross & a) {
+// void Parameters::get_element(Json::Value root, PresolverAcross & a) {
+//   assert(root.isArray());
+//   Json::ValueIterator iti = root.begin();
+//   a.o = (*iti).asInt();
+//   iti++;
+//   a.ras = get_vector<register_atom>(*iti);
+//   iti++;
+//   a.as = get_vector<PresolverAcrossItem>(*iti);
+// }
+
+void Parameters::get_element(Json::Value root, PresolverAcrossJSON & a) {
   assert(root.isArray());
   Json::ValueIterator iti = root.begin();
   a.o = (*iti).asInt();
   iti++;
   a.ras = get_vector<register_atom>(*iti);
   iti++;
-  a.as = get_vector<PresolverAcrossItem>(*iti);
+  a.as = get_vector<PresolverAcrossItemJSON>(*iti);
 }
 
 void Parameters::get_element(Json::Value root, PresolverSetAcross & sa) {

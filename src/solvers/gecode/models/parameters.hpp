@@ -274,25 +274,25 @@ public:
   vector<PresolverCopyTmpTable> tmp_tables;
 
   // basic no-goods
-  vector<nogood> nogoods;
+  vector<UnisonConstraintExpr> nogoods;
 
   // additional no-goods
-  vector<nogood> nogoods2;
+  vector<UnisonConstraintExpr> nogoods2;
 
   // basic presolver precedences
-  vector<PresolverPrecedence> precedences;
+  vector<UnisonConstraintExpr> precedences;
 
   // additional presolver precedences
-  vector<PresolverPrecedence> precedences2;
+  vector<UnisonConstraintExpr> precedences2;
 
   // basic presolver partially ordered operands
-  vector<PresolverBefore> before;
+  vector<PresolverBeforeJSON> before;
 
   // additional presolver partially ordered operands
-  vector<PresolverBefore> before2;
+  vector<PresolverBeforeJSON> before2;
 
   // presolver across-call temporaries
-  vector<PresolverAcross> across;
+  vector<PresolverAcrossJSON> across;
 
   // presolver across-call temporary sets
   vector<PresolverSetAcross> set_across;
@@ -601,31 +601,31 @@ public:
   vector<vector<PresolverCopyTmpTable>> btmp_tables;
 
   // basic no-goods, across blocks
-  vector<nogood> gnogoods;
+  vector<UnisonConstraintExpr> gnogoods;
 
   // basic no-goods, per block
-  vector<vector<nogood> > bnogoods;
+  vector<vector<UnisonConstraintExpr> > bnogoods;
 
   // additional no-goods, per block
-  vector<vector<nogood> > bnogoods2;
+  vector<vector<UnisonConstraintExpr> > bnogoods2;
 
   // basic presolver partially ordered operands, per block
-  vector<vector<PresolverBefore>> bbefore;
+  vector<vector<PresolverBeforeJSON>> bbefore;
 
   // additional presolver partially ordered operands, per block
-  vector<vector<PresolverBefore>> bbefore2;
+  vector<vector<PresolverBeforeJSON>> bbefore2;
 
   // presolver across-call temporaries, per block
-  vector<vector<PresolverAcross> > bacross;
+  vector<vector<PresolverAcrossJSON> > bacross;
 
   // presolver across-call temporary sets, per block
   vector<vector<PresolverSetAcross> > bset_across;
 
   // basic presolver precedences, per block
-  vector<vector<PresolverPrecedence>> bprecedences;
+  vector<vector<UnisonConstraintExpr>> bprecedences;
 
   // additional presolver precedences, per block
-  vector<vector<PresolverPrecedence>> bprecedences2;
+  vector<vector<UnisonConstraintExpr>> bprecedences2;
 
   // presolver sets of interchangeable temporaries, per block
   vector<vector<vector<vector<int> > > > bdomops;
@@ -665,10 +665,10 @@ protected:
   void get_element(JSONVALUE root, UnisonConstraintExpr & e);
   void get_element(JSONVALUE root, PresolverActiveTable & at);
   void get_element(JSONVALUE root, PresolverCopyTmpTable & ctt);
-  void get_element(JSONVALUE root, PresolverPrecedence & p);
-  void get_element(JSONVALUE root, PresolverBefore & b);
-  void get_element(JSONVALUE root, PresolverAcross & a);
-  void get_element(JSONVALUE root, PresolverAcrossItem & ai);
+  // void get_element(JSONVALUE root, PresolverPrecedence & p);
+  void get_element(JSONVALUE root, PresolverBeforeJSON & b);
+  void get_element(JSONVALUE root, PresolverAcrossJSON & a);
+  void get_element(JSONVALUE root, PresolverAcrossItemJSON & ai);
   void get_element(JSONVALUE root, PresolverSetAcross & sa);
   void get_element(JSONVALUE root, PresolverDominates & d);
   void get_element(JSONVALUE root, PresolverPred & d);

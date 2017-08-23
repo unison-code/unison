@@ -355,6 +355,57 @@ presolver_conj normal_conjunction(const Parameters& input, const presolver_conj&
   return normal;
 }
 
+bool sorted_exprs(const presolver_conj& exprs) {
+  for (unsigned int i=1; i<exprs.size(); i++)
+    if (!(exprs[i-1] < exprs[i]))
+      return false;
+  return true;
+}
+
+UnisonConstraintExpr conj_to_expr(const presolver_conj& conjuncts) {
+  if (conjuncts.size()==1) {
+    return conjuncts[0];
+  }
+  assert(sorted_exprs(conjuncts));
+  return UnisonConstraintExpr(AND_EXPR, {}, conjuncts);
+}
+
+UnisonConstraintExpr disj_to_expr(const presolver_disj& d) {
+  vector<UnisonConstraintExpr> disjuncts;
+  for(const presolver_conj& c : d)
+    disjuncts.push_back(conj_to_expr(c));
+  if (disjuncts.size()==1) {
+    return disjuncts[0];
+  }
+  sort(disjuncts.begin(), disjuncts.end()); // canonicalize - sorted d does not mean sorted disjuncts
+  return UnisonConstraintExpr(OR_EXPR, {}, disjuncts);
+}
+
+presolver_disj expr_to_disj(const UnisonConstraintExpr& e) {
+  presolver_disj d;
+  vector<UnisonConstraintExpr> disjuncts;
+  if (e.id == OR_EXPR) {
+    disjuncts = e.children;
+  } else {
+    disjuncts.push_back(e);
+  }
+  for (const UnisonConstraintExpr& e1 : disjuncts) {
+    if (e1.id == AND_EXPR) {
+      d.push_back(e1.children);
+    } else {
+      d.push_back({e1});
+    }
+  }
+  return d;
+}
+
+bool disj_is_true(const presolver_disj& d) {
+  return d.size()==1 && d[0].empty();
+}
+
+bool disj_is_false(const presolver_disj& d) {
+  return d.empty();
+}
 
 void deepsort(int) {return;};
 

@@ -264,13 +264,11 @@ void gen_active_tables(Parameters & input, Support::Timer & t,
 	  vector_insert(M[tmin], tt);
     }
   }
-  for(const presolver_conj& n : input.nogoods) {
-    if(n.size() == 2
-       && n[0].id == CONNECTS_EXPR
-       && n[1].id == CONNECTS_EXPR) {
+  for(const UnisonConstraintExpr& n : input.nogoods) {
+    if(n.id == AND_EXPR && n.children[0].id == CONNECTS_EXPR && n.children[1].id == CONNECTS_EXPR) {
 
-      operand p1 = n[0].data[0];
-      operand p2 = n[1].data[0];
+      operand p1 = n.children[0].data[0];
+      operand p2 = n.children[1].data[0];
 
       temporary t1 = first_temp_but_null(input, p1);
       temporary t2 = first_temp_but_null(input, p2);
@@ -282,7 +280,6 @@ void gen_active_tables(Parameters & input, Support::Timer & t,
       	for (temporary t3 : ord_union(T1, T2)) {
   	  vector<temporary> t1t2 = {t1, t2};
   	  vector_insert(M[t1t2], t3);
-
 	  vector_insert(keys2, t1t2);
       	}
       }
@@ -335,8 +332,8 @@ void assert_active_tables(Parameters & input,
     if(result.timeout_status == RELAXED_NO_TIMEOUT) {
       // if no labeling is produced, fail and return
       if (result.labelings.empty()) {
-        presolver_conj c;
-        input.nogoods.push_back(c);
+        input.nogoods.clear();
+        input.nogoods.push_back(UnisonConstraintExpr(OR_EXPR, {}, {}));
         return;
       } else {
         decompose_copy_set(input, O, result.labelings, active_tables);
@@ -464,8 +461,8 @@ void assert_tmp_tables(Parameters & input,
       if(result.timeout_status == RELAXED_NO_TIMEOUT) {
         // if no labeling is produced, fail and return
         if (result.labelings.empty()) {
-          presolver_conj c;
-          input.nogoods.push_back(c);
+	  input.nogoods.clear();
+	  input.nogoods.push_back(UnisonConstraintExpr(OR_EXPR, {}, {}));
           return;
         } else {
           PresolverCopyTmpTable

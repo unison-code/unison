@@ -295,9 +295,9 @@ void BeforePresolver::before_vs_nogoods(beforeset& T, vector<nogood>& Nogoods) {
   for(PresolverBefore& t : T) {
     // before <- {t | t = <p,q,{ø}> in T}
     if(t.d.empty()) {
-      presolver_conj c;
-      t.d.push_back(c);
-      input.before.push_back(t);
+      UnisonConstraintExpr e(AND_EXPR, {}, {});
+      PresolverBeforeJSON u(t.p, t.q, e);
+      input.before.push_back(u);
     }
 
     // nogoods <- {Conj union {overlap(p(p), p(q))} | <p,q,{conj}> in T

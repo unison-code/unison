@@ -74,8 +74,12 @@ string show(const UnisonConstraintExpr e) {
   return show(vector<string>{show((int)e.id), show(e.data), show(e.children)}, ", ");
 }
 
-string show(const PresolverBefore b) {
-  return show(vector<string>{show(b.p), show(b.q), show(b.d)}, ", ");
+// string show(const PresolverBefore b) {
+//   return show(vector<string>{show(b.p), show(b.q), show(b.d)}, ", ");
+// }
+
+string show(const PresolverBeforeJSON b) {
+  return show(vector<string>{show(b.p), show(b.q), show(b.e)}, ", ");
 }
 
 string show(const PresolverDominates d) {
@@ -116,7 +120,11 @@ string show(const PresolverSucc p) {
   return show(vector<string>{show(p.p), show(p.q), show(p.d)}, ", ");
 }
 
-string show(const PresolverAcross x) {
+// string show(const PresolverAcross x) {
+//   return show(vector<string>{show(x.o), show(x.ras), show(x.as)}, ", ");
+// }
+
+string show(const PresolverAcrossJSON x) {
   return show(vector<string>{show(x.o), show(x.ras), show(x.as)}, ", ");
 }
 
@@ -124,17 +132,21 @@ string show(const PresolverAcrossTuple x) {
   return show(vector<string>{show(x.o), show(x.t), show(x.d)}, ", ");
 }
 
-string show(const PresolverAcrossItem x) {
-  return show(vector<string>{show(x.t), show(x.d)}, ", ");
+// string show(const PresolverAcrossItem x) {
+//   return show(vector<string>{show(x.t), show(x.d)}, ", ");
+// }
+
+string show(const PresolverAcrossItemJSON x) {
+  return show(vector<string>{show(x.t), show(x.e)}, ", ");
 }
 
 string show(const PresolverSetAcross x) {
   return show(vector<string>{show(x.o), show(x.ras), show(x.tsets)}, ", ");
 }
 
-string show(const PresolverPrecedence& p) {
-  return show(vector<string>{show(p.i), show(p.j), show(p.n), show(p.d)}, ", ");
-}
+// string show(const PresolverPrecedence& p) {
+//   return show(vector<string>{show(p.i), show(p.j), show(p.n), show(p.d)}, ", ");
+// }
 
 string emit_json(const int i) {
   stringstream s;
@@ -163,23 +175,37 @@ string emit_json(const PresolverCopyTmpTable x) {
         emit_json(x.tuples)}, ", ");
 }
 
-string emit_json(const PresolverPrecedence x) {
-  return show(vector<string>{emit_json(x.i), emit_json(x.j),
-        emit_json(x.n), emit_json(x.d)}, ", ");
-}
+// string emit_json(const PresolverPrecedence x) {
+//   return show(vector<string>{emit_json(x.i), emit_json(x.j),
+//         emit_json(x.n), emit_json(x.d)}, ", ");
+// }
 
-string emit_json(const PresolverBefore x) {
+// string emit_json(const PresolverBefore x) {
+//   return show(vector<string>{emit_json(x.p), emit_json(x.q),
+//         emit_json(x.d)}, ", ");
+// }
+
+string emit_json(const PresolverBeforeJSON x) {
   return show(vector<string>{emit_json(x.p), emit_json(x.q),
-        emit_json(x.d)}, ", ");
+        emit_json(x.e)}, ", ");
 }
 
-string emit_json(const PresolverAcross x) {
+// string emit_json(const PresolverAcross x) {
+//   return show(vector<string>{emit_json(x.o), emit_json(x.ras),
+//         emit_json(x.as)}, ", ");
+// }
+
+string emit_json(const PresolverAcrossJSON x) {
   return show(vector<string>{emit_json(x.o), emit_json(x.ras),
         emit_json(x.as)}, ", ");
 }
 
-string emit_json(const PresolverAcrossItem x) {
-  return show(vector<string>{emit_json(x.t), emit_json(x.d)}, ", ");
+// string emit_json(const PresolverAcrossItem x) {
+//   return show(vector<string>{emit_json(x.t), emit_json(x.d)}, ", ");
+// }
+
+string emit_json(const PresolverAcrossItemJSON x) {
+  return show(vector<string>{emit_json(x.t), emit_json(x.e)}, ", ");
 }
 
 string emit_json(const PresolverSetAcross x) {
@@ -316,16 +342,22 @@ bool in_block(PresolverCopyTmpTable & ctt, block b, const Parameters * input) {
   return true;
 }
 
-bool in_block(PresolverPrecedence & p, block b, const Parameters * input) {
-  if (input->oblock[p.i] != b) return false;
-  if (input->oblock[p.j] != b) return false;
-  return in_block(p.d, b, input);
-}
+// bool in_block(PresolverPrecedence & p, block b, const Parameters * input) {
+//   if (input->oblock[p.i] != b) return false;
+//   if (input->oblock[p.j] != b) return false;
+//   return in_block(p.d, b, input);
+// }
 
-bool in_block(PresolverBefore & bf, block b, const Parameters * input) {
+// bool in_block(PresolverBefore & bf, block b, const Parameters * input) {
+//   if (input->pb[bf.p] != b) return false;
+//   if (input->pb[bf.q] != b) return false;
+//   return in_block(bf.d, b, input);
+// }
+
+bool in_block(PresolverBeforeJSON & bf, block b, const Parameters * input) {
   if (input->pb[bf.p] != b) return false;
   if (input->pb[bf.q] != b) return false;
-  return in_block(bf.d, b, input);
+  return in_block(bf.e, b, input);
 }
 
 bool in_block(UnisonConstraintExpr & e, block b, const Parameters * input) {

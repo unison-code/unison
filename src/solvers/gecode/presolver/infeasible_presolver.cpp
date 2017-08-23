@@ -164,8 +164,8 @@ void InfeasiblePresolver::setup(void) {
 
   // E <- {<p,q> | <p,q> in JSON.before &&
   //               (r = q || (q is mandatory def and copy related to r))
-  for(const PresolverBefore& b : input.before) {
-    if(b.d.size() == 1 && b.d[0].empty()) { // b.d = {{}}
+  for(const PresolverBeforeJSON& b : input.before) {
+    if(b.e.id==AND_EXPR && b.e.children.empty()) { // b.d = {{}}
       operand p = b.p;
       operand q = b.q;
       E.push_back(make_pair(p,q));
@@ -372,10 +372,10 @@ void InfeasiblePresolver::redefined_operand_nogoods(vector<nogood>& Nogoods) {
 }
 
 void InfeasiblePresolver::before_in_nogoods(vector<nogood>& Nogoods) {
-  for(const PresolverBefore& b : input.before) {
+  for(const PresolverBeforeJSON& b : input.before) {
     vector<temporary> Ts = input.temps[b.q];
     temporary T1 = Ts[0];
-    if(b.d.size() == 1 && b.d[0].empty() && // b.d = {{}}
+    if(b.e.id==AND_EXPR && b.e.children.empty() && // b.d = {{}}
        T1 >= 0 &&
        input.type[input.oper[b.q]] == OUT &&
        input.type[input.def_opr[T1]] == IN) {
@@ -1112,32 +1112,61 @@ void InfeasiblePresolver::break_cycle(const vector<operation>& scc,
 
 void InfeasiblePresolver::detect_cycles(void) {
   map<vector<operation>, vector<pair<int,vector<nogood> > > > M;
-  vector<PresolverPrecedence> T;
+  vector<UnisonConstraintExpr> T;
   vector<vector<operation> > E;
 
   cutoff = (options.timeout() + timer.stop()) / 2;
 
-  for(const PresolverPrecedence& prec : input.precedences) {
+  for(const UnisonConstraintExpr& prec : input.precedences) {
     // T <- {<j,i,-n,d> | <i,j,n,d> in input.precedences && i < j & (d = {ø} || d = {{a(i)}})}
 
-    UnisonConstraintExpr e(ACTIVE_EXPR, {prec.i}, {});
-    presolver_conj a_i = {e};
+    UnisonConstraintExpr prec_c(AND_EXPR, {}, {});
+    vector<int> data = prec.data;
+    operation prec_i;
+    operation prec_j;
+    int prec_n;
+    bool prec_d_true_or_active_i = true;
+    bool implied = false;
 
-    if (prec.i < prec.j && prec.d.size() == 1 &&
-        (prec.d[0].empty() || (prec.d[0] == a_i))) {
-      PresolverPrecedence p(prec.j, prec.i, -prec.n, prec.d);
+    if (prec.id != DISTANCE_EXPR) {
+      implied = true;
+      prec_c = prec.children[0];
+      data = prec.children[1].data;
+      if (prec_c.id != ACTIVE_EXPR || prec_c.data[0] != data[0])
+	prec_d_true_or_active_i = false;
+    }
+    prec_i = data[0];
+    prec_j = data[1];
+    prec_n = data[2];
+    if (prec_i < prec_j && prec_d_true_or_active_i) {
+      UnisonConstraintExpr p(DISTANCE_EXPR, {prec_j,prec_i,-prec_n}, {});
+      if (implied)
+	p = UnisonConstraintExpr(IMPLIES_EXPR, {}, {prec_c,p});
       vector_insert(T,p);
     }
   }
 
   // TC <- input.precedences \ T
-  vector<PresolverPrecedence> precedences = input.precedences;
+  vector<UnisonConstraintExpr> precedences = input.precedences;
   sort(precedences.begin(), precedences.end());
-  vector<PresolverPrecedence> TC = ord_difference(precedences, T);
+  vector<UnisonConstraintExpr> TC = ord_difference(precedences, T);
 
-  for(const PresolverPrecedence& pred : TC) {
-    vector_insert(M[{pred.i, pred.j}], make_pair(pred.n, pred.d));
-    vector_insert(E, {pred.i, pred.j});
+  for(const UnisonConstraintExpr& prec : TC) {
+    vector<int> data = prec.data;
+    operation prec_i;
+    operation prec_j;
+    int prec_n;
+    presolver_disj prec_d = {{}};
+
+    if (prec.id != DISTANCE_EXPR) {
+      prec_d = expr_to_disj(prec.children[0]);
+      data = prec.children[1].data;
+    }
+    prec_i = data[0];
+    prec_j = data[1];
+    prec_n = data[2];
+    vector_insert(M[{prec_i, prec_j}], make_pair(prec_n, prec_d));
+    vector_insert(E, {prec_i, prec_j});
   }
 
   Digraph G(E);

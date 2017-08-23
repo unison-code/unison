@@ -47,7 +47,7 @@
 
 :- dynamic
 	cur_set_index/3,
-	cur_literal_index/3.
+	cur_expr_index/3.
 
 json2dzn(InputName) :-
 	statistics(runtime, [T1,_]),
@@ -62,8 +62,8 @@ model2dzn(AVL0) :-
 	term_hash([], H),
 	retractall(cur_set_index(_,_,_)),
 	asserta(cur_set_index(H, [], 1)),
-	retractall(cur_literal_index(_,_,_)),
-	asserta(cur_literal_index(H, [], 0)),
+	retractall(cur_expr_index(_,_,_)),
+	asserta(cur_expr_index(H, [], 0)),
 	avl_fetch(use, AVL0, Use0),
 	(   foreach(U0,Use0),
 	    foreach(U,Use)
@@ -245,17 +245,17 @@ model2dzn(AVL0) :-
 	    foreach(P1,BeforePred),
 	    foreach(Q1,BeforeSucc),
 	    foreach(Disj2,BeforeCond)
-	do  encode(disj, set(int), Disj1, Disj2)
+	do  encode(expr, int, Disj1, Disj2)
 	),
 	length(Before3, Nbefore),
 	write_array(before_pred, array(1..Nbefore,int), BeforePred),
 	write_array(before_succ, array(1..Nbefore,int), BeforeSucc),
-	write_array(before_cond, array(1..Nbefore,set(int)), BeforeCond),
+	write_array(before_cond, array(1..Nbefore,int), BeforeCond),
 	%
 	avl_fetch(nogoods, AVL, Nogoods1),
 	(   foreach(Conj1,Nogoods1),
 	    foreach(Conj2,Nogoods2)
-	do  encode(conj, int, Conj1, Conj2)
+	do  encode(expr, int, Conj1, Conj2)
 	),
 	length(Nogoods1, Nnogood),
 	write_array(nogood, array(1..Nnogood,int), Nogoods2),
@@ -267,7 +267,7 @@ model2dzn(AVL0) :-
 	write_array(across_items, array(1..Nacross,set(int)), AcrossItems),
 	length(AcrossTemps, Nacross_items),
 	write_array(across_item_temp, array(1..Nacross_items,int), AcrossTemps),
-	write_array(across_item_cond, array(1..Nacross_items,set(int)), AcrossConds),
+	write_array(across_item_cond, array(1..Nacross_items,int), AcrossConds),
 	%
 	compute_setacross(AVL, SetacrossInsn, SetacrossRegs, SetacrossTempSets),
 	length(SetacrossInsn, Nsetacross),
@@ -343,19 +343,13 @@ model2dzn(AVL0) :-
 	%
 	avl_fetch(precedences, AVL, Precedence1),
 	avl_fetch(precedences2, AVL, Precedence2),
-	append(Precedence1, Precedence2, Precedence),
-	(   foreach([I2,J2,N2,Disj3],Precedence),
-	    foreach(I2,PrecedencePred),
-	    foreach(J2,PrecedenceSucc),
-	    foreach(N2,PrecedenceDiff),
-	    foreach(Disj4,PrecedenceCond)
-	do  encode(disj, set(int), Disj3, Disj4)
+	append(Precedence1, Precedence2, Precedence12),
+	(   foreach(Pre1,Precedence12),
+	    foreach(Pre2,Precedence3)
+	do  encode(expr, int, Pre1, Pre2)
 	),
-	length(Precedence, Nprecedence),
-	write_array(precedence_pred, array(1..Nprecedence,int), PrecedencePred),
-	write_array(precedence_succ, array(1..Nprecedence,int), PrecedenceSucc),
-	write_array(precedence_diff, array(1..Nprecedence,int), PrecedenceDiff),
-	write_array(precedence_cond, array(1..Nprecedence,set(int)), PrecedenceCond),
+	length(Precedence3, Nprecedence),
+	write_array(precedence, array(1..Nprecedence,int), Precedence3),
 	%
 	compute_active_tables(AVL, Exists, Iffall,
 			      RelationInsns, RelationTemps, RelationNtuples,
@@ -486,19 +480,19 @@ model2dzn(AVL0) :-
 	write_array(bypass_table, array(1..NBypassTable,1..3,int), BypassTable),
 	%
 	avl_fetch('E', AVL, Adhoc1),
-	(   foreach(Lit1,Adhoc1),
-	    foreach(Lit2,Adhoc2)
-	do  encode(literal, int, Lit1, Lit2)
+	(   foreach(Expr1,Adhoc1),
+	    foreach(Expr2,Adhoc2)
+	do  encode(expr, int, Expr1, Expr2)
 	),
 	length(Adhoc1, Nadhoc),
 	write_array(adhoc, array(1..Nadhoc,int), Adhoc2),
 	%
-	literals_postlude(LOp, LArg1, LArg2, LArg3),
-	length(LOp, Nliteral),
-	write_array(literal_op, array(1..Nliteral,int), LOp),
-	write_array(literal_arg1, array(1..Nliteral,int), LArg1),
-	write_array(literal_arg2, array(1..Nliteral,int), LArg2),
-	write_array(literal_arg3, array(1..Nliteral,int), LArg3),
+	exprs_postlude(LOp, LArg1, LArg2, LArg3),
+	length(LOp, Nexpr),
+	write_array(expr_op, array(1..Nexpr,int), LOp),
+	write_array(expr_arg1, array(1..Nexpr,int), LArg1),
+	write_array(expr_arg2, array(1..Nexpr,int), LArg2),
+	write_array(expr_arg3, array(1..Nexpr,int), LArg3),
 	sets_postlude(Sets),
 	length(Sets, Nset),
 	write_array(sets, array(1..Nset,set(int)), Sets).
@@ -633,10 +627,10 @@ compute_across(AVL, AcrossInsn, AcrossRegs, AcrossItems, AcrossTemps1, AcrossCon
 	    AcrossIndex2 is AcrossIndex1 + N-1,
 	    AcrossIndex3 is AcrossIndex2 + 1,
 	    AcrossItem = [[AcrossIndex1|AcrossIndex2]],
-	    (   foreach([T,Disj1],AItems1),
+	    (   foreach([T,Expr1],AItems1),
 		fromto(AcrossTemps2,[T|AcrossTemps3],AcrossTemps3,AcrossTemps4),
-		fromto(AcrossConds2,[Disj2|AcrossConds3],AcrossConds3,AcrossConds4)
-	    do  encode(disj, set(int), Disj1, Disj2)
+		fromto(AcrossConds2,[Expr2|AcrossConds3],AcrossConds3,AcrossConds4)
+	    do  encode(expr, int, Expr1, Expr2)
 	    )
 	).
 
@@ -828,88 +822,69 @@ encode(list(int), int, List, Index) :- !,
 	    Index is Index0+1,
 	    asserta(cur_set_index(H, Set, Index))
 	).
-encode(disj, set(int), Disj1, Set) :-
-	(   foreach(D1,Disj1),
-	    foreach(D2,Disj2)
-	do  encode(conj, int, D1, D2)
-	),
-	list_to_fdset(Disj2, Set).
-encode(conj, int, Conj1, SetOfLit) :-
-	(   foreach(C1,Conj1),
-	    foreach(C2,Conj2)
-	do  encode(literal, int, C1, C2)
-	),
-	encode(list(int), int, Conj2, SetOfLit).
-% encode(literal, int, Literal, Index) :-
-% 	term_hash(Literal, H),
-% 	(   cur_literal_index(H, Literal, Index) -> true
-% 	;   once(cur_literal_index(_, _, Index0)),
-% 	    Index is Index0+1,
-% 	    asserta(cur_literal_index(H, Literal, Index))
-% 	).
-encode(literal, int, Literal, Index) :-
-	literal_quad(Literal, Quad),
+encode(expr, int, Expr, Index) :-
+	expr_quad(Expr, Quad),
 	encode_quad(Quad, Index).
 
 encode_quad(Quad, Index) :-
 	term_hash(Quad, H),
-	(   cur_literal_index(H, Quad, Index) -> true
-	;   once(cur_literal_index(_, _, Index0)),
+	(   cur_expr_index(H, Quad, Index) -> true
+	;   once(cur_expr_index(_, _, Index0)),
 	    Index is Index0+1,
-	    asserta(cur_literal_index(H, Quad, Index))
+	    asserta(cur_expr_index(H, Quad, Index))
 	).
 
-% 0..4 are connectives, 5..13 are true literals
-literal_quad([0|Args1], Quad) :- !, % OR
+% 0..4 are connectives, 5..13 are true exprs
+expr_quad([0|Args1], Quad) :- !, % OR
 	(   Args1 = [] -> Quad = [0,-1,-1,0] % FALSE
 	;   Args1 = [X]
-	->  literal_quad(X, Quad)
+	->  expr_quad(X, Quad)
 	;   Args1 = [X,Y|Zs]
-	->  literal_quad(X, Quad1),
-	    literal_quad([0,Y|Zs], Quad2),
+	->  expr_quad(X, Quad1),
+	    expr_quad([0,Y|Zs], Quad2),
 	    encode_quad(Quad1, I1),
 	    encode_quad(Quad2, I2),
 	    Quad = [0,I1,I2,0]
 	).
-literal_quad([1|Args1], Quad) :- !, % AND
+expr_quad([1|Args1], Quad) :- !, % AND
 	(   Args1 = [] -> Quad = [1,-1,-1,0] % TRUE
 	;   Args1 = [X]
-	->  literal_quad(X, Quad)
+	->  expr_quad(X, Quad)
 	;   Args1 = [X,Y|Zs]
-	->  literal_quad(X, Quad1),
-	    literal_quad([1,Y|Zs], Quad2),
+	->  expr_quad(X, Quad1),
+	    expr_quad([1,Y|Zs], Quad2),
 	    encode_quad(Quad1, I1),
 	    encode_quad(Quad2, I2),
 	    Quad = [1,I1,I2,0]
 	).
-literal_quad([2,X,Y], Quad) :- !, % XOR
-	literal_quad(X, Quad1),
-	literal_quad(Y, Quad2),
+expr_quad([2,X,Y], Quad) :- !, % XOR
+	expr_quad(X, Quad1),
+	expr_quad(Y, Quad2),
 	encode_quad(Quad1, I1),
 	encode_quad(Quad2, I2),
 	Quad = [2,I1,I2,0].
-literal_quad([3,X,Y], Quad) :- !, % IMPLIES
-	literal_quad(X, Quad1),
-	literal_quad(Y, Quad2),
+expr_quad([3,X,Y], Quad) :- !, % IMPLIES
+	expr_quad(X, Quad1),
+	expr_quad(Y, Quad2),
 	encode_quad(Quad1, I1),
 	encode_quad(Quad2, I2),
 	Quad = [3,I1,I2,0].
-literal_quad([4,X], Quad) :- !, % NOT
-	literal_quad(X, Quad1),
+expr_quad([4,X], Quad) :- !, % NOT
+	expr_quad(X, Quad1),
 	encode_quad(Quad1, I1),
 	Quad = [4,I1,0,0].
-literal_quad(Literal, Quad) :-	% literal proper
-	(   Literal = [T,X] -> Quad = [T,X,0,0]
-	;   Literal = [T,X,Y] -> Quad = [T,X,Y,0]
-	;   Literal = [T,X,Y,Z] -> Quad = [T,X,Y,Z]
+expr_quad(Expr, Quad) :-	% expr proper
+	(   Expr = [T,X] -> Quad = [T,X,0,0]
+	;   Expr = [T,X,Y] -> Quad = [T,X,Y,0]
+	;   Expr = [T,X,Y,Z] -> Quad = [T,X,Y,Z]
 	).
 
-literals_postlude(Ops, Args1, Args2, Args3) :-
-	findall(Literal, cur_literal_index(_,Literal,_), Literals1),
-	reverse(Literals1, [_|Literals2]),
-	Literals2 \== [], !,
-	transpose(Literals2, [Ops,Args1,Args2,Args3]).
-literals_postlude([], [], [], []).
+exprs_postlude(Ops, Args1, Args2, Args3) :-
+	findall(Expr, cur_expr_index(_,Expr,_), Exprs1),
+	reverse(Exprs1, [_|Exprs2]),
+	Exprs2 \== [], !,
+	transpose(Exprs2, [Ops,Args1,Args2,Args3]).
+exprs_postlude([], [], [], []).
 
 sets_postlude(Sets2) :-
 	findall(Set, cur_set_index(_,Set,_), Sets1),

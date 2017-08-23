@@ -94,21 +94,21 @@ BoolVar RelaxedModel::relaxed_adhoc_constraint_var(UnisonConstraintExpr & e) {
     {
       BoolVarArgs vs;
       for (UnisonConstraintExpr e0 : e.children)
-        vs << adhoc_constraint_var(e0);
+        vs << relaxed_adhoc_constraint_var(e0);
       rel(*this, e.id == OR_EXPR ? BOT_OR : BOT_AND, vs, v, ipl);
     }
     return v;
   case XOR_EXPR:
   case IMPLIES_EXPR:
     rel(*this,
-        adhoc_constraint_var(e.children[0]),
+        relaxed_adhoc_constraint_var(e.children[0]),
         e.id == XOR_EXPR ? BOT_XOR : BOT_IMP,
-        adhoc_constraint_var(e.children[1]),
+        relaxed_adhoc_constraint_var(e.children[1]),
         v,
         ipl);
     return v;
   case NOT_EXPR:
-    rel(*this, adhoc_constraint_var(e.children[0]), IRT_NQ, v);
+    rel(*this, relaxed_adhoc_constraint_var(e.children[0]), IRT_NQ, v);
     return v;
   case ACTIVE_EXPR:
     return a(e.data[0]);
@@ -254,9 +254,8 @@ void RelaxedModel::post_instruction_constraints(void) {
  ********************************************************************************/
 
 void RelaxedModel::post_relaxed_nogood_constraints(void) {
-  for(presolver_conj nogood : input->nogoods)
-    if (!nogood.empty())
-      constraint(!relaxed_presolver_conj_var(nogood));
+  for(UnisonConstraintExpr nogood : input->nogoods)
+    constraint(!relaxed_adhoc_constraint_var(nogood));
 }
 
 /*********************************************************************************
