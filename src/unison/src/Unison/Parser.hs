@@ -122,6 +122,7 @@ sFile =
      frameMarkerLine
      fobjs  <- frameObjectLine `endBy` newline
      sp     <- spOffsetLine
+     ss     <- stackArgSizeLine
      jumpTableMarkerLine
      jtk    <- option [] (jumpTableKindLine `endBy` newline)
      jtes   <- jumpTableEntryLine `endBy` newline
@@ -130,7 +131,7 @@ sFile =
      sourceMarkerLine
      src    <- sourceLine `endBy` newline
      eof
-     return (comms, name, body, listToMaybe cs, ffobjs, fobjs, sp,
+     return (comms, name, body, listToMaybe cs, ffobjs, fobjs, sp, ss,
              (toKind jtk, jtes), goal, rfs, src)
 
 toKind [] = ""
@@ -160,6 +161,7 @@ jumpTableMarkerLine   = lineOf (marker "jump-table")
 sourceMarkerLine      = lineOf (marker "source")
 
 spOffsetLine = lineOf spOffset
+stackArgSizeLine = lineOf stackArgSize
 goalLine = lineOf goal
 removedFreqsLine = lineOf removedFreqs
 
@@ -179,6 +181,13 @@ removedFreqs =
 
 spOffset =
   do marker "stack-pointer-offset"
+     whiteSpace
+     sp <- decimal
+     whiteSpace
+     return sp
+
+stackArgSize =
+  do marker "stack-arg-size"
      whiteSpace
      sp <- decimal
      whiteSpace
@@ -546,13 +555,13 @@ isLsPrescheduled (LsPrescheduled _) = True
 isLsPrescheduled _                  = False
 
 toFunction target
-  (cmms, name, body, cs, ffobjs, fobjs, sp, (jtk, jt), goal, rfs, src) =
+  (cmms, name, body, cs, ffobjs, fobjs, sp, ss, (jtk, jt), goal, rfs, src) =
   let cms   = [cm | (LsComment cm) <- cmms]
       code  = map (toBB target) (split (dWhen isLsBB) body)
       cs'   = map (mapTuple toOperand) $ fromMaybe [] cs
       goal' = map toHLGoal goal
       src'  = concat [l ++ "\n" | l <- src]
-  in mkCompleteFunction cms name code cs' ffobjs fobjs sp (jtk, jt) goal' rfs
+  in mkCompleteFunction cms name code cs' ffobjs fobjs sp ss (jtk, jt) goal' rfs
      src'
 
 toBB target (LsBlock l as : code) =

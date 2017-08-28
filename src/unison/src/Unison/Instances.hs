@@ -121,7 +121,7 @@ instance (Show i, Show r) => ShowSimple (Function i r) where
   showSimple f = show (f {fSource = ""})
 
 instance (Show i, Show r) => Show (Function i r) where
-    show (Function comments name code cs' ffobjs fobjs sp jt goal rfs src) =
+    show (Function comments name code cs' ffobjs fobjs sp ss jt goal rfs src) =
       concatMap showComment comments ++
       showSectionName "function" ++ " " ++ name ++ newLine ++
       concatMap show code ++
@@ -132,6 +132,7 @@ instance (Show i, Show r) => Show (Function i r) where
       showSectionName "frame" ++ newLine ++
       showFrameObjects False fobjs ++
       showSectionName "stack-pointer-offset" ++ " " ++ show sp ++ newLine ++
+      showSectionName "stack-arg-size" ++ " " ++ show ss ++ newLine ++
       showSectionName "jump-table" ++ newLine ++
       showJumpTableEntries jt ++
       showSectionName "goal" ++ maybeShowGoal goal ++ newLine ++
@@ -143,8 +144,6 @@ showComment comment = "//" ++ comment ++ newLine
 
 maybeShowGoal [] = ""
 maybeShowGoal gs = " " ++ render (cs show gs)
---maybeShowGoal (Just Speed) = " speed"
---maybeShowGoal (Just Size) = " size"
 
 instance Show HighLevelGoal where
   show Speed = "speed"

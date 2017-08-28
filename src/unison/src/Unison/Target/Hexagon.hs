@@ -717,12 +717,13 @@ mayStore i =
   in mem `elem` ws
 
 -- | Gives a list of function transformers
-transforms ImportPreLift = [peephole extractReturnRegs,
+transforms ImportPreLift = [liftStackArgSize,
+                            peephole extractReturnRegs,
                             peephole foldStackPointerCopy,
                             mapToOperation addAlternativeInstructions]
 transforms AugmentPreRW = [peephole expandJumps]
 transforms AugmentPostRW = [mapToOperation addControlBarrier]
-transforms ExportPostOffs = [alignAllocFrame]
+transforms ExportPostOffs = [allocateArgArea, alignAllocFrame]
 transforms ExportPreLow = [shiftFrameOffsets]
 transforms _ = []
 

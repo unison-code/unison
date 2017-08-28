@@ -10,11 +10,13 @@ Main authors:
 This file is part of Unison, see http://unison-code.github.io
 -}
 module Unison.Target.Hexagon.Transforms
-    (extractReturnRegs,
+    (liftStackArgSize,
+     extractReturnRegs,
      foldStackPointerCopy,
      addAlternativeInstructions,
      expandJumps,
      addControlBarrier,
+     allocateArgArea,
      alignAllocFrame,
      shiftFrameOffsets) where
 
@@ -29,6 +31,13 @@ import Unison.Analysis.FrameOffsets
 import Unison.Target.Hexagon.Common
 import Unison.Target.Hexagon.Registers
 import Unison.Target.Hexagon.SpecsGen.HexagonInstructionDecl
+
+liftStackArgSize f @ Function {fCode = code} =
+  let fcode = flatten code
+      sizes = [s | Bound (MachineImm {miValue = s}) <-
+                  [oSingleUse o | o <- fcode, isFrameSetup o]]
+      size  = maybeMax 0 sizes
+  in f {fStackArgSize = size}
 
 extractReturnRegs _ (
   c @ SingleOperation {oOpr = Virtual (ci @ VirtualCopy {
@@ -213,7 +222,20 @@ addControlBarrier o @ SingleOperation {oOpr = Natural Linear {oIs = is},
      else o
 addControlBarrier o = o
 
--- Introduce "slack" frame object to align the offset of 'allocframe' to 8 bytes
+-- Allocate a region in the stack frame for passing arguments to callees
+
+allocateArgArea f @ Function {fStackArgSize = s,
+                              fFixedStackFrame = fobjs, fStackFrame = objs}
+  | s > 0 =
+    let size   = frameSize (fobjs ++ objs)
+        fstIdx = newFrameIndex objs
+        objs'  = objs ++ [mkFrameObject fstIdx size (Just s) s]
+    in f {fStackArgSize = 0, fFixedStackFrame = fobjs, fStackFrame = objs'}
+  | otherwise = f
+
+-- Introduce "slack" frame object to align the offset of 'allocframe' to 8
+-- bytes. TODO: introduce this frame object in the same stack frame region
+-- as LLVM for consistency.
 
 alignAllocFrame f @ Function {fFixedStackFrame = fobjs,
                               fStackFrame = objs} =

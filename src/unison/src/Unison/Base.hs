@@ -157,6 +157,8 @@ data Function i r = Function {
       fStackFrame  :: [FrameObject],
       -- | Stack pointer offset (default is 0)
       fStackPointerOffset :: Integer,
+      -- | Argument-passing section size in the stack frame (default is 0)
+      fStackArgSize :: Integer,
       -- | Jump table kind and entries
       fJumpTable   :: (String, [JumpTableEntry]),
       -- | Goal(s) for which the function is to be optimized
