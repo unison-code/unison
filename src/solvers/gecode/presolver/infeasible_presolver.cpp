@@ -1004,9 +1004,9 @@ bool InfeasiblePresolver::subsumed_nogood(const presolver_conj& conj) {
   // Exists p,t,t' | {eq(p(p),t(t)),eq(p(p),t(t'))} subset of conj
   // Since conj is sorted, any such pair must be consecetive positioned in conj.
   for(unsigned i = 1; i < conj.size(); i++) {
-    if(conj[i-1].data[0] == conj[i].data[0] && // Equal p
-       conj[i-1].id == CONNECTS_EXPR &&
-       conj[i].id == CONNECTS_EXPR) {
+    if(conj[i-1].id == CONNECTS_EXPR &&
+       conj[i].id == CONNECTS_EXPR &&
+       conj[i-1].data[0] == conj[i].data[0]) { // Equal p
       return true;
     }
   }
