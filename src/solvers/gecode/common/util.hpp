@@ -213,6 +213,8 @@ string show(const PresolverAcrossItemJSON);
 
 string show(const PresolverSetAcross);
 
+string show(const PresolverPrecedence x);
+
 template <typename C>
 string show(const C& container, string l = ",", string pre = "",
             string limits = "[]") {

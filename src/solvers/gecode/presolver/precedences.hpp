@@ -89,32 +89,50 @@ multimap<PrecedenceEdge, presolver_conj> gen_before_precedences1(const Parameter
 								 operand q,
 								 const presolver_disj& disj);
 
-void gen_region_precedences(const Parameters& input, precedence_set& PI);
+void gen_region_init(const Parameters& input,
+		     map<block,vector<vector<operation>>>& edgeset_map,
+		     vector<vector<vector<int>>>& min_con_erg,
+		     map<int,int>& pweight,
+		     precedence_set& PI);
 
-bool distinct_cycle(const Parameters& input,
-		    operation i,
-		    operation j,
-		    const vector<vector<vector<int>>>& min_con_erg);
+void gen_region_precedences(const Parameters& input,
+			    const map<block,vector<vector<operation>>>& edgeset_map,
+			    const vector<vector<vector<int>>>& min_con_erg,
+			    map<int,int>& pweight,
+			    precedence_set& PI);
 
-void partition_nodes(Digraph& G, vector<operation>& pnodes);
+void gen_region_precedences(const Parameters& input,
+			    map<block,vector<vector<operation>>>& edgeset_map,
+			    const vector<vector<vector<int>>>& min_con_erg,
+			    map<int,int>& pweight,
+			    const vector<int>& ass,
+			    precedence_set& PI);
+
+void partition_nodes(Digraph& G,
+		     vector<operation>& pnodes,
+		     const vector<int>& focus);
 
 void gen_region_per_partition(const Parameters& input,
-			      const Digraph& G,
+			      Digraph& G,
 			      const vector<operation>& pnodes,
-			      precedence_set& PI,
-			      const vector<vector<vector<int>>>& min_con_erg);
+			      const vector<int>& focus,
+			      const vector<int>& ass,
+			      const vector<vector<vector<int>>>& min_con_erg,
+			      map<int,int>& pweight,
+			      precedence_set& PI);
 
 void gen_region(const Parameters& input,
 		operation src, operation sink,
 		Digraph& G, // forward
 		Digraph& H, // backward
-		precedence_set& PI,
+		const vector<int>& ass,
 		const vector<vector<vector<int>>>& min_con_erg,
-		map<int,int>& pweights);
+		map<int,int>& pweight,
+		precedence_set& PI);
 
-map<operation,int> dag_longest_paths_fwd(vector<operation>& region, map<int,int>& pweights);
+map<operation,int> dag_longest_paths_fwd(vector<operation>& region, map<int,int>& pweight);
 
-map<operation,int> dag_longest_paths_bwd(vector<operation>& region, map<int,int>& pweights);
+map<operation,int> dag_longest_paths_bwd(vector<operation>& region, map<int,int>& pweight);
 
 vector<operation> region_finishers(Digraph &R,
 				   resource r, int cap,

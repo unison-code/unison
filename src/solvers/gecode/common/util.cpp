@@ -132,6 +132,10 @@ string show(const PresolverSetAcross x) {
   return show(vector<string>{show(x.o), show(x.ras), show(x.tsets)}, ", ");
 }
 
+string show(const PresolverPrecedence x) {
+  return show(vector<string>{show(x.i), show(x.j), show(x.n), show(x.d)}, ", ");
+}
+
 string emit_json(const int i) {
   stringstream s;
   s << i;

@@ -323,8 +323,24 @@ void presolve(Parameters & input, PresolverOptions & options) {
   if (timeout(t, options, "Precedences - gen_fixed_precedences", t0, false))
     return;
   // gen_data_precedences(input, opnd2lat, precedences); // defer to solver!
-  if (options.regions())
-    gen_region_precedences(input, precedences);
+  if (options.regions()) {
+    map<block,vector<vector<operation>>> edgeset_map;
+    vector<vector<vector<int>>> min_con_erg = vector<vector<vector<int>>>(input.O.size());
+    map<int,int> pweight;
+    
+    gen_region_init(input, edgeset_map, min_con_erg, pweight, precedences);
+    gen_region_precedences(input, edgeset_map, min_con_erg, pweight, precedences);
+    for(operand p : input.P) {
+      temporary t0 = input.temps[p][0];
+      if(input.use[p] && t0 != NULL_TEMPORARY) {
+	for(temporary t : input.temps[p]) {
+	  if (t != t0) {
+	    gen_region_precedences(input, edgeset_map, min_con_erg, pweight, {p,t}, precedences);
+	  }
+	}
+      }
+    }
+  }
   if (timeout(t, options, "Precedences - gen_region_precedences", t0, false))
     return;
   sort(precedences.begin(), precedences.end());

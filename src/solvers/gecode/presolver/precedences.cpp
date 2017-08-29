@@ -201,95 +201,202 @@ multimap<operation, instruction> build_oI (const presolver_disj& Y) {
     return oI;
 }
 
-void gen_region_precedences(const Parameters& input, precedence_set& PI) {
-    map<block,vector<vector<operation>>> M;
-    vector<vector<vector<int>>> min_con_erg = vector<vector<vector<int>>>(input.O.size());
-    for(operation o : input.O) {
-      min_con_erg[o] = vector<vector<int>>(input.R.size());
-      for(resource r : input.R) {
-	int minc = 9999;
-	int mine = 9999;
-	for(instruction i : input.instructions[o]) {
-	  if(minc>input.con[i][r]) {
-	    minc = input.con[i][r];
-	    mine = minc * input.dur[i][r];
-	    if(minc==0)
-	      break;
-	  }
-	}
-	min_con_erg[o][r] = vector<int>(2);
-	min_con_erg[o][r][0] = minc;
-	min_con_erg[o][r][1] = mine;
-      }
-    }
-    // FUN-FUN, DEFINE-*, and *-KILL precedences are useless here
-    // X-FUN ---> X-[TAIL]CALL if X is not [TAIL]CALL and can't be issued with [TAIL]CALL
-    // [TAIL]CALL-X ---> FUN-X if X is not FUN
-    for(const vector<operation>& edge : input.precs) {
-      operation i = edge[0];
-      operation j = edge[1];
-      operation isucc = i;
-      operation jpred = j;
-      if (input.type[i] == CALL || input.type[i] == TAILCALL)
-	while (input.type[isucc] != FUN)
-	  isucc++;
-      if (input.type[j] == FUN)
-	while (input.type[jpred] != CALL && input.type[jpred] != TAILCALL)
-	  jpred--;
-      if (input.type[i] == FUN && input.type[j] == FUN) {
-      } else if (input.type[i] != CALL && input.type[i] != TAILCALL && input.type[j] == FUN &&
-		 distinct_cycle(input, i, jpred, min_con_erg)) {
-	M[input.oblock[j]].push_back({i,jpred});
-      } else if ((input.type[i] == CALL || input.type[i] == TAILCALL) && input.type[j] != FUN) {
-	M[input.oblock[j]].push_back({isucc,j});
-      } else if (input.type[i] != DEFINE && input.type[j] != KILL) {
-	M[input.oblock[j]].push_back(edge);
-      }
-    }
-    for(const pair<block,vector<vector<operation>>>& b_edges : M) {
-      vector<operation> pnodes;
-      Digraph G = Digraph(b_edges.second).reduction();
-      partition_nodes(G, pnodes);
-      gen_region_per_partition(input, G, pnodes, PI, min_con_erg);
-    }
-}
-
-bool distinct_cycle(const Parameters& input,
-		    operation i,
-		    operation j,
-		    const vector<vector<vector<int>>>& min_con_erg) {
+static bool distinct_cycle(const Parameters& input,
+			   operation i,
+			   operation j,
+			   const vector<vector<vector<int>>>& min_con_erg) {
   for (resource r : input.R)
     if (min_con_erg[i][r][0] + min_con_erg[j][r][0] > input.cap[r])
       return true;
   return false;
 }
 
-void partition_nodes(Digraph& G, vector<operation>& pnodes) {
+#define FastPair(o1,o2) (((o1)<<20) + (o2))
+
+void gen_region_init(const Parameters& input,
+		     map<block,vector<vector<operation>>>& edgeset_map,
+		     vector<vector<vector<int>>>& min_con_erg,
+		     map<int,int>& pweight,
+		     precedence_set& PI) {
+  presolver_conj ConjTrue;
+  presolver_disj DisjTrue({ConjTrue});
+    
+  for(operation o : input.O) {
+    min_con_erg[o] = vector<vector<int>>(input.R.size());
+    for(resource r : input.R) {
+      int minc = 9999;
+      int mine = 9999;
+      for(instruction i : input.instructions[o]) {
+	if(minc>input.con[i][r]) {
+	  minc = input.con[i][r];
+	  mine = minc * input.dur[i][r];
+	  if(minc==0)
+	    break;
+	}
+      }
+      min_con_erg[o][r] = vector<int>(2);
+      min_con_erg[o][r][0] = minc;
+      min_con_erg[o][r][1] = mine;
+    }
+  }
+  // FUN-FUN, DEFINE-*, and *-KILL precedences are useless here
+  // X-FUN ---> X-[TAIL]CALL if X is not [TAIL]CALL and can't be issued with [TAIL]CALL
+  // [TAIL]CALL-X ---> FUN-X if X is not FUN
+  for(const vector<operation>& edge : input.precs) {
+    operation i = edge[0];
+    operation j = edge[1];
+    operation isucc = i;
+    operation jpred = j;
+    if (input.type[i] == CALL || input.type[i] == TAILCALL)
+      while (input.type[isucc] != FUN)
+	isucc++;
+    if (input.type[j] == FUN)
+      while (input.type[jpred] != CALL && input.type[jpred] != TAILCALL)
+	jpred--;
+    if (input.type[i] == FUN && input.type[j] == FUN) {
+    } else if (input.type[i] != CALL && input.type[i] != TAILCALL && input.type[j] == FUN &&
+	       distinct_cycle(input, i, jpred, min_con_erg)) {
+      edgeset_map[input.oblock[j]].push_back({i,jpred});
+      PI.push_back(PresolverPrecedence(i, jpred, 1, DisjTrue));
+    } else if ((input.type[i] == CALL || input.type[i] == TAILCALL) && input.type[j] != FUN) {
+      edgeset_map[input.oblock[j]].push_back({isucc,j});
+      PI.push_back(PresolverPrecedence(isucc, j, 1, DisjTrue));
+    } else if (input.type[i] != DEFINE && input.type[j] != KILL) {
+      edgeset_map[input.oblock[j]].push_back(edge);
+      PI.push_back(PresolverPrecedence(i, j, 1, DisjTrue));
+    }
+  }
+
+  for (const PresolverPrecedence& p : PI) {
+    operation src = p.i;
+    operation dest = p.j;
+    int n = p.n;
+    presolver_disj D = p.d;
+    if (src<dest && disj_is_true(D)) {
+      int key = FastPair(src,dest);
+      if (pweight.find(key) == pweight.end() || pweight[key] < n)
+	pweight[key] = n;
+    }
+  }
+}
+
+void gen_region_precedences(const Parameters& input,
+			    const map<block,vector<vector<operation>>>& edgeset_map,
+			    const vector<vector<vector<int>>>& min_con_erg,
+			    map<int,int>& pweight,
+			    precedence_set& PI) {
+  for(const pair<block,vector<vector<operation>>>& edgeset_pair : edgeset_map) {
+    vector<operation> pnodes;
+    Digraph G = Digraph(edgeset_pair.second).reduction();
+    partition_nodes(G, pnodes, {});
+    gen_region_per_partition(input, G, pnodes, {}, {}, min_con_erg, pweight, PI);
+  }
+}
+
+static int min_latency(const Parameters& input,
+		       operation o1,
+		       operation o2,
+		       operand d,
+		       operand u) {
+  int ld = 1000000000;
+  int lu = 1000000000;
+  for(unsigned int ii = 0; ii < input.instructions[o1].size(); ++ii) {
+    if(input.instructions[o1][ii] != NULL_INSTRUCTION) {
+      unsigned int di = index_of(input.operands[o1], d);
+      int lat = input.lat[o1][ii][di];
+      ld = ld < lat ? ld : lat;
+    }
+  }
+  for(unsigned int ii = 0; ii < input.instructions[o2].size(); ++ii) {
+    if(input.instructions[o2][ii] != NULL_INSTRUCTION) {
+      unsigned int ui = index_of(input.operands[o2], u);
+      int lat = input.lat[o2][ii][ui];
+      lu = lu < lat ? lu : lat;
+    }
+  }
+
+  return ld+lu;
+};
+
+void gen_region_precedences(const Parameters& input,
+			    map<block,vector<vector<operation>>>& edgeset_map,
+			    const vector<vector<vector<int>>>& min_con_erg,
+			    map<int,int>& pweight,
+			    const vector<int>& ass,
+			    precedence_set& PI) {
+  // add edges induced by assumption pi = tj
+  operand p = ass[0];
+  temporary t = ass[1];
+  operation o3 = opnd_oper(input, p);
+  operation o2 = temp_oper(input, t);
+  operation o1 = input.type[o2] != COPY ? -1 : temp_oper(input, first_temp_but_null(input, first_use(input, o2)));
+  block b = input.oblock[o3];
+  
+  if (o1>=0) {
+    operand d2 = first_def(input, o2);
+    operand u2 = first_use(input, o2);
+    temporary t2 = first_temp_but_null(input, u2);
+    operand d1 = temp_def(input, t2);
+    int d12 = min_latency(input, o1, o2, d1, u2);
+    int d23 = min_latency(input, o2, o3, d2, p);
+    if (d12>0 && d23>0) {
+      vector<vector<operation>> edgeset;
+      edgeset.insert(edgeset.end(), edgeset_map[b].begin(), edgeset_map[b].end());
+      vector<operation> pnodes;
+      
+      edgeset.push_back({o1,o2});
+      edgeset.push_back({o2,o3});
+      Digraph G = Digraph(edgeset).reduction();
+      // cerr << "ASSUMING p" << p << "=t" << t << " o1=" << o1 <<" o2=" << o2 <<" o3=" << o3 << endl;
+      partition_nodes(G, pnodes, {o1,o3});
+      gen_region_per_partition(input, G, pnodes, {o1,o3,d12+d23}, ass, min_con_erg, pweight, PI);
+    }
+  }
+}
+
+void partition_nodes(Digraph& G,
+		     vector<operation>& pnodes,
+		     const vector<int>& focus) {
   operation l = G.vertices()[0];
   for(operation v : G.vertices()) {
-    if (v==l)
+    if (v==l && (focus.empty() || v <= focus[0] || v >= focus[1])) // no partition nodes inside the focus
       pnodes.push_back(v);
     for(operation n : G.neighbors(v))
       l = n > l ? n : l;
   }
 }
 
-#define FastPair(o1,o2) (((o1)<<20) + (o2))
+// naive depth-first search
+static int longest_path(Digraph &G, map<int,int>& pweight, operation src, operation sink, int len) {
+  if (src > sink) {
+    return 0;
+  } else if (src == sink) {
+    return len;
+  } else {
+    int lp = len;
+    vector<operation> ns = G.neighbors(src);
+    for (operation n : ns) {
+      int key = FastPair(src,n);
+      int weight = (pweight.find(key) != pweight.end() ? pweight[key] : 0);
+      int nl = longest_path(G, pweight, n, sink, len+weight);
+      lp = (nl > lp ? nl : lp);
+    }
+    return lp;
+  }
+}
 
 void gen_region_per_partition(const Parameters& input,
-			      const Digraph& G, // "precs" edges for 1 block
+			      Digraph& G, // "precs" edges for 1 block
 			      const vector<operation>& pnodes,
-			      precedence_set& PI,
-			      const vector<vector<vector<int>>>& min_con_erg) {
-  map<int,int> pweights;
+			      const vector<int>& focus,
+			      const vector<int>& ass,
+			      const vector<vector<vector<int>>>& min_con_erg,
+			      map<int,int>& pweight,
+			      precedence_set& PI) {
   map<operation,vector<pair<operation,operation>>> M;
   int multiplier = input.O.size();
-  presolver_conj ConjTrue;
-  presolver_disj DisjTrue({ConjTrue});
 
   for(const pair<operation,operation>& edge : G.edges()) {
-    PresolverPrecedence pred(edge.first, edge.second, 1, DisjTrue);
-    PI.push_back(pred);
     for(operation b : pnodes) {
       if(b >= edge.second) {
 	M[b].push_back(edge);
@@ -298,18 +405,27 @@ void gen_region_per_partition(const Parameters& input,
     }
   }
 
-  for (const PresolverPrecedence& p : PI) {
-    operation src = p.i;
-    operation dest = p.j;
-    int d = p.n;
-    presolver_disj D = p.d;
-    if (src<dest && D==DisjTrue && vector_contains(G.vertices(),src) && vector_contains(G.vertices(),dest)) {
-      int key = FastPair(src,dest);
-      if (pweights.find(key) == pweights.end() || pweights[key] < d)
-	pweights[key] = d;
+  if (!ass.empty()) {
+    operand p = ass[0];
+    temporary t = ass[1];
+    operation src = focus[0];
+    operation sink = focus[1];
+    int lat = focus[2];
+    int lp = longest_path(G, pweight, src, sink, 0);
+
+    // vector<operation> region = ord_union(G.reachables(src), {src});
+    // map<operation,int> src_cps = dag_longest_paths_fwd(region, pweight);
+    // by construction, sink is reachable from src
+    if(lp<lat) {
+      UnisonConstraintExpr e(CONNECTS_EXPR, {p,t}, {});
+      presolver_conj Conj({e});
+      PresolverPrecedence pred(src, sink, lat, presolver_disj({Conj})); // FIXME: check zero-latencies!
+      // cerr << "  PAIR PRECEDENCE: " << show(pred) << endl;
+      PI.push_back(pred);
+      // pweight[FastPair(src,sink)] = lat; // only holds under assumption p...=t...
     }
   }
-
+  
   for(const pair<operation,vector<pair<operation,operation>>>& b_edges : M) {
     Digraph G = Digraph(b_edges.second);
     Digraph H = G.transpose();
@@ -339,7 +455,8 @@ void gen_region_per_partition(const Parameters& input,
 	  R[vji] = r1;
 	} else {
 	  R[vji] = vi;
-	  gen_region(input, vj, vi, G, H, PI, min_con_erg, pweights);
+	  if (focus.empty() || (vj <= focus[0] && focus[1] <= vi)) 
+	    gen_region(input, vj, vi, G, H, ass, min_con_erg, pweight, PI);
 	}
       }
     }
@@ -376,9 +493,10 @@ void gen_region(const Parameters& input,
 		operation src, operation sink,
 		Digraph& G, // forward
 		Digraph& H, // backward
-		precedence_set& PI,
+		const vector<int>& ass,
 		const vector<vector<vector<int>>>& min_con_erg,
-		map<int,int>& pweights) {
+		map<int,int>& pweight,
+		precedence_set& PI) {
   int glb = 0;
   vector<operation> inside = ord_intersection(G.reachables(src), H.reachables(sink)); // excludes src, sink
   vector<operation> region = ord_union(inside, {src,sink});
@@ -388,8 +506,8 @@ void gen_region(const Parameters& input,
   for (unsigned int ii = 0; ii < rs; ii++)
     reverse[rs-ii-1] = region[ii];
 
-  map<operation,int> src_cps = dag_longest_paths_fwd(region, pweights);
-  map<operation,int> sink_cps = dag_longest_paths_bwd(reverse, pweights);
+  map<operation,int> src_cps = dag_longest_paths_fwd(region, pweight);
+  map<operation,int> sink_cps = dag_longest_paths_bwd(reverse, pweight);
   for (resource r : input.R) {
     vector<pair<int,int>> edges;
     for (operation o1 : region)
@@ -431,16 +549,26 @@ void gen_region(const Parameters& input,
       glb = r2 > glb ? r2 : glb;
     }
   }
-  if (glb > src_cps[sink]) {
+  if (glb <= src_cps[sink]) {
+  } else if (ass.empty()) {
     presolver_conj Conj;
     PresolverPrecedence pred(src, sink, glb, presolver_disj({Conj}));
+    // cerr << "  REGION PRECEDENCE: " << show(pred) << endl;
     PI.push_back(pred);
-    pweights[FastPair(src,sink)] = glb;
+    pweight[FastPair(src,sink)] = glb;
+  } else {
+    operand p = ass[0];
+    temporary t = ass[1];
+    presolver_conj Conj({UnisonConstraintExpr(CONNECTS_EXPR, {p,t}, {})});
+    PresolverPrecedence pred(src, sink, glb, presolver_disj({Conj}));
+    // cerr << "  REGION PRECEDENCE: " << show(pred) << endl;
+    PI.push_back(pred);
+    // pweight[FastPair(src,sink)] = glb; // only holds under assumption p...=t...
   }
 }
 
 // Find all longest paths from implicit src, assuming we have a DAG, assuming ascending vertices by top sort
-map<operation,int> dag_longest_paths_fwd(vector<operation>& region, map<int,int>& pweights) {
+map<operation,int> dag_longest_paths_fwd(vector<operation>& region, map<int,int>& pweight) {
   map<operation,int> L;
 
   for(operation v : region)
@@ -449,8 +577,8 @@ map<operation,int> dag_longest_paths_fwd(vector<operation>& region, map<int,int>
     for(operation v : region)
       if(b<v) {
 	int key = FastPair(b,v);
-	if(pweights.find(key) != pweights.end()) {
-	  int w = pweights[key];
+	if(pweight.find(key) != pweight.end()) {
+	  int w = pweight[key];
 	  if(L[v] < L[b]+w)
 	    L[v] = L[b]+w;
 	}
@@ -459,7 +587,7 @@ map<operation,int> dag_longest_paths_fwd(vector<operation>& region, map<int,int>
 }
 
 // Find all longest paths from implicit src, assuming we have a DAG, assuming ascending vertices by top sort
-map<operation,int> dag_longest_paths_bwd(vector<operation>& region, map<int,int>& pweights) {
+map<operation,int> dag_longest_paths_bwd(vector<operation>& region, map<int,int>& pweight) {
   map<operation,int> L;
 
   for(operation v : region)
@@ -468,8 +596,8 @@ map<operation,int> dag_longest_paths_bwd(vector<operation>& region, map<int,int>
     for(operation v : region)
       if(b>v) {
 	int key = FastPair(v,b);
-	if(pweights.find(key) != pweights.end()) {
-	  int w = pweights[key];
+	if(pweight.find(key) != pweight.end()) {
+	  int w = pweight[key];
 	  if(L[v] < L[b]+w)
 	    L[v] = L[b]+w;
 	}
