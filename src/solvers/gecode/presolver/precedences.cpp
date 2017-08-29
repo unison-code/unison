@@ -419,7 +419,7 @@ void gen_region_per_partition(const Parameters& input,
     if(lp<lat) {
       UnisonConstraintExpr e(CONNECTS_EXPR, {p,t}, {});
       presolver_conj Conj({e});
-      PresolverPrecedence pred(src, sink, lat, presolver_disj({Conj})); // FIXME: check zero-latencies!
+      PresolverPrecedence pred(src, sink, lat, presolver_disj({Conj}));
       // cerr << "  PAIR PRECEDENCE: " << show(pred) << endl;
       PI.push_back(pred);
       // pweight[FastPair(src,sink)] = lat; // only holds under assumption p...=t...
