@@ -198,16 +198,21 @@ linearJumps J2_jumpf = [J2_jumpf_linear, J2_jumpf_nv_linear]
 newValueJump J2_jumpt = J2_jumpt_nv
 newValueJump J2_jumpf = J2_jumpf_nv
 
--- We assume the "taken" hint all the time
+-- We assume the "taken" until 'addJumpHint' during post-processing
 linearNewValueCmpJump cmp jmp =
   read $
   "J4_" ++
   (normalForm $ dropPrefix "C2_" $ show cmp) ++ "_" ++
-  (if isTrueJump jmp then "t" else "f") ++
+  (if isTrueNVCmpJump cmp jmp then "t" else "f") ++
   "_jumpnv_t_linear"
 
 normalForm "cmplteu" = "cmpltu"
+normalForm "cmplte"  = "cmplt"
 normalForm i = i
+
+isTrueNVCmpJump cmp jmp
+  | cmp `elem` [C4_cmplte, C4_cmplteu] = not (isTrueJump jmp)
+  | otherwise = isTrueJump jmp
 
 isTrueJump J2_jumpt = True
 isTrueJump J2_jumpf = False
