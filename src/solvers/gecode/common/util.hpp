@@ -126,6 +126,11 @@ T max_of(vector<vector<vector<T> > > & v3) {
 }
 
 template<class T>
+T maybe_max_of(T e, const vector<T> & v) {
+  return v.empty() ? e : max_of(v);
+}
+
+template<class T>
 T min_of(vector<T> & v) {
   return *min_element(v.begin(), v.end());
 }
@@ -137,6 +142,11 @@ T min_of(vector<vector<vector<T> > > & v3) {
     for (vector<T> v1 : v2)
       v.insert(v.end(), v1.begin(), v1.end());
   return min_of(v);
+}
+
+template<class T>
+T maybe_min_of(T e, const vector<T> & v) {
+  return v.empty() ? e : min_of(v);
 }
 
 template<class T>

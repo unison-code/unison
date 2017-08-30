@@ -95,7 +95,7 @@ LocalModel::LocalModel(Parameters * p_input, ModelOptions * p_options,
   v_ls  = int_var_array(T().size(), 0, input->maxc[b]);
   v_ld  = int_var_array(T().size(), 0, input->maxc[b]);
   v_le  = int_var_array(T().size(), 0,
-                        input->maxc[b] + max_of(input->minlive));
+                        input->maxc[b] + maybe_max_of(0, input->minlive));
   v_al  = bool_var_array(T().size() * input->RS.size(), 0, 1);
   v_u   = bool_var_array(input->bnu[b], 0, 1);
   v_us  = int_var_array(T().size(), 0, O().size());
@@ -110,7 +110,9 @@ LocalModel::LocalModel(Parameters * p_input, ModelOptions * p_options,
                             IntSet(min_of(input->ope[b]),
                                    max_of(input->ope[b])));
   }
-  v_s = int_var_array(input->n_global[b], -input->max_lat, input->max_lat);
+  if (!P().empty()) {
+    v_s = int_var_array(input->n_global[b], -input->max_lat, input->max_lat);
+  }
   v_f = int_var_array(input->N, 0, Int::Limits::max);
   if (!options->disable_precedence_variables()) {
     v_p = bool_var_array(input->mandatory[b].size() *

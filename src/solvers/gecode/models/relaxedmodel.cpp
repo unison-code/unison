@@ -140,7 +140,9 @@ RelaxedModel::RelaxedModel(Parameters * p_input, ModelOptions * p_options,
   // Variables
   v_r   = int_var_array(T().size(), -1, input->RA.size() - 1);
   v_i   = int_var_array(O().size(), 0, input->I.size() - 1);
-  v_y   = int_var_array(P().size(), 0, input->T.size() - 1);
+  if (!P().empty()) {
+    v_y   = int_var_array(P().size(), 0, input->T.size() - 1);
+  }
   v_x   = bool_var_array(sum_of(input->n_global_optionals), 0, 1);
   v_ry  = int_var_array(P().size(), -1, input->RA.size() - 1);
   v_a   = bool_var_array(O().size(), 0, 1);

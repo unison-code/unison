@@ -93,7 +93,7 @@ CompleteModel::CompleteModel(Parameters * p_input, ModelOptions * p_options,
   v_ls  = int_var_array(T().size(), 0, max_of(input->maxc));
   v_ld  = int_var_array(T().size(), 0, max_of(input->maxc));
   v_le  = int_var_array(T().size(), 0,
-                        max_of(input->maxc) + max_of(input->minlive));
+                        max_of(input->maxc) + maybe_max_of(0, input->minlive));
   v_al  = bool_var_array(T().size() * input->RS.size(), 0, 1);
   v_u   = bool_var_array(input->nu, 0, 1);
   v_us  = int_var_array(T().size(), 0, O().size());
@@ -110,7 +110,10 @@ CompleteModel::CompleteModel(Parameters * p_input, ModelOptions * p_options,
     v_users = set_var_array(T().size(), IntSet::empty,
                             IntSet(min_of(input->P), max_of(input->P)));
   }
-  v_s = int_var_array(sum_of(input->n_global), -input->max_lat, input->max_lat);
+  if (!P().empty()) {
+    v_s = int_var_array(sum_of(input->n_global),
+                        -input->max_lat, input->max_lat);
+  }
   v_gf = int_var_array(input->N, 0, Int::Limits::max);
   v_f  = int_var_array(input->B.size() * input->N, 0, Int::Limits::max);
 }
