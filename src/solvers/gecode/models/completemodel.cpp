@@ -129,13 +129,8 @@ CompleteModel* CompleteModel::copy(void) {
   return new CompleteModel(*this);
 }
 
-IntVarArray CompleteModel::cost() const {
+IntVarArgs CompleteModel::cost() const {
   return gf();
-}
-
-void CompleteModel::constrain(const Space & _s) {
-  const CompleteModel & gs = static_cast<const CompleteModel &>(_s);
-  rel(*this, cost(), IRT_LE, gs.cost());
 }
 
 void CompleteModel::post_decision_variable_domain_definitions(void) {

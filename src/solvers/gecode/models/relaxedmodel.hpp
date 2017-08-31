@@ -69,8 +69,11 @@ public:
 
   IntVar s(operand p) const;
 
-  // This is needed since inherited from Model
+  // These are needed since inherited from Model
+
   IntVar f(block, unsigned int) const { GECODE_NEVER; return v_i[0]; };
+
+  IntVarArgs cost() const { GECODE_NEVER; return v_i; };
 
   // Auxiliary
 

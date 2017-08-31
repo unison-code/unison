@@ -424,6 +424,6 @@ bool in_block(PresolverBeforeJSON & bf, block b, const Parameters * input);
 
 bool in_block(UnisonConstraintExpr & e, block b, const Parameters * input);
 
-vector<int> var_vector(const IntVarArray & v);
+vector<int> var_vector(const IntVarArgs & v);
 
 #endif

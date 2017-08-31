@@ -76,7 +76,7 @@ public:
     return v_f[(b * input->N) + n];
   };
 
-  IntVarArray cost() const;
+  IntVarArgs cost() const;
 
   // Gecode space methods
 
@@ -85,8 +85,6 @@ public:
   CompleteModel(CompleteModel& cg);
 
   CompleteModel* copy(void);
-
-  virtual void constrain(const Space & _s);
 
   // Constraints
 

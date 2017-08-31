@@ -84,7 +84,7 @@ public:
 
   IntVar f(block, unsigned int n) const { return v_f[n]; };
 
-  IntVarArray cost() const;
+  IntVarArgs cost() const;
 
   // Gecode objects
 
@@ -100,8 +100,6 @@ public:
   LocalModel(LocalModel& cg);
 
   LocalModel* copy(void);
-
-  virtual void constrain(const Space & _s);
 
   // Constraints
 
