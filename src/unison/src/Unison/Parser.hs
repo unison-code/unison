@@ -117,6 +117,8 @@ sFile =
      body   <- bodyLine `endBy` newline
      congruencesMarkerLine
      cs     <- congruenceLine `endBy` newline
+     rematerializableMarkerLine
+     rts    <- rematerializableLine `endBy` newline
      fixedframeMarkerLine
      ffobjs <- frameObjectLine `endBy` newline
      frameMarkerLine
@@ -131,8 +133,8 @@ sFile =
      sourceMarkerLine
      src    <- sourceLine `endBy` newline
      eof
-     return (comms, name, body, listToMaybe cs, ffobjs, fobjs, sp, ss,
-             (toKind jtk, jtes), goal, rfs, src)
+     return (comms, name, body, listToMaybe cs, listToMaybe rts, ffobjs, fobjs,
+             sp, ss, (toKind jtk, jtes), goal, rfs, src)
 
 toKind [] = ""
 toKind [k] = k
@@ -144,17 +146,19 @@ functionName =
      whiteSpace
      return name
 
-commentLine        = tryLineOf comment
-bodyLine           = tryLineOf (bLabelDeclaration <|> blockOperation)
-congruenceLine     = tryLineOf congruenceList
-frameObjectLine    = tryLineOf frameObject
-jumpTableKindLine  = tryLineOf jumpTableKind
-jumpTableEntryLine = tryLineOf jumpTableEntry
-sourceLine         = tryLineOf source
+commentLine          = tryLineOf comment
+bodyLine             = tryLineOf (bLabelDeclaration <|> blockOperation)
+congruenceLine       = tryLineOf congruenceList
+rematerializableLine = tryLineOf temporaryList
+frameObjectLine      = tryLineOf frameObject
+jumpTableKindLine    = tryLineOf jumpTableKind
+jumpTableEntryLine   = tryLineOf jumpTableEntry
+sourceLine           = tryLineOf source
 
 tryLineOf = try . lineOf
 
 congruencesMarkerLine = lineOf (marker "adjacent")
+rematerializableMarkerLine = lineOf (marker "rematerializable")
 fixedframeMarkerLine  = lineOf (marker "fixed-frame")
 frameMarkerLine       = lineOf (marker "frame")
 jumpTableMarkerLine   = lineOf (marker "jump-table")
@@ -396,6 +400,12 @@ congruenceOf t =
      o' <- t
      return (o, o')
 
+temporaryList =
+  do t <- temporary
+     optional comma
+     ts <- temporary `sepBy` comma
+     return (t:ts)
+
 frameObject =
   do mfi <- mirFI
      whiteSpace
@@ -555,14 +565,15 @@ isLsPrescheduled (LsPrescheduled _) = True
 isLsPrescheduled _                  = False
 
 toFunction target
-  (cmms, name, body, cs, ffobjs, fobjs, sp, ss, (jtk, jt), goal, rfs, src) =
+  (cmms, name, body, cs, rts, ffobjs, fobjs, sp, ss, (jtk, jt), goal, rfs, src) =
   let cms   = [cm | (LsComment cm) <- cmms]
       code  = map (toBB target) (split (dWhen isLsBB) body)
       cs'   = map (mapTuple toOperand) $ fromMaybe [] cs
+      rts'  = map toOperand $ fromMaybe [] rts
       goal' = map toHLGoal goal
       src'  = concat [l ++ "\n" | l <- src]
-  in mkCompleteFunction cms name code cs' ffobjs fobjs sp ss (jtk, jt) goal' rfs
-     src'
+  in mkCompleteFunction cms name code cs' rts' ffobjs fobjs sp ss (jtk, jt)
+     goal' rfs src'
 
 toBB target (LsBlock l as : code) =
   Block l (toBlockAttributes as) (map (toOperation target) code)

@@ -61,10 +61,7 @@ join (OldFact old) (NewFact new) =
 reachDefTransfer :: Ord i => Show i => Ord r =>
                     OperandPredicate r ->
                     FwdTransfer (HOperation i r) (ReachingDefs r)
-reachDefTransfer p = mkFTransfer3 inDefs (middleDefs p) outDefs
-
-inDefs :: Ord i => Show i => HOperation i r C O -> ReachingDefs r -> ReachingDefs r
-inDefs _ rds = rds
+reachDefTransfer p = mkFTransfer3 (const id) (middleDefs p) outDefs
 
 middleDefs :: Ord i => Show i => Ord r =>
               OperandPredicate r ->

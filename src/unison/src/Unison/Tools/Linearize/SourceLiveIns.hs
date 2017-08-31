@@ -18,13 +18,16 @@ import Unison.Target.API
 import qualified Unison.Graphs.BCFG as BCFG
 import qualified Unison.Graphs.ICFG as ICFG
 
-sourceLiveIns f @ Function {fCode = code, fCongruences = cs} target =
-    let bif       = branchInfo target
+sourceLiveIns f @ Function {fCode = code, fCongruences = cs,
+                            fRematerializable = rts} target =
+    let bif      = branchInfo target
         icfg     = (ICFG.fromBCFG . BCFG.fromFunction bif) f
         codeSame = foldWithTempIndex (srcLiveIns icfg) [] code
         code'    = map fst codeSame
-        cs'      = cs ++ concatMap (map clearPreAssignments . snd) codeSame
-    in f {fCode = code', fCongruences = cs'}
+        newCs    = concatMap (map (mapTuple undoPreAssign) . snd) codeSame
+        cs'      = cs ++ newCs
+        rts'     = nub $ rts ++ map snd (filter (\c -> fst c `elem` rts) newCs)
+    in f {fCode = code', fCongruences = cs', fRematerializable = rts'}
 
 srcLiveIns icfg (i, codeSame) b @ Block {bLab = l, bCode = code} =
   let ts          = nub (sort (tUses code))
@@ -33,9 +36,7 @@ srcLiveIns icfg (i, codeSame) b @ Block {bLab = l, bCode = code} =
       liveIns     = filter (ICFG.isLiveIn (BCFG.toNode l) icfg) ts
       same        = zip liveIns (map mkTemp [i..])
       sCode       = addToIn (map snd same) code
-      sameIds     = M.fromList [(tId t, tId t') | (t, t') <- same]
+      sameIds     = M.fromList $ map (mapTuple tId) same
       renamedCode = map (mapToModelOperand (applyTempIdMap sameIds)) sCode
   in (i + fromIntegral (length same),
       codeSame ++ [(b {bCode = renamedCode}, same)])
-
-clearPreAssignments (t, t') = (undoPreAssign t, undoPreAssign t')

@@ -30,9 +30,9 @@ liftRegs f @ Function {fCode = code} target =
     let rr    = map (mkRegister . mkTargetRegister) $ reserved target
         lr    = isLiftableRegister rr
         bif   = branchInfo target
-        icfg  = (ICFG.fromBCFG . BCFG.fromFunction bif) f
+        icfg  = ICFG.fromBCFG $ BCFG.fromFunction bif f
         cfg   = toHOprGraph icfg
-        o2ds  = (reachingDefinitions lr cfg)
+        o2ds  = reachingDefinitions lr cfg
         rds   = sort $ nub $ concatMap S.toList $ M.elems o2ds
         tid   = newTempIndex (flatten code)
         rd2t  = M.fromList $ zip rds [tid..]

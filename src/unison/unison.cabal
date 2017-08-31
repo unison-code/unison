@@ -47,6 +47,7 @@ Library
                    Unison.Graphs.Hoopl
                    Unison.Graphs.Hoopl.Liveness
                    Unison.Graphs.Hoopl.ReachingConstants
+                   Unison.Graphs.Hoopl.ReachingConstantsSSA
                    Unison.Graphs.Hoopl.ReachingDefinitions
                    Unison.Graphs.Partition
                    Unison.Graphs.ThirdParty
@@ -149,6 +150,7 @@ Library
                   Unison.Tools.Import.RunPreProcess
                   Unison.Tools.Import.SimplifyCombinations
                   Unison.Tools.Import.SplitBlocks
+                  Unison.Tools.Import.TagRemats
                   Unison.Tools.Linearize.SinkLiveOuts
                   Unison.Tools.Linearize.SourceLiveIns
                   Unison.Tools.Linearize.RemovePhis

@@ -151,6 +151,8 @@ data Function i r = Function {
       fCode        :: [Block i r],
       -- | Congruences among operands
       fCongruences :: [CongruenceTuple r],
+      -- | Operands that can be rematerialized
+      fRematerializable :: [Operand r],
       -- | Fixed stack frame information
       fFixedStackFrame :: [FrameObject],
       -- | Variable stack frame information

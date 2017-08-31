@@ -72,6 +72,7 @@ import Unison.Tools.Import.FoldCopies
 import Unison.Tools.Import.SplitBlocks
 import Unison.Tools.Import.RepairCSSA
 import Unison.Tools.Import.AdvancePhis
+import Unison.Tools.Import.TagRemats
 
 run (estimateFreq, simplifyControlFlow, noCC, noReserved, maxBlockSize,
      implementFrames, function, goal, mirFile, debug, intermediate, lint,
@@ -147,6 +148,7 @@ uniTransformations (goal, noCC, noReserved, maxBlockSize, estimateFreq,
      (renameOperations, "renameOperations", True),
      (estimateFrequency, "estimateFrequency", estimateFreq),
      (normalizeFrequency, "normalizeFrequency", True),
+     (tagRemats, "tagRemats", True),
      (addPragmas importPragmas, "addPragmas", lintPragma)]
 
 importPragmas =

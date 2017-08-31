@@ -280,12 +280,14 @@ applyMOperandIdMap _ o = o
 renameOperands :: Ord r => ([BlockOperation i r] -> [Integer]) ->
                   (M.Map Integer Integer -> Operand r -> Operand r) ->
                   Function i r -> Function i r
-renameOperands o r f @ Function {fCode = code, fCongruences = cs} =
+renameOperands o r f @ Function {fCode = code, fCongruences = cs,
+                                 fRematerializable = rts} =
   let o2n   = M.fromList (zip (nub $ o $ flatten code) [0..])
       rf    = r o2n
       code' = mapToOperationInBlocks (mapToModelOperand rf) code
-      cs'   = sort (map (mapTuple rf) cs)
-  in f {fCode = code', fCongruences = cs'}
+      cs'   = sort $ map (mapTuple rf) cs
+      rts'  = sort $ map rf rts
+  in f {fCode = code', fCongruences = cs', fRematerializable = rts'}
 
 mapToReads :: ([RWObject r] -> [RWObject r]) -> BlockOperation i r ->
               BlockOperation i r

@@ -121,12 +121,14 @@ instance (Show i, Show r) => ShowSimple (Function i r) where
   showSimple f = show (f {fSource = ""})
 
 instance (Show i, Show r) => Show (Function i r) where
-    show (Function comments name code cs' ffobjs fobjs sp ss jt goal rfs src) =
+    show (Function comments name code cs' rts ffobjs fobjs sp ss jt goal rfs src) =
       concatMap showComment comments ++
       showSectionName "function" ++ " " ++ name ++ newLine ++
       concatMap show code ++
       showSectionName "adjacent" ++ newLine ++
       showCongruences cs' lineWidth wsWidth ++
+      showSectionName "rematerializable" ++ newLine ++
+      showRematerializable rts lineWidth wsWidth ++
       showSectionName "fixed-frame" ++ newLine ++
       showFrameObjects True ffobjs ++
       showSectionName "frame" ++ newLine ++
@@ -136,7 +138,8 @@ instance (Show i, Show r) => Show (Function i r) where
       showSectionName "jump-table" ++ newLine ++
       showJumpTableEntries jt ++
       showSectionName "goal" ++ maybeShowGoal goal ++ newLine ++
-      showSectionName "removed-freqs" ++ " " ++ render (cs show rfs) ++ newLine ++
+      showSectionName "removed-freqs" ++
+      (if null rfs then "" else " " ++ render (cs show rfs)) ++ newLine ++
       showSectionName "source" ++ newLine ++
       src
 
@@ -306,6 +309,10 @@ showCongruences ts l w =
     renderStyle (st l) (nest w (cs showCongruence ts)) ++ newLine
 
 showCongruence (t, t') = show t ++ " -> " ++ show t'
+
+showRematerializable [] _ _ = ""
+showRematerializable ts l w =
+  renderStyle (st l) (nest w (cs show ts)) ++ newLine
 
 showFrameObjects _ []    = ""
 showFrameObjects fixed fobjs =
