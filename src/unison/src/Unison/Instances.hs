@@ -312,7 +312,12 @@ showCongruence (t, t') = show t ++ " -> " ++ show t'
 
 showRematerializable [] _ _ = ""
 showRematerializable ts l w =
-  renderStyle (st l) (nest w (cs show ts)) ++ newLine
+  renderStyle (st l) (nest w (cs showRematTuple ts)) ++ newLine
+
+showRematTuple (t, oids) =
+  show t ++ " [" ++ render (cs showOperationId oids) ++ "]"
+
+showOperationId oid = "o" ++ show oid
 
 showFrameObjects _ []    = ""
 showFrameObjects fixed fobjs =

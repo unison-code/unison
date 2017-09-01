@@ -13,6 +13,8 @@ module Unison.Tools.Linearize.SourceLiveIns (sourceLiveIns) where
 
 import Data.List
 import qualified Data.Map as M
+import Data.Maybe
+
 import Unison
 import Unison.Target.API
 import qualified Unison.Graphs.BCFG as BCFG
@@ -26,7 +28,8 @@ sourceLiveIns f @ Function {fCode = code, fCongruences = cs,
         code'    = map fst codeSame
         newCs    = concatMap (map (mapTuple undoPreAssign) . snd) codeSame
         cs'      = cs ++ newCs
-        rts'     = nub $ rts ++ map snd (filter (\c -> fst c `elem` rts) newCs)
+        newRts   = mapMaybe (congruenceToRematTuple (M.fromList rts)) newCs
+        rts'     = nub $ rts ++ newRts
     in f {fCode = code', fCongruences = cs', fRematerializable = rts'}
 
 srcLiveIns icfg (i, codeSame) b @ Block {bLab = l, bCode = code} =
@@ -40,3 +43,8 @@ srcLiveIns icfg (i, codeSame) b @ Block {bLab = l, bCode = code} =
       renamedCode = map (mapToModelOperand (applyTempIdMap sameIds)) sCode
   in (i + fromIntegral (length same),
       codeSame ++ [(b {bCode = renamedCode}, same)])
+
+congruenceToRematTuple rts (t, t') =
+  case M.lookup t rts of
+   Just oids -> Just (t', oids)
+   Nothing -> Nothing

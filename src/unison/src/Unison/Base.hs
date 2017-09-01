@@ -152,7 +152,7 @@ data Function i r = Function {
       -- | Congruences among operands
       fCongruences :: [CongruenceTuple r],
       -- | Operands that can be rematerialized
-      fRematerializable :: [Operand r],
+      fRematerializable :: [RematerializableTuple r],
       -- | Fixed stack frame information
       fFixedStackFrame :: [FrameObject],
       -- | Variable stack frame information
@@ -590,6 +590,7 @@ instance (Read r) => Read (RegisterId r) where
   readsPrec _ name = [(TargetRegister (read name), "")]
 
 type CongruenceTuple r = (Operand r, Operand r)
+type RematerializableTuple r = (Operand r, [OperationId])
 
 -- | Object allocated in the stack frame similar to LLVM's 'StackObject'.
 

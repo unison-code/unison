@@ -32,6 +32,7 @@ extendWithCopies f target =
       apf       = alignedPairs target
       bif       = branchInfo target
       csf       = calleeSaved target
+      rcf       = rematCopies target
       ra        = mkRegisterArray target 0
       ovf       = regOverlap (regAtoms ra)
       cst       = calleeSavedTemps csf ovf f
@@ -39,10 +40,11 @@ extendWithCopies f target =
       bcfg      = BCFG.fromFunction bif f
       sg        = SG.fromFunction (Just apf) f
       fInfo     = (f, cst, cg, ra, bcfg, sg)
+      rtmap     = mkRematTempMap rcf f
       id        = newId (fCode f)
       t2rs      = mkMustRegistersMap f
       (f', id') = foldWithTempIndex
-                  (extendBB True virtualTemps always (cf fInfo) t2rs)
+                  (extendBB rtmap True virtualTemps always (cf fInfo) t2rs)
                   (f {fCode = []}, id) (fCode f)
       code''    = filterCode (not . isVirtualCopy) (fCode f')
       f''       = f' {fCode = code''}
@@ -52,17 +54,18 @@ extendWithCopies f target =
       fInfo'    = (f'', cst, cg', ra, bcfg', sg')
       t2rs'     = mkMustRegistersMap f''
       (f''', _) = foldWithTempIndex
-                  (extendBB False allTemps notRCopy (cf fInfo') t2rs')
+                  (extendBB rtmap False allTemps notRCopy (cf fInfo') t2rs')
                   (f'' {fCode = []}, id') (fCode f'')
   in f'''
 
 -- | Extends the block temporaries given by the function ft with copies
-extendBB vc ft rf cf t2rs
+extendBB rtmap vc ft rf cf t2rs
   (ti, (f @ Function {fCode = accCode, fCongruences = cs}, id))
   b @ Block {bCode = code} =
   let (ids, itf)                = ft code
       init                      = (ti, code, [], id, t2rs)
-      (ti', code', irs, id', _) = foldl (extendTemporary vc itf rf cf) init ids
+      (ti', code', irs, id', _) = foldl
+                                  (extendTemporary vc rtmap itf rf cf) init ids
       cs'                       = updateSame cs irs
   in (ti', (f {fCode = accCode ++ [b {bCode = code'}], fCongruences = cs'}, id'))
 
@@ -86,23 +89,30 @@ virtualCopyTemps id = copyOps . findBy id oId
 
 -- | Extends the given temporary pair. The tuple (src, dst) contains different
 -- | temporaries only when virtual copy temporaries are extended
-extendTemporary vc itf rf cf (ti, code, irs, id, t2rs) oId =
+extendTemporary vc rtmap itf rf cf (ti, code, irs, id, t2rs) oId =
     let (src, dst) = itf oId code
         code'      = filter rf code
         d          = find (isDefiner src) code'
         us         = filter (isUser dst) code'
-    in extendReferences vc cf (src, dst) d us (ti, code, irs, id, t2rs)
+    in extendReferences vc rtmap cf (src, dst) d us (ti, code, irs, id, t2rs)
 
-extendReferences _ _ _ Nothing _  out = out
-extendReferences _ _ _ _       [] out = out
-extendReferences vc cf (src, dst) (Just d) us (ti, code, irs, id, t2rs) =
-    let rs           = mustRegisters t2rs src
-        (dcs, ucs)   = cf vc src rs d us
-        t'           = if null dcs then src else mkTemp ti
-        extDefOut    = extend vc undefT src after (ti, code, [], id, t2rs) (d, dcs)
+extendReferences _ _ _ _ Nothing _  out = out
+extendReferences _ _ _ _ _       [] out = out
+extendReferences vc rtmap cf (src, dst) (Just d) us (ti, code, irs, id, t2rs) =
+    let rs         = mustRegisters t2rs src
+        (dcs, ucs) = cf vc src rs d us
+        (dcs',
+         ucs') = case M.lookup src rtmap of
+                  Just (_, (drc, urc)) ->
+                    (if null dcs then [] else dcs ++ [TargetInstruction drc],
+                     [if null ucs0 then [] else ucs0 ++ [TargetInstruction urc]
+                     | ucs0 <- ucs])
+                  _ -> (dcs, ucs)
+        t'         = if null dcs' then src else mkTemp ti
+        extDefOut  = extend vc undefT src after (ti, code, [], id, t2rs) (d, dcs')
         (ti', code',
          irs', id',
-         t2rs')      = foldl (extend vc dst t' before) extDefOut (zip us ucs)
+         t2rs')    = foldl (extend vc dst t' before) extDefOut (zip us ucs')
     in (ti', code', irs ++ irs', id', t2rs')
 
 -- | Updates the same tuples according to the irs tuples
@@ -168,3 +178,16 @@ replaceTemp t2rs (oldT, newT)
         t2rs'  = M.delete oldT t2rs
         t2rs'' = M.update (Just . nub . (++) oldRs) newT t2rs'
     in t2rs''
+
+mkRematTempMap rcf f @ Function {fRematerializable = rts} =
+  let fcode = flatCode f
+  in M.fromList (mapMaybe (toRematTemp rcf fcode) rts)
+
+toRematTemp rcf fcode (t, oids) =
+  let os = map (\oid -> fromJust $ find (isId oid) fcode) oids
+      -- All definers should be implemented equally, otherwise t would not
+      -- be rematerilizable
+      i  = targetInst $ oInstructions $ head os
+  in case rcf i of
+     Just rcs -> Just (t, (os, rcs))
+     Nothing  -> Nothing

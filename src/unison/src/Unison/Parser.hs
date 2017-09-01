@@ -25,6 +25,7 @@ import Data.List.Split hiding (endBy, sepBy, oneOf)
 import Text.ParserCombinators.Parsec hiding (sourceLine)
 import qualified Text.Parsec.Token as P
 import Text.Parsec.Language (emptyDef)
+import Control.Arrow
 
 import Common.Util
 
@@ -149,7 +150,7 @@ functionName =
 commentLine          = tryLineOf comment
 bodyLine             = tryLineOf (bLabelDeclaration <|> blockOperation)
 congruenceLine       = tryLineOf congruenceList
-rematerializableLine = tryLineOf temporaryList
+rematerializableLine = tryLineOf rematTupleList
 frameObjectLine      = tryLineOf frameObject
 jumpTableKindLine    = tryLineOf jumpTableKind
 jumpTableEntryLine   = tryLineOf jumpTableEntry
@@ -400,11 +401,17 @@ congruenceOf t =
      o' <- t
      return (o, o')
 
-temporaryList =
-  do t <- temporary
+rematTupleList =
+  do t <- rematTuple
      optional comma
-     ts <- temporary `sepBy` comma
+     ts <- rematTuple `sepBy` comma
      return (t:ts)
+
+rematTuple =
+  do t <- temporary
+     whiteSpace
+     oids <- brackets (operationId `sepBy` comma)
+     return (t, oids)
 
 frameObject =
   do mfi <- mirFI
@@ -569,7 +576,7 @@ toFunction target
   let cms   = [cm | (LsComment cm) <- cmms]
       code  = map (toBB target) (split (dWhen isLsBB) body)
       cs'   = map (mapTuple toOperand) $ fromMaybe [] cs
-      rts'  = map toOperand $ fromMaybe [] rts
+      rts'  = map (first toOperand) $ fromMaybe [] rts
       goal' = map toHLGoal goal
       src'  = concat [l ++ "\n" | l <- src]
   in mkCompleteFunction cms name code cs' rts' ffobjs fobjs sp ss (jtk, jt)

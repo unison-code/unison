@@ -185,6 +185,7 @@ import Data.List.Split
 import Data.Maybe
 import qualified Data.Map as M
 import qualified Data.Set as S
+import Control.Arrow
 
 import Common.Util
 
@@ -286,7 +287,7 @@ renameOperands o r f @ Function {fCode = code, fCongruences = cs,
       rf    = r o2n
       code' = mapToOperationInBlocks (mapToModelOperand rf) code
       cs'   = sort $ map (mapTuple rf) cs
-      rts'  = sort $ map rf rts
+      rts'  = sort $ map (first rf) rts
   in f {fCode = code', fCongruences = cs', fRematerializable = rts'}
 
 mapToReads :: ([RWObject r] -> [RWObject r]) -> BlockOperation i r ->
@@ -1063,7 +1064,7 @@ isMandNaturalWith p o =
 isDelimiterOperand ::  [BlockOperation i r] -> Operand r -> Bool
 isDelimiterOperand code t = any isDelimiter (definer t code : users t code)
 
-targetInst ::  [Instruction c] -> c
+targetInst ::  [Instruction i] -> i
 targetInst = oTargetInstr . fromJust . find isTargetInstruction
 
 oInstructions ::  BlockOperation i r -> [Instruction i]

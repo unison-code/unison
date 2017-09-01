@@ -18,6 +18,7 @@ module Unison.Graphs.Hoopl.ReachingConstantsSSA (reachingConstants) where
 import Data.Maybe
 import Data.List
 import qualified Data.Map as M
+import qualified Data.Set as S
 import Compiler.Hoopl hiding (joinFacts)
 
 import Unison.Base
@@ -32,7 +33,8 @@ data ConstLattElem i r =
     ConstTop |
     -- | The temporary can be rematerialized by the given operation
     ConstOpr {
-      constOpr :: BlockOperation i r
+      constOpr  :: BlockOperation i r,
+      constDefs :: S.Set OperationId
     } |
     -- | The temporary cannot be rematerialized
     ConstBottom
@@ -70,8 +72,8 @@ meet ConstTop    ConstTop    = ConstTop
 meet ConstBottom ConstBottom = ConstBottom
 meet ConstTop    x           = x
 meet _           ConstBottom = ConstBottom
-meet (ConstOpr o) (ConstOpr o')
-  | equivalent o o' = (ConstOpr o)
+meet (ConstOpr o ds) (ConstOpr o' ds')
+  | equivalent o o' = ConstOpr o (S.union ds ds')
   | otherwise = ConstBottom
 meet x y = error $ "unmatched: meet " ++ show x ++ " " ++ show y
 
@@ -106,10 +108,13 @@ middleConstants (HMiddle o) consts =
 
 mkLatticeElement consts o =
     case concatMap extractTemps (oUses o) of
-      [] -> canonicalize (ConstOpr o)
-      us -> case nub [consts M.! t | t <- us] of
-             [e @ ConstOpr {}] | isPhi o -> e
-             _  -> ConstBottom
+      [] -> canonicalize (ConstOpr o (S.fromList [oId o]))
+      us ->
+        let uconsts = [consts M.! t | t <- us]
+        in (case (all isConstOpr uconsts, nub (map constOpr uconsts)) of
+             (True, [ro]) | isVirtualCopy o || isPhi o ->
+                            ConstOpr ro (S.unions $ map constDefs uconsts)
+             _  -> ConstBottom)
 
 -- TODO: check with target, extract info from TableGen's 'isReMaterializable'.
 isRematerializable o | isDefine o = False
@@ -134,7 +139,7 @@ reachingConstants cfg ts =
         lastb = maximum $ setElems $ labelsDefined cfg
         rts   = fromJust $ lookupFact lastb b2rcs
         rts'  = M.filter isConstOpr rts
-        rts'' = M.map constOpr rts'
+        rts'' = M.map (\c -> (constOpr c, constDefs c)) rts'
     in rts''
 
 reachingConsts cfg ts = runSimpleUniqueMonad $ do

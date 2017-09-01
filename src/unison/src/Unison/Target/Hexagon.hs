@@ -59,6 +59,7 @@ target =
       API.tPostProcess      = const postProcess,
       API.tTransforms       = const transforms,
       API.tCopies           = const copies,
+      API.tRematCopies      = const (const Nothing),
       API.tFromCopy         = const fromCopy,
       API.tOperandInfo      = const operandInfo,
       API.tAlignedPairs     = const SpecsGen.alignedPairs,

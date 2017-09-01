@@ -12,6 +12,7 @@ This file is part of Unison, see http://unison-code.github.io
 module Unison.Tools.Import.TagRemats (tagRemats) where
 
 import qualified Data.Map as M
+import qualified Data.Set as S
 
 import Unison
 import Unison.Target.API
@@ -25,5 +26,6 @@ tagRemats f target =
         icfg = ICFG.fromBCFG $ BCFG.fromFunction bif f
         cfg  = toHOprGraph icfg
         ts   = map undoPreAssign $ tUniqueOps (flatCode f)
-        rts  = M.keys $ reachingConstants cfg ts
+        rts  = [(t, S.toList oids)
+               | (t, (_, oids)) <- M.toList $ reachingConstants cfg ts]
     in f {fRematerializable = rts}
