@@ -117,7 +117,7 @@ mkLatticeElement consts o =
              _  -> ConstBottom)
 
 -- TODO: check with target, extract info from TableGen's 'isReMaterializable'.
-isRematerializable o | isDefine o = False
+isRematerializable o | isDefine o || isFun o || isIn o = False
 isRematerializable _ = True
 
 outConstants :: Ord i => Show i => Ord r => Show r => HOperation i r O C ->
