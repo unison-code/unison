@@ -45,7 +45,7 @@ mainWithTargets targets = do
              (Any target) ->
                  Import.run
                  (estimateFreq, simplifyControlFlow, noCC, noReserved,
-                  maxBlockSize, implementFrames, function, goal,
+                  maxBlockSize, implementFrames, rematType, function, goal,
                   inFile, debug, intermediate, lint, lintPragma, outFile)
                  input (target, targetOption)
     Linearize{..} ->
@@ -68,7 +68,7 @@ mainWithTargets targets = do
              (Any target) ->
                  Augment.run
                  (implementFrames, noCross, oldModel, expandCopies,
-                  rematerialize,
+                  rematType,
                   inFile, debug, intermediate, lint, lintPragma, outFile)
                  input (target, targetOption)
     Model{..} ->
@@ -135,7 +135,7 @@ mainWithTargets targets = do
        (Any target) -> do
          Run.run
            (estimateFreq, simplifyControlFlow, noCC, noReserved, maxBlockSize, implementFrames,
-            function, goal, noCross, oldModel, expandCopies, rematerialize,
+            function, goal, noCross, oldModel, expandCopies, rematType,
             baseFile, scaleFreq, applyBaseFile, tightPressureBound,
             strictlyBetter, unsatisfiable, removeReds, keepNops, solverFlags,
             inFile, debug, verbose, intermediate, lint, outFile, outTemp,

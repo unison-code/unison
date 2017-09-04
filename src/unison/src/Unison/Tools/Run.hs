@@ -29,7 +29,7 @@ import qualified Unison.Tools.Normalize as Normalize
 
 run (estimateFreq, simplifyControlFlow, noCC, noReserved, maxBlockSize,
      implementFrames, function, goal, noCross, oldModel, expandCopies,
-     rematerialize, baseFile, scaleFreq, applyBaseFile, tightPressureBound,
+     rematType, baseFile, scaleFreq, applyBaseFile, tightPressureBound,
      strictlyBetter, unsatisfiable, removeReds, keepNops, solverFlags, inFile,
      debug, verbose, intermediate, lint, outFile, outTemp, presolver, solver)
      targetWithOption =
@@ -43,8 +43,9 @@ run (estimateFreq, simplifyControlFlow, noCC, noReserved, maxBlockSize,
      let uniFile = addExtension prefix "uni"
      maybePutStrLn "Running 'uni import'..."
      Import.run
-       (estimateFreq, simplifyControlFlow, noCC, noReserved, maxBlockSize, implementFrames, function,
-        goal, inFile, debug, intermediate, lint, lintPragma, Just uniFile)
+       (estimateFreq, simplifyControlFlow, noCC, noReserved, maxBlockSize,
+        implementFrames, rematType, function, goal, inFile, debug, intermediate,
+        lint, lintPragma, Just uniFile)
        mirInput targetWithOption
      uniInput <- readFile uniFile
 
@@ -65,7 +66,7 @@ run (estimateFreq, simplifyControlFlow, noCC, noReserved, maxBlockSize,
      let altUniFile = addExtension prefix "alt.uni"
      maybePutStrLn "Running 'uni augment'..."
      Augment.run
-       (implementFrames, noCross, oldModel, expandCopies, rematerialize,
+       (implementFrames, noCross, oldModel, expandCopies, rematType,
         extUniFile, debug, intermediate, lint, lintPragma, Just altUniFile)
        extUniInput targetWithOption
      altUniInput <- readFile altUniFile

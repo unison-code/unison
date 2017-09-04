@@ -93,7 +93,7 @@ runUnison unisonTargets testArgs mirFile =
                    noCross args,
                    oldModel args,
                    expandCopies args,
-                   rematerialize args,
+                   rematType args,
                    Just asmMirFile,
                    scaleFreq args,
                    applyBaseFile args,

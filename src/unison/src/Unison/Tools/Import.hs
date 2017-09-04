@@ -19,6 +19,7 @@ import Control.Monad
 
 import Unison.Base
 import Unison.Driver
+import Unison.Tools.UniArgs
 import Unison.Tools.Lint (invokeLint)
 
 import qualified MachineIR as MachineIR
@@ -75,8 +76,8 @@ import Unison.Tools.Import.AdvancePhis
 import Unison.Tools.Import.TagRemats
 
 run (estimateFreq, simplifyControlFlow, noCC, noReserved, maxBlockSize,
-     implementFrames, function, goal, mirFile, debug, intermediate, lint,
-     lintPragma, uniFile) mir target =
+     implementFrames, rematType, function, goal, mirFile, debug, intermediate,
+     lint, lintPragma, uniFile) mir target =
     let mf = selectFunction function $ MachineIR.parse mir
         (mf', partialMfs) =
             applyTransformations
@@ -86,7 +87,8 @@ run (estimateFreq, simplifyControlFlow, noCC, noReserved, maxBlockSize,
         (f, partialFs) =
             applyTransformations
             (uniTransformations (goal, noCC, noReserved, maxBlockSize,
-                                 estimateFreq, implementFrames, lintPragma))
+                                 estimateFreq, implementFrames, rematType,
+                                 lintPragma))
             target ff
         baseName = takeBaseName mirFile
     in do when debug $
@@ -115,7 +117,7 @@ mirTransformations (estimateFreq, simplifyControlFlow) =
      (runPreProcess, "runPreProcess", True)]
 
 uniTransformations (goal, noCC, noReserved, maxBlockSize, estimateFreq,
-                    implementFrames, lintPragma) =
+                    implementFrames, rematType, lintPragma) =
     [(liftGoal goal, "liftGoal", True),
      (addDelimiters, "addDelimiters", True),
      (postponeBranches, "postponeBranches", True),
@@ -148,7 +150,7 @@ uniTransformations (goal, noCC, noReserved, maxBlockSize, estimateFreq,
      (renameOperations, "renameOperations", True),
      (estimateFrequency, "estimateFrequency", estimateFreq),
      (normalizeFrequency, "normalizeFrequency", True),
-     (tagRemats, "tagRemats", True),
+     (tagRemats, "tagRemats", rematType == CopyRemat),
      (addPragmas importPragmas, "addPragmas", lintPragma)]
 
 importPragmas =

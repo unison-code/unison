@@ -12,9 +12,12 @@ This file is part of Unison, see http://unison-code.github.io
 {-# LANGUAGE DeriveDataTypeable #-}
 {-# OPTIONS_GHC -fno-warn-missing-fields #-}
 
-module Unison.Tools.UniArgs (Uni(..), uniArgs) where
+module Unison.Tools.UniArgs (Uni(..), RematType(..), uniArgs) where
 
 import System.Console.CmdArgs
+
+data RematType = CopyRemat | GeneralRemat | NoRemat
+               deriving (Data, Typeable, Show, Eq)
 
 data Uni =
     Import    {targetName :: String, inFile :: FilePath, targetOption :: [String],
@@ -22,7 +25,8 @@ data Uni =
                lint :: Bool, lintPragma :: Bool, estimateFreq :: Bool,
                simplifyControlFlow :: Bool, implementFrames :: Bool,
                noCC :: Bool, noReserved :: Bool, maxBlockSize :: Maybe Integer,
-               function :: Maybe String, goal :: Maybe String} |
+               rematType :: RematType, function :: Maybe String,
+               goal :: Maybe String} |
     Linearize {targetName :: String, inFile :: FilePath, targetOption :: [String],
                outFile :: Maybe FilePath, debug :: Bool, intermediate :: Bool,
                lint :: Bool, lintPragma :: Bool} |
@@ -33,7 +37,7 @@ data Uni =
                outFile :: Maybe FilePath, debug :: Bool, intermediate :: Bool,
                lint :: Bool, lintPragma :: Bool, implementFrames :: Bool,
                noCross :: Bool, oldModel :: Bool, expandCopies :: Bool,
-               rematerialize :: Bool} |
+               rematType :: RematType} |
     Model     {targetName :: String, inFile :: FilePath, targetOption :: [String],
                outFile :: Maybe FilePath, baseFile :: Maybe FilePath,
                scaleFreq :: Bool, oldModel :: Bool, applyBaseFile :: Bool,
@@ -77,15 +81,15 @@ data Uni =
                outFile :: Maybe FilePath, debug :: Bool, verbose :: Bool,
                intermediate :: Bool, lint :: Bool, estimateFreq :: Bool,
                simplifyControlFlow :: Bool, implementFrames :: Bool, noCC :: Bool,
-               noReserved :: Bool, maxBlockSize :: Maybe Integer, function :: Maybe String,
+               noReserved :: Bool, maxBlockSize :: Maybe Integer,
+               rematType :: RematType, function :: Maybe String,
                goal :: Maybe String, noCross :: Bool, oldModel :: Bool,
-               expandCopies :: Bool, rematerialize :: Bool,
-               baseFile :: Maybe FilePath, scaleFreq :: Bool,
-               applyBaseFile :: Bool, tightPressureBound :: Bool,
-               strictlyBetter :: Bool, unsatisfiable :: Bool,
-               removeReds :: Bool, keepNops :: Bool, solverFlags :: String,
-               outTemp :: Bool, presolver :: Maybe FilePath,
-               solver :: Maybe FilePath}
+               expandCopies :: Bool, baseFile :: Maybe FilePath,
+               scaleFreq :: Bool, applyBaseFile :: Bool,
+               tightPressureBound :: Bool, strictlyBetter :: Bool,
+               unsatisfiable :: Bool, removeReds :: Bool, keepNops :: Bool,
+               solverFlags :: String, outTemp :: Bool,
+               presolver :: Maybe FilePath, solver :: Maybe FilePath}
     deriving (Data, Typeable, Show, Eq)
 
 allModes = [import', linearize', extend', augment', model', export', analyze',
@@ -110,6 +114,9 @@ import' = Import {
   noCC            = False &= help "Do not enforce calling convention",
   noReserved      = False &= help "Do not enforce reserved registers",
   maxBlockSize    = Nothing &= help "Maximum block size",
+  rematType       = enum [CopyRemat &= help "Copy-based rematerialization",
+                          GeneralRemat &= help "General rematerialization",
+                          NoRemat &= help "No rematerialization"],
   function        = Nothing &= help "Name of the function to import from the input MachineIR",
   goal            = Nothing &= help "Optimization goal (one of {speed, size})"}
   &= help "Import a MachineIR function into Unison"
@@ -121,8 +128,7 @@ extend' = Extend {} &= help "Extend a Unison function with copies"
 augment' = Augment {
   noCross  = False &= help "Do not cross temporary flow",
   oldModel = False &= help "Extend operands as for the old CP2012 model",
-  expandCopies = True &= help "Expand copies in a target-dependent manner",
-  rematerialize = True &= help "Add rematerialization decisions whenever suitable"}
+  expandCopies = True &= help "Expand copies in a target-dependent manner"}
   &= help "Augment a Unison function with alternative temporaries"
 
 model' = Model {

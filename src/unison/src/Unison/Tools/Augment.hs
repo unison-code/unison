@@ -18,6 +18,7 @@ import Control.Monad
 import Unison.Base
 import Unison.Driver
 import Unison.Parser
+import Unison.Tools.UniArgs hiding (expandCopies)
 import Unison.Tools.Lint (invokeLint)
 
 import Unison.Transformations.PostponeBranches
@@ -38,13 +39,13 @@ import Unison.Tools.Augment.CleanAttributes
 import Unison.Tools.Augment.AddReadWrites
 import Unison.Tools.Augment.LiftMemInfo
 
-run (implementFrames, noCross, oldModel, expandCopies', rematerialize,
+run (implementFrames, noCross, oldModel, expandCopies', rematType,
      uniFile, debug, intermediate, lint, lintPragma, altUniFile) uni target =
     let f = parse target uni
         (altF, partialAltFs) =
             applyTransformations
             (augmenterTransformations (implementFrames, noCross, oldModel,
-                                       expandCopies', rematerialize,
+                                       expandCopies', rematType,
                                        lintPragma))
             target f
         baseName = takeBaseName uniFile
@@ -57,12 +58,12 @@ run (implementFrames, noCross, oldModel, expandCopies', rematerialize,
                invokeLint altF target
 
 augmenterTransformations (implementFrames, noCross, oldModel, expandCopies',
-                          rematerialize, lintPragma) =
+                          rematType, lintPragma) =
     [(generalizeOperands, "generalizeOperands", True),
      (generalizeCongruences, "generalizeCongruences", True),
      (augmentOperands noCross oldModel, "augmentOperands", True),
      (expandCopies, "expandCopies", expandCopies'),
-     (addRematerialization, "addRematerialization", rematerialize),
+     (addRematerialization, "addRematerialization", rematType == GeneralRemat),
      (postponeBranches, "postponeBranches", True),
      (runTargetTransforms AugmentPreRW, "runTargetTransforms", True),
      (addPrologueEpilogue, "addPrologueEpilogue", implementFrames),
