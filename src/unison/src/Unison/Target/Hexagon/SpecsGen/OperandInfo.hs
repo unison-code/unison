@@ -374,7 +374,7 @@ operandInfo i
   | i `elem` [V6_lvsplatw_128B] =
     ([TemporaryInfo (RegisterClass IntRegs) 0 False],
      [TemporaryInfo (RegisterClass VectorRegs128B) 1 False])
-  | i `elem` [STW] =
+  | i `elem` [A2_tfrsi_demat, STW] =
     ([TemporaryInfo (RegisterClass IntRegs) 0 False],
      [TemporaryInfo (InfiniteRegisterClass M32) 1 False])
   | i `elem` [Y5_l2fetch] =
@@ -2231,7 +2231,7 @@ operandInfo i
     ([TemporaryInfo (RegisterClass VectorRegs128B) 0 False,
       TemporaryInfo (RegisterClass VectorRegs128B) 0 False, BoundInfo],
      [TemporaryInfo (RegisterClass VectorRegs128B) 1 False])
-  | i `elem` [LDW] =
+  | i `elem` [A2_tfrsi_remat, LDW] =
     ([TemporaryInfo (InfiniteRegisterClass M32) 0 False],
      [TemporaryInfo (RegisterClass IntRegs) 1 False])
   | i `elem` [LDD] =

@@ -4,18 +4,19 @@ module Unison.Target.Hexagon.SpecsGen.Size (size) where
 import Unison.Target.Hexagon.SpecsGen.HexagonInstructionDecl
 size i
   | i `elem`
-      [BUNDLE, BUNDLE_ce, CFI_INSTRUCTION, CFI_INSTRUCTION_ce, COPY,
-       COPY_TO_REGCLASS, COPY_TO_REGCLASS_ce, COPY_ce, DBG_VALUE,
-       DBG_VALUE_ce, EH_LABEL, EH_LABEL_ce, EXTRACT_SUBREG,
-       EXTRACT_SUBREG_ce, FAULTING_LOAD_OP, FAULTING_LOAD_OP_ce, GC_LABEL,
-       GC_LABEL_ce, IMPLICIT_DEF, IMPLICIT_DEF_ce, INLINEASM,
-       INLINEASM_ce, INSERT_SUBREG, INSERT_SUBREG_ce, KILL, KILL_ce,
-       LIFETIME_END, LIFETIME_END_ce, LIFETIME_START, LIFETIME_START_ce,
-       LOAD_STACK_GUARD, LOAD_STACK_GUARD_ce, LOCAL_ESCAPE,
-       LOCAL_ESCAPE_ce, PATCHPOINT, PATCHPOINT_ce, PHI, PHI_ce,
-       REG_SEQUENCE, REG_SEQUENCE_ce, STACKMAP, STACKMAP_ce, STATEPOINT,
-       STATEPOINT_ce, SUBREG_TO_REG, SUBREG_TO_REG_ce, Jr_merge,
-       Jump_merge, Jump_merge_ce, Ret_dealloc_merge]
+      [A2_tfrsi_demat, BUNDLE, BUNDLE_ce, CFI_INSTRUCTION,
+       CFI_INSTRUCTION_ce, COPY, COPY_TO_REGCLASS, COPY_TO_REGCLASS_ce,
+       COPY_ce, DBG_VALUE, DBG_VALUE_ce, EH_LABEL, EH_LABEL_ce,
+       EXTRACT_SUBREG, EXTRACT_SUBREG_ce, FAULTING_LOAD_OP,
+       FAULTING_LOAD_OP_ce, GC_LABEL, GC_LABEL_ce, IMPLICIT_DEF,
+       IMPLICIT_DEF_ce, INLINEASM, INLINEASM_ce, INSERT_SUBREG,
+       INSERT_SUBREG_ce, KILL, KILL_ce, LIFETIME_END, LIFETIME_END_ce,
+       LIFETIME_START, LIFETIME_START_ce, LOAD_STACK_GUARD,
+       LOAD_STACK_GUARD_ce, LOCAL_ESCAPE, LOCAL_ESCAPE_ce, PATCHPOINT,
+       PATCHPOINT_ce, PHI, PHI_ce, REG_SEQUENCE, REG_SEQUENCE_ce,
+       STACKMAP, STACKMAP_ce, STATEPOINT, STATEPOINT_ce, SUBREG_TO_REG,
+       SUBREG_TO_REG_ce, Jr_merge, Jump_merge, Jump_merge_ce,
+       Ret_dealloc_merge]
     = 0
   | i `elem`
       [L2_loadrb_io_fi, L2_loadrb_io_fi_ce, L2_loadrd_io_fi,
@@ -56,10 +57,10 @@ size i
        A2_sxth, A2_sxtw, A2_tfr, A2_tfrcrr, A2_tfrf, A2_tfrfnew, A2_tfrih,
        A2_tfrih_ce, A2_tfril, A2_tfril_ce, A2_tfrp, A2_tfrpf, A2_tfrpfnew,
        A2_tfrpi, A2_tfrpi_ce, A2_tfrpt, A2_tfrptnew, A2_tfrrcr, A2_tfrsi,
-       A2_tfrsi_ce, A2_tfrt, A2_tfrtnew, A2_vabsh, A2_vabshsat, A2_vabsw,
-       A2_vabswsat, A2_vaddh, A2_vaddhs, A2_vaddub, A2_vaddubs,
-       A2_vadduhs, A2_vaddw, A2_vaddws, A2_vavgh, A2_vavghcr, A2_vavghr,
-       A2_vavgub, A2_vavgubr, A2_vavguh, A2_vavguhr, A2_vavguw,
+       A2_tfrsi_ce, A2_tfrsi_remat, A2_tfrt, A2_tfrtnew, A2_vabsh,
+       A2_vabshsat, A2_vabsw, A2_vabswsat, A2_vaddh, A2_vaddhs, A2_vaddub,
+       A2_vaddubs, A2_vadduhs, A2_vaddw, A2_vaddws, A2_vavgh, A2_vavghcr,
+       A2_vavghr, A2_vavgub, A2_vavgubr, A2_vavguh, A2_vavguhr, A2_vavguw,
        A2_vavguwr, A2_vavgw, A2_vavgwcr, A2_vavgwr, A2_vcmpbeq,
        A2_vcmpbgtu, A2_vcmpheq, A2_vcmphgt, A2_vcmphgtu, A2_vcmpweq,
        A2_vcmpwgt, A2_vcmpwgtu, A2_vconj, A2_vmaxb, A2_vmaxh, A2_vmaxub,

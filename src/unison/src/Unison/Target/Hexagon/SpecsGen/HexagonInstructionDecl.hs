@@ -2619,6 +2619,8 @@ data HexagonInstruction = A2_abs
                         | C2_muxii_tfr_new
                         | C2_muxir_tfr_new
                         | C2_muxri_tfr_new
+                        | A2_tfrsi_demat
+                        | A2_tfrsi_remat
                         | A2_addi_ce
                         | A2_andir_ce
                         | A2_combineii_ce

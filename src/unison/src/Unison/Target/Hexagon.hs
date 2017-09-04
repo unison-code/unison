@@ -59,7 +59,7 @@ target =
       API.tPostProcess      = const postProcess,
       API.tTransforms       = const transforms,
       API.tCopies           = const copies,
-      API.tRematCopies      = const (const Nothing),
+      API.tRematCopies      = const rematCopies,
       API.tFromCopy         = const fromCopy,
       API.tOperandInfo      = const operandInfo,
       API.tAlignedPairs     = const SpecsGen.alignedPairs,
@@ -236,6 +236,9 @@ newValueStoreOp d w
   | otherwise           = [STW_nv]
 
 isReserved r = r `elem` reserved
+
+rematCopies A2_tfrsi = Just (A2_tfrsi_demat, A2_tfrsi_remat)
+rematCopies i = error ("unmatched: rematCopies " ++ show i)
 
 -- | Transforms copy instructions into natural instructions
 

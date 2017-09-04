@@ -1073,6 +1073,7 @@ parent i
     = Nothing
   | i `elem` [MVW] = Just A2_tfr
   | i `elem` [MVD] = Just A2_tfrp
+  | i `elem` [A2_tfrsi_demat, A2_tfrsi_remat] = Just A2_tfrsi
   | i `elem` [C2_mux_tfr, C2_mux_tfr_new] = Just C2_mux
   | i `elem`
       [C2_muxii_tfr, C2_muxii_tfr_ce, C2_muxii_tfr_new,

@@ -585,3 +585,15 @@ instruction-set:
          - Rs:              [register, use, IntRegs]
         size:               8
         itinerary:          ALU32_SLOT0123_2
+
+      - id:                 A2_tfrsi_demat
+        parent:             A2_tfrsi
+        type:               copy
+        << :                [*r2m]
+        size:               0
+        itinerary:          NoItinerary
+
+      - id:                 A2_tfrsi_remat
+        parent:             A2_tfrsi
+        type:               copy
+        << :                [*m2r]

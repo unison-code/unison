@@ -866,16 +866,16 @@ alignedPairs i ([_], [_])
   | i `elem`
       [A2_abs, A2_abssat, A2_negsat, A2_not, A2_roundsat, A2_sat,
        A2_satb, A2_sath, A2_satub, A2_satuh, A2_swiz, A2_sxtw, A2_tfr,
-       A2_tfrcrr, A2_tfrp, A2_tfrrcr, A4_tfrcpp, A4_tfrpcp, C2_pxfer_map,
-       COPY, COPY_ce, F2_dfimm_n, F2_dfimm_n_ce, F2_dfimm_p,
-       F2_dfimm_p_ce, F2_sfimm_n, F2_sfimm_n_ce, F2_sfimm_p,
-       F2_sfimm_p_ce, J2_jumpf_linear, J2_jumpf_nv_linear,
-       J2_jumpt_linear, J2_jumpt_nv_linear, L2_loadw_locked,
-       L4_loadd_locked, LDD, LDW, MVD, MVW, S2_brev, S2_svsathb,
-       S2_svsathub, S2_vrndpackwh, S2_vrndpackwhs, S2_vsathb, S2_vsathub,
-       S2_vsatwh, S2_vsatwuh, S2_vsplatrb, S2_vsplatrh, S2_vsxtbh,
-       S2_vsxthw, S2_vtrunehb, S2_vtrunohb, S2_vzxtbh, S2_vzxthw, STD,
-       STW, STW_nv, Ret_dealloc_merge]
+       A2_tfrcrr, A2_tfrp, A2_tfrrcr, A2_tfrsi_demat, A2_tfrsi_remat,
+       A4_tfrcpp, A4_tfrpcp, C2_pxfer_map, COPY, COPY_ce, F2_dfimm_n,
+       F2_dfimm_n_ce, F2_dfimm_p, F2_dfimm_p_ce, F2_sfimm_n,
+       F2_sfimm_n_ce, F2_sfimm_p, F2_sfimm_p_ce, J2_jumpf_linear,
+       J2_jumpf_nv_linear, J2_jumpt_linear, J2_jumpt_nv_linear,
+       L2_loadw_locked, L4_loadd_locked, LDD, LDW, MVD, MVW, S2_brev,
+       S2_svsathb, S2_svsathub, S2_vrndpackwh, S2_vrndpackwhs, S2_vsathb,
+       S2_vsathub, S2_vsatwh, S2_vsatwuh, S2_vsplatrb, S2_vsplatrh,
+       S2_vsxtbh, S2_vsxthw, S2_vtrunehb, S2_vtrunohb, S2_vzxtbh,
+       S2_vzxthw, STD, STW, STW_nv, Ret_dealloc_merge]
     = []
 alignedPairs i ([_, _], [])
   | i `elem`

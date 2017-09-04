@@ -165,7 +165,8 @@ instructionType i
        SAVE_REGISTERS_CALL_V4_ce, STACKMAP, STACKMAP_ce, STATEPOINT,
        STATEPOINT_ce, TCRETURNi, TCRETURNi_ce, TCRETURNr]
     = CallInstructionType
-  | i `elem` [MVD, MVPR, MVRP, MVW] = CopyInstructionType
+  | i `elem` [A2_tfrsi_demat, A2_tfrsi_remat, MVD, MVPR, MVRP, MVW] =
+    CopyInstructionType
   | i `elem`
       [A2_abs, A2_absp, A2_abssat, A2_add, A2_addh_h16_hh,
        A2_addh_h16_hl, A2_addh_h16_lh, A2_addh_h16_ll, A2_addh_h16_sat_hh,
