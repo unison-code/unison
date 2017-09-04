@@ -1071,9 +1071,16 @@ parent i
        Dep_S2_packhl, Jr_merge, Jump_merge, Jump_merge_ce,
        Ret_dealloc_merge]
     = Nothing
-  | i `elem` [MVW] = Just A2_tfr
-  | i `elem` [MVD] = Just A2_tfrp
-  | i `elem` [A2_tfrsi_demat, A2_tfrsi_remat] = Just A2_tfrsi
+  | i `elem` [MVW, MVW_ce] = Just A2_tfr
+  | i `elem` [MVD, MVD_ce] = Just A2_tfrp
+  | i `elem`
+      [A2_tfrpi_demat, A2_tfrpi_demat_ce, A2_tfrpi_remat,
+       A2_tfrpi_remat_ce]
+    = Just A2_tfrpi
+  | i `elem`
+      [A2_tfrsi_demat, A2_tfrsi_demat_ce, A2_tfrsi_remat,
+       A2_tfrsi_remat_ce]
+    = Just A2_tfrsi
   | i `elem` [C2_mux_tfr, C2_mux_tfr_new] = Just C2_mux
   | i `elem`
       [C2_muxii_tfr, C2_muxii_tfr_ce, C2_muxii_tfr_new,
@@ -1087,8 +1094,12 @@ parent i
       [C2_muxri_tfr, C2_muxri_tfr_ce, C2_muxri_tfr_new,
        C2_muxri_tfr_new_ce]
     = Just C2_muxri
-  | i `elem` [MVPR] = Just C2_tfrpr
-  | i `elem` [MVRP] = Just C2_tfrrp
+  | i `elem` [MVPR, MVPR_ce] = Just C2_tfrpr
+  | i `elem` [MVRP, MVRP_ce] = Just C2_tfrrp
+  | i `elem`
+      [CONST64_Int_Real_demat, CONST64_Int_Real_demat_ce,
+       CONST64_Int_Real_remat, CONST64_Int_Real_remat_ce]
+    = Just CONST64_Int_Real
   | i `elem`
       [J2_jumpf_linear, J2_jumpf_nv, J2_jumpf_nv_ce, J2_jumpf_nv_linear]
     = Just J2_jumpf
@@ -1133,9 +1144,57 @@ parent i
     Just J4_cmpltu_t_jumpnv_t
   | i `elem` [JMPret_dealloc_linear, JMPret_linear] = Just JMPret
   | i `elem` [L2_deallocframe_linear] = Just L2_deallocframe
+  | i `elem`
+      [L2_loadrb_io_demat_fi, L2_loadrb_io_demat_fi_ce,
+       L2_loadrb_io_remat_fi, L2_loadrb_io_remat_fi_ce]
+    = Just L2_loadrb_io
+  | i `elem`
+      [L2_loadrd_io_demat_fi, L2_loadrd_io_demat_fi_ce,
+       L2_loadrd_io_remat_fi, L2_loadrd_io_remat_fi_ce]
+    = Just L2_loadrd_io_fi
+  | i `elem`
+      [L2_loadri_io_demat_fi, L2_loadri_io_demat_fi_ce,
+       L2_loadri_io_remat_fi, L2_loadri_io_remat_fi_ce]
+    = Just L2_loadri_io
+  | i `elem`
+      [L4_loadrb_abs_demat, L4_loadrb_abs_demat_ce, L4_loadrb_abs_remat,
+       L4_loadrb_abs_remat_ce]
+    = Just L4_loadrb_abs
+  | i `elem`
+      [L4_loadrd_abs_demat, L4_loadrd_abs_demat_ce, L4_loadrd_abs_remat,
+       L4_loadrd_abs_remat_ce]
+    = Just L4_loadrd_abs
+  | i `elem`
+      [L4_loadrh_abs_demat, L4_loadrh_abs_demat_ce, L4_loadrh_abs_remat,
+       L4_loadrh_abs_remat_ce]
+    = Just L4_loadrh_abs
+  | i `elem`
+      [L4_loadri_abs_demat, L4_loadri_abs_demat_ce, L4_loadri_abs_remat,
+       L4_loadri_abs_remat_ce]
+    = Just L4_loadri_abs
+  | i `elem`
+      [L4_loadrub_abs_demat, L4_loadrub_abs_demat_ce,
+       L4_loadrub_abs_remat, L4_loadrub_abs_remat_ce]
+    = Just L4_loadrub_abs
+  | i `elem`
+      [L4_loadruh_abs_demat, L4_loadruh_abs_demat_ce,
+       L4_loadruh_abs_remat, L4_loadruh_abs_remat_ce]
+    = Just L4_loadruh_abs
   | i `elem` [L4_return_linear] = Just L4_return
   | i `elem` [S2_pstorerif_io_fi, S2_pstorerif_io_fi_ce] =
     Just S2_pstorerif_io
   | i `elem` [S2_storerf_io_fi, S2_storerf_io_fi_ce] =
     Just S2_storerf_io
+  | i `elem`
+      [TFR_FI_demat_fi, TFR_FI_demat_fi_ce, TFR_FI_remat_fi,
+       TFR_FI_remat_fi_ce]
+    = Just TFR_FI
+  | i `elem`
+      [TFR_PdFalse_demat, TFR_PdFalse_demat_ce, TFR_PdFalse_remat,
+       TFR_PdFalse_remat_ce]
+    = Just TFR_PdFalse
+  | i `elem`
+      [TFR_PdTrue_demat, TFR_PdTrue_demat_ce, TFR_PdTrue_remat,
+       TFR_PdTrue_remat_ce]
+    = Just TFR_PdTrue
 

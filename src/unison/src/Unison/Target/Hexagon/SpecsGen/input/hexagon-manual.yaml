@@ -113,6 +113,13 @@ instruction-set:
         uses:            [src]
         defines:         [dst]
 
+    - instruction-attrs: &m2p
+        operands:
+          - src:         [register, use, m32]
+          - dst:         [register, def, PredRegs]
+        uses:            [src]
+        defines:         [dst]
+
     - instruction-attrs: &r2r
         operands:
           - src:         [register, use, IntRegs]
@@ -194,6 +201,13 @@ instruction-set:
         uses:            [src]
         defines:         [dst]
 
+    - instruction-attrs: &p2m
+        operands:
+          - src:         [register, use, PredRegs]
+          - dst:         [register, def, m32]
+        uses:            [src]
+        defines:         [dst]
+
     - instruction-attrs: &r
         operands:
           - src:         [register, use, IntRegs]
@@ -240,6 +254,14 @@ instruction-set:
            - dst:             [register, def, F32]
           uses:               [src1]
           defines:            [dst]
+
+    - instruction-attrs: &demat
+          type:               copy
+          size:               0
+          itinerary:          NoItinerary
+
+    - instruction-attrs: &remat
+          type:               copy
 
   - group: MANUAL
     instructions:
@@ -588,12 +610,120 @@ instruction-set:
 
       - id:                 A2_tfrsi_demat
         parent:             A2_tfrsi
-        type:               copy
-        << :                [*r2m]
-        size:               0
-        itinerary:          NoItinerary
+        << :                [*demat, *r2m]
 
       - id:                 A2_tfrsi_remat
         parent:             A2_tfrsi
-        type:               copy
-        << :                [*m2r]
+        << :                [*remat, *m2r]
+
+      - id:                 L2_loadri_io_demat_fi
+        parent:             L2_loadri_io
+        << :                [*demat, *r2m]
+
+      - id:                 L2_loadri_io_remat_fi
+        parent:             L2_loadri_io
+        << :                [*remat, *m2r]
+
+      - id:                 L2_loadrb_io_demat_fi
+        parent:             L2_loadrb_io
+        << :                [*demat, *r2m]
+
+      - id:                 L2_loadrb_io_remat_fi
+        parent:             L2_loadrb_io
+        << :                [*remat, *m2r]
+
+      - id:                 L4_loadrb_abs_demat
+        parent:             L4_loadrb_abs
+        << :                [*demat, *r2m]
+
+      - id:                 L4_loadrb_abs_remat
+        parent:             L4_loadrb_abs
+        << :                [*remat, *m2r]
+
+      - id:                 L4_loadri_abs_demat
+        parent:             L4_loadri_abs
+        << :                [*demat, *r2m]
+
+      - id:                 L4_loadrh_abs_demat
+        parent:             L4_loadrh_abs
+        << :                [*demat, *r2m]
+
+      - id:                 L4_loadrh_abs_remat
+        parent:             L4_loadrh_abs
+        << :                [*remat, *m2r]
+
+      - id:                 L4_loadri_abs_remat
+        parent:             L4_loadri_abs
+        << :                [*remat, *m2r]
+
+      - id:                 L4_loadrub_abs_demat
+        parent:             L4_loadrub_abs
+        << :                [*demat, *r2m]
+
+      - id:                 L4_loadrub_abs_remat
+        parent:             L4_loadrub_abs
+        << :                [*remat, *m2r]
+
+      - id:                 L4_loadruh_abs_demat
+        parent:             L4_loadruh_abs
+        << :                [*demat, *r2m]
+
+      - id:                 L4_loadruh_abs_remat
+        parent:             L4_loadruh_abs
+        << :                [*remat, *m2r]
+
+      - id:                 TFR_FI_demat_fi
+        parent:             TFR_FI
+        << :                [*demat, *r2m]
+
+      - id:                 TFR_FI_remat_fi
+        parent:             TFR_FI
+        << :                [*remat, *m2r]
+
+      - id:                 A2_tfrpi_demat
+        parent:             A2_tfrpi
+        << :                [*demat, *d2M]
+
+      - id:                 A2_tfrpi_remat
+        parent:             A2_tfrpi
+        << :                [*remat, *M2d]
+
+      - id:                 CONST64_Int_Real_demat
+        parent:             CONST64_Int_Real
+        << :                [*demat, *d2M]
+
+      - id:                 CONST64_Int_Real_remat
+        parent:             CONST64_Int_Real
+        << :                [*remat, *M2d]
+
+      - id:                 L2_loadrd_io_demat_fi
+        parent:             L2_loadrd_io_fi
+        << :                [*demat, *d2M]
+
+      - id:                 L2_loadrd_io_remat_fi
+        parent:             L2_loadrd_io_fi
+        << :                [*remat, *M2d]
+
+      - id:                 L4_loadrd_abs_demat
+        parent:             L4_loadrd_abs
+        << :                [*demat, *d2M]
+
+      - id:                 L4_loadrd_abs_remat
+        parent:             L4_loadrd_abs
+        << :                [*remat, *M2d]
+
+      - id:                 TFR_PdFalse_demat
+        parent:             TFR_PdFalse
+        << :                [*demat, *p2m]
+
+      - id:                 TFR_PdFalse_remat
+        parent:             TFR_PdFalse
+        << :                [*remat, *m2p]
+
+      - id:                 TFR_PdTrue_demat
+        parent:             TFR_PdTrue
+        << :                [*demat, *p2m]
+
+      - id:                 TFR_PdTrue_remat
+        parent:             TFR_PdTrue
+        << :                [*remat, *m2p]

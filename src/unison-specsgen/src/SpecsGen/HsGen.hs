@@ -79,7 +79,8 @@ constantExtendedOperation i
   | otherwise = Nothing
 
 isConstantExtendable i =
-  any (isConstantExtendableOp . simplifyOperand) $ iOperands i
+  (iType i == "copy") ||
+  (any (isConstantExtendableOp . simplifyOperand) $ iOperands i)
 
 isConstantExtendableOp (_, YBoundInfo) = True
 isConstantExtendableOp (_, YBlockRefInfo) = True

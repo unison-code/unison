@@ -188,6 +188,14 @@ copies _ False t [] d [u]
     fromJust (classOfTemp t d) `elem` (map RegisterClass [PredRegs, F32]) =
       ([], [[]])
 
+-- Do not extend rematerializable instructions used only once, locally
+-- FIXME: review whether this is always safe
+copies _ False t _ d [u]
+  | isNatural d &&
+    (isRematerializable (targetInst (oInstructions d))) &&
+    not (isOut u) &&
+    (fromJust (classOfTemp t d) == fromJust (classOfTemp t u)) = ([], [[]])
+
 copies (f, _, cg, ra, _, _) _ t _rs d us =
   let is = d:us
       w  = widthOfTemp ra cg f t is
@@ -237,8 +245,9 @@ newValueStoreOp d w
 
 isReserved r = r `elem` reserved
 
-rematCopies A2_tfrsi = Just (A2_tfrsi_demat, A2_tfrsi_remat)
-rematCopies i = error ("unmatched: rematCopies " ++ show i)
+rematCopies i
+  | isRematerializable i = Just (dematInstr i, rematInstr i)
+  | otherwise = error ("unmatched: rematCopies " ++ show i)
 
 -- | Transforms copy instructions into natural instructions
 
@@ -375,7 +384,7 @@ resources =
 usages i
   | i `elem` [Jump_merge, Jr_merge] = [mkUsage BlockEnd 1 1]
 usages i
-  | isConstantExtended i =
+  | isConstantExtended i && not (isDematInstr i) =
     let it = SpecsGen.itinerary (nonConstantExtendedInstr i)
     in mergeUsages (itineraryUsage i it) [mkUsage BundleWidth 1 1]
   | i `elem` [C2_mux_tfr, C2_mux_tfr_new] =

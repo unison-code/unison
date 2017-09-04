@@ -30,7 +30,7 @@ alignedPairs i ([], [_])
 alignedPairs i ([_], [_]) | i `elem` [ALIGNA, ALIGNA_ce] = []
 alignedPairs i ([_], [_])
   | i `elem` [C2_all8, C2_any8, C2_not] = []
-alignedPairs i ([_], [_]) | i `elem` [C2_tfrpr, MVPR] = []
+alignedPairs i ([_], [_]) | i `elem` [C2_tfrpr, MVPR, MVPR_ce] = []
 alignedPairs i ([_, _], [_])
   | i `elem`
       [C2_and, C2_andn, C2_or, C2_orn, C2_xor, C4_fastcorner9,
@@ -133,7 +133,7 @@ alignedPairs i ([_], [])
       [CALLRv3nr, J2_callr, J4_hintjumpr, Y2_dccleana, Y2_dccleaninva,
        Y2_dcinva, Y2_dczeroa, Y2_icinva, Y4_trace]
     = []
-alignedPairs i ([_], [_]) | i `elem` [C2_tfrrp, MVRP] = []
+alignedPairs i ([_], [_]) | i `elem` [C2_tfrrp, MVRP, MVRP_ce] = []
 alignedPairs i ([_], [_])
   | i `elem`
       [A2_aslh, A2_asrh, A2_sxtb, A2_sxth, A2_zxtb, A2_zxth,
@@ -866,16 +866,41 @@ alignedPairs i ([_], [_])
   | i `elem`
       [A2_abs, A2_abssat, A2_negsat, A2_not, A2_roundsat, A2_sat,
        A2_satb, A2_sath, A2_satub, A2_satuh, A2_swiz, A2_sxtw, A2_tfr,
-       A2_tfrcrr, A2_tfrp, A2_tfrrcr, A2_tfrsi_demat, A2_tfrsi_remat,
-       A4_tfrcpp, A4_tfrpcp, C2_pxfer_map, COPY, COPY_ce, F2_dfimm_n,
+       A2_tfrcrr, A2_tfrp, A2_tfrpi_demat, A2_tfrpi_demat_ce,
+       A2_tfrpi_remat, A2_tfrpi_remat_ce, A2_tfrrcr, A2_tfrsi_demat,
+       A2_tfrsi_demat_ce, A2_tfrsi_remat, A2_tfrsi_remat_ce, A4_tfrcpp,
+       A4_tfrpcp, C2_pxfer_map, CONST64_Int_Real_demat,
+       CONST64_Int_Real_demat_ce, CONST64_Int_Real_remat,
+       CONST64_Int_Real_remat_ce, COPY, COPY_ce, F2_dfimm_n,
        F2_dfimm_n_ce, F2_dfimm_p, F2_dfimm_p_ce, F2_sfimm_n,
        F2_sfimm_n_ce, F2_sfimm_p, F2_sfimm_p_ce, J2_jumpf_linear,
        J2_jumpf_nv_linear, J2_jumpt_linear, J2_jumpt_nv_linear,
-       L2_loadw_locked, L4_loadd_locked, LDD, LDW, MVD, MVW, S2_brev,
-       S2_svsathb, S2_svsathub, S2_vrndpackwh, S2_vrndpackwhs, S2_vsathb,
-       S2_vsathub, S2_vsatwh, S2_vsatwuh, S2_vsplatrb, S2_vsplatrh,
-       S2_vsxtbh, S2_vsxthw, S2_vtrunehb, S2_vtrunohb, S2_vzxtbh,
-       S2_vzxthw, STD, STW, STW_nv, Ret_dealloc_merge]
+       L2_loadrb_io_demat_fi, L2_loadrb_io_demat_fi_ce,
+       L2_loadrb_io_remat_fi, L2_loadrb_io_remat_fi_ce,
+       L2_loadrd_io_demat_fi, L2_loadrd_io_demat_fi_ce,
+       L2_loadrd_io_remat_fi, L2_loadrd_io_remat_fi_ce,
+       L2_loadri_io_demat_fi, L2_loadri_io_demat_fi_ce,
+       L2_loadri_io_remat_fi, L2_loadri_io_remat_fi_ce, L2_loadw_locked,
+       L4_loadd_locked, L4_loadrb_abs_demat, L4_loadrb_abs_demat_ce,
+       L4_loadrb_abs_remat, L4_loadrb_abs_remat_ce, L4_loadrd_abs_demat,
+       L4_loadrd_abs_demat_ce, L4_loadrd_abs_remat,
+       L4_loadrd_abs_remat_ce, L4_loadrh_abs_demat,
+       L4_loadrh_abs_demat_ce, L4_loadrh_abs_remat,
+       L4_loadrh_abs_remat_ce, L4_loadri_abs_demat,
+       L4_loadri_abs_demat_ce, L4_loadri_abs_remat,
+       L4_loadri_abs_remat_ce, L4_loadrub_abs_demat,
+       L4_loadrub_abs_demat_ce, L4_loadrub_abs_remat,
+       L4_loadrub_abs_remat_ce, L4_loadruh_abs_demat,
+       L4_loadruh_abs_demat_ce, L4_loadruh_abs_remat,
+       L4_loadruh_abs_remat_ce, LDD, LDW, MVD, MVD_ce, MVW, MVW_ce,
+       S2_brev, S2_svsathb, S2_svsathub, S2_vrndpackwh, S2_vrndpackwhs,
+       S2_vsathb, S2_vsathub, S2_vsatwh, S2_vsatwuh, S2_vsplatrb,
+       S2_vsplatrh, S2_vsxtbh, S2_vsxthw, S2_vtrunehb, S2_vtrunohb,
+       S2_vzxtbh, S2_vzxthw, STD, STW, STW_nv, TFR_FI_demat_fi,
+       TFR_FI_demat_fi_ce, TFR_FI_remat_fi, TFR_FI_remat_fi_ce,
+       TFR_PdFalse_demat, TFR_PdFalse_demat_ce, TFR_PdFalse_remat,
+       TFR_PdFalse_remat_ce, TFR_PdTrue_demat, TFR_PdTrue_demat_ce,
+       TFR_PdTrue_remat, TFR_PdTrue_remat_ce, Ret_dealloc_merge]
     = []
 alignedPairs i ([_, _], [])
   | i `elem`

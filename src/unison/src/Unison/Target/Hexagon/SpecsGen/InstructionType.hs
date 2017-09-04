@@ -165,8 +165,35 @@ instructionType i
        SAVE_REGISTERS_CALL_V4_ce, STACKMAP, STACKMAP_ce, STATEPOINT,
        STATEPOINT_ce, TCRETURNi, TCRETURNi_ce, TCRETURNr]
     = CallInstructionType
-  | i `elem` [A2_tfrsi_demat, A2_tfrsi_remat, MVD, MVPR, MVRP, MVW] =
-    CopyInstructionType
+  | i `elem`
+      [A2_tfrpi_demat, A2_tfrpi_demat_ce, A2_tfrpi_remat,
+       A2_tfrpi_remat_ce, A2_tfrsi_demat, A2_tfrsi_demat_ce,
+       A2_tfrsi_remat, A2_tfrsi_remat_ce, CONST64_Int_Real_demat,
+       CONST64_Int_Real_demat_ce, CONST64_Int_Real_remat,
+       CONST64_Int_Real_remat_ce, L2_loadrb_io_demat_fi,
+       L2_loadrb_io_demat_fi_ce, L2_loadrb_io_remat_fi,
+       L2_loadrb_io_remat_fi_ce, L2_loadrd_io_demat_fi,
+       L2_loadrd_io_demat_fi_ce, L2_loadrd_io_remat_fi,
+       L2_loadrd_io_remat_fi_ce, L2_loadri_io_demat_fi,
+       L2_loadri_io_demat_fi_ce, L2_loadri_io_remat_fi,
+       L2_loadri_io_remat_fi_ce, L4_loadrb_abs_demat,
+       L4_loadrb_abs_demat_ce, L4_loadrb_abs_remat,
+       L4_loadrb_abs_remat_ce, L4_loadrd_abs_demat,
+       L4_loadrd_abs_demat_ce, L4_loadrd_abs_remat,
+       L4_loadrd_abs_remat_ce, L4_loadrh_abs_demat,
+       L4_loadrh_abs_demat_ce, L4_loadrh_abs_remat,
+       L4_loadrh_abs_remat_ce, L4_loadri_abs_demat,
+       L4_loadri_abs_demat_ce, L4_loadri_abs_remat,
+       L4_loadri_abs_remat_ce, L4_loadrub_abs_demat,
+       L4_loadrub_abs_demat_ce, L4_loadrub_abs_remat,
+       L4_loadrub_abs_remat_ce, L4_loadruh_abs_demat,
+       L4_loadruh_abs_demat_ce, L4_loadruh_abs_remat,
+       L4_loadruh_abs_remat_ce, MVD, MVD_ce, MVPR, MVPR_ce, MVRP, MVRP_ce,
+       MVW, MVW_ce, TFR_FI_demat_fi, TFR_FI_demat_fi_ce, TFR_FI_remat_fi,
+       TFR_FI_remat_fi_ce, TFR_PdFalse_demat, TFR_PdFalse_demat_ce,
+       TFR_PdFalse_remat, TFR_PdFalse_remat_ce, TFR_PdTrue_demat,
+       TFR_PdTrue_demat_ce, TFR_PdTrue_remat, TFR_PdTrue_remat_ce]
+    = CopyInstructionType
   | i `elem`
       [A2_abs, A2_absp, A2_abssat, A2_add, A2_addh_h16_hh,
        A2_addh_h16_hl, A2_addh_h16_lh, A2_addh_h16_ll, A2_addh_h16_sat_hh,

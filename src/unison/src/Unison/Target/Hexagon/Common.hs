@@ -14,7 +14,8 @@ module Unison.Target.Hexagon.Common
      isLinearJump, isLinearNewValueCmpJump, isNewValueCmpJump, isJumpNew,
      isMemAccessWithOff, memAccessAlignment, isOldValueStoreInstr,
      newValueStoreInstr, isMuxTransferInstr, isCondTransferInstr,
-     condTransferInstr, muxTransferInstr) where
+     condTransferInstr, muxTransferInstr, isRematerializable, isDematInstr,
+     dematInstr, rematInstr) where
 
 import Data.List
 import qualified Data.Map as M
@@ -116,3 +117,27 @@ condTransferVersions = M.fromList
    ((C2_muxii, True), C2_muxii_tfr_new),
    ((C2_muxir, True), C2_muxir_tfr_new),
    ((C2_muxri, True), C2_muxri_tfr_new)]
+
+isRematerializable i = M.member i rematVersions
+isDematInstr i = M.member i $ M.fromList $ M.elems rematVersions
+dematInstr i = fst $ rematVersions M.! i
+rematInstr i = snd $ rematVersions M.! i
+
+rematVersions = M.fromList
+  [(A2_tfrsi, (A2_tfrsi_demat, A2_tfrsi_remat)),
+   (A2_tfrsi_ce, (A2_tfrsi_demat_ce, A2_tfrsi_remat_ce)),
+   (L2_loadri_io_fi, (L2_loadri_io_demat_fi, L2_loadri_io_remat_fi)),
+   (L2_loadrb_io_fi, (L2_loadrb_io_demat_fi, L2_loadrb_io_remat_fi)),
+   (L4_loadrb_abs_ce, (L4_loadrb_abs_demat_ce, L4_loadrb_abs_remat_ce)),
+   (L4_loadri_abs_ce, (L4_loadri_abs_demat_ce, L4_loadri_abs_remat_ce)),
+   (L4_loadrh_abs_ce, (L4_loadrh_abs_demat_ce, L4_loadrh_abs_remat_ce)),
+   (L4_loadrub_abs_ce, (L4_loadrub_abs_demat_ce, L4_loadrub_abs_remat_ce)),
+   (L4_loadruh_abs_ce, (L4_loadruh_abs_demat_ce, L4_loadruh_abs_remat_ce)),
+   (TFR_FI_fi, (TFR_FI_demat_fi, TFR_FI_remat_fi)),
+   (A2_tfrpi, (A2_tfrpi_demat, A2_tfrpi_remat)),
+   (CONST64_Int_Real, (CONST64_Int_Real_demat, CONST64_Int_Real_remat)),
+   (L2_loadrd_io_fi, (L2_loadrd_io_demat_fi, L2_loadrd_io_remat_fi)),
+   (L4_loadrd_abs_ce, (L4_loadrd_abs_demat_ce, L4_loadrd_abs_remat_ce)),
+   (TFR_PdFalse, (TFR_PdFalse_demat, TFR_PdFalse_remat)),
+   (TFR_PdTrue, (TFR_PdTrue_demat, TFR_PdTrue_remat))
+  ]

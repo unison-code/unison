@@ -51,9 +51,9 @@ operandInfo i
       [A2_absp, A2_negp, A2_notp, A2_tfrp, A2_vabsh, A2_vabshsat,
        A2_vabsw, A2_vabswsat, A2_vconj, F2_conv_d2df, F2_conv_df2d,
        F2_conv_df2d_chop, F2_conv_df2ud, F2_conv_df2ud_chop,
-       F2_conv_ud2df, MVD, S2_brevp, S2_deinterleave, S2_interleave,
-       S2_vsathb_nopack, S2_vsathub_nopack, S2_vsatwh_nopack,
-       S2_vsatwuh_nopack]
+       F2_conv_ud2df, MVD, MVD_ce, S2_brevp, S2_deinterleave,
+       S2_interleave, S2_vsathb_nopack, S2_vsathub_nopack,
+       S2_vsatwh_nopack, S2_vsatwuh_nopack]
     =
     ([TemporaryInfo (RegisterClass DoubleRegs) 0 False],
      [TemporaryInfo (RegisterClass DoubleRegs) 1 False])
@@ -66,7 +66,12 @@ operandInfo i
     =
     ([TemporaryInfo (RegisterClass DoubleRegs) 0 False],
      [TemporaryInfo (RegisterClass IntRegs) 1 False])
-  | i `elem` [STD] =
+  | i `elem`
+      [A2_tfrpi_demat, A2_tfrpi_demat_ce, CONST64_Int_Real_demat,
+       CONST64_Int_Real_demat_ce, L2_loadrd_io_demat_fi,
+       L2_loadrd_io_demat_fi_ce, L4_loadrd_abs_demat,
+       L4_loadrd_abs_demat_ce, STD]
+    =
     ([TemporaryInfo (RegisterClass DoubleRegs) 0 False],
      [TemporaryInfo (InfiniteRegisterClass M64) 1 False])
   | i `elem`
@@ -348,10 +353,10 @@ operandInfo i
        A2_sath, A2_satub, A2_satuh, A2_swiz, A2_sxtb, A2_sxth, A2_tfr,
        A2_zxtb, A2_zxth, ARGEXTEND, F2_conv_sf2uw, F2_conv_sf2uw_chop,
        F2_conv_sf2w, F2_conv_sf2w_chop, F2_conv_uw2sf, F2_conv_w2sf,
-       F2_sffixupr, L2_loadw_locked, MVW, S2_brev, S2_cl0, S2_cl1, S2_clb,
-       S2_clbnorm, S2_ct0, S2_ct1, S2_svsathb, S2_svsathub, S2_vsplatrb,
-       V4_SA1_and1, V4_SA1_dec, V4_SA1_inc, V4_SA1_sxtb, V4_SA1_sxth,
-       V4_SA1_tfr, V4_SA1_zxtb, V4_SA1_zxth]
+       F2_sffixupr, L2_loadw_locked, MVW, MVW_ce, S2_brev, S2_cl0, S2_cl1,
+       S2_clb, S2_clbnorm, S2_ct0, S2_ct1, S2_svsathb, S2_svsathub,
+       S2_vsplatrb, V4_SA1_and1, V4_SA1_dec, V4_SA1_inc, V4_SA1_sxtb,
+       V4_SA1_sxth, V4_SA1_tfr, V4_SA1_zxtb, V4_SA1_zxth]
     =
     ([TemporaryInfo (RegisterClass IntRegs) 0 False],
      [TemporaryInfo (RegisterClass IntRegs) 1 False])
@@ -359,7 +364,7 @@ operandInfo i
     ([TemporaryInfo (RegisterClass IntRegs) 0 False],
      [TemporaryInfo (RegisterClass IntRegs) 1 False,
       TemporaryInfo (RegisterClass PredRegs) 1 False])
-  | i `elem` [C2_tfrrp, MVRP, Y5_l2locka] =
+  | i `elem` [C2_tfrrp, MVRP, MVRP_ce, Y5_l2locka] =
     ([TemporaryInfo (RegisterClass IntRegs) 0 False],
      [TemporaryInfo (RegisterClass PredRegs) 1 False])
   | i `elem` [V6_pred_scalar2] =
@@ -374,7 +379,16 @@ operandInfo i
   | i `elem` [V6_lvsplatw_128B] =
     ([TemporaryInfo (RegisterClass IntRegs) 0 False],
      [TemporaryInfo (RegisterClass VectorRegs128B) 1 False])
-  | i `elem` [A2_tfrsi_demat, STW] =
+  | i `elem`
+      [A2_tfrsi_demat, A2_tfrsi_demat_ce, L2_loadrb_io_demat_fi,
+       L2_loadrb_io_demat_fi_ce, L2_loadri_io_demat_fi,
+       L2_loadri_io_demat_fi_ce, L4_loadrb_abs_demat,
+       L4_loadrb_abs_demat_ce, L4_loadrh_abs_demat,
+       L4_loadrh_abs_demat_ce, L4_loadri_abs_demat,
+       L4_loadri_abs_demat_ce, L4_loadrub_abs_demat,
+       L4_loadrub_abs_demat_ce, L4_loadruh_abs_demat,
+       L4_loadruh_abs_demat_ce, STW, TFR_FI_demat_fi, TFR_FI_demat_fi_ce]
+    =
     ([TemporaryInfo (RegisterClass IntRegs) 0 False],
      [TemporaryInfo (InfiniteRegisterClass M32) 1 False])
   | i `elem` [Y5_l2fetch] =
@@ -1177,12 +1191,18 @@ operandInfo i
   | i `elem` [J2_jumpf_linear, J2_jumpt_linear] =
     ([TemporaryInfo (RegisterClass PredRegs) 0 False],
      [TemporaryInfo (RegisterClass F32) 1 False])
-  | i `elem` [C2_tfrpr, MVPR] =
+  | i `elem` [C2_tfrpr, MVPR, MVPR_ce] =
     ([TemporaryInfo (RegisterClass PredRegs) 0 False],
      [TemporaryInfo (RegisterClass IntRegs) 1 False])
   | i `elem` [C2_all8, C2_any8, C2_not, C2_pxfer_map] =
     ([TemporaryInfo (RegisterClass PredRegs) 0 False],
      [TemporaryInfo (RegisterClass PredRegs) 1 False])
+  | i `elem`
+      [TFR_PdFalse_demat, TFR_PdFalse_demat_ce, TFR_PdTrue_demat,
+       TFR_PdTrue_demat_ce]
+    =
+    ([TemporaryInfo (RegisterClass PredRegs) 0 False],
+     [TemporaryInfo (InfiniteRegisterClass M32) 1 False])
   | i `elem` [A2_tfrpf, A2_tfrpfnew, A2_tfrpt, A2_tfrptnew] =
     ([TemporaryInfo (RegisterClass PredRegs) 0 False,
       TemporaryInfo (RegisterClass DoubleRegs) 0 False],
@@ -2231,10 +2251,30 @@ operandInfo i
     ([TemporaryInfo (RegisterClass VectorRegs128B) 0 False,
       TemporaryInfo (RegisterClass VectorRegs128B) 0 False, BoundInfo],
      [TemporaryInfo (RegisterClass VectorRegs128B) 1 False])
-  | i `elem` [A2_tfrsi_remat, LDW] =
+  | i `elem`
+      [A2_tfrsi_remat, A2_tfrsi_remat_ce, L2_loadrb_io_remat_fi,
+       L2_loadrb_io_remat_fi_ce, L2_loadri_io_remat_fi,
+       L2_loadri_io_remat_fi_ce, L4_loadrb_abs_remat,
+       L4_loadrb_abs_remat_ce, L4_loadrh_abs_remat,
+       L4_loadrh_abs_remat_ce, L4_loadri_abs_remat,
+       L4_loadri_abs_remat_ce, L4_loadrub_abs_remat,
+       L4_loadrub_abs_remat_ce, L4_loadruh_abs_remat,
+       L4_loadruh_abs_remat_ce, LDW, TFR_FI_remat_fi, TFR_FI_remat_fi_ce]
+    =
     ([TemporaryInfo (InfiniteRegisterClass M32) 0 False],
      [TemporaryInfo (RegisterClass IntRegs) 1 False])
-  | i `elem` [LDD] =
+  | i `elem`
+      [TFR_PdFalse_remat, TFR_PdFalse_remat_ce, TFR_PdTrue_remat,
+       TFR_PdTrue_remat_ce]
+    =
+    ([TemporaryInfo (InfiniteRegisterClass M32) 0 False],
+     [TemporaryInfo (RegisterClass PredRegs) 1 False])
+  | i `elem`
+      [A2_tfrpi_remat, A2_tfrpi_remat_ce, CONST64_Int_Real_remat,
+       CONST64_Int_Real_remat_ce, L2_loadrd_io_remat_fi,
+       L2_loadrd_io_remat_fi_ce, L4_loadrd_abs_remat,
+       L4_loadrd_abs_remat_ce, LDD]
+    =
     ([TemporaryInfo (InfiniteRegisterClass M64) 0 False],
      [TemporaryInfo (RegisterClass DoubleRegs) 1 False])
   | i `elem`

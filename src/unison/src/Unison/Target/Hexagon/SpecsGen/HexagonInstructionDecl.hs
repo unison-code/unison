@@ -2621,6 +2621,34 @@ data HexagonInstruction = A2_abs
                         | C2_muxri_tfr_new
                         | A2_tfrsi_demat
                         | A2_tfrsi_remat
+                        | L2_loadri_io_demat_fi
+                        | L2_loadri_io_remat_fi
+                        | L2_loadrb_io_demat_fi
+                        | L2_loadrb_io_remat_fi
+                        | L4_loadrb_abs_demat
+                        | L4_loadrb_abs_remat
+                        | L4_loadri_abs_demat
+                        | L4_loadrh_abs_demat
+                        | L4_loadrh_abs_remat
+                        | L4_loadri_abs_remat
+                        | L4_loadrub_abs_demat
+                        | L4_loadrub_abs_remat
+                        | L4_loadruh_abs_demat
+                        | L4_loadruh_abs_remat
+                        | TFR_FI_demat_fi
+                        | TFR_FI_remat_fi
+                        | A2_tfrpi_demat
+                        | A2_tfrpi_remat
+                        | CONST64_Int_Real_demat
+                        | CONST64_Int_Real_remat
+                        | L2_loadrd_io_demat_fi
+                        | L2_loadrd_io_remat_fi
+                        | L4_loadrd_abs_demat
+                        | L4_loadrd_abs_remat
+                        | TFR_PdFalse_demat
+                        | TFR_PdFalse_remat
+                        | TFR_PdTrue_demat
+                        | TFR_PdTrue_remat
                         | A2_addi_ce
                         | A2_andir_ce
                         | A2_combineii_ce
@@ -3626,6 +3654,10 @@ data HexagonInstruction = A2_abs
                         | S2_storerf_io_fi_ce
                         | S2_pstorerif_io_fi_ce
                         | TFR_FI_fi_ce
+                        | MVW_ce
+                        | MVD_ce
+                        | MVPR_ce
+                        | MVRP_ce
                         | J4_cmpeqi_t_jumpnv_t_linear_ce
                         | J4_cmpeqi_f_jumpnv_t_linear_ce
                         | J4_cmpgti_t_jumpnv_t_linear_ce
@@ -3641,5 +3673,35 @@ data HexagonInstruction = A2_abs
                         | C2_muxii_tfr_new_ce
                         | C2_muxir_tfr_new_ce
                         | C2_muxri_tfr_new_ce
+                        | A2_tfrsi_demat_ce
+                        | A2_tfrsi_remat_ce
+                        | L2_loadri_io_demat_fi_ce
+                        | L2_loadri_io_remat_fi_ce
+                        | L2_loadrb_io_demat_fi_ce
+                        | L2_loadrb_io_remat_fi_ce
+                        | L4_loadrb_abs_demat_ce
+                        | L4_loadrb_abs_remat_ce
+                        | L4_loadri_abs_demat_ce
+                        | L4_loadrh_abs_demat_ce
+                        | L4_loadrh_abs_remat_ce
+                        | L4_loadri_abs_remat_ce
+                        | L4_loadrub_abs_demat_ce
+                        | L4_loadrub_abs_remat_ce
+                        | L4_loadruh_abs_demat_ce
+                        | L4_loadruh_abs_remat_ce
+                        | TFR_FI_demat_fi_ce
+                        | TFR_FI_remat_fi_ce
+                        | A2_tfrpi_demat_ce
+                        | A2_tfrpi_remat_ce
+                        | CONST64_Int_Real_demat_ce
+                        | CONST64_Int_Real_remat_ce
+                        | L2_loadrd_io_demat_fi_ce
+                        | L2_loadrd_io_remat_fi_ce
+                        | L4_loadrd_abs_demat_ce
+                        | L4_loadrd_abs_remat_ce
+                        | TFR_PdFalse_demat_ce
+                        | TFR_PdFalse_remat_ce
+                        | TFR_PdTrue_demat_ce
+                        | TFR_PdTrue_remat_ce
                         deriving (Eq, Ord)
 
