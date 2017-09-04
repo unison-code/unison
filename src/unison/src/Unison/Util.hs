@@ -50,6 +50,7 @@ module Unison.Util
         mapToAttrVirtualCopy,
         mapToAttrRemat,
         mapToAttrJTBlocks,
+        mapToAttrRematOrigin,
         isTailCallFun,
         isTerminator,
         callOf,
@@ -248,8 +249,9 @@ mapToOperationId :: OperationIdMap -> BlockOperation i r -> BlockOperation i r
 mapToOperationId f i @ (SingleOperation {oId = id, oAs = as}) =
   i {oId = f id, oAs = mapToOperationIdInAttributes f as}
 
-mapToOperationIdInAttributes f as @ Attributes {aCall = id} =
-  as {aCall = fmap f id}
+mapToOperationIdInAttributes f
+  as @ Attributes {aCall = id1, aRematOrigin = id2} =
+    as {aCall = fmap f id1, aRematOrigin = fmap f id2}
 
 mapToModelOperand :: OperandMap r -> BlockOperation i r -> BlockOperation i r
 mapToModelOperand = mapToOperandIf isModelOperand
@@ -326,6 +328,12 @@ mapToAttrJTBlocks :: ([BlockId] -> [BlockId]) -> BlockOperation i r -> BlockOper
 mapToAttrJTBlocks f o @ SingleOperation {
                oAs = as @ Attributes {aJTBlocks = bs}} =
   o {oAs = as {aJTBlocks = f bs}}
+
+mapToAttrRematOrigin :: (Maybe OperationId -> Maybe OperationId) ->
+                        BlockOperation i r -> BlockOperation i r
+mapToAttrRematOrigin f o @ SingleOperation {
+  oAs = as @ Attributes {aRematOrigin = oid}} =
+  o {oAs = as {aRematOrigin = f oid}}
 
 isTailCallFun :: [BlockOperation i r] -> BlockOperation i r -> Bool
 isTailCallFun code i

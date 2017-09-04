@@ -56,7 +56,7 @@ extendWithCopies f target =
       (f''', _) = foldWithTempIndex
                   (extendBB rtmap False allTemps notRCopy (cf fInfo') t2rs')
                   (f'' {fCode = []}, id') (fCode f'')
-  in f'''
+  in f''' {fRematerializable = []}
 
 -- | Extends the block temporaries given by the function ft with copies
 extendBB rtmap vc ft rf cf t2rs
@@ -104,15 +104,25 @@ extendReferences vc rtmap cf (src, dst) (Just d) us (ti, code, irs, id, t2rs) =
         (dcs',
          ucs') = case M.lookup src rtmap of
                   Just (_, (drc, urc)) ->
-                    (if null dcs then [] else dcs ++ [TargetInstruction drc],
-                     [if null ucs0 then [] else ucs0 ++ [TargetInstruction urc]
+                    -- this assumes that the rematerialization instruction
+                    -- always dominates all other copies and is compatible
+                    -- with the register class of all its users: a more
+                    -- flexible model would include the dcs and ucs copies
+                    -- as well and let the target decide, perhaps in a
+                    -- later phase
+                    (if null dcs then []
+                     else [mkNullInstruction, TargetInstruction drc],
+                     [if null ucs0 then []
+                      else [mkNullInstruction, TargetInstruction urc]
                      | ucs0 <- ucs])
                   _ -> (dcs, ucs)
         t'         = if null dcs' then src else mkTemp ti
-        extDefOut  = extend vc undefT src after (ti, code, [], id, t2rs) (d, dcs')
+        extDefOut  = extend vc rtmap undefT src after (ti, code, [], id, t2rs)
+                     (d, dcs')
         (ti', code',
          irs', id',
-         t2rs')    = foldl (extend vc dst t' before) extDefOut (zip us ucs')
+         t2rs')    = foldl (extend vc rtmap dst t' before) extDefOut
+                     (zip us ucs')
     in (ti', code', irs ++ irs', id', t2rs')
 
 -- | Updates the same tuples according to the irs tuples
@@ -129,21 +139,26 @@ updateTemps (firstT, newT) oprToExtend code =
     in code'
 
 -- | Extends the code according to firstT, prevT and pos
-extend _ firstT prevT _ (ti, code, irs, id, t2rs) (oprToExtend, []) =
+extend _ _ firstT prevT _ (ti, code, irs, id, t2rs) (oprToExtend, []) =
     let r      = (firstT, prevT)
         code'  = updateTemps r oprToExtend code
         t2rs'  = replaceTemp t2rs r
     in (ti, code', irs ++ [(oprToExtend, r)], id, t2rs')
 
-extend vc firstT prevT pos (ti, code, irs, id, t2rs) (oprToExtend, insts) =
+extend vc rtmap firstT prevT pos (ti, code, irs, id, t2rs) (oprToExtend, insts) =
     let newT   = mkTemp ti
         ti'    = ti + 1
         id'    = id + 1
         copy   = mkCopy id insts (undoPreAssign prevT) [] (undoPreAssign newT) []
-        copy'  = mapToAttrVirtualCopy (const vc) copy
+        copy1  = mapToAttrVirtualCopy (const vc) copy
+        rorig  = case (M.lookup firstT rtmap, M.lookup prevT rtmap) of
+                  (Just (ro:_, _), _) -> Just (oId ro)
+                  (Nothing       , Just (ro:_, _)) -> Just (oId ro)
+                  (Nothing,        Nothing) -> Nothing
+        copy2  =  mapToAttrRematOrigin (const rorig) copy1
         r      = (firstT, newT)
         code'  = updateTemps r oprToExtend code
-        code'' = insertWhen pos (isIdOf oprToExtend) [copy'] code'
+        code'' = insertWhen pos (isIdOf oprToExtend) [copy2] code'
     in (ti', code'', irs ++ [(oprToExtend, r)], id', t2rs)
 
 undefT = mkTemp (-1)

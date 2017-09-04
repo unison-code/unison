@@ -237,13 +237,14 @@ instance (Show i, Show r) => Show (Attributes i r) where
     show (Attributes {aReads = reads, aWrites = writes, aCall = call,
                       aMem = mem, aActivators = act, aVirtualCopy = vc,
                       aRemat = rm, aJTBlocks = jtbs, aBranchTaken = bt,
-                      aPrescheduled = ps}) =
+                      aPrescheduled = ps, aRematOrigin = rorig}) =
         let attrs = catMaybes
                     [maybeShowReads reads, maybeShowWrites writes,
                      maybeShowCall call, maybeShowMem mem,
                      maybeShowActivators act, maybeShowVirtualCopy vc,
                      maybeShowRemat rm, maybeShowJTBlocks jtbs,
-                     maybeShowBranchTaken bt, maybeShowPrescheduled ps]
+                     maybeShowBranchTaken bt, maybeShowPrescheduled ps,
+                     maybeShowRematOrigin rorig]
         in (if null attrs then ""
             else " (" ++ render (cs id attrs) ++ ")")
 
@@ -279,6 +280,9 @@ showBool False = "false"
 
 maybeShowPrescheduled Nothing = Nothing
 maybeShowPrescheduled (Just c) = Just $ showAttr "cycle" "" c
+
+maybeShowRematOrigin Nothing = Nothing
+maybeShowRematOrigin (Just id) = Just $ showAttr "remat-origin" "o" id
 
 showAttr :: Show a => String -> String -> a -> String
 showAttr n p a = n ++ ": " ++ p ++ show a

@@ -64,7 +64,7 @@ data LsOperand r =
 data LsAttributes r =
   LsAttributes (LsAttribute r) (LsAttribute r) (LsAttribute r) (LsAttribute r)
                (LsAttribute r) (LsAttribute r) (LsAttribute r) (LsAttribute r)
-               (LsAttribute r) (LsAttribute r)
+               (LsAttribute r) (LsAttribute r) (LsAttribute r)
   deriving (Show)
 
 data LsAttribute r =
@@ -77,7 +77,8 @@ data LsAttribute r =
   LsRemat Bool |
   LsJTBlocks [LsOperand r] |
   LsBranchTaken (Maybe Bool) |
-  LsPrescheduled (Maybe IssueCycle)
+  LsPrescheduled (Maybe IssueCycle) |
+  LsRematOrigin (Maybe OperationId)
   deriving (Show)
 
 data LsRWObject =
@@ -308,7 +309,8 @@ attributes =
                             (fetchAttr (LsRemat False) isLsRemat attrs)
                             (fetchAttr (LsJTBlocks []) isLsJTBlocks attrs)
                             (fetchAttr (LsBranchTaken Nothing) isLsBranchTaken attrs)
-                            (fetchAttr (LsPrescheduled Nothing) isLsPrescheduled attrs))
+                            (fetchAttr (LsPrescheduled Nothing) isLsPrescheduled attrs)
+                            (fetchAttr (LsRematOrigin Nothing) isLsRematOrigin attrs))
 
 attribute = try (sideEffectListAttribute "reads" LsReads)
             <|> sideEffectListAttribute "writes" LsWrites
@@ -316,6 +318,7 @@ attribute = try (sideEffectListAttribute "reads" LsReads)
             <|> integerAttribute "mem" (LsMem . Just)
             <|> instructionListAttribute "activators" LsActivators
             <|> simpleAttribute "virtualcopy" (LsVirtualCopy True)
+            <|> try (operationIdAttribute "remat-origin" (LsRematOrigin . Just))
             <|> simpleAttribute "remat" (LsRemat True)
             <|> operandListAttribute "jtblocks" LsJTBlocks
             <|> boolAttribute "taken" (LsBranchTaken . Just)
@@ -571,6 +574,9 @@ isLsBranchTaken _                 = False
 isLsPrescheduled (LsPrescheduled _) = True
 isLsPrescheduled _                  = False
 
+isLsRematOrigin (LsRematOrigin _) = True
+isLsRematOrigin _                 = False
+
 toFunction target
   (cmms, name, body, cs, rts, ffobjs, fobjs, sp, ss, (jtk, jt), goal, rfs, src) =
   let cms   = [cm | (LsComment cm) <- cmms]
@@ -665,9 +671,9 @@ readInstr (LsTargetInstruction i) = TargetInstruction (read i)
 toAttributes (LsAttributes (LsReads reads) (LsWrites writes) (LsAttrCall call)
               (LsMem mem) (LsActivators acs) (LsVirtualCopy vcopy)
               (LsRemat rm) (LsJTBlocks bs) (LsBranchTaken bt)
-              (LsPrescheduled pa)) =
+              (LsPrescheduled pa) (LsRematOrigin rorig)) =
   mkAttributes (map toRWObject reads) (map toRWObject writes) call mem
-               (map readInstr acs) vcopy rm (map lsBlockRefId bs) bt pa
+               (map readInstr acs) vcopy rm (map lsBlockRefId bs) bt pa rorig
 
 lsBlockRefId (LsBlockRef bid) = bid
 
@@ -680,7 +686,7 @@ toRWObject (LsOtherSideEffect r) = OtherSideEffect (read r)
 mkNullLsAttributes =
   LsAttributes (LsReads []) (LsWrites []) (LsAttrCall Nothing) (LsMem Nothing)
   (LsActivators []) (LsVirtualCopy False) (LsRemat False) (LsJTBlocks [])
-  (LsBranchTaken Nothing) (LsPrescheduled Nothing)
+  (LsBranchTaken Nothing) (LsPrescheduled Nothing) (LsRematOrigin Nothing)
 
 mkNullLsBlockAttributes = LsBlockAttributes []
 
