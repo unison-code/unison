@@ -16,7 +16,7 @@ module Unison.Tools.UniArgs (Uni(..), RematType(..), uniArgs) where
 
 import System.Console.CmdArgs
 
-data RematType = CopyRemat | GeneralRemat | NoRemat
+data RematType = GeneralRemat | CopyRemat | NoRemat
                deriving (Data, Typeable, Show, Eq)
 
 data Uni =
@@ -114,8 +114,8 @@ import' = Import {
   noCC            = False &= help "Do not enforce calling convention",
   noReserved      = False &= help "Do not enforce reserved registers",
   maxBlockSize    = Nothing &= help "Maximum block size",
-  rematType       = enum [CopyRemat &= help "Copy-based rematerialization",
-                          GeneralRemat &= help "General rematerialization",
+  rematType       = enum [GeneralRemat &= help "General rematerialization",
+                          CopyRemat &= help "Copy-based rematerialization",
                           NoRemat &= help "No rematerialization"],
   function        = Nothing &= help "Name of the function to import from the input MachineIR",
   goal            = Nothing &= help "Optimization goal (one of {speed, size})"}
