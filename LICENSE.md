@@ -32,6 +32,10 @@ Unison includes code from the following projects:
   algorithms of the `unison` package). The code is licensed under
   [BSD2](https://hackage.haskell.org/package/Graphalyze/src/LICENSE).
 
+- [JsonCpp](https://github.com/open-source-parsers/jsoncpp) (used by the
+  presolver and solver to parse their input). The code is licensed under
+  [MIT](https://github.com/open-source-parsers/jsoncpp/blob/master/LICENSE).
+
 - Erik Ekstrom's [master's
   thesis](https://www.sics.se/%7ercas/teaching/ErikEkstrom_2015.pdf) (in parts
   of the presolver). The code is licensed under BSD3 but the copyright is held
