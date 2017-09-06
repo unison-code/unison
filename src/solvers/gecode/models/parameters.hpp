@@ -304,7 +304,7 @@ public:
   vector<operand> last_use;
 
   // register atoms for temporaries assigned to infinite spaces
-  vector<vector<int> > memassign;
+  vector<vector<int> > infassign;
 
   // set of dominated uses
   vector<vector<operand> > domuses;
@@ -511,8 +511,9 @@ public:
   // representative operation of each activation class
   vector<operation> activation_class_representative;
 
-  // infinite register atom range assigned to each temporary
-  map<temporary, vector<register_atom> > infinite_atom_range;
+  // infinite register atom range assigned to each temporary and space
+  map<pair<temporary, register_space>, vector<register_atom> >
+  infinite_atom_range;
 
   // operands participating in a congruence
   set<operand> congruent;

@@ -97,8 +97,9 @@ parameters (cg, _, _, t2w, ra, _) f @ Function {fCode = code} target =
         callersaved = toAtoms $ callerSaved target
         calleesaved = toAtoms $ calleeSaved target
 
-        classSpace  = [(raIndexedRc ra rc, raRcSpace ra rc) | rc <- raRcs ra]
-        space       = toValueList classSpace
+        classSpace  = M.fromList
+                      [(raIndexedRc ra rc, raRcSpace ra rc) | rc <- raRcs ra]
+        space       = toValueListM classSpace
         range       = toValueList rs2a
 
         home        = toValueListM $ homeRegisterSpaces ra oif fCode cg
@@ -107,10 +108,11 @@ parameters (cg, _, _, t2w, ra, _) f @ Function {fCode = code} target =
         def_opr'    = tempOprDefiners fCode
         def_opr     = toValueListM def_opr'
         allClasses  = nub $ concat $ concat rclass
-        memassign   = if any (isBounded ibf) allClasses then [] else
-                        concat [memAssignForSpace ocf (M.fromList classSpace)
-                                t def_opr' (M.fromList rs2a) t2w p2ts congr rs'
-                               | rs' <- rs, rsInfinite rs']
+        infassign   = concat [infAssignForSpace ocf classSpace
+                              t def_opr' (M.fromList rs2a) t2w p2ts congr rs'
+                             | rs' <- rs,
+                               rsInfinite rs',
+                               none (isBounded ibf classSpace rs') allClasses]
     in
      [
       -- Program parameters
@@ -259,10 +261,11 @@ parameters (cg, _, _, t2w, ra, _) f @ Function {fCode = code} target =
       ("def_opr", toJSON def_opr),
 
       -- register atoms for temporaries assigned to infinite spaces
-      -- example: memassign[2][0]: temporary of the third assignment
-      -- example: memassign[2][1]: first register atom of the third assignment
-      -- example: memassign[2][2]: last register atom of the third assignment
-      ("memassign", toJSON memassign)
+      -- example: infassign[2][0]: temporary of the third assignment
+      -- example: infassign[2][1]: infinite register space of the third assignment
+      -- example: infassign[2][2]: first register atom of the third assignment
+      -- example: infassign[2][3]: last register atom of the third assignment
+      ("infassign", toJSON infassign)
 
      ]
 
@@ -455,24 +458,24 @@ joinClusterCycles adj pr =
         pr'    = foldl P.connectElements pr conn
     in pr'
 
-isBounded ibf irc =
+isBounded ibf classSpace rs irc =
   let rc = rcClass irc
-  in isInfiniteRegisterClass rc && isJust (ibf rc)
+  in classSpace M.! irc == rs && isJust (ibf rc)
 
-memAssignForSpace ocf rcSpace ts def_opr rs2a t2w p2ts congr rs =
+infAssignForSpace ocf rcSpace ts def_opr rs2a t2w p2ts congr rs =
     let cts1    = map (map mkTemp) $ P.toList $
                   foldl (mergeCongruences p2ts) (P.fromNodes ts) congr
-        -- cts4 contains sets of temporaries representing the same original
+        -- cts3 contains sets of temporaries representing the same original
         -- temporary and can thus be assigned the same infinite space atoms
-        cts2    = cfilter (\t -> not $ isMandatory $ def_opr M.! t) cts1
-        cts3    = cfilter (isSpaceCandidate ocf rcSpace def_opr rs) cts2
-        cts4    = map sort cts3
+        cts2    = cfilter (isSpaceCandidate ocf rcSpace def_opr rs) cts1
+        cts3    = map sort cts2
         -- this ensures a correct register bank alignment
-        cts5    = sortBy (comparing (\ts -> - t2w M.! head ts)) cts4
+        cts4    = sortBy (comparing (\ts -> - t2w M.! head ts)) cts3
         fa      = fst $ rs2a M.! rs
-        (_, ma) = mapAccumL (buildMemAssign t2w) fa cts5
-        ma'     = sort $ concat [map (\t -> (t,a,la)) ts | (ts,(a,la)) <- ma]
-    in ma'
+        (_, ia) = mapAccumL (buildInfAssign t2w) fa cts4
+        ia'     = sort $
+                  concat [map (\t -> (t, rs, a, la)) ts | (ts, (a, la)) <- ia]
+    in ia'
 
 cfilter :: (a -> Bool) -> [[a]] -> [[a]]
 cfilter f cts = filter (not . null) $ map (filter f) cts
@@ -488,7 +491,7 @@ isSpaceCandidate ocf rcSpace def_opr rs t =
         rcs  = [ircs !! tidx | ircs <- ocf $ def_opr M.! t]
     in any (\rc -> rs == (rcSpace M.! rc)) rcs
 
-buildMemAssign t2w a ts =
+buildInfAssign t2w a ts =
   let w = fromInteger (t2w M.! head ts)
       n = fromInteger (toInteger (length ts))
   in (a + (w * n), (ts, (a, a + w * (n - 1))))

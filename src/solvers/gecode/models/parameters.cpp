@@ -126,7 +126,7 @@ Parameters::Parameters(JSONVALUE root) :
   set_across    (get_vector<PresolverSetAcross>(getRoot(root, "set_across"))),
   domops        (get_3d_vector<int>(getRoot(root, "domops"))),
   last_use      (get_vector<int>(getRoot(root, "last_use"))),
-  memassign     (get_2d_vector<int>(getRoot(root, "memassign"))),
+  infassign     (get_2d_vector<int>(getRoot(root, "infassign"))),
   domuses       (get_2d_vector<int>(getRoot(root, "domuses"))),
   precs         (get_2d_vector<int>(getRoot(root, "precs"))),
   assignhints   (get_2d_vector<int>(getRoot(root, "assignhints"))),
@@ -567,13 +567,14 @@ void Parameters::compute_derived() {
     ac++;
   }
 
-  for (vector<int> ma : memassign) {
-    temporary t = ma[0];
-    register_atom fra = ma[1];
-    register_atom lra = ma[2];
-    assert(contains(RA, fra));
-    assert(contains(RA, lra));
-    infinite_atom_range[t] = {fra, lra};
+  for (vector<int> ia : infassign) {
+    temporary t = ia[0];
+    register_space rs = ia[1];
+    register_atom fra = ia[2];
+    register_atom lra = ia[3];
+    for (register_atom ra : {fra, lra})
+      assert(ra >= range[rs][0] && ra <= range[rs][1]);
+    infinite_atom_range[make_pair(t, rs)] = {fra, lra};
   }
 
   vector<vector<operation> > emptyint;

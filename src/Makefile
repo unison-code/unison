@@ -119,7 +119,8 @@ run-specsgen: run-specsgen-hexagon run-specsgen-mips run-specsgen-arm
 run-specsgen-hexagon:
 	specsgen --targetname=Hexagon $(SGHEXAGONINPUTYAML) $(SGHEXAGONAUXYAML) \
 	         --outputdir=$(SGHEXAGONROOTDIR) \
-	         --constantextend --infiniteregclass m32 --infiniteregclass m64 \
+	         --constantextend --infiniteregclass M32 --infiniteregclass M64 \
+	         --infiniteregclass RM32 --infiniteregclass RM64 \
 	         --rematfile=$(SGHEXAGONREMATYAML)
 
 run-specsgen-mips:
