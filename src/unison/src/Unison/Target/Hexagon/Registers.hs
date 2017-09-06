@@ -22,7 +22,9 @@ import Unison.Target.Hexagon.HexagonRegisterClassDecl
 
 -- | Register array
 
-registerArray = [RegisterClass IntRegs, RegisterClass PredRegs, RegisterClass F32, InfiniteRegisterClass M32]
+registerArray =
+  [RegisterClass IntRegs, RegisterClass PredRegs, RegisterClass F32,
+   InfiniteRegisterClass M32, InfiniteRegisterClass RM32]
 
 
 -- | Register atoms of 1-width registers
@@ -77,7 +79,7 @@ registerAtoms (D12_15) = (R24, R31)
 regClasses =
     map RegisterClass
             [IntRegs, DoubleRegs, G128, G256, PredRegs, P64, P128, F32] ++
-    map InfiniteRegisterClass  [M32, M64]
+    map InfiniteRegisterClass  [M32, M64, RM32, RM64]
 
 -- | Individual registers of each register class
 
@@ -126,6 +128,8 @@ subRegIndexType subreg = error ("unmatched: subRegIndexType " ++ show subreg)
 infRegClassUsage (InfiniteRegisterClass rc)
   | rc == M32 = 1
   | rc == M64 = 2
+  | rc == RM32 = 1
+  | rc == RM64 = 2
 
 -- | Map from infinite register class to (possibly) register atom upper bound
 

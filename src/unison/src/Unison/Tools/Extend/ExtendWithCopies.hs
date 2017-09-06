@@ -113,11 +113,11 @@ extendReferences vc rtmap cf (src, dst) (Just d) us (ti, code, irs, id, t2rs) =
                     -- as well and let the target decide, perhaps in a
                     -- later phase
                     (if null dcs then []
-                     else [mkNullInstruction, TargetInstruction drc],
+                     else dcs ++ [TargetInstruction drc],
                      [if null ucs0 then []
-                      else [mkNullInstruction, TargetInstruction urc]
+                      else ucs0 ++ [TargetInstruction urc]
                      | ucs0 <- ucs])
-                  _ -> (dcs, ucs)
+                  Nothing -> (dcs, ucs)
         t'         = if null dcs' then src else mkTemp ti
         extDefOut  = extend vc rtmap undefT src after (ti, code, [], id, t2rs)
                      (d, dcs')

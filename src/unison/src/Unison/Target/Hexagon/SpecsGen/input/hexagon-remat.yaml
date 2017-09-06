@@ -2,64 +2,64 @@
 
 - id: A2_tfrsi
   home-class: IntRegs
-  infinite-class: m32
+  infinite-class: RM32
 
 - id: A2_tfrpi
   home-class: DoubleRegs
-  infinite-class: m64
+  infinite-class: RM64
 
 - id: L2_loadri_io
   home-class: IntRegs
-  infinite-class: m32
+  infinite-class: RM32
   suffix: _fi
 
 - id: L2_loadrb_io
   home-class: IntRegs
-  infinite-class: m32
+  infinite-class: RM32
   suffix: _fi
 
 - id: L4_loadrb_abs
   home-class: IntRegs
-  infinite-class: m32
+  infinite-class: RM32
 
 - id: L4_loadri_abs
   home-class: IntRegs
-  infinite-class: m32
+  infinite-class: RM32
 
 - id: L4_loadrh_abs
   home-class: IntRegs
-  infinite-class: m32
+  infinite-class: RM32
 
 - id: L4_loadruh_abs
   home-class: IntRegs
-  infinite-class: m32
+  infinite-class: RM32
 
 - id: L4_loadrub_abs
   home-class: IntRegs
-  infinite-class: m32
+  infinite-class: RM32
 
 - id: TFR_FI
   home-class: IntRegs
-  infinite-class: m32
+  infinite-class: RM32
   suffix: _fi
 
 - id: CONST64_Int_Real
   home-class: DoubleRegs
-  infinite-class: m64
+  infinite-class: RM64
 
 - id: L2_loadrd_io
   home-class: DoubleRegs
-  infinite-class: m64
+  infinite-class: RM64
   suffix: "_fi"
 
 - id: L4_loadrd_abs
   home-class: DoubleRegs
-  infinite-class: m64
+  infinite-class: RM64
 
 - id: TFR_PdFalse
   home-class: PredRegs
-  infinite-class: m32
+  infinite-class: RM32
 
 - id: TFR_PdTrue
   home-class: PredRegs
-  infinite-class: m32
+  infinite-class: RM32

@@ -94,7 +94,7 @@ instruction-set:
 
     - instruction-attrs: &M2d
         operands:
-          - src:         [register, use, m64]
+          - src:         [register, use, M64]
           - dst:         [register, def, DoubleRegs]
         uses:            [src]
         defines:         [dst]
@@ -108,14 +108,14 @@ instruction-set:
 
     - instruction-attrs: &m2r
         operands:
-          - src:         [register, use, m32]
+          - src:         [register, use, M32]
           - dst:         [register, def, IntRegs]
         uses:            [src]
         defines:         [dst]
 
     - instruction-attrs: &m2p
         operands:
-          - src:         [register, use, m32]
+          - src:         [register, use, M32]
           - dst:         [register, def, PredRegs]
         uses:            [src]
         defines:         [dst]
@@ -130,7 +130,7 @@ instruction-set:
     - instruction-attrs: &d2M
         operands:
           - src:         [register, use, DoubleRegs]
-          - dst:         [register, def, m64]
+          - dst:         [register, def, M64]
         uses:            [src]
         defines:         [dst]
 
@@ -190,21 +190,21 @@ instruction-set:
     - instruction-attrs: &r2m
         operands:
           - src:         [register, use, IntRegs]
-          - dst:         [register, def, m32]
+          - dst:         [register, def, M32]
         uses:            [src]
         defines:         [dst]
 
     - instruction-attrs: &r2m_nv
         operands:
           - src:         [register, use, IntRegs, -1]
-          - dst:         [register, def, m32]
+          - dst:         [register, def, M32]
         uses:            [src]
         defines:         [dst]
 
     - instruction-attrs: &p2m
         operands:
           - src:         [register, use, PredRegs]
-          - dst:         [register, def, m32]
+          - dst:         [register, def, M32]
         uses:            [src]
         defines:         [dst]
 

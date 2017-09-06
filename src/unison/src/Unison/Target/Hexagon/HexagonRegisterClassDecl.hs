@@ -32,5 +32,7 @@ data HexagonRegisterClass =
     P64 |
     P128 |
     G128 |
-    G256
+    G256 |
+    RM32 |
+    RM64
     deriving (Eq, Ord, Show, Read)
