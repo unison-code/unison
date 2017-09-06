@@ -14,8 +14,8 @@ module Unison.Target.Hexagon.Common
      isLinearJump, isLinearNewValueCmpJump, isNewValueCmpJump, isJumpNew,
      isMemAccessWithOff, memAccessAlignment, isOldValueStoreInstr,
      newValueStoreInstr, isMuxTransferInstr, isCondTransferInstr,
-     condTransferInstr, muxTransferInstr, isRematerializable, isDematInstr,
-     dematInstr, rematInstr) where
+     condTransferInstr, muxTransferInstr, isRematerializable,
+     isSourceOrDematInstr, sourceInstr, dematInstr, rematInstr) where
 
 import Data.List
 import qualified Data.Map as M
@@ -118,26 +118,32 @@ condTransferVersions = M.fromList
    ((C2_muxir, True), C2_muxir_tfr_new),
    ((C2_muxri, True), C2_muxri_tfr_new)]
 
+data RematTriple = RematTriple {
+  source :: HexagonInstruction,
+  demat  :: HexagonInstruction,
+  remat  :: HexagonInstruction}
+
 isRematerializable i = M.member i rematVersions
-isDematInstr i = M.member i $ M.fromList $ M.elems rematVersions
-dematInstr i = fst $ rematVersions M.! i
-rematInstr i = snd $ rematVersions M.! i
+isSourceOrDematInstr i =
+  i `elem` concat [[source t, demat t] | t <- M.elems rematVersions]
+sourceInstr i = source $ rematVersions M.! i
+dematInstr  i = demat $ rematVersions M.! i
+rematInstr  i = remat $ rematVersions M.! i
 
 rematVersions = M.fromList
-  [(A2_tfrsi, (A2_tfrsi_demat, A2_tfrsi_remat)),
-   (A2_tfrsi_ce, (A2_tfrsi_demat_ce, A2_tfrsi_remat_ce)),
-   (L2_loadri_io_fi, (L2_loadri_io_demat_fi, L2_loadri_io_remat_fi)),
-   (L2_loadrb_io_fi, (L2_loadrb_io_demat_fi, L2_loadrb_io_remat_fi)),
-   (L4_loadrb_abs_ce, (L4_loadrb_abs_demat_ce, L4_loadrb_abs_remat_ce)),
-   (L4_loadri_abs_ce, (L4_loadri_abs_demat_ce, L4_loadri_abs_remat_ce)),
-   (L4_loadrh_abs_ce, (L4_loadrh_abs_demat_ce, L4_loadrh_abs_remat_ce)),
-   (L4_loadrub_abs_ce, (L4_loadrub_abs_demat_ce, L4_loadrub_abs_remat_ce)),
-   (L4_loadruh_abs_ce, (L4_loadruh_abs_demat_ce, L4_loadruh_abs_remat_ce)),
-   (TFR_FI_fi, (TFR_FI_demat_fi, TFR_FI_remat_fi)),
-   (A2_tfrpi, (A2_tfrpi_demat, A2_tfrpi_remat)),
-   (CONST64_Int_Real, (CONST64_Int_Real_demat, CONST64_Int_Real_remat)),
-   (L2_loadrd_io_fi, (L2_loadrd_io_demat_fi, L2_loadrd_io_remat_fi)),
-   (L4_loadrd_abs_ce, (L4_loadrd_abs_demat_ce, L4_loadrd_abs_remat_ce)),
-   (TFR_PdFalse, (TFR_PdFalse_demat, TFR_PdFalse_remat)),
-   (TFR_PdTrue, (TFR_PdTrue_demat, TFR_PdTrue_remat))
-  ]
+  [(A2_tfrsi, RematTriple A2_tfrsi_source A2_tfrsi_demat A2_tfrsi_remat),
+   (A2_tfrsi_ce, RematTriple A2_tfrsi_source_ce A2_tfrsi_demat_ce A2_tfrsi_remat_ce),
+   (A2_tfrpi, RematTriple A2_tfrpi_source A2_tfrpi_demat A2_tfrpi_remat),
+   (L2_loadri_io, RematTriple L2_loadri_io_source_fi L2_loadri_io_demat_fi L2_loadri_io_remat_fi),
+   (L2_loadrb_io, RematTriple L2_loadrb_io_source_fi L2_loadrb_io_demat_fi L2_loadrb_io_remat_fi),
+   (L4_loadrb_abs_ce, RematTriple L4_loadrb_abs_source_ce L4_loadrb_abs_demat_ce L4_loadrb_abs_remat_ce),
+   (L4_loadri_abs_ce, RematTriple L4_loadri_abs_source_ce L4_loadri_abs_demat_ce L4_loadri_abs_remat_ce),
+   (L4_loadrh_abs_ce, RematTriple L4_loadrh_abs_source_ce L4_loadrh_abs_demat_ce L4_loadrh_abs_remat_ce),
+   (L4_loadruh_abs_ce, RematTriple L4_loadruh_abs_source_ce L4_loadruh_abs_demat_ce L4_loadruh_abs_remat_ce),
+   (L4_loadrub_abs_ce, RematTriple L4_loadrub_abs_source_ce L4_loadrub_abs_demat_ce L4_loadrub_abs_remat_ce),
+   (TFR_FI, RematTriple TFR_FI_source_fi TFR_FI_demat_fi TFR_FI_remat_fi),
+   (CONST64_Int_Real, RematTriple CONST64_Int_Real_source CONST64_Int_Real_demat CONST64_Int_Real_remat),
+   (L2_loadrd_io, RematTriple L2_loadrd_io_source_fi L2_loadrd_io_demat_fi L2_loadrd_io_remat_fi),
+   (L4_loadrd_abs_ce, RematTriple L4_loadrd_abs_source_ce L4_loadrd_abs_demat_ce L4_loadrd_abs_remat_ce),
+   (TFR_PdFalse, RematTriple TFR_PdFalse_source TFR_PdFalse_demat TFR_PdFalse_remat),
+   (TFR_PdTrue, RematTriple TFR_PdTrue_source TFR_PdTrue_demat TFR_PdTrue_remat)]

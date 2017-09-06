@@ -25,7 +25,8 @@ alignedPairs i ([], [_])
   | i `elem`
       [HEXAGON_V6_vd0_pseudo, HEXAGON_V6_vd0_pseudo_128B, IMPLICIT_DEF,
        IMPLICIT_DEF_ce, L2_deallocframe_linear, L4_return_linear,
-       LOAD_STACK_GUARD, LOAD_STACK_GUARD_ce, TFR_PdFalse, TFR_PdTrue]
+       LOAD_STACK_GUARD, LOAD_STACK_GUARD_ce, TFR_PdFalse,
+       TFR_PdFalse_source, TFR_PdTrue, TFR_PdTrue_source]
     = []
 alignedPairs i ([_], [_]) | i `elem` [ALIGNA, ALIGNA_ce] = []
 alignedPairs i ([_], [_])
@@ -625,10 +626,14 @@ alignedPairs i ([_], [_])
       [L2_loadrbgp, L2_loadrbgp_ce, L2_loadrdgp, L2_loadrdgp_ce,
        L2_loadrhgp, L2_loadrhgp_ce, L2_loadrigp, L2_loadrigp_ce,
        L2_loadrubgp, L2_loadrubgp_ce, L2_loadruhgp, L2_loadruhgp_ce,
-       L4_loadrb_abs, L4_loadrb_abs_ce, L4_loadrd_abs, L4_loadrd_abs_ce,
-       L4_loadrh_abs, L4_loadrh_abs_ce, L4_loadri_abs, L4_loadri_abs_ce,
-       L4_loadrub_abs, L4_loadrub_abs_ce, L4_loadruh_abs,
-       L4_loadruh_abs_ce]
+       L4_loadrb_abs, L4_loadrb_abs_ce, L4_loadrb_abs_source,
+       L4_loadrb_abs_source_ce, L4_loadrd_abs, L4_loadrd_abs_ce,
+       L4_loadrd_abs_source, L4_loadrd_abs_source_ce, L4_loadrh_abs,
+       L4_loadrh_abs_ce, L4_loadrh_abs_source, L4_loadrh_abs_source_ce,
+       L4_loadri_abs, L4_loadri_abs_ce, L4_loadri_abs_source,
+       L4_loadri_abs_source_ce, L4_loadrub_abs, L4_loadrub_abs_ce,
+       L4_loadrub_abs_source, L4_loadrub_abs_source_ce, L4_loadruh_abs,
+       L4_loadruh_abs_ce, L4_loadruh_abs_source, L4_loadruh_abs_source_ce]
     = []
 alignedPairs i ([_], [_, _])
   | i `elem`
@@ -796,13 +801,17 @@ alignedPairs i ([dst2, _, _], [dst2'])
 alignedPairs i ([dst2, _, _, _], [dst2'])
   | i `elem` [S2_insert, S2_insert_ce, S2_insertp, S2_insertp_ce] =
     [(dst2, dst2')]
-alignedPairs i ([_, _], [_]) | i `elem` [TFR_FI, TFR_FI_ce] = []
+alignedPairs i ([_, _], [_])
+  | i `elem`
+      [TFR_FI, TFR_FI_ce, TFR_FI_source_fi, TFR_FI_source_fi_ce]
+    = []
 alignedPairs i ([_], [_])
   | i `elem`
       [CONST32, CONST32_Int_Real, CONST32_Int_Real_ce, CONST32_ce,
-       CONST64_Int_Real, CONST64_Int_Real_ce, FCONST32_nsdata,
-       FCONST32_nsdata_ce, HI_GOT, HI_GOTREL, HI_GOTREL_ce, HI_GOT_ce,
-       LO_GOT, LO_GOTREL, LO_GOTREL_ce, LO_GOT_ce]
+       CONST64_Int_Real, CONST64_Int_Real_ce, CONST64_Int_Real_source,
+       CONST64_Int_Real_source_ce, FCONST32_nsdata, FCONST32_nsdata_ce,
+       HI_GOT, HI_GOTREL, HI_GOTREL_ce, HI_GOT_ce, LO_GOT, LO_GOTREL,
+       LO_GOTREL_ce, LO_GOT_ce]
     = []
 alignedPairs i ([_], [])
   | i `elem`
@@ -847,7 +856,10 @@ alignedPairs i ([_, _], [])
     = []
 alignedPairs i ([_, _], [_])
   | i `elem` [A2_subri, A2_subri_ce] = []
-alignedPairs i ([_], [_]) | i `elem` [A2_tfrsi, A2_tfrsi_ce] = []
+alignedPairs i ([_], [_])
+  | i `elem`
+      [A2_tfrsi, A2_tfrsi_ce, A2_tfrsi_source, A2_tfrsi_source_ce]
+    = []
 alignedPairs i ([_, _], [_]) | i `elem` [S4_lsli, S4_lsli_ce] = []
 alignedPairs i ([_, _], [])
   | i `elem` [V4_SS2_stored_sp, V4_SS2_stored_sp_ce] = []
@@ -937,10 +949,11 @@ alignedPairs i ([_], [])
     = []
 alignedPairs i ([_], [_])
   | i `elem`
-      [A2_tfrpi, A2_tfrpi_ce, ARGEXTEND, CONST32_Float_Real,
-       CONST32_Float_Real_ce, CONST64_Float_Real, CONST64_Float_Real_ce,
-       HEXAGON_V6_hi, HEXAGON_V6_hi_128B, HEXAGON_V6_lo,
-       HEXAGON_V6_lo_128B, HEXAGON_V6_vassignp, HEXAGON_V6_vassignp_128B,
+      [A2_tfrpi, A2_tfrpi_ce, A2_tfrpi_source, A2_tfrpi_source_ce,
+       ARGEXTEND, CONST32_Float_Real, CONST32_Float_Real_ce,
+       CONST64_Float_Real, CONST64_Float_Real_ce, HEXAGON_V6_hi,
+       HEXAGON_V6_hi_128B, HEXAGON_V6_lo, HEXAGON_V6_lo_128B,
+       HEXAGON_V6_vassignp, HEXAGON_V6_vassignp_128B,
        J4_cmpeqn1_t_jumpnv_t_linear, J4_cmpgtn1_t_jumpnv_t_linear,
        TFRI64_V4, TFRI64_V4_ce, TFRI_f, TFRI_f_ce, V6_lvsplatw,
        V6_lvsplatw_128B, V6_pred_not, V6_pred_not_128B, V6_pred_scalar2,
@@ -1076,9 +1089,11 @@ alignedPairs i ([_, _], [_])
       [L2_loadbsw2_io, L2_loadbsw2_io_ce, L2_loadbsw4_io,
        L2_loadbsw4_io_ce, L2_loadbzw2_io, L2_loadbzw2_io_ce,
        L2_loadbzw4_io, L2_loadbzw4_io_ce, L2_loadrb_io, L2_loadrb_io_ce,
-       L2_loadrd_io, L2_loadrd_io_ce, L2_loadrh_io, L2_loadrh_io_ce,
-       L2_loadri_io, L2_loadri_io_ce, L2_loadrub_io, L2_loadrub_io_ce,
-       L2_loadruh_io, L2_loadruh_io_ce]
+       L2_loadrb_io_source_fi, L2_loadrb_io_source_fi_ce, L2_loadrd_io,
+       L2_loadrd_io_ce, L2_loadrd_io_source_fi, L2_loadrd_io_source_fi_ce,
+       L2_loadrh_io, L2_loadrh_io_ce, L2_loadri_io, L2_loadri_io_ce,
+       L2_loadri_io_source_fi, L2_loadri_io_source_fi_ce, L2_loadrub_io,
+       L2_loadrub_io_ce, L2_loadruh_io, L2_loadruh_io_ce]
     = []
 alignedPairs i ([src1, _], [_, src1'])
   | i `elem`

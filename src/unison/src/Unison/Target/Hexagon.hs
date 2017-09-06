@@ -59,7 +59,7 @@ target =
       API.tPostProcess      = const postProcess,
       API.tTransforms       = const transforms,
       API.tCopies           = const copies,
-      API.tRematCopies      = const rematCopies,
+      API.tRematInstrs      = const rematInstrs,
       API.tFromCopy         = const fromCopy,
       API.tOperandInfo      = const operandInfo,
       API.tAlignedPairs     = const SpecsGen.alignedPairs,
@@ -245,9 +245,10 @@ newValueStoreOp d w
 
 isReserved r = r `elem` reserved
 
-rematCopies i
-  | isRematerializable i = Just (dematInstr i, rematInstr i)
-  | otherwise = error ("unmatched: rematCopies " ++ show i)
+rematInstrs i
+  | isRematerializable i =
+      Just (sourceInstr i, dematInstr i, rematInstr i)
+  | otherwise = error ("unmatched: rematInstrs " ++ show i)
 
 -- | Transforms copy instructions into natural instructions
 
@@ -384,7 +385,7 @@ resources =
 usages i
   | i `elem` [Jump_merge, Jr_merge] = [mkUsage BlockEnd 1 1]
 usages i
-  | isConstantExtended i && not (isDematInstr i) =
+  | isConstantExtended i && not (isSourceOrDematInstr i) =
     let it = SpecsGen.itinerary (nonConstantExtendedInstr i)
     in mergeUsages (itineraryUsage i it) [mkUsage BundleWidth 1 1]
   | i `elem` [C2_mux_tfr, C2_mux_tfr_new] =

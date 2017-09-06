@@ -12,6 +12,7 @@ This file is part of Unison, see http://unison-code.github.io
 module Unison.Tools.Extend.ExtendWithCopies (extendWithCopies) where
 
 import Data.List
+import qualified Data.Set as S
 import qualified Data.Map as M
 import Data.Maybe
 import Control.Arrow
@@ -32,7 +33,7 @@ extendWithCopies f target =
       apf       = alignedPairs target
       bif       = branchInfo target
       csf       = calleeSaved target
-      rcf       = rematCopies target
+      rif       = rematInstrs target
       ra        = mkRegisterArray target 0
       ovf       = regOverlap (regAtoms ra)
       cst       = calleeSavedTemps csf ovf f
@@ -40,23 +41,24 @@ extendWithCopies f target =
       bcfg      = BCFG.fromFunction bif f
       sg        = SG.fromFunction (Just apf) f
       fInfo     = (f, cst, cg, ra, bcfg, sg)
-      rtmap     = mkRematTempMap rcf f
+      rtmap     = mkRematTempMap rif f
       id        = newId (fCode f)
       t2rs      = mkMustRegistersMap f
-      (f', id') = foldWithTempIndex
+      (f1, id') = foldWithTempIndex
                   (extendBB rtmap True virtualTemps always (cf fInfo) t2rs)
                   (f {fCode = []}, id) (fCode f)
-      code''    = filterCode (not . isVirtualCopy) (fCode f')
-      f''       = f' {fCode = code''}
-      cg'       = CG.fromFunction f''
-      bcfg'     = BCFG.fromFunction bif f''
-      sg'       = SG.fromFunction (Just apf) f''
-      fInfo'    = (f'', cst, cg', ra, bcfg', sg')
-      t2rs'     = mkMustRegistersMap f''
-      (f''', _) = foldWithTempIndex
+      code''    = filterCode (not . isVirtualCopy) (fCode f1)
+      f2        = f1 {fCode = code''}
+      cg'       = CG.fromFunction f2
+      bcfg'     = BCFG.fromFunction bif f2
+      sg'       = SG.fromFunction (Just apf) f2
+      fInfo'    = (f2, cst, cg', ra, bcfg', sg')
+      t2rs'     = mkMustRegistersMap f2
+      (f3, _)   = foldWithTempIndex
                   (extendBB rtmap False allTemps notRCopy (cf fInfo') t2rs')
-                  (f'' {fCode = []}, id') (fCode f'')
-  in f''' {fRematerializable = []}
+                  (f2 {fCode = []}, id') (fCode f2)
+      f4        = updateRematOrigins rif f3
+  in f4
 
 -- | Extends the block temporaries given by the function ft with copies
 extendBB rtmap vc ft rf cf t2rs
@@ -103,7 +105,7 @@ extendReferences vc rtmap cf (src, dst) (Just d) us (ti, code, irs, id, t2rs) =
         (dcs, ucs) = cf vc src rs d us
         (dcs',
          ucs') = case M.lookup src rtmap of
-                  Just (_, (drc, urc)) ->
+                  Just (_, (_, drc, urc)) ->
                     -- this assumes that the rematerialization instruction
                     -- always dominates all other copies and is compatible
                     -- with the register class of all its users: a more
@@ -151,14 +153,18 @@ extend vc rtmap firstT prevT pos (ti, code, irs, id, t2rs) (oprToExtend, insts) 
         id'    = id + 1
         copy   = mkCopy id insts (undoPreAssign prevT) [] (undoPreAssign newT) []
         copy1  = mapToAttrVirtualCopy (const vc) copy
-        rorig  = case (M.lookup firstT rtmap, M.lookup prevT rtmap) of
-                  (Just (ro:_, _), _) -> Just (oId ro)
-                  (Nothing       , Just (ro:_, _)) -> Just (oId ro)
-                  (Nothing,        Nothing) -> Nothing
+        ro     = case (M.lookup firstT rtmap, M.lookup prevT rtmap) of
+                  (Just (ro:_, _), _) -> Just ro
+                  (Nothing, Just (ro:_, _)) -> Just ro
+                  (Nothing, Nothing) -> Nothing
+        rorig  = fmap (\o -> (oId o, head $ oInstructions o)) ro
         copy2  =  mapToAttrRematOrigin (const rorig) copy1
+        copy3  = case ro of
+                  (Just ro') -> mapToAttrMem (const (aMem $ oAs ro')) copy2
+                  Nothing -> copy2
         r      = (firstT, newT)
         code'  = updateTemps r oprToExtend code
-        code'' = insertWhen pos (isIdOf oprToExtend) [copy2] code'
+        code'' = insertWhen pos (isIdOf oprToExtend) [copy3] code'
     in (ti', code'', irs ++ [(oprToExtend, r)], id', t2rs)
 
 undefT = mkTemp (-1)
@@ -194,15 +200,27 @@ replaceTemp t2rs (oldT, newT)
         t2rs'' = M.update (Just . nub . (++) oldRs) newT t2rs'
     in t2rs''
 
-mkRematTempMap rcf f @ Function {fRematerializable = rts} =
+mkRematTempMap rif f @ Function {fRematerializable = rts} =
   let fcode = flatCode f
-  in M.fromList (mapMaybe (toRematTemp rcf fcode) rts)
+  in M.fromList (mapMaybe (toRematTemp rif fcode) rts)
 
-toRematTemp rcf fcode (t, oids) =
+toRematTemp rif fcode (t, oids) =
   let os = map (\oid -> fromJust $ find (isId oid) fcode) oids
       -- All definers should be implemented equally, otherwise t would not
       -- be rematerilizable
       i  = targetInst $ oInstructions $ head os
-  in case rcf i of
+  in case rif i of
      Just rcs -> Just (t, (os, rcs))
      Nothing  -> Nothing
+
+updateRematOrigins rif f @ Function {fCode = code} =
+  let os = S.fromList $ mapMaybe (fmap fst . aRematOrigin . oAs) $ flatten code
+      f' = mapToOperation (addDematerialize rif os) f
+  in f' {fRematerializable = []}
+
+addDematerialize rif os o
+  | S.member (oId o) os =
+      let i  = targetInst $ oInstructions o
+          Just (s, _, _) = rif i
+      in mapToInstructions (\is -> is ++ [TargetInstruction s]) o
+  | otherwise = o

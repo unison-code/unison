@@ -78,7 +78,7 @@ data LsAttribute r =
   LsJTBlocks [LsOperand r] |
   LsBranchTaken (Maybe Bool) |
   LsPrescheduled (Maybe IssueCycle) |
-  LsRematOrigin (Maybe OperationId)
+  LsRematOrigin (Maybe (OperationId, LsInstruction))
   deriving (Show)
 
 data LsRWObject =
@@ -318,7 +318,7 @@ attribute = try (sideEffectListAttribute "reads" LsReads)
             <|> integerAttribute "mem" (LsMem . Just)
             <|> instructionListAttribute "activators" LsActivators
             <|> simpleAttribute "virtualcopy" (LsVirtualCopy True)
-            <|> try (operationIdAttribute "remat-origin" (LsRematOrigin . Just))
+            <|> try (operationIdInstructionAttribute "remat-origin" (LsRematOrigin . Just))
             <|> simpleAttribute "remat" (LsRemat True)
             <|> operandListAttribute "jtblocks" LsJTBlocks
             <|> boolAttribute "taken" (LsBranchTaken . Just)
@@ -345,6 +345,14 @@ operationIdAttribute = attributeItem operationId
 instructionListAttribute = attributeList instruction
 
 operandListAttribute = attributeList operand
+
+operationIdInstructionAttribute = attributeItem operationIdInstruction
+
+operationIdInstruction =
+  do oid <- operationId
+     string ":"
+     i <- instruction
+     return (oid, i)
 
 sideEffect = try memorySideEffect
              <|> try allMemorySideEffect
@@ -671,9 +679,10 @@ readInstr (LsTargetInstruction i) = TargetInstruction (read i)
 toAttributes (LsAttributes (LsReads reads) (LsWrites writes) (LsAttrCall call)
               (LsMem mem) (LsActivators acs) (LsVirtualCopy vcopy)
               (LsRemat rm) (LsJTBlocks bs) (LsBranchTaken bt)
-              (LsPrescheduled pa) (LsRematOrigin rorig)) =
+              (LsPrescheduled pa) (LsRematOrigin ro)) =
   mkAttributes (map toRWObject reads) (map toRWObject writes) call mem
-               (map readInstr acs) vcopy rm (map lsBlockRefId bs) bt pa rorig
+               (map readInstr acs) vcopy rm (map lsBlockRefId bs) bt pa
+               (fmap (second readInstr) ro)
 
 lsBlockRefId (LsBlockRef bid) = bid
 

@@ -485,8 +485,8 @@ data Attributes i r = Attributes {
   aBranchTaken  :: Maybe Bool,
   -- | Whether the operation is prescheduled and in what issue cycle
   aPrescheduled :: Maybe IssueCycle,
-  -- | Identifier of the rematerialization copy's original source, if any
-  aRematOrigin  :: Maybe OperationId
+  -- | Identifier and instruction of the rematerialization copy's source, if any
+  aRematOrigin  :: Maybe (OperationId, Instruction i)
 } deriving (Eq)
 
 -- | Object representing the side-effect of an 'Operation'. Operations can write

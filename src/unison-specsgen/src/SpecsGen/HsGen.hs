@@ -12,6 +12,7 @@ This file is part of Unison, see http://unison-code.github.io
 module SpecsGen.HsGen
     (
      constantExtendedOperation,
+     extendRemats,
      expand,
      promote,
      update,
@@ -86,10 +87,70 @@ isConstantExtendableOp (_, YBoundInfo) = True
 isConstantExtendableOp (_, YBlockRefInfo) = True
 isConstantExtendableOp _ = False
 
-expand is =
-  let id2i = M.fromList $ map (\i -> (oId i, i)) is
-      is'  = map (maybeExpandInstr id2i) is
-  in is'
+extendRemats is remat = concatMap (extendRemat (idMap is)) remat
+
+extendRemat id2i r =
+  let id  = yFetchStr "id" r
+      hc  = yFetchStr "home-class" r
+      ic  = yFetchStr "infinite-class" r
+      suf = case yFetch "suffix" r of
+             YString s -> s
+             YNil -> ""
+      i   = case M.lookup id id2i of
+                Just i' -> i'
+                Nothing ->
+                  error ("Rematerializable instruction \'" ++ id ++ "\' does not exist")
+      d   = sourceVersion id suf (hc, ic) i
+      dc  = dematVersion id suf (hc, ic) i
+      rc  = rematVersion id suf (hc, ic) i
+  in [d, dc, rc]
+
+sourceVersion id suf (_, ic) i =
+  let (_, [d]) = iUseDefs i
+      u =  [(YString "id", YString (id ++ "_source" ++ suf))] ++
+           noUsages ++ noEffects
+      i1 = foldl replaceField i u
+      i2 = updateOperandInInstr d
+           (YSeq [YString "register", YString "def", YString ic, YString "-1"])
+           i1
+  in i2
+
+dematVersion id suf (hc, ic) i =
+  let u = [(YString "id", YString (id ++ "_demat" ++ suf))] ++
+          noUsages ++ noEffects ++ copy ++ copyOperands hc ic (Just "-1")
+      i1 = foldl replaceField i u
+  in i1
+
+rematVersion id suf (hc, ic) i =
+  let u = [(YString "id", YString (id ++ "_remat" ++ suf))] ++
+          copy ++ copyOperands ic hc Nothing
+      i1 = foldl replaceField i u
+  in i1
+
+noUsages = [(YString "itinerary", YString "NoItinerary"),
+            (YString "size", YString "0")]
+
+noEffects = [(YString "affects",     YNil),
+             (YString "affected-by", YNil)]
+
+copy = [(YString "type", YString "copy")]
+
+copyOperands s d dl =
+  [(YString "uses",     YSeq [YString "src"]),
+   (YString "defines",  YSeq [YString "dst"]),
+   (YString "operands", YSeq [regOperand "src" "use" s Nothing,
+                              regOperand "dst" "def" d dl])]
+
+regOperand name typ rclass deflat =
+  let lat = case deflat of
+             Just l  -> [YString l]
+             Nothing -> []
+  in YMap [(YString name,
+            YSeq ([YString "register", YString typ, YString rclass] ++ lat))]
+
+idMap is = M.fromList $ map (\i -> (oId i, i)) is
+
+expand is = map (maybeExpandInstr (idMap is)) is
 
 maybeExpandInstr id2i i =
   case iParent i of

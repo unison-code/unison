@@ -46,6 +46,7 @@ module Unison.Util
         mapToReads,
         mapToWrites,
         mapToAttrCall,
+        mapToAttrMem,
         mapToActivators,
         mapToAttrVirtualCopy,
         mapToAttrRemat,
@@ -250,8 +251,8 @@ mapToOperationId f i @ (SingleOperation {oId = id, oAs = as}) =
   i {oId = f id, oAs = mapToOperationIdInAttributes f as}
 
 mapToOperationIdInAttributes f
-  as @ Attributes {aCall = id1, aRematOrigin = id2} =
-    as {aCall = fmap f id1, aRematOrigin = fmap f id2}
+  as @ Attributes {aCall = id1, aRematOrigin = ro} =
+    as {aCall = fmap f id1, aRematOrigin = fmap (first f) ro}
 
 mapToModelOperand :: OperandMap r -> BlockOperation i r -> BlockOperation i r
 mapToModelOperand = mapToOperandIf isModelOperand
@@ -309,6 +310,11 @@ mapToAttrCall :: (Maybe OperationId -> Maybe OperationId) ->
 mapToAttrCall f o @ SingleOperation {
   oAs = as @ Attributes {aCall = call}} = o {oAs = as {aCall = f call}}
 
+mapToAttrMem :: (Maybe Integer -> Maybe Integer) ->
+                 BlockOperation i r -> BlockOperation i r
+mapToAttrMem f o @ SingleOperation {
+  oAs = as @ Attributes {aMem = mem}} = o {oAs = as {aMem = f mem}}
+
 mapToActivators :: InstructionsMap i -> BlockOperation i r -> BlockOperation i r
 mapToActivators f o @ SingleOperation {
                oAs = as @ Attributes {aActivators = insts}} =
@@ -329,11 +335,12 @@ mapToAttrJTBlocks f o @ SingleOperation {
                oAs = as @ Attributes {aJTBlocks = bs}} =
   o {oAs = as {aJTBlocks = f bs}}
 
-mapToAttrRematOrigin :: (Maybe OperationId -> Maybe OperationId) ->
-                        BlockOperation i r -> BlockOperation i r
+mapToAttrRematOrigin ::  (Maybe (OperationId, Instruction i) ->
+                          Maybe (OperationId, Instruction i)) ->
+                          BlockOperation i r -> BlockOperation i r
 mapToAttrRematOrigin f o @ SingleOperation {
-  oAs = as @ Attributes {aRematOrigin = oid}} =
-  o {oAs = as {aRematOrigin = f oid}}
+  oAs = as @ Attributes {aRematOrigin = ro}} =
+  o {oAs = as {aRematOrigin = f ro}}
 
 isTailCallFun :: [BlockOperation i r] -> BlockOperation i r -> Bool
 isTailCallFun code i

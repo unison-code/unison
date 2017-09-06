@@ -2619,34 +2619,49 @@ data HexagonInstruction = A2_abs
                         | C2_muxii_tfr_new
                         | C2_muxir_tfr_new
                         | C2_muxri_tfr_new
+                        | A2_tfrsi_source
                         | A2_tfrsi_demat
                         | A2_tfrsi_remat
-                        | L2_loadri_io_demat_fi
-                        | L2_loadri_io_remat_fi
-                        | L2_loadrb_io_demat_fi
-                        | L2_loadrb_io_remat_fi
-                        | L4_loadrb_abs_demat
-                        | L4_loadrb_abs_remat
-                        | L4_loadri_abs_demat
-                        | L4_loadrh_abs_demat
-                        | L4_loadrh_abs_remat
-                        | L4_loadri_abs_remat
-                        | L4_loadrub_abs_demat
-                        | L4_loadrub_abs_remat
-                        | L4_loadruh_abs_demat
-                        | L4_loadruh_abs_remat
-                        | TFR_FI_demat_fi
-                        | TFR_FI_remat_fi
+                        | A2_tfrpi_source
                         | A2_tfrpi_demat
                         | A2_tfrpi_remat
+                        | L2_loadri_io_source_fi
+                        | L2_loadri_io_demat_fi
+                        | L2_loadri_io_remat_fi
+                        | L2_loadrb_io_source_fi
+                        | L2_loadrb_io_demat_fi
+                        | L2_loadrb_io_remat_fi
+                        | L4_loadrb_abs_source
+                        | L4_loadrb_abs_demat
+                        | L4_loadrb_abs_remat
+                        | L4_loadri_abs_source
+                        | L4_loadri_abs_demat
+                        | L4_loadri_abs_remat
+                        | L4_loadrh_abs_source
+                        | L4_loadrh_abs_demat
+                        | L4_loadrh_abs_remat
+                        | L4_loadruh_abs_source
+                        | L4_loadruh_abs_demat
+                        | L4_loadruh_abs_remat
+                        | L4_loadrub_abs_source
+                        | L4_loadrub_abs_demat
+                        | L4_loadrub_abs_remat
+                        | TFR_FI_source_fi
+                        | TFR_FI_demat_fi
+                        | TFR_FI_remat_fi
+                        | CONST64_Int_Real_source
                         | CONST64_Int_Real_demat
                         | CONST64_Int_Real_remat
+                        | L2_loadrd_io_source_fi
                         | L2_loadrd_io_demat_fi
                         | L2_loadrd_io_remat_fi
+                        | L4_loadrd_abs_source
                         | L4_loadrd_abs_demat
                         | L4_loadrd_abs_remat
+                        | TFR_PdFalse_source
                         | TFR_PdFalse_demat
                         | TFR_PdFalse_remat
+                        | TFR_PdTrue_source
                         | TFR_PdTrue_demat
                         | TFR_PdTrue_remat
                         | A2_addi_ce
@@ -3673,30 +3688,43 @@ data HexagonInstruction = A2_abs
                         | C2_muxii_tfr_new_ce
                         | C2_muxir_tfr_new_ce
                         | C2_muxri_tfr_new_ce
+                        | A2_tfrsi_source_ce
                         | A2_tfrsi_demat_ce
                         | A2_tfrsi_remat_ce
-                        | L2_loadri_io_demat_fi_ce
-                        | L2_loadri_io_remat_fi_ce
-                        | L2_loadrb_io_demat_fi_ce
-                        | L2_loadrb_io_remat_fi_ce
-                        | L4_loadrb_abs_demat_ce
-                        | L4_loadrb_abs_remat_ce
-                        | L4_loadri_abs_demat_ce
-                        | L4_loadrh_abs_demat_ce
-                        | L4_loadrh_abs_remat_ce
-                        | L4_loadri_abs_remat_ce
-                        | L4_loadrub_abs_demat_ce
-                        | L4_loadrub_abs_remat_ce
-                        | L4_loadruh_abs_demat_ce
-                        | L4_loadruh_abs_remat_ce
-                        | TFR_FI_demat_fi_ce
-                        | TFR_FI_remat_fi_ce
+                        | A2_tfrpi_source_ce
                         | A2_tfrpi_demat_ce
                         | A2_tfrpi_remat_ce
+                        | L2_loadri_io_source_fi_ce
+                        | L2_loadri_io_demat_fi_ce
+                        | L2_loadri_io_remat_fi_ce
+                        | L2_loadrb_io_source_fi_ce
+                        | L2_loadrb_io_demat_fi_ce
+                        | L2_loadrb_io_remat_fi_ce
+                        | L4_loadrb_abs_source_ce
+                        | L4_loadrb_abs_demat_ce
+                        | L4_loadrb_abs_remat_ce
+                        | L4_loadri_abs_source_ce
+                        | L4_loadri_abs_demat_ce
+                        | L4_loadri_abs_remat_ce
+                        | L4_loadrh_abs_source_ce
+                        | L4_loadrh_abs_demat_ce
+                        | L4_loadrh_abs_remat_ce
+                        | L4_loadruh_abs_source_ce
+                        | L4_loadruh_abs_demat_ce
+                        | L4_loadruh_abs_remat_ce
+                        | L4_loadrub_abs_source_ce
+                        | L4_loadrub_abs_demat_ce
+                        | L4_loadrub_abs_remat_ce
+                        | TFR_FI_source_fi_ce
+                        | TFR_FI_demat_fi_ce
+                        | TFR_FI_remat_fi_ce
+                        | CONST64_Int_Real_source_ce
                         | CONST64_Int_Real_demat_ce
                         | CONST64_Int_Real_remat_ce
+                        | L2_loadrd_io_source_fi_ce
                         | L2_loadrd_io_demat_fi_ce
                         | L2_loadrd_io_remat_fi_ce
+                        | L4_loadrd_abs_source_ce
                         | L4_loadrd_abs_demat_ce
                         | L4_loadrd_abs_remat_ce
                         | TFR_PdFalse_demat_ce

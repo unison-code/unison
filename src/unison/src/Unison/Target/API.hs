@@ -42,7 +42,7 @@ module Unison.Target.API (
   postProcess,
   transforms,
   copies,
-  rematCopies,
+  rematInstrs,
   fromCopy,
   operandInfo,
   alignedPairs,
@@ -166,7 +166,7 @@ preProcess (ti, to) = tPreProcess ti to
 postProcess (ti, to) = tPostProcess ti to
 transforms (ti, to) = tTransforms ti to
 copies (ti, to) = tCopies ti to
-rematCopies (ti, to) = tRematCopies ti to
+rematInstrs (ti, to) = tRematInstrs ti to
 fromCopy (ti, to) bo @ SingleOperation {oOpr = o} =
     bo {oOpr = Natural (tFromCopy ti to o)}
 operandInfo (ti, to) = tOperandInfo ti to
@@ -252,9 +252,10 @@ data TargetDescription i r rc s = TargetDescription {
       tCopies           :: TargetOptions -> FunctionInfo i r rc -> Bool ->
                            Operand r -> [r] -> BlockOperation i r ->
                            [BlockOperation i r] -> CopyInstructions i,
-      -- | Copy instructions to rematerialize the value defined by the
-      -- given instruction
-      tRematCopies      :: TargetOptions -> i -> Maybe (i, i),
+      -- | Instructions to rematerialize the value defined by the
+      -- given instruction (source instruction, dematerialization copy, and
+      -- rematerialization copy)
+      tRematInstrs      :: TargetOptions -> i -> Maybe (i, i, i),
       -- | Implementation of the given copy operation to be applied
       -- during the export phase
       tFromCopy         :: TargetOptions -> Operation i r ->
