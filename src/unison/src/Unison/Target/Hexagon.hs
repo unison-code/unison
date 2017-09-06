@@ -191,9 +191,8 @@ copies _ False t [] d [u]
 -- Do not extend rematerializable instructions used only once, locally
 -- FIXME: review whether this is always safe
 copies _ False t _ d [u]
-  | isNatural d &&
+  | all isNatural [d, u] &&
     (isRematerializable (targetInst (oInstructions d))) &&
-    not (isOut u) &&
     (fromJust (classOfTemp t d) == fromJust (classOfTemp t u)) = ([], [[]])
 
 copies (f, _, cg, ra, _, _) _ t _rs d us =
