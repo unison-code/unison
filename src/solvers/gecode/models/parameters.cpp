@@ -1305,7 +1305,7 @@ void Parameters::get_element(Json::Value root, UnisonConstraintExpr & e) {
   switch (e.id) {
     // unary expressions
   case NOT_EXPR:
-    ini++;
+    iti++;
     {
       UnisonConstraintExpr e1;
       get_element(*iti, e1);
@@ -1316,7 +1316,7 @@ void Parameters::get_element(Json::Value root, UnisonConstraintExpr & e) {
   case XOR_EXPR:
   case IMPLIES_EXPR:
     for (unsigned int i = 0; i < 2; i++) {
-      ini++;
+      iti++;
       {
         UnisonConstraintExpr e2;
         get_element(*iti, e2);
@@ -1327,22 +1327,21 @@ void Parameters::get_element(Json::Value root, UnisonConstraintExpr & e) {
     // n-ary expressions
   case OR_EXPR:
   case AND_EXPR:
-    while (iti.hasNext()) {
-      ini++;
-      if (iti.name() != "length") {
-        {
-          UnisonConstraintExpr e3;
-          get_element(*iti, e3);
-          e.children.push_back(e3);
-        }
+    iti++;
+    while (iti != root.end()) {
+      {
+        UnisonConstraintExpr e3;
+        get_element(*iti, e3);
+        e.children.push_back(e3);
       }
+      iti++;
     }
     break;
     // unary literals
   case ACTIVE_EXPR:
   case CALLER_SAVED_EXPR:
-    ini++;
-    e.data.push_back(iti.value().toInt32());
+    iti++;
+    e.data.push_back((*iti).asInt());
     break;
     // binary literals
   case CONNECTS_EXPR:
@@ -1352,15 +1351,15 @@ void Parameters::get_element(Json::Value root, UnisonConstraintExpr & e) {
   case TEMPORARY_OVERLAP_EXPR:
   case ALLOCATED_EXPR:
     for (unsigned int i = 0; i < 2; i++) {
-      ini++;
-      e.data.push_back(iti.value().toInt32());
+      iti++;
+      e.data.push_back((*iti).asInt());
     }
     break;
     // ternary literals
   case DISTANCE_EXPR:
     for (unsigned int i = 0; i < 3; i++) {
-      ini++;
-      e.data.push_back(iti.value().toInt32());
+      iti++;
+      e.data.push_back((*iti).asInt());
     }
     break;
   default: GECODE_NEVER;

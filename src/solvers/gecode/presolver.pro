@@ -67,7 +67,10 @@ HEADERS += common/definitions.hpp \
            presolver/quasi_adjacent.hpp \
            presolver/unsafe_temp.hpp
 
-SOURCES += common/definitions.cpp \
+SOURCES += third-party/jsoncpp/json_reader.cpp \
+           third-party/jsoncpp/json_value.cpp \
+           third-party/jsoncpp/json_writer.cpp \
+           common/definitions.cpp \
            common/util.cpp \
            common/jsonutil.cpp \
            models/parameters.cpp \
@@ -109,7 +112,7 @@ CONFIG(graphics) {
   LIBS += -lgecodegist
 }
 LIBS += -lgecodesearch -lgecodeminimodel -lgecodeset -lgecodefloat -lgecodeint \
-        -lgecodekernel -lgecodesupport -ljson
+        -lgecodekernel -lgecodesupport
 
 TARGET = gecode-presolver
 CONFIG -= qt
@@ -122,7 +125,6 @@ CONFIG(graphics) {
 
   DEFINES += GRAPHICS NEWGV
 
-  LIBS -= -ljson
   LIBS += -lgvc -lcgraph -lcdt
 
 }

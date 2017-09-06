@@ -56,8 +56,8 @@
 #include <QtScript/QScriptValueIterator>
 #include <QDebug>
 #else // Then we still need an alternative for parsing JSON
-#include <json/value.h>
-#include <json/reader.h>
+#include "third-party/jsoncpp/json/value.h"
+#include "third-party/jsoncpp/json/reader.h"
 #endif
 
 #include "common/util.hpp"

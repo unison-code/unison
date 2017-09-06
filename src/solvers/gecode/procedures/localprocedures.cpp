@@ -59,6 +59,7 @@ solve_local_portfolio(LocalModel * base, GIST_OPTIONS * lo, int iteration) {
 
 Solution<LocalModel>
 solve_generic_portfolio(LocalModel * base, GIST_OPTIONS * lo, int iteration) {
+  (void)lo; (void)iteration;
 
   block b = base->b;
 
@@ -267,6 +268,7 @@ solve_custom_portfolio(LocalModel * base, GIST_OPTIONS * lo, int iteration) {
 
 Solution<LocalModel>
 solve_local(LocalModel * base, char search, GIST_OPTIONS * lo, int iteration) {
+  (void)lo; (void)iteration;
 
   // Create local problem with the given search strategy
   LocalModel * l = (LocalModel*) base->clone();

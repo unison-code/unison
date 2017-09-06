@@ -51,8 +51,8 @@
 #include <gecode/driver.hh>
 
 #ifndef GRAPHICS
-#include <json/value.h>
-#include <json/reader.h>
+#include "third-party/jsoncpp/json/value.h"
+#include "third-party/jsoncpp/json/reader.h"
 #endif
 
 #include "common/definitions.hpp"
@@ -248,10 +248,12 @@ int main(int argc, char* argv[]) {
   delete app;
 #else
   Json::Value root;
-  Json::Reader reader;
-  if (!reader.parse(json_input, root)) {
-    cerr << "Failed to parse " << name << endl <<
-      reader.getFormatedErrorMessages();
+  Json::CharReaderBuilder reader;
+  std::stringstream json_input_stream;
+  json_input_stream << json_input;
+  std::string errs;
+  if (!Json::parseFromStream(reader, json_input_stream, &root, &errs)) {
+    cerr << "Failed to parse " << name << endl << errs;
     exit(EXIT_FAILURE);
   }
 #endif

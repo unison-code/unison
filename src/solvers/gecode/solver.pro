@@ -53,7 +53,10 @@ HEADERS += common/definitions.hpp \
            procedures/localprocedures.hpp
 
 
-SOURCES += common/definitions.cpp \
+SOURCES += third-party/jsoncpp/json_reader.cpp \
+           third-party/jsoncpp/json_value.cpp \
+           third-party/jsoncpp/json_writer.cpp \
+           common/definitions.cpp \
            common/util.cpp \
            common/jsonutil.cpp \
            models/parameters.cpp \
@@ -83,7 +86,7 @@ CONFIG(graphics) {
   LIBS += -lgecodegist
 }
 LIBS += -lgecodesearch -lgecodeminimodel -lgecodeset -lgecodefloat -lgecodeint \
-        -lgecodekernel -lgecodesupport -ljsoncpp
+        -lgecodekernel -lgecodesupport
 
 TARGET = gecode-solver
 CONFIG -= qt
@@ -149,7 +152,6 @@ CONFIG(graphics) {
              inspectors/usersinspector.cpp \
              inspectors/operandlatencyinspector.cpp
 
-  LIBS -= -ljsoncpp
   LIBS += -lgvc -lcgraph -lcdt
 
 }

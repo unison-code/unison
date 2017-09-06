@@ -64,8 +64,8 @@
 #include "procedures/localprocedures.hpp"
 
 #ifndef GRAPHICS
-#include <json/value.h>
-#include <json/reader.h>
+#include "third-party/jsoncpp/json/value.h"
+#include "third-party/jsoncpp/json/reader.h"
 #endif
 
 #ifdef GRAPHICS
@@ -342,6 +342,7 @@ string cost_status_report(GlobalModel * base, const GlobalModel * sol) {
 void emit_output(GlobalModel * base, vector<ResultData> & results,
                  GlobalData & gd, IterationState & state, string prefix,
                  GIST_OPTIONS * go) {
+  (void)go;
 
   assert(!results.empty());
 
@@ -490,10 +491,12 @@ int main(int argc, char* argv[]) {
   delete app;
 #else
   Json::Value root;
-  Json::Reader reader;
-  if (!reader.parse(json_input, root)) {
-    cerr << "Failed to parse " << name << endl <<
-      reader.getFormatedErrorMessages();
+  Json::CharReaderBuilder reader;
+  std::stringstream json_input_stream;
+  json_input_stream << json_input;
+  std::string errs;
+  if (!Json::parseFromStream(reader, json_input_stream, &root, &errs)) {
+    cerr << "Failed to parse " << name << endl << errs;
     exit(EXIT_FAILURE);
   }
 #endif

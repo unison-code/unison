@@ -394,6 +394,7 @@ void presolve_global_cluster_impact(GlobalModel * base, GIST_OPTIONS * lo) {
 
 void presolve_global_cluster_impact(
      GlobalModel * base, global_cluster gc, bool connect, GIST_OPTIONS * lo) {
+  (void)lo;
   Parameters * input = base->input;
   GlobalModel * g = (GlobalModel*) base->clone();
   g->post_cluster_connection_decision(gc, connect);
@@ -526,6 +527,7 @@ global_limit(Parameters * input, ModelOptions * options, int best) {
 Solution<GlobalModel>
 solve_global(GlobalModel * base, IterationState & state, vector<int> & best,
              GIST_OPTIONS * go, int iteration) {
+  (void)go; (void)iteration;
 
   // Create global problem with aggressiveness a
   GlobalModel * g = (GlobalModel*) base->clone();
@@ -617,11 +619,12 @@ SolverResult shave_local_costs(GlobalModel * base) {
 }
 
 Solution<GlobalModel> solve_monolithic(GlobalModel * base, GIST_OPTIONS * go) {
+  (void)go;
 
   GlobalModel * m = (GlobalModel*) base->clone();
+  m->post_complete_branchers(0);
 
 #ifdef GRAPHICS
-  m->post_complete_branchers(0);
   if (base->options->gist_global()) Gist::bab(m, *go);
 #endif
 
