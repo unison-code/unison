@@ -2258,5 +2258,23 @@ data MipsInstruction = ABSQ_S_PH
                      | SWC1_sp
                      | SDC1_sp
                      | LoadGPDisp
+                     | LDC1_fi_source_fi
+                     | LDC1_fi_demat_fi
+                     | LDC1_fi_remat_fi
+                     | LEA_ADDiu_source
+                     | LEA_ADDiu_demat
+                     | LEA_ADDiu_remat
+                     | LUi_source
+                     | LUi_demat
+                     | LUi_remat
+                     | LW_fi_source_fi
+                     | LW_fi_demat_fi
+                     | LW_fi_remat_fi
+                     | LBu_fi_source_fi
+                     | LBu_fi_demat_fi
+                     | LBu_fi_remat_fi
+                     | LWC1_fi_source_fi
+                     | LWC1_fi_demat_fi
+                     | LWC1_fi_remat_fi
                      deriving (Eq, Ord)
 

@@ -100,6 +100,7 @@ SGHEXAGONREMATYAML = $(SGHEXAGONROOTDIR)/input/hexagon-remat.yaml
 SGMIPSROOTDIR   = $(UNISONDIR)/src/Unison/Target/Mips/SpecsGen
 SGMIPSINPUTYAML = $(SGMIPSROOTDIR)/input/mips.yaml
 SGMIPSAUXYAML   = $(SGMIPSROOTDIR)/input/mips-manual.yaml
+SGMIPSREMATYAML = $(SGMIPSROOTDIR)/input/mips-remat.yaml
 
 SGARMROOTDIR   = $(UNISONDIR)/src/Unison/Target/ARM/SpecsGen
 SGARMINPUTYAML = $(SGARMROOTDIR)/input/arm.yaml
@@ -128,7 +129,9 @@ run-specsgen-hexagon:
 run-specsgen-mips:
 	specsgen --targetname=Mips $(SGMIPSINPUTYAML) $(SGMIPSAUXYAML) \
 	         --outputdir=$(SGMIPSROOTDIR) \
-	         --infiniteregclass m32 --infiniteregclass m64
+	         --infiniteregclass m32 --infiniteregclass m64 \
+	         --infiniteregclass RM32 --infiniteregclass RM64 \
+	         --rematfile=$(SGMIPSREMATYAML)
 
 run-specsgen-arm:
 	specsgen --targetname=ARM $(SGARMINPUTYAML) $(SGARMAUXYAML) \

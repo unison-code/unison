@@ -1,0 +1,27 @@
+- id: LDC1_fi
+  home-class: AFGR64Opnd
+  infinite-class: RM64
+  suffix: _fi
+
+- id: LEA_ADDiu
+  home-class: GPR32Opnd
+  infinite-class: RM32
+
+- id: LUi
+  home-class: GPR32Opnd
+  infinite-class: RM32
+
+- id: LW_fi
+  home-class: GPR32Opnd
+  infinite-class: RM32
+  suffix: _fi
+
+- id: LBu_fi
+  home-class: GPR32Opnd
+  infinite-class: RM32
+  suffix: _fi
+
+- id: LWC1_fi
+  home-class: FGR32Opnd
+  infinite-class: RM32
+  suffix: _fi

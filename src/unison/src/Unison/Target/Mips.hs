@@ -54,7 +54,7 @@ target =
       API.tPostProcess      = const postProcess,
       API.tTransforms       = const transforms,
       API.tCopies           = const copies,
-      API.tRematInstrs      = const (const Nothing),
+      API.tRematInstrs      = const rematInstrs,
       API.tFromCopy         = const fromCopy,
       API.tOperandInfo      = const operandInfo,
       API.tAlignedPairs     = const SpecsGen.alignedPairs,
@@ -138,6 +138,13 @@ copies _ False t [] _ [u] | isCombine u = (accCopy t u, [[]])
 copies _ False _ [] d us | isCombine d =
   ([], replicate (length us) [])
 
+-- Do not extend rematerializable instructions used only once, locally
+-- FIXME: review whether this is always safe
+copies _ False t _ d [u]
+  | isNatural d && (isNatural u || isFun u) &&
+    (isRematerializable (targetInst (oInstructions d))) &&
+    compatibleClassesForTemp t [d, u] = ([], [[]])
+
 copies (f, _, cg, ra, bcfg, sg) _ t _ d us =
   let is = d:us
       w  = widthOfTemp ra cg f t is
@@ -175,7 +182,12 @@ useCopies AnyRegClass    1 = [mkNullInstruction] ++ map TargetInstruction [MOVE,
 useCopies _              2 = [mkNullInstruction] ++ map TargetInstruction [MOVE_D, LOAD_D]
 useCopies rc w = error ("unmatched: useCopies " ++ show rc ++ " " ++ show w)
 
+classOfTemp = classOf (target, [])
 widthOfTemp = widthOf (target, [])
+
+compatibleClassesForTemp t os =
+  let regs = [S.fromList $ registers $ fromJust (classOfTemp t o) | o <- os]
+  in not $ S.null $ foldl S.intersection (head regs) regs
 
 isFGR32Class rc = rc `elem` map RegisterClass [FGR32, FGR32Opnd]
 isFGR32 r = mipsReg r `elem` registers (RegisterClass FGR32Opnd)
@@ -200,6 +212,7 @@ popInstruction r
 
 -- | Transforms copy instructions into natural instructions
 
+-- handle regular copies
 fromCopy _ o @ Copy {oCopyIs = [TargetInstruction i], oCopyS = s, oCopyD = d}
   | i `elem` [MOVE, MFLO, MFHI, MTLO, MTHI, MOVE_F, MOVE_D] = toLinear o
   | i `elem` [STORE, STORE_F, STORE_D] =
@@ -210,6 +223,18 @@ fromCopy _ o @ Copy {oCopyIs = [TargetInstruction i], oCopyS = s, oCopyD = d}
     Linear {oIs = [TargetInstruction (fromCopyInstr i)],
             oUs  = [mkOprMipsSP, mkBoundMachineFrameObject i s],
             oDs  = [d]}
+
+-- handle rematerialization copies
+fromCopy (Just (Linear {oUs = us}))
+         Copy {oCopyIs = [TargetInstruction i], oCopyS = s, oCopyD = d}
+  | isDematInstr i =
+    Linear {oIs = [mkNullInstruction], oUs = [s], oDs = [d]}
+  | isRematInstr i =
+    Linear {oIs = [TargetInstruction (originalInstr i)], oUs = us, oDs = [d]}
+
+-- handle rematerialization sources
+fromCopy _ (Natural o @ Linear {oIs = [TargetInstruction i]})
+  | isSourceInstr i = o {oIs = [mkNullInstruction]}
 
 fromCopy _ (Natural o) = o
 fromCopy _ o = error ("unmatched pattern: fromCopy " ++ show o)
@@ -230,6 +255,11 @@ fromCopyInstr = fromJust . SpecsGen.parent
 
 isReservedRegister ZERO = True
 isReservedRegister _ = False
+
+rematInstrs i
+  | isRematerializable i =
+      Just (sourceInstr i, dematInstr i, rematInstr i)
+  | otherwise = error ("unmatched: rematInstrs " ++ show i)
 
 -- | Declares target architecture resources
 

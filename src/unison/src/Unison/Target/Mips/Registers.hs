@@ -28,14 +28,14 @@ import Unison.Target.Mips.MipsRegisterClassDecl
 registerArray =
     map RegisterClass
     [GPR32Opnd, ACC64, FGR32Opnd, FCCRegsOpnd, DSPCC] ++
-    [InfiniteRegisterClass M32]
+    map InfiniteRegisterClass [M32, RM32]
 
 -- | Register classes
 regClasses =
   map RegisterClass
   [GPR32Opnd, GPR32, GPR_ATT7, GPR_T89, GPR_FPRA, ACC64, FGR32Opnd, FGR32,
    AFGR64Opnd, AFGR64, AFGR_D09, FCCRegsOpnd, DSPCC] ++
-  map InfiniteRegisterClass [M32, M64]
+  map InfiniteRegisterClass [M32, M64, RM32, RM64]
 
 -- | Register atoms of 1-width registers
 
@@ -99,13 +99,14 @@ registers (RegisterClass rc)
 
 -- | Map from infinite register class to register usage
 
-infRegClassUsage (InfiniteRegisterClass M32) = 1
-infRegClassUsage (InfiniteRegisterClass M64) = 2
+infRegClassUsage (InfiniteRegisterClass M32)  = 1
+infRegClassUsage (InfiniteRegisterClass M64)  = 2
+infRegClassUsage (InfiniteRegisterClass RM32) = 1
+infRegClassUsage (InfiniteRegisterClass RM64) = 2
 
 -- | Map from infinite register class to (possibly) register atom upper bound
 
-infRegClassBound (InfiniteRegisterClass M32) = Nothing
-infRegClassBound (InfiniteRegisterClass M64) = Nothing
+infRegClassBound = const Nothing
 
 -- | Registers whose value cannot be moved around
 

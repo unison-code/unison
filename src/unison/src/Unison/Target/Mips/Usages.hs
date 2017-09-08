@@ -13,7 +13,8 @@ import Unison.Target.Mips.SpecsGen.MipsInstructionDecl
 usages i =
   let it = SpecsGen.itinerary i
   in mergeUsages (itineraryUsage i it)
-     [mkUsage BundleWidth (size i) 1, mkUsage Issue (issue i) 1]
+     ([mkUsage BundleWidth (size i) 1 | size i > 0] ++
+      [mkUsage Issue (issue i) 1])
 
 itineraryUsage i _
   | isDelaySlotInstr i = [mkUsage LongDuration 1 1]
@@ -73,11 +74,14 @@ itineraryUsage _ it
   -- TODO: double-check this, missing from LLVM
   | it `elem` [II_SLTI_SLTIU, II_SLT_SLTU, II_SEB, II_WSBH] =
       [mkUsage ALU 1 1]
+  | it `elem` [NoItinerary] = []
 
 itineraryUsage i it =
   error ("unmatched: itineraryUsage " ++ show i ++ " " ++ show it)
 
 size LoadGPDisp = size LUi + size ADDiu
+size i
+  | isSourceInstr i || isDematInstr i = 0
 size i =
   case SpecsGen.size i of
    4 -> 1

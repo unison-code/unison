@@ -80,6 +80,9 @@ operandInfo i
   | i `elem` [MFHC1_D32, MFHC1_MM] =
     ([TemporaryInfo (RegisterClass AFGR64Opnd) 0 False],
      [TemporaryInfo (RegisterClass GPR32Opnd) 1 False])
+  | i `elem` [LDC1_fi_demat_fi] =
+    ([TemporaryInfo (RegisterClass AFGR64Opnd) 0 False],
+     [TemporaryInfo (InfiniteRegisterClass RM64) 0 False])
   | i `elem` [STORE_D] =
     ([TemporaryInfo (RegisterClass AFGR64Opnd) 0 False],
      [TemporaryInfo (InfiniteRegisterClass M64) 1 False])
@@ -371,6 +374,9 @@ operandInfo i
   | i `elem` [MFC1, MFC1_MM] =
     ([TemporaryInfo (RegisterClass FGR32Opnd) 0 False],
      [TemporaryInfo (RegisterClass GPR32Opnd) 1 False])
+  | i `elem` [LWC1_fi_demat_fi] =
+    ([TemporaryInfo (RegisterClass FGR32Opnd) 0 False],
+     [TemporaryInfo (InfiniteRegisterClass RM32) 0 False])
   | i `elem` [STORE_F] =
     ([TemporaryInfo (RegisterClass FGR32Opnd) 0 False],
      [TemporaryInfo (InfiniteRegisterClass M32) 1 False])
@@ -613,6 +619,11 @@ operandInfo i
   | i `elem` [FILL_W] =
     ([TemporaryInfo (RegisterClass GPR32Opnd) 0 False],
      [TemporaryInfo (RegisterClass MSA128WOpnd) 1 False])
+  | i `elem`
+      [LBu_fi_demat_fi, LEA_ADDiu_demat, LUi_demat, LW_fi_demat_fi]
+    =
+    ([TemporaryInfo (RegisterClass GPR32Opnd) 0 False],
+     [TemporaryInfo (InfiniteRegisterClass RM32) 0 False])
   | i `elem` [STORE] =
     ([TemporaryInfo (RegisterClass GPR32Opnd) 0 False],
      [TemporaryInfo (InfiniteRegisterClass M32) 1 False])
@@ -1418,6 +1429,17 @@ operandInfo i
   | i `elem` [BNZ_W, BZ_W] =
     ([TemporaryInfo (RegisterClass MSA128WOpnd) 0 False, BlockRefInfo],
      [])
+  | i `elem` [LWC1_fi_remat_fi] =
+    ([TemporaryInfo (InfiniteRegisterClass RM32) 0 False],
+     [TemporaryInfo (RegisterClass FGR32Opnd) 1 False])
+  | i `elem`
+      [LBu_fi_remat_fi, LEA_ADDiu_remat, LUi_remat, LW_fi_remat_fi]
+    =
+    ([TemporaryInfo (InfiniteRegisterClass RM32) 0 False],
+     [TemporaryInfo (RegisterClass GPR32Opnd) 1 False])
+  | i `elem` [LDC1_fi_remat_fi] =
+    ([TemporaryInfo (InfiniteRegisterClass RM64) 0 False],
+     [TemporaryInfo (RegisterClass AFGR64Opnd) 1 False])
   | i `elem` [LOAD_F] =
     ([TemporaryInfo (InfiniteRegisterClass M32) 0 False],
      [TemporaryInfo (RegisterClass FGR32Opnd) 1 False])
@@ -1460,6 +1482,8 @@ operandInfo i
     ([BoundInfo], [TemporaryInfo (RegisterClass MSA128HOpnd) 1 False])
   | i `elem` [LDI_W] =
     ([BoundInfo], [TemporaryInfo (RegisterClass MSA128WOpnd) 1 False])
+  | i `elem` [LUi_source] =
+    ([BoundInfo], [TemporaryInfo (InfiniteRegisterClass RM32) 0 False])
   | i `elem` [COPY, FAULTING_LOAD_OP] = ([BoundInfo], [BoundInfo])
   | i `elem` [SHILO, SHILO_MM] =
     ([BoundInfo, TemporaryInfo (RegisterClass ACC64DSPOpnd) 0 False],
@@ -1561,6 +1585,15 @@ operandInfo i
   | i `elem` [LD_W] =
     ([BoundInfo, BoundInfo],
      [TemporaryInfo (RegisterClass MSA128WOpnd) 1 False])
+  | i `elem`
+      [LBu_fi_source_fi, LEA_ADDiu_source, LWC1_fi_source_fi,
+       LW_fi_source_fi]
+    =
+    ([BoundInfo, BoundInfo],
+     [TemporaryInfo (InfiniteRegisterClass RM32) 0 False])
+  | i `elem` [LDC1_fi_source_fi] =
+    ([BoundInfo, BoundInfo],
+     [TemporaryInfo (InfiniteRegisterClass RM64) 0 False])
   | i `elem` [COPY_TO_REGCLASS, EXTRACT_SUBREG, REG_SEQUENCE] =
     ([BoundInfo, BoundInfo], [BoundInfo])
   | i `elem` [LWL, LWLE, LWR, LWRE, SWLE, SWRE] =

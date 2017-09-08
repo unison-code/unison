@@ -58,4 +58,6 @@ data MipsRegisterClass =
     MSA128CROpnd |
     MSA128D |
     M32 |
-    M64 deriving (Eq, Ord, Show, Read)
+    M64 |
+    RM32 |
+    RM64 deriving (Eq, Ord, Show, Read)
