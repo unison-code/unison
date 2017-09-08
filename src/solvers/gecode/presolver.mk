@@ -49,8 +49,8 @@ SOLVERBRANCHERS := filters merit value printers pressureschedulingbrancher \
 routingbrancher
 SOLVERPROCEDURES := presolverprocedures commonprocedures
 SOLVERPRESOLVER := presolver-options presolve before_presolver diff_temps	\
-dominance infeasible_presolver last_use precedences unsafe_temp auxiliary congr	\
-digraph
+dominance infeasible_presolver last_use precedences unsafe_temp auxiliary	\
+congr digraph across
 
 PRESOLVERCLASSES := $(addprefix $(SOLVERCOMMONDIR)/, $(SOLVERCOMMON))	\
 $(addprefix $(SOLVERMODELSDIR)/, $(SOLVERMODELS)) $(addprefix		\
