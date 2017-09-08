@@ -790,12 +790,20 @@ constraint
 
 %% resources
 
+% test unit_res_dur_cap(int: res, set of int: active) = (
+%     forall(o in active)(
+%         fixedop(o) /\
+% 	res_con[res,min(op_instructions[o])]=res_cap[res] /\
+% 	res_dur[res,min(op_instructions[o])]=1 /\
+% 	res_off[res,min(op_instructions[o])]=0
+%     )
+% );
+
 test unit_res_dur_cap(int: res, set of int: active) = (
-    forall(o in active)(
-        fixedop(o) /\
-	res_con[res,min(op_instructions[o])]=res_cap[res] /\
-	res_dur[res,min(op_instructions[o])]=1 /\
-	res_off[res,min(op_instructions[o])]=0
+    forall(o in active, oi in op_instructions[o])(
+	res_con[res,oi]=res_cap[res] /\
+	res_dur[res,oi]=1 /\
+	res_off[res,oi]=0
     )
 );
 
