@@ -314,8 +314,8 @@ model2dzn(AVL0) :-
 	write_array(domuse_q, array(1..Ndomuse,int), Qs1),
 	write_array(domuse_r, array(1..Ndomuse,int), Rs1),
 	%
-	avl_fetch(memassign, AVL, MemAssign),
-	(   foreach([MA1,MA2,MA3],MemAssign),
+	avl_fetch(infassign, AVL, MemAssign),
+	(   foreach([MA1,_RegSpace,MA2,MA3],MemAssign),
 	    foreach(MA1,MemAssignTemp),
 	    foreach(MA2,MemAssignMin),
 	    foreach(MA3,MemAssignMax)

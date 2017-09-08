@@ -567,7 +567,8 @@ void alt_across_call(PresolverAsserts& PA,
 	    if(ord_contains(DefOnly, tu) &&
 	       ord_contains(UseOnly, td) &&
 	       !ord_contains(S, tu) &&
-	       !ord_contains(S, td)) {
+	       !ord_contains(S, td) &&
+	       ord_intersection(input.temps[pu], PA.remat).empty()) {
 	      S.push_back(tu);
 	      S.push_back(td);
 	      PresolverSetAcrossTuple T;
