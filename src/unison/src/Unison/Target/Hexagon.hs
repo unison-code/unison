@@ -191,9 +191,9 @@ copies _ False t [] d [u]
 -- Do not extend rematerializable instructions used only once, locally
 -- FIXME: review whether this is always safe
 copies _ False t _ d [u]
-  | all isNatural [d, u] &&
+  | isNatural d && (isNatural u || isFun u) &&
     (isRematerializable (targetInst (oInstructions d))) &&
-    (fromJust (classOfTemp t d) == fromJust (classOfTemp t u)) = ([], [[]])
+    compatibleClassesForTemp t [d, u] = ([], [[]])
 
 copies (f, _, cg, ra, _, _) _ t _rs d us =
   let is = d:us
@@ -223,6 +223,10 @@ useCopies t w u =
 classOfTemp = classOf (target, [])
 widthOfTemp = widthOf (target, [])
 
+compatibleClassesForTemp t os =
+  let regs = [S.fromList $ registers $ fromJust (classOfTemp t o) | o <- os]
+  in not $ S.null $ foldl S.intersection (head regs) regs
+
 moveOp 1 = MVW
 moveOp 2 = MVD
 
@@ -251,7 +255,8 @@ rematInstrs i
 
 -- | Transforms copy instructions into natural instructions
 
-fromCopy Copy {oCopyIs = [TargetInstruction i], oCopyS = s, oCopyD = d}
+-- handle regular copies
+fromCopy _ Copy {oCopyIs = [TargetInstruction i], oCopyS = s, oCopyD = d}
   | i `elem` [MVW, MVD, MVPR, MVRP] =
     Linear {oIs = [TargetInstruction (fromCopyInstr i)],
             oUs = [s],
@@ -265,7 +270,20 @@ fromCopy Copy {oCopyIs = [TargetInstruction i], oCopyS = s, oCopyD = d}
             oUs = [mkOprHexagonSP, mkBoundMachineFrameObject i s],
             oDs = [d]}
 
-fromCopy i = error ("unmatched pattern: fromCopy " ++ show i)
+-- handle rematerialization copies
+fromCopy (Just (Linear {oUs = us}))
+         Copy {oCopyIs = [TargetInstruction i], oCopyS = s, oCopyD = d}
+  | isDematInstr i =
+    Linear {oIs = [mkNullInstruction], oUs = [s], oDs = [d]}
+  | isRematInstr i =
+    Linear {oIs = [TargetInstruction (originalInstr i)], oUs = us, oDs = [d]}
+
+-- handle rematerialization sources
+fromCopy _ (Natural o @ Linear {oIs = [TargetInstruction i]})
+  | isSourceInstr i = o {oIs = [mkNullInstruction]}
+
+fromCopy _ (Natural o) = o
+fromCopy _ o = error ("unmatched pattern: fromCopy " ++ show o)
 
 mkOprHexagonSP = Register $ mkTargetRegister hexagonSP
 
@@ -384,7 +402,7 @@ resources =
 usages i
   | i `elem` [Jump_merge, Jr_merge] = [mkUsage BlockEnd 1 1]
 usages i
-  | isConstantExtended i && not (isSourceOrDematInstr i) =
+  | isConstantExtended i && not (isSourceInstr i || isDematInstr i) =
     let it = SpecsGen.itinerary (nonConstantExtendedInstr i)
     in mergeUsages (itineraryUsage i it) [mkUsage BundleWidth 1 1]
   | i `elem` [C2_mux_tfr, C2_mux_tfr_new] =

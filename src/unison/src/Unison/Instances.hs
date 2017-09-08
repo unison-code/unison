@@ -282,8 +282,7 @@ maybeShowPrescheduled Nothing = Nothing
 maybeShowPrescheduled (Just c) = Just $ showAttr "cycle" "" c
 
 maybeShowRematOrigin Nothing = Nothing
-maybeShowRematOrigin (Just (oid, i)) =
-  Just ("remat-origin: o" ++ show oid ++ ":" ++ show i)
+maybeShowRematOrigin (Just oid) = Just $ showAttr "remat-origin" "o" oid
 
 showAttr :: Show a => String -> String -> a -> String
 showAttr n p a = n ++ ": " ++ p ++ show a

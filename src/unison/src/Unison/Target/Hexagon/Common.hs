@@ -15,7 +15,8 @@ module Unison.Target.Hexagon.Common
      isMemAccessWithOff, memAccessAlignment, isOldValueStoreInstr,
      newValueStoreInstr, isMuxTransferInstr, isCondTransferInstr,
      condTransferInstr, muxTransferInstr, isRematerializable,
-     isSourceOrDematInstr, sourceInstr, dematInstr, rematInstr) where
+     isSourceInstr, isDematInstr, isRematInstr, sourceInstr, dematInstr,
+     rematInstr, originalInstr) where
 
 import Data.List
 import qualified Data.Map as M
@@ -124,11 +125,16 @@ data RematTriple = RematTriple {
   remat  :: HexagonInstruction}
 
 isRematerializable i = M.member i rematVersions
-isSourceOrDematInstr i =
-  i `elem` concat [[source t, demat t] | t <- M.elems rematVersions]
+isSourceInstr = isRInstrOf source
+isDematInstr = isRInstrOf demat
+isRematInstr = isRInstrOf remat
+isRInstrOf f i = i `elem` [f t | t <- M.elems rematVersions]
 sourceInstr i = source $ rematVersions M.! i
 dematInstr  i = demat $ rematVersions M.! i
 rematInstr  i = remat $ rematVersions M.! i
+
+originalInstr i =
+  (M.fromList [(remat ris, i) | (i, ris) <- M.toList rematVersions]) M.! i
 
 rematVersions = M.fromList
   [(A2_tfrsi, RematTriple A2_tfrsi_source A2_tfrsi_demat A2_tfrsi_remat),

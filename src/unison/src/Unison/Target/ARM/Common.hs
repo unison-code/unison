@@ -11,7 +11,8 @@ This file is part of Unison, see http://unison-code.github.io
 -}
 module Unison.Target.ARM.Common
     (isCpsrDef, toExplicitCpsrDef, fromExplicitCpsrDef, defaultMIRPred,
-     defaultUniPred) where
+     defaultUniPred, isRematerializable, isSourceInstr, isDematInstr,
+     isRematInstr, sourceInstr, dematInstr, rematInstr, originalInstr) where
 
 import qualified Data.Map as M
 import Data.Tuple
@@ -47,3 +48,37 @@ cpsrMap =
 defaultMIRPred = [mkMachineImm 14, mkMachineNullReg]
 
 defaultUniPred = map mkBound defaultMIRPred
+
+data RematTriple = RematTriple {
+  source :: ARMInstruction,
+  demat  :: ARMInstruction,
+  remat  :: ARMInstruction}
+
+isRematerializable i = M.member i rematVersions
+isSourceInstr = isRInstrOf source
+isDematInstr = isRInstrOf demat
+isRematInstr = isRInstrOf remat
+isRInstrOf f i = i `elem` [f t | t <- M.elems rematVersions]
+sourceInstr i = source $ rematVersions M.! i
+dematInstr  i = demat $ rematVersions M.! i
+rematInstr  i = remat $ rematVersions M.! i
+
+originalInstr i =
+  (M.fromList [(remat ris, i) | (i, ris) <- M.toList rematVersions]) M.! i
+
+rematVersions = M.fromList
+  [(T2MOVi, RematTriple T2MOVi_source T2MOVi_demat T2MOVi_remat),
+   (T2MOVi16, RematTriple T2MOVi16_source T2MOVi16_demat T2MOVi16_remat),
+   (T2MOVi32imm, RematTriple T2MOVi32imm_source T2MOVi32imm_demat T2MOVi32imm_remat),
+   (TMOVi8s, RematTriple TMOVi8s_source TMOVi8s_demat TMOVi8s_remat),
+   (FMSTAT_cpsr, RematTriple FMSTAT_cpsr_source FMSTAT_cpsr_demat FMSTAT_cpsr_remat),
+   (T2ADDri_fi, RematTriple T2ADDri_fi_source_fi T2ADDri_fi_demat_fi T2ADDri_fi_remat_fi),
+   (T2LDRi12_fi, RematTriple T2LDRi12_fi_source_fi T2LDRi12_fi_demat_fi T2LDRi12_fi_remat_fi),
+   (T2LEApcrelJT, RematTriple T2LEApcrelJT_source T2LEApcrelJT_demat T2LEApcrelJT_remat),
+   (T2MVNi, RematTriple T2MVNi_source T2MVNi_demat T2MVNi_remat),
+   (VLDRD_cpi, RematTriple VLDRD_cpi_source_cpi VLDRD_cpi_demat_cpi VLDRD_cpi_remat_cpi),
+   (VLDRD_fi, RematTriple VLDRD_fi_source_fi VLDRD_fi_demat_fi VLDRD_fi_remat_fi),
+   (VLDRS_cpi, RematTriple VLDRS_cpi_source_cpi VLDRS_cpi_demat_cpi VLDRS_cpi_remat_cpi),
+   (T2LDRBi12_fi, RematTriple T2LDRBi12_fi_source_fi T2LDRBi12_fi_demat_fi T2LDRBi12_fi_remat_fi),
+   (T2LEApcrel_cpi, RematTriple T2LEApcrel_cpi_source_cpi T2LEApcrel_cpi_demat_cpi T2LEApcrel_cpi_remat_cpi),
+   (VLDRS_fi, RematTriple VLDRS_fi_source_fi VLDRS_fi_demat_fi VLDRS_fi_remat_fi)]

@@ -204,7 +204,9 @@ data BlockOperation i r =
 
 data Operation i r =
     -- | Regular program operation
-    Natural (NaturalOperation i r) |
+    Natural {
+      oNatural :: NaturalOperation i r
+    } |
     -- | Operation with special semantics that is not meant to appear in the
     -- final code
     Virtual (VirtualOperation r) |
@@ -485,8 +487,8 @@ data Attributes i r = Attributes {
   aBranchTaken  :: Maybe Bool,
   -- | Whether the operation is prescheduled and in what issue cycle
   aPrescheduled :: Maybe IssueCycle,
-  -- | Identifier and instruction of the rematerialization copy's source, if any
-  aRematOrigin  :: Maybe (OperationId, Instruction i)
+  -- | Identifier of the rematerialization copy's origin, if any
+  aRematOrigin  :: Maybe OperationId
 } deriving (Eq)
 
 -- | Object representing the side-effect of an 'Operation'. Operations can write

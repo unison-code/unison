@@ -200,7 +200,7 @@ popInstruction r
 
 -- | Transforms copy instructions into natural instructions
 
-fromCopy o @ Copy {oCopyIs = [TargetInstruction i], oCopyS = s, oCopyD = d}
+fromCopy _ o @ Copy {oCopyIs = [TargetInstruction i], oCopyS = s, oCopyD = d}
   | i `elem` [MOVE, MFLO, MFHI, MTLO, MTHI, MOVE_F, MOVE_D] = toLinear o
   | i `elem` [STORE, STORE_F, STORE_D] =
     Linear {oIs = [TargetInstruction (fromCopyInstr i)],
@@ -211,7 +211,8 @@ fromCopy o @ Copy {oCopyIs = [TargetInstruction i], oCopyS = s, oCopyD = d}
             oUs  = [mkOprMipsSP, mkBoundMachineFrameObject i s],
             oDs  = [d]}
 
-fromCopy o = error ("unmatched pattern: fromCopy " ++ show o)
+fromCopy _ (Natural o) = o
+fromCopy _ o = error ("unmatched pattern: fromCopy " ++ show o)
 
 mkOprMipsSP = Register $ mkTargetRegister SP
 

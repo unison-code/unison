@@ -606,5 +606,20 @@ allInstructions
      TTST_cpsr, T2TEQrr_cpsr, TFP, TPUSH_r4_7, TPUSH_r8_11, TPUSH2_r4_7,
      TPUSH2_r4_11, TPOP_r4_7, TPOP_r8_11, TPOP2_r4_7, TPOP2_r4_11,
      TPOP2_r4_7_RET, TPOP2_r4_11_RET, MEMCPY_4, T2LDMIA_4,
-     T2LDMIA_UPD_4, T2STMIA_4, T2STMIA_UPD_4, Load_merge]
+     T2LDMIA_UPD_4, T2STMIA_4, T2STMIA_UPD_4, Load_merge, T2MOVi_source,
+     T2MOVi_demat, T2MOVi_remat, T2MOVi16_source, T2MOVi16_demat,
+     T2MOVi16_remat, T2MOVi32imm_source, T2MOVi32imm_demat,
+     T2MOVi32imm_remat, TMOVi8s_source, TMOVi8s_demat, TMOVi8s_remat,
+     T2ADDri_fi_source_fi, T2ADDri_fi_demat_fi, T2ADDri_fi_remat_fi,
+     T2LDRi12_fi_source_fi, T2LDRi12_fi_demat_fi, T2LDRi12_fi_remat_fi,
+     VLDRD_fi_source_fi, VLDRD_fi_demat_fi, VLDRD_fi_remat_fi,
+     T2MVNi_source, T2MVNi_demat, T2MVNi_remat, T2LEApcrelJT_source,
+     T2LEApcrelJT_demat, T2LEApcrelJT_remat, VLDRD_cpi_source_cpi,
+     VLDRD_cpi_demat_cpi, VLDRD_cpi_remat_cpi, VLDRS_cpi_source_cpi,
+     VLDRS_cpi_demat_cpi, VLDRS_cpi_remat_cpi, FMSTAT_cpsr_source,
+     FMSTAT_cpsr_demat, FMSTAT_cpsr_remat, T2LDRBi12_fi_source_fi,
+     T2LDRBi12_fi_demat_fi, T2LDRBi12_fi_remat_fi,
+     T2LEApcrel_cpi_source_cpi, T2LEApcrel_cpi_demat_cpi,
+     T2LEApcrel_cpi_remat_cpi, VLDRS_fi_source_fi, VLDRS_fi_demat_fi,
+     VLDRS_fi_remat_fi]
 

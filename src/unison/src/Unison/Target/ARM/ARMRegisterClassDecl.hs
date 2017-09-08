@@ -34,6 +34,8 @@ data ARMRegisterClass =
     QQPR |
     QQQQPR |
     RGPR |
+    RM32 |
+    RM64 |
     SPR |
     TcGPR |
     TGPR |

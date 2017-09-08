@@ -105,7 +105,7 @@ extendReferences vc rtmap cf (src, dst) (Just d) us (ti, code, irs, id, t2rs) =
         (dcs, ucs) = cf vc src rs d us
         (dcs',
          ucs') = case M.lookup src rtmap of
-                  Just (_, (_, drc, urc)) ->
+                  Just (_, ris) ->
                     -- this assumes that the rematerialization instruction
                     -- always dominates all other copies and is compatible
                     -- with the register class of all its users: a more
@@ -113,9 +113,9 @@ extendReferences vc rtmap cf (src, dst) (Just d) us (ti, code, irs, id, t2rs) =
                     -- as well and let the target decide, perhaps in a
                     -- later phase
                     (if null dcs then []
-                     else dcs ++ [TargetInstruction drc],
+                     else dcs ++ [TargetInstruction drc | (_, drc, _) <- ris],
                      [if null ucs0 then []
-                      else ucs0 ++ [TargetInstruction urc]
+                      else ucs0 ++ [TargetInstruction urc | (_, _, urc) <- ris]
                      | ucs0 <- ucs])
                   Nothing -> (dcs, ucs)
         t'         = if null dcs' then src else mkTemp ti
@@ -157,8 +157,7 @@ extend vc rtmap firstT prevT pos (ti, code, irs, id, t2rs) (oprToExtend, insts) 
                   (Just (ro:_, _), _) -> Just ro
                   (Nothing, Just (ro:_, _)) -> Just ro
                   (Nothing, Nothing) -> Nothing
-        rorig  = fmap (\o -> (oId o, head $ oInstructions o)) ro
-        copy2  =  mapToAttrRematOrigin (const rorig) copy1
+        copy2  = mapToAttrRematOrigin (const (fmap oId ro)) copy1
         copy3  = case ro of
                   (Just ro') -> mapToAttrMem (const (aMem $ oAs ro')) copy2
                   Nothing -> copy2
@@ -205,22 +204,20 @@ mkRematTempMap rif f @ Function {fRematerializable = rts} =
   in M.fromList (mapMaybe (toRematTemp rif fcode) rts)
 
 toRematTemp rif fcode (t, oids) =
-  let os = map (\oid -> fromJust $ find (isId oid) fcode) oids
+  let os   = map (\oid -> fromJust $ find (isId oid) fcode) oids
       -- All definers should be implemented equally, otherwise t would not
-      -- be rematerilizable
-      i  = targetInst $ oInstructions $ head os
-  in case rif i of
-     Just rcs -> Just (t, (os, rcs))
-     Nothing  -> Nothing
+      -- be rematerializable
+      ris  = catMaybes [rif i | TargetInstruction i <- oInstructions $ head os]
+  in if null ris then Nothing else Just (t, (os, ris))
 
 updateRematOrigins rif f @ Function {fCode = code} =
-  let os = S.fromList $ mapMaybe (fmap fst . aRematOrigin . oAs) $ flatten code
+  let os = S.fromList $ mapMaybe (aRematOrigin . oAs) $ flatten code
       f' = mapToOperation (addDematerialize rif os) f
   in f' {fRematerializable = []}
 
 addDematerialize rif os o
   | S.member (oId o) os =
-      let i  = targetInst $ oInstructions o
-          Just (s, _, _) = rif i
-      in mapToInstructions (\is -> is ++ [TargetInstruction s]) o
+      let ris = catMaybes [rif i | TargetInstruction i <- oInstructions o]
+          is' = [TargetInstruction s | (s, _, _) <- ris]
+      in mapToInstructions (\is -> is ++ is') o
   | otherwise = o

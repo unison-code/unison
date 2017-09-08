@@ -167,8 +167,8 @@ postProcess (ti, to) = tPostProcess ti to
 transforms (ti, to) = tTransforms ti to
 copies (ti, to) = tCopies ti to
 rematInstrs (ti, to) = tRematInstrs ti to
-fromCopy (ti, to) bo @ SingleOperation {oOpr = o} =
-    bo {oOpr = Natural (tFromCopy ti to o)}
+fromCopy (ti, to) ro o =
+    o {oOpr = Natural (tFromCopy ti to (fmap (oNatural . oOpr) ro) (oOpr o))}
 operandInfo (ti, to) = tOperandInfo ti to
 alignedPairs (ti, to) o @ SingleOperation {oOpr = (Natural {})} =
   concat [[(p, q, tai) | (p, q) <- tAlignedPairs ti to i (oUses o, oDefs o)]
@@ -256,10 +256,10 @@ data TargetDescription i r rc s = TargetDescription {
       -- given instruction (source instruction, dematerialization copy, and
       -- rematerialization copy)
       tRematInstrs      :: TargetOptions -> i -> Maybe (i, i, i),
-      -- | Implementation of the given copy operation to be applied
-      -- during the export phase
-      tFromCopy         :: TargetOptions -> Operation i r ->
-                           NaturalOperation i r,
+      -- | Implementation of the given operation (typically a copy) to be
+      -- applied during the export phase with possibly a supporting remat origin
+      tFromCopy         :: TargetOptions -> Maybe (NaturalOperation i r) ->
+                           Operation i r -> NaturalOperation i r,
       -- | Information about the use and definition operands of the given
       -- instruction
       tOperandInfo      :: TargetOptions -> OperandInfoFunction i rc,

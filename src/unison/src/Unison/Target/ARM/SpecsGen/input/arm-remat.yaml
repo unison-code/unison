@@ -1,0 +1,69 @@
+---
+
+- id: t2MOVi
+  home-class: rGPR
+  infinite-class: RM32
+
+- id: t2MOVi16
+  home-class: rGPR
+  infinite-class: RM32
+
+- id: t2MOVi32imm
+  home-class: rGPR
+  infinite-class: RM32
+
+- id: tMOVi8s
+  home-class: tGPR
+  infinite-class: RM32
+
+- id: t2ADDri_fi
+  home-class: GPRnopc
+  infinite-class: RM32
+  suffix: _fi
+
+- id: t2LDRi12_fi
+  home-class: GPR
+  infinite-class: RM32
+  suffix: _fi
+
+- id: VLDRD_fi
+  home-class: DPR
+  infinite-class: RM64
+  suffix: _fi
+
+- id: t2MVNi
+  home-class: rGPR
+  infinite-class: RM32
+
+- id: t2LEApcrelJT
+  home-class: rGPR
+  infinite-class: RM32
+
+- id: VLDRD_cpi
+  home-class: DPR
+  infinite-class: RM64
+  suffix: _cpi
+
+- id: VLDRS_cpi
+  home-class: SPR
+  infinite-class: RM32
+  suffix: _cpi
+
+- id: FMSTAT_cpsr
+  home-class: CCR
+  infinite-class: RM32
+
+- id: t2LDRBi12_fi
+  home-class: GPRnopc
+  infinite-class: RM32
+  suffix: _fi
+
+- id: t2LEApcrel_cpi
+  home-class: rGPR
+  infinite-class: RM32
+  suffix: _cpi
+
+- id: VLDRS_fi
+  home-class: SPR
+  infinite-class: RM32
+  suffix: _fi

@@ -104,6 +104,8 @@ SGMIPSAUXYAML   = $(SGMIPSROOTDIR)/input/mips-manual.yaml
 SGARMROOTDIR   = $(UNISONDIR)/src/Unison/Target/ARM/SpecsGen
 SGARMINPUTYAML = $(SGARMROOTDIR)/input/arm.yaml
 SGARMAUXYAML   = $(SGARMROOTDIR)/input/arm-manual.yaml
+SGARMREMATYAML = $(SGARMROOTDIR)/input/arm-remat.yaml
+
 
 build-specsgen: prepare-specsgen
 	cd $(UNISONSPECSGENDIR); $(CABALBIN) configure; $(CABALBIN) build
@@ -133,4 +135,6 @@ run-specsgen-arm:
 	         --outputdir=$(SGARMROOTDIR) \
 	         --regclass p2:CCR --infiniteregclass M32 --infiniteregclass M32t \
 	         --infiniteregclass M64 --infiniteregclass M128 \
-	         --promoteeffect CPSR:
+	         --promoteeffect CPSR: \
+	         --infiniteregclass RM32 --infiniteregclass RM64 \
+	         --rematfile=$(SGARMREMATYAML)

@@ -217,8 +217,8 @@ alignedPairs i ([_, _, _, _], [_])
 alignedPairs i ([_, _, _, _, _], [_])
   | i `elem`
       [ADDri, ANDri, BICri, EORri, ORRri, RSBri, SUBri, T2ADDri,
-       T2ADDri_fi, T2ANDri, T2BICri, T2EORri, T2ORNri, T2ORRri, T2RSBri,
-       T2SUBri, TRSBs]
+       T2ADDri_fi, T2ADDri_fi_source_fi, T2ANDri, T2BICri, T2EORri,
+       T2ORNri, T2ORRri, T2RSBri, T2SUBri, TRSBs]
     = []
 alignedPairs i ([_, _, _, _, _, _], [_, _])
   | i `elem` [ADCri, RSCri, SBCri, T2ADCri, T2SBCri] = []
@@ -848,15 +848,19 @@ alignedPairs i ([_, _, _, _], [])
        T2TBH]
     = []
 alignedPairs i ([_, _, _, _], [_])
-  | i `elem` [VLDRD, VLDRD_cpi, VLDRD_fi] = []
+  | i `elem`
+      [VLDRD, VLDRD_cpi, VLDRD_cpi_source_cpi, VLDRD_fi,
+       VLDRD_fi_source_fi]
+    = []
 alignedPairs i ([_, _, _, _], [_])
   | i `elem`
       [LDRBi12, LDRcp, LDRi12, PICLDRB, PICLDRH, PICLDRSB, PICLDRSH,
-       T2LDRBT, T2LDRBi12, T2LDRBi12_fi, T2LDRBi8, T2LDREX, T2LDRHT,
-       T2LDRHi12, T2LDRHi12_fi, T2LDRHi8, T2LDRSBT, T2LDRSBi12, T2LDRSBi8,
-       T2LDRSHT, T2LDRSHi12, T2LDRSHi12_fi, T2LDRSHi8, T2LDRT, T2LDRi12,
-       T2LDRi12_fi, T2LDRi8, T2STRBT, T2STRHT, T2STRT, TLDRBi, TLDRBr,
-       TLDRHi, TLDRHr, TLDRSB, TLDRSH, TLDRi, TLDRr, TLDRspi]
+       T2LDRBT, T2LDRBi12, T2LDRBi12_fi, T2LDRBi12_fi_source_fi, T2LDRBi8,
+       T2LDREX, T2LDRHT, T2LDRHi12, T2LDRHi12_fi, T2LDRHi8, T2LDRSBT,
+       T2LDRSBi12, T2LDRSBi8, T2LDRSHT, T2LDRSHi12, T2LDRSHi12_fi,
+       T2LDRSHi8, T2LDRT, T2LDRi12, T2LDRi12_fi, T2LDRi12_fi_source_fi,
+       T2LDRi8, T2STRBT, T2STRHT, T2STRT, TLDRBi, TLDRBr, TLDRHi, TLDRHr,
+       TLDRSB, TLDRSH, TLDRi, TLDRr, TLDRspi]
     = []
 alignedPairs i ([_, _, _, _], [_, _]) | i `elem` [T2LDRDi8] = []
 alignedPairs i ([_, _, _, _], [_, _, _])
@@ -867,7 +871,10 @@ alignedPairs i ([_, _, _, _], [_, _])
        T2LDRSH_PRE, T2LDR_PRE]
     = []
 alignedPairs i ([_, _, _, _], [_])
-  | i `elem` [VLDRS, VLDRS_cpi, VLDRS_fi] = []
+  | i `elem`
+      [VLDRS, VLDRS_cpi, VLDRS_cpi_source_cpi, VLDRS_fi,
+       VLDRS_fi_source_fi]
+    = []
 alignedPairs i ([_, _, _, _], [_])
   | i `elem`
       [PICLDR, VLD1d64QPseudo, VLD1d64TPseudo, VLD2q16Pseudo,
@@ -1021,14 +1028,18 @@ alignedPairs i ([_], []) | i `elem` [HVC, SETPAN, T2SETPAN] = []
 alignedPairs i ([_, _, _], [])
   | i `elem` [HINT, T2HINT, T2SUBS_PC_LR, THINT, TSVC] = []
 alignedPairs i ([_, _, _], [_]) | i `elem` [FCONSTD] = []
-alignedPairs i ([_, _, _], [_]) | i `elem` [MOVi16, T2MOVi16] = []
+alignedPairs i ([_, _, _], [_])
+  | i `elem` [MOVi16, T2MOVi16, T2MOVi16_source] = []
 alignedPairs i ([_, _, _], [_]) | i `elem` [FCONSTS] = []
 alignedPairs i ([_, _, _, _], [_])
-  | i `elem` [MOVi, MVNi, T2MOVi, T2MVNi] = []
+  | i `elem`
+      [MOVi, MVNi, T2MOVi, T2MOVi_source, T2MVNi, T2MVNi_source]
+    = []
 alignedPairs i ([_], []) | i `elem` [UDF, T2HVC, T2UDF] = []
 alignedPairs i ([_], []) | i `elem` [TUDF] = []
 alignedPairs i ([_, _, _], [_, _]) | i `elem` [TMOVi8] = []
-alignedPairs i ([_, _, _, _], [_]) | i `elem` [TMOVi8s] = []
+alignedPairs i ([_, _, _, _], [_])
+  | i `elem` [TMOVi8s, TMOVi8s_source] = []
 alignedPairs i ([_, _], []) | i `elem` [CPS2p, T2CPS2p, TCPS] = []
 alignedPairs i ([_, _, _], []) | i `elem` [CPS3p, T2CPS3p] = []
 alignedPairs i ([_, _, _], [_]) | i `elem` [SUBREG_TO_REG] = []
@@ -1042,7 +1053,8 @@ alignedPairs i ([_, _, _], [])
 alignedPairs i ([_, _, _], [_])
   | i `elem`
       [ADR, LEApcrel, LEApcrelJT, T2LEApcrel, T2LEApcrelJT,
-       T2LEApcrel_cpi, TLEApcrel, TLEApcrelJT]
+       T2LEApcrelJT_source, T2LEApcrel_cpi, T2LEApcrel_cpi_source_cpi,
+       TLEApcrel, TLEApcrelJT]
     = []
 alignedPairs i ([lhs, _], [lhs'])
   | i `elem` [TPICADD] = [(lhs, lhs')]
@@ -1171,7 +1183,8 @@ alignedPairs i ([_, _], [_])
       [VMRS, VMRS_FPEXC, VMRS_FPINST, VMRS_FPINST2, VMRS_FPSID,
        VMRS_MVFR0, VMRS_MVFR1, VMRS_MVFR2]
     = []
-alignedPairs i ([_, _], [_]) | i `elem` [FMSTAT_cpsr] = []
+alignedPairs i ([_, _], [_])
+  | i `elem` [FMSTAT_cpsr, FMSTAT_cpsr_source] = []
 alignedPairs i ([_, _, _], []) | i `elem` [TBL, TBLXi, TBLXr] = []
 alignedPairs i ([_, _, _, _], [])
   | i `elem` [TPOP, TPOP_RET, TPUSH] = []
@@ -1190,9 +1203,19 @@ alignedPairs i ([_, _, _, _], [_]) | i `elem` [TADDrSP] = []
 alignedPairs i ([_, _, _, _], [_]) | i `elem` [TADDrSPi, TFP] = []
 alignedPairs i ([_], [_])
   | i `elem`
-      [COPY, LDRLIT_ga_abs, LOAD, LOAD_D, LOAD_T, MOVE, MOVE_ALL, MOVE_D,
-       MOVi32imm, STORE, STORE_D, STORE_T, Load_merge, T2MOVi32imm,
-       TLDRLIT_ga_abs, TPOP_r4_7, TPOP_r8_11, TPUSH_r4_7, TPUSH_r8_11]
+      [COPY, FMSTAT_cpsr_demat, FMSTAT_cpsr_remat, LDRLIT_ga_abs, LOAD,
+       LOAD_D, LOAD_T, MOVE, MOVE_ALL, MOVE_D, MOVi32imm, STORE, STORE_D,
+       STORE_T, VLDRD_cpi_demat_cpi, VLDRD_cpi_remat_cpi,
+       VLDRD_fi_demat_fi, VLDRD_fi_remat_fi, VLDRS_cpi_demat_cpi,
+       VLDRS_cpi_remat_cpi, VLDRS_fi_demat_fi, VLDRS_fi_remat_fi,
+       Load_merge, T2ADDri_fi_demat_fi, T2ADDri_fi_remat_fi,
+       T2LDRBi12_fi_demat_fi, T2LDRBi12_fi_remat_fi, T2LDRi12_fi_demat_fi,
+       T2LDRi12_fi_remat_fi, T2LEApcrelJT_demat, T2LEApcrelJT_remat,
+       T2LEApcrel_cpi_demat_cpi, T2LEApcrel_cpi_remat_cpi, T2MOVi16_demat,
+       T2MOVi16_remat, T2MOVi32imm, T2MOVi32imm_demat, T2MOVi32imm_remat,
+       T2MOVi32imm_source, T2MOVi_demat, T2MOVi_remat, T2MVNi_demat,
+       T2MVNi_remat, TLDRLIT_ga_abs, TMOVi8s_demat, TMOVi8s_remat,
+       TPOP_r4_7, TPOP_r8_11, TPUSH_r4_7, TPUSH_r8_11]
     = []
 alignedPairs i ([_], [_, _])
   | i `elem` [ABS, MOVsra_flag, MOVsrl_flag, T2ABS] = []

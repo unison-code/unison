@@ -2,6 +2,7 @@ module Unison.Target.ARM.Usages (usages) where
 
 import Unison
 
+import Unison.Target.ARM.Common
 import Unison.Target.ARM.ARMResourceDecl
 import qualified Unison.Target.ARM.SpecsGen as SpecsGen
 import Unison.Target.ARM.SpecsGen.ARMItineraryDecl
@@ -13,7 +14,7 @@ usages i =
   let it = SpecsGen.itinerary i
   -- TODO: define instruction size as BundleWidth usage
   in mergeUsages (itineraryUsage i it)
-     [mkUsage BundleWidth (size i) 1]
+     [mkUsage BundleWidth (size i) 1 | size i > 0]
 
 itineraryUsage _ it
   | it `elem` [NoItinerary] = []
@@ -52,11 +53,15 @@ itineraryUsage _ it
 
 itineraryUsage _ it = error ("unmatched: itineraryUsage " ++ show it)
 
-size T2MOVi32imm = size T2MOVi16 + size T2MOVTi16
+size i
+  | i `elem` [T2MOVi32imm, T2MOVi32imm_remat] = size T2MOVi16 + size T2MOVTi16
 size VMOVDcc = size VMOVD
 size VMOVScc = size VMOVS
 size i
   | i `elem` [JUMPTABLE_INSTS, Load_merge] = 0
+size MEMCPY_4 = size T2LDMIA_4 + size T2STMIA_4
+size i
+  | isSourceInstr i || isDematInstr i = 0
 size i =
   case SpecsGen.size i of
    0 -> error ("size of instruction " ++ show i ++ " is 0")

@@ -252,7 +252,7 @@ mapToOperationId f i @ (SingleOperation {oId = id, oAs = as}) =
 
 mapToOperationIdInAttributes f
   as @ Attributes {aCall = id1, aRematOrigin = ro} =
-    as {aCall = fmap f id1, aRematOrigin = fmap (first f) ro}
+    as {aCall = fmap f id1, aRematOrigin = fmap f ro}
 
 mapToModelOperand :: OperandMap r -> BlockOperation i r -> BlockOperation i r
 mapToModelOperand = mapToOperandIf isModelOperand
@@ -335,8 +335,7 @@ mapToAttrJTBlocks f o @ SingleOperation {
                oAs = as @ Attributes {aJTBlocks = bs}} =
   o {oAs = as {aJTBlocks = f bs}}
 
-mapToAttrRematOrigin ::  (Maybe (OperationId, Instruction i) ->
-                          Maybe (OperationId, Instruction i)) ->
+mapToAttrRematOrigin ::  (Maybe OperationId -> Maybe OperationId) ->
                           BlockOperation i r -> BlockOperation i r
 mapToAttrRematOrigin f o @ SingleOperation {
   oAs = as @ Attributes {aRematOrigin = ro}} =

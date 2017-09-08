@@ -11,6 +11,7 @@ This file is part of Unison, see http://unison-code.github.io
 -}
 module Unison.Target.ARM (target) where
 
+import Data.Maybe
 import Data.List
 import qualified Data.Set as S
 import Control.Arrow
@@ -57,7 +58,7 @@ target =
       API.tPostProcess      = const postProcess,
       API.tTransforms       = const transforms,
       API.tCopies           = const copies,
-      API.tRematInstrs      = const (const Nothing),
+      API.tRematInstrs      = const rematInstrs,
       API.tFromCopy         = const fromCopy,
       API.tOperandInfo      = const operandInfo,
       API.tAlignedPairs     = const SpecsGen.alignedPairs,
@@ -138,6 +139,13 @@ copies (f, _, _, _, _, _) False t [] d [u]
     | isIn d && isOut u && not (any isCall (bCode $ tempBlock (fCode f) t)) =
     ([], [[]])
 
+-- Do not extend rematerializable instructions used only once, locally
+-- FIXME: review whether this is always safe
+copies _ False t _ d [u]
+  | isNatural d && (isNatural u || isFun u) &&
+    (isRematerializable (targetInst (oInstructions d))) &&
+    compatibleClassesForTemp t [d, u] = ([], [[]])
+
 copies (f, _, cg, ra, bcfg, sg) _ t _rs d us =
   let is     = d:us
       w      = widthOfTemp ra cg f t is
@@ -171,7 +179,12 @@ useCopies size w _ =
    map TargetInstruction (moveInstrs size w) ++
    map TargetInstruction (loadInstrs size w)
 
+classOfTemp = classOf (target, [])
 widthOfTemp = widthOf (target, [])
+
+compatibleClassesForTemp t os =
+  let regs = [S.fromList $ registers $ fromJust (classOfTemp t o) | o <- os]
+  in not $ S.null $ foldl S.intersection (head regs) regs
 
 -- TODO: add STORE_S, LOAD_S, also GPR <-> SPR moves?
 
@@ -203,9 +216,15 @@ loadInstrs _ 2 = [LOAD_D]
 
 isReserved r = r `elem` reserved
 
+rematInstrs i
+  | isRematerializable i =
+      Just (sourceInstr i, dematInstr i, rematInstr i)
+  | otherwise = error ("unmatched: rematInstrs " ++ show i)
+
 -- | Transforms copy instructions into natural instructions
 
-fromCopy Copy {oCopyIs = [TargetInstruction i], oCopyS = s, oCopyD = d}
+-- handle regular copies
+fromCopy _ Copy {oCopyIs = [TargetInstruction i], oCopyS = s, oCopyD = d}
   | i `elem` [MOVE, MOVE_ALL, MOVE_D] =
     Linear {oIs = [TargetInstruction (fromCopyInstr i (s, d))],
             oUs = [s] ++ defaultUniPred,
@@ -232,7 +251,21 @@ fromCopy Copy {oCopyIs = [TargetInstruction i], oCopyS = s, oCopyD = d}
                oUs = [mkOprArmSP | w] ++ defaultUniPred ++
                      map (Register . TargetRegister) (pushRegs i),
                oDs = [mkOprArmSP | w]}
-fromCopy o = error ("unmatched pattern: fromCopy " ++ show o)
+
+-- handle rematerialization copies
+fromCopy (Just (Linear {oUs = us}))
+         Copy {oCopyIs = [TargetInstruction i], oCopyS = s, oCopyD = d}
+  | isDematInstr i =
+    Linear {oIs = [mkNullInstruction], oUs = [s], oDs = [d]}
+  | isRematInstr i =
+    Linear {oIs = [TargetInstruction (originalInstr i)], oUs = us, oDs = [d]}
+
+-- handle rematerialization sources
+fromCopy _ (Natural o @ Linear {oIs = [TargetInstruction i]})
+  | isSourceInstr i = o {oIs = [mkNullInstruction]}
+
+fromCopy _ (Natural o) = o
+fromCopy _ o = error ("unmatched pattern: fromCopy " ++ show o)
 
 mkOprArmSP = Register $ mkTargetRegister SP
 

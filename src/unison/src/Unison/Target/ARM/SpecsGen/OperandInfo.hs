@@ -17,6 +17,9 @@ operandInfo i
   | i `elem` [MOVE_ALL] =
     ([TemporaryInfo (RegisterClass ALL) 0 False],
      [TemporaryInfo (RegisterClass ALL) 1 False])
+  | i `elem` [FMSTAT_cpsr_demat] =
+    ([TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (InfiniteRegisterClass RM32) 0 False])
   | i `elem` [TPUSH_r4_7, TPUSH_r8_11] =
     ([TemporaryInfo (RegisterClass CS) 0 False],
      [TemporaryInfo (InfiniteRegisterClass M128) 1 False])
@@ -43,6 +46,9 @@ operandInfo i
   | i `elem` [STORE_D] =
     ([TemporaryInfo (RegisterClass DPR) 0 False],
      [TemporaryInfo (InfiniteRegisterClass M64) 1 False])
+  | i `elem` [VLDRD_cpi_demat_cpi, VLDRD_fi_demat_fi] =
+    ([TemporaryInfo (RegisterClass DPR) 0 False],
+     [TemporaryInfo (InfiniteRegisterClass RM64) 0 False])
   | i `elem`
       [VCVTASD, VCVTAUD, VCVTMSD, VCVTMUD, VCVTNSD, VCVTNUD, VCVTPSD,
        VCVTPUD]
@@ -373,6 +379,9 @@ operandInfo i
   | i `elem` [STORE] =
     ([TemporaryInfo (RegisterClass GPR) 0 False],
      [TemporaryInfo (InfiniteRegisterClass M32) 1 False])
+  | i `elem` [T2LDRi12_fi_demat_fi] =
+    ([TemporaryInfo (RegisterClass GPR) 0 False],
+     [TemporaryInfo (InfiniteRegisterClass RM32) 0 False])
   | i `elem` [WIN__DBZCHK] =
     ([TemporaryInfo (RegisterClass GPR) 0 False],
      [TemporaryInfo (AbstractRegisterClass Unknown) 1 False])
@@ -1645,6 +1654,9 @@ operandInfo i
       TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo,
       TemporaryInfo (RegisterClass CCR) 0 False],
      [TemporaryInfo (RegisterClass GPR) 1 False])
+  | i `elem` [T2ADDri_fi_demat_fi, T2LDRBi12_fi_demat_fi] =
+    ([TemporaryInfo (RegisterClass GPRnopc) 0 False],
+     [TemporaryInfo (InfiniteRegisterClass RM32) 0 False])
   | i `elem` [STRBrs] =
     ([TemporaryInfo (RegisterClass GPRnopc) 0 False,
       TemporaryInfo (RegisterClass GPR) 0 False,
@@ -2105,6 +2117,33 @@ operandInfo i
       TemporaryInfo (RegisterClass DPR) 0 False, BoundInfo,
       TemporaryInfo (RegisterClass CCR) 0 False],
      [TemporaryInfo (RegisterClass DPR) 1 False])
+  | i `elem` [FMSTAT_cpsr_remat] =
+    ([TemporaryInfo (InfiniteRegisterClass RM32) 0 False],
+     [TemporaryInfo (RegisterClass CCR) 1 False])
+  | i `elem` [T2LDRi12_fi_remat_fi] =
+    ([TemporaryInfo (InfiniteRegisterClass RM32) 0 False],
+     [TemporaryInfo (RegisterClass GPR) 1 False])
+  | i `elem` [T2ADDri_fi_remat_fi, T2LDRBi12_fi_remat_fi] =
+    ([TemporaryInfo (InfiniteRegisterClass RM32) 0 False],
+     [TemporaryInfo (RegisterClass GPRnopc) 1 False])
+  | i `elem` [VLDRS_cpi_remat_cpi, VLDRS_fi_remat_fi] =
+    ([TemporaryInfo (InfiniteRegisterClass RM32) 0 False],
+     [TemporaryInfo (RegisterClass SPR) 1 False])
+  | i `elem`
+      [T2LEApcrelJT_remat, T2LEApcrel_cpi_remat_cpi, T2MOVi16_remat,
+       T2MOVi32imm_remat, T2MOVi_remat, T2MVNi_remat]
+    =
+    ([TemporaryInfo (InfiniteRegisterClass RM32) 0 False],
+     [TemporaryInfo (RegisterClass RGPR) 1 False])
+  | i `elem` [TMOVi8s_remat] =
+    ([TemporaryInfo (InfiniteRegisterClass RM32) 0 False],
+     [TemporaryInfo (RegisterClass TGPR) 1 False])
+  | i `elem` [VLDRD_cpi_remat_cpi, VLDRD_fi_remat_fi] =
+    ([TemporaryInfo (InfiniteRegisterClass RM64) 0 False],
+     [TemporaryInfo (RegisterClass DPR) 1 False])
+  | i `elem` [VLDRS_cpi_demat_cpi, VLDRS_fi_demat_fi] =
+    ([TemporaryInfo (RegisterClass SPR) 0 False],
+     [TemporaryInfo (InfiniteRegisterClass RM32) 0 False])
   | i `elem`
       [VCVTASS, VCVTAUS, VCVTMSS, VCVTMUS, VCVTNSS, VCVTNUS, VCVTPSS,
        VCVTPUS, VRINTAS, VRINTMS, VRINTNS, VRINTPS]
@@ -2351,6 +2390,12 @@ operandInfo i
       TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo, BoundInfo,
       TemporaryInfo (RegisterClass CCR) 0 False],
      [])
+  | i `elem`
+      [T2LEApcrelJT_demat, T2LEApcrel_cpi_demat_cpi, T2MOVi16_demat,
+       T2MOVi32imm_demat, T2MOVi_demat, T2MVNi_demat]
+    =
+    ([TemporaryInfo (RegisterClass RGPR) 0 False],
+     [TemporaryInfo (InfiniteRegisterClass RM32) 0 False])
   | i `elem` [Load_merge] =
     ([TemporaryInfo (RegisterClass RGPR) 0 False],
      [TemporaryInfo (RegisterClass RGPR) 1 False])
@@ -2594,6 +2639,9 @@ operandInfo i
   | i `elem` [STORE_T] =
     ([TemporaryInfo (RegisterClass TGPR) 0 False],
      [TemporaryInfo (InfiniteRegisterClass M32t) 1 False])
+  | i `elem` [TMOVi8s_demat] =
+    ([TemporaryInfo (RegisterClass TGPR) 0 False],
+     [TemporaryInfo (InfiniteRegisterClass RM32) 0 False])
   | i `elem` [TMOVSr] =
     ([TemporaryInfo (RegisterClass TGPR) 0 False],
      [TemporaryInfo (RegisterClass TGPR) 1 False,
@@ -2743,6 +2791,8 @@ operandInfo i
       [LDRLIT_ga_abs, LDRLIT_ga_pcrel, LDRLIT_ga_pcrel_ldr, MOV_ga_pcrel,
        MOV_ga_pcrel_ldr, MOVi32imm]
     = ([BoundInfo], [TemporaryInfo (RegisterClass GPR) 1 False])
+  | i `elem` [T2MOVi32imm_source] =
+    ([BoundInfo], [TemporaryInfo (InfiniteRegisterClass RM32) 0 False])
   | i `elem` [T2MOV_ga_pcrel, T2MOVi32imm] =
     ([BoundInfo], [TemporaryInfo (RegisterClass RGPR) 1 False])
   | i `elem` [TLDRLIT_ga_abs, TLDRLIT_ga_pcrel] =
@@ -2764,6 +2814,9 @@ operandInfo i
   | i `elem` [MRS, MRSsys] =
     ([BoundInfo, TemporaryInfo (RegisterClass CCR) 0 False],
      [TemporaryInfo (RegisterClass GPRnopc) 1 False])
+  | i `elem` [FMSTAT_cpsr_source] =
+    ([BoundInfo, TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (InfiniteRegisterClass RM32) 0 False])
   | i `elem` [FMSTAT] =
     ([BoundInfo, TemporaryInfo (RegisterClass CCR) 0 False],
      [TemporaryInfo (AbstractRegisterClass Unknown) 1 False])
@@ -2870,6 +2923,11 @@ operandInfo i
     =
     ([BoundInfo, BoundInfo, TemporaryInfo (RegisterClass CCR) 0 False],
      [TemporaryInfo (RegisterClass QPR) 1 False])
+  | i `elem`
+      [T2LEApcrelJT_source, T2LEApcrel_cpi_source_cpi, T2MOVi16_source]
+    =
+    ([BoundInfo, BoundInfo, TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (InfiniteRegisterClass RM32) 0 False])
   | i `elem` [FCONSTS] =
     ([BoundInfo, BoundInfo, TemporaryInfo (RegisterClass CCR) 0 False],
      [TemporaryInfo (RegisterClass SPR) 1 False])
@@ -2890,6 +2948,10 @@ operandInfo i
     ([BoundInfo, BoundInfo, TemporaryInfo (RegisterClass CCR) 0 False,
       TemporaryInfo (RegisterClass CCR) 0 False],
      [TemporaryInfo (RegisterClass GPR) 1 False])
+  | i `elem` [T2MOVi_source, T2MVNi_source, TMOVi8s_source] =
+    ([BoundInfo, BoundInfo, TemporaryInfo (RegisterClass CCR) 0 False,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (InfiniteRegisterClass RM32) 0 False])
   | i `elem` [T2MOVi, T2MVNi] =
     ([BoundInfo, BoundInfo, TemporaryInfo (RegisterClass CCR) 0 False,
       TemporaryInfo (RegisterClass CCR) 0 False],
@@ -2970,6 +3032,17 @@ operandInfo i
     ([BoundInfo, BoundInfo, BoundInfo,
       TemporaryInfo (RegisterClass CCR) 0 False],
      [TemporaryInfo (RegisterClass GPRnopc) 1 False])
+  | i `elem`
+      [VLDRS_cpi_source_cpi, VLDRS_fi_source_fi, T2LDRBi12_fi_source_fi,
+       T2LDRi12_fi_source_fi]
+    =
+    ([BoundInfo, BoundInfo, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (InfiniteRegisterClass RM32) 0 False])
+  | i `elem` [VLDRD_cpi_source_cpi, VLDRD_fi_source_fi] =
+    ([BoundInfo, BoundInfo, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (InfiniteRegisterClass RM64) 0 False])
   | i `elem` [VLDRS_cpi, VLDRS_fi] =
     ([BoundInfo, BoundInfo, BoundInfo,
       TemporaryInfo (RegisterClass CCR) 0 False],
@@ -2979,6 +3052,11 @@ operandInfo i
       TemporaryInfo (RegisterClass CCR) 0 False,
       TemporaryInfo (RegisterClass CCR) 0 False],
      [TemporaryInfo (RegisterClass GPRnopc) 1 False])
+  | i `elem` [T2ADDri_fi_source_fi] =
+    ([BoundInfo, BoundInfo, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (InfiniteRegisterClass RM32) 0 False])
   | i `elem` [T2MRRC, T2MRRC2] =
     ([BoundInfo, BoundInfo, BoundInfo, BoundInfo,
       TemporaryInfo (RegisterClass CCR) 0 False],

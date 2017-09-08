@@ -24,7 +24,8 @@ import Unison.Target.ARM.ARMRegisterClassDecl
 -- | Register array
 
 registerArray = [RegisterClass GPR, RegisterClass SPR, RegisterClass CCR,
-                 RegisterClass F32, InfiniteRegisterClass M32]
+                 RegisterClass F32, InfiniteRegisterClass M32,
+                 InfiniteRegisterClass RM32]
 
 -- | Register atoms of 1-width registers
 
@@ -63,7 +64,7 @@ registerAtoms r = error ("unmatched: registerAtoms " ++ show r)
 regClasses =
     map RegisterClass
     [GPR, RGPR, GPRnopc, TcGPR, GPRsp, SPR, DPR, CCR, TGPR, ALL, CS, CSL, CSH, F32] ++
-    map InfiniteRegisterClass [M32, M32t, M64, M128]
+    map InfiniteRegisterClass [M32, M32t, M64, M128, RM32, RM64]
 
 -- | Individual registers of each register class
 
@@ -123,6 +124,8 @@ infRegClassUsage (InfiniteRegisterClass rc)
   | rc == M32t = 1
   | rc == M64  = 2
   | rc == M128 = 4
+  | rc == RM32 = 1
+  | rc == RM64 = 2
 
 -- | Map from infinite register class to (possibly) register atom upper bound
 
