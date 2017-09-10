@@ -68,6 +68,7 @@ import Language.Haskell.Syntax
 import qualified Data.Text as T
 import Control.Arrow
 import Text.Regex.Posix
+import Data.Function
 
 import SpecsGen.SimpleYaml
 
@@ -162,7 +163,30 @@ maybeExpandInstr id2i i =
                  error ("Parent instruction \'" ++ p ++ "\' does not exist")
          i2 = foldl replaceField i1 (yMap i)
          i3 = addField (YString "parent", YString p) i2
-     in i3
+         i4 = maybeExpandOperands (yLookup "new-operands" i) i3
+     in i4
+
+maybeExpandOperands (Just (YSeq new)) i =
+  let operands = nubBy (equaling operandName) $ new ++ iOperands i
+      i1       = replaceField i (YString "operands", YSeq operands)
+      uses     = nub $ iUses i ++
+                       [YString (operandName o) | o <- new, isUse o]
+      i2       = replaceField i1 (YString "uses", YSeq uses)
+      defines  = nub $ iDefines i ++
+                       [YString (operandName o) | o <- new, isDef o]
+      i3       = replaceField i2 (YString "defines", YSeq defines)
+  in i3
+maybeExpandOperands Nothing i = i
+
+equaling = ((==) `on`)
+
+operandName (YMap [(YString name, _)]) = name
+
+isUse (YMap [(_,YSeq (_:YString ud:_:_))]) = ud `elem` ["use", "usedef"]
+isUse _ = False
+
+isDef (YMap [(_,YSeq (_:YString ud:_:_))]) = ud `elem` ["def", "usedef"]
+isDef _ = False
 
 replaceField i (YString "parent", _) = i
 replaceField (YMap fs) f = YMap (map (replace f) fs)
