@@ -200,35 +200,33 @@ parent i
        LBu64, LBuE, LBuE_MM, LBu_MM, LD, LDC1, LDC164, LDC1_MM, LDC2,
        LDC2_R6, LDC3, LDI_B, LDI_D, LDI_H, LDI_W, LDL, LDPC, LDR, LDXC1,
        LDXC164, LD_B, LD_D, LD_H, LD_W, LEA_ADDiu, LEA_ADDiu64,
-       LEA_ADDiu_MM, LEA_ADDiu_demat, LEA_ADDiu_remat, LEA_ADDiu_source,
-       LH, LH64, LHE, LHE_MM, LHU16_MM, LHX, LHX_MM, LH_MM, LHu, LHu64,
-       LHuE, LHuE_MM, LHu_MM, LI16_MM, LI16_MMR6, LIFETIME_END,
-       LIFETIME_START, LL, LLD, LLD_R6, LLE, LLE_MM, LLE_MMR6, LL_MM,
-       LL_R6, LOAD_ACC128, LOAD_ACC64, LOAD_ACC64DSP, LOAD_CCOND_DSP,
-       LOAD_STACK_GUARD, LOCAL_ESCAPE, LONG_BRANCH_ADDiu,
+       LEA_ADDiu_MM, LH, LH64, LHE, LHE_MM, LHU16_MM, LHX, LHX_MM, LH_MM,
+       LHu, LHu64, LHuE, LHuE_MM, LHu_MM, LI16_MM, LI16_MMR6,
+       LIFETIME_END, LIFETIME_START, LL, LLD, LLD_R6, LLE, LLE_MM,
+       LLE_MMR6, LL_MM, LL_R6, LOAD_ACC128, LOAD_ACC64, LOAD_ACC64DSP,
+       LOAD_CCOND_DSP, LOAD_STACK_GUARD, LOCAL_ESCAPE, LONG_BRANCH_ADDiu,
        LONG_BRANCH_DADDiu, LONG_BRANCH_LUi, LSA, LSA_MMR6, LSA_R6,
-       LUI_MMR6, LUXC1, LUXC164, LUXC1_MM, LUi, LUi64, LUi_MM, LUi_demat,
-       LUi_remat, LUi_source, LW, LW16_MM, LW64, LWC1, LWC1_MM, LWC2,
-       LWC2_R6, LWC3, LWE, LWE_MM, LWE_MMR6, LWGP_MM, LWL, LWL64, LWLE,
-       LWLE_MM, LWL_MM, LWM16_MM, LWM16_MMR6, LWM32_MM, LWM_MM, LWPC,
-       LWPC_MMR6, LWP_MM, LWR, LWR64, LWRE, LWRE_MM, LWR_MM, LWSP_MM,
-       LWUPC, LWU_MM, LWX, LWXC1, LWXC1_MM, LWXS_MM, LWX_MM, LW_MM,
-       LW_MMR6, LWu, LbRxRyOffMemX16, LbuRxRyOffMemX16, LhRxRyOffMemX16,
-       LhuRxRyOffMemX16, LiRxImm16, LiRxImmAlignX16, LiRxImmX16,
-       LoadAddrImm32, LoadAddrImm64, LoadAddrReg32, LoadAddrReg64,
-       LoadImm32, LoadImm64, LwConstant32, LwRxPcTcp16, LwRxPcTcpX16,
-       LwRxRyOffMemX16, LwRxSpImmX16, MADD, MADDF_D, MADDF_D_MMR6,
-       MADDF_S, MADDF_S_MMR6, MADDR_Q_H, MADDR_Q_W, MADDU, MADDU_DSP,
-       MADDU_DSP_MM, MADDU_MM, MADDV_B, MADDV_D, MADDV_H, MADDV_W,
-       MADD_D32, MADD_D32_MM, MADD_D64, MADD_DSP, MADD_DSP_MM, MADD_MM,
-       MADD_Q_H, MADD_Q_W, MADD_S, MADD_S_MM, MAQ_SA_W_PHL,
-       MAQ_SA_W_PHL_MM, MAQ_SA_W_PHR, MAQ_SA_W_PHR_MM, MAQ_S_W_PHL,
-       MAQ_S_W_PHL_MM, MAQ_S_W_PHR, MAQ_S_W_PHR_MM, MAXA_D, MAXA_D_MMR6,
-       MAXA_S, MAXA_S_MMR6, MAXI_S_B, MAXI_S_D, MAXI_S_H, MAXI_S_W,
-       MAXI_U_B, MAXI_U_D, MAXI_U_H, MAXI_U_W, MAX_A_B, MAX_A_D, MAX_A_H,
-       MAX_A_W, MAX_D, MAX_D_MMR6, MAX_S, MAX_S_B, MAX_S_D, MAX_S_H,
-       MAX_S_MMR6, MAX_S_W, MAX_U_B, MAX_U_D, MAX_U_H, MAX_U_W, MFC0,
-       MFC1, MFC1_MM, MFC2, MFHC1_D32, MFHC1_D64, MFHC1_MM, MFHI,
+       LUI_MMR6, LUXC1, LUXC164, LUXC1_MM, LUi, LUi64, LUi_MM, LW,
+       LW16_MM, LW64, LWC1, LWC1_MM, LWC2, LWC2_R6, LWC3, LWE, LWE_MM,
+       LWE_MMR6, LWGP_MM, LWL, LWL64, LWLE, LWLE_MM, LWL_MM, LWM16_MM,
+       LWM16_MMR6, LWM32_MM, LWM_MM, LWPC, LWPC_MMR6, LWP_MM, LWR, LWR64,
+       LWRE, LWRE_MM, LWR_MM, LWSP_MM, LWUPC, LWU_MM, LWX, LWXC1,
+       LWXC1_MM, LWXS_MM, LWX_MM, LW_MM, LW_MMR6, LWu, LbRxRyOffMemX16,
+       LbuRxRyOffMemX16, LhRxRyOffMemX16, LhuRxRyOffMemX16, LiRxImm16,
+       LiRxImmAlignX16, LiRxImmX16, LoadAddrImm32, LoadAddrImm64,
+       LoadAddrReg32, LoadAddrReg64, LoadImm32, LoadImm64, LwConstant32,
+       LwRxPcTcp16, LwRxPcTcpX16, LwRxRyOffMemX16, LwRxSpImmX16, MADD,
+       MADDF_D, MADDF_D_MMR6, MADDF_S, MADDF_S_MMR6, MADDR_Q_H, MADDR_Q_W,
+       MADDU, MADDU_DSP, MADDU_DSP_MM, MADDU_MM, MADDV_B, MADDV_D,
+       MADDV_H, MADDV_W, MADD_D32, MADD_D32_MM, MADD_D64, MADD_DSP,
+       MADD_DSP_MM, MADD_MM, MADD_Q_H, MADD_Q_W, MADD_S, MADD_S_MM,
+       MAQ_SA_W_PHL, MAQ_SA_W_PHL_MM, MAQ_SA_W_PHR, MAQ_SA_W_PHR_MM,
+       MAQ_S_W_PHL, MAQ_S_W_PHL_MM, MAQ_S_W_PHR, MAQ_S_W_PHR_MM, MAXA_D,
+       MAXA_D_MMR6, MAXA_S, MAXA_S_MMR6, MAXI_S_B, MAXI_S_D, MAXI_S_H,
+       MAXI_S_W, MAXI_U_B, MAXI_U_D, MAXI_U_H, MAXI_U_W, MAX_A_B, MAX_A_D,
+       MAX_A_H, MAX_A_W, MAX_D, MAX_D_MMR6, MAX_S, MAX_S_B, MAX_S_D,
+       MAX_S_H, MAX_S_MMR6, MAX_S_W, MAX_U_B, MAX_U_D, MAX_U_H, MAX_U_W,
+       MFC0, MFC1, MFC1_MM, MFC2, MFHC1_D32, MFHC1_D64, MFHC1_MM, MFHI,
        MFHI16_MM, MFHI64, MFHI_DSP, MFHI_DSP_MM, MFHI_MM, MFLO, MFLO16_MM,
        MFLO64, MFLO_DSP, MFLO_DSP_MM, MFLO_MM, MINA_D, MINA_D_MMR6,
        MINA_S, MINA_S_MMR6, MINI_S_B, MINI_S_D, MINI_S_H, MINI_S_W,
@@ -384,22 +382,23 @@ parent i
   | i `elem` [ADDiu_negsp, ADDiu_sp] = Just ADDiu
   | i `elem` [MOVE_D] = Just FMOV_D32
   | i `elem` [MOVE_F] = Just FMOV_S
-  | i `elem`
-      [LBu_fi, LBu_fi_demat_fi, LBu_fi_remat_fi, LBu_fi_source_fi]
-    = Just LBu
-  | i `elem`
-      [LDC1_fi, LDC1_fi_demat_fi, LDC1_fi_remat_fi, LDC1_fi_source_fi,
-       LOAD_D]
-    = Just LDC1
+  | i `elem` [LBu_fi] = Just LBu
+  | i `elem` [LBu_fi_demat_fi, LBu_fi_remat_fi, LBu_fi_source_fi] =
+    Just LBu_fi
+  | i `elem` [LDC1_fi, LOAD_D] = Just LDC1
+  | i `elem` [LDC1_fi_demat_fi, LDC1_fi_remat_fi, LDC1_fi_source_fi]
+    = Just LDC1_fi
+  | i `elem` [LEA_ADDiu_demat, LEA_ADDiu_remat, LEA_ADDiu_source] =
+    Just LEA_ADDiu
   | i `elem` [LH_fi] = Just LH
   | i `elem` [LHu_fi] = Just LHu
-  | i `elem`
-      [LOAD, LW_fi, LW_fi_demat_fi, LW_fi_remat_fi, LW_fi_source_fi]
-    = Just LW
-  | i `elem`
-      [LOAD_F, LWC1_fi, LWC1_fi_demat_fi, LWC1_fi_remat_fi,
-       LWC1_fi_source_fi]
-    = Just LWC1
+  | i `elem` [LUi_demat, LUi_remat, LUi_source] = Just LUi
+  | i `elem` [LOAD, LW_fi] = Just LW
+  | i `elem` [LOAD_F, LWC1_fi] = Just LWC1
+  | i `elem` [LWC1_fi_demat_fi, LWC1_fi_remat_fi, LWC1_fi_source_fi]
+    = Just LWC1_fi
+  | i `elem` [LW_fi_demat_fi, LW_fi_remat_fi, LW_fi_source_fi] =
+    Just LW_fi
   | i `elem` [LoadGPDisp] = Just LoadAddrImm32
   | i `elem` [MOVE] = Just OR
   | i `elem` [SB_fi] = Just SB

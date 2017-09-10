@@ -102,31 +102,41 @@ extendRemat id2i r =
                 Nothing ->
                   error ("Rematerializable instruction \'" ++ id ++ "\' does not exist")
       d   = sourceVersion id suf (hc, ic) i
-      dc  = dematVersion id suf (hc, ic) i
-      rc  = rematVersion id suf (hc, ic) i
-  in [d, dc, rc]
+      dc  = dematVersion id suf (hc, ic)
+      rc  = rematVersion id suf (hc, ic)
+      ris = map (maybeExpandInstr id2i) [d, dc, rc]
+  in case yFetch "versions" r of
+      (YSeq versions) -> [expandVersion ri v | ri <- ris, v <- versions]
+      YNil -> ris
+
+expandVersion i (YString "base") = i
+expandVersion i (YMap [(YString suf, YSeq [YMap fields])]) =
+  let id = oId i
+      v  = YMap ([(YString "id", YString (id ++ suf))] ++
+                 [(YString "parent", YString id)] ++
+                 fields)
+      i' = maybeExpandInstr (idMap [i]) v
+  in i'
 
 sourceVersion id suf (_, ic) i =
   let (_, [d]) = iUseDefs i
       u =  [(YString "id", YString (id ++ "_source" ++ suf))] ++
-           noUsages ++ noEffects
-      i1 = foldl replaceField i u
-      i2 = updateOperandInInstr d
-           (YSeq [YString "register", YString "def", YString ic, YString "-1"])
-           i1
-  in i2
+           [(YString "parent", YString id)] ++
+           noUsages ++ noEffects ++
+           [(YString "new-operands",
+             YSeq [YMap [(YString d, YSeq [YString "register", YString "def",
+                                           YString ic, YString "-1"])]])]
+  in YMap u
 
-dematVersion id suf (hc, ic) i =
-  let u = [(YString "id", YString (id ++ "_demat" ++ suf))] ++
-          noUsages ++ noEffects ++ copy ++ copyOperands hc ic (Just "-1")
-      i1 = foldl replaceField i u
-  in i1
+dematVersion id suf (hc, ic) =
+  YMap ([(YString "id", YString (id ++ "_demat" ++ suf))] ++
+        [(YString "parent", YString id)] ++
+        noUsages ++ noEffects ++ copy ++ copyOperands hc ic (Just "-1"))
 
-rematVersion id suf (hc, ic) i =
-  let u = [(YString "id", YString (id ++ "_remat" ++ suf))] ++
-          copy ++ copyOperands ic hc Nothing
-      i1 = foldl replaceField i u
-  in i1
+rematVersion id suf (hc, ic) =
+  YMap ([(YString "id", YString (id ++ "_remat" ++ suf))] ++
+        [(YString "parent", YString id)] ++
+        copy ++ copyOperands ic hc Nothing)
 
 noUsages = [(YString "itinerary", YString "NoItinerary"),
             (YString "size", YString "0")]
@@ -162,9 +172,10 @@ maybeExpandInstr id2i i =
                Nothing ->
                  error ("Parent instruction \'" ++ p ++ "\' does not exist")
          i2 = foldl replaceField i1 (yMap i)
-         i3 = addField (YString "parent", YString p) i2
-         i4 = maybeExpandOperands (yLookup "new-operands" i) i3
-     in i4
+         i3 = deleteField (YString "parent") i2
+         i4 = addField (YString "parent", YString p) i3
+         i5 = maybeExpandOperands (yLookup "new-operands" i) i4
+     in i5
 
 maybeExpandOperands (Just (YSeq new)) i =
   let operands = nubBy (equaling operandName) $ new ++ iOperands i
@@ -196,6 +207,10 @@ replace (YString newk, newv) (YString oldk, oldv)
   | otherwise = (YString oldk, oldv)
 
 addField f (YMap fs) = YMap (fs ++ [f])
+
+deleteField df (YMap fs) = YMap (filter (not . isField df) fs)
+
+isField f (f', _) = f == f'
 
 promote effectPats i =
     let effs   = map (\p -> second tail $ break (\c -> c == ':') p) effectPats
