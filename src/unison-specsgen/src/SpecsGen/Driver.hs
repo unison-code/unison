@@ -63,7 +63,7 @@ runSpecsGen tPreMod tExtension =
        remat <- maybe (return "") readFile rematFile
        let is   = concatMap yamlInstructions yaml
            is1  = expand is
-           is2  = is1 ++ extendRemats is1 (ySeq $ simplify $ decodeYaml remat)
+           is2  = is1 ++ extendRemats is1 (yamlInstructions remat)
            is3  = is2 ++
                   if constantExtend then mapMaybe constantExtendedOperation is2
                   else []
