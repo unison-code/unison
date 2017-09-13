@@ -152,9 +152,26 @@ guessGoal mirFile =
 
 updateProperties properties mirFile mir =
   do let docs = split onDocumentEnd mir
-         mir' = (docs !! 0) ++ (docs !! 1) ++
+         mir' = dummyIR ++ findMirDoc properties docs ++
                 "---\n" ++ encodeYaml properties ++ "...\n"
      writeFile mirFile mir'
+
+dummyIR = "--- |\n" ++ "  ; ModuleID = 'dummy.ll'\n" ++ "...\n"
+
+findMirDoc properties docs =
+  case filter isMachineFunctionDoc docs of
+   [mf] -> mf
+   mfs  -> case testFunction properties of
+            Just function ->
+              fromJust $ find (\mf -> machineFunctionName mf == function) mfs
+            Nothing -> error "cannot disambiguate function to be updated"
+
+isMachineFunctionDoc doc = namePrefix `isPrefixOf` doc
+
+machineFunctionName doc =
+  takeWhile ((/=) '\n') $ dropWhile ((==) ' ') $ drop (length namePrefix) doc
+
+namePrefix = "---\nname:"
 
 mkTestProperties = TestProperties
 
