@@ -99,7 +99,7 @@ runUnison unisonTargets testArgs mirFile =
                    scaleFreq args,
                    applyBaseFile args,
                    tightPressureBound args,
-                   strictlyBetter args,
+                   fromMaybe (strictlyBetter args) (testStrictlyBetter properties),
                    unsatisfiable args,
                    removeReds args,
                    keepNops args,
@@ -138,7 +138,7 @@ parseTestProperties unisonTargets mirFile mir =
   in case decodeEither $ B8.pack (last docs) of
       Right properties -> properties :: TestProperties
       (Left _) -> mkTestProperties (guessTarget unisonTargets mirFile)
-                  (guessGoal mirFile) Nothing Nothing Nothing Nothing
+                  (guessGoal mirFile) Nothing Nothing Nothing Nothing Nothing
 
 guessTarget unisonTargets mirFile =
   case find (\t -> t `isInfixOf` mirFile) (map fst unisonTargets) of
@@ -162,6 +162,7 @@ data TestProperties = TestProperties {
   testTarget :: String,
   testGoal :: [String],
   testFunction :: Maybe String,
+  testStrictlyBetter :: Maybe Bool,
   testExpectedHasSolution :: Maybe Bool,
   testExpectedProven :: Maybe Bool,
   testExpectedCost :: Maybe [Integer]
@@ -173,16 +174,18 @@ instance FromJSON TestProperties where
     (v .:  "unison-test-target") <*>
     (v .:  "unison-test-goal") <*>
     (v .:? "unison-test-function") <*>
+    (v .:? "unison-test-strictly-better") <*>
     (v .:? "unison-test-expected-has-solution") <*>
     (v .:? "unison-test-expected-proven") <*>
     (v .:? "unison-test-expected-cost")
   parseJSON _ = error "Can't parse TestProperties from YAML"
 
 instance ToJSON TestProperties where
-  toJSON (TestProperties target goal fun expHasSolution expProven expCost) =
+  toJSON (TestProperties target goal fun sb expHasSolution expProven expCost) =
     object ["unison-test-target" .= target,
             "unison-test-goal" .= goal,
             "unison-test-function" .= fun,
+            "unison-test-strictly-better" .= sb,
             "unison-test-expected-has-solution" .= expHasSolution,
             "unison-test-expected-proven" .= expProven,
             "unison-test-expected-cost" .= expCost]
