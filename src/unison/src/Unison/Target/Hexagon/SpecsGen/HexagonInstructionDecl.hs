@@ -2625,12 +2625,12 @@ data HexagonInstruction = A2_abs
                         | A2_tfrpi_source
                         | A2_tfrpi_demat
                         | A2_tfrpi_remat
-                        | L2_loadri_io_source_fi
-                        | L2_loadri_io_demat_fi
-                        | L2_loadri_io_remat_fi
-                        | L2_loadrb_io_source_fi
-                        | L2_loadrb_io_demat_fi
-                        | L2_loadrb_io_remat_fi
+                        | L2_loadri_io_fi_source_fi
+                        | L2_loadri_io_fi_demat_fi
+                        | L2_loadri_io_fi_remat_fi
+                        | L2_loadrb_io_fi_source_fi
+                        | L2_loadrb_io_fi_demat_fi
+                        | L2_loadrb_io_fi_remat_fi
                         | L4_loadrb_abs_source
                         | L4_loadrb_abs_demat
                         | L4_loadrb_abs_remat
@@ -2646,15 +2646,15 @@ data HexagonInstruction = A2_abs
                         | L4_loadrub_abs_source
                         | L4_loadrub_abs_demat
                         | L4_loadrub_abs_remat
-                        | TFR_FI_source_fi
-                        | TFR_FI_demat_fi
-                        | TFR_FI_remat_fi
+                        | TFR_FI_fi_source_fi
+                        | TFR_FI_fi_demat_fi
+                        | TFR_FI_fi_remat_fi
                         | CONST64_Int_Real_source
                         | CONST64_Int_Real_demat
                         | CONST64_Int_Real_remat
-                        | L2_loadrd_io_source_fi
-                        | L2_loadrd_io_demat_fi
-                        | L2_loadrd_io_remat_fi
+                        | L2_loadrd_io_fi_source_fi
+                        | L2_loadrd_io_fi_demat_fi
+                        | L2_loadrd_io_fi_remat_fi
                         | L4_loadrd_abs_source
                         | L4_loadrd_abs_demat
                         | L4_loadrd_abs_remat
@@ -3694,12 +3694,12 @@ data HexagonInstruction = A2_abs
                         | A2_tfrpi_source_ce
                         | A2_tfrpi_demat_ce
                         | A2_tfrpi_remat_ce
-                        | L2_loadri_io_source_fi_ce
-                        | L2_loadri_io_demat_fi_ce
-                        | L2_loadri_io_remat_fi_ce
-                        | L2_loadrb_io_source_fi_ce
-                        | L2_loadrb_io_demat_fi_ce
-                        | L2_loadrb_io_remat_fi_ce
+                        | L2_loadri_io_fi_source_fi_ce
+                        | L2_loadri_io_fi_demat_fi_ce
+                        | L2_loadri_io_fi_remat_fi_ce
+                        | L2_loadrb_io_fi_source_fi_ce
+                        | L2_loadrb_io_fi_demat_fi_ce
+                        | L2_loadrb_io_fi_remat_fi_ce
                         | L4_loadrb_abs_source_ce
                         | L4_loadrb_abs_demat_ce
                         | L4_loadrb_abs_remat_ce
@@ -3715,15 +3715,15 @@ data HexagonInstruction = A2_abs
                         | L4_loadrub_abs_source_ce
                         | L4_loadrub_abs_demat_ce
                         | L4_loadrub_abs_remat_ce
-                        | TFR_FI_source_fi_ce
-                        | TFR_FI_demat_fi_ce
-                        | TFR_FI_remat_fi_ce
+                        | TFR_FI_fi_source_fi_ce
+                        | TFR_FI_fi_demat_fi_ce
+                        | TFR_FI_fi_remat_fi_ce
                         | CONST64_Int_Real_source_ce
                         | CONST64_Int_Real_demat_ce
                         | CONST64_Int_Real_remat_ce
-                        | L2_loadrd_io_source_fi_ce
-                        | L2_loadrd_io_demat_fi_ce
-                        | L2_loadrd_io_remat_fi_ce
+                        | L2_loadrd_io_fi_source_fi_ce
+                        | L2_loadrd_io_fi_demat_fi_ce
+                        | L2_loadrd_io_fi_remat_fi_ce
                         | L4_loadrd_abs_source_ce
                         | L4_loadrd_abs_demat_ce
                         | L4_loadrd_abs_remat_ce

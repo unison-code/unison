@@ -11,12 +11,12 @@ instruction-set:
      home-class: DoubleRegs
      infinite-class: RM64
 
-   - id: L2_loadri_io
+   - id: L2_loadri_io_fi
      home-class: IntRegs
      infinite-class: RM32
      suffix: _fi
 
-   - id: L2_loadrb_io
+   - id: L2_loadrb_io_fi
      home-class: IntRegs
      infinite-class: RM32
      suffix: _fi
@@ -41,7 +41,7 @@ instruction-set:
      home-class: IntRegs
      infinite-class: RM32
 
-   - id: TFR_FI
+   - id: TFR_FI_fi
      home-class: IntRegs
      infinite-class: RM32
      suffix: _fi
@@ -50,10 +50,10 @@ instruction-set:
      home-class: DoubleRegs
      infinite-class: RM64
 
-   - id: L2_loadrd_io
+   - id: L2_loadrd_io_fi
      home-class: DoubleRegs
      infinite-class: RM64
-     suffix: "_fi"
+     suffix: _fi
 
    - id: L4_loadrd_abs
      home-class: DoubleRegs

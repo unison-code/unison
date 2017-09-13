@@ -73,8 +73,8 @@ operandInfo i
      [TemporaryInfo (InfiniteRegisterClass M64) 1 False])
   | i `elem`
       [A2_tfrpi_demat, A2_tfrpi_demat_ce, CONST64_Int_Real_demat,
-       CONST64_Int_Real_demat_ce, L2_loadrd_io_demat_fi,
-       L2_loadrd_io_demat_fi_ce, L4_loadrd_abs_demat,
+       CONST64_Int_Real_demat_ce, L2_loadrd_io_fi_demat_fi,
+       L2_loadrd_io_fi_demat_fi_ce, L4_loadrd_abs_demat,
        L4_loadrd_abs_demat_ce]
     =
     ([TemporaryInfo (RegisterClass DoubleRegs) 0 False],
@@ -376,14 +376,14 @@ operandInfo i
     ([TemporaryInfo (RegisterClass IntRegs) 0 False],
      [TemporaryInfo (RegisterClass PredRegs) 1 False])
   | i `elem`
-      [A2_tfrsi_demat, A2_tfrsi_demat_ce, L2_loadrb_io_demat_fi,
-       L2_loadrb_io_demat_fi_ce, L2_loadri_io_demat_fi,
-       L2_loadri_io_demat_fi_ce, L4_loadrb_abs_demat,
+      [A2_tfrsi_demat, A2_tfrsi_demat_ce, L2_loadrb_io_fi_demat_fi,
+       L2_loadrb_io_fi_demat_fi_ce, L2_loadri_io_fi_demat_fi,
+       L2_loadri_io_fi_demat_fi_ce, L4_loadrb_abs_demat,
        L4_loadrb_abs_demat_ce, L4_loadrh_abs_demat,
        L4_loadrh_abs_demat_ce, L4_loadri_abs_demat,
        L4_loadri_abs_demat_ce, L4_loadrub_abs_demat,
        L4_loadrub_abs_demat_ce, L4_loadruh_abs_demat,
-       L4_loadruh_abs_demat_ce, TFR_FI_demat_fi, TFR_FI_demat_fi_ce]
+       L4_loadruh_abs_demat_ce, TFR_FI_fi_demat_fi, TFR_FI_fi_demat_fi_ce]
     =
     ([TemporaryInfo (RegisterClass IntRegs) 0 False],
      [TemporaryInfo (InfiniteRegisterClass RM32) 0 False])
@@ -830,16 +830,6 @@ operandInfo i
     =
     ([TemporaryInfo (RegisterClass IntRegs) 0 False, BoundInfo],
      [TemporaryInfo (RegisterClass PredRegs) 1 False])
-  | i `elem`
-      [L2_loadrb_io_source_fi, L2_loadrb_io_source_fi_ce,
-       L2_loadri_io_source_fi, L2_loadri_io_source_fi_ce,
-       TFR_FI_source_fi, TFR_FI_source_fi_ce]
-    =
-    ([TemporaryInfo (RegisterClass IntRegs) 0 False, BoundInfo],
-     [TemporaryInfo (InfiniteRegisterClass RM32) 0 False])
-  | i `elem` [L2_loadrd_io_source_fi, L2_loadrd_io_source_fi_ce] =
-    ([TemporaryInfo (RegisterClass IntRegs) 0 False, BoundInfo],
-     [TemporaryInfo (InfiniteRegisterClass RM64) 0 False])
   | i `elem`
       [LDrivv_indexed, LDrivv_indexed_ce, LDrivv_pseudo_V6,
        LDrivv_pseudo_V6_ce]
@@ -1698,14 +1688,14 @@ operandInfo i
     ([TemporaryInfo (RegisterClass PredRegs) 0 False, BlockRefInfo],
      [])
   | i `elem`
-      [A2_tfrsi_remat, A2_tfrsi_remat_ce, L2_loadrb_io_remat_fi,
-       L2_loadrb_io_remat_fi_ce, L2_loadri_io_remat_fi,
-       L2_loadri_io_remat_fi_ce, L4_loadrb_abs_remat,
+      [A2_tfrsi_remat, A2_tfrsi_remat_ce, L2_loadrb_io_fi_remat_fi,
+       L2_loadrb_io_fi_remat_fi_ce, L2_loadri_io_fi_remat_fi,
+       L2_loadri_io_fi_remat_fi_ce, L4_loadrb_abs_remat,
        L4_loadrb_abs_remat_ce, L4_loadrh_abs_remat,
        L4_loadrh_abs_remat_ce, L4_loadri_abs_remat,
        L4_loadri_abs_remat_ce, L4_loadrub_abs_remat,
        L4_loadrub_abs_remat_ce, L4_loadruh_abs_remat,
-       L4_loadruh_abs_remat_ce, TFR_FI_remat_fi, TFR_FI_remat_fi_ce]
+       L4_loadruh_abs_remat_ce, TFR_FI_fi_remat_fi, TFR_FI_fi_remat_fi_ce]
     =
     ([TemporaryInfo (InfiniteRegisterClass RM32) 0 False],
      [TemporaryInfo (RegisterClass IntRegs) 1 False])
@@ -1717,8 +1707,8 @@ operandInfo i
      [TemporaryInfo (RegisterClass PredRegs) 1 False])
   | i `elem`
       [A2_tfrpi_remat, A2_tfrpi_remat_ce, CONST64_Int_Real_remat,
-       CONST64_Int_Real_remat_ce, L2_loadrd_io_remat_fi,
-       L2_loadrd_io_remat_fi_ce, L4_loadrd_abs_remat,
+       CONST64_Int_Real_remat_ce, L2_loadrd_io_fi_remat_fi,
+       L2_loadrd_io_fi_remat_fi_ce, L4_loadrd_abs_remat,
        L4_loadrd_abs_remat_ce]
     =
     ([TemporaryInfo (InfiniteRegisterClass RM64) 0 False],
@@ -2441,6 +2431,18 @@ operandInfo i
     =
     ([BoundInfo, BoundInfo],
      [TemporaryInfo (RegisterClass IntRegs) 1 False])
+  | i `elem`
+      [L2_loadrb_io_fi_source_fi, L2_loadrb_io_fi_source_fi_ce,
+       L2_loadri_io_fi_source_fi, L2_loadri_io_fi_source_fi_ce,
+       TFR_FI_fi_source_fi, TFR_FI_fi_source_fi_ce]
+    =
+    ([BoundInfo, BoundInfo],
+     [TemporaryInfo (InfiniteRegisterClass RM32) 0 False])
+  | i `elem`
+      [L2_loadrd_io_fi_source_fi, L2_loadrd_io_fi_source_fi_ce]
+    =
+    ([BoundInfo, BoundInfo],
+     [TemporaryInfo (InfiniteRegisterClass RM64) 0 False])
   | i `elem`
       [COPY_TO_REGCLASS, COPY_TO_REGCLASS_ce, EXTRACT_SUBREG,
        EXTRACT_SUBREG_ce, REG_SEQUENCE, REG_SEQUENCE_ce]

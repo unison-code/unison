@@ -1146,20 +1146,20 @@ parent i
   | i `elem` [JMPret_dealloc_linear, JMPret_linear] = Just JMPret
   | i `elem` [L2_deallocframe_linear] = Just L2_deallocframe
   | i `elem`
-      [L2_loadrb_io_demat_fi, L2_loadrb_io_demat_fi_ce,
-       L2_loadrb_io_remat_fi, L2_loadrb_io_remat_fi_ce,
-       L2_loadrb_io_source_fi, L2_loadrb_io_source_fi_ce]
-    = Just L2_loadrb_io
+      [L2_loadrb_io_fi_demat_fi, L2_loadrb_io_fi_demat_fi_ce,
+       L2_loadrb_io_fi_remat_fi, L2_loadrb_io_fi_remat_fi_ce,
+       L2_loadrb_io_fi_source_fi, L2_loadrb_io_fi_source_fi_ce]
+    = Just L2_loadrb_io_fi
   | i `elem`
-      [L2_loadrd_io_demat_fi, L2_loadrd_io_demat_fi_ce,
-       L2_loadrd_io_remat_fi, L2_loadrd_io_remat_fi_ce,
-       L2_loadrd_io_source_fi, L2_loadrd_io_source_fi_ce]
-    = Just L2_loadrd_io
+      [L2_loadrd_io_fi_demat_fi, L2_loadrd_io_fi_demat_fi_ce,
+       L2_loadrd_io_fi_remat_fi, L2_loadrd_io_fi_remat_fi_ce,
+       L2_loadrd_io_fi_source_fi, L2_loadrd_io_fi_source_fi_ce]
+    = Just L2_loadrd_io_fi
   | i `elem`
-      [L2_loadri_io_demat_fi, L2_loadri_io_demat_fi_ce,
-       L2_loadri_io_remat_fi, L2_loadri_io_remat_fi_ce,
-       L2_loadri_io_source_fi, L2_loadri_io_source_fi_ce]
-    = Just L2_loadri_io
+      [L2_loadri_io_fi_demat_fi, L2_loadri_io_fi_demat_fi_ce,
+       L2_loadri_io_fi_remat_fi, L2_loadri_io_fi_remat_fi_ce,
+       L2_loadri_io_fi_source_fi, L2_loadri_io_fi_source_fi_ce]
+    = Just L2_loadri_io_fi
   | i `elem`
       [L4_loadrb_abs_demat, L4_loadrb_abs_demat_ce, L4_loadrb_abs_remat,
        L4_loadrb_abs_remat_ce, L4_loadrb_abs_source,
@@ -1196,9 +1196,9 @@ parent i
   | i `elem` [S2_storerf_io_fi, S2_storerf_io_fi_ce] =
     Just S2_storerf_io
   | i `elem`
-      [TFR_FI_demat_fi, TFR_FI_demat_fi_ce, TFR_FI_remat_fi,
-       TFR_FI_remat_fi_ce, TFR_FI_source_fi, TFR_FI_source_fi_ce]
-    = Just TFR_FI
+      [TFR_FI_fi_demat_fi, TFR_FI_fi_demat_fi_ce, TFR_FI_fi_remat_fi,
+       TFR_FI_fi_remat_fi_ce, TFR_FI_fi_source_fi, TFR_FI_fi_source_fi_ce]
+    = Just TFR_FI_fi
   | i `elem`
       [TFR_PdFalse_demat, TFR_PdFalse_demat_ce, TFR_PdFalse_remat,
        TFR_PdFalse_remat_ce, TFR_PdFalse_source]

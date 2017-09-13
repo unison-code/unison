@@ -801,10 +801,7 @@ alignedPairs i ([dst2, _, _], [dst2'])
 alignedPairs i ([dst2, _, _, _], [dst2'])
   | i `elem` [S2_insert, S2_insert_ce, S2_insertp, S2_insertp_ce] =
     [(dst2, dst2')]
-alignedPairs i ([_, _], [_])
-  | i `elem`
-      [TFR_FI, TFR_FI_ce, TFR_FI_source_fi, TFR_FI_source_fi_ce]
-    = []
+alignedPairs i ([_, _], [_]) | i `elem` [TFR_FI, TFR_FI_ce] = []
 alignedPairs i ([_], [_])
   | i `elem`
       [CONST32, CONST32_Int_Real, CONST32_Int_Real_ce, CONST32_ce,
@@ -887,14 +884,15 @@ alignedPairs i ([_], [_])
        F2_dfimm_n_ce, F2_dfimm_p, F2_dfimm_p_ce, F2_sfimm_n,
        F2_sfimm_n_ce, F2_sfimm_p, F2_sfimm_p_ce, J2_jumpf_linear,
        J2_jumpf_nv_linear, J2_jumpt_linear, J2_jumpt_nv_linear,
-       L2_loadrb_io_demat_fi, L2_loadrb_io_demat_fi_ce,
-       L2_loadrb_io_remat_fi, L2_loadrb_io_remat_fi_ce,
-       L2_loadrd_io_demat_fi, L2_loadrd_io_demat_fi_ce,
-       L2_loadrd_io_remat_fi, L2_loadrd_io_remat_fi_ce,
-       L2_loadri_io_demat_fi, L2_loadri_io_demat_fi_ce,
-       L2_loadri_io_remat_fi, L2_loadri_io_remat_fi_ce, L2_loadw_locked,
-       L4_loadd_locked, L4_loadrb_abs_demat, L4_loadrb_abs_demat_ce,
-       L4_loadrb_abs_remat, L4_loadrb_abs_remat_ce, L4_loadrd_abs_demat,
+       L2_loadrb_io_fi_demat_fi, L2_loadrb_io_fi_demat_fi_ce,
+       L2_loadrb_io_fi_remat_fi, L2_loadrb_io_fi_remat_fi_ce,
+       L2_loadrd_io_fi_demat_fi, L2_loadrd_io_fi_demat_fi_ce,
+       L2_loadrd_io_fi_remat_fi, L2_loadrd_io_fi_remat_fi_ce,
+       L2_loadri_io_fi_demat_fi, L2_loadri_io_fi_demat_fi_ce,
+       L2_loadri_io_fi_remat_fi, L2_loadri_io_fi_remat_fi_ce,
+       L2_loadw_locked, L4_loadd_locked, L4_loadrb_abs_demat,
+       L4_loadrb_abs_demat_ce, L4_loadrb_abs_remat,
+       L4_loadrb_abs_remat_ce, L4_loadrd_abs_demat,
        L4_loadrd_abs_demat_ce, L4_loadrd_abs_remat,
        L4_loadrd_abs_remat_ce, L4_loadrh_abs_demat,
        L4_loadrh_abs_demat_ce, L4_loadrh_abs_remat,
@@ -908,8 +906,8 @@ alignedPairs i ([_], [_])
        S2_brev, S2_svsathb, S2_svsathub, S2_vrndpackwh, S2_vrndpackwhs,
        S2_vsathb, S2_vsathub, S2_vsatwh, S2_vsatwuh, S2_vsplatrb,
        S2_vsplatrh, S2_vsxtbh, S2_vsxthw, S2_vtrunehb, S2_vtrunohb,
-       S2_vzxtbh, S2_vzxthw, STD, STW, STW_nv, TFR_FI_demat_fi,
-       TFR_FI_demat_fi_ce, TFR_FI_remat_fi, TFR_FI_remat_fi_ce,
+       S2_vzxtbh, S2_vzxthw, STD, STW, STW_nv, TFR_FI_fi_demat_fi,
+       TFR_FI_fi_demat_fi_ce, TFR_FI_fi_remat_fi, TFR_FI_fi_remat_fi_ce,
        TFR_PdFalse_demat, TFR_PdFalse_demat_ce, TFR_PdFalse_remat,
        TFR_PdFalse_remat_ce, TFR_PdTrue_demat, TFR_PdTrue_demat_ce,
        TFR_PdTrue_remat, TFR_PdTrue_remat_ce, Ret_dealloc_merge]
@@ -1089,11 +1087,9 @@ alignedPairs i ([_, _], [_])
       [L2_loadbsw2_io, L2_loadbsw2_io_ce, L2_loadbsw4_io,
        L2_loadbsw4_io_ce, L2_loadbzw2_io, L2_loadbzw2_io_ce,
        L2_loadbzw4_io, L2_loadbzw4_io_ce, L2_loadrb_io, L2_loadrb_io_ce,
-       L2_loadrb_io_source_fi, L2_loadrb_io_source_fi_ce, L2_loadrd_io,
-       L2_loadrd_io_ce, L2_loadrd_io_source_fi, L2_loadrd_io_source_fi_ce,
-       L2_loadrh_io, L2_loadrh_io_ce, L2_loadri_io, L2_loadri_io_ce,
-       L2_loadri_io_source_fi, L2_loadri_io_source_fi_ce, L2_loadrub_io,
-       L2_loadrub_io_ce, L2_loadruh_io, L2_loadruh_io_ce]
+       L2_loadrd_io, L2_loadrd_io_ce, L2_loadrh_io, L2_loadrh_io_ce,
+       L2_loadri_io, L2_loadri_io_ce, L2_loadrub_io, L2_loadrub_io_ce,
+       L2_loadruh_io, L2_loadruh_io_ce]
     = []
 alignedPairs i ([src1, _], [_, src1'])
   | i `elem`
@@ -1131,9 +1127,12 @@ alignedPairs i ([_, _], [_])
        J4_cmpgtui_t_jumpnv_t_linear, J4_cmpgtui_t_jumpnv_t_linear_ce,
        J4_cmplt_f_jumpnv_t_linear, J4_cmplt_t_jumpnv_t_linear,
        J4_cmpltu_f_jumpnv_t_linear, J4_cmpltu_t_jumpnv_t_linear,
-       L2_loadrb_io_fi, L2_loadrb_io_fi_ce, L2_loadrd_io_fi,
-       L2_loadrd_io_fi_ce, L2_loadrh_io_fi, L2_loadrh_io_fi_ce,
-       L2_loadri_io_fi, L2_loadri_io_fi_ce, L2_loadrub_io_fi,
+       L2_loadrb_io_fi, L2_loadrb_io_fi_ce, L2_loadrb_io_fi_source_fi,
+       L2_loadrb_io_fi_source_fi_ce, L2_loadrd_io_fi, L2_loadrd_io_fi_ce,
+       L2_loadrd_io_fi_source_fi, L2_loadrd_io_fi_source_fi_ce,
+       L2_loadrh_io_fi, L2_loadrh_io_fi_ce, L2_loadri_io_fi,
+       L2_loadri_io_fi_ce, L2_loadri_io_fi_source_fi,
+       L2_loadri_io_fi_source_fi_ce, L2_loadrub_io_fi,
        L2_loadrub_io_fi_ce, L2_loadruh_io_fi, L2_loadruh_io_fi_ce,
        M2_cmpyrs_s0, M2_cmpyrs_s1, M2_cmpyrsc_s0, M2_cmpyrsc_s1,
        M2_dpmpyss_rnd_s0, M2_hmmpyh_rs1, M2_hmmpyh_s1, M2_hmmpyl_rs1,
@@ -1157,7 +1156,8 @@ alignedPairs i ([_, _], [_])
        S4_vxaddsubw, S4_vxsubaddh, S4_vxsubaddhr, S4_vxsubaddw,
        S6_rol_i_p, S6_rol_i_p_ce, S6_rol_i_r, S6_rol_i_r_ce,
        TFRI64_V2_ext, TFRI64_V2_ext_ce, TFRI_cNotPt_f, TFRI_cNotPt_f_ce,
-       TFRI_cPt_f, TFRI_cPt_f_ce, TFR_FI_fi, TFR_FI_fi_ce, V6_extractw,
+       TFRI_cPt_f, TFRI_cPt_f_ce, TFR_FI_fi, TFR_FI_fi_ce,
+       TFR_FI_fi_source_fi, TFR_FI_fi_source_fi_ce, V6_extractw,
        V6_extractw_128B, V6_pred_and, V6_pred_and_128B, V6_pred_and_n,
        V6_pred_and_n_128B, V6_pred_or, V6_pred_or_128B, V6_pred_or_n,
        V6_pred_or_n_128B, V6_pred_xor, V6_pred_xor_128B, V6_vL32Ub_ai,
