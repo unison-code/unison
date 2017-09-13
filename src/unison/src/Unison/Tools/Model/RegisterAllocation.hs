@@ -109,7 +109,8 @@ parameters (cg, _, _, t2w, ra, _) f @ Function {fCode = code} target =
         def_opr     = toValueListM def_opr'
         allClasses  = nub $ concat $ concat rclass
         infassign   = concat [infAssignForSpace ocf classSpace
-                              t def_opr' (M.fromList rs2a) t2w p2ts congr rs'
+                              t def_opr' (M.fromList rs2a) t2w p2ts congr
+                              packed rs'
                              | rs' <- rs,
                                rsInfinite rs',
                                none (isBounded ibf classSpace rs') allClasses]
@@ -462,17 +463,19 @@ isBounded ibf classSpace rs irc =
   let rc = rcClass irc
   in classSpace M.! irc == rs && isJust (ibf rc)
 
-infAssignForSpace ocf rcSpace ts def_opr rs2a t2w p2ts congr rs =
-    let cts1    = map (map mkTemp) $ P.toList $
+infAssignForSpace ocf rcSpace ts def_opr rs2a t2w p2ts congr packed rs =
+    let pts     = S.fromList $ concatMap (extractTemps . snd) packed
+        cts1    = map (map mkTemp) $ P.toList $
                   foldl (mergeCongruences p2ts) (P.fromNodes ts) congr
         -- cts3 contains sets of temporaries representing the same original
         -- temporary and can thus be assigned the same infinite space atoms
         cts2    = cfilter (isSpaceCandidate ocf rcSpace def_opr rs) cts1
         cts3    = map sort cts2
+        cts4    = filter (\ts -> none (\t -> S.member t pts) ts) cts3
         -- this ensures a correct register bank alignment
-        cts4    = sortBy (comparing (\ts -> - t2w M.! head ts)) cts3
+        cts5    = sortBy (comparing (\ts -> - t2w M.! head ts)) cts4
         fa      = fst $ rs2a M.! rs
-        (_, ia) = mapAccumL (buildInfAssign t2w) fa cts4
+        (_, ia) = mapAccumL (buildInfAssign t2w) fa cts5
         ia'     = sort $
                   concat [map (\t -> (t, rs, a, la)) ts | (ts, (a, la)) <- ia]
     in ia'
