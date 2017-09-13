@@ -30,6 +30,7 @@ import Control.Applicative ((<$>),(<*>))
 import qualified Data.ByteString.Lazy.Char8 as BSL
 import qualified Data.Aeson as JSON
 import qualified Data.HashMap.Strict as HM
+import qualified Data.ByteString.Char8 as B8
 
 import Common.Util
 import Unison
@@ -88,7 +89,7 @@ runUnison unisonTargets testArgs mirFile =
                    noReserved args,
                    maxBlockSize args,
                    implementFrames args,
-                   function args,
+                   (testFunction properties),
                    Just (intercalate "," (testGoal properties)),
                    noCross args,
                    oldModel args,
@@ -134,9 +135,10 @@ mirFileNames dir = do
 
 parseTestProperties unisonTargets mirFile mir =
   let docs = split onDocumentEnd mir
-  in if length docs == 3 then decodeYaml (docs !! 2)  :: TestProperties
-     else mkTestProperties (guessTarget unisonTargets mirFile)
-          (guessGoal mirFile) Nothing Nothing Nothing
+  in case decodeEither $ B8.pack (last docs) of
+      Right properties -> properties :: TestProperties
+      (Left _) -> mkTestProperties (guessTarget unisonTargets mirFile)
+                  (guessGoal mirFile) Nothing Nothing Nothing Nothing
 
 guessTarget unisonTargets mirFile =
   case find (\t -> t `isInfixOf` mirFile) (map fst unisonTargets) of
@@ -159,6 +161,7 @@ mkTestProperties = TestProperties
 data TestProperties = TestProperties {
   testTarget :: String,
   testGoal :: [String],
+  testFunction :: Maybe String,
   testExpectedHasSolution :: Maybe Bool,
   testExpectedProven :: Maybe Bool,
   testExpectedCost :: Maybe [Integer]
@@ -169,15 +172,17 @@ instance FromJSON TestProperties where
     TestProperties <$>
     (v .:  "unison-test-target") <*>
     (v .:  "unison-test-goal") <*>
+    (v .:? "unison-test-function") <*>
     (v .:? "unison-test-expected-has-solution") <*>
     (v .:? "unison-test-expected-proven") <*>
     (v .:? "unison-test-expected-cost")
   parseJSON _ = error "Can't parse TestProperties from YAML"
 
 instance ToJSON TestProperties where
-  toJSON (TestProperties target goal expHasSolution expProven expCost) =
+  toJSON (TestProperties target goal fun expHasSolution expProven expCost) =
     object ["unison-test-target" .= target,
             "unison-test-goal" .= goal,
+            "unison-test-function" .= fun,
             "unison-test-expected-has-solution" .= expHasSolution,
             "unison-test-expected-proven" .= expProven,
             "unison-test-expected-cost" .= expCost]
