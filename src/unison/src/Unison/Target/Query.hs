@@ -20,7 +20,10 @@ module Unison.Target.Query
      latencies,
      dataLatency,
      tempsToInfo,
-     regClassOf)
+     regClassOf,
+     mayLoad,
+     mayStore,
+     mayCrossMemDep)
     where
 
 import Data.List
@@ -163,3 +166,22 @@ operandLatency t2l t =
 expandTemps t2l =
   M.fromList $ concatMap (\(p, l) -> [(t, l) | t <- extractTemps p,
                                       not (isNullTemporary t)]) (M.toList t2l)
+
+mayAccessMemory f rwif i =
+  let effs = f $ rwif i
+  in not $ null [m | m @ Memory {} <- effs]
+
+mayLoad  = mayAccessMemory fst
+mayStore = mayAccessMemory snd
+
+mayCrossMemDep rwif d u code =
+  any (\i -> mayLoad rwif i || mayStore rwif i) (oTargetIs d) &&
+  any (mayStoreOpr rwif) (operationsInBetween (oId d) (oId u) code)
+
+mayStoreOpr rwif o = isNatural o && any (mayStore rwif) (oTargetIs o)
+
+operationsInBetween p s code =
+  let b = fromJust $ find (\b -> any (isId p) (bCode b)) code
+  in between (isId p) (isId s) (bCode b)
+
+oTargetIs o = [i | TargetInstruction i <- oInstructions o]

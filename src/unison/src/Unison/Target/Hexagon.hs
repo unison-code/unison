@@ -27,6 +27,7 @@ import Unison
 import qualified Unison.Target.API as API
 import Unison.Target.RegisterArray
 import Unison.Analysis.TemporaryType
+import Unison.Target.Query
 import Unison.Target.Hexagon.Registers
 import Unison.Target.Hexagon.Transforms
 import Unison.Target.Hexagon.Common
@@ -190,9 +191,10 @@ copies _ False t [] d [u]
 
 -- Do not extend rematerializable instructions used only once, locally
 -- FIXME: review whether this is always safe
-copies _ False t _ d [u]
+copies (Function {fCode = code}, _, _, _, _, _) False t _ d [u]
   | isNatural d && (isNatural u || isFun u) &&
     (isRematerializable (targetInst (oInstructions d))) &&
+    not (mayCrossMemDep SpecsGen.readWriteInfo d u code) &&
     compatibleClassesForTemp t [d, u] = ([], [[]])
 
 copies (f, _, cg, ra, _, _) _ t _rs d us =
@@ -428,7 +430,7 @@ itineraryUsage i it
       -- New-value stores cannot be issued with other stores, we model this by
       -- saturating the 'Store' resource.
     | it `elem` [ST_tc_st_SLOT0, V2LDST_tc_st_SLOT0, V4LDST_tc_st_SLOT0,
-                 NCJ_tc_3or4stall_SLOT0] && mayStore i =
+                 NCJ_tc_3or4stall_SLOT0] && mayStore' i =
       slot0 ++ store 2 ++ conNewValue
       -- A new-value compare and jump instruction i cannot be issued in parallel
       -- with stores as slot 0 will be occupied by i and slot 1 will be occupied
@@ -741,11 +743,8 @@ addHint True J2_jumpfnew = J2_jumpfnewpt
 addHint False i | isNewValueCmpJump i = read (init (show i) ++ "nt")
 addHint _ i = i
 
-mayStore STW_nv = True
-mayStore i =
-  let ws  = snd (SpecsGen.readWriteInfo i) :: [RWObject HexagonRegister]
-      mem = Memory "mem" :: RWObject HexagonRegister
-  in mem `elem` ws
+mayStore' STW_nv = True
+mayStore' i = mayStore (SpecsGen.readWriteInfo) i
 
 -- | Gives a list of function transformers
 transforms ImportPreLift = [liftStackArgSize,

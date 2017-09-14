@@ -15,7 +15,6 @@ module Unison.Tools.Import.RelocateDefines (relocateDefines) where
 import Data.List
 
 import Common.Util
-
 import Unison
 
 relocateDefines f _target = fixpoint relocateDefine f
@@ -39,9 +38,5 @@ isRelocatableDefine code i
             in not (isPhi u) && any (not . isDefine) is
           _   -> False
     | otherwise = False
-
-between f g l =
-    let (_:l') = dropWhile (not . f) l
-    in  takeWhile (not . g) l'
 
 singleUser i code = fromSingleton (users (oSingleDef i) code)

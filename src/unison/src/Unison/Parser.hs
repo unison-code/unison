@@ -27,7 +27,7 @@ import qualified Text.Parsec.Token as P
 import Text.Parsec.Language (emptyDef)
 import Control.Arrow
 
-import Common.Util
+import Common.Util hiding (between)
 
 import MachineIR.Base (MachineOperand, mfiIndex, mjtiIndex)
 import MachineIR.Parser

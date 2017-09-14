@@ -27,7 +27,7 @@ import Text.ParserCombinators.Parsec as P
 import qualified Text.Parsec.Token as T
 import Text.Parsec.Language (emptyDef)
 
-import Common.Util
+import Common.Util hiding (between)
 import MachineIR.Base
 import MachineIR.Constructors
 import MachineIR.Util

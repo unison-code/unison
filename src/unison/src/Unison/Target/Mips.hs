@@ -21,6 +21,7 @@ import MachineIR hiding (parse)
 import Unison
 import qualified Unison.Target.API as API
 import Unison.Target.RegisterArray
+import Unison.Target.Query
 import Unison.Analysis.TemporaryType
 import Unison.Analysis.TransitiveOperations
 import Unison.Transformations.FoldReservedRegisters
@@ -140,9 +141,10 @@ copies _ False _ [] d us | isCombine d =
 
 -- Do not extend rematerializable instructions used only once, locally
 -- FIXME: review whether this is always safe
-copies _ False t _ d [u]
+copies (Function {fCode = code}, _, _, _, _, _) False t _ d [u]
   | isNatural d && (isNatural u || isFun u) &&
     (isRematerializable (targetInst (oInstructions d))) &&
+    not (mayCrossMemDep SpecsGen.readWriteInfo d u code) &&
     compatibleClassesForTemp t [d, u] = ([], [[]])
 
 copies (f, _, cg, ra, bcfg, sg) _ t _ d us =
