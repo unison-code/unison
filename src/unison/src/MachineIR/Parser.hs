@@ -14,7 +14,7 @@ This file is part of Unison, see http://unison-code.github.io
 -}
 {-# LANGUAGE OverloadedStrings, FlexibleContexts, CPP #-}
 module MachineIR.Parser
-       (MachineIR.Parser.parse, mirOperand, mirFI, mirJTI) where
+       (MachineIR.Parser.parse, splitDocs, mirOperand, mirFI, mirJTI) where
 
 import Data.Maybe
 import Data.Char
@@ -33,9 +33,12 @@ import MachineIR.Constructors
 import MachineIR.Util
 
 parse :: Read i => Read r => String -> [MachineFunction i r]
-parse input =
+parse input = map parseFunction (splitDocs input)
+
+splitDocs :: String -> [(String, String)]
+splitDocs input =
   let docs = split onDocumentEnd input
-  in [parseFunction (rawIR, rawMIR) | [rawIR, rawMIR] <- chunksOf 2 docs]
+  in [(rawIR, rawMIR) | [rawIR, rawMIR] <- chunksOf 2 docs]
 
 parseFunction :: Read i => Read r => (String, String) -> MachineFunction i r
 parseFunction (rawIR, rawMIR) =

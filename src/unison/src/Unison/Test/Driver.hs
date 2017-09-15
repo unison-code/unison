@@ -76,13 +76,14 @@ runUnison unisonTargets testArgs mirFile =
      let sp = showProgress testArgs
          verb = verbose testArgs
          upd = update testArgs
-         asmMirFile = addExtension (take (length mirFile - 4) mirFile) "asm.mir"
+         asmMirFile = addExtension "asm.mir" (take (length mirFile - 4) mirFile)
          properties = parseTestProperties unisonTargets mirFile mir
      when (verb || sp) $ hPutStrLn stderr ""
      when sp $ hPutStrLn stderr ("Running test " ++ mirFile ++ "...")
      case pickTarget (testTarget properties) unisonTargets of
       (Any target) -> do
-        prefix <- Run.run
+        (_, [prefix])
+               <- Run.run
                   (estimateFreq args,
                    simplifyControlFlow args,
                    noCC args,
@@ -115,13 +116,13 @@ runUnison unisonTargets testArgs mirFile =
                    solver testArgs)
                   (target, targetOption args)
         properties1 <- assertOutJson upd properties prefix
-        let unisonMirFile = addExtension prefix "unison.mir"
+        let unisonMirFile = addExtension "unison.mir" prefix
         properties2 <- assertCost upd (target, targetOption args)
                        properties1 unisonMirFile
         when upd $ updateProperties properties2 mirFile mir
         return ()
 
-addExtension prefix ext = prefix ++ "." ++ ext
+addExtension ext prefix = prefix ++ "." ++ ext
 
 mirFileNames dir = do
   names <- getDirectoryContents dir
@@ -208,7 +209,7 @@ instance ToJSON TestProperties where
             "unison-test-expected-cost" .= expCost]
 
 assertOutJson update properties prefix =
-  do let outJsonFile = addExtension prefix "out.json"
+  do let outJsonFile = addExtension "out.json" prefix
      outJson <- readFile outJsonFile
      let sol = parseSolution outJson
          expHasSolution = solFromJson sol "has_solution" :: Bool
