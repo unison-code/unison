@@ -244,6 +244,9 @@ public:
   // whether each register space is infinite
   vector<bool> infinite;
 
+  // whether each register space is bounded
+  vector<bool> bounded;
+
   // name of each instruction
   vector<string> insname;
 

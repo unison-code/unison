@@ -23,6 +23,7 @@ import Data.Aeson (toJSON)
 import Control.Arrow
 import Data.Graph.Inductive
 import Unison.Graphs.ThirdParty
+import Data.Tuple
 
 import Unison
 import Unison.Target.API
@@ -84,7 +85,10 @@ parameters (cg, _, _, t2w, ra, _) f @ Function {fCode = code} target =
 
         copyrel     = concatMap copyRelatedOperands code
 
+        classSpace  = M.fromList
+                      [(raIndexedRc ra rc, raRcSpace ra rc) | rc <- raRcs ra]
         infinite    = map rsInfinite rs
+        bounded     = map (isBoundedSpace ibf classSpace) rs
 
         atomname    = toValueListM $ atomToAtomicRegName ra
 
@@ -97,8 +101,6 @@ parameters (cg, _, _, t2w, ra, _) f @ Function {fCode = code} target =
         callersaved = toAtoms $ callerSaved target
         calleesaved = toAtoms $ calleeSaved target
 
-        classSpace  = M.fromList
-                      [(raIndexedRc ra rc, raRcSpace ra rc) | rc <- raRcs ra]
         space       = toValueListM classSpace
         range       = toValueList rs2a
 
@@ -227,6 +229,10 @@ parameters (cg, _, _, t2w, ra, _) f @ Function {fCode = code} target =
       -- whether each register space is infinite
       -- example: infinite[3]: whether register space rs3 is infinite
       ("infinite", toJSON infinite),
+
+      -- whether each register space is bounded
+      -- example: bounded[2]: whether register space rs2 is bounded
+      ("bounded", toJSON bounded),
 
       -- name of each atom
       -- example: atomname[5]: name of the atom a5
@@ -462,6 +468,12 @@ joinClusterCycles adj pr =
 isBounded ibf classSpace rs irc =
   let rc = rcClass irc
   in classSpace M.! irc == rs && isJust (ibf rc)
+
+isBoundedSpace ibf classSpace rs
+  | rsInfinite rs =
+    let ircs = (fromListMult $ map swap (M.toList classSpace)) M.! rs
+    in any (isJust . ibf . rcClass) ircs
+  | otherwise = False
 
 infAssignForSpace ocf rcSpace ts def_opr rs2a t2w p2ts congr packed rs =
     let pts     = S.fromList $ concatMap (extractTemps . snd) packed

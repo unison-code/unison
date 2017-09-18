@@ -104,6 +104,7 @@ Parameters::Parameters(JSONVALUE root) :
   range         (get_2d_vector<int>(getRoot(root, "range"))),
   home          (get_vector<int>(getRoot(root, "home"))),
   infinite      (get_vector<bool>(getRoot(root, "infinite"))),
+  bounded       (get_vector<bool>(getRoot(root, "bounded"))),
   insname       (get_vector<string>(getRoot(root, "insname"))),
   atomname      (get_vector<string>(getRoot(root, "atomname"))),
   classname     (get_vector<string>(getRoot(root, "classname"))),
