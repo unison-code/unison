@@ -24,7 +24,7 @@ itineraryUsage RetRA IIPseudo =
   itineraryUsage PseudoReturn (SpecsGen.itinerary PseudoReturn)
 itineraryUsage NOP IIPseudo = [mkUsage ALU 1 1]
 itineraryUsage i NoItinerary
-  | i `elem` [LEA_ADDiu, TEQ] = [mkUsage ALU 1 1]
+  | i `elem` [LEA_ADDiu, LEA_ADDiu_remat, TEQ] = [mkUsage ALU 1 1]
 itineraryUsage i IIPseudo
   | i `elem` [BuildPairF64, ExtractElementF64] = [mkUsage ALU 1 1]
 itineraryUsage _ it
