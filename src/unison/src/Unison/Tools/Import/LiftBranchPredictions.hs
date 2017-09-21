@@ -42,7 +42,7 @@ liftBranchPredictionInInstruction (itf, bif, oif) succ mi
         let o = fromMachineInstruction itf oif (-1, mi)
         in case fromJust (bif o) of
           (BranchInfo Conditional (Just bid)) ->
-            let taken = (succ M.! bid) > 50
+            let taken = (succ M.! bid) >= 50
                 mpt   = mkMachineInstructionPropertyBranchTaken taken
                 mi'   = mi {msProperties = msProperties mi ++ [mpt]}
             in mi'
