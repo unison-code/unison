@@ -3660,6 +3660,8 @@ data HexagonInstruction = A2_abs
                         | L2_loadri_io_fi_ce
                         | L2_loadrub_io_fi_ce
                         | L2_loadruh_io_fi_ce
+                        | LDD_ce
+                        | LDW_ce
                         | S2_storerd_io_fi_ce
                         | S2_storeri_io_fi_ce
                         | S2_storerb_io_fi_ce
@@ -3668,6 +3670,9 @@ data HexagonInstruction = A2_abs
                         | S2_storerinew_io_fi_ce
                         | S2_storerf_io_fi_ce
                         | S2_pstorerif_io_fi_ce
+                        | STD_ce
+                        | STW_ce
+                        | STW_nv_ce
                         | TFR_FI_fi_ce
                         | MVW_ce
                         | MVD_ce

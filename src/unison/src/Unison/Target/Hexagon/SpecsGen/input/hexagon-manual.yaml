@@ -289,9 +289,11 @@ instruction-set:
         << :    [*ld, *ii2r, *mem-read]
 
       - id:     LDD
+        type:   copy
         << :    [*ld, *M2d]
 
       - id:     LDW
+        type:   copy
         << :    [*ld, *m2r]
 
       - id:     S2_storerd_io_fi
@@ -321,12 +323,15 @@ instruction-set:
         << :    [*piir]
 
       - id:     STD
+        type:   copy
         << :    [*st, *d2M]
 
       - id:     STW
+        type:   copy
         << :    [*st, *r2m]
 
       - id:     STW_nv
+        type:   copy
         << :    [*nvst, *r2m_nv]
 
       - id:     TFR_FI_fi

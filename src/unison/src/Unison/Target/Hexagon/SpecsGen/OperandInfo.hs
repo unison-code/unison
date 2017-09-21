@@ -68,7 +68,7 @@ operandInfo i
     =
     ([TemporaryInfo (RegisterClass DoubleRegs) 0 False],
      [TemporaryInfo (RegisterClass IntRegs) 1 False])
-  | i `elem` [STD] =
+  | i `elem` [STD, STD_ce] =
     ([TemporaryInfo (RegisterClass DoubleRegs) 0 False],
      [TemporaryInfo (InfiniteRegisterClass M64) 1 False])
   | i `elem`
@@ -313,7 +313,7 @@ operandInfo i
     =
     ([TemporaryInfo (RegisterClass IntRegs) (-1) True],
      [TemporaryInfo (RegisterClass F32) 1 False])
-  | i `elem` [STW_nv] =
+  | i `elem` [STW_nv, STW_nv_ce] =
     ([TemporaryInfo (RegisterClass IntRegs) (-1) True],
      [TemporaryInfo (InfiniteRegisterClass M32) 1 False])
   | i `elem`
@@ -369,7 +369,7 @@ operandInfo i
     ([TemporaryInfo (RegisterClass IntRegs) 0 False],
      [TemporaryInfo (RegisterClass IntRegs) 1 False,
       TemporaryInfo (RegisterClass PredRegs) 1 False])
-  | i `elem` [STW] =
+  | i `elem` [STW, STW_ce] =
     ([TemporaryInfo (RegisterClass IntRegs) 0 False],
      [TemporaryInfo (InfiniteRegisterClass M32) 1 False])
   | i `elem` [C2_tfrrp, MVRP, MVRP_ce, Y5_l2locka] =
@@ -1164,10 +1164,10 @@ operandInfo i
   | i `elem` [J4_jumpsetr, J4_jumpsetr_ce] =
     ([TemporaryInfo (RegisterClass IntRegs) 0 False, BlockRefInfo],
      [TemporaryInfo (RegisterClass IntRegs) 1 False])
-  | i `elem` [LDW] =
+  | i `elem` [LDW, LDW_ce] =
     ([TemporaryInfo (InfiniteRegisterClass M32) 0 False],
      [TemporaryInfo (RegisterClass IntRegs) 1 False])
-  | i `elem` [LDD] =
+  | i `elem` [LDD, LDD_ce] =
     ([TemporaryInfo (InfiniteRegisterClass M64) 0 False],
      [TemporaryInfo (RegisterClass DoubleRegs) 1 False])
   | i `elem` [J2_jumpf_nv_linear, J2_jumpt_nv_linear] =

@@ -362,7 +362,8 @@ data HexagonResource =
   Slot3 |
   Store |
   ConNewValue |
-  BlockEnd
+  BlockEnd |
+  SpillCost
   deriving (Eq, Ord, Show, Read)
 
 resources =
@@ -395,7 +396,10 @@ resources =
 
      -- Artificial resource to disallow jump merges and ENDLOOP instructions to
      -- be scheduled together with (out)-delimiters
-     Resource BlockEnd 1
+     Resource BlockEnd 1,
+
+     -- Artificial resource for weighted spill code minimization
+     Resource SpillCost 2
 
     ]
 
@@ -405,10 +409,13 @@ usages i
   | i `elem` [Jump_merge, Jr_merge] = [mkUsage BlockEnd 1 1]
 usages i
   | isConstantExtended i && not (isSourceInstr i || isDematInstr i) =
-    let it = SpecsGen.itinerary (nonConstantExtendedInstr i)
-    in mergeUsages (itineraryUsage i it) [mkUsage BundleWidth 1 1]
+      mergeUsages (usages (nonConstantExtendedInstr i))
+                  [mkUsage BundleWidth 1 1]
   | i `elem` [C2_mux_tfr, C2_mux_tfr_new] =
       mergeUsages (itineraryUsage i $ SpecsGen.itinerary i) conNewValue
+  | i `elem` spillInstrs || mayLoad' i || mayStore' i =
+      mergeUsages (itineraryUsage i $ SpecsGen.itinerary i)
+                  [mkUsage SpillCost 1 1]
   | otherwise = itineraryUsage i $ SpecsGen.itinerary i
 
 itineraryUsage i it
@@ -524,9 +531,11 @@ stackAccessors =
   -- there are instructions referring to frame objects, or
   fiInstrs ++
   -- there are spills.
-  [STW, STD, STW_nv, LDW, LDD]
+  spillInstrs
 
 fiInstrs = filter (\i -> "_fi" `isSuffixOf` (show i)) SpecsGen.allInstructions
+
+spillInstrs = [STW, STD, STW_nv, LDW, LDD]
 
 -- | Direction in which the stack grows
 stackDirection = API.StackGrowsDown
@@ -742,6 +751,8 @@ addHint True J2_jumptnew = J2_jumptnewpt
 addHint True J2_jumpfnew = J2_jumpfnewpt
 addHint False i | isNewValueCmpJump i = read (init (show i) ++ "nt")
 addHint _ i = i
+
+mayLoad' = mayLoad SpecsGen.readWriteInfo
 
 mayStore' STW_nv = True
 mayStore' i = mayStore (SpecsGen.readWriteInfo) i

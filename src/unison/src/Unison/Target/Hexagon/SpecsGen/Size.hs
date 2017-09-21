@@ -50,13 +50,14 @@ size i
        L2_loadri_io_fi_remat_fi_ce, L2_loadri_io_fi_source_fi,
        L2_loadri_io_fi_source_fi_ce, L2_loadrub_io_fi,
        L2_loadrub_io_fi_ce, L2_loadruh_io_fi, L2_loadruh_io_fi_ce, LDD,
-       LDW, S2_storerb_io_fi, S2_storerb_io_fi_ce, S2_storerd_io_fi,
-       S2_storerd_io_fi_ce, S2_storerh_io_fi, S2_storerh_io_fi_ce,
-       S2_storeri_io_fi, S2_storeri_io_fi_ce, S2_storerinew_io_fi,
-       S2_storerinew_io_fi_ce, S4_storeiri_io_fi, S4_storeiri_io_fi_ce,
-       STD, STW, STW_nv, TFR_FI_fi, TFR_FI_fi_ce, TFR_FI_fi_demat_fi,
-       TFR_FI_fi_demat_fi_ce, TFR_FI_fi_remat_fi, TFR_FI_fi_remat_fi_ce,
-       TFR_FI_fi_source_fi, TFR_FI_fi_source_fi_ce]
+       LDD_ce, LDW, LDW_ce, S2_storerb_io_fi, S2_storerb_io_fi_ce,
+       S2_storerd_io_fi, S2_storerd_io_fi_ce, S2_storerh_io_fi,
+       S2_storerh_io_fi_ce, S2_storeri_io_fi, S2_storeri_io_fi_ce,
+       S2_storerinew_io_fi, S2_storerinew_io_fi_ce, S4_storeiri_io_fi,
+       S4_storeiri_io_fi_ce, STD, STD_ce, STW, STW_ce, STW_nv, STW_nv_ce,
+       TFR_FI_fi, TFR_FI_fi_ce, TFR_FI_fi_demat_fi, TFR_FI_fi_demat_fi_ce,
+       TFR_FI_fi_remat_fi, TFR_FI_fi_remat_fi_ce, TFR_FI_fi_source_fi,
+       TFR_FI_fi_source_fi_ce]
     = 1
   | i `elem`
       [A2_abs, A2_absp, A2_abssat, A2_add, A2_addh_h16_hh,

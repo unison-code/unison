@@ -673,8 +673,8 @@ itinerary i
        L4_ploadrubt_abs_ce, L4_ploadrubtnew_abs, L4_ploadrubtnew_abs_ce,
        L4_ploadruhf_abs, L4_ploadruhf_abs_ce, L4_ploadruhfnew_abs,
        L4_ploadruhfnew_abs_ce, L4_ploadruht_abs, L4_ploadruht_abs_ce,
-       L4_ploadruhtnew_abs, L4_ploadruhtnew_abs_ce, LDD, LDW,
-       LDriq_pred_V6, LDriq_pred_V6_128B, LDriq_pred_V6_128B_ce,
+       L4_ploadruhtnew_abs, L4_ploadruhtnew_abs_ce, LDD, LDD_ce, LDW,
+       LDW_ce, LDriq_pred_V6, LDriq_pred_V6_128B, LDriq_pred_V6_128B_ce,
        LDriq_pred_V6_ce, LDriq_pred_vec_V6, LDriq_pred_vec_V6_128B,
        LDriq_pred_vec_V6_128B_ce, LDriq_pred_vec_V6_ce, LDriv_pseudo_V6,
        LDriv_pseudo_V6_128B, LDriv_pseudo_V6_128B_ce, LDriv_pseudo_V6_ce,
@@ -843,7 +843,7 @@ itinerary i
        S4_storerbnew_ap_ce, S4_storerbnew_ur, S4_storerbnew_ur_ce,
        S4_storerhnew_ap, S4_storerhnew_ap_ce, S4_storerhnew_ur,
        S4_storerhnew_ur_ce, S4_storerinew_ap, S4_storerinew_ap_ce,
-       S4_storerinew_ur, S4_storerinew_ur_ce, STW_nv]
+       S4_storerinew_ur, S4_storerinew_ur_ce, STW_nv, STW_nv_ce]
     = NCJ_tc_3or4stall_SLOT0
   | i `elem`
       [A2_tfrpi_demat, A2_tfrpi_demat_ce, A2_tfrpi_source,
@@ -1010,9 +1010,9 @@ itinerary i
        S4_storerd_ur, S4_storerd_ur_ce, S4_storerf_ap, S4_storerf_ap_ce,
        S4_storerf_ur, S4_storerf_ur_ce, S4_storerh_ap, S4_storerh_ap_ce,
        S4_storerh_ur, S4_storerh_ur_ce, S4_storeri_ap, S4_storeri_ap_ce,
-       S4_storeri_ur, S4_storeri_ur_ce, STD, STW, STriq_pred_V6,
-       STriq_pred_V6_128B, STriq_pred_V6_128B_ce, STriq_pred_V6_ce,
-       STriq_pred_vec_V6, STriq_pred_vec_V6_128B,
+       S4_storeri_ur, S4_storeri_ur_ce, STD, STD_ce, STW, STW_ce,
+       STriq_pred_V6, STriq_pred_V6_128B, STriq_pred_V6_128B_ce,
+       STriq_pred_V6_ce, STriq_pred_vec_V6, STriq_pred_vec_V6_128B,
        STriq_pred_vec_V6_128B_ce, STriq_pred_vec_V6_ce, STriv_pseudo_V6,
        STriv_pseudo_V6_128B, STriv_pseudo_V6_128B_ce, STriv_pseudo_V6_ce,
        STrivv_pseudo_V6, STrivv_pseudo_V6_128B, STrivv_pseudo_V6_128B_ce,

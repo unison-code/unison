@@ -902,15 +902,16 @@ alignedPairs i ([_], [_])
        L4_loadrub_abs_demat_ce, L4_loadrub_abs_remat,
        L4_loadrub_abs_remat_ce, L4_loadruh_abs_demat,
        L4_loadruh_abs_demat_ce, L4_loadruh_abs_remat,
-       L4_loadruh_abs_remat_ce, LDD, LDW, MVD, MVD_ce, MVW, MVW_ce,
-       S2_brev, S2_svsathb, S2_svsathub, S2_vrndpackwh, S2_vrndpackwhs,
-       S2_vsathb, S2_vsathub, S2_vsatwh, S2_vsatwuh, S2_vsplatrb,
-       S2_vsplatrh, S2_vsxtbh, S2_vsxthw, S2_vtrunehb, S2_vtrunohb,
-       S2_vzxtbh, S2_vzxthw, STD, STW, STW_nv, TFR_FI_fi_demat_fi,
-       TFR_FI_fi_demat_fi_ce, TFR_FI_fi_remat_fi, TFR_FI_fi_remat_fi_ce,
-       TFR_PdFalse_demat, TFR_PdFalse_demat_ce, TFR_PdFalse_remat,
-       TFR_PdFalse_remat_ce, TFR_PdTrue_demat, TFR_PdTrue_demat_ce,
-       TFR_PdTrue_remat, TFR_PdTrue_remat_ce, Ret_dealloc_merge]
+       L4_loadruh_abs_remat_ce, LDD, LDD_ce, LDW, LDW_ce, MVD, MVD_ce,
+       MVW, MVW_ce, S2_brev, S2_svsathb, S2_svsathub, S2_vrndpackwh,
+       S2_vrndpackwhs, S2_vsathb, S2_vsathub, S2_vsatwh, S2_vsatwuh,
+       S2_vsplatrb, S2_vsplatrh, S2_vsxtbh, S2_vsxthw, S2_vtrunehb,
+       S2_vtrunohb, S2_vzxtbh, S2_vzxthw, STD, STD_ce, STW, STW_ce,
+       STW_nv, STW_nv_ce, TFR_FI_fi_demat_fi, TFR_FI_fi_demat_fi_ce,
+       TFR_FI_fi_remat_fi, TFR_FI_fi_remat_fi_ce, TFR_PdFalse_demat,
+       TFR_PdFalse_demat_ce, TFR_PdFalse_remat, TFR_PdFalse_remat_ce,
+       TFR_PdTrue_demat, TFR_PdTrue_demat_ce, TFR_PdTrue_remat,
+       TFR_PdTrue_remat_ce, Ret_dealloc_merge]
     = []
 alignedPairs i ([_, _], [])
   | i `elem`
