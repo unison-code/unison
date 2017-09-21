@@ -1157,10 +1157,18 @@ parent i
        L2_loadrd_io_fi_source_fi, L2_loadrd_io_fi_source_fi_ce]
     = Just L2_loadrd_io_fi
   | i `elem`
+      [L2_loadrhgp_demat, L2_loadrhgp_demat_ce, L2_loadrhgp_remat,
+       L2_loadrhgp_remat_ce, L2_loadrhgp_source, L2_loadrhgp_source_ce]
+    = Just L2_loadrhgp
+  | i `elem`
       [L2_loadri_io_fi_demat_fi, L2_loadri_io_fi_demat_fi_ce,
        L2_loadri_io_fi_remat_fi, L2_loadri_io_fi_remat_fi_ce,
        L2_loadri_io_fi_source_fi, L2_loadri_io_fi_source_fi_ce]
     = Just L2_loadri_io_fi
+  | i `elem`
+      [L2_loadrubgp_demat, L2_loadrubgp_demat_ce, L2_loadrubgp_remat,
+       L2_loadrubgp_remat_ce, L2_loadrubgp_source, L2_loadrubgp_source_ce]
+    = Just L2_loadrubgp
   | i `elem`
       [L4_loadrb_abs_demat, L4_loadrb_abs_demat_ce, L4_loadrb_abs_remat,
        L4_loadrb_abs_remat_ce, L4_loadrb_abs_source,

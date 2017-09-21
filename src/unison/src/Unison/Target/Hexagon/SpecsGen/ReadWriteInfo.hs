@@ -131,9 +131,12 @@ readWriteInfo i
        L2_loadrb_io_fi_demat_fi_ce, L2_loadrb_io_fi_source_fi,
        L2_loadrb_io_fi_source_fi_ce, L2_loadrd_io_fi_demat_fi,
        L2_loadrd_io_fi_demat_fi_ce, L2_loadrd_io_fi_source_fi,
-       L2_loadrd_io_fi_source_fi_ce, L2_loadri_io_fi_demat_fi,
-       L2_loadri_io_fi_demat_fi_ce, L2_loadri_io_fi_source_fi,
-       L2_loadri_io_fi_source_fi_ce, L4_loadrb_abs_demat,
+       L2_loadrd_io_fi_source_fi_ce, L2_loadrhgp_demat,
+       L2_loadrhgp_demat_ce, L2_loadrhgp_source, L2_loadrhgp_source_ce,
+       L2_loadri_io_fi_demat_fi, L2_loadri_io_fi_demat_fi_ce,
+       L2_loadri_io_fi_source_fi, L2_loadri_io_fi_source_fi_ce,
+       L2_loadrubgp_demat, L2_loadrubgp_demat_ce, L2_loadrubgp_source,
+       L2_loadrubgp_source_ce, L4_loadrb_abs_demat,
        L4_loadrb_abs_demat_ce, L4_loadrb_abs_source,
        L4_loadrb_abs_source_ce, L4_loadrd_abs_demat,
        L4_loadrd_abs_demat_ce, L4_loadrd_abs_source,
@@ -1170,8 +1173,10 @@ readWriteInfo i
     = ([Memory "mem", OtherSideEffect CS], [])
   | i `elem`
       [L2_loadrbgp, L2_loadrbgp_ce, L2_loadrdgp, L2_loadrdgp_ce,
-       L2_loadrhgp, L2_loadrhgp_ce, L2_loadrigp, L2_loadrigp_ce,
-       L2_loadrubgp, L2_loadrubgp_ce, L2_loadruhgp, L2_loadruhgp_ce]
+       L2_loadrhgp, L2_loadrhgp_ce, L2_loadrhgp_remat,
+       L2_loadrhgp_remat_ce, L2_loadrigp, L2_loadrigp_ce, L2_loadrubgp,
+       L2_loadrubgp_ce, L2_loadrubgp_remat, L2_loadrubgp_remat_ce,
+       L2_loadruhgp, L2_loadruhgp_ce]
     = ([Memory "mem", OtherSideEffect GP], [])
   | i `elem`
       [V4_SL2_return_f, V4_SL2_return_fnew, V4_SL2_return_t,

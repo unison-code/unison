@@ -148,6 +148,8 @@ rematVersions = M.fromList
    (L4_loadruh_abs_ce, RematTriple L4_loadruh_abs_source_ce L4_loadruh_abs_demat_ce L4_loadruh_abs_remat_ce),
    (L4_loadrub_abs_ce, RematTriple L4_loadrub_abs_source_ce L4_loadrub_abs_demat_ce L4_loadrub_abs_remat_ce),
    (TFR_FI_fi, RematTriple TFR_FI_fi_source_fi TFR_FI_fi_demat_fi TFR_FI_fi_remat_fi),
+   (L2_loadrhgp, RematTriple L2_loadrhgp_source L2_loadrhgp_demat L2_loadrhgp_remat),
+   (L2_loadrubgp, RematTriple L2_loadrubgp_source L2_loadrubgp_demat L2_loadrubgp_remat),
    (CONST64_Int_Real, RematTriple CONST64_Int_Real_source CONST64_Int_Real_demat CONST64_Int_Real_remat),
    (L2_loadrd_io_fi, RematTriple L2_loadrd_io_fi_source_fi L2_loadrd_io_fi_demat_fi L2_loadrd_io_fi_remat_fi),
    (L4_loadrd_abs_ce, RematTriple L4_loadrd_abs_source_ce L4_loadrd_abs_demat_ce L4_loadrd_abs_remat_ce),
