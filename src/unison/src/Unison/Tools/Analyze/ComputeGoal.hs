@@ -39,7 +39,9 @@ goalOb modelCost aux b2f code go =
     sumMap (goalObInBlock modelCost aux b2f go) code
 
 goalObInBlock modelCost aux b2f go Block {bLab = l, bCode = code} =
-    (b2f M.! l) * sumMap (goalObInOpr modelCost aux go) code
+  let f = b2f M.! l
+      c = sumMap (goalObInOpr modelCost aux go) code
+  in f * c
 
 goalObInOpr modelCost _ Cycles o
     | modelCost && (isIn o || isFun o) = 1
