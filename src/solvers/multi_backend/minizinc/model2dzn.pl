@@ -101,19 +101,26 @@ model2dzn(AVL0) :-
 	avl_fetch(calleesaved, AVL, CalleeSaved1),
 	encode(list(int), set(int), CalleeSaved1, CalleeSaved2),
 	write_array(calleesaved, set(int), CalleeSaved2),
+	%
 	avl_fetch(callersaved, AVL, CallerSaved1),
 	encode(list(int), set(int), CallerSaved1, CallerSaved2),
 	write_array(callersaved, set(int), CallerSaved2),
+	%
 	avl_fetch(infinite, AVL, Infinite1),
 	avl_fetch(range, AVL, Range),
+	avl_fetch(bounded, AVL, Bounded),
 	(   foreach(Inf1,Infinite1),
 	    foreach([X4,Y4],Range),
+	    foreach([[X4|Y4]],RangeAsSet),
 	    fromto(Infinite2,Infinite3,Infinite4,[])
 	do  (   Inf1 = false -> Infinite3 = Infinite4
 	    ;   Infinite3 = [[X4|Y4]|Infinite4]
 	    )
 	),
+	length(Range, NR),
 	write_array(infinite, set(int), Infinite2),
+	write_array(range, array(1..NR,set(int)), RangeAsSet),
+	write_array(bounded, array(1..NR,bool), Bounded),
 	%
 	avl_fetch(cap, AVL, Cap),
 	length(Cap, Nres),
@@ -314,17 +321,14 @@ model2dzn(AVL0) :-
 	write_array(domuse_q, array(1..Ndomuse,int), Qs1),
 	write_array(domuse_r, array(1..Ndomuse,int), Rs1),
 	%
-	avl_fetch(infassign, AVL, MemAssign),
-	(   foreach([MA1,_RegSpace,MA2,MA3],MemAssign),
-	    foreach(MA1,MemAssignTemp),
-	    foreach(MA2,MemAssignMin),
-	    foreach(MA3,MemAssignMax)
-	do  true
-	),
-	length(MemAssign, MALen),
-	write_array(memassign_temp, array(1..MALen,int), MemAssignTemp),
-	write_array(memassign_min, array(1..MALen,int), MemAssignMin),
-	write_array(memassign_max, array(1..MALen,int), MemAssignMax),
+	avl_fetch(infassign, AVL, InfAssign),
+	length(InfAssign, NIA),
+	write_array(infassign, array(1..NIA,1..4,int), InfAssign),
+	%
+	avl_fetch(space, AVL, Space),
+	length(Space, NSpace),
+	NS1 is NSpace-1,
+	write_array(space, array(-1..NS1,int), [-1|Space]),
 	%
 	avl_fetch(dominates, AVL, Dominate),
 	(   foreach([I1,J1,L5,L6],Dominate),

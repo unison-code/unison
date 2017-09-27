@@ -93,10 +93,12 @@ array[int] of int: op_order;
 %% see JSON atoms
 array[int] of set of int: atom_regs; % atom -> registers
 
-%% see JSON calleesaved, callersaved, infinite, range
+%% see JSON calleesaved, callersaved, infinite, bounded, range
 set of int: calleesaved;
 set of int: callersaved;
 set of int: infinite;
+array[int] of bool: bounded;
+array[int] of set of int: range;
 
 %% see JSON cap, con, dur, off
 array[int] of int: res_cap;
@@ -200,10 +202,11 @@ array[int] of int: domuse_p;
 array[int] of int: domuse_q;
 array[int] of int: domuse_r;
 
-%% see JSON memassign
-array[int] of int: memassign_temp;
-array[int] of int: memassign_min;
-array[int] of int: memassign_max;
+%% see JSON infassign
+array[int,int] of int: infassign;
+
+%% see JSON space
+array[int] of int: space;
 
 %% see JSON dominates
 array[int] of int: dominate_ing;
@@ -346,18 +349,29 @@ predicate smart_alldiff(array[int] of var int: X) =
     all_different(X)
   endif endif;
 
+predicate ra_diffn_cumu(array[int] of var int: R,
+			array[int] of int: W,
+			array[int] of var int: LS,
+			array[int] of var int: LD,
+			int: v) =
+      let {set of int: J = {i | i in index_set(R) where card(dom(R[i]) intersect max(0,v-W[i]+1)..v)>0}}
+      in cumulative([LS[i] | i in J], [LD[i] | i in J],
+                    [if W[i]=1 then R[i]=v else R[i] in max(0,v-W[i]+1)..v endif | i in J],
+                    1);
+
 predicate ra_diffn(array[int] of var int: R,
                    array[int] of int: W,
                    array[int] of var int: LS,
                    array[int] of var int: LD,
                    array[int] of var int: LE) =
-  if good_cumulative then
+  if good_cumulative then % [MC] infinite ranges are clash free by construction
     forall(v in 0..min(infinite)-1)(
-      let {set of int: J = {i | i in index_set(R) where card(dom(R[i]) intersect max(0,v-W[i]+1)..v)>0}}
-      in cumulative([LS[i] | i in J], [LD[i] | i in J],
-                    [if W[i]=1 then R[i]=v else R[i] in max(0,v-W[i]+1)..v endif | i in J],
-                    1)
-  ) else if good_diffn then
+      ra_diffn_cumu(R, W, LS, LD, v)
+    ) /\
+    forall(j in index_set(bounded), v in range[j] where bounded[j])(
+      ra_diffn_cumu(R, W, LS, LD, v)
+    )
+  else if good_diffn then
     diffn_nonstrict(R, LS, W, LD)
   else
     forall(i,j in index_set(R) where i < j)(
@@ -546,25 +560,31 @@ constraint
 
 %% domains
 constraint
-    forall(o in 0..MAXO) (ii[o] in 1..card(op_instructions[o])) /\
-    forall(q in 0..MAXP) (y[q] in 1..card(operand_temps[q])) /\
+    forall(o in 0..MAXO) (ii[o] in 1..card(op_instructions[o]));
+
+constraint
+    forall(q in 0..MAXP) (y[q] in 1..card(operand_temps[q]));
+
+set of int: temp_insn_regs(int: v, int: j) =
+    let {int: p = temp_def[v],
+         int: w = temp_width[v],
+         int: oa = operand_atom[p,j],
+	 set of int: ks = {k | k in index_set_1of2(infassign) where infassign[k,1]=v /\ infassign[k,2]=space[oa]},
+	 set of int: unaligned =
+	   if card(ks)>0 then
+	     {r | r in atom_regs[oa]} intersect (infassign[min(ks),3]..infassign[min(ks),4])
+	   else
+	     {r | r in atom_regs[oa]}
+	   endif}
+    in {r | r in unaligned /*where r mod w = 0*/}; % currently, that would over-constrain
+
+constraint
     forall(v in 0..MAXT) (
         let {int: p = temp_def[v],
 	     int: w = temp_width[v],
-	     set of int: rdom = array_union([atom_regs[operand_atom[p,q]] | q in 1..MAXI]),
+	     set of int: rdom = array_union([temp_insn_regs(v,j) | j in 1..MAXI]),
     	     set of int: joker = if min(operand_temps[p])>=0 then {} else {-1} endif, % rematerialization
-	     set of int: mdom =
-	                 { r
-			 | j in index_set(memassign_temp),
-			   r in memassign_min[j]..memassign_max[j]
-			 where memassign_temp[j]=v
-			 /\    r mod w = 0
-			 }} in
-    	    if card(mdom)=0 then
-    	      r[v] in rdom union joker
-    	    else
-    	      r[v] in (rdom diff infinite) union mdom union joker
-    	    endif
+	} in r[v] in rdom union joker
     );
 
 %% operation selection (register set depending on operation)
