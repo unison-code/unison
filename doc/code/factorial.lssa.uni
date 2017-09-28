@@ -19,10 +19,13 @@ b2 (exit, return, freq: 4):
 adjacent:
     t0 -> t5, t1 -> t6, t1 -> t11, t2 -> t4, t2 -> t10, t6 -> t6, t6 -> t11,
     t7 -> t5, t8 -> t4, t8 -> t10
+rematerializable:
 fixed-frame:
 frame:
 stack-pointer-offset: 0
+stack-arg-size: 0
 jump-table:
 goal: speed
+removed-freqs:
 source:
 ; ModuleID = (...)

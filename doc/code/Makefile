@@ -7,7 +7,7 @@ factorial-examples: factorial.mir
 	make factorial.json
 
 %.alt.uni: %.ext.uni
-	uni augment $(UNIARGS) $< -o $@
+	uni augment $(UNIARGS) --implementframes=false $< -o $@
 
 %.ext.uni: %.lssa.uni
 	uni extend $(UNIARGS) $< -o $@
@@ -16,7 +16,7 @@ factorial-examples: factorial.mir
 	uni linearize $(UNIARGS) $< -o $@
 
 %.uni: %.mir
-	uni import $(UNIARGS) --nocc --noreserved --goal=speed $< -o $@
+	uni import $(UNIARGS) --nocc --noreserved --goal=speed --noremat $< -o $@
 
 %.json : %.alt.uni %.llvm.mir
 	uni model --basefile=$*.llvm.mir $< | aeson-pretty -c | sed 's/,/, /g' | sed 's/:/: /g' | sed 's/, "/,\n"/g' > $@

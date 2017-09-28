@@ -8,7 +8,7 @@ b0 (entry, freq: 4):
     o5: [p10{-, t6}] <- {-, C2_cmpgti} [p9{-, t0, t2, t5, t7},0] (reads: [control])
     o6: [p12{-, t7}] <- {-, MVW, LDW} [p11{-, t0, t2}] (reads: [control])
     o7: [p14{-, t8}] <- {-, MVW, LDW} [p13{-, t3, t4}] (reads: [control])
-    o8: [p16{-, t9}] <- {-, J2_jumpf_linear} [p15{-, t6}] (writes: [control])
+    o8: [p16{-, t9}] <- {-, J2_jumpf_linear, J2_jumpf_nv_linear} [p15{-, t6}] (writes: [control])
     o9: [p18{-, t10}] <- {-, J4_cmpgti_f_jumpnv_t_linear} [p17{-, t0, t2, t5, t7},0] (writes: [control])
     o10: [] <- jump_merge [p19{t9, t10},b2] (writes: [control,pc])
     o11: [] <- (out) [p20{t0, t2, t5, t7},p21{t1},p22{t3, t4, t8}]
@@ -27,7 +27,7 @@ b1 (freq: 85):
     o23: [p48{-, t24}] <- {-, C2_cmpgti} [p47{-, t12, t15, t16, t20, t23},1] (reads: [control])
     o24: [p50{-, t25}] <- {-, MVW, LDW} [p49{-, t17, t18}] (reads: [control])
     o25: [p52{-, t26}] <- {-, MVW, LDW} [p51{-, t21, t22}] (reads: [control])
-    o26: [p54{-, t27}] <- {-, J2_jumpt_linear} [p53{-, t24}] (writes: [control])
+    o26: [p54{-, t27}] <- {-, J2_jumpt_linear, J2_jumpt_nv_linear} [p53{-, t24}] (writes: [control])
     o27: [p56{-, t28}] <- {-, J4_cmpgti_t_jumpnv_t_linear} [p55{-, t12, t15, t16, t20, t23},1] (writes: [control])
     o28: [] <- jump_merge [p57{t27, t28},b1] (writes: [control,pc])
     o29: [] <- (out) [p58{t13},p59{t17, t18, t25},p60{t21, t22, t26}]
@@ -35,15 +35,18 @@ b2 (exit, return, freq: 4):
     o30: [p61{t29},p62{t30}] <- (in) []
     o31: [p64{-, t31}] <- {-, MVW, STW} [p63{-, t29}] (reads: [control])
     o32: [p66{-, t32}] <- {-, MVW, LDW} [p65{-, t29, t31}] (reads: [control])
-    o33: [] <- JMPret [p67{t30}] (writes: [control,pc,pc])
+    o33: [] <- JMPret [p67{t30}] (reads: [r31], writes: [control,pc,pc])
     o34: [] <- (out) [p68{t29, t31, t32}:r0]
 adjacent:
     p20 -> p24, p21 -> p25, p21 -> p62, p22 -> p23, p22 -> p61, p58 -> p25,
     p58 -> p62, p59 -> p24, p60 -> p23, p60 -> p61
+rematerializable:
 fixed-frame:
 frame:
 stack-pointer-offset: 0
+stack-arg-size: 0
 jump-table:
 goal: speed
+removed-freqs:
 source:
 ; ModuleID = (...)

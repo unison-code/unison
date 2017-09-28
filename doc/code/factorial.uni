@@ -20,10 +20,13 @@ b2 (exit, return, freq: 4):
     o15: [] <- JMPret [t1]
     o16: [] <- (out) [t9:r0]
 adjacent:
+rematerializable:
 fixed-frame:
 frame:
 stack-pointer-offset: 0
+stack-arg-size: 0
 jump-table:
 goal: speed
+removed-freqs:
 source:
 ; ModuleID = (...)
