@@ -121,7 +121,7 @@ subRegIndexType subreg = error ("unmatched: subRegIndexType " ++ show subreg)
 
 -- | Registers that are not preserved across calls
 -- FIXME: check out the specifics of FP
-callerSaved = [ATT7, T89, GP, FPRA, D09]
+callerSaved = [ATT7, T89, GP, FPRA, AC0, D09]
 
 -- | Registers that are preserved across calls
 calleeSaved = [S0, S1, S2, S3, S4, S5, S6, S7, RA,
