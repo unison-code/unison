@@ -284,13 +284,13 @@ normalizeCallEpilogue _ (o : rest) _ = (rest, [o])
 
 {-
     o41: [V0] <- (copy) [t5]
-    o42: [] <- RetRA []
+    o42: [] <- PseudoReturn [RA]
     o49: [] <- (out) [V0]
 
     ->
 
     o41: [t'] <- (copy) [t5]
-    o42: [] <- RetRA []
+    o42: [] <- PseudoReturn [RA]
     o49: [] <- (out) [t':V0]
     -}
 
@@ -298,7 +298,8 @@ extractReturnRegs _ (
   c @ SingleOperation {oOpr = Virtual (ci @ VirtualCopy {
                                                 oVirtualCopyD = Register ret})}
   :
-  r @ SingleOperation {oOpr = Natural Branch {oBranchIs = [TargetInstruction RetRA]}}
+  r @ SingleOperation {oOpr = Natural Branch {
+                          oBranchIs = [TargetInstruction PseudoReturn]}}
   :
   o @ SingleOperation {oOpr = Virtual
                                (Delimiter oi @ (Out {oOuts = [Register ret']}))}

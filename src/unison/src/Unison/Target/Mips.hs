@@ -314,7 +314,7 @@ stackDirection = API.StackGrowsDown
 
 -- | Target dependent pre-processing functions
 
-preProcess = [addFrameIndex]
+preProcess = [addFrameIndex, explicateRA]
 
 addFrameIndex = mapToTargetMachineInstruction addFrameIndexInstr
 
@@ -324,6 +324,13 @@ addFrameIndexInstr mi @ MachineSingle {msOpcode = opcode,
     any isTemporaryInfo (fst $ operandInfo $ mopcTarget opcode) =
       mi {msOpcode = liftToTOpc (\i -> read (show i ++ "_fi")) opcode}
   | otherwise = mi
+
+explicateRA = mapToTargetMachineInstruction explicateRAInInstr
+
+explicateRAInInstr mi @ MachineSingle {msOpcode = MachineTargetOpc RetRA} =
+  mi {msOpcode   = mkMachineTargetOpc PseudoReturn,
+      msOperands = [mkMachineReg RA]}
+explicateRAInInstr mi = mi
 
 liftToTOpc f = mkMachineTargetOpc . f . mopcTarget
 
