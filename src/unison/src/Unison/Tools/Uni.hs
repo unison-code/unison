@@ -16,6 +16,7 @@ import Data.Maybe
 import System.Environment
 import System.Console.CmdArgs
 
+import Common.Util
 import Unison.Driver
 import Unison.Target.API (Any(..), TargetDescription)
 import Unison.Tools.UniArgs
@@ -40,7 +41,7 @@ mainWithTargets targets = do
   args <- cmdArgsRun uniArgs
   case args of
     Import{..} ->
-        do input <- readFile inFile
+        do input <- strictReadFile inFile
            case pickTarget targetName targets of
              (Any target) ->
                  Import.run
@@ -49,21 +50,21 @@ mainWithTargets targets = do
                   inFile, debug, intermediate, lint, lintPragma, outFile)
                  input (target, targetOption)
     Linearize{..} ->
-        do input <- readFile inFile
+        do input <- strictReadFile inFile
            case pickTarget targetName targets of
              (Any target) ->
                  Linearize.run
                  (inFile, debug, intermediate, lint, lintPragma, outFile)
                  input (target, targetOption)
     Extend{..} ->
-        do input <- readFile inFile
+        do input <- strictReadFile inFile
            case pickTarget targetName targets of
              (Any target) ->
                  Extend.run
                  (inFile, debug, intermediate, lint, lintPragma, outFile)
                  input (target, targetOption)
     Augment{..} ->
-        do input <- readFile inFile
+        do input <- strictReadFile inFile
            case pickTarget targetName targets of
              (Any target) ->
                  Augment.run
@@ -72,7 +73,7 @@ mainWithTargets targets = do
                   inFile, debug, intermediate, lint, lintPragma, outFile)
                  input (target, targetOption)
     Model{..} ->
-        do input <- readFile inFile
+        do input <- strictReadFile inFile
            case pickTarget targetName targets of
              (Any target) ->
                  Model.run
@@ -80,7 +81,7 @@ mainWithTargets targets = do
                   tightPressureBound, strictlyBetter, unsatisfiable, outFile)
                  input (target, targetOption)
     Export{..} ->
-        do input <- readFile inFile
+        do input <- strictReadFile inFile
            case pickTarget targetName targets of
              (Any target) ->
                  Export.run
@@ -88,7 +89,7 @@ mainWithTargets targets = do
                   fromJust solFile, outFile)
                  input (target, targetOption)
     Analyze{..} ->
-        do input <- readFile inFile
+        do input <- strictReadFile inFile
            case pickTarget targetName targets of
              (Any target) ->
                  Analyze.run
@@ -96,34 +97,34 @@ mainWithTargets targets = do
                   inFile, debug, intermediate, outFile)
                  input (target, targetOption)
     Normalize{..} ->
-        do input <- readFile inFile
+        do input <- strictReadFile inFile
            case pickTarget targetName targets of
              (Any target) ->
                  Normalize.run
                  (estimateFreq, simplifyControlFlow, debug, outFile)
                  input (target, targetOption)
     Lint{..} ->
-        do input <- readFile inFile
+        do input <- strictReadFile inFile
            case pickTarget targetName targets of
              (Any target) ->
                  Lint.run rawArgs
                   input (target, targetOption)
     Count{..} ->
-        do input <- readFile inFile
+        do input <- strictReadFile inFile
            case pickTarget targetName targets of
              (Any target) ->
                  Count.run
                  (singleRow, inFile, outFile)
                  input (target, targetOption)
     Legalize{..} ->
-        do input <- readFile inFile
+        do input <- strictReadFile inFile
            case pickTarget targetName targets of
              (Any target) ->
                  Legalize.run
                  outFile
                  input (target, targetOption)
     Plot{..} ->
-        do input <- readFile inFile
+        do input <- strictReadFile inFile
            case pickTarget targetName targets of
              (Any target) ->
                  Plot.run

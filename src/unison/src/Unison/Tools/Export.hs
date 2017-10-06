@@ -54,8 +54,8 @@ instance FromJSON RegisterAtom where
 
 run (removeReds, keepNops, baseFile, tight, debug, outJsonFile, unisonMirFile)
   extUni target =
-  do outJson <- readFile outJsonFile
-     baseMir <- maybeReadFile baseFile
+  do outJson <- strictReadFile outJsonFile
+     baseMir <- maybeStrictReadFile baseFile
      let f   = Unison.Parser.parse target extUni
          sol = parseSolution outJson
          (f', partialFs) =

@@ -48,6 +48,9 @@ module Common.Util (
         showInLines,
         -- * Debugging
         traceIf,
+        -- * I/O
+        strictReadFile,
+        maybeStrictReadFile,
         -- * Other functions
         dropPrefix,
         dropSuffix,
@@ -55,7 +58,6 @@ module Common.Util (
         always,
         none,
         maybeNothing,
-        maybeReadFile,
         fixpointWith,
         fixpoint,
         combineAdd,
@@ -76,6 +78,7 @@ import Debug.Trace
 import Data.List.Split
 import Data.Yaml
 import qualified Data.ByteString.Char8 as B8
+import System.IO
 
 maybeMax v [] = v
 maybeMax _ l  = maximum l
@@ -155,6 +158,20 @@ showInLines l = unlines $ map show l
 traceIf True s = trace s
 traceIf False _ = id
 
+strictReadFile f =
+  do h <- openFile f ReadMode
+     c <- strictHGetContents h
+     return c
+
+strictHGetContents h =
+  do c <- hGetContents h
+     length c `seq` return c
+
+maybeStrictReadFile Nothing = return Nothing
+maybeStrictReadFile (Just file) =
+  do contents <- strictReadFile file
+     return (Just contents)
+
 dropPrefix s l = drop (length s) l
 
 dropSuffix s l = take (length l - length s) l
@@ -169,11 +186,6 @@ none f = not . any f
 
 maybeNothing True m  = m
 maybeNothing False _ = Nothing
-
-maybeReadFile Nothing = return Nothing
-maybeReadFile (Just file) =
-  do contents <- readFile file
-     return (Just contents)
 
 -- | Runs the function f with the input i until a fixpoint is reached.
 --   The comparison is performed by c.

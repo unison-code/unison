@@ -72,7 +72,7 @@ systemTest unisonTargets testArgs mirFile =
 runUnison unisonTargets testArgs mirFile =
   do let argv = processValue uniArgs ["run", "--target=foo", "bar"]
      args <- cmdArgsApply argv
-     mir <- readFile mirFile
+     mir <- strictReadFile mirFile
      let sp = showProgress testArgs
          verb = verbose testArgs
          upd = update testArgs
@@ -210,7 +210,7 @@ instance ToJSON TestProperties where
 
 assertOutJson update properties prefix =
   do let outJsonFile = addExtension "out.json" prefix
-     outJson <- readFile outJsonFile
+     outJson <- strictReadFile outJsonFile
      let sol = parseSolution outJson
          expHasSolution = solFromJson sol "has_solution" :: Bool
          properties1 = if update then properties {testExpectedHasSolution =
@@ -235,7 +235,7 @@ assertOutJson update properties prefix =
      return properties2
 
 assertCost update target properties unisonMirFile =
-    do unisonMir <- readFile unisonMirFile
+    do unisonMir <- strictReadFile unisonMirFile
        let gls = map lowLevelGoal (testGoal properties)
            (expCosts, _) =
              Analyze.analyze (False, True, False) 1.0 gls unisonMir target

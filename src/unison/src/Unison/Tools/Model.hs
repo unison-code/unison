@@ -50,7 +50,7 @@ import qualified Unison.Tools.Model.RegisterAllocation as RA
 run (baseFile, scaleFreq, oldModel, applyBaseFile, tightPressureBound,
      strictlyBetter, unsatisfiable, jsonFile)
     extUni target =
-  do baseMir <- maybeReadFile baseFile
+  do baseMir <- maybeStrictReadFile baseFile
      let f    = parse target extUni
          base = maybeNothing applyBaseFile baseMir
          aux  = auxiliarDataStructures target tightPressureBound base f

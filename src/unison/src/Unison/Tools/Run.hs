@@ -18,6 +18,7 @@ import System.Process
 import Control.Monad
 import Data.List.Split
 
+import Common.Util
 import Unison.Driver
 import qualified Unison.Tools.Import as Import
 import qualified Unison.Tools.Linearize as Linearize
@@ -35,11 +36,11 @@ run args @
    _strictlyBetter, _unsatisfiable, _removeReds, _keepNops, _solverFlags,
    inFile, _debug, _verbose, _intermediate, _lint, outFile, outTemp, _presolver,
    _solver) targetWithOption =
-  do mirInput <- readFile inFile
+  do mirInput <- strictReadFile inFile
      let mirInputs = splitDocs mirInput
      prefixes <- mapM (runFunction args targetWithOption) mirInputs
      unisonMirOutput <-
-       fmap concat $ mapM (readFile . addExtension "unison.mir") prefixes
+       fmap concat $ mapM (strictReadFile . addExtension "unison.mir") prefixes
      prefix <- getTempPrefix
      let unisonMirFile =
            case outFile of
@@ -68,21 +69,21 @@ runFunction
         implementFrames, rematType, function, goal, inFile, debug, intermediate,
         lint, lintPragma, Just uniFile)
        mirInput targetWithOption
-     uniInput <- readFile uniFile
+     uniInput <- strictReadFile uniFile
 
      let lssaUniFile = addExtension "lssa.uni" prefix
      maybePutStrLn "Running 'uni linearize'..."
      Linearize.run
        (uniFile, debug, intermediate, lint, lintPragma, Just lssaUniFile)
        uniInput targetWithOption
-     lssaUniInput <- readFile lssaUniFile
+     lssaUniInput <- strictReadFile lssaUniFile
 
      let extUniFile = addExtension "ext.uni" prefix
      maybePutStrLn "Running 'uni extend'..."
      Extend.run
        (lssaUniFile, debug, intermediate, lint, lintPragma, Just extUniFile)
        lssaUniInput targetWithOption
-     extUniInput <- readFile extUniFile
+     extUniInput <- strictReadFile extUniFile
 
      let altUniFile = addExtension "alt.uni" prefix
      maybePutStrLn "Running 'uni augment'..."
@@ -90,7 +91,7 @@ runFunction
        (implementFrames, noCross, oldModel, expandCopies, rematType,
         extUniFile, debug, intermediate, lint, lintPragma, Just altUniFile)
        extUniInput targetWithOption
-     altUniInput <- readFile altUniFile
+     altUniInput <- strictReadFile altUniFile
 
      baseFile' <- normalize (prefix, estimateFreq, simplifyControlFlow, debug,
                              verbose, targetWithOption) baseFile
@@ -136,7 +137,7 @@ normalize _ Nothing = return Nothing
 normalize (prefix, estimateFreq, simplifyControlFlow, debug, verbose,
            targetWithOption) (Just baseFile) =
   do let llvmMirFile = addExtension "llvm.mir" prefix
-     asmMirInput <- readFile baseFile
+     asmMirInput <- strictReadFile baseFile
      when verbose $ hPutStrLn stderr "Running 'uni normalize'..."
      Normalize.run
        (estimateFreq, simplifyControlFlow, debug, Just llvmMirFile)
