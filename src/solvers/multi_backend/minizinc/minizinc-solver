@@ -17,6 +17,7 @@ freeflag=''
 freedefault='--fzn-flag -f'
 rndflag=''
 nogoods=''
+setuponly='false'
 while [ $# -gt  1 ]; do
     opt="$1"
     shift
@@ -96,6 +97,9 @@ while [ $# -gt  1 ]; do
 	ncores=$1
 	shift
       ;;
+      --setuponly)
+	setuponly=true
+      ;;
     esac
 done
 BASENAME=$(basename $1 .ext.json)
@@ -112,6 +116,9 @@ if [ '$mzn' = 'mzn-gecode' ]; then
 else
   pflag=''
   pvalue=''
+fi
+if [ $setuponly = true ]; then
+    exit 0
 fi
 set -x
 time ${mzn} ${allsolns} -k ${statflag} ${pflag} ${pvalue} ${freeflag} ${rndflag} ${toflag} ${nogoods} -D good_cumulative=${cumulative} -D good_diffn=${diffn} code-generation.mzn $DIRBASENAME.dzn | $COMMON_DIR/outfilter.pl ${OUTJSON}.last > ${OUTJSON}

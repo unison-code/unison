@@ -30,6 +30,8 @@ import System.Console.CmdArgs
 import System.Process
 import System.Process.Internals
 import System.Directory
+import System.IO
+import System.Environment
 import Data.List.Split
 
 data Portfolio =
@@ -63,11 +65,32 @@ runGecode flags v extJson outJsonFile =
      return outJsonFile
 
 runChuffed flags extJson outJsonFile =
-  do callProcess "minizinc-solver"
-       (["--topdown", "--chuffed", "--free", "--no-diffn", "--no-cumulative", "-o", outJsonFile] ++
-        (splitFlags flags) ++
-        [extJson])
-     out <- readFile outJsonFile
+  do -- call 'minizinc-solver' but only for the setup (we would like to use the
+     -- entire script but for some reason then we cannot kill the underlying
+     -- processes when MiniZinc looses the race)
+     callProcess "minizinc-solver"
+       (["--topdown", "--chuffed", "--free", "--no-diffn", "--no-cumulative",
+         "--setuponly"] ++ (splitFlags flags) ++ [extJson])
+     -- now call the underlying 'minizinc' process that is killable (unlike what
+     -- is executed from 'minizinc-solver')
+     let pre = (take (length extJson - 9) extJson)
+         dzn = pre ++ ".dzn"
+         ozn = pre ++ ".ozn"
+     setEnv "FLATZINC_CMD" "fzn-chuffed"
+     callProcess "minizinc"
+       ["-Gchuffed", "--fzn-flag", "--mdd", "--fzn-flag", "on", "-a", "-k",
+        "-s", "--fzn-flag", "-f", "-D", "good_cumulative=false", "-D",
+        "good_diffn=false", "code-generation.mzn", dzn, "-o", ozn]
+     -- finally, invoke 'outfilter' to format the output
+     inf  <- openFile ozn ReadMode
+     outf <- openFile outJsonFile WriteMode
+     (_, _, _, h) <- createProcess
+         (proc "outfilter.pl" [outJsonFile ++ ".last"])
+         {std_in = UseHandle inf, std_out = UseHandle outf}
+     waitForProcess h
+     hClose inf
+     hClose outf
+     out <- strictReadFile outJsonFile
      -- if chuffed terminated without a proof, that means there was an error
      when (not (proven out)) $ forever $ threadDelay 10000
      return outJsonFile
@@ -92,6 +115,15 @@ solutionFromJson object =
    Error e -> error ("error converting JSON input:\n" ++ show e)
    Success s -> s
 
+strictReadFile f =
+  do h <- openFile f ReadMode
+     c <- strictHGetContents h
+     return c
+
+strictHGetContents h =
+  do c <- hGetContents h
+     length c `seq` return c
+
 main =
     do Portfolio{..} <- cmdArgsRun portfolioArgs
        let gecodeOutFile  = outFile ++ ".gecode"
@@ -100,17 +132,12 @@ main =
        result <- race
                  (runGecode gecodeFlags verbose inFile gecodeOutFile)
                  (runChuffed chuffedFlags inFile chuffedOutFile)
-       -- FIXME: this is too brutal (and platform-specific), find out instead
-       -- why the process spawned by 'minizinc-solver' are not killed
-       createProcess
-         (proc "killall" ["sicstus", "mzn2fzn", "fzn-chuffed"])
-         {std_out = CreatePipe, std_err = CreatePipe}
        let winner = case result of
                       Left  _ -> Gecode
                       Right _ -> Chuffed
        finalOutFile <- if winner == Chuffed then return chuffedOutFile
                        else
-                         do gecodeOut <- readFile gecodeOutFile
+                         do gecodeOut <- strictReadFile gecodeOutFile
                             if proven gecodeOut then return gecodeOutFile
                             else
                             -- gecode-solver timed out, the last solution
@@ -136,7 +163,7 @@ removeIfExists file =
 
 readIfExists file =
   do fileExists <- doesFileExist file
-     if fileExists then readFile file else return ""
+     if fileExists then strictReadFile file else return ""
 
 betterThan out1 out2 = cost out1 < cost out2
 
