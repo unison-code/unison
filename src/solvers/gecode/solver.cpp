@@ -679,10 +679,8 @@ int main(int argc, char* argv[]) {
   if (options.verbose())
     cerr << global() << cost_status_report(base, base) << endl;
 
-  bool reached_acceptable_gap = false;
   if (optimality_gap(base, base, 0) <= base->options->acceptable_gap() &&
       base->options->acceptable_gap() > 0) {
-    reached_acceptable_gap = true;
     if (options.verbose())
       cerr << global() << "reached acceptable optimality gap" << endl;
     emit_output(base, results, gd, state, prefix, go);
@@ -842,7 +840,6 @@ int main(int argc, char* argv[]) {
 
   if (optimality_gap(base, base, 0) <= base->options->acceptable_gap() &&
       base->options->acceptable_gap() > 0) {
-    reached_acceptable_gap = true;
     if (options.verbose())
       cerr << global() << "reached acceptable optimality gap" << endl;
     emit_output(base, results, gd, state, prefix, go);
@@ -865,7 +862,7 @@ int main(int argc, char* argv[]) {
     map<block, SolverResult> latest_result;
     for (block b : base->input->B) latest_result[b] = UNKNOWN;
 
-    while(!proven && !state.stop(&options)) {
+    while(!proven && (options.complete() || !state.stop(&options))) {
       Support::Timer t_it;
       t_it.start();
 
@@ -1074,56 +1071,62 @@ int main(int argc, char* argv[]) {
           optimality_gap(base, best.solution, 0) <=
           base->options->acceptable_gap() &&
           base->options->acceptable_gap() > 0) {
-        reached_acceptable_gap = true;
         if (options.verbose())
           cerr << global() << "reached acceptable optimality gap" << endl;
         break;
       }
 
-      if (!deactivation) { // Update aggressiveness
-        state.next(&options);
-        iteration++;
-      }
-    }
-  }
-
-  if (!proven &&
-      !reached_acceptable_gap &&
-      options.monolithic() &&
-      input.O.size() <= options.monolithic_threshold()) { // Run monolithic solver
-    if (options.verbose())
-      cerr << monolithic() << "running monolithic solver..." << endl;
-    Solution<GlobalModel> ms = solve_monolithic(base, go);
-    double solving_time = t.stop();
-    total_failed += ms.failures;
-    total_nodes += ms.nodes;
-    if (ms.result == OPTIMAL_SOLUTION) {
-      vector<int> ms_sol = var_vector(ms.solution->cost());
-      base->post_lower_bound(ms_sol);
-      base->post_upper_bound(ms_sol);
-      base->status();
-      if (options.verbose())
-        cerr << monolithic() << "found optimal solution "
-             << "(" << cost_status_report(base, ms.solution) << ")" << endl;
-      results.push_back(ResultData(ms.solution, true, ms.failures, ms.nodes,
-                                   presolver_time, presolving_time,
-                                   solving_time, solving_time));
-    } else if (ms.result == UNSATISFIABLE) {
-      // If the global problem is unsatisfiable and there is some solution we
-      // have found the optimal one
-      if (has_solution(results)) {
+      IterationState next_state(state);
+      next_state.next(&options);
+      if (!proven &&
+          next_state.stop(&options) &&
+          options.monolithic() &&
+          input.O.size() <= options.monolithic_threshold()) { // Run monolithic solver
         if (options.verbose())
-          cerr << monolithic() << "proven optimality" << endl;
-        // Remove results from the back until a solution is found
-        while (!results.back().solution) results.pop_back();
-        assert(results.back().solution);
-        base->post_lower_bound(var_vector(results.back().solution->cost()));
-      } else {
-        if (options.verbose()) {
-          cerr << monolithic() << unsat_report(base) << endl;
+          cerr << monolithic() << "running monolithic solver..." << endl;
+        Solution<GlobalModel> ms = solve_monolithic(base, go);
+        double solving_time = t.stop();
+        total_failed += ms.failures;
+        total_nodes += ms.nodes;
+        if (ms.result == OPTIMAL_SOLUTION) {
+          vector<int> ms_sol = var_vector(ms.solution->cost());
+          base->post_lower_bound(ms_sol);
+          base->post_upper_bound(ms_sol);
+          base->status();
+          if (options.verbose())
+            cerr << monolithic() << "found optimal solution "
+                 << "(" << cost_status_report(base, ms.solution) << ")" << endl;
+          results.push_back(ResultData(ms.solution, true, ms.failures, ms.nodes,
+                                       presolver_time, presolving_time,
+                                       solving_time, solving_time));
+          proven = true;
+        } else if (ms.result == UNSATISFIABLE) {
+          // If the global problem is unsatisfiable and there is some solution we
+          // have found the optimal one
+          if (has_solution(results)) {
+            if (options.verbose())
+              cerr << monolithic() << "proven optimality" << endl;
+            // Remove results from the back until a solution is found
+            while (!results.back().solution) results.pop_back();
+            assert(results.back().solution);
+            base->post_lower_bound(var_vector(results.back().solution->cost()));
+          } else {
+            if (options.verbose()) {
+              cerr << monolithic() << unsat_report(base) << endl;
+            }
+          }
+          proven = true;
+          results.back().proven = true;
         }
       }
-      results.back().proven = true;
+
+      if (!deactivation) { // Update aggressiveness
+        state.next(&options);
+        if (!proven && options.complete() && state.stop(&options)) {
+          state = IterationState(options.initial_aggressiveness(), false);
+        }
+        iteration++;
+      }
     }
   }
 

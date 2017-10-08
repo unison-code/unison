@@ -78,6 +78,7 @@ protected:
 
   Driver::UnsignedIntOption _total_threads; // Total number of threads
   Driver::UnsignedIntOption _portfolio_threads; // Threads for each portfolio
+  Driver::BoolOption _complete; // Run to completeness
   Driver::BoolOption _decomposition; // Run decomposition
   Driver::BoolOption _monolithic; // Run monolithic solver
   Driver::DoubleOption _initial_aggressiveness; // Initial aggressiveness
@@ -157,6 +158,7 @@ public:
 
   unsigned int total_threads(void) const {return _total_threads.value();}
   unsigned int portfolio_threads(void) const {return _portfolio_threads.value();}
+  bool complete(void) const {return _complete.value();}
   bool decomposition(void) const {return _decomposition.value();}
   bool monolithic(void) const {return _monolithic.value();}
   double initial_aggressiveness(void) const {return _initial_aggressiveness.value();}
