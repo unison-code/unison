@@ -74,13 +74,14 @@ runChuffed flags extJson outJsonFile =
      -- now call the underlying 'minizinc' process that is killable (unlike what
      -- is executed from 'minizinc-solver')
      let pre = (take (length extJson - 9) extJson)
+         mzn = pre ++ ".mzn"
          dzn = pre ++ ".dzn"
          ozn = pre ++ ".ozn"
      setEnv "FLATZINC_CMD" "fzn-chuffed"
      callProcess "minizinc"
        ["-Gchuffed", "--fzn-flag", "--mdd", "--fzn-flag", "on", "-a", "-k",
         "-s", "--fzn-flag", "-f", "-D", "good_cumulative=false", "-D",
-        "good_diffn=false", "code-generation.mzn", dzn, "-o", ozn]
+        "good_diffn=false", mzn, dzn, "-o", ozn]
      -- finally, invoke 'outfilter' to format the output
      inf  <- openFile ozn ReadMode
      outf <- openFile outJsonFile WriteMode
@@ -171,7 +172,8 @@ cost "" = maxInt
 cost out =
   let sol  = parseJson out
       cost = sol HM.! "cost"
-      c    = (solutionFromJson cost) :: Integer
+      -- Assumes a single goal as the minizinc solver does not support more
+      [c]  = (solutionFromJson cost) :: [Integer]
   in if c == -1 then maxInt else c
 
 maxInt = toInteger (maxBound - 1 :: Int32)

@@ -45,6 +45,7 @@ unlink $last;
 my $state = 1;
 my $soln = 0;
 my $proven = 0;
+my $cost = -1;
 my @buf = ();
 
 while (my $line = <STDIN>) {
@@ -59,6 +60,7 @@ while (my $line = <STDIN>) {
         foreach my $arg (@buf) {
             print $log "$arg,\n";
         }
+        print $log "\"cost\": [$cost],\n";
         if ($soln) {
             print $log "\"has_solution\": true,\n";
         } else {
@@ -75,6 +77,8 @@ while (my $line = <STDIN>) {
 	$soln = 1;
     } elsif ($line =~ "%") {
 	print STDERR "$line\n";
+    } elsif ($line =~ "cost") {
+	($cost) = $line =~ /(\d+)/;
     } elsif ($state < 3) {
 	$state = 3;
 	@buf = ($line);
@@ -87,6 +91,7 @@ print("{\n");
 foreach my $arg (@buf) {
     print "$arg,\n";
 }
+print "\"cost\": [$cost],\n";
 if ($soln) {
     print "\"has_solution\": true,\n";
 } else {
