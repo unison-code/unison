@@ -64,6 +64,9 @@ runGecode flags v extJson outJsonFile =
         [extJson])
      return outJsonFile
 
+tryIO :: IO a ->  IO (Either IOException a)
+tryIO =  try
+
 runChuffed flags extJson outJsonFile =
   do -- call 'minizinc-solver' but only for the setup (we would like to use the
      -- entire script but for some reason then we cannot kill the underlying
@@ -78,23 +81,32 @@ runChuffed flags extJson outJsonFile =
          dzn = pre ++ ".dzn"
          ozn = pre ++ ".ozn"
      setEnv "FLATZINC_CMD" "fzn-chuffed"
-     callProcess "minizinc"
+     minizincResult <- tryIO $ callProcess "minizinc"
        ["-Gchuffed", "--fzn-flag", "--mdd", "--fzn-flag", "on", "-a", "-k",
-        "-s", "--fzn-flag", "-f", "-D", "good_cumulative=false", "-D",
-        "good_diffn=false", mzn, dzn, "-o", ozn]
-     -- finally, invoke 'outfilter' to format the output
-     inf  <- openFile ozn ReadMode
-     outf <- openFile outJsonFile WriteMode
-     (_, _, _, h) <- createProcess
-         (proc "outfilter.pl" [outJsonFile ++ ".last"])
-         {std_in = UseHandle inf, std_out = UseHandle outf}
-     waitForProcess h
-     hClose inf
-     hClose outf
-     out <- strictReadFile outJsonFile
-     -- if chuffed terminated without a proof, that means there was an error
-     when (not (proven out)) $ forever $ threadDelay 10000
-     return outJsonFile
+        "-s", "--fzn-flag", "-f", "--fzn-flag", "--rnd-seed", "--fzn-flag",
+        "123456", "-D", "good_cumulative=true", "-D", "good_diffn=false",
+        mzn, dzn, "-o", ozn]
+     case minizincResult of
+      Left ex ->
+        do putStrLn "minizinc thread crashed, sleeping..."
+           waitForever
+           return outJsonFile
+      Right () ->
+        -- finally, invoke 'outfilter' to format the output
+        do inf  <- openFile ozn ReadMode
+           outf <- openFile outJsonFile WriteMode
+           (_, _, _, h) <- createProcess
+                           (proc "outfilter.pl" [outJsonFile ++ ".last"])
+                             {std_in = UseHandle inf, std_out = UseHandle outf}
+           waitForProcess h
+           hClose inf
+           hClose outf
+           out <- strictReadFile outJsonFile
+           -- if chuffed terminated without a proof, there was an error
+           when (not (proven out)) waitForever
+           return outJsonFile
+
+waitForever = forever $ threadDelay 10000
 
 splitFlags :: String -> [String]
 splitFlags flags =
