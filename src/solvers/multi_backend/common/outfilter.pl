@@ -82,7 +82,6 @@ while (my $line = <STDIN>) {
     } elsif ($state < 3) {
 	$state = 3;
 	@buf = ($line);
-	print STDERR "$line\n";
     } else {
 	push(@buf, $line);
     }
