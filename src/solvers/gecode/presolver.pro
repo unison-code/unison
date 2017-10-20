@@ -104,6 +104,14 @@ SOURCES += third-party/jsoncpp/json_reader.cpp \
            presolver/unsafe_temp.cpp \
            presolver.cpp
 
+ENV_CXX = $$(CXX)
+! isEmpty( ENV_CXX ) {
+    QMAKE_CXX = $$ENV_CXX
+}
+INCLUDEPATH = $$(CPATH)
+QMAKE_LIBDIR = $$(LIBRARY_PATH)
+QMAKE_LFLAGS = $$(LDFLAGS)
+
 QMAKE_CXXFLAGS += -std=c++0x
 
 LIBS += -lpthread -lgecodedriver
