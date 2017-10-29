@@ -105,18 +105,7 @@ extendReferences vc rtmap cf (src, dst) (Just d) us (ti, code, irs, id, t2rs) =
         (dcs, ucs) = cf vc src rs d us
         (dcs',
          ucs') = case M.lookup src rtmap of
-                  Just (_, ris) ->
-                    -- this assumes that the rematerialization instruction
-                    -- always dominates all other copies and is compatible
-                    -- with the register class of all its users: a more
-                    -- flexible model would include the dcs and ucs copies
-                    -- as well and let the target decide, perhaps in a
-                    -- later phase
-                    (if null dcs then []
-                     else dcs ++ [TargetInstruction drc | (_, drc, _) <- ris],
-                     [if null ucs0 then []
-                      else ucs0 ++ [TargetInstruction urc | (_, _, urc) <- ris]
-                     | ucs0 <- ucs])
+                  Just (_, ris) -> rematCopies ris (dcs, ucs) vc us
                   Nothing -> (dcs, ucs)
         t'         = if null dcs' then src else mkTemp ti
         extDefOut  = extend vc rtmap undefT src after (ti, code, [], id, t2rs)
@@ -126,6 +115,17 @@ extendReferences vc rtmap cf (src, dst) (Just d) us (ti, code, irs, id, t2rs) =
          t2rs')    = foldl (extend vc rtmap dst t' before) extDefOut
                      (zip us ucs')
     in (ti', code', irs ++ irs', id', t2rs')
+
+-- if the temporary is only used once by an (out) operation, the 'X_source'
+-- instruction is enough to rematerialize, no need for other remat copies
+rematCopies _ (dcs, ucs) vc [u] | isOut u && not vc = (dcs, ucs)
+-- general case
+rematCopies ris (dcs, ucs) _ _ =
+  (if null dcs then []
+   else dcs ++ [TargetInstruction drc | (_, drc, _) <- ris],
+   [if null ucs0 then []
+    else ucs0 ++ [TargetInstruction urc | (_, _, urc) <- ris]
+   | ucs0 <- ucs])
 
 -- | Updates the same tuples according to the irs tuples
 updateSame same irs =
