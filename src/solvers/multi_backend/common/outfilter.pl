@@ -55,6 +55,8 @@ while (my $line = <STDIN>) {
 	$state = 1;
 	$proven = 1;
     } elsif ($line =~ "--------") {
+	$state = 2;
+	$soln = 1;
         open(my $log, '>', $last);
         print $log "{\n";
         foreach my $arg (@buf) {
@@ -73,8 +75,6 @@ while (my $line = <STDIN>) {
         }
         print($log "}\n");
         close $log;
-	$state = 2;
-	$soln = 1;
     } elsif ($line =~ "%") {
 	print STDERR "$line\n";
     } elsif ($line =~ "cost") {
