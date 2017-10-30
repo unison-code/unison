@@ -105,7 +105,7 @@ extendReferences vc rtmap cf (src, dst) (Just d) us (ti, code, irs, id, t2rs) =
         (dcs, ucs) = cf vc src rs d us
         (dcs',
          ucs') = case M.lookup src rtmap of
-                  Just (_, ris) -> rematCopies ris (dcs, ucs) vc us
+                  Just (_, ris) -> rematCopies ris (dcs, ucs) vc (d, us)
                   Nothing -> (dcs, ucs)
         t'         = if null dcs' then src else mkTemp ti
         extDefOut  = extend vc rtmap undefT src after (ti, code, [], id, t2rs)
@@ -116,9 +116,11 @@ extendReferences vc rtmap cf (src, dst) (Just d) us (ti, code, irs, id, t2rs) =
                      (zip us ucs')
     in (ti', code', irs ++ irs', id', t2rs')
 
--- if the temporary is only used once by an (out) operation, the 'X_source'
--- instruction is enough to rematerialize, no need for other remat copies
-rematCopies _ (dcs, ucs) vc [u] | isOut u && not vc = (dcs, ucs)
+-- if the temporary can be defined by a 'X_source' instruction and is only
+-- used once by an (out) operation, 'X_source' is enough to rematerialize,
+-- no need for other remat copies
+rematCopies _ (dcs, ucs) vc (d, [u])
+  | not (isIn d) && isOut u && not vc = (dcs, ucs)
 -- general case
 rematCopies ris (dcs, ucs) _ _ =
   (if null dcs then []
