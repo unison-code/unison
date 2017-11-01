@@ -105,7 +105,7 @@ extendReferences vc rtmap cf (src, dst) (Just d) us (ti, code, irs, id, t2rs) =
         (dcs, ucs) = cf vc src rs d us
         (dcs',
          ucs') = case M.lookup src rtmap of
-                  Just (_, ris) -> rematCopies ris (dcs, ucs) vc (d, us)
+                  Just (_, ris) -> rematCopies src code ris (dcs, ucs) vc (d, us)
                   Nothing -> (dcs, ucs)
         t'         = if null dcs' then src else mkTemp ti
         extDefOut  = extend vc rtmap undefT src after (ti, code, [], id, t2rs)
@@ -119,10 +119,12 @@ extendReferences vc rtmap cf (src, dst) (Just d) us (ti, code, irs, id, t2rs) =
 -- if the temporary can be defined by a 'X_source' instruction and is only
 -- used once by an (out) operation, 'X_source' is enough to rematerialize,
 -- no need for other remat copies
-rematCopies _ (dcs, ucs) vc (d, [u])
-  | not (isIn d) && isOut u && not vc = (dcs, ucs)
+rematCopies t code _ (dcs, ucs) vc (d, [u])
+  -- additionally, the copy cannot be virtual and there must be really one
+  -- user (virtual or not): 'users t code' includes also virtual copies
+  | not (isIn d) && isOut u && not vc && length (users t code) == 1 = (dcs, ucs)
 -- general case
-rematCopies ris (dcs, ucs) _ _ =
+rematCopies _ _ ris (dcs, ucs) _ _ =
   (if null dcs then []
    else dcs ++ [TargetInstruction drc | (_, drc, _) <- ris],
    [if null ucs0 then []
