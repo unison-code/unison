@@ -1,5 +1,5 @@
 --- |
-  ; ModuleID = 'before/g72x.ll'
+  ; ModuleID = 'dummy.ll'
 ...
 ---
 name:            reconstruct
@@ -98,6 +98,8 @@ unison-test-goal:
 - speed
 unison-test-expected-cost:
 - 162
+unison-test-function: null
 unison-test-expected-proven: true
+unison-test-strictly-better: null
 unison-test-expected-has-solution: true
 ...

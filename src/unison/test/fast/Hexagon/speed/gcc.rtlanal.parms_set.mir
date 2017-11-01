@@ -1,59 +1,5 @@
 --- |
-  ; ModuleID = 'gcc.rtlanal.parms_set.ll'
-  target datalayout = "e-m:e-p:32:32:32-i64:64:64-i32:32:32-i16:16:16-i1:8:8-f64:64:64-f32:32:32-v64:64:64-v32:32:32-a:0-n16:32"
-  target triple = "hexagon"
-  
-  %struct.rtx_def.365 = type { i32, [1 x %union.rtunion_def.366] }
-  %union.rtunion_def.366 = type { i32 }
-  
-  ; Function Attrs: norecurse nounwind
-  define hidden void @parms_set(%struct.rtx_def.365* nocapture readonly %x, %struct.rtx_def.365* nocapture readnone %pat, i8* nocapture %data) #0 {
-    %cgep6 = bitcast %struct.rtx_def.365* %x to %struct.rtx_def.365*
-    %cgep47 = bitcast %struct.rtx_def.365* %cgep6 to i32*
-    %1 = load i32, i32* %cgep47, align 4
-    %2 = and i32 %1, 255
-    %3 = icmp eq i32 %2, 61
-    br i1 %3, label %4, label %20
-  
-  ; <label>:4                                       ; preds = %0
-    %5 = bitcast %struct.rtx_def.365* %x to %struct.rtx_def.365*
-    %cgep5 = getelementptr %struct.rtx_def.365, %struct.rtx_def.365* %5, i32 0, i32 1, i32 0, i32 0
-    %6 = load i32, i32* %cgep5, align 4
-    %7 = icmp ult i32 %6, 53
-    br i1 %7, label %8, label %20
-  
-  ; <label>:8                                       ; preds = %4
-    %cgep1 = getelementptr i8, i8* %data, i32 4
-    %9 = bitcast i8* %cgep1 to i32*
-    %10 = load i32, i32* %9, align 4
-    %11 = shl i32 1, %6
-    %12 = and i32 %10, %11
-    %13 = icmp eq i32 %12, 0
-    br i1 %13, label %20, label %14
-  
-  ; <label>:14                                      ; preds = %8
-    %15 = xor i32 %11, -1
-    %16 = and i32 %10, %15
-    %sunkaddr = ptrtoint i8* %data to i32
-    %sunkaddr8 = add i32 %sunkaddr, 4
-    %sunkaddr9 = inttoptr i32 %sunkaddr8 to i32*
-    store i32 %16, i32* %sunkaddr9, align 4
-    %17 = bitcast i8* %data to i32*
-    %18 = load i32, i32* %17, align 4
-    %19 = add nsw i32 %18, -1
-    store i32 %19, i32* %17, align 4
-    br label %20
-  
-  ; <label>:20                                      ; preds = %14, %8, %4, %0
-    ret void
-  }
-  
-  attributes #0 = { norecurse nounwind "disable-tail-calls"="false" "less-precise-fpmad"="false" "no-frame-pointer-elim"="true" "no-frame-pointer-elim-non-leaf" "no-infs-fp-math"="false" "no-nans-fp-math"="false" "stack-protector-buffer-size"="8" "target-cpu"="hexagonv4" "target-features"="-hvx,-hvx-double" "unsafe-fp-math"="false" "use-soft-float"="false" }
-  
-  !llvm.ident = !{!0}
-  
-  !0 = !{!"clang version 3.8.0 (http://llvm.org/git/clang.git 2d49f0a0ae8366964a93e3b7b26e29679bee7160) (http://llvm.org/git/llvm.git 60bc66b44837125843b58ed3e0fd2e6bb948d839)"}
-
+  ; ModuleID = 'dummy.ll'
 ...
 ---
 name:            parms_set
@@ -142,6 +88,8 @@ unison-test-goal:
 - speed
 unison-test-expected-cost:
 - 243
+unison-test-function: null
 unison-test-expected-proven: true
+unison-test-strictly-better: null
 unison-test-expected-has-solution: false
 ...
