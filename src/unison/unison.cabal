@@ -251,7 +251,7 @@ Library
                   Unison.Target.Mips.SpecsGen.Parent
 
   Build-Depends: base >= 4.0,
-                 fgl >= 5.4,
+                 fgl >= 5.5.3,
                  pretty >= 1.0,
                  graphviz >= 2999.17,
                  parsec >= 3.1,
