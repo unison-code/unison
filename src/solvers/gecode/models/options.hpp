@@ -73,6 +73,7 @@ protected:
   Driver::DoubleOption _local_shaving_limit; // Local shaving limit
   Driver::DoubleOption _local_relaxation_limit; // Local relaxation limit
   Driver::DoubleOption _acceptable_gap; // Acceptable optimality gap
+  Driver::DoubleOption _timeout; // Global timeout
 
   // Solving
 
@@ -155,6 +156,7 @@ public:
   double local_shaving_limit(void) const {return _local_shaving_limit.value();}
   double local_relaxation_limit(void) const {return _local_relaxation_limit.value();}
   double acceptable_gap(void) const {return _acceptable_gap.value();}
+  double timeout(void) const {return _timeout.value();}
 
   unsigned int total_threads(void) const {return _total_threads.value();}
   unsigned int portfolio_threads(void) const {return _portfolio_threads.value();}

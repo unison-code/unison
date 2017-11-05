@@ -62,6 +62,7 @@ ModelOptions::ModelOptions(void)
     _local_shaving_limit("--local-shaving-limit", "local shaving limit", 2000.0),
     _local_relaxation_limit("--local-relaxation-limit", "local relaxation limit", 1000.0),
     _acceptable_gap("--acceptable-gap", "acceptable optimality gap", 0.0),
+    _timeout("--timeout", "global timeout", std::numeric_limits<double>::max()),
 
     _total_threads("--total-threads", "total number of threads", 5),
     _portfolio_threads("--portfolio-threads", "threads for each portfolio", 5),
@@ -135,6 +136,7 @@ ModelOptions::ModelOptions(void)
   add(_local_shaving_limit);
   add(_local_relaxation_limit);
   add(_acceptable_gap);
+  add(_timeout);
 
   add(_total_threads);
   add(_portfolio_threads);

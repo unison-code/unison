@@ -39,7 +39,8 @@ data Portfolio =
              outFile :: FilePath,
              verbose :: Bool,
              gecodeFlags :: String,
-             chuffedFlags :: String}
+             chuffedFlags :: String,
+             timeOut :: Maybe Integer}
   deriving (Data, Typeable, Show)
 
 data Solver = Gecode | Chuffed deriving Eq
@@ -50,7 +51,8 @@ portfolioArgs = cmdArgsMode $ Portfolio
      outFile = "" &= name "o" &= help "Output file name" &= typFile,
      verbose = False &= name "v" &= help "Run solvers in verbose mode",
      gecodeFlags = "" &= help "Flags passed to the Gecode solver",
-     chuffedFlags = "" &= help "Flags passed to the Chuffed solver"
+     chuffedFlags = "" &= help "Flags passed to the Chuffed solver",
+     timeOut = Nothing &= help "Timeout for both solvers (in seconds)"
     }
 
 gecodeFile :: FilePath -> String
@@ -58,11 +60,14 @@ gecodeFile outJsonFile = outJsonFile ++ ".gecode"
 chuffedFile :: FilePath -> String
 chuffedFile outJsonFile = outJsonFile ++ ".chuffed"
 
-runGecode flags v extJson outJsonFile =
+runGecode flags timeOut v extJson outJsonFile =
   do tryUntilSuccess $ callProcess "gecode-solver"
        (["-o", outJsonFile] ++ ["--verbose" | v] ++ (splitFlags flags) ++
-        [extJson])
+        (gecodeTimeoutFlags timeOut) ++ [extJson])
      return outJsonFile
+
+gecodeTimeoutFlags (Just s) = ["--complete", "--timeout", show (s * 1000)]
+gecodeTimeoutFlags Nothing  = []
 
 tryIO :: IO a ->  IO (Either IOException a)
 tryIO =  try
@@ -75,7 +80,7 @@ tryUntilSuccess a =
            tryUntilSuccess a
       Right () -> return ()
 
-runChuffed flags extJson outJsonFile =
+runChuffed flags timeOut extJson outJsonFile =
   do -- call 'minizinc-solver' but only for the setup (we would like to use the
      -- entire script but for some reason then we cannot kill the underlying
      -- processes when MiniZinc looses the race)
@@ -88,12 +93,16 @@ runChuffed flags extJson outJsonFile =
          mzn = pre ++ ".mzn"
          dzn = pre ++ ".dzn"
          ozn = pre ++ ".ozn"
+         timeOutFlags =
+           case timeOut of
+            Just s  -> ["--fzn-flag", "--time-out", "--fzn-flag", show s]
+            Nothing -> []
      setEnv "FLATZINC_CMD" "fzn-chuffed"
      tryUntilSuccess $ callProcess "minizinc"
-       ["-Gchuffed", "--fzn-flag", "--mdd", "--fzn-flag", "on", "-a", "-k",
+       (["-Gchuffed", "--fzn-flag", "--mdd", "--fzn-flag", "on", "-a", "-k",
         "-s", "--fzn-flag", "-f", "--fzn-flag", "--rnd-seed", "--fzn-flag",
-        "123456", "-D", "good_cumulative=true", "-D", "good_diffn=false",
-        mzn, dzn, "-o", ozn]
+        "123456", "-D", "good_cumulative=true", "-D", "good_diffn=false"] ++
+        timeOutFlags ++ [mzn, dzn, "-o", ozn])
      -- finally, invoke 'outfilter' to format the output
      inf  <- openFile ozn ReadMode
      outf <- openFile outJsonFile WriteMode
@@ -141,8 +150,8 @@ main =
            chuffedOutFile = outFile ++ ".chuffed"
            chuffedLastOutFile = outFile ++ ".chuffed.last"
        result <- race
-                 (runGecode gecodeFlags verbose inFile gecodeOutFile)
-                 (runChuffed chuffedFlags inFile chuffedOutFile)
+                 (runGecode  gecodeFlags  timeOut verbose inFile gecodeOutFile)
+                 (runChuffed chuffedFlags timeOut inFile chuffedOutFile)
        let winner = case result of
                       Left  _ -> Gecode
                       Right _ -> Chuffed
