@@ -194,8 +194,10 @@ Library
                   Unison.Target.Hexagon.Common
                   Unison.Target.Hexagon.Registers
                   Unison.Target.Hexagon.Transforms
+                  Unison.Target.Hexagon.Usages
                   Unison.Target.Hexagon.HexagonRegisterDecl
                   Unison.Target.Hexagon.HexagonRegisterClassDecl
+                  Unison.Target.Hexagon.HexagonResourceDecl
                   Unison.Target.Hexagon.SpecsGen
                   Unison.Target.Hexagon.SpecsGen.HexagonInstructionDecl
                   Unison.Target.Hexagon.SpecsGen.HexagonItineraryDecl

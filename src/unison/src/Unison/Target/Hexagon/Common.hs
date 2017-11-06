@@ -16,13 +16,15 @@ module Unison.Target.Hexagon.Common
      newValueStoreInstr, isMuxTransferInstr, isCondTransferInstr,
      condTransferInstr, muxTransferInstr, isRematerializable,
      isSourceInstr, isDematInstr, isRematInstr, sourceInstr, dematInstr,
-     rematInstr, originalInstr) where
+     rematInstr, originalInstr, constantExtendedInstr, nonConstantExtendedInstr,
+     isConstantExtended, mayLoad', mayStore', spillInstrs) where
 
 import Data.List
 import qualified Data.Map as M
 
 import Unison
 import MachineIR
+import Unison.Target.Query
 import qualified Unison.Target.Hexagon.SpecsGen as SpecsGen
 import Unison.Target.Hexagon.SpecsGen.HexagonInstructionDecl
 
@@ -133,8 +135,12 @@ sourceInstr i = source $ rematVersions M.! i
 dematInstr  i = demat $ rematVersions M.! i
 rematInstr  i = remat $ rematVersions M.! i
 
-originalInstr i =
-  (M.fromList [(remat ris, i) | (i, ris) <- M.toList rematVersions]) M.! i
+originalInstr i = (M.fromList (concat originalInstrLists)) M.! i
+
+originalInstrLists =
+  [[(i, i), (source ris, i), (demat ris, i), (remat ris, i)]
+  | (i, ris) <- M.toList rematVersions]
+
 
 rematVersions = M.fromList
   [(A2_tfrsi, RematTriple A2_tfrsi_source A2_tfrsi_demat A2_tfrsi_remat),
@@ -155,3 +161,19 @@ rematVersions = M.fromList
    (L4_loadrd_abs_ce, RematTriple L4_loadrd_abs_source_ce L4_loadrd_abs_demat_ce L4_loadrd_abs_remat_ce),
    (TFR_PdFalse, RematTriple TFR_PdFalse_source TFR_PdFalse_demat TFR_PdFalse_remat),
    (TFR_PdTrue, RematTriple TFR_PdTrue_source TFR_PdTrue_demat TFR_PdTrue_remat)]
+
+constantExtendedInstr :: HexagonInstruction -> HexagonInstruction
+constantExtendedInstr i = read $ show i ++ "_ce"
+
+nonConstantExtendedInstr :: HexagonInstruction -> HexagonInstruction
+nonConstantExtendedInstr i = read $ dropSuffix "_ce" (show i)
+
+isConstantExtended :: HexagonInstruction -> Bool
+isConstantExtended i = "_ce" `isSuffixOf` (show i)
+
+mayLoad' = mayLoad SpecsGen.readWriteInfo
+
+mayStore' STW_nv = True
+mayStore' i = mayStore (SpecsGen.readWriteInfo) i
+
+spillInstrs = [STW, STD, STW_nv, LDW, LDD]

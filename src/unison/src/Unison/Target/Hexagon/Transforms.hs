@@ -15,6 +15,7 @@ module Unison.Target.Hexagon.Transforms
      foldStackPointerCopy,
      addAlternativeInstructions,
      expandJumps,
+     discardSpills,
      addControlBarrier,
      allocateArgArea,
      alignAllocFrame,
@@ -218,6 +219,50 @@ isTrueJump J2_jumpt = True
 isTrueJump J2_jumpf = False
 
 mkMOp id ts = mkMOperand id ts Nothing
+
+discardSpills f @ Function {fCode = code} =
+  let f1 = mapToOperation (discardSpill (flatten code)) f
+      f2 = removeInactiveOperations f1
+  in f2
+
+discardSpill code o @ SingleOperation {oOpr = co @ Copy {oCopyIs = is},
+                                       oAs = as} =
+  case fmap (\roid -> fromJust $ find (isId roid) code) (aRematOrigin as) of
+   Just ro ->
+     let ris = map originalInstr [i | TargetInstruction i <- oInstructions ro]
+         is' = filter (\i -> isNullInstruction i ||
+                             (isTargetInstruction i &&
+                              isUsefulCopyFor (head ris) (oTargetInstr i))) is
+     in o {oOpr = co {oCopyIs = is'}}
+   Nothing -> o
+discardSpill _ o = o
+
+-- rematerialization copies are always useful
+isUsefulCopyFor _ ci | isDematInstr ci || isRematInstr ci = True
+-- copies for constant-extended rematerializable instructions are always useful
+-- as they only take one slot
+isUsefulCopyFor ri _ | isConstantExtended ri = True
+-- spill copies are never useful for rematerializable instructions since a
+-- single store or load consumes as much as them (rematerializable instructions
+-- are either transfer-like (SLOT0123), predicate-transfer-like (SLOT23 but no
+-- spilling), or load-like (SLOT01))
+isUsefulCopyFor _ ci | ci `elem` spillInstrs = False
+-- other copies are useful
+isUsefulCopyFor _ _ = True
+
+removeInactiveOperations f @ Function {fCode = code} =
+  let os    = filter isInactive (flatten code)
+      ts    = concatMap extractTemps $ concatMap oDefOperands os
+      code' = filterCode (\o -> not (o `elem` os)) code
+      f'    = mapToOperation (mapToModelOperand (delAlts ts)) f {fCode = code'}
+  in f'
+
+delAlts dts p @ MOperand {altTemps = ts} = p {altTemps = ts \\ dts}
+
+isInactive o =
+  case oInstructions o of
+   [i] | isNullInstruction i -> True
+   _ -> False
 
 addControlBarrier o @ SingleOperation {oOpr = Natural Linear {oIs = is},
                                        oAs = as} =
