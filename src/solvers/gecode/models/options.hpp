@@ -50,7 +50,6 @@ protected:
   // Interface
 
   Driver::StringValueOption _output_file; // Output file
-  Driver::BoolOption _output_every_iteration; // Dump an output every iteration
   Driver::BoolOption _verbose; // Verbose mode
   Driver::BoolOption _emit_improvement; // Emit estimated improvement
 #ifdef GRAPHICS
@@ -95,6 +94,7 @@ protected:
   Driver::UnsignedIntOption _shaving_threshold; // Operation threshold to disable shaving
   Driver::BoolOption _solve_global_only; // Solve only the global problem
   Driver::BoolOption _first_solution; // Return the first solution found
+  Driver::BoolOption _all_solutions; // Emit solutions as they are found
   Driver::UnsignedIntOption _solving_threshold; // Operation threshold to give up on solving
   Driver::UnsignedIntOption _monolithic_threshold; // Operation threshold to give up on running the monolithic solver
 
@@ -135,7 +135,6 @@ public:
   ModelOptions(void);
 
   string output_file(void) const {return _output_file.value();}
-  bool output_every_iteration(void) const {return _output_every_iteration.value();}
   bool verbose(void) const {return _verbose.value();}
   bool emit_improvement(void) const {return _emit_improvement.value();}
 #ifdef GRAPHICS
@@ -176,6 +175,7 @@ public:
   unsigned int shaving_threshold(void) const {return _shaving_threshold.value();}
   bool solve_global_only(void) const {return _solve_global_only.value();}
   bool first_solution(void) const {return _first_solution.value();}
+  bool all_solutions(void) const {return _all_solutions.value();}
   unsigned int solving_threshold(void) const {return _solving_threshold.value();}
   unsigned int monolithic_threshold(void) const {return _monolithic_threshold.value();}
 

@@ -41,7 +41,6 @@ ModelOptions::ModelOptions(void)
   : InstanceOptions("Unison"),
 
     _output_file("-o", "output file", ""),
-    _output_every_iteration("--output-every-iteration", "produce an output file every iteration (only works if an output file is set)", false),
     _verbose("--verbose", "verbose mode", false),
     _emit_improvement("--emit-improvement", "emit estimated improvement", false),
 #ifdef GRAPHICS
@@ -82,6 +81,7 @@ ModelOptions::ModelOptions(void)
     _shaving_threshold("--shaving-threshold", "pperation threshold to disable shaving", 150),
     _solve_global_only("--solve-global-only", "solve only the global problem", false),
     _first_solution("--first-solution", "return the first solution found", false),
+    _all_solutions("--all-solutions", "emit solutions as they are found", false),
     _solving_threshold("--solving-threshold", "operation threshold to give up on solving", std::numeric_limits<int>::max()),
     _monolithic_threshold("--monolithic-threshold", "operation threshold to give up on running the monolithic solver", 1000),
 
@@ -115,7 +115,6 @@ ModelOptions::ModelOptions(void)
 
 {
   add(_output_file);
-  add(_output_every_iteration);
   add(_verbose);
   add(_emit_improvement);
 #ifdef GRAPHICS
@@ -156,6 +155,7 @@ ModelOptions::ModelOptions(void)
   add(_shaving_threshold);
   add(_solve_global_only);
   add(_first_solution);
+  add(_all_solutions);
   add(_solving_threshold);
   add(_monolithic_threshold);
 

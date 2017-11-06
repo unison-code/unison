@@ -19,9 +19,15 @@ This file is part of Unison, see http://unison-code.github.io
 {-# LANGUAGE DeriveDataTypeable, RecordWildCards, OverloadedStrings #-}
 
 import Data.Aeson
+import Data.Aeson.Encode.Pretty
 import Data.Int
+import Data.Ord
+import Data.List
+import qualified Data.Text.Lazy.Builder as DTB
+import Data.Scientific
 import qualified Data.ByteString.Lazy.Char8 as BSL
 import qualified Data.HashMap.Strict as HM
+import qualified Data.Map as M
 import Control.Concurrent
 import Control.Concurrent.Async
 import Control.Monad
@@ -32,6 +38,7 @@ import System.Process.Internals
 import System.Directory
 import System.IO
 import System.Environment
+import System.Timeout
 import Data.List.Split
 
 data Portfolio =
@@ -43,7 +50,7 @@ data Portfolio =
              timeOut :: Maybe Integer}
   deriving (Data, Typeable, Show)
 
-data Solver = Gecode | Chuffed deriving Eq
+data Solver = Gecode | Chuffed | NoSolver deriving Eq
 
 portfolioArgs = cmdArgsMode $ Portfolio
     {
@@ -60,14 +67,15 @@ gecodeFile outJsonFile = outJsonFile ++ ".gecode"
 chuffedFile :: FilePath -> String
 chuffedFile outJsonFile = outJsonFile ++ ".chuffed"
 
-runGecode flags timeOut v extJson outJsonFile =
+runGecode flags to v extJson outJsonFile =
   do tryUntilSuccess $ callProcess "gecode-solver"
        (["-o", outJsonFile] ++ ["--verbose" | v] ++ (splitFlags flags) ++
-        (gecodeTimeoutFlags timeOut) ++ [extJson])
+        (gecodeTimeoutFlags to) ++ [extJson])
      return outJsonFile
 
-gecodeTimeoutFlags (Just s) = ["--complete", "--timeout", show (s * 1000)]
-gecodeTimeoutFlags Nothing  = []
+gecodeTimeoutFlags to
+  | to >= 0 = ["--complete", "--all-solutions"]
+  | otherwise = []
 
 tryIO :: IO a ->  IO (Either IOException a)
 tryIO =  try
@@ -80,7 +88,7 @@ tryUntilSuccess a =
            tryUntilSuccess a
       Right () -> return ()
 
-runChuffed flags timeOut extJson outJsonFile =
+runChuffed flags extJson outJsonFile =
   do -- call 'minizinc-solver' but only for the setup (we would like to use the
      -- entire script but for some reason then we cannot kill the underlying
      -- processes when MiniZinc looses the race)
@@ -93,16 +101,12 @@ runChuffed flags timeOut extJson outJsonFile =
          mzn = pre ++ ".mzn"
          dzn = pre ++ ".dzn"
          ozn = pre ++ ".ozn"
-         timeOutFlags =
-           case timeOut of
-            Just s  -> ["--fzn-flag", "--time-out", "--fzn-flag", show s]
-            Nothing -> []
      setEnv "FLATZINC_CMD" "fzn-chuffed"
      tryUntilSuccess $ callProcess "minizinc"
        (["-Gchuffed", "--fzn-flag", "--mdd", "--fzn-flag", "on", "-a", "-k",
         "-s", "--fzn-flag", "-f", "--fzn-flag", "--rnd-seed", "--fzn-flag",
         "123456", "-D", "good_cumulative=true", "-D", "good_diffn=false"] ++
-        timeOutFlags ++ [mzn, dzn, "-o", ozn])
+        [mzn, dzn, "-o", ozn])
      -- finally, invoke 'outfilter' to format the output
      inf  <- openFile ozn ReadMode
      outf <- openFile outJsonFile WriteMode
@@ -146,32 +150,76 @@ strictHGetContents h =
 
 main =
     do Portfolio{..} <- cmdArgsRun portfolioArgs
-       let gecodeOutFile  = outFile ++ ".gecode"
+       let baseOutFile    = outFile ++ ".base"
+           gecodeOutFile  = outFile ++ ".gecode"
            chuffedOutFile = outFile ++ ".chuffed"
            chuffedLastOutFile = outFile ++ ".chuffed.last"
-       result <- race
-                 (runGecode  gecodeFlags  timeOut verbose inFile gecodeOutFile)
-                 (runChuffed chuffedFlags timeOut inFile chuffedOutFile)
+           to = case timeOut of
+                 Just s  -> if s * 1000000 > maxInt
+                            then error ("exceeded maximum timeout")
+                            else (fromInteger s) * 1000000
+                 Nothing -> -1
+       result <- timeout to
+                 (race
+                  (runGecode gecodeFlags to verbose inFile gecodeOutFile)
+                  (runChuffed chuffedFlags inFile chuffedOutFile))
        let winner = case result of
-                      Left  _ -> Gecode
-                      Right _ -> Chuffed
-       finalOutFile <- if winner == Chuffed then return chuffedOutFile
-                       else
-                         do gecodeOut <- strictReadFile gecodeOutFile
-                            if proven gecodeOut then return gecodeOutFile
-                            else
-                            -- gecode-solver timed out, the last solution
-                            -- provided by Chuffed might be actually better
-                                 do chuffedLastOut <- readIfExists
-                                                   chuffedLastOutFile
-                                    if chuffedLastOut `betterThan` gecodeOut
-                                       then return chuffedLastOutFile
-                                       else return gecodeOutFile
+                     (Just (Left  _)) -> Gecode
+                     (Just (Right _)) -> Chuffed
+                     Nothing          -> NoSolver
+       finalOutFile <- if to >= 0
+                       then pickBest winner baseOutFile gecodeOutFile
+                            (chuffedOutFile, chuffedLastOutFile)
+                       else pickNoTimeOutBest winner gecodeOutFile
+                            (chuffedOutFile, chuffedLastOutFile)
        renameFile finalOutFile outFile
        removeIfExists gecodeOutFile
        removeIfExists chuffedOutFile
        removeIfExists chuffedLastOutFile
        return ()
+
+pickBest winner baseOutFile gecodeOutFile (chuffedOutFile, chuffedLastOutFile)
+  | winner == Gecode  = return gecodeOutFile
+  | winner == Chuffed = return chuffedOutFile
+  | winner == NoSolver = -- see which one produced the best non-proven solution
+    do gecodeOut  <- readIfExists gecodeOutFile
+       chuffedOut <- readIfExists chuffedLastOutFile
+       let (best, bestOut) = minimumBy (comparing solutionCost)
+                             [(gecodeOutFile, gecodeOut),
+                              (chuffedLastOutFile, chuffedOut)]
+       (best', bestOut') <- maybeBase baseOutFile (best, bestOut)
+       return best'
+
+maybeBase baseOutFile (best, bestOut) =
+  if solutionCost (best, bestOut) < maxInt then return (best, bestOut) else
+    do writeFile baseOutFile baseOut
+       return (baseOutFile, baseOut)
+
+baseOut =
+  BSL.unpack $ encodePretty' jsonConfig $ toJSON $ M.fromList baseSolution
+jsonConfig = defConfig {confNumFormat = Custom showInteger}
+showInteger i =
+  case floatingOrInteger i of
+   Right i' -> DTB.fromString (show (toInteger i'))
+   Left r -> error ("expecting integer but got " ++ show r)
+baseSolution =
+  [("cost", toJSON (-1 :: Integer)),
+   ("has_solution", toJSON False),
+   ("proven" :: String, toJSON False)]
+
+pickNoTimeOutBest winner gecodeOutFile (chuffedOutFile, chuffedLastOutFile) =
+  if winner == Chuffed then return chuffedOutFile
+  else
+    do gecodeOut <- strictReadFile gecodeOutFile
+       if proven gecodeOut then return gecodeOutFile
+         else
+         -- gecode-solver timed out, the last solution
+         -- provided by Chuffed might be actually better
+         do chuffedLastOut <- readIfExists
+                              chuffedLastOutFile
+            if chuffedLastOut `betterThan` gecodeOut
+              then return chuffedLastOutFile
+              else return gecodeOutFile
 
 replaceFlagChar '=' = ' '
 replaceFlagChar ';' = ' '
@@ -186,6 +234,9 @@ readIfExists file =
      if fileExists then strictReadFile file else return ""
 
 betterThan out1 out2 = cost out1 < cost out2
+
+solutionCost (_, "")  = maxInt
+solutionCost (_, out) = cost out
 
 cost "" = maxInt
 cost out =

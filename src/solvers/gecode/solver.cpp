@@ -339,9 +339,8 @@ string cost_status_report(GlobalModel * base, const GlobalModel * sol) {
   return ss.str();
 }
 
-void emit_output_exit(GlobalModel * base, vector<ResultData> & results,
-                      GlobalData & gd, IterationState & state, string prefix,
-                      GIST_OPTIONS * go) {
+void emit_output_exit(GlobalModel * base, const vector<ResultData> & results,
+                      const GlobalData & gd, GIST_OPTIONS * go) {
   (void)go;
 
   assert(!results.empty());
@@ -387,36 +386,20 @@ void emit_output_exit(GlobalModel * base, vector<ResultData> & results,
     cout << produce_json(best_rd, gd, base->input->N, 0) << endl;
   } else {
     ofstream fout;
-    if (base->options->output_every_iteration()) {
-      // If we want to output all iterations, fill the solutions vector with NULL
-      // for the missing iterations
-      while(!state.stop(base->options)) {
-        results.push_back(ResultData(NULL, false, 0, 0, best_rd.presolver_time,
-                                     best_rd.presolving_time,
-                                     best_rd.solving_time, 0));
-        state.next(base->options);
-      }
-      for (unsigned int i = 0; i < results.size(); i++) {
-        fout.open ((prefix + "." + to_string(i) + ".out.json").c_str());
-        fout << produce_json(results[i], gd, base->input->N, i);
-        fout.close();
-      }
-    }
     fout.open(base->options->output_file());
     fout << produce_json(best_rd, gd, base->input->N, 0);
     fout.close();
   }
 
-  exit(EXIT_SUCCESS);
+  if (!(base->options->all_solutions() && !best_rd.proven)) exit(EXIT_SUCCESS);
 
 }
 
-void timeout_exit(GlobalModel * base, vector<ResultData> & results,
-                  GlobalData & gd, IterationState & state, string prefix,
-                  GIST_OPTIONS * go, double time) {
+void timeout_exit(GlobalModel * base, const vector<ResultData> & results,
+                  const GlobalData & gd, GIST_OPTIONS * go, double time) {
   if (base->options->verbose())
     cerr << global() << "timeout (" << time << " ms)" << endl;
-  emit_output_exit(base, results, gd, state, prefix, go);
+  emit_output_exit(base, results, gd, go);
 }
 
 bool has_solution(vector<ResultData> & results) {
@@ -649,7 +632,7 @@ int main(int argc, char* argv[]) {
   if (execution_time > options.timeout()) {
     results.push_back(ResultData(NULL, false, 0, 0, presolver_time,
                                  0, 0, execution_time));
-    timeout_exit(base, results, gd, state, prefix, go, t.stop());
+    timeout_exit(base, results, gd, go, t.stop());
   }
 
   if (input.O.size() > options.solving_threshold()) {
@@ -662,7 +645,7 @@ int main(int argc, char* argv[]) {
     }
     results.push_back(ResultData(NULL, false, 0, 0, presolver_time,
                                  0, 0, execution_time));
-    emit_output_exit(base, results, gd, state, prefix, go);
+    emit_output_exit(base, results, gd, go);
   }
 
   Gecode::SpaceStatus ss = base->status();
@@ -685,7 +668,7 @@ int main(int argc, char* argv[]) {
     }
     results.push_back(ResultData(NULL, true, 1, 1, presolver_time,
                                  0, 0, execution_time));
-    emit_output_exit(base, results, gd, state, prefix, go);
+    emit_output_exit(base, results, gd, go);
   } else {
     results.push_back(ResultData(NULL, false, 0, 0, presolver_time, 0, 0, 0));
   }
@@ -697,11 +680,11 @@ int main(int argc, char* argv[]) {
       base->options->acceptable_gap() > 0) {
     if (options.verbose())
       cerr << global() << "reached acceptable optimality gap" << endl;
-    emit_output_exit(base, results, gd, state, prefix, go);
+    emit_output_exit(base, results, gd, go);
   }
 
   if (t.stop() > options.timeout())
-    timeout_exit(base, results, gd, state, prefix, go, t.stop());
+    timeout_exit(base, results, gd, go, t.stop());
 
   // Failure and node count for all problems
   long long int total_failed = 0;
@@ -731,11 +714,11 @@ int main(int argc, char* argv[]) {
       }
       results.push_back(ResultData(NULL, true, 0, 0, presolver_time, 0, 0,
                                    execution_time));
-      emit_output_exit(base, results, gd, state, prefix, go);
+      emit_output_exit(base, results, gd, go);
     }
 
     if (t.stop() > options.timeout())
-      timeout_exit(base, results, gd, state, prefix, go, t.stop());
+      timeout_exit(base, results, gd, go, t.stop());
 
     if (input.optimize_resource[0] != ISSUE_CYCLES) {
       Support::Timer t_pre2;
@@ -757,11 +740,11 @@ int main(int argc, char* argv[]) {
       }
       results.push_back(ResultData(NULL, true, 0, 0, presolver_time, 0, 0,
                                    execution_time));
-      emit_output_exit(base, results, gd, state, prefix, go);
+      emit_output_exit(base, results, gd, go);
     }
 
     if (t.stop() > options.timeout())
-      timeout_exit(base, results, gd, state, prefix, go, t.stop());
+      timeout_exit(base, results, gd, go, t.stop());
 
     if (!single_block) {
       Support::Timer t_pre3;
@@ -783,11 +766,11 @@ int main(int argc, char* argv[]) {
       }
       results.push_back(ResultData(NULL, true, 0, 0, presolver_time, 0, 0,
                                    execution_time));
-      emit_output_exit(base, results, gd, state, prefix, go);
+      emit_output_exit(base, results, gd, go);
     }
 
     if (t.stop() > options.timeout())
-      timeout_exit(base, results, gd, state, prefix, go, t.stop());
+      timeout_exit(base, results, gd, go, t.stop());
 
     Support::Timer t_pre4;
     t_pre4.start();
@@ -799,7 +782,7 @@ int main(int argc, char* argv[]) {
     }
 
     if (t.stop() > options.timeout())
-      timeout_exit(base, results, gd, state, prefix, go, t.stop());
+      timeout_exit(base, results, gd, go, t.stop());
 
     Support::Timer t_pre5;
     t_pre5.start();
@@ -811,7 +794,7 @@ int main(int argc, char* argv[]) {
     }
 
     if (t.stop() > options.timeout())
-      timeout_exit(base, results, gd, state, prefix, go, t.stop());
+      timeout_exit(base, results, gd, go, t.stop());
 
     Support::Timer t_pre6;
     t_pre6.start();
@@ -823,7 +806,7 @@ int main(int argc, char* argv[]) {
     }
 
     if (t.stop() > options.timeout())
-      timeout_exit(base, results, gd, state, prefix, go, t.stop());
+      timeout_exit(base, results, gd, go, t.stop());
 
     Gecode::SpaceStatus ss4 = base->status();
     if (ss4 == SS_FAILED) { // The problem has no solution
@@ -834,11 +817,11 @@ int main(int argc, char* argv[]) {
       }
       results.push_back(ResultData(NULL, true, 0, 0, presolver_time, 0, 0,
                                    execution_time));
-      emit_output_exit(base, results, gd, state, prefix, go);
+      emit_output_exit(base, results, gd, go);
     }
 
     if (t.stop() > options.timeout())
-      timeout_exit(base, results, gd, state, prefix, go, t.stop());
+      timeout_exit(base, results, gd, go, t.stop());
 
     Support::Timer t_pre7;
     t_pre7.start();
@@ -858,7 +841,7 @@ int main(int argc, char* argv[]) {
       }
       results.push_back(ResultData(NULL, true, 0, 0, presolver_time, 0, 0,
                                    execution_time));
-      emit_output_exit(base, results, gd, state, prefix, go);
+      emit_output_exit(base, results, gd, go);
     }
 
   }
@@ -874,11 +857,11 @@ int main(int argc, char* argv[]) {
       base->options->acceptable_gap() > 0) {
     if (options.verbose())
       cerr << global() << "reached acceptable optimality gap" << endl;
-    emit_output_exit(base, results, gd, state, prefix, go);
+    emit_output_exit(base, results, gd, go);
   }
 
   if (t.stop() > options.timeout())
-    timeout_exit(base, results, gd, state, prefix, go, t.stop());
+    timeout_exit(base, results, gd, go, t.stop());
 
   Support::Timer t_solver;
   t_solver.start();
@@ -936,7 +919,7 @@ int main(int argc, char* argv[]) {
         if (base->options->solve_global_only()) exit(EXIT_SUCCESS);
 
         if (t.stop() > options.timeout())
-          timeout_exit(base, results, gd, state, prefix, go, t.stop());
+          timeout_exit(base, results, gd, go, t.stop());
 
         // Sort the local problems lexicographically in descending
         // <solution score, block frequency>. The idea is to solve the
@@ -969,7 +952,7 @@ int main(int argc, char* argv[]) {
         }
 
         if (t.stop() > options.timeout())
-          timeout_exit(base, results, gd, state, prefix, go, t.stop());
+          timeout_exit(base, results, gd, go, t.stop());
 
         // Process the local solutions
         for (block b : solved_blocks) {
@@ -1101,7 +1084,10 @@ int main(int argc, char* argv[]) {
       total_failed += iteration_failed;
       total_nodes += iteration_nodes;
 
-      if (has_solution(results) && options.first_solution()) break;
+      if (has_solution(results) && !proven) {
+        if (options.all_solutions()) emit_output_exit(base, results, gd, go);
+        if (options.first_solution()) break;
+      }
 
       ResultData best = results.back();
       for (ResultData rd : results)
@@ -1117,7 +1103,7 @@ int main(int argc, char* argv[]) {
       }
 
       if (t.stop() > options.timeout())
-        timeout_exit(base, results, gd, state, prefix, go, t.stop());
+        timeout_exit(base, results, gd, go, t.stop());
 
       IterationState next_state(state);
       next_state.next(&options);
@@ -1181,6 +1167,6 @@ int main(int argc, char* argv[]) {
     cerr << "total searched nodes in all problems: " << total_nodes << endl;
   }
 
-  emit_output_exit(base, results, gd, state, prefix, go);
+  emit_output_exit(base, results, gd, go);
 
 }
