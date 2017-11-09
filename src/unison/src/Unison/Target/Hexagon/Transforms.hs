@@ -330,7 +330,7 @@ isAllocFrameOpr o =
 alternativeInstructions i us
   | isOldValueStoreInstr i = [i, newValueStoreInstr i]
   -- see HexagonExpandCondsets.cpp. TODO: handle MUX64_rr
-  | isMuxTransferInstr i = muxAlternatives i us
+  | isMuxTransferInstr i = muxAlternatives us
       --let
       --let i' = if any isGTSigned8BitsImm us then [] else [i]
       --in i' ++ [condTransferInstr (i, False), condTransferInstr (i, True)]
@@ -346,7 +346,7 @@ data MuxOperandType = MuxReg | MuxImm MuxImmType deriving Show
 -- C2_mux* are never better than their C2_mux counterparts, but of both
 -- operands are immediates and at least the second one is large, there is
 -- no other option.
-muxAlternatives i [_, s1, s2] =
+muxAlternatives [_, s1, s2] =
   case (muxOperandType s1, muxOperandType s2) of
    -- Reg Reg
    (MuxReg,          MuxReg) ->          [C2_mux,       C2_mux_tfr_new]
