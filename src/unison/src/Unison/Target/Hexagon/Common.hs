@@ -114,12 +114,18 @@ muxTransferInstr i = (inverseMap condTransferVersions) M.! i
 condTransferVersions = M.fromList
   [((C2_mux, False), C2_mux_tfr),
    ((C2_muxii, False), C2_muxii_tfr),
+   ((C2_muxii_ce, False), C2_muxii_tfr),
    ((C2_muxir, False), C2_muxir_tfr),
+   ((C2_muxir_ce, False), C2_muxir_tfr),
    ((C2_muxri, False), C2_muxri_tfr),
+   ((C2_muxri_ce, False), C2_muxri_tfr),
    ((C2_mux, True), C2_mux_tfr_new),
    ((C2_muxii, True), C2_muxii_tfr_new),
+   ((C2_muxii_ce, True), C2_muxii_tfr_new),
    ((C2_muxir, True), C2_muxir_tfr_new),
-   ((C2_muxri, True), C2_muxri_tfr_new)]
+   ((C2_muxir_ce, True), C2_muxir_tfr_new),
+   ((C2_muxri, True), C2_muxri_tfr_new),
+   ((C2_muxri_ce, True), C2_muxri_tfr_new)]
 
 data RematTriple = RematTriple {
   source :: HexagonInstruction,

@@ -330,16 +330,37 @@ isAllocFrameOpr o =
 alternativeInstructions i us
   | isOldValueStoreInstr i = [i, newValueStoreInstr i]
   -- see HexagonExpandCondsets.cpp. TODO: handle MUX64_rr
-  | isMuxTransferInstr i =
-      let i' = if any isGTSigned8BitsImm us then [] else [i]
-      in i' ++ [condTransferInstr (i, False), condTransferInstr (i, True)]
+  | isMuxTransferInstr i = muxAlternatives i us
+      --let
+      --let i' = if any isGTSigned8BitsImm us then [] else [i]
+      --in i' ++ [condTransferInstr (i, False), condTransferInstr (i, True)]
   | otherwise = [i]
 
-isGTSigned8BitsImm (Bound MachineImm {miValue = imm})
-  | not (isSInt 8 imm) = True
-isGTSigned8BitsImm _ = False
+data MuxImmType = MuxSmall | MuxLarge deriving Show
+data MuxOperandType = MuxReg | MuxImm MuxImmType deriving Show
 
-isSInt n v =
-  let v' = fromInteger v :: Word64
-      p  = 2 ^ (n - 1)
-  in v' >= (-p) && v' < p
+-- Select mux alternatives depending on their operand types. The C2_mux
+-- variants occupy only one slot (except if they are constant-extended) and
+-- their result can be new-valued. The C2_mux*_tfr_new variants occupy two
+-- slots, and they can pick a new value of their used predicate. The base
+-- C2_mux* are never better than their C2_mux counterparts, but of both
+-- operands are immediates and at least the second one is large, there is
+-- no other option.
+muxAlternatives i [_, s1, s2] =
+  case (muxOperandType s1, muxOperandType s2) of
+   -- Reg Reg
+   (MuxReg,          MuxReg) ->          [C2_mux,       C2_mux_tfr_new]
+   -- Imm Imm
+   (MuxImm MuxSmall, MuxImm MuxSmall) -> [C2_muxii,     C2_muxii_tfr_new]
+   (MuxImm MuxLarge, MuxImm MuxSmall) -> [C2_muxii_ce,  C2_muxii_tfr_new]
+   (MuxImm _,        MuxImm _) ->        [C2_muxii_tfr, C2_muxii_tfr_new]
+   -- Reg Imm
+   (MuxReg,          MuxImm MuxSmall) -> [C2_muxir,     C2_muxir_tfr_new]
+   (MuxReg,          MuxImm MuxLarge) -> [C2_muxir_ce,  C2_muxir_tfr_new]
+   -- Imm Reg
+   (MuxImm MuxSmall, MuxReg)          -> [C2_muxri,     C2_muxri_tfr_new]
+   (MuxImm MuxLarge, MuxReg)          -> [C2_muxri_ce,  C2_muxri_tfr_new]
+
+muxOperandType Temporary {} = MuxReg
+muxOperandType (Bound MachineImm {miValue = im}) =
+  MuxImm (if im >= (-128) && im <= 127 then MuxSmall else MuxLarge)

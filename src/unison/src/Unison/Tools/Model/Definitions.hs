@@ -67,6 +67,7 @@ instance ToJSON (ConstraintExpr i rc) where
   toJSON e @ (AndExpr es) = toJSON ([toJSON (exprId e)] ++ map toJSON es)
   toJSON e @ (XorExpr e1 e2) = toJSON (exprId e, e1, e2)
   toJSON e @ (ImpliesExpr e1 e2) = toJSON (exprId e, e1, e2)
+  toJSON e @ (NotExpr e1) = toJSON (exprId e, e1)
   toJSON e @ (ActiveExpr oid) = toJSON (exprId e, oid)
   toJSON e @ (ConnectsExpr pid tid) = toJSON (exprId e, pid, tid)
   toJSON e @ (EImplementsExpr oid ii) = toJSON (exprId e, oid, ii)
