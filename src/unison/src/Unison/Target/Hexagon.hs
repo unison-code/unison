@@ -78,7 +78,7 @@ target =
       API.tReadWriteLatency = const readWriteLatency,
       API.tAlternativeTemps = const alternativeTemps,
       API.tExpandCopy       = const expandCopy,
-      API.tConstraints      = const (const [])
+      API.tConstraints      = const constraints
     }
 
 -- | Gives the type of natural operation according to the instruction
@@ -708,3 +708,37 @@ alternativeTemps _ _ _ ts = map fst ts
 -- | Copy expansion
 
 expandCopy _ _ o = [o]
+
+-- | Custom processor constraints
+
+constraints f = forbiddenNewValueConstraints (flatCode f)
+
+-- new-value instructions (with bypassing operands) cannot use the result
+-- of conditional transfers
+forbiddenNewValueConstraints fcode =
+  concatMap (forbiddenNVForDef fcode) fcode
+
+forbiddenNVForDef fcode
+  d @ SingleOperation {oOpr = Natural Linear {
+                          oIs = is,
+                          oDs = [MOperand {altTemps = [t]}]}} =
+    let us = potentialUsers t fcode
+    in concat [concatMap (forbiddenNVForCT (oId d) t i) us
+              | TargetInstruction i <- is, isCondTransferInstr i]
+forbiddenNVForDef _ _ = []
+
+forbiddenNVForCT did t i u =
+  concatMap (forbiddenNVForUser did t i u) (oInstructions u)
+
+forbiddenNVForUser did t i u (TargetInstruction i') =
+  let pbs = [p | (p, True) <- tempBypasses operandInfo u i',
+             t `elem` extractTemps p]
+  in [forbiddenNewValueConstraint (operandId p) (tId t) did i (oId u) i'
+     | p <- pbs]
+forbiddenNVForUser _ _ _ _ _ = []
+
+forbiddenNewValueConstraint pid tid did di uid ui =
+  NotExpr (AndExpr
+           [ConnectsExpr pid tid,
+            ImplementsExpr did (TargetInstruction di),
+            ImplementsExpr uid (TargetInstruction ui)])
