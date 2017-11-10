@@ -548,15 +548,14 @@ removeFrameIndexInstr mi @ MachineSingle {msOpcode = MachineTargetOpc i,
           mops' = case mops of
                     [off @ MachineImm {}, MachineImm {miValue = 0},
                      r @ MachineReg {}] -> [mkMachineRegSP, off, r]
+                    -- Example: L2_loadri_io_fi [dst, base, off]
                     [r @ MachineReg {},
-                     off @ MachineImm {}, MachineImm {miValue = 0}] ->
-                            [r, mkMachineRegSP, off]
+                     MachineImm {miValue = base}, MachineImm {miValue = off}] ->
+                            [r, mkMachineRegSP, mkMachineImm (base + off)]
                     -- TODO: what do we do with the non-offset value? (which is
                     -- non-zero)
                     [off @ MachineImm {}, MachineImm {}, r @ MachineReg {}] ->
                       [mkMachineRegSP, off, r]
-                    [r @ MachineReg {}, off @ MachineImm {}, MachineImm {}] ->
-                      [r, mkMachineRegSP, off]
                     [p @ MachineReg {}, off @ MachineImm {},
                      MachineImm {miValue = 0}, r @ MachineReg {}] ->
                       [p, mkMachineRegSP, off, r]
