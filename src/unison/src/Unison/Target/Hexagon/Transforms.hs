@@ -152,17 +152,20 @@ expandJumps _ (
 expandJumps f (
   j @ SingleOperation {oOpr = Natural jo @ (Branch {
                          oBranchIs = [TargetInstruction i],
-                         oBranchUs = [p1 @ MOperand {altTemps = [t1]}, l]}),
+                         oBranchUs = [p1 @ MOperand {altTemps = ts}, l]}),
                        oAs = as}
   :
   os) (tid, oid, pid)
   | isConditionalBranchInstr i =
-    let b   = fromJust $ blockOf (fCode f) j
+    let bcode = bCode $ fromJust $ blockOf (fCode f) j
+        -- normally we expect |ds| == 1
+        ds = [potentialDefiner t bcode | t <- ts,
+              not (isCopy $ potentialDefiner t bcode)]
         ejs =
-          case find (isPotentialDefiner t1) (bCode b) of
-           Just (c @ SingleOperation {oOpr = Natural (Linear {
+          case ds of
+           [c @ SingleOperation {oOpr = Natural (Linear {
                                         oIs = [TargetInstruction ci],
-                                        oUs = [_, u2]})})
+                                        oUs = [_, u2]})}]
              -- A new-value compare and jump can be used
              | isNewValueJumpCandidateInstr ci u2 ->
                let jis = linearJumps i
