@@ -336,8 +336,8 @@ alternativeInstructions i us
       --in i' ++ [condTransferInstr (i, False), condTransferInstr (i, True)]
   | otherwise = [i]
 
-data MuxImmType = MuxSmall | MuxLarge deriving Show
-data MuxOperandType = MuxReg | MuxImm MuxImmType deriving Show
+data MuxImmSize = Small | Medium | Large deriving (Show, Eq, Ord)
+data MuxOperandType = MuxReg | MuxImm MuxImmSize deriving Show
 
 -- Select mux alternatives depending on their operand types. The C2_mux
 -- variants occupy only one slot (except if they are constant-extended) and
@@ -349,18 +349,29 @@ data MuxOperandType = MuxReg | MuxImm MuxImmType deriving Show
 muxAlternatives [_, s1, s2] =
   case (muxOperandType s1, muxOperandType s2) of
    -- Reg Reg
-   (MuxReg,          MuxReg) ->          [C2_mux,       C2_mux_tfr_new]
+   (MuxReg,        MuxReg)        -> [C2_mux,          C2_mux_tfr_new]
    -- Imm Imm
-   (MuxImm MuxSmall, MuxImm MuxSmall) -> [C2_muxii,     C2_muxii_tfr_new]
-   (MuxImm MuxLarge, MuxImm MuxSmall) -> [C2_muxii_ce,  C2_muxii_tfr_new]
-   (MuxImm _,        MuxImm _) ->        [C2_muxii_tfr, C2_muxii_tfr_new]
+   (MuxImm Small,  MuxImm Small)  -> [C2_muxii,        C2_muxii_tfr_new]
+   (MuxImm Medium, MuxImm Small)  -> [C2_muxii_ce,     C2_muxii_tfr_new]
+   (MuxImm Large,  MuxImm Small)  -> [C2_muxii_ce,     C2_muxii_tfr_new_ce]
+   (MuxImm i1,     MuxImm i2)
+     | all ((<=Medium)) [i1, i2]  -> [C2_muxii_tfr,    C2_muxii_tfr_new]
+     | otherwise                  -> [C2_muxii_tfr_ce, C2_muxii_tfr_new_ce]
    -- Reg Imm
-   (MuxReg,          MuxImm MuxSmall) -> [C2_muxir,     C2_muxir_tfr_new]
-   (MuxReg,          MuxImm MuxLarge) -> [C2_muxir_ce,  C2_muxir_tfr_new]
+   (MuxReg,        MuxImm Small)  -> [C2_muxir,        C2_muxir_tfr_new]
+   (MuxReg,        MuxImm Medium) -> [C2_muxir_ce,     C2_muxir_tfr_new]
+   (MuxReg,        MuxImm Large)  -> [C2_muxir_ce,     C2_muxir_tfr_new_ce]
    -- Imm Reg
-   (MuxImm MuxSmall, MuxReg)          -> [C2_muxri,     C2_muxri_tfr_new]
-   (MuxImm MuxLarge, MuxReg)          -> [C2_muxri_ce,  C2_muxri_tfr_new]
+   (MuxImm Small,  MuxReg)        -> [C2_muxri,        C2_muxri_tfr_new]
+   (MuxImm Medium, MuxReg)        -> [C2_muxri_ce,     C2_muxri_tfr_new]
+   (MuxImm Large,  MuxReg)        -> [C2_muxri_ce,     C2_muxri_tfr_new_ce]
 
 muxOperandType Temporary {} = MuxReg
-muxOperandType (Bound MachineImm {miValue = im}) =
-  MuxImm (if im >= (-128) && im <= 127 then MuxSmall else MuxLarge)
+muxOperandType (Bound MachineImm {miValue = im})
+  | isSInt 8 im = MuxImm Small
+  | isSInt 12im = MuxImm Medium
+  | otherwise   = MuxImm Large
+
+isSInt n v =
+  let p = 2 ^ (n - 1)
+  in v >= (-p) && v < p
