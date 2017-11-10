@@ -59,9 +59,9 @@ unison-test-target: ARM
 unison-test-goal:
 - size
 unison-test-expected-cost:
-- 22
+- 21
 unison-test-function: null
 unison-test-expected-proven: true
 unison-test-strictly-better: null
-unison-test-expected-has-solution: false
+unison-test-expected-has-solution: true
 ...

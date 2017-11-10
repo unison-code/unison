@@ -322,6 +322,9 @@ resources =
 nop = Linear [TargetInstruction NOP] [] []
 
 readWriteInfo i
+  -- copies do not have memory side effects (loads and stores do not alias
+  -- with other memory accesses as they operate on spill slots only)
+  | SpecsGen.instructionType i == CopyInstructionType = SpecsGen.readWriteInfo i
   -- complete memory side effects (some mayLoad/mayStore info is missing)
   | SpecsGen.itinerary i `elem`
     [IIC_iLoad_m, IIC_iLoad_mu, IIC_iLoad_mBr, IIC_iLoad_bh_ru, IIC_iLoad_bh_iu,

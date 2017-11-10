@@ -79,8 +79,8 @@ unison-test-goal:
 - size
 - speed
 unison-test-expected-cost:
-- 32
-- 26
+- 31
+- 25
 unison-test-function: null
 unison-test-expected-proven: true
 unison-test-strictly-better: null
