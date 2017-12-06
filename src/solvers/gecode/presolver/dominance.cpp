@@ -476,8 +476,49 @@ void assert_tmp_tables(Parameters & input,
     }
   }
   input.tmp_tables = tmp_tables;
-}
+  // NEW CODE to remove subsumed elements of nogoods, domops, domuses, difftemps
+  vector<UnisonConstraintExpr> nogoods_ref = input.nogoods;
+  vector<UnisonConstraintExpr> nogoods2_ref = input.nogoods2;
+  vector<vector<operand> > difftemps_ref = input.difftemps;
+  vector<vector<vector<int> > > domops_ref = input.domops;
+  input.nogoods.clear();
+  input.nogoods2.clear();
+  input.difftemps.clear();
+  input.domops.clear();
+  
+  map<operand, vector<int>> P2Ts;
+  int id = 0;
+  for(const PresolverCopyTmpTable& tt : tmp_tables) {
+    for(operand p : tt.ps)
+      P2Ts[p].push_back(id);
+    id++;
+  }
 
+  for(const UnisonConstraintExpr& n : nogoods_ref) {
+    vector<operand> ps;
+    expr_operands(n, ps);
+    if(!already_tabled(ps, P2Ts))
+      input.nogoods.push_back(n);
+  }
+  for(const UnisonConstraintExpr& n : nogoods2_ref) {
+    vector<operand> ps;
+    expr_operands(n, ps);
+    sort(ps.begin(), ps.end());
+    ps.erase(unique(ps.begin(), ps.end()), ps.end());
+    if(!already_tabled(ps, P2Ts))
+      input.nogoods2.push_back(n);
+  }
+  for(const vector<operand>& d : difftemps_ref) {
+    if(!already_tabled(d, P2Ts))
+      input.difftemps.push_back(d);
+  }
+  for(const vector<vector<int>>& d : domops_ref) {
+    if(!already_tabled(d[0], P2Ts))
+      input.domops.push_back(d);
+  }
+  
+}
+  
 vector<vector<int>> trim_tmp_tables(at_map S, temporary k) {
 
   vector<vector<int>> S1;
@@ -597,4 +638,44 @@ void filter_active_tables(Parameters & input) {
 
   input.active_tables = filtered_active_tables;
   input.dominates = filtered_dominates;
+}
+
+void expr_operands(const UnisonConstraintExpr& e, vector<operand>& ps) {
+  switch (e.id) {
+  case OR_EXPR:
+  case AND_EXPR:
+  case XOR_EXPR:
+  case IMPLIES_EXPR:
+  case NOT_EXPR:
+    for (UnisonConstraintExpr e0 : e.children)
+      expr_operands(e0, ps);
+    break;
+  case CONNECTS_EXPR:
+    ps.push_back(e.data[0]);
+    break;
+  case SHARE_EXPR:
+    ps.push_back(e.data[0]);
+    ps.push_back(e.data[1]);
+    break;
+  default:
+    ps.push_back(-1);
+    break;
+  }
+}
+  
+bool already_tabled(const vector<operand>& ps, map<operand, vector<int>>& P2Ts) {
+  bool first = true;
+  vector<int> ids;
+  for(operand p : ps) {
+    if(P2Ts.count(p)==0) {
+      return FALSE;
+    } else if(first) {
+      ids.swap(P2Ts[p]);
+      first = false;
+    } else {
+      vector<int> inters = ord_intersection(ids,P2Ts[p]);
+      ids.swap(inters);
+    }
+  }
+  return !ids.empty();
 }

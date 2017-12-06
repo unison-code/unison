@@ -119,5 +119,10 @@ int optional_min_active_tables(Parameters& input, block b);
 
 void filter_active_tables(Parameters & input);
 
+// NEW CODE
+
+void expr_operands(const UnisonConstraintExpr& e, vector<operand>& ps);
+
+bool already_tabled(const vector<operand>& ps, map<operand, vector<int>>& P2Ts);
 
 #endif
