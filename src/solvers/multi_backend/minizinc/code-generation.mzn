@@ -270,6 +270,7 @@ array[int] of int: expr_op;
 array[int] of int: expr_arg1;
 array[int] of int: expr_arg2;
 array[int] of int: expr_arg3;
+array[int] of set of int: expr_children;
 
 %% extra store for relations in table constraints
 array[int] of int: ints;
@@ -466,14 +467,15 @@ var int: ls_t(int: p) = [ls[t] | t in operand_temps[p]][y[p]];
 
 var int: le_t(int: p) = [le[t] | t in operand_temps[p]][y[p]];
 
+%% conditions
 predicate eval_expr(int: l) = (
     let {int: tag = expr_op[l],
          int: arg1 = expr_arg1[l],
          int: arg2 = expr_arg2[l],
          int: arg3 = expr_arg3[l],
 	 } in (
-	     if tag=0 then if arg1<0 then false else eval_expr(arg1) \/ eval_expr(arg2) endif
-	else if tag=1 then if arg1<0 then true else eval_expr(arg1) /\ eval_expr(arg2) endif
+	     if tag=0 then exists(j in expr_children[l])(eval_expr(j))
+	else if tag=1 then forall(j in expr_children[l])(eval_expr(j))
 	else if tag=2 then eval_expr(arg1) xor eval_expr(arg2)
 	else if tag=3 then eval_expr(arg1) -> eval_expr(arg2)
 	else if tag=4 then not eval_expr(arg1)
@@ -1068,8 +1070,8 @@ constraint
     forall(j in index_set(before_pred)) (
         let {int: p = before_pred[j],
 	     int: q = before_succ[j],
-	     expr: cond = before_cond[j]} in (
-            eval_expr(cond) -> operand_live_before(p,q)
+	     expr: bc = before_cond[j]} in (
+            eval_expr(bc) -> operand_live_before(p,q)
 	)
     );
 

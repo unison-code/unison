@@ -491,12 +491,13 @@ model2dzn(AVL0) :-
 	length(Adhoc1, Nadhoc),
 	write_array(adhoc, array(1..Nadhoc,int), Adhoc2),
 	%
-	exprs_postlude(LOp, LArg1, LArg2, LArg3),
+	exprs_postlude(LOp, LArg1, LArg2, LArg3, Lchildren),
 	length(LOp, Nexpr),
 	write_array(expr_op, array(1..Nexpr,int), LOp),
 	write_array(expr_arg1, array(1..Nexpr,int), LArg1),
 	write_array(expr_arg2, array(1..Nexpr,int), LArg2),
 	write_array(expr_arg3, array(1..Nexpr,int), LArg3),
+	write_array(expr_children, array(1..Nexpr,set(int)), Lchildren),
 	sets_postlude(Sets),
 	length(Sets, Nset),
 	write_array(sets, array(1..Nset,set(int)), Sets).
@@ -839,56 +840,79 @@ encode_quad(Quad, Index) :-
 	).
 
 % 0..4 are connectives, 5..13 are true exprs
-expr_quad([0|Args1], Quad) :- !, % OR
-	(   Args1 = [] -> Quad = [0,-1,-1,0] % FALSE
-	;   Args1 = [X]
-	->  expr_quad(X, Quad)
-	;   Args1 = [X,Y|Zs]
-	->  expr_quad(X, Quad1),
-	    expr_quad([0,Y|Zs], Quad2),
-	    encode_quad(Quad1, I1),
-	    encode_quad(Quad2, I2),
-	    Quad = [0,I1,I2,0]
+expr_quad([0|Args], Quad) :- !, % OR
+	(   foreach(A,Args),
+	    foreach(Q,Quads),
+	    foreach(E,Encoded)
+	do  expr_quad(A, Q),
+	    encode_quad(Q, E)
+	),
+	(   Quads = [Q1]
+	->  Quad = Q1
+	;   Quad = [0,0,0,0,Encoded1],
+	    sort(Encoded, Encoded1)
 	).
-expr_quad([1|Args1], Quad) :- !, % AND
-	(   Args1 = [] -> Quad = [1,-1,-1,0] % TRUE
-	;   Args1 = [X]
-	->  expr_quad(X, Quad)
-	;   Args1 = [X,Y|Zs]
-	->  expr_quad(X, Quad1),
-	    expr_quad([1,Y|Zs], Quad2),
-	    encode_quad(Quad1, I1),
-	    encode_quad(Quad2, I2),
-	    Quad = [1,I1,I2,0]
+expr_quad([1|Args], Quad) :- !, % AND
+	(   foreach(A,Args),
+	    foreach(Q,Quads),
+	    foreach(E,Encoded)
+	do  expr_quad(A, Q),
+	    encode_quad(Q, E)
+	),
+	(   Quads = [Q1]
+	->  Quad = Q1
+	;   Quad = [1,0,0,0,Encoded1],
+	    sort(Encoded, Encoded1)
 	).
 expr_quad([2,X,Y], Quad) :- !, % XOR
 	expr_quad(X, Quad1),
 	expr_quad(Y, Quad2),
 	encode_quad(Quad1, I1),
 	encode_quad(Quad2, I2),
-	Quad = [2,I1,I2,0].
+	Quad = [2,I1,I2,0,[]].
+expr_quad([3,[0|Args],Y], Quad) :- !, % P1 \/ ... \/ Pn IMPLIES Q ---> (P1->Q) /\ ... /\ (Pn->Q)
+	(   foreach(A,Args),
+	    foreach([3,A,Y],Conjuncts),
+	    param(Y)
+	do  true
+	),
+	expr_quad([1|Conjuncts], Quad).
+expr_quad([3,[1|Args],Y], Quad) :- !, % P1 /\ ... /\ Pn IMPLIES Q ---> NOT P1 \/ ... \/ NOT Pn \/ Q
+	(   foreach(A,Args),
+	    foreach(D,Disjuncts)
+	do  (A = [4,D] -> true ; D = [4,A])
+	),
+	expr_quad([0,Y|Disjuncts], Quad).
 expr_quad([3,X,Y], Quad) :- !, % IMPLIES
 	expr_quad(X, Quad1),
 	expr_quad(Y, Quad2),
 	encode_quad(Quad1, I1),
 	encode_quad(Quad2, I2),
-	Quad = [3,I1,I2,0].
+	Quad = [3,I1,I2,0,[]],
+	(   X = [1|_] -> print_message(warning, can_opt([3,X,Y]))
+	;   Y = [0|_] -> print_message(warning, can_opt([3,X,Y]))
+	;   true
+	).
 expr_quad([4,X], Quad) :- !, % NOT
 	expr_quad(X, Quad1),
 	encode_quad(Quad1, I1),
-	Quad = [4,I1,0,0].
+	Quad = [4,I1,0,0,[]],
+	(   X = [T|_], T<5 -> print_message(warning, can_opt([4,X]))
+	;   true
+	).
 expr_quad(Expr, Quad) :-	% expr proper
-	(   Expr = [T,X] -> Quad = [T,X,0,0]
-	;   Expr = [T,X,Y] -> Quad = [T,X,Y,0]
-	;   Expr = [T,X,Y,Z] -> Quad = [T,X,Y,Z]
+	(   Expr = [T,X] -> Quad = [T,X,0,0,[]]
+	;   Expr = [T,X,Y] -> Quad = [T,X,Y,0,[]]
+	;   Expr = [T,X,Y,Z] -> Quad = [T,X,Y,Z,[]]
 	).
 
-exprs_postlude(Ops, Args1, Args2, Args3) :-
+exprs_postlude(Ops, Args1, Args2, Args3, Children) :-
 	findall(Expr, cur_expr_index(_,Expr,_), Exprs1),
 	reverse(Exprs1, [_|Exprs2]),
 	Exprs2 \== [], !,
-	transpose(Exprs2, [Ops,Args1,Args2,Args3]).
-exprs_postlude([], [], [], []).
+	transpose(Exprs2, [Ops,Args1,Args2,Args3,ChildrenLists]),
+	encode(list(list(int)), list(set(int)), ChildrenLists, Children).	
+exprs_postlude([], [], [], [], []).
 
 sets_postlude(Sets2) :-
 	findall(Set, cur_set_index(_,Set,_), Sets1),
