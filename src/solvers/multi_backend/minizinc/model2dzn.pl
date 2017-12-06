@@ -246,15 +246,15 @@ model2dzn(AVL0) :-
 	write_array(packed_pq, array(1.._,1..2,int), Packed),
 	%
 	avl_fetch(before, AVL, Before1),
-	avl_fetch(before2, AVL, Before2),
-	append(Before1, Before2, Before3),
-	(   foreach([P1,Q1,Disj1],Before3),
+	% avl_fetch(before2, AVL, Before2),
+	% append(Before1, Before2, Before12),
+	(   foreach([P1,Q1,Disj1],Before1),
 	    foreach(P1,BeforePred),
 	    foreach(Q1,BeforeSucc),
 	    foreach(Disj2,BeforeCond)
 	do  encode(expr, int, Disj1, Disj2)
 	),
-	length(Before3, Nbefore),
+	length(BeforePred, Nbefore),
 	write_array(before_pred, array(1..Nbefore,int), BeforePred),
 	write_array(before_succ, array(1..Nbefore,int), BeforeSucc),
 	write_array(before_cond, array(1..Nbefore,int), BeforeCond),
@@ -346,9 +346,9 @@ model2dzn(AVL0) :-
 	write_array(dominate_temps, array(1..Ndominate,set(int)), DominateTemps),
 	%
 	avl_fetch(precedences, AVL, Precedence1),
-	avl_fetch(precedences2, AVL, Precedence2),
-	append(Precedence1, Precedence2, Precedence12),
-	(   foreach(Pre1,Precedence12),
+	% avl_fetch(precedences2, AVL, Precedence2),
+	% append(Precedence1, Precedence2, Precedence12),
+	(   foreach(Pre1,Precedence1),
 	    foreach(Pre2,Precedence3)
 	do  encode(expr, int, Pre1, Pre2)
 	),
