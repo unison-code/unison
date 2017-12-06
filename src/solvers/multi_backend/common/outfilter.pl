@@ -76,8 +76,11 @@ while (my $line = <STDIN>) {
         print($log "}\n");
         close $log;
     } elsif ($line =~ "%") {
+	# DO NOT REMOVE
 	print STDERR "$line\n";
     } elsif ($line =~ "cost") {
+	# DO NOT REMOVE
+	print STDERR "$line\n";
 	($cost) = $line =~ /(\d+)/;
     } elsif ($state < 3) {
 	$state = 3;

@@ -106,9 +106,9 @@ DIRBASENAME=${1%.ext.json}
 EXTJSON=$1
 shift
 echo "json2dzn('${EXTJSON}')." | sicstus -f --nologo --noinfo -l $MINIZINC_DIR/model2dzn.pl
-# for first solution:
-# cat $MINIZINC_DIR/code-generation.mzn $MINIZINC_DIR/${search} | sed 's/minimize(obj)/satisfy/' > code-generation.mzn
-cat $MINIZINC_DIR/code-generation.mzn $MINIZINC_DIR/${search} > $DIRBASENAME.mzn
+cp $MINIZINC_DIR/code-generation.mzn $MINIZINC_DIR/${search} .
+printf "include \"code-generation.mzn\";\n" > $DIRBASENAME.mzn
+printf "include \"${search}\";\n" >> $DIRBASENAME.mzn
 if [ '$mzn' = 'mzn-gecode' ]; then
   pflag='-p'
   pvalue=${ncores}
@@ -120,4 +120,4 @@ if [ $setuponly = true ]; then
     exit 0
 fi
 set -x
-time ${mzn} ${allsolns} -k ${statflag} ${pflag} ${pvalue} ${freeflag} ${rndflag} ${toflag} ${nogoods} -D good_cumulative=${cumulative} -D good_diffn=${diffn} $DIRBASENAME.mzn $DIRBASENAME.dzn | $COMMON_DIR/outfilter.pl ${OUTJSON}.last > ${OUTJSON}
+time ${mzn} ${allsolns} ${statflag} ${pflag} ${pvalue} ${freeflag} ${rndflag} ${toflag} ${nogoods} -D good_cumulative=${cumulative} -D good_diffn=${diffn} $DIRBASENAME.mzn $DIRBASENAME.dzn | $COMMON_DIR/outfilter.pl ${OUTJSON}.last > ${OUTJSON}
