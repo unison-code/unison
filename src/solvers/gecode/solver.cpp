@@ -382,6 +382,8 @@ void emit_output_exit(GlobalModel * base, const vector<ResultData> & results,
     }
   }
 
+  emit_lower_bound(base, best_rd.proven, best_rd.solution);
+
   if (base->options->output_file() == "") {
     cout << produce_json(best_rd, gd, base->input->N, 0) << endl;
   } else {
@@ -628,6 +630,8 @@ int main(int argc, char* argv[]) {
   GlobalModel * base = new GlobalModel(&input, &options, IPL_DOM);
   GlobalData gd(base->n_int_vars, base->n_bool_vars, base->n_set_vars);
 
+  emit_lower_bound(base);
+
   double execution_time = t.stop();
   if (execution_time > options.timeout()) {
     results.push_back(ResultData(NULL, false, 0, 0, presolver_time,
@@ -648,7 +652,7 @@ int main(int argc, char* argv[]) {
     emit_output_exit(base, results, gd, go);
   }
 
-  Gecode::SpaceStatus ss = base->status();
+  Gecode::SpaceStatus ss = status_lb(base);
   assert(ss != SS_FAILED); // At this point the problem should be solvable
 
   if (options.verbose())
@@ -659,7 +663,7 @@ int main(int argc, char* argv[]) {
 
   // Post cost upper bound
   base->post_upper_bound(input.maxf);
-  Gecode::SpaceStatus ss1 = base->status();
+  Gecode::SpaceStatus ss1 = status_lb(base);
   if (ss1 == SS_FAILED) { // The problem has no solution
     double execution_time = t.stop();
     if (options.verbose()) {
@@ -706,7 +710,7 @@ int main(int argc, char* argv[]) {
            << ceil(tpre) << " ms" << endl;
     }
 
-    if (base->status() == SS_FAILED) { // The problem has no solution
+    if (status_lb(base) == SS_FAILED) { // The problem has no solution
       double execution_time = t.stop();
       if (options.verbose()) {
         cerr << pre() << unsat_report(base) << endl;
@@ -731,7 +735,7 @@ int main(int argc, char* argv[]) {
       }
     }
 
-    Gecode::SpaceStatus ss2 = base->status();
+    Gecode::SpaceStatus ss2 = status_lb(base);
     if (ss2 == SS_FAILED) { // The problem has no solution
       double execution_time = t.stop();
       if (options.verbose()) {
@@ -757,7 +761,7 @@ int main(int argc, char* argv[]) {
       }
     }
 
-    Gecode::SpaceStatus ss3 = base->status();
+    Gecode::SpaceStatus ss3 = status_lb(base);
     if (ss3 == SS_FAILED) { // The problem has no solution
       double execution_time = t.stop();
       if (options.verbose()) {
@@ -808,7 +812,7 @@ int main(int argc, char* argv[]) {
     if (t.stop() > options.timeout())
       timeout_exit(base, results, gd, go, t.stop());
 
-    Gecode::SpaceStatus ss4 = base->status();
+    Gecode::SpaceStatus ss4 = status_lb(base);
     if (ss4 == SS_FAILED) { // The problem has no solution
       double execution_time = t.stop();
       if (options.verbose()) {
@@ -832,7 +836,7 @@ int main(int argc, char* argv[]) {
            << ceil(tpre) << " ms" << endl;
     }
 
-    Gecode::SpaceStatus ss5 = base->status();
+    Gecode::SpaceStatus ss5 = status_lb(base);
     if (ss5 == SS_FAILED) { // The problem has no solution
       double execution_time = t.stop();
       if (options.verbose()) {
@@ -993,7 +997,7 @@ int main(int argc, char* argv[]) {
 
         // Forbid the current global solution
         base->post_different_solution(gs.solution, unsat);
-        base->status();
+        status_lb(base);
 
         // All local solutions could be found, combine them and tighten
         // the objective function
@@ -1025,7 +1029,7 @@ int main(int argc, char* argv[]) {
           // Tighten the objective function
           best_cost.back()--;
           base->post_upper_bound(best_cost);
-          base->status();
+          status_lb(base);
 
           acs = gs.solution->unnecessary_activation_classes();
           if (!acs.empty()) deactivation = true;
@@ -1061,7 +1065,7 @@ int main(int argc, char* argv[]) {
 
       if (base->options->solve_global_only()) exit(EXIT_SUCCESS);
 
-      if (gs.result == UNSATISFIABLE || base->status() == SS_FAILED) {
+      if (gs.result == UNSATISFIABLE || status_lb(base) == SS_FAILED) {
         // If the global problem is unsatisfiable and there is some solution we
         // have found the optimal one
         if (has_solution(results)) {
@@ -1121,7 +1125,7 @@ int main(int argc, char* argv[]) {
           vector<int> ms_sol = var_vector(ms.solution->cost());
           base->post_lower_bound(ms_sol);
           base->post_upper_bound(ms_sol);
-          base->status();
+          status_lb(base);
           if (options.verbose())
             cerr << monolithic() << "found optimal solution "
                  << "(" << cost_status_report(base, ms.solution) << ")" << endl;
@@ -1138,7 +1142,10 @@ int main(int argc, char* argv[]) {
             // Remove results from the back until a solution is found
             while (!results.back().solution) results.pop_back();
             assert(results.back().solution);
-            base->post_lower_bound(var_vector(results.back().solution->cost()));
+            vector<int> opt_cost(var_vector(results.back().solution->cost()));
+            base->post_lower_bound(opt_cost);
+            base->post_upper_bound(opt_cost);
+            status_lb(base);
           } else {
             if (options.verbose()) {
               cerr << monolithic() << unsat_report(base) << endl;

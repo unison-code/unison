@@ -117,6 +117,13 @@ int score(SolverResult r);
 vector<InstructionAssignment> shave_instructions(
   Model * base, Search::Stop * stop, Search::Statistics & stats);
 
+// Propagates, possibly emits the lower bound, and returns the status
+Gecode::SpaceStatus status_lb(GlobalModel * base);
+
+// Emits the lower bound to a file (if specified by the options)
+void emit_lower_bound(const GlobalModel * base,
+                      bool proven = false, GlobalModel * sol = nullptr);
+
 // Makes a new local space out of a global one
 LocalModel * make_local(const GlobalModel * gs, block b);
 LocalModel * make_local(const GlobalModel * gs, block b, IntPropLevel p_ipl);

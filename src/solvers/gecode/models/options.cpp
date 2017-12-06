@@ -43,6 +43,7 @@ ModelOptions::ModelOptions(void)
     _output_file("-o", "output file", ""),
     _verbose("--verbose", "verbose mode", false),
     _emit_improvement("--emit-improvement", "emit estimated improvement", false),
+    _lower_bound_file("-l", "lower bound file", ""),
 #ifdef GRAPHICS
     _gist_global("--gist-global", "run Gist for global problems", false),
     _gist_block("--gist-block", "block on which to run Gist", -1),
@@ -117,6 +118,7 @@ ModelOptions::ModelOptions(void)
   add(_output_file);
   add(_verbose);
   add(_emit_improvement);
+  add(_lower_bound_file);
 #ifdef GRAPHICS
   add(_gist_global);
   add(_gist_block);

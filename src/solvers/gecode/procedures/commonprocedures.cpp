@@ -118,6 +118,32 @@ vector<InstructionAssignment> shave_instructions(Model * base,
   return forbidden;
 }
 
+Gecode::SpaceStatus status_lb(GlobalModel * base) {
+  SpaceStatus ss = base->status();
+  emit_lower_bound(base);
+  return ss;
+}
+
+void emit_lower_bound(const GlobalModel * base,
+                      bool proven, GlobalModel * sol) {
+  if (base->options->lower_bound_file().empty()) return;
+  vector<int> lbs;
+  for (unsigned int n = 0; n < base->input->N; n++) {
+    if (proven && sol)
+      lbs.push_back(sol->cost()[n].val());
+    else if (proven && !sol) {
+      lbs.push_back(base->input->maxf[n]);
+      lbs.back()++;
+    }
+    else
+      lbs.push_back(base->cost()[n].min());
+  }
+  ofstream fout;
+  fout.open(base->options->lower_bound_file());
+  fout << "{\"lower_bound\":" << show(lbs, ", ", "", "[]") << "}" << endl;
+  fout.close();
+}
+
 LocalModel * make_local(const GlobalModel * gs, block b) {
   return make_local(gs, b, gs->ipl);
 }
