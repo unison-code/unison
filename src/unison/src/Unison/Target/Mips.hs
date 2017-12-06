@@ -255,8 +255,9 @@ fromCopyInstr = fromJust . SpecsGen.parent
 
 -- | Tells whether the given register can be moved across register spaces
 
-isReservedRegister ZERO = True
-isReservedRegister _ = False
+-- isReservedRegister ZERO = True
+-- isReservedRegister _ = False
+isReservedRegister r = r `elem` reserved
 
 rematInstrs i
   | isRematerializable i =
