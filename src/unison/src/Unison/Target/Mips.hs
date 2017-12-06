@@ -103,7 +103,7 @@ branchInfo (Branch {oBranchIs = [TargetInstruction PseudoReturn]}) =
 
 -- Do not extend temporaries that are congruent to temporaries pre-allocated
 -- to reserved registers
-copies _fInfo _phiTemp _t [r] _d us | isReservedRegister r =
+copies _fInfo _phiTemp _t [r] _d us | r `elem` reserved =
     ([], replicate (length us) [])
 
 -- Do not extend temporaries that are defined by virtual defines
@@ -252,12 +252,6 @@ stackSize op
   | op `elem` [STORE_D, LOAD_D] = 8
 
 fromCopyInstr = fromJust . SpecsGen.parent
-
--- | Tells whether the given register can be moved across register spaces
-
--- isReservedRegister ZERO = True
--- isReservedRegister _ = False
-isReservedRegister r = r `elem` reserved
 
 rematInstrs i
   | isRematerializable i =
