@@ -50,7 +50,8 @@ data Uni =
     Analyze   {targetName :: String, inFile :: FilePath, targetOption :: [String],
                outFile :: Maybe FilePath, debug :: Bool, intermediate :: Bool,
                goals :: String, estimateFreq :: Bool,
-               simulateStalls :: Bool, modelCost :: Bool} |
+               simulateStalls :: Bool, modelCost :: Bool,
+               boundFile :: Maybe FilePath, boundGoal :: String} |
     Normalize {targetName :: String, inFile :: FilePath, targetOption :: [String],
                outFile :: Maybe FilePath, debug :: Bool, estimateFreq :: Bool,
                simplifyControlFlow :: Bool} |
@@ -150,7 +151,9 @@ export' = Export {
 analyze' = Analyze {
   goals          = "" &= help "Comma-separated list of goals (speed, size) to analyze",
   simulateStalls = True &= help "Simulate stalls due to unsatisfied non-critical latencies",
-  modelCost      = False &= help "Compute costs as similarly as possible to the model cost function"}
+  modelCost      = False &= help "Compute costs as similarly as possible to the model cost function",
+  boundFile      = Nothing &= help "File with bounds computed from the solver to be added to the output",
+  boundGoal      = "" &= help "Goal of the bound file (mandatory if a bound file is supplied)"}
   &= help "Analyze a MachineIR function"
 
 normalize' = Normalize {} &= help "Normalize a MachineIR function"

@@ -93,8 +93,8 @@ mainWithTargets targets = do
            case pickTarget targetName targets of
              (Any target) ->
                  Analyze.run
-                 (goals, estimateFreq, simulateStalls, modelCost,
-                  inFile, debug, intermediate, outFile)
+                 (goals, estimateFreq, simulateStalls, modelCost, boundFile,
+                  boundGoal, inFile, debug, intermediate, outFile)
                  input (target, targetOption)
     Normalize{..} ->
         do input <- strictReadFile inFile

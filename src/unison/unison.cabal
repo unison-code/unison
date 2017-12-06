@@ -189,6 +189,7 @@ Library
                   Unison.Tools.Export.CleanNops
                   Unison.Tools.Analyze.InsertNops
                   Unison.Tools.Analyze.InsertFuns
+                  Unison.Tools.Analyze.FilterOverhead
                   Unison.Tools.Analyze.ComputeGoal
 
                   Unison.Target.Hexagon.Common

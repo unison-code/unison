@@ -12,12 +12,15 @@ This file is part of Unison, see http://unison-code.github.io
 {-# LANGUAGE DeriveDataTypeable, RecordWildCards #-}
 module Unison.Tools.Analyze (run, analyze) where
 
+import Data.Aeson
 import qualified Data.Map as M
 import System.FilePath
 import Control.Monad
 import Data.Aeson.Encode.Pretty
 import qualified Data.ByteString.Lazy.Char8 as BSL
+import qualified Data.HashMap.Strict as HM
 import Data.List.Split
+import Data.String
 
 import Unison
 import Unison.Target.API
@@ -32,30 +35,49 @@ import Unison.Transformations.UnbundleSingletons
 
 import Unison.Tools.Analyze.InsertNops
 import Unison.Tools.Analyze.InsertFuns
+import Unison.Tools.Analyze.FilterOverhead
 import Unison.Tools.Analyze.ComputeGoal
 
-run (goals, estimateFreq, simulateStalls, modelCost,
+run (goals, estimateFreq, simulateStalls, modelCost, boundFile, boundGoal,
      mirFile, debug, intermediate, jsonFile) mir target =
-  let sgoals          = splitOn "," goals
-      gs              = map (lowerGoal . read) sgoals
-      (rs, partialFs) = analyze (estimateFreq, simulateStalls, modelCost)
-                        1.0 gs mir target
-      results         = zip sgoals rs
-      baseName        = takeBaseName mirFile
-  in do when debug $
-             putStr (toPlainText partialFs)
-        when intermediate $
-             mapM_ (writeIntermediateFile "a" baseName) partialFs
-        emitOutput jsonFile (BSL.unpack (encodePretty (M.fromList results)))
+  do inBounds <- maybeStrictReadFile boundFile
+     let af = \gs mc oo ->
+               analyze (estimateFreq, simulateStalls, mc, oo) 1.0 gs mir target
+         -- compute requested costs
+         sgoals   = splitOn "," goals
+         gs       = map (lowerGoal . read) sgoals
+         (rs, partialFs) = af gs modelCost False
+         results  = [(g, toJSON v) | (g, v) <- zip sgoals rs]
+         -- compute lower bound
+         bg       = lowerGoal $ read boundGoal
+         ([overhead], _) = af [bg] (not modelCost) True
+         lbs      = fmap (map (\lb -> lb - overhead) . parseLowerBound) inBounds
+         bound    = case lbs of
+                     Just [lb] ->
+                       let ([solCost], _) = af [bg] modelCost False
+                           -- In a few cases, the base solution might have a
+                           -- lower cost than the lower bound. This happens if
+                           -- no better solution is found and the base solution
+                           -- contains fewer basic blocks than the input.
+                           lb' = min lb solCost
+                       in [("lower_bound", toJSON lb')]
+                     _ -> []
+         -- merge both results
+         ps       = toJSON $ M.fromList (results ++ bound)
+         baseName = takeBaseName mirFile
+     when debug $ putStr (toPlainText partialFs)
+     when intermediate $
+       mapM_ (writeIntermediateFile "a" baseName) partialFs
+     emitOutput jsonFile (BSL.unpack (encodePretty ps))
 
-analyze (estimateFreq, simulateStalls, modelCost)
+analyze (estimateFreq, simulateStalls, modelCost, overheadOnly)
   factor gl mir target =
   let mf  = fromSingleton $ MIR.parse mir
       mf' = MIR.runMachineTransformations (preProcess target) mf
       ff  = buildFunction target mf'
       (f, partialFs) =
         applyTransformations
-        (analyzerGeneralTransformations (estimateFreq, modelCost))
+        (analyzerGeneralTransformations (estimateFreq, modelCost, overheadOnly))
         target ff
 
       (cf, partialFs') =
@@ -74,11 +96,23 @@ associateFunction (cf, _) g @ (StaticGoal Cycles)             = (g, cf)
 associateFunction (_, rf) g @ (DynamicGoal (ResourceUsage _)) = (g, rf)
 associateFunction (_, rf) g @ (StaticGoal (ResourceUsage _))  = (g, rf)
 
-analyzerGeneralTransformations (estimateFreq, modelCost) =
+analyzerGeneralTransformations (estimateFreq, modelCost, overheadOnly) =
     [(addDelimiters, "addDelimiters", True),
      (estimateFrequency, "estimateFrequency", estimateFreq),
-     (insertFuns, "insertFuns", modelCost)]
+     (insertFuns, "insertFuns", modelCost),
+     (filterOverhead, "filterOverhead", overheadOnly)]
 
 analyzerCycleTransformations simulateStalls =
     [(insertNops, "insertNops", simulateStalls),
      (unbundleSingletons, "unbundleSingletons", True)]
+
+parseLowerBound json =
+  let bounds = case decode (BSL.pack json) of
+                Nothing -> error ("error parsing bounds file")
+                Just (Object s) -> s
+  in boundFromJson (bounds HM.! (fromString "lower_bound")) :: [Integer]
+
+boundFromJson object =
+  case fromJSON object of
+   Error e -> error ("error converting JSON input:\n" ++ show e)
+   Success s -> s

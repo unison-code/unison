@@ -142,7 +142,7 @@ maximumCost scaleFreq cf gl (mir, mf) deps target code =
         fbs    = map blockFreq code
         factor = if scaleFreq then scaleFactor (rm, oif, deps) code else 1.0
         nf     = sort . map (scaleDown factor)
-        ([baseCost], _) = Analyze.analyze (False, True, True)
+        ([baseCost], _) = Analyze.analyze (False, True, True, False)
                           factor [gl] mir target
         baseCost' = baseCost + compensation cf gl (nf fbs) (nf bbs)
     in baseCost'

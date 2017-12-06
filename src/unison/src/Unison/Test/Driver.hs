@@ -238,7 +238,8 @@ assertCost update target properties unisonMirFile =
     do unisonMir <- strictReadFile unisonMirFile
        let gls = map lowLevelGoal (testGoal properties)
            (expCosts, _) =
-             Analyze.analyze (False, True, False) 1.0 gls unisonMir target
+             Analyze.analyze (False, True, False, False)
+             1.0 gls unisonMir target
            properties1 = if update then properties {testExpectedCost =
                                                        Just expCosts}
                          else properties
