@@ -47,7 +47,8 @@ data Portfolio =
              verbose :: Bool,
              gecodeFlags :: String,
              chuffedFlags :: String,
-             timeOut :: Maybe Integer}
+             timeOut :: Maybe Integer,
+             lowerBoundFile :: FilePath}
   deriving (Data, Typeable, Show)
 
 data Solver = Gecode | Chuffed | NoSolver deriving Eq
@@ -59,7 +60,8 @@ portfolioArgs = cmdArgsMode $ Portfolio
      verbose = False &= name "v" &= help "Run solvers in verbose mode",
      gecodeFlags = "" &= help "Flags passed to the Gecode solver",
      chuffedFlags = "" &= help "Flags passed to the Chuffed solver",
-     timeOut = Nothing &= help "Timeout for both solvers (in seconds)"
+     timeOut = Nothing &= help "Timeout for both solvers (in seconds)",
+     lowerBoundFile = "" &= name "l" &= help "Lower bound file" &= typFile
     }
 
 gecodeFile :: FilePath -> String
@@ -67,10 +69,13 @@ gecodeFile outJsonFile = outJsonFile ++ ".gecode"
 chuffedFile :: FilePath -> String
 chuffedFile outJsonFile = outJsonFile ++ ".chuffed"
 
-runGecode flags to v extJson outJsonFile =
+runGecode flags lowerBoundFile to v extJson outJsonFile =
   do tryUntilSuccess $ callProcess "gecode-solver"
-       (["-o", outJsonFile] ++ ["--verbose" | v] ++ (splitFlags flags) ++
-        (gecodeTimeoutFlags to) ++ [extJson])
+       (["-o", outJsonFile] ++
+        (if null lowerBoundFile then [] else ["-l", lowerBoundFile]) ++
+        ["--verbose" | v] ++ (splitFlags flags) ++
+        (gecodeTimeoutFlags to) ++
+        [extJson])
      return outJsonFile
 
 gecodeTimeoutFlags to
@@ -161,7 +166,8 @@ main =
                  Nothing -> -1
        result <- timeout to
                  (race
-                  (runGecode gecodeFlags to verbose inFile gecodeOutFile)
+                  (runGecode gecodeFlags lowerBoundFile to verbose inFile
+                   gecodeOutFile)
                   (runChuffed chuffedFlags inFile chuffedOutFile))
        let winner = case result of
                      (Just (Left  _)) -> Gecode
