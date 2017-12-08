@@ -179,6 +179,7 @@ main =
                        else pickNoTimeOutBest winner gecodeOutFile
                             (chuffedOutFile, chuffedLastOutFile)
        renameFile finalOutFile outFile
+       updateLowerBoundFile lowerBoundFile outFile
        removeIfExists gecodeOutFile
        removeIfExists chuffedOutFile
        removeIfExists chuffedLastOutFile
@@ -201,13 +202,7 @@ maybeBase baseOutFile (best, bestOut) =
     do writeFile baseOutFile baseOut
        return (baseOutFile, baseOut)
 
-baseOut =
-  BSL.unpack $ encodePretty' jsonConfig $ toJSON $ M.fromList baseSolution
-jsonConfig = defConfig {confNumFormat = Custom showInteger}
-showInteger i =
-  case floatingOrInteger i of
-   Right i' -> DTB.fromString (show (toInteger i'))
-   Left r -> error ("expecting integer but got " ++ show r)
+baseOut = toJSONString $ M.fromList baseSolution
 baseSolution =
   [("cost", toJSON (-1 :: Integer)),
    ("has_solution", toJSON False),
@@ -253,3 +248,20 @@ cost out =
   in if c == -1 then maxInt else c
 
 maxInt = toInteger (maxBound - 1 :: Int32)
+
+updateLowerBoundFile "" _ = return ()
+updateLowerBoundFile lowerBoundFile outFile =
+  do bestOut <- readIfExists outFile
+     if proven bestOut then
+       writeFile lowerBoundFile baseLowerBound
+       else return ()
+
+baseLowerBound = toJSONString baseLB
+baseLB = M.fromList [("lower_bound" :: String, toJSON [maxInt :: Integer])]
+
+toJSONString = BSL.unpack . encodePretty' jsonConfig . toJSON
+jsonConfig = defConfig {confNumFormat = Custom showInteger}
+showInteger i =
+  case floatingOrInteger i of
+   Right i' -> DTB.fromString (show (toInteger i'))
+   Left r -> error ("expecting integer but got " ++ show r)

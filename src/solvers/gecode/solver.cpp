@@ -382,7 +382,7 @@ void emit_output_exit(GlobalModel * base, const vector<ResultData> & results,
     }
   }
 
-  emit_lower_bound(base, best_rd.proven, best_rd.solution);
+  emit_lower_bound(base, best_rd.proven);
 
   if (base->options->output_file() == "") {
     cout << produce_json(best_rd, gd, base->input->N, 0) << endl;

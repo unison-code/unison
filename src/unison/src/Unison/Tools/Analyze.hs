@@ -55,10 +55,7 @@ run (goals, estimateFreq, simulateStalls, modelCost, boundFile, boundGoal,
          bound    = case lbs of
                      Just [lb] ->
                        let ([solCost], _) = af [bg] modelCost False
-                           -- In a few cases, the base solution might have a
-                           -- lower cost than the lower bound. This happens if
-                           -- no better solution is found and the base solution
-                           -- contains fewer basic blocks than the input.
+                           -- the input lower bound of a proven sol. is 'maxint'
                            lb' = min lb solCost
                        in [("lower_bound", toJSON lb')]
                      _ -> []

@@ -121,8 +121,7 @@ vector<InstructionAssignment> shave_instructions(
 Gecode::SpaceStatus status_lb(GlobalModel * base);
 
 // Emits the lower bound to a file (if specified by the options)
-void emit_lower_bound(const GlobalModel * base,
-                      bool proven = false, GlobalModel * sol = nullptr);
+void emit_lower_bound(const GlobalModel * base, bool proven = false);
 
 // Makes a new local space out of a global one
 LocalModel * make_local(const GlobalModel * gs, block b);
