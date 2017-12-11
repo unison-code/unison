@@ -39,6 +39,7 @@ import System.Directory
 import System.IO
 import System.Environment
 import System.Timeout
+import Data.Time
 import Data.List.Split
 
 data Portfolio =
@@ -132,14 +133,14 @@ splitFlags flags =
 proven json =
   let sol    = parseJson json
       proven = sol HM.! "proven"
-  in (solutionFromJson proven) :: Bool
+  in (fromJson proven) :: Bool
 
 parseJson json =
   case decode (BSL.pack json) of
    Nothing -> error ("error parsing JSON output")
    Just (Object s) -> s
 
-solutionFromJson object =
+fromJson object =
   case fromJSON object of
    Error e -> error ("error converting JSON input:\n" ++ show e)
    Success s -> s
@@ -164,15 +165,19 @@ main =
                             then error ("exceeded maximum timeout")
                             else (fromInteger s) * 1000000
                  Nothing -> -1
+       start <- getCurrentTime
        result <- timeout to
                  (race
                   (runGecode gecodeFlags lowerBoundFile to verbose inFile
                    gecodeOutFile)
                   (runChuffed chuffedFlags inFile chuffedOutFile))
+       end <- getCurrentTime
        let winner = case result of
                      (Just (Left  _)) -> Gecode
                      (Just (Right _)) -> Chuffed
                      Nothing          -> NoSolver
+           solverTime = (round $ fromRational $
+                         toRational (diffUTCTime end start) * 1000) :: Integer
        finalOutFile <- if to >= 0
                        then pickBest winner baseOutFile gecodeOutFile
                             (chuffedOutFile, chuffedLastOutFile)
@@ -180,6 +185,7 @@ main =
                             (chuffedOutFile, chuffedLastOutFile)
        renameFile finalOutFile outFile
        updateLowerBoundFile lowerBoundFile outFile
+       updateTimes inFile solverTime outFile
        removeIfExists gecodeOutFile
        removeIfExists chuffedOutFile
        removeIfExists chuffedLastOutFile
@@ -244,7 +250,7 @@ cost out =
   let sol  = parseJson out
       cost = sol HM.! "cost"
       -- Assumes a single goal as the minizinc solver does not support more
-      [c]  = (solutionFromJson cost) :: [Integer]
+      [c]  = (fromJson cost) :: [Integer]
   in if c == -1 then maxInt else c
 
 maxInt = toInteger (maxBound - 1 :: Int32)
@@ -259,6 +265,25 @@ updateLowerBoundFile lowerBoundFile outFile =
 baseLowerBound = toJSONString baseLB
 baseLB = M.fromList [("lower_bound" :: String, toJSON [maxInt :: Integer])]
 
+updateTimes inFile solverTime outFile =
+  do extJsonStr <- readIfExists inFile
+     outJsonStr <- readIfExists outFile
+     let preTime  = presolverTime extJsonStr
+         outJson  = parseJson outJsonStr
+         -- override existing fields possibly emitted by the underlying solvers
+         outJson' = HM.union
+                    (HM.fromList [("presolver_time", toJSON preTime),
+                                  ("solver_time", toJSON solverTime)])
+                    outJson
+     writeFile outFile (toJSONMap outJson')
+     return ()
+
+presolverTime extJson =
+  let input   = parseJson extJson
+      preTime = input HM.! "presolver_time"
+  in fromJson preTime :: Integer
+
+toJSONMap = BSL.unpack . encodePretty' jsonConfig
 toJSONString = BSL.unpack . encodePretty' jsonConfig . toJSON
 jsonConfig = defConfig {confNumFormat = Custom showInteger}
 showInteger i =
