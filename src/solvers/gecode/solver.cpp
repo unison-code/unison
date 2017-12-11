@@ -250,10 +250,10 @@ string produce_json(const ResultData& rd,
       if (rd.presolver_time >= 0) {
         ss << ", \"presolver_time\": " << rd.presolver_time;
       }
-      ss << ", \"presolving_time\": " << rd.presolving_time;
+      ss << ", \"gecode_presolving_time\": " << rd.presolving_time;
     }
     if (rd.solving_time >= 0) {
-      ss << ", \"solving_time\": " << rd.solving_time;
+      ss << ", \"solver_time\": " << rd.solving_time;
     }
     if (rd.it_solving_time >= 0) {
       ss << ", \"it_solving_time\": " << rd.it_solving_time;
