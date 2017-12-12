@@ -668,7 +668,7 @@ bool already_tabled(const vector<operand>& ps, map<operand, vector<int>>& P2Ts) 
   vector<int> ids;
   for(operand p : ps) {
     if(P2Ts.count(p)==0) {
-      return FALSE;
+      return false;
     } else if(first) {
       ids.swap(P2Ts[p]);
       first = false;
