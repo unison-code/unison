@@ -140,6 +140,11 @@ parseJson json =
    Nothing -> error ("error parsing JSON output")
    Just (Object s) -> s
 
+validJson json =
+  case decode (BSL.pack json) :: Maybe Value of
+   (Just _) -> True
+   Nothing  -> False
+
 fromJson object =
   case fromJSON object of
    Error e -> error ("error converting JSON input:\n" ++ show e)
@@ -258,7 +263,8 @@ maxInt = toInteger (maxBound - 1 :: Int32)
 updateLowerBoundFile "" _ = return ()
 updateLowerBoundFile lowerBoundFile outFile =
   do bestOut <- readIfExists outFile
-     if proven bestOut then
+     lowerBound <- readIfExists lowerBoundFile
+     if proven bestOut || not (validJson lowerBound) then
        writeFile lowerBoundFile baseLowerBound
        else return ()
 
