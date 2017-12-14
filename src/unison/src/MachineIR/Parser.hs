@@ -47,7 +47,8 @@ parseFunction (rawIR, rawMIR) =
       mjt = fmap toMachineFunctionPropertyJumpTable (jumpTable mir)
       mfs = fmap toMachineFunctionPropertyFixedStack (fixedStack mir)
       ms  = fmap toMachineFunctionPropertyStack (stack mir)
-      mf  = case P.parse mirBody "" (body mir) of
+      v   = mirVersion mir
+      mf  = case P.parse (mirBody v) "" (body mir) of
         Left e -> error ("error parsing body of '"
                          ++ name mir ++ "':\n" ++ show e)
         Right mf -> mf {mfName = name mir, mfIR = ir,
@@ -57,9 +58,15 @@ parseFunction (rawIR, rawMIR) =
       mf2 = mapToMachineInstruction (mapToMachineOperand readOperand) mf1
   in mf2
 
+mirVersion mir =
+  -- poor indicator of the MIR version (LLVM 6 drops the 'isSSA' attribute)
+  case isSSA mir of
+   Just _ -> LLVM5
+   Nothing -> LLVM6
 
 data MIRFunction = MIRFunction {
   name :: String,
+  isSSA :: Maybe Bool,
   fixedStack :: Maybe [MIRStackObject],
   stack :: Maybe [MIRStackObject],
   jumpTable :: Maybe MIRJumpTable,
@@ -70,6 +77,7 @@ instance FromJSON MIRFunction where
     parseJSON (Object v) =
       MIRFunction <$>
       (v .: "name") <*>
+      (v .:? "isSSA") <*>
       (v .:? "fixedStack") <*>
       (v .:? "stack") <*>
       (v .:? "jumpTable") <*>
@@ -116,12 +124,12 @@ instance FromJSON MIRJumpTableEntry where
       (v .: "blocks")
     parseJSON _ = error "Can't parse MIRJumpTableEntry from YAML"
 
-mirBody =
-  do blocks <- many mirBlock
+mirBody v =
+  do blocks <- many (mirBlock v)
      eof
      return (mkMachineFunction "" [] blocks "")
 
-mirBlock =
+mirBlock v =
   do id <- mirBlockId
      whiteSpace
      attrs <- option [] (parens (mirBlockAttribute `sepBy` comma))
@@ -132,7 +140,7 @@ mirBlock =
      ret   <- optionMaybe (try mirBlockLiveOuts)
      exit  <- optionMaybe (try mirBlockExit)
      many eol
-     instructions <- many mirInstruction
+     instructions <- many (mirInstruction v)
      many eol
      return (mkMachineBlock id
              (concatAttributes attrs succs)
@@ -193,7 +201,7 @@ mirBlockLiveIns =
   do whiteSpaces 2
      string "liveins:"
      whiteSpace
-     liveIns <- mirOperand `sepBy` comma
+     liveIns <- mirOperand LLVM5 `sepBy` comma
      eol
      return liveIns
 
@@ -201,7 +209,7 @@ mirBlockLiveOuts =
   do whiteSpaces 2
      string "liveouts:"
      whiteSpace
-     liveOuts <- mirOperand `sepBy` comma
+     liveOuts <- mirOperand LLVM5 `sepBy` comma
      eol
      return liveOuts
 
@@ -211,30 +219,30 @@ mirBlockExit =
      eol
      return ()
 
-mirInstruction = try mirBundle <|> try (mirSingle 2)
+mirInstruction v = try (mirBundle v) <|> try (mirSingle v 2)
 
-mirBundle =
+mirBundle v =
   do whiteSpaces 2
      opcode <- mirOpcode
      whiteSpace
-     us <- mirOperand `sepBy` comma
+     us <- mirOperand v `sepBy` comma
      whiteSpace
      char '{'
      eol
-     instructions <- many (try (mirSingle 4))
+     instructions <- many (try (mirSingle v 4))
      whiteSpaces 2
      char '}'
      eol
      return (mkMachineBundleWithHeader
              (mkMachineSingle opcode [] us) instructions)
 
-mirSingle n =
+mirSingle v n =
   do whiteSpaces n
-     ds <- option [] mirDefOperands
+     ds <- option [] (mirDefOperands v)
      optional (try (string "frame-setup "))
      opcode <- mirOpcode
      whiteSpace
-     us <- mirOperand `sepBy` comma
+     us <- mirOperand v `sepBy` comma
      whiteSpace
      optional mirMemOperands
      eol
@@ -259,6 +267,7 @@ mirVirtualOpcode =
   try (mirVOpc ("COMBINE", COMBINE)) <|>
   try (mirVOpc ("ADJCALLSTACKUP", ADJCALLSTACKUP)) <|>
   try (mirVOpc ("ADJCALLSTACKDOWN", ADJCALLSTACKDOWN)) <|>
+  try (mirVOpc ("ANNOTATION_LABEL", ANNOTATION_LABEL)) <|>
   try (mirVOpc ("CFI_INSTRUCTION", CFI_INSTRUCTION)) <|>
   try (mirVOpc ("EH_LABEL", EH_LABEL)) <|>
   try (mirVOpc ("BLOCK_MARKER", BLOCK_MARKER)) <|>
@@ -272,32 +281,33 @@ mirTargetOpcode =
   do opc <-many1 alphaNumDashDotUnderscore
      return (mkMachineVirtualOpc (FREE_OPCODE opc))
 
-mirDefOperands =
-  do ds <- mirOperand `sepBy` comma
+mirDefOperands v =
+  do ds <- mirOperand v `sepBy` comma
      string " = "
      return ds
 
-mirOperand =
+mirOperand v =
   do optional (try mirTargetFlags)
      whiteSpace
-     op <- mirActualOperand
+     op <- mirActualOperand v
      return op
 
 mirTargetFlags = string "target-flags(<unknown>)"
 
-mirActualOperand =
+mirActualOperand v =
   try mirConstantPoolIndex <|>
   try mirBlockRef <|>
   try mirJTI <|>
   try mirFI <|>
   try mirMFS <|>
-  try mirReg <|>
+  try (mirReg v) <|>
   try mirImm <|>
   try mirNullReg <|>
   try mirGlobalAdress <|>
   try mirExternalSymbol <|>
   try mirMemPartition <|>
   try mirProperty <|>
+  try mirBlockFreq <|>
   try mirDebugLocation <|>
   try mirMCSymbol <|>
   try mirFPImm <|>
@@ -313,10 +323,10 @@ mirConstantPoolIndex =
      idx <- many1 alphaNumDashDotUnderscore
      return (mkMachineConstantPoolIndex idx)
 
-mirReg =
+mirReg v =
   do mirRegFlag `endBy` whiteSpace
      char '%'
-     mirReg <- mirSpecificReg
+     mirReg <- mirSpecificReg v
      return mirReg
 
 mirJTI =
@@ -346,18 +356,26 @@ fIName =
      string "<unnamed alloca>" <|> many1 alphaNumDashDotUnderscore
      return ()
 
-mirSpecificReg = try mirVirtualReg <|> mirMachineReg
+mirSpecificReg v = try (mirVirtualReg v) <|> mirMachineReg
 
-mirVirtualReg =
+mirVirtualReg v =
   do id <- decimal
-     srid <- optionMaybe mirSubRegIndex
+     srid <- optionMaybe (mirSubRegIndex v)
+     optional mirVirtualRegClass
      td <- optionMaybe mirTiedDef
      return (case (srid, td) of
                (Nothing, td) -> mkMachineTemp id td
                (Just idx, Nothing) -> mkMachineSubTemp id idx)
 
-mirSubRegIndex =
-  do char ':' <|> char '.'
+mirSubRegIndex v =
+  do char (case v of
+            LLVM5 -> ':'
+            LLVM6 -> '.')
+     idx <- many1 alphaNumDashDotUnderscore
+     return idx
+
+mirVirtualRegClass =
+  do char ':'
      idx <- many1 alphaNumDashDotUnderscore
      return idx
 
@@ -438,6 +456,14 @@ mirProperty =
      string "\"}"
      return (mkMachineProperty address pr)
 
+mirBlockFreq =
+  do string "<0"
+     address <- hexadecimal
+     string "> = !{!\"unison-block-frequency\", i32 "
+     freq <- decimal
+     string "}"
+     return (mkMachineBlockFreq address freq)
+
 mirDebugLocation =
   do string "debug-location !"
      id <- decimal
@@ -470,7 +496,7 @@ mirCFIDef =
   do optional mirCFIPrefix
      string "def_cfa"
      whiteSpace
-     reg <- mirReg
+     reg <- mirReg LLVM5
      string ", "
      off <- signedDecimal
      return (mkMachineCFIDef (mfrRegName reg) off)
@@ -486,14 +512,14 @@ mirCFIDefReg =
   do optional mirCFIPrefix
      string "def_cfa_register"
      whiteSpace
-     reg <- mirReg
+     reg <- mirReg LLVM5
      return (mkMachineCFIDefReg (mfrRegName reg))
 
 mirCFIOffset =
   do optional mirCFIPrefix
      string "offset"
      whiteSpace
-     reg <- mirReg
+     reg <- mirReg LLVM5
      string ", "
      off <- signedDecimal
      return (mkMachineCFIOffset (mfrRegName reg) off)

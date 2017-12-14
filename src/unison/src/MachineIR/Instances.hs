@@ -204,6 +204,9 @@ showMachineOperand (MachineMemPartition address partition) =
 showMachineOperand (MachineProperty address property) =
   "<0x" ++ showHex address "" ++ "> = !{!\"unison-property\", !\"" ++
   property ++ "\"}"
+showMachineOperand (MachineBlockFreq address freq) =
+  "<0x" ++ showHex address "" ++ "> = !{!\"unison-block-frequency\", i32 " ++
+  show freq ++ "}"
 showMachineOperand (MachineDebugLocation id) = "debug-location !" ++ show id
 showMachineOperand MachineNullReg = "_"
 showMachineOperand (MachineCFIDef reg off) = ".cfi_def_cfa %" ++ reg ++ ", " ++ show off

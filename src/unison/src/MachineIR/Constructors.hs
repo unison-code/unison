@@ -63,6 +63,7 @@ module MachineIR.Constructors
          mkMachineCFIIndex,
          mkMachineMemPartition,
          mkMachineProperty,
+         mkMachineBlockFreq,
          mkMachineNullReg,
          mkMachineDebugLocation,
          mkMachineCFIDef,
@@ -130,6 +131,7 @@ mkMachineConstantPoolIndex = MachineConstantPoolIndex
 mkMachineCFIIndex = MachineCFIIndex
 mkMachineMemPartition = MachineMemPartition
 mkMachineProperty = MachineProperty
+mkMachineBlockFreq = MachineBlockFreq
 mkMachineNullReg = MachineNullReg
 mkMachineDebugLocation = MachineDebugLocation
 mkMachineCFIDef = MachineCFIDef

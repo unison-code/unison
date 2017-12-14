@@ -28,6 +28,7 @@ import Unison.Construction.AddDelimiters
 import Unison.Construction.LiftGoal
 import Unison.Construction.BuildFunction
 
+import MachineIR.Transformations.LiftBlockFreqs
 import MachineIR.Transformations.LiftCustomProperties
 import MachineIR.Transformations.LiftJumpTables
 import MachineIR.Transformations.SimplifyFallthroughs
@@ -102,6 +103,7 @@ run (estimateFreq, simplifyControlFlow, noCC, noReserved, maxBlockSize,
 mirTransformations (estimateFreq, simplifyControlFlow) =
     [(dropDebugLocations, "dropDebugLocations", True),
      (normalizePhis, "normalizePhis", True),
+     (liftBlockFreqs, "liftBlockFreqs", True),
      (liftCustomProperties, "liftCustomProperties", True),
      (liftBranchPredictions, "liftBranchPredictions", True),
      (liftJumpTables, "liftJumpTables", True),

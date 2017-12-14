@@ -29,7 +29,8 @@ import Control.Arrow
 
 import Common.Util hiding (between)
 
-import MachineIR.Base (MachineOperand, mfiIndex, mjtiIndex)
+import MachineIR.Base (MachineOperand, MachineIRVersion (..),
+                       mfiIndex, mjtiIndex)
 import MachineIR.Parser
 
 import Unison.Base
@@ -499,7 +500,7 @@ bLabel =
      decimal
 
 bound =
-  do e <- mirOperand
+  do e <- mirOperand LLVM5
      return (LsBound e)
 
 operandRef =

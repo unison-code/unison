@@ -110,6 +110,7 @@ Library
                    MachineIR.Instances
 
                    MachineIR.Transformations.SplitTerminators
+                   MachineIR.Transformations.LiftBlockFreqs
                    MachineIR.Transformations.LiftCustomProperties
                    MachineIR.Transformations.LiftJumpTables
                    MachineIR.Transformations.DropExplicitFallthroughs

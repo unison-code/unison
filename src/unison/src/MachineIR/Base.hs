@@ -25,7 +25,8 @@ module MachineIR.Base
          MachineInstructionProperty (..),
          MachineOperand (..),
          MachineRegState (..),
-         MachineFrameObjectInfo (..)
+         MachineFrameObjectInfo (..),
+         MachineIRVersion (..)
        )
        where
 
@@ -173,6 +174,7 @@ data MachineVirtualOpcode =
   COMBINE |
   ADJCALLSTACKUP |
   ADJCALLSTACKDOWN |
+  ANNOTATION_LABEL |
   CFI_INSTRUCTION |
   EH_LABEL |
   BLOCK_MARKER |
@@ -309,6 +311,12 @@ data MachineOperand r =
     mpAddress  :: Integer,
     mpProperty :: String
     } |
+  -- | Block frequency (does not correspond to any LLVM operand, we represent
+  -- it in LLVM with a metadata operand)
+  MachineBlockFreq {
+    mbfAddress :: Integer,
+    mbfFreq    :: Integer
+    } |
   -- | Null register corresponding to LLVM's @MO_Register@ called @-@
   MachineNullReg |
   -- | Debug location (does not correspond to any LLVM operand)
@@ -362,3 +370,11 @@ data MachineFrameObjectInfo =
     -- | Object alignment
     mfoiAlignment :: Integer
     } deriving (Eq, Ord)
+
+-- | MIR version to be parsed.
+
+data MachineIRVersion =
+  -- | LLVM 5.0 or older
+  LLVM5 |
+  -- | LLVM 6.0 or newer (defines embedded register classes in the operands)
+  LLVM6
