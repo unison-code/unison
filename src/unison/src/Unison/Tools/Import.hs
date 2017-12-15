@@ -35,6 +35,7 @@ import MachineIR.Transformations.SimplifyFallthroughs
 import MachineIR.Transformations.SplitTerminators
 import MachineIR.Transformations.RenameMachineBlocks
 import MachineIR.Transformations.DropUnsupportedPseudos
+import MachineIR.Transformations.RunPreProcess
 
 import Unison.Transformations.RenameBlocks
 import Unison.Transformations.PostponeBranches
@@ -54,7 +55,6 @@ import Unison.Tools.Import.ExtractSubRegs
 import Unison.Tools.Import.LowerInsertSubRegs
 import Unison.Tools.Import.LowerSubRegVirtuals
 
-import Unison.Tools.Import.RunPreProcess
 import Unison.Tools.Import.RemoveUnreachableBlocks
 import Unison.Tools.Import.CorrectDoubleBranches
 import Unison.Tools.Import.AdjustPhiLabels

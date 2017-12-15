@@ -9,10 +9,10 @@ Main authors:
 
 This file is part of Unison, see http://unison-code.github.io
 -}
-module Unison.Tools.Export.RunPostProcess (runPostProcess) where
+module MachineIR.Transformations.RunPreProcess (runPreProcess) where
 
 import MachineIR.Util
 
 import Unison.Target.API
 
-runPostProcess mf target = runMachineTransformations (postProcess target) mf
+runPreProcess mf target = runMachineTransformations (preProcess target) mf

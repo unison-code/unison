@@ -26,6 +26,7 @@ import Unison.Target.API
 import Unison.Transformations.FinalizeOperations
 import Unison.Transformations.UnbundleSingletons
 import Unison.Transformations.RunTargetTransforms
+import MachineIR.Transformations.RunPostProcess
 import MachineIR.Transformations.SimplifyFallthroughs
 import MachineIR.Transformations.RenameMachineBlocks
 import MachineIR.Transformations.PrepareForEmission
@@ -41,7 +42,6 @@ import Unison.Tools.Export.LowerFrameSize
 import Unison.Tools.Export.DirectFrame
 import Unison.Tools.Export.LowerFrameIndices
 import Unison.Tools.Export.RemoveNops
-import Unison.Tools.Export.RunPostProcess
 import Unison.Tools.Export.CleanNops
 
 import Data.Maybe

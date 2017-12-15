@@ -109,6 +109,8 @@ Library
                    MachineIR.Parser
                    MachineIR.Instances
 
+                   MachineIR.Transformations.RunPreProcess
+                   MachineIR.Transformations.RunPostProcess
                    MachineIR.Transformations.SplitTerminators
                    MachineIR.Transformations.LiftBlockFreqs
                    MachineIR.Transformations.LiftCustomProperties
@@ -148,7 +150,6 @@ Library
                   Unison.Tools.Import.RepairCSSA
                   Unison.Tools.Import.AdvancePhis
                   Unison.Tools.Import.ReserveRegs
-                  Unison.Tools.Import.RunPreProcess
                   Unison.Tools.Import.SimplifyCombinations
                   Unison.Tools.Import.SplitBlocks
                   Unison.Tools.Import.TagRemats
@@ -186,7 +187,6 @@ Library
                   Unison.Tools.Export.DirectFrame
                   Unison.Tools.Export.LowerFrameIndices
                   Unison.Tools.Export.RemoveNops
-                  Unison.Tools.Export.RunPostProcess
                   Unison.Tools.Export.CleanNops
                   Unison.Tools.Analyze.InsertNops
                   Unison.Tools.Analyze.InsertFuns

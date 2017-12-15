@@ -20,11 +20,14 @@ import Control.Monad
 
 import qualified MachineIR as MIR
 
+import MachineIR.Transformations.LiftBlockFreqs
+import MachineIR.Transformations.RunPreProcess
 import MachineIR.Transformations.LiftJumpTables
 import MachineIR.Transformations.SimplifyFallthroughs
 import MachineIR.Transformations.SplitTerminators
 import MachineIR.Transformations.RenameMachineBlocks
 import MachineIR.Transformations.DropUnsupportedPseudos
+import MachineIR.Transformations.RunPostProcess
 import MachineIR.Transformations.PrepareForEmission
 import Unison.Transformations.FinalizeOperations
 import Unison.Transformations.EstimateFrequency
@@ -32,34 +35,45 @@ import qualified Unison.Transformations.NormalizeFrequency as NF
 
 run (estimateFreq, simplifyControlFlow, debug, normMirFile) mir target =
   let mf  = fromSingleton $ MIR.parse mir
-      mf0 = liftJumpTables mf target
-      mf1 = MIR.runMachineTransformations (preProcess target) mf0
-      mf2 = if simplifyControlFlow
-            then simplifyFallthroughs False mf1 target else mf1
-      mf3 = splitTerminators estimateFreq mf2 target
-      mf4 = renameMachineBlocks mf3 target
-      mf5 = dropUnsupportedPseudos mf4 target
-      f   = buildFunction target mf5
-      f1  = if estimateFreq then estimateFrequency f target else f
-      f2  = NF.normalizeFrequency f1 target
-      f3  = finalizeOperations f2 target
-      mf6 = toMachineFunction f3
-      mf7 = MIR.runMachineTransformations (postProcess target) mf6
-      mf8 = prepareForEmission mf7 target
+      (mf0, partialPreMfs) =
+            applyTransformations
+            (mirPreTransformations (estimateFreq, simplifyControlFlow))
+            target mf
+      ff  = buildFunction target mf0
+      (f, partialFs) =
+            applyTransformations
+            (uniTransformations estimateFreq)
+            target ff
+      mf1 = toMachineFunction f
+      (mf2, partialPostMfs) =
+            applyTransformations
+            mirPostTransformations
+            target mf1
   in do
      when debug $
-          putStr $ toPlainText $
-          [("liftJumpTables", Just $ showSimple mf0),
-           ("preProcess", Just $ showSimple mf1),
-           ("simplifyFallthroughs", Just $ showSimple mf2),
-           ("splitTerminators", Just $ showSimple mf3),
-           ("renameMachineBlocks", Just $ showSimple mf4),
-           ("dropUnsupportedPseudos", Just $ showSimple mf5),
-           ("buildFunction", Just $ showSimple f),
-           ("estimateFrequency", Just $ showSimple f1),
-           ("normalizeFrequency", Just $ showSimple f2),
-           ("finalizeOperations", Just $ showSimple f3),
-           ("toMachineFunction", Just $ showSimple mf6),
-           ("postProcess", Just $ showSimple mf7),
-           ("prepareForEmission", Just $ showSimple mf8)]
-     emitOutput normMirFile (show mf8)
+          putStr (toPlainText (partialPreMfs ++ partialFs ++ partialPostMfs))
+     emitOutput normMirFile (show mf2)
+
+mirPreTransformations :: (Eq i, Read i, Read r, Eq r) =>
+    (Bool, Bool) -> [(MIR.MachineFunction i r -> TargetWithOptions i r rc s ->
+    MIR.MachineFunction i r, String, Bool)]
+mirPreTransformations (estimateFreq, simplifyControlFlow) =
+  [(liftBlockFreqs, "liftBlockFreqs", True),
+   (liftJumpTables, "liftJumpTables", True),
+   (runPreProcess, "runPreProcess", True),
+   (simplifyFallthroughs False, "simplifyFallthroughs", simplifyControlFlow),
+   (splitTerminators estimateFreq, "splitTerminators", True),
+   (renameMachineBlocks, "renameMachineBlocks", True),
+   (dropUnsupportedPseudos, "dropUnsupportedPseudos", True)]
+
+uniTransformations estimateFreq =
+  [(estimateFrequency, "estimateFrequency", estimateFreq),
+   (NF.normalizeFrequency, "normalizeFrequency", True),
+   (finalizeOperations, "finalizeOperations", True)]
+
+mirPostTransformations :: (Eq i, Read i, Read r, Eq r) =>
+    [(MIR.MachineFunction i r -> TargetWithOptions i r rc s ->
+    MIR.MachineFunction i r, String, Bool)]
+mirPostTransformations =
+  [(runPostProcess, "runPostProcess", True),
+   (prepareForEmission, "prepareForEmission", True)]
