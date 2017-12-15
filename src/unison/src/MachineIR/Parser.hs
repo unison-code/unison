@@ -223,6 +223,7 @@ mirInstruction v = try (mirBundle v) <|> try (mirSingle v 2)
 
 mirBundle v =
   do whiteSpaces 2
+     optional (try frameSetup)
      opcode <- mirOpcode
      whiteSpace
      us <- mirOperand v `sepBy` comma
@@ -239,7 +240,7 @@ mirBundle v =
 mirSingle v n =
   do whiteSpaces n
      ds <- option [] (mirDefOperands v)
-     optional (try (string "frame-setup "))
+     optional (try frameSetup)
      opcode <- mirOpcode
      whiteSpace
      us <- mirOperand v `sepBy` comma
@@ -247,6 +248,8 @@ mirSingle v n =
      optional mirMemOperands
      eol
      return (mkMachineSingle opcode [] (ds ++ us))
+
+frameSetup = string "frame-setup "
 
 mirOpcode = try mirVirtualOpcode <|> mirTargetOpcode
 
