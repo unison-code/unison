@@ -134,6 +134,10 @@ copies _ False t [] d us
     | isLow d  = ([mkNullInstruction, TargetInstruction MFLO], map (accCopy t) us)
     | isHigh d = ([mkNullInstruction, TargetInstruction MFHI], map (accCopy t) us)
 
+-- Do not extend temporaries with the address used by function calls
+copies _ False _ _ d [u]
+    | isFunctionPointerLoad d && isJALRCall u = ([], [[]])
+
 -- Extend temporaries combined to be used by a macc with mtlo and mthi
 copies _ False t [] _ [u] | isCombine u = (accCopy t u, [[]])
 copies _ False _ [] d us | isCombine d =
@@ -211,6 +215,17 @@ pushInstruction r
 popInstruction r
   | r `elem` registers (RegisterClass GPR32Opnd) = LOAD
   | r `elem` registers (RegisterClass AFGR64Opnd) = LOAD_D
+
+isFunctionPointerLoad SingleOperation {
+  oOpr = (Natural (Linear {
+                      oIs = [TargetInstruction LW],
+                      oUs = [Temporary {},
+                             Bound MachineGlobalAddress {}]}))} = True
+isFunctionPointerLoad _ = False
+
+isJALRCall SingleOperation {
+  oOpr = (Natural (Call {oCallIs = [TargetInstruction JALRPseudo]}))} = True
+isJALRCall _ = False
 
 -- | Transforms copy instructions into natural instructions
 
