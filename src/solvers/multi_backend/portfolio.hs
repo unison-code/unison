@@ -70,7 +70,7 @@ gecodeFile outJsonFile = outJsonFile ++ ".gecode"
 chuffedFile :: FilePath -> String
 chuffedFile outJsonFile = outJsonFile ++ ".chuffed"
 
-runGecode flags lowerBoundFile to v extJson outJsonFile =
+runGecode flags to v extJson lowerBoundFile outJsonFile =
   do tryUntilSuccess $ callProcess "gecode-solver"
        (["-o", outJsonFile] ++
         (if null lowerBoundFile then [] else ["-l", lowerBoundFile]) ++
@@ -94,36 +94,44 @@ tryUntilSuccess a =
            tryUntilSuccess a
       Right () -> return ()
 
-runChuffed flags extJson outJsonFile =
+runChuffed flags extJson lowerBoundFile outJsonFile =
   do -- call 'minizinc-solver' but only for the setup (we would like to use the
      -- entire script but for some reason then we cannot kill the underlying
      -- processes when MiniZinc looses the race)
      callProcess "minizinc-solver"
-       (["--topdown", "--chuffed", "--free", "--no-diffn", "--no-cumulative",
-         "--setuponly"] ++ (splitFlags flags) ++ [extJson])
-     -- now call the underlying 'minizinc' process that is killable (unlike what
-     -- is executed from 'minizinc-solver')
+       (["--topdown", "--chuffed", "--no-diffn", "--free", "--rnd",
+         "--setuponly"] ++
+        (if null lowerBoundFile then [] else ["-l", lowerBoundFile]) ++
+        (splitFlags flags) ++
+        [extJson])
+     -- now call the underlying 'minizinc' process that is killable (unlike
+     -- what is executed from 'minizinc-solver')
      let pre = (take (length extJson - 9) extJson)
          mzn = pre ++ ".mzn"
          dzn = pre ++ ".dzn"
-         ozn = pre ++ ".ozn"
+         out = pre ++ ".out"
      setEnv "FLATZINC_CMD" "fzn-chuffed"
-     tryUntilSuccess $ callProcess "minizinc"
-       (["-Gchuffed", "--fzn-flag", "--mdd", "--fzn-flag", "on", "-a", "-k",
-        "-s", "--fzn-flag", "-f", "--fzn-flag", "--rnd-seed", "--fzn-flag",
-        "123456", "-D", "good_cumulative=true", "-D", "good_diffn=false"] ++
-        [mzn, dzn, "-o", ozn])
+     tryUntilSuccess $ callProcess "mzn-chuffed"
+       (concatMap fznFlag ["--mdd", "on", "--verbosity", "3", "-f",
+                           "--rnd-seed", "123456"] ++
+        ["-a", "-s",
+         "-D", "good_cumulative=true",
+         "-D", "good_diffn=false"] ++
+        [mzn, dzn, "-o", out])
      -- finally, invoke 'outfilter' to format the output
-     inf  <- openFile ozn ReadMode
+     inf  <- openFile out ReadMode
      outf <- openFile outJsonFile WriteMode
      (_, _, _, h) <- createProcess
-                     (proc "outfilter.pl" [outJsonFile ++ ".last"])
+                     (proc "outfilter.pl"
+                           [outJsonFile ++ ".last",
+                            if null lowerBoundFile then "-" else lowerBoundFile])
                        {std_in = UseHandle inf, std_out = UseHandle outf}
      waitForProcess h
      hClose inf
      hClose outf
-     out <- strictReadFile outJsonFile
      return outJsonFile
+
+fznFlag opt = ["--fzn-flag", opt]
 
 splitFlags :: String -> [String]
 splitFlags flags =
@@ -165,6 +173,8 @@ main =
            gecodeOutFile  = outFile ++ ".gecode"
            chuffedOutFile = outFile ++ ".chuffed"
            chuffedLastOutFile = outFile ++ ".chuffed.last"
+           gecodeLowerBoundFile = lowerBoundFile ++ ".gecode"
+           chuffedLowerBoundFile = lowerBoundFile ++ ".chuffed"
            to = case timeOut of
                  Just s  -> if s * 1000000 > maxInt
                             then error ("exceeded maximum timeout")
@@ -173,9 +183,10 @@ main =
        start <- getCurrentTime
        result <- timeout to
                  (race
-                  (runGecode gecodeFlags lowerBoundFile to verbose inFile
-                   gecodeOutFile)
-                  (runChuffed chuffedFlags inFile chuffedOutFile))
+                  (runGecode gecodeFlags to verbose inFile
+                   gecodeLowerBoundFile gecodeOutFile)
+                  (runChuffed chuffedFlags inFile
+                   chuffedLowerBoundFile chuffedOutFile))
        end <- getCurrentTime
        let winner = case result of
                      (Just (Left  _)) -> Gecode
@@ -189,7 +200,8 @@ main =
                        else pickNoTimeOutBest winner gecodeOutFile
                             (chuffedOutFile, chuffedLastOutFile)
        renameFile finalOutFile outFile
-       updateLowerBoundFile lowerBoundFile outFile
+       writeLowerBoundFile lowerBoundFile
+         [gecodeLowerBoundFile, chuffedLowerBoundFile] outFile
        updateTimes inFile solverTime outFile
        removeIfExists gecodeOutFile
        removeIfExists chuffedOutFile
@@ -260,16 +272,26 @@ cost out =
 
 maxInt = toInteger (maxBound - 1 :: Int32)
 
-updateLowerBoundFile "" _ = return ()
-updateLowerBoundFile lowerBoundFile outFile =
-  do bestOut <- readIfExists outFile
-     lowerBound <- readIfExists lowerBoundFile
-     if proven bestOut || not (validJson lowerBound) then
-       writeFile lowerBoundFile baseLowerBound
-       else return ()
+lowerBound lowerBoundJson =
+  let json  = parseJson lowerBoundJson
+      lbj   = json HM.! "lower_bound"
+      [lb]  = (fromJson lbj) :: [Integer]
+  in lb
 
-baseLowerBound = toJSONString baseLB
-baseLB = M.fromList [("lower_bound" :: String, toJSON [maxInt :: Integer])]
+writeLowerBoundFile "" _ _ = return ()
+-- Writes final lower bound to 'outLowerBoundFile' according to the
+-- solution properties and the lower bounds provided by the solvers
+writeLowerBoundFile outLowerBoundFile inLowerBoundFiles outFile =
+  do bestOut <- readIfExists outFile
+     jsonLBs <- mapM readIfExists inLowerBoundFiles
+     let lbs = [lowerBound lb | lb <- jsonLBs, validJson lb]
+         bestLB = if proven bestOut || null lbs then baseLowerBound
+                  else formatLB (maximum lbs)
+     writeFile outLowerBoundFile bestLB
+
+baseLowerBound = formatLB maxInt
+formatLB lb =
+  toJSONString $ M.fromList [("lower_bound" :: String, toJSON [lb :: Integer])]
 
 updateTimes inFile solverTime outFile =
   do extJsonStr <- readIfExists inFile

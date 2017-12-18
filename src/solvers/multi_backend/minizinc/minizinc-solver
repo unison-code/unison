@@ -111,9 +111,7 @@ DIRBASENAME=${1%.ext.json}
 EXTJSON=$1
 shift
 echo "json2dzn('${EXTJSON}'),halt." | sicstus -f --nologo --noinfo -l $MINIZINC_DIR/model2dzn.pl
-cp $MINIZINC_DIR/code-generation.mzn $MINIZINC_DIR/${search} .
-printf "include \"code-generation.mzn\";\n" > $DIRBASENAME.mzn
-printf "include \"${search}\";\n" >> $DIRBASENAME.mzn
+cat $MINIZINC_DIR/code-generation.mzn $MINIZINC_DIR/${search} > $DIRBASENAME.mzn
 if [ '$mzn' = 'mzn-gecode' ]; then
   pflag='-p'
   pvalue=${ncores}
