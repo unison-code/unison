@@ -193,7 +193,9 @@ showMachineOperand (MachineGlobalAddress address offset) =
 showMachineOperand (MachineSymbol name) = "<mcsymbol " ++ name ++ ">"
 showMachineOperand (MachineJumpTableIndex index) = jumpTablePrefix ++ show index
 showMachineOperand (MachineExternal name) = "$" ++ name
-showMachineOperand (MachineTemp id td) = "%" ++ show id ++ showTiedDef td
+showMachineOperand (MachineTemp id states td) =
+  showCS showMachineRegState states ++
+  (if null states then "" else " ") ++ "%" ++ show id ++ showTiedDef td
 showMachineOperand (MachineFrameIndex idx fixed offset) =
   "%" ++ (if fixed then "fixed-" else "") ++ "stack." ++ show idx ++
   (if offset == 0 then "" else ("+" ++ show offset))
@@ -227,6 +229,7 @@ showTiedDef (Just id) = "(tied-def " ++ show id ++ ")"
 
 showMachineRegState MachineRegImplicit = "implicit"
 showMachineRegState MachineRegImplicitDefine = "implicit-def"
+showMachineRegState MachineRegUndef = "undef"
 
 maybeEscape ga @ (d:_)
   | isDigit d = doubleQuoted id ("\\" ++ ga)
@@ -240,7 +243,7 @@ showOffset n
   | n >= 0 = "+" ++ show n
 
 instance Show r => Show (MachineOperand r) where
-  show (MachineTemp id _) = inBraces ["temp", show id]
+  show (MachineTemp id _ _) = inBraces ["temp", show id]
   show (MachineSubTemp id subreg) =
     inBraces ["subtemp", inBraces [show id, subreg]]
   show (MachineSubRegIndex subreg) = inBraces ["subreg", subreg]

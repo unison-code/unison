@@ -44,6 +44,7 @@ module MachineIR.Constructors
          mkMachineInstructionPropertyBranchTaken,
          -- * MachineOperand constructors
          mkMachineTemp,
+         mkSimpleMachineTemp,
          mkMachineSubTemp,
          mkMachineSubRegIndex,
          mkMachineReg,
@@ -73,6 +74,7 @@ module MachineIR.Constructors
          -- * MachineRegState constructors
          mkMachineRegImplicit,
          mkMachineRegImplicitDefine,
+         mkMachineRegUndef,
          -- * Other
          mkMachineVirtualOpc,
          mkMachineTargetOpc,
@@ -112,6 +114,7 @@ mkMachineInstructionPropertyDefs = MachineInstructionPropertyDefs
 mkMachineInstructionPropertyBranchTaken = MachineInstructionPropertyBranchTaken
 
 mkMachineTemp = MachineTemp
+mkSimpleMachineTemp id = mkMachineTemp id [] Nothing
 mkMachineSubTemp = MachineSubTemp
 mkMachineSubRegIndex = MachineSubRegIndex
 mkMachineReg name = MachineReg name []
@@ -141,6 +144,7 @@ mkMachineCFIOffset = MachineCFIOffset
 
 mkMachineRegImplicit = MachineRegImplicit
 mkMachineRegImplicitDefine = MachineRegImplicitDefine
+mkMachineRegUndef = MachineRegUndef
 
 mkMachineTargetOpc = MachineTargetOpc
 mkMachineVirtualOpc = MachineVirtualOpc

@@ -56,8 +56,6 @@ nextId _ st2t = maximum (map (mtId . snd) st2t) + 1
 
 mapToTemps id subtemps = zip subtemps (map mkSimpleMachineTemp [id..])
 
-mkSimpleMachineTemp id = mkMachineTemp id Nothing
-
 replaceSubRegs m mi @ MachineSingle {msOperands = os} =
   mi {msOperands = map (applyMap (M.fromList m)) os}
 
@@ -72,7 +70,8 @@ replacePhiSubRegs m mi @ MachineSingle {msOperands = (d:os)}
 mkExtractSubReg (MachineSubTemp {mstId = mstid, mstSubRegIndex = subreg},
                  MachineTemp    {mtId  = id, mtTiedDef = d}) =
   mkMachineSingle (mkMachineVirtualOpc EXTRACT_SUBREG) []
-  [mkMachineTemp id d, mkMachineTemp mstid Nothing, mkMachineSubRegIndex subreg]
+  [mkMachineTemp id [] d, mkMachineTemp mstid [] Nothing,
+   mkMachineSubRegIndex subreg]
 
 appendInstrs b2mis b @ MachineBlock {mbId = bid, mbInstructions = mis}
   | M.member bid b2mis = b {mbInstructions = mis ++ b2mis M.! bid}

@@ -1339,7 +1339,7 @@ toMachineInstructionProperties Attributes {aJTBlocks = bs, aBranchTaken = bt} =
 toMachineOperand :: Show r => Operand r -> MachineOperand r
 toMachineOperand (Register (TargetRegister r)) = mkMachineReg r
 toMachineOperand (BlockRef l) = mkMachineBlockRef l
-toMachineOperand (Temporary {tId = tid}) = mkMachineTemp tid Nothing
+toMachineOperand (Temporary {tId = tid}) = mkMachineTemp tid [] Nothing
 toMachineOperand (Bound mo) = mo
 
 toLinear :: Operation i r -> NaturalOperation i r

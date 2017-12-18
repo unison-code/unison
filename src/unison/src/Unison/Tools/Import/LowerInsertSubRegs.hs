@@ -32,14 +32,14 @@ lowerInsertInstrSubRegs stf (accIs, id) (mi @
       (id', mis) =
         case stf subreg of
           LowSubRegIndex ->
-            let t  = mkMachineTemp id Nothing
+            let t  = mkSimpleMachineTemp id
                 hi = mi {msOpcode = mkMachineVirtualOpc HIGH,
                          msOperands = [t, s1]}
                 co = mi {msOpcode = mkMachineVirtualOpc COMBINE,
                          msOperands = [d, s2, t]}
             in (id + 1, [hi, co])
           HighSubRegIndex ->
-            let t  = mkMachineTemp id Nothing
+            let t  = mkSimpleMachineTemp id
                 lo = mi {msOpcode = mkMachineVirtualOpc LOW,
                                     msOperands = [t, s1]}
                 co = mi {msOpcode = mkMachineVirtualOpc COMBINE,

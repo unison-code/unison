@@ -51,6 +51,7 @@ import Unison.Tools.Import.DropDebugLocations
 import Unison.Tools.Import.NormalizePhis
 import Unison.Tools.Import.LiftBranchPredictions
 import Unison.Tools.Import.LiftMemoryPartitions
+import Unison.Tools.Import.LiftMachineUndefs
 import Unison.Tools.Import.ExtractSubRegs
 import Unison.Tools.Import.LowerInsertSubRegs
 import Unison.Tools.Import.LowerSubRegVirtuals
@@ -113,6 +114,7 @@ mirTransformations (estimateFreq, simplifyControlFlow) =
      (splitTerminators estimateFreq, "splitTerminators", True),
      (renameMachineBlocks, "renameMachineBlocks", True),
      (dropUnsupportedPseudos, "dropUnsupportedPseudos", True),
+     (liftMachineUndefs, "liftMachineUndefs", True),
      (extractSubRegs, "extractSubRegs", True),
      (lowerInsertSubRegs, "lowerInsertSubRegs", True),
      (lowerSubRegVirtuals, "lowerSubRegVirtuals", True),

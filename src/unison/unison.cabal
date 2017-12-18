@@ -138,6 +138,7 @@ Library
                   Unison.Tools.Import.ExtractCallRegs
                   Unison.Tools.Import.LiftRegs
                   Unison.Tools.Import.ExtractRegs
+                  Unison.Tools.Import.LiftMachineUndefs
                   Unison.Tools.Import.ExtractSubRegs
                   Unison.Tools.Import.FoldCopies
                   Unison.Tools.Import.ImplementFrameOperations

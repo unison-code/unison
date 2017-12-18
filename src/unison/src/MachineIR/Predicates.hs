@@ -53,6 +53,8 @@ module MachineIR.Predicates
          isMachineNullReg,
          isMachineDebugLocation,
          isMachineConstantPoolIndex,
+         -- * MachineRegState predicates
+         isMachineRegUndef,
          -- * MachineFunction predicates
          isMachinePreUnison
        )
@@ -176,6 +178,9 @@ isMachineDebugLocation _ = False
 
 isMachineConstantPoolIndex MachineConstantPoolIndex {} = True
 isMachineConstantPoolIndex _ = False
+
+isMachineRegUndef MachineRegUndef {} = True
+isMachineRegUndef _ = False
 
 isMachinePreUnison mf =
   let mis = concatMap mbInstructions (mfBlocks mf)

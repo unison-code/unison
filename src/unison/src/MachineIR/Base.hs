@@ -219,6 +219,7 @@ data MachineOperand r =
   -- | Temporary corresponding to LLVM's @MO_Register@ when this is a virtual register
   MachineTemp {
     mtId      :: Integer,
+    mtFlags   :: [MachineRegState],
     mtTiedDef :: Maybe Integer
     } |
   -- | Temporary corresponding to LLVM's @MO_Register@ when this is a virtual
@@ -354,7 +355,9 @@ data MachineRegState =
   -- | Implicit operand
   MachineRegImplicit |
   -- | Implicit definition
-  MachineRegImplicitDefine
+  MachineRegImplicitDefine |
+  -- | Undefined value
+  MachineRegUndef
   deriving (Eq, Ord)
 
 -- | Object allocated in the stack corresponding to LLVM's 'StackObject'.

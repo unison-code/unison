@@ -333,10 +333,10 @@ mirSubRegIndex =
      return (mkMachineSubRegIndex idx)
 
 mirReg v =
-  do mirRegFlag `endBy` whiteSpace
+  do states <- mirRegFlag `endBy` whiteSpace
      char '%'
-     mirReg <- mirSpecificReg v
-     return mirReg
+     reg <- mirSpecificReg v (catMaybes states)
+     return reg
 
 mirJTI =
   do string "%jump-table."
@@ -365,15 +365,15 @@ fIName =
      string "<unnamed alloca>" <|> many1 alphaNumDashDotUnderscore
      return ()
 
-mirSpecificReg v = try (mirVirtualReg v) <|> mirMachineReg
+mirSpecificReg v states = try (mirVirtualReg v states) <|> mirMachineReg
 
-mirVirtualReg v =
+mirVirtualReg v states =
   do id <- decimal
      srid <- optionMaybe (mirSuffixSubRegIndex v)
      optional mirVirtualRegClass
      td <- optionMaybe mirTiedDef
      return (case (srid, td) of
-               (Nothing, td) -> mkMachineTemp id td
+               (Nothing, td) -> mkMachineTemp id states td
                (Just idx, Nothing) -> mkMachineSubTemp id idx)
 
 mirSuffixSubRegIndex v =
@@ -402,15 +402,31 @@ mirMachineReg =
      return (MachineFreeReg name)
 
 mirRegFlag =
-    try (string "implicit-def") <|>
-    try (string "implicit") <|>
-    try (string "def") <|>
-    try (string "dead") <|>
-    try (string "killed") <|>
-    try (string "undef") <|>
-    try (string "internal") <|>
-    try (string "early-clobber") <|>
-    try (string "debug-use")
+    try mirRegImplicitDefine <|>
+    try mirRegImplicit <|>
+    try mirRegUndef <|>
+    try mirRegOther
+
+mirRegImplicitDefine =
+  do string "implicit-def"
+     return (Just mkMachineRegImplicitDefine)
+
+mirRegImplicit =
+  do string "implicit"
+     return (Just mkMachineRegImplicit)
+
+mirRegUndef =
+  do string "undef"
+     return (Just mkMachineRegUndef)
+
+mirRegOther =
+  do try (string "def") <|>
+       try (string "dead") <|>
+       try (string "killed") <|>
+       try (string "internal") <|>
+       try (string "early-clobber") <|>
+       try (string "debug-use")
+     return Nothing
 
 mirImm =
   do imm <- signedDecimal
