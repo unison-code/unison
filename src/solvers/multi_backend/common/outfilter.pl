@@ -42,6 +42,8 @@ use strict;
 
 my $last = $ARGV[0];
 unlink $last;
+my $lbfile = $ARGV[1];
+unlink $lbfile;
 my $state = 1;
 my $soln = 0;
 my $proven = 0;
@@ -75,6 +77,14 @@ while (my $line = <STDIN>) {
         }
         print($log "}\n");
         close $log;
+    } elsif (($lbfile ne "-") && ($line =~ m/% root level bounds on objective: min (\S+) max (\S+)/)) {
+	my $min = $1;
+	my $max = $2;
+	open(my $lb, '>', $lbfile);
+	print $lb "{\"lower bound\":[$min]}\n";
+	close($lb);
+	# DO NOT REMOVE
+	print STDERR "$line\n";
     } elsif ($line =~ "%") {
 	# DO NOT REMOVE
 	print STDERR "$line\n";

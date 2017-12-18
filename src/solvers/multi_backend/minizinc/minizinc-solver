@@ -17,6 +17,7 @@ freeflag=''
 freedefault='--fzn-flag -f'
 rndflag=''
 nogoods=''
+lbfile='-'
 setuponly='false'
 while [ $# -gt  1 ]; do
     opt="$1"
@@ -43,7 +44,7 @@ while [ $# -gt  1 ]; do
         mzn='mzn-cpx'
       ;;
       --chuffed | --chuffed21)
-        mzn='mzn-chuffed --fzn-flag --mdd --fzn-flag on'
+        mzn='mzn-chuffed --fzn-flag --mdd --fzn-flag on --fzn-flag --verbosity --fzn-flag 3'
       ;;
       --chuffed20)
         mzn='mzn-chuffed'
@@ -97,6 +98,10 @@ while [ $# -gt  1 ]; do
 	ncores=$1
 	shift
       ;;
+      -l)
+	lbfile=$1
+	shift
+      ;;
       --setuponly)
 	setuponly=true
       ;;
@@ -120,4 +125,4 @@ if [ $setuponly = true ]; then
     exit 0
 fi
 set -x
-time ${mzn} ${allsolns} ${statflag} ${pflag} ${pvalue} ${freeflag} ${rndflag} ${toflag} ${nogoods} -D good_cumulative=${cumulative} -D good_diffn=${diffn} $DIRBASENAME.mzn $DIRBASENAME.dzn | $COMMON_DIR/outfilter.pl ${OUTJSON}.last > ${OUTJSON}
+time ${mzn} ${allsolns} ${statflag} ${pflag} ${pvalue} ${freeflag} ${rndflag} ${toflag} ${nogoods} -D good_cumulative=${cumulative} -D good_diffn=${diffn} $DIRBASENAME.mzn $DIRBASENAME.dzn | $COMMON_DIR/outfilter.pl ${OUTJSON}.last ${lbfile} > ${OUTJSON}
