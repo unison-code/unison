@@ -75,7 +75,6 @@ parseFunction v (rawIR, rawMIR) =
 
 data MIRFunction = MIRFunction {
   name :: String,
-  isSSA :: Maybe Bool,
   fixedStack :: Maybe [MIRStackObject],
   stack :: Maybe [MIRStackObject],
   jumpTable :: Maybe MIRJumpTable,
@@ -86,7 +85,6 @@ instance FromJSON MIRFunction where
     parseJSON (Object v) =
       MIRFunction <$>
       (v .: "name") <*>
-      (v .:? "isSSA") <*>
       (v .:? "fixedStack") <*>
       (v .:? "stack") <*>
       (v .:? "jumpTable") <*>
