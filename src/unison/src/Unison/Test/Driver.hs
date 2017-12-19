@@ -105,6 +105,7 @@ runUnison unisonTargets testArgs mirFile =
                    removeReds args,
                    keepNops args,
                    "--local-limit 4000",
+                   mirVersion args,
                    mirFile,
                    False,
                    verb,
@@ -117,7 +118,8 @@ runUnison unisonTargets testArgs mirFile =
                   (target, targetOption args)
         properties1 <- assertOutJson upd properties prefix
         let unisonMirFile = addExtension "unison.mir" prefix
-        properties2 <- assertCost upd (target, targetOption args)
+        properties2 <- assertCost (mirVersion args) upd
+                       (target, targetOption args)
                        properties1 unisonMirFile
         when upd $ updateProperties properties2 mirFile mir
         return ()
@@ -234,11 +236,11 @@ assertOutJson update properties prefix =
        expProven
      return properties2
 
-assertCost update target properties unisonMirFile =
+assertCost mirVersion update target properties unisonMirFile =
     do unisonMir <- strictReadFile unisonMirFile
        let gls = map lowLevelGoal (testGoal properties)
            (expCosts, _) =
-             Analyze.analyze (False, True, False, False)
+             Analyze.analyze (False, True, mirVersion, False, False)
              1.0 gls unisonMir target
            properties1 = if update then properties {testExpectedCost =
                                                        Just expCosts}

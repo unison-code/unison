@@ -12,6 +12,9 @@ Main authors:
 
 This file is part of Unison, see http://unison-code.github.io
 -}
+
+{-# LANGUAGE DeriveDataTypeable #-}
+
 module MachineIR.Base
        (
          MachineFunction (..),
@@ -29,6 +32,8 @@ module MachineIR.Base
          MachineIRVersion (..)
        )
        where
+
+import Data.Data
 
 -- | Machine IR function corresponding to LLVM's @MachineFunction@. This
 -- data type and all the data types contained ('MachineBlock',
@@ -381,3 +386,4 @@ data MachineIRVersion =
   LLVM5 |
   -- | LLVM 6.0 or newer (defines embedded register classes in the operands)
   LLVM6
+  deriving (Data, Typeable, Show, Eq)

@@ -78,9 +78,9 @@ import Unison.Tools.Import.AdvancePhis
 import Unison.Tools.Import.TagRemats
 
 run (estimateFreq, simplifyControlFlow, noCC, noReserved, maxBlockSize,
-     implementFrames, rematType, function, goal, mirFile, debug, intermediate,
-     lint, lintPragma, uniFile) mir target =
-    let mf = selectFunction function $ MachineIR.parse mir
+     implementFrames, rematType, function, goal, mirVersion, mirFile, debug,
+     intermediate, lint, lintPragma, uniFile) mir target =
+    let mf = selectFunction function $ MachineIR.parse mirVersion mir
         (mf', partialMfs) =
             applyTransformations
             (mirTransformations (estimateFreq, simplifyControlFlow))

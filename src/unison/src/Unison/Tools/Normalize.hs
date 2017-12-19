@@ -33,8 +33,9 @@ import Unison.Transformations.FinalizeOperations
 import Unison.Transformations.EstimateFrequency
 import qualified Unison.Transformations.NormalizeFrequency as NF
 
-run (estimateFreq, simplifyControlFlow, debug, normMirFile) mir target =
-  let mf  = fromSingleton $ MIR.parse mir
+run (estimateFreq, simplifyControlFlow, mirVersion, debug, normMirFile)
+    mir target =
+  let mf  = fromSingleton $ MIR.parse mirVersion mir
       (mf0, partialPreMfs) =
             applyTransformations
             (mirPreTransformations (estimateFreq, simplifyControlFlow))

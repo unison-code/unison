@@ -32,42 +32,53 @@ import MachineIR.Parser
 run args @
   (_estimateFreq, _simplifyControlFlow, _noCC, _noReserved, _maxBlockSize,
    _implementFrames, _function, _goal, _noCross, _oldModel, _expandCopies,
-   _rematType, _baseFile, _scaleFreq, _applyBaseFile, _tightPressureBound,
+   _rematType, baseFile, _scaleFreq, _applyBaseFile, _tightPressureBound,
    _strictlyBetter, _unsatisfiable, _removeReds, _keepNops, _solverFlags,
-   inFile, _debug, _verbose, _intermediate, _lint, outFile, outTemp, _presolver,
-   _solver) targetWithOption =
-  do mirInput <- strictReadFile inFile
-     let mirInputs = splitDocs mirInput
-     prefixes <- mapM (runFunction args targetWithOption) mirInputs
-     unisonMirOutput <-
-       fmap concat $ mapM (strictReadFile . addExtension "unison.mir") prefixes
+   mirVersion, inFile, _debug, _verbose, _intermediate, _lint, outFile, outTemp,
+   _presolver, _solver) targetWithOption =
+  do mirInput         <- strictReadFile inFile
+     maybeAsmMirInput <- maybeStrictReadFile baseFile
+     let mirInputs    = splitDocs mirVersion mirInput
+         asmMirInputs =
+           case maybeAsmMirInput of
+            Just asmMirInput -> map Just $ splitDocs mirVersion asmMirInput
+            Nothing          -> replicate (length mirInputs) Nothing
+     prefixes <- mapM (runFunction args targetWithOption)
+                      (zip mirInputs asmMirInputs)
+     unisonMirOutputs <- mapM (strictReadFile . addExtension "unison.mir")
+                         prefixes
      prefix <- getTempPrefix
      let unisonMirFile =
            case outFile of
             Just file -> Just file
             Nothing -> if outTemp then Just (addExtension "unison.mir" prefix)
                        else Nothing
+         unisonMirOutput = combineDocs mirVersion
+                           (concatMap (splitDocs mirVersion) unisonMirOutputs)
      emitOutput unisonMirFile unisonMirOutput
      return (prefix, prefixes)
 
 runFunction
   (estimateFreq, simplifyControlFlow, noCC, noReserved, maxBlockSize,
    implementFrames, function, goal, noCross, oldModel, expandCopies,
-   rematType, baseFile, scaleFreq, applyBaseFile, tightPressureBound,
-   strictlyBetter, unsatisfiable, removeReds, keepNops, solverFlags, inFile,
-   debug, verbose, intermediate, lint, _outFile, _outTemp, presolver, solver)
-  targetWithOption (rawIR, rawMIR) =
+   rematType, _baseFile, scaleFreq, applyBaseFile, tightPressureBound,
+   strictlyBetter, unsatisfiable, removeReds, keepNops, solverFlags, mirVersion,
+   inFile, debug, verbose, intermediate, lint, _outFile, _outTemp, presolver,
+   solver)
+  targetWithOption (mir, asmMir) =
   do prefix <- getTempPrefix
      let maybePutStrLn = when verbose . hPutStrLn stderr
          lintPragma    = True
-         mirInput      = rawIR ++ rawMIR
+         concatFun     = \(rawIR, rawMir) -> rawIR ++ rawMir
+         mirInput      = concatFun mir
+         asmMirInput   = fmap concatFun asmMir
 
      let uniFile = addExtension "uni" prefix
      maybePutStrLn "Running 'uni import'..."
      Import.run
        (estimateFreq, simplifyControlFlow, noCC, noReserved, maxBlockSize,
-        implementFrames, rematType, function, goal, inFile, debug, intermediate,
-        lint, lintPragma, Just uniFile)
+        implementFrames, rematType, function, goal, mirVersion, inFile, debug,
+        intermediate, lint, lintPragma, Just uniFile)
        mirInput targetWithOption
      uniInput <- strictReadFile uniFile
 
@@ -93,8 +104,9 @@ runFunction
        extUniInput targetWithOption
      altUniInput <- strictReadFile altUniFile
 
-     baseFile' <- normalize (prefix, estimateFreq, simplifyControlFlow, debug,
-                             verbose, targetWithOption) baseFile
+     baseFile' <-normalize
+                 (prefix, estimateFreq, simplifyControlFlow, mirVersion,
+                  debug, verbose, targetWithOption) asmMirInput
 
      let jsonFile = addExtension "json" prefix
      maybePutStrLn "Running 'uni model'..."
@@ -134,13 +146,12 @@ runFunction
 addExtension ext prefix = prefix ++ "." ++ ext
 
 normalize _ Nothing = return Nothing
-normalize (prefix, estimateFreq, simplifyControlFlow, debug, verbose,
-           targetWithOption) (Just baseFile) =
+normalize (prefix, estimateFreq, simplifyControlFlow, mirVersion,
+           debug, verbose, targetWithOption) (Just asmMirInput) =
   do let llvmMirFile = addExtension "llvm.mir" prefix
-     asmMirInput <- strictReadFile baseFile
      when verbose $ hPutStrLn stderr "Running 'uni normalize'..."
      Normalize.run
-       (estimateFreq, simplifyControlFlow, debug, Just llvmMirFile)
+       (estimateFreq, simplifyControlFlow, mirVersion, debug, Just llvmMirFile)
        asmMirInput targetWithOption
      return (Just llvmMirFile)
 

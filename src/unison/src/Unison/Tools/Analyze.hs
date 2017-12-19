@@ -39,10 +39,11 @@ import Unison.Tools.Analyze.FilterOverhead
 import Unison.Tools.Analyze.ComputeGoal
 
 run (goals, estimateFreq, simulateStalls, modelCost, boundFile, boundGoal,
-     mirFile, debug, intermediate, jsonFile) mir target =
+     mirVersion, mirFile, debug, intermediate, jsonFile) mir target =
   do inBounds <- maybeStrictReadFile boundFile
      let af = \gs mc oo ->
-               analyze (estimateFreq, simulateStalls, mc, oo) 1.0 gs mir target
+               analyze (estimateFreq, simulateStalls, mirVersion, mc, oo)
+               1.0 gs mir target
          -- compute requested costs
          sgoals   = splitOn "," goals
          gs       = map (lowerGoal . read) sgoals
@@ -67,9 +68,9 @@ run (goals, estimateFreq, simulateStalls, modelCost, boundFile, boundGoal,
        mapM_ (writeIntermediateFile "a" baseName) partialFs
      emitOutput jsonFile (BSL.unpack (encodePretty ps))
 
-analyze (estimateFreq, simulateStalls, modelCost, overheadOnly)
+analyze (estimateFreq, simulateStalls, mirVersion, modelCost, overheadOnly)
   factor gl mir target =
-  let mf  = fromSingleton $ MIR.parse mir
+  let mf  = fromSingleton $ MIR.parse mirVersion mir
       mf' = MIR.runMachineTransformations (preProcess target) mf
       ff  = buildFunction target mf'
       (f, partialFs) =

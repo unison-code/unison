@@ -14,6 +14,7 @@ This file is part of Unison, see http://unison-code.github.io
 
 module Unison.Tools.UniArgs (Uni(..), RematType(..), uniArgs) where
 
+import MachineIR
 import System.Console.CmdArgs
 
 data RematType = GeneralRemat | CopyRemat | NoRemat
@@ -26,7 +27,7 @@ data Uni =
                simplifyControlFlow :: Bool, implementFrames :: Bool,
                noCC :: Bool, noReserved :: Bool, maxBlockSize :: Maybe Integer,
                rematType :: RematType, function :: Maybe String,
-               goal :: Maybe String} |
+               goal :: Maybe String, mirVersion :: MachineIRVersion} |
     Linearize {targetName :: String, inFile :: FilePath, targetOption :: [String],
                outFile :: Maybe FilePath, debug :: Bool, intermediate :: Bool,
                lint :: Bool, lintPragma :: Bool} |
@@ -51,10 +52,11 @@ data Uni =
                outFile :: Maybe FilePath, debug :: Bool, intermediate :: Bool,
                goals :: String, estimateFreq :: Bool,
                simulateStalls :: Bool, modelCost :: Bool,
-               boundFile :: Maybe FilePath, boundGoal :: String} |
+               boundFile :: Maybe FilePath, boundGoal :: String,
+               mirVersion :: MachineIRVersion} |
     Normalize {targetName :: String, inFile :: FilePath, targetOption :: [String],
                outFile :: Maybe FilePath, debug :: Bool, estimateFreq :: Bool,
-               simplifyControlFlow :: Bool} |
+               simplifyControlFlow :: Bool, mirVersion :: MachineIRVersion} |
     Lint      {targetName :: String, inFile :: FilePath, targetOption :: [String],
                outFile :: Maybe FilePath, allTemporariesDefined :: Bool,
                singleDefinitions :: Bool, allTemporariesUsed :: Bool,
@@ -89,8 +91,9 @@ data Uni =
                scaleFreq :: Bool, applyBaseFile :: Bool,
                tightPressureBound :: Bool, strictlyBetter :: Bool,
                unsatisfiable :: Bool, removeReds :: Bool, keepNops :: Bool,
-               solverFlags :: String, outTemp :: Bool,
-               presolver :: Maybe FilePath, solver :: Maybe FilePath}
+               solverFlags :: String, mirVersion :: MachineIRVersion,
+               outTemp :: Bool, presolver :: Maybe FilePath,
+               solver :: Maybe FilePath}
     deriving (Data, Typeable, Show, Eq)
 
 allModes = [import', linearize', extend', augment', model', export', analyze',
@@ -115,6 +118,8 @@ import' = Import {
   noCC            = False &= help "Do not enforce calling convention",
   noReserved      = False &= help "Do not enforce reserved registers",
   maxBlockSize    = Nothing &= help "Maximum block size",
+  mirVersion      = enum [LLVM5 &= help "MIR version LLVM <= 5",
+                          LLVM6 &= help "MIR version LLVM >= 6"],
   rematType       = enum [CopyRemat &= help "Copy-based rematerialization",
                           GeneralRemat &= help "General rematerialization",
                           NoRemat &= help "No rematerialization"],

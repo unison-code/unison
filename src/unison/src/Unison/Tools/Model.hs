@@ -94,7 +94,10 @@ optimizationParameters (strictlyBetter, unsatisfiable, scaleFreq)
         or    = map (optResource r2id) gl :: [ResourceId]
         maxf0 = case baseMir of
                  (Just mir) ->
-                     let mf = fromSingleton $ MIR.parse mir
+                   -- The MIR version does not matter at this point as we
+                   -- expect normalized, single-function MIR. Same for the
+                   -- 'maximumCost' function below.
+                     let mf = fromSingleton $ MIR.parse MIR.LLVM5 mir
                          mc = maximumCost scaleFreq cf
                          mx = map (\g -> mc g (mir, mf) deps target code) gl
                      in if strictlyBetter then decrementLast mx else mx
@@ -142,7 +145,7 @@ maximumCost scaleFreq cf gl (mir, mf) deps target code =
         fbs    = map blockFreq code
         factor = if scaleFreq then scaleFactor (rm, oif, deps) code else 1.0
         nf     = sort . map (scaleDown factor)
-        ([baseCost], _) = Analyze.analyze (False, True, True, False)
+        ([baseCost], _) = Analyze.analyze (False, True, MIR.LLVM5, True, False)
                           factor [gl] mir target
         baseCost' = baseCost + compensation cf gl (nf fbs) (nf bbs)
     in baseCost'

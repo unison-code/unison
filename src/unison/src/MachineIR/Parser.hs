@@ -14,7 +14,8 @@ This file is part of Unison, see http://unison-code.github.io
 -}
 {-# LANGUAGE OverloadedStrings, FlexibleContexts, CPP #-}
 module MachineIR.Parser
-       (MachineIR.Parser.parse, splitDocs, mirOperand, mirFI, mirJTI) where
+       (MachineIR.Parser.parse, splitDocs, combineDocs, mirOperand, mirFI,
+        mirJTI) where
 
 import Data.Maybe
 import Data.Char
@@ -32,22 +33,36 @@ import MachineIR.Base
 import MachineIR.Constructors
 import MachineIR.Util
 
-parse :: Read i => Read r => String -> [MachineFunction i r]
-parse input = map parseFunction (splitDocs input)
+parse :: Read i => Read r => MachineIRVersion -> String -> [MachineFunction i r]
+parse version input = map (parseFunction version) (splitDocs version input)
 
-splitDocs :: String -> [(String, String)]
-splitDocs input =
+splitDocs :: MachineIRVersion -> String -> [(String, String)]
+splitDocs LLVM5 input =
+  -- A MIR file contains copies of the raw IR interleaved with the MIR of
+  -- each function in the module.
   let docs = split onDocumentEnd input
   in [(rawIR, rawMIR) | [rawIR, rawMIR] <- chunksOf 2 docs]
+splitDocs LLVM6 input =
+  -- A MIR file contains a first document with the raw IR followed by a
+  -- document with the MIR of each function in the module.
+  case split onDocumentEnd input of
+   [] -> []
+   rawIR : rawMIRs -> [(rawIR, rawMIR) | rawMIR <- rawMIRs]
 
-parseFunction :: Read i => Read r => (String, String) -> MachineFunction i r
-parseFunction (rawIR, rawMIR) =
+combineDocs :: MachineIRVersion -> [(String, String)] -> String
+combineDocs LLVM5 outputs =
+  concat [rawIR ++ rawMIR | (rawIR, rawMIR) <- outputs]
+combineDocs LLVM6 ((rawIR, rawMIR) : outputs) =
+  concat ([rawIR, rawMIR] ++ map snd outputs)
+
+parseFunction :: Read i => Read r => MachineIRVersion -> (String, String) ->
+                 MachineFunction i r
+parseFunction v (rawIR, rawMIR) =
   let ir  = decodeYaml rawIR  :: String
       mir = decodeYaml rawMIR :: MIRFunction
       mjt = fmap toMachineFunctionPropertyJumpTable (jumpTable mir)
       mfs = fmap toMachineFunctionPropertyFixedStack (fixedStack mir)
       ms  = fmap toMachineFunctionPropertyStack (stack mir)
-      v   = mirVersion mir
       mf  = case P.parse (mirBody v) "" (body mir) of
         Left e -> error ("error parsing body of '"
                          ++ name mir ++ "':\n" ++ show e)
@@ -57,12 +72,6 @@ parseFunction (rawIR, rawMIR) =
       mf1 = mapToMachineInstruction readTargetOpcode mf
       mf2 = mapToMachineInstruction (mapToMachineOperand readOperand) mf1
   in mf2
-
-mirVersion mir =
-  -- poor indicator of the MIR version (LLVM 6 drops the 'isSSA' attribute)
-  case isSSA mir of
-   Just _ -> LLVM5
-   Nothing -> LLVM6
 
 data MIRFunction = MIRFunction {
   name :: String,

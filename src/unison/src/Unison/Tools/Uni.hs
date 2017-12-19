@@ -47,6 +47,7 @@ mainWithTargets targets = do
                  Import.run
                  (estimateFreq, simplifyControlFlow, noCC, noReserved,
                   maxBlockSize, implementFrames, rematType, function, goal,
+                  mirVersion,
                   inFile, debug, intermediate, lint, lintPragma, outFile)
                  input (target, targetOption)
     Linearize{..} ->
@@ -94,14 +95,14 @@ mainWithTargets targets = do
              (Any target) ->
                  Analyze.run
                  (goals, estimateFreq, simulateStalls, modelCost, boundFile,
-                  boundGoal, inFile, debug, intermediate, outFile)
+                  boundGoal, mirVersion, inFile, debug, intermediate, outFile)
                  input (target, targetOption)
     Normalize{..} ->
         do input <- strictReadFile inFile
            case pickTarget targetName targets of
              (Any target) ->
                  Normalize.run
-                 (estimateFreq, simplifyControlFlow, debug, outFile)
+                 (estimateFreq, simplifyControlFlow, mirVersion, debug, outFile)
                  input (target, targetOption)
     Lint{..} ->
         do input <- strictReadFile inFile
@@ -138,7 +139,7 @@ mainWithTargets targets = do
            (estimateFreq, simplifyControlFlow, noCC, noReserved, maxBlockSize, implementFrames,
             function, goal, noCross, oldModel, expandCopies, rematType,
             baseFile, scaleFreq, applyBaseFile, tightPressureBound,
-            strictlyBetter, unsatisfiable, removeReds, keepNops, solverFlags,
+            strictlyBetter, unsatisfiable, removeReds, keepNops, solverFlags, mirVersion,
             inFile, debug, verbose, intermediate, lint, outFile, outTemp,
             presolver, solver)
            (target, targetOption)
