@@ -82,6 +82,7 @@ body:             |
 
 ...
 ---
+unison-test-mir-version: null
 unison-test-target: Mips
 unison-test-goal:
 - size

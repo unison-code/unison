@@ -48,6 +48,7 @@ body:             |
 
 ...
 ---
+unison-test-mir-version: null
 unison-test-target: Hexagon
 unison-test-goal:
 - size

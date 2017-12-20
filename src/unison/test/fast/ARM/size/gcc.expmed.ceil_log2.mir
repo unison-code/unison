@@ -48,6 +48,7 @@ body:             |
 
 ...
 ---
+unison-test-mir-version: null
 unison-test-target: ARM
 unison-test-goal:
 - size

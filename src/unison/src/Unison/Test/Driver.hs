@@ -31,8 +31,10 @@ import qualified Data.ByteString.Lazy.Char8 as BSL
 import qualified Data.Aeson as JSON
 import qualified Data.HashMap.Strict as HM
 import qualified Data.ByteString.Char8 as B8
+import qualified Data.Text as T
 
 import Common.Util
+import qualified MachineIR as MIR
 import Unison
 import Unison.Target.API
 import Unison.Tools.Run as Run
@@ -105,7 +107,7 @@ runUnison unisonTargets testArgs mirFile =
                    removeReds args,
                    keepNops args,
                    "--local-limit 4000",
-                   mirVersion args,
+                   fromMaybe (mirVersion args) (testMirVersion properties),
                    mirFile,
                    False,
                    verb,
@@ -141,7 +143,8 @@ parseTestProperties unisonTargets mirFile mir =
   in case decodeEither $ B8.pack (last docs) of
       Right properties -> properties :: TestProperties
       (Left _) -> mkTestProperties (guessTarget unisonTargets mirFile)
-                  (guessGoal mirFile) Nothing Nothing Nothing Nothing Nothing
+                  (guessGoal mirFile)
+                  Nothing Nothing Nothing Nothing Nothing Nothing
 
 guessTarget unisonTargets mirFile =
   case find (\t -> t `isInfixOf` mirFile) (map fst unisonTargets) of
@@ -183,6 +186,7 @@ data TestProperties = TestProperties {
   testGoal :: [String],
   testFunction :: Maybe String,
   testStrictlyBetter :: Maybe Bool,
+  testMirVersion :: Maybe MIR.MachineIRVersion,
   testExpectedHasSolution :: Maybe Bool,
   testExpectedProven :: Maybe Bool,
   testExpectedCost :: Maybe [Integer]
@@ -195,17 +199,19 @@ instance FromJSON TestProperties where
     (v .:  "unison-test-goal") <*>
     (v .:? "unison-test-function") <*>
     (v .:? "unison-test-strictly-better") <*>
+    (v .:? "unison-test-mir-version") <*>
     (v .:? "unison-test-expected-has-solution") <*>
     (v .:? "unison-test-expected-proven") <*>
     (v .:? "unison-test-expected-cost")
   parseJSON _ = error "Can't parse TestProperties from YAML"
 
 instance ToJSON TestProperties where
-  toJSON (TestProperties target goal fun sb expHasSolution expProven expCost) =
+  toJSON (TestProperties target goal fun sb mv expHasSolution expProven expCost) =
     object ["unison-test-target" .= target,
             "unison-test-goal" .= goal,
             "unison-test-function" .= fun,
             "unison-test-strictly-better" .= sb,
+            "unison-test-mir-version" .= mv,
             "unison-test-expected-has-solution" .= expHasSolution,
             "unison-test-expected-proven" .= expProven,
             "unison-test-expected-cost" .= expCost]
@@ -265,3 +271,9 @@ solFromJson sol key =
     case JSON.fromJSON (sol HM.! key) of
       JSON.Error e -> error ("error converting JSON input:\n" ++ show e)
       JSON.Success s -> s
+
+instance ToJSON MIR.MachineIRVersion where
+  toJSON v = toJSON (show v)
+
+instance FromJSON MIR.MachineIRVersion where
+  parseJSON = JSON.withText "String" (\v -> return (read (T.unpack v)))

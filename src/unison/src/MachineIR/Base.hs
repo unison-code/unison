@@ -386,4 +386,4 @@ data MachineIRVersion =
   LLVM5 |
   -- | LLVM 6.0 or newer (defines embedded register classes in the operands)
   LLVM6
-  deriving (Data, Typeable, Show, Eq)
+  deriving (Data, Typeable, Show, Read, Eq)
