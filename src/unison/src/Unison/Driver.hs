@@ -27,7 +27,6 @@ import Common.Util
 import Data.Maybe
 import Data.List
 import System.FilePath
-import System.Directory
 import System.IO
 
 applyTransformations ts target f = mapAccumL (applyTransformation target) f ts
@@ -60,5 +59,7 @@ pickTarget targetName targets =
 unisonPrefixFile tmp =
   do (uniFile, h) <- openTempFileWithDefaultPermissions tmp "unison-"
      hClose h
-     removeFile uniFile
+     -- the prefix file 'uniFile' is not deleted to prevent the next call to
+     -- 'unisonPrefixFile' to create the same prefix, the caller is responsible
+     -- for its deletion.
      return uniFile

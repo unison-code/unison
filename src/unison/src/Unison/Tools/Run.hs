@@ -45,6 +45,7 @@ run args @
             Nothing          -> replicate (length mirInputs) Nothing
      prefixes <- mapM (runFunction args targetWithOption)
                       (zip mirInputs asmMirInputs)
+     mapM removeFile prefixes
      unisonMirOutputs <- mapM (strictReadFile . addExtension "unison.mir")
                          prefixes
      prefix <- getTempPrefix
@@ -72,6 +73,7 @@ runFunction
          concatFun     = \(rawIR, rawMir) -> rawIR ++ rawMir
          mirInput      = concatFun mir
          asmMirInput   = fmap concatFun asmMir
+     maybePutStrLn ("Running function with prefix '" ++ prefix ++ "'...")
 
      let uniFile = addExtension "uni" prefix
      maybePutStrLn "Running 'uni import'..."
