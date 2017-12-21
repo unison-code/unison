@@ -46,6 +46,10 @@ instruction-set:
      infinite-class: RM32
      suffix: _fi
 
+   - id: L2_loadrigp
+     home-class: IntRegs
+     infinite-class: RM32
+
    - id: L2_loadrhgp
      home-class: IntRegs
      infinite-class: RM32

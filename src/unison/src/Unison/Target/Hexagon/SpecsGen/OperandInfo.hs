@@ -379,9 +379,10 @@ operandInfo i
       [A2_tfrsi_demat, A2_tfrsi_demat_ce, L2_loadrb_io_fi_demat_fi,
        L2_loadrb_io_fi_demat_fi_ce, L2_loadrhgp_demat,
        L2_loadrhgp_demat_ce, L2_loadri_io_fi_demat_fi,
-       L2_loadri_io_fi_demat_fi_ce, L2_loadrubgp_demat,
-       L2_loadrubgp_demat_ce, L4_loadrb_abs_demat, L4_loadrb_abs_demat_ce,
-       L4_loadrh_abs_demat, L4_loadrh_abs_demat_ce, L4_loadri_abs_demat,
+       L2_loadri_io_fi_demat_fi_ce, L2_loadrigp_demat,
+       L2_loadrigp_demat_ce, L2_loadrubgp_demat, L2_loadrubgp_demat_ce,
+       L4_loadrb_abs_demat, L4_loadrb_abs_demat_ce, L4_loadrh_abs_demat,
+       L4_loadrh_abs_demat_ce, L4_loadri_abs_demat,
        L4_loadri_abs_demat_ce, L4_loadrub_abs_demat,
        L4_loadrub_abs_demat_ce, L4_loadruh_abs_demat,
        L4_loadruh_abs_demat_ce, TFR_FI_fi_demat_fi, TFR_FI_fi_demat_fi_ce]
@@ -1692,9 +1693,10 @@ operandInfo i
       [A2_tfrsi_remat, A2_tfrsi_remat_ce, L2_loadrb_io_fi_remat_fi,
        L2_loadrb_io_fi_remat_fi_ce, L2_loadrhgp_remat,
        L2_loadrhgp_remat_ce, L2_loadri_io_fi_remat_fi,
-       L2_loadri_io_fi_remat_fi_ce, L2_loadrubgp_remat,
-       L2_loadrubgp_remat_ce, L4_loadrb_abs_remat, L4_loadrb_abs_remat_ce,
-       L4_loadrh_abs_remat, L4_loadrh_abs_remat_ce, L4_loadri_abs_remat,
+       L2_loadri_io_fi_remat_fi_ce, L2_loadrigp_remat,
+       L2_loadrigp_remat_ce, L2_loadrubgp_remat, L2_loadrubgp_remat_ce,
+       L4_loadrb_abs_remat, L4_loadrb_abs_remat_ce, L4_loadrh_abs_remat,
+       L4_loadrh_abs_remat_ce, L4_loadri_abs_remat,
        L4_loadri_abs_remat_ce, L4_loadrub_abs_remat,
        L4_loadrub_abs_remat_ce, L4_loadruh_abs_remat,
        L4_loadruh_abs_remat_ce, TFR_FI_fi_remat_fi, TFR_FI_fi_remat_fi_ce]
@@ -2354,12 +2356,13 @@ operandInfo i
       TemporaryInfo (RegisterClass IntRegs) 1 False])
   | i `elem`
       [A2_tfrsi_source, A2_tfrsi_source_ce, L2_loadrhgp_source,
-       L2_loadrhgp_source_ce, L2_loadrubgp_source, L2_loadrubgp_source_ce,
-       L4_loadrb_abs_source, L4_loadrb_abs_source_ce,
-       L4_loadrh_abs_source, L4_loadrh_abs_source_ce,
-       L4_loadri_abs_source, L4_loadri_abs_source_ce,
-       L4_loadrub_abs_source, L4_loadrub_abs_source_ce,
-       L4_loadruh_abs_source, L4_loadruh_abs_source_ce]
+       L2_loadrhgp_source_ce, L2_loadrigp_source, L2_loadrigp_source_ce,
+       L2_loadrubgp_source, L2_loadrubgp_source_ce, L4_loadrb_abs_source,
+       L4_loadrb_abs_source_ce, L4_loadrh_abs_source,
+       L4_loadrh_abs_source_ce, L4_loadri_abs_source,
+       L4_loadri_abs_source_ce, L4_loadrub_abs_source,
+       L4_loadrub_abs_source_ce, L4_loadruh_abs_source,
+       L4_loadruh_abs_source_ce]
     =
     ([BoundInfo], [TemporaryInfo (InfiniteRegisterClass RM32) 0 False])
   | i `elem`

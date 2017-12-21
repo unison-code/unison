@@ -2649,6 +2649,9 @@ data HexagonInstruction = A2_abs
                         | TFR_FI_fi_source_fi
                         | TFR_FI_fi_demat_fi
                         | TFR_FI_fi_remat_fi
+                        | L2_loadrigp_source
+                        | L2_loadrigp_demat
+                        | L2_loadrigp_remat
                         | L2_loadrhgp_source
                         | L2_loadrhgp_demat
                         | L2_loadrhgp_remat
@@ -3729,6 +3732,9 @@ data HexagonInstruction = A2_abs
                         | TFR_FI_fi_source_fi_ce
                         | TFR_FI_fi_demat_fi_ce
                         | TFR_FI_fi_remat_fi_ce
+                        | L2_loadrigp_source_ce
+                        | L2_loadrigp_demat_ce
+                        | L2_loadrigp_remat_ce
                         | L2_loadrhgp_source_ce
                         | L2_loadrhgp_demat_ce
                         | L2_loadrhgp_remat_ce

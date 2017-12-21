@@ -1166,6 +1166,10 @@ parent i
        L2_loadri_io_fi_source_fi, L2_loadri_io_fi_source_fi_ce]
     = Just L2_loadri_io_fi
   | i `elem`
+      [L2_loadrigp_demat, L2_loadrigp_demat_ce, L2_loadrigp_remat,
+       L2_loadrigp_remat_ce, L2_loadrigp_source, L2_loadrigp_source_ce]
+    = Just L2_loadrigp
+  | i `elem`
       [L2_loadrubgp_demat, L2_loadrubgp_demat_ce, L2_loadrubgp_remat,
        L2_loadrubgp_remat_ce, L2_loadrubgp_source, L2_loadrubgp_source_ce]
     = Just L2_loadrubgp
