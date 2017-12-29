@@ -2658,6 +2658,9 @@ data HexagonInstruction = A2_abs
                         | L2_loadrubgp_source
                         | L2_loadrubgp_demat
                         | L2_loadrubgp_remat
+                        | L2_loadruhgp_source
+                        | L2_loadruhgp_demat
+                        | L2_loadruhgp_remat
                         | CONST64_Int_Real_source
                         | CONST64_Int_Real_demat
                         | CONST64_Int_Real_remat
@@ -3741,6 +3744,9 @@ data HexagonInstruction = A2_abs
                         | L2_loadrubgp_source_ce
                         | L2_loadrubgp_demat_ce
                         | L2_loadrubgp_remat_ce
+                        | L2_loadruhgp_source_ce
+                        | L2_loadruhgp_demat_ce
+                        | L2_loadruhgp_remat_ce
                         | CONST64_Int_Real_source_ce
                         | CONST64_Int_Real_demat_ce
                         | CONST64_Int_Real_remat_ce

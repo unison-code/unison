@@ -58,6 +58,10 @@ instruction-set:
      home-class: IntRegs
      infinite-class: RM32
 
+   - id: L2_loadruhgp
+     home-class: IntRegs
+     infinite-class: RM32
+
    - id: CONST64_Int_Real
      home-class: DoubleRegs
      infinite-class: RM64

@@ -728,6 +728,7 @@ allInstructions
      L2_loadrigp_source, L2_loadrigp_demat, L2_loadrigp_remat,
      L2_loadrhgp_source, L2_loadrhgp_demat, L2_loadrhgp_remat,
      L2_loadrubgp_source, L2_loadrubgp_demat, L2_loadrubgp_remat,
+     L2_loadruhgp_source, L2_loadruhgp_demat, L2_loadruhgp_remat,
      CONST64_Int_Real_source, CONST64_Int_Real_demat,
      CONST64_Int_Real_remat, L2_loadrd_io_fi_source_fi,
      L2_loadrd_io_fi_demat_fi, L2_loadrd_io_fi_remat_fi,
@@ -1123,11 +1124,12 @@ allInstructions
      L2_loadrigp_source_ce, L2_loadrigp_demat_ce, L2_loadrigp_remat_ce,
      L2_loadrhgp_source_ce, L2_loadrhgp_demat_ce, L2_loadrhgp_remat_ce,
      L2_loadrubgp_source_ce, L2_loadrubgp_demat_ce,
-     L2_loadrubgp_remat_ce, CONST64_Int_Real_source_ce,
-     CONST64_Int_Real_demat_ce, CONST64_Int_Real_remat_ce,
-     L2_loadrd_io_fi_source_fi_ce, L2_loadrd_io_fi_demat_fi_ce,
-     L2_loadrd_io_fi_remat_fi_ce, L4_loadrd_abs_source_ce,
-     L4_loadrd_abs_demat_ce, L4_loadrd_abs_remat_ce,
-     TFR_PdFalse_demat_ce, TFR_PdFalse_remat_ce, TFR_PdTrue_demat_ce,
-     TFR_PdTrue_remat_ce]
+     L2_loadrubgp_remat_ce, L2_loadruhgp_source_ce,
+     L2_loadruhgp_demat_ce, L2_loadruhgp_remat_ce,
+     CONST64_Int_Real_source_ce, CONST64_Int_Real_demat_ce,
+     CONST64_Int_Real_remat_ce, L2_loadrd_io_fi_source_fi_ce,
+     L2_loadrd_io_fi_demat_fi_ce, L2_loadrd_io_fi_remat_fi_ce,
+     L4_loadrd_abs_source_ce, L4_loadrd_abs_demat_ce,
+     L4_loadrd_abs_remat_ce, TFR_PdFalse_demat_ce, TFR_PdFalse_remat_ce,
+     TFR_PdTrue_demat_ce, TFR_PdTrue_remat_ce]
 
