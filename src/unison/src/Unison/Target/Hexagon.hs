@@ -359,9 +359,10 @@ resources =
      Resource Slot2 1,    -- Used by JR
      Resource Slot3 1,    -- Used by CR
 
-     -- Artificial resource to represent the fact that there can only be up to
-     -- two regular stores or a single new-value store per bundle (see Section
-     -- 5.5 in Hexagon programmer's reference)
+     -- Artificial resource to represent the fact that there can only be up
+     -- to two regular stores or a single new-value store per bundle (see
+     -- Section 5.5 in Hexagon programmer's reference). Also used to avoid
+     -- stores in parallel with L4_return (seems to be disallowed by LLVM)
      Resource Store 2,    -- Used by ST and NVST
 
      -- Artificial resource to forbid conditional instructions and new-value
