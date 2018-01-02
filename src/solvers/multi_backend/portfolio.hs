@@ -263,6 +263,8 @@ solutionCost (_, "")  = maxInt
 solutionCost (_, out) = cost out
 
 cost "" = maxInt
+cost out
+  | not (validJson out) = maxInt
 cost out =
   let sol  = parseJson out
       cost = sol HM.! "cost"
