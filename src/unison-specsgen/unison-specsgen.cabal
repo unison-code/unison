@@ -43,8 +43,7 @@ Library
                  yaml >= 0.8,
                  bytestring >= 0.9,
                  cmdargs >= 0.10,
-                 filepath >= 1.3,
-                 regex-posix >= 0.95
+                 filepath >= 1.3
 
   Ghc-options: -fwarn-dodgy-exports -fwarn-dodgy-imports -fwarn-unused-matches
                -fwarn-unused-imports -fwarn-unused-binds -O2

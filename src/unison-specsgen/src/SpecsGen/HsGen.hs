@@ -67,7 +67,6 @@ import qualified Data.Map as M
 import Language.Haskell.Syntax
 import qualified Data.Text as T
 import Control.Arrow
-import Text.Regex.Posix
 import Data.Function
 
 import SpecsGen.SimpleYaml
@@ -212,12 +211,7 @@ deleteField df (YMap fs) = YMap (filter (not . isField df) fs)
 
 isField f (f', _) = f == f'
 
-promote effectPats i =
-    let effs   = map (\p -> second tail $ break (\c -> c == ':') p) effectPats
-        effs'  = [e | (e, p) <- effs, oId i =~ p]
-    in doPromote effs' i
-
-doPromote effs i =
+promote effs i =
     let rs    = sideEffects $ iAffectedBy i
         ws    = if iType i `elem` ["call", "branch"]
                 then [] -- calls and branches do not have definition operands

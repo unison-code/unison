@@ -138,6 +138,6 @@ run-specsgen-arm:
 	         --outputdir=$(SGARMROOTDIR) \
 	         --regclass p2:CCR --infiniteregclass M32 --infiniteregclass M32t \
 	         --infiniteregclass M64 --infiniteregclass M128 \
-	         --promoteeffect CPSR: \
+	         --promoteeffect CPSR \
 	         --infiniteregclass RM32 --infiniteregclass RM64 \
 	         --rematfile=$(SGARMREMATYAML)
