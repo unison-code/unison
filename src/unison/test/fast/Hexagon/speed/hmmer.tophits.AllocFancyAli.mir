@@ -61,9 +61,9 @@ unison-test-target: Hexagon
 unison-test-goal:
 - speed
 unison-test-expected-cost:
-- 7
+- 8
 unison-test-function: null
-unison-test-expected-proven: true
+unison-test-expected-proven: false
 unison-test-strictly-better: null
-unison-test-expected-has-solution: true
+unison-test-expected-has-solution: false
 ...
