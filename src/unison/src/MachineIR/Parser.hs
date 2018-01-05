@@ -438,7 +438,8 @@ mirRegOther =
        try (string "killed") <|>
        try (string "internal") <|>
        try (string "early-clobber") <|>
-       try (string "debug-use")
+       try (string "debug-use") <|>
+       try (string "renamable")
      return Nothing
 
 mirImm =
