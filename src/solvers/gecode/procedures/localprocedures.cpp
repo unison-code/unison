@@ -84,6 +84,9 @@ solve_generic_portfolio(LocalModel * base, GIST_OPTIONS * lo, int iteration) {
     new_stop(base->options->local_limit(), base->options);
   Search::Options localOptions;
   localOptions.stop = localStop;
+  // FIXME: if base->options->portfolio_threads() == 1, we would still like
+  // to set assets == base->options->local_portfolio().size(), but in that
+  // case Gecode does not seem to honor 'localStop'.
   int n = std::min(base->options->portfolio_threads(),
                    (unsigned int) base->options->local_portfolio().size());
   localOptions.assets = n;
