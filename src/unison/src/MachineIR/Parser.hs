@@ -403,7 +403,13 @@ mirTiedDef =
      string ")"
      return id
 
-mirMachineReg =
+mirMachineReg = try mirLongNullReg <|> mirMachineFreeReg
+
+mirLongNullReg =
+  do string "noreg"
+     return mkMachineNullReg
+
+mirMachineFreeReg =
   do name <- many alphaNumDashDotUnderscore
      optional (try mirTiedDef)
      return (MachineFreeReg name)
