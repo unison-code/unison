@@ -20,6 +20,7 @@ import Data.Yaml
 import qualified Data.ByteString.Char8 as B8
 import Language.Haskell.Pretty
 import Data.Maybe
+import System.Directory
 
 import SpecsGen.SimpleYaml
 import SpecsGen.HsGen
@@ -87,8 +88,19 @@ runSpecsGen tPreMod tExtension =
        tExtension sg is6
 
 writeHsFile dir base f =
-    writeFile (dir </> addExtension base ".hs")
-    (topComment ++ concatMap (\d -> prettyPrint d ++ "\n\n") f)
+    let name = dir </> addExtension base ".hs"
+        hs   = (topComment ++ concatMap (\d -> prettyPrint d ++ "\n\n") f)
+    in updateFile name hs
+
+updateFile name content =
+  do oldContent <- readIfExists name
+     maybeUpdateFile name oldContent content
+     return ()
+
+maybeUpdateFile _ (Just oldContent) newContent
+  | oldContent == newContent = return ()
+maybeUpdateFile name _ newContent =
+  writeFile name newContent
 
 yamlInstructions = yInstructions . simplify . decodeYaml
 
@@ -99,3 +111,10 @@ decodeYaml s =
   case decodeEither $ B8.pack s of
     (Left err) -> error err
     Right yaml -> yaml
+
+readIfExists file =
+  do fileExists <- doesFileExist file
+     if fileExists then
+       (do content <-readFile file
+           return (Just content))
+       else return Nothing
