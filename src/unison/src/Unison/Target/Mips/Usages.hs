@@ -10,11 +10,18 @@ import Unison.Target.Mips.SpecsGen.MipsInstructionDecl
 
 -- | Declares resource usages of each instruction
 
-usages i =
+usages to i =
   let it = SpecsGen.itinerary i
-  in mergeUsages (itineraryUsage i it)
+  in mergeUsages (itineraryUsage' to i it)
      ([mkUsage BundleWidth (size i) 1 | size i > 0] ++
       [mkUsage Issue (issue i) 1])
+
+itineraryUsage' to i it =
+  let us = itineraryUsage i it
+  in if unitLatency to then
+       [u {occupation = 1, offset = 0}
+       | u  <- us, resource u /= LongDuration]
+     else us
 
 itineraryUsage i _
   | isDelaySlotInstr i = [mkUsage LongDuration 1 1]
@@ -91,4 +98,4 @@ issue i
   | isDelaySlotInstr i = 0
   | otherwise = 1
 
-latency i = maybeMax 0 $ map occupation (usages i)
+latency to i = maybeMax 0 $ map occupation (usages to i)

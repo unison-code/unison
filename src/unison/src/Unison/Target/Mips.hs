@@ -52,24 +52,24 @@ target =
       API.tInstructionType  = const SpecsGen.instructionType,
       API.tBranchInfo       = const branchInfo,
       API.tPreProcess       = const preProcess,
-      API.tPostProcess      = const postProcess,
+      API.tPostProcess      = postProcess,
       API.tTransforms       = const transforms,
       API.tCopies           = const copies,
       API.tRematInstrs      = const rematInstrs,
       API.tFromCopy         = const fromCopy,
-      API.tOperandInfo      = const operandInfo,
+      API.tOperandInfo      = operandInfo,
       API.tAlignedPairs     = const SpecsGen.alignedPairs,
       API.tPackedPairs      = const (const (const [])),
       API.tRelatedPairs     = const (const []),
       API.tResources        = const resources,
-      API.tUsages           = const usages,
+      API.tUsages           = usages,
       API.tNop              = const nop,
       API.tReadWriteInfo    = const SpecsGen.readWriteInfo,
       API.tImplementFrame   = const implementFrame,
       API.tAddPrologue      = const addPrologue,
       API.tAddEpilogue      = const addEpilogue,
       API.tStackDirection   = const stackDirection,
-      API.tReadWriteLatency = const readWriteLatency,
+      API.tReadWriteLatency = readWriteLatency,
       API.tAlternativeTemps = const alternativeTemps,
       API.tExpandCopy       = const expandCopy,
       API.tConstraints      = const (const [])
@@ -156,9 +156,9 @@ copies (f, _, cg, ra, bcfg, sg) _ t _ d us =
       w  = widthOfTemp ra cg f t is
       -- This below is just to determine which temporaries require only 32-bits
       -- FP rather than GP copies
-      drcs = transitiveRegClasses operandInfo bcfg sg Reaching f t
+      drcs = transitiveRegClasses (operandInfo []) bcfg sg Reaching f t
       dors = transitivePreAssignments bcfg sg Reaching f t
-      urcs = transitiveRegClasses operandInfo bcfg sg Reachable f t
+      urcs = transitiveRegClasses (operandInfo []) bcfg sg Reachable f t
       uors = transitivePreAssignments bcfg sg Reachable f t
       rcType rcs ors
         | null rcs && null ors = AnyRegClass
@@ -331,7 +331,7 @@ addFrameIndex = mapToTargetMachineInstruction addFrameIndexInstr
 addFrameIndexInstr mi @ MachineSingle {msOpcode = opcode,
                                        msOperands = operands}
   | any isMachineFrameIndex operands &&
-    any isTemporaryInfo (fst $ operandInfo $ mopcTarget opcode) =
+    any isTemporaryInfo (fst $ operandInfo [] $ mopcTarget opcode) =
       mi {msOpcode = liftToTOpc (\i -> read (show i ++ "_fi")) opcode}
   | otherwise = mi
 
@@ -346,22 +346,23 @@ liftToTOpc f = mkMachineTargetOpc . f . mopcTarget
 
 -- | Target dependent post-processing functions
 
-postProcess = [expandPseudos, cleanNops, normalizeDelaySlots,
-               flip addImplicitRegs (target, [])]
+postProcess to = [expandPseudos to, cleanNops, normalizeDelaySlots,
+                  flip addImplicitRegs (target, [])]
 
-expandPseudos = mapToMachineBlock (expandBlockPseudos expandPseudo)
+expandPseudos to = mapToMachineBlock (expandBlockPseudos (expandPseudo to))
 
-expandPseudo mi @ MachineSingle {msOpcode = MachineTargetOpc LoadGPDisp} =
+expandPseudo to mi @ MachineSingle {msOpcode = MachineTargetOpc LoadGPDisp}
+  | not (unitLatency to) =
   let v0  = mkMachineReg V0
       gpd = mkMachineExternal "_gp_disp"
       mi1 = mi {msOpcode = mkMachineTargetOpc LUi, msOperands = [v0, gpd]}
       mi2 = mi {msOpcode = mkMachineTargetOpc ADDiu, msOperands = [v0, v0, gpd]}
   in [[mi1],[mi2]]
 
-expandPseudo mi @ MachineSingle {msOpcode   = MachineTargetOpc i,
+expandPseudo _ mi @ MachineSingle {msOpcode   = MachineTargetOpc i,
                                  msOperands = mos} =
   [[expandSimple mi (i, mos)]]
-expandPseudo mi = [[mi]]
+expandPseudo _ mi = [[mi]]
 
 expandSimple mi (RetRA, _) =
   mi {msOpcode = MachineTargetOpc PseudoReturn,
@@ -421,12 +422,12 @@ transforms _ = []
 
 -- | Latency of read-write dependencies
 
-readWriteLatency _ (_, Read) (_, Write) = 0
-readWriteLatency _ ((_, VirtualType (DelimiterType InType)), _) (_, _) = 1
-readWriteLatency _ ((_, VirtualType FunType), _) (_, _) = 1
-readWriteLatency _ ((_, VirtualType _), _) (_, _) = 0
-readWriteLatency _ ((TargetInstruction p, _), _) (_, _) =
-    maybeMax 0 $ map occupation (usages p)
+readWriteLatency _ _ (_, Read) (_, Write) = 0
+readWriteLatency _ _ ((_, VirtualType (DelimiterType InType)), _) (_, _) = 1
+readWriteLatency _ _ ((_, VirtualType FunType), _) (_, _) = 1
+readWriteLatency _ _ ((_, VirtualType _), _) (_, _) = 0
+readWriteLatency to _ ((TargetInstruction p, _), _) (_, _) =
+    maybeMax 0 $ map occupation (usages to p)
 
 
 -- | Alternative temporaries of each operand
@@ -438,7 +439,8 @@ alternativeTemps _ _ _ ts = map fst ts
 
 expandCopy _ _ o = [o]
 
-operandInfo i = adjustDefLatency i $ correctUses i $ SpecsGen.operandInfo i
+operandInfo to i =
+  adjustDefLatency to i $ correctUses i $ SpecsGen.operandInfo i
 
 correctUses i info
     | i `elem` [LW, LH, LBu, LB, LHu] =
@@ -483,4 +485,4 @@ correctUses i info
          [])
     | otherwise = info
 
-adjustDefLatency i = second (map (applyToLatency (const (latency i))))
+adjustDefLatency to i = second (map (applyToLatency (const (latency to i))))
