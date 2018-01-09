@@ -37,7 +37,7 @@ import qualified Unison.Graphs.Partition as P
 
 import Unison.Tools.Model.Definitions
 
-parameters (cg, _, _, t2w, ra, _) f @ Function {fCode = code} target =
+parameters noCC (cg, _, _, t2w, ra, _) f @ Function {fCode = code} target =
     let oif         = operandInfo target
         bif         = branchInfo target
         apf         = alignedPairs target
@@ -98,8 +98,8 @@ parameters (cg, _, _, t2w, ra, _) f @ Function {fCode = code} target =
         r2as        = regAtoms ra
         toAtoms     = concatMap ((M.!) r2as) .
                       map (mkRegister . mkTargetRegister)
-        callersaved = toAtoms $ callerSaved target
-        calleesaved = toAtoms $ calleeSaved target
+        callersaved = if noCC then [] else toAtoms $ callerSaved target
+        calleesaved = if noCC then [] else toAtoms $ calleeSaved target
 
         space       = toValueListM classSpace
         range       = toValueList rs2a

@@ -79,7 +79,8 @@ mainWithTargets targets = do
              (Any target) ->
                  Model.run
                  (baseFile, scaleFreq, oldModel, applyBaseFile,
-                  tightPressureBound, strictlyBetter, unsatisfiable, outFile)
+                  tightPressureBound, strictlyBetter, unsatisfiable, noCC,
+                  outFile)
                  input (target, targetOption)
     Export{..} ->
         do input <- strictReadFile inFile

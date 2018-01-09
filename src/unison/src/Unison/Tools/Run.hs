@@ -114,7 +114,7 @@ runFunction
      maybePutStrLn "Running 'uni model'..."
      Model.run
        (baseFile', scaleFreq, oldModel, applyBaseFile, tightPressureBound,
-        strictlyBetter, unsatisfiable, Just jsonFile)
+        strictlyBetter, unsatisfiable, noCC, Just jsonFile)
        altUniInput targetWithOption
 
      let extJsonFile   = addExtension "ext.json" prefix

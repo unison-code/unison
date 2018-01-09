@@ -48,13 +48,13 @@ import qualified Unison.Tools.Model.InstructionScheduling as IS
 import qualified Unison.Tools.Model.RegisterAllocation as RA
 
 run (baseFile, scaleFreq, oldModel, applyBaseFile, tightPressureBound,
-     strictlyBetter, unsatisfiable, jsonFile)
+     strictlyBetter, unsatisfiable, noCC, jsonFile)
     extUni target =
   do baseMir <- maybeStrictReadFile baseFile
      let f    = parse target extUni
          base = maybeNothing applyBaseFile baseMir
          aux  = auxiliarDataStructures target tightPressureBound base f
-         ps   = modeler scaleFreq aux target f
+         ps   = modeler (scaleFreq, noCC) aux target f
          ps'  = optimization (strictlyBetter, unsatisfiable, scaleFreq)
                 aux target f ps
          ps'' = presolver oldModel aux target f ps'
@@ -62,9 +62,9 @@ run (baseFile, scaleFreq, oldModel, applyBaseFile, tightPressureBound,
 
 jsonConfig = defConfig {confNumFormat = Custom showInteger}
 
-modeler scaleFreq aux target f =
+modeler (scaleFreq, noCC) aux target f =
   toJSON (M.fromList (IS.parameters scaleFreq aux f target ++
-                      RA.parameters aux f target))
+                      RA.parameters noCC aux f target))
 
 auxiliarDataStructures target tight baseMir f @ Function {fCode = code} =
   let rwlf  = readWriteLatency target
