@@ -10,11 +10,17 @@ import Unison.Target.ARM.SpecsGen.ARMInstructionDecl
 
 -- | Declares resource usages of each instruction
 
-usages i =
+usages to i =
   let it = SpecsGen.itinerary i
   -- TODO: define instruction size as BundleWidth usage
-  in mergeUsages (itineraryUsage i it)
+  in mergeUsages (itineraryUsage' to i it)
      [mkUsage BundleWidth (size i) 1 | size i > 0]
+
+itineraryUsage' to i it =
+  let us = itineraryUsage i it
+  in if unitLatency to then
+       [u {occupation = 1, offset = 0} | u  <- us]
+     else us
 
 itineraryUsage _ it
   | it `elem` [NoItinerary] = []

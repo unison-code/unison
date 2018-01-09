@@ -64,9 +64,10 @@ addThumbAlternatives goals o @ SingleOperation {
      else o'
 addThumbAlternatives _ o = o
 
-occupations = S.fromList .
-              concatMap (map occupation . filter isV6 . usages . oTargetInstr) .
-              oInstructions
+occupations =
+  S.fromList .
+  concatMap (map occupation . filter isV6 . usages [] . oTargetInstr) .
+  oInstructions
 
 isV6 Usage {resource = V6_Pipe} = True
 isV6 _ = False

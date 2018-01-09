@@ -10,16 +10,20 @@ Main authors:
 This file is part of Unison, see http://unison-code.github.io
 -}
 module Unison.Target.ARM.Common
-    (isCpsrDef, toExplicitCpsrDef, fromExplicitCpsrDef, defaultMIRPred,
-     defaultUniPred, isRematerializable, isSourceInstr, isDematInstr,
-     isRematInstr, sourceInstr, dematInstr, rematInstr, originalInstr) where
+    (unitLatency, isCpsrDef, toExplicitCpsrDef, fromExplicitCpsrDef,
+     defaultMIRPred, defaultUniPred, isRematerializable, isSourceInstr,
+     isDematInstr, isRematInstr, sourceInstr, dematInstr, rematInstr,
+     originalInstr) where
 
 import qualified Data.Map as M
 import Data.Tuple
 
 import MachineIR
 import Unison
+import qualified Unison.Target.API as API
 import Unison.Target.ARM.SpecsGen.ARMInstructionDecl
+
+unitLatency to = API.isBoolOption "unit-latency" to
 
 isCpsrDef i = i `elem` (map fst cpsrMap)
 toExplicitCpsrDef i = (M.fromList cpsrMap) M.! i

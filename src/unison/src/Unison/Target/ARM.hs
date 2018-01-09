@@ -56,7 +56,7 @@ target =
       API.tInstructionType  = const instructionType,
       API.tBranchInfo       = const branchInfo,
       API.tPreProcess       = const preProcess,
-      API.tPostProcess      = const postProcess,
+      API.tPostProcess      = postProcess,
       API.tTransforms       = const transforms,
       API.tCopies           = const copies,
       API.tRematInstrs      = const rematInstrs,
@@ -66,14 +66,14 @@ target =
       API.tPackedPairs      = const (const (const [])),
       API.tRelatedPairs     = const (const []),
       API.tResources        = const resources,
-      API.tUsages           = const usages,
+      API.tUsages           = usages,
       API.tNop              = const nop,
       API.tReadWriteInfo    = const readWriteInfo,
       API.tImplementFrame   = const implementFrame,
       API.tAddPrologue      = const addPrologue,
       API.tAddEpilogue      = const addEpilogue,
       API.tStackDirection   = const stackDirection,
-      API.tReadWriteLatency = const readWriteLatency,
+      API.tReadWriteLatency = readWriteLatency,
       API.tAlternativeTemps = const alternativeTemps,
       API.tExpandCopy       = const expandCopy,
       API.tConstraints      = const constraints
@@ -483,26 +483,27 @@ processTailCalls mi = mi
 
 -- | Target dependent post-processing functions
 
-postProcess = [expandPseudos, removeAllNops, removeFrameIndex,
-               removeEmptyBundles, reorderImplicitOperands,
-               exposeCPSRRegister, flip addImplicitRegs (target, []),
-               demoteImplicitOperands]
+postProcess to = [expandPseudos to, removeAllNops, removeFrameIndex,
+                  removeEmptyBundles, reorderImplicitOperands,
+                  exposeCPSRRegister, flip addImplicitRegs (target, []),
+                  demoteImplicitOperands]
 
-expandPseudos = mapToMachineBlock (expandBlockPseudos expandPseudo)
+expandPseudos to = mapToMachineBlock (expandBlockPseudos (expandPseudo to))
 
-expandPseudo mi @ MachineSingle {
+expandPseudo to mi @ MachineSingle {
   msOpcode   = MachineTargetOpc T2MOVi32imm,
-  msOperands = [dst, ga @ MachineGlobalAddress {}]} =
-  let mi1 = mi {msOpcode   = mkMachineTargetOpc T2MOVi16,
-                msOperands = [dst, ga] ++ defaultMIRPred}
-      mi2 = mi {msOpcode   = mkMachineTargetOpc T2MOVTi16,
-                msOperands = [dst, dst, ga] ++ defaultMIRPred}
-  in [[mi1], [mi2]]
+  msOperands = [dst, ga @ MachineGlobalAddress {}]}
+  | not (unitLatency to) =
+    let mi1 = mi {msOpcode   = mkMachineTargetOpc T2MOVi16,
+                  msOperands = [dst, ga] ++ defaultMIRPred}
+        mi2 = mi {msOpcode   = mkMachineTargetOpc T2MOVTi16,
+                  msOperands = [dst, dst, ga] ++ defaultMIRPred}
+    in [[mi1], [mi2]]
 
-expandPseudo mi @ MachineSingle {msOpcode = MachineTargetOpc TFP} =
+expandPseudo _ mi @ MachineSingle {msOpcode = MachineTargetOpc TFP} =
   [[mi {msOpcode = mkMachineTargetOpc TADDrSPi}]]
 
-expandPseudo mi = [[mi]]
+expandPseudo _ mi = [[mi]]
 
 pushRegs i
   | i `elem` [TPUSH2_r4_7, TPOP2_r4_7, TPOP2_r4_7_RET] =
@@ -601,12 +602,12 @@ mapToOperationWithGoals t f @ Function {fCode = code, fGoal = gs} =
 
 -- | Latency of read-write dependencies
 
-readWriteLatency _ (_, Read) (_, Write) = 0
-readWriteLatency _ ((_, VirtualType (DelimiterType InType)), _) (_, _) = 1
-readWriteLatency _ ((_, VirtualType FunType), _) (_, _) = 1
-readWriteLatency _ ((_, VirtualType _), _) (_, _) = 0
-readWriteLatency _ ((TargetInstruction p, _), _) (_, _) =
-    maybeMax 0 $ map occupation (usages p)
+readWriteLatency _ _ (_, Read) (_, Write) = 0
+readWriteLatency _ _ ((_, VirtualType (DelimiterType InType)), _) (_, _) = 1
+readWriteLatency _ _ ((_, VirtualType FunType), _) (_, _) = 1
+readWriteLatency _ _ ((_, VirtualType _), _) (_, _) = 0
+readWriteLatency to _ ((TargetInstruction p, _), _) (_, _) =
+    maybeMax 0 $ map occupation (usages to p)
 
 
 -- | Alternative temporaries of each operand
