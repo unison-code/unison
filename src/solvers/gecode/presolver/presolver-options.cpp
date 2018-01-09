@@ -41,6 +41,7 @@ PresolverOptions::PresolverOptions(void)
     _timeout("-t", "timeout", 30000.0),
     _verbose("--verbose", "verbose mode (false)", false),
     _regions("--regions", "find regions (true)", true),
+    _tabling("--tabling", "do tabling (true)", true),
     _test("--test", "test the generated parameters against the input ones (false)", false)
 
 {
@@ -48,5 +49,6 @@ PresolverOptions::PresolverOptions(void)
   add(_timeout);
   add(_verbose);
   add(_regions);
+  add(_tabling);
   add(_test);
 }

@@ -50,6 +50,7 @@ protected:
   Driver::DoubleOption _timeout; // Timeout
   Driver::BoolOption _verbose; // Verbose mode
   Driver::BoolOption _regions; // Find regions
+  Driver::BoolOption _tabling; // Do tabling
 
   // Testing
 
@@ -63,6 +64,7 @@ public:
   double timeout(void) const {return _timeout.value();}
   bool verbose(void) const {return _verbose.value();}
   bool regions(void) const {return _regions.value();}
+  bool tabling(void) const {return _tabling.value();}
 
   bool test(void) const {return _test.value();}
 

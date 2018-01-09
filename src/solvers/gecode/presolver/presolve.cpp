@@ -469,6 +469,8 @@ void presolve(Parameters & input, PresolverOptions & options) {
   if (timeout(t, options, "nogoods", t0))
     return;
 
+  if (options.tabling()) {
+
   // 29: GENACTIVETABLES(), JSON.tmp_tables
 
   t0.start();
@@ -493,6 +495,8 @@ void presolve(Parameters & input, PresolverOptions & options) {
     input.optional_min[b] = optional_min_active_tables(input, b);
   if (timeout(t, options, "optional_min", t0))
     return;
+
+  } // end of options.tabling()
 
   // these can cause huge printouts and should be protected from timeouts
 
