@@ -64,6 +64,7 @@ while (my $line = <STDIN>) {
         foreach my $arg (@buf) {
             print $log "$arg,\n";
         }
+        print $log "\"solver\": \"minizinc-solver\",\n";
         print $log "\"cost\": [$cost],\n";
         if ($soln) {
             print $log "\"has_solution\": true,\n";
@@ -103,6 +104,7 @@ print("{\n");
 foreach my $arg (@buf) {
     print "$arg,\n";
 }
+print "\"solver\": \"minizinc-solver\",\n";
 print "\"cost\": [$cost],\n";
 if ($soln) {
     print "\"has_solution\": true,\n";

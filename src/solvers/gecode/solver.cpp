@@ -228,7 +228,8 @@ string produce_json(const ResultData& rd,
     else             json = "{}";
     stringstream ss;
     if (rd.solution) ss << ", ";
-    ss << "\"has_solution\": " << (rd.solution ? "true" : "false");
+    ss << "\"solver\": \"gecode-solver\"";
+    ss << ", \"has_solution\": " << (rd.solution ? "true" : "false");
     ss << ", \"proven\": " << (rd.proven ? "true" : "false");
     vector<int> ones;
     init_vector(ones, N, -1);
