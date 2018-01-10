@@ -200,9 +200,13 @@ main =
                        else pickNoTimeOutBest winner gecodeOutFile
                             (chuffedOutFile, chuffedLastOutFile)
        renameFile finalOutFile outFile
-       writeLowerBoundFile lowerBoundFile
+       extJsonStr <- readIfExists inFile
+       let input   = parseJson extJsonStr
+           factor  = freqFactor input
+           preTime = presolverTime input
+       writeLowerBoundFile factor lowerBoundFile
          [gecodeLowerBoundFile, chuffedLowerBoundFile] outFile
-       updateTimes inFile solverTime outFile
+       updateTimes preTime solverTime outFile
        removeIfExists gecodeOutFile
        removeIfExists chuffedOutFile
        removeIfExists chuffedLastOutFile
@@ -281,26 +285,32 @@ lowerBound lowerBoundJson =
       [lb]  = (fromJson lbj) :: [Integer]
   in lb
 
-writeLowerBoundFile "" _ _ = return ()
+freqFactor input =
+  let factor = input HM.! "freq_scale"
+  in fromJson factor :: Double
+
+writeLowerBoundFile _ "" _ _ = return ()
 -- Writes final lower bound to 'outLowerBoundFile' according to the
 -- solution properties and the lower bounds provided by the solvers
-writeLowerBoundFile outLowerBoundFile inLowerBoundFiles outFile =
+writeLowerBoundFile factor outLowerBoundFile inLowerBoundFiles outFile =
   do bestOut <- readIfExists outFile
      jsonLBs <- mapM readIfExists inLowerBoundFiles
      let lbs = [lowerBound lb | lb <- jsonLBs, validJson lb]
          bestLB = if proven bestOut || null lbs then baseLowerBound
-                  else formatLB (maximum lbs)
+                  else
+                    let lb  = maximum lbs
+                        lb1 = (fromInteger lb) / factor
+                        lb2 = floor lb1
+                    in formatLB lb2
      writeFile outLowerBoundFile bestLB
 
 baseLowerBound = formatLB maxInt
 formatLB lb =
   toJSONString $ M.fromList [("lower_bound" :: String, toJSON [lb :: Integer])]
 
-updateTimes inFile solverTime outFile =
-  do extJsonStr <- readIfExists inFile
-     outJsonStr <- readIfExists outFile
-     let preTime  = presolverTime extJsonStr
-         outJson  = parseJson outJsonStr
+updateTimes preTime solverTime outFile =
+  do outJsonStr <- readIfExists outFile
+     let outJson  = parseJson outJsonStr
          -- override existing fields possibly emitted by the underlying solvers
          outJson' = HM.union
                     (HM.fromList [("presolver_time", toJSON preTime),
@@ -309,9 +319,8 @@ updateTimes inFile solverTime outFile =
      writeFile outFile (toJSONMap outJson')
      return ()
 
-presolverTime extJson =
-  let input   = parseJson extJson
-      preTime = input HM.! "presolver_time"
+presolverTime input =
+  let preTime = input HM.! "presolver_time"
   in fromJson preTime :: Integer
 
 toJSONMap = BSL.unpack . encodePretty' jsonConfig

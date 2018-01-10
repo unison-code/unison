@@ -85,6 +85,7 @@ Parameters::Parameters(JSONVALUE root) :
   optimize_dynamic (get_vector<bool>(getRoot(root, "optimize_dynamic"))),
   optimize_resource (get_vector<int>(getRoot(root, "optimize_resource"))),
   maxf          (get_vector<int>(getRoot(root, "maxf"))),
+  freq_scale    (get_scalar<double>(getRoot(root, "freq_scale"))),
 
   // Additional parameters
 
@@ -1086,6 +1087,11 @@ void Parameters::get_element(QScriptValue root, int & i) {
   i = root.toInt32();
 }
 
+void Parameters::get_element(QScriptValue root, double & d) {
+  assert(root.isNumber());
+  d = root.toNumber();
+}
+
 void Parameters::get_element(QScriptValue root, string & s) {
   assert(root.isString());
   s = root.toString().toStdString();
@@ -1292,6 +1298,11 @@ void Parameters::get_element(Json::Value root, bool & b) {
 void Parameters::get_element(Json::Value root, int & i) {
   assert(root.isInt());
   i = root.asInt();
+}
+
+void Parameters::get_element(Json::Value root, double & d) {
+  assert(root.isDouble());
+  d = root.asDouble();
 }
 
 void Parameters::get_element(Json::Value root, string & s) {
