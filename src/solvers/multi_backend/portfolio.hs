@@ -304,7 +304,7 @@ writeLowerBoundFile factor outLowerBoundFile inLowerBoundFiles outFile =
                     in formatLB lb2
      writeFile outLowerBoundFile bestLB
 
-baseLowerBound = formatLB maxInt
+baseLowerBound = formatLB (-1)
 formatLB lb =
   toJSONString $ M.fromList [("lower_bound" :: String, toJSON [lb :: Integer])]
 

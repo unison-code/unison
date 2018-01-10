@@ -128,7 +128,7 @@ void emit_lower_bound(const GlobalModel * base, bool proven) {
   if (base->options->lower_bound_file().empty()) return;
   vector<int> lbs;
   for (unsigned int n = 0; n < base->input->N; n++) {
-    lbs.push_back(proven ? Int::Limits::max : base->cost()[n].min());
+    lbs.push_back(proven ? -1 : base->cost()[n].min());
   }
   ofstream fout;
   fout.open(base->options->lower_bound_file());

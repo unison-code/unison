@@ -52,13 +52,15 @@ run (goals, estimateFreq, simulateStalls, modelCost, boundFile, boundGoal,
          -- compute lower bound
          bg       = lowerGoal $ read boundGoal
          ([overhead], _) = af [bg] (not modelCost) True
-         lbs      = fmap (map (\lb -> lb - overhead) . parseLowerBound) inBounds
-         bound    = case lbs of
-                     Just [lb] ->
+         mlbs     = fmap (map (fmap (\lb -> lb - overhead)) . parseLowerBound)
+                    inBounds
+         bound    = case mlbs of
+                     Just [mlb] ->
                        let ([solCost], _) = af [bg] modelCost False
-                           -- the input lower bound of a proven sol. is 'maxint'
-                           lb' = min lb solCost
-                       in [("lower_bound", toJSON lb')]
+                           lb = case mlb of
+                                  Just lb' -> min lb' solCost
+                                  Nothing -> solCost
+                       in [("lower_bound", toJSON lb)]
                      _ -> []
          -- merge both results
          ps       = toJSON $ M.fromList (results ++ bound)
@@ -108,9 +110,16 @@ parseLowerBound json =
   let bounds = case decode (BSL.pack json) of
                 Nothing -> error ("error parsing bounds file")
                 Just (Object s) -> s
-  in boundFromJson (bounds HM.! (fromString "lower_bound")) :: [Integer]
+      bounds' = boundFromJson
+                (bounds HM.! (fromString "lower_bound")) :: [Integer]
+  in map boundToMaybe bounds'
 
 boundFromJson object =
   case fromJSON object of
    Error e -> error ("error converting JSON input:\n" ++ show e)
    Success s -> s
+
+-- the input lower bound of a proven solution is negative
+boundToMaybe b
+  | b < 0 = Nothing
+  | otherwise = Just b
