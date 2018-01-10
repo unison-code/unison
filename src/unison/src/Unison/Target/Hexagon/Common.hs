@@ -154,6 +154,7 @@ rematVersions = M.fromList
    (A2_tfrpi, RematTriple A2_tfrpi_source A2_tfrpi_demat A2_tfrpi_remat),
    (L2_loadri_io_fi, RematTriple L2_loadri_io_fi_source_fi L2_loadri_io_fi_demat_fi L2_loadri_io_fi_remat_fi),
    (L2_loadrb_io_fi, RematTriple L2_loadrb_io_fi_source_fi L2_loadrb_io_fi_demat_fi L2_loadrb_io_fi_remat_fi),
+   (L2_loadruh_io_fi, RematTriple L2_loadruh_io_fi_source_fi L2_loadruh_io_fi_demat_fi L2_loadruh_io_fi_remat_fi),
    (L4_loadrb_abs_ce, RematTriple L4_loadrb_abs_source_ce L4_loadrb_abs_demat_ce L4_loadrb_abs_remat_ce),
    (L4_loadri_abs_ce, RematTriple L4_loadri_abs_source_ce L4_loadri_abs_demat_ce L4_loadri_abs_remat_ce),
    (L4_loadrh_abs_ce, RematTriple L4_loadrh_abs_source_ce L4_loadrh_abs_demat_ce L4_loadrh_abs_remat_ce),

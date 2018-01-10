@@ -21,6 +21,11 @@ instruction-set:
      infinite-class: RM32
      suffix: _fi
 
+   - id: L2_loadruh_io_fi
+     home-class: IntRegs
+     infinite-class: RM32
+     suffix: _fi
+
    - id: L4_loadrb_abs
      home-class: IntRegs
      infinite-class: RM32

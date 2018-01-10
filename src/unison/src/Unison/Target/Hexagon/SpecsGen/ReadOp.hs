@@ -2642,6 +2642,9 @@ readOp "L2_loadri_io_fi_remat_fi" = L2_loadri_io_fi_remat_fi
 readOp "L2_loadrb_io_fi_source_fi" = L2_loadrb_io_fi_source_fi
 readOp "L2_loadrb_io_fi_demat_fi" = L2_loadrb_io_fi_demat_fi
 readOp "L2_loadrb_io_fi_remat_fi" = L2_loadrb_io_fi_remat_fi
+readOp "L2_loadruh_io_fi_source_fi" = L2_loadruh_io_fi_source_fi
+readOp "L2_loadruh_io_fi_demat_fi" = L2_loadruh_io_fi_demat_fi
+readOp "L2_loadruh_io_fi_remat_fi" = L2_loadruh_io_fi_remat_fi
 readOp "L4_loadrb_abs_source" = L4_loadrb_abs_source
 readOp "L4_loadrb_abs_demat" = L4_loadrb_abs_demat
 readOp "L4_loadrb_abs_remat" = L4_loadrb_abs_remat
@@ -3758,6 +3761,12 @@ readOp "L2_loadrb_io_fi_source_fi_ce"
   = L2_loadrb_io_fi_source_fi_ce
 readOp "L2_loadrb_io_fi_demat_fi_ce" = L2_loadrb_io_fi_demat_fi_ce
 readOp "L2_loadrb_io_fi_remat_fi_ce" = L2_loadrb_io_fi_remat_fi_ce
+readOp "L2_loadruh_io_fi_source_fi_ce"
+  = L2_loadruh_io_fi_source_fi_ce
+readOp "L2_loadruh_io_fi_demat_fi_ce"
+  = L2_loadruh_io_fi_demat_fi_ce
+readOp "L2_loadruh_io_fi_remat_fi_ce"
+  = L2_loadruh_io_fi_remat_fi_ce
 readOp "L4_loadrb_abs_source_ce" = L4_loadrb_abs_source_ce
 readOp "L4_loadrb_abs_demat_ce" = L4_loadrb_abs_demat_ce
 readOp "L4_loadrb_abs_remat_ce" = L4_loadrb_abs_remat_ce
