@@ -381,6 +381,7 @@ operandInfo i
        L2_loadrhgp_demat_ce, L2_loadri_io_fi_demat_fi,
        L2_loadri_io_fi_demat_fi_ce, L2_loadrigp_demat,
        L2_loadrigp_demat_ce, L2_loadrubgp_demat, L2_loadrubgp_demat_ce,
+       L2_loadruh_io_fi_demat_fi, L2_loadruh_io_fi_demat_fi_ce,
        L2_loadruhgp_demat, L2_loadruhgp_demat_ce, L4_loadrb_abs_demat,
        L4_loadrb_abs_demat_ce, L4_loadrh_abs_demat,
        L4_loadrh_abs_demat_ce, L4_loadri_abs_demat,
@@ -1696,6 +1697,7 @@ operandInfo i
        L2_loadrhgp_remat_ce, L2_loadri_io_fi_remat_fi,
        L2_loadri_io_fi_remat_fi_ce, L2_loadrigp_remat,
        L2_loadrigp_remat_ce, L2_loadrubgp_remat, L2_loadrubgp_remat_ce,
+       L2_loadruh_io_fi_remat_fi, L2_loadruh_io_fi_remat_fi_ce,
        L2_loadruhgp_remat, L2_loadruhgp_remat_ce, L4_loadrb_abs_remat,
        L4_loadrb_abs_remat_ce, L4_loadrh_abs_remat,
        L4_loadrh_abs_remat_ce, L4_loadri_abs_remat,
@@ -2443,6 +2445,7 @@ operandInfo i
   | i `elem`
       [L2_loadrb_io_fi_source_fi, L2_loadrb_io_fi_source_fi_ce,
        L2_loadri_io_fi_source_fi, L2_loadri_io_fi_source_fi_ce,
+       L2_loadruh_io_fi_source_fi, L2_loadruh_io_fi_source_fi_ce,
        TFR_FI_fi_source_fi, TFR_FI_fi_source_fi_ce]
     =
     ([BoundInfo, BoundInfo],

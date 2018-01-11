@@ -21,6 +21,7 @@ import qualified Data.ByteString.Char8 as B8
 import Language.Haskell.Pretty
 import Data.Maybe
 import System.Directory
+import System.IO
 
 import SpecsGen.SimpleYaml
 import SpecsGen.HsGen
@@ -60,8 +61,8 @@ specsgen = cmdArgsMode $ SpecsGen
 
 runSpecsGen tPreMod tExtension =
     do sg @ SpecsGen{..} <- cmdArgsRun specsgen
-       yaml  <- mapM readFile files
-       remat <- maybe (return "") readFile rematFile
+       yaml  <- mapM strictReadFile files
+       remat <- maybe (return "") strictReadFile rematFile
        let is   = concatMap yamlInstructions yaml
            is1  = expand is
            is2  = is1 ++ extendRemats is1 (yamlInstructions remat)
@@ -115,6 +116,15 @@ decodeYaml s =
 readIfExists file =
   do fileExists <- doesFileExist file
      if fileExists then
-       (do content <-readFile file
+       (do content <- strictReadFile file
            return (Just content))
        else return Nothing
+
+strictReadFile f =
+  do h <- openFile f ReadMode
+     c <- strictHGetContents h
+     return c
+
+strictHGetContents h =
+  do c <- hGetContents h
+     length c `seq` return c

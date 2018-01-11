@@ -2631,6 +2631,9 @@ data HexagonInstruction = A2_abs
                         | L2_loadrb_io_fi_source_fi
                         | L2_loadrb_io_fi_demat_fi
                         | L2_loadrb_io_fi_remat_fi
+                        | L2_loadruh_io_fi_source_fi
+                        | L2_loadruh_io_fi_demat_fi
+                        | L2_loadruh_io_fi_remat_fi
                         | L4_loadrb_abs_source
                         | L4_loadrb_abs_demat
                         | L4_loadrb_abs_remat
@@ -3717,6 +3720,9 @@ data HexagonInstruction = A2_abs
                         | L2_loadrb_io_fi_source_fi_ce
                         | L2_loadrb_io_fi_demat_fi_ce
                         | L2_loadrb_io_fi_remat_fi_ce
+                        | L2_loadruh_io_fi_source_fi_ce
+                        | L2_loadruh_io_fi_demat_fi_ce
+                        | L2_loadruh_io_fi_remat_fi_ce
                         | L4_loadrb_abs_source_ce
                         | L4_loadrb_abs_demat_ce
                         | L4_loadrb_abs_remat_ce
