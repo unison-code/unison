@@ -203,8 +203,9 @@ main =
        extJsonStr <- readIfExists inFile
        let input   = parseJson extJsonStr
            factor  = freqFactor input
+           [dyn]   = optimizeDynamic input -- portfolio-solver assumes one goal
            preTime = presolverTime input
-       writeLowerBoundFile factor lowerBoundFile
+       writeLowerBoundFile (dyn, factor) lowerBoundFile
          [gecodeLowerBoundFile, chuffedLowerBoundFile] outFile
        updateTimes preTime solverTime outFile
        removeIfExists gecodeOutFile
@@ -289,19 +290,24 @@ freqFactor input =
   let factor = input HM.! "freq_scale"
   in fromJson factor :: Double
 
+optimizeDynamic input =
+  let od = input HM.! "optimize_dynamic"
+  in fromJson od :: [Bool]
+
 writeLowerBoundFile _ "" _ _ = return ()
 -- Writes final lower bound to 'outLowerBoundFile' according to the
 -- solution properties and the lower bounds provided by the solvers
-writeLowerBoundFile factor outLowerBoundFile inLowerBoundFiles outFile =
+writeLowerBoundFile (dyn, factor) outLowerBoundFile inLowerBoundFiles outFile =
   do bestOut <- readIfExists outFile
      jsonLBs <- mapM readIfExists inLowerBoundFiles
      let lbs = [lowerBound lb | lb <- jsonLBs, validJson lb]
          bestLB = if proven bestOut || null lbs then baseLowerBound
                   else
                     let lb  = maximum lbs
-                        lb1 = (fromInteger lb) / factor
-                        lb2 = floor lb1
-                    in formatLB lb2
+                        lb1 = if dyn then
+                                floor ((fromInteger lb) / factor)
+                              else lb
+                    in formatLB lb1
      writeFile outLowerBoundFile bestLB
 
 baseLowerBound = formatLB (-1)
