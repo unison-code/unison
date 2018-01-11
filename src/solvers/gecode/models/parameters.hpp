@@ -194,6 +194,8 @@ public:
   // upper bound of the nth objective
   vector<int> maxf;
 
+  // frequency scale factor
+  double freq_scale;
 
   // Additional parameters
 
@@ -664,6 +666,7 @@ protected:
 
   JSONVALUE getRoot(JSONVALUE root, string p);
   void get_element(JSONVALUE root, bool & b);
+  void get_element(JSONVALUE root, double & d);
   void get_element(JSONVALUE root, int & i);
   void get_element(JSONVALUE root, string & s);
   void get_element(JSONVALUE root, UnisonConstraintExpr & e);

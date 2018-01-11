@@ -148,6 +148,13 @@ string emit_json(const bool b) {
   return s.str();
 }
 
+string emit_json(const double d) {
+  stringstream s;
+  s.precision(std::numeric_limits<double>::max_digits10);
+  s << fixed << d;
+  return s.str();
+}
+
 string emit_json(const string s) {
   stringstream ss;
   ss << "\"" << s << "\"";

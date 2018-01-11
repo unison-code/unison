@@ -244,6 +244,8 @@ string emit_json(const int i);
 
 string emit_json(const bool b);
 
+string emit_json(const double d);
+
 string emit_json(const string s);
 
 string emit_json(const PresolverActiveTable at);

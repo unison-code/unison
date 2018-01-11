@@ -60,7 +60,7 @@ run (baseFile, scaleFreq, oldModel, applyBaseFile, tightPressureBound,
          ps'' = presolver oldModel aux target f ps'
      emitOutput jsonFile ((BSL.unpack (encodePretty' jsonConfig ps'')))
 
-jsonConfig = defConfig {confNumFormat = Custom showInteger}
+jsonConfig = defConfig {confNumFormat = Custom showNumber}
 
 modeler (scaleFreq, noCC) aux target f =
   toJSON (M.fromList (IS.parameters scaleFreq aux f target ++
@@ -87,19 +87,22 @@ optimization flags aux target f ps =
 optimizationParameters (strictlyBetter, unsatisfiable, scaleFreq)
   (_, _, deps, _, _, baseMir) target Function {fCode = code, fGoal = goal} =
     let rm    = resourceManager target
+        oif   = operandInfo target
         cf    = capacityMap target
         r2id  = M.fromList [(resName (res ir), resId ir) | ir <- iResources rm]
         gl    = mkGoal goal
         od    = map isDynamic gl :: [Bool]
         or    = map (optResource r2id) gl :: [ResourceId]
+        fact  = if scaleFreq then scaleFactor (rm, oif, deps) code else 1.0
+        factd = fromRational fact :: Double
         maxf0 = case baseMir of
                  (Just mir) ->
                    -- The MIR version does not matter at this point as we
                    -- expect normalized, single-function MIR. Same for the
                    -- 'maximumCost' function below.
                      let mf = fromSingleton $ MIR.parse MIR.LLVM5 mir
-                         mc = maximumCost scaleFreq cf
-                         mx = map (\g -> mc g (mir, mf) deps target code) gl
+                         mc = maximumCost fact cf
+                         mx = map (\g -> mc g (mir, mf) target code) gl
                      in if strictlyBetter then decrementLast mx else mx
                  Nothing -> replicate (length gl) maxInt
         maxf  = if unsatisfiable then replicate (length gl) 0 else maxf0
@@ -114,7 +117,11 @@ optimizationParameters (strictlyBetter, unsatisfiable, scaleFreq)
       ("optimize_resource", toJSON or),
 
       -- upper bound of the nth objective
-      ("maxf", toJSON maxf)
+      ("maxf", toJSON maxf),
+
+      -- frequency scale factor
+      ("freq_scale", toJSON (factd :: Double))
+
       ]
 
 decrementLast l = init l ++ [(last l) - 1]
@@ -133,17 +140,13 @@ optResource' r2id (ResourceUsage r) = r2id M.! r
 
 maximumCost :: (Eq i, Show i, Read i, Ord r, Show r, Read r, Ord rc, Show rc,
                 Ord s, Show s) =>
-               Bool -> M.Map s Integer -> Goal s ->
+               Rational -> M.Map s Integer -> Goal s ->
                (String, MIR.MachineFunction i r) ->
-               [[(OperationId, OperationId, [Maybe Latency])]] ->
                TargetWithOptions i r rc s -> [Block i r] ->
                Integer
-maximumCost scaleFreq cf gl (mir, mf) deps target code =
-    let rm     = resourceManager target
-        oif    = operandInfo target
-        bbs    = map MIR.machineBlockFreq (MIR.mfBlocks mf)
+maximumCost factor cf gl (mir, mf) target code =
+    let bbs    = map MIR.machineBlockFreq (MIR.mfBlocks mf)
         fbs    = map blockFreq code
-        factor = if scaleFreq then scaleFactor (rm, oif, deps) code else 1.0
         nf     = sort . map (scaleDown factor)
         ([baseCost], _) = Analyze.analyze (False, True, MIR.LLVM5, True, False)
                           factor [gl] mir target
@@ -174,7 +177,7 @@ difference l1 l2 = l1 \\ l2
 goalObject (DynamicGoal o) = o
 goalObject (StaticGoal o)  = o
 
-showInteger i =
+showNumber i =
   case floatingOrInteger i of
    Right i' -> DTB.fromString (show (toInteger i'))
-   Left r -> error ("expecting integer but got " ++ show r)
+   Left r -> DTB.fromString (show r)
