@@ -41,7 +41,7 @@ ModelOptions::ModelOptions(void)
   : InstanceOptions("Unison"),
 
     _output_file("-o", "output file", ""),
-    _verbose("--verbose", "verbose mode", false),
+    _verbose("--verbose", "verbose mode", true),
     _emit_improvement("--emit-improvement", "emit estimated improvement", false),
     _lower_bound_file("-l", "lower bound file", ""),
 #ifdef GRAPHICS
