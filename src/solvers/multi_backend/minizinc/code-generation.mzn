@@ -780,6 +780,7 @@ array[int] of var int: opnd_lbs(int: q) =
 predicate post_data_prec(int: q) =
     let {int: u = operand_definer[q],
          array[int] of var int: lbs = opnd_lbs(q)} in
+      c[u] >= lbs[1] /\
       c[u] >= lbs[y[q]];
 
 %% Model::post_data_precedences_constraints

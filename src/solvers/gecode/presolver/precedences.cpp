@@ -164,93 +164,6 @@ void gen_precs_precedences(const Parameters& input,
 }
 
 
-void gen_data_precedences(const Parameters& input,
-			  map<operand,map<instruction,latency>>& opnd_to_lat, 
-			  precedence_set& PI) {
-    // For all o in JSON.O
-    for(operation o : input.O) {
-        // For all q in OperOpnds(o) where q is use
-        for(operand q : oper_opnds(input, o)) {
-	  if(input.use[q]) {
-	    // T <- OpndTemps(q)
-	    vector<temporary> T = opnd_temps(input, q);
-	    // For all t in OpndTempsButNull(q)
-	    for(temporary t : T) {
-	      if(t!=NULL_TEMPORARY) {
-		// d <- TempOper(t)
-		// p <- TempDef(t)
-		operation d = temp_oper(input, t);
-		operand   p = temp_def(input, t);
-		bool o_is_kill   = oper_type(input, o) == KILL;
-		bool d_is_define = oper_type(input, d) == DEFINE;
-		bool q_in_last_use = ord_contains(input.last_use, q);
-                // if o is (kill) or (d is (define) and q in JSON.last_use)
-		if(o_is_kill || (d_is_define && q_in_last_use)) {
-		  // l <- JSON.minlive[t]
-		  int l = input.minlive[t];
-		  // PI <- PI U {<d, o, l, {}>,<d, o,-l, {}}
-		  PresolverPrecedence pred(d, o, l, {{}});
-		  PresolverPrecedence pred1(o, d, -l, {{}});
-
-		  PI.push_back(pred);
-		  PI.push_back(pred1);
-		} else if (t == T[0]) {
-		  gen_data_precedences1(d, o, p, q, {}, opnd_to_lat, PI);
-		} else {
-		  // PI <- PI U
-		  // GenDataPrecedences1(d, o, p, q, {eq(p(q), t(t))},
-		  // OpndToLat)
-		  UnisonConstraintExpr lit(CONNECTS_EXPR, {q,t}, {});
-		  gen_data_precedences1(d, o, p, q, {lit}, opnd_to_lat, PI);
-		}
-	      }
-            }
-	  }
-        }
-    }
-}
-
-void gen_data_precedences1(operation d, operation o,
-			   operand p, operand q,
-			   const presolver_conj& Conj,
-			   map<operand,map<instruction,latency>>& opnd_to_lat,
-			   precedence_set& PI) {
-    map<instruction, latency> Lp = opnd_to_lat[p];
-    map<instruction, latency> Lq = opnd_to_lat[q];
-
-    auto comp = [](pair<instruction, latency> p1,
-                   pair<instruction, latency> p2) {
-                    return p1.second < p2.second;
-            };
-    latency min_Lp = min_element(Lp.begin(), Lp.end(), comp)->second;
-    latency min_Lq = std::min_element(Lq.begin(), Lq.end(), comp)->second;
-    latency l = min_Lp + min_Lq;
-
-    PresolverPrecedence pd(d,o,l,{Conj});
-    PI.push_back(pd);
-
-    for(const pair<instruction,latency>& mp : Lp) {
-        instruction ip = mp.first;
-        latency lp     = mp.second;
-        for(const pair<instruction,latency>& mq : Lq) {
-            instruction iq = mq.first;
-            latency lq     = mq.second;
-            if(lp + lq > l) {
-	      UnisonConstraintExpr lit1(IMPLEMENTS_EXPR, {d,ip}, {});
-	      UnisonConstraintExpr lit2(IMPLEMENTS_EXPR, {o,iq}, {});
-                presolver_conj conj = Conj;
-                // conj.push_back(lit1);
-		// conj.push_back(lit2);
-		vector_insert(conj, lit1);
-		vector_insert(conj, lit2);
-
-                PresolverPrecedence pd(d, o, lp + lq, {conj});
-                PI.push_back(pd);
-            }
-        }
-    }
-}
-
 multimap<operation, instruction> build_oI (const presolver_disj& Y) {
   multimap<operation, instruction> oI;
 
@@ -305,10 +218,11 @@ static int min_latency(const Parameters& input,
   return ld+lu;
 };
 
+static
 void gen_region_init(const Parameters& input,
 		     map<block,vector<vector<operation>>>& edgeset_map,
 		     map<int,int>& pweight,
-		     precedence_set& PI) {
+		     const precedence_set& PI) {
   set<UnisonConstraintExpr> entailed;
 
   for (const PresolverActiveTable& pa : input.active_tables) {
@@ -330,9 +244,6 @@ void gen_region_init(const Parameters& input,
       }
     }
   }
-  // cerr << "DUMPING ENTAILED" << endl;
-  // for (auto ent : entailed)
-  //   cerr << "    " << show(ent) << endl;
   for (const PresolverPrecedence& p : PI) {
     operation src = p.i;
     operation dest = p.j;
@@ -375,44 +286,46 @@ void gen_region_init(const Parameters& input,
   }  
 }
 
+    
 void gen_region_precedences(const Parameters& input,
-			    const map<block,vector<vector<operation>>>& edgeset_map,
 			    const vector<vector<vector<int>>>& min_con_erg,
-			    map<int,int>& pweight,
-			    precedence_set& PI) {
+			    const precedence_set &precedences,
+			    precedence_set &region_precedences) {
+  map<block,vector<vector<operation>>> edgeset_map;
+  map<int,int> pweight;
+  gen_region_init(input, edgeset_map, pweight, precedences);
+  gen_region_precedences_uncond(input, edgeset_map, min_con_erg, pweight, region_precedences);
+  for(operand p : input.P) {
+    temporary t0 = input.temps[p][0];
+    if(input.use[p] && t0 != NULL_TEMPORARY) {
+      for(temporary t : input.temps[p]) {
+	if (t != t0) {
+	  gen_region_precedences_cond(input, edgeset_map, min_con_erg, pweight, {p,t}, region_precedences);
+	}
+      }
+    }
+  }
+}
+
+void gen_region_precedences_uncond(const Parameters& input,
+				   const map<block,vector<vector<operation>>>& edgeset_map,
+				   const vector<vector<vector<int>>>& min_con_erg,
+				   map<int,int>& pweight,
+				   precedence_set& PI) {
   for(const pair<block,vector<vector<operation>>>& edgeset_pair : edgeset_map) {
     vector<operation> pnodes;
     Digraph G = Digraph(edgeset_pair.second).reduction();
-
-    // cerr << "digraph cpDecodeSecret {" << endl;
-    // cerr << "  size=\"8.5,11\";" << endl;
-    // cerr << "  concentrate=true;" << endl;
-    // cerr << "  label=\"pegwit.ec_crypt.cpDecodeSecret\";" << endl;
-    // cerr << "  fontsize=\"36\";" << endl;
-    // cerr << "  // kills" << endl;
-    // cerr << "  38 [shape=square];  " << endl;
-    // cerr << "  48 [shape=square];  " << endl;
-    // cerr << "  58 [shape=square];  " << endl;
-    // cerr << "  // edges" << endl;
-    // for (const pair<operation,operation> edge : G.edges()) {
-    //   operation src = edge.first;
-    //   operation dest = edge.second;
-    //   int key = FastPair(src,dest);      
-    //   cerr << "  " << src << " -> " << dest << " [label=\"" << pweight[key] << "\"];" << endl;
-    // }
-    // cerr << "}" << endl;
-
     partition_nodes(G, pnodes, {});
     gen_region_per_partition(input, G, pnodes, {}, {}, min_con_erg, pweight, PI);
   }
 }
 
-void gen_region_precedences(const Parameters& input,
-			    map<block,vector<vector<operation>>>& edgeset_map,
-			    const vector<vector<vector<int>>>& min_con_erg,
-			    map<int,int>& pweight,
-			    const vector<int>& ass,
-			    precedence_set& PI) {
+void gen_region_precedences_cond(const Parameters& input,
+				 map<block,vector<vector<operation>>>& edgeset_map,
+				 const vector<vector<vector<int>>>& min_con_erg,
+				 map<int,int>& pweight,
+				 const vector<int>& ass,
+				 precedence_set& PI) {
   // add edges induced by assumption pi = tj
   operand p = ass[0];
   temporary t = ass[1];
@@ -862,24 +775,6 @@ void normalize_precedences(const Parameters& input, const precedence_set& P, vec
       P1.push_back(expr);
     }
     sort(P1.begin(), P1.end()); // canonicalize
-}
-
-void compute_opnd_to_lat(const Parameters& input,
-			 map<operand, map<instruction, latency>>& M) {
-  for(operation o : input.O) {
-    vector<operand> operands = oper_opnds(input, o);
-    for(unsigned int p = 0; p < operands.size(); ++p) {
-      map<instruction, latency> M1;
-      vector<instruction> instructions =
-	oper_insns(input, o);
-      for(unsigned int i = 0; i < instructions.size(); ++i) {
-	if(instructions[i] != NULL_INSTRUCTION) {
-	  M1.insert(make_pair(instructions[i], input.lat[o][i][p]));
-	}
-      }
-      M.insert(make_pair(operands[p], M1));
-    }
-  }
 }
 
 void gen_before_precedences(const Parameters& input,

@@ -62,18 +62,6 @@ void gen_precs_precedences(const Parameters& input,
 			   const vector<vector<vector<int>>>& min_con_erg,
 			   precedence_set& PI);
 
-// GenDataPrecedences(OpndToLat)
-void gen_data_precedences(const Parameters& input,
-			  map<operand,map<instruction,latency>>& opnd_to_lat,
-			  precedence_set& PI);
-
-// GenDataPrecedences1(d, o, p, q, Conj, OpndToLat);
-void gen_data_precedences1(operation d, operation o,
-			   operand p, operand q,
-			   const presolver_conj& Conj,
-			   map<operand,map<instruction,latency>>& opnd_to_lat,
-			   precedence_set& PI);
-
 void gen_before_precedences(const Parameters& input,
                             PresolverOptions & options,
 			    const vector<PresolverBeforeJSON>& before,
@@ -88,23 +76,23 @@ void gen_before_precedences1(const Parameters& input,
 			     const vector<vector<vector<int>>>& min_con_erg,
 			     map<PrecedenceEdge, presolver_disj>& M);
 
-void gen_region_init(const Parameters& input,
-		     map<block,vector<vector<operation>>>& edgeset_map,
-		     map<int,int>& pweight,
-		     precedence_set& PI);
-
 void gen_region_precedences(const Parameters& input,
-			    const map<block,vector<vector<operation>>>& edgeset_map,
 			    const vector<vector<vector<int>>>& min_con_erg,
-			    map<int,int>& pweight,
-			    precedence_set& PI);
+			    const precedence_set &precedences,
+			    precedence_set &region_precedences);
 
-void gen_region_precedences(const Parameters& input,
-			    map<block,vector<vector<operation>>>& edgeset_map,
-			    const vector<vector<vector<int>>>& min_con_erg,
-			    map<int,int>& pweight,
-			    const vector<int>& ass,
-			    precedence_set& PI);
+void gen_region_precedences_uncond(const Parameters& input,
+				   const map<block,vector<vector<operation>>>& edgeset_map,
+				   const vector<vector<vector<int>>>& min_con_erg,
+				   map<int,int>& pweight,
+				   precedence_set& PI);
+
+void gen_region_precedences_cond(const Parameters& input,
+				 map<block,vector<vector<operation>>>& edgeset_map,
+				 const vector<vector<vector<int>>>& min_con_erg,
+				 map<int,int>& pweight,
+				 const vector<int>& ass,
+				 precedence_set& PI);
 
 void partition_nodes(Digraph& G,
 		     vector<operation>& pnodes,
@@ -146,9 +134,6 @@ void region_finishers_rec(vector<operation>& In,
 			  const vector<vector<vector<int>>>& min_con_erg);
 
 void normalize_precedences(const Parameters& input, const precedence_set& P, vector<UnisonConstraintExpr>& P1);
-
-void compute_opnd_to_lat(const Parameters& input,
-			 map<operand, map<instruction, latency>>& M);
 
 void gen_long_latency(Parameters& input);
 

@@ -139,7 +139,7 @@ void presolve(Parameters & input, PresolverOptions & options) {
   if (timeout(t, options, "preparation", t0))
     return;
 
-  // JSON.long_latency: identify global operands that may need nonzero slack BEFORE unfeasibility test
+  // 23: JSON.long_latency: identify global operands that may need nonzero slack BEFORE unfeasibility test
 
   t0.start();
   gen_long_latency(input);
@@ -317,13 +317,11 @@ void presolve(Parameters & input, PresolverOptions & options) {
   if (timeout(t, options, "before2", t0))
     return;
 
-  // 18: Precedences <- GenBeforePrecedences() U GenFixedPrecedences() U GenDataPrecedences()
+  // 18: Precedences <- GenPrecsPrecedences() U GenBeforePrecedences() U GenFixedPrecedences()
 
   precedence_set precedences;
   vector<vector<vector<int>>> min_con_erg = vector<vector<vector<int>>>(input.O.size());
-  map<operand, map<instruction, latency>> opnd2lat;
   t0.start();
-  compute_opnd_to_lat(input, opnd2lat);
   gen_min_con_erg(input, min_con_erg);
   gen_precs_precedences(input, min_con_erg, precedences);
   gen_before_precedences(input, options, input.before, min_con_erg, precedences, t);
@@ -332,7 +330,6 @@ void presolve(Parameters & input, PresolverOptions & options) {
   gen_fixed_precedences(input, precedences);
   if (timeout(t, options, "Precedences - gen_fixed_precedences", t0, false))
     return;
-  // gen_data_precedences(input, opnd2lat, precedences); // defer to solver!
   sort(precedences.begin(), precedences.end());
   precedences.erase(unique(precedences.begin(), precedences.end()), precedences.end());
 
@@ -402,13 +399,6 @@ void presolve(Parameters & input, PresolverOptions & options) {
   if (timeout(t, options, "value_precede_chains", t0))
     return;
 
-  // 25: JSON.predecessors
-  // 26: JSON.successors
-
-  // gen_predecessors_successors(input);
-  // if (timeout(t, options, "predecessors, successors", t0))
-  //   return;
-
   // 25: JSON.quasi_adjacent
 
   t0.start();
@@ -416,14 +406,14 @@ void presolve(Parameters & input, PresolverOptions & options) {
   if (timeout(t, options, "quasi_adjacent", t0))
     return;
 
-  // 26: GENDOMINATES()
+  // 26: JSON.dominates
 
   t0.start();
   gen_dominates(input);
   if (timeout(t, options, "gen_dominates", t0))
     return;
 
-  // 27: DETECTCYCLES(Nogoods)
+  // 27: DetectCycles(Nogoods)
 
   t0.start();
   vector<presolver_conj> Nogoods3, n3;
@@ -453,7 +443,7 @@ void presolve(Parameters & input, PresolverOptions & options) {
 
   if (options.tabling()) {
 
-  // 29: GENACTIVETABLES(), JSON.tmp_tables
+  // 29: GenActiveTables(), JSON.tmp_tables
 
   t0.start();
   input.compute_derived();	// refresh for Model:: methods
@@ -461,16 +451,17 @@ void presolve(Parameters & input, PresolverOptions & options) {
   if (timeout(t, options, "gen_active_tables", t0))
     return;
 
-  // 30: FILTERACTIVETABLES(), JSON.active_tables, JSON.dominates
+  // 30: Tidy()
+  // 31: FilterActiveTables(), JSON.active_tables, JSON.dominates
 
   t0.start();
   filter_active_tables(input);	// sets input.active_tables, input.dominates
   if (timeout(t, options, "filter_active_tables", t0))
     return;
 
-  // 31: for all b ∈ JSON.B do
-  // 32: JSON.optional_min[b] <- OPTIONALMINACTIVETABLES(b)
-  // 33: end for
+  // 32: for all b ∈ JSON.B do
+  // 33:   JSON.optional_min[b] <- OptionalminActiveTables(b)
+  // 34: end for
 
   t0.start();
   for(block b : input.B)
@@ -480,32 +471,15 @@ void presolve(Parameters & input, PresolverOptions & options) {
 
   } // end of options.tabling()
 
-  // regions
+  // 35: JSON.precedences <- JSON.precedences U NormalizePrecedences(GenRegionPrecedences())
 
   if (options.regions()) {
-    map<block,vector<vector<operation>>> edgeset_map;
-    map<int,int> pweight;
-    gen_region_init(input, edgeset_map, pweight, precedences);
-    precedences.clear();
-    gen_region_precedences(input, edgeset_map, min_con_erg, pweight, precedences);
-    for(operand p : input.P) {
-      temporary t0 = input.temps[p][0];
-      if(input.use[p] && t0 != NULL_TEMPORARY) {
-	for(temporary t : input.temps[p]) {
-	  if (t != t0) {
-	    gen_region_precedences(input, edgeset_map, min_con_erg, pweight, {p,t}, precedences);
-	  }
-	}
-      }
-    }
-    // merge in the region precedences
-    normalize_precedences(input, precedences, input.precedences);
-    // cerr << "DUMP REGION PRECEDENCES" << endl;
-    // for (auto pre : precedences)
-    //   cerr << "    " << show(pre) << endl;
-    // cerr << "DUMP ALL PRECEDENCES" << endl;
-    // for (auto pre : input.precedences)
-    //   cerr << "    " << show(pre) << endl;
+    t0.start();
+    precedence_set region_precedences;
+    gen_region_precedences(input, min_con_erg, precedences, region_precedences); 
+    normalize_precedences(input, region_precedences, input.precedences);
+    if (timeout(t, options, "region_precedences", t0))
+      return;
   }
 
   // these can cause huge printouts and should be protected from timeouts
