@@ -103,10 +103,8 @@ void InfeasiblePresolver::setup(void) {
       vector_insert(U, {Temporand::p(ods[0]),
 	                Temporand::p(ous[0]),
 	                Temporand::n(0)});
-    } else if (oper_type(input, o) == COPY) {
-      vector_insert(D, {Temporand::p(ous[0]),
-                        Temporand::p(ods[0])});
     } else if (o != 0 &&
+               oper_type(input, o) != COPY &&
                oper_type(input, o) != FUN &&
                oper_type(input, o) != KILL) {
       auto U_D = alldiffs_for_co_use(Du,Dd,U,D);

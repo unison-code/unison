@@ -36,6 +36,7 @@
 #include "common/util.hpp" // min_of, etc...
 #include "models/parameters.hpp"
 #include "models/options.hpp"
+#include "models/globalmodel.hpp"
 #include "common/definitions.hpp" // class PresolverPrecedence
 #include "auxiliary.hpp" // Kernel_set
 #include <map>
@@ -136,6 +137,10 @@ void region_finishers_rec(vector<operation>& In,
 void normalize_precedences(const Parameters& input, const precedence_set& P, vector<UnisonConstraintExpr>& P1);
 
 void gen_long_latency(Parameters& input);
+
+bool analyzable(UnisonConstraintExpr& nogood);
+
+void test_redundancy(Parameters & input, GlobalModel * gm);
 
 #if 0
 

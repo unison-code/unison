@@ -109,6 +109,8 @@ void assert_tmp_tables(Parameters & input,
 		       const map<vector<temporary>,vector<temporary>>& M,
 		       int timeout);
 
+void tidy(Parameters & input);
+
 vector<vector<int>> trim_tmp_tables(at_map S, temporary k);
 
 vector<vector<int>> trim_clump(set<vector<int>>C, temporary k);
@@ -123,6 +125,14 @@ void filter_active_tables(Parameters & input);
 
 void expr_operands(const UnisonConstraintExpr& e, vector<operand>& ps);
 
-bool already_tabled(const vector<operand>& ps, map<operand, vector<int>>& P2Ts);
+bool already_tabled(const vector<operand>& ps, map<operand, int>& P2Table);
+
+UnisonConstraintExpr simplify_expr(const Parameters& input,
+				   const UnisonConstraintExpr& n,
+				   map<operand, int>& P2Table);
+
+bool noop_copy_literal(const Parameters& input, const UnisonConstraintExpr& c);
+
+bool noop_copy_conjunction(const Parameters& input, const presolver_conj& c);
 
 #endif

@@ -444,34 +444,32 @@ void presolve(Parameters & input, PresolverOptions & options) {
   if (options.tabling()) {
 
   // 29: GenActiveTables(), JSON.tmp_tables
+    
+    t0.start();
+    input.compute_derived();	// refresh for Model:: methods
+    gen_active_tables(input, t, options);
+    if (timeout(t, options, "gen_active_tables", t0))
+      return;
 
-  t0.start();
-  input.compute_derived();	// refresh for Model:: methods
-  gen_active_tables(input, t, options);
-  if (timeout(t, options, "gen_active_tables", t0))
-    return;
+  // 30: FilterActiveTables(), JSON.active_tables, JSON.dominates
 
-  // 30: Tidy()
-  // 31: FilterActiveTables(), JSON.active_tables, JSON.dominates
+    t0.start();
+    filter_active_tables(input);	// sets input.active_tables, input.dominates
+    if (timeout(t, options, "filter_active_tables", t0))
+      return;
 
-  t0.start();
-  filter_active_tables(input);	// sets input.active_tables, input.dominates
-  if (timeout(t, options, "filter_active_tables", t0))
-    return;
+  // 31: for all b ∈ JSON.B do
+  // 32:   JSON.optional_min[b] <- OptionalminActiveTables(b)
+  // 33: end for
 
-  // 32: for all b ∈ JSON.B do
-  // 33:   JSON.optional_min[b] <- OptionalminActiveTables(b)
-  // 34: end for
-
-  t0.start();
-  for(block b : input.B)
-    input.optional_min[b] = optional_min_active_tables(input, b);
-  if (timeout(t, options, "optional_min", t0))
-    return;
-
+    t0.start();
+    for(block b : input.B)
+      input.optional_min[b] = optional_min_active_tables(input, b);
+    if (timeout(t, options, "optional_min", t0))
+      return;
   } // end of options.tabling()
 
-  // 35: JSON.precedences <- JSON.precedences U NormalizePrecedences(GenRegionPrecedences())
+  // 34: JSON.precedences <- JSON.precedences U NormalizePrecedences(GenRegionPrecedences())
 
   if (options.regions()) {
     t0.start();
@@ -482,7 +480,15 @@ void presolve(Parameters & input, PresolverOptions & options) {
       return;
   }
 
+  // 35: Tidy()
+  tidy(input);
+
   // these can cause huge printouts and should be protected from timeouts
+
+  // input.compute_derived();	// refresh for Model:: methods
+  // GlobalModel * gm = new GlobalModel(&input, &moptions, IPL_DOM);
+  // test_redundancy(input, gm);
+  // delete gm;
 
   if (options.test()) {
     run_test("nogoods", nogoods_ref, input.nogoods);
@@ -511,3 +517,4 @@ void presolve(Parameters & input, PresolverOptions & options) {
     run_test("tmp_tables", tmp_tables_ref, input.tmp_tables);
   }
 }
+

@@ -127,6 +127,9 @@ public:
   bool operator==(const UnisonConstraintExpr& e) const {
     return (id == e.id) && (data == e.data) && (children == e.children);
   }
+  bool operator!=(const UnisonConstraintExpr& e) const {
+    return (id != e.id) || (data != e.data) || (children != e.children);
+  }
 };
 
 typedef tuple<operand, vector<register_atom> > AvoidHint;
@@ -179,6 +182,9 @@ class PresolverAcrossItemJSON {
 public:
   temporary t;
   UnisonConstraintExpr e;
+  PresolverAcrossItemJSON() : t(-1), e() {}
+  PresolverAcrossItemJSON(temporary t, UnisonConstraintExpr e):
+    t(t), e(e) {}
   bool operator<(const PresolverAcrossItemJSON& that) const {
     if (t != that.t) return t < that.t;
     return e < that.e;

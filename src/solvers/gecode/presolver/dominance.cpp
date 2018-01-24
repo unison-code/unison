@@ -476,44 +476,97 @@ void assert_tmp_tables(Parameters & input,
     }
   }
   input.tmp_tables = tmp_tables;
-  // NEW CODE to remove subsumed elements of nogoods, domops, domuses, difftemps
+}
+
+// remove subsumed elements of nogoods, domops, domuses, difftemps
+void tidy(Parameters & input) {
   vector<UnisonConstraintExpr> nogoods_ref = input.nogoods;
   vector<UnisonConstraintExpr> nogoods2_ref = input.nogoods2;
+  vector<PresolverBeforeJSON> before2_ref = input.before2;
+  vector<UnisonConstraintExpr> precedences_ref = input.precedences;
+  vector<UnisonConstraintExpr> precedences2_ref = input.precedences2;
+  vector<PresolverAcrossJSON> across_ref = input.across;
   vector<vector<operand> > difftemps_ref = input.difftemps;
   vector<vector<vector<int> > > domops_ref = input.domops;
   input.nogoods.clear();
   input.nogoods2.clear();
+  input.before2.clear();
+  input.precedences.clear();
+  input.precedences2.clear();
+  input.across.clear();
   input.difftemps.clear();
   input.domops.clear();
   
-  map<operand, vector<int>> P2Ts;
+  map<operand, int> P2Table;
   int id = 0;
-  for(const PresolverCopyTmpTable& tt : tmp_tables) {
+  for(const PresolverCopyTmpTable& tt : input.tmp_tables) {
     for(operand p : tt.ps)
-      P2Ts[p].push_back(id);
+      P2Table[p] = id;
     id++;
   }
 
   for(const UnisonConstraintExpr& n : nogoods_ref) {
     vector<operand> ps;
     expr_operands(n, ps);
-    if(!already_tabled(ps, P2Ts))
-      input.nogoods.push_back(n);
+    sort(ps.begin(), ps.end());
+    ps.erase(unique(ps.begin(), ps.end()), ps.end());
+    if(already_tabled(ps, P2Table)) {
+    } else {
+      UnisonConstraintExpr n2 = simplify_expr(input, n, P2Table);
+      if (n2 != UnisonConstraintExpr(OR_EXPR, {}, {})) {
+	input.nogoods.push_back(n2);
+      }
+    }
   }
   for(const UnisonConstraintExpr& n : nogoods2_ref) {
     vector<operand> ps;
     expr_operands(n, ps);
     sort(ps.begin(), ps.end());
     ps.erase(unique(ps.begin(), ps.end()), ps.end());
-    if(!already_tabled(ps, P2Ts))
-      input.nogoods2.push_back(n);
+    if(!already_tabled(ps, P2Table)) {
+      UnisonConstraintExpr n2 = simplify_expr(input, n, P2Table);
+      if (n2 != UnisonConstraintExpr(OR_EXPR, {}, {})) {
+	input.nogoods.push_back(n2);
+      }
+    }
+  }
+  for(const PresolverBeforeJSON& bf : before2_ref) {
+    UnisonConstraintExpr e2 = simplify_expr(input, bf.e, P2Table);
+    if (e2 != UnisonConstraintExpr(OR_EXPR, {}, {})) {
+      PresolverBeforeJSON bf2 = PresolverBeforeJSON(bf.p, bf.q, e2);
+      input.before2.push_back(bf2);
+    }
+  }
+  for(const UnisonConstraintExpr& pr : precedences_ref) {
+    UnisonConstraintExpr pr2 = simplify_expr(input, pr, P2Table);
+    if (pr2 != UnisonConstraintExpr(AND_EXPR, {}, {})) {
+      input.precedences.push_back(pr2);
+    }
+  }
+  for(const UnisonConstraintExpr& pr : precedences2_ref) {
+    UnisonConstraintExpr pr2 = simplify_expr(input, pr, P2Table);
+    if (pr2 != UnisonConstraintExpr(AND_EXPR, {}, {})) {
+      input.precedences2.push_back(pr2);
+    }
+  }
+  for(const PresolverAcrossJSON& pr : across_ref) {
+    PresolverAcrossJSON pr2;
+    pr2.o = pr.o;
+    pr2.ras = pr.ras;
+    for (PresolverAcrossItemJSON ai : pr.as) {
+      UnisonConstraintExpr e2 = simplify_expr(input, ai.e, P2Table);
+      if (e2 != UnisonConstraintExpr(OR_EXPR, {}, {}))
+	pr2.as.push_back(PresolverAcrossItemJSON(ai.t,e2));
+    }
+    if (!pr2.as.empty())
+      input.across.push_back(pr2);
   }
   for(const vector<operand>& d : difftemps_ref) {
-    if(!already_tabled(d, P2Ts))
+    if(!already_tabled(d, P2Table))
       input.difftemps.push_back(d);
   }
   for(const vector<vector<int>>& d : domops_ref) {
-    if(!already_tabled(d[0], P2Ts))
+    if(!already_tabled(d[0], P2Table))
       input.domops.push_back(d);
   }
   
@@ -665,19 +718,147 @@ void expr_operands(const UnisonConstraintExpr& e, vector<operand>& ps) {
   }
 }
   
-bool already_tabled(const vector<operand>& ps, map<operand, vector<int>>& P2Ts) {
-  bool first = true;
-  vector<int> ids;
+bool already_tabled(const vector<operand>& ps, map<operand, int>& P2Table) {
+  int common_id = -2;
   for(operand p : ps) {
-    if(P2Ts.count(p)==0) {
+    if(P2Table.count(p)==0) {
       return false;
-    } else if(first) {
-      ids.swap(P2Ts[p]);
-      first = false;
     } else {
-      vector<int> inters = ord_intersection(ids,P2Ts[p]);
-      ids.swap(inters);
+      int id = P2Table[p];
+      if (common_id > -2 && common_id != id)
+	return false;
+      common_id = id;
     }
   }
-  return !ids.empty();
+  return true;
+}
+
+UnisonConstraintExpr simplify_expr(const Parameters& input,
+				   const UnisonConstraintExpr& n,
+				   map<operand, int>& P2Table) {
+  UnisonConstraintExpr FalseExpr = UnisonConstraintExpr(OR_EXPR, {}, {});
+  map<int, vector<UnisonConstraintExpr>> ID2Lits;
+  if (n.id == IMPLIES_EXPR) {
+    UnisonConstraintExpr ifpart = simplify_expr(input, n.children[0], P2Table);
+    UnisonConstraintExpr thenpart = n.children[1];
+    if (ifpart == FalseExpr)
+      return UnisonConstraintExpr(AND_EXPR, {}, {});
+    else
+      return UnisonConstraintExpr(IMPLIES_EXPR, {}, {ifpart,thenpart});
+  } else if (n.id == OR_EXPR) {
+    vector<UnisonConstraintExpr> disjuncts;
+    for (const UnisonConstraintExpr& c : n.children) {
+      UnisonConstraintExpr c2 = simplify_expr(input, c, P2Table);
+      if (c2 != FalseExpr)
+	disjuncts.push_back(c2);
+    }
+    if (disjuncts.empty())
+      return FalseExpr;
+    else if (disjuncts.size()==1)
+      return disjuncts[0];
+    else
+      return UnisonConstraintExpr(OR_EXPR, {}, disjuncts);
+  } else if (n.id == AND_EXPR) {
+    if (noop_copy_conjunction(input, n.children)) {
+      return FalseExpr;
+    }
+    for (const UnisonConstraintExpr& c : n.children)
+      if (c.id == CONNECTS_EXPR) {
+	if (noop_copy_literal(input, c)) {
+	  return FalseExpr;
+	}
+	operand p = c.data[0];
+	if(P2Table.count(p)>0)
+	  ID2Lits[P2Table[p]].push_back(c);
+      }
+  } else if (n.id == CONNECTS_EXPR) {
+    if (noop_copy_literal(input, n)) {
+      return FalseExpr;
+    }
+    operand p = n.data[0];
+    if(P2Table.count(p)>0)
+      ID2Lits[P2Table[p]].push_back(n);
+  } else {
+    return n;
+  }
+  for (pair<int, vector<UnisonConstraintExpr>> IdLits : ID2Lits) {
+    PresolverCopyTmpTable tt = input.tmp_tables[IdLits.first];
+    vector<UnisonConstraintExpr> lits = IdLits.second;
+    vector<int> key;
+    sort(lits.begin(), lits.end());
+    auto litp = lits.begin();
+    for(operand p : tt.ps) {
+      if (litp != lits.end() && p == (*litp).data[0])
+	key.push_back((*litp++).data[1]);
+      else
+	key.push_back(-1);
+    }
+    for(const vector<int>& tu : tt.tuples) {
+      int i = tt.os.size();
+      for(int k : key)
+	if (k != -1 && k != tu[i])
+	  goto next_t;
+        else
+	  i++;
+      goto next_g;
+    next_t: ;
+    }
+    return FalseExpr;
+  next_g: ;
+  }
+  return n;
+}
+
+bool noop_copy_literal(const Parameters& input, const UnisonConstraintExpr& c) {
+  operand p1 = c.data[0];
+  temporary t1 = c.data[1];
+  int r1 = input.p_preassign[p1];
+  operation o0 = input.def_opr[t1];
+  if (input.use[p1] && r1>=0 && input.type[o0]==COPY) {
+    operand p0 = first_use(input, o0);
+    if (input.temps[p0][0]==NULL_TEMPORARY && input.temps[p0].size()==2) {
+      temporary t0 = input.temps[p0][1];
+      int r0 = input.t_preassign[t0];
+      if (r0==r1)
+	return true;
+    }
+  }
+  return false;
+}
+
+bool noop_copy_conjunction(const Parameters& input, const presolver_conj& c) {
+  if (c.size()==2 && c[0].id==CONNECTS_EXPR && c[1].id==CONNECTS_EXPR) {
+    operand p0 = c[0].data[0];
+    temporary t0 = c[0].data[1];
+    operation o0 = opnd_oper(input, p0);
+    int pr0 = input.p_preassign[p0];
+    int tr0 = input.t_preassign[t0];
+    operand p1 = c[1].data[0];
+    temporary t1 = c[1].data[1];
+    int pr1 = input.p_preassign[p1];
+    if (pr0!=pr1 && pr0>=0 && pr1>=0 && t0==t1)
+      return true; // DOES OCCUR
+    if (input.use[p0] && input.type[o0]==COPY && tr0==pr1 && tr0>=0 &&
+	first_temp_but_null(input, first_def(input, o0))==t1)
+      return true;
+  } else if (c.size()==3 && c[0].id==CONNECTS_EXPR && c[1].id==CONNECTS_EXPR && c[2].id==CONNECTS_EXPR) {
+    operand p0 = c[0].data[0];
+    temporary t0 = c[0].data[1];
+    int r0 = input.p_preassign[p0];
+    operation o0 = opnd_oper(input, p0);
+    operand p1 = c[1].data[0];
+    temporary t1 = c[1].data[1];
+    int r1 = input.p_preassign[p1];
+    operation o1 = opnd_oper(input, p1);
+    operand p2 = c[2].data[0];
+    temporary t2 = c[2].data[1];
+    int r2 = input.p_preassign[p2];
+    if (input.use[p0] && input.type[o0]==COPY && t0==t1 && r1==r2 && r2>=0 &&
+	first_temp_but_null(input, first_def(input, o0))==t2)
+      return true;
+    if (input.use[p1] && input.type[o1]==COPY && t0==t1 && r0==r2 && r2>=0 &&
+	first_temp_but_null(input, first_def(input, o1))==t2)
+      return true;
+  }
+  return false;
 }

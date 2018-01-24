@@ -948,6 +948,86 @@ void gen_long_latency(Parameters& input) {
   }
 }
 
+
+bool analyzable(UnisonConstraintExpr& nogood) {
+  switch (nogood.id) {
+  case AND_EXPR:
+    for (UnisonConstraintExpr& ch : nogood.children) {
+      switch (ch.id) {
+      case CONNECTS_EXPR:
+      case IMPLEMENTS_EXPR:
+      case CALLER_SAVED_EXPR:
+	continue;
+      default:
+	return false;
+      }
+    }
+    return true;
+  case CONNECTS_EXPR:
+  case IMPLEMENTS_EXPR:
+  case CALLER_SAVED_EXPR:
+    return true;
+  default:
+    return false;
+  }
+}
+  
+void test_redundancy(Parameters & input, GlobalModel * gm) {
+  for(block b : input.B) {
+    vector<UnisonConstraintExpr> nogoods = input.bnogoods[b];
+    input.bnogoods[b].clear();
+    LocalModel * lm = new LocalModel(gm->input, gm->options, gm->ipl, gm, b);
+    lm->status();
+
+    for (UnisonConstraintExpr& nogood : nogoods) {
+      if (analyzable(nogood)) {
+	bool redundant = true;
+	cerr << "ANALYZING " << show(nogood) << endl;
+	switch (nogood.id) {
+	case AND_EXPR:
+	  {
+	    int nch = nogood.children.size();
+	    for (int i=0; i<nch; i++) {
+	      cerr << "  pivot is " << i << endl;
+	      LocalModel * clone = (LocalModel *)lm->clone();
+	      for (int j=0; j<nch; j++)
+		if (j!=i)
+		  clone->constraint(clone->adhoc_constraint_var(nogood.children[j]));
+	      Gecode::SpaceStatus ss = clone->status();
+	      if (ss == SS_FAILED) {
+		cerr << "    nonpivots caused failure" << endl;
+	      } else {
+		BoolVar reif = clone->adhoc_constraint_var(nogood.children[i]);
+		cerr << "    pivot's value is " << reif.min() << ".." << reif.max() << endl;
+		if (!reif.assigned())
+		  redundant = false;
+	      }
+	      delete clone;
+	    }
+	  }
+	  break;
+	case CONNECTS_EXPR:
+	case IMPLEMENTS_EXPR:
+	case CALLER_SAVED_EXPR:
+	  {
+	    BoolVar reif = lm->adhoc_constraint_var(nogood);
+	    cerr << "  value is " << reif.min() << ".." << reif.max() << endl;
+	    if (!reif.assigned())
+	      redundant = false;
+	  }
+	  break;
+	default:
+	  break;
+	}
+	if (redundant)
+	  cerr << "REDUNDANT " << show(nogood) << endl;
+      }
+    }
+    delete lm;
+    input.bnogoods[b] = nogoods;
+  }
+}
+
 #if 0
 
 /*****************************************************************************
