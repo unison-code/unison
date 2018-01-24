@@ -225,6 +225,8 @@ string show(const PresolverSetAcross);
 
 string show(const PresolverPrecedence x);
 
+string show(const PrecedenceEdge);
+
 template <typename C>
 string show(const C& container, string l = ",", string pre = "",
             string limits = "[]") {

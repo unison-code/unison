@@ -319,40 +319,22 @@ void presolve(Parameters & input, PresolverOptions & options) {
 
   // 18: Precedences <- GenBeforePrecedences() U GenFixedPrecedences() U GenDataPrecedences()
 
-  t0.start();
-  map<operand, map<instruction, latency>> opnd2lat = compute_opnd_to_lat(input);
   precedence_set precedences;
-  gen_before_precedences(input, options, input.before, precedences, t);
+  vector<vector<vector<int>>> min_con_erg = vector<vector<vector<int>>>(input.O.size());
+  map<operand, map<instruction, latency>> opnd2lat;
+  t0.start();
+  compute_opnd_to_lat(input, opnd2lat);
+  gen_min_con_erg(input, min_con_erg);
+  gen_precs_precedences(input, min_con_erg, precedences);
+  gen_before_precedences(input, options, input.before, min_con_erg, precedences, t);
   if (timeout(t, options, "Precedences - gen_before_precedences", t0, false))
     return;
   gen_fixed_precedences(input, precedences);
   if (timeout(t, options, "Precedences - gen_fixed_precedences", t0, false))
     return;
   // gen_data_precedences(input, opnd2lat, precedences); // defer to solver!
-  if (options.regions()) {
-    map<block,vector<vector<operation>>> edgeset_map;
-    vector<vector<vector<int>>> min_con_erg = vector<vector<vector<int>>>(input.O.size());
-    map<int,int> pweight;
-    
-    gen_region_init(input, edgeset_map, min_con_erg, pweight, precedences);
-    gen_region_precedences(input, edgeset_map, min_con_erg, pweight, precedences);
-    for(operand p : input.P) {
-      temporary t0 = input.temps[p][0];
-      if(input.use[p] && t0 != NULL_TEMPORARY) {
-	for(temporary t : input.temps[p]) {
-	  if (t != t0) {
-	    gen_region_precedences(input, edgeset_map, min_con_erg, pweight, {p,t}, precedences);
-	  }
-	}
-      }
-    }
-  }
-  if (timeout(t, options, "Precedences - gen_region_precedences", t0, false))
-    return;
   sort(precedences.begin(), precedences.end());
   precedences.erase(unique(precedences.begin(), precedences.end()), precedences.end());
-  if (timeout(t, options, "Precedences", t0))
-    return;
 
   // 19: JSON.precedences <- NormalizePrecedences()
 
@@ -378,7 +360,7 @@ void presolve(Parameters & input, PresolverOptions & options) {
   t0.start();
   temp.clear();
   precedence_set precedences2;
-  gen_before_precedences(input, options, input.before2, precedences2, t);
+  gen_before_precedences(input, options, input.before2, min_con_erg, precedences2, t);
   if (timeout(t, options, "precedences2 - gen_before_precedences", t0, false))
     return;
   for(const PresolverPrecedence& pred : precedences2) {
@@ -497,6 +479,34 @@ void presolve(Parameters & input, PresolverOptions & options) {
     return;
 
   } // end of options.tabling()
+
+  // regions
+
+  if (options.regions()) {
+    map<block,vector<vector<operation>>> edgeset_map;
+    map<int,int> pweight;
+    gen_region_init(input, edgeset_map, pweight, precedences);
+    precedences.clear();
+    gen_region_precedences(input, edgeset_map, min_con_erg, pweight, precedences);
+    for(operand p : input.P) {
+      temporary t0 = input.temps[p][0];
+      if(input.use[p] && t0 != NULL_TEMPORARY) {
+	for(temporary t : input.temps[p]) {
+	  if (t != t0) {
+	    gen_region_precedences(input, edgeset_map, min_con_erg, pweight, {p,t}, precedences);
+	  }
+	}
+      }
+    }
+    // merge in the region precedences
+    normalize_precedences(input, precedences, input.precedences);
+    // cerr << "DUMP REGION PRECEDENCES" << endl;
+    // for (auto pre : precedences)
+    //   cerr << "    " << show(pre) << endl;
+    // cerr << "DUMP ALL PRECEDENCES" << endl;
+    // for (auto pre : input.precedences)
+    //   cerr << "    " << show(pre) << endl;
+  }
 
   // these can cause huge printouts and should be protected from timeouts
 

@@ -636,6 +636,8 @@ void filter_active_tables(Parameters & input) {
     vector_insert(filtered_dominates, pd);
   }
 
+  sort(filtered_active_tables.begin(), filtered_active_tables.end());
+  filtered_active_tables.erase(unique(filtered_active_tables.begin(), filtered_active_tables.end()), filtered_active_tables.end());
   input.active_tables = filtered_active_tables;
   input.dominates = filtered_dominates;
 }

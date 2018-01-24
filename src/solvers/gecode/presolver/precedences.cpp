@@ -99,6 +99,71 @@ void gen_fixed_precedences(const Parameters& input, precedence_set& PI) {
     }
 }
 
+static bool distinct_cycle(const Parameters& input,
+			   operation i,
+			   operation j,
+			   const vector<vector<vector<int>>>& min_con_erg) {
+  for (resource r : input.R)
+    if (min_con_erg[i][r][0] + min_con_erg[j][r][0] > input.cap[r])
+      return true;
+  return false;
+}
+
+void gen_min_con_erg(const Parameters& input,
+		     vector<vector<vector<int>>>& min_con_erg) {
+  for(operation o : input.O) {
+    min_con_erg[o] = vector<vector<int>>(input.R.size());
+    for(resource r : input.R) {
+      int minc = 9999;
+      int mine = 9999;
+      for(instruction i : input.instructions[o]) {
+	if(i != NULL_INSTRUCTION && minc>input.con[i][r]) {
+	  minc = input.con[i][r];
+	  mine = minc * input.dur[i][r];
+	  if(minc==0)
+	    break;
+	}
+      }
+      min_con_erg[o][r] = vector<int>(2);
+      min_con_erg[o][r][0] = minc;
+      min_con_erg[o][r][1] = mine;
+    }
+  }
+}
+
+void gen_precs_precedences(const Parameters& input,
+			   const vector<vector<vector<int>>>& min_con_erg,
+			   precedence_set& PI) {
+  presolver_conj ConjTrue;
+  presolver_disj DisjTrue({ConjTrue});
+
+  // FUN-FUN ---> no-op
+  // X-FUN ---> X-[TAIL]CALL if X is not [TAIL]CALL and can't be issued with [TAIL]CALL
+  // [TAIL]CALL-X ---> FUN-X if X is not FUN
+  for(const vector<operation>& edge : input.precs) {
+    operation i = edge[0];
+    operation j = edge[1];
+    operation isucc = i;
+    operation jpred = j;
+    if (input.type[i] == CALL || input.type[i] == TAILCALL)
+      while (input.type[isucc] != FUN)
+	isucc++;
+    if (input.type[j] == FUN)
+      while (input.type[jpred] != CALL && input.type[jpred] != TAILCALL)
+	jpred--;
+    if (input.type[i] == FUN && input.type[j] == FUN) {
+    } else if (input.type[i] != CALL && input.type[i] != TAILCALL && input.type[j] == FUN &&
+	       distinct_cycle(input, i, jpred, min_con_erg)) {
+      PI.push_back(PresolverPrecedence(i, jpred, 1, DisjTrue));
+    } else if ((input.type[i] == CALL || input.type[i] == TAILCALL) && input.type[j] != FUN) {
+      PI.push_back(PresolverPrecedence(isucc, j, 1, DisjTrue));
+    } else {
+      PI.push_back(PresolverPrecedence(i, j, 1, DisjTrue));
+    }
+  }
+}
+
+
 void gen_data_precedences(const Parameters& input,
 			  map<operand,map<instruction,latency>>& opnd_to_lat, 
 			  precedence_set& PI) {
@@ -201,96 +266,18 @@ multimap<operation, instruction> build_oI (const presolver_disj& Y) {
     return oI;
 }
 
-static bool distinct_cycle(const Parameters& input,
-			   operation i,
-			   operation j,
-			   const vector<vector<vector<int>>>& min_con_erg) {
-  for (resource r : input.R)
-    if (min_con_erg[i][r][0] + min_con_erg[j][r][0] > input.cap[r])
-      return true;
-  return false;
-}
-
 #define FastPair(o1,o2) (((o1)<<20) + (o2))
 
-void gen_region_init(const Parameters& input,
-		     map<block,vector<vector<operation>>>& edgeset_map,
-		     vector<vector<vector<int>>>& min_con_erg,
-		     map<int,int>& pweight,
-		     precedence_set& PI) {
-  presolver_conj ConjTrue;
-  presolver_disj DisjTrue({ConjTrue});
-    
-  for(operation o : input.O) {
-    min_con_erg[o] = vector<vector<int>>(input.R.size());
-    for(resource r : input.R) {
-      int minc = 9999;
-      int mine = 9999;
-      for(instruction i : input.instructions[o]) {
-	if(minc>input.con[i][r]) {
-	  minc = input.con[i][r];
-	  mine = minc * input.dur[i][r];
-	  if(minc==0)
-	    break;
-	}
-      }
-      min_con_erg[o][r] = vector<int>(2);
-      min_con_erg[o][r][0] = minc;
-      min_con_erg[o][r][1] = mine;
+static bool entailed_disj(const presolver_disj& d, const set<UnisonConstraintExpr>& entailed) {
+  for (const presolver_conj& c : d) {
+    for (const UnisonConstraintExpr& e : c) {
+      if (!entailed.count(e))
+	goto next_c;
     }
+    return true;
+  next_c: ;
   }
-  // FUN-FUN, DEFINE-*, and *-KILL precedences are useless here
-  // X-FUN ---> X-[TAIL]CALL if X is not [TAIL]CALL and can't be issued with [TAIL]CALL
-  // [TAIL]CALL-X ---> FUN-X if X is not FUN
-  for(const vector<operation>& edge : input.precs) {
-    operation i = edge[0];
-    operation j = edge[1];
-    operation isucc = i;
-    operation jpred = j;
-    if (input.type[i] == CALL || input.type[i] == TAILCALL)
-      while (input.type[isucc] != FUN)
-	isucc++;
-    if (input.type[j] == FUN)
-      while (input.type[jpred] != CALL && input.type[jpred] != TAILCALL)
-	jpred--;
-    if (input.type[i] == FUN && input.type[j] == FUN) {
-    } else if (input.type[i] != CALL && input.type[i] != TAILCALL && input.type[j] == FUN &&
-	       distinct_cycle(input, i, jpred, min_con_erg)) {
-      edgeset_map[input.oblock[j]].push_back({i,jpred});
-      PI.push_back(PresolverPrecedence(i, jpred, 1, DisjTrue));
-    } else if ((input.type[i] == CALL || input.type[i] == TAILCALL) && input.type[j] != FUN) {
-      edgeset_map[input.oblock[j]].push_back({isucc,j});
-      PI.push_back(PresolverPrecedence(isucc, j, 1, DisjTrue));
-    } else if (input.type[i] != DEFINE && input.type[j] != KILL) {
-      edgeset_map[input.oblock[j]].push_back(edge);
-      PI.push_back(PresolverPrecedence(i, j, 1, DisjTrue));
-    }
-  }
-
-  for (const PresolverPrecedence& p : PI) {
-    operation src = p.i;
-    operation dest = p.j;
-    int n = p.n;
-    presolver_disj D = p.d;
-    if (src<dest && disj_is_true(D)) {
-      int key = FastPair(src,dest);
-      if (pweight.find(key) == pweight.end() || pweight[key] < n)
-	pweight[key] = n;
-    }
-  }
-}
-
-void gen_region_precedences(const Parameters& input,
-			    const map<block,vector<vector<operation>>>& edgeset_map,
-			    const vector<vector<vector<int>>>& min_con_erg,
-			    map<int,int>& pweight,
-			    precedence_set& PI) {
-  for(const pair<block,vector<vector<operation>>>& edgeset_pair : edgeset_map) {
-    vector<operation> pnodes;
-    Digraph G = Digraph(edgeset_pair.second).reduction();
-    partition_nodes(G, pnodes, {});
-    gen_region_per_partition(input, G, pnodes, {}, {}, min_con_erg, pweight, PI);
-  }
+  return false;
 }
 
 static int min_latency(const Parameters& input,
@@ -317,6 +304,108 @@ static int min_latency(const Parameters& input,
 
   return ld+lu;
 };
+
+void gen_region_init(const Parameters& input,
+		     map<block,vector<vector<operation>>>& edgeset_map,
+		     map<int,int>& pweight,
+		     precedence_set& PI) {
+  set<UnisonConstraintExpr> entailed;
+
+  for (const PresolverActiveTable& pa : input.active_tables) {
+    if (pa.os.size() == 1) {
+      operation o = pa.os[0];
+      entailed.insert(UnisonConstraintExpr(ACTIVE_EXPR, {o}, {}));
+      for (operand p : input.operands[o])
+	if (input.use[p] && input.temps[p].size() == 2 && input.temps[p][0] == NULL_TEMPORARY)
+	  entailed.insert(UnisonConstraintExpr(CONNECTS_EXPR, {p,input.temps[p][1]}, {}));
+    }
+  }
+  for (const PresolverCopyTmpTable& pa : input.tmp_tables) {
+    if (pa.tuples.size() == 1) {
+      int no = pa.os.size();
+      int np = pa.ps.size();
+      for (int i=no; i<no+np; i++) {
+	int ti = pa.tuples[0][i];
+	entailed.insert(UnisonConstraintExpr(CONNECTS_EXPR, {pa.ps[i-no],ti}, {}));
+      }
+    }
+  }
+  // cerr << "DUMPING ENTAILED" << endl;
+  // for (auto ent : entailed)
+  //   cerr << "    " << show(ent) << endl;
+  for (const PresolverPrecedence& p : PI) {
+    operation src = p.i;
+    operation dest = p.j;
+    if (src<dest && entailed_disj(p.d, entailed)) {
+      int key = FastPair(src,dest);
+      if (pweight.find(key) == pweight.end() || pweight[key] < p.n)
+	pweight[key] = p.n;
+      // FIXME: is this really valid if p.n == 0?
+      vector_insert(edgeset_map[input.oblock[src]], {src,dest});
+    }
+  }
+  // simulate data precedences: KILL precedences are redundant
+  for (operand p : input.P) {
+    if (input.use[p]) {
+      operation o2 = input.oper[p];
+      if (input.type[o2] != KILL && (input.type[o2] != OUT || input.p_preassign[p]>=0)) {
+	temporary t = -1;
+	for (const auto e : entailed) {
+	  if (e.id == CONNECTS_EXPR && e.data[0] == p) {
+	    t = e.data[1]; break;
+	  }
+	}
+	if (t < 0 && (is_mandatory(input, o2) || entailed.count(UnisonConstraintExpr(ACTIVE_EXPR, {o2}, {})))) {
+	  t = first_temp_but_null(input, p);
+	}
+	if (t >= 0) {
+	  operation o1 = input.def_opr[t];
+	  operand d = input.definer[t];
+	  if (input.type[o1] != IN || input.t_preassign[t]>=0) {
+	    int key = FastPair(o1,o2);
+	    int distance = min_latency(input, o1, o2, d, p);
+	    if (pweight.find(key) == pweight.end() || pweight[key] < distance)
+	      pweight[key] = distance;
+	    // FIXME: is this really valid if distance == 0?
+	    vector_insert(edgeset_map[input.oblock[o1]], {o1,o2});
+	  }
+	}
+      }
+    }
+  }  
+}
+
+void gen_region_precedences(const Parameters& input,
+			    const map<block,vector<vector<operation>>>& edgeset_map,
+			    const vector<vector<vector<int>>>& min_con_erg,
+			    map<int,int>& pweight,
+			    precedence_set& PI) {
+  for(const pair<block,vector<vector<operation>>>& edgeset_pair : edgeset_map) {
+    vector<operation> pnodes;
+    Digraph G = Digraph(edgeset_pair.second).reduction();
+
+    // cerr << "digraph cpDecodeSecret {" << endl;
+    // cerr << "  size=\"8.5,11\";" << endl;
+    // cerr << "  concentrate=true;" << endl;
+    // cerr << "  label=\"pegwit.ec_crypt.cpDecodeSecret\";" << endl;
+    // cerr << "  fontsize=\"36\";" << endl;
+    // cerr << "  // kills" << endl;
+    // cerr << "  38 [shape=square];  " << endl;
+    // cerr << "  48 [shape=square];  " << endl;
+    // cerr << "  58 [shape=square];  " << endl;
+    // cerr << "  // edges" << endl;
+    // for (const pair<operation,operation> edge : G.edges()) {
+    //   operation src = edge.first;
+    //   operation dest = edge.second;
+    //   int key = FastPair(src,dest);      
+    //   cerr << "  " << src << " -> " << dest << " [label=\"" << pweight[key] << "\"];" << endl;
+    // }
+    // cerr << "}" << endl;
+
+    partition_nodes(G, pnodes, {});
+    gen_region_per_partition(input, G, pnodes, {}, {}, min_con_erg, pweight, PI);
+  }
+}
 
 void gen_region_precedences(const Parameters& input,
 			    map<block,vector<vector<operation>>>& edgeset_map,
@@ -347,7 +436,6 @@ void gen_region_precedences(const Parameters& input,
       edgeset.push_back({o1,o2});
       edgeset.push_back({o2,o3});
       Digraph G = Digraph(edgeset).reduction();
-      // cerr << "ASSUMING p" << p << "=t" << t << " o1=" << o1 <<" o2=" << o2 <<" o3=" << o3 << endl;
       partition_nodes(G, pnodes, {o1,o3});
       gen_region_per_partition(input, G, pnodes, {o1,o3,d12+d23}, ass, min_con_erg, pweight, PI);
     }
@@ -420,7 +508,6 @@ void gen_region_per_partition(const Parameters& input,
       UnisonConstraintExpr e(CONNECTS_EXPR, {p,t}, {});
       presolver_conj Conj({e});
       PresolverPrecedence pred(src, sink, lat, presolver_disj({Conj}));
-      // cerr << "  PAIR PRECEDENCE: " << show(pred) << endl;
       PI.push_back(pred);
       // pweight[FastPair(src,sink)] = lat; // only holds under assumption p...=t...
     }
@@ -553,7 +640,6 @@ void gen_region(const Parameters& input,
   } else if (ass.empty()) {
     presolver_conj Conj;
     PresolverPrecedence pred(src, sink, glb, presolver_disj({Conj}));
-    // cerr << "  REGION PRECEDENCE: " << show(pred) << endl;
     PI.push_back(pred);
     pweight[FastPair(src,sink)] = glb;
   } else {
@@ -561,7 +647,6 @@ void gen_region(const Parameters& input,
     temporary t = ass[1];
     presolver_conj Conj({UnisonConstraintExpr(CONNECTS_EXPR, {p,t}, {})});
     PresolverPrecedence pred(src, sink, glb, presolver_disj({Conj}));
-    // cerr << "  REGION PRECEDENCE: " << show(pred) << endl;
     PI.push_back(pred);
     // pweight[FastPair(src,sink)] = glb; // only holds under assumption p...=t...
   }
@@ -779,43 +864,37 @@ void normalize_precedences(const Parameters& input, const precedence_set& P, vec
     sort(P1.begin(), P1.end()); // canonicalize
 }
 
-map<operand, map<instruction, latency>> compute_opnd_to_lat(const Parameters& input) {
-    map<operand, map<instruction, latency>> M;
-    for(operation o : input.O) {
-        vector<operand> operands = oper_opnds(input, o);
-        for(unsigned int p = 0; p < operands.size(); ++p) {
-            map<instruction, latency> M1;
-            vector<instruction> instructions =
-                oper_insns(input, o);
-            for(unsigned int i = 0; i < instructions.size(); ++i) {
-                if(instructions[i] != NULL_INSTRUCTION) {
-                    M1.insert(make_pair(instructions[i], input.lat[o][i][p]));
-                }
-            }
-            M.insert(make_pair(operands[p], M1));
-        }
+void compute_opnd_to_lat(const Parameters& input,
+			 map<operand, map<instruction, latency>>& M) {
+  for(operation o : input.O) {
+    vector<operand> operands = oper_opnds(input, o);
+    for(unsigned int p = 0; p < operands.size(); ++p) {
+      map<instruction, latency> M1;
+      vector<instruction> instructions =
+	oper_insns(input, o);
+      for(unsigned int i = 0; i < instructions.size(); ++i) {
+	if(instructions[i] != NULL_INSTRUCTION) {
+	  M1.insert(make_pair(instructions[i], input.lat[o][i][p]));
+	}
+      }
+      M.insert(make_pair(operands[p], M1));
     }
-    return M;
+  }
 }
 
 void gen_before_precedences(const Parameters& input,
                             PresolverOptions & options,
 			    const vector<PresolverBeforeJSON>& before,
+			    const vector<vector<vector<int>>>& min_con_erg,
 			    precedence_set& PI,
                             Support::Timer & t) {
     // M <- empty
-    multimap<PrecedenceEdge, presolver_conj> M;
-    vector<PrecedenceEdge> M_keys; // Storing keys for convenience
+    map<PrecedenceEdge, presolver_disj> M;
     unsigned int i = 0;
     // For all <p,q,Disj> in Before
     for(const PresolverBeforeJSON& b : before) {
         // M <- M U GenBeforePrecedences1(p,q,Disj)
-        multimap<PrecedenceEdge, presolver_conj> M1 =
-	  gen_before_precedences1(input, b.p, b.q, expr_to_disj(b.e));
-        for(auto p : M1) {
-	  M_keys.push_back(p.first);
-	  M.insert(p);
-	}
+        gen_before_precedences1(input, b.p, b.q, expr_to_disj(b.e), min_con_erg, M);
         if ((i % 16 == 0) &&
             timeout(t, options, "gen_before_precedences (1st loop)", t, false))
           return;
@@ -823,35 +902,32 @@ void gen_before_precedences(const Parameters& input,
     }
     i = 0;
     // return {<p,s,n,KernelSet(Disj, empty)> | <p,s,n> -> Disj in M }
-    for(const PrecedenceEdge& k : M_keys) {
-        // Get Disj
-        auto range = M.equal_range(k);
-        presolver_disj disj;
-        for(auto it = range.first; it != range.second; ++it) {
-            disj.push_back(it->second);
-        }
-        PresolverPrecedence e(k.i, k.j, k.n, kernel_set(disj, {}, -1));
-        PI.push_back(e);
-        if ((i % 16 == 0) &&
-            timeout(t, options, "gen_before_precedences (2nd loop)", t, false))
+    for(auto pd : M) {
+      PrecedenceEdge k = pd.first;
+      presolver_disj disj = pd.second;
+      sort(disj.begin(), disj.end());
+      disj.erase(unique(disj.begin(), disj.end()), disj.end());
+      PresolverPrecedence e(k.i, k.j, k.n, kernel_set(disj, {}, -1));
+      PI.push_back(e);
+      if ((i % 16 == 0) &&
+	  timeout(t, options, "gen_before_precedences (2nd loop)", t, false))
           return;
-        i++;
+      i++;
     }
 }
 
-void before_rule(const Parameters& input,
-		 const presolver_conj& conj1,
-		 const operation o,
-		 const operation o1,
-		 const presolver_conj& conj,
-		 std::multimap<PrecedenceEdge, presolver_conj>& map) {
-    // if o != o'
+static void before_rule(const Parameters& input,
+			const presolver_conj& conj1,
+			const operation o,
+			const operation o1,
+			const presolver_conj& conj,
+			const vector<vector<vector<int>>>& min_con_erg,
+			map<PrecedenceEdge, presolver_disj>& M) {
     if(o != o1) {
-        // AddToMap(<o,o',0> -> Conj' U Conj)
         PrecedenceEdge e;
         e.i = o;
 	e.j = o1;
-	e.n = 0;
+	e.n = distinct_cycle(input, o, o1, min_con_erg) ? 1 : 0;
         presolver_conj u;
         for(const UnisonConstraintExpr& l : conj1) {
 	  if (l.id != CONNECTS_EXPR || opnd_temps(input, l.data[0]).size() > 1) // not entailed?
@@ -861,111 +937,41 @@ void before_rule(const Parameters& input,
 	  if (l.id != CONNECTS_EXPR || opnd_temps(input, l.data[0]).size() > 1) // not entailed?
 	    vector_insert(u, l);
 	}
-        map.insert(make_pair(e,u));
+        M[e].push_back(u);
     }
 }
 
-multimap<PrecedenceEdge, presolver_conj> gen_before_precedences1(const Parameters& input,
-								 operand p, operand q,
-								 const presolver_disj& disj) {
-
-    // M <- empty
-    multimap<PrecedenceEdge, presolver_conj> M;
-    // if p is def and q is def, then
-    if(!input.use[p] && !input.use[q]) {
-        // t <- min(OpndTempsButNull(p))
-        temporary t = first_temp_but_null(input, p);
-        // For all r in TempUses(t)
-        for(operand r : temp_uses(input, t)) {
-            // Or <- OpndOper(r)
-            operation o_r = opnd_oper(input, r);
-            // For all Conj in Disj
-            for(const presolver_conj& conj : disj) {
-                // M <- BeforeRule({eq(p(r), t(t))}, Or, OpndOper(q), Conj, M)
-	      UnisonConstraintExpr lit1(CONNECTS_EXPR, {r,t}, {});
-	      before_rule(input, { lit1 }, o_r, opnd_oper(input, q), conj, M);
-            }
-        }
-    } else if (!input.use[p] && input.use[q]) {
-        // t <- min(OpndTempsButNull(p))
-        temporary t = first_temp_but_null(input, p);
-        // for all r in TempUses(t)
-        for(operand r : temp_uses(input, t)) {
-            // or <- OpndOper(r)
-            operation o_r = opnd_oper(input, r);
-            // for all t' in OpndTempsButNull(q)
-            for(temporary t1 : opnd_temps(input, q)) {
-	      if(t1!=NULL_TEMPORARY) {
-                // for all conj in disj
-                for(const presolver_conj& conj : disj) {
-                    // M <- before_rule(input, {eq(p(r), t(t)), eq(p(q), t(t'))},
-                    // or, TempOper(t'), Conj, M)
-		  UnisonConstraintExpr lit1(CONNECTS_EXPR, {r,t}, {});
-		  UnisonConstraintExpr lit2(CONNECTS_EXPR, {q,t1}, {});
-		  before_rule(input, {lit1, lit2}, o_r, temp_oper(input, t1), conj, M);
-                }
-	      }
-            }
-        }
-    } else if (input.use[p] && !input.use[q]) {
-        // for all r in TempUses(min(OpndTempsButNull(p)))
-        temporary min_t = first_temp_but_null(input, p);
-        for(temporary r : temp_uses(input, min_t)) {
-            // or <- OpndOper(r)
-            operation o_r = opnd_oper(input, r);
-
-            // Compute OpndTempsButNull(p) intersecting
-            // OpndTempsButNull(r)
-            vector<temporary> inter = ord_intersection(opnd_temps(input, p), opnd_temps(input, r));
-
-            // For all t in intersection
-            for(temporary t : inter) {
-	      if(t!=NULL_TEMPORARY) {
-                // For all Conj in Disj
-                for(const presolver_conj& conj : disj) {
-                    // M <- BeforeRule({eq(p(r), t(t)), eq(p(p), t(t))}, or,
-                    // OpndOper(q), Conj, M)
-		  UnisonConstraintExpr lit1(CONNECTS_EXPR, {r,t}, {});
-		  UnisonConstraintExpr lit2(CONNECTS_EXPR, {p,t}, {});
-		  before_rule(input, {lit1, lit2}, o_r, opnd_oper(input, q), conj, M);
-                }
-	      }
-            }
-        }
-    } else if (input.use[p] && input.use[q]) {
-        // For all r in TempUses(min(OpndTempsButNull(p)))
-        temporary min_t = first_temp_but_null(input, p);
-        for(operand r : temp_uses(input, min_t)) {
-            // or <- OpndOper(r)
-            operation o_r = opnd_oper(input, r);
-            // For all t' in OpndTempsButNull(q)
-            for(temporary t1 : opnd_temps(input, q)) {
-	      if(t1!=NULL_TEMPORARY) {
-                // ot' <- TempOper(t')
-                operation o_t1 = temp_oper(input, t1);
-                // Compute OpndTempsButNull(p) intersecting
-                // OpndTempsButNull(r)
-		vector<temporary> inter = ord_intersection(opnd_temps(input, p), opnd_temps(input, r));
-                // for all t in intersection
-                for(temporary t : inter) {
-		  if(t!=NULL_TEMPORARY) {
-		    // for all Conj in Disj
-		    for(const presolver_conj& conj : disj) {
-		      // {eq(p(r), t(t))}
-		      UnisonConstraintExpr lit1(CONNECTS_EXPR, {r,t}, {});
-		      // {eq(p(p), t(t))}
-		      UnisonConstraintExpr lit2(CONNECTS_EXPR, {p,t}, {});
-		      // {eq(p(q), t(t'))}
-		      UnisonConstraintExpr lit3(CONNECTS_EXPR, {q,t1}, {});
-		      before_rule(input, {lit1, lit2, lit3}, o_r, o_t1, conj, M);
-		    }
-		  }
-		}
-	      }
-	    }
-        }
+void gen_before_precedences1(const Parameters& input,
+			     operand p, operand q,
+			     const presolver_disj& disj,
+			     const vector<vector<vector<int>>>& min_con_erg,
+			     map<PrecedenceEdge, presolver_disj>& M) {
+  operand o_p = opnd_oper(input, p);
+  operand o_q = opnd_oper(input, q);
+  for(const presolver_conj& conj : disj) {
+    before_rule(input, { }, o_p, o_q, conj, min_con_erg, M);
+  }
+  if(!input.use[p]) {
+    temporary t = first_temp_but_null(input, p);
+    for(operand r : temp_uses(input, t)) {
+      operation o_r = opnd_oper(input, r);
+      for(const presolver_conj& conj : disj) {
+	UnisonConstraintExpr lit1(CONNECTS_EXPR, {r,t}, {});
+	before_rule(input, { lit1 }, o_r, o_q, conj, min_con_erg, M);
+      }
     }
-    return M;
+  }
+  if(input.use[q]) {
+    for(temporary t : opnd_temps(input, q)) {
+      if(t!=NULL_TEMPORARY) {
+	operation o_r = input.def_opr[t];
+	for(const presolver_conj& conj : disj) {
+	  UnisonConstraintExpr lit1(CONNECTS_EXPR, {q,t}, {});
+	  before_rule(input, { lit1 }, o_p, o_r, conj, min_con_erg, M);
+	}
+      }
+    }
+  }
 }
 
 void gen_long_latency(Parameters& input) {

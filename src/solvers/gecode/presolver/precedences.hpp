@@ -55,6 +55,13 @@ typedef vector<PresolverPrecedence> precedence_set;
 // GenFixedPrecedences: p.49
 void gen_fixed_precedences(const Parameters& input, precedence_set& PI);
 
+void gen_min_con_erg(const Parameters& input,
+		     vector<vector<vector<int>>>& min_con_erg);
+
+void gen_precs_precedences(const Parameters& input,
+			   const vector<vector<vector<int>>>& min_con_erg,
+			   precedence_set& PI);
+
 // GenDataPrecedences(OpndToLat)
 void gen_data_precedences(const Parameters& input,
 			  map<operand,map<instruction,latency>>& opnd_to_lat,
@@ -67,31 +74,22 @@ void gen_data_precedences1(operation d, operation o,
 			   map<operand,map<instruction,latency>>& opnd_to_lat,
 			   precedence_set& PI);
 
-class PrecedenceEdge {
-    public:
-        operation i, j;
-        latency n;
-        bool operator<(const PrecedenceEdge& p) const {
-            if(i != p.i) return i < p.i;
-            else if(j != p.j) return j < p.j;
-            else return n < p.n;
-        }
-};
-
 void gen_before_precedences(const Parameters& input,
                             PresolverOptions & options,
 			    const vector<PresolverBeforeJSON>& before,
+			    const vector<vector<vector<int>>>& min_con_erg,
 			    precedence_set& PI,
                             Support::Timer & t);
 
-multimap<PrecedenceEdge, presolver_conj> gen_before_precedences1(const Parameters& input,
-								 operand p,
-								 operand q,
-								 const presolver_disj& disj);
+void gen_before_precedences1(const Parameters& input,
+			     operand p,
+			     operand q,
+			     const presolver_disj& disj,
+			     const vector<vector<vector<int>>>& min_con_erg,
+			     map<PrecedenceEdge, presolver_disj>& M);
 
 void gen_region_init(const Parameters& input,
 		     map<block,vector<vector<operation>>>& edgeset_map,
-		     vector<vector<vector<int>>>& min_con_erg,
 		     map<int,int>& pweight,
 		     precedence_set& PI);
 
@@ -149,7 +147,8 @@ void region_finishers_rec(vector<operation>& In,
 
 void normalize_precedences(const Parameters& input, const precedence_set& P, vector<UnisonConstraintExpr>& P1);
 
-map<operand, map<instruction, latency>> compute_opnd_to_lat(const Parameters& input);
+void compute_opnd_to_lat(const Parameters& input,
+			 map<operand, map<instruction, latency>>& M);
 
 void gen_long_latency(Parameters& input);
 

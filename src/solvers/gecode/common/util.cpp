@@ -136,6 +136,10 @@ string show(const PresolverPrecedence x) {
   return show(vector<string>{show(x.i), show(x.j), show(x.n), show(x.d)}, ", ");
 }
 
+string show(const PrecedenceEdge x) {
+  return show(vector<string>{show(x.i), show(x.j), show(x.n)}, ", ");
+}
+
 string emit_json(const int i) {
   stringstream s;
   s << i;

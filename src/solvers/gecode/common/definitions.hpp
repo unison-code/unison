@@ -326,6 +326,20 @@ public:
   }
 };
 
+class PrecedenceEdge {
+public:
+  operation i, j;
+  latency n;
+  bool operator<(const PrecedenceEdge& p) const {
+    if(i != p.i) return i < p.i;
+    else if(j != p.j) return j < p.j;
+    else return n < p.n;
+  }
+  bool operator==(const PrecedenceEdge& p) const {
+    return i == p.i && j == p.j && n == p.n;
+  }
+};
+
 class PresolverPrecedence {
 public:
   operation i, j;
