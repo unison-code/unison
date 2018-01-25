@@ -94,7 +94,7 @@ tryUntilSuccess a =
            tryUntilSuccess a
       Right () -> return ()
 
-runChuffed flags extJson lowerBoundFile outJsonFile =
+runChuffed flags to extJson lowerBoundFile outJsonFile =
   do -- call 'minizinc-solver' but only for the setup (we would like to use the
      -- entire script but for some reason then we cannot kill the underlying
      -- processes when MiniZinc looses the race)
@@ -112,8 +112,11 @@ runChuffed flags extJson lowerBoundFile outJsonFile =
          out = pre ++ ".out"
      setEnv "FLATZINC_CMD" "fzn-chuffed"
      tryUntilSuccess $ callProcess "mzn-chuffed"
-       (concatMap fznFlag ["--mdd", "on", "--verbosity", "3", "-f",
-                           "--rnd-seed", "123456"] ++
+       (concatMap fznFlag (["--mdd", "on",
+                            "--verbosity", "3",
+                            "-f",
+                            "--rnd-seed", "123456"] ++
+                           chuffedTimeoutFlags to) ++
         ["-a", "-s",
          "-D", "good_cumulative=true",
          "-D", "good_diffn=false"] ++
@@ -132,6 +135,12 @@ runChuffed flags extJson lowerBoundFile outJsonFile =
      return outJsonFile
 
 fznFlag opt = ["--fzn-flag", opt]
+
+chuffedTimeoutFlags to
+  -- just to be sure that fzn-chuffed dies after the timeout (it does not
+  -- always honor the kill signal)
+  | to >= 0 = ["--time-out", show (to `div` timeoutFactor)]
+  | otherwise = []
 
 splitFlags :: String -> [String]
 splitFlags flags =
@@ -167,6 +176,8 @@ strictHGetContents h =
   do c <- hGetContents h
      length c `seq` return c
 
+timeoutFactor = 1000000
+
 main =
     do Portfolio{..} <- cmdArgsRun portfolioArgs
        let baseOutFile    = outFile ++ ".base"
@@ -176,16 +187,16 @@ main =
            gecodeLowerBoundFile = lowerBoundFile ++ ".gecode"
            chuffedLowerBoundFile = lowerBoundFile ++ ".chuffed"
            to = case timeOut of
-                 Just s  -> if s * 1000000 > maxInt
+                 Just s  -> if s * timeoutFactor > maxInt
                             then error ("exceeded maximum timeout")
-                            else (fromInteger s) * 1000000
+                            else s * timeoutFactor
                  Nothing -> -1
        start <- getCurrentTime
-       result <- timeout to
+       result <- timeout (fromInteger to)
                  (race
                   (runGecode gecodeFlags to verbose inFile
                    gecodeLowerBoundFile gecodeOutFile)
-                  (runChuffed chuffedFlags inFile
+                  (runChuffed chuffedFlags to inFile
                    chuffedLowerBoundFile chuffedOutFile))
        end <- getCurrentTime
        let winner = case result of
