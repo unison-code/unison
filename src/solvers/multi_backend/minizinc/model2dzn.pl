@@ -942,7 +942,7 @@ write_array(Name, array(IndexSet1,Type), Array) :- !,
 	write(', '),
 	write_list(Type, Array),
 	write(');\n').
-write_array(Name, array(1.._,1..B,int), []) :- !,
+write_array(Name, array(1.._,1..B,_), []) :- !,
 	format('~w = array2d(1..0, 1..~d, []);\n', [Name,B]).
 write_array(Name, array(IndexSet1,IndexSet2,Type), Array) :-
 	IndexSet1 = 1.._,

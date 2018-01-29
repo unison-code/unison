@@ -132,7 +132,7 @@ array[int] of int: quasi_adj_from;
 array[int] of int: quasi_adj_to;
 
 %% see JSON long_latency
-array[int,1..4] of set of int: long_latency_index;
+array[int,int] of set of int: long_latency_index;
 array[int] of int: long_latency_def;
 array[int] of int: long_latency_use;
 

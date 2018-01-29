@@ -963,14 +963,15 @@ void gen_long_latency(Parameters& input) {
     vector<operand> inps, outps;
     vector<int> inix, outix;
     for(operand p : ps)
-      switch(input.type[input.oper[p]]) {
-      case IN:
-	inps.push_back(p);
-	break;
-      case OUT:
-	outps.push_back(p);
-	break;
-      }
+      if(input.global_operand[p])
+	switch(input.type[input.oper[p]]) {
+	case IN:
+	  inps.push_back(p);
+	  break;
+	case OUT:
+	  outps.push_back(p);
+	  break;
+	}
     if (!inps.empty() && !outps.empty()) {
       for(int ii = 0; ii < nll; ii++) {
 	vector<operand>& du = input.long_latency_def_use[ii];
