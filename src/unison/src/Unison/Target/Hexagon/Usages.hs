@@ -10,11 +10,19 @@ import Unison.Target.Hexagon.SpecsGen.HexagonInstructionDecl
 
 -- | Declares resource usages of each instruction
 
-usages i
+usages to i =
+  let us  = usages' i
+      us' = [mkUsage BundleWidth 1 1 | any (isUsageOf BundleWidth) us] ++
+            [mkUsage BlockEnd 1 1 | any (isUsageOf BlockEnd) us]
+  in if singleIssue to then us' else us
+
+isUsageOf r Usage {resource = r'} = r == r'
+
+usages' i
   | i `elem` [Jump_merge, Jr_merge] = [mkUsage BlockEnd 1 1]
-usages i
+usages' i
   | isConstantExtended i && not (isSourceInstr i || isDematInstr i) =
-      mergeUsages (usages (nonConstantExtendedInstr i))
+      mergeUsages (usages' (nonConstantExtendedInstr i))
                   [mkUsage BundleWidth 1 1]
   | i `elem` [C2_mux_tfr, C2_mux_tfr_new] =
       mergeUsages (itineraryUsage i $ SpecsGen.itinerary i) conNewValue
