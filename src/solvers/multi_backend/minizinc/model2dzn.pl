@@ -899,18 +899,11 @@ expr_quad([3,X,Y], Quad) :- !, % IMPLIES
 	expr_quad(Y, Quad2),
 	encode_quad(Quad1, I1),
 	encode_quad(Quad2, I2),
-	Quad = [3,I1,I2,0,[]],
-	(   X = [1|_] -> print_message(warning, can_opt([3,X,Y]))
-	;   Y = [0|_] -> print_message(warning, can_opt([3,X,Y]))
-	;   true
-	).
+	Quad = [3,I1,I2,0,[]].
 expr_quad([4,X], Quad) :- !, % NOT
 	expr_quad(X, Quad1),
 	encode_quad(Quad1, I1),
-	Quad = [4,I1,0,0,[]],
-	(   X = [T|_], T<5 -> print_message(warning, can_opt([4,X]))
-	;   true
-	).
+	Quad = [4,I1,0,0,[]].
 expr_quad(Expr, Quad) :-	% expr proper
 	(   Expr = [T,X] -> Quad = [T,X,0,0,[]]
 	;   Expr = [T,X,Y] -> Quad = [T,X,Y,0,[]]
