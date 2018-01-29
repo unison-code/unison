@@ -1,0 +1,4 @@
+#!/bin/bash
+# 16 GB MEM
+ulimit -v 16777216
+mzn-chuffed $@
