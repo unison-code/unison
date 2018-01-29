@@ -57,7 +57,7 @@ target =
       API.tReserved         = const reserved,
       API.tInstructionType  = const instructionType,
       API.tBranchInfo       = const branchInfo,
-      API.tPreProcess       = const preProcess,
+      API.tPreProcess       = preProcess,
       API.tPostProcess      = const postProcess,
       API.tTransforms       = const transforms,
       API.tCopies           = const copies,
@@ -67,8 +67,8 @@ target =
       API.tAlignedPairs     = const SpecsGen.alignedPairs,
       API.tPackedPairs      = const (const (const [])),
       API.tRelatedPairs     = const (const []),
-      API.tResources        = const resources,
-      API.tUsages           = const usages,
+      API.tResources        = resources,
+      API.tUsages           = usages,
       API.tNop              = const nop,
       API.tReadWriteInfo    = const readWriteInfo,
       API.tImplementFrame   = const implementFrame,
@@ -342,7 +342,9 @@ baseInstr i
   | isConstantExtended i = nonConstantExtendedInstr i
   | otherwise = i
 
-resources =
+resources to
+  | singleIssue to = [Resource BundleWidth 1, Resource BlockEnd 1]
+  | otherwise =
     [
 
      -- Boundle width
@@ -455,8 +457,9 @@ stackDirection = API.StackGrowsDown
 
 -- | Target dependent pre-processing functions
 
-preProcess = [mapToTargetMachineInstruction preprocessJRInstrs,
-              foldSPCopies, addFrameIndex, constantExtend]
+preProcess to = [mapToTargetMachineInstruction preprocessJRInstrs,
+                 foldSPCopies, addFrameIndex, constantExtend,
+                 if singleIssue to then serialize else id]
 
 -- This is so that we take the additional call cost cost of tail-call jumps
 -- in LLVM solutions when we run 'uni analyze'
@@ -503,6 +506,14 @@ liftToTOpc f = mkMachineTargetOpc . f . mopcTarget
 
 isConstExtendedProperty =
   isMachineInstructionPropertyCustomOf "constant-extended"
+
+serialize = mapToMachineBlock serializeBlock
+
+serializeBlock mb @ MachineBlock {mbInstructions = mis} =
+  mb {mbInstructions = concatMap machineInstructionToList mis}
+
+machineInstructionToList ms @ MachineSingle {} = [ms]
+machineInstructionToList MachineBundle {mbInstrs = mis} = mis
 
 -- | Target dependent post-processing functions
 
@@ -690,7 +701,7 @@ readWriteLatency _ ((_, VirtualType (DelimiterType InType)), _) (_, _) = 1
 readWriteLatency _ ((_, VirtualType FunType), _) (_, _) = 1
 readWriteLatency _ ((_, VirtualType _), _) (_, _) = 0
 readWriteLatency _ ((TargetInstruction p, _), _) (_, _) =
-    maybeMax 0 $ map occupation (usages p)
+    maybeMax 0 $ map occupation (usages [] p)
 
 linearMergeJumps = [JMPret_dealloc_linear, L4_return_linear, Ret_dealloc_merge,
                     JMPret_linear, Jr_merge]
