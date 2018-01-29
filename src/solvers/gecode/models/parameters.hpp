@@ -320,9 +320,6 @@ public:
   // set of register assignment hints
   vector<vector<int> > assignhints;
 
-  // unsafe temps
-  vector<temporary> unsafe_temp;
-
   // set of dominates
   vector<PresolverDominates> dominates;
 
@@ -350,8 +347,11 @@ public:
   // [MC] quasi_adjacent operands
   vector<vector<operand> > quasi_adjacent;
 
+  // [MC] long_latency index: [in operands, its relevant def-uses, out operands, its relevant def-uses]
+  vector<vector<vector<int> > > long_latency_index;
+  
   // [MC] long_latency use-def hazards
-  vector<vector<operand> > long_latency;
+  vector<vector<operand> > long_latency_def_use;
 
   Parameters(JSONVALUE root);
 

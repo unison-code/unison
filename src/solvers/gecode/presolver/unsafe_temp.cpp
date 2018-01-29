@@ -37,51 +37,49 @@
 
 using namespace std;
 
-void gen_unsafe_temp(Parameters& input) {
-    for(temporary t : input.T) {
-        // operand that can define temporary t
-        operand d = temp_def(input, t);
-        // operands that can use temporary t
-        vector<operand> U = temp_uses(input, t);
-        // operation that defines temporary t
-        operation o = temp_oper(input, t);
+bool temp_is_unsafe(const Parameters& input, const temporary t) {
+  // operand that can define temporary t
+  operand d = temp_def(input, t);
+  // operands that can use temporary t
+  vector<operand> U = temp_uses(input, t);
+  // operation that defines temporary t
+  operation o = temp_oper(input, t);
 
-        int otype = input.type[o];
-        if (otype != IN  && otype != DEFINE && otype != FUN) {
-            int ld = std::numeric_limits<int>::max();
-            int lu = std::numeric_limits<int>::max();
+  int otype = input.type[o];
+  if (otype != IN  && otype != DEFINE && otype != FUN) {
+    int ld = std::numeric_limits<int>::max();
+    int lu = std::numeric_limits<int>::max();
 
-            // For each instruction that can implement operation o
-            for(unsigned int i = 0; i < oper_insns(input, o).size(); ++i) {
-                // Latency of operand d, in operation o, if it' implemented by
-                // instruction i
-                if(oper_insns(input, o)[i] != NULL_INSTRUCTION) {
-                    unsigned int di = index_of(oper_opnds(input, o), d);
-                    ld = std::min(ld, input.lat[o][i][di]);
-                }
-            } // I get minimum latency of the definer of temporary
-            // I assume that the operation does not have ONLY null
-            // instructions
+    // For each instruction that can implement operation o
+    for(unsigned int i = 0; i < oper_insns(input, o).size(); ++i) {
+      // Latency of operand d, in operation o, if it' implemented by
+      // instruction i
+      if(oper_insns(input, o)[i] != NULL_INSTRUCTION) {
+	unsigned int di = index_of(oper_opnds(input, o), d);
+	ld = std::min(ld, input.lat[o][i][di]);
+      }
+    } // I get minimum latency of the definer of temporary
+    // I assume that the operation does not have ONLY null
+    // instructions
 
-            // For operand that can use t
-            for(operand u : U) {
-                // For the operation that might use t
-                operation o1 = opnd_oper(input, u);
-                // For each instruction that can implement operation o1
-                for(unsigned int i = 0; i < oper_insns(input, o1).size(); ++i) {
-                    if(oper_insns(input, o1)[i] != NULL_INSTRUCTION) {
-                        unsigned int ui = index_of(oper_opnds(input, o1), u);
-                        lu = std::min(lu, input.lat[o1][i][ui]);
-                    }
-                }
-            } // I get minimum latency of all the users of the temporary
+    // For operand that can use t
+    for(operand u : U) {
+      // For the operation that might use t
+      operation o1 = opnd_oper(input, u);
+      // For each instruction that can implement operation o1
+      for(unsigned int i = 0; i < oper_insns(input, o1).size(); ++i) {
+	if(oper_insns(input, o1)[i] != NULL_INSTRUCTION) {
+	  unsigned int ui = index_of(oper_opnds(input, o1), u);
+	  lu = std::min(lu, input.lat[o1][i][ui]);
+	}
+      }
+    } // I get minimum latency of all the users of the temporary
 
-            // If the minimum live range (which is min 1 cycle) of the
-            // temporary is bigger than ld + lu
-            if(input.minlive[t] > ld + lu) {
-                input.unsafe_temp.push_back(t); // Say it's unsafe.
-            }
-        }
-    }
+    // If the minimum live range (which is min 1 cycle) of the
+    // temporary is bigger than ld + lu
+    if (input.minlive[t] > ld + lu)
+      return true;
+  }
+  return false;
 }
 

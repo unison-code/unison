@@ -870,6 +870,9 @@ void gen_before_precedences1(const Parameters& input,
 }
 
 void gen_long_latency(Parameters& input) {
+
+  // Phase 1: collect relevant def-use pairs where at least one operand is global and may require nonzero slack
+  
   set<vector<operand>> seen;
   vector<operand> queue;
   for(operation o : input.O) {
@@ -888,7 +891,7 @@ void gen_long_latency(Parameters& input) {
 	      if (seen.find(pq) == seen.end()) {
 		seen.insert(pq);
 		queue.push_back(q);
-		input.long_latency.push_back(pq);
+		input.long_latency_def_use.push_back(pq);
 	      }
 	    }
 	  }
@@ -901,7 +904,7 @@ void gen_long_latency(Parameters& input) {
 	      if (seen.find(pq) == seen.end()) {
 		seen.insert(pq);
 		queue.push_back(q);
-		input.long_latency.push_back(pq);
+		input.long_latency_def_use.push_back(pq);
 	      }
 	    }
 	  }
@@ -925,7 +928,7 @@ void gen_long_latency(Parameters& input) {
 	    if (seen.find(pq2) == seen.end()) {
 	      seen.insert(pq2);
 	      queue.push_back(q2);
-	      input.long_latency.push_back(pq2);
+	      input.long_latency_def_use.push_back(pq2);
 	    }
 	  }
 	}
@@ -939,13 +942,46 @@ void gen_long_latency(Parameters& input) {
 	    if (seen.find(pq2) == seen.end()) {
 	      seen.insert(pq2);
 	      queue.push_back(q2);
-	      input.long_latency.push_back(pq2);
+	      input.long_latency_def_use.push_back(pq2);
 	    }
 	  }
 	}
       }
     }
   }
+
+  // Phase 2: build index
+
+  //  forall(opnds in congr)(
+  //    let {set of int: inps = {p | p in opnds where op_type[operand_definer[p]] = TYPE_IN},
+  //        set of int: inix = {i | i in index_set(long_latency_def) where long_latency_def[i] in inps},
+  //         set of int: outps = {p | p in opnds where op_type[operand_definer[p]] = TYPE_OUT},
+  //        set of int: outix = {i | i in index_set(long_latency_use) where long_latency_use[i] in outps},
+
+  int nll = input.long_latency_def_use.size();
+  for(vector<operand>& ps : input.congr) {
+    vector<operand> inps, outps;
+    vector<int> inix, outix;
+    for(operand p : ps)
+      switch(input.type[input.oper[p]]) {
+      case IN:
+	inps.push_back(p);
+	break;
+      case OUT:
+	outps.push_back(p);
+	break;
+      }
+    if (!inps.empty() && !outps.empty()) {
+      for(int ii = 0; ii < nll; ii++) {
+	vector<operand>& du = input.long_latency_def_use[ii];
+	if(ord_contains(inps, du[0]))
+	  inix.push_back(ii);
+	if(ord_contains(outps, du[1]))
+	  outix.push_back(ii);
+      }
+      input.long_latency_index.push_back({inps, inix, outps, outix});
+    }
+  }  
 }
 
 

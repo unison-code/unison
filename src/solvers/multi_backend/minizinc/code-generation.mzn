@@ -132,6 +132,7 @@ array[int] of int: quasi_adj_from;
 array[int] of int: quasi_adj_to;
 
 %% see JSON long_latency
+array[int,1..4] of set of int: long_latency_index;
 array[int] of int: long_latency_def;
 array[int] of int: long_latency_use;
 
@@ -153,12 +154,11 @@ array[int,int] of int: operand_atom; % operand x operation -> atom
 %% see JSON temps
 array[int] of set of int: related_temps;
 
-%% see JSON definer, temps, width, minlive, temp_unsafe
+%% see JSON definer, temps, width, minlive
 array[int] of int: temp_definer; % temp -> defining op
 array[int] of int: temp_def;     % temp -> defining operand
 array[int] of int: temp_width;   % temp -> width
 array[int] of int: temp_minlive; % temp -> minlive
-array[int] of bool: temp_unsafe; % temp -> unsafe
 array[int] of set of int: temp_uses; % temp -> set of use operands
 
 %% see JSON packed, pinstrs
@@ -426,6 +426,23 @@ predicate temp_in(int: p, set of int: T) =
     y[p] in {j | j in index_set(ts) where ts[j] in T}
   endif endif;
 
+test temp_is_unsafe(int: t) =
+  if op_type[temp_definer[t]] in {TYPE_IN,TYPE_DEFINE,TYPE_FUN} then
+    false
+  else
+    let {array[int] of int: dlats = [lat_table[j,4] | j in index_set_1of2(lat_table)
+						    where
+						      lat_table[j,2] != 0 /\
+						      lat_table[j,3] = temp_def[t]
+						    ],
+	 array[int] of int: ulats = [lat_table[j,4] | j in index_set_1of2(lat_table)
+						    where
+						      lat_table[j,2] != 0 /\
+						      lat_table[j,3] in temp_uses[t]
+						    ]} in
+    temp_minlive[t] > min(dlats) + min(ulats)
+  endif;
+
 test temp_must_be_real(int: p) =
   min(operand_temps[p])>=0;
 
@@ -530,18 +547,20 @@ constraint
 	   (r[v] >= 0 <-> ls[v]=0) /\
 	   (r[v] >= 0 <-> temp_eq(temp_def[v],v))) /\
     forall(v in 0..MAXT) (
-	let {set of int: pset = {p | p in 0..MAXP where can_use(p,v)},
+	let {bool: unsafe = temp_is_unsafe(v),
+	     set of int: pset = {p | p in 0..MAXP where can_use(p,v)},
 	     set of int: prange = 1..card(pset),
 	     array[prange] of int: parr = [p | p in pset],
 	     array[prange] of var -1..MAXC: carr} in (
 	    forall(p in prange) (carr[p] = ite(temp_eq(parr[p],v), c[operand_definer[parr[p]]], -1)) /\
-	    if card(pset)=1 /\ not temp_unsafe[v] then
+	    if card(pset)=1 /\ not unsafe then
 	      le[v] = carr[1]
+	    else if not unsafe then
+	      maximum(le[v], carr)
 	    else
 	      maximum(le[v], carr++[ls[v]+ % 20130930: live range can extend past last use
-				    temp_minlive[v]*bool2int(a[def])
-				   | def in [temp_definer[v]] where temp_unsafe[v]])
-	    endif
+				    temp_minlive[v]*bool2int(a[temp_definer[v]])])
+	    endif endif
 	)
     );
 
@@ -1355,11 +1374,11 @@ constraint
 %% N.B. Subsumes post_slack_lower_bound_constraints
 %% N.B. MAY clash with post_reverse_data_precedences_constraints
 constraint
-  forall(opnds in congr)(
-    let {set of int: inps = {p | p in opnds where op_type[operand_definer[p]] = TYPE_IN},
-	 set of int: inix = {i | i in index_set(long_latency_def) where long_latency_def[i] in inps},
-         set of int: outps = {p | p in opnds where op_type[operand_definer[p]] = TYPE_OUT},
-	 set of int: outix = {i | i in index_set(long_latency_use) where long_latency_use[i] in outps},
+  forall(j in index_set_1of2(long_latency_index))(
+    let {set of int: inps = long_latency_index[j,1],
+	 set of int: inix = long_latency_index[j,2],
+         set of int: outps = long_latency_index[j,3],
+	 set of int: outix = long_latency_index[j,4],
          array[int] of var int:  inubs = [ if temp_eq(q,single_temp(p)) then
 					     c[operand_definer[q]] - lt[q] - s[q] - lt[p] 
 					   else MAXL endif
@@ -1373,15 +1392,12 @@ constraint
 					 | i in outix,
 					   p in [long_latency_def[i]],
 					   q in [long_latency_use[i]]
-					 ]} in 
-      if card(inps)>0 /\ card(outps)>0 then
-        let {var int: outlb = if length( inubs)>0 then -min( inubs) else -MAXL endif,
-	     var int: outub = if length(outubs)>0 then  min(outubs) else  MAXL endif} in
+					 ]} in
+      assert((card(inps)>0 /\ card(outps)>0), "invalid long_latency item") /\
+      let {var int: outlb = if length( inubs)>0 then -min( inubs) else -MAXL endif,
+	   var int: outub = if length(outubs)>0 then  min(outubs) else  MAXL endif} in
 	outlb <= outub /\
 	forall(p in outps)(s[p] = min(outub,max(outlb,0)))
-      else /* no global operands */
-        true
-      endif
   );
 
 %% output

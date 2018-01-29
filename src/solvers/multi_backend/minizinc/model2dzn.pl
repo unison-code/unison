@@ -179,7 +179,12 @@ model2dzn(AVL0) :-
 	%
 	pairs_to_arrays(AVL, quasi_adjacent, quasi_adj_from, quasi_adj_to),
 	%
-	pairs_to_arrays(AVL, long_latency, long_latency_def, long_latency_use),
+	avl_fetch(long_latency_index, AVL, LongLatencyIndex1),
+	avl_fetch(long_latency_def_use, AVL, LongLatencyDU),
+	encode(list(list(list(int))), list(list(set(int))), LongLatencyIndex1, LongLatencyIndex2),
+	length(LongLatencyIndex2, LLI),
+	write_array(long_latency_index, array(1..LLI,1..4,set(int)), LongLatencyIndex2),
+	data_to_arrays_zero_based(LongLatencyDU, long_latency_def, long_latency_use),
 	%
 	avl_fetch(last_use, AVL, LastUse),
 	avl_fetch(temps, AVL, Temps),
@@ -225,21 +230,16 @@ model2dzn(AVL0) :-
 	avl_fetch(width, AVL, Width),
 	avl_fetch(definer, AVL, Definer),
 	avl_fetch(minlive, AVL, MinLive),
-	avl_fetch(unsafe_temp, AVL, UnsafeTemp),
-	(   for(T,0,MAXT),
-	    foreach(Uns,UnsafeTempArray),
-	    foreach(TDef1,Definer),
+	(   foreach(TDef1,Definer),
 	    foreach(TDef2,TDefs),
-	    param(UnsafeTemp,DefinerArray)
-	do  (ord_member(T,UnsafeTemp) -> Uns = true ; Uns = false),
-	    nth0(TDef1, DefinerArray, TDef2)
+	    param(DefinerArray)
+	do  nth0(TDef1, DefinerArray, TDef2)
 	),
 	compute_operands_array(Temps, Use0, OperandsArray),
 	write_array(temp_definer, array(0..MAXT,int), TDefs), % defining operation
 	write_array(temp_def, array(0..MAXT,int), Definer),   % defining operand
 	write_array(temp_width, array(0..MAXT,int), Width),
 	write_array(temp_minlive, array(0..MAXT,int), MinLive),
-	write_array(temp_unsafe, array(0..MAXT,bool), UnsafeTempArray),
 	write_array(temp_uses, array(0..MAXT,set(int)), OperandsArray),
 	%
 	avl_fetch(packed, AVL, Packed),
@@ -512,6 +512,17 @@ pairs_to_arrays(AVL, Tag, FirstArr, SecondArr) :-
 	length(Data, N),
 	write_array(FirstArr, array(1..N,int), DataX),
 	write_array(SecondArr, array(1..N,int), DataY).
+
+data_to_arrays_zero_based(Data, FirstArr, SecondArr) :-
+	(   foreach([X1,Y1],Data),
+	    foreach(X1,DataX),
+	    foreach(Y1,DataY)
+	do  true
+	),
+	length(Data, N),
+	M is N-1,
+	write_array(FirstArr, array(0..M,int), DataX),
+	write_array(SecondArr, array(0..M,int), DataY).
 
 compute_bb(AVL, MAXF, MAXO, MAXP, MAXT, MAXC, MAXI, MAXR,
 	   Insns, Operands, Temps, Frequency, MaxCycle, OptionalMin, BBOrder) :-

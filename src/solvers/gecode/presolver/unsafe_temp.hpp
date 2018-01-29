@@ -44,7 +44,6 @@
 #include <limits>
 #include <vector>
 
-// JSON.unsafe_temp: p.46 of the specification.
-void gen_unsafe_temp(Parameters& input);
+bool temp_is_unsafe(const Parameters& input, const temporary t);
 
 #endif

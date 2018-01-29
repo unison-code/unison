@@ -132,7 +132,6 @@ Parameters::Parameters(JSONVALUE root) :
   domuses       (get_2d_vector<int>(getRoot(root, "domuses"))),
   precs         (get_2d_vector<int>(getRoot(root, "precs"))),
   assignhints   (get_2d_vector<int>(getRoot(root, "assignhints"))),
-  unsafe_temp   (get_vector<int>(getRoot(root, "unsafe_temp"))),
   dominates     (get_vector<PresolverDominates>(getRoot(root, "dominates"))),
   difftemps     (get_2d_vector<int>(getRoot(root, "difftemps"))),
   diffregs      (get_2d_vector<int>(getRoot(root, "diffregs"))),
@@ -142,7 +141,8 @@ Parameters::Parameters(JSONVALUE root) :
   successors      (get_vector<PresolverSucc>(getRoot(root, "successors"))),
   value_precede_chains  (get_vector<PresolverValuePrecedeChain>(getRoot(root, "value_precede_chains"))),
   quasi_adjacent  (get_2d_vector<int>(getRoot(root, "quasi_adjacent"))),
-  long_latency  (get_2d_vector<int>(getRoot(root, "long_latency")))
+  long_latency_index  (get_3d_vector<int>(getRoot(root, "long_latency_index"))),
+  long_latency_def_use  (get_2d_vector<int>(getRoot(root, "long_latency_def_use")))
 {
   compute_derived();
 }

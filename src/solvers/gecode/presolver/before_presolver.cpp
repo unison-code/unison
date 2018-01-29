@@ -36,6 +36,7 @@
  */
 
 #include "before_presolver.hpp"
+#include "unsafe_temp.hpp"
 
 
 BeforePresolver::BeforePresolver(Parameters& input) :
@@ -145,7 +146,7 @@ void BeforePresolver::gen_before(beforeset& B) {
     if(!input.use[p]) {
       vector<temporary> ts = input.temps[p];
 
-      if(ts.size() == 1 && !ord_contains(input.unsafe_temp, ts[0])) {
+      if(ts.size() == 1 && !temp_is_unsafe(input, ts[0])) {
 	vector<operand> uses = input.users[ts[0]];
 	if(uses.size() == 1) {
           for(operand q : oper_defs(input, input.oper[uses[0]])) {

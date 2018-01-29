@@ -226,62 +226,42 @@ void CompleteModel::post_slack_functional_constraints(void) {
 
   int maxc = max_of(input->maxc);
   int maxl = input->max_lat;
-  for (global_congruence g : input->G) {
-    congruence cg = input->regular[g];
-    set<operand> inps, outps;
-    vector<operand> outpv;
-    vector<int> inix, outix;
-
-    for (operand p : input->congr[cg]) {
-      if (input->global_operand[p]) {
-	if (input->type[input->oper[p]] == IN) {
-	  inps.insert(p); 
-	} else {
-	  outps.insert(p);
-	  outpv.push_back(p);
-	}
-      }
+  for (vector<vector<int>>& ix : input->long_latency_index) {
+    vector<operand> inps = ix[0];
+    vector<operand> outps = ix[2];
+    vector<int> inix = ix[1];
+    vector<int> outix = ix[3];
+    IntVarArgs inubs, outubs;
+    
+    for (unsigned int ii : inix) {
+      vector<operand>du = input->long_latency_def_use[ii];
+      operand p = du[0];
+      operand q = du[1];
+      temporary t = input->single_temp[p];
+      inubs << var(ite(u(q, t), c(input->oper[q]) - lt(q) - slack(q) - lt(p), maxl));
     }
-
-    if (!inps.empty()) {
-      for (unsigned int ii=0; ii<input->long_latency.size(); ii++) {
-	vector<operand>du = input->long_latency[ii];
-	if (inps.find(du[0]) != inps.end())
-	  inix.push_back(ii);
-	if (outps.find(du[1]) != outps.end())
-	  outix.push_back(ii);
-      }
-      IntVarArgs inubs, outubs;
-      for (unsigned int ii : inix) {
-	vector<operand>du = input->long_latency[ii];
-	operand p = du[0];
-	operand q = du[1];
-	temporary t = input->single_temp[p];
-	inubs << var(ite(u(q, t), c(input->oper[q]) - lt(q) - slack(q) - lt(p), maxl));
-      }
-      for (unsigned int ii : outix) {
-	vector<operand>du = input->long_latency[ii];
-	operand p = du[0];
-	operand q = du[1];
-	temporary t = input->single_temp[p];
-	outubs << var(ite(u(q, t), ld(t) - lt(q) - slack(p) - lt(p), maxl));
-      }
-      IntVar outlb(*this, -maxc, maxc);
-      IntVar outub(*this, -maxc, maxc);
-      if(!inix.empty())
-	constraint(outlb == -min(inubs));
-      else
-	constraint(outlb == -maxl);
-      if(!outix.empty())
-	constraint(outub == min(outubs));
-      else
-	constraint(outub == maxl);
-      constraint(outlb <= outub);
-      constraint(s(outpv[0]) == min(outub,max(outlb,0)));
-      for (operand p : outpv)
-	if (p > outpv[0])
-	  constraint(s(p) == s(outpv[0]));
+    for (unsigned int ii : outix) {
+      vector<operand>du = input->long_latency_def_use[ii];
+      operand p = du[0];
+      operand q = du[1];
+      temporary t = input->single_temp[p];
+      outubs << var(ite(u(q, t), ld(t) - lt(q) - slack(p) - lt(p), maxl));
     }
+    IntVar outlb(*this, -maxc, maxc);
+    IntVar outub(*this, -maxc, maxc);
+    if(!inix.empty())
+      constraint(outlb == -min(inubs));
+    else
+      constraint(outlb == -maxl);
+    if(!outix.empty())
+      constraint(outub == min(outubs));
+    else
+      constraint(outub == maxl);
+    constraint(outlb <= outub);
+    constraint(s(outps[0]) == min(outub,max(outlb,0)));
+    for (operand p : outps)
+      if (p > outps[0])
+	constraint(s(p) == s(outps[0]));
   }
   
 }

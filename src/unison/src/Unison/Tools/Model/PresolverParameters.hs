@@ -55,7 +55,6 @@ parameters oldModel (_, dgs, _, _, ra, _)
       set_across = [] :: [Integer]
       domops = [] :: [Integer]
       last_use = [] :: [Integer]
-      unsafe_temp = [] :: [Integer]
       dominates = [] :: [Integer]
       difftemps = [] :: [Integer]
       diffregs = [] :: [Integer]
@@ -64,7 +63,8 @@ parameters oldModel (_, dgs, _, _, ra, _)
       predecessors = [] :: [Integer]
       successors = [] :: [Integer]
       quasi_adjacent = [] :: [Integer]
-      long_latency = [] :: [Integer]
+      long_latency_index = [] :: [Integer]
+      long_latency_def_use = [] :: [Integer]
       value_precede_chains = [] :: [Integer]
   in
    [
@@ -105,7 +105,6 @@ parameters oldModel (_, dgs, _, _, ra, _)
       ("set_across", toJSON set_across),
       ("domops", toJSON domops),
       ("last_use", toJSON last_use),
-      ("unsafe_temp", toJSON unsafe_temp),
       ("dominates", toJSON dominates),
       ("difftemps", toJSON difftemps),
       ("diffregs", toJSON diffregs),
@@ -114,7 +113,8 @@ parameters oldModel (_, dgs, _, _, ra, _)
       ("predecessors", toJSON predecessors),
       ("successors", toJSON successors),
       ("quasi_adjacent", toJSON quasi_adjacent),
-      ("long_latency", toJSON long_latency),
+      ("long_latency_index", toJSON long_latency_index),
+      ("long_latency_def_use", toJSON long_latency_def_use),
       ("value_precede_chains", toJSON value_precede_chains)
 
      ]
