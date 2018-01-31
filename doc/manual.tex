@@ -916,6 +916,88 @@ representing the bits with which instructions are encoded.
 \chapter{Target Description}
 \label{sec:target-description}
 
+This chapter explains how target processors are described in Unison.
+%
+Section~\ref{sec:generation} describes how major parts of the Unison description
+can be generated from a higher-level description.
+%
+Section~\ref{sec:importing} explains how the higher-level description itself can
+be imported from LLVM.
+
+\section{Register Array}
+\label{sec:register-array}
+
+\section{Resource Model}
+\label{sec:resource-model}
+
+\section{Calling Conventions}
+\label{sec:calling-conventions}
+
+\section{Target Generation}
+\label{sec:generation}
+
+Large parts of a Unison processor description can be generated from a
+high-level, \href{https://en.wikipedia.org/wiki/YAML}{YAML}-based description of
+the instruction set.
+%
+The description consists of a list of instructions, where the main attributes of
+each instruction (its identifier, operands, size, \dots) are defined.
+%
+This is how the description for Hexagon's instruction \code{A2\_addi} in the
+running example looks like:
+
+\fvset{fontsize=\small}
+\begin{codeBox}
+\BVerbatimInput{code/instruction.yaml}
+\end{codeBox}
+
+The high-level YAML-based descriptions are transformed by Unison's tool
+\code{specsgen} into actual Haskell code to be compiled together with the rest
+of the Unison project.
+%
+To build \code{specsgen}, go to the \code{src} directory and run:
+%
+\begin{command}
+make build-specsgen
+\end{command}
+
+To install it, just run:
+%
+\begin{command}
+make install-specsgen
+\end{command}
+
+\code{specsgen} takes as input a number of YAML files (\code{.yaml}) and
+generates a number of Haskell files (\code{.hs}) in a given directory.
+%
+Run \code{specsgen --help} for more details.
+%
+Makefile recipes are defined to run \code{specsgen} for each target supported by
+Unison, see the \code{run-specsgen-*} recipes in \code{src/Makefile}.
+
+\section{Importing from LLVM}
+\label{sec:importing}
+
+Most of the information required to describe a target in Unison is readily
+available at LLVM for the most popular targets.
+%
+LLVM uses a language called
+\href{https://llvm.org/docs/TableGen/index.html}{TableGen} to describe targets.
+%
+The Unison driver for LLVM (see Chapter~\ref{sec:llvm-integration}) includes an
+extension of LLVM's \code{llvm-tblgen} tool that produces a YAML file
+(processable by \code{specsgen}) with the attributes of all instructions in a
+LLVM target.
+%
+To produce a \code{\$TARGET.yaml} file for a LLVM target \code{\$TARGET} (where
+LLVM's source code is placed in \code{\$LLVM\_DIR}), run:
+%
+\begin{command}
+llvm-tblgen -unison $LLVM_DIR/lib/Target/$TARGET/$TARGET.td \
+            -I $LLVM_DIR/include -I $LLVM_DIR/lib/Target/$TARGET \
+            -o $TARGET.yaml
+\end{command}
+
 \appendix
 
 \chapter{Further Reading}
