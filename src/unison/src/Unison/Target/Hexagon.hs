@@ -681,7 +681,8 @@ transforms ImportPreLift = [liftStackArgSize,
                             peephole foldStackPointerCopy,
                             mapToOperation addAlternativeInstructions]
 transforms AugmentPreRW = [peephole expandJumps]
-transforms AugmentPostRW = [mapToOperation addControlBarrier]
+transforms AugmentPostRW = [mapToOperation addControlBarrier,
+                            addCSLoadEffects]
 transforms ExportPostOffs = [allocateArgArea, alignAllocFrame]
 transforms ExportPreLow = [shiftFrameOffsets]
 transforms _ = []

@@ -17,6 +17,7 @@ module Unison.Target.Hexagon.Transforms
      expandJumps,
      discardSpills,
      addControlBarrier,
+     addCSLoadEffects,
      allocateArgArea,
      alignAllocFrame,
      shiftFrameOffsets) where
@@ -32,6 +33,7 @@ import Unison.Analysis.FrameOffsets
 import Unison.Target.Hexagon.Common
 import Unison.Target.Hexagon.Registers
 import Unison.Target.Hexagon.SpecsGen.HexagonInstructionDecl
+import Unison.Target.Hexagon.HexagonRegisterDecl
 
 liftStackArgSize f @ Function {fCode = code} =
   let fcode = flatten code
@@ -274,6 +276,23 @@ addControlBarrier o @ SingleOperation {oOpr = Natural Linear {oIs = is},
        o {oAs = as {aReads = [], aWrites = [ControlSideEffect]}}
      else o
 addControlBarrier o = o
+
+-- Add R29 read effect to callee-saved loads in exit blocks. This is not
+-- done in general as the side-effect would be too restrictive, we allow
+-- for example spills before stack allocation instructions in entry blocks.
+
+addCSLoadEffects f @ Function {fCode = code} =
+  let code' = mapIf isExitBlock addCSLoadEffect code
+  in f {fCode = code'}
+
+addCSLoadEffect b @ Block {bCode = code} =
+    let code' = mapIf isCalleeSavedLoad
+                (mapToReads ((++ [OtherSideEffect R29]))) code
+    in b {bCode = code'}
+
+isCalleeSavedLoad o = isCopy o &&
+  -- Callee-saved loads are the only copies with these alternative instructions:
+  oInstructions o == [General NullInstruction, TargetInstruction LDD]
 
 -- Allocate a region in the stack frame for passing arguments to callees
 
