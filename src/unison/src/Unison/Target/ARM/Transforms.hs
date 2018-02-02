@@ -582,6 +582,52 @@ combineLoadStores _ (
       [uc11, uc12, uc21, uc22, st1', st2', od]
      )
 
+{-
+ Transforms:
+    o35: [p87{ -, t50}] <- { -, MOVE_ALL, LOAD} [p86{ -, t48, t49}]
+    o36: [] <- t2STRi12 [p88{t48, t49, t50},p89{t13},0,14,_]
+    o37: [p91{ -, t51}] <- { -, MOVE_ALL, LOAD} [p90{ -, t44, t45}]
+    o38: [] <- t2STRi12 [p92{t44, t45, t51, t53},p93{t13},4,14,_]
+ into:
+    o35: [p87{ -, t50}] <- { -, MOVE_ALL, LOAD} [p86{ -, t48, t49}]
+    o37: [p91{ -, t51}] <- { -, MOVE_ALL, LOAD} [p90{ -, t44, t45}]
+    o36: [] <- { -, t2STRi12} [p88{ -, t48, t49, t50},p89{ -, t13},0,14,_]
+    o38: [] <- { -, t2STRi12} [p92{ -, t44, t45, t51, t53},p93{ -, t13},4,14,_]
+    od:  [] <- { -, t2STRDi8} [p94{ -, t48, ..}, p95{ -, t44, ..}, p95{ -, t13}, 0, 14, _]
+-}
+
+combineLoadStores _ (
+  uc1
+  :
+  st1 @ SingleOperation {oOpr = Natural Linear {
+                            oIs = [TargetInstruction T2STRi12],
+                            oUs = MOperand {altTemps = ts1} :
+                                  MOperand {altTemps = uts1} : off1 : pred1},
+                         oAs = as}
+  :
+  uc2
+  :
+  st2 @ SingleOperation {oOpr = Natural Linear {
+                            oIs = [TargetInstruction T2STRi12],
+                            oUs = MOperand {altTemps = ts2} :
+                                  MOperand {altTemps = uts2} : off2 : pred2}}
+  :
+  rest) (_, oid, pid)
+  -- TODO: check offset (lines 2039-2042 in ARMLoadStoreOptimizer.cpp)
+  | all isCopy [uc1, uc2] && uts1 == uts2 && pred1 == pred2 &&
+    offBy 4 off1 off2 =
+  let mkOper = mkOperand pid
+      st1'   = makeOptional st1
+      st2'   = makeOptional st2
+      od     = makeOptional $ (mkLinear oid
+               [TargetInstruction T2STRDi8]
+               (mkOper 5 ts1 : mkOper 6 ts2 : mkOper 7 uts1 : off1 : pred1)
+               []) {oAs = as}
+  in (
+      rest,
+      [uc1, uc2, st1', st2', od]
+     )
+
 combineLoadStores _ (o : code) _ = (code, [o])
 
 mkOperand pid id ts = mkMOperand (pid + id) ts Nothing
