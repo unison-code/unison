@@ -2258,6 +2258,7 @@ data MipsInstruction = ABSQ_S_PH
                      | SWC1_sp
                      | SDC1_sp
                      | LoadGPDisp
+                     | CLOBBER_RA
                      | LDC1_fi_source_fi
                      | LDC1_fi_demat_fi
                      | LDC1_fi_remat_fi

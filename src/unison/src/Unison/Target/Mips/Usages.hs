@@ -86,6 +86,7 @@ itineraryUsage _ it
 itineraryUsage i it =
   error ("unmatched: itineraryUsage " ++ show i ++ " " ++ show it)
 
+size CLOBBER_RA = 0
 size LoadGPDisp = size LUi + size ADDiu
 size i
   | isSourceInstr i || isDematInstr i = 0
@@ -98,4 +99,6 @@ issue i
   | isDelaySlotInstr i = 0
   | otherwise = 1
 
+-- latency to the corresponding (fun) operation (one cycle after the call)
+latency _ CLOBBER_RA = 2
 latency to i = maybeMax 0 $ map occupation (usages to i)

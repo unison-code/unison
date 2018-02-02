@@ -15,8 +15,10 @@ module Unison.Target.Mips.Transforms
      normalizeCallEpilogue,
      extractReturnRegs,
      hideStackPointer,
+     clobberRAInCall,
      insertGPDisp,
-     markBarriers) where
+     markBarriers,
+     cleanClobbers) where
 
 import Unison
 import MachineIR
@@ -327,6 +329,38 @@ hideStackPointer o = o
 
 isStackPointer = isTargetReg SP
 
+{-
+    Redefine $ra by an operation to be scheduled one cycle before function
+    calls, to model that the old $ra value is not accesible to delay slot
+    instructions:
+
+    ... <- JALRPseudo ...
+    ... <- (fun) [...]
+
+    ->
+
+    [t:ra] <- CLOBBER_RA []
+    ... <- JALRPseudo ...
+    ... <- (fun) [..., t:ra]
+-}
+
+clobberRAInCall _ (
+  c @ SingleOperation {oOpr = Natural Call {}}
+  :
+  f @ SingleOperation {oOpr = Virtual fi @ (Fun {oFunctionUs = us})}
+  :
+  rest) (tid, oid, _) =
+  let t = mkPreAssignedTemp tid (Register (TargetRegister RA))
+  in
+    (rest,
+     [
+      mkLinear oid [TargetInstruction CLOBBER_RA] [] [t],
+      c,
+      f {oOpr = Virtual fi {oFunctionUs = us ++ [t]}}]
+    )
+
+clobberRAInCall _ (o : rest) _ = (rest, [o])
+
 insertGPDisp _ (
   e @ SingleOperation {oOpr = Virtual (Delimiter (In {oIns = ins}))}
   :
@@ -349,3 +383,11 @@ markBarriers o @ SingleOperation {
     oOpr = Natural (Linear {oIs = [TargetInstruction i]}), oAs = as}
   | isBarrierInstr i = o {oAs = as {aReads = [], aWrites = [ControlSideEffect]}}
 markBarriers o = o
+
+cleanClobbers f = mapToOperation cleanClobber f
+
+cleanClobber o @ SingleOperation {}
+  | isClobberRA o = cleanClobber (mkBundle [o])
+  | otherwise = o
+cleanClobber o @ Bundle {bundleOs = os} =
+  o {bundleOs = filter (not . isClobberRA) os}

@@ -72,7 +72,7 @@ target =
       API.tReadWriteLatency = readWriteLatency,
       API.tAlternativeTemps = const alternativeTemps,
       API.tExpandCopy       = const expandCopy,
-      API.tConstraints      = const (const [])
+      API.tConstraints      = const constraints
     }
 
 instance Read MipsInstruction where
@@ -107,7 +107,10 @@ copies _fInfo _phiTemp _t [r] _d us | r `elem` reserved =
     ([], replicate (length us) [])
 
 -- Do not extend temporaries that are defined by virtual defines
-copies _fInfo False _t _rs d [_] | isDefine d = ([], [[]])
+copies _fInfo False _t _rs d [_]
+  | isDefine d ||
+    (isNatural d && targetInst (oInstructions d) `elem` [CLOBBER_RA]) =
+      ([], [[]])
 
 -- Do not extend temporaries that are only used by virtual kills
 copies _fInfo False _t _rs _d [u] | isKill u = ([], [[]])
@@ -269,6 +272,7 @@ stackSize op
 fromCopyInstr = fromJust . SpecsGen.parent
 
 rematInstrs i
+  | i `elem` [CLOBBER_RA] = Nothing
   | isRematerializable i =
       Just (sourceInstr i, dematInstr i, rematInstr i)
   | otherwise = error ("unmatched: rematInstrs " ++ show i)
@@ -414,9 +418,13 @@ transforms ImportPreLift = [peephole rs2ts,
                             (\f -> foldReservedRegisters f (target, [])),
                             mapToOperation hideStackPointer]
 
+transforms ImportPostLift = [peephole clobberRAInCall]
+
 transforms AugmentPreRW = [peephole insertGPDisp]
 
 transforms AugmentPostRW = [mapToOperation markBarriers]
+
+transforms ExportPreLow = [cleanClobbers]
 
 transforms _ = []
 
@@ -438,6 +446,23 @@ alternativeTemps _ _ _ ts = map fst ts
 -- | Copy expansion
 
 expandCopy _ _ o = [o]
+
+-- | Custom processor constraints
+
+constraints f =
+  -- force RA clobbering operations to be scheduled one cycle before their
+  -- corresponding call operation (that is, two cycles before the corresponding
+  -- (fun) operation):
+  clobberRASchedulingConstraints f
+
+clobberRASchedulingConstraints f =
+  let fcode = flatCode f
+  in [clobberRASchedulingConstraint fcode o | o <- fcode, isClobberRA o]
+
+clobberRASchedulingConstraint fcode clo =
+  let [d]  = extractTemps (oSingleDef clo)
+      [fo] = potentialUsers d fcode
+  in DistanceExpr (oId fo) (oId clo) (-2)
 
 operandInfo to i =
   adjustDefLatency to i $ correctUses i $ SpecsGen.operandInfo i

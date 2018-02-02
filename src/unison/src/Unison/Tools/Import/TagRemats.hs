@@ -26,6 +26,6 @@ tagRemats f target =
         icfg = ICFG.fromBCFG $ BCFG.fromFunction bif f
         cfg  = toHOprGraph icfg
         ts   = map undoPreAssign $ tUniqueOps (flatCode f)
-        rts  = [(t, S.toList oids)
+        rts  = [(undoPreAssign t, S.toList oids)
                | (t, (_, oids)) <- M.toList $ reachingConstants cfg ts]
     in f {fRematerializable = rts}

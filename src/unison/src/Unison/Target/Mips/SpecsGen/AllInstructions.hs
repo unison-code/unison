@@ -381,10 +381,10 @@ allInstructions
      MOVE, STORE_D, LOAD_D, MOVE_D, STORE_F, LOAD_F, MOVE_F, LW_fi,
      LHu_fi, SW_fi, SWL_fi, SWR_fi, SB_fi, LDC1_fi, LBu_fi, SH_fi,
      LH_fi, SWC1_fi, LWC1_fi, ADDiu_sp, ADDiu_negsp, SW_sp, SWC1_sp,
-     SDC1_sp, LoadGPDisp, LDC1_fi_source_fi, LDC1_fi_demat_fi,
-     LDC1_fi_remat_fi, LEA_ADDiu_source, LEA_ADDiu_demat,
-     LEA_ADDiu_remat, LUi_source, LUi_demat, LUi_remat, LW_fi_source_fi,
-     LW_fi_demat_fi, LW_fi_remat_fi, LBu_fi_source_fi, LBu_fi_demat_fi,
-     LBu_fi_remat_fi, LWC1_fi_source_fi, LWC1_fi_demat_fi,
-     LWC1_fi_remat_fi]
+     SDC1_sp, LoadGPDisp, CLOBBER_RA, LDC1_fi_source_fi,
+     LDC1_fi_demat_fi, LDC1_fi_remat_fi, LEA_ADDiu_source,
+     LEA_ADDiu_demat, LEA_ADDiu_remat, LUi_source, LUi_demat, LUi_remat,
+     LW_fi_source_fi, LW_fi_demat_fi, LW_fi_remat_fi, LBu_fi_source_fi,
+     LBu_fi_demat_fi, LBu_fi_remat_fi, LWC1_fi_source_fi,
+     LWC1_fi_demat_fi, LWC1_fi_remat_fi]
 

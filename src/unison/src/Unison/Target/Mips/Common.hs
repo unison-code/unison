@@ -1,10 +1,12 @@
 module Unison.Target.Mips.Common
        (unitLatency, isBarrierInstr, hiddenStackPointerInstruction,
-        isDelaySlotInstr, isRematerializable, isSourceInstr, isDematInstr,
-        isRematInstr, sourceInstr, dematInstr, rematInstr, originalInstr) where
+        isDelaySlotInstr, isClobberRA, isRematerializable, isSourceInstr,
+        isDematInstr, isRematInstr, sourceInstr, dematInstr, rematInstr,
+        originalInstr) where
 
 import qualified Data.Map as M
 
+import Unison
 import qualified Unison.Target.API as API
 import Unison.Target.Mips.SpecsGen.MipsInstructionDecl
 import Unison.Target.Mips.SpecsGen()
@@ -30,6 +32,9 @@ isDelaySlotInstr i = i `elem` delaySlotInstrs
 delaySlotInstrs =
   [B, BC1F, BC1T, BEQ, BGEZ, BGTZ, BLEZ, BLTZ, BNE, JALRPseudo,
    PseudoIndirectBranch, PseudoReturn, RetRA]
+
+isClobberRA o =
+  isNatural o && (TargetInstruction CLOBBER_RA) `elem` oInstructions o
 
 data RematTriple = RematTriple {
   source :: MipsInstruction,
