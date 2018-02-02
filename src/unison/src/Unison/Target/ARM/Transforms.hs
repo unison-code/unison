@@ -493,7 +493,7 @@ combineLoadStores _ (
   uc1
   :
   ld1 @ SingleOperation {oOpr = Natural Linear {
-                            oIs = [TargetInstruction T2LDRi12],
+                            oIs = ld1is,
                             oUs = MOperand {altTemps = uts1} : off1 : pred1,
                             oDs = [MOperand {altTemps = [tr1]}]}}
   :
@@ -502,7 +502,7 @@ combineLoadStores _ (
   uc2
   :
   ld2 @ SingleOperation {oOpr = Natural Linear {
-                            oIs = [TargetInstruction T2LDRi12],
+                            oIs = ld2is,
                             oUs = MOperand {altTemps = uts2} : off2 : pred2,
                             oDs = [MOperand {altTemps = [tr2]}]}}
   :
@@ -510,8 +510,8 @@ combineLoadStores _ (
   :
   rest) (tid, oid, pid)
   -- TODO: check offset (lines 2039-2042 in ARMLoadStoreOptimizer.cpp)
-  | all isCopy [uc1, dc1, uc2, dc2] && uts1 == uts2 && pred1 == pred2 &&
-    offBy 4 off1 off2 =
+  | all isCombinableLoad [ld1is, ld2is] && all isCopy [uc1, dc1, uc2, dc2] &&
+    ld1is == ld2is && uts1 == uts2 && pred1 == pred2 && offBy 4 off1 off2 =
   let mkOper = mkOperand pid
       replaceDefTempBy t = mapToOperands id (applyToAltTemps (const [t]))
       [tr1', tr1'', tr2', tr2''] = map (\id -> mkTemp (tid + id)) [0..3]
@@ -553,7 +553,7 @@ combineLoadStores _ (
   uc12
   :
   st1 @ SingleOperation {oOpr = Natural Linear {
-                            oIs = [TargetInstruction T2STRi12],
+                            oIs = st1is,
                             oUs = MOperand {altTemps = ts1} :
                                   MOperand {altTemps = uts1} : off1 : pred1}}
   :
@@ -562,14 +562,14 @@ combineLoadStores _ (
   uc22
   :
   st2 @ SingleOperation {oOpr = Natural Linear {
-                            oIs = [TargetInstruction T2STRi12],
+                            oIs = st2is,
                             oUs = MOperand {altTemps = ts2} :
                                   MOperand {altTemps = uts2} : off2 : pred2}}
   :
   rest) (_, oid, pid)
   -- TODO: check offset (lines 2039-2042 in ARMLoadStoreOptimizer.cpp)
-  | all isCopy [uc11, uc21, uc21, uc22] && uts1 == uts2 && pred1 == pred2 &&
-    offBy 4 off1 off2 =
+  | all isCombinableStore [st1is, st2is] && all isCopy [uc11, uc21, uc21, uc22]
+    && uts1 == uts2 && pred1 == pred2 && offBy 4 off1 off2 =
   let mkOper = mkOperand pid
       st1'   = makeOptional st1
       st2'   = makeOptional st2
@@ -600,7 +600,7 @@ combineLoadStores _ (
   uc1
   :
   st1 @ SingleOperation {oOpr = Natural Linear {
-                            oIs = [TargetInstruction T2STRi12],
+                            oIs = st1is,
                             oUs = MOperand {altTemps = ts1} :
                                   MOperand {altTemps = uts1} : off1 : pred1},
                          oAs = as}
@@ -608,14 +608,14 @@ combineLoadStores _ (
   uc2
   :
   st2 @ SingleOperation {oOpr = Natural Linear {
-                            oIs = [TargetInstruction T2STRi12],
+                            oIs = st2is,
                             oUs = MOperand {altTemps = ts2} :
                                   MOperand {altTemps = uts2} : off2 : pred2}}
   :
   rest) (_, oid, pid)
   -- TODO: check offset (lines 2039-2042 in ARMLoadStoreOptimizer.cpp)
-  | all isCopy [uc1, uc2] && uts1 == uts2 && pred1 == pred2 &&
-    offBy 4 off1 off2 =
+  | all isCombinableStore [st1is, st2is] && all isCopy [uc1, uc2] &&
+    uts1 == uts2 && pred1 == pred2 && offBy 4 off1 off2 =
   let mkOper = mkOperand pid
       st1'   = makeOptional st1
       st2'   = makeOptional st2
@@ -629,6 +629,9 @@ combineLoadStores _ (
      )
 
 combineLoadStores _ (o : code) _ = (code, [o])
+
+isCombinableLoad  is = TargetInstruction T2LDRi12 `elem` is
+isCombinableStore is = TargetInstruction T2STRi12 `elem` is
 
 mkOperand pid id ts = mkMOperand (pid + id) ts Nothing
 

@@ -643,22 +643,24 @@ altRetConstraints (_ : code) constraints = (code, constraints)
 
 altLoadStoreConstraints (
   s1 @ SingleOperation {oOpr = Natural Linear {
-       oIs = [General NullInstruction, TargetInstruction i1]}}
+       oIs = General NullInstruction : is1}}
   :
   s2 @ SingleOperation {oOpr = Natural Linear {
-       oIs = [General NullInstruction, TargetInstruction i2]}}
+       oIs = General NullInstruction : is2}}
   :
   ds @ SingleOperation {oOpr = Natural Linear {
        oIs = [General NullInstruction, TargetInstruction dsi]}}
   :
-  code) constraints | all isSingleLoadStore [i1, i2] && isDoubleLoadStore dsi =
-  let alt =
-        XorExpr
-        (AndExpr [ActiveExpr (oId s1), ActiveExpr (oId s2)])
-        (ActiveExpr (oId ds))
-  in (code, constraints ++ [alt])
+  code) constraints
+  | all isSingleLoadStore (map oTargetInstr (is1 ++ is2)) &&
+    isDoubleLoadStore dsi =
+    let alt =
+          XorExpr
+          (AndExpr [ActiveExpr (oId s1), ActiveExpr (oId s2)])
+          (ActiveExpr (oId ds))
+    in (code, constraints ++ [alt])
 
 altLoadStoreConstraints (_ : code) constraints = (code, constraints)
 
-isSingleLoadStore i = i `elem` [T2LDRi12, T2STRi12]
+isSingleLoadStore i = i `elem` [TLDRi, T2LDRi12, TSTRi, T2STRi12]
 isDoubleLoadStore i = i `elem` [T2LDRDi8, T2STRDi8]
