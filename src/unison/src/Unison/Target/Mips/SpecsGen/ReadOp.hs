@@ -2257,6 +2257,7 @@ readOp "SW_sp" = SW_sp
 readOp "SWC1_sp" = SWC1_sp
 readOp "SDC1_sp" = SDC1_sp
 readOp "LoadGPDisp" = LoadGPDisp
+readOp "CLOBBER_RA" = CLOBBER_RA
 readOp "LDC1_fi_source_fi" = LDC1_fi_source_fi
 readOp "LDC1_fi_demat_fi" = LDC1_fi_demat_fi
 readOp "LDC1_fi_remat_fi" = LDC1_fi_remat_fi

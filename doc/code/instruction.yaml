@@ -1,0 +1,12 @@
+- id:                 A2_addi
+  type:               linear
+  operands:
+   - Rd:              [register, def, IntRegs]
+   - Rs:              [register, use, IntRegs]
+   - s16:             bound
+  uses:               [Rs, s16]
+  defines:            [Rd]
+  size:               4
+  affects:
+  affected-by:
+  itinerary:          ALU32_ADDI_tc_1_SLOT0123

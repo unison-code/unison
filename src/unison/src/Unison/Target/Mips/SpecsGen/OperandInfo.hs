@@ -15,8 +15,8 @@ operandInfo i
   | i `elem` [Mfhi16, Mflo16] =
     ([], [TemporaryInfo (RegisterClass CPU16Regs) 1 False])
   | i `elem`
-      [BPOSGE32_PSEUDO, DI, DI_MM, DI_MMR6, EI, EI_MM, EI_MMR6, MFHI,
-       MFHI16_MM, MFHI_MM, MFLO, MFLO16_MM, MFLO_MM]
+      [BPOSGE32_PSEUDO, CLOBBER_RA, DI, DI_MM, DI_MMR6, EI, EI_MM,
+       EI_MMR6, MFHI, MFHI16_MM, MFHI_MM, MFLO, MFLO16_MM, MFLO_MM]
     = ([], [TemporaryInfo (RegisterClass GPR32Opnd) 1 False])
   | i `elem` [MFHI64, MFLO64] =
     ([], [TemporaryInfo (RegisterClass GPR64Opnd) 1 False])

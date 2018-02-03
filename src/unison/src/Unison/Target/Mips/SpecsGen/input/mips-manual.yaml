@@ -184,3 +184,14 @@ instruction-set:
           operands:
           uses:               []
           defines:            []
+
+        - id:                 CLOBBER_RA
+          type:               linear
+          operands:
+           - ra:              [register, def, GPR32Opnd]
+          uses:               []
+          defines:            [ra]
+          size:               0
+          affects:
+          affected-by:
+          itinerary:          NoItinerary

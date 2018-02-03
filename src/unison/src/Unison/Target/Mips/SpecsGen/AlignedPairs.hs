@@ -13,6 +13,7 @@ alignedPairs i ([], [])
     = []
 alignedPairs i ([], [_])
   | i `elem` [BPOSGE32_PSEUDO, IMPLICIT_DEF, LOAD_STACK_GUARD] = []
+alignedPairs i ([], [_]) | i `elem` [CLOBBER_RA] = []
 alignedPairs i ([], [_])
   | i `elem`
       [MFHI, MFHI16_MM, MFHI64, MFHI_MM, MFLO, MFLO16_MM, MFLO64,

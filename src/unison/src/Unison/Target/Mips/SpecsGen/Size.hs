@@ -4,14 +4,15 @@ module Unison.Target.Mips.SpecsGen.Size (size) where
 import Unison.Target.Mips.SpecsGen.MipsInstructionDecl
 size i
   | i `elem`
-      [BUNDLE, CFI_INSTRUCTION, COPY, COPY_TO_REGCLASS, DBG_VALUE,
-       EH_LABEL, EXTRACT_SUBREG, FAULTING_LOAD_OP, GC_LABEL, IMPLICIT_DEF,
-       INLINEASM, INSERT_SUBREG, KILL, LBu_fi_demat_fi, LBu_fi_source_fi,
-       LDC1_fi_demat_fi, LDC1_fi_source_fi, LEA_ADDiu_demat,
-       LEA_ADDiu_source, LIFETIME_END, LIFETIME_START, LOAD_STACK_GUARD,
-       LOCAL_ESCAPE, LUi_demat, LUi_source, LWC1_fi_demat_fi,
-       LWC1_fi_source_fi, LW_fi_demat_fi, LW_fi_source_fi, PATCHPOINT,
-       PHI, REG_SEQUENCE, STACKMAP, STATEPOINT, SUBREG_TO_REG]
+      [BUNDLE, CFI_INSTRUCTION, CLOBBER_RA, COPY, COPY_TO_REGCLASS,
+       DBG_VALUE, EH_LABEL, EXTRACT_SUBREG, FAULTING_LOAD_OP, GC_LABEL,
+       IMPLICIT_DEF, INLINEASM, INSERT_SUBREG, KILL, LBu_fi_demat_fi,
+       LBu_fi_source_fi, LDC1_fi_demat_fi, LDC1_fi_source_fi,
+       LEA_ADDiu_demat, LEA_ADDiu_source, LIFETIME_END, LIFETIME_START,
+       LOAD_STACK_GUARD, LOCAL_ESCAPE, LUi_demat, LUi_source,
+       LWC1_fi_demat_fi, LWC1_fi_source_fi, LW_fi_demat_fi,
+       LW_fi_source_fi, PATCHPOINT, PHI, REG_SEQUENCE, STACKMAP,
+       STATEPOINT, SUBREG_TO_REG]
     = 0
   | i `elem`
       [ADDIUR1SP_MM, ADDIUR2_MM, ADDIUS5_MM, ADDIUSP_MM, ADDU16_MM,
