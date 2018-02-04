@@ -3026,6 +3026,8 @@ instance Show ARMInstruction where
         show TPOP2_r4_11 = "tPOP2_r4_11"
         show TPOP2_r4_7_RET = "tPOP2_r4_7_RET"
         show TPOP2_r4_11_RET = "tPOP2_r4_11_RET"
+        show TSUBspi_pseudo = "tSUBspi_pseudo"
+        show TADDspi_pseudo = "tADDspi_pseudo"
         show MEMCPY_4 = "MEMCPY_4"
         show T2LDMIA_4 = "t2LDMIA_4"
         show T2LDMIA_UPD_4 = "t2LDMIA_UPD_4"

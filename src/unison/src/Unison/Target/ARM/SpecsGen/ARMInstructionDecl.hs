@@ -3025,6 +3025,8 @@ data ARMInstruction = ABS
                     | TPOP2_r4_11
                     | TPOP2_r4_7_RET
                     | TPOP2_r4_11_RET
+                    | TSUBspi_pseudo
+                    | TADDspi_pseudo
                     | MEMCPY_4
                     | T2LDMIA_4
                     | T2LDMIA_UPD_4

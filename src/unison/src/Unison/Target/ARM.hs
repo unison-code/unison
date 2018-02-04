@@ -13,6 +13,7 @@ module Unison.Target.ARM (target) where
 
 import Data.Maybe
 import Data.List
+import Data.List.Split
 import qualified Data.Set as S
 import Control.Arrow
 
@@ -389,11 +390,25 @@ otherwise: ?
 
 -}
 
-addPrologue _ code = code
+mkSpAdj oid i = mkLinear oid [TargetInstruction i] [Bound mkMachineFrameSize] []
 
--- | Adds function epilogue (TODO: investigate crashes for ARM, see "emitEpilogue" in ARMFrameLowering.cpp)
+-- TODO: remove if there are no load/stores using the stack (no spills)
+addPrologue (_, oid, _) (e:code) =
+  let subSp = mkSpAdj oid TSUBspi_pseudo
+  in [e, subSp] ++ code
 
-addEpilogue _ code = code
+-- TODO: remove if there are no load/stores using the stack (no spills)
+addEpilogue (_, oid, _) code =
+  case split (keepDelimsL $ whenElt isBranch) code of
+   [f, e] ->
+     let addSp = mkSpAdj oid TADDspi_pseudo
+     in f ++ [addSp] ++ e
+   [_] ->
+     case split (keepDelimsL $ whenElt isTailCall) code of
+      [f, e] ->
+        let addSp = mkSpAdj oid TADDspi_pseudo
+        in f ++ [addSp] ++ e
+      os -> error ("unhandled epilogue: " ++ show os)
 
 -- | Direction in which the stack grows
 stackDirection = API.StackGrowsDown
@@ -595,6 +610,9 @@ transforms AugmentPreRW = [peephole combinePushPops,
                            peephole expandRets,
                            fixpoint (peephole normalizeLoadStores),
                            peephole combineLoadStores]
+
+transforms AugmentPostRW = [deactivateSPAdjusts]
+
 transforms _ = []
 
 mapToOperationWithGoals t f @ Function {fCode = code, fGoal = gs} =
@@ -643,22 +661,24 @@ altRetConstraints (_ : code) constraints = (code, constraints)
 
 altLoadStoreConstraints (
   s1 @ SingleOperation {oOpr = Natural Linear {
-       oIs = [General NullInstruction, TargetInstruction i1]}}
+       oIs = General NullInstruction : is1}}
   :
   s2 @ SingleOperation {oOpr = Natural Linear {
-       oIs = [General NullInstruction, TargetInstruction i2]}}
+       oIs = General NullInstruction : is2}}
   :
   ds @ SingleOperation {oOpr = Natural Linear {
        oIs = [General NullInstruction, TargetInstruction dsi]}}
   :
-  code) constraints | all isSingleLoadStore [i1, i2] && isDoubleLoadStore dsi =
-  let alt =
-        XorExpr
-        (AndExpr [ActiveExpr (oId s1), ActiveExpr (oId s2)])
-        (ActiveExpr (oId ds))
-  in (code, constraints ++ [alt])
+  code) constraints
+  | all isSingleLoadStore (map oTargetInstr (is1 ++ is2)) &&
+    isDoubleLoadStore dsi =
+    let alt =
+          XorExpr
+          (AndExpr [ActiveExpr (oId s1), ActiveExpr (oId s2)])
+          (ActiveExpr (oId ds))
+    in (code, constraints ++ [alt])
 
 altLoadStoreConstraints (_ : code) constraints = (code, constraints)
 
-isSingleLoadStore i = i `elem` [T2LDRi12, T2STRi12]
+isSingleLoadStore i = i `elem` [TLDRi, T2LDRi12, TSTRi, T2STRi12]
 isDoubleLoadStore i = i `elem` [T2LDRDi8, T2STRDi8]

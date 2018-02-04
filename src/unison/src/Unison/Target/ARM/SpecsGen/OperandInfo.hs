@@ -2785,7 +2785,8 @@ operandInfo i
        KILL, LIFETIME_END, LIFETIME_START, PHI, SETEND, SETPAN, SRSDA,
        SRSDA_UPD, SRSDB, SRSDB_UPD, SRSIA, SRSIA_UPD, SRSIB, SRSIB_UPD,
        STATEPOINT, TCRETURNdi, UDF, T2CPS1p, T2HVC, T2SETPAN, T2UDF,
-       TADJCALLSTACKDOWN, TBKPT, THLT, TSETEND, TUDF]
+       TADDspi_pseudo, TADJCALLSTACKDOWN, TBKPT, THLT, TSETEND,
+       TSUBspi_pseudo, TUDF]
     = ([BoundInfo], [])
   | i `elem`
       [LDRLIT_ga_abs, LDRLIT_ga_pcrel, LDRLIT_ga_pcrel_ldr, MOV_ga_pcrel,

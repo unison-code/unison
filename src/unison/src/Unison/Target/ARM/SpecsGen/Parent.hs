@@ -663,6 +663,7 @@ parent i
   | i `elem` [T2TSTrr_cpsr] = Just T2TSTrr
   | i `elem` [T2TSTrs_cpsr] = Just T2TSTrs
   | i `elem` [TFP] = Just TADDrSPi
+  | i `elem` [TADDspi_pseudo] = Just TADDspi
   | i `elem` [TANDs] = Just TAND
   | i `elem` [TBICs] = Just TBIC
   | i `elem` [TCMPhir_cpsr] = Just TCMPhir
@@ -685,6 +686,7 @@ parent i
   | i `elem` [TSTRBrz] = Just TSTRBr
   | i `elem` [TSTRHrz] = Just TSTRHr
   | i `elem` [TSTRrz] = Just TSTRr
+  | i `elem` [TSUBspi_pseudo] = Just TSUBspi
   | i `elem` [TSXTHz] = Just TSXTH
   | i `elem` [TTST_cpsr] = Just TTST
   | i `elem` [TUXTBz] = Just TUXTB

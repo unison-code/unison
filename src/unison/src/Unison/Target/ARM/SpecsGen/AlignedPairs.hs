@@ -1024,7 +1024,9 @@ alignedPairs i ([_], [])
 alignedPairs i ([_, _, _, _, _, _], [_])
   | i `elem` [PATCHPOINT] = []
 alignedPairs i ([_, _, _], []) | i `elem` [STACKMAP] = []
-alignedPairs i ([_], []) | i `elem` [HVC, SETPAN, T2SETPAN] = []
+alignedPairs i ([_], [])
+  | i `elem` [HVC, SETPAN, T2SETPAN, TADDspi_pseudo, TSUBspi_pseudo]
+    = []
 alignedPairs i ([_, _, _], [])
   | i `elem` [HINT, T2HINT, T2SUBS_PC_LR, THINT, TSVC] = []
 alignedPairs i ([_, _, _], [_]) | i `elem` [FCONSTD] = []

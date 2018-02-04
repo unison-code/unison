@@ -18,23 +18,29 @@ module Unison.Target.ARM.Transforms
      combinePushPops,
      expandRets,
      normalizeLoadStores,
-     combineLoadStores) where
+     combineLoadStores,
+     deactivateSPAdjusts) where
 
 import qualified Data.Map as M
 import qualified Data.Set as S
 import Data.Word
 import Data.Bits
 import Data.List
+import Data.Maybe
 
+import Common.Util
 import Unison
 import MachineIR
 import Unison.Target.Query
+import qualified Unison.Graphs.CG as CG
+import qualified Unison.Graphs.Partition as P
 import Unison.Target.ARM.Common
 import Unison.Target.ARM.OperandInfo
 import Unison.Target.ARM.Usages
 import Unison.Target.ARM.ARMResourceDecl
 import Unison.Target.ARM.ARMRegisterDecl
 import Unison.Target.ARM.SpecsGen.ARMInstructionDecl
+import Unison.Target.ARM.Registers()
 
 extractReturnRegs _ (
   c
@@ -493,7 +499,7 @@ combineLoadStores _ (
   uc1
   :
   ld1 @ SingleOperation {oOpr = Natural Linear {
-                            oIs = [TargetInstruction T2LDRi12],
+                            oIs = ld1is,
                             oUs = MOperand {altTemps = uts1} : off1 : pred1,
                             oDs = [MOperand {altTemps = [tr1]}]}}
   :
@@ -502,7 +508,7 @@ combineLoadStores _ (
   uc2
   :
   ld2 @ SingleOperation {oOpr = Natural Linear {
-                            oIs = [TargetInstruction T2LDRi12],
+                            oIs = ld2is,
                             oUs = MOperand {altTemps = uts2} : off2 : pred2,
                             oDs = [MOperand {altTemps = [tr2]}]}}
   :
@@ -510,8 +516,8 @@ combineLoadStores _ (
   :
   rest) (tid, oid, pid)
   -- TODO: check offset (lines 2039-2042 in ARMLoadStoreOptimizer.cpp)
-  | all isCopy [uc1, dc1, uc2, dc2] && uts1 == uts2 && pred1 == pred2 &&
-    offBy 4 off1 off2 =
+  | all isCombinableLoad [ld1is, ld2is] && all isCopy [uc1, dc1, uc2, dc2] &&
+    ld1is == ld2is && uts1 == uts2 && pred1 == pred2 && offBy 4 off1 off2 =
   let mkOper = mkOperand pid
       replaceDefTempBy t = mapToOperands id (applyToAltTemps (const [t]))
       [tr1', tr1'', tr2', tr2''] = map (\id -> mkTemp (tid + id)) [0..3]
@@ -553,7 +559,7 @@ combineLoadStores _ (
   uc12
   :
   st1 @ SingleOperation {oOpr = Natural Linear {
-                            oIs = [TargetInstruction T2STRi12],
+                            oIs = st1is,
                             oUs = MOperand {altTemps = ts1} :
                                   MOperand {altTemps = uts1} : off1 : pred1}}
   :
@@ -562,14 +568,14 @@ combineLoadStores _ (
   uc22
   :
   st2 @ SingleOperation {oOpr = Natural Linear {
-                            oIs = [TargetInstruction T2STRi12],
+                            oIs = st2is,
                             oUs = MOperand {altTemps = ts2} :
                                   MOperand {altTemps = uts2} : off2 : pred2}}
   :
   rest) (_, oid, pid)
   -- TODO: check offset (lines 2039-2042 in ARMLoadStoreOptimizer.cpp)
-  | all isCopy [uc11, uc21, uc21, uc22] && uts1 == uts2 && pred1 == pred2 &&
-    offBy 4 off1 off2 =
+  | all isCombinableStore [st1is, st2is] && all isCopy [uc11, uc21, uc21, uc22]
+    && uts1 == uts2 && pred1 == pred2 && offBy 4 off1 off2 =
   let mkOper = mkOperand pid
       st1'   = makeOptional st1
       st2'   = makeOptional st2
@@ -582,7 +588,56 @@ combineLoadStores _ (
       [uc11, uc12, uc21, uc22, st1', st2', od]
      )
 
+{-
+ Transforms:
+    o35: [p87{ -, t50}] <- { -, MOVE_ALL, LOAD} [p86{ -, t48, t49}]
+    o36: [] <- t2STRi12 [p88{t48, t49, t50},p89{t13},0,14,_]
+    o37: [p91{ -, t51}] <- { -, MOVE_ALL, LOAD} [p90{ -, t44, t45}]
+    o38: [] <- t2STRi12 [p92{t44, t45, t51, t53},p93{t13},4,14,_]
+ into:
+    o35: [p87{ -, t50}] <- { -, MOVE_ALL, LOAD} [p86{ -, t48, t49}]
+    o37: [p91{ -, t51}] <- { -, MOVE_ALL, LOAD} [p90{ -, t44, t45}]
+    o36: [] <- { -, t2STRi12} [p88{ -, t48, t49, t50},p89{ -, t13},0,14,_]
+    o38: [] <- { -, t2STRi12} [p92{ -, t44, t45, t51, t53},p93{ -, t13},4,14,_]
+    od:  [] <- { -, t2STRDi8} [p94{ -, t48, ..}, p95{ -, t44, ..}, p95{ -, t13}, 0, 14, _]
+-}
+
+combineLoadStores _ (
+  uc1
+  :
+  st1 @ SingleOperation {oOpr = Natural Linear {
+                            oIs = st1is,
+                            oUs = MOperand {altTemps = ts1} :
+                                  MOperand {altTemps = uts1} : off1 : pred1},
+                         oAs = as}
+  :
+  uc2
+  :
+  st2 @ SingleOperation {oOpr = Natural Linear {
+                            oIs = st2is,
+                            oUs = MOperand {altTemps = ts2} :
+                                  MOperand {altTemps = uts2} : off2 : pred2}}
+  :
+  rest) (_, oid, pid)
+  -- TODO: check offset (lines 2039-2042 in ARMLoadStoreOptimizer.cpp)
+  | all isCombinableStore [st1is, st2is] && all isCopy [uc1, uc2] &&
+    uts1 == uts2 && pred1 == pred2 && offBy 4 off1 off2 =
+  let mkOper = mkOperand pid
+      st1'   = makeOptional st1
+      st2'   = makeOptional st2
+      od     = makeOptional $ (mkLinear oid
+               [TargetInstruction T2STRDi8]
+               (mkOper 5 ts1 : mkOper 6 ts2 : mkOper 7 uts1 : off1 : pred1)
+               []) {oAs = as}
+  in (
+      rest,
+      [uc1, uc2, st1', st2', od]
+     )
+
 combineLoadStores _ (o : code) _ = (code, [o])
+
+isCombinableLoad  is = TargetInstruction T2LDRi12 `elem` is
+isCombinableStore is = TargetInstruction T2STRi12 `elem` is
 
 mkOperand pid id ts = mkMOperand (pid + id) ts Nothing
 
@@ -592,3 +647,38 @@ offBy n (Bound MachineImm {miValue = off1})
         (Bound MachineImm {miValue = off2}) =
   abs (off1 - off2) == n
 offBy _ _ _ = False
+
+-- if there are no loads or stores using the stack (spill count does not count),
+-- switch off SP adjustment operations.
+deactivateSPAdjusts f @ Function {fCode = code} =
+  let pcg   = P.fromGraph $ CG.fromFunction f
+      t2rs  = M.fromListWith (++) [(undoPreAssign t, maybeToList $ tReg t)
+                                  | t <- tOps (flatten code)]
+      code1 = filterCode (not . isSPAdjust) code
+      code2 = if any (isStackAccess (pcg, t2rs)) (flatten code)
+              then code else code1
+  in f {fCode = code2}
+
+isSPAdjust o =
+  any (\i -> TargetInstruction i `elem` oInstructions o)
+  [TSUBspi_pseudo, TADDspi_pseudo]
+
+isStackAccess aux
+  SingleOperation {oOpr = Natural Linear {oIs = is, oUs = _:addr:_}}
+  | TargetInstruction T2STRi12 `elem` is = isSP aux addr
+isStackAccess aux
+  SingleOperation {oOpr = Natural Linear {oIs = is, oUs = addr:_}}
+  | TargetInstruction T2LDRi12 `elem` is = isSP aux addr
+isStackAccess _ _ = False
+
+-- if the temporaries in the addr operand are in the same CG partition as a
+-- temporary that is potentially preassigned to SP
+isSP (pcg, t2rs) addr =
+  let -- enough with a representative as they are all in the same CG partition
+      at   = head $ map undoPreAssign $ extractTemps addr
+      cgts = map mkTemp $ fromJust $ P.equivalent pcg at
+      sp   = or [any isSPRegister (t2rs M.! t) | t <- cgts]
+  in sp
+
+isSPRegister Register {regId = TargetRegister SP} = True
+isSPRegister _ = False
