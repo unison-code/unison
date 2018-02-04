@@ -13,6 +13,7 @@ module Unison.Target.ARM (target) where
 
 import Data.Maybe
 import Data.List
+import Data.List.Split
 import qualified Data.Set as S
 import Control.Arrow
 
@@ -389,11 +390,25 @@ otherwise: ?
 
 -}
 
-addPrologue _ code = code
+mkSpAdj oid i = mkLinear oid [TargetInstruction i] [Bound mkMachineFrameSize] []
 
--- | Adds function epilogue (TODO: investigate crashes for ARM, see "emitEpilogue" in ARMFrameLowering.cpp)
+-- TODO: remove if there are no load/stores using the stack (no spills)
+addPrologue (_, oid, _) (e:code) =
+  let subSp = mkSpAdj oid TSUBspi_pseudo
+  in [e, subSp] ++ code
 
-addEpilogue _ code = code
+-- TODO: remove if there are no load/stores using the stack (no spills)
+addEpilogue (_, oid, _) code =
+  case split (keepDelimsL $ whenElt isBranch) code of
+   [f, e] ->
+     let addSp = mkSpAdj oid TADDspi_pseudo
+     in f ++ [addSp] ++ e
+   [_] ->
+     case split (keepDelimsL $ whenElt isTailCall) code of
+      [f, e] ->
+        let addSp = mkSpAdj oid TADDspi_pseudo
+        in f ++ [addSp] ++ e
+      os -> error ("unhandled epilogue: " ++ show os)
 
 -- | Direction in which the stack grows
 stackDirection = API.StackGrowsDown
@@ -595,6 +610,9 @@ transforms AugmentPreRW = [peephole combinePushPops,
                            peephole expandRets,
                            fixpoint (peephole normalizeLoadStores),
                            peephole combineLoadStores]
+
+transforms AugmentPostRW = [deactivateSPAdjusts]
+
 transforms _ = []
 
 mapToOperationWithGoals t f @ Function {fCode = code, fGoal = gs} =

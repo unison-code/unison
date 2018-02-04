@@ -1102,6 +1102,20 @@ instruction-set:
           parent:             tPOP2_r4_11
           itinerary:          IIC_iPop_Br
 
+        - id:                 tSUBspi_pseudo
+          parent:             tSUBspi
+          operands:
+           - imm:             bound
+          uses:               [imm]
+          defines:            []
+
+        - id:                 tADDspi_pseudo
+          parent:             tADDspi
+          operands:
+           - imm:             bound
+          uses:               [imm]
+          defines:            []
+
         - id:                 MEMCPY_4
           type:               linear
           operands:

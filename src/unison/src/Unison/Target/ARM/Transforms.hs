@@ -18,23 +18,29 @@ module Unison.Target.ARM.Transforms
      combinePushPops,
      expandRets,
      normalizeLoadStores,
-     combineLoadStores) where
+     combineLoadStores,
+     deactivateSPAdjusts) where
 
 import qualified Data.Map as M
 import qualified Data.Set as S
 import Data.Word
 import Data.Bits
 import Data.List
+import Data.Maybe
 
+import Common.Util
 import Unison
 import MachineIR
 import Unison.Target.Query
+import qualified Unison.Graphs.CG as CG
+import qualified Unison.Graphs.Partition as P
 import Unison.Target.ARM.Common
 import Unison.Target.ARM.OperandInfo
 import Unison.Target.ARM.Usages
 import Unison.Target.ARM.ARMResourceDecl
 import Unison.Target.ARM.ARMRegisterDecl
 import Unison.Target.ARM.SpecsGen.ARMInstructionDecl
+import Unison.Target.ARM.Registers()
 
 extractReturnRegs _ (
   c
@@ -641,3 +647,38 @@ offBy n (Bound MachineImm {miValue = off1})
         (Bound MachineImm {miValue = off2}) =
   abs (off1 - off2) == n
 offBy _ _ _ = False
+
+-- if there are no loads or stores using the stack (spill count does not count),
+-- switch off SP adjustment operations.
+deactivateSPAdjusts f @ Function {fCode = code} =
+  let pcg   = P.fromGraph $ CG.fromFunction f
+      t2rs  = M.fromListWith (++) [(undoPreAssign t, maybeToList $ tReg t)
+                                  | t <- tOps (flatten code)]
+      code1 = filterCode (not . isSPAdjust) code
+      code2 = if any (isStackAccess (pcg, t2rs)) (flatten code)
+              then code else code1
+  in f {fCode = code2}
+
+isSPAdjust o =
+  any (\i -> TargetInstruction i `elem` oInstructions o)
+  [TSUBspi_pseudo, TADDspi_pseudo]
+
+isStackAccess aux
+  SingleOperation {oOpr = Natural Linear {oIs = is, oUs = _:addr:_}}
+  | TargetInstruction T2STRi12 `elem` is = isSP aux addr
+isStackAccess aux
+  SingleOperation {oOpr = Natural Linear {oIs = is, oUs = addr:_}}
+  | TargetInstruction T2LDRi12 `elem` is = isSP aux addr
+isStackAccess _ _ = False
+
+-- if the temporaries in the addr operand are in the same CG partition as a
+-- temporary that is potentially preassigned to SP
+isSP (pcg, t2rs) addr =
+  let -- enough with a representative as they are all in the same CG partition
+      at   = head $ map undoPreAssign $ extractTemps addr
+      cgts = map mkTemp $ fromJust $ P.equivalent pcg at
+      sp   = or [any isSPRegister (t2rs M.! t) | t <- cgts]
+  in sp
+
+isSPRegister Register {regId = TargetRegister SP} = True
+isSPRegister _ = False

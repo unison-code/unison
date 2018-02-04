@@ -617,8 +617,9 @@ itinerary i
        T2LEApcrelJT, T2LEApcrelJT_remat, T2LEApcrel_cpi,
        T2LEApcrel_cpi_remat_cpi, T2RSBSri, T2RSBri, T2SBCri, T2SUBSri,
        T2SUBri, T2SUBri12, T2SUBri_cpsr, TADDi3, TADDi3s, TADDi8, TADDi8s,
-       TADDrSPi, TADDspi, TADR, TFP, TLEApcrel, TLEApcrelJT, TRSB, TRSBs,
-       TSUBi3, TSUBi3s, TSUBi8, TSUBi8s, TSUBspi]
+       TADDrSPi, TADDspi, TADDspi_pseudo, TADR, TFP, TLEApcrel,
+       TLEApcrelJT, TRSB, TRSBs, TSUBi3, TSUBi3s, TSUBi8, TSUBi8s,
+       TSUBspi, TSUBspi_pseudo]
     = IIC_iALUi
   | i `elem`
       [ADCrr, ADDSrr, ADDrr, PICADD, QADD, QADD16, QADD8, QASX, QDADD,
