@@ -181,10 +181,10 @@ multimap<operation, instruction> build_oI (const presolver_disj& Y) {
 
 /**************** region precedences ******************/
 
-#define FastPair(o1,o2) (((o1)<<20) + (o2))
+#define FastPair(o1,o2) (((unsigned long)(o1)<<32) + (unsigned long)(o2))
 
-#define FastPairSource(P) ((P) >> 20)
-#define FastPairTarget(P) ((P) & 0xFFFFF)
+#define FastPairSource(P) ((int)((P) >> 32))
+#define FastPairTarget(P) ((int)((P) & (unsigned long)(0xFFFFFFFF)))
 
 static int min_latency(const Parameters& input,
 		       operation o1,
@@ -216,8 +216,8 @@ void gen_region_precedences(const Parameters& input,
 			    const precedence_set& PI,
 			    precedence_set& PO) {
   set<UnisonConstraintExpr> entailed;
-  map<int,int> pweight;
-  map<int,int> pweight_c;
+  map<unsigned long,int> pweight;
+  map<unsigned long,int> pweight_c;
   presolver_conj ConjTrue;
   presolver_disj DisjTrue({ConjTrue});
   map<UnisonConstraintExpr,vector<PresolverPrecedence>> prec_index;
@@ -225,7 +225,7 @@ void gen_region_precedences(const Parameters& input,
   for (const auto kv : pweight) {
     operation src = FastPairSource(kv.first);
     operation tgt = FastPairTarget(kv.first);
-    cerr << "%    c(" << src << ") + " << kv.second << " <= c(" << tgt << ")" << endl;
+    cerr << "%    [" << kv.first << "] c(" << src << ") + " << kv.second << " <= c(" << tgt << ")" << endl;
   }
   for(block b : input.B)
     gen_region_precedences_block(input, b, min_con_erg, pweight, pweight_c, DisjTrue, PO);
@@ -246,16 +246,19 @@ void gen_region_precedences(const Parameters& input,
 
 void gen_region_init(const Parameters& input,
 		     set<UnisonConstraintExpr>& entailed,
-		     map<int,int>& pweight,
+		     map<unsigned long,int>& pweight,
 		     map<UnisonConstraintExpr,vector<PresolverPrecedence>>& prec_index,
 		     const precedence_set& PI) {
   for (const PresolverActiveTable& pa : input.active_tables) {
-    if (pa.os.size() == 1) {
-      operation o = pa.os[0];
-      entailed.insert(UnisonConstraintExpr(ACTIVE_EXPR, {o}, {}));
-      for (operand p : input.operands[o])
-	if (input.use[p] && input.temps[p].size() == 2 && input.temps[p][0] == NULL_TEMPORARY)
-	  entailed.insert(UnisonConstraintExpr(CONNECTS_EXPR, {p,input.temps[p][1]}, {}));
+    if (pa.tuples.size() == 1) {
+      for (unsigned int i=0; i<pa.os.size(); i++)
+	if (pa.tuples[0][i]) {
+	  operation o = pa.os[i];
+	  entailed.insert(UnisonConstraintExpr(ACTIVE_EXPR, {o}, {}));
+	  for (operand p : input.operands[o])
+	    if (input.use[p] && input.temps[p].size() == 2 && input.temps[p][0] == NULL_TEMPORARY)
+	      entailed.insert(UnisonConstraintExpr(CONNECTS_EXPR, {p,input.temps[p][1]}, {}));
+	}
     }
   }
   for (const PresolverCopyTmpTable& pa : input.tmp_tables) {
@@ -273,7 +276,7 @@ void gen_region_init(const Parameters& input,
     operation dest = pre.j;
     if (src < dest && pre.n >= 0) {
       if (disj_is_true(pre.d)) {
-	int key = FastPair(src,dest);
+	unsigned long key = FastPair(src,dest);
 	if (pweight.find(key) == pweight.end() || pweight[key] < pre.n)
 	  pweight[key] = pre.n;
       } else if (pre.d.size()==1 && pre.d[0].size()==1) {
@@ -286,7 +289,7 @@ void gen_region_init(const Parameters& input,
       for (const PresolverPrecedence& pre : prec_index[e]) {
 	operation src = pre.i;
 	operation dest = pre.j;
-	int key = FastPair(src,dest);
+	unsigned long key = FastPair(src,dest);
 	if (pweight.find(key) == pweight.end() || pweight[key] < pre.n)
 	  pweight[key] = pre.n;
       }
@@ -307,7 +310,7 @@ void gen_region_init(const Parameters& input,
 	operation o1 = input.def_opr[t];
 	operand d = input.definer[t];
 	if (o1 < o2 && !input.global_operand[d] && !input.global_operand[p] && input.type[o2] != KILL) {
-	  int key = FastPair(o1,o2);
+	  unsigned long key = FastPair(o1,o2);
 	  int distance = min_latency(input, o1, o2, d, p);
 	  if (pweight.find(key) == pweight.end() || pweight[key] < distance)
 	    pweight[key] = distance;
@@ -321,12 +324,12 @@ void gen_region_precedences_cond(const Parameters& input,
 				 const operand p,
 				 const temporary t,
 				 const vector<vector<vector<int>>>& min_con_erg,
-				 map<int,int>& pweight,
+				 map<unsigned long,int>& pweight,
 				 map<UnisonConstraintExpr,vector<PresolverPrecedence>>& prec_index,
 				 precedence_set& PO) {
   block b = input.pb[p];
   set<UnisonConstraintExpr> entailed_c;
-  map<int,int> pweight_c;
+  map<unsigned long,int> pweight_c;
   vector<int> def_use_c;
   UnisonConstraintExpr lit = UnisonConstraintExpr(CONNECTS_EXPR, {p,t}, {});
   presolver_disj cond({{lit}});
@@ -371,7 +374,7 @@ void gen_region_precedences_cond(const Parameters& input,
       for (const PresolverPrecedence& pre : prec_index[e]) {
 	operation src = pre.i;
 	operation dest = pre.j;
-	int key = FastPair(src,dest);
+	unsigned long key = FastPair(src,dest);
 	if (pweight_c.find(key) == pweight_c.end() || pweight_c[key] < pre.n)
 	  pweight_c[key] = pre.n;
       }
@@ -390,7 +393,7 @@ void gen_region_precedences_cond(const Parameters& input,
     operation o1 = input.oper[d];
     operation o2 = input.oper[u];
     if(o1 < o2 && !input.global_operand[d] && !input.global_operand[u] && input.type[o2] != KILL) {
-      int key = FastPair(o1,o2);
+      unsigned long key = FastPair(o1,o2);
       int distance = min_latency(input, o1, o2, d, u);
       if (pweight_c.find(key) == pweight_c.end() || pweight_c[key] < distance)
 	pweight_c[key] = distance;
@@ -407,15 +410,15 @@ void gen_region_precedences_cond(const Parameters& input,
 void gen_region_precedences_block(const Parameters& input,
 				  const block b,
 				  const vector<vector<vector<int>>>& min_con_erg,
-				  map<int,int>& pweight,
-				  map<int,int>& pweight_c,
+				  map<unsigned long,int>& pweight,
+				  map<unsigned long,int>& pweight_c,
 				  const presolver_disj& cond,
 				  precedence_set& PO) {
   vector<vector<operation>> edges;
-  for(const pair<int,int>& kv : pweight)
+  for(const auto kv : pweight)
     if(input.oblock[FastPairSource(kv.first)] == b)
       edges.push_back({FastPairSource(kv.first), FastPairTarget(kv.first)});
-  for(const pair<int,int>& kv : pweight_c)
+  for(const auto kv : pweight_c)
     edges.push_back({FastPairSource(kv.first), FastPairTarget(kv.first)});
   vector<operation> pnodes;
   Digraph G = Digraph(edges);
@@ -437,8 +440,8 @@ void partition_nodes(Digraph& G,
 #if 0
 // naive depth-first search
 static int longest_path(Digraph& G,
-			map<int,int>& pweight,
-			map<int,int>& pweight_c,
+			map<unsigned long,int>& pweight,
+			map<unsigned long,int>& pweight_c,
 			operation src,
 			operation sink,
 			int len) {
@@ -450,7 +453,7 @@ static int longest_path(Digraph& G,
     int lp = len;
     vector<operation> ns = G.neighbors(src);
     for (operation n : ns) {
-      int key = FastPair(src,n);
+      unsigned long key = FastPair(src,n);
       int weight = (pweight.find(key) != pweight.end() ? pweight[key] : 0);
       int weight_c = (pweight_c.find(key) != pweight_c.end() ? pweight_c[key] : 0);
       int nl = longest_path(G, pweight, pweight_c, n, sink, len+max(weight,weight_c));
@@ -461,7 +464,7 @@ static int longest_path(Digraph& G,
 }
 #endif
 
-static bool has_edge_inside(map<int,int>& pweight_c,
+static bool has_edge_inside(map<unsigned long,int>& pweight_c,
 			    operation lb,
 			    operation ub) {
   for (const auto kv : pweight_c) {
@@ -477,8 +480,8 @@ void gen_region_per_partition(const Parameters& input,
 			      Digraph& G, // "precs" edges for 1 block
 			      const vector<operation>& pnodes,
 			      const vector<vector<vector<int>>>& min_con_erg,
-			      map<int,int>& pweight,
-			      map<int,int>& pweight_c,
+			      map<unsigned long,int>& pweight,
+			      map<unsigned long,int>& pweight_c,
 			      const presolver_disj& cond,
 			      precedence_set& PO) {
   map<operation,vector<pair<operation,operation>>> M;
@@ -584,8 +587,8 @@ void gen_region(const Parameters& input,
 		Digraph& G, // forward
 		Digraph& H, // backward
 		const vector<vector<vector<int>>>& min_con_erg,
-		map<int,int>& pweight,
-		map<int,int>& pweight_c,
+		map<unsigned long,int>& pweight,
+		map<unsigned long,int>& pweight_c,
 		const presolver_disj& cond,
 		precedence_set& PO) {
   int glb = 0;
@@ -656,8 +659,8 @@ void gen_region(const Parameters& input,
 
 // Find all longest paths from implicit src, assuming we have a DAG, assuming ascending vertices by top sort
 map<operation,int> dag_longest_paths_fwd(vector<operation>& region,
-					 map<int,int>& pweight,
-					 map<int,int>& pweight_c) {
+					 map<unsigned long,int>& pweight,
+					 map<unsigned long,int>& pweight_c) {
   map<operation,int> L;
 
   for(operation v : region)
@@ -665,22 +668,23 @@ map<operation,int> dag_longest_paths_fwd(vector<operation>& region,
   for(operation b : region)
     for(operation v : region)
       if(b<v) {
-	int key = FastPair(b,v);
-	int w = 0;
-	int w_c = 0;
+	unsigned long key = FastPair(b,v);
+	int w = -1;
+	int w_c = -1;
 	if(pweight.find(key) != pweight.end())
 	  w = pweight[key];
 	if(pweight_c.find(key) != pweight_c.end())
 	  w_c = pweight_c[key];
-	L[v] = max(L[v],L[b]+max(w,w_c));
+	if(max(w,w_c) >= 0)
+	  L[v] = max(L[v],L[b]+max(w,w_c));
       }
   return L;
 }
 
 // Find all longest paths from implicit src, assuming we have a DAG, assuming ascending vertices by top sort
 map<operation,int> dag_longest_paths_bwd(vector<operation>& region,
-					 map<int,int>& pweight,
-					 map<int,int>& pweight_c) {
+					 map<unsigned long,int>& pweight,
+					 map<unsigned long,int>& pweight_c) {
   map<operation,int> L;
 
   for(operation v : region)
@@ -688,14 +692,15 @@ map<operation,int> dag_longest_paths_bwd(vector<operation>& region,
   for(operation b : region)
     for(operation v : region)
       if(b>v) {
-	int key = FastPair(v,b);
-	int w = 0;
-	int w_c = 0;
+	unsigned long key = FastPair(v,b);
+	int w = -1;
+	int w_c = -1;
 	if(pweight.find(key) != pweight.end())
 	  w = pweight[key];
 	if(pweight_c.find(key) != pweight_c.end())
 	  w_c = pweight_c[key];
-	L[v] = max(L[v],L[b]+max(w,w_c));
+	if(max(w,w_c) >= 0)
+	  L[v] = max(L[v],L[b]+max(w,w_c));
       }
   return L;
 }

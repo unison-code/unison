@@ -86,7 +86,7 @@ void gen_region_precedences(const Parameters& input,
 
 void gen_region_init(const Parameters& input,
 		     set<UnisonConstraintExpr>& entailed,
-		     map<int,int>& pweight,
+		     map<unsigned long,int>& pweight,
 		     map<UnisonConstraintExpr,vector<PresolverPrecedence>>& prec_index,
 		     const precedence_set& PI);
 
@@ -94,15 +94,15 @@ void gen_region_precedences_cond(const Parameters& input,
 				 const operand p,
 				 const temporary t,
 				 const vector<vector<vector<int>>>& min_con_erg,
-				 map<int,int>& pweight,
+				 map<unsigned long,int>& pweight,
 				 map<UnisonConstraintExpr,vector<PresolverPrecedence>>& prec_index,
 				 precedence_set& PO);
 
 void gen_region_precedences_block(const Parameters& input,
 				  const block b,
 				  const vector<vector<vector<int>>>& min_con_erg,
-				  map<int,int>& pweight,
-				  map<int,int>& pweight_c,
+				  map<unsigned long,int>& pweight,
+				  map<unsigned long,int>& pweight_c,
 				  const presolver_disj& cond,
 				  precedence_set& PO);
 
@@ -113,8 +113,8 @@ void gen_region_per_partition(const Parameters& input,
 			      Digraph& G,
 			      const vector<operation>& pnodes,
 			      const vector<vector<vector<int>>>& min_con_erg,
-			      map<int,int>& pweight,
-			      map<int,int>& pweight_c,
+			      map<unsigned long,int>& pweight,
+			      map<unsigned long,int>& pweight_c,
 			      const presolver_disj& cond,
 			      precedence_set& PO);
 
@@ -124,18 +124,18 @@ void gen_region(const Parameters& input,
 		Digraph& G, // forward
 		Digraph& H, // backward
 		const vector<vector<vector<int>>>& min_con_erg,
-		map<int,int>& pweight,
-		map<int,int>& pweight_c,
+		map<unsigned long,int>& pweight,
+		map<unsigned long,int>& pweight_c,
 		const presolver_disj& cond,
 		precedence_set& PO);
 
 map<operation,int> dag_longest_paths_fwd(vector<operation>& region,
-					 map<int,int>& pweight,
-					 map<int,int>& pweight_c);
+					 map<unsigned long,int>& pweight,
+					 map<unsigned long,int>& pweight_c);
 
 map<operation,int> dag_longest_paths_bwd(vector<operation>& region,
-					 map<int,int>& pweight,
-					 map<int,int>& pweight_c);
+					 map<unsigned long,int>& pweight,
+					 map<unsigned long,int>& pweight_c);
 
 vector<operation> region_finishers(Digraph &R,
 				   resource r, int cap,
