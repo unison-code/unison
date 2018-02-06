@@ -482,11 +482,7 @@ mirExternalSymbol =
      return (mkMachineExternal sym)
 
 mirMemPartition =
-  do string "<0"
-     address <- hexadecimal
-     string "> = !{!\"unison-memory-partition\", i32 "
-     id <- decimal
-     string "}"
+  do (address, id) <- mirMDInt "unison-memory-partition"
      return (mkMachineMemPartition address id)
 
 mirProperty =
@@ -498,11 +494,7 @@ mirProperty =
      return (mkMachineProperty address pr)
 
 mirBlockFreq =
-  do string "<0"
-     address <- hexadecimal
-     string "> = !{!\"unison-block-frequency\", i32 "
-     freq <- decimal
-     string "}"
+  do (address, freq) <- mirMDInt "unison-block-frequency"
      return (mkMachineBlockFreq address freq)
 
 mirDebugLocation =
@@ -569,6 +561,18 @@ mirRegMask =
   do string "csr_"
      name <- many1 alphaNumDashDotUnderscore
      return (mkMachineRegMask name)
+
+mirMDInt tag =
+  do string "<0"
+     address <- hexadecimal
+     string ("> = !{!\"" ++ tag ++ "\",")
+     whiteSpace
+     string "i"
+     decimal
+     whiteSpace
+     val <- decimal
+     string "}"
+     return (address, val)
 
 mirMemOperands =
   do string "::"
