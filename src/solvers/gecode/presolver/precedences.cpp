@@ -222,11 +222,6 @@ void gen_region_precedences(const Parameters& input,
   presolver_disj DisjTrue({ConjTrue});
   map<UnisonConstraintExpr,vector<PresolverPrecedence>> prec_index;
   gen_region_init(input, entailed, pweight, prec_index, PI);
-  for (const auto kv : pweight) {
-    operation src = FastPairSource(kv.first);
-    operation tgt = FastPairTarget(kv.first);
-    cerr << "%    [" << kv.first << "] c(" << src << ") + " << kv.second << " <= c(" << tgt << ")" << endl;
-  }
   for(block b : input.B)
     gen_region_precedences_block(input, b, min_con_erg, pweight, pweight_c, DisjTrue, PO);
   for(operand p : input.P) {
@@ -333,7 +328,7 @@ void gen_region_precedences_cond(const Parameters& input,
   vector<int> def_use_c;
   UnisonConstraintExpr lit = UnisonConstraintExpr(CONNECTS_EXPR, {p,t}, {});
   presolver_disj cond({{lit}});
-  cerr << "% region precedences assuming " << show(lit) << endl;
+  // cerr << "% region precedences assuming " << show(lit) << endl;
   entailed_c.insert(lit);
   entailed_c.insert(UnisonConstraintExpr(ACTIVE_EXPR, {input.def_opr[t]}, {}));
   for (const PresolverCopyTmpTable& pa : input.tmp_tables) {
@@ -350,10 +345,10 @@ void gen_region_precedences_cond(const Parameters& input,
 	if (pa.tuples[jj][no+pix] == t)
 	  tuno = (tuno == -1 ? jj : nt);
       if (tuno < 0) {
-	cerr << "%    no support" << endl;
+	// cerr << "%    no support" << endl;
 	return;
       } else if (tuno >= 0 && tuno < nt) {
-	cerr << "%    single support" << endl;
+	// cerr << "%    single support" << endl;
 	for (int jj=0; jj<no; jj++)
 	  if (pa.tuples[tuno][jj]) {
 	    operation o1 = pa.os[jj];
@@ -364,8 +359,8 @@ void gen_region_precedences_cond(const Parameters& input,
 	  temporary t1 = pa.tuples[tuno][no+jj];
 	  entailed_c.insert(UnisonConstraintExpr(CONNECTS_EXPR, {p1,t1}, {}));
 	}
-      } else {
-	cerr << "%    multiple support" << endl;
+	// } else {
+	// cerr << "%    multiple support" << endl;
       }
     }
   }
@@ -398,11 +393,6 @@ void gen_region_precedences_cond(const Parameters& input,
       if (pweight_c.find(key) == pweight_c.end() || pweight_c[key] < distance)
 	pweight_c[key] = distance;
     }
-  }
-  for (const auto kv : pweight_c) {
-    operation src = FastPairSource(kv.first);
-    operation tgt = FastPairTarget(kv.first);
-    cerr << "%    c(" << src << ") + " << kv.second << " <= c(" << tgt << ")" << endl;
   }
   gen_region_precedences_block(input, b, min_con_erg, pweight, pweight_c, cond, PO);
 }
@@ -648,12 +638,12 @@ void gen_region(const Parameters& input,
     PresolverPrecedence pred(src, sink, glb, cond);
     PO.push_back(pred);
     pweight[FastPair(src,sink)] = glb;
-    cerr << "%    NEW c(" << src << ") + " << glb << " <= c(" << sink << ")" << endl;
+    // cerr << "%    NEW c(" << src << ") + " << glb << " <= c(" << sink << ")" << endl;
   } else {
     PresolverPrecedence pred(src, sink, glb, cond);
     PO.push_back(pred);
     pweight_c[FastPair(src,sink)] = glb;
-    cerr << "%    NEW c(" << src << ") + " << glb << " <= c(" << sink << ")" << endl;
+    // cerr << "%    NEW c(" << src << ") + " << glb << " <= c(" << sink << ")" << endl;
   }
 }
 
