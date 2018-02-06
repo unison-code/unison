@@ -77,49 +77,65 @@ void gen_before_precedences1(const Parameters& input,
 			     const vector<vector<vector<int>>>& min_con_erg,
 			     map<PrecedenceEdge, presolver_disj>& M);
 
+/**************** region precedences ******************/
+
 void gen_region_precedences(const Parameters& input,
 			    const vector<vector<vector<int>>>& min_con_erg,
-			    const precedence_set &precedences,
-			    precedence_set &region_precedences);
+			    const precedence_set &PI,
+			    precedence_set &PO);
 
-void gen_region_precedences_uncond(const Parameters& input,
-				   const map<block,vector<vector<operation>>>& edgeset_map,
-				   const vector<vector<vector<int>>>& min_con_erg,
-				   map<int,int>& pweight,
-				   precedence_set& PI);
+void gen_region_init(const Parameters& input,
+		     set<UnisonConstraintExpr>& entailed,
+		     map<int,int>& pweight,
+		     map<UnisonConstraintExpr,vector<PresolverPrecedence>>& prec_index,
+		     const precedence_set& PI);
 
 void gen_region_precedences_cond(const Parameters& input,
-				 map<block,vector<vector<operation>>>& edgeset_map,
+				 const operand p,
+				 const temporary t,
 				 const vector<vector<vector<int>>>& min_con_erg,
 				 map<int,int>& pweight,
-				 const vector<int>& ass,
-				 precedence_set& PI);
+				 map<UnisonConstraintExpr,vector<PresolverPrecedence>>& prec_index,
+				 precedence_set& PO);
+
+void gen_region_precedences_block(const Parameters& input,
+				  const block b,
+				  const vector<vector<vector<int>>>& min_con_erg,
+				  map<int,int>& pweight,
+				  map<int,int>& pweight_c,
+				  const presolver_disj& cond,
+				  precedence_set& PO);
 
 void partition_nodes(Digraph& G,
-		     vector<operation>& pnodes,
-		     const vector<int>& focus);
+		     vector<operation>& pnodes);
 
 void gen_region_per_partition(const Parameters& input,
 			      Digraph& G,
 			      const vector<operation>& pnodes,
-			      const vector<int>& focus,
-			      const vector<int>& ass,
 			      const vector<vector<vector<int>>>& min_con_erg,
 			      map<int,int>& pweight,
-			      precedence_set& PI);
+			      map<int,int>& pweight_c,
+			      const presolver_disj& cond,
+			      precedence_set& PO);
 
 void gen_region(const Parameters& input,
-		operation src, operation sink,
+		operation src,
+		operation sink,
 		Digraph& G, // forward
 		Digraph& H, // backward
-		const vector<int>& ass,
 		const vector<vector<vector<int>>>& min_con_erg,
 		map<int,int>& pweight,
-		precedence_set& PI);
+		map<int,int>& pweight_c,
+		const presolver_disj& cond,
+		precedence_set& PO);
 
-map<operation,int> dag_longest_paths_fwd(vector<operation>& region, map<int,int>& pweight);
+map<operation,int> dag_longest_paths_fwd(vector<operation>& region,
+					 map<int,int>& pweight,
+					 map<int,int>& pweight_c);
 
-map<operation,int> dag_longest_paths_bwd(vector<operation>& region, map<int,int>& pweight);
+map<operation,int> dag_longest_paths_bwd(vector<operation>& region,
+					 map<int,int>& pweight,
+					 map<int,int>& pweight_c);
 
 vector<operation> region_finishers(Digraph &R,
 				   resource r, int cap,
