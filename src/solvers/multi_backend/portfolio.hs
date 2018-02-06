@@ -112,8 +112,7 @@ runChuffed flags to extJson lowerBoundFile outJsonFile =
          out = pre ++ ".out"
      setEnv "FLATZINC_CMD" "fzn-chuffed"
      tryUntilSuccess $ callProcess "mzn-crippled-chuffed"
-       (concatMap fznFlag (["--mdd", "on",
-                            "--verbosity", "3",
+       (concatMap fznFlag (["--verbosity", "3",
                             "-f",
                             "--rnd-seed", "123456"] ++
                            chuffedTimeoutFlags to) ++
