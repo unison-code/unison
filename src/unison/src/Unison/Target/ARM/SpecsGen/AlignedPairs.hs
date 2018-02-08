@@ -240,8 +240,11 @@ alignedPairs i ([_, _, _], [])
 alignedPairs i ([_, _, _], [_, _]) | i `elem` [TMVN, TRSB] = []
 alignedPairs i ([rn, _, _], [rn'])
   | i `elem`
-      [T2STMDB_UPD_4_10, T2STMDB_UPD_4_11, T2STMDB_UPD_4_8,
-       T2STMDB_UPD_4_9]
+      [T2LDMIA_RET_4_10, T2LDMIA_RET_4_11, T2LDMIA_RET_4_8,
+       T2LDMIA_RET_4_9, T2LDMIA_UPD_4_10, T2LDMIA_UPD_4_11,
+       T2LDMIA_UPD_4_4, T2LDMIA_UPD_4_5, T2LDMIA_UPD_4_6, T2LDMIA_UPD_4_7,
+       T2LDMIA_UPD_4_8, T2LDMIA_UPD_4_9, T2STMDB_UPD_4_10,
+       T2STMDB_UPD_4_11, T2STMDB_UPD_4_8, T2STMDB_UPD_4_9]
     = [(rn, rn')]
 alignedPairs i ([rn, _, _], [rn', _, _, _, _])
   | i `elem` [T2LDMIA_UPD_4] = [(rn, rn')]
@@ -1180,7 +1183,8 @@ alignedPairs i ([orig, _, _, _, _], [orig'])
 alignedPairs i ([_, _], [])
   | i `elem`
       [BX_RET, ERET, MOVPCLR, T2CLREX, T2DCPS1, T2DCPS2, T2DCPS3,
-       TBX_RET, TPUSH_4, TPUSH_4_5, TPUSH_4_6, TPUSH_4_7]
+       TBX_RET, TPOP_RET_4, TPOP_RET_4_5, TPOP_RET_4_6, TPOP_RET_4_7,
+       TPUSH_4, TPUSH_4_5, TPUSH_4_6, TPUSH_4_7]
     = []
 alignedPairs i ([_, _], [_]) | i `elem` [FMSTAT] = []
 alignedPairs i ([_, _], [_])

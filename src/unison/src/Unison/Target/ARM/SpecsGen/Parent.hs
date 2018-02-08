@@ -628,7 +628,15 @@ parent i
   | i `elem` [T2CMPrr_cpsr] = Just T2CMPrr
   | i `elem` [T2CMPrs_cpsr] = Just T2CMPrs
   | i `elem` [T2LDMIA_4] = Just T2LDMIA
-  | i `elem` [T2LDMIA_UPD_4] = Just T2LDMIA_UPD
+  | i `elem`
+      [T2LDMIA_RET_4_10, T2LDMIA_RET_4_11, T2LDMIA_RET_4_8,
+       T2LDMIA_RET_4_9]
+    = Just T2LDMIA_RET
+  | i `elem`
+      [T2LDMIA_UPD_4, T2LDMIA_UPD_4_10, T2LDMIA_UPD_4_11,
+       T2LDMIA_UPD_4_4, T2LDMIA_UPD_4_5, T2LDMIA_UPD_4_6, T2LDMIA_UPD_4_7,
+       T2LDMIA_UPD_4_8, T2LDMIA_UPD_4_9]
+    = Just T2LDMIA_UPD
   | i `elem`
       [T2LDRBi12_fi_demat_fi, T2LDRBi12_fi_remat_fi,
        T2LDRBi12_fi_source_fi]
@@ -686,6 +694,8 @@ parent i
   | i `elem` [TORRs] = Just TORR
   | i `elem` [TPOP2_r4_11_RET] = Just TPOP2_r4_11
   | i `elem` [TPOP2_r4_7_RET] = Just TPOP2_r4_7
+  | i `elem` [TPOP_RET_4, TPOP_RET_4_5, TPOP_RET_4_6, TPOP_RET_4_7] =
+    Just TPOP_RET
   | i `elem` [TPUSH_4, TPUSH_4_5, TPUSH_4_6, TPUSH_4_7] = Just TPUSH
   | i `elem` [TRORs] = Just TROR
   | i `elem` [TSTRBrz] = Just TSTRBr

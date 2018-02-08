@@ -722,11 +722,16 @@ itinerary i
       [LDMDA, LDMDB, LDMIA, LDMIB, SysLDMDA, SysLDMDB, SysLDMIA,
        SysLDMIB, T2LDMDB, T2LDMIA, T2LDMIA_4, TLDMIA]
     = IIC_iLoad_m
-  | i `elem` [LDMIA_RET, T2LDMIA_RET] = IIC_iLoad_mBr
+  | i `elem`
+      [LDMIA_RET, T2LDMIA_RET, T2LDMIA_RET_4_10, T2LDMIA_RET_4_11,
+       T2LDMIA_RET_4_8, T2LDMIA_RET_4_9]
+    = IIC_iLoad_mBr
   | i `elem`
       [LDMDA_UPD, LDMDB_UPD, LDMIA_UPD, LDMIB_UPD, SysLDMDA_UPD,
        SysLDMDB_UPD, SysLDMIA_UPD, SysLDMIB_UPD, T2LDMDB_UPD, T2LDMIA_UPD,
-       T2LDMIA_UPD_4, TLDMIA_UPD]
+       T2LDMIA_UPD_4, T2LDMIA_UPD_4_10, T2LDMIA_UPD_4_11, T2LDMIA_UPD_4_4,
+       T2LDMIA_UPD_4_5, T2LDMIA_UPD_4_6, T2LDMIA_UPD_4_7, T2LDMIA_UPD_4_8,
+       T2LDMIA_UPD_4_9, TLDMIA_UPD]
     = IIC_iLoad_mu
   | i `elem` [LDRcp, LDRi12, PICLDR, TLDRr, TLDRrz] = IIC_iLoad_r
   | i `elem`
@@ -784,8 +789,10 @@ itinerary i
   | i `elem` [T2MVNs] = IIC_iMVNsi
   | i `elem` [MVNsi, MVNsr] = IIC_iMVNsr
   | i `elem` [TPOP, TPOP2_r4_11, TPOP2_r4_7, TPOP_r4_7] = IIC_iPop
-  | i `elem` [TPOP2_r4_11_RET, TPOP2_r4_7_RET, TPOP_RET] =
-    IIC_iPop_Br
+  | i `elem`
+      [TPOP2_r4_11_RET, TPOP2_r4_7_RET, TPOP_RET, TPOP_RET_4,
+       TPOP_RET_4_5, TPOP_RET_4_6, TPOP_RET_4_7]
+    = IIC_iPop_Br
   | i `elem`
       [T2STRBT, T2STRBi12, T2STRBi12_fi, T2STRBi8, T2STRHT, T2STRHi12,
        T2STRHi12_fi, T2STRHi8, TSTRBi, TSTRHi]

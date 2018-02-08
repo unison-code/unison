@@ -3041,6 +3041,22 @@ data ARMInstruction = ABS
                     | TPUSH_4_5
                     | TPUSH_4_6
                     | TPUSH_4_7
+                    | TPOP_RET_4
+                    | TPOP_RET_4_5
+                    | TPOP_RET_4_6
+                    | TPOP_RET_4_7
+                    | T2LDMIA_UPD_4_4
+                    | T2LDMIA_UPD_4_5
+                    | T2LDMIA_UPD_4_6
+                    | T2LDMIA_UPD_4_7
+                    | T2LDMIA_UPD_4_8
+                    | T2LDMIA_UPD_4_9
+                    | T2LDMIA_UPD_4_10
+                    | T2LDMIA_UPD_4_11
+                    | T2LDMIA_RET_4_8
+                    | T2LDMIA_RET_4_9
+                    | T2LDMIA_RET_4_10
+                    | T2LDMIA_RET_4_11
                     | T2MOVi_source
                     | T2MOVi_demat
                     | T2MOVi_remat

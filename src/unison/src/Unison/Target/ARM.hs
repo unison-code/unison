@@ -105,8 +105,9 @@ branchInfo (Branch {oBranchIs = is, oBranchUs = [BlockRef l, _, _]})
     BranchInfo Unconditional (Just l)
 
 branchInfo (Branch {oBranchIs = is})
-  | targetInst is `elem`  [TBX_RET, T2LDMIA_RET, TPOP_RET, T2BR_JT, T2TBB_JT,
-                           T2TBH_JT] =
+  | (targetInst is `elem`
+     [TBX_RET, T2LDMIA_RET, TPOP_RET, T2BR_JT, T2TBB_JT, T2TBH_JT]) ||
+    (SpecsGen.parent (targetInst is) `elem` [Just T2LDMIA_RET, Just TPOP_RET]) =
     BranchInfo Unconditional Nothing
 
 branchInfo o = error ("unmatched pattern: branchInfo " ++ show (mkSingleOperation (-1) (Natural o)))
@@ -421,7 +422,7 @@ preProcess = [mapToTargetMachineInstruction instantiateMEMCPY,
               mapToMachineInstruction hideCPSRRegister,
               mapToTargetMachineInstruction addFrameIndex,
               mapToTargetMachineInstruction processTailCalls,
-              mapToTargetMachineInstruction collapseVarOpPushes]
+              mapToTargetMachineInstruction collapseVarOpInstructions]
 
 instantiateMEMCPY
   mi @ MachineSingle {msOpcode = MachineTargetOpc i,
@@ -497,17 +498,18 @@ processTailCalls mi @ MachineSingle {msOpcode   = MachineTargetOpc i,
 
 processTailCalls mi = mi
 
-collapseVarOpPushes mi @ MachineSingle {msOpcode   = MachineTargetOpc i,
-                                        msOperands = p1:p2:mos}
-  | i == TPUSH =
+collapseVarOpInstructions mi @ MachineSingle {msOpcode   = MachineTargetOpc i,
+                                              msOperands = p1:p2:mos}
+  | i `elem` [TPUSH, TPOP_RET] =
     let i' = varOpPseudo i mos
     in mi {msOpcode = mkMachineTargetOpc i', msOperands = [p1,p2]}
-collapseVarOpPushes mi @ MachineSingle {msOpcode   = MachineTargetOpc i,
-                                        msOperands = sp:sp':p1:p2:mos}
-  | i == T2STMDB_UPD =
+
+collapseVarOpInstructions mi @ MachineSingle {msOpcode   = MachineTargetOpc i,
+                                              msOperands = sp:sp':p1:p2:mos}
+  | i `elem` [T2STMDB_UPD, T2LDMIA_UPD, T2LDMIA_RET] =
     let i' = varOpPseudo i mos
     in mi {msOpcode = mkMachineTargetOpc i', msOperands = [sp,sp',p1,p2]}
-collapseVarOpPushes mi = mi
+collapseVarOpInstructions mi = mi
 
 varOpPseudo TPUSH mos
   | any (isMachineRegWith R7)  mos = TPUSH_4_7
@@ -519,6 +521,25 @@ varOpPseudo T2STMDB_UPD mos
   | any (isMachineRegWith R10) mos = T2STMDB_UPD_4_10
   | any (isMachineRegWith R9)  mos = T2STMDB_UPD_4_9
   | any (isMachineRegWith R8)  mos = T2STMDB_UPD_4_8
+varOpPseudo TPOP_RET mos
+  | any (isMachineRegWith R7)  mos = TPOP_RET_4_7
+  | any (isMachineRegWith R6)  mos = TPOP_RET_4_6
+  | any (isMachineRegWith R5)  mos = TPOP_RET_4_5
+  | any (isMachineRegWith R4)  mos = TPOP_RET_4
+varOpPseudo T2LDMIA_UPD mos
+  | any (isMachineRegWith R11) mos = T2LDMIA_UPD_4_11
+  | any (isMachineRegWith R10) mos = T2LDMIA_UPD_4_10
+  | any (isMachineRegWith R9)  mos = T2LDMIA_UPD_4_9
+  | any (isMachineRegWith R8)  mos = T2LDMIA_UPD_4_8
+  | any (isMachineRegWith R7)  mos = T2LDMIA_UPD_4_7
+  | any (isMachineRegWith R6)  mos = T2LDMIA_UPD_4_6
+  | any (isMachineRegWith R5)  mos = T2LDMIA_UPD_4_5
+  | any (isMachineRegWith R4)  mos = T2LDMIA_UPD_4_4
+varOpPseudo T2LDMIA_RET mos
+  | any (isMachineRegWith R11) mos = T2LDMIA_RET_4_11
+  | any (isMachineRegWith R10) mos = T2LDMIA_RET_4_10
+  | any (isMachineRegWith R9)  mos = T2LDMIA_RET_4_9
+  | any (isMachineRegWith R8)  mos = T2LDMIA_RET_4_8
 
 isMachineRegWith r MachineReg {mrName = r'} = r == r'
 isMachineRegWith _ _ = False
@@ -528,7 +549,7 @@ isMachineRegWith _ _ = False
 postProcess to = [expandPseudos to, removeAllNops, removeFrameIndex,
                   removeEmptyBundles, reorderImplicitOperands,
                   exposeCPSRRegister,
-                  mapToTargetMachineInstruction expandVarOpPushes,
+                  mapToTargetMachineInstruction expandVarOpInstructions,
                   flip addImplicitRegs (target, []),
                   demoteImplicitOperands]
 
@@ -628,15 +649,19 @@ isCPSROrNullReg mo = isMachineCPSRReg mo || isMachineNullReg mo
 isMachineCPSRReg (MachineReg {mrName = CPSR}) = True
 isMachineCPSRReg _ = False
 
--- | This is the inverse of 'collapseVarOpPushes'
+-- | This is the inverse of 'collapseVarOpInstructions'
 
-expandVarOpPushes mi @ MachineSingle {msOpcode   = MachineTargetOpc i,
-                                      msOperands = mos}
-  | SpecsGen.parent i `elem` [Just TPUSH, Just T2STMDB_UPD] =
+expandVarOpInstructions mi @ MachineSingle {msOpcode   = MachineTargetOpc i,
+                                            msOperands = mos}
+  | SpecsGen.parent i `elem` [Just TPUSH, Just T2STMDB_UPD, Just T2LDMIA_UPD] =
     let i'   = fromJust $ SpecsGen.parent i
         mos' = mos ++ map mkMachineReg (varOps i ++ [LR])
     in mi {msOpcode = mkMachineTargetOpc i', msOperands = mos'}
-expandVarOpPushes mi = mi
+  | SpecsGen.parent i `elem` [Just TPOP_RET, Just T2LDMIA_RET] =
+    let i'   = fromJust $ SpecsGen.parent i
+        mos' = mos ++ map mkMachineReg (varOps i ++ [PC])
+    in mi {msOpcode = mkMachineTargetOpc i', msOperands = mos'}
+expandVarOpInstructions mi = mi
 
 varOps TPUSH_4   = [R4]
 varOps TPUSH_4_5 = [R4, R5]
@@ -647,6 +672,25 @@ varOps T2STMDB_UPD_4_8  = [R4, R5, R6, R7, R8]
 varOps T2STMDB_UPD_4_9  = [R4, R5, R6, R7, R8, R9]
 varOps T2STMDB_UPD_4_10 = [R4, R5, R6, R7, R8, R9, R10]
 varOps T2STMDB_UPD_4_11 = [R4, R5, R6, R7, R8, R9, R10, R11]
+
+varOps TPOP_RET_4   = [R4]
+varOps TPOP_RET_4_5 = [R4, R5]
+varOps TPOP_RET_4_6 = [R4, R5, R6]
+varOps TPOP_RET_4_7 = [R4, R5, R6, R7]
+
+varOps T2LDMIA_UPD_4_4  = [R4]
+varOps T2LDMIA_UPD_4_5  = [R4, R5]
+varOps T2LDMIA_UPD_4_6  = [R4, R5, R6]
+varOps T2LDMIA_UPD_4_7  = [R4, R5, R6, R7]
+varOps T2LDMIA_UPD_4_8  = [R4, R5, R6, R7, R8]
+varOps T2LDMIA_UPD_4_9  = [R4, R5, R6, R7, R8, R9]
+varOps T2LDMIA_UPD_4_10 = [R4, R5, R6, R7, R8, R9, R10]
+varOps T2LDMIA_UPD_4_11 = [R4, R5, R6, R7, R8, R9, R10, R11]
+
+varOps T2LDMIA_RET_4_8  = [R4, R5, R6, R7, R8]
+varOps T2LDMIA_RET_4_9  = [R4, R5, R6, R7, R8, R9]
+varOps T2LDMIA_RET_4_10 = [R4, R5, R6, R7, R8, R9, R10]
+varOps T2LDMIA_RET_4_11 = [R4, R5, R6, R7, R8, R9, R10, R11]
 
 -- | Gives a list of function transformers
 transforms ImportPreLift = [peephole extractReturnRegs,

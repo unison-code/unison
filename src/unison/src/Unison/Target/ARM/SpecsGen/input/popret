@@ -1,0 +1,11 @@
+    tPOP_RET 14, _, def %r4, def %pc
+    tPOP_RET 14, _, def %r4, def %pc, implicit %r0
+    tPOP_RET 14, _, def %r4, def %r5, def %r6, def %pc, implicit %r0
+    tPOP_RET 14, _, def %r4, def %r5, def %r6, def %r7, def %pc
+    tPOP_RET 14, _, def %r4, def %r5, def %r6, def %r7, def %pc, implicit %r0
+    tPOP_RET 14, _, def %r4, def %r5, def %r7, def %pc
+    tPOP_RET 14, _, def %r4, def %r5, def %r7, def %pc, implicit %r0
+    tPOP_RET 14, _, def %r4, def %r6, def %r7, def %pc
+    tPOP_RET 14, _, def %r4, def %r6, def %r7, def %pc, implicit %r0
+    tPOP_RET 14, _, def %r7, def %pc
+    tPOP_RET 14, _, def %r7, def %pc, implicit %r0
