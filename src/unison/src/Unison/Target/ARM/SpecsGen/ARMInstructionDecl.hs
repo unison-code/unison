@@ -3037,6 +3037,10 @@ data ARMInstruction = ABS
                     | T2STMDB_UPD_4_9
                     | T2STMDB_UPD_4_10
                     | T2STMDB_UPD_4_11
+                    | TPUSH_4
+                    | TPUSH_4_5
+                    | TPUSH_4_6
+                    | TPUSH_4_7
                     | T2MOVi_source
                     | T2MOVi_demat
                     | T2MOVi_remat

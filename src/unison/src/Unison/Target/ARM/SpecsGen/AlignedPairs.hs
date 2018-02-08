@@ -1180,7 +1180,7 @@ alignedPairs i ([orig, _, _, _, _], [orig'])
 alignedPairs i ([_, _], [])
   | i `elem`
       [BX_RET, ERET, MOVPCLR, T2CLREX, T2DCPS1, T2DCPS2, T2DCPS3,
-       TBX_RET]
+       TBX_RET, TPUSH_4, TPUSH_4_5, TPUSH_4_6, TPUSH_4_7]
     = []
 alignedPairs i ([_, _], [_]) | i `elem` [FMSTAT] = []
 alignedPairs i ([_, _], [_])

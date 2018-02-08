@@ -508,7 +508,8 @@ readWriteInfo i
        T2STREX, T2STREXB, T2STREXD, T2STREXH, T2STRH_PRE, T2STR_PRE,
        TSTMIA_UPD]
     = ([], [Memory "mem"])
-  | i `elem` [TPUSH] = ([], [Memory "mem", OtherSideEffect SP])
+  | i `elem` [TPUSH, TPUSH_4, TPUSH_4_5, TPUSH_4_6, TPUSH_4_7] =
+    ([], [Memory "mem", OtherSideEffect SP])
   | i `elem`
       [ABS, ADCri, ADCrr, ADCrsi, ADCrsr, ADDSri, ADDSrr, ADDSrsi,
        ADDSrsr, BCCZi64, BCCi64, CMNri, CMNzrr, CMNzrsi, CMNzrsr, CMPri,

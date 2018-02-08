@@ -498,12 +498,22 @@ processTailCalls mi @ MachineSingle {msOpcode   = MachineTargetOpc i,
 processTailCalls mi = mi
 
 collapseVarOpPushes mi @ MachineSingle {msOpcode   = MachineTargetOpc i,
+                                        msOperands = p1:p2:mos}
+  | i == TPUSH =
+    let i' = varOpPseudo i mos
+    in mi {msOpcode = mkMachineTargetOpc i', msOperands = [p1,p2]}
+collapseVarOpPushes mi @ MachineSingle {msOpcode   = MachineTargetOpc i,
                                         msOperands = sp:sp':p1:p2:mos}
   | i == T2STMDB_UPD =
-    let i' = varOpPseudo T2STMDB_UPD mos
+    let i' = varOpPseudo i mos
     in mi {msOpcode = mkMachineTargetOpc i', msOperands = [sp,sp',p1,p2]}
 collapseVarOpPushes mi = mi
 
+varOpPseudo TPUSH mos
+  | any (isMachineRegWith R7)  mos = TPUSH_4_7
+  | any (isMachineRegWith R6)  mos = TPUSH_4_6
+  | any (isMachineRegWith R5)  mos = TPUSH_4_5
+  | any (isMachineRegWith R4)  mos = TPUSH_4
 varOpPseudo T2STMDB_UPD mos
   | any (isMachineRegWith R11) mos = T2STMDB_UPD_4_11
   | any (isMachineRegWith R10) mos = T2STMDB_UPD_4_10
@@ -517,9 +527,10 @@ isMachineRegWith _ _ = False
 
 postProcess to = [expandPseudos to, removeAllNops, removeFrameIndex,
                   removeEmptyBundles, reorderImplicitOperands,
-                  exposeCPSRRegister, flip addImplicitRegs (target, []),
-                  demoteImplicitOperands,
-                  mapToTargetMachineInstruction expandVarOpPushes]
+                  exposeCPSRRegister,
+                  mapToTargetMachineInstruction expandVarOpPushes,
+                  flip addImplicitRegs (target, []),
+                  demoteImplicitOperands]
 
 expandPseudos to = mapToMachineBlock (expandBlockPseudos (expandPseudo to))
 
@@ -621,11 +632,16 @@ isMachineCPSRReg _ = False
 
 expandVarOpPushes mi @ MachineSingle {msOpcode   = MachineTargetOpc i,
                                       msOperands = mos}
-  | SpecsGen.parent i == Just T2STMDB_UPD =
+  | SpecsGen.parent i `elem` [Just TPUSH, Just T2STMDB_UPD] =
     let i'   = fromJust $ SpecsGen.parent i
         mos' = mos ++ map mkMachineReg (varOps i ++ [LR])
     in mi {msOpcode = mkMachineTargetOpc i', msOperands = mos'}
 expandVarOpPushes mi = mi
+
+varOps TPUSH_4   = [R4]
+varOps TPUSH_4_5 = [R4, R5]
+varOps TPUSH_4_6 = [R4, R5, R6]
+varOps TPUSH_4_7 = [R4, R5, R6, R7]
 
 varOps T2STMDB_UPD_4_8  = [R4, R5, R6, R7, R8]
 varOps T2STMDB_UPD_4_9  = [R4, R5, R6, R7, R8, R9]

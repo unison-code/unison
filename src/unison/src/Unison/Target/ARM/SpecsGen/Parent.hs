@@ -686,6 +686,7 @@ parent i
   | i `elem` [TORRs] = Just TORR
   | i `elem` [TPOP2_r4_11_RET] = Just TPOP2_r4_11
   | i `elem` [TPOP2_r4_7_RET] = Just TPOP2_r4_7
+  | i `elem` [TPUSH_4, TPUSH_4_5, TPUSH_4_6, TPUSH_4_7] = Just TPUSH
   | i `elem` [TRORs] = Just TROR
   | i `elem` [TSTRBrz] = Just TSTRBr
   | i `elem` [TSTRHrz] = Just TSTRHr

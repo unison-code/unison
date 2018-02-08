@@ -814,7 +814,7 @@ itinerary i
   | i `elem`
       [STMDA, STMDB, STMIA, STMIB, SysSTMDA, SysSTMDB, SysSTMIA,
        SysSTMIB, T2STMDB, T2STMIA, T2STMIA_4, TPUSH, TPUSH2_r4_11,
-       TPUSH2_r4_7, TPUSH_r4_7]
+       TPUSH2_r4_7, TPUSH_4, TPUSH_4_5, TPUSH_4_6, TPUSH_4_7, TPUSH_r4_7]
     = IIC_iStore_m
   | i `elem`
       [STMDA_UPD, STMDB_UPD, STMIA_UPD, STMIB_UPD, SysSTMDA_UPD,

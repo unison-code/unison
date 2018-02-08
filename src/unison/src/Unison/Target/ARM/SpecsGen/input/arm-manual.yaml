@@ -1224,3 +1224,31 @@ instruction-set:
            - p1:              bound
            - p2:              bound
           uses:               [Rn, p1, p2]
+
+        - id:                 tPUSH_4
+          parent:             tPUSH
+          operands:
+           - p1:              bound
+           - p2:              bound
+          uses:               [p1, p2]
+
+        - id:                 tPUSH_4_5
+          parent:             tPUSH
+          operands:
+           - p1:              bound
+           - p2:              bound
+          uses:               [p1, p2]
+
+        - id:                 tPUSH_4_6
+          parent:             tPUSH
+          operands:
+           - p1:              bound
+           - p2:              bound
+          uses:               [p1, p2]
+
+        - id:                 tPUSH_4_7
+          parent:             tPUSH
+          operands:
+           - p1:              bound
+           - p2:              bound
+          uses:               [p1, p2]
