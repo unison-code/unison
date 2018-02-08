@@ -420,7 +420,8 @@ preProcess = [mapToTargetMachineInstruction instantiateMEMCPY,
               mapToMachineInstruction promoteImplicitOperands,
               mapToMachineInstruction hideCPSRRegister,
               mapToTargetMachineInstruction addFrameIndex,
-              mapToTargetMachineInstruction processTailCalls]
+              mapToTargetMachineInstruction processTailCalls,
+              mapToTargetMachineInstruction collapseVarOpPushes]
 
 instantiateMEMCPY
   mi @ MachineSingle {msOpcode = MachineTargetOpc i,
@@ -496,12 +497,29 @@ processTailCalls mi @ MachineSingle {msOpcode   = MachineTargetOpc i,
 
 processTailCalls mi = mi
 
+collapseVarOpPushes mi @ MachineSingle {msOpcode   = MachineTargetOpc i,
+                                        msOperands = sp:sp':p1:p2:mos}
+  | i == T2STMDB_UPD =
+    let i' = varOpPseudo T2STMDB_UPD mos
+    in mi {msOpcode = mkMachineTargetOpc i', msOperands = [sp,sp',p1,p2]}
+collapseVarOpPushes mi = mi
+
+varOpPseudo T2STMDB_UPD mos
+  | any (isMachineRegWith R11) mos = T2STMDB_UPD_4_11
+  | any (isMachineRegWith R10) mos = T2STMDB_UPD_4_10
+  | any (isMachineRegWith R9)  mos = T2STMDB_UPD_4_9
+  | any (isMachineRegWith R8)  mos = T2STMDB_UPD_4_8
+
+isMachineRegWith r MachineReg {mrName = r'} = r == r'
+isMachineRegWith _ _ = False
+
 -- | Target dependent post-processing functions
 
 postProcess to = [expandPseudos to, removeAllNops, removeFrameIndex,
                   removeEmptyBundles, reorderImplicitOperands,
                   exposeCPSRRegister, flip addImplicitRegs (target, []),
-                  demoteImplicitOperands]
+                  demoteImplicitOperands,
+                  mapToTargetMachineInstruction expandVarOpPushes]
 
 expandPseudos to = mapToMachineBlock (expandBlockPseudos (expandPseudo to))
 
@@ -598,6 +616,21 @@ isCPSROrNullReg mo = isMachineCPSRReg mo || isMachineNullReg mo
 
 isMachineCPSRReg (MachineReg {mrName = CPSR}) = True
 isMachineCPSRReg _ = False
+
+-- | This is the inverse of 'collapseVarOpPushes'
+
+expandVarOpPushes mi @ MachineSingle {msOpcode   = MachineTargetOpc i,
+                                      msOperands = mos}
+  | SpecsGen.parent i == Just T2STMDB_UPD =
+    let i'   = fromJust $ SpecsGen.parent i
+        mos' = mos ++ map mkMachineReg (varOps i ++ [LR])
+    in mi {msOpcode = mkMachineTargetOpc i', msOperands = mos'}
+expandVarOpPushes mi = mi
+
+varOps T2STMDB_UPD_4_8  = [R4, R5, R6, R7, R8]
+varOps T2STMDB_UPD_4_9  = [R4, R5, R6, R7, R8, R9]
+varOps T2STMDB_UPD_4_10 = [R4, R5, R6, R7, R8, R9, R10]
+varOps T2STMDB_UPD_4_11 = [R4, R5, R6, R7, R8, R9, R10, R11]
 
 -- | Gives a list of function transformers
 transforms ImportPreLift = [peephole extractReturnRegs,

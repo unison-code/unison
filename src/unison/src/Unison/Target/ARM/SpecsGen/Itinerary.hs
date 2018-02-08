@@ -818,8 +818,9 @@ itinerary i
     = IIC_iStore_m
   | i `elem`
       [STMDA_UPD, STMDB_UPD, STMIA_UPD, STMIB_UPD, SysSTMDA_UPD,
-       SysSTMDB_UPD, SysSTMIA_UPD, SysSTMIB_UPD, T2STMDB_UPD, T2STMIA_UPD,
-       T2STMIA_UPD_4, TSTMIA_UPD]
+       SysSTMDB_UPD, SysSTMIA_UPD, SysSTMIB_UPD, T2STMDB_UPD,
+       T2STMDB_UPD_4_10, T2STMDB_UPD_4_11, T2STMDB_UPD_4_8,
+       T2STMDB_UPD_4_9, T2STMIA_UPD, T2STMIA_UPD_4, TSTMIA_UPD]
     = IIC_iStore_mu
   | i `elem` [PICSTR, STRi12, TSTRr, TSTRrz] = IIC_iStore_r
   | i `elem`

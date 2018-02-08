@@ -3033,6 +3033,10 @@ data ARMInstruction = ABS
                     | T2STMIA_4
                     | T2STMIA_UPD_4
                     | Load_merge
+                    | T2STMDB_UPD_4_8
+                    | T2STMDB_UPD_4_9
+                    | T2STMDB_UPD_4_10
+                    | T2STMDB_UPD_4_11
                     | T2MOVi_source
                     | T2MOVi_demat
                     | T2MOVi_remat

@@ -654,6 +654,10 @@ parent i
   | i `elem` [T2MVNi_demat, T2MVNi_remat, T2MVNi_source] =
     Just T2MVNi
   | i `elem` [T2ORRrr_cpsr] = Just T2ORRrr
+  | i `elem`
+      [T2STMDB_UPD_4_10, T2STMDB_UPD_4_11, T2STMDB_UPD_4_8,
+       T2STMDB_UPD_4_9]
+    = Just T2STMDB_UPD
   | i `elem` [T2STMIA_4] = Just T2STMIA
   | i `elem` [T2STMIA_UPD_4] = Just T2STMIA_UPD
   | i `elem` [T2SUBri_cpsr] = Just T2SUBri

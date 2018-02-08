@@ -734,7 +734,8 @@ operandInfo i
      [TemporaryInfo (RegisterClass DPair) 1 False])
   | i `elem`
       [CLZ, LDA, LDAB, LDAEX, LDAEXB, LDAEXH, LDAH, LDREX, LDREXB,
-       LDREXH, RBIT, REV, REV16, REVSH, TMOVr]
+       LDREXH, RBIT, REV, REV16, REVSH, T2STMDB_UPD_4_10,
+       T2STMDB_UPD_4_11, T2STMDB_UPD_4_8, T2STMDB_UPD_4_9, TMOVr]
     =
     ([TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo,
       TemporaryInfo (RegisterClass CCR) 0 False],

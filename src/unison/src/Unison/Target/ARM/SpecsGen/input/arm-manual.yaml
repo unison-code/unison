@@ -1192,3 +1192,35 @@ instruction-set:
           defines:            [dst]
           size:               0
           itinerary:          NoItinerary
+
+        - id:                 t2STMDB_UPD_4_8
+          parent:             t2STMDB_UPD
+          operands:
+           - Rn:              [register, usedef, GPR]
+           - p1:              bound
+           - p2:              bound
+          uses:               [Rn, p1, p2]
+
+        - id:                 t2STMDB_UPD_4_9
+          parent:             t2STMDB_UPD
+          operands:
+           - Rn:              [register, usedef, GPR]
+           - p1:              bound
+           - p2:              bound
+          uses:               [Rn, p1, p2]
+
+        - id:                 t2STMDB_UPD_4_10
+          parent:             t2STMDB_UPD
+          operands:
+           - Rn:              [register, usedef, GPR]
+           - p1:              bound
+           - p2:              bound
+          uses:               [Rn, p1, p2]
+
+        - id:                 t2STMDB_UPD_4_11
+          parent:             t2STMDB_UPD
+          operands:
+           - Rn:              [register, usedef, GPR]
+           - p1:              bound
+           - p2:              bound
+          uses:               [Rn, p1, p2]

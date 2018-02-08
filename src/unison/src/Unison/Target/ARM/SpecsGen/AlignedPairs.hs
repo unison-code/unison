@@ -238,6 +238,11 @@ alignedPairs i ([rn, _, _, _], [_, rn'])
 alignedPairs i ([_, _, _], [])
   | i `elem` [T2RFEDB, T2RFEDBW, T2RFEIA, T2RFEIAW] = []
 alignedPairs i ([_, _, _], [_, _]) | i `elem` [TMVN, TRSB] = []
+alignedPairs i ([rn, _, _], [rn'])
+  | i `elem`
+      [T2STMDB_UPD_4_10, T2STMDB_UPD_4_11, T2STMDB_UPD_4_8,
+       T2STMDB_UPD_4_9]
+    = [(rn, rn')]
 alignedPairs i ([rn, _, _], [rn', _, _, _, _])
   | i `elem` [T2LDMIA_UPD_4] = [(rn, rn')]
 alignedPairs i ([_, _, _], [_]) | i `elem` [VLDMQIA] = []
