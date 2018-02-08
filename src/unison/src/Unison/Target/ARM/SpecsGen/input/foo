@@ -1,8 +1,0 @@
-%sp = t2STMDB_UPD %sp, 14, _, killed %r4, killed %r5, killed %r6, killed %r7, killed %r8, killed %lr
-%sp = t2STMDB_UPD %sp, 14, _, killed %r4, killed %r5, killed %r6, killed %r7, killed %r8, killed %r9, killed %lr
-%sp = t2STMDB_UPD %sp, 14, _, killed %r4, killed %r5, killed %r6, killed %r7, killed %r8, killed %r9, killed %r10, killed %lr
-%sp = t2STMDB_UPD %sp, 14, _, killed %r4, killed %r5, killed %r6, killed %r7, killed %r8, killed %r9, killed %r10, killed %r11, killed %lr
-
-Note: 16- and 32 bits, see:
-
-http://infocenter.arm.com/help/index.jsp?topic=/com.arm.doc.dui0489e/Babefbce.html

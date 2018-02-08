@@ -1,6 +1,0 @@
-    frame-setup tPUSH 14, _, killed %r4, killed %lr, implicit-def %sp, implicit %sp
-    frame-setup tPUSH 14, _, killed %r4, killed %r5, killed %r6, killed %lr, implicit-def %sp, implicit %sp
-    frame-setup tPUSH 14, _, killed %r4, killed %r5, killed %r6, killed %r7, killed %lr, implicit-def %sp, implicit %sp
-    frame-setup tPUSH 14, _, killed %r4, killed %r5, killed %r7, killed %lr, implicit-def %sp, implicit %sp
-    frame-setup tPUSH 14, _, killed %r4, killed %r6, killed %r7, killed %lr, implicit-def %sp, implicit %sp
-    frame-setup tPUSH 14, _, killed %r7, killed %lr, implicit-def %sp, implicit %sp
