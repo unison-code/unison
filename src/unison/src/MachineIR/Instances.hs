@@ -200,7 +200,11 @@ showMachineOperand _ (MachineGlobalAddress address offset) =
 showMachineOperand _ (MachineSymbol name) = "<mcsymbol " ++ name ++ ">"
 showMachineOperand _ (MachineJumpTableIndex index) =
   jumpTablePrefix ++ show index
-showMachineOperand _ (MachineExternal name) = "$" ++ name
+showMachineOperand v (MachineExternal name) =
+  let extPrefix = case v of
+                    LLVM5 -> "$"
+                    LLVM6 -> "&"
+  in extPrefix ++ name
 showMachineOperand _ (MachineTemp id states td) =
   showCS showMachineRegState states ++
   (if null states then "" else " ") ++ "%" ++ show id ++ showTiedDef td

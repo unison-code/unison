@@ -315,7 +315,7 @@ mirActualOperand v =
   try mirImm <|>
   try mirNullReg <|>
   try mirGlobalAdress <|>
-  try mirExternalSymbol <|>
+  try (mirExternalSymbol v) <|>
   try mirMemPartition <|>
   try mirProperty <|>
   try mirBlockFreq <|>
@@ -347,6 +347,9 @@ mirReg v =
 
 mirRegPrefix LLVM5 = char '%'
 mirRegPrefix LLVM6 = P.oneOf "%$"
+
+mirExternalSymbolPrefix LLVM5 = char '$'
+mirExternalSymbolPrefix LLVM6 = char '&'
 
 mirJTI =
   do string "%jump-table."
@@ -479,8 +482,8 @@ mirOffset =
                 '-' -> offset * (-1)
                 '+' -> offset)
 
-mirExternalSymbol =
-  do char '$'
+mirExternalSymbol v =
+  do mirExternalSymbolPrefix v
      sym <- many1 alphaNumDashDotUnderscore
      return (mkMachineExternal sym)
 
