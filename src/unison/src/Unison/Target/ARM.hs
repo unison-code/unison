@@ -407,9 +407,12 @@ addPrologue (_, oid, _) (e:code) =
 addEpilogue (_, oid, _) code =
   let addSp = mkAct $ mkOpt oid TADDspi_pseudo [Bound mkMachineFrameSize] []
   in case split (keepDelimsL $
-                 whenElt (\o -> isBranch o || isTailCall o)) code of
-      [f, e] -> f ++ [addSp] ++ e
-      os     -> error ("unhandled epilogue: " ++ show os)
+                 whenElt (\o -> isPopRet o || isBranch o || isTailCall o))
+          code of
+      f : e -> f ++ [addSp] ++ concat e
+      os    -> error ("unhandled epilogue: " ++ show os)
+
+isPopRet o = TargetInstruction TPOP2_r4_7_RET `elem` oInstructions o
 
 mkOpt oid inst us ds =
   makeOptional $ mkLinear oid [TargetInstruction inst] us ds

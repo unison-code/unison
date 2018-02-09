@@ -116,7 +116,7 @@ uniTransformations (cycles, instructions, registers, temporaries)
      (removeNops, "removeNops", not keepNops),
      (unbundleSingletons, "unbundleSingletons", True)]
 
-mirTransformations :: (Eq i, Read i, Read r, Eq r) =>
+mirTransformations :: (Show i, Eq i, Read i, Show r, Read r, Eq r) =>
   MachineIRVersion ->
   [(MachineFunction i r -> TargetWithOptions i r rc s -> MachineFunction i r,
     String, Bool)]

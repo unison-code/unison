@@ -55,7 +55,7 @@ run (estimateFreq, simplifyControlFlow, mirVersion, debug, normMirFile)
           putStr (toPlainText (partialPreMfs ++ partialFs ++ partialPostMfs))
      emitOutput normMirFile (show mf2)
 
-mirPreTransformations :: (Eq i, Read i, Read r, Eq r) =>
+mirPreTransformations :: (Show i, Eq i, Read i, Show r, Read r, Eq r) =>
     (Bool, Bool) -> [(MIR.MachineFunction i r -> TargetWithOptions i r rc s ->
     MIR.MachineFunction i r, String, Bool)]
 mirPreTransformations (estimateFreq, simplifyControlFlow) =
