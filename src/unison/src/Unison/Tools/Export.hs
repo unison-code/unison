@@ -52,7 +52,8 @@ instance FromJSON RegisterAtom where
     parseJSON (Number a) = return (RegisterAtom (round a))
     parseJSON _          = mzero
 
-run (removeReds, keepNops, baseFile, tight, debug, outJsonFile, unisonMirFile)
+run (removeReds, keepNops, baseFile, tight, mirVersion, debug, outJsonFile,
+     unisonMirFile)
   extUni target =
   do outJson <- strictReadFile outJsonFile
      baseMir <- maybeStrictReadFile baseFile
@@ -64,7 +65,7 @@ run (removeReds, keepNops, baseFile, tight, debug, outJsonFile, unisonMirFile)
            target f
          mf = toMachineFunction f'
          (mf', partialMfs) =
-           applyTransformations mirTransformations target mf
+           applyTransformations (mirTransformations mirVersion) target mf
          mfBase = case baseMir of
                  (Just base) -> base
                  Nothing     -> ""
@@ -116,11 +117,12 @@ uniTransformations (cycles, instructions, registers, temporaries)
      (unbundleSingletons, "unbundleSingletons", True)]
 
 mirTransformations :: (Eq i, Read i, Read r, Eq r) =>
+  MachineIRVersion ->
   [(MachineFunction i r -> TargetWithOptions i r rc s -> MachineFunction i r,
     String, Bool)]
-mirTransformations =
+mirTransformations mirVersion =
   [(simplifyFallthroughs True, "simplifyFallthroughs", True),
    (renameMachineBlocks, "renameMachineBlocks", True),
    (runPostProcess, "runPostProcess", True),
    (cleanNops, "cleanNops", True),
-   (prepareForEmission, "prepareForEmission", True)]
+   (prepareForEmission mirVersion, "prepareForEmission", True)]

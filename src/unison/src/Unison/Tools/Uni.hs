@@ -87,8 +87,8 @@ mainWithTargets targets = do
            case pickTarget targetName targets of
              (Any target) ->
                  Export.run
-                 (removeReds, keepNops, baseFile, tightPressureBound, debug,
-                  fromJust solFile, outFile)
+                 (removeReds, keepNops, baseFile, tightPressureBound, mirVersion,
+                  debug, fromJust solFile, outFile)
                  input (target, targetOption)
     Analyze{..} ->
         do input <- strictReadFile inFile

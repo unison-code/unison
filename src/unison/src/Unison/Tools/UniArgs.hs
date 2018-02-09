@@ -47,7 +47,8 @@ data Uni =
     Export    {targetName :: String, inFile :: FilePath, targetOption :: [String],
                outFile :: Maybe FilePath, debug :: Bool, removeReds :: Bool,
                keepNops :: Bool, baseFile :: Maybe FilePath,
-               tightPressureBound :: Bool, solFile :: Maybe FilePath} |
+               tightPressureBound :: Bool, mirVersion :: MachineIRVersion,
+               solFile :: Maybe FilePath} |
     Analyze   {targetName :: String, inFile :: FilePath, targetOption :: [String],
                outFile :: Maybe FilePath, debug :: Bool, intermediate :: Bool,
                goals :: String, estimateFreq :: Bool,

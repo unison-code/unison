@@ -80,6 +80,10 @@ data MachineFunctionProperty r =
   -- | Frequencies of removed blocks
   MachineFunctionPropertyRemovedFreqs {
     mfPropertyRemovedFreqs :: [Integer]
+    } |
+  -- | MIR version for parsing and emission
+  MachineFunctionPropertyVersion {
+    mfPropertyVersion :: MachineIRVersion
     }
   deriving (Eq, Ord)
 
@@ -386,4 +390,4 @@ data MachineIRVersion =
   LLVM5 |
   -- | LLVM 6.0 or newer (defines embedded register classes in the operands)
   LLVM6
-  deriving (Data, Typeable, Show, Read, Eq)
+  deriving (Data, Typeable, Show, Read, Eq, Ord)

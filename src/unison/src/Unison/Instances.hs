@@ -37,6 +37,7 @@ import Unison.Util
 import Unison.Predicates
 import Unison.Constructors
 
+import MachineIR.Base (MachineIRVersion(..))
 import MachineIR.Instances
 
 instance (Ord i, Eq r) => Ord (BlockOperation i r) where
@@ -298,7 +299,7 @@ instance Show r => Show (Operand r) where
     show (Temporary t r)          = 't' : show t ++ maybe "" showPreAssignment r
     show (BlockRef l)             = "b" ++ show l
     show (Register r)             = show r
-    show (Bound e)                = showMachineOperand e
+    show (Bound e)                = showMachineOperand LLVM5 e
     show NullTemporary            = "-"
     show (MOperand i ts r) = "p" ++ show i ++ showAlternatives show ts
                                     ++ maybe "" showPreAssignment r

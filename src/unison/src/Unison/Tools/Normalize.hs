@@ -48,7 +48,7 @@ run (estimateFreq, simplifyControlFlow, mirVersion, debug, normMirFile)
       mf1 = toMachineFunction f
       (mf2, partialPostMfs) =
             applyTransformations
-            mirPostTransformations
+            (mirPostTransformations mirVersion)
             target mf1
   in do
      when debug $
@@ -73,8 +73,9 @@ uniTransformations estimateFreq =
    (finalizeOperations, "finalizeOperations", True)]
 
 mirPostTransformations :: (Eq i, Read i, Read r, Eq r) =>
+    MIR.MachineIRVersion ->
     [(MIR.MachineFunction i r -> TargetWithOptions i r rc s ->
     MIR.MachineFunction i r, String, Bool)]
-mirPostTransformations =
+mirPostTransformations mirVersion =
   [(runPostProcess, "runPostProcess", True),
-   (prepareForEmission, "prepareForEmission", True)]
+   (prepareForEmission mirVersion, "prepareForEmission", True)]

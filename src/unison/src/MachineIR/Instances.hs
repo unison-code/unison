@@ -25,6 +25,7 @@ import Common.Util
 
 import MachineIR.Base
 import MachineIR.Predicates
+import MachineIR.Constructors
 
 instance (Show i, Show r) => ShowSimple (MachineFunction i r) where
   showSimple mf = show (mf {mfIR = ""})
@@ -34,7 +35,10 @@ instance (Show i, Show r) => Show (MachineFunction i r) where
 
 showMir MachineFunction {mfName = name, mfProperties = mps,
                          mfBlocks = mbs, mfIR = ir} =
-  showIR ir ++ showMachineFunction (name, mps, mbs)
+  let v = case find isMachineFunctionPropertyVersion mps of
+             (Just (MachineFunctionPropertyVersion v')) -> v'
+             Nothing   -> LLVM5
+  in showIR ir ++ showMachineFunction v (name, mps, mbs)
 
 showIR ir =
     docBegin ++ " |" ++ newLine ++
@@ -46,7 +50,7 @@ nest' n s = concatMap (\l -> replicate n ' ' ++ l ++ newLine) (lines s)
 docBegin = "---"
 docEnd = "..."
 
-showMachineFunction (name, mps, mbs) =
+showMachineFunction v (name, mps, mbs) =
     docBegin ++ newLine ++
     fill 17 "name:" ++ name ++ newLine ++
     (case find isMachineFunctionPropertyFixedFrame mps of
@@ -71,7 +75,7 @@ showMachineFunction (name, mps, mbs) =
           show (mfPropertyRemovedFreqs mrf) ++ newLine
         Nothing -> "") ++
     fill 18 "body:" ++ "|" ++ newLine ++
-    nest' 2 (showMachineBasicBlocks mbs) ++ newLine ++
+    nest' 2 (showMachineBasicBlocks v mbs) ++ newLine ++
     docEnd ++ newLine
 
 showMachineFrameObjectInfo
@@ -91,16 +95,16 @@ showMachineJumpTable (MachineFunctionPropertyJumpTable kind entries) =
 showMachineJumpTableEntry (MachineJumpTableEntry id bs) =
   fill 19 "- id:" ++ show id ++ newLine ++
   fill 19 "  blocks:" ++ "[ " ++
-  showCS (quoted showMachineOperand) bs ++ " ]" ++ newLine
+  showCS (quoted (showMachineOperand LLVM5)) bs ++ " ]" ++ newLine
 
-showMachineBasicBlocks [] = ""
-showMachineBasicBlocks [mb] =
-    showMachineBasicBlock mb
-showMachineBasicBlocks (mb : mbs) =
-    showMachineBasicBlock mb ++ newLine ++
-    showMachineBasicBlocks mbs
+showMachineBasicBlocks _ [] = ""
+showMachineBasicBlocks v [mb] =
+    showMachineBasicBlock v mb
+showMachineBasicBlocks v (mb : mbs) =
+    showMachineBasicBlock v mb ++ newLine ++
+    showMachineBasicBlocks v mbs
 
-showMachineBasicBlock
+showMachineBasicBlock v
   MachineBlock {mbId = bid, mbProperties = mps, mbInstructions = mis} =
   let freq  = find isMachineBlockPropertyFreq mps
       succs = find isMachineBlockPropertySuccs mps
@@ -116,7 +120,7 @@ showMachineBasicBlock
          (case split of
              (Just {}) -> nest' 2 ("split" ++ newLine)
              Nothing -> "") ++ newLine ++
-     nest' 2 (showMachineBasicBlockBody mis)
+     nest' 2 (showMachineBasicBlockBody v mis)
 
 showSuccessor (bid, p) = "%bb." ++ show bid ++ "(" ++ show p ++ ")"
 
@@ -125,32 +129,32 @@ showCS f l = renderStyle lineStyle (cs f l)
 quoted f s = "'" ++ f s ++ "'"
 doubleQuoted f s = "\"" ++ f s ++ "\""
 
-showMachineBasicBlockBody mis = concatMap showMachineInstruction mis
+showMachineBasicBlockBody v mis = concatMap (showMachineInstruction v) mis
 
 instance (Show i, Show r) => Show (MachineInstruction i r) where
-    show = showMachineInstruction
+    show = (showMachineInstruction LLVM5)
 
-showMachineInstruction (MachineBundle {mbHead = True, mbInstrs = mis}) =
-  "BUNDLE" ++ showMachineBundleTail mis
+showMachineInstruction v (MachineBundle {mbHead = True, mbInstrs = mis}) =
+  "BUNDLE" ++ showMachineBundleTail v mis
 
-showMachineInstruction (MachineBundle {mbHead = False, mbInstrs = mi:mis}) =
-  showInlineMachineSingle mi ++ showMachineBundleTail mis
+showMachineInstruction v (MachineBundle {mbHead = False, mbInstrs = mi:mis}) =
+  showInlineMachineSingle v mi ++ showMachineBundleTail v mis
 
-showMachineInstruction ms @ MachineSingle {} =
-  showInlineMachineSingle ms ++ newLine
+showMachineInstruction v ms @ MachineSingle {} =
+  showInlineMachineSingle v ms ++ newLine
 
-showInlineMachineSingle (MachineSingle mopc mps mops) =
+showInlineMachineSingle v (MachineSingle mopc mps mops) =
   let  n        = case find isMachineInstructionPropertyDefs mps of
                     (Just (MachineInstructionPropertyDefs n')) -> fromInteger n'
                     Nothing -> 0
        (ds, us) = splitAt n mops
-  in (if null ds then "" else showCS showMachineOperand ds ++ " = ") ++
+  in (if null ds then "" else showCS (showMachineOperand v) ds ++ " = ") ++
      show mopc ++
-     (if null us then "" else " " ++ showCS showMachineOperand us)
+     (if null us then "" else " " ++ showCS (showMachineOperand v) us)
 
-showMachineBundleTail mis =
+showMachineBundleTail v mis =
   " {" ++ newLine ++
-  nest' 2 (concatMap showMachineInstruction mis) ++
+  nest' 2 (concatMap (showMachineInstruction v) mis) ++
   "}" ++ newLine
 
 instance Show r => Show (MachineFunctionProperty r) where
@@ -182,45 +186,55 @@ instance Show r => Show (MachineInstructionProperty r) where
     inBraces ["jtiblocks", inBraces (map show bs)]
   show (MachineInstructionPropertyDefs ds) = inBraces ["defs", show ds]
 
-showMachineOperand :: Show r => MachineOperand r -> String
-showMachineOperand (MachineReg name states) =
-  showCS showMachineRegState states ++
-  (if null states then "" else " ") ++ "%" ++ show name
-showMachineOperand (MachineImm value) = show value
-showMachineOperand (MachineBlockRef id) = "%bb." ++ show id
-showMachineOperand (MachineGlobalAddress address offset) =
+showMachineOperand :: Show r => MachineIRVersion -> MachineOperand r -> String
+showMachineOperand v (MachineReg name states) =
+  let regPrefix = case v of
+                    LLVM5 -> "%"
+                    LLVM6 -> "$"
+  in showCS showMachineRegState states ++
+     (if null states then "" else " ") ++ regPrefix ++ show name
+showMachineOperand _ (MachineImm value) = show value
+showMachineOperand _ (MachineBlockRef id) = "%bb." ++ show id
+showMachineOperand _ (MachineGlobalAddress address offset) =
   "@" ++ maybeEscape address ++ maybeShowOffset offset
-showMachineOperand (MachineSymbol name) = "<mcsymbol " ++ name ++ ">"
-showMachineOperand (MachineJumpTableIndex index) = jumpTablePrefix ++ show index
-showMachineOperand (MachineExternal name) = "$" ++ name
-showMachineOperand (MachineTemp id states td) =
+showMachineOperand _ (MachineSymbol name) = "<mcsymbol " ++ name ++ ">"
+showMachineOperand _ (MachineJumpTableIndex index) =
+  jumpTablePrefix ++ show index
+showMachineOperand _ (MachineExternal name) = "$" ++ name
+showMachineOperand _ (MachineTemp id states td) =
   showCS showMachineRegState states ++
   (if null states then "" else " ") ++ "%" ++ show id ++ showTiedDef td
-showMachineOperand (MachineFrameIndex idx fixed offset) =
+showMachineOperand _ (MachineFrameIndex idx fixed offset) =
   "%" ++ (if fixed then "fixed-" else "") ++ "stack." ++ show idx ++
   (if offset == 0 then "" else ("+" ++ show offset))
-showMachineOperand MachineFrameSize = "%frame-size"
-showMachineOperand (MachineMemPartition address partition) =
+showMachineOperand _ MachineFrameSize = "%frame-size"
+showMachineOperand _ (MachineMemPartition address partition) =
   "<0x" ++ showHex address "" ++ "> = !{!\"unison-memory-partition\", i32 " ++
   show partition ++ "}"
-showMachineOperand (MachineProperty address property) =
+showMachineOperand _ (MachineProperty address property) =
   "<0x" ++ showHex address "" ++ "> = !{!\"unison-property\", !\"" ++
   property ++ "\"}"
-showMachineOperand (MachineBlockFreq address freq) =
+showMachineOperand _ (MachineBlockFreq address freq) =
   "<0x" ++ showHex address "" ++ "> = !{!\"unison-block-frequency\", i32 " ++
   show freq ++ "}"
-showMachineOperand (MachineDebugLocation id) = "debug-location !" ++ show id
-showMachineOperand MachineNullReg = "_"
-showMachineOperand (MachineCFIDef reg off) = ".cfi_def_cfa %" ++ reg ++ ", " ++ show off
-showMachineOperand (MachineCFIDefOffset off) = ".cfi_def_cfa_offset " ++ show off
-showMachineOperand (MachineCFIDefReg reg) = ".cfi_def_cfa_register %" ++ reg
-showMachineOperand (MachineCFIOffset reg off) = ".cfi_offset %" ++ reg ++ ", " ++ show off
-showMachineOperand (MachineRegMask name) = "csr_" ++ name
-showMachineOperand (MachineConstantPoolIndex idx) = "%const." ++ idx
-showMachineOperand (MachineFPImm i f e) =
+showMachineOperand _ (MachineDebugLocation id) = "debug-location !" ++ show id
+showMachineOperand _ MachineNullReg = "_"
+showMachineOperand v (MachineCFIDef reg off) =
+  ".cfi_def_cfa " ++ showMIRReg v reg ++ ", " ++ show off
+showMachineOperand _ (MachineCFIDefOffset off) =
+  ".cfi_def_cfa_offset " ++ show off
+showMachineOperand v (MachineCFIDefReg reg) =
+  ".cfi_def_cfa_register " ++ showMIRReg v reg ++ reg
+showMachineOperand v (MachineCFIOffset reg off) =
+  ".cfi_offset " ++ showMIRReg v reg ++ ", " ++ show off
+showMachineOperand _ (MachineRegMask name) = "csr_" ++ name
+showMachineOperand _ (MachineConstantPoolIndex idx) = "%const." ++ idx
+showMachineOperand _ (MachineFPImm i f e) =
   "float " ++ show i ++ "." ++ show f ++ "e" ++ showOffset e
-showMachineOperand (MachineRawFPImm imm) = "float " ++ "0x" ++ showHex imm ""
-showMachineOperand mo = show mo
+showMachineOperand _ (MachineRawFPImm imm) = "float " ++ "0x" ++ showHex imm ""
+showMachineOperand _ mo = show mo
+
+showMIRReg v r = showMachineOperand v (mkMachineReg r)
 
 jumpTablePrefix = "%jump-table."
 

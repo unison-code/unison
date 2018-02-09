@@ -19,16 +19,18 @@ import MachineIR
 import Unison.Target.API
 import Unison.Util
 
-prepareForEmission mf target =
+prepareForEmission mirVersion mf target =
   let itf  = instructionType target
       bif  = branchInfo target
       oif  = operandInfo target
       fts  = M.fromList $ fallthroughBlock (mfBlocks mf)
-      mf'  = mapToMachineBlock
+      mf1  = mapToMachineBlock
              (addBlockSuccessor
-              (itf, bif, oif, fts, mbId $ last (mfBlocks mf'))) mf
-      mf'' = mapToMachineInstruction (addDefs oif) mf'
-  in mf''
+              (itf, bif, oif, fts, mbId $ last (mfBlocks mf))) mf
+      mf2  = mapToMachineInstruction (addDefs oif) mf1
+      mf3  = mf2 {mfProperties = mfProperties mf2 ++
+                                 [mkMachineFunctionPropertyVersion mirVersion]}
+  in mf3
 
 addBlockSuccessor (itf, bif, oif, fts, lastId)
   mb @ MachineBlock {mbProperties = mbps} =

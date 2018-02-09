@@ -139,7 +139,7 @@ runFunction
      let unisonMirFile = addExtension "unison.mir" prefix
      maybePutStrLn "Running 'uni export'..."
      Export.run
-       (removeReds, keepNops, baseFile', tightPressureBound, debug,
+       (removeReds, keepNops, baseFile', tightPressureBound, mirVersion, debug,
         outJsonFile, Just unisonMirFile)
        altUniInput targetWithOption
 
