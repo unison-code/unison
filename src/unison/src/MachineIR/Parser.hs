@@ -323,10 +323,10 @@ mirActualOperand v =
   try mirMCSymbol <|>
   try mirFPImm <|>
   try mirRawFPImm <|>
-  try mirCFIDef <|>
+  try (mirCFIDef v) <|>
   try mirCFIDefOffset <|>
-  try mirCFIDefReg <|>
-  try mirCFIOffset <|>
+  try (mirCFIDefReg v) <|>
+  try (mirCFIOffset v) <|>
   try mirRegMask
 
 mirConstantPoolIndex =
@@ -528,11 +528,11 @@ mirRawFPImm =
      imm <- hexadecimal
      return (mkMachineRawFPImm imm)
 
-mirCFIDef =
+mirCFIDef v =
   do optional mirCFIPrefix
      string "def_cfa"
      whiteSpace
-     reg <- mirReg LLVM5
+     reg <- mirReg v
      string ", "
      off <- signedDecimal
      return (mkMachineCFIDef (mfrRegName reg) off)
@@ -544,18 +544,18 @@ mirCFIDefOffset =
      off <- signedDecimal
      return (mkMachineCFIDefOffset off)
 
-mirCFIDefReg =
+mirCFIDefReg v =
   do optional mirCFIPrefix
      string "def_cfa_register"
      whiteSpace
-     reg <- mirReg LLVM5
+     reg <- mirReg v
      return (mkMachineCFIDefReg (mfrRegName reg))
 
-mirCFIOffset =
+mirCFIOffset v =
   do optional mirCFIPrefix
      string "offset"
      whiteSpace
-     reg <- mirReg LLVM5
+     reg <- mirReg v
      string ", "
      off <- signedDecimal
      return (mkMachineCFIOffset (mfrRegName reg) off)
@@ -579,107 +579,11 @@ mirMDInt tag =
 
 mirMemOperands =
   do string "::"
-     whiteSpace
-     ms <- mirMemOperand `sepBy` comma
+     ms <- many1 (noneOf "\n\r")
      return ms
 
 -- This prefix is present only in LLVM <= 3.9
 mirCFIPrefix = string ".cfi_"
-
-mirMemOperand = parens nakedMirMemOperand
-
-nakedMirMemOperand =
-  do typ <- mirMemOperandType `endBy` whiteSpace
-     size <- decimal
-     source <- mirMemSourceDecl
-     attrs <- many mirMemOperandAttr
-     return (typ, size, source, attrs)
-
-mirMemOperandType =
-    try (string "volatile") <|>
-    try (string "non-temporal") <|>
-    try (string "dereferenceable") <|>
-    try (string "invariant") <|>
-    try (string "load") <|>
-    try (string "store")
-
-mirMemSourceDecl =
-  try unknownMemSourceDecl <|> knownMemSourceDecl
-
-unknownMemSourceDecl =
-  do string "unknown"
-     whiteSpace
-     o <- try (option 0 mirOffset)
-     return ("unknown", o)
-
-knownMemSourceDecl =
-  do whiteSpace
-     string "from" <|> string "into"
-     whiteSpace
-     source <- mirMemSource
-     return source
-
-mirMemSource =
-    try mirPseudoSourceValue <|>
-    try mirCallEntryValue <|>
-    try mirIRValue <|>
-    try getElementPtr
-
-mirPseudoSourceValue =
-  do v <- mirPseudoSourceValueType
-     whiteSpace
-     o <- try (option 0 mirOffset)
-     return (v, o)
-
-mirPseudoSourceValueType =
-    try (string "stack") <|>
-    try (string "got") <|>
-    try (string "jump-table") <|>
-    try (string "constant-pool") <|>
-    try (string "unknown")
-
-mirCallEntryValue =
-  do string "call-entry"
-     whiteSpace
-     mo <- mirGlobalAdress <|> mirExternalSymbol
-     let name (MachineGlobalAddress n _) = n
-         name (MachineExternal n) = n
-     return (name mo, 0)
-
-mirIRValue =
-  do char '%' <|> char '@'
-     (v, o) <- mirAddress
-     return (v, o)
-
-getElementPtr =
-  do char '`'
-     v <- many1 (noneOf "`")
-     char '`'
-     whiteSpace
-     o <- try (option 0 mirOffset)
-     return (v, o)
-
-mirMemOperandAttr =
-  do char ','
-     whiteSpace
-     attr <- try mirMemAlignment <|>
-             try (mirMemAttr "tbaa") <|>
-             try (mirMemAttr "alias.scope") <|>
-             try (mirMemAttr "range")
-     return attr
-
-mirMemAlignment =
-  do string "align"
-     whiteSpace
-     a <- decimal
-     return a
-
-mirMemAttr name =
-  do string ("!" ++ name)
-     whiteSpace
-     char '!'
-     value <- decimal
-     return value
 
 whiteSpaces n = string (replicate n ' ')
 
