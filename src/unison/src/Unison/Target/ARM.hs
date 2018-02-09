@@ -391,10 +391,14 @@ otherwise: ?
 
 -}
 
--- We need a stack frame iff there are 1) spills, 2) other sp-relative stores,
--- or 3) accesses to non-fixed stack objects. This takes care of 1), the
--- transformation 'enforceStackFrame' at AugmentPostRW takes care of 2) and 3),
--- which are static conditions.
+-- We need a stack frame iff there are 1) spills or 2) non-fixed stack
+-- objects. This takes care of 1), the transformation 'enforceStackFrame'
+-- at AugmentPostRW takes care of 2) which is a static
+-- condition. Additionally, we need to adjust the SP by 1 if we have an odd
+-- number of callee-saved spills for alignment reasons (see
+-- http://infocenter.arm.com/help/index.jsp?topic=/com.arm.doc.faqs/ka4127.html).
+-- This is not yet supported. TODO, short term: let 'uni normalize' remove
+-- SP adjustments in such cases in to ensure a fair comparison to LLVM.
 
 addPrologue (_, oid, _) (e:code) =
   let subSp = mkAct $ mkOpt oid TSUBspi_pseudo [Bound mkMachineFrameSize] []
@@ -707,7 +711,7 @@ transforms AugmentPreRW = [peephole combinePushPops,
                            fixpoint (peephole normalizeLoadStores),
                            peephole combineLoadStores]
 
-transforms AugmentPostRW = []
+transforms AugmentPostRW = [enforceStackFrame]
 
 transforms _ = []
 
