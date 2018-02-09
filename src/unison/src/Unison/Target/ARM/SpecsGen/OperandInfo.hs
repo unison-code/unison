@@ -734,7 +734,12 @@ operandInfo i
      [TemporaryInfo (RegisterClass DPair) 1 False])
   | i `elem`
       [CLZ, LDA, LDAB, LDAEX, LDAEXB, LDAEXH, LDAH, LDREX, LDREXB,
-       LDREXH, RBIT, REV, REV16, REVSH, TMOVr]
+       LDREXH, RBIT, REV, REV16, REVSH, T2LDMIA_RET_4_10,
+       T2LDMIA_RET_4_11, T2LDMIA_RET_4_8, T2LDMIA_RET_4_9,
+       T2LDMIA_UPD_4_10, T2LDMIA_UPD_4_11, T2LDMIA_UPD_4_4,
+       T2LDMIA_UPD_4_5, T2LDMIA_UPD_4_6, T2LDMIA_UPD_4_7, T2LDMIA_UPD_4_8,
+       T2LDMIA_UPD_4_9, T2STMDB_UPD_4_10, T2STMDB_UPD_4_11,
+       T2STMDB_UPD_4_8, T2STMDB_UPD_4_9, TMOVr]
     =
     ([TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo,
       TemporaryInfo (RegisterClass CCR) 0 False],
@@ -2801,7 +2806,8 @@ operandInfo i
   | i `elem` [COPY, FAULTING_LOAD_OP] = ([BoundInfo], [BoundInfo])
   | i `elem`
       [BX_RET, ERET, MOVPCLR, T2CLREX, T2DCPS1, T2DCPS2, T2DCPS3,
-       TBX_RET]
+       TBX_RET, TPOP_RET_4, TPOP_RET_4_5, TPOP_RET_4_6, TPOP_RET_4_7,
+       TPUSH_4, TPUSH_4_5, TPUSH_4_6, TPUSH_4_7]
     = ([BoundInfo, TemporaryInfo (RegisterClass CCR) 0 False], [])
   | i `elem` [FMSTAT_cpsr] =
     ([BoundInfo, TemporaryInfo (RegisterClass CCR) 0 False],

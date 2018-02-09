@@ -233,6 +233,7 @@ Library
                   Unison.Target.ARM.SpecsGen.InstructionType
                   Unison.Target.ARM.SpecsGen.AlignedPairs
                   Unison.Target.ARM.SpecsGen.Size
+                  Unison.Target.ARM.SpecsGen.Parent
 
                   Unison.Target.Mips.Common
                   Unison.Target.Mips.Registers

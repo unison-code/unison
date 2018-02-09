@@ -1192,3 +1192,187 @@ instruction-set:
           defines:            [dst]
           size:               0
           itinerary:          NoItinerary
+
+        - id:                 t2STMDB_UPD_4_8
+          parent:             t2STMDB_UPD
+          operands:
+           - Rn:              [register, usedef, GPR]
+           - p1:              bound
+           - p2:              bound
+          uses:               [Rn, p1, p2]
+
+        - id:                 t2STMDB_UPD_4_9
+          parent:             t2STMDB_UPD
+          operands:
+           - Rn:              [register, usedef, GPR]
+           - p1:              bound
+           - p2:              bound
+          uses:               [Rn, p1, p2]
+
+        - id:                 t2STMDB_UPD_4_10
+          parent:             t2STMDB_UPD
+          operands:
+           - Rn:              [register, usedef, GPR]
+           - p1:              bound
+           - p2:              bound
+          uses:               [Rn, p1, p2]
+
+        - id:                 t2STMDB_UPD_4_11
+          parent:             t2STMDB_UPD
+          operands:
+           - Rn:              [register, usedef, GPR]
+           - p1:              bound
+           - p2:              bound
+          uses:               [Rn, p1, p2]
+
+        - id:                 tPUSH_4
+          parent:             tPUSH
+          operands:
+           - p1:              bound
+           - p2:              bound
+          uses:               [p1, p2]
+
+        - id:                 tPUSH_4_5
+          parent:             tPUSH
+          operands:
+           - p1:              bound
+           - p2:              bound
+          uses:               [p1, p2]
+
+        - id:                 tPUSH_4_6
+          parent:             tPUSH
+          operands:
+           - p1:              bound
+           - p2:              bound
+          uses:               [p1, p2]
+
+        - id:                 tPUSH_4_7
+          parent:             tPUSH
+          operands:
+           - p1:              bound
+           - p2:              bound
+          uses:               [p1, p2]
+
+        - id:                 tPOP_RET_4
+          parent:             tPOP_RET
+          operands:
+           - p1:              bound
+           - p2:              bound
+          uses:               [p1, p2]
+
+        - id:                 tPOP_RET_4_5
+          parent:             tPOP_RET
+          operands:
+           - p1:              bound
+           - p2:              bound
+          uses:               [p1, p2]
+
+        - id:                 tPOP_RET_4_6
+          parent:             tPOP_RET
+          operands:
+           - p1:              bound
+           - p2:              bound
+          uses:               [p1, p2]
+
+        - id:                 tPOP_RET_4_7
+          parent:             tPOP_RET
+          operands:
+           - p1:              bound
+           - p2:              bound
+          uses:               [p1, p2]
+
+        - id:                 t2LDMIA_UPD_4_4
+          parent:             t2LDMIA_UPD
+          operands:
+           - Rn:              [register, usedef, GPR]
+           - p1:              bound
+           - p2:              bound
+          uses:               [Rn, p1, p2]
+
+        - id:                 t2LDMIA_UPD_4_5
+          parent:             t2LDMIA_UPD
+          operands:
+           - Rn:              [register, usedef, GPR]
+           - p1:              bound
+           - p2:              bound
+          uses:               [Rn, p1, p2]
+
+        - id:                 t2LDMIA_UPD_4_6
+          parent:             t2LDMIA_UPD
+          operands:
+           - Rn:              [register, usedef, GPR]
+           - p1:              bound
+           - p2:              bound
+          uses:               [Rn, p1, p2]
+
+        - id:                 t2LDMIA_UPD_4_7
+          parent:             t2LDMIA_UPD
+          operands:
+           - Rn:              [register, usedef, GPR]
+           - p1:              bound
+           - p2:              bound
+          uses:               [Rn, p1, p2]
+
+        - id:                 t2LDMIA_UPD_4_8
+          parent:             t2LDMIA_UPD
+          operands:
+           - Rn:              [register, usedef, GPR]
+           - p1:              bound
+           - p2:              bound
+          uses:               [Rn, p1, p2]
+
+        - id:                 t2LDMIA_UPD_4_9
+          parent:             t2LDMIA_UPD
+          operands:
+           - Rn:              [register, usedef, GPR]
+           - p1:              bound
+           - p2:              bound
+          uses:               [Rn, p1, p2]
+
+        - id:                 t2LDMIA_UPD_4_10
+          parent:             t2LDMIA_UPD
+          operands:
+           - Rn:              [register, usedef, GPR]
+           - p1:              bound
+           - p2:              bound
+          uses:               [Rn, p1, p2]
+
+        - id:                 t2LDMIA_UPD_4_11
+          parent:             t2LDMIA_UPD
+          operands:
+           - Rn:              [register, usedef, GPR]
+           - p1:              bound
+           - p2:              bound
+          uses:               [Rn, p1, p2]
+
+        - id:                 t2LDMIA_RET_4_8
+          parent:             t2LDMIA_RET
+          operands:
+           - Rn:              [register, usedef, GPR]
+           - p1:              bound
+           - p2:              bound
+          uses:               [Rn, p1, p2]
+
+        - id:                 t2LDMIA_RET_4_9
+          parent:             t2LDMIA_RET
+          operands:
+           - Rn:              [register, usedef, GPR]
+           - p1:              bound
+           - p2:              bound
+          uses:               [Rn, p1, p2]
+
+        - id:                 t2LDMIA_RET_4_10
+          parent:             t2LDMIA_RET
+          operands:
+           - Rn:              [register, usedef, GPR]
+           - p1:              bound
+           - p2:              bound
+          uses:               [Rn, p1, p2]
+
+        - id:                 t2LDMIA_RET_4_11
+          parent:             t2LDMIA_RET
+          operands:
+           - Rn:              [register, usedef, GPR]
+           - p1:              bound
+           - p2:              bound
+          uses:               [Rn, p1, p2]

@@ -143,8 +143,8 @@ mirBlock v =
      char ':'
      eol
      succs <- optionMaybe (try mirBlockSuccessors)
-     entry <- optionMaybe (try mirBlockLiveIns)
-     ret   <- optionMaybe (try mirBlockLiveOuts)
+     entry <- optionMaybe (try $ mirBlockLiveIns v)
+     ret   <- optionMaybe (try $ mirBlockLiveOuts v)
      exit  <- optionMaybe (try mirBlockExit)
      many eol
      instructions <- many (mirInstruction v)
@@ -204,19 +204,19 @@ mirBlockSuccessor =
      prob <- parens decimal
      return (mbrId mbr, prob)
 
-mirBlockLiveIns =
+mirBlockLiveIns v =
   do whiteSpaces 2
      string "liveins:"
      whiteSpace
-     liveIns <- mirOperand LLVM5 `sepBy` comma
+     liveIns <- mirOperand v `sepBy` comma
      eol
      return liveIns
 
-mirBlockLiveOuts =
+mirBlockLiveOuts v =
   do whiteSpaces 2
      string "liveouts:"
      whiteSpace
-     liveOuts <- mirOperand LLVM5 `sepBy` comma
+     liveOuts <- mirOperand v `sepBy` comma
      eol
      return liveOuts
 
@@ -341,9 +341,12 @@ mirSubRegIndex =
 
 mirReg v =
   do states <- mirRegFlag `endBy` whiteSpace
-     char '%'
+     mirRegPrefix v
      reg <- mirSpecificReg v (catMaybes states)
      return reg
+
+mirRegPrefix LLVM5 = char '%'
+mirRegPrefix LLVM6 = P.oneOf "%$"
 
 mirJTI =
   do string "%jump-table."
@@ -482,11 +485,7 @@ mirExternalSymbol =
      return (mkMachineExternal sym)
 
 mirMemPartition =
-  do string "<0"
-     address <- hexadecimal
-     string "> = !{!\"unison-memory-partition\", i32 "
-     id <- decimal
-     string "}"
+  do (address, id) <- mirMDInt "unison-memory-partition"
      return (mkMachineMemPartition address id)
 
 mirProperty =
@@ -498,11 +497,7 @@ mirProperty =
      return (mkMachineProperty address pr)
 
 mirBlockFreq =
-  do string "<0"
-     address <- hexadecimal
-     string "> = !{!\"unison-block-frequency\", i32 "
-     freq <- decimal
-     string "}"
+  do (address, freq) <- mirMDInt "unison-block-frequency"
      return (mkMachineBlockFreq address freq)
 
 mirDebugLocation =
@@ -569,6 +564,18 @@ mirRegMask =
   do string "csr_"
      name <- many1 alphaNumDashDotUnderscore
      return (mkMachineRegMask name)
+
+mirMDInt tag =
+  do string "<0"
+     address <- hexadecimal
+     string ("> = !{!\"" ++ tag ++ "\",")
+     whiteSpace
+     string "i"
+     decimal
+     whiteSpace
+     val <- decimal
+     string "}"
+     return (address, val)
 
 mirMemOperands =
   do string "::"
