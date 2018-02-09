@@ -391,25 +391,28 @@ otherwise: ?
 
 -}
 
-mkSpAdj oid i = mkLinear oid [TargetInstruction i] [Bound mkMachineFrameSize] []
+-- We need a stack frame iff there are 1) spills, 2) other sp-relative stores,
+-- or 3) accesses to non-fixed stack objects. This takes care of 1), the
+-- transformation 'enforceStackFrame' at AugmentPostRW takes care of 2) and 3),
+-- which are static conditions.
 
--- TODO: remove if there are no load/stores using the stack (no spills)
 addPrologue (_, oid, _) (e:code) =
-  let subSp = mkSpAdj oid TSUBspi_pseudo
+  let subSp = mkAct $ mkOpt oid TSUBspi_pseudo [Bound mkMachineFrameSize] []
   in [e, subSp] ++ code
 
--- TODO: remove if there are no load/stores using the stack (no spills)
 addEpilogue (_, oid, _) code =
-  case split (keepDelimsL $ whenElt isBranch) code of
-   [f, e] ->
-     let addSp = mkSpAdj oid TADDspi_pseudo
-     in f ++ [addSp] ++ e
-   [_] ->
-     case split (keepDelimsL $ whenElt isTailCall) code of
-      [f, e] ->
-        let addSp = mkSpAdj oid TADDspi_pseudo
-        in f ++ [addSp] ++ e
-      os -> error ("unhandled epilogue: " ++ show os)
+  let addSp = mkAct $ mkOpt oid TADDspi_pseudo [Bound mkMachineFrameSize] []
+  in case split (keepDelimsL $
+                 whenElt (\o -> isBranch o || isTailCall o)) code of
+      [f, e] -> f ++ [addSp] ++ e
+      os     -> error ("unhandled epilogue: " ++ show os)
+
+mkOpt oid inst us ds =
+  makeOptional $ mkLinear oid [TargetInstruction inst] us ds
+
+mkAct = addActivators (map TargetInstruction spillInstrs)
+
+addActivators = mapToActivators . (++)
 
 -- | Direction in which the stack grows
 stackDirection = API.StackGrowsDown
@@ -704,7 +707,7 @@ transforms AugmentPreRW = [peephole combinePushPops,
                            fixpoint (peephole normalizeLoadStores),
                            peephole combineLoadStores]
 
-transforms AugmentPostRW = [deactivateSPAdjusts]
+transforms AugmentPostRW = []
 
 transforms _ = []
 

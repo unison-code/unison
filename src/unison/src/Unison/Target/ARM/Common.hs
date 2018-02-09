@@ -13,7 +13,7 @@ module Unison.Target.ARM.Common
     (unitLatency, isCpsrDef, toExplicitCpsrDef, fromExplicitCpsrDef,
      defaultMIRPred, defaultUniPred, isRematerializable, isSourceInstr,
      isDematInstr, isRematInstr, sourceInstr, dematInstr, rematInstr,
-     originalInstr) where
+     originalInstr, spillInstrs) where
 
 import qualified Data.Map as M
 import Data.Tuple
@@ -86,3 +86,5 @@ rematVersions = M.fromList
    (T2LDRBi12_fi, RematTriple T2LDRBi12_fi_source_fi T2LDRBi12_fi_demat_fi T2LDRBi12_fi_remat_fi),
    (T2LEApcrel_cpi, RematTriple T2LEApcrel_cpi_source_cpi T2LEApcrel_cpi_demat_cpi T2LEApcrel_cpi_remat_cpi),
    (VLDRS_fi, RematTriple VLDRS_fi_source_fi VLDRS_fi_demat_fi VLDRS_fi_remat_fi)]
+
+spillInstrs = [STORE, STORE_T, STORE_D, LOAD, LOAD_T, LOAD_D]
