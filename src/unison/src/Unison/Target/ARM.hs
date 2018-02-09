@@ -56,7 +56,7 @@ target =
       API.tReserved         = const reserved,
       API.tInstructionType  = const instructionType,
       API.tBranchInfo       = const branchInfo,
-      API.tPreProcess       = const preProcess,
+      API.tPreProcess       = preProcess,
       API.tPostProcess      = postProcess,
       API.tTransforms       = const transforms,
       API.tCopies           = const copies,
@@ -397,8 +397,8 @@ otherwise: ?
 -- condition. Additionally, we need to adjust the SP by 1 if we have an odd
 -- number of callee-saved spills for alignment reasons (see
 -- http://infocenter.arm.com/help/index.jsp?topic=/com.arm.doc.faqs/ka4127.html).
--- This is not yet supported. TODO, short term: let 'uni normalize' remove
--- SP adjustments in such cases in to ensure a fair comparison to LLVM.
+-- This is not yet supported, instead, 'uni normalize' removes SP adjustments in
+-- such cases to ensure a fair comparison to LLVM.
 
 addPrologue (_, oid, _) (e:code) =
   let subSp = mkAct $ mkOpt oid TSUBspi_pseudo [Bound mkMachineFrameSize] []
@@ -426,13 +426,14 @@ stackDirection = API.StackGrowsDown
 
 -- | Target dependent pre-processing functions
 
-preProcess = [mapToTargetMachineInstruction instantiateMEMCPY,
-              cleanConstPoolBlocks,
-              mapToMachineInstruction promoteImplicitOperands,
-              mapToMachineInstruction hideCPSRRegister,
-              mapToTargetMachineInstruction addFrameIndex,
-              mapToTargetMachineInstruction processTailCalls,
-              mapToTargetMachineInstruction collapseVarOpInstructions]
+preProcess to = [mapToTargetMachineInstruction instantiateMEMCPY,
+                 cleanConstPoolBlocks,
+                 mapToMachineInstruction promoteImplicitOperands,
+                 mapToMachineInstruction hideCPSRRegister,
+                 mapToTargetMachineInstruction addFrameIndex,
+                 mapToTargetMachineInstruction processTailCalls,
+                 mapToTargetMachineInstruction collapseVarOpInstructions,
+                 if align to then id else relaxAlignment]
 
 instantiateMEMCPY
   mi @ MachineSingle {msOpcode = MachineTargetOpc i,
@@ -553,6 +554,27 @@ varOpPseudo T2LDMIA_RET mos
 
 isMachineRegWith r MachineReg {mrName = r'} = r == r'
 isMachineRegWith _ _ = False
+
+relaxAlignment mf @ MachineFunction {mfProperties = mps} =
+  case find isMachineFunctionPropertyFrame mps of
+   -- if the only (non-fixed) objects in the stack are callee-saved registers,
+   -- the only reason for SP adjustments is the alignment constraints
+   -- (http://infocenter.arm.com/help/index.jsp?topic=/com.arm.doc.faqs/ka4127.html).
+   -- In that case, remove them.
+   Just (MachineFunctionPropertyFrame ff) | all isCSRegisterObject ff ->
+     cleanSPAdjusts mf
+   Nothing -> cleanSPAdjusts mf
+   _ -> mf
+
+cleanSPAdjusts = filterMachineInstructions (not . isSPAlign)
+
+isSPAlign MachineSingle {msOpcode   = MachineTargetOpc i,
+                         msOperands = [_, _, MachineImm 1, _, _]}
+  | i `elem` [TSUBspi, TADDspi] = True
+isSPAlign _ = False
+
+isCSRegisterObject MachineFrameObjectInfo {mfoiCSRegister = (Just _)} = True
+isCSRegisterObject _ = False
 
 -- | Target dependent post-processing functions
 

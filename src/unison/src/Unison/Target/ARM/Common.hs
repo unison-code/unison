@@ -10,7 +10,7 @@ Main authors:
 This file is part of Unison, see http://unison-code.github.io
 -}
 module Unison.Target.ARM.Common
-    (unitLatency, isCpsrDef, toExplicitCpsrDef, fromExplicitCpsrDef,
+    (unitLatency, align, isCpsrDef, toExplicitCpsrDef, fromExplicitCpsrDef,
      defaultMIRPred, defaultUniPred, isRematerializable, isSourceInstr,
      isDematInstr, isRematInstr, sourceInstr, dematInstr, rematInstr,
      originalInstr, spillInstrs) where
@@ -24,6 +24,7 @@ import qualified Unison.Target.API as API
 import Unison.Target.ARM.SpecsGen.ARMInstructionDecl
 
 unitLatency to = API.isBoolOption "unit-latency" to
+align to = API.isBoolOption "align" to
 
 isCpsrDef i = i `elem` (map fst cpsrMap)
 toExplicitCpsrDef i = (M.fromList cpsrMap) M.! i
