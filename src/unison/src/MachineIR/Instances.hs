@@ -56,13 +56,14 @@ showMachineFunction v (name, mps, mbs) =
     (case find isMachineFunctionPropertyFixedFrame mps of
         (Just mff) ->
           fill 17 "fixedStack:" ++ newLine ++
-          nest' 2 (concatMap showMachineFrameObjectInfo $
+          nest' 2 (concatMap (showMachineFrameObjectInfo v) $
                    mfPropertyFixedFrame mff)
         Nothing -> "") ++
     (case find isMachineFunctionPropertyFrame mps of
         (Just mf) ->
           fill 17 "stack:" ++ newLine ++
-          nest' 2 (concatMap showMachineFrameObjectInfo $ mfPropertyFrame mf)
+          nest' 2 (concatMap (showMachineFrameObjectInfo v) $
+                   mfPropertyFrame mf)
         Nothing -> "") ++
     (case find isMachineFunctionPropertyJumpTable mps of
         (Just mjt) ->
@@ -78,14 +79,18 @@ showMachineFunction v (name, mps, mbs) =
     nest' 2 (showMachineBasicBlocks v mbs) ++ newLine ++
     docEnd ++ newLine
 
-showMachineFrameObjectInfo
+showMachineFrameObjectInfo v
   MachineFrameObjectInfo {mfoiIndex = id, mfoiOffset = off, mfoiSize = size,
-                          mfoiAlignment = ali} =
+                          mfoiAlignment = ali, mfoiCSRegister = csreg} =
   "- { id: " ++ show id ++ ", offset: " ++ show off ++
   (case size of
      Just s -> (", size: " ++ show s)
      Nothing -> "") ++
-  ", alignment: " ++ show ali ++ " }" ++ newLine
+  ", alignment: " ++ show ali ++
+  (case csreg of
+     Just r -> (", callee-saved-register: '" ++ showMIRReg v r ++ "'")
+     Nothing -> "") ++
+  " }" ++ newLine
 
 showMachineJumpTable (MachineFunctionPropertyJumpTable kind entries) =
   fill 17 "kind:" ++ kind ++ newLine ++
@@ -293,7 +298,8 @@ instance Show r => Show (MachineOperand r) where
 
 inBraces es = "{" ++ renderStyle lineStyle (cs id es) ++ "}"
 
-instance Show MachineFrameObjectInfo where
-    show (MachineFrameObjectInfo idx off size align) =
+instance Show r => Show (MachineFrameObjectInfo r) where
+    show (MachineFrameObjectInfo idx off size align csreg) =
         concat (intersperse "\'"
-                (fmap show [Just idx, Just off, size, Just align]))
+                (fmap show [Just idx, Just off, size, Just align] ++
+                 [show csreg]))

@@ -301,7 +301,7 @@ allocateArgArea f @ Function {fStackArgSize = s,
   | s > 0 =
     let size   = frameSize (fobjs ++ objs)
         fstIdx = newFrameIndex objs
-        objs'  = objs ++ [mkFrameObject fstIdx size (Just s) s]
+        objs'  = objs ++ [mkFrameObject fstIdx size (Just s) s Nothing]
     in f {fStackArgSize = 0, fFixedStackFrame = fobjs, fStackFrame = objs'}
   | otherwise = f
 
@@ -318,7 +318,7 @@ alignAllocFrame f @ Function {fFixedStackFrame = fobjs,
       8 -> f
       _ ->
         let fstIdx = newFrameIndex objs
-            objs'  = objs ++ [mkFrameObject fstIdx size (Just r) 1]
+            objs'  = objs ++ [mkFrameObject fstIdx size (Just r) 1 Nothing]
         in f {fFixedStackFrame = fobjs, fStackFrame = objs'}
 
 -- Offset frame indices before (-8) and after (+d) 'allocframe'

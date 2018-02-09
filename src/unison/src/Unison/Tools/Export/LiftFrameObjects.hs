@@ -63,4 +63,4 @@ toFrameIndex _ op = op
 
 toFrameObject o2i (MachineFrameObject o (Just size) align) =
   let idx = fst $ o2i M.! o
-  in mkFrameObject idx 0 (Just size) align
+  in mkFrameObject idx 0 (Just size) align Nothing

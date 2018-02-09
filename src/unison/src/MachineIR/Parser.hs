@@ -92,10 +92,11 @@ instance FromJSON MIRFunction where
     parseJSON _ = error "Can't parse MIRFunction from YAML"
 
 data MIRStackObject = MIRStackObject {
-  sId        :: Integer,
-  sOffset    :: Integer,
-  sSize      :: Maybe Integer,
-  sAlignment :: Integer
+  sId                  :: Integer,
+  sOffset              :: Integer,
+  sSize                :: Maybe Integer,
+  sAlignment           :: Integer,
+  sCalleeSavedRegister :: Maybe String
 } deriving Show
 
 instance FromJSON MIRStackObject where
@@ -104,7 +105,8 @@ instance FromJSON MIRStackObject where
       (v .:  "id") <*>
       (v .:  "offset") <*>
       (v .:? "size") <*>
-      (v .:  "alignment")
+      (v .:  "alignment") <*>
+      (v .:? "callee-saved-register")
     parseJSON _ = error "Can't parse MIRStackObject from YAML"
 
 data MIRJumpTable = MIRJumpTable {
@@ -646,8 +648,9 @@ toMachineFunctionPropertyStack fso =
     mkMachineFunctionPropertyFrame (map toMachineFrameObjectInfo fso)
 
 toMachineFrameObjectInfo
-  MIRStackObject {sId = id, sOffset = off, sSize = s, sAlignment = ali} =
-    mkMachineFrameObjectInfo id off s ali
+  MIRStackObject {sId = id, sOffset = off, sSize = s, sAlignment = ali,
+                  sCalleeSavedRegister = csreg} =
+    mkMachineFrameObjectInfo id off s ali (fmap (read . tail) csreg)
 
 toMachineFunctionPropertyJumpTable MIRJumpTable {kind = k, entries = es} =
   let mes = map toMachineJumpTableEntry es

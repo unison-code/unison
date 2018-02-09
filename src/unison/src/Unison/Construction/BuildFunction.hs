@@ -65,8 +65,9 @@ buildStackFrame =
 
 toStackFrameObject MachineFrameObjectInfo {
                          mfoiIndex = idx, mfoiOffset = off,
-                         mfoiSize = size, mfoiAlignment = align} =
-  mkFrameObject idx off size align
+                         mfoiSize = size, mfoiAlignment = align,
+                         mfoiCSRegister = csreg} =
+  mkFrameObject idx off size align csreg
 
 buildJumpTable Nothing = ("", [])
 buildJumpTable (Just (MachineFunctionPropertyJumpTable k es)) =

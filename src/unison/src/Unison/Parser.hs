@@ -107,6 +107,10 @@ data LsHighLevelGoal =
   LsSpill
   deriving (Eq, Show)
 
+data LsFrameObject =
+  LsFrameObject Integer Integer (Maybe Integer) Integer (Maybe String)
+  deriving (Eq, Show)
+
 parse :: Read i => Read r =>
          TargetWithOptions i r rc s -> String -> Function i r
 parse target s =
@@ -426,7 +430,8 @@ frameObject =
      comma
      size <- optionMaybe frameSizeAndComma
      align <- frameObjectProperty "align"
-     return (mkFrameObject (mfiIndex mfi) off size align)
+     csreg <- optionMaybe frameCSReg
+     return (LsFrameObject (mfiIndex mfi) off size align csreg)
 
 frameSizeAndComma =
   do size <- frameObjectProperty "size"
@@ -440,6 +445,15 @@ frameObjectProperty p =
      whiteSpace
      v <- signedDecimal
      return v
+
+frameCSReg =
+  do string "callee-saved-register"
+     whiteSpace
+     char '='
+     whiteSpace
+     oneOf "%$"
+     r <- many1 alphaNumDashAtDotUnderscore
+     return r
 
 jumpTableKind =
   do string "kind:"
@@ -580,13 +594,15 @@ isLsRematOrigin _                 = False
 
 toFunction target
   (cmms, name, body, cs, rts, ffobjs, fobjs, sp, ss, (jtk, jt), goal, rfs, src) =
-  let cms   = [cm | (LsComment cm) <- cmms]
-      code  = map (toBB target) (split (dWhen isLsBB) body)
-      cs'   = map (mapTuple toOperand) $ fromMaybe [] cs
-      rts'  = map (first toOperand) $ fromMaybe [] rts
-      goal' = map toHLGoal goal
-      src'  = concat [l ++ "\n" | l <- src]
-  in mkCompleteFunction cms name code cs' rts' ffobjs fobjs sp ss (jtk, jt)
+  let cms     = [cm | (LsComment cm) <- cmms]
+      code    = map (toBB target) (split (dWhen isLsBB) body)
+      cs'     = map (mapTuple toOperand) $ fromMaybe [] cs
+      rts'    = map (first toOperand) $ fromMaybe [] rts
+      ffobjs' = map toFrameObj ffobjs
+      fobjs'  = map toFrameObj fobjs
+      goal'   = map toHLGoal goal
+      src'    = concat [l ++ "\n" | l <- src]
+  in mkCompleteFunction cms name code cs' rts' ffobjs' fobjs' sp ss (jtk, jt)
      goal' rfs src'
 
 toBB target (LsBlock l as : code) =
@@ -627,6 +643,9 @@ toOperand (LsMOperand pid ts pas) =
     mkMOperand pid (map toOperand ts) (fmap toOperand pas)
 toOperand (LsBlockRef bid) = mkBlockRef bid
 toOperand (LsOperandRef pid) = mkOperandRef pid
+
+toFrameObj (LsFrameObject idx off size ali csreg) =
+  mkFrameObject idx off size ali (fmap read csreg)
 
 toHLGoal LsSpeed = Speed
 toHLGoal LsSize = Size

@@ -60,11 +60,11 @@ data MachineFunctionProperty r =
     } |
   -- | Stack frame corresponding to LLVM's @MachineFrameInfo@ (fixed part)
   MachineFunctionPropertyFixedFrame {
-    mfPropertyFixedFrame :: [MachineFrameObjectInfo]
+    mfPropertyFixedFrame :: [MachineFrameObjectInfo r]
     } |
   -- | Stack frame corresponding to LLVM's @MachineFrameInfo@ (variable part)
   MachineFunctionPropertyFrame {
-    mfPropertyFrame :: [MachineFrameObjectInfo]
+    mfPropertyFrame :: [MachineFrameObjectInfo r]
     } |
   -- | Register class of each temporary embedded as a string
   MachineFunctionPropertyRegClasses {
@@ -371,16 +371,18 @@ data MachineRegState =
 
 -- | Object allocated in the stack corresponding to LLVM's 'StackObject'.
 
-data MachineFrameObjectInfo =
+data MachineFrameObjectInfo r =
   MachineFrameObjectInfo {
     -- | Object index
-    mfoiIndex     :: Integer,
+    mfoiIndex      :: Integer,
     -- | Object offset
-    mfoiOffset    :: Integer,
+    mfoiOffset     :: Integer,
     -- | Object size ('Nothing' if variable size)
-    mfoiSize      :: Maybe Integer,
+    mfoiSize       :: Maybe Integer,
     -- | Object alignment
-    mfoiAlignment :: Integer
+    mfoiAlignment  :: Integer,
+    -- | Object callee-saved register ('Nothing' if not a callee-saved spill)
+    mfoiCSRegister :: Maybe r
     } deriving (Eq, Ord)
 
 -- | MIR version to be parsed.

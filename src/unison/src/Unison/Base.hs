@@ -154,9 +154,9 @@ data Function i r = Function {
       -- | Operands that can be rematerialized
       fRematerializable :: [RematerializableTuple r],
       -- | Fixed stack frame information
-      fFixedStackFrame :: [FrameObject],
+      fFixedStackFrame :: [FrameObject r],
       -- | Variable stack frame information
-      fStackFrame  :: [FrameObject],
+      fStackFrame  :: [FrameObject r],
       -- | Stack pointer offset (default is 0)
       fStackPointerOffset :: Integer,
       -- | Argument-passing section size in the stack frame (default is 0)
@@ -598,7 +598,7 @@ type RematerializableTuple r = (Operand r, [OperationId])
 
 -- | Object allocated in the stack frame similar to LLVM's 'StackObject'.
 
-data FrameObject =
+data FrameObject r =
   FrameObject {
     -- | Object index: there are two different indices depending on whether the
     -- object is fixed (belongs to 'fFixedStackFrame') or variable (belongs to
@@ -609,7 +609,9 @@ data FrameObject =
     -- | Object size ('Nothing' if variable size)
     foSize        :: Maybe Integer,
     -- | Object alignment
-    foAlignment   :: Integer
+    foAlignment   :: Integer,
+    -- | Object callee-saved register ('Nothing' if not a callee-saved spill)
+    foCSRegister  :: Maybe r
     } deriving (Eq, Ord)
 
 -- | Jump table entry

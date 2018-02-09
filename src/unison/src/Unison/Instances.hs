@@ -335,7 +335,7 @@ showJumpTableEntries (k, es) =
 
 showLineInst w i = wsString ++ showBlockOperation w i ++ newLine
 
-instance Show FrameObject where
+instance Show r => Show (FrameObject r) where
     show = showFrameObject False
 
 showFrameObject fixed fo =
@@ -343,13 +343,16 @@ showFrameObject fixed fo =
         show (foIndex fo) ++ ": " ++
         renderStyle lineStyle
         (cs showFrameObjectProperty
-         ([("offset", foOffset fo)] ++
+         ([("offset", show (foOffset fo))] ++
            (case foSize fo of
-             Just s -> [("size", s)]
+             Just s -> [("size", show s)]
              Nothing -> []) ++
-          [("align", foAlignment fo)]))
+          [("align", show (foAlignment fo))] ++
+           (case foCSRegister fo of
+             Just r -> [("callee-saved-register", show r)]
+             Nothing -> [])))
 
-showFrameObjectProperty (p, v) = p ++ " = " ++ show v
+showFrameObjectProperty (p, v) = p ++ " = " ++ v
 
 instance Show JumpTableEntry where
     show e = jumpTablePrefix ++ show (jtId e) ++ ": " ++

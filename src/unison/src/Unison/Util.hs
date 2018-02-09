@@ -1109,13 +1109,13 @@ oRWObjects o = oReadObjects o ++ oWriteObjects o
 oActivators ::  BlockOperation i r -> [Instruction i]
 oActivators = aActivators . oAs
 
-foMaybeSize :: FrameObject -> Integer
+foMaybeSize :: FrameObject r -> Integer
 foMaybeSize fo =
   case foSize fo of
     Just size -> size
     Nothing -> 0
 
-newFrameIndex :: [FrameObject] -> Integer
+newFrameIndex :: [FrameObject r] -> Integer
 newFrameIndex []   = 0
 newFrameIndex objs = maximum (map foIndex objs) + 1
 
@@ -1276,20 +1276,21 @@ toMachineFunction
          (maybeToList mff ++ maybeToList mf ++ maybeToList mjt) mbs src
 
 toMachineFunctionPropertyFixedFrame ::
-    [FrameObject] -> Maybe (MachineFunctionProperty r)
+    [FrameObject r] -> Maybe (MachineFunctionProperty r)
 toMachineFunctionPropertyFixedFrame [] = Nothing
 toMachineFunctionPropertyFixedFrame fobjs = Just $
     mkMachineFunctionPropertyFixedFrame (map toMachineFrameObjectInfo fobjs)
 
 toMachineFunctionPropertyFrame ::
-    [FrameObject] -> Maybe (MachineFunctionProperty r)
+    [FrameObject r] -> Maybe (MachineFunctionProperty r)
 toMachineFunctionPropertyFrame [] = Nothing
 toMachineFunctionPropertyFrame fobjs = Just $
     mkMachineFunctionPropertyFrame (map toMachineFrameObjectInfo fobjs)
 
-toMachineFrameObjectInfo :: FrameObject -> MachineFrameObjectInfo
+toMachineFrameObjectInfo :: FrameObject r -> MachineFrameObjectInfo r
 toMachineFrameObjectInfo fo = mkMachineFrameObjectInfo (foIndex fo)
                               (foOffset fo) (foSize fo) (foAlignment fo)
+                              (foCSRegister fo)
 
 toMachineFunctionPropertyJumpTable ::
   (String, [JumpTableEntry]) -> Maybe (MachineFunctionProperty r)
