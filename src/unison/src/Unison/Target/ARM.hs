@@ -556,15 +556,27 @@ isMachineRegWith r MachineReg {mrName = r'} = r == r'
 isMachineRegWith _ _ = False
 
 relaxAlignment mf @ MachineFunction {mfProperties = mps} =
-  case find isMachineFunctionPropertyFrame mps of
-   -- if the only (non-fixed) objects in the stack are callee-saved registers,
-   -- the only reason for SP adjustments is the alignment constraints
-   -- (http://infocenter.arm.com/help/index.jsp?topic=/com.arm.doc.faqs/ka4127.html).
-   -- In that case, remove them.
-   Just (MachineFunctionPropertyFrame ff) | all isCSRegisterObject ff ->
-     cleanSPAdjusts mf
-   Nothing -> cleanSPAdjusts mf
-   _ -> mf
+  -- if the only (non-fixed) objects in the stack are callee-saved registers and
+  -- there are no SP-relative stores, the only reason for SP adjustments is the
+  -- alignment constraints
+  -- (http://infocenter.arm.com/help/index.jsp?topic=/com.arm.doc.faqs/ka4127.html).
+  -- In that case, remove them.
+  let regularObjects = case find isMachineFunctionPropertyFrame mps of
+        Just (MachineFunctionPropertyFrame ff)
+          | all isCSRegisterObject ff -> False
+        Nothing -> False
+        _ -> True
+      spStores = any isSPStore (flattenMachineFunction mf)
+  in if regularObjects || spStores then mf else cleanSPAdjusts mf
+
+isSPStore MachineSingle {msOpcode   = MachineTargetOpc i,
+                         msOperands = mos}
+  | i `elem` [T2STRBi12, T2STRDi8, T2STRi12, TSTRspi, VSTRS]
+    && any isSPRegister mos = True
+isSPStore _ = False
+
+isSPRegister MachineReg {mrName = SP} = True
+isSPRegister _ = False
 
 cleanSPAdjusts = filterMachineInstructions (not . isSPAlign)
 
