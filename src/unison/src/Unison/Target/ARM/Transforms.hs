@@ -26,11 +26,14 @@ import qualified Data.Set as S
 import Data.Word
 import Data.Bits
 import Data.List
+import Data.Maybe
 
 import Common.Util
 import Unison
 import MachineIR
 import Unison.Target.Query
+import qualified Unison.Graphs.CG as CG
+import qualified Unison.Graphs.Partition as P
 import Unison.Target.ARM.Common
 import Unison.Target.ARM.OperandInfo
 import Unison.Target.ARM.Usages
@@ -645,11 +648,34 @@ offBy n (Bound MachineImm {miValue = off1})
   abs (off1 - off2) == n
 offBy _ _ _ = False
 
--- Activate the SP adjustment operations if there are non-fixed stack
--- objects.
-enforceStackFrame f @ Function {fStackFrame = frame}
-  | null frame = f
-  | otherwise = mapToOperation activateSPAdjusts f
+-- Activate the SP adjustment operations if there are non-fixed stack objects or
+--  SP-relative stores (typically to store function call arguments).
+enforceStackFrame f @ Function {fCode = code, fStackFrame = frame} =
+  let fcode = flatten code
+      pcg   = P.fromGraph $ CG.fromFunction f
+      t2rs  = M.fromListWith (++) [(undoPreAssign t, maybeToList $ tReg t)
+                                  | t <- tOps fcode]
+  in if length frame > 0 || any (isStackAccess (pcg, t2rs)) fcode
+     then mapToOperation activateSPAdjusts f
+     else f
+
+isStackAccess aux
+  SingleOperation {oOpr = Natural Linear {oIs = is, oUs = _:addr:_}}
+  | any (\i -> TargetInstruction i `elem` is) [T2STRi12, T2STRBi12, VSTRS] =
+    isSP aux addr
+isStackAccess _ _ = False
+
+-- if the temporaries in the addr operand are in the same CG partition as a
+-- temporary that is potentially preassigned to SP
+isSP (pcg, t2rs) addr =
+  let -- enough with a representative as they are all in the same CG partition
+      at   = head $ map undoPreAssign $ extractTemps addr
+      cgts = map mkTemp $ fromJust $ P.equivalent pcg at
+      sp   = or [any isSPRegister (t2rs M.! t) | t <- cgts]
+  in sp
+
+isSPRegister Register {regId = TargetRegister SP} = True
+isSPRegister _ = False
 
 activateSPAdjusts
   o @ SingleOperation {oOpr = Natural spo @ Linear {

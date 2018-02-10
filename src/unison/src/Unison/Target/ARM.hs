@@ -391,9 +391,9 @@ otherwise: ?
 
 -}
 
--- We need a stack frame iff there are 1) spills or 2) non-fixed stack
--- objects. This takes care of 1), the transformation 'enforceStackFrame'
--- at AugmentPostRW takes care of 2) which is a static
+-- We need a stack frame iff there are 1) spills or 2) non-fixed stack objects
+-- or SP-relative stores. This takes care of 1), the transformation
+-- 'enforceStackFrame' at AugmentPostRW takes care of 2) which is a static
 -- condition. Additionally, we need to adjust the SP by 1 if we have an odd
 -- number of callee-saved spills for alignment reasons (see
 -- http://infocenter.arm.com/help/index.jsp?topic=/com.arm.doc.faqs/ka4127.html).

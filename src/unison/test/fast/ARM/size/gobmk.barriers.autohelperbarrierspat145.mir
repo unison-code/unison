@@ -82,5 +82,5 @@ unison-test-expected-cost:
 unison-test-function: null
 unison-test-expected-proven: true
 unison-test-strictly-better: null
-unison-test-expected-has-solution: true
+unison-test-expected-has-solution: false
 ...
