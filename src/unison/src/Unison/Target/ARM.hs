@@ -342,6 +342,8 @@ readWriteInfo i
      IIC_fpStore_mu, IIC_fpStore_m, IIC_fpStore64, IIC_fpStore32,
      IIC_iStore_bh_i, IIC_iStore_i] =
       second addMem $ SpecsGen.readWriteInfo i
+  | i `elem` [TSUBspi_pseudo, TADDspi_pseudo] =
+      second (++ [OtherSideEffect SP]) $ SpecsGen.readWriteInfo i
   | otherwise = SpecsGen.readWriteInfo i
 
 addMem = (++ [Memory "mem"])
@@ -402,7 +404,14 @@ otherwise: ?
 
 addPrologue (_, oid, _) (e:code) =
   let subSp = mkAct $ mkOpt oid TSUBspi_pseudo [Bound mkMachineFrameSize] []
-  in [e, subSp] ++ code
+  in case split (keepDelimsR $ whenElt isFP) code of
+      [before, after] -> [e] ++ before ++ [subSp] ++ after
+      _ -> case split (dropInitBlank $ condense $ whenElt isStoreCopy) code of
+            before : after -> [e] ++ before ++ [subSp] ++ concat after
+
+isFP o = TargetInstruction TFP `elem` oInstructions o
+isStoreCopy o = any (\i -> TargetInstruction i `elem` oInstructions o)
+                [STORE, TPUSH2_r4_7, TPUSH2_r4_11, STORE_D]
 
 addEpilogue (_, oid, _) code =
   let addSp = mkAct $ mkOpt oid TADDspi_pseudo [Bound mkMachineFrameSize] []
@@ -611,6 +620,16 @@ expandPseudo to mi @ MachineSingle {
 
 expandPseudo _ mi @ MachineSingle {msOpcode = MachineTargetOpc TFP} =
   [[mi {msOpcode = mkMachineTargetOpc TADDrSPi}]]
+
+expandPseudo _ mi @ MachineSingle {msOpcode = MachineTargetOpc i,
+                                   msOperands = [off]}
+  | i `elem` [TSUBspi_pseudo, TADDspi_pseudo] =
+    let i' = case i of
+              TSUBspi_pseudo -> TSUBspi
+              TADDspi_pseudo -> TADDspi
+        sp = mkMachineReg SP
+    in [[mi {msOpcode = mkMachineTargetOpc i',
+             msOperands = [sp, sp, off] ++ defaultMIRPred}]]
 
 expandPseudo _ mi = [[mi]]
 
