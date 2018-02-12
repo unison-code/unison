@@ -1,5 +1,7 @@
 module Unison.Target.ARM.Usages (usages) where
 
+import Data.List
+
 import Unison
 
 import Unison.Target.ARM.Common
@@ -23,7 +25,7 @@ itineraryUsage' to i it =
      else us
 
 itineraryUsage i _
-  | i `elem` [VMOVScc, VMOVDcc] = concatUsages (ccInstrs i)
+  | i `elem` condMoveInstrs || i == T2MOVCCi32imm = concatUsages (ccInstrs i)
 itineraryUsage _ it
   | it `elem` [NoItinerary] = []
   | it `elem` [IIC_Br, IIC_iALUi, IIC_iBITi, IIC_iCMPi, IIC_iEXTr,
@@ -64,7 +66,7 @@ itineraryUsage _ it = error ("unmatched: itineraryUsage " ++ show it)
 size i
   | i `elem` [T2MOVi32imm, T2MOVi32imm_remat] = size T2MOVi16 + size T2MOVTi16
 size i
-  | i `elem` [VMOVScc, VMOVDcc] = sum $ map size $ ccInstrs i
+  | i `elem` condMoveInstrs || i == T2MOVCCi32imm = sum $ map size $ ccInstrs i
 size i
   | i `elem` [JUMPTABLE_INSTS, Load_merge] = 0
 size MEMCPY_4 = size T2LDMIA_4 + size T2STMIA_4
@@ -77,5 +79,11 @@ size i =
 
 concatUsages is =
   case map (\i -> itineraryUsage i (SpecsGen.itinerary i)) is of
-   [[Usage r u o 0], [Usage r' u' o' 0]]
-     | r == r' && u == u' -> [mkUsage r u (o + o')]
+   [[Usage r1 u1 o1 0], [Usage r2 u2 o2 0]]
+     | r1 == r2 && u1 == u2 -> [mkUsage r1 u1 (o1 + o2)]
+   -- TODO: generalize
+   [[Usage r1 u1 o1 0], [Usage r2 u2 o2 0], [Usage r3 u3 o3 0]]
+     | allEqual [r1, r2, r3] && allEqual [u1, u2, u3] ->
+       [mkUsage r1 u1 (o1 + o2 + o3)]
+
+allEqual l = length (nub l) == 1

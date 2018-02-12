@@ -309,9 +309,10 @@ isGPR r = rTargetReg (regId r) `elem` registers (RegisterClass GPR)
 resources =
     [
 
-     -- Boundle width (times 16 bits)
+     -- Boundle width (times 16 bits): upper bound given by size of compound
+     -- instructions to be expanded
 
-     Resource BundleWidth 4,
+     Resource BundleWidth 5,
 
      -- Resources as defined by ARMScheduleV6
 
@@ -621,7 +622,7 @@ expandPseudo to mi @ MachineSingle {
 expandPseudo _ mi @ MachineSingle {
   msOpcode   = MachineTargetOpc i,
   msOperands = [_, u1, u2, cc, p]}
-  | i `elem` [VMOVScc, VMOVDcc] =
+  | i `elem` condMoveInstrs =
     let [ci, ri] = ccInstrs i
         mi1 = mi {msOpcode   = mkMachineTargetOpc ci,
                   -- FIXME: compute mask correctly
@@ -629,6 +630,8 @@ expandPseudo _ mi @ MachineSingle {
         mi2 = mi {msOpcode   = mkMachineTargetOpc ri,
                   msOperands = [u1, u2, cc, p]}
     in [[mi1], [mi2]]
+
+-- TODO: expand 'T2MOVCCi32imm'
 
 expandPseudo _ mi @ MachineSingle {msOpcode = MachineTargetOpc TFP} =
   [[mi {msOpcode = mkMachineTargetOpc TADDrSPi}]]

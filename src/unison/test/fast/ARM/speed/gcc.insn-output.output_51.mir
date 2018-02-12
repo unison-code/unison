@@ -86,7 +86,7 @@ unison-test-target: ARM
 unison-test-goal:
 - speed
 unison-test-expected-cost:
-- 37
+- 38
 unison-test-function: null
 unison-test-expected-proven: true
 unison-test-strictly-better: null

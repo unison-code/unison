@@ -13,7 +13,7 @@ module Unison.Target.ARM.Common
     (unitLatency, align, isCpsrDef, toExplicitCpsrDef, fromExplicitCpsrDef,
      defaultMIRPred, defaultUniPred, isRematerializable, isSourceInstr,
      isDematInstr, isRematInstr, sourceInstr, dematInstr, rematInstr,
-     originalInstr, spillInstrs, ccInstrs) where
+     originalInstr, spillInstrs, condMoveInstrs, ccInstrs) where
 
 import qualified Data.Map as M
 import Data.Tuple
@@ -90,5 +90,12 @@ rematVersions = M.fromList
 
 spillInstrs = [STORE, STORE_T, STORE_D, LOAD, LOAD_T, LOAD_D]
 
-ccInstrs VMOVScc = [T2IT, VMOVS]
-ccInstrs VMOVDcc = [T2IT, VMOVD]
+condMoveInstrs = [VMOVScc, VMOVDcc, T2MOVCCr, T2MOVCCi, T2MOVCCi16]
+
+ccInstrs VMOVScc    = [T2IT, VMOVS]
+ccInstrs VMOVDcc    = [T2IT, VMOVD]
+ccInstrs T2MOVCCr   = [T2IT, TMOVr]
+ccInstrs T2MOVCCi   = [T2IT, TMOVi8]
+ccInstrs T2MOVCCi16 = [T2IT, T2MOVi16]
+
+ccInstrs T2MOVCCi32imm = [T2IT, T2MOVi16, T2MOVTi16]
