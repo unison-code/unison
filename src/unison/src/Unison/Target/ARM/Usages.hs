@@ -22,6 +22,8 @@ itineraryUsage' to i it =
        [u {occupation = 1, offset = 0} | u  <- us]
      else us
 
+itineraryUsage i _
+  | i `elem` [VMOVScc, VMOVDcc] = concatUsages (ccInstrs i)
 itineraryUsage _ it
   | it `elem` [NoItinerary] = []
   | it `elem` [IIC_Br, IIC_iALUi, IIC_iBITi, IIC_iCMPi, IIC_iEXTr,
@@ -61,8 +63,8 @@ itineraryUsage _ it = error ("unmatched: itineraryUsage " ++ show it)
 
 size i
   | i `elem` [T2MOVi32imm, T2MOVi32imm_remat] = size T2MOVi16 + size T2MOVTi16
-size VMOVDcc = size VMOVD
-size VMOVScc = size VMOVS
+size i
+  | i `elem` [VMOVScc, VMOVDcc] = sum $ map size $ ccInstrs i
 size i
   | i `elem` [JUMPTABLE_INSTS, Load_merge] = 0
 size MEMCPY_4 = size T2LDMIA_4 + size T2STMIA_4
@@ -72,3 +74,8 @@ size i =
   case SpecsGen.size i of
    0 -> error ("size of instruction " ++ show i ++ " is 0")
    b -> b `div` 2
+
+concatUsages is =
+  case map (\i -> itineraryUsage i (SpecsGen.itinerary i)) is of
+   [[Usage r u o 0], [Usage r' u' o' 0]]
+     | r == r' && u == u' -> [mkUsage r u (o + o')]

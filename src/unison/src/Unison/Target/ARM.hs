@@ -618,6 +618,18 @@ expandPseudo to mi @ MachineSingle {
                   msOperands = [dst, dst, ga] ++ defaultMIRPred}
     in [[mi1], [mi2]]
 
+expandPseudo _ mi @ MachineSingle {
+  msOpcode   = MachineTargetOpc i,
+  msOperands = [_, u1, u2, cc, p]}
+  | i `elem` [VMOVScc, VMOVDcc] =
+    let [ci, ri] = ccInstrs i
+        mi1 = mi {msOpcode   = mkMachineTargetOpc ci,
+                  -- FIXME: compute mask correctly
+                  msOperands = [cc, mkMachineImm 8]}
+        mi2 = mi {msOpcode   = mkMachineTargetOpc ri,
+                  msOperands = [u1, u2, cc, p]}
+    in [[mi1], [mi2]]
+
 expandPseudo _ mi @ MachineSingle {msOpcode = MachineTargetOpc TFP} =
   [[mi {msOpcode = mkMachineTargetOpc TADDrSPi}]]
 
@@ -650,7 +662,7 @@ reorderImplicitOperandsInInstr
   mi @ MachineSingle {msOpcode   = MachineTargetOpc i,
                       msOperands = MachineReg {mrName = CPSR} : _}
   | i `elem` [T2TSTri_cpsr, T2CMNri_cpsr, T2CMPrr_cpsr, T2TSTrr_cpsr,
-              T2SUBrr_cpsr, TCMPi8_cpsr] =
+              T2SUBrr_cpsr, TCMPi8_cpsr, FMSTAT_cpsr] =
       mi {msOpcode = mkMachineTargetOpc $ fromExplicitCpsrDef i}
 
 reorderImplicitOperandsInInstr
