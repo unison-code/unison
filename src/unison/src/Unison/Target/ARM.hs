@@ -694,17 +694,21 @@ exposeCPSR mr = mr
 removeFrameIndex = mapToMachineInstruction removeFrameIndexInstr
 
 removeFrameIndexInstr
-  mi @ MachineSingle {msOpcode = MachineTargetOpc T2LDRi12_fi,
-                      msOperands = [d, off, MachineImm {miValue = 0}, cc, p]} =
-  let mos = [d, mkMachineReg SP, off, cc, p]
-  in mi {msOpcode = mkMachineTargetOpc T2LDRi12, msOperands = mos}
+  mi @ MachineSingle {msOpcode = MachineTargetOpc i,
+                      msOperands = [d, off, MachineImm {miValue = 0}, cc, p]}
+  | i `elem` [T2LDRi12_fi, VLDRD_fi] =
+    let mos = [d, mkMachineReg SP, off, cc, p]
+    in mi {msOpcode = mkMachineTargetOpc $ removeFi i, msOperands = mos}
 
 removeFrameIndexInstr mi @ MachineSingle {msOpcode = MachineTargetOpc i}
   | "_fi" `isSuffixOf`  (show i) =
-    mi {msOpcode = mkMachineTargetOpc $ read $ dropSuffix "_fi" (show i)}
+    mi {msOpcode = mkMachineTargetOpc $ removeFi i}
   | "_cpi" `isSuffixOf` (show i) =
-    mi {msOpcode = mkMachineTargetOpc $ read $ dropSuffix "_cpi" (show i)}
+    mi {msOpcode = mkMachineTargetOpc $ removeCpi i}
   | otherwise = mi
+
+removeFi i = read $ dropSuffix "_fi" (show i)
+removeCpi i = read $ dropSuffix "_cpi" (show i)
 
 removeEmptyBundles = filterMachineInstructions (const True)
 
