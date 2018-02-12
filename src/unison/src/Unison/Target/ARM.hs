@@ -693,6 +693,12 @@ exposeCPSR mr = mr
 
 removeFrameIndex = mapToMachineInstruction removeFrameIndexInstr
 
+removeFrameIndexInstr
+  mi @ MachineSingle {msOpcode = MachineTargetOpc T2LDRi12_fi,
+                      msOperands = [d, off, MachineImm {miValue = 0}, cc, p]} =
+  let mos = [d, mkMachineReg SP, off, cc, p]
+  in mi {msOpcode = mkMachineTargetOpc T2LDRi12, msOperands = mos}
+
 removeFrameIndexInstr mi @ MachineSingle {msOpcode = MachineTargetOpc i}
   | "_fi" `isSuffixOf`  (show i) =
     mi {msOpcode = mkMachineTargetOpc $ read $ dropSuffix "_fi" (show i)}
