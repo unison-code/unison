@@ -164,12 +164,12 @@ copies (f, _, cg, ra, bcfg, sg) _ t _rs d us =
 pushInstruction [r]
   | r == R4_7  = TPUSH_r4_7
   | r == R8_11 = TPUSH_r8_11
-  | r `elem` registers (RegisterClass DPR) = STORE_D
+  | r == D8_15 = VSTMDDB_UPD_d8_15
 
 popInstruction [r]
   | r == R4_7  = TPOP_r4_7
   | r == R8_11 = TPOP_r8_11
-  | r `elem` registers (RegisterClass DPR) = LOAD_D
+  | r == D8_15 = VLDMDIA_UPD_d8_15
 
 defCopies _ _ [Register (TargetRegister R7)] = []
 defCopies size w _ =
@@ -249,12 +249,19 @@ fromCopy _ Copy {oCopyIs = [TargetInstruction i], oCopyS = s, oCopyD = d}
                oUs = [mkOprArmSP | w] ++ defaultUniPred ++
                      map (Register . TargetRegister) (pushRegs i ++ [LR]),
                oDs = [mkOprArmSP | w]}
+  | i `elem` [VSTMDDB_UPD_d8_15] =
+    Linear {oIs = [TargetInstruction (fromCopyInstr i (s, d))],
+            oUs = [mkOprArmSP] ++ defaultUniPred ++ mkPushRegs i,
+            oDs = [mkOprArmSP]}
   | i `elem` [TPOP2_r4_7, TPOP2_r4_7_RET, TPOP2_r4_11, TPOP2_r4_11_RET] =
     let w = i `elem` [TPOP2_r4_11, TPOP2_r4_11_RET]
     in Linear {oIs = [TargetInstruction (fromCopyInstr i (s, d))],
-               oUs = [mkOprArmSP | w] ++ defaultUniPred ++
-                     map (Register . TargetRegister) (pushRegs i),
+               oUs = [mkOprArmSP | w] ++ defaultUniPred ++ mkPushRegs i,
                oDs = [mkOprArmSP | w]}
+  | i `elem` [VLDMDIA_UPD_d8_15] =
+    Linear {oIs = [TargetInstruction (fromCopyInstr i (s, d))],
+            oUs = [mkOprArmSP] ++ defaultUniPred ++ mkPushRegs i,
+            oDs = [mkOprArmSP]}
 
 -- handle rematerialization copies
 fromCopy (Just (Linear {oUs = us}))
@@ -270,6 +277,8 @@ fromCopy _ (Natural o @ Linear {oIs = [TargetInstruction i]})
 
 fromCopy _ (Natural o) = o
 fromCopy _ o = error ("unmatched pattern: fromCopy " ++ show o)
+
+mkPushRegs i = map (Register . TargetRegister) (pushRegs i)
 
 mkOprArmSP = Register $ mkTargetRegister SP
 
@@ -296,10 +305,12 @@ fromCopyInstr MOVE_ALL (s, d)
   | isSPR s && isSPR d = VMOVS
 fromCopyInstr TPUSH2_r4_7 _  = TPUSH
 fromCopyInstr TPUSH2_r4_11 _ = T2STMDB_UPD
+fromCopyInstr VSTMDDB_UPD_d8_15 _ = VSTMDDB_UPD
 fromCopyInstr TPOP2_r4_7 _      = TPOP
 fromCopyInstr TPOP2_r4_7_RET _  = TPOP_RET
 fromCopyInstr TPOP2_r4_11 _     = T2LDMIA_UPD
 fromCopyInstr TPOP2_r4_11_RET _ = T2LDMIA_RET
+fromCopyInstr VLDMDIA_UPD_d8_15 _ = VLDMDIA_UPD
 
 isSPR r = rTargetReg (regId r) `elem` registers (RegisterClass SPR)
 isGPR r = rTargetReg (regId r) `elem` registers (RegisterClass GPR)
@@ -653,6 +664,8 @@ pushRegs i
       [R4, R5, R6, R7]
   | i `elem` [TPUSH2_r4_11, TPOP2_r4_11, TPOP2_r4_11_RET] =
       pushRegs TPUSH2_r4_7 ++ [R8, R9, R10, R11]
+  | i `elem` [VSTMDDB_UPD_d8_15, VLDMDIA_UPD_d8_15] =
+      [D8, D9, D10, D11, D12, D13, D14, D15]
 pushRegs i = error ("unmatched: pushRegs " ++ show i)
 
 removeAllNops =

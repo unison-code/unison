@@ -1034,6 +1034,19 @@ instruction-set:
            - SP:              register
           itinerary:          IIC_iStore_m
 
+        - id:                 VSTMDDB_UPD_d8_15
+          parent:             VSTMDDB_UPD
+          type:               copy
+          operands:
+           - src:             [register, use, FCS]
+           - dst:             [register, def, M512]
+          uses:               [src]
+          defines:            [dst]
+          affects:
+           - SP:              register
+          affected-by:
+           - SP:              register
+
         - id:                 tPOP_r4_7
           type:               copy
           operands:
@@ -1101,6 +1114,19 @@ instruction-set:
         - id:                 tPOP2_r4_11_RET
           parent:             tPOP2_r4_11
           itinerary:          IIC_iPop_Br
+
+        - id:                 VLDMDIA_UPD_d8_15
+          parent:             VLDMDIA_UPD
+          type:               copy
+          operands:
+           - src:             [register, use, M512]
+           - dst:             [register, def, FCS]
+          uses:               [src]
+          defines:            [dst]
+          affects:
+           - SP:              register
+          affected-by:
+           - SP:              register
 
         - id:                 tSUBspi_pseudo
           parent:             tSUBspi

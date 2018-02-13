@@ -29,6 +29,7 @@ data ARMRegister =
     D7 |
     D8 |
     D9 |
+    D8_15 |
     FPSCR_NZCV |
     ITSTATE |
     LR |

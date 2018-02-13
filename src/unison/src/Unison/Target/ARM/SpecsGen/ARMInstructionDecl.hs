@@ -3019,12 +3019,14 @@ data ARMInstruction = ABS
                     | TPUSH_r8_11
                     | TPUSH2_r4_7
                     | TPUSH2_r4_11
+                    | VSTMDDB_UPD_d8_15
                     | TPOP_r4_7
                     | TPOP_r8_11
                     | TPOP2_r4_7
                     | TPOP2_r4_11
                     | TPOP2_r4_7_RET
                     | TPOP2_r4_11_RET
+                    | VLDMDIA_UPD_d8_15
                     | TSUBspi_pseudo
                     | TADDspi_pseudo
                     | MEMCPY_4

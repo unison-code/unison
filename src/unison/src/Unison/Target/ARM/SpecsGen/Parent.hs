@@ -604,6 +604,7 @@ parent i
   | i `elem`
       [FMSTAT_cpsr_demat, FMSTAT_cpsr_remat, FMSTAT_cpsr_source]
     = Just FMSTAT_cpsr
+  | i `elem` [VLDMDIA_UPD_d8_15] = Just VLDMDIA_UPD
   | i `elem` [VLDRD_cpi] = Just VLDRD
   | i `elem`
       [VLDRD_cpi_demat_cpi, VLDRD_cpi_remat_cpi, VLDRD_cpi_source_cpi]
@@ -618,6 +619,7 @@ parent i
   | i `elem`
       [VLDRS_fi_demat_fi, VLDRS_fi_remat_fi, VLDRS_fi_source_fi]
     = Just VLDRS_fi
+  | i `elem` [VSTMDDB_UPD_d8_15] = Just VSTMDDB_UPD
   | i `elem` [T2ADDri_cpsr] = Just T2ADDri
   | i `elem`
       [T2ADDri_fi_demat_fi, T2ADDri_fi_remat_fi, T2ADDri_fi_source_fi]

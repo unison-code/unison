@@ -365,6 +365,9 @@ operandInfo i
       TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo,
       TemporaryInfo (RegisterClass CCR) 0 False],
      [])
+  | i `elem` [VSTMDDB_UPD_d8_15] =
+    ([TemporaryInfo (RegisterClass FCS) 0 False],
+     [TemporaryInfo (InfiniteRegisterClass M512) 1 False])
   | i `elem`
       [BLX, BX, MOVPCRX, RFEDA, RFEDA_UPD, RFEDB, RFEDB_UPD, RFEIA,
        RFEIA_UPD, RFEIB, RFEIB_UPD]
@@ -1893,6 +1896,9 @@ operandInfo i
   | i `elem` [LOAD_T] =
     ([TemporaryInfo (InfiniteRegisterClass M32t) 0 False],
      [TemporaryInfo (RegisterClass TGPR) 1 False])
+  | i `elem` [VLDMDIA_UPD_d8_15] =
+    ([TemporaryInfo (InfiniteRegisterClass M512) 0 False],
+     [TemporaryInfo (RegisterClass FCS) 1 False])
   | i `elem` [LOAD_D] =
     ([TemporaryInfo (InfiniteRegisterClass M64) 0 False],
      [TemporaryInfo (RegisterClass DPR) 1 False])

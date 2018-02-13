@@ -22,18 +22,19 @@ instructionType i
     = CallInstructionType
   | i `elem`
       [FMSTAT_cpsr_demat, FMSTAT_cpsr_remat, LOAD, LOAD_D, LOAD_T, MOVE,
-       MOVE_ALL, MOVE_D, STORE, STORE_D, STORE_T, VLDRD_cpi_demat_cpi,
-       VLDRD_cpi_remat_cpi, VLDRD_fi_demat_fi, VLDRD_fi_remat_fi,
-       VLDRS_cpi_demat_cpi, VLDRS_cpi_remat_cpi, VLDRS_fi_demat_fi,
-       VLDRS_fi_remat_fi, T2ADDri_fi_demat_fi, T2ADDri_fi_remat_fi,
-       T2LDRBi12_fi_demat_fi, T2LDRBi12_fi_remat_fi, T2LDRi12_fi_demat_fi,
-       T2LDRi12_fi_remat_fi, T2LEApcrelJT_demat, T2LEApcrelJT_remat,
-       T2LEApcrel_cpi_demat_cpi, T2LEApcrel_cpi_remat_cpi, T2MOVi16_demat,
-       T2MOVi16_remat, T2MOVi32imm_demat, T2MOVi32imm_remat, T2MOVi_demat,
-       T2MOVi_remat, T2MVNi_demat, T2MVNi_remat, TMOVi8s_demat,
-       TMOVi8s_remat, TPOP2_r4_11, TPOP2_r4_11_RET, TPOP2_r4_7,
-       TPOP2_r4_7_RET, TPOP_r4_7, TPOP_r8_11, TPUSH2_r4_11, TPUSH2_r4_7,
-       TPUSH_r4_7, TPUSH_r8_11]
+       MOVE_ALL, MOVE_D, STORE, STORE_D, STORE_T, VLDMDIA_UPD_d8_15,
+       VLDRD_cpi_demat_cpi, VLDRD_cpi_remat_cpi, VLDRD_fi_demat_fi,
+       VLDRD_fi_remat_fi, VLDRS_cpi_demat_cpi, VLDRS_cpi_remat_cpi,
+       VLDRS_fi_demat_fi, VLDRS_fi_remat_fi, VSTMDDB_UPD_d8_15,
+       T2ADDri_fi_demat_fi, T2ADDri_fi_remat_fi, T2LDRBi12_fi_demat_fi,
+       T2LDRBi12_fi_remat_fi, T2LDRi12_fi_demat_fi, T2LDRi12_fi_remat_fi,
+       T2LEApcrelJT_demat, T2LEApcrelJT_remat, T2LEApcrel_cpi_demat_cpi,
+       T2LEApcrel_cpi_remat_cpi, T2MOVi16_demat, T2MOVi16_remat,
+       T2MOVi32imm_demat, T2MOVi32imm_remat, T2MOVi_demat, T2MOVi_remat,
+       T2MVNi_demat, T2MVNi_remat, TMOVi8s_demat, TMOVi8s_remat,
+       TPOP2_r4_11, TPOP2_r4_11_RET, TPOP2_r4_7, TPOP2_r4_7_RET,
+       TPOP_r4_7, TPOP_r8_11, TPUSH2_r4_11, TPUSH2_r4_7, TPUSH_r4_7,
+       TPUSH_r8_11]
     = CopyInstructionType
   | i `elem`
       [ABS, ADCri, ADCrr, ADCrsi, ADCrsr, ADDSri, ADDSrr, ADDSrsi,

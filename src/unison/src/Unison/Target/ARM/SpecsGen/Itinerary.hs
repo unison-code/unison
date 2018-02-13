@@ -584,8 +584,10 @@ itinerary i
        VLDRD_fi_remat_fi]
     = IIC_fpLoad64
   | i `elem` [VLDMDIA, VLDMQIA, VLDMSIA] = IIC_fpLoad_m
-  | i `elem` [VLDMDDB_UPD, VLDMDIA_UPD, VLDMSDB_UPD, VLDMSIA_UPD] =
-    IIC_fpLoad_mu
+  | i `elem`
+      [VLDMDDB_UPD, VLDMDIA_UPD, VLDMDIA_UPD_d8_15, VLDMSDB_UPD,
+       VLDMSIA_UPD]
+    = IIC_fpLoad_mu
   | i `elem` [VMLAS, VMLSS, VNMLAS, VNMLSS] = IIC_fpMAC32
   | i `elem` [VMLAD, VMLSD, VNMLAD, VNMLSD] = IIC_fpMAC64
   | i `elem` [VMOVRRD, VMOVRRS] = IIC_fpMOVDI
@@ -605,8 +607,10 @@ itinerary i
   | i `elem` [VSTRS, VSTRS_fi] = IIC_fpStore32
   | i `elem` [STORE_D, VSTRD] = IIC_fpStore64
   | i `elem` [VSTMDIA, VSTMQIA, VSTMSIA] = IIC_fpStore_m
-  | i `elem` [VSTMDDB_UPD, VSTMDIA_UPD, VSTMSDB_UPD, VSTMSIA_UPD] =
-    IIC_fpStore_mu
+  | i `elem`
+      [VSTMDDB_UPD, VSTMDDB_UPD_d8_15, VSTMDIA_UPD, VSTMSDB_UPD,
+       VSTMSIA_UPD]
+    = IIC_fpStore_mu
   | i `elem` [FCONSTS, VABSS, VMOVS, VMOVScc, VNEGS] = IIC_fpUNA32
   | i `elem` [FCONSTD, MOVE_D, VABSD, VMOVD, VMOVDcc, VNEGD] =
     IIC_fpUNA64

@@ -15,6 +15,7 @@ data ARMRegisterClass =
     ALL |
     CCR |
     CS |
+    FCS |
     CSL |
     CSH |
     DPair |
@@ -27,6 +28,7 @@ data ARMRegisterClass =
     GPRsp |
     GPRwithAPSR |
     M128 |
+    M512 |
     M32 |
     M32t |
     M64 |

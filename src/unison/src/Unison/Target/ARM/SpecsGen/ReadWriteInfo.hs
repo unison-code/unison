@@ -576,10 +576,10 @@ readWriteInfo i
   | i `elem` [Int_eh_sjlj_longjmp, TInt_eh_sjlj_longjmp] =
     ([], [OtherSideEffect R7, OtherSideEffect LR, OtherSideEffect SP])
   | i `elem`
-      [ADJCALLSTACKDOWN, ADJCALLSTACKUP, TADJCALLSTACKDOWN,
-       TADJCALLSTACKUP, TPOP2_r4_11, TPOP2_r4_11_RET, TPOP2_r4_7,
-       TPOP2_r4_7_RET, TPOP_r4_7, TPOP_r8_11, TPUSH2_r4_11, TPUSH2_r4_7,
-       TPUSH_r4_7, TPUSH_r8_11]
+      [ADJCALLSTACKDOWN, ADJCALLSTACKUP, VLDMDIA_UPD_d8_15,
+       VSTMDDB_UPD_d8_15, TADJCALLSTACKDOWN, TADJCALLSTACKUP, TPOP2_r4_11,
+       TPOP2_r4_11_RET, TPOP2_r4_7, TPOP2_r4_7_RET, TPOP_r4_7, TPOP_r8_11,
+       TPUSH2_r4_11, TPUSH2_r4_7, TPUSH_r4_7, TPUSH_r8_11]
     = ([], [OtherSideEffect SP])
   | i `elem`
       [FAULTING_LOAD_OP, LDAEX, LDAEXB, LDAEXD, LDAEXH, LDMDA, LDMDA_UPD,
