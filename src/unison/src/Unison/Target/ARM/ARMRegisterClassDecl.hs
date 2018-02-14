@@ -14,10 +14,12 @@ module Unison.Target.ARM.ARMRegisterClassDecl (ARMRegisterClass (..)) where
 data ARMRegisterClass =
     ALL |
     CCR |
+    CRS |
     CS |
-    FCS |
     CSL |
     CSH |
+    FCS |
+    FCRS |
     DPair |
     DPR |
     DPR_8 |

@@ -14,6 +14,7 @@ module Unison.Target.ARM.ARMRegisterDecl (ARMRegister (..)) where
 data ARMRegister =
     CPSR |
     D0 |
+    D0_7 |
     D1 |
     D10 |
     D11 |
@@ -35,6 +36,7 @@ data ARMRegister =
     LR |
     PC |
     R0 |
+    R0_3 |
     R1 |
     R10 |
     R11 |

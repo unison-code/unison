@@ -55,11 +55,13 @@ registerAtoms D15 = (S30, S31)
 
 -- | Register atoms of 4-width registers
 
+registerAtoms R0_3  = (R0, R3)
 registerAtoms R4_7  = (R4, R7)
 registerAtoms R8_11 = (R8, R11)
 
 -- | Register atoms of 16-width registers
 
+registerAtoms D0_7 = (S0, S15)
 registerAtoms D8_15 = (S16, S31)
 
 registerAtoms r = error ("unmatched: registerAtoms " ++ show r)
@@ -67,7 +69,7 @@ registerAtoms r = error ("unmatched: registerAtoms " ++ show r)
 -- | Register classes
 regClasses =
     map RegisterClass
-    [GPR, RGPR, GPRnopc, TcGPR, GPRsp, SPR, DPR, CCR, TGPR, ALL, CS, CSL, CSH, FCS, F32] ++
+    [GPR, RGPR, GPRnopc, TcGPR, GPRsp, SPR, DPR, CCR, TGPR, ALL, CS, CSL, CSH, CRS, FCS, FCRS, F32] ++
     map InfiniteRegisterClass [M32, M32t, M64, M128, M512, RM32, RM64]
 
 -- | Individual registers of each register class
@@ -108,9 +110,13 @@ registers (RegisterClass CSL) = [R4_7]
 
 registers (RegisterClass CSH) = [R8_11]
 
+registers (RegisterClass CRS) = [R0_3]
+
 registers (RegisterClass CCR) = [CPSR]
 
 registers (RegisterClass FCS) = [D8_15]
+
+registers (RegisterClass FCRS) = [D0_7]
 
 registers (RegisterClass QPR) =
     [Q0, Q1, Q2, Q3, Q4, Q5, Q6, Q7, Q8, Q9 ,Q10, Q11, Q12, Q13, Q14, Q15]
@@ -147,8 +153,7 @@ reserved = [SP, LR, PC]
 -- | Caller- and callee-saved registers
 
 -- | Registers that are not preserved across calls
-callerSaved = [R0, R1, R2, R3, R12,
-               D0, D1, D2, D3, D4, D5, D6, D7]
+callerSaved = [R0_3, R12, D0_7]
 
 -- | Registers that are preserved across calls
 calleeSaved = [R4_7, R8_11, D8_15]
@@ -184,9 +189,11 @@ regStrings = M.fromList $
    (PC, "pc")] ++
   regStringsWithIndex "s" SPR ++
   regStringsWithIndex "d" DPR ++
-  [(R4_7, "r4_7"),
+  [(R0_3, "r0_3"),
+   (R4_7, "r4_7"),
    (R8_11, "r8_11")] ++
-  [(D8_15, "d8_15")] ++
+  [(D0_7, "d0_7"),
+   (D8_15, "d8_15")] ++
   [(CPSR, "cpsr")] ++
   [(FPSCR_NZCV, "fpscr_nzcv"),
    (ITSTATE, "itstate"),
