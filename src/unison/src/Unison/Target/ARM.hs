@@ -370,41 +370,6 @@ implementFrame = const []
 -- | Adds function prologue, see corresponding logic in ARMFrameLowering.cpp
 -- ("emitPrologue")
 
-{-
-
-Observations:
-
-ArgRegsSaveSize is always 0
-
-a function has a stack frame (AFI->hasStackFrame()) iff
- - BigStack (always false), or
- - !CanEliminateFrame (sometimes true, sometimes false), or
- - RegInfo->cannotEliminateFrame(MF) (sometimes true, sometimes false)
-
-CanEliminateFrame <-> no callee-saved register is spilled
-
-RegInfo->cannotEliminateFrame(MF) <->
-  MFI->adjustsStack() (sometimes true, sometimes false) ||
-  MFI->hasVarSizedObjects() (always false) ||
-  MFI->isFrameAddressTaken() (always false) ||
-  needsStackRealignment(MF) (alwaysFalse)
-
-MFI->adjustsStack() <-> exists a FrameSetupOpcode or a FrameDestroyOpcode
-(calculateCallsInformation in PrologEpilogInserter.cpp)
-
-to summarize:
-
-hasStackFrame() <->
-a callee-saved register is spilled ||
-exists a FrameSetupOpcode or a FrameDestroyOpcode
-
-prologue:
-
-if !hasStackFrame() -> no prologue
-otherwise: ?
-
--}
-
 -- We need a stack frame iff there are 1) spills or 2) non-fixed stack objects
 -- or SP-relative stores. This takes care of 1), the transformation
 -- 'enforceStackFrame' at AugmentPostRW takes care of 2) which is a static
@@ -416,14 +381,14 @@ otherwise: ?
 
 addPrologue (_, oid, _) (e:code) =
   let subSp = mkAct $ mkOpt oid TSUBspi_pseudo [Bound mkMachineFrameSize] []
-  in case split (keepDelimsR $ whenElt isFP) code of
+  in case split (keepDelimsR $ whenElt isFPPush) code of
       [before, after] -> [e] ++ before ++ [subSp] ++ after
       _ -> case split (dropInitBlank $ condense $ whenElt isStoreCopy) code of
             before : after -> [e] ++ before ++ [subSp] ++ concat after
 
-isFP o = TargetInstruction TFP `elem` oInstructions o
+isFPPush o = TargetInstruction (VSTMDDB_UPD_d8_15) `elem` oInstructions o
 isStoreCopy o = any (\i -> TargetInstruction i `elem` oInstructions o)
-                [STORE, TPUSH2_r4_7, TPUSH2_r4_11, STORE_D]
+                [STORE, STORE_D, TPUSH2_r4_7, VSTMDDB_UPD_d8_15]
 
 addEpilogue (_, oid, _) code =
   let addSp = mkAct $ mkOpt oid TADDspi_pseudo [Bound mkMachineFrameSize] []
@@ -433,7 +398,8 @@ addEpilogue (_, oid, _) code =
       f : e -> f ++ [addSp] ++ concat e
       os    -> error ("unhandled epilogue: " ++ show os)
 
-isPopRet o = TargetInstruction TPOP2_r4_7_RET `elem` oInstructions o
+isPopRet o = any (\i -> TargetInstruction i `elem` oInstructions o)
+             [TPOP2_r4_7_RET, VLDMDIA_UPD_d8_15]
 
 mkOpt oid inst us ds =
   makeOptional $ mkLinear oid [TargetInstruction inst] us ds
@@ -803,7 +769,8 @@ transforms ImportPostLift = [peephole handlePromotedOperands,
 transforms AugmentPreRW = [peephole combinePushPops,
                            peephole expandRets,
                            fixpoint (peephole normalizeLoadStores),
-                           peephole combineLoadStores]
+                           peephole combineLoadStores,
+                           reorderCalleeSavedSpills]
 
 transforms AugmentPostRW = [enforceStackFrame]
 

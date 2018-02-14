@@ -19,6 +19,7 @@ module Unison.Target.ARM.Transforms
      expandRets,
      normalizeLoadStores,
      combineLoadStores,
+     reorderCalleeSavedSpills,
      enforceStackFrame) where
 
 import qualified Data.Map as M
@@ -647,6 +648,28 @@ offBy n (Bound MachineImm {miValue = off1})
         (Bound MachineImm {miValue = off2}) =
   abs (off1 - off2) == n
 offBy _ _ _ = False
+
+reorderCalleeSavedSpills f @ Function {fCode = code}
+  | any isReturnBlock code =
+    let code1 = mapIf isEntryBlock (moveFP . reoderCalleeSavedStores) code
+        code2 = mapIf isReturnBlock reoderCalleeSavedLoads code1
+    in f {fCode = code2}
+  | otherwise = f
+
+reoderCalleeSavedStores b = moveOperations isCalleeSavedPrologue after isIn b
+
+isCalleeSavedPrologue o =
+  any (\i -> isInstr i o) [VSTMDDB_UPD_d8_15, TPUSH2_r4_7, TFP]
+
+moveFP b = moveOperations (isInstr TFP) after (isInstr TPUSH2_r4_7) b
+
+reoderCalleeSavedLoads b =
+  foldl (\b0 i -> moveOperations (isInstr i) before isTerm b0)
+  b [VLDMDIA_UPD_d8_15, TPOP2_r4_7, TPOP2_r4_7_RET]
+
+isInstr i o = (TargetInstruction i) `elem` oInstructions o
+
+isTerm o = isBranch o || isTailCall o
 
 -- Activate the SP adjustment operations if there are non-fixed stack objects or
 --  SP-relative stores (typically to store function call arguments).
