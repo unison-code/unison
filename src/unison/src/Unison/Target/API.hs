@@ -137,7 +137,7 @@ type RelatedPairsFunction i r = BlockOperation i r -> [RegisterTable r]
 -- temporary
 type CopyInstructions i = ([Instruction i], [[Instruction i]])
 -- | Target-dependent options (typically passed by tools through the
--- command line flag '--targetoption')
+-- command line flag @--targetoption@)
 type TargetOptions = [String]
 -- | Target description together with target-dependent options
 type TargetWithOptions i r rc s = (TargetDescription i r rc s, TargetOptions)
@@ -204,7 +204,49 @@ type FunctionInfo i r rc =
      BCFGraph i r, Partition (Operand r))
 
 -- | Description of a target processor. Implementing these functions
--- is all that is required for a Unison target.
+-- is all that is required for a Unison target. The following table specifies
+-- which processor description functions are invoked by each component in the
+-- Unison toolchain:
+--
+-- @
+--  function            import linearize extend augment model export
+--
+--  'tRegisterArray'       x      -         x      -       x     x
+--  'tRegisterAtoms'       x      -         x      -       x     x
+--  'tRegClasses'          x      -         x      -       x     x
+--  'tRegisters'           x      -         x      -       x     x
+--  'tInfRegClassUsage'    x      -         x      -       x     x
+--  'tInfRegClassBound'    x      -         x      -       x     x
+--  'tSubRegIndexType'     x      -         -      -       -     -
+--  'tCallerSaved'         x      -         -      -       x     -
+--  'tCalleeSaved'         x      -         x      -       x     -
+--  'tReserved'            x      -         -      -       -     -
+--  'tInstructionType'     x      -         -      -       -     x
+--  'tBranchInfo'          x      x         x      x       x     x
+--  'tPreProcess'          x      -         -      -       -     -
+--  'tPostProcess'         -      -         -      -       -     x
+--  'tTransforms'          x      -         -      x       -     x
+--  'tCopies'              -      -         x      -       -     -
+--  'tRematInstrs'         -      -         x      -       -     -
+--  'tFromCopy'            -      -         -      -       -     x
+--  'tOperandInfo'         x      -         -      -       x     x
+--  'tAlignedPairs'        -      -         x      -       x     -
+--  'tPackedPairs'         -      -         -      -       x     -
+--  'tRelatedPairs'        -      -         -      -       x     -
+--  'tResources'           -      -         -      -       x     -
+--  'tUsages'              -      -         -      -       x     x
+--  'tNop'                 x      -         -      -       -     x
+--  'tReadWriteInfo'       -      -         -      x       -     -
+--  'tImplementFrame'      x      -         -      -       -     -
+--  'tAddPrologue'         -      -         -      x       -     -
+--  'tAddEpilogue'         -      -         -      x       -     -
+--  'tStackDirection'      -      -         -      -       -     x
+--  'tReadWriteLatency'    -      -         -      -       x     x
+--  'tAlternativeTemps'    -      -         -      x       -     -
+--  'tExpandCopy'          -      -         -      x       -     -
+--  'tConstraints'         -      -         -      -       x     -
+-- @
+
 data TargetDescription i r rc s = TargetDescription {
       -- | Sequence of atomic (one register atom per register)
       -- register classes that forms the register array
