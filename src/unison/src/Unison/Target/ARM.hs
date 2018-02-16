@@ -417,6 +417,7 @@ preProcess to = [mapToTargetMachineInstruction instantiateMEMCPY,
                  cleanConstPoolBlocks,
                  mapToMachineInstruction promoteImplicitOperands,
                  mapToMachineInstruction hideCPSRRegister,
+                 mapToMachineInstruction explicateSelectPatterns,
                  mapToTargetMachineInstruction addFrameIndex,
                  mapToTargetMachineInstruction processTailCalls,
                  mapToTargetMachineInstruction collapseVarOpInstructions,
@@ -471,6 +472,20 @@ hideCPSRRegister mi @ MachineSingle {msOperands = mos} =
 
 hideCPSR mr @ MachineReg {mrName = CPSR} = mr {mrName = PRED}
 hideCPSR mr = mr
+
+explicateSelectPatterns
+  mi @ MachineSingle {msOpcode   = MachineTargetOpc i,
+                      msOperands = [d, u1, u2, p1, p2, s,
+                                    MachineTemp {mtId = tid,
+                                                 mtFlags = [MachineRegImplicit],
+                                                 mtTiedDef = Just 0}]}
+  | i `elem` [T2LSLri] =
+    let i'   = mkMachineTargetOpc T2LSLricc
+        mos' = [d, u1, u2, mkSimpleMachineTemp tid, p1, p2, s]
+    in mi {msOpcode = i', msOperands = mos'}
+
+explicateSelectPatterns mi = mi
+
 
 liftToTOpc f = mkMachineTargetOpc . f . mopcTarget
 
@@ -597,10 +612,21 @@ expandPseudo to mi @ MachineSingle {
                   msOperands = [dst, dst, ga] ++ defaultMIRPred}
     in [[mi1], [mi2]]
 
-expandPseudo _ mi @ MachineSingle {
+expandPseudo to mi @ MachineSingle {
+  msOpcode   = MachineTargetOpc i,
+  msOperands = [d, u1, u2, _, cc, p, s]}
+  | not (unitLatency to) && i `elem` [T2LSLricc] =
+    let [ci, ri] = ccInstrs i
+        mi1 = mi {msOpcode = mkMachineTargetOpc ci,
+                  msOperands = [cc, mkMachineImm 8]}
+        mi2 = mi {msOpcode = mkMachineTargetOpc ri,
+                  msOperands = [d, u1, u2, cc, p, s]}
+    in [[mi1], [mi2]]
+
+expandPseudo to mi @ MachineSingle {
   msOpcode   = MachineTargetOpc i,
   msOperands = [_, u1, u2, cc, p]}
-  | i `elem` condMoveInstrs =
+  | not (unitLatency to) && i `elem` condMoveInstrs =
     let [ci, ri] = ccInstrs i
         mi1 = mi {msOpcode   = mkMachineTargetOpc ci,
                   -- FIXME: compute mask correctly

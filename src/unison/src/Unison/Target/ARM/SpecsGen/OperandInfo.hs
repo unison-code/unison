@@ -2601,6 +2601,12 @@ operandInfo i
       TemporaryInfo (RegisterClass CCR) 0 False,
       TemporaryInfo (AbstractRegisterClass Unknown) 0 False],
      [TemporaryInfo (RegisterClass RGPR) 1 False])
+  | i `elem` [T2LSLricc] =
+    ([TemporaryInfo (RegisterClass RGPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass RGPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass RGPR) 1 False])
   | i `elem` [T2MOVTi16_ga_pcrel] =
     ([TemporaryInfo (RegisterClass RGPR) 0 False, BoundInfo,
       BoundInfo],

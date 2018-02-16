@@ -3060,6 +3060,7 @@ instance Show ARMInstruction where
         show T2LDMIA_RET_4_9 = "t2LDMIA_RET_4_9"
         show T2LDMIA_RET_4_10 = "t2LDMIA_RET_4_10"
         show T2LDMIA_RET_4_11 = "t2LDMIA_RET_4_11"
+        show T2LSLricc = "t2LSLricc"
         show T2MOVi_source = "t2MOVi_source"
         show T2MOVi_demat = "t2MOVi_demat"
         show T2MOVi_remat = "t2MOVi_remat"

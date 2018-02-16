@@ -771,9 +771,9 @@ itinerary i
   | i `elem` [MOVE, MOVr, MOVr_TC, NOP, T2MOVr, TMOVSr, TMOVr] =
     IIC_iMOVr
   | i `elem`
-      [MOVsra_flag, MOVsrl_flag, RRX, T2ASRri, T2LSLri, T2LSRri,
-       T2MOVsra_flag, T2MOVsrl_flag, T2RORri, T2RRX, TASRri, TASRris,
-       TLSLri, TLSLris, TLSRri, TLSRris]
+      [MOVsra_flag, MOVsrl_flag, RRX, T2ASRri, T2LSLri, T2LSLricc,
+       T2LSRri, T2MOVsra_flag, T2MOVsrl_flag, T2RORri, T2RRX, TASRri,
+       TASRris, TLSLri, TLSLris, TLSRri, TLSRris]
     = IIC_iMOVsi
   | i `elem`
       [MOVsi, MOVsr, T2ASRrr, T2LSLrr, T2LSRrr, T2RORrr, TASRrr, TASRrrs,

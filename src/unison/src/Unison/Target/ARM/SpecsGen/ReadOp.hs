@@ -3058,6 +3058,7 @@ readOp "t2LDMIA_RET_4_8" = T2LDMIA_RET_4_8
 readOp "t2LDMIA_RET_4_9" = T2LDMIA_RET_4_9
 readOp "t2LDMIA_RET_4_10" = T2LDMIA_RET_4_10
 readOp "t2LDMIA_RET_4_11" = T2LDMIA_RET_4_11
+readOp "t2LSLricc" = T2LSLricc
 readOp "t2MOVi_source" = T2MOVi_source
 readOp "t2MOVi_demat" = T2MOVi_demat
 readOp "t2MOVi_remat" = T2MOVi_remat

@@ -58,6 +58,8 @@ alignedPairs i ([_, _, _, _], [_])
   | i `elem`
       [QADD, QDADD, QDSUB, QSUB, T2QADD, T2QDADD, T2QDSUB, T2QSUB]
     = []
+alignedPairs i ([_, _, rd, _, _, _], [rd'])
+  | i `elem` [T2LSLricc] = [(rd, rd')]
 alignedPairs i ([_, _, _, _, _], [_])
   | i `elem` [T2ASRri, T2LSLri, T2LSRri, T2RORri] = []
 alignedPairs i ([_, _, _, _], [_, _])

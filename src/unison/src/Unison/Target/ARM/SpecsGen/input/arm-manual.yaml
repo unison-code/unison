@@ -1402,3 +1402,14 @@ instruction-set:
            - p1:              bound
            - p2:              bound
           uses:               [Rn, p1, p2]
+
+        - id:                 t2LSLricc
+          parent:             t2LSLri
+          operands:
+           - Rd:              [register, usedef, rGPR]
+           - Rm:              [register, use, rGPR]
+           - imm:             bound
+           - p1:              bound
+           - p2:              bound
+           - s:               [register, use, CCR]
+          uses:               [Rm, imm, Rd, p1, p2, s]

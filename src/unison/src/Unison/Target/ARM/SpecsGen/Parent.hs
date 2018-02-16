@@ -654,6 +654,7 @@ parent i
       [T2LEApcrel_cpi_demat_cpi, T2LEApcrel_cpi_remat_cpi,
        T2LEApcrel_cpi_source_cpi]
     = Just T2LEApcrel_cpi
+  | i `elem` [T2LSLricc] = Just T2LSLri
   | i `elem` [T2MOVi_demat, T2MOVi_remat, T2MOVi_source] =
     Just T2MOVi
   | i `elem` [T2MOVi16_demat, T2MOVi16_remat, T2MOVi16_source] =
