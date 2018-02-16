@@ -84,13 +84,20 @@ solve_generic_portfolio(LocalModel * base, GIST_OPTIONS * lo, int iteration) {
     new_stop(base->options->local_limit(), base->options);
   Search::Options localOptions;
   localOptions.stop = localStop;
-  // FIXME: if base->options->portfolio_threads() == 1, we would still like
-  // to set assets == base->options->local_portfolio().size(), but in that
-  // case Gecode does not seem to honor 'localStop'.
-  int n = std::min(base->options->portfolio_threads(),
-                   (unsigned int) base->options->local_portfolio().size());
-  localOptions.assets = n;
-  localOptions.threads = n;
+  unsigned int strategies = base->options->local_portfolio().size();
+  if (base->options->portfolio_threads() == 1) { // Sequential portfolio
+    localOptions.assets = strategies;
+    localOptions.threads = 1;
+    double failure_budget =
+      (((double) base->options->local_limit()) /
+       ((double) base->input->ops[l->b].size())) * 20.0;
+    localOptions.slice = failure_budget / strategies;
+  } else {
+    // Parallel portfolio: as many threads as given, up to the number of assets
+    int n = std::min(base->options->portfolio_threads(), strategies);
+    localOptions.assets = n;
+    localOptions.threads = n;
+  }
 
   // Local portfolio meta-engine
   PBS<LocalModel, BAB> e(l, localOptions);
