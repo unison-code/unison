@@ -106,7 +106,7 @@ runUnison unisonTargets testArgs mirFile =
                    unsatisfiable args,
                    removeReds args,
                    keepNops args,
-                   "--local-limit 4000",
+                   "-local-limit 4000",
                    fromMaybe (mirVersion args) (testMirVersion properties),
                    mirFile,
                    False,

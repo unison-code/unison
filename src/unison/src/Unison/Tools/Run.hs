@@ -123,7 +123,7 @@ runFunction
                           Nothing -> "gecode-presolver"
      maybePutStrLn ("Running '" ++ presolverPath ++ "'...")
      callProcess presolverPath
-       (["-o", extJsonFile] ++ ["--verbose" | verbose] ++
+       (["-o", extJsonFile] ++ ["-verbose" | verbose] ++
         ["-t", "180000", jsonFile])
 
      let outJsonFile = addExtension "out.json" prefix
@@ -133,7 +133,7 @@ runFunction
                           Nothing -> "gecode-solver"
      maybePutStrLn ("Running '" ++ solverPath ++ "'...")
      callProcess solverPath
-       (["-o", outJsonFile] ++ ["--verbose" | verbose] ++ splitFlags ++
+       (["-o", outJsonFile] ++ ["-verbose" | verbose] ++ splitFlags ++
         [extJsonFile])
 
      let unisonMirFile = addExtension "unison.mir" prefix
