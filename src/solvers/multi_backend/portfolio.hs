@@ -74,13 +74,13 @@ runGecode flags to v extJson lowerBoundFile outJsonFile =
   do tryUntilSuccess $ callProcess "gecode-solver"
        (["-o", outJsonFile] ++
         (if null lowerBoundFile then [] else ["-l", lowerBoundFile]) ++
-        ["--verbose" | v] ++ (splitFlags flags) ++
+        ["-verbose" | v] ++ (splitFlags flags) ++
         (gecodeTimeoutFlags to) ++
         [extJson])
      return outJsonFile
 
 gecodeTimeoutFlags to
-  | to >= 0 = ["--complete", "--all-solutions"]
+  | to >= 0 = ["-complete", "-all-solutions"]
   | otherwise = []
 
 tryIO :: IO a ->  IO (Either IOException a)
