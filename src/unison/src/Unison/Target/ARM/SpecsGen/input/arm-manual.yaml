@@ -1413,3 +1413,81 @@ instruction-set:
            - p2:              bound
            - s:               [register, use, CCR]
           uses:               [Rm, imm, Rd, p1, p2, s]
+
+        - id:                 t2ADDricc
+          parent:             t2ADDri
+          operands:
+           - Rd:              [register, usedef, GPRnopc]
+           - Rn:              [register, use, GPRnopc]
+           - imm:             bound
+           - p1:              bound
+           - p2:              bound
+           - s:               [register, use, CCR]
+          uses:               [Rn, imm, Rd, p1, p2, s]
+
+        - id:                 t2ANDricc
+          parent:             t2ANDri
+          operands:
+           - Rd:              [register, usedef, rGPR]
+           - Rn:              [register, use, rGPR]
+           - imm:             bound
+           - p1:              bound
+           - p2:              bound
+           - s:               [register, use, CCR]
+          uses:               [Rn, imm, Rd, p1, p2, s]
+
+        - id:                 t2ORRricc
+          parent:             t2ORRri
+          operands:
+           - Rd:              [register, usedef, rGPR]
+           - Rn:              [register, use, rGPR]
+           - imm:             bound
+           - p1:              bound
+           - p2:              bound
+           - s:               [register, use, CCR]
+          uses:               [Rn, imm, Rd, p1, p2, s]
+
+        - id:                 t2SUBricc
+          parent:             t2SUBri
+          operands:
+           - Rd:              [register, usedef, GPRnopc]
+           - Rn:              [register, use, GPRnopc]
+           - imm:             bound
+           - p1:              bound
+           - p2:              bound
+           - s:               [register, use, CCR]
+          uses:               [Rn, imm, Rd, p1, p2, s]
+
+        - id:                 t2SUBrrcc
+          parent:             t2SUBrr
+          operands:
+           - Rd:              [register, usedef, GPRnopc]
+           - Rn:              [register, use, GPRnopc]
+           - Rm:              [register, use, rGPR]
+           - p1:              bound
+           - p2:              bound
+           - s:               [register, use, CCR]
+          uses:               [Rn, Rm, Rd, p1, p2, s]
+
+        - id:                 t2ADDrrcc
+          parent:             t2ADDrr
+          operands:
+           - Rd:              [register, usedef, GPRnopc]
+           - Rn:              [register, use, GPRnopc]
+           - Rm:              [register, use, rGPR]
+           - p1:              bound
+           - p2:              bound
+           - s:               [register, use, CCR]
+          uses:               [Rn, Rm, Rd, p1, p2, s]
+
+        - id:                 t2ADDrscc
+          parent:             t2ADDrs
+          operands:
+           - Rd:              [register, def, GPRnopc]
+           - Rn:              [register, use, GPRnopc]
+           - ShiftedRm1:      [register, use, rGPR]
+           - ShiftedRm2:      bound
+           - p1:              bound
+           - p2:              bound
+           - s:               [register, use, CCR]
+          uses:               [Rn, ShiftedRm1, ShiftedRm2, Rd, p1, p2, s]

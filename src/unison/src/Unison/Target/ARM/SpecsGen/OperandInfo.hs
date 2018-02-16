@@ -1766,6 +1766,13 @@ operandInfo i
       BoundInfo, TemporaryInfo (RegisterClass CCR) 0 False,
       TemporaryInfo (RegisterClass CCR) 0 False],
      [TemporaryInfo (RegisterClass GPR) 1 False])
+  | i `elem` [T2ADDrrcc, T2SUBrrcc] =
+    ([TemporaryInfo (RegisterClass GPRnopc) 0 False,
+      TemporaryInfo (RegisterClass RGPR) 0 False,
+      TemporaryInfo (RegisterClass GPRnopc) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass GPRnopc) 1 False])
   | i `elem` [T2CMPrr_cpsr, T2TEQrr_cpsr, T2TSTrr_cpsr] =
     ([TemporaryInfo (RegisterClass GPRnopc) 0 False,
       TemporaryInfo (RegisterClass RGPR) 0 False, BoundInfo,
@@ -1791,6 +1798,13 @@ operandInfo i
   | i `elem` [T2ADDrr, T2SUBrr] =
     ([TemporaryInfo (RegisterClass GPRnopc) 0 False,
       TemporaryInfo (RegisterClass RGPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass GPRnopc) 1 False])
+  | i `elem` [T2ADDrscc] =
+    ([TemporaryInfo (RegisterClass GPRnopc) 0 False,
+      TemporaryInfo (RegisterClass RGPR) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass GPRnopc) 0 False, BoundInfo,
       TemporaryInfo (RegisterClass CCR) 0 False,
       TemporaryInfo (RegisterClass CCR) 0 False],
      [TemporaryInfo (RegisterClass GPRnopc) 1 False])
@@ -1820,6 +1834,12 @@ operandInfo i
     ([TemporaryInfo (RegisterClass GPRnopc) 0 False, BoundInfo,
       TemporaryInfo (RegisterClass CCR) 0 False],
      [])
+  | i `elem` [T2ADDricc, T2SUBricc] =
+    ([TemporaryInfo (RegisterClass GPRnopc) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass GPRnopc) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CCR) 0 False,
+      TemporaryInfo (RegisterClass CCR) 0 False],
+     [TemporaryInfo (RegisterClass GPRnopc) 1 False])
   | i `elem` [T2LDRBpcrel, T2LDRHpcrel, T2LDRSBpcrel, T2LDRSHpcrel] =
     ([TemporaryInfo (RegisterClass GPRnopc) 0 False, BoundInfo,
       BoundInfo, TemporaryInfo (RegisterClass CCR) 0 False],
@@ -2601,7 +2621,7 @@ operandInfo i
       TemporaryInfo (RegisterClass CCR) 0 False,
       TemporaryInfo (AbstractRegisterClass Unknown) 0 False],
      [TemporaryInfo (RegisterClass RGPR) 1 False])
-  | i `elem` [T2LSLricc] =
+  | i `elem` [T2ANDricc, T2LSLricc, T2ORRricc] =
     ([TemporaryInfo (RegisterClass RGPR) 0 False, BoundInfo,
       TemporaryInfo (RegisterClass RGPR) 0 False, BoundInfo,
       TemporaryInfo (RegisterClass CCR) 0 False,

@@ -13,7 +13,8 @@ module Unison.Target.ARM.Common
     (unitLatency, align, isCpsrDef, toExplicitCpsrDef, fromExplicitCpsrDef,
      defaultMIRPred, defaultUniPred, isRematerializable, isSourceInstr,
      isDematInstr, isRematInstr, sourceInstr, dematInstr, rematInstr,
-     originalInstr, spillInstrs, condMoveInstrs, ccInstrs) where
+     originalInstr, spillInstrs, condMoveInstrs, ccInstrs, isRedefableInstr,
+     isRedefInstr, redefInstr) where
 
 import qualified Data.Map as M
 import Data.Tuple
@@ -90,14 +91,30 @@ rematVersions = M.fromList
 
 spillInstrs = [STORE, STORE_T, STORE_D, LOAD, LOAD_T, LOAD_D]
 
-condMoveInstrs = [VMOVScc, VMOVDcc, T2MOVCCr, T2MOVCCi, T2MOVCCi16, T2LSLricc]
+condMoveInstrs = [VMOVScc, VMOVDcc, T2MOVCCr, T2MOVCCi, T2MOVCCi16] ++
+                 M.elems redefVersions
 
 ccInstrs VMOVScc    = [T2IT, VMOVS]
 ccInstrs VMOVDcc    = [T2IT, VMOVD]
 ccInstrs T2MOVCCr   = [T2IT, TMOVr]
 ccInstrs T2MOVCCi   = [T2IT, TMOVi8]
 ccInstrs T2MOVCCi16 = [T2IT, T2MOVi16]
-ccInstrs T2LSLricc  = [T2IT, T2LSLri]
-
 ccInstrs T2MOVCCi32imm = [T2IT, T2MOVi16, T2MOVTi16]
+ccInstrs i
+  | isRedefInstr i = [T2IT, redefableInstr i]
 
+isRedefableInstr i = M.member i redefVersions
+isRedefInstr i = M.member i (inverseMap redefVersions)
+
+redefInstr i = redefVersions M.! i
+redefableInstr i = (inverseMap redefVersions) M.! i
+
+redefVersions = M.fromList
+  [(T2LSLri, T2LSLricc),
+   (T2ADDri, T2ADDricc),
+   (T2ANDri, T2ANDricc),
+   (T2ORRri, T2ORRricc),
+   (T2SUBri, T2SUBricc),
+   (T2SUBrr, T2SUBrrcc),
+   (T2ADDrr, T2ADDrrcc),
+   (T2ADDrs, T2ADDrscc)]

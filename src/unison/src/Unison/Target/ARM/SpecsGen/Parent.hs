@@ -620,11 +620,13 @@ parent i
       [VLDRS_fi_demat_fi, VLDRS_fi_remat_fi, VLDRS_fi_source_fi]
     = Just VLDRS_fi
   | i `elem` [VSTMDDB_UPD_d8_15] = Just VSTMDDB_UPD
-  | i `elem` [T2ADDri_cpsr] = Just T2ADDri
+  | i `elem` [T2ADDri_cpsr, T2ADDricc] = Just T2ADDri
   | i `elem`
       [T2ADDri_fi_demat_fi, T2ADDri_fi_remat_fi, T2ADDri_fi_source_fi]
     = Just T2ADDri_fi
-  | i `elem` [T2ANDri_cpsr] = Just T2ANDri
+  | i `elem` [T2ADDrrcc] = Just T2ADDrr
+  | i `elem` [T2ADDrscc] = Just T2ADDrs
+  | i `elem` [T2ANDri_cpsr, T2ANDricc] = Just T2ANDri
   | i `elem` [T2CMNri_cpsr] = Just T2CMNri
   | i `elem` [T2CMPri_cpsr] = Just T2CMPri
   | i `elem` [T2CMPrr_cpsr] = Just T2CMPrr
@@ -664,6 +666,7 @@ parent i
     = Just T2MOVi32imm
   | i `elem` [T2MVNi_demat, T2MVNi_remat, T2MVNi_source] =
     Just T2MVNi
+  | i `elem` [T2ORRricc] = Just T2ORRri
   | i `elem` [T2ORRrr_cpsr] = Just T2ORRrr
   | i `elem`
       [T2STMDB_UPD_4_10, T2STMDB_UPD_4_11, T2STMDB_UPD_4_8,
@@ -671,8 +674,8 @@ parent i
     = Just T2STMDB_UPD
   | i `elem` [T2STMIA_4] = Just T2STMIA
   | i `elem` [T2STMIA_UPD_4] = Just T2STMIA_UPD
-  | i `elem` [T2SUBri_cpsr] = Just T2SUBri
-  | i `elem` [T2SUBrr_cpsr] = Just T2SUBrr
+  | i `elem` [T2SUBri_cpsr, T2SUBricc] = Just T2SUBri
+  | i `elem` [T2SUBrr_cpsr, T2SUBrrcc] = Just T2SUBrr
   | i `elem` [T2TEQrr_cpsr] = Just T2TEQrr
   | i `elem` [T2TSTri_cpsr] = Just T2TSTri
   | i `elem` [T2TSTrr_cpsr] = Just T2TSTrr

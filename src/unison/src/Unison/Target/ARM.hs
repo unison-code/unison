@@ -417,7 +417,7 @@ preProcess to = [mapToTargetMachineInstruction instantiateMEMCPY,
                  cleanConstPoolBlocks,
                  mapToMachineInstruction promoteImplicitOperands,
                  mapToMachineInstruction hideCPSRRegister,
-                 mapToMachineInstruction explicateSelectPatterns,
+                 mapToMachineInstruction explicateRedefPatterns,
                  mapToTargetMachineInstruction addFrameIndex,
                  mapToTargetMachineInstruction processTailCalls,
                  mapToTargetMachineInstruction collapseVarOpInstructions,
@@ -473,18 +473,29 @@ hideCPSRRegister mi @ MachineSingle {msOperands = mos} =
 hideCPSR mr @ MachineReg {mrName = CPSR} = mr {mrName = PRED}
 hideCPSR mr = mr
 
-explicateSelectPatterns
+explicateRedefPatterns
+  mi @ MachineSingle {msOpcode   = MachineTargetOpc i,
+                      msOperands = [d, u1, u2, u3, p1, p2, s,
+                                    MachineTemp {mtId = tid,
+                                                 mtFlags = [MachineRegImplicit],
+                                                 mtTiedDef = Just 0}]}
+  | isRedefableInstr i =
+    let i'   = mkMachineTargetOpc (redefInstr i)
+        mos' = [d, u1, u2, u3, mkSimpleMachineTemp tid, p1, p2, s]
+    in mi {msOpcode = i', msOperands = mos'}
+
+explicateRedefPatterns
   mi @ MachineSingle {msOpcode   = MachineTargetOpc i,
                       msOperands = [d, u1, u2, p1, p2, s,
                                     MachineTemp {mtId = tid,
                                                  mtFlags = [MachineRegImplicit],
                                                  mtTiedDef = Just 0}]}
-  | i `elem` [T2LSLri] =
-    let i'   = mkMachineTargetOpc T2LSLricc
+  | isRedefableInstr i =
+    let i'   = mkMachineTargetOpc (redefInstr i)
         mos' = [d, u1, u2, mkSimpleMachineTemp tid, p1, p2, s]
     in mi {msOpcode = i', msOperands = mos'}
 
-explicateSelectPatterns mi = mi
+explicateRedefPatterns mi = mi
 
 
 liftToTOpc f = mkMachineTargetOpc . f . mopcTarget
@@ -614,8 +625,19 @@ expandPseudo to mi @ MachineSingle {
 
 expandPseudo to mi @ MachineSingle {
   msOpcode   = MachineTargetOpc i,
+  msOperands = [d, u1, u2, u3, _, cc, p, s]}
+  | not (unitLatency to) && isRedefInstr i =
+    let [ci, ri] = ccInstrs i
+        mi1 = mi {msOpcode = mkMachineTargetOpc ci,
+                  msOperands = [cc, mkMachineImm 8]}
+        mi2 = mi {msOpcode = mkMachineTargetOpc ri,
+                  msOperands = [d, u1, u2, u3, cc, p, s]}
+    in [[mi1], [mi2]]
+
+expandPseudo to mi @ MachineSingle {
+  msOpcode   = MachineTargetOpc i,
   msOperands = [d, u1, u2, _, cc, p, s]}
-  | not (unitLatency to) && i `elem` [T2LSLricc] =
+  | not (unitLatency to) && isRedefInstr i =
     let [ci, ri] = ccInstrs i
         mi1 = mi {msOpcode = mkMachineTargetOpc ci,
                   msOperands = [cc, mkMachineImm 8]}

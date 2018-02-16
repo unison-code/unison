@@ -617,13 +617,13 @@ itinerary i
   | i `elem`
       [ADCri, ADDSri, ADDri, ADR, LEApcrel, LEApcrelJT, RSBSri, RSBri,
        RSCri, SBCri, SUBSri, SUBri, T2ADCri, T2ADDSri, T2ADDri, T2ADDri12,
-       T2ADDri_cpsr, T2ADDri_fi, T2ADDri_fi_remat_fi, T2ADR, T2LEApcrel,
-       T2LEApcrelJT, T2LEApcrelJT_remat, T2LEApcrel_cpi,
+       T2ADDri_cpsr, T2ADDri_fi, T2ADDri_fi_remat_fi, T2ADDricc, T2ADR,
+       T2LEApcrel, T2LEApcrelJT, T2LEApcrelJT_remat, T2LEApcrel_cpi,
        T2LEApcrel_cpi_remat_cpi, T2RSBSri, T2RSBri, T2SBCri, T2SUBSri,
-       T2SUBri, T2SUBri12, T2SUBri_cpsr, TADDi3, TADDi3s, TADDi8, TADDi8s,
-       TADDrSPi, TADDspi, TADDspi_pseudo, TADR, TFP, TLEApcrel,
-       TLEApcrelJT, TRSB, TRSBs, TSUBi3, TSUBi3s, TSUBi8, TSUBi8s,
-       TSUBspi, TSUBspi_pseudo]
+       T2SUBri, T2SUBri12, T2SUBri_cpsr, T2SUBricc, TADDi3, TADDi3s,
+       TADDi8, TADDi8s, TADDrSPi, TADDspi, TADDspi_pseudo, TADR, TFP,
+       TLEApcrel, TLEApcrelJT, TRSB, TRSBs, TSUBi3, TSUBi3s, TSUBi8,
+       TSUBi8s, TSUBspi, TSUBspi_pseudo]
     = IIC_iALUi
   | i `elem`
       [ADCrr, ADDSrr, ADDrr, PICADD, QADD, QADD16, QADD8, QASX, QDADD,
@@ -632,13 +632,13 @@ itinerary i
        SSUB16, SSUB8, SUBSrr, SUBrr, UADD16, UADD8, UASX, UHADD16, UHADD8,
        UHASX, UHSAX, UHSUB16, UHSUB8, UQADD16, UQADD8, UQASX, UQSAX,
        UQSUB16, UQSUB8, USAX, USUB16, USUB8, T2ADCrr, T2ADDSrr, T2ADDrr,
-       T2RSBrr, T2SBCrr, T2SUBSrr, T2SUBrr, T2SUBrr_cpsr, TADC, TADDhirr,
-       TADDhirrs, TADDrSP, TADDrr, TADDrrs, TADDspr, TPICADD, TSBC,
-       TSUBrr, TSUBrrs]
+       T2ADDrrcc, T2RSBrr, T2SBCrr, T2SUBSrr, T2SUBrr, T2SUBrr_cpsr,
+       T2SUBrrcc, TADC, TADDhirr, TADDhirrs, TADDrSP, TADDrr, TADDrrs,
+       TADDspr, TPICADD, TSBC, TSUBrr, TSUBrrs]
     = IIC_iALUr
   | i `elem`
-      [PKHBT, T2ADCrs, T2ADDSrs, T2ADDrs, T2RSBSrs, T2SBCrs, T2SUBSrs,
-       T2SUBrs]
+      [PKHBT, T2ADCrs, T2ADDSrs, T2ADDrs, T2ADDrscc, T2RSBSrs, T2SBCrs,
+       T2SUBSrs, T2SUBrs]
     = IIC_iALUsi
   | i `elem` [T2RSBrs] = IIC_iALUsir
   | i `elem`
@@ -648,8 +648,8 @@ itinerary i
     = IIC_iALUsr
   | i `elem` [T2IT] = IIC_iALUx
   | i `elem`
-      [ANDri, BICri, EORri, ORRri, T2ANDri, T2ANDri_cpsr, T2BFI, T2BICri,
-       T2EORri, T2ORNri, T2ORRri]
+      [ANDri, BICri, EORri, ORRri, T2ANDri, T2ANDri_cpsr, T2ANDricc,
+       T2BFI, T2BICri, T2EORri, T2ORNri, T2ORRri, T2ORRricc]
     = IIC_iBITi
   | i `elem`
       [ANDrr, BICrr, EORrr, ORRrr, T2ANDrr, T2BICrr, T2EORrr, T2ORNrr,

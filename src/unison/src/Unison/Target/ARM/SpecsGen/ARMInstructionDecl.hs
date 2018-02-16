@@ -3060,6 +3060,13 @@ data ARMInstruction = ABS
                     | T2LDMIA_RET_4_10
                     | T2LDMIA_RET_4_11
                     | T2LSLricc
+                    | T2ADDricc
+                    | T2ANDricc
+                    | T2ORRricc
+                    | T2SUBricc
+                    | T2SUBrrcc
+                    | T2ADDrrcc
+                    | T2ADDrscc
                     | T2MOVi_source
                     | T2MOVi_demat
                     | T2MOVi_remat

@@ -112,6 +112,8 @@ alignedPairs i ([_, _, _, _, _], [_])
     = []
 alignedPairs i ([_, _, _, _, _, _], [_])
   | i `elem` [MLA, MLAv5] = []
+alignedPairs i ([_, _, rd, _, _, _], [rd'])
+  | i `elem` [T2ADDrrcc, T2SUBrrcc] = [(rd, rd')]
 alignedPairs i ([_, _, _, _], [_])
   | i `elem`
       [CMNzrr, CMPrr, TEQrr, TSTrr, T2CMNzrr, T2CMPrr, T2TEQrr, T2TSTrr,
@@ -188,6 +190,8 @@ alignedPairs i ([_, _, _, _, _], [_])
     = []
 alignedPairs i ([_, _, _, _, _], [_])
   | i `elem` [PKHBT, PKHTB, T2PKHBT, T2PKHTB] = []
+alignedPairs i ([_, _, _, rd, _, _, _], [rd'])
+  | i `elem` [T2ADDrscc] = [(rd, rd')]
 alignedPairs i ([_, _, _, _, _], [_])
   | i `elem` [T2CMNzrs, T2CMPrs, T2TEQrs, T2TSTrs] = []
 alignedPairs i ([_, _, _, _, _], [_, _])
@@ -201,6 +205,9 @@ alignedPairs i ([_, _, _, _, _, _], [_])
     = []
 alignedPairs i ([_, _, _, _, _, _, _], [_, _])
   | i `elem` [T2ADCrs, T2SBCrs] = []
+alignedPairs i ([_, _, rd, _, _, _], [rd'])
+  | i `elem` [T2ADDricc, T2ANDricc, T2ORRricc, T2SUBricc] =
+    [(rd, rd')]
 alignedPairs i ([_, _, _, _], [_])
   | i `elem`
       [CMNri, CMPri, TEQri, TSTri, T2CMNri, T2CMPri, T2TEQri, T2TSTri]
