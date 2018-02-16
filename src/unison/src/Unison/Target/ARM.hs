@@ -578,6 +578,7 @@ isCSRegisterObject _ = False
 -- | Target dependent post-processing functions
 
 postProcess to = [expandPseudos to, removeAllNops, removeFrameIndex,
+                  cleanLoadMerges,
                   removeEmptyBundles, reorderImplicitOperands,
                   exposeCPSRRegister,
                   mapToTargetMachineInstruction expandVarOpInstructions,
@@ -688,6 +689,11 @@ removeFrameIndexInstr mi @ MachineSingle {msOpcode = MachineTargetOpc i}
 
 removeFi i = read $ dropSuffix "_fi" (show i)
 removeCpi i = read $ dropSuffix "_cpi" (show i)
+
+cleanLoadMerges = filterMachineInstructions (not . isSingleLoadMerge)
+
+isSingleLoadMerge MachineSingle {msOpcode = MachineTargetOpc Load_merge} = True
+isSingleLoadMerge _ = False
 
 removeEmptyBundles = filterMachineInstructions (const True)
 
