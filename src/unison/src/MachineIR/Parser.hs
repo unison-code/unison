@@ -232,7 +232,7 @@ mirInstruction v = try (mirBundle v) <|> try (mirSingle v 2)
 
 mirBundle v =
   do whiteSpaces 2
-     optional (try frameSetup)
+     optional (try frameAnnotation)
      opcode <- mirOpcode
      whiteSpace
      us <- mirOperand v `sepBy` comma
@@ -249,7 +249,7 @@ mirBundle v =
 mirSingle v n =
   do whiteSpaces n
      ds <- option [] (mirDefOperands v)
-     optional (try frameSetup)
+     optional (try frameAnnotation)
      opcode <- mirOpcode
      whiteSpace
      us <- mirOperand v `sepBy` comma
@@ -258,7 +258,9 @@ mirSingle v n =
      eol
      return (mkMachineSingle opcode [] (ds ++ us))
 
-frameSetup = string "frame-setup "
+frameAnnotation = try frameSetup <|> try frameDestroy
+frameSetup   = string "frame-setup "
+frameDestroy = string "frame-destroy "
 
 mirOpcode = try mirVirtualOpcode <|> mirTargetOpcode
 
@@ -650,7 +652,11 @@ toMachineFunctionPropertyStack fso =
 toMachineFrameObjectInfo
   MIRStackObject {sId = id, sOffset = off, sSize = s, sAlignment = ali,
                   sCalleeSavedRegister = csreg} =
-    mkMachineFrameObjectInfo id off s ali (fmap (read . tail) csreg)
+    mkMachineFrameObjectInfo id off s ali (maybeRead csreg)
+
+maybeRead Nothing   = Nothing
+maybeRead (Just "") = Nothing
+maybeRead (Just r)  = Just (read $ tail r)
 
 toMachineFunctionPropertyJumpTable MIRJumpTable {kind = k, entries = es} =
   let mes = map toMachineJumpTableEntry es
