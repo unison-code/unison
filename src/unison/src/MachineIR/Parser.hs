@@ -311,11 +311,11 @@ mirTargetFlags = string "target-flags(<unknown>)"
 
 mirActualOperand v =
   try mirConstantPoolIndex <|>
-  try mirSubRegIndex <|>
   try mirBlockRef <|>
   try mirJTI <|>
   try mirFI <|>
   try mirMFS <|>
+  try mirSubRegIndex <|>
   try (mirReg v) <|>
   try mirImm <|>
   try mirNullReg <|>
@@ -341,7 +341,7 @@ mirConstantPoolIndex =
 
 mirSubRegIndex =
   do string "%subreg."
-     idx <- mirSubRegIndexName
+     idx <- many1 alphaNumDashDotUnderscore
      return (mkMachineSubRegIndex idx)
 
 mirReg v =
@@ -398,10 +398,8 @@ mirSuffixSubRegIndex v =
   do char (case v of
             LLVM5 -> ':'
             LLVM6 -> '.')
-     idx <- mirSubRegIndexName
+     idx <- many1 alphaNumDashDotUnderscore
      return idx
-
-mirSubRegIndexName = many1 alphaNumDashDotUnderscore
 
 mirVirtualRegClass =
   do char ':'
