@@ -289,6 +289,7 @@ mirVirtualOpcode =
 
 mirVOpc (name, opc) =
   do string name
+     notFollowedBy alphaNumDashDotUnderscore
      return (mkMachineVirtualOpc opc)
 
 mirTargetOpcode =
