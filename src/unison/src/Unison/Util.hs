@@ -1240,7 +1240,7 @@ splitMachineVirtualOperands opcode operands
   | opcode `elem` [ENTRY] = ([], operands)
 splitMachineVirtualOperands opcode operands
   | opcode `elem` [RETURN] = (operands, [])
-splitMachineVirtualOperands opcode [d, s]
+splitMachineVirtualOperands opcode (d:s:_)
   | opcode `elem` [COPY, LOW, HIGH] = ([s], [d])
 splitMachineVirtualOperands opcode [ld, hd, u]
   | opcode `elem` [SPLIT2] = ([u], [ld, hd])
