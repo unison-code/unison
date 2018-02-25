@@ -27,7 +27,8 @@ data Uni =
                simplifyControlFlow :: Bool, implementFrames :: Bool,
                noCC :: Bool, noReserved :: Bool, maxBlockSize :: Maybe Integer,
                rematType :: RematType, function :: Maybe String,
-               goal :: Maybe String, mirVersion :: MachineIRVersion} |
+               goal :: Maybe String, mirVersion :: MachineIRVersion,
+               sizeThreshold :: Maybe Integer} |
     Linearize {targetName :: String, inFile :: FilePath, targetOption :: [String],
                outFile :: Maybe FilePath, debug :: Bool, intermediate :: Bool,
                lint :: Bool, lintPragma :: Bool} |
@@ -94,7 +95,7 @@ data Uni =
                unsatisfiable :: Bool, removeReds :: Bool, keepNops :: Bool,
                solverFlags :: String, mirVersion :: MachineIRVersion,
                outTemp :: Bool, presolver :: Maybe FilePath,
-               solver :: Maybe FilePath}
+               solver :: Maybe FilePath, sizeThreshold :: Maybe Integer}
     deriving (Data, Typeable, Show, Eq)
 
 allModes = [import', linearize', extend', augment', model', export', analyze',
@@ -125,7 +126,8 @@ import' = Import {
                           GeneralRemat &= help "General rematerialization",
                           NoRemat &= help "No rematerialization"],
   function        = Nothing &= help "Name of the function to import from the input MachineIR",
-  goal            = Nothing &= help "Optimization goal (one of {speed, size})"}
+  goal            = Nothing &= help "Optimization goal (one of {speed, size})",
+  sizeThreshold   = Nothing &= help "Function size over which solving is skipped"}
   &= help "Import a MachineIR function into Unison"
 
 linearize' = Linearize {} &= help "Transform a Unison function into Linear SSA form"

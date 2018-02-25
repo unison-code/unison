@@ -17,6 +17,7 @@ import System.Directory
 import System.Process
 import Control.Monad
 import Data.List.Split
+import Data.Maybe
 
 import Common.Util
 import Unison.Driver
@@ -35,7 +36,7 @@ run args @
    _rematType, baseFile, _scaleFreq, _applyBaseFile, _tightPressureBound,
    _strictlyBetter, _unsatisfiable, _removeReds, _keepNops, _solverFlags,
    mirVersion, inFile, _debug, _verbose, _intermediate, _lint, outFile, outTemp,
-   _presolver, _solver) targetWithOption =
+   _presolver, _solver, _sizeThreshold) targetWithOption =
   do mirInput         <- strictReadFile inFile
      maybeAsmMirInput <- maybeStrictReadFile baseFile
      let mirInputs    = splitDocs mirVersion mirInput
@@ -65,7 +66,7 @@ runFunction
    rematType, _baseFile, scaleFreq, applyBaseFile, tightPressureBound,
    strictlyBetter, unsatisfiable, removeReds, keepNops, solverFlags, mirVersion,
    inFile, debug, verbose, intermediate, lint, _outFile, _outTemp, presolver,
-   solver)
+   solver, sizeThreshold)
   targetWithOption (mir, asmMir) =
   do prefix <- getTempPrefix
      let maybePutStrLn = when verbose . hPutStrLn stderr
@@ -75,75 +76,90 @@ runFunction
          asmMirInput   = fmap concatFun asmMir
      maybePutStrLn ("Running function with prefix '" ++ prefix ++ "'...")
 
+     baseFile' <- normalize
+                  (prefix, estimateFreq, simplifyControlFlow, mirVersion,
+                   debug, verbose, targetWithOption) asmMirInput
+
      let uniFile = addExtension "uni" prefix
      maybePutStrLn "Running 'uni import'..."
-     Import.run
+     importResult <-
+       Import.run
        (estimateFreq, simplifyControlFlow, noCC, noReserved, maxBlockSize,
-        implementFrames, rematType, function, goal, mirVersion, inFile, debug,
-        intermediate, lint, lintPragma, Just uniFile)
+        implementFrames, rematType, function, goal, mirVersion, sizeThreshold,
+        inFile, debug, intermediate, lint, lintPragma, Just uniFile)
        mirInput targetWithOption
-     uniInput <- strictReadFile uniFile
 
-     let lssaUniFile = addExtension "lssa.uni" prefix
-     maybePutStrLn "Running 'uni linearize'..."
-     Linearize.run
-       (uniFile, debug, intermediate, lint, lintPragma, Just lssaUniFile)
-       uniInput targetWithOption
-     lssaUniInput <- strictReadFile lssaUniFile
+     case importResult of
+      -- import succeeds:
+      (Just _) ->
+        do uniInput <- strictReadFile uniFile
 
-     let extUniFile = addExtension "ext.uni" prefix
-     maybePutStrLn "Running 'uni extend'..."
-     Extend.run
-       (lssaUniFile, debug, intermediate, lint, lintPragma, Just extUniFile)
-       lssaUniInput targetWithOption
-     extUniInput <- strictReadFile extUniFile
+           let lssaUniFile = addExtension "lssa.uni" prefix
+           maybePutStrLn "Running 'uni linearize'..."
+           Linearize.run
+             (uniFile, debug, intermediate, lint, lintPragma, Just lssaUniFile)
+             uniInput targetWithOption
+           lssaUniInput <- strictReadFile lssaUniFile
 
-     let altUniFile = addExtension "alt.uni" prefix
-     maybePutStrLn "Running 'uni augment'..."
-     Augment.run
-       (implementFrames, noCross, oldModel, expandCopies, rematType,
-        extUniFile, debug, intermediate, lint, lintPragma, Just altUniFile)
-       extUniInput targetWithOption
-     altUniInput <- strictReadFile altUniFile
+           let extUniFile = addExtension "ext.uni" prefix
+           maybePutStrLn "Running 'uni extend'..."
+           Extend.run
+             (lssaUniFile, debug, intermediate, lint, lintPragma, Just extUniFile)
+             lssaUniInput targetWithOption
+           extUniInput <- strictReadFile extUniFile
 
-     baseFile' <-normalize
-                 (prefix, estimateFreq, simplifyControlFlow, mirVersion,
-                  debug, verbose, targetWithOption) asmMirInput
+           let altUniFile = addExtension "alt.uni" prefix
+           maybePutStrLn "Running 'uni augment'..."
+           Augment.run
+             (implementFrames, noCross, oldModel, expandCopies, rematType,
+              extUniFile, debug, intermediate, lint, lintPragma, Just altUniFile)
+             extUniInput targetWithOption
+           altUniInput <- strictReadFile altUniFile
 
-     let jsonFile = addExtension "json" prefix
-     maybePutStrLn "Running 'uni model'..."
-     Model.run
-       (baseFile', scaleFreq, oldModel, applyBaseFile, tightPressureBound,
-        strictlyBetter, unsatisfiable, noCC, Just jsonFile)
-       altUniInput targetWithOption
+           let jsonFile = addExtension "json" prefix
+           maybePutStrLn "Running 'uni model'..."
+           Model.run
+             (baseFile', scaleFreq, oldModel, applyBaseFile, tightPressureBound,
+              strictlyBetter, unsatisfiable, noCC, Just jsonFile)
+             altUniInput targetWithOption
 
-     let extJsonFile   = addExtension "ext.json" prefix
-         presolverPath = case presolver of
-                          Just path -> path
-                          Nothing -> "gecode-presolver"
-     maybePutStrLn ("Running '" ++ presolverPath ++ "'...")
-     callProcess presolverPath
-       (["-o", extJsonFile] ++ ["-verbose" | verbose] ++
-        ["-t", "180000", jsonFile])
+           let extJsonFile   = addExtension "ext.json" prefix
+               presolverPath = case presolver of
+                                Just path -> path
+                                Nothing -> "gecode-presolver"
+           maybePutStrLn ("Running '" ++ presolverPath ++ "'...")
+           callProcess presolverPath
+             (["-o", extJsonFile] ++ ["-verbose" | verbose] ++
+              ["-t", "180000", jsonFile])
 
-     let outJsonFile = addExtension "out.json" prefix
-         splitFlags  = [flag | flag <- splitOn " " solverFlags, not (null flag)]
-         solverPath  = case solver of
-                          Just path -> path
-                          Nothing -> "gecode-solver"
-     maybePutStrLn ("Running '" ++ solverPath ++ "'...")
-     callProcess solverPath
-       (["-o", outJsonFile] ++ ["-verbose" | verbose] ++ splitFlags ++
-        [extJsonFile])
+           let outJsonFile = addExtension "out.json" prefix
+               splitFlags  = [flag | flag <- splitOn " " solverFlags,
+                              not (null flag)]
+               solverPath  = case solver of
+                                Just path -> path
+                                Nothing -> "gecode-solver"
+           maybePutStrLn ("Running '" ++ solverPath ++ "'...")
+           callProcess solverPath
+             (["-o", outJsonFile] ++ ["-verbose" | verbose] ++ splitFlags ++
+              [extJsonFile])
 
-     let unisonMirFile = addExtension "unison.mir" prefix
-     maybePutStrLn "Running 'uni export'..."
-     Export.run
-       (removeReds, keepNops, baseFile', tightPressureBound, mirVersion, debug,
-        outJsonFile, Just unisonMirFile)
-       altUniInput targetWithOption
+           let unisonMirFile = addExtension "unison.mir" prefix
+           maybePutStrLn "Running 'uni export'..."
+           Export.run
+             (removeReds, keepNops, baseFile', tightPressureBound, mirVersion, debug,
+              outJsonFile, Just unisonMirFile)
+             altUniInput targetWithOption
 
-     return prefix
+           return prefix
+
+      -- import aborted (because input exceeds maximum size as given by
+      -- 'sizeThreshold'), assume a base file is given:
+      Nothing ->
+        do when verbose $
+                hPutStrLn stderr "Size threshold exceeded, skipping function..."
+           let unisonMirFile = addExtension "unison.mir" prefix
+           copyFile (fromJust baseFile') unisonMirFile
+           return prefix
 
 addExtension ext prefix = prefix ++ "." ++ ext
 

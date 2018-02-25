@@ -44,12 +44,13 @@ mainWithTargets targets = do
         do input <- strictReadFile inFile
            case pickTarget targetName targets of
              (Any target) ->
-                 Import.run
-                 (estimateFreq, simplifyControlFlow, noCC, noReserved,
-                  maxBlockSize, implementFrames, rematType, function, goal,
-                  mirVersion,
-                  inFile, debug, intermediate, lint, lintPragma, outFile)
-                 input (target, targetOption)
+                 do _ <- Import.run
+                         (estimateFreq, simplifyControlFlow, noCC, noReserved,
+                          maxBlockSize, implementFrames, rematType, function,
+                          goal, mirVersion, sizeThreshold, inFile, debug,
+                          intermediate, lint, lintPragma, outFile)
+                         input (target, targetOption)
+                    return ()
     Linearize{..} ->
         do input <- strictReadFile inFile
            case pickTarget targetName targets of
@@ -142,6 +143,6 @@ mainWithTargets targets = do
             baseFile, scaleFreq, applyBaseFile, tightPressureBound,
             strictlyBetter, unsatisfiable, removeReds, keepNops, solverFlags, mirVersion,
             inFile, debug, verbose, intermediate, lint, outFile, outTemp,
-            presolver, solver)
+            presolver, solver, sizeThreshold)
            (target, targetOption)
          return ()

@@ -78,8 +78,8 @@ import Unison.Tools.Import.AdvancePhis
 import Unison.Tools.Import.TagRemats
 
 run (estimateFreq, simplifyControlFlow, noCC, noReserved, maxBlockSize,
-     implementFrames, rematType, function, goal, mirVersion, mirFile, debug,
-     intermediate, lint, lintPragma, uniFile) mir target =
+     implementFrames, rematType, function, goal, mirVersion, sizeThreshold,
+     mirFile, debug, intermediate, lint, lintPragma, uniFile) mir target =
     let mf = selectFunction function $ MachineIR.parse mirVersion mir
         (mf', partialMfs) =
             applyTransformations
@@ -93,13 +93,16 @@ run (estimateFreq, simplifyControlFlow, noCC, noReserved, maxBlockSize,
                                  lintPragma))
             target ff
         baseName = takeBaseName mirFile
-    in do when debug $
-               putStr (toPlainText (partialMfs ++ partialFs))
-          when intermediate $
-               mapM_ (writeIntermediateFile "uni" baseName) partialFs
-          emitOutput uniFile (show f)
-          when lint $
-               invokeLint f target
+    in case overThreshold sizeThreshold mf of
+        True  -> do return Nothing
+        False -> do when debug $
+                         putStr (toPlainText (partialMfs ++ partialFs))
+                    when intermediate $
+                         mapM_ (writeIntermediateFile "uni" baseName) partialFs
+                    emitOutput uniFile (show f)
+                    when lint $
+                         invokeLint f target
+                    return (Just uniFile)
 
 mirTransformations (estimateFreq, simplifyControlFlow) =
     [(dropDebugLocations, "dropDebugLocations", True),
@@ -168,3 +171,7 @@ selectFunction (Just name) mfs =
   case find (\mf -> MachineIR.mfName mf == name) mfs of
     Just mf -> mf
     Nothing -> error ("could not find specified MIR function " ++ show name)
+
+overThreshold Nothing _ = False
+overThreshold (Just max) mf =
+  toInteger (length (MachineIR.flattenMachineFunction mf)) > max
