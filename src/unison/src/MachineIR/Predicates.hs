@@ -32,6 +32,7 @@ module MachineIR.Predicates
          isMachineExtractSubReg,
          isMachineInsertSubReg,
          isMachineRegSequence,
+         isMachineSubregToReg,
          isMachinePhi,
          isMachineCopy,
          isMachineCFIInstruction,
@@ -119,6 +120,10 @@ isMachineInsertSubReg _ = False
 isMachineRegSequence
   MachineSingle {msOpcode = MachineVirtualOpc REG_SEQUENCE} = True
 isMachineRegSequence _ = False
+
+isMachineSubregToReg
+  MachineSingle {msOpcode = MachineVirtualOpc SUBREG_TO_REG} = True
+isMachineSubregToReg _ = False
 
 isMachinePhi MachineSingle {msOpcode = MachineVirtualOpc PHI} = True
 isMachinePhi _ = False
