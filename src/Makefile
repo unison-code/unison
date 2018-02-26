@@ -45,6 +45,8 @@ SOLVERBIN := $(SOLVERDIR)/gecode-solver
 
 UNISON_SHOW_DETAILS ?= always
 
+UNISON_GHC_CONFIG := -O2
+
 build:
 	$(MAKE) build-unison
 	$(MAKE) build-presolver build-solver
@@ -54,7 +56,7 @@ build-solver: $(SOLVERBIN)
 build-presolver: $(PRESOLVERBIN)
 
 build-unison: prepare-unison
-	cd $(UNISONDIR); $(CABALBIN) configure --enable-tests; $(CABALBIN) build
+	cd $(UNISONDIR); $(CABALBIN) configure --enable-tests; $(CABALBIN) build --ghc-options="$(UNISON_GHC_CONFIG)"
 
 prepare-unison:
 	cd $(UNISONDIR); $(CABALBIN) install --only-dependencies --enable-tests
