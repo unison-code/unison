@@ -51,7 +51,7 @@ install:
   - export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib
   - cabal update
   - cabal install 'cabal-install == 1.22.*'
-  - cabal install 'aeson == 1.1.*'
+  - cabal install 'aeson == 1.1.*' 'transformers-compat == 0.5.*'
   - cd src && make prepare-unison && cd -
 
 # Build and test Unison
