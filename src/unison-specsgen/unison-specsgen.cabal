@@ -40,6 +40,8 @@ Library
                  text >= 1.1,
                  vector >= 0.10,
                  unordered-containers >= 0.2,
+                 -- 0.6.* gives problems with old ghcs
+                 transformers-compat == 0.5.*,
                  yaml >= 0.8,
                  bytestring >= 0.9,
                  cmdargs >= 0.10,
