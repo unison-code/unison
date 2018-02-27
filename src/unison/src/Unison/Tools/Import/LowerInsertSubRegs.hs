@@ -23,7 +23,7 @@ lowerInsertSubRegs mf target =
 
 lowerInsertInstrSubRegs stf (accIs, id) (mi @
   MachineSingle {msOperands = [d @ MachineTemp {},
-                               s1 @ MachineTemp {},
+                               s1,
                                s2 @ MachineTemp {},
                                sr]}
   : is)
@@ -41,12 +41,29 @@ lowerInsertInstrSubRegs stf (accIs, id) (mi @
           HighSubRegIndex ->
             let t  = mkSimpleMachineTemp id
                 lo = mi {msOpcode = mkMachineVirtualOpc LOW,
-                                    msOperands = [t, s1]}
+                         msOperands = [t, s1]}
                 co = mi {msOpcode = mkMachineVirtualOpc COMBINE,
-                                    msOperands = [d, t, s2]}
+                         msOperands = [d, t, s2]}
             in (id + 1, [lo, co])
           CopySubRegIndex -> (id, [mi {msOpcode = mkMachineVirtualOpc COPY,
                                        msOperands = [d, s2]}])
+  in lowerInsertInstrSubRegs stf (accIs ++ mis, id') is
+  | isMachineSubregToReg mi =
+  let subreg     = toSubRegIndex sr
+      (id', mis) =
+        case stf subreg of
+          CopySubRegIndex -> (id, [mi {msOpcode = mkMachineVirtualOpc COPY,
+                                       msOperands = [d, s2]}])
+          sri ->
+            let t   = mkSimpleMachineTemp id
+                de  = mi {msOpcode = mkMachineVirtualOpc IMPLICIT_DEF,
+                          msOperands = [t]}
+                mos = case sri of
+                       LowSubRegIndex  -> [d, s2, t]
+                       HighSubRegIndex -> [d, t, s2]
+                co = mi {msOpcode = mkMachineVirtualOpc COMBINE,
+                         msOperands = mos}
+            in (id + 1, [de, co])
   in lowerInsertInstrSubRegs stf (accIs ++ mis, id') is
 
 lowerInsertInstrSubRegs stf (accIs, id) (mi : is) =
