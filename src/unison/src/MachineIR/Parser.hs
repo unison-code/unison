@@ -278,6 +278,7 @@ mirVirtualOpcode =
   try (mirVOpc ("IMPLICIT_DEF", IMPLICIT_DEF)) <|>
   try (mirVOpc ("INSERT_SUBREG", INSERT_SUBREG)) <|>
   try (mirVOpc ("REG_SEQUENCE", REG_SEQUENCE)) <|>
+  try (mirVOpc ("SUBREG_TO_REG", SUBREG_TO_REG)) <|>
   try (mirVOpc ("COMBINE", COMBINE)) <|>
   try (mirVOpc ("ADJCALLSTACKUP", ADJCALLSTACKUP)) <|>
   try (mirVOpc ("ADJCALLSTACKDOWN", ADJCALLSTACKDOWN)) <|>

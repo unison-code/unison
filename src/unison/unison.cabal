@@ -280,7 +280,7 @@ Library
                  HUnit
 
   Ghc-options: -fwarn-dodgy-exports -fwarn-dodgy-imports -fwarn-unused-matches
-               -fwarn-unused-imports -fwarn-unused-binds -O2
+               -fwarn-unused-imports -fwarn-unused-binds
 
 Executable uni
 

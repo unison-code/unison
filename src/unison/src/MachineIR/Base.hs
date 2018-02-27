@@ -180,6 +180,7 @@ data MachineVirtualOpcode =
   IMPLICIT_DEF |
   INSERT_SUBREG |
   REG_SEQUENCE |
+  SUBREG_TO_REG |
   COMBINE |
   ADJCALLSTACKUP |
   ADJCALLSTACKDOWN |
@@ -238,7 +239,7 @@ data MachineOperand r =
     mstSubRegIndex :: String
     } |
   -- | Sub-register index corresponding to LLVM's @MO_Immediate@ when used by a
-  -- @INSERT_SUBREG@ or a @REG_SEQUENCE@ instruction
+  -- @INSERT_SUBREG@, @REG_SEQUENCE@, or @SUBREG_TO_REG@ instruction
   MachineSubRegIndex {
     msrSubRegIndex :: String
     } |

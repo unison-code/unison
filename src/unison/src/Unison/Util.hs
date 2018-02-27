@@ -1204,6 +1204,8 @@ fromMachineInstruction itf oif
                   COMBINE          -> mkCombine id (us' !! 0) (us' !! 1) (head ds')
                   ADJCALLSTACKDOWN -> mkFrameSetup id (head us')
                   ADJCALLSTACKUP   -> mkFrameDestroy id (head us')
+                  SUBREG_TO_REG ->
+                    error ("unexpected 'SUBREG_TO_REG' machine instruction, should be lowered before this point")
               (MachineTargetOpc i) ->
                 case itf i of
                   CopyInstructionType ->
@@ -1252,6 +1254,9 @@ splitMachineVirtualOperands opcode (operand:operands)
   | opcode `elem` [PHI, COMBINE] = (operands, [operand])
 splitMachineVirtualOperands opcode (s:_)
   | opcode `elem` [ADJCALLSTACKDOWN, ADJCALLSTACKUP] = ([s], [])
+splitMachineVirtualOperands opcode _
+  | opcode `elem` [SUBREG_TO_REG] =
+      error ("unexpected 'SUBREG_TO_REG' machine instruction, should be lowered before this point")
 
 buildInstructionAttributes :: [MachineInstructionProperty r] -> Attributes i r
 buildInstructionAttributes ips =
