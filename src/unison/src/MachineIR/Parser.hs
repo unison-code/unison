@@ -333,6 +333,7 @@ mirActualOperand v =
   try mirCFIDefOffset <|>
   try (mirCFIDefReg v) <|>
   try (mirCFIOffset v) <|>
+  try mirCFIAdjustCfaOffset <|>
   try mirRegMask
 
 mirConstantPoolIndex =
@@ -566,6 +567,13 @@ mirCFIOffset v =
      string ", "
      off <- signedDecimal
      return (mkMachineCFIOffset (mfrRegName reg) off)
+
+mirCFIAdjustCfaOffset =
+  do optional mirCFIPrefix
+     string "adjust_cfa_offset"
+     whiteSpace
+     off <- signedDecimal
+     return (mkMachineCFIAdjustCfaOffset off)
 
 mirRegMask =
   do string "csr_"

@@ -72,6 +72,7 @@ module MachineIR.Constructors
          mkMachineCFIDefOffset,
          mkMachineCFIDefReg,
          mkMachineCFIOffset,
+         mkMachineCFIAdjustCfaOffset,
          -- * MachineRegState constructors
          mkMachineRegImplicit,
          mkMachineRegImplicitDefine,
@@ -143,6 +144,7 @@ mkMachineCFIDef = MachineCFIDef
 mkMachineCFIDefOffset = MachineCFIDefOffset
 mkMachineCFIDefReg = MachineCFIDefReg
 mkMachineCFIOffset = MachineCFIOffset
+mkMachineCFIAdjustCfaOffset = MachineCFIAdjustCfaOffset
 
 mkMachineRegImplicit = MachineRegImplicit
 mkMachineRegImplicitDefine = MachineRegImplicitDefine
