@@ -236,7 +236,7 @@ showMachineOperand v (MachineCFIDefReg reg) =
   ".cfi_def_cfa_register " ++ showMIRReg v reg ++ reg
 showMachineOperand v (MachineCFIOffset reg off) =
   ".cfi_offset " ++ showMIRReg v reg ++ ", " ++ show off
-showMachineOperand v (MachineCFIAdjustCfaOffset off) =
+showMachineOperand _ (MachineCFIAdjustCfaOffset off) =
   ".cfi_adjust_cfa_offset " ++ show off
 showMachineOperand _ (MachineRegMask name) = "csr_" ++ name
 showMachineOperand _ (MachineConstantPoolIndex idx) = "%const." ++ idx
