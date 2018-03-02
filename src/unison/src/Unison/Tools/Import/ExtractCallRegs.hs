@@ -35,7 +35,9 @@ extractCallRegsInCall rs (code, (t, id)) o
         isTheCall = isId callId
         [b,_,a]   = split (whenElt isTheCall) code
         prol      = filter (isPrologueOpr rs) $ dropUntil isPerilogueLimit b
-        epil      = filter (isEpilogueOpr rs) $ takeWhile (not . isPerilogueLimit) a
+        epil      = filter (isEpilogueOpr rs) $
+                    takeWhile (not . (\o -> isPerilogueLimit o ||
+                                            isPrologueOpr rs o)) a
         ((t', code'),   pt) = mapAccumL virtualizeProlInstr (t, code) prol
         ((t'', code''), et) = mapAccumL virtualizeEpilInstr (t', code') epil
         fun       = mapToAttrCall (const (Just callId)) (mkFun id pt et)
