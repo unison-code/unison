@@ -347,10 +347,14 @@ data MachineOperand r =
   MachineCFIDefReg {
     mcdRegName :: String
     } |
-  -- | CFI definition register with offset (for LLVM's @CFI_INSTRUCTION@ instructions)
+  -- | CFI register with offset (for LLVM's @CFI_INSTRUCTION@ instructions)
   MachineCFIOffset {
     mcRegName :: String,
     mcOffset :: Integer
+    } |
+  -- | CFI offset adjustment (for LLVM's @CFI_INSTRUCTION@ instructions)
+  MachineCFIAdjustCfaOffset {
+    mcacOffset :: Integer
     } |
   -- | Free-form register (does not correspond to any LLVM operand, for
   -- temporary use only)

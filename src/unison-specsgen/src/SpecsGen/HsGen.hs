@@ -220,14 +220,18 @@ promote effs i =
     in i1
 
 explicateEffect (rs, ws) i eff =
-  let i1 = if eff `elem` rs then addEffectOperand (eff ++ "_use") "use" i  else i
-      i2 = if eff `elem` ws then addEffectOperand (eff ++ "_def") "def" i1 else i1
-      i3 = if eff `elem` rs then addToOperands (eff ++ "_use") "uses" i2 else i2
-      i4 = if eff `elem` ws then addToOperands (eff ++ "_def") "defines" i3 else i3
+  let (ef, rc) =
+        case break (\c -> c == ':') eff of
+         (ef', []) -> (ef', "Unknown")
+         (ef', _:rc') -> (ef', rc')
+      i1 = if ef `elem` rs then addEffectOperand (ef ++ "_use") "use" rc i  else i
+      i2 = if ef `elem` ws then addEffectOperand (ef ++ "_def") "def" rc i1 else i1
+      i3 = if ef `elem` rs then addToOperands (ef ++ "_use") "uses" i2 else i2
+      i4 = if ef `elem` ws then addToOperands (ef ++ "_def") "defines" i3 else i3
   in i4
 
-addEffectOperand name typ i =
-    let ps = [YString "register", YString typ, YString "Unknown"]
+addEffectOperand name typ rc i =
+    let ps = [YString "register", YString typ, YString rc]
     in yApplyTo (YString "operands")
        (yAddToSeq (YMap [(YString name, YSeq ps)])) i
 

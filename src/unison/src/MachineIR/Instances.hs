@@ -236,6 +236,8 @@ showMachineOperand v (MachineCFIDefReg reg) =
   ".cfi_def_cfa_register " ++ showMIRReg v reg ++ reg
 showMachineOperand v (MachineCFIOffset reg off) =
   ".cfi_offset " ++ showMIRReg v reg ++ ", " ++ show off
+showMachineOperand _ (MachineCFIAdjustCfaOffset off) =
+  ".cfi_adjust_cfa_offset " ++ show off
 showMachineOperand _ (MachineRegMask name) = "csr_" ++ name
 showMachineOperand _ (MachineConstantPoolIndex idx) = "%const." ++ idx
 showMachineOperand _ (MachineFPImm i f e) =
@@ -295,6 +297,7 @@ instance Show r => Show (MachineOperand r) where
   show (MachineCFIDefOffset off) = inBraces ["mcdo", show off]
   show (MachineCFIDefReg name) = inBraces ["mcdr", name]
   show (MachineCFIOffset name off) = inBraces ["mco", name, show off]
+  show (MachineCFIAdjustCfaOffset off) = inBraces ["mcaco", show off]
 
 inBraces es = "{" ++ renderStyle lineStyle (cs id es) ++ "}"
 
