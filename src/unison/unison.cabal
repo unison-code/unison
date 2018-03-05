@@ -256,6 +256,16 @@ Library
                   Unison.Target.Mips.SpecsGen.AllInstructions
                   Unison.Target.Mips.SpecsGen.Parent
 
+  if impl(ghc <= 7.4.2)
+    Build-Depends: transformers-compat == 0.5.*,
+                   cmdargs == 0.10.14,
+                   yaml == 0.8.27,
+                   parsec == 3.1.11
+  else
+    Build-Depends: cmdargs >= 0.10,
+                   yaml >= 0.8,
+                   parsec >= 3.1
+
   Build-Depends: base >= 4.0,
                  fgl >= 5.5.3,
                  pretty >= 1.0,
@@ -266,14 +276,10 @@ Library
                  hoopl >= 3.9,
                  filepath >= 1.1,
                  text >= 1.0,
-                 cmdargs >= 0.10,
                  aeson >= 0.7,
                  aeson-pretty >= 0.8.1,
                  bytestring >= 0.9,
                  unordered-containers >= 0.2,
-                 -- 0.6.* gives problems with old ghcs
-                 transformers-compat == 0.5.*,
-                 yaml >= 0.8,
                  scientific >= 0.3,
                  directory >= 1.2,
                  process >= 1.2,
