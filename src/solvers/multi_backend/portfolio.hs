@@ -49,6 +49,7 @@ data Portfolio =
              gecodeFlags :: String,
              chuffedFlags :: String,
              timeOut :: Maybe Integer,
+             memLimit :: Bool,
              lowerBoundFile :: FilePath}
   deriving (Data, Typeable, Show)
 
@@ -62,6 +63,7 @@ portfolioArgs = cmdArgsMode $ Portfolio
      gecodeFlags = "" &= help "Flags passed to the Gecode solver",
      chuffedFlags = "" &= help "Flags passed to the Chuffed solver",
      timeOut = Nothing &= help "Timeout for both solvers (in seconds)",
+     memLimit = True &= help "Limit the use of memory by Chuffed to 16 GB",
      lowerBoundFile = "" &= name "l" &= help "Lower bound file" &= typFile
     }
 
@@ -94,7 +96,7 @@ tryUntilSuccess a =
            tryUntilSuccess a
       Right () -> return ()
 
-runChuffed flags to extJson lowerBoundFile outJsonFile =
+runChuffed flags to memLimit extJson lowerBoundFile outJsonFile =
   do -- call 'minizinc-solver' but only for the setup (we would like to use the
      -- entire script but for some reason then we cannot kill the underlying
      -- processes when MiniZinc looses the race)
@@ -106,12 +108,13 @@ runChuffed flags to extJson lowerBoundFile outJsonFile =
         [extJson])
      -- now call the underlying 'minizinc' process that is killable (unlike
      -- what is executed from 'minizinc-solver')
-     let pre = (take (length extJson - 9) extJson)
+     let mznChuffed = if memLimit then "mzn-crippled-chuffed" else "mzn-chuffed"
+         pre = (take (length extJson - 9) extJson)
          mzn = pre ++ ".mzn"
          dzn = pre ++ ".dzn"
          out = pre ++ ".out"
      setEnv "FLATZINC_CMD" "fzn-chuffed"
-     tryUntilSuccess $ callProcess "mzn-crippled-chuffed"
+     tryUntilSuccess $ callProcess mznChuffed
        (concatMap fznFlag (["--verbosity", "3",
                             "-f",
                             "--rnd-seed", "123456"] ++
@@ -195,7 +198,7 @@ main =
                  (race
                   (runGecode gecodeFlags to verbose inFile
                    gecodeLowerBoundFile gecodeOutFile)
-                  (runChuffed chuffedFlags to inFile
+                  (runChuffed chuffedFlags to memLimit inFile
                    chuffedLowerBoundFile chuffedOutFile))
        end <- getCurrentTime
        let winner = case result of
