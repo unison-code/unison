@@ -39,15 +39,15 @@ sudo: required
 
 cache:
   directories:
-  - gecode-build
+  - gecode-release-6.0.0
 
 # Install prerequisities
 
 install:
   - sudo apt-get -qq update
   - sudo apt-get install -y expect haskell-platform g++ libqt4-dev libgraphviz-dev
-  - if [ ! -e gecode-build/Makefile ]; then ./.travis/download-build-gecode.sh; fi
-  - cd gecode-build && sudo make install && cd -
+  - if [ ! -e gecode-release-6.0.0/Makefile ]; then ./.travis/download-build-gecode.sh; fi
+  - cd gecode-release-6.0.0 && sudo make install && cd -
   - export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib
   - cabal update
   - cabal install 'cabal-install == 1.22.*'
