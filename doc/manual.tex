@@ -234,7 +234,7 @@ Unison has the following direct dependencies:
 \item \href{http://hackage.haskell.org/platform/}{Haskell platform}
 \item \href{https://www.qt.io/}{Qt (version 4.x)}
 \item \href{http://www.graphviz.org/}{Graphviz library}
-\item \href{http://www.gecode.org/}{Gecode (svn revision 16772 or newer)}
+\item \href{http://www.gecode.org/}{Gecode (version 6.0.0)}
 \end{itemize}
 %
 To get the first three dependencies in Debian-based distributions, just run:
@@ -243,11 +243,10 @@ To get the first three dependencies in Debian-based distributions, just run:
 apt-get install haskell-platform libqt4-dev libgraphviz-dev
 \end{command}
 
-The source of the required Gecode revision can be fetched with:
+The source of Gecode can be fetched with:
 %
 \begin{command}
-svn --username anonymous checkout -r16772 \
-https://svn.gecode.org/svn/gecode/trunk
+wget https://github.com/Gecode/gecode/archive/release-6.0.0.tar.gz
 \end{command}
 
 \section{Building}

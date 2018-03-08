@@ -1,7 +1,8 @@
 #!/bin/bash
-./.travis/accept-svn-certificate.sh anonymous robcasloz@gmail.com https://svn.gecode.org/svn/gecode/trunk
-svn --non-interactive --username anonymous --password robcasloz@gmail.com checkout -r16772 https://svn.gecode.org/svn/gecode/trunk gecode-trunk
-cd gecode-trunk
+wget https://github.com/Gecode/gecode/archive/release-6.0.0.tar.gz
+tar -xvzf release-6.0.0.tar.gz
+mv gecode-release-6.0.0 gecode-build
+cd gecode-build
 ./configure --disable-examples --disable-float --disable-flatzinc
 make
 cd -
