@@ -44,7 +44,8 @@ data Uni =
                outFile :: Maybe FilePath, baseFile :: Maybe FilePath,
                scaleFreq :: Bool, oldModel :: Bool, applyBaseFile :: Bool,
                tightPressureBound :: Bool, strictlyBetter :: Bool,
-               unsatisfiable :: Bool, noCC :: Bool} |
+               unsatisfiable :: Bool, noCC :: Bool,
+               mirVersion :: MachineIRVersion} |
     Export    {targetName :: String, inFile :: FilePath, targetOption :: [String],
                outFile :: Maybe FilePath, debug :: Bool, removeReds :: Bool,
                keepNops :: Bool, baseFile :: Maybe FilePath,
