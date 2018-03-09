@@ -151,7 +151,7 @@ splitFlags flags =
 
 proven json =
   let sol    = parseJson json
-      proven = sol HM.! "proven"
+      proven = lookupOrFail "sol" sol "proven"
   in (fromJson proven) :: Bool
 
 parseJson json =
@@ -286,7 +286,7 @@ cost out
   | not (validJson out) = maxInt
 cost out =
   let sol  = parseJson out
-      cost = sol HM.! "cost"
+      cost = lookupOrFail "sol" sol "cost"
       -- Assumes a single goal as the minizinc solver does not support more
       [c]  = (fromJson cost) :: [Integer]
   in if c == -1 then maxInt else c
@@ -295,16 +295,16 @@ maxInt = toInteger (maxBound - 1 :: Int32)
 
 lowerBound lowerBoundJson =
   let json  = parseJson lowerBoundJson
-      lbj   = json HM.! "lower_bound"
+      lbj   = lookupOrFail "json" json "lower_bound"
       [lb]  = (fromJson lbj) :: [Integer]
   in lb
 
 freqFactor input =
-  let factor = input HM.! "freq_scale"
+  let factor = lookupOrFail "input" input "freq_scale"
   in fromJson factor :: Double
 
 optimizeDynamic input =
-  let od = input HM.! "optimize_dynamic"
+  let od = lookupOrFail "input" input "optimize_dynamic"
   in fromJson od :: [Bool]
 
 writeLowerBoundFile _ "" _ _ = return ()
@@ -339,7 +339,7 @@ updateTimes preTime solverTime outFile =
      return ()
 
 presolverTime input =
-  let preTime = input HM.! "presolver_time"
+  let preTime = lookupOrFail "input" input "presolver_time"
   in fromJson preTime :: Integer
 
 toJSONMap = BSL.unpack . encodePretty' jsonConfig
@@ -349,3 +349,9 @@ showInteger i =
   case floatingOrInteger i of
    Right i' -> DTB.fromString (show (toInteger i'))
    Left r -> error ("expecting integer but got " ++ show r)
+
+lookupOrFail name map key =
+  case HM.lookup  key map of
+   Just val -> val
+   Nothing -> error $ "key " ++ show key ++ " is not present in map " ++
+                      show name ++ "\n" ++ "map contents: " ++ show map
