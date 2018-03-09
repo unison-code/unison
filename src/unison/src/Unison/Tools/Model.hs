@@ -48,14 +48,15 @@ import qualified Unison.Tools.Model.InstructionScheduling as IS
 import qualified Unison.Tools.Model.RegisterAllocation as RA
 
 run (baseFile, scaleFreq, oldModel, applyBaseFile, tightPressureBound,
-     strictlyBetter, unsatisfiable, noCC, jsonFile)
+     strictlyBetter, unsatisfiable, noCC, mirVersion, jsonFile)
     extUni target =
   do baseMir <- maybeStrictReadFile baseFile
      let f    = parse target extUni
          base = maybeNothing applyBaseFile baseMir
          aux  = auxiliarDataStructures target tightPressureBound base f
          ps   = modeler (scaleFreq, noCC) aux target f
-         ps'  = optimization (strictlyBetter, unsatisfiable, scaleFreq)
+         ps'  = optimization
+                (strictlyBetter, unsatisfiable, scaleFreq, mirVersion)
                 aux target f ps
          ps'' = presolver oldModel aux target f ps'
      emitOutput jsonFile ((BSL.unpack (encodePretty' jsonConfig ps'')))
@@ -84,7 +85,7 @@ optimization flags aux target f ps =
     let ops = toJSON (M.fromList (optimizationParameters flags aux target f))
     in unionMaps ps ops
 
-optimizationParameters (strictlyBetter, unsatisfiable, scaleFreq)
+optimizationParameters (strictlyBetter, unsatisfiable, scaleFreq, mirVersion)
   (_, _, deps, _, _, baseMir) target Function {fCode = code, fGoal = goal} =
     let rm    = resourceManager target
         oif   = operandInfo target
@@ -97,11 +98,8 @@ optimizationParameters (strictlyBetter, unsatisfiable, scaleFreq)
         factd = fromRational fact :: Double
         maxf0 = case baseMir of
                  (Just mir) ->
-                   -- The MIR version does not matter at this point as we
-                   -- expect normalized, single-function MIR. Same for the
-                   -- 'maximumCost' function below.
-                     let mf = fromSingleton $ MIR.parse MIR.LLVM5 mir
-                         mc = maximumCost fact cf
+                     let mf = fromSingleton $ MIR.parse mirVersion mir
+                         mc = maximumCost mirVersion fact cf
                          mx = map (\g -> mc g (mir, mf) target code) gl
                      in if strictlyBetter then decrementLast mx else mx
                  Nothing -> replicate (length gl) maxInt
@@ -140,15 +138,15 @@ optResource' r2id (ResourceUsage r) = r2id M.! r
 
 maximumCost :: (Eq i, Show i, Read i, Ord r, Show r, Read r, Ord rc, Show rc,
                 Ord s, Show s) =>
-               Rational -> M.Map s Integer -> Goal s ->
+               MIR.MachineIRVersion -> Rational -> M.Map s Integer -> Goal s ->
                (String, MIR.MachineFunction i r) ->
                TargetWithOptions i r rc s -> [Block i r] ->
                Integer
-maximumCost factor cf gl (mir, mf) target code =
+maximumCost mirVersion factor cf gl (mir, mf) target code =
     let bbs    = map MIR.machineBlockFreq (MIR.mfBlocks mf)
         fbs    = map blockFreq code
         nf     = sort . map (scaleDown factor)
-        ([baseCost], _) = Analyze.analyze (False, True, MIR.LLVM5, True, False)
+        ([baseCost], _) = Analyze.analyze (False, True, mirVersion, True, False)
                           factor [gl] mir target
         baseCost' = baseCost + compensation cf gl (nf fbs) (nf bbs)
     in baseCost'
