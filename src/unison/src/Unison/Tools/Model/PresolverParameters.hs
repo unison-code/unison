@@ -65,6 +65,7 @@ parameters oldModel (_, dgs, _, _, ra, _)
       quasi_adjacent = [] :: [Integer]
       long_latency_index = [] :: [Integer]
       long_latency_def_use = [] :: [Integer]
+      subsumed_resources = map (\_ -> [] :: [Integer]) code
       value_precede_chains = [] :: [Integer]
   in
    [
@@ -115,6 +116,7 @@ parameters oldModel (_, dgs, _, _, ra, _)
       ("quasi_adjacent", toJSON quasi_adjacent),
       ("long_latency_index", toJSON long_latency_index),
       ("long_latency_def_use", toJSON long_latency_def_use),
+      ("subsumed_resources", toJSON subsumed_resources),
       ("value_precede_chains", toJSON value_precede_chains)
 
      ]

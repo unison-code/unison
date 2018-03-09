@@ -592,45 +592,48 @@ void gen_region(const Parameters& input,
 
   map<operation,int> src_cps = dag_longest_paths_fwd(region, pweight, pweight_c);
   map<operation,int> sink_cps = dag_longest_paths_bwd(reverse, pweight, pweight_c);
+  vector<resource> subsumed = input.subsumed_resources[input.oblock[src]];
   for (resource r : input.R) {
-    vector<pair<int,int>> edges;
-    for (operation o1 : region)
-      if (min_con_erg[o1][r][1]>0)
-	for (operation o2 : G.reachables(o1))
-	  if (ord_contains(region,o2) && min_con_erg[o2][r][1]>0)
-	    edges.push_back(make_pair(o1,o2));
-    Digraph R = Digraph(edges);
-    vector<operation> RV = R.vertices();
-    if (RV.size()>0) {
-      int r1=0, r2=0, r3=0;
-      vector<operation> F;
-      if (min_con_erg[src][r][1]==0) {
-	r1 = 1000000000;
-	for (operation o : RV) {
-	  int cp = src_cps[o];
-	  r1 = cp < r1 ? cp : r1;
+    if (!ord_contains(subsumed, r)) {
+      vector<pair<int,int>> edges;
+      for (operation o1 : region)
+	if (min_con_erg[o1][r][1]>0)
+	  for (operation o2 : G.reachables(o1))
+	    if (ord_contains(region,o2) && min_con_erg[o2][r][1]>0)
+	      edges.push_back(make_pair(o1,o2));
+      Digraph R = Digraph(edges);
+      vector<operation> RV = R.vertices();
+      if (RV.size()>0) {
+	int r1=0, r2=0, r3=0;
+	vector<operation> F;
+	if (min_con_erg[src][r][1]==0) {
+	  r1 = 1000000000;
+	  for (operation o : RV) {
+	    int cp = src_cps[o];
+	    r1 = cp < r1 ? cp : r1;
+	  }
 	}
+	if (min_con_erg[sink][r][1]==0) {
+	  r3 = 1000000000;
+	  for (operation o : RV) {
+	    int cp = sink_cps[o];
+	    r3 = cp < r3 ? cp : r3;
+	  }
+	}
+	for (operation o : RV)
+	  if (min_con_erg[o][r][0] < min_con_erg[o][r][1]) {
+	    F = region_finishers(R, r, input.cap[r], min_con_erg);
+	    break;
+	  }
+	for (operation o : RV)
+	  if (ord_contains(F,o))
+	    r2 = r2 + min_con_erg[o][r][0];
+	  else
+	    r2 = r2 + min_con_erg[o][r][1];
+	r2 = (r2-1)/input.cap[r]+1;
+	r2 = r1+r2+r3-1;
+	glb = r2 > glb ? r2 : glb;
       }
-      if (min_con_erg[sink][r][1]==0) {
-	r3 = 1000000000;
-	for (operation o : RV) {
-	  int cp = sink_cps[o];
-	  r3 = cp < r3 ? cp : r3;
-	}
-      }
-      for (operation o : RV)
-	if (min_con_erg[o][r][0] < min_con_erg[o][r][1]) {
-	  F = region_finishers(R, r, input.cap[r], min_con_erg);
-	  break;
-	}
-      for (operation o : RV)
-	if (ord_contains(F,o))
-	  r2 = r2 + min_con_erg[o][r][0];
-        else
-	  r2 = r2 + min_con_erg[o][r][1];
-      r2 = (r2-1)/input.cap[r]+1;
-      r2 = r1+r2+r3-1;
-      glb = r2 > glb ? r2 : glb;
     }
   }
   if (glb <= src_cps[sink]) {
@@ -1157,6 +1160,45 @@ void test_redundancy(Parameters & input, GlobalModel * gm) {
   }
 }
 
+// given block b and resource r, is the resource constraint entailed up front?
+void subsumed_resources(Parameters& input) {
+  for(block b : input.B) {
+    vector<resource> entailed;
+    vector<set<operation>> r2o(input.R.size());
+    set<instruction> bI;
+    for(operation o : input.ops[b]) {
+      for(instruction i : input.instructions[o]) {
+	bI.insert(input.instructions[o].begin(), input.instructions[o].end());
+	if(i != NULL_INSTRUCTION)
+	  for(resource r : input.R)
+	    if (input.con[i][r]>0 && input.dur[i][r]>0)
+	      r2o[r].insert(o);
+      }
+    }
+    for(resource r : input.R) {
+      if(r2o[r].size() <= 1) {
+	entailed.push_back(r);
+      } else {
+	for(resource s : input.R) {
+	  if(s != r && input.cap[r] >= input.cap[s] && !ord_contains(entailed, s)) {
+	    for(instruction i : bI)
+	      if(i != NULL_INSTRUCTION &&
+		 (input.dur[i][r] > input.dur[i][s] ||
+		  input.con[i][r] > input.con[i][s] ||
+		  input.off[i][r] != input.off[i][s]))
+		goto next_s;
+	    entailed.push_back(r);
+	    goto next_r;
+	  }
+	next_s: ;
+	}
+      }
+    next_r: ;
+    }
+    input.subsumed_resources[b] = entailed;
+  }
+}
+    
 #if 0
 
 /*****************************************************************************

@@ -79,6 +79,7 @@ array[int] of int: bb_order;
 array[int] of set of int: bb_ops;
 array[int] of set of int: bb_operands;
 array[int] of set of int: bb_temps;
+array[int] of set of int: bb_subsumed;
 array[int] of int: bb_frequency;
 array[int] of int: bb_maxcycle;
 array[int] of int: bb_optional_min;
@@ -866,7 +867,7 @@ int: max_res_off(int: res, int: o) = (
 );
 
 constraint
-    forall(res in index_set(res_cap), b in 1..MAXB) (
+    forall(b in 1..MAXB, res in index_set(res_cap) diff bb_subsumed[b]) (
         let {set of int: active = {o | o in bb_ops[b] where
 	                               exists(q in op_instructions[o])
 				             (res_con[res,q]>0)}} in (

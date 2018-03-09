@@ -142,7 +142,8 @@ Parameters::Parameters(JSONVALUE root) :
   value_precede_chains  (get_vector<PresolverValuePrecedeChain>(getRoot(root, "value_precede_chains"))),
   quasi_adjacent  (get_2d_vector<int>(getRoot(root, "quasi_adjacent"))),
   long_latency_index  (get_3d_vector<int>(getRoot(root, "long_latency_index"))),
-  long_latency_def_use  (get_2d_vector<int>(getRoot(root, "long_latency_def_use")))
+  long_latency_def_use  (get_2d_vector<int>(getRoot(root, "long_latency_def_use"))),
+  subsumed_resources  (get_2d_vector<int>(getRoot(root, "subsumed_resources")))
 {
   compute_derived();
 }

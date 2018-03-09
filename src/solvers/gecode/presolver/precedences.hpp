@@ -158,6 +158,8 @@ bool analyzable(UnisonConstraintExpr& nogood);
 
 void test_redundancy(Parameters & input, GlobalModel * gm);
 
+void subsumed_resources(Parameters& input);
+
 #if 0
 
 void gen_predecessors_successors(Parameters& input);

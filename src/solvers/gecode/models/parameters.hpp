@@ -353,6 +353,9 @@ public:
   // [MC] long_latency use-def hazards
   vector<vector<operand> > long_latency_def_use;
 
+  // [MC] subsumed resources
+  vector<vector<resource> > subsumed_resources;
+
   Parameters(JSONVALUE root);
 
   // emit parameters in JSON format
