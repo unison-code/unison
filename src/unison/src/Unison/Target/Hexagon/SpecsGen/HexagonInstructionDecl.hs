@@ -3157,7 +3157,6 @@ data HexagonInstruction = A2_abs
                         | LIFETIME_END_ce
                         | LIFETIME_START_ce
                         | LO_ce
-                        | LOAD_STACK_GUARD_ce
                         | LOCAL_ESCAPE_ce
                         | LO_GOT_ce
                         | LO_GOTREL_ce

@@ -25,8 +25,8 @@ alignedPairs i ([], [_])
   | i `elem`
       [HEXAGON_V6_vd0_pseudo, HEXAGON_V6_vd0_pseudo_128B, IMPLICIT_DEF,
        IMPLICIT_DEF_ce, L2_deallocframe_linear, L4_return_linear,
-       LOAD_STACK_GUARD, LOAD_STACK_GUARD_ce, TFR_PdFalse,
-       TFR_PdFalse_source, TFR_PdTrue, TFR_PdTrue_source]
+       LOAD_STACK_GUARD, TFR_PdFalse, TFR_PdFalse_source, TFR_PdTrue,
+       TFR_PdTrue_source]
     = []
 alignedPairs i ([_], [_]) | i `elem` [ALIGNA, ALIGNA_ce] = []
 alignedPairs i ([_], [_])

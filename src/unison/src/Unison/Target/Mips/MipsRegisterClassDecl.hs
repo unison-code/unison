@@ -60,4 +60,5 @@ data MipsRegisterClass =
     M32 |
     M64 |
     RM32 |
-    RM64 deriving (Eq, Ord, Show, Read)
+    RM64 |
+    Ptr_rc deriving (Eq, Ord, Show, Read)

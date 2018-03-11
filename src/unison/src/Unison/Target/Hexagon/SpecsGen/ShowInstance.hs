@@ -3163,7 +3163,6 @@ instance Show HexagonInstruction where
         show LIFETIME_END_ce = "LIFETIME_END_ce"
         show LIFETIME_START_ce = "LIFETIME_START_ce"
         show LO_ce = "LO_ce"
-        show LOAD_STACK_GUARD_ce = "LOAD_STACK_GUARD_ce"
         show LOCAL_ESCAPE_ce = "LOCAL_ESCAPE_ce"
         show LO_GOT_ce = "LO_GOT_ce"
         show LO_GOTREL_ce = "LO_GOTREL_ce"

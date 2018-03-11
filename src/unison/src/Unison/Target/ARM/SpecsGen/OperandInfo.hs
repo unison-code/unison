@@ -13,7 +13,9 @@ operandInfo i
     ([], [TemporaryInfo (RegisterClass DPR) 1 False])
   | i `elem` [VMOVQ0] =
     ([], [TemporaryInfo (RegisterClass QPR) 1 False])
-  | i `elem` [IMPLICIT_DEF, LOAD_STACK_GUARD] = ([], [BoundInfo])
+  | i `elem` [LOAD_STACK_GUARD] =
+    ([], [TemporaryInfo (RegisterClass Ptr_rc) 1 False])
+  | i `elem` [IMPLICIT_DEF] = ([], [BoundInfo])
   | i `elem` [MOVE_ALL] =
     ([TemporaryInfo (RegisterClass ALL) 0 False],
      [TemporaryInfo (RegisterClass ALL) 1 False])
@@ -2421,6 +2423,8 @@ operandInfo i
       TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo, BoundInfo,
       TemporaryInfo (RegisterClass CCR) 0 False],
      [])
+  | i `elem` [LOCAL_ESCAPE] =
+    ([TemporaryInfo (RegisterClass Ptr_rc) 0 False, BoundInfo], [])
   | i `elem`
       [T2LEApcrelJT_demat, T2LEApcrel_cpi_demat_cpi, T2MOVi16_demat,
        T2MOVi32imm_demat, T2MOVi_demat, T2MVNi_demat]
@@ -2919,9 +2923,8 @@ operandInfo i
     ([BoundInfo, TemporaryInfo (RegisterClass RGPR) 0 False, BoundInfo,
       BoundInfo, TemporaryInfo (RegisterClass CCR) 0 False],
      [TemporaryInfo (RegisterClass RGPR) 1 False])
-  | i `elem`
-      [CPS2p, ITasm, LOCAL_ESCAPE, T2CPS2p, T2IT, TADJCALLSTACKUP, TCPS]
-    = ([BoundInfo, BoundInfo], [])
+  | i `elem` [CPS2p, ITasm, T2CPS2p, T2IT, TADJCALLSTACKUP, TCPS] =
+    ([BoundInfo, BoundInfo], [])
   | i `elem` [MOVi16_ga_pcrel, TLDRpci_pic] =
     ([BoundInfo, BoundInfo],
      [TemporaryInfo (RegisterClass GPR) 1 False])

@@ -2987,7 +2987,7 @@ instruction-set:
         - id:                 LOAD_STACK_GUARD
           type:               linear
           operands:
-           - dst:             bound
+           - dst:             [register, def, ptr_rc]
           uses:               []
           defines:            [dst]
           size:               0
@@ -2999,7 +2999,7 @@ instruction-set:
         - id:                 LOCAL_ESCAPE
           type:               linear
           operands:
-           - symbol:          bound
+           - symbol:          [register, use, ptr_rc]
            - id:              bound
           uses:               [symbol, id]
           defines:            []

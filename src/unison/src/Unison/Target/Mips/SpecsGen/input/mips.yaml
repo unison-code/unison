@@ -1501,7 +1501,7 @@ instruction-set:
           type:               linear
           operands:
            - dst:             [register, def, GPR32]
-           - ptr:             bound
+           - ptr:             [register, use, ptr_rc]
            - cmp:             [register, use, GPR32]
            - swap:            [register, use, GPR32]
           uses:               [ptr, cmp, swap]
@@ -1515,7 +1515,7 @@ instruction-set:
           type:               linear
           operands:
            - dst:             [register, def, GPR32]
-           - ptr:             bound
+           - ptr:             [register, use, ptr_rc]
            - cmp:             [register, use, GPR32]
            - swap:            [register, use, GPR32]
           uses:               [ptr, cmp, swap]
@@ -1529,7 +1529,7 @@ instruction-set:
           type:               linear
           operands:
            - dst:             [register, def, GPR64]
-           - ptr:             bound
+           - ptr:             [register, use, ptr_rc]
            - cmp:             [register, use, GPR64]
            - swap:            [register, use, GPR64]
           uses:               [ptr, cmp, swap]
@@ -1543,7 +1543,7 @@ instruction-set:
           type:               linear
           operands:
            - dst:             [register, def, GPR32]
-           - ptr:             bound
+           - ptr:             [register, use, ptr_rc]
            - cmp:             [register, use, GPR32]
            - swap:            [register, use, GPR32]
           uses:               [ptr, cmp, swap]
@@ -1557,7 +1557,7 @@ instruction-set:
           type:               linear
           operands:
            - dst:             [register, def, GPR32]
-           - ptr:             bound
+           - ptr:             [register, use, ptr_rc]
            - incr:            [register, use, GPR32]
           uses:               [ptr, incr]
           defines:            [dst]
@@ -1570,7 +1570,7 @@ instruction-set:
           type:               linear
           operands:
            - dst:             [register, def, GPR32]
-           - ptr:             bound
+           - ptr:             [register, use, ptr_rc]
            - incr:            [register, use, GPR32]
           uses:               [ptr, incr]
           defines:            [dst]
@@ -1583,7 +1583,7 @@ instruction-set:
           type:               linear
           operands:
            - dst:             [register, def, GPR64]
-           - ptr:             bound
+           - ptr:             [register, use, ptr_rc]
            - incr:            [register, use, GPR64]
           uses:               [ptr, incr]
           defines:            [dst]
@@ -1596,7 +1596,7 @@ instruction-set:
           type:               linear
           operands:
            - dst:             [register, def, GPR32]
-           - ptr:             bound
+           - ptr:             [register, use, ptr_rc]
            - incr:            [register, use, GPR32]
           uses:               [ptr, incr]
           defines:            [dst]
@@ -1609,7 +1609,7 @@ instruction-set:
           type:               linear
           operands:
            - dst:             [register, def, GPR32]
-           - ptr:             bound
+           - ptr:             [register, use, ptr_rc]
            - incr:            [register, use, GPR32]
           uses:               [ptr, incr]
           defines:            [dst]
@@ -1622,7 +1622,7 @@ instruction-set:
           type:               linear
           operands:
            - dst:             [register, def, GPR32]
-           - ptr:             bound
+           - ptr:             [register, use, ptr_rc]
            - incr:            [register, use, GPR32]
           uses:               [ptr, incr]
           defines:            [dst]
@@ -1635,7 +1635,7 @@ instruction-set:
           type:               linear
           operands:
            - dst:             [register, def, GPR64]
-           - ptr:             bound
+           - ptr:             [register, use, ptr_rc]
            - incr:            [register, use, GPR64]
           uses:               [ptr, incr]
           defines:            [dst]
@@ -1648,7 +1648,7 @@ instruction-set:
           type:               linear
           operands:
            - dst:             [register, def, GPR32]
-           - ptr:             bound
+           - ptr:             [register, use, ptr_rc]
            - incr:            [register, use, GPR32]
           uses:               [ptr, incr]
           defines:            [dst]
@@ -1661,7 +1661,7 @@ instruction-set:
           type:               linear
           operands:
            - dst:             [register, def, GPR32]
-           - ptr:             bound
+           - ptr:             [register, use, ptr_rc]
            - incr:            [register, use, GPR32]
           uses:               [ptr, incr]
           defines:            [dst]
@@ -1674,7 +1674,7 @@ instruction-set:
           type:               linear
           operands:
            - dst:             [register, def, GPR32]
-           - ptr:             bound
+           - ptr:             [register, use, ptr_rc]
            - incr:            [register, use, GPR32]
           uses:               [ptr, incr]
           defines:            [dst]
@@ -1687,7 +1687,7 @@ instruction-set:
           type:               linear
           operands:
            - dst:             [register, def, GPR64]
-           - ptr:             bound
+           - ptr:             [register, use, ptr_rc]
            - incr:            [register, use, GPR64]
           uses:               [ptr, incr]
           defines:            [dst]
@@ -1700,7 +1700,7 @@ instruction-set:
           type:               linear
           operands:
            - dst:             [register, def, GPR32]
-           - ptr:             bound
+           - ptr:             [register, use, ptr_rc]
            - incr:            [register, use, GPR32]
           uses:               [ptr, incr]
           defines:            [dst]
@@ -1713,7 +1713,7 @@ instruction-set:
           type:               linear
           operands:
            - dst:             [register, def, GPR32]
-           - ptr:             bound
+           - ptr:             [register, use, ptr_rc]
            - incr:            [register, use, GPR32]
           uses:               [ptr, incr]
           defines:            [dst]
@@ -1726,7 +1726,7 @@ instruction-set:
           type:               linear
           operands:
            - dst:             [register, def, GPR32]
-           - ptr:             bound
+           - ptr:             [register, use, ptr_rc]
            - incr:            [register, use, GPR32]
           uses:               [ptr, incr]
           defines:            [dst]
@@ -1739,7 +1739,7 @@ instruction-set:
           type:               linear
           operands:
            - dst:             [register, def, GPR64]
-           - ptr:             bound
+           - ptr:             [register, use, ptr_rc]
            - incr:            [register, use, GPR64]
           uses:               [ptr, incr]
           defines:            [dst]
@@ -1752,7 +1752,7 @@ instruction-set:
           type:               linear
           operands:
            - dst:             [register, def, GPR32]
-           - ptr:             bound
+           - ptr:             [register, use, ptr_rc]
            - incr:            [register, use, GPR32]
           uses:               [ptr, incr]
           defines:            [dst]
@@ -1765,7 +1765,7 @@ instruction-set:
           type:               linear
           operands:
            - dst:             [register, def, GPR32]
-           - ptr:             bound
+           - ptr:             [register, use, ptr_rc]
            - incr:            [register, use, GPR32]
           uses:               [ptr, incr]
           defines:            [dst]
@@ -1778,7 +1778,7 @@ instruction-set:
           type:               linear
           operands:
            - dst:             [register, def, GPR32]
-           - ptr:             bound
+           - ptr:             [register, use, ptr_rc]
            - incr:            [register, use, GPR32]
           uses:               [ptr, incr]
           defines:            [dst]
@@ -1791,7 +1791,7 @@ instruction-set:
           type:               linear
           operands:
            - dst:             [register, def, GPR64]
-           - ptr:             bound
+           - ptr:             [register, use, ptr_rc]
            - incr:            [register, use, GPR64]
           uses:               [ptr, incr]
           defines:            [dst]
@@ -1804,7 +1804,7 @@ instruction-set:
           type:               linear
           operands:
            - dst:             [register, def, GPR32]
-           - ptr:             bound
+           - ptr:             [register, use, ptr_rc]
            - incr:            [register, use, GPR32]
           uses:               [ptr, incr]
           defines:            [dst]
@@ -1817,7 +1817,7 @@ instruction-set:
           type:               linear
           operands:
            - dst:             [register, def, GPR32]
-           - ptr:             bound
+           - ptr:             [register, use, ptr_rc]
            - incr:            [register, use, GPR32]
           uses:               [ptr, incr]
           defines:            [dst]
@@ -1830,7 +1830,7 @@ instruction-set:
           type:               linear
           operands:
            - dst:             [register, def, GPR32]
-           - ptr:             bound
+           - ptr:             [register, use, ptr_rc]
            - incr:            [register, use, GPR32]
           uses:               [ptr, incr]
           defines:            [dst]
@@ -1843,7 +1843,7 @@ instruction-set:
           type:               linear
           operands:
            - dst:             [register, def, GPR64]
-           - ptr:             bound
+           - ptr:             [register, use, ptr_rc]
            - incr:            [register, use, GPR64]
           uses:               [ptr, incr]
           defines:            [dst]
@@ -1856,7 +1856,7 @@ instruction-set:
           type:               linear
           operands:
            - dst:             [register, def, GPR32]
-           - ptr:             bound
+           - ptr:             [register, use, ptr_rc]
            - incr:            [register, use, GPR32]
           uses:               [ptr, incr]
           defines:            [dst]
@@ -1869,7 +1869,7 @@ instruction-set:
           type:               linear
           operands:
            - dst:             [register, def, GPR32]
-           - ptr:             bound
+           - ptr:             [register, use, ptr_rc]
            - incr:            [register, use, GPR32]
           uses:               [ptr, incr]
           defines:            [dst]
@@ -1882,7 +1882,7 @@ instruction-set:
           type:               linear
           operands:
            - dst:             [register, def, GPR32]
-           - ptr:             bound
+           - ptr:             [register, use, ptr_rc]
            - incr:            [register, use, GPR32]
           uses:               [ptr, incr]
           defines:            [dst]
@@ -1895,7 +1895,7 @@ instruction-set:
           type:               linear
           operands:
            - dst:             [register, def, GPR64]
-           - ptr:             bound
+           - ptr:             [register, use, ptr_rc]
            - incr:            [register, use, GPR64]
           uses:               [ptr, incr]
           defines:            [dst]
@@ -1908,7 +1908,7 @@ instruction-set:
           type:               linear
           operands:
            - dst:             [register, def, GPR32]
-           - ptr:             bound
+           - ptr:             [register, use, ptr_rc]
            - incr:            [register, use, GPR32]
           uses:               [ptr, incr]
           defines:            [dst]
@@ -5147,7 +5147,7 @@ instruction-set:
         - id:                 CACHE
           type:               linear
           operands:
-           - addr1:           bound
+           - addr1:           [register, use, ptr_rc]
            - addr2:           bound
            - hint:            bound
           uses:               [addr1, addr2, hint]
@@ -5160,7 +5160,7 @@ instruction-set:
         - id:                 CACHEE
           type:               linear
           operands:
-           - addr1:           bound
+           - addr1:           [register, use, ptr_rc]
            - addr2:           bound
            - hint:            bound
           uses:               [addr1, addr2, hint]
@@ -5225,7 +5225,7 @@ instruction-set:
         - id:                 CACHE_R6
           type:               linear
           operands:
-           - addr1:           bound
+           - addr1:           [register, use, ptr_rc]
            - addr2:           bound
            - hint:            bound
           uses:               [addr1, addr2, hint]
@@ -14329,7 +14329,7 @@ instruction-set:
           type:               linear
           operands:
            - rt:              [register, def, GPR32Opnd]
-           - addr1:           bound
+           - addr1:           [register, use, ptr_rc]
            - addr2:           bound
           uses:               [addr1, addr2]
           defines:            [rt]
@@ -14343,7 +14343,7 @@ instruction-set:
           type:               linear
           operands:
            - rt:              [register, def, GPR64Opnd]
-           - addr1:           bound
+           - addr1:           [register, use, ptr_rc]
            - addr2:           bound
           uses:               [addr1, addr2]
           defines:            [rt]
@@ -14357,7 +14357,7 @@ instruction-set:
           type:               linear
           operands:
            - rt:              [register, def, GPR32Opnd]
-           - addr1:           bound
+           - addr1:           [register, use, ptr_rc]
            - addr2:           bound
           uses:               [addr1, addr2]
           defines:            [rt]
@@ -14371,7 +14371,7 @@ instruction-set:
           type:               linear
           operands:
            - rt:              [register, def, GPR32Opnd]
-           - addr1:           bound
+           - addr1:           [register, use, ptr_rc]
            - addr2:           bound
           uses:               [addr1, addr2]
           defines:            [rt]
@@ -14427,8 +14427,8 @@ instruction-set:
           type:               linear
           operands:
            - rd:              [register, def, GPR32Opnd]
-           - base:            bound
-           - index:           bound
+           - base:            [register, use, ptr_rc]
+           - index:           [register, use, ptr_rc]
           uses:               [base, index]
           defines:            [rd]
           size:               4
@@ -14441,8 +14441,8 @@ instruction-set:
           type:               linear
           operands:
            - rd:              [register, def, GPR32Opnd]
-           - base:            bound
-           - index:           bound
+           - base:            [register, use, ptr_rc]
+           - index:           [register, use, ptr_rc]
           uses:               [base, index]
           defines:            [rd]
           size:               4
@@ -14469,7 +14469,7 @@ instruction-set:
           type:               linear
           operands:
            - rt:              [register, def, GPR32Opnd]
-           - addr1:           bound
+           - addr1:           [register, use, ptr_rc]
            - addr2:           bound
           uses:               [addr1, addr2]
           defines:            [rt]
@@ -14497,7 +14497,7 @@ instruction-set:
           type:               linear
           operands:
            - rt:              [register, def, GPR32Opnd]
-           - addr1:           bound
+           - addr1:           [register, use, ptr_rc]
            - addr2:           bound
           uses:               [addr1, addr2]
           defines:            [rt]
@@ -14511,7 +14511,7 @@ instruction-set:
           type:               linear
           operands:
            - rt:              [register, def, GPR64Opnd]
-           - addr1:           bound
+           - addr1:           [register, use, ptr_rc]
            - addr2:           bound
           uses:               [addr1, addr2]
           defines:            [rt]
@@ -14525,7 +14525,7 @@ instruction-set:
           type:               linear
           operands:
            - rt:              [register, def, GPR32Opnd]
-           - addr1:           bound
+           - addr1:           [register, use, ptr_rc]
            - addr2:           bound
           uses:               [addr1, addr2]
           defines:            [rt]
@@ -14539,7 +14539,7 @@ instruction-set:
           type:               linear
           operands:
            - rt:              [register, def, GPR32Opnd]
-           - addr1:           bound
+           - addr1:           [register, use, ptr_rc]
            - addr2:           bound
           uses:               [addr1, addr2]
           defines:            [rt]
@@ -14553,7 +14553,7 @@ instruction-set:
           type:               linear
           operands:
            - rt:              [register, def, GPR32Opnd]
-           - addr1:           bound
+           - addr1:           [register, use, ptr_rc]
            - addr2:           bound
           uses:               [addr1, addr2]
           defines:            [rt]
@@ -14567,7 +14567,7 @@ instruction-set:
           type:               linear
           operands:
            - rt:              [register, def, GPR64Opnd]
-           - addr1:           bound
+           - addr1:           [register, use, ptr_rc]
            - addr2:           bound
           uses:               [addr1, addr2]
           defines:            [rt]
@@ -14581,7 +14581,7 @@ instruction-set:
           type:               linear
           operands:
            - rt:              [register, def, AFGR64Opnd]
-           - addr1:           bound
+           - addr1:           [register, use, ptr_rc]
            - addr2:           bound
           uses:               [addr1, addr2]
           defines:            [rt]
@@ -14595,7 +14595,7 @@ instruction-set:
           type:               linear
           operands:
            - rt:              [register, def, FGR64Opnd]
-           - addr1:           bound
+           - addr1:           [register, use, ptr_rc]
            - addr2:           bound
           uses:               [addr1, addr2]
           defines:            [rt]
@@ -14609,7 +14609,7 @@ instruction-set:
           type:               linear
           operands:
            - rt:              [register, def, AFGR64Opnd]
-           - addr1:           bound
+           - addr1:           [register, use, ptr_rc]
            - addr2:           bound
           uses:               [addr1, addr2]
           defines:            [rt]
@@ -14623,7 +14623,7 @@ instruction-set:
           type:               linear
           operands:
            - rt:              [register, def, COP2Opnd]
-           - addr1:           bound
+           - addr1:           [register, use, ptr_rc]
            - addr2:           bound
           uses:               [addr1, addr2]
           defines:            [rt]
@@ -14637,7 +14637,7 @@ instruction-set:
           type:               linear
           operands:
            - rt:              [register, def, COP2Opnd]
-           - addr1:           bound
+           - addr1:           [register, use, ptr_rc]
            - addr2:           bound
           uses:               [addr1, addr2]
           defines:            [rt]
@@ -14651,7 +14651,7 @@ instruction-set:
           type:               linear
           operands:
            - rt:              [register, def, COP3Opnd]
-           - addr1:           bound
+           - addr1:           [register, use, ptr_rc]
            - addr2:           bound
           uses:               [addr1, addr2]
           defines:            [rt]
@@ -14713,7 +14713,7 @@ instruction-set:
           type:               linear
           operands:
            - src:             [register, usedef, GPR64Opnd]
-           - addr1:           bound
+           - addr1:           [register, use, ptr_rc]
            - addr2:           bound
           uses:               [addr1, addr2, src]
           defines:            [src]
@@ -14738,7 +14738,7 @@ instruction-set:
           type:               linear
           operands:
            - src:             [register, usedef, GPR64Opnd]
-           - addr1:           bound
+           - addr1:           [register, use, ptr_rc]
            - addr2:           bound
           uses:               [addr1, addr2, src]
           defines:            [src]
@@ -14751,8 +14751,8 @@ instruction-set:
           type:               linear
           operands:
            - fd:              [register, def, AFGR64Opnd]
-           - base:            bound
-           - index:           bound
+           - base:            [register, use, ptr_rc]
+           - index:           [register, use, ptr_rc]
           uses:               [base, index]
           defines:            [fd]
           size:               4
@@ -14764,8 +14764,8 @@ instruction-set:
           type:               linear
           operands:
            - fd:              [register, def, FGR64Opnd]
-           - base:            bound
-           - index:           bound
+           - base:            [register, use, ptr_rc]
+           - index:           [register, use, ptr_rc]
           uses:               [base, index]
           defines:            [fd]
           size:               4
@@ -14777,7 +14777,7 @@ instruction-set:
           type:               linear
           operands:
            - wd:              [register, def, MSA128BOpnd]
-           - addr1:           bound
+           - addr1:           [register, use, ptr_rc]
            - addr2:           bound
           uses:               [addr1, addr2]
           defines:            [wd]
@@ -14790,7 +14790,7 @@ instruction-set:
           type:               linear
           operands:
            - wd:              [register, def, MSA128DOpnd]
-           - addr1:           bound
+           - addr1:           [register, use, ptr_rc]
            - addr2:           bound
           uses:               [addr1, addr2]
           defines:            [wd]
@@ -14803,7 +14803,7 @@ instruction-set:
           type:               linear
           operands:
            - wd:              [register, def, MSA128HOpnd]
-           - addr1:           bound
+           - addr1:           [register, use, ptr_rc]
            - addr2:           bound
           uses:               [addr1, addr2]
           defines:            [wd]
@@ -14816,7 +14816,7 @@ instruction-set:
           type:               linear
           operands:
            - wd:              [register, def, MSA128WOpnd]
-           - addr1:           bound
+           - addr1:           [register, use, ptr_rc]
            - addr2:           bound
           uses:               [addr1, addr2]
           defines:            [wd]
@@ -14829,7 +14829,7 @@ instruction-set:
           type:               linear
           operands:
            - rt:              [register, def, GPR32Opnd]
-           - addr1:           bound
+           - addr1:           [register, use, ptr_rc]
            - addr2:           bound
           uses:               [addr1, addr2]
           defines:            [rt]
@@ -14842,7 +14842,7 @@ instruction-set:
           type:               linear
           operands:
            - rt:              [register, def, GPR64Opnd]
-           - addr1:           bound
+           - addr1:           [register, use, ptr_rc]
            - addr2:           bound
           uses:               [addr1, addr2]
           defines:            [rt]
@@ -14855,7 +14855,7 @@ instruction-set:
           type:               linear
           operands:
            - rt:              [register, def, GPR32Opnd]
-           - addr1:           bound
+           - addr1:           [register, use, ptr_rc]
            - addr2:           bound
           uses:               [addr1, addr2]
           defines:            [rt]
@@ -14868,7 +14868,7 @@ instruction-set:
           type:               linear
           operands:
            - rt:              [register, def, GPR32Opnd]
-           - addr1:           bound
+           - addr1:           [register, use, ptr_rc]
            - addr2:           bound
           uses:               [addr1, addr2]
           defines:            [rt]
@@ -14882,7 +14882,7 @@ instruction-set:
           type:               linear
           operands:
            - rt:              [register, def, GPR64Opnd]
-           - addr1:           bound
+           - addr1:           [register, use, ptr_rc]
            - addr2:           bound
           uses:               [addr1, addr2]
           defines:            [rt]
@@ -14896,7 +14896,7 @@ instruction-set:
           type:               linear
           operands:
            - rt:              [register, def, GPR32Opnd]
-           - addr1:           bound
+           - addr1:           [register, use, ptr_rc]
            - addr2:           bound
           uses:               [addr1, addr2]
           defines:            [rt]
@@ -14910,7 +14910,7 @@ instruction-set:
           type:               linear
           operands:
            - rt:              [register, def, GPR32Opnd]
-           - addr1:           bound
+           - addr1:           [register, use, ptr_rc]
            - addr2:           bound
           uses:               [addr1, addr2]
           defines:            [rt]
@@ -14938,8 +14938,8 @@ instruction-set:
           type:               linear
           operands:
            - rd:              [register, def, GPR32Opnd]
-           - base:            bound
-           - index:           bound
+           - base:            [register, use, ptr_rc]
+           - index:           [register, use, ptr_rc]
           uses:               [base, index]
           defines:            [rd]
           size:               4
@@ -14952,8 +14952,8 @@ instruction-set:
           type:               linear
           operands:
            - rd:              [register, def, GPR32Opnd]
-           - base:            bound
-           - index:           bound
+           - base:            [register, use, ptr_rc]
+           - index:           [register, use, ptr_rc]
           uses:               [base, index]
           defines:            [rd]
           size:               4
@@ -14966,7 +14966,7 @@ instruction-set:
           type:               linear
           operands:
            - rt:              [register, def, GPR32Opnd]
-           - addr1:           bound
+           - addr1:           [register, use, ptr_rc]
            - addr2:           bound
           uses:               [addr1, addr2]
           defines:            [rt]
@@ -14980,7 +14980,7 @@ instruction-set:
           type:               linear
           operands:
            - rt:              [register, def, GPR32Opnd]
-           - addr1:           bound
+           - addr1:           [register, use, ptr_rc]
            - addr2:           bound
           uses:               [addr1, addr2]
           defines:            [rt]
@@ -14994,7 +14994,7 @@ instruction-set:
           type:               linear
           operands:
            - rt:              [register, def, GPR64Opnd]
-           - addr1:           bound
+           - addr1:           [register, use, ptr_rc]
            - addr2:           bound
           uses:               [addr1, addr2]
           defines:            [rt]
@@ -15008,7 +15008,7 @@ instruction-set:
           type:               linear
           operands:
            - rt:              [register, def, GPR32Opnd]
-           - addr1:           bound
+           - addr1:           [register, use, ptr_rc]
            - addr2:           bound
           uses:               [addr1, addr2]
           defines:            [rt]
@@ -15022,7 +15022,7 @@ instruction-set:
           type:               linear
           operands:
            - rt:              [register, def, GPR32Opnd]
-           - addr1:           bound
+           - addr1:           [register, use, ptr_rc]
            - addr2:           bound
           uses:               [addr1, addr2]
           defines:            [rt]
@@ -15036,7 +15036,7 @@ instruction-set:
           type:               linear
           operands:
            - rt:              [register, def, GPR32Opnd]
-           - addr1:           bound
+           - addr1:           [register, use, ptr_rc]
            - addr2:           bound
           uses:               [addr1, addr2]
           defines:            [rt]
@@ -15096,7 +15096,7 @@ instruction-set:
           type:               linear
           operands:
            - rt:              [register, def, GPR32Opnd]
-           - addr1:           bound
+           - addr1:           [register, use, ptr_rc]
            - addr2:           bound
           uses:               [addr1, addr2]
           defines:            [rt]
@@ -15110,7 +15110,7 @@ instruction-set:
           type:               linear
           operands:
            - rt:              [register, def, GPR64Opnd]
-           - addr1:           bound
+           - addr1:           [register, use, ptr_rc]
            - addr2:           bound
           uses:               [addr1, addr2]
           defines:            [rt]
@@ -15124,7 +15124,7 @@ instruction-set:
           type:               linear
           operands:
            - rt:              [register, def, GPR64Opnd]
-           - addr1:           bound
+           - addr1:           [register, use, ptr_rc]
            - addr2:           bound
           uses:               [addr1, addr2]
           defines:            [rt]
@@ -15138,7 +15138,7 @@ instruction-set:
           type:               linear
           operands:
            - rt:              [register, def, GPR32Opnd]
-           - addr1:           bound
+           - addr1:           [register, use, ptr_rc]
            - addr2:           bound
           uses:               [addr1, addr2]
           defines:            [rt]
@@ -15194,7 +15194,7 @@ instruction-set:
           type:               linear
           operands:
            - rt:              [register, def, GPR32Opnd]
-           - addr1:           bound
+           - addr1:           [register, use, ptr_rc]
            - addr2:           bound
           uses:               [addr1, addr2]
           defines:            [rt]
@@ -15208,7 +15208,7 @@ instruction-set:
           type:               linear
           operands:
            - rt:              [register, def, ACC128]
-           - addr1:           bound
+           - addr1:           [register, use, ptr_rc]
            - addr2:           bound
           uses:               [addr1, addr2]
           defines:            [rt]
@@ -15222,7 +15222,7 @@ instruction-set:
           type:               linear
           operands:
            - rt:              [register, def, ACC64]
-           - addr1:           bound
+           - addr1:           [register, use, ptr_rc]
            - addr2:           bound
           uses:               [addr1, addr2]
           defines:            [rt]
@@ -15236,7 +15236,7 @@ instruction-set:
           type:               linear
           operands:
            - rt:              [register, def, ACC64DSPOpnd]
-           - addr1:           bound
+           - addr1:           [register, use, ptr_rc]
            - addr2:           bound
           uses:               [addr1, addr2]
           defines:            [rt]
@@ -15250,7 +15250,7 @@ instruction-set:
           type:               linear
           operands:
            - rt:              [register, def, DSPCC]
-           - addr1:           bound
+           - addr1:           [register, use, ptr_rc]
            - addr2:           bound
           uses:               [addr1, addr2]
           defines:            [rt]
@@ -15263,7 +15263,7 @@ instruction-set:
         - id:                 LOAD_STACK_GUARD
           type:               linear
           operands:
-           - dst:             bound
+           - dst:             [register, def, ptr_rc]
           uses:               []
           defines:            [dst]
           size:               0
@@ -15275,7 +15275,7 @@ instruction-set:
         - id:                 LOCAL_ESCAPE
           type:               linear
           operands:
-           - symbol:          bound
+           - symbol:          [register, use, ptr_rc]
            - id:              bound
           uses:               [symbol, id]
           defines:            []
@@ -15383,8 +15383,8 @@ instruction-set:
           type:               linear
           operands:
            - fd:              [register, def, AFGR64Opnd]
-           - base:            bound
-           - index:           bound
+           - base:            [register, use, ptr_rc]
+           - index:           [register, use, ptr_rc]
           uses:               [base, index]
           defines:            [fd]
           size:               4
@@ -15396,8 +15396,8 @@ instruction-set:
           type:               linear
           operands:
            - fd:              [register, def, FGR64Opnd]
-           - base:            bound
-           - index:           bound
+           - base:            [register, use, ptr_rc]
+           - index:           [register, use, ptr_rc]
           uses:               [base, index]
           defines:            [fd]
           size:               4
@@ -15409,8 +15409,8 @@ instruction-set:
           type:               linear
           operands:
            - fd:              [register, def, AFGR64Opnd]
-           - base:            bound
-           - index:           bound
+           - base:            [register, use, ptr_rc]
+           - index:           [register, use, ptr_rc]
           uses:               [base, index]
           defines:            [fd]
           size:               4
@@ -15458,7 +15458,7 @@ instruction-set:
           type:               linear
           operands:
            - rt:              [register, def, GPR32Opnd]
-           - addr1:           bound
+           - addr1:           [register, use, ptr_rc]
            - addr2:           bound
           uses:               [addr1, addr2]
           defines:            [rt]
@@ -15486,7 +15486,7 @@ instruction-set:
           type:               linear
           operands:
            - rt:              [register, def, GPR64Opnd]
-           - addr1:           bound
+           - addr1:           [register, use, ptr_rc]
            - addr2:           bound
           uses:               [addr1, addr2]
           defines:            [rt]
@@ -15500,7 +15500,7 @@ instruction-set:
           type:               linear
           operands:
            - rt:              [register, def, FGR32Opnd]
-           - addr1:           bound
+           - addr1:           [register, use, ptr_rc]
            - addr2:           bound
           uses:               [addr1, addr2]
           defines:            [rt]
@@ -15514,7 +15514,7 @@ instruction-set:
           type:               linear
           operands:
            - rt:              [register, def, FGR32Opnd]
-           - addr1:           bound
+           - addr1:           [register, use, ptr_rc]
            - addr2:           bound
           uses:               [addr1, addr2]
           defines:            [rt]
@@ -15528,7 +15528,7 @@ instruction-set:
           type:               linear
           operands:
            - rt:              [register, def, COP2Opnd]
-           - addr1:           bound
+           - addr1:           [register, use, ptr_rc]
            - addr2:           bound
           uses:               [addr1, addr2]
           defines:            [rt]
@@ -15542,7 +15542,7 @@ instruction-set:
           type:               linear
           operands:
            - rt:              [register, def, COP2Opnd]
-           - addr1:           bound
+           - addr1:           [register, use, ptr_rc]
            - addr2:           bound
           uses:               [addr1, addr2]
           defines:            [rt]
@@ -15556,7 +15556,7 @@ instruction-set:
           type:               linear
           operands:
            - rt:              [register, def, COP3Opnd]
-           - addr1:           bound
+           - addr1:           [register, use, ptr_rc]
            - addr2:           bound
           uses:               [addr1, addr2]
           defines:            [rt]
@@ -15570,7 +15570,7 @@ instruction-set:
           type:               linear
           operands:
            - rt:              [register, def, GPR32Opnd]
-           - addr1:           bound
+           - addr1:           [register, use, ptr_rc]
            - addr2:           bound
           uses:               [addr1, addr2]
           defines:            [rt]
@@ -15584,7 +15584,7 @@ instruction-set:
           type:               linear
           operands:
            - rt:              [register, def, GPR32Opnd]
-           - addr1:           bound
+           - addr1:           [register, use, ptr_rc]
            - addr2:           bound
           uses:               [addr1, addr2]
           defines:            [rt]
@@ -15626,7 +15626,7 @@ instruction-set:
           type:               linear
           operands:
            - src:             [register, usedef, GPR32Opnd]
-           - addr1:           bound
+           - addr1:           [register, use, ptr_rc]
            - addr2:           bound
           uses:               [addr1, addr2, src]
           defines:            [src]
@@ -15639,7 +15639,7 @@ instruction-set:
           type:               linear
           operands:
            - src:             [register, usedef, GPR64Opnd]
-           - addr1:           bound
+           - addr1:           [register, use, ptr_rc]
            - addr2:           bound
           uses:               [addr1, addr2, src]
           defines:            [src]
@@ -15652,7 +15652,7 @@ instruction-set:
           type:               linear
           operands:
            - src:             [register, usedef, GPR32Opnd]
-           - addr1:           bound
+           - addr1:           [register, use, ptr_rc]
            - addr2:           bound
           uses:               [addr1, addr2, src]
           defines:            [src]
@@ -15785,7 +15785,7 @@ instruction-set:
           type:               linear
           operands:
            - src:             [register, usedef, GPR32Opnd]
-           - addr1:           bound
+           - addr1:           [register, use, ptr_rc]
            - addr2:           bound
           uses:               [addr1, addr2, src]
           defines:            [src]
@@ -15798,7 +15798,7 @@ instruction-set:
           type:               linear
           operands:
            - src:             [register, usedef, GPR64Opnd]
-           - addr1:           bound
+           - addr1:           [register, use, ptr_rc]
            - addr2:           bound
           uses:               [addr1, addr2, src]
           defines:            [src]
@@ -15811,7 +15811,7 @@ instruction-set:
           type:               linear
           operands:
            - src:             [register, usedef, GPR32Opnd]
-           - addr1:           bound
+           - addr1:           [register, use, ptr_rc]
            - addr2:           bound
           uses:               [addr1, addr2, src]
           defines:            [src]
@@ -15890,8 +15890,8 @@ instruction-set:
           type:               linear
           operands:
            - rd:              [register, def, GPR32Opnd]
-           - base:            bound
-           - index:           bound
+           - base:            [register, use, ptr_rc]
+           - index:           [register, use, ptr_rc]
           uses:               [base, index]
           defines:            [rd]
           size:               4
@@ -15904,8 +15904,8 @@ instruction-set:
           type:               linear
           operands:
            - fd:              [register, def, FGR32Opnd]
-           - base:            bound
-           - index:           bound
+           - base:            [register, use, ptr_rc]
+           - index:           [register, use, ptr_rc]
           uses:               [base, index]
           defines:            [fd]
           size:               4
@@ -15917,8 +15917,8 @@ instruction-set:
           type:               linear
           operands:
            - fd:              [register, def, FGR32Opnd]
-           - base:            bound
-           - index:           bound
+           - base:            [register, use, ptr_rc]
+           - index:           [register, use, ptr_rc]
           uses:               [base, index]
           defines:            [fd]
           size:               4
@@ -15930,8 +15930,8 @@ instruction-set:
           type:               linear
           operands:
            - rd:              [register, def, GPR32Opnd]
-           - base:            bound
-           - index:           bound
+           - base:            [register, use, ptr_rc]
+           - index:           [register, use, ptr_rc]
           uses:               [base, index]
           defines:            [rd]
           size:               4
@@ -15943,8 +15943,8 @@ instruction-set:
           type:               linear
           operands:
            - rd:              [register, def, GPR32Opnd]
-           - base:            bound
-           - index:           bound
+           - base:            [register, use, ptr_rc]
+           - index:           [register, use, ptr_rc]
           uses:               [base, index]
           defines:            [rd]
           size:               4
@@ -15957,7 +15957,7 @@ instruction-set:
           type:               linear
           operands:
            - rt:              [register, def, GPR32Opnd]
-           - addr1:           bound
+           - addr1:           [register, use, ptr_rc]
            - addr2:           bound
           uses:               [addr1, addr2]
           defines:            [rt]
@@ -15971,7 +15971,7 @@ instruction-set:
           type:               linear
           operands:
            - rt:              [register, def, GPR32Opnd]
-           - addr1:           bound
+           - addr1:           [register, use, ptr_rc]
            - addr2:           bound
           uses:               [addr1, addr2]
           defines:            [rt]
@@ -15985,7 +15985,7 @@ instruction-set:
           type:               linear
           operands:
            - rt:              [register, def, GPR64Opnd]
-           - addr1:           bound
+           - addr1:           [register, use, ptr_rc]
            - addr2:           bound
           uses:               [addr1, addr2]
           defines:            [rt]
@@ -16119,7 +16119,7 @@ instruction-set:
           type:               linear
           operands:
            - rt:              [register, def, GPR32Opnd]
-           - addr1:           bound
+           - addr1:           [register, use, ptr_rc]
            - addr2:           bound
           uses:               [addr1, addr2]
           defines:            [rt]
@@ -16132,7 +16132,7 @@ instruction-set:
           type:               linear
           operands:
            - rt:              [register, def, GPR64Opnd]
-           - addr1:           bound
+           - addr1:           [register, use, ptr_rc]
            - addr2:           bound
           uses:               [addr1, addr2]
           defines:            [rt]
@@ -21190,7 +21190,7 @@ instruction-set:
         - id:                 PREF
           type:               linear
           operands:
-           - addr1:           bound
+           - addr1:           [register, use, ptr_rc]
            - addr2:           bound
            - hint:            bound
           uses:               [addr1, addr2, hint]
@@ -21203,7 +21203,7 @@ instruction-set:
         - id:                 PREFE
           type:               linear
           operands:
-           - addr1:           bound
+           - addr1:           [register, use, ptr_rc]
            - addr2:           bound
            - hint:            bound
           uses:               [addr1, addr2, hint]
@@ -21242,8 +21242,8 @@ instruction-set:
         - id:                 PREFX_MM
           type:               linear
           operands:
-           - base:            bound
-           - index:           bound
+           - base:            [register, use, ptr_rc]
+           - index:           [register, use, ptr_rc]
            - hint:            bound
           uses:               [base, index, hint]
           defines:            []
@@ -21281,7 +21281,7 @@ instruction-set:
         - id:                 PREF_R6
           type:               linear
           operands:
-           - addr1:           bound
+           - addr1:           [register, use, ptr_rc]
            - addr2:           bound
            - hint:            bound
           uses:               [addr1, addr2, hint]
@@ -22686,7 +22686,7 @@ instruction-set:
           type:               linear
           operands:
            - rt:              [register, use, GPR32Opnd]
-           - addr1:           bound
+           - addr1:           [register, use, ptr_rc]
            - addr2:           bound
           uses:               [rt, addr1, addr2]
           defines:            []
@@ -22728,7 +22728,7 @@ instruction-set:
           type:               linear
           operands:
            - rt:              [register, use, GPR64Opnd]
-           - addr1:           bound
+           - addr1:           [register, use, ptr_rc]
            - addr2:           bound
           uses:               [rt, addr1, addr2]
           defines:            []
@@ -22742,7 +22742,7 @@ instruction-set:
           type:               linear
           operands:
            - rt:              [register, use, GPR32Opnd]
-           - addr1:           bound
+           - addr1:           [register, use, ptr_rc]
            - addr2:           bound
           uses:               [rt, addr1, addr2]
           defines:            []
@@ -22756,7 +22756,7 @@ instruction-set:
           type:               linear
           operands:
            - rt:              [register, use, GPR32Opnd]
-           - addr1:           bound
+           - addr1:           [register, use, ptr_rc]
            - addr2:           bound
           uses:               [rt, addr1, addr2]
           defines:            []
@@ -22784,7 +22784,7 @@ instruction-set:
           type:               linear
           operands:
            - rt:              [register, use, GPR32Opnd]
-           - addr1:           bound
+           - addr1:           [register, use, ptr_rc]
            - addr2:           bound
           uses:               [rt, addr1, addr2]
           defines:            []
@@ -22798,7 +22798,7 @@ instruction-set:
           type:               linear
           operands:
            - rt:              [register, use, GPR32Opnd]
-           - addr1:           bound
+           - addr1:           [register, use, ptr_rc]
            - addr2:           bound
           uses:               [rt, addr1, addr2]
           defines:            []
@@ -22812,7 +22812,7 @@ instruction-set:
           type:               linear
           operands:
            - rt:              [register, usedef, GPR32Opnd]
-           - addr1:           bound
+           - addr1:           [register, use, ptr_rc]
            - addr2:           bound
           uses:               [rt, addr1, addr2]
           defines:            [rt]
@@ -22826,7 +22826,7 @@ instruction-set:
           type:               linear
           operands:
            - rt:              [register, usedef, GPR64Opnd]
-           - addr1:           bound
+           - addr1:           [register, use, ptr_rc]
            - addr2:           bound
           uses:               [rt, addr1, addr2]
           defines:            [rt]
@@ -22840,7 +22840,7 @@ instruction-set:
           type:               linear
           operands:
            - rt:              [register, usedef, GPR64Opnd]
-           - addr1:           bound
+           - addr1:           [register, use, ptr_rc]
            - addr2:           bound
           uses:               [rt, addr1, addr2]
           defines:            [rt]
@@ -22854,7 +22854,7 @@ instruction-set:
           type:               linear
           operands:
            - rt:              [register, usedef, GPR32Opnd]
-           - addr1:           bound
+           - addr1:           [register, use, ptr_rc]
            - addr2:           bound
           uses:               [rt, addr1, addr2]
           defines:            [rt]
@@ -22910,7 +22910,7 @@ instruction-set:
           type:               linear
           operands:
            - rt:              [register, usedef, GPR32Opnd]
-           - addr1:           bound
+           - addr1:           [register, use, ptr_rc]
            - addr2:           bound
           uses:               [rt, addr1, addr2]
           defines:            [rt]
@@ -22924,7 +22924,7 @@ instruction-set:
           type:               linear
           operands:
            - rt:              [register, use, GPR64Opnd]
-           - addr1:           bound
+           - addr1:           [register, use, ptr_rc]
            - addr2:           bound
           uses:               [rt, addr1, addr2]
           defines:            []
@@ -23004,7 +23004,7 @@ instruction-set:
           type:               linear
           operands:
            - rt:              [register, use, AFGR64Opnd]
-           - addr1:           bound
+           - addr1:           [register, use, ptr_rc]
            - addr2:           bound
           uses:               [rt, addr1, addr2]
           defines:            []
@@ -23018,7 +23018,7 @@ instruction-set:
           type:               linear
           operands:
            - rt:              [register, use, FGR64Opnd]
-           - addr1:           bound
+           - addr1:           [register, use, ptr_rc]
            - addr2:           bound
           uses:               [rt, addr1, addr2]
           defines:            []
@@ -23032,7 +23032,7 @@ instruction-set:
           type:               linear
           operands:
            - rt:              [register, use, AFGR64Opnd]
-           - addr1:           bound
+           - addr1:           [register, use, ptr_rc]
            - addr2:           bound
           uses:               [rt, addr1, addr2]
           defines:            []
@@ -23046,7 +23046,7 @@ instruction-set:
           type:               linear
           operands:
            - rt:              [register, use, COP2Opnd]
-           - addr1:           bound
+           - addr1:           [register, use, ptr_rc]
            - addr2:           bound
           uses:               [rt, addr1, addr2]
           defines:            []
@@ -23060,7 +23060,7 @@ instruction-set:
           type:               linear
           operands:
            - rt:              [register, use, COP2Opnd]
-           - addr1:           bound
+           - addr1:           [register, use, ptr_rc]
            - addr2:           bound
           uses:               [rt, addr1, addr2]
           defines:            []
@@ -23074,7 +23074,7 @@ instruction-set:
           type:               linear
           operands:
            - rt:              [register, use, COP3Opnd]
-           - addr1:           bound
+           - addr1:           [register, use, ptr_rc]
            - addr2:           bound
           uses:               [rt, addr1, addr2]
           defines:            []
@@ -23116,7 +23116,7 @@ instruction-set:
           type:               linear
           operands:
            - rt:              [register, use, GPR64Opnd]
-           - addr1:           bound
+           - addr1:           [register, use, ptr_rc]
            - addr2:           bound
           uses:               [rt, addr1, addr2]
           defines:            []
@@ -23129,7 +23129,7 @@ instruction-set:
           type:               linear
           operands:
            - rt:              [register, use, GPR64Opnd]
-           - addr1:           bound
+           - addr1:           [register, use, ptr_rc]
            - addr2:           bound
           uses:               [rt, addr1, addr2]
           defines:            []
@@ -23142,8 +23142,8 @@ instruction-set:
           type:               linear
           operands:
            - fs:              [register, use, AFGR64Opnd]
-           - base:            bound
-           - index:           bound
+           - base:            [register, use, ptr_rc]
+           - index:           [register, use, ptr_rc]
           uses:               [fs, base, index]
           defines:            []
           size:               4
@@ -23155,8 +23155,8 @@ instruction-set:
           type:               linear
           operands:
            - fs:              [register, use, FGR64Opnd]
-           - base:            bound
-           - index:           bound
+           - base:            [register, use, ptr_rc]
+           - index:           [register, use, ptr_rc]
           uses:               [fs, base, index]
           defines:            []
           size:               4
@@ -23536,7 +23536,7 @@ instruction-set:
           type:               linear
           operands:
            - rt:              [register, use, GPR32Opnd]
-           - addr1:           bound
+           - addr1:           [register, use, ptr_rc]
            - addr2:           bound
           uses:               [rt, addr1, addr2]
           defines:            []
@@ -23578,7 +23578,7 @@ instruction-set:
           type:               linear
           operands:
            - rt:              [register, use, GPR64Opnd]
-           - addr1:           bound
+           - addr1:           [register, use, ptr_rc]
            - addr2:           bound
           uses:               [rt, addr1, addr2]
           defines:            []
@@ -23592,7 +23592,7 @@ instruction-set:
           type:               linear
           operands:
            - rt:              [register, use, GPR32Opnd]
-           - addr1:           bound
+           - addr1:           [register, use, ptr_rc]
            - addr2:           bound
           uses:               [rt, addr1, addr2]
           defines:            []
@@ -23606,7 +23606,7 @@ instruction-set:
           type:               linear
           operands:
            - rt:              [register, use, GPR32Opnd]
-           - addr1:           bound
+           - addr1:           [register, use, ptr_rc]
            - addr2:           bound
           uses:               [rt, addr1, addr2]
           defines:            []
@@ -24309,7 +24309,7 @@ instruction-set:
           type:               linear
           operands:
            - rt:              [register, use, GPR32Opnd]
-           - addr1:           bound
+           - addr1:           [register, use, ptr_rc]
            - addr2:           bound
           uses:               [rt, addr1, addr2]
           defines:            []
@@ -24323,7 +24323,7 @@ instruction-set:
           type:               linear
           operands:
            - rt:              [register, use, GPR32Opnd]
-           - addr1:           bound
+           - addr1:           [register, use, ptr_rc]
            - addr2:           bound
           uses:               [rt, addr1, addr2]
           defines:            []
@@ -25633,7 +25633,7 @@ instruction-set:
           type:               linear
           operands:
            - rt:              [register, use, ACC128]
-           - addr1:           bound
+           - addr1:           [register, use, ptr_rc]
            - addr2:           bound
           uses:               [rt, addr1, addr2]
           defines:            []
@@ -25647,7 +25647,7 @@ instruction-set:
           type:               linear
           operands:
            - rt:              [register, use, ACC64]
-           - addr1:           bound
+           - addr1:           [register, use, ptr_rc]
            - addr2:           bound
           uses:               [rt, addr1, addr2]
           defines:            []
@@ -25661,7 +25661,7 @@ instruction-set:
           type:               linear
           operands:
            - rt:              [register, use, ACC64DSPOpnd]
-           - addr1:           bound
+           - addr1:           [register, use, ptr_rc]
            - addr2:           bound
           uses:               [rt, addr1, addr2]
           defines:            []
@@ -25675,7 +25675,7 @@ instruction-set:
           type:               linear
           operands:
            - rt:              [register, use, DSPCC]
-           - addr1:           bound
+           - addr1:           [register, use, ptr_rc]
            - addr2:           bound
           uses:               [rt, addr1, addr2]
           defines:            []
@@ -25689,7 +25689,7 @@ instruction-set:
           type:               linear
           operands:
            - wd:              [register, use, MSA128BOpnd]
-           - addr1:           bound
+           - addr1:           [register, use, ptr_rc]
            - addr2:           bound
           uses:               [wd, addr1, addr2]
           defines:            []
@@ -25702,7 +25702,7 @@ instruction-set:
           type:               linear
           operands:
            - wd:              [register, use, MSA128DOpnd]
-           - addr1:           bound
+           - addr1:           [register, use, ptr_rc]
            - addr2:           bound
           uses:               [wd, addr1, addr2]
           defines:            []
@@ -25715,7 +25715,7 @@ instruction-set:
           type:               linear
           operands:
            - wd:              [register, use, MSA128HOpnd]
-           - addr1:           bound
+           - addr1:           [register, use, ptr_rc]
            - addr2:           bound
           uses:               [wd, addr1, addr2]
           defines:            []
@@ -25728,7 +25728,7 @@ instruction-set:
           type:               linear
           operands:
            - wd:              [register, use, MSA128WOpnd]
-           - addr1:           bound
+           - addr1:           [register, use, ptr_rc]
            - addr2:           bound
           uses:               [wd, addr1, addr2]
           defines:            []
@@ -26523,8 +26523,8 @@ instruction-set:
           type:               linear
           operands:
            - fs:              [register, use, AFGR64Opnd]
-           - base:            bound
-           - index:           bound
+           - base:            [register, use, ptr_rc]
+           - index:           [register, use, ptr_rc]
           uses:               [fs, base, index]
           defines:            []
           size:               4
@@ -26536,8 +26536,8 @@ instruction-set:
           type:               linear
           operands:
            - fs:              [register, use, FGR64Opnd]
-           - base:            bound
-           - index:           bound
+           - base:            [register, use, ptr_rc]
+           - index:           [register, use, ptr_rc]
           uses:               [fs, base, index]
           defines:            []
           size:               4
@@ -26549,8 +26549,8 @@ instruction-set:
           type:               linear
           operands:
            - fs:              [register, use, AFGR64Opnd]
-           - base:            bound
-           - index:           bound
+           - base:            [register, use, ptr_rc]
+           - index:           [register, use, ptr_rc]
           uses:               [fs, base, index]
           defines:            []
           size:               4
@@ -26562,7 +26562,7 @@ instruction-set:
           type:               linear
           operands:
            - rt:              [register, use, GPR32Opnd]
-           - addr1:           bound
+           - addr1:           [register, use, ptr_rc]
            - addr2:           bound
           uses:               [rt, addr1, addr2]
           defines:            []
@@ -26604,7 +26604,7 @@ instruction-set:
           type:               linear
           operands:
            - rt:              [register, use, GPR64Opnd]
-           - addr1:           bound
+           - addr1:           [register, use, ptr_rc]
            - addr2:           bound
           uses:               [rt, addr1, addr2]
           defines:            []
@@ -26618,7 +26618,7 @@ instruction-set:
           type:               linear
           operands:
            - rt:              [register, use, FGR32Opnd]
-           - addr1:           bound
+           - addr1:           [register, use, ptr_rc]
            - addr2:           bound
           uses:               [rt, addr1, addr2]
           defines:            []
@@ -26632,7 +26632,7 @@ instruction-set:
           type:               linear
           operands:
            - rt:              [register, use, FGR32Opnd]
-           - addr1:           bound
+           - addr1:           [register, use, ptr_rc]
            - addr2:           bound
           uses:               [rt, addr1, addr2]
           defines:            []
@@ -26646,7 +26646,7 @@ instruction-set:
           type:               linear
           operands:
            - rt:              [register, use, COP2Opnd]
-           - addr1:           bound
+           - addr1:           [register, use, ptr_rc]
            - addr2:           bound
           uses:               [rt, addr1, addr2]
           defines:            []
@@ -26660,7 +26660,7 @@ instruction-set:
           type:               linear
           operands:
            - rt:              [register, use, COP2Opnd]
-           - addr1:           bound
+           - addr1:           [register, use, ptr_rc]
            - addr2:           bound
           uses:               [rt, addr1, addr2]
           defines:            []
@@ -26674,7 +26674,7 @@ instruction-set:
           type:               linear
           operands:
            - rt:              [register, use, COP3Opnd]
-           - addr1:           bound
+           - addr1:           [register, use, ptr_rc]
            - addr2:           bound
           uses:               [rt, addr1, addr2]
           defines:            []
@@ -26688,7 +26688,7 @@ instruction-set:
           type:               linear
           operands:
            - rt:              [register, use, GPR32Opnd]
-           - addr1:           bound
+           - addr1:           [register, use, ptr_rc]
            - addr2:           bound
           uses:               [rt, addr1, addr2]
           defines:            []
@@ -26702,7 +26702,7 @@ instruction-set:
           type:               linear
           operands:
            - rt:              [register, use, GPR32Opnd]
-           - addr1:           bound
+           - addr1:           [register, use, ptr_rc]
            - addr2:           bound
           uses:               [rt, addr1, addr2]
           defines:            []
@@ -26716,7 +26716,7 @@ instruction-set:
           type:               linear
           operands:
            - rt:              [register, use, GPR32Opnd]
-           - addr1:           bound
+           - addr1:           [register, use, ptr_rc]
            - addr2:           bound
           uses:               [rt, addr1, addr2]
           defines:            []
@@ -26730,7 +26730,7 @@ instruction-set:
           type:               linear
           operands:
            - rt:              [register, use, GPR32Opnd]
-           - addr1:           bound
+           - addr1:           [register, use, ptr_rc]
            - addr2:           bound
           uses:               [rt, addr1, addr2]
           defines:            []
@@ -26743,7 +26743,7 @@ instruction-set:
           type:               linear
           operands:
            - rt:              [register, use, GPR64Opnd]
-           - addr1:           bound
+           - addr1:           [register, use, ptr_rc]
            - addr2:           bound
           uses:               [rt, addr1, addr2]
           defines:            []
@@ -26756,7 +26756,7 @@ instruction-set:
           type:               linear
           operands:
            - src:             [register, usedef, GPR32Opnd]
-           - addr1:           bound
+           - addr1:           [register, use, ptr_rc]
            - addr2:           bound
           uses:               [addr1, addr2, src]
           defines:            [src]
@@ -26865,7 +26865,7 @@ instruction-set:
           type:               linear
           operands:
            - rt:              [register, use, GPR32Opnd]
-           - addr1:           bound
+           - addr1:           [register, use, ptr_rc]
            - addr2:           bound
           uses:               [rt, addr1, addr2]
           defines:            []
@@ -26878,7 +26878,7 @@ instruction-set:
           type:               linear
           operands:
            - rt:              [register, use, GPR64Opnd]
-           - addr1:           bound
+           - addr1:           [register, use, ptr_rc]
            - addr2:           bound
           uses:               [rt, addr1, addr2]
           defines:            []
@@ -26891,7 +26891,7 @@ instruction-set:
           type:               linear
           operands:
            - src:             [register, usedef, GPR32Opnd]
-           - addr1:           bound
+           - addr1:           [register, use, ptr_rc]
            - addr2:           bound
           uses:               [addr1, addr2, src]
           defines:            [src]
@@ -26958,8 +26958,8 @@ instruction-set:
           type:               linear
           operands:
            - fs:              [register, use, FGR32Opnd]
-           - base:            bound
-           - index:           bound
+           - base:            [register, use, ptr_rc]
+           - index:           [register, use, ptr_rc]
           uses:               [fs, base, index]
           defines:            []
           size:               4
@@ -26971,8 +26971,8 @@ instruction-set:
           type:               linear
           operands:
            - fs:              [register, use, FGR32Opnd]
-           - base:            bound
-           - index:           bound
+           - base:            [register, use, ptr_rc]
+           - index:           [register, use, ptr_rc]
           uses:               [fs, base, index]
           defines:            []
           size:               4
@@ -26984,7 +26984,7 @@ instruction-set:
           type:               linear
           operands:
            - rt:              [register, use, GPR32Opnd]
-           - addr1:           bound
+           - addr1:           [register, use, ptr_rc]
            - addr2:           bound
           uses:               [rt, addr1, addr2]
           defines:            []
@@ -26998,7 +26998,7 @@ instruction-set:
           type:               linear
           operands:
            - rt:              [register, use, GPR32Opnd]
-           - addr1:           bound
+           - addr1:           [register, use, ptr_rc]
            - addr2:           bound
           uses:               [rt, addr1, addr2]
           defines:            []
@@ -27022,7 +27022,7 @@ instruction-set:
         - id:                 SYNCI
           type:               linear
           operands:
-           - addr1:           bound
+           - addr1:           [register, use, ptr_rc]
            - addr2:           bound
           uses:               [addr1, addr2]
           defines:            []
@@ -27034,7 +27034,7 @@ instruction-set:
         - id:                 SYNCI_MMR6
           type:               linear
           operands:
-           - addr1:           bound
+           - addr1:           [register, use, ptr_rc]
            - addr2:           bound
           uses:               [addr1, addr2]
           defines:            []
@@ -28304,7 +28304,7 @@ instruction-set:
           type:               linear
           operands:
            - rt:              [register, def, GPR32Opnd]
-           - addr1:           bound
+           - addr1:           [register, use, ptr_rc]
            - addr2:           bound
           uses:               [addr1, addr2]
           defines:            [rt]
@@ -28317,7 +28317,7 @@ instruction-set:
           type:               linear
           operands:
            - rt:              [register, def, GPR32Opnd]
-           - addr1:           bound
+           - addr1:           [register, use, ptr_rc]
            - addr2:           bound
           uses:               [addr1, addr2]
           defines:            [rt]
@@ -28330,7 +28330,7 @@ instruction-set:
           type:               linear
           operands:
            - rt:              [register, def, GPR32Opnd]
-           - addr1:           bound
+           - addr1:           [register, use, ptr_rc]
            - addr2:           bound
           uses:               [addr1, addr2]
           defines:            [rt]

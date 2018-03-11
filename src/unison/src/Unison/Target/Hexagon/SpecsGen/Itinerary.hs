@@ -884,15 +884,14 @@ itinerary i
        L4_loadrub_abs_source_ce, L4_loadruh_abs_demat,
        L4_loadruh_abs_demat_ce, L4_loadruh_abs_source,
        L4_loadruh_abs_source_ce, LIFETIME_END, LIFETIME_END_ce,
-       LIFETIME_START, LIFETIME_START_ce, LOAD_STACK_GUARD,
-       LOAD_STACK_GUARD_ce, LOCAL_ESCAPE, LOCAL_ESCAPE_ce, PATCHPOINT,
-       PATCHPOINT_ce, PHI, PHI_ce, REG_SEQUENCE, REG_SEQUENCE_ce,
-       STACKMAP, STACKMAP_ce, STATEPOINT, STATEPOINT_ce, SUBREG_TO_REG,
-       SUBREG_TO_REG_ce, TFR_FI_fi_demat_fi, TFR_FI_fi_demat_fi_ce,
-       TFR_FI_fi_source_fi, TFR_FI_fi_source_fi_ce, TFR_PdFalse_demat,
-       TFR_PdFalse_demat_ce, TFR_PdFalse_source, TFR_PdTrue_demat,
-       TFR_PdTrue_demat_ce, TFR_PdTrue_source, Jr_merge, Jump_merge,
-       Jump_merge_ce, Ret_dealloc_merge]
+       LIFETIME_START, LIFETIME_START_ce, LOAD_STACK_GUARD, LOCAL_ESCAPE,
+       LOCAL_ESCAPE_ce, PATCHPOINT, PATCHPOINT_ce, PHI, PHI_ce,
+       REG_SEQUENCE, REG_SEQUENCE_ce, STACKMAP, STACKMAP_ce, STATEPOINT,
+       STATEPOINT_ce, SUBREG_TO_REG, SUBREG_TO_REG_ce, TFR_FI_fi_demat_fi,
+       TFR_FI_fi_demat_fi_ce, TFR_FI_fi_source_fi, TFR_FI_fi_source_fi_ce,
+       TFR_PdFalse_demat, TFR_PdFalse_demat_ce, TFR_PdFalse_source,
+       TFR_PdTrue_demat, TFR_PdTrue_demat_ce, TFR_PdTrue_source, Jr_merge,
+       Jump_merge, Jump_merge_ce, Ret_dealloc_merge]
     = NoItinerary
   | i `elem`
       [V4_SA1_addi, V4_SA1_addi_ce, V4_SA1_addrx, V4_SA1_addsp,

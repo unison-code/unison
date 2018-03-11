@@ -16,6 +16,7 @@ module SpecsGen.HsGen
      expand,
      promote,
      update,
+     makeBound,
      dummySrcLoc,
      name,
      infoToIds,
@@ -266,6 +267,17 @@ updateOperandInFields _ _ f = f
 updateOperand k v op @ (YMap [(YString k', _)])
   | k == k' = (YMap [(YString k, v)])
   | otherwise = op
+
+makeBound regClasses i = foldl makeRegClassBound i regClasses
+
+makeRegClassBound i regClass =
+  let operands = map (mkRegClassBound regClass) $ iOperands i
+  in replaceField i (YString "operands", YSeq operands)
+
+mkRegClassBound regClass (YMap [(k, YSeq [YString "register", _, YString rc])])
+  | regClass == rc = YMap [(k, YString "bound")]
+
+mkRegClassBound _ operand = operand
 
 yApplyTo p f (YMap s) = YMap [(k, if k == p then f v else v) | (k, v) <- s]
 

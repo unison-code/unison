@@ -3168,7 +3168,6 @@ readOp "LDriw_pred_ce" = LDriw_pred_ce
 readOp "LIFETIME_END_ce" = LIFETIME_END_ce
 readOp "LIFETIME_START_ce" = LIFETIME_START_ce
 readOp "LO_ce" = LO_ce
-readOp "LOAD_STACK_GUARD_ce" = LOAD_STACK_GUARD_ce
 readOp "LOCAL_ESCAPE_ce" = LOCAL_ESCAPE_ce
 readOp "LO_GOT_ce" = LO_GOT_ce
 readOp "LO_GOTREL_ce" = LO_GOTREL_ce

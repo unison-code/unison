@@ -42,7 +42,8 @@ data SpecsGen =
     SpecsGen {files :: [FilePath], targetName :: String, outputDir :: String,
               constantExtend :: Bool, infiniteRegClass :: [String],
               abstractRegClass :: [String], promoteEffect :: [String],
-              regClass :: [String], rematFile :: Maybe FilePath}
+              regClass :: [String], boundRegClass :: [String],
+              rematFile :: Maybe FilePath}
     deriving (Data, Typeable, Show)
 
 specsgen = cmdArgsMode $ SpecsGen
@@ -55,6 +56,7 @@ specsgen = cmdArgsMode $ SpecsGen
              abstractRegClass = [],
              promoteEffect = [],
              regClass = [],
+             boundRegClass = [],
              rematFile = Nothing
            }
     &= summary "Generates partial Haskell files (.hs) with target information from the given YAML description (.yaml)\nRoberto Castaneda Lozano roberto.castaneda@ri.se"
@@ -71,22 +73,23 @@ runSpecsGen tPreMod tExtension =
                   else []
            is4 = map (promote promoteEffect) is3
            is5 = map (update regClass) is4
-           is6 = tPreMod is5 -- Hand off yaml to target for target-specific modifications
+           is6 = map (makeBound boundRegClass) is5
+           is7 = tPreMod is6 -- Hand off yaml to target for target-specific modifications
            abstractRegClass' = abstractRegClass ++ ["Unknown"]
        writeHsFile outputDir "OperandInfo"
-         (emitOperandInfo targetName (infiniteRegClass, abstractRegClass') is6)
-       writeHsFile outputDir "AlignedPairs" (emitAlignedPairs targetName is6)
-       writeHsFile outputDir (targetName ++ "InstructionDecl") (emitInstructionDecl targetName is6)
-       writeHsFile outputDir "ReadOp" (emitReadOp targetName is6)
-       writeHsFile outputDir "ShowInstance" (emitShowInstance targetName is6)
-       writeHsFile outputDir "ReadWriteInfo" (emitReadWriteInfo targetName is6)
-       writeHsFile outputDir "Itinerary" (emitItinerary targetName is6)
-       writeHsFile outputDir "Size" (emitSize targetName is6)
-       writeHsFile outputDir "InstructionType" (emitInstructionType targetName is6)
-       writeHsFile outputDir "AllInstructions" (emitAllInstructions targetName is6)
-       writeHsFile outputDir (targetName ++ "ItineraryDecl") (emitItineraryDecl targetName is6)
-       writeHsFile outputDir "Parent" (emitParent targetName is6)
-       tExtension sg is6
+         (emitOperandInfo targetName (infiniteRegClass, abstractRegClass') is7)
+       writeHsFile outputDir "AlignedPairs" (emitAlignedPairs targetName is7)
+       writeHsFile outputDir (targetName ++ "InstructionDecl") (emitInstructionDecl targetName is7)
+       writeHsFile outputDir "ReadOp" (emitReadOp targetName is7)
+       writeHsFile outputDir "ShowInstance" (emitShowInstance targetName is7)
+       writeHsFile outputDir "ReadWriteInfo" (emitReadWriteInfo targetName is7)
+       writeHsFile outputDir "Itinerary" (emitItinerary targetName is7)
+       writeHsFile outputDir "Size" (emitSize targetName is7)
+       writeHsFile outputDir "InstructionType" (emitInstructionType targetName is7)
+       writeHsFile outputDir "AllInstructions" (emitAllInstructions targetName is7)
+       writeHsFile outputDir (targetName ++ "ItineraryDecl") (emitItineraryDecl targetName is7)
+       writeHsFile outputDir "Parent" (emitParent targetName is7)
+       tExtension sg is7
 
 writeHsFile dir base f =
     let name = dir </> addExtension base ".hs"

@@ -34,10 +34,9 @@ operandInfo i
     ([], [TemporaryInfo (RegisterClass VectorRegs) 1 False])
   | i `elem` [HEXAGON_V6_vd0_pseudo_128B] =
     ([], [TemporaryInfo (RegisterClass VectorRegs128B) 1 False])
-  | i `elem`
-      [IMPLICIT_DEF, IMPLICIT_DEF_ce, LOAD_STACK_GUARD,
-       LOAD_STACK_GUARD_ce]
-    = ([], [BoundInfo])
+  | i `elem` [LOAD_STACK_GUARD] =
+    ([], [TemporaryInfo (RegisterClass Ptr_rc) 1 False])
+  | i `elem` [IMPLICIT_DEF, IMPLICIT_DEF_ce] = ([], [BoundInfo])
   | i `elem` [A2_tfrcrr] =
     ([TemporaryInfo (RegisterClass CtrRegs) 0 False],
      [TemporaryInfo (RegisterClass IntRegs) 1 False])
@@ -2299,6 +2298,8 @@ operandInfo i
     ([TemporaryInfo (RegisterClass VectorRegs128B) 0 False,
       TemporaryInfo (RegisterClass VectorRegs128B) 0 False, BoundInfo],
      [TemporaryInfo (RegisterClass VectorRegs128B) 1 False])
+  | i `elem` [LOCAL_ESCAPE, LOCAL_ESCAPE_ce] =
+    ([TemporaryInfo (RegisterClass Ptr_rc) 0 False, BoundInfo], [])
   | i `elem`
       [A4_ext, A4_ext_c, A4_ext_c_ce, A4_ext_ce, A4_ext_g, A4_ext_g_ce,
        ADJCALLSTACKDOWN, ADJCALLSTACKDOWN_ce, BUNDLE, BUNDLE_ce, CALLv3nr,
@@ -2424,9 +2425,8 @@ operandInfo i
     ([BoundInfo, TemporaryInfo (RegisterClass IntRegs) 0 False,
       BoundInfo],
      [TemporaryInfo (RegisterClass IntRegs) 1 False])
-  | i `elem`
-      [ADJCALLSTACKUP, ADJCALLSTACKUP_ce, LOCAL_ESCAPE, LOCAL_ESCAPE_ce]
-    = ([BoundInfo, BoundInfo], [])
+  | i `elem` [ADJCALLSTACKUP, ADJCALLSTACKUP_ce] =
+    ([BoundInfo, BoundInfo], [])
   | i `elem`
       [A2_combineii, A2_combineii_ce, A4_combineii, A4_combineii_ce,
        L2_loadrd_io_fi, L2_loadrd_io_fi_ce, TFRI64_V2_ext,
