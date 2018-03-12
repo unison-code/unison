@@ -136,6 +136,7 @@ module Unison.Util
         makeOptional,
         addNullTemp,
         foldVirtualCopy,
+        cleanRedundantReads,
         -- * Accessors
         oAllOperands,
         oUseOperands,
@@ -928,6 +929,11 @@ foldVirtualCopy p f @ Function {fCode = code, fCongruences = cs} =
                   (mapToModelOperand (applyTempIdMap d2s)) code'
          cs'    = map (mapTuple (applyTempIdMap d2s)) cs
      in f {fCode = code'', fCongruences = cs'}
+
+cleanRedundantReads :: Eq r => BlockOperation i r -> BlockOperation i r
+cleanRedundantReads o =
+  let rs' = oReadObjects o \\ oWriteObjects o
+  in mapToReads (const rs') o
 
 peephole :: Eq r => OperationTransform i r -> FunctionTransform i r
 peephole tf f @ Function {fCode = code} =

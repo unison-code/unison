@@ -440,13 +440,12 @@ readWriteInfo i
        TUDF, TUXTB, TUXTBz, TUXTH, TUXTHz]
     = ([], [])
   | i `elem`
-      [SPACE, STATEPOINT, STLEX, STLEXB, STLEXD, STLEXH, STMDA,
-       STMDA_UPD, STMDB, STMDB_UPD, STMIA, STMIA_UPD, STMIB, STMIB_UPD,
-       STRB_POST_IMM, STRB_POST_REG, STRB_PRE_IMM, STRB_PRE_REG, STRD,
-       STRD_POST, STRD_PRE, STREX, STREXB, STREXD, STREXH, STRT_POST_IMM,
-       STRT_POST_REG, STR_POST_IMM, STR_POST_REG, STR_PRE_IMM,
-       STR_PRE_REG, SWP, SWPB, VST1d16, VST1d16Q, VST1d16Qwb_fixed,
-       VST1d16Qwb_register, VST1d16T, VST1d16Twb_fixed,
+      [STLEX, STLEXB, STLEXD, STLEXH, STMDA, STMDA_UPD, STMDB, STMDB_UPD,
+       STMIA, STMIA_UPD, STMIB, STMIB_UPD, STRB_POST_IMM, STRB_POST_REG,
+       STRB_PRE_IMM, STRB_PRE_REG, STRD, STRD_POST, STRD_PRE, STREX,
+       STREXB, STREXD, STREXH, STRT_POST_IMM, STRT_POST_REG, STR_POST_IMM,
+       STR_POST_REG, STR_PRE_IMM, STR_PRE_REG, VST1d16, VST1d16Q,
+       VST1d16Qwb_fixed, VST1d16Qwb_register, VST1d16T, VST1d16Twb_fixed,
        VST1d16Twb_register, VST1d16wb_fixed, VST1d16wb_register, VST1d32,
        VST1d32Q, VST1d32Qwb_fixed, VST1d32Qwb_register, VST1d32T,
        VST1d32Twb_fixed, VST1d32Twb_register, VST1d32wb_fixed,
@@ -509,20 +508,16 @@ readWriteInfo i
        T2STREX, T2STREXB, T2STREXD, T2STREXH, T2STRH_PRE, T2STR_PRE,
        TSTMIA_UPD]
     = ([], [Memory "mem"])
-  | i `elem` [TPUSH, TPUSH_4, TPUSH_4_5, TPUSH_4_6, TPUSH_4_7] =
-    ([], [Memory "mem", OtherSideEffect SP])
   | i `elem`
-      [ABS, ADCri, ADCrr, ADCrsi, ADCrsr, ADDSri, ADDSrr, ADDSrsi,
-       ADDSrsr, BCCZi64, BCCi64, CMNri, CMNzrr, CMNzrsi, CMNzrsr, CMPri,
-       CMPrr, CMPrsi, CMPrsr, MOVsra_flag, MOVsrl_flag, RSBSri, RSBSrsi,
-       RSBSrsr, RSCri, RSCrr, RSCrsi, RSCrsr, SBCri, SBCrr, SBCrsi,
-       SBCrsr, SUBSri, SUBSrr, SUBSrsi, SUBSrsr, TEQri, TEQrr, TEQrsi,
-       TEQrsr, TSTri, TSTrr, TSTrsi, TSTrsr, WIN__DBZCHK, T2ABS, T2ADCri,
-       T2ADCrr, T2ADCrs, T2ADDSri, T2ADDSrr, T2ADDSrs, T2CMNri, T2CMNzrr,
-       T2CMNzrs, T2CMPri, T2CMPrr, T2CMPrs, T2MOVsra_flag, T2MOVsrl_flag,
-       T2RSBSri, T2RSBSrs, T2SBCri, T2SBCrr, T2SBCrs, T2SUBSri, T2SUBSrr,
-       T2SUBSrs, T2TEQri, T2TEQrr, T2TEQrs, T2TSTri, T2TSTrr, T2TSTrs,
-       TADDframe, TCMNz, TCMPhir, TCMPi8, TCMPr, TMOVSr, TTST]
+      [ABS, ADDSri, ADDSrr, ADDSrsi, ADDSrsr, BCCZi64, BCCi64, CMNri,
+       CMNzrr, CMNzrsi, CMNzrsr, CMPri, CMPrr, CMPrsi, CMPrsr,
+       MOVsra_flag, MOVsrl_flag, RSBSri, RSBSrsi, RSBSrsr, SUBSri, SUBSrr,
+       SUBSrsi, SUBSrsr, TEQri, TEQrr, TEQrsi, TEQrsr, TSTri, TSTrr,
+       TSTrsi, TSTrsr, WIN__DBZCHK, T2ABS, T2ADDSri, T2ADDSrr, T2ADDSrs,
+       T2CMNri, T2CMNzrr, T2CMNzrs, T2CMPri, T2CMPrr, T2CMPrs,
+       T2MOVsra_flag, T2MOVsrl_flag, T2RSBSri, T2RSBSrs, T2SUBSri,
+       T2SUBSrr, T2SUBSrs, T2TEQri, T2TEQrr, T2TEQrs, T2TSTri, T2TSTrr,
+       T2TSTrs, TADDframe, TCMNz, TCMPhir, TCMPi8, TCMPr, TMOVSr, TTST]
     = ([], [OtherSideEffect CPSR])
   | i `elem`
       [VMSR, VMSR_FPEXC, VMSR_FPINST, VMSR_FPINST2, VMSR_FPSID]
@@ -572,16 +567,8 @@ readWriteInfo i
       OtherSideEffect Q13, OtherSideEffect Q14, OtherSideEffect Q15])
   | i `elem` [TInt_WIN_eh_sjlj_longjmp] =
     ([], [OtherSideEffect R11, OtherSideEffect LR, OtherSideEffect SP])
-  | i `elem` [WIN__CHKSTK] =
-    ([], [OtherSideEffect R4, OtherSideEffect SP])
   | i `elem` [Int_eh_sjlj_longjmp, TInt_eh_sjlj_longjmp] =
     ([], [OtherSideEffect R7, OtherSideEffect LR, OtherSideEffect SP])
-  | i `elem`
-      [ADJCALLSTACKDOWN, ADJCALLSTACKUP, VLDMDIA_UPD_d8_15,
-       VSTMDDB_UPD_d8_15, TADJCALLSTACKDOWN, TADJCALLSTACKUP, TPOP2_r4_11,
-       TPOP2_r4_11_RET, TPOP2_r4_7, TPOP2_r4_7_RET, TPOP_r4_7, TPOP_r8_11,
-       TPUSH2_r4_11, TPUSH2_r4_7, TPUSH_r4_7, TPUSH_r8_11]
-    = ([], [OtherSideEffect SP])
   | i `elem`
       [FAULTING_LOAD_OP, LDAEX, LDAEXB, LDAEXD, LDAEXH, LDMDA, LDMDA_UPD,
        LDMDB, LDMDB_UPD, LDMIA, LDMIA_RET, LDMIA_UPD, LDMIB, LDMIB_UPD,
@@ -679,11 +666,19 @@ readWriteInfo i
        T2LDR_PRE, TLDMIA, TLDMIA_UPD, TPOP_RET, TPOP_RET_4, TPOP_RET_4_5,
        TPOP_RET_4_6, TPOP_RET_4_7]
     = ([Memory "mem"], [])
-  | i `elem` [TPOP] = ([Memory "mem"], [OtherSideEffect SP])
+  | i `elem` [SPACE, STATEPOINT, SWP, SWPB] =
+    ([Memory "mem"], [Memory "mem"])
+  | i `elem` [TPOP] =
+    ([Memory "mem", OtherSideEffect SP], [OtherSideEffect SP])
   | i `elem`
       [RRX, VSELEQD, VSELEQS, VSELGED, VSELGES, VSELGTD, VSELGTS,
        VSELVSD, VSELVSS, T2RRX, TADC, TSBC]
     = ([OtherSideEffect CPSR], [])
+  | i `elem`
+      [ADCri, ADCrr, ADCrsi, ADCrsr, RSCri, RSCrr, RSCrsi, RSCrsr, SBCri,
+       SBCrr, SBCrsi, SBCrsr, T2ADCri, T2ADCrr, T2ADCrs, T2SBCri, T2SBCrr,
+       T2SBCrs]
+    = ([OtherSideEffect CPSR], [OtherSideEffect CPSR])
   | i `elem`
       [VMRS, VMRS_FPEXC, VMRS_FPINST, VMRS_FPINST2, VMRS_FPSID,
        VMRS_MVFR0, VMRS_MVFR1, VMRS_MVFR2, VTOSIRD, VTOSIRS, VTOUIRD,
@@ -693,10 +688,14 @@ readWriteInfo i
     ([OtherSideEffect FPSCR_NZCV], [])
   | i `elem` [FMSTAT] =
     ([OtherSideEffect FPSCR_NZCV], [OtherSideEffect CPSR])
+  | i `elem` [WIN__CHKSTK] =
+    ([OtherSideEffect R4], [OtherSideEffect R4, OtherSideEffect SP])
   | i `elem`
       [SVC, TAILJMPd, TAILJMPr, TCRETURNdi, TCRETURNri, TFP, TSVC,
        TTAILJMPd, TTAILJMPdND, TTAILJMPr]
     = ([OtherSideEffect SP], [])
+  | i `elem` [TPUSH, TPUSH_4, TPUSH_4_5, TPUSH_4_6, TPUSH_4_7] =
+    ([OtherSideEffect SP], [Memory "mem", OtherSideEffect SP])
   | i `elem`
       [BL, BLX, BLX_pred, BL_pred, BMOVPCB_CALL, BMOVPCRX_CALL, BX_CALL,
        TBL, TBLXi, TBLXr, TBX_CALL]
@@ -705,4 +704,10 @@ readWriteInfo i
     ([OtherSideEffect SP],
      [OtherSideEffect R0, OtherSideEffect R12, OtherSideEffect LR,
       OtherSideEffect CPSR])
+  | i `elem`
+      [ADJCALLSTACKDOWN, ADJCALLSTACKUP, VLDMDIA_UPD_d8_15,
+       VSTMDDB_UPD_d8_15, TADJCALLSTACKDOWN, TADJCALLSTACKUP, TPOP2_r4_11,
+       TPOP2_r4_11_RET, TPOP2_r4_7, TPOP2_r4_7_RET, TPOP_r4_7, TPOP_r8_11,
+       TPUSH2_r4_11, TPUSH2_r4_7, TPUSH_r4_7, TPUSH_r8_11]
+    = ([OtherSideEffect SP], [OtherSideEffect SP])
 

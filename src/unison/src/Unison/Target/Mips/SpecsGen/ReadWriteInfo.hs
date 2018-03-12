@@ -314,15 +314,12 @@ readWriteInfo i
        SB_MMR6, SB_fi, SC, SCD, SCD_R6, SCE, SCE_MM, SCE_MMR6, SC_MM,
        SC_R6, SD, SDC1, SDC164, SDC1_MM, SDC2, SDC2_R6, SDC3, SH, SH16_MM,
        SH16_MMR6, SH64, SHE, SHE_MM, SHE_MMR6, SH_MM, SH_MMR6, SH_fi,
-       STATEPOINT, STORE_ACC128, STORE_ACC64, STORE_ACC64DSP,
-       STORE_CCOND_DSP, SW, SW16_MM, SW16_MMR6, SW64, SWC1, SWC1_MM,
-       SWC1_fi, SWC2, SWC2_R6, SWC3, SWE, SWE_MM, SWE_MMR6, SWM16_MM,
-       SWM16_MMR6, SWM32_MM, SWP_MM, SWSP_MM, SWSP_MMR6, SW_MM, SW_MMR6,
-       SW_fi, SbRxRyOffMemX16, ShRxRyOffMemX16, SwRxRyOffMemX16,
-       SwRxSpImmX16]
+       STORE_ACC128, STORE_ACC64, STORE_ACC64DSP, STORE_CCOND_DSP, SW,
+       SW16_MM, SW16_MMR6, SW64, SWC1, SWC1_MM, SWC1_fi, SWC2, SWC2_R6,
+       SWC3, SWE, SWE_MM, SWE_MMR6, SWM16_MM, SWM16_MMR6, SWM32_MM,
+       SWP_MM, SWSP_MM, SWSP_MMR6, SW_MM, SW_MMR6, SW_fi, SbRxRyOffMemX16,
+       ShRxRyOffMemX16, SwRxRyOffMemX16, SwRxSpImmX16]
     = ([], [Memory "mem"])
-  | i `elem` [Save16, SaveX16] =
-    ([], [Memory "mem", OtherSideEffect SP])
   | i `elem`
       [B, B16_MM, BBIT0, BBIT032, BBIT1, BBIT132, BC16_MMR6, BC1F, BC1FL,
        BC1F_MM, BC1T, BC1TL, BC1T_MM, BEQ, BEQ64, BEQC, BEQL, BEQZ16_MM,
@@ -377,14 +374,11 @@ readWriteInfo i
        EXTR_R_W, EXTR_R_W_MM, EXTR_S_H, EXTR_S_H_MM, EXTR_W, EXTR_W_MM]
     = ([], [OtherSideEffect DSPOutFlag23])
   | i `elem` [MTHLIP, MTHLIP_MM] = ([], [OtherSideEffect DSPPos])
-  | i `elem` [EXTPDP, EXTPDPV, EXTPDPV_MM, EXTPDP_MM] =
-    ([], [OtherSideEffect DSPPos, OtherSideEffect DSPEFI])
   | i `elem` [FCMP_D32, FCMP_D32_MM, FCMP_D64, FCMP_S32, FCMP_S32_MM]
     = ([], [OtherSideEffect FCC0])
   | i `elem` [MTHI, MTHI_MM] = ([], [OtherSideEffect HI0])
   | i `elem`
-      [DivRxRy16, DivuRxRy16, MADD, MADDU, MADDU_MM, MADD_MM, MSUB,
-       MSUBU, MSUBU_MM, MSUB_MM, MUL, MULT, MULT_MM, MULTu, MULTu_MM,
+      [DivRxRy16, DivuRxRy16, MUL, MULT, MULT_MM, MULTu, MULTu_MM,
        MultRxRy16, MultRxRyRz16, MultuRxRy16, MultuRxRyRz16, SDIV,
        SDIV_MM, UDIV, UDIV_MM]
     = ([], [OtherSideEffect HI0, OtherSideEffect LO0])
@@ -428,10 +422,6 @@ readWriteInfo i
        JIALC, JIALC_MMR6, Jal16, JalB16, JumpLinkReg16]
     = ([], [OtherSideEffect RA])
   | i `elem`
-      [ADDiu_negsp, ADDiu_sp, ADJCALLSTACKDOWN, ADJCALLSTACKUP,
-       AddiuSpImm16, AddiuSpImmX16]
-    = ([], [OtherSideEffect SP])
-  | i `elem`
       [CmpRxRy16, CmpiRxImm16, CmpiRxImmX16, SltRxRy16, SltiRxImm16,
        SltiRxImmX16, SltiuRxImm16, SltiuRxImmX16, SltuRxRy16,
        SltuRxRyRz16]
@@ -452,10 +442,11 @@ readWriteInfo i
        LhuRxRyOffMemX16, LwRxPcTcp16, LwRxPcTcpX16, LwRxRyOffMemX16,
        PATCHPOINT, STACKMAP]
     = ([Memory "mem"], [])
-  | i `elem` [Restore16, RestoreX16] =
-    ([Memory "mem"], [OtherSideEffect SP])
+  | i `elem` [STATEPOINT] = ([Memory "mem"], [Memory "mem"])
   | i `elem` [LwRxSpImmX16] =
     ([Memory "mem", OtherSideEffect SP], [])
+  | i `elem` [Restore16, RestoreX16] =
+    ([Memory "mem", OtherSideEffect SP], [OtherSideEffect SP])
   | i `elem` [MFHI, MFHI16_MM, MFHI_MM, MFLO, MFLO16_MM, MFLO_MM] =
     ([OtherSideEffect AC0], [])
   | i `elem` [MFHI64, MFLO64] = ([OtherSideEffect AC0_64], [])
@@ -466,14 +457,28 @@ readWriteInfo i
   | i `elem` [BPOSGE32_PSEUDO] = ([OtherSideEffect DSPPos], [])
   | i `elem` [EXTP, EXTPV, EXTPV_MM, EXTP_MM] =
     ([OtherSideEffect DSPPos], [OtherSideEffect DSPEFI])
+  | i `elem` [EXTPDP, EXTPDPV, EXTPDPV_MM, EXTPDP_MM] =
+    ([OtherSideEffect DSPPos],
+     [OtherSideEffect DSPPos, OtherSideEffect DSPEFI])
   | i `elem` [INSV, INSV_MM] =
     ([OtherSideEffect DSPPos, OtherSideEffect DSPSCount], [])
   | i `elem` [Mfhi16] = ([OtherSideEffect HI0], [])
+  | i `elem`
+      [MADD, MADDU, MADDU_MM, MADD_MM, MSUB, MSUBU, MSUBU_MM, MSUB_MM]
+    =
+    ([OtherSideEffect HI0, OtherSideEffect LO0],
+     [OtherSideEffect HI0, OtherSideEffect LO0])
   | i `elem` [Mflo16] = ([OtherSideEffect LO0], [])
   | i `elem` [LOAD, LOAD_D, LOAD_F, STORE, STORE_D, STORE_F] =
     ([OtherSideEffect SP], [])
   | i `elem` [SDC1_sp, SWC1_sp, SW_sp] =
     ([OtherSideEffect SP], [Memory "mem"])
+  | i `elem` [Save16, SaveX16] =
+    ([OtherSideEffect SP], [Memory "mem", OtherSideEffect SP])
+  | i `elem`
+      [ADDiu_negsp, ADDiu_sp, ADJCALLSTACKDOWN, ADJCALLSTACKUP,
+       AddiuSpImm16, AddiuSpImmX16]
+    = ([OtherSideEffect SP], [OtherSideEffect SP])
   | i `elem` [Bteqz16, BteqzX16, Btnez16, BtnezX16] =
     ([OtherSideEffect T8], [])
   | i `elem` [MIPSeh_return32, MIPSeh_return64] =

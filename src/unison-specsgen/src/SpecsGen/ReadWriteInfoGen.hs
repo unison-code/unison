@@ -11,7 +11,6 @@ This file is part of Unison, see http://unison-code.github.io
 -}
 module SpecsGen.ReadWriteInfoGen (emitReadWriteInfo) where
 
-import Data.List
 import Language.Haskell.Syntax
 
 import SpecsGen.SimpleYaml
@@ -30,7 +29,7 @@ emitReadWriteInfo targetName is =
 iReadWriteInfo i =
     let rs = toAffectsList $ iAffectedBy i
         ws = toAffectsList $ iAffects i
-    in (rs \\ ws, ws)
+    in (rs, ws)
 
 toReadWriteRhs (ri, wi) =
     let riTup = map toReadWriteInfoExp ri

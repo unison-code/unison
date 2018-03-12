@@ -79,8 +79,9 @@ concentrate deps =
   in [(d, u, ts) | ((d, u), ts) <- M.toList dm]
 
 readWriteEdges rwlf _ code =
-    let rwos = nub (concatMap oRWObjects code)
-        deps = concatMap (readWriteEdgesForObject code) rwos
+    let code' = map cleanRedundantReads code
+        rwos  = nub (concatMap oRWObjects code')
+        deps  = concatMap (readWriteEdgesForObject code') rwos
     in map (toReadWriteEdge rwlf) deps
 
 readWriteEdgesForObject code rwo =

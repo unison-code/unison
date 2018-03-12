@@ -494,23 +494,7 @@ readWriteInfo i
        Dep_S2_packhl, Jump_merge, Jump_merge_ce]
     = ([], [])
   | i `elem`
-      [L4_add_memopb_io, L4_add_memopb_io_ce, L4_add_memoph_io,
-       L4_add_memoph_io_ce, L4_add_memopw_io, L4_add_memopw_io_ce,
-       L4_and_memopb_io, L4_and_memopb_io_ce, L4_and_memoph_io,
-       L4_and_memoph_io_ce, L4_and_memopw_io, L4_and_memopw_io_ce,
-       L4_iadd_memopb_io, L4_iadd_memopb_io_ce, L4_iadd_memoph_io,
-       L4_iadd_memoph_io_ce, L4_iadd_memopw_io, L4_iadd_memopw_io_ce,
-       L4_iand_memopb_io, L4_iand_memopb_io_ce, L4_iand_memoph_io,
-       L4_iand_memoph_io_ce, L4_iand_memopw_io, L4_iand_memopw_io_ce,
-       L4_ior_memopb_io, L4_ior_memopb_io_ce, L4_ior_memoph_io,
-       L4_ior_memoph_io_ce, L4_ior_memopw_io, L4_ior_memopw_io_ce,
-       L4_isub_memopb_io, L4_isub_memopb_io_ce, L4_isub_memoph_io,
-       L4_isub_memoph_io_ce, L4_isub_memopw_io, L4_isub_memopw_io_ce,
-       L4_or_memopb_io, L4_or_memopb_io_ce, L4_or_memoph_io,
-       L4_or_memoph_io_ce, L4_or_memopw_io, L4_or_memopw_io_ce,
-       L4_sub_memopb_io, L4_sub_memopb_io_ce, L4_sub_memoph_io,
-       L4_sub_memoph_io_ce, L4_sub_memopw_io, L4_sub_memopw_io_ce,
-       S2_pstorerbf_io, S2_pstorerbf_io_ce, S2_pstorerbf_pi,
+      [S2_pstorerbf_io, S2_pstorerbf_io_ce, S2_pstorerbf_pi,
        S2_pstorerbf_pi_ce, S2_pstorerbfnew_pi, S2_pstorerbfnew_pi_ce,
        S2_pstorerbnewf_io, S2_pstorerbnewf_io_ce, S2_pstorerbnewf_pi,
        S2_pstorerbnewf_pi_ce, S2_pstorerbnewfnew_pi,
@@ -658,22 +642,22 @@ readWriteInfo i
        S4_storeri_rr, S4_storeri_rr_ce, S4_storeri_ur, S4_storeri_ur_ce,
        S4_storerinew_ap, S4_storerinew_ap_ce, S4_storerinew_rr,
        S4_storerinew_rr_ce, S4_storerinew_ur, S4_storerinew_ur_ce,
-       STATEPOINT, STATEPOINT_ce, STriq_pred_V6, STriq_pred_V6_128B,
-       STriq_pred_V6_128B_ce, STriq_pred_V6_ce, STriq_pred_vec_V6,
-       STriq_pred_vec_V6_128B, STriq_pred_vec_V6_128B_ce,
-       STriq_pred_vec_V6_ce, STriv_pseudo_V6, STriv_pseudo_V6_128B,
-       STriv_pseudo_V6_128B_ce, STriv_pseudo_V6_ce, STrivv_indexed,
-       STrivv_indexed_128B, STrivv_indexed_128B_ce, STrivv_indexed_ce,
-       STrivv_pseudo_V6, STrivv_pseudo_V6_128B, STrivv_pseudo_V6_128B_ce,
-       STrivv_pseudo_V6_ce, STriw_pred, STriw_pred_ce, V4_SS1_storeb_io,
-       V4_SS1_storeb_io_ce, V4_SS1_storew_io, V4_SS1_storew_io_ce,
-       V4_SS2_storebi0, V4_SS2_storebi0_ce, V4_SS2_storebi1,
-       V4_SS2_storebi1_ce, V4_SS2_storeh_io, V4_SS2_storeh_io_ce,
-       V4_SS2_storewi0, V4_SS2_storewi0_ce, V4_SS2_storewi1,
-       V4_SS2_storewi1_ce, V6_vS32Ub_ai, V6_vS32Ub_ai_128B,
-       V6_vS32Ub_ai_128B_ce, V6_vS32Ub_ai_ce, V6_vS32Ub_npred_ai,
-       V6_vS32Ub_npred_ai_128B, V6_vS32Ub_npred_ai_128B_ce,
-       V6_vS32Ub_npred_ai_ce, V6_vS32Ub_npred_pi, V6_vS32Ub_npred_pi_128B,
+       STriq_pred_V6, STriq_pred_V6_128B, STriq_pred_V6_128B_ce,
+       STriq_pred_V6_ce, STriq_pred_vec_V6, STriq_pred_vec_V6_128B,
+       STriq_pred_vec_V6_128B_ce, STriq_pred_vec_V6_ce, STriv_pseudo_V6,
+       STriv_pseudo_V6_128B, STriv_pseudo_V6_128B_ce, STriv_pseudo_V6_ce,
+       STrivv_indexed, STrivv_indexed_128B, STrivv_indexed_128B_ce,
+       STrivv_indexed_ce, STrivv_pseudo_V6, STrivv_pseudo_V6_128B,
+       STrivv_pseudo_V6_128B_ce, STrivv_pseudo_V6_ce, STriw_pred,
+       STriw_pred_ce, V4_SS1_storeb_io, V4_SS1_storeb_io_ce,
+       V4_SS1_storew_io, V4_SS1_storew_io_ce, V4_SS2_storebi0,
+       V4_SS2_storebi0_ce, V4_SS2_storebi1, V4_SS2_storebi1_ce,
+       V4_SS2_storeh_io, V4_SS2_storeh_io_ce, V4_SS2_storewi0,
+       V4_SS2_storewi0_ce, V4_SS2_storewi1, V4_SS2_storewi1_ce,
+       V6_vS32Ub_ai, V6_vS32Ub_ai_128B, V6_vS32Ub_ai_128B_ce,
+       V6_vS32Ub_ai_ce, V6_vS32Ub_npred_ai, V6_vS32Ub_npred_ai_128B,
+       V6_vS32Ub_npred_ai_128B_ce, V6_vS32Ub_npred_ai_ce,
+       V6_vS32Ub_npred_pi, V6_vS32Ub_npred_pi_128B,
        V6_vS32Ub_npred_pi_128B_ce, V6_vS32Ub_npred_pi_ce,
        V6_vS32Ub_npred_ppu, V6_vS32Ub_pi, V6_vS32Ub_pi_128B,
        V6_vS32Ub_pi_128B_ce, V6_vS32Ub_pi_ce, V6_vS32Ub_ppu,
@@ -837,86 +821,8 @@ readWriteInfo i
        JMPretfnew, JMPretfnewpt, JMPrett, JMPrettnew, JMPrettnewpt,
        TCRETURNr, Jr_merge]
     = ([], [OtherSideEffect PC])
-  | i `elem`
-      [J4_cmpeq_fp0_jump_nt, J4_cmpeq_fp0_jump_nt_ce,
-       J4_cmpeq_fp0_jump_t, J4_cmpeq_fp0_jump_t_ce, J4_cmpeq_tp0_jump_nt,
-       J4_cmpeq_tp0_jump_nt_ce, J4_cmpeq_tp0_jump_t,
-       J4_cmpeq_tp0_jump_t_ce, J4_cmpeqi_fp0_jump_nt,
-       J4_cmpeqi_fp0_jump_nt_ce, J4_cmpeqi_fp0_jump_t,
-       J4_cmpeqi_fp0_jump_t_ce, J4_cmpeqi_tp0_jump_nt,
-       J4_cmpeqi_tp0_jump_nt_ce, J4_cmpeqi_tp0_jump_t,
-       J4_cmpeqi_tp0_jump_t_ce, J4_cmpeqn1_fp0_jump_nt,
-       J4_cmpeqn1_fp0_jump_nt_ce, J4_cmpeqn1_fp0_jump_t,
-       J4_cmpeqn1_fp0_jump_t_ce, J4_cmpeqn1_tp0_jump_nt,
-       J4_cmpeqn1_tp0_jump_nt_ce, J4_cmpeqn1_tp0_jump_t,
-       J4_cmpeqn1_tp0_jump_t_ce, J4_cmpgt_fp0_jump_nt,
-       J4_cmpgt_fp0_jump_nt_ce, J4_cmpgt_fp0_jump_t,
-       J4_cmpgt_fp0_jump_t_ce, J4_cmpgt_tp0_jump_nt,
-       J4_cmpgt_tp0_jump_nt_ce, J4_cmpgt_tp0_jump_t,
-       J4_cmpgt_tp0_jump_t_ce, J4_cmpgti_fp0_jump_nt,
-       J4_cmpgti_fp0_jump_nt_ce, J4_cmpgti_fp0_jump_t,
-       J4_cmpgti_fp0_jump_t_ce, J4_cmpgti_tp0_jump_nt,
-       J4_cmpgti_tp0_jump_nt_ce, J4_cmpgti_tp0_jump_t,
-       J4_cmpgti_tp0_jump_t_ce, J4_cmpgtn1_fp0_jump_nt,
-       J4_cmpgtn1_fp0_jump_nt_ce, J4_cmpgtn1_fp0_jump_t,
-       J4_cmpgtn1_fp0_jump_t_ce, J4_cmpgtn1_tp0_jump_nt,
-       J4_cmpgtn1_tp0_jump_nt_ce, J4_cmpgtn1_tp0_jump_t,
-       J4_cmpgtn1_tp0_jump_t_ce, J4_cmpgtu_fp0_jump_nt,
-       J4_cmpgtu_fp0_jump_nt_ce, J4_cmpgtu_fp0_jump_t,
-       J4_cmpgtu_fp0_jump_t_ce, J4_cmpgtu_tp0_jump_nt,
-       J4_cmpgtu_tp0_jump_nt_ce, J4_cmpgtu_tp0_jump_t,
-       J4_cmpgtu_tp0_jump_t_ce, J4_cmpgtui_fp0_jump_nt,
-       J4_cmpgtui_fp0_jump_nt_ce, J4_cmpgtui_fp0_jump_t,
-       J4_cmpgtui_fp0_jump_t_ce, J4_cmpgtui_tp0_jump_nt,
-       J4_cmpgtui_tp0_jump_nt_ce, J4_cmpgtui_tp0_jump_t,
-       J4_cmpgtui_tp0_jump_t_ce, J4_tstbit0_fp0_jump_nt,
-       J4_tstbit0_fp0_jump_nt_ce, J4_tstbit0_fp0_jump_t,
-       J4_tstbit0_fp0_jump_t_ce, J4_tstbit0_tp0_jump_nt,
-       J4_tstbit0_tp0_jump_nt_ce, J4_tstbit0_tp0_jump_t,
-       J4_tstbit0_tp0_jump_t_ce]
-    = ([], [OtherSideEffect PC, OtherSideEffect P0])
-  | i `elem`
-      [J4_cmpeq_fp1_jump_nt, J4_cmpeq_fp1_jump_nt_ce,
-       J4_cmpeq_fp1_jump_t, J4_cmpeq_fp1_jump_t_ce, J4_cmpeq_tp1_jump_nt,
-       J4_cmpeq_tp1_jump_nt_ce, J4_cmpeq_tp1_jump_t,
-       J4_cmpeq_tp1_jump_t_ce, J4_cmpeqi_fp1_jump_nt,
-       J4_cmpeqi_fp1_jump_nt_ce, J4_cmpeqi_fp1_jump_t,
-       J4_cmpeqi_fp1_jump_t_ce, J4_cmpeqi_tp1_jump_nt,
-       J4_cmpeqi_tp1_jump_nt_ce, J4_cmpeqi_tp1_jump_t,
-       J4_cmpeqi_tp1_jump_t_ce, J4_cmpeqn1_fp1_jump_nt,
-       J4_cmpeqn1_fp1_jump_nt_ce, J4_cmpeqn1_fp1_jump_t,
-       J4_cmpeqn1_fp1_jump_t_ce, J4_cmpeqn1_tp1_jump_nt,
-       J4_cmpeqn1_tp1_jump_nt_ce, J4_cmpeqn1_tp1_jump_t,
-       J4_cmpeqn1_tp1_jump_t_ce, J4_cmpgt_fp1_jump_nt,
-       J4_cmpgt_fp1_jump_nt_ce, J4_cmpgt_fp1_jump_t,
-       J4_cmpgt_fp1_jump_t_ce, J4_cmpgt_tp1_jump_nt,
-       J4_cmpgt_tp1_jump_nt_ce, J4_cmpgt_tp1_jump_t,
-       J4_cmpgt_tp1_jump_t_ce, J4_cmpgti_fp1_jump_nt,
-       J4_cmpgti_fp1_jump_nt_ce, J4_cmpgti_fp1_jump_t,
-       J4_cmpgti_fp1_jump_t_ce, J4_cmpgti_tp1_jump_nt,
-       J4_cmpgti_tp1_jump_nt_ce, J4_cmpgti_tp1_jump_t,
-       J4_cmpgti_tp1_jump_t_ce, J4_cmpgtn1_fp1_jump_nt,
-       J4_cmpgtn1_fp1_jump_nt_ce, J4_cmpgtn1_fp1_jump_t,
-       J4_cmpgtn1_fp1_jump_t_ce, J4_cmpgtn1_tp1_jump_nt,
-       J4_cmpgtn1_tp1_jump_nt_ce, J4_cmpgtn1_tp1_jump_t,
-       J4_cmpgtn1_tp1_jump_t_ce, J4_cmpgtu_fp1_jump_nt,
-       J4_cmpgtu_fp1_jump_nt_ce, J4_cmpgtu_fp1_jump_t,
-       J4_cmpgtu_fp1_jump_t_ce, J4_cmpgtu_tp1_jump_nt,
-       J4_cmpgtu_tp1_jump_nt_ce, J4_cmpgtu_tp1_jump_t,
-       J4_cmpgtu_tp1_jump_t_ce, J4_cmpgtui_fp1_jump_nt,
-       J4_cmpgtui_fp1_jump_nt_ce, J4_cmpgtui_fp1_jump_t,
-       J4_cmpgtui_fp1_jump_t_ce, J4_cmpgtui_tp1_jump_nt,
-       J4_cmpgtui_tp1_jump_nt_ce, J4_cmpgtui_tp1_jump_t,
-       J4_cmpgtui_tp1_jump_t_ce, J4_tstbit0_fp1_jump_nt,
-       J4_tstbit0_fp1_jump_nt_ce, J4_tstbit0_fp1_jump_t,
-       J4_tstbit0_fp1_jump_t_ce, J4_tstbit0_tp1_jump_nt,
-       J4_tstbit0_tp1_jump_nt_ce, J4_tstbit0_tp1_jump_t,
-       J4_tstbit0_tp1_jump_t_ce]
-    = ([], [OtherSideEffect PC, OtherSideEffect P1])
   | i `elem` [ALLOCA, ALLOCA_ce] = ([], [OtherSideEffect R29])
-  | i `elem`
-      [ADJCALLSTACKUP, ADJCALLSTACKUP_ce, L2_deallocframe_linear]
-    =
+  | i `elem` [L2_deallocframe_linear] =
     ([],
      [OtherSideEffect R29, OtherSideEffect R30, OtherSideEffect R31])
   | i `elem`
@@ -1147,23 +1053,25 @@ readWriteInfo i
        V6_vL32b_tmp_pi, V6_vL32b_tmp_pi_128B, V6_vL32b_tmp_pi_128B_ce,
        V6_vL32b_tmp_pi_ce, V6_vL32b_tmp_ppu]
     = ([Memory "mem"], [])
-  | i `elem` [V4_SL2_return] =
-    ([Memory "mem"],
-     [OtherSideEffect PC, OtherSideEffect R31, OtherSideEffect R29,
-      OtherSideEffect R30])
-  | i `elem` [L2_deallocframe, Ret_dealloc_merge] =
-    ([Memory "mem"],
-     [OtherSideEffect R29, OtherSideEffect R30, OtherSideEffect R31])
   | i `elem`
-      [L4_return, L4_return_f, L4_return_fnew_pnt, L4_return_fnew_pt,
-       L4_return_t, L4_return_tnew_pnt, L4_return_tnew_pt]
-    =
-    ([Memory "mem"],
-     [OtherSideEffect R29, OtherSideEffect R30, OtherSideEffect R31,
-      OtherSideEffect PC])
-  | i `elem` [V4_SL2_deallocframe] =
-    ([Memory "mem"],
-     [OtherSideEffect R31, OtherSideEffect R29, OtherSideEffect R30])
+      [L4_add_memopb_io, L4_add_memopb_io_ce, L4_add_memoph_io,
+       L4_add_memoph_io_ce, L4_add_memopw_io, L4_add_memopw_io_ce,
+       L4_and_memopb_io, L4_and_memopb_io_ce, L4_and_memoph_io,
+       L4_and_memoph_io_ce, L4_and_memopw_io, L4_and_memopw_io_ce,
+       L4_iadd_memopb_io, L4_iadd_memopb_io_ce, L4_iadd_memoph_io,
+       L4_iadd_memoph_io_ce, L4_iadd_memopw_io, L4_iadd_memopw_io_ce,
+       L4_iand_memopb_io, L4_iand_memopb_io_ce, L4_iand_memoph_io,
+       L4_iand_memoph_io_ce, L4_iand_memopw_io, L4_iand_memopw_io_ce,
+       L4_ior_memopb_io, L4_ior_memopb_io_ce, L4_ior_memoph_io,
+       L4_ior_memoph_io_ce, L4_ior_memopw_io, L4_ior_memopw_io_ce,
+       L4_isub_memopb_io, L4_isub_memopb_io_ce, L4_isub_memoph_io,
+       L4_isub_memoph_io_ce, L4_isub_memopw_io, L4_isub_memopw_io_ce,
+       L4_or_memopb_io, L4_or_memopb_io_ce, L4_or_memoph_io,
+       L4_or_memoph_io_ce, L4_or_memopw_io, L4_or_memopw_io_ce,
+       L4_sub_memopb_io, L4_sub_memopb_io_ce, L4_sub_memoph_io,
+       L4_sub_memoph_io_ce, L4_sub_memopw_io, L4_sub_memopw_io_ce,
+       STATEPOINT, STATEPOINT_ce]
+    = ([Memory "mem"], [Memory "mem"])
   | i `elem`
       [L2_loadalignb_pci, L2_loadalignb_pci_ce, L2_loadalignb_pcr,
        L2_loadalignh_pci, L2_loadalignh_pci_ce, L2_loadalignh_pcr,
@@ -1187,16 +1095,33 @@ readWriteInfo i
        L2_loadruhgp_remat_ce]
     = ([Memory "mem", OtherSideEffect GP], [])
   | i `elem`
-      [V4_SL2_return_f, V4_SL2_return_fnew, V4_SL2_return_t,
-       V4_SL2_return_tnew]
-    =
-    ([Memory "mem", OtherSideEffect P0],
-     [OtherSideEffect PC, OtherSideEffect R31, OtherSideEffect R29,
-      OtherSideEffect R30])
-  | i `elem`
       [V4_SL2_loadrd_sp, V4_SL2_loadrd_sp_ce, V4_SL2_loadri_sp,
        V4_SL2_loadri_sp_ce]
     = ([Memory "mem", OtherSideEffect R29], [])
+  | i `elem` [V4_SL2_return] =
+    ([Memory "mem", OtherSideEffect R30],
+     [OtherSideEffect PC, OtherSideEffect R31, OtherSideEffect R29,
+      OtherSideEffect R30])
+  | i `elem` [L2_deallocframe, Ret_dealloc_merge] =
+    ([Memory "mem", OtherSideEffect R30],
+     [OtherSideEffect R29, OtherSideEffect R30, OtherSideEffect R31])
+  | i `elem`
+      [L4_return, L4_return_f, L4_return_fnew_pnt, L4_return_fnew_pt,
+       L4_return_t, L4_return_tnew_pnt, L4_return_tnew_pt]
+    =
+    ([Memory "mem", OtherSideEffect R30],
+     [OtherSideEffect R29, OtherSideEffect R30, OtherSideEffect R31,
+      OtherSideEffect PC])
+  | i `elem` [V4_SL2_deallocframe] =
+    ([Memory "mem", OtherSideEffect R30],
+     [OtherSideEffect R31, OtherSideEffect R29, OtherSideEffect R30])
+  | i `elem`
+      [V4_SL2_return_f, V4_SL2_return_fnew, V4_SL2_return_t,
+       V4_SL2_return_tnew]
+    =
+    ([Memory "mem", OtherSideEffect R30, OtherSideEffect P0],
+     [OtherSideEffect PC, OtherSideEffect R31, OtherSideEffect R29,
+      OtherSideEffect R30])
   | i `elem`
       [S2_storerb_pci, S2_storerb_pci_ce, S2_storerb_pcr,
        S2_storerbnew_pci, S2_storerbnew_pci_ce, S2_storerbnew_pcr,
@@ -1218,9 +1143,85 @@ readWriteInfo i
       [V4_SA1_clrf, V4_SA1_clrfnew, V4_SA1_clrt, V4_SA1_clrtnew]
     = ([OtherSideEffect P0], [])
   | i `elem`
+      [J4_cmpeq_fp0_jump_nt, J4_cmpeq_fp0_jump_nt_ce,
+       J4_cmpeq_fp0_jump_t, J4_cmpeq_fp0_jump_t_ce, J4_cmpeq_tp0_jump_nt,
+       J4_cmpeq_tp0_jump_nt_ce, J4_cmpeq_tp0_jump_t,
+       J4_cmpeq_tp0_jump_t_ce, J4_cmpeqi_fp0_jump_nt,
+       J4_cmpeqi_fp0_jump_nt_ce, J4_cmpeqi_fp0_jump_t,
+       J4_cmpeqi_fp0_jump_t_ce, J4_cmpeqi_tp0_jump_nt,
+       J4_cmpeqi_tp0_jump_nt_ce, J4_cmpeqi_tp0_jump_t,
+       J4_cmpeqi_tp0_jump_t_ce, J4_cmpeqn1_fp0_jump_nt,
+       J4_cmpeqn1_fp0_jump_nt_ce, J4_cmpeqn1_fp0_jump_t,
+       J4_cmpeqn1_fp0_jump_t_ce, J4_cmpeqn1_tp0_jump_nt,
+       J4_cmpeqn1_tp0_jump_nt_ce, J4_cmpeqn1_tp0_jump_t,
+       J4_cmpeqn1_tp0_jump_t_ce, J4_cmpgt_fp0_jump_nt,
+       J4_cmpgt_fp0_jump_nt_ce, J4_cmpgt_fp0_jump_t,
+       J4_cmpgt_fp0_jump_t_ce, J4_cmpgt_tp0_jump_nt,
+       J4_cmpgt_tp0_jump_nt_ce, J4_cmpgt_tp0_jump_t,
+       J4_cmpgt_tp0_jump_t_ce, J4_cmpgti_fp0_jump_nt,
+       J4_cmpgti_fp0_jump_nt_ce, J4_cmpgti_fp0_jump_t,
+       J4_cmpgti_fp0_jump_t_ce, J4_cmpgti_tp0_jump_nt,
+       J4_cmpgti_tp0_jump_nt_ce, J4_cmpgti_tp0_jump_t,
+       J4_cmpgti_tp0_jump_t_ce, J4_cmpgtn1_fp0_jump_nt,
+       J4_cmpgtn1_fp0_jump_nt_ce, J4_cmpgtn1_fp0_jump_t,
+       J4_cmpgtn1_fp0_jump_t_ce, J4_cmpgtn1_tp0_jump_nt,
+       J4_cmpgtn1_tp0_jump_nt_ce, J4_cmpgtn1_tp0_jump_t,
+       J4_cmpgtn1_tp0_jump_t_ce, J4_cmpgtu_fp0_jump_nt,
+       J4_cmpgtu_fp0_jump_nt_ce, J4_cmpgtu_fp0_jump_t,
+       J4_cmpgtu_fp0_jump_t_ce, J4_cmpgtu_tp0_jump_nt,
+       J4_cmpgtu_tp0_jump_nt_ce, J4_cmpgtu_tp0_jump_t,
+       J4_cmpgtu_tp0_jump_t_ce, J4_cmpgtui_fp0_jump_nt,
+       J4_cmpgtui_fp0_jump_nt_ce, J4_cmpgtui_fp0_jump_t,
+       J4_cmpgtui_fp0_jump_t_ce, J4_cmpgtui_tp0_jump_nt,
+       J4_cmpgtui_tp0_jump_nt_ce, J4_cmpgtui_tp0_jump_t,
+       J4_cmpgtui_tp0_jump_t_ce, J4_tstbit0_fp0_jump_nt,
+       J4_tstbit0_fp0_jump_nt_ce, J4_tstbit0_fp0_jump_t,
+       J4_tstbit0_fp0_jump_t_ce, J4_tstbit0_tp0_jump_nt,
+       J4_tstbit0_tp0_jump_nt_ce, J4_tstbit0_tp0_jump_t,
+       J4_tstbit0_tp0_jump_t_ce]
+    = ([OtherSideEffect P0], [OtherSideEffect PC, OtherSideEffect P0])
+  | i `elem`
       [V4_SL2_jumpr31_f, V4_SL2_jumpr31_fnew, V4_SL2_jumpr31_t,
        V4_SL2_jumpr31_tnew]
     = ([OtherSideEffect P0, OtherSideEffect R31], [OtherSideEffect PC])
+  | i `elem`
+      [J4_cmpeq_fp1_jump_nt, J4_cmpeq_fp1_jump_nt_ce,
+       J4_cmpeq_fp1_jump_t, J4_cmpeq_fp1_jump_t_ce, J4_cmpeq_tp1_jump_nt,
+       J4_cmpeq_tp1_jump_nt_ce, J4_cmpeq_tp1_jump_t,
+       J4_cmpeq_tp1_jump_t_ce, J4_cmpeqi_fp1_jump_nt,
+       J4_cmpeqi_fp1_jump_nt_ce, J4_cmpeqi_fp1_jump_t,
+       J4_cmpeqi_fp1_jump_t_ce, J4_cmpeqi_tp1_jump_nt,
+       J4_cmpeqi_tp1_jump_nt_ce, J4_cmpeqi_tp1_jump_t,
+       J4_cmpeqi_tp1_jump_t_ce, J4_cmpeqn1_fp1_jump_nt,
+       J4_cmpeqn1_fp1_jump_nt_ce, J4_cmpeqn1_fp1_jump_t,
+       J4_cmpeqn1_fp1_jump_t_ce, J4_cmpeqn1_tp1_jump_nt,
+       J4_cmpeqn1_tp1_jump_nt_ce, J4_cmpeqn1_tp1_jump_t,
+       J4_cmpeqn1_tp1_jump_t_ce, J4_cmpgt_fp1_jump_nt,
+       J4_cmpgt_fp1_jump_nt_ce, J4_cmpgt_fp1_jump_t,
+       J4_cmpgt_fp1_jump_t_ce, J4_cmpgt_tp1_jump_nt,
+       J4_cmpgt_tp1_jump_nt_ce, J4_cmpgt_tp1_jump_t,
+       J4_cmpgt_tp1_jump_t_ce, J4_cmpgti_fp1_jump_nt,
+       J4_cmpgti_fp1_jump_nt_ce, J4_cmpgti_fp1_jump_t,
+       J4_cmpgti_fp1_jump_t_ce, J4_cmpgti_tp1_jump_nt,
+       J4_cmpgti_tp1_jump_nt_ce, J4_cmpgti_tp1_jump_t,
+       J4_cmpgti_tp1_jump_t_ce, J4_cmpgtn1_fp1_jump_nt,
+       J4_cmpgtn1_fp1_jump_nt_ce, J4_cmpgtn1_fp1_jump_t,
+       J4_cmpgtn1_fp1_jump_t_ce, J4_cmpgtn1_tp1_jump_nt,
+       J4_cmpgtn1_tp1_jump_nt_ce, J4_cmpgtn1_tp1_jump_t,
+       J4_cmpgtn1_tp1_jump_t_ce, J4_cmpgtu_fp1_jump_nt,
+       J4_cmpgtu_fp1_jump_nt_ce, J4_cmpgtu_fp1_jump_t,
+       J4_cmpgtu_fp1_jump_t_ce, J4_cmpgtu_tp1_jump_nt,
+       J4_cmpgtu_tp1_jump_nt_ce, J4_cmpgtu_tp1_jump_t,
+       J4_cmpgtu_tp1_jump_t_ce, J4_cmpgtui_fp1_jump_nt,
+       J4_cmpgtui_fp1_jump_nt_ce, J4_cmpgtui_fp1_jump_t,
+       J4_cmpgtui_fp1_jump_t_ce, J4_cmpgtui_tp1_jump_nt,
+       J4_cmpgtui_tp1_jump_nt_ce, J4_cmpgtui_tp1_jump_t,
+       J4_cmpgtui_tp1_jump_t_ce, J4_tstbit0_fp1_jump_nt,
+       J4_tstbit0_fp1_jump_nt_ce, J4_tstbit0_fp1_jump_t,
+       J4_tstbit0_fp1_jump_t_ce, J4_tstbit0_tp1_jump_nt,
+       J4_tstbit0_tp1_jump_nt_ce, J4_tstbit0_tp1_jump_t,
+       J4_tstbit0_tp1_jump_t_ce]
+    = ([OtherSideEffect P1], [OtherSideEffect PC, OtherSideEffect P1])
   | i `elem` [C4_addipc, C4_addipc_ce] = ([OtherSideEffect PC], [])
   | i `elem` [EH_RETURN_JMPR] =
     ([OtherSideEffect R28], [OtherSideEffect PC])
@@ -1230,11 +1231,14 @@ readWriteInfo i
       [V4_SS2_stored_sp, V4_SS2_stored_sp_ce, V4_SS2_storew_sp,
        V4_SS2_storew_sp_ce]
     = ([OtherSideEffect R29], [Memory "mem"])
+  | i `elem` [ADJCALLSTACKUP, ADJCALLSTACKUP_ce] =
+    ([OtherSideEffect R29],
+     [OtherSideEffect R29, OtherSideEffect R30, OtherSideEffect R31])
   | i `elem`
       [SAVE_REGISTERS_CALL_V4, SAVE_REGISTERS_CALL_V4_EXT,
        SAVE_REGISTERS_CALL_V4_EXT_ce, SAVE_REGISTERS_CALL_V4_ce]
     =
-    ([OtherSideEffect R29],
+    ([OtherSideEffect R29, OtherSideEffect R31],
      [OtherSideEffect D0, OtherSideEffect D1, OtherSideEffect D2,
       OtherSideEffect D3, OtherSideEffect D4, OtherSideEffect D5,
       OtherSideEffect D6, OtherSideEffect D7, OtherSideEffect R28,
@@ -1243,20 +1247,23 @@ readWriteInfo i
       OtherSideEffect M1, OtherSideEffect LC0, OtherSideEffect LC1,
       OtherSideEffect SA0, OtherSideEffect SA1, OtherSideEffect USR,
       OtherSideEffect USR_OVF])
+  | i `elem` [S2_allocframe, S2_allocframe_ce] =
+    ([OtherSideEffect R29, OtherSideEffect R31, OtherSideEffect R30],
+     [Memory "mem", OtherSideEffect R29, OtherSideEffect R30])
   | i `elem` [ALIGNA, ALIGNA_ce] = ([OtherSideEffect R30], [])
-  | i `elem`
-      [S2_allocframe, S2_allocframe_ce, V4_SS2_allocframe,
-       V4_SS2_allocframe_ce]
-    =
-    ([OtherSideEffect R31],
+  | i `elem` [V4_SS2_allocframe, V4_SS2_allocframe_ce] =
+    ([OtherSideEffect R30, OtherSideEffect R31, OtherSideEffect R29],
      [Memory "mem", OtherSideEffect R29, OtherSideEffect R30])
   | i `elem` [V4_SL2_jumpr31] =
     ([OtherSideEffect R31], [OtherSideEffect PC])
   | i `elem` [ADJCALLSTACKDOWN, ADJCALLSTACKDOWN_ce] =
-    ([OtherSideEffect R31], [OtherSideEffect R29, OtherSideEffect R30])
+    ([OtherSideEffect R31, OtherSideEffect R30, OtherSideEffect R29],
+     [OtherSideEffect R29, OtherSideEffect R30])
   | i `elem` [ENDLOOP0, ENDLOOP0_ce] =
-    ([OtherSideEffect SA0], [OtherSideEffect PC, OtherSideEffect LC0])
+    ([OtherSideEffect SA0, OtherSideEffect LC0],
+     [OtherSideEffect PC, OtherSideEffect LC0])
   | i `elem` [ENDLOOP1, ENDLOOP1_ce] =
-    ([OtherSideEffect SA1], [OtherSideEffect PC, OtherSideEffect LC1])
+    ([OtherSideEffect SA1, OtherSideEffect LC1],
+     [OtherSideEffect PC, OtherSideEffect LC1])
   | i `elem` [F2_sfinvsqrta] = ([OtherSideEffect USR], [])
 

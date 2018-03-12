@@ -15,6 +15,7 @@ import qualified Data.Set as S
 import Data.Maybe
 import Data.List.Split
 import Control.Arrow
+import Data.List
 
 import MachineIR hiding (parse)
 
@@ -319,7 +320,7 @@ addEpilogue (_, oid, _) code =
         addSp = mkOpt oid ADDiu_sp [Bound mkMachineFrameSize] []
     in f ++ [addSp] ++ e
 
-spUsers = filter isSPUser SpecsGen.allInstructions
+spUsers = (filter isSPUser SpecsGen.allInstructions) \\ [ADDiu_sp, ADDiu_negsp]
 isSPUser = readsObject (OtherSideEffect SP)
 readsObject rwo i = rwo `elem` (fst $ SpecsGen.readWriteInfo i)
 

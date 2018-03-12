@@ -14,7 +14,6 @@ module Unison.Test.Invariants
      singleDefinitions,
      allTemporariesUsed,
      allRegistersDefined,
-     noReadWriteOverlaps,
      allRegClassesDefined,
      consistentOperandInfo,
      consistentOperands,
@@ -102,15 +101,6 @@ definedRegisters ra (_, _, r) =
     in if r `elem` rs then Nothing
        else Just (showProblem "allRegistersDefined"
                   (show r ++ " is not defined in the target description"))
-
-noReadWriteOverlaps f _ = testAllOperations noReadWriteInstrOverlaps (fCode f)
-
-noReadWriteInstrOverlaps i =
-    let crwos = S.toList $ S.intersection
-                (S.fromList $ oReadObjects i) (S.fromList $ oWriteObjects i)
-    in if null crwos then [] else
-        [showProblem "noReadWriteOverlaps"
-                  "the objects " ++ show crwos ++ " are both read and written by operation o" ++ show (oId i)]
 
 allRegClassesDefined f target =
   let   oif = operandInfo target

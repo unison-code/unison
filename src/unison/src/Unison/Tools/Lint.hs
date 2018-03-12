@@ -39,7 +39,6 @@ runLint rawArgs f target =
                    (I.singleDefinitions, singleDefinitions args),
                    (I.allTemporariesUsed, allTemporariesUsed args),
                    (I.allRegistersDefined, allRegistersDefined args),
-                   (I.noReadWriteOverlaps, noReadWriteOverlaps args),
                    (I.allRegClassesDefined, allRegClassesDefined args),
                    (I.noEmptyRegClass, noEmptyRegClass args),
                    (I.consistentOperandInfo, consistentOperandInfo args),

@@ -14,6 +14,7 @@ module Unison.Tools.Export.RemoveNops (removeNops) where
 import Data.List
 import Data.Maybe
 import qualified Data.Map as M
+import Control.Arrow
 
 import Unison
 import Unison.Target.API
@@ -85,8 +86,9 @@ completeDep (r, Nothing, Just (u, ul), Nothing) =
   (r, Just (0, 1), Just (u, ul), Just (u - ul))
 
 rwDeps rwlf icode =
-    let writeDeps = concatMap rwWrites icode
-        readDeps  = concatMap rwReads icode
+    let icode'    = map (second cleanRedundantReads) icode
+        writeDeps = concatMap rwWrites icode'
+        readDeps  = concatMap rwReads icode'
         deps      = mergeDeps rwlf (writeDeps, Write) (readDeps, Read) ++
                     mergeDeps rwlf (writeDeps, Write) (writeDeps, Write)
     in deps
