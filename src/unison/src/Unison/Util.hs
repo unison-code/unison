@@ -931,9 +931,11 @@ foldVirtualCopy p f @ Function {fCode = code, fCongruences = cs} =
      in f {fCode = code'', fCongruences = cs'}
 
 cleanRedundantReads :: Eq r => BlockOperation i r -> BlockOperation i r
-cleanRedundantReads o =
+cleanRedundantReads o @ SingleOperation {} =
   let rs' = oReadObjects o \\ oWriteObjects o
   in mapToReads (const rs') o
+cleanRedundantReads o @ Bundle {bundleOs = os} =
+  o {bundleOs = map cleanRedundantReads os}
 
 peephole :: Eq r => OperationTransform i r -> FunctionTransform i r
 peephole tf f @ Function {fCode = code} =
