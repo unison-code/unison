@@ -92,6 +92,12 @@ doc:
 	cd $(UNISONDIR); $(CABALBIN) haddock
 	cd $(UNISONSPECSGENDIR); $(CABALBIN) haddock
 
+haskell-loc:
+	cloc unison/src --exclude-dir=SpecsGen
+
+cpp-loc:
+	cloc solvers
+
 UNISONSPECSGENDIR := unison-specsgen
 
 SGHEXAGONROOTDIR   = $(UNISONDIR)/src/Unison/Target/Hexagon/SpecsGen
