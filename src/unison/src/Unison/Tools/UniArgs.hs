@@ -94,7 +94,7 @@ data Uni =
                scaleFreq :: Bool, applyBaseFile :: Bool,
                tightPressureBound :: Bool, strictlyBetter :: Bool,
                unsatisfiable :: Bool, removeReds :: Bool, keepNops :: Bool,
-               solverFlags :: String, mirVersion :: MachineIRVersion,
+               solverFlag :: [String], mirVersion :: MachineIRVersion,
                outTemp :: Bool, presolver :: Maybe FilePath,
                solver :: Maybe FilePath, sizeThreshold :: Maybe Integer}
     deriving (Data, Typeable, Show, Eq)
@@ -219,7 +219,7 @@ plot' = Plot {
 
 run' = Run {
   verbose     = False &= name "v" &= help "Run Unison in verbose mode",
-  solverFlags = "" &= help "Flags to be passed on to the solver",
+  solverFlag = [] &= help "Flag to be passed to the solver",
   outTemp     = False &= help "Dump output into temporary file with same prefix as the generated intermediate files",
   presolver   = Nothing &= help "Path to Unison's presolver binary" &= typFile,
   solver      = Nothing &= help "Path to Unison's solver binary" &= typFile}

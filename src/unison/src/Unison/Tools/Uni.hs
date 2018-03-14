@@ -141,7 +141,7 @@ mainWithTargets targets = do
            (estimateFreq, simplifyControlFlow, noCC, noReserved, maxBlockSize, implementFrames,
             function, goal, noCross, oldModel, expandCopies, rematType,
             baseFile, scaleFreq, applyBaseFile, tightPressureBound,
-            strictlyBetter, unsatisfiable, removeReds, keepNops, solverFlags, mirVersion,
+            strictlyBetter, unsatisfiable, removeReds, keepNops, solverFlag, mirVersion,
             inFile, debug, verbose, intermediate, lint, outFile, outTemp,
             presolver, solver, sizeThreshold)
            (target, targetOption)

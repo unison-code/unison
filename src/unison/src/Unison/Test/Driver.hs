@@ -106,7 +106,7 @@ runUnison unisonTargets testArgs mirFile =
                    unsatisfiable args,
                    removeReds args,
                    keepNops args,
-                   "-local-limit 4000 --total-threads 1 --portfolio-threads 1",
+                   ["-local-limit=4000", "-total-threads=1", "-portfolio-threads=1"],
                    fromMaybe (mirVersion args) (testMirVersion properties),
                    mirFile,
                    False,

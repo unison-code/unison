@@ -34,7 +34,7 @@ run args @
   (_estimateFreq, _simplifyControlFlow, _noCC, _noReserved, _maxBlockSize,
    _implementFrames, _function, _goal, _noCross, _oldModel, _expandCopies,
    _rematType, baseFile, _scaleFreq, _applyBaseFile, _tightPressureBound,
-   _strictlyBetter, _unsatisfiable, _removeReds, _keepNops, _solverFlags,
+   _strictlyBetter, _unsatisfiable, _removeReds, _keepNops, _solverFlag,
    mirVersion, inFile, _debug, _verbose, _intermediate, _lint, outFile, outTemp,
    _presolver, _solver, _sizeThreshold) targetWithOption =
   do mirInput         <- strictReadFile inFile
@@ -64,7 +64,7 @@ runFunction
   (estimateFreq, simplifyControlFlow, noCC, noReserved, maxBlockSize,
    implementFrames, function, goal, noCross, oldModel, expandCopies,
    rematType, _baseFile, scaleFreq, applyBaseFile, tightPressureBound,
-   strictlyBetter, unsatisfiable, removeReds, keepNops, solverFlags, mirVersion,
+   strictlyBetter, unsatisfiable, removeReds, keepNops, solverFlag, mirVersion,
    inFile, debug, verbose, intermediate, lint, _outFile, _outTemp, presolver,
    solver, sizeThreshold)
   targetWithOption (mir, asmMir) =
@@ -133,8 +133,7 @@ runFunction
               ["-t", "180000", jsonFile])
 
            let outJsonFile = addExtension "out.json" prefix
-               splitFlags  = [flag | flag <- splitOn " " solverFlags,
-                              not (null flag)]
+               splitFlags  = concatMap (splitOn "=") solverFlag
                solverPath  = case solver of
                                 Just path -> path
                                 Nothing -> "gecode-solver"
