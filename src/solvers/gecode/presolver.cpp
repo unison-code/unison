@@ -172,6 +172,7 @@ string produce_json(Parameters &input, int presolver_time)
        << emit_json_line("long_latency_index", input.long_latency_index)
        << emit_json_line("long_latency_def_use", input.long_latency_def_use)
        << emit_json_line("subsumed_resources", input.subsumed_resources)
+       << emit_json_line("temp_domain", input.temp_domain)
        << emit_json_line("freq_scale", input.freq_scale)
        << emit_json_line_last("presolver_time", presolver_time)
        << "}\n";

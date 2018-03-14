@@ -45,5 +45,6 @@
 #include <vector>
 
 bool temp_is_unsafe(const Parameters& input, const temporary t);
+void temp_domain(Parameters& input);
 
 #endif

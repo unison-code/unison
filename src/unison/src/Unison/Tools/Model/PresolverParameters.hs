@@ -39,6 +39,7 @@ parameters oldModel (_, dgs, _, _, ra, _)
       r2as        = regAtoms ra
       precs       = if oldModel then []
                     else concatMap (pgPrecs . PG.mandatory . PG.positive) pgs
+      t           = sort $ tUniqueOps fCode
       assignhints = [(p, head $ r2as M.! r) | (p, r) <- assignmentHints f]
       interchangeable = sort $ concatMap interchangeableCopies code
       -- Default (empty presolver parameters)
@@ -66,6 +67,7 @@ parameters oldModel (_, dgs, _, _, ra, _)
       long_latency_index = [] :: [Integer]
       long_latency_def_use = [] :: [Integer]
       subsumed_resources = map (\_ -> [] :: [Integer]) code
+      temp_domain = map (\_ -> [] :: [Integer]) t
       value_precede_chains = [] :: [Integer]
   in
    [

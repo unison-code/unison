@@ -83,3 +83,92 @@ bool temp_is_unsafe(const Parameters& input, const temporary t) {
   return false;
 }
 
+static bool void temp_users_predef(Parameters& input, temporary t, set<int>& prdom) {
+  for (operand p : input.users[t]) {
+    int r = input.p_preassign[p];
+    if (r < 0)
+      return false;
+    else
+      prdom.insert(r);
+  }
+  return true;
+}
+
+void temp_domain(Parameters& input) {
+  vector<vector<int>> t_domain(input.T.size(), noregs);
+  vector<temporary> deferred_in;
+  // phase 1: all except those defined by congruent (in) operands
+  for (temporary t : input.T) {
+    operand p = input.definer[t];
+    bool optional = (input.temps[p][0] == NULL_TEMPORARY);
+    int r = input.p_preassign[p];
+    operation o = input.def_opr[t];
+    set<int> rdom;
+    if (optional)
+      rdom.insert(-1);
+    if (r >= 0) {
+      input.temp_domain[t].push_back(r);
+    } else if (input.type[o] == IN) {
+      deferred_in.push_back(t);
+    } else if (temp_users_predef(input, t, rdom)) {
+      input.temp_domain[t].insert(input.temp_domain[t].end(), rdom.begin(), rdom.end());
+      cerr << "all users predef: D(r[" << t << "]) = " << show(input.temp_domain[t]) << endl;
+    } else {
+      rdom.clear();
+      if (optional)
+	rdom.insert(-1);
+      unsigned int nbinsn = input.instructions[o].size();
+      unsigned int opndno = 0;
+      for (operand p0 : input.operands[o])
+	if (p0 == p)
+	  break;
+        else
+	  opndno++;      
+      for (unsigned int j=0; j<nbinsn; j++) {
+	if (input.instructions[o][j] != NULL_INSTRUCTION) {
+	  register_class rc = input.rclass[o][j][opndno];
+          register_space rs = input.space[rc];
+	  pair<temporary, register_space> trs = make_pair(t, rs);
+	  if (input.infinite[rs] &&
+              input.infinite_atom_range.count(trs)) {
+            register_atom fra = input.infinite_atom_range[trs][0],
+	                  lra = input.infinite_atom_range[trs][1];
+	    unsigned int w = input.width[t];
+	    for (int a = fra; a <= lra; a += w)
+	      rdom.insert(a);
+	  } else {
+	    rdom.insert(input.atoms[rc].begin(), input.atoms[rc].end());
+	  }
+	}
+      }
+      input.temp_domain[t].insert(input.temp_domain[t].end(), rdom.begin(), rdom.end());
+    }
+  }
+  // phase 2: congruent (in) operands
+  map<operand,vector<operand>> in2outs;
+  for (const vector<operand>& adj : input.adjacent) {
+    operand outp = adj[0];
+    operand inp = adj[1];
+    in2outs[inp].push_back(outp);
+  }
+  vector<pair<temporary, temporary> > E;
+  for (temporary t : deferred_in) {
+    operand inp = input.definer[t];
+    for (operand outp : in2outs[inp])
+      for (temporary u : input.temps[outp])
+	if (u != NULL_TEMPORARY)
+	  E.push_back(make_pair(t,u));
+  }
+  Digraph G(E);
+  for (temporary t : deferred_in) {
+    operand p = input.definer[t];
+    set<int> rdom;
+    for (temporary u : G.reachables(t))
+      rdom.insert(input.temp_domain[u].begin(), input.temp_domain[u].end());
+    if (input.temps[p][0] == NULL_TEMPORARY)
+      rdom.insert(-1);
+    else
+      rdom.erase(-1);
+    input.temp_domain[t].insert(input.temp_domain[t].end(), rdom.begin(), rdom.end());
+  }
+}

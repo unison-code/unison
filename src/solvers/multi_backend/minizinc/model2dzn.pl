@@ -492,6 +492,13 @@ model2dzn(AVL0) :-
 	length(Adhoc1, Nadhoc),
 	write_array(adhoc, array(1..Nadhoc,int), Adhoc2),
 	%
+	avl_fetch(temp_domain, AVL, TempDomain1),
+	(   foreach(TD1,TempDomain1),
+	    foreach(TD2,TempDomain2)
+	do  list_to_fdset(TD1, TD2)
+	),
+	write_array(temp_domain, array(1..Nbb,set(int)), TempDomain2),
+	%
 	exprs_postlude(LOp, LArg1, LArg2, LArg3, Lchildren),
 	length(LOp, Nexpr),
 	write_array(expr_op, array(1..Nexpr,int), LOp),

@@ -356,6 +356,9 @@ public:
   // [MC] subsumed resources
   vector<vector<resource> > subsumed_resources;
 
+  // [MC] register atom domain of each temp
+  vector<vector<register_atom> > temp_domain;
+
   Parameters(JSONVALUE root);
 
   // emit parameters in JSON format

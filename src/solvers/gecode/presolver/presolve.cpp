@@ -95,7 +95,6 @@ void presolve(Parameters & input, PresolverOptions & options) {
   vector<vector<operand> > quasi_adjacent_ref = input.quasi_adjacent;
   vector<vector<vector<int> > > long_latency_index_ref = input.long_latency_index;
   vector<vector<operand> > long_latency_def_use_ref = input.long_latency_def_use;
-  vector<vector<resource> > subsumed_resources_ref = input.subsumed_resources;
   vector<PresolverActiveTable> active_tables_ref = input.active_tables;
   vector<PresolverCopyTmpTable> tmp_tables_ref = input.tmp_tables;
   vector<PresolverDominates> dominates_ref = input.dominates;
@@ -463,7 +462,11 @@ void presolve(Parameters & input, PresolverOptions & options) {
   
   subsumed_resources(input);
   
-  // 35: JSON.precedences <- JSON.precedences U NormalizePrecedences(GenRegionPrecedences())
+  // 35: JSON.temp_domain
+  
+  temp_domain(input);
+  
+  // 37: JSON.precedences <- JSON.precedences U NormalizePrecedences(GenRegionPrecedences())
 
   if (options.regions()) {
     t0.start();
@@ -505,7 +508,6 @@ void presolve(Parameters & input, PresolverOptions & options) {
     run_test("quasi_adjacent", quasi_adjacent_ref, input.quasi_adjacent);
     run_test("long_latency_index", long_latency_index_ref, input.long_latency_index);
     run_test("long_latency_def_use", long_latency_def_use_ref, input.long_latency_def_use);
-    run_test("subsumed_resources", subsumed_resources_ref, input.subsumed_resources);
     run_test("dominates", dominates_ref, input.dominates);
     run_test("optional_min", optional_min_ref, input.optional_min);
     run_test("active_tables", active_tables_ref, input.active_tables);

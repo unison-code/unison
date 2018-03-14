@@ -1166,15 +1166,15 @@ void subsumed_resources(Parameters& input) {
     vector<resource> entailed;
     vector<set<operation>> r2o(input.R.size());
     set<instruction> bI;
-    for(operation o : input.ops[b]) {
-      for(instruction i : input.instructions[o]) {
-	bI.insert(input.instructions[o].begin(), input.instructions[o].end());
-	if(i != NULL_INSTRUCTION)
-	  for(resource r : input.R)
-	    if (input.con[i][r]>0 && input.dur[i][r]>0)
-	      r2o[r].insert(o);
-      }
-    }
+    for(operation o : input.ops[b])
+      if(!input.delimiter[o])
+	for(instruction i : input.instructions[o]) {
+	  bI.insert(input.instructions[o].begin(), input.instructions[o].end());
+	  if(i != NULL_INSTRUCTION)
+	    for(resource r : input.R)
+	      if (input.con[i][r]>0 && input.dur[i][r]>0)
+		r2o[r].insert(o);
+	}
     for(resource r : input.R) {
       if(r2o[r].size() <= 1) {
 	entailed.push_back(r);

@@ -161,6 +161,7 @@ array[int] of int: temp_def;     % temp -> defining operand
 array[int] of int: temp_width;   % temp -> width
 array[int] of int: temp_minlive; % temp -> minlive
 array[int] of set of int: temp_uses; % temp -> set of use operands
+array[int] of set of int: temp_domain; % temp -> domain of regs
 
 %% see JSON packed, pinstrs
 array[int,int] of int: packed_pq;
@@ -353,26 +354,29 @@ predicate smart_alldiff(array[int] of var int: X) =
 
 predicate ra_diffn_cumu(array[int] of var int: R,
 			array[int] of int: W,
+                        array[int] of set of int: D,
 			array[int] of var int: LS,
 			array[int] of var int: LD,
 			int: v) =
-      let {set of int: J = {i | i in index_set(R) where card(dom(R[i]) intersect max(0,v-W[i]+1)..v)>0}}
+      let {set of int: J = {i | i in index_set(R) where card(D[i] intersect max(0,v-W[i]+1)..v)>0}}
       in cumulative([LS[i] | i in J], [LD[i] | i in J],
                     [if W[i]=1 then R[i]=v else R[i] in max(0,v-W[i]+1)..v endif | i in J],
                     1);
 
 predicate ra_diffn(array[int] of var int: R,
                    array[int] of int: W,
+                   array[int] of set of int: D,
                    array[int] of var int: LS,
                    array[int] of var int: LD,
                    array[int] of var int: LE) =
   if good_cumulative then % [MC] infinite ranges are clash free by construction
-    forall(v in 0..min(infinite)-1)(
-      ra_diffn_cumu(R, W, LS, LD, v)
-    ) /\
-    forall(j in index_set(bounded), v in range[j] where bounded[j])(
-      ra_diffn_cumu(R, W, LS, LD, v)
-    )
+    let {set of int: atoms = array_union(D)}
+    in forall(v in atoms intersect (0..min(infinite)-1))(
+	 ra_diffn_cumu(R, W, D, LS, LD, v)
+       ) /\
+       forall(j in index_set(bounded), v in atoms intersect range[j] where bounded[j])(
+	 ra_diffn_cumu(R, W, D, LS, LD, v)
+       )
   else if good_diffn then
     diffn_nonstrict(R, LS, W, LD)
   else
@@ -600,14 +604,18 @@ set of int: temp_insn_regs(int: v, int: j) =
 	   endif}
     in {r | r in unaligned /*where r mod w = 0*/}; % currently, that would over-constrain
 
+set of int: generic_temp_domain(int: t1) =
+    if card(temp_domain[t1]) > 0 then
+      temp_domain[t1]
+    else
+      let {int: p = temp_def[t1],
+	   set of int: rdom = array_union([temp_insn_regs(t1,j) | j in 1..MAXI]),
+	   set of int: joker = if min(operand_temps[p])>=0 then {} else {-1} endif, % rematerialization
+      } in rdom union joker
+    endif;
+
 constraint
-    forall(v in 0..MAXT) (
-        let {int: p = temp_def[v],
-	     int: w = temp_width[v],
-	     set of int: rdom = array_union([temp_insn_regs(v,j) | j in 1..MAXI]),
-    	     set of int: joker = if min(operand_temps[p])>=0 then {} else {-1} endif, % rematerialization
-	} in r[v] in rdom union joker
-    );
+    forall(t1 in 0..MAXT) (r[t1] in generic_temp_domain(t1));
 
 %% operation selection (register set depending on operation)
 constraint
@@ -720,7 +728,12 @@ constraint
 %% disjoint live ranges
 constraint
     forall(T in bb_temps) (
-	ra_diffn([r[v] | v in T], [temp_width[v] | v in T], [ls[v] | v in T], [ld[v] | v in T], [le[v] | v in T])
+	ra_diffn([r[v] | v in T],
+		 [temp_width[v] | v in T],
+		 [generic_temp_domain(v) | v in T],
+		 [ls[v] | v in T],
+		 [ld[v] | v in T],
+		 [le[v] | v in T])
     );
 
 %% precedences (with conditions added by presolver)
@@ -869,8 +882,8 @@ int: max_res_off(int: res, int: o) = (
 constraint
     forall(b in 1..MAXB, res in index_set(res_cap) diff bb_subsumed[b]) (
         let {set of int: active = {o | o in bb_ops[b] where
-	                               exists(q in op_instructions[o])
-				             (res_con[res,q]>0)}} in (
+		      	 	       not(op_type[o] in {TYPE_IN,TYPE_OUT}) /\
+	                               exists(q in op_instructions[o])(res_con[res,q]>0)}} in (
             if card(active)<=1 then true
             else if unit_res_dur_cap(res,active) then
 	        smart_alldiff([c[o] | o in active])

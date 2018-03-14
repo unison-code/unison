@@ -143,7 +143,8 @@ Parameters::Parameters(JSONVALUE root) :
   quasi_adjacent  (get_2d_vector<int>(getRoot(root, "quasi_adjacent"))),
   long_latency_index  (get_3d_vector<int>(getRoot(root, "long_latency_index"))),
   long_latency_def_use  (get_2d_vector<int>(getRoot(root, "long_latency_def_use"))),
-  subsumed_resources  (get_2d_vector<int>(getRoot(root, "subsumed_resources")))
+  subsumed_resources  (get_2d_vector<int>(getRoot(root, "subsumed_resources"))),
+  temp_domain  (get_2d_vector<int>(getRoot(root, "temp_domain")))
 {
   compute_derived();
 }
