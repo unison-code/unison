@@ -83,19 +83,18 @@ bool temp_is_unsafe(const Parameters& input, const temporary t) {
   return false;
 }
 
-static bool void temp_users_predef(Parameters& input, temporary t, set<int>& prdom) {
+static bool temp_users_predef(Parameters& input, temporary t, set<int>& rdom) {
   for (operand p : input.users[t]) {
     int r = input.p_preassign[p];
     if (r < 0)
       return false;
     else
-      prdom.insert(r);
+      rdom.insert(r);
   }
   return true;
 }
 
 void temp_domain(Parameters& input) {
-  vector<vector<int>> t_domain(input.T.size(), noregs);
   vector<temporary> deferred_in;
   // phase 1: all except those defined by congruent (in) operands
   for (temporary t : input.T) {
@@ -112,7 +111,6 @@ void temp_domain(Parameters& input) {
       deferred_in.push_back(t);
     } else if (temp_users_predef(input, t, rdom)) {
       input.temp_domain[t].insert(input.temp_domain[t].end(), rdom.begin(), rdom.end());
-      cerr << "all users predef: D(r[" << t << "]) = " << show(input.temp_domain[t]) << endl;
     } else {
       rdom.clear();
       if (optional)

@@ -497,7 +497,7 @@ model2dzn(AVL0) :-
 	    foreach(TD2,TempDomain2)
 	do  list_to_fdset(TD1, TD2)
 	),
-	write_array(temp_domain, array(1..Nbb,set(int)), TempDomain2),
+	write_array(temp_domain, array(0..MAXT,set(int)), TempDomain2),
 	%
 	exprs_postlude(LOp, LArg1, LArg2, LArg3, Lchildren),
 	length(LOp, Nexpr),
@@ -562,7 +562,11 @@ compute_bb(AVL, MAXF, MAXO, MAXP, MAXT, MAXC, MAXI, MAXR,
 	    TmpMin is TmpPrev+1,
 	    last(Op1, OpMax),
 	    NLen is OpMin-OpMax,
-	    list_to_fdset(Sub1, Sub),
+	    (   foreach(R1,Sub1),
+		foreach(R2,Sub2)
+	    do  R2 is R1+1
+	    ),
+	    list_to_fdset(Sub2, Sub),
 	    (   Tmp1 = []	% no temps, no opnds?
 	    ->  TmpMax is TmpMin-1,
 		OpndMax is OpndMin-1,

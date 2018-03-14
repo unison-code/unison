@@ -882,7 +882,6 @@ int: max_res_off(int: res, int: o) = (
 constraint
     forall(b in 1..MAXB, res in index_set(res_cap) diff bb_subsumed[b]) (
         let {set of int: active = {o | o in bb_ops[b] where
-		      	 	       not(op_type[o] in {TYPE_IN,TYPE_OUT}) /\
 	                               exists(q in op_instructions[o])(res_con[res,q]>0)}} in (
             if card(active)<=1 then true
             else if unit_res_dur_cap(res,active) then
