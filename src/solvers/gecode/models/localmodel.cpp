@@ -255,6 +255,12 @@ void LocalModel::post_register_symmetry_breaking_constraints(block b) {
     IntVarArgs rts;
     for (temporary t : vpc.ts) {
       rts << r(t);
+      for (int w = 1; w < input->width[t]; w++) {
+	IntVar rtw(*this, r(t).min() + w, r(t).max() + w);
+	constraint(rtw == r(t) + w);
+	assert_bounded(rtw);
+	rts << rtw;
+      }
     }
     for (vector<register_atom> rs : vpc.rss) {
       IntArgs ras(rs.begin(), rs.end());
