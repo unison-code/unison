@@ -1023,6 +1023,8 @@ data TransformPhase =
     ImportPreLift |
     -- | During import phase, after register lifting
     ImportPostLift |
+    -- | During import phase, after enforcing the calling convention
+    ImportPostCC |
     -- | During augment phase, before adding read/write objects
     AugmentPreRW |
     -- | During augment phase, after adding read/write objects
