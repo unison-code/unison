@@ -14,7 +14,8 @@ This file is part of Unison, see http://unison-code.github.io
 -}
 
 module Unison.Driver
-    (applyTransformations,
+    (ImportSkipReason (..),
+     applyTransformations,
      emitOutput,
      toPlainText,
      writeIntermediateFile,
@@ -28,6 +29,8 @@ import Data.Maybe
 import Data.List
 import System.FilePath
 import System.IO
+
+data ImportSkipReason = OverSizeThreshold | NotSelected deriving Eq
 
 applyTransformations ts target f = mapAccumL (applyTransformation target) f ts
 

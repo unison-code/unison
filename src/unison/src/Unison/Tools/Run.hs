@@ -91,7 +91,7 @@ runFunction
 
      case importResult of
       -- import succeeds:
-      (Just _) ->
+      (Right _) ->
         do uniInput <- strictReadFile uniFile
 
            let lssaUniFile = addExtension "lssa.uni" prefix
@@ -151,10 +151,10 @@ runFunction
 
            return prefix
 
-      -- import aborted (because input exceeds maximum size as given by
-      -- 'sizeThreshold'), assume a base file is given:
-      Nothing ->
-        do when verbose $
+      -- import aborted because of different reasons, assume a base file is
+      -- given:
+      (Left reason) ->
+        do when (verbose && reason == OverSizeThreshold) $
                 hPutStrLn stderr "Size threshold exceeded, skipping function..."
            let unisonMirFile = addExtension "unison.mir" prefix
            copyFile (fromJust baseFile') unisonMirFile

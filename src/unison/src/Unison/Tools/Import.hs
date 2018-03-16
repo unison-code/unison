@@ -80,7 +80,8 @@ import Unison.Tools.Import.TagRemats
 run (estimateFreq, simplifyControlFlow, noCC, noReserved, maxBlockSize,
      implementFrames, rematType, function, goal, mirVersion, sizeThreshold,
      mirFile, debug, intermediate, lint, lintPragma, uniFile) mir target =
-    let mf = selectFunction function $ MachineIR.parse mirVersion mir
+    let mfs = MachineIR.parse mirVersion mir
+        mf  = selectFunction function mfs
         (mf', partialMfs) =
             applyTransformations
             (mirTransformations (estimateFreq, simplifyControlFlow))
@@ -93,16 +94,18 @@ run (estimateFreq, simplifyControlFlow, noCC, noReserved, maxBlockSize,
                                  lintPragma))
             target ff
         baseName = takeBaseName mirFile
-    in case overThreshold sizeThreshold mf of
-        True  -> do return Nothing
-        False -> do when debug $
-                         putStr (toPlainText (partialMfs ++ partialFs))
-                    when intermediate $
-                         mapM_ (writeIntermediateFile "uni" baseName) partialFs
-                    emitOutput uniFile (show f)
-                    when lint $
-                         invokeLint f target
-                    return (Just uniFile)
+    in case selected function mfs of
+        False -> do return (Left NotSelected)
+        True  -> case overThreshold sizeThreshold mf of
+            True  -> do return (Left OverSizeThreshold)
+            False -> do when debug $
+                             putStr (toPlainText (partialMfs ++ partialFs))
+                        when intermediate $
+                             mapM_ (writeIntermediateFile "uni" baseName) partialFs
+                        emitOutput uniFile (show f)
+                        when lint $
+                             invokeLint f target
+                        return (Right uniFile)
 
 mirTransformations (estimateFreq, simplifyControlFlow) =
     [(dropDebugLocations, "dropDebugLocations", True),
@@ -168,9 +171,14 @@ importPragmas =
 
 selectFunction Nothing [mf] = mf
 selectFunction (Just name) mfs =
-  case find (\mf -> MachineIR.mfName mf == name) mfs of
+  case find (isMfName name) mfs of
     Just mf -> mf
     Nothing -> error ("could not find specified MIR function " ++ show name)
+
+selected Nothing [_] = True
+selected (Just name) mfs = any (isMfName name) mfs
+
+isMfName name mf = MachineIR.mfName mf == name
 
 overThreshold Nothing _ = False
 overThreshold (Just max) mf =
