@@ -169,7 +169,9 @@ void gen_calleesaved_spill(Parameters& input) {
     for(const vector<temporary>& related : copyrel_star) {
       if(related.size()>=2 && related[0]==t) {
 	temporary t1 = related[1];
-	Si.push_back(input.oper[input.definer[t1]]);
+	operation oi = input.oper[input.definer[t1]];
+	if(input.type[oi] == COPY)
+	  Si.push_back(oi);
 	for(unsigned int j=2; j<related.size(); j++) {
 	  temporary tj = related[j];
 	  operation oj = input.oper[input.definer[tj]];
@@ -179,7 +181,8 @@ void gen_calleesaved_spill(Parameters& input) {
 	break;
       }
     }
-    input.calleesaved_spill.push_back(Si);
+    if (!Si.empty())
+      input.calleesaved_spill.push_back(Si);
   }
 }
 
