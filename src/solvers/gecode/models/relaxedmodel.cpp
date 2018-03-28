@@ -176,6 +176,7 @@ void RelaxedModel::post_relaxed_decision_variable_domain_definitions(void) {
 void RelaxedModel::post_relaxed_secondary_variable_definitions(void) {
   for(block b : input->B) {
     Model::post_operand_register_definition(b);
+    Model::post_connected_operand_definition(b);
     Model::post_allocation_definition(b);
     Model::post_use_temporary_definition(b);
     Model::post_temporary_uses_definition(b);
