@@ -127,19 +127,21 @@ void presolve(Parameters & input, PresolverOptions & options) {
   // Abort if the problem is trivially unfeasible
   
   t0.start();
-  ModelOptions moptions;
-  GlobalModel * base = new GlobalModel(&input, &moptions, IPL_DOM);
-  base->post_upper_bound(input.maxf);
-  Gecode::SpaceStatus ss1 = base->status();
-  delete base;
-  if (ss1 == SS_FAILED) {
-    if (options.verbose())
-      cerr << pre()
-           << "proven absence of solutions with cost less or equal than "
-           << show(input.maxf, ", ", "", "{}") << endl;
-    // ensure infeasible MiniZinc model
-    input.nogoods.push_back(UnisonConstraintExpr(OR_EXPR, {}, {}));
-    return;
+  {
+    ModelOptions moptions;
+    GlobalModel * base = new GlobalModel(&input, &moptions, IPL_DOM);
+    base->post_upper_bound(input.maxf);
+    Gecode::SpaceStatus ss1 = base->status();
+    delete base;
+    if (ss1 == SS_FAILED) {
+      if (options.verbose())
+	cerr << pre()
+	     << "proven absence of solutions with cost less or equal than "
+	     << show(input.maxf, ", ", "", "{}") << endl;
+      // ensure infeasible MiniZinc model
+      input.nogoods.push_back(UnisonConstraintExpr(OR_EXPR, {}, {}));
+      return;
+    }
   }
 
   if (timeout(t, options, "trivial unfeasibility", t0))
