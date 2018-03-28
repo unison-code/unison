@@ -211,3 +211,8 @@ void disconnect_operand(Parameters& input, operand p) {
     // TODO: update 'dist'
   }
 }
+
+void populate_r_domain(Model * m, temporary t, vector<int>& domain) {
+  for (IntVarValues rr(m->r(t)); rr(); ++rr)
+    domain.push_back(rr.val());
+}

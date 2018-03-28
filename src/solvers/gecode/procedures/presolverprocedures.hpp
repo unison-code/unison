@@ -88,4 +88,6 @@ bool propagate(Parameters& input);
 // Updates the parameters according to the constraint model to reflect that the given operand is disconnected.
 void disconnect_operand(Parameters& input, operand p);
 
+void populate_r_domain(Model * m, temporary t, vector<int>& domain);
+
 #endif

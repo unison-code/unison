@@ -40,6 +40,8 @@
 
 #include "../common/util.hpp" // min_of, etc...
 #include "../models/parameters.hpp"
+#include "models/globalmodel.hpp"
+#include "procedures/presolverprocedures.hpp"
 #include "auxiliary.hpp" // auxiliary functions as defined in the spec
 #include <limits>
 #include <vector>
