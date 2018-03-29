@@ -899,11 +899,18 @@ void Model::post_basic_model_constraints(block b) {
 
 void Model::post_connected_users_constraints(block b) {
 
-  // A temporary is live iff it is connected to a user:
+  // A temporary is live iff it is connected to a user;
+  // If it's live, then its register must be among the users' registers,
+  // otherwise its register must be -1:
 
-  for (temporary t : input->tmp[b])
+  for (temporary t : input->tmp[b]) {
     constraint(l(t) == (us(t) > 0));
-
+    IntVarArgs ruses;
+    for (operand p : input->users[t]) ruses << ry(p);
+    operand p = input->definer[t];
+    if (!must_connect(p)) ruses << IntVar(*this, -1, -1);
+    member(*this, ruses, r(t), ipl);
+  }
 }
 
 void Model::post_active_instructions_constraints(block b) {
@@ -1012,7 +1019,15 @@ void Model::post_alignment_constraints(block b) {
     instruction i = input->baligned[b][ai][1],
                 j = input->baligned[b][ai][3];
     int adist = input->badist[b][ai];
-    constraint((imp(op, i) && imp(oq, j)) >> (ry(p) == (ry(q) + adist)));
+    if (input->instructions[op].size()==1 && input->instructions[oq].size()==1) {
+      constraint(ry(p) == ry(q) + adist);
+    } else {
+      IntVar ryqa(*this, ry(q).min()+adist, ry(q).max()+adist);
+      constraint(ryqa == (ry(q) + adist));
+      BoolVar r(*this, 0, 1);
+      rel(*this, ry(p), IRT_EQ, ryqa, r, ipl);
+      constraint(!imp(op, i) || !imp(oq, j) || r);
+    }
   }
 
 }

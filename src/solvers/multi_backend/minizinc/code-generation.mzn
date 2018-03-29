@@ -36,6 +36,7 @@ include "globals.mzn";
 
 bool: good_cumulative;
 bool: good_diffn;
+bool: good_member;
 bool: optimize_cycles;
 
 %% some constants
@@ -301,11 +302,6 @@ array[1..MAXB] of var 0..MAXC: copysum;
 test isreal(int: o) = (op_type[o] in
                        {TYPE_LINEAR, TYPE_BRANCH, TYPE_CALL, TYPE_TAIL, TYPE_FUN, TYPE_COPY});
 
-test can_use(int: p, int: temp) = (
-      operand_use[p] /\
-      temp in operand_temps[p]
-);
-
 test fixedop(int: o) = (
     op_instructions[o] != {0} /\ card(op_instructions[o]) = 1
 );
@@ -553,7 +549,7 @@ constraint
 	   (r[v] >= 0 <-> temp_eq(temp_def[v],v))) /\
     forall(v in 0..MAXT) (
 	let {bool: unsafe = temp_is_unsafe(v),
-	     set of int: pset = {p | p in 0..MAXP where can_use(p,v)},
+	     set of int: pset = temp_uses[v],
 	     set of int: prange = 1..card(pset),
 	     array[prange] of int: parr = [p | p in pset],
 	     array[prange] of var -1..MAXC: carr} in (
@@ -1024,6 +1020,7 @@ constraint
 %% live temporary
 bool: hairy_live_temporary = false;
 
+%% Model::post_connected_users_constraints
 constraint
   if hairy_live_temporary then
     forall(T in related_temps) (
@@ -1032,26 +1029,39 @@ constraint
 	     array[irange] of var 0..card(tset): count,
 	     array[irange] of int: tarr = [x | x in tset]} in (
 	    forall(j in irange)(count[j] >= bool2int(a[temp_definer[tarr[j]]])) /\
-	    global_cardinality([t(p) | p in 0..MAXP where can_use(p,tarr[1])],
-		               tarr, count)
+	    global_cardinality(temp_uses[tarr[1]], tarr, count)
  	)
     )
   else
     forall(p in 0..MAXP where not operand_use[p])(
         let {int: v = single_temp(p)} in (
 	    if temp_must_be_real(p) then
-	      temp_member_reif({q | q in 0..MAXP where can_use(q,v)}, v, true)
+	      temp_member_reif(temp_uses[v], v, true)
 	    else if opt_in_temporary(v) then
 	      let {var bool: rp}
               in  (temp_is_real_reif(p,rp)) /\
-                  (temp_member_reif({q | q in 0..MAXP where can_use(q,v)}, v, rp))
+                  (temp_member_reif(temp_uses[v], v, rp))
 	    else
-                  temp_member_reif({q | q in 0..MAXP where can_use(q,v)}, v, a[operand_definer[p]])
+                  temp_member_reif(temp_uses[v], v, a[operand_definer[p]])
 	    endif endif
         )
     )
   endif;
 
+%% Model::post_connected_users_constraints
+constraint
+  if good_member then
+    forall(p in 0..MAXP where not operand_use[p])(
+	let {int: v = single_temp(p)} in (
+	    if temp_must_be_real(p) then
+	      member([rt[p] | p in temp_uses[v]], r[v])
+	    else
+	      member([rt[p] | p in temp_uses[v]]++[-1], r[v])
+	    endif
+	)
+    )
+  else true endif;
+  
 %% last use -- pretty much subsumed by maximum(le[v], ...)
 % constraint
 %     forall(p in 0..MAXP where operand_use[p])
