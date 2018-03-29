@@ -347,14 +347,28 @@ value_precede_chains(Parameters & input, Model * m, bool global, block b) {
   for(const pair<vector<temporary>,vector<vector<register_atom>>>& TsRs : SymChainsOfTemps) {
     PresolverValuePrecedeChain vpc;
     map<int,vector<temporary>> w2ts;
+    vector<temporary> ts;
+    int minwidth = 1;
     for (temporary t : TsRs.first) // sort temps by decreasing width
       w2ts[-input.width[t]].push_back(t);
-    for (auto wts : w2ts)
-      vpc.ts.insert(vpc.ts.end(), wts.second.begin(), wts.second.end());
-    vpc.rss = TsRs.second;
-    sort(vpc.rss.begin(), vpc.rss.end()); // canonicalize
-    // cerr << "SYMMETRY " << show(vpc) << endl;
-    chains.push_back(vpc);
+    for (auto wts : w2ts) {
+      ts.insert(ts.end(), wts.second.begin(), wts.second.end());
+      minwidth = -wts.first;
+    }
+    for (auto ras1 : TsRs.second) {
+      vector<register_atom> ras2;
+      for (register_atom a : ras1)
+	if ((a % minwidth) == 0)
+	  ras2.push_back(a);
+      if (ras2.size()>1)
+	vpc.rss.push_back(ras2);
+    }
+    if (!vpc.rss.empty()) {
+      sort(vpc.rss.begin(), vpc.rss.end()); // canonicalize
+      vpc.ts = ts;
+      // cerr << "SYMMETRY " << show(vpc) << endl;
+      chains.push_back(vpc);
+    }
   }
   return chains;
 }
