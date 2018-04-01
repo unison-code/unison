@@ -79,14 +79,14 @@ $(SOLVERBIN): $(GENMAKEFILE)
 	fi; \
 
 $(GENMAKEFILE): $(SOLVERPROJECT) $(SOLVERSRC)
-	qmake TARGET="gecode-solver" CONFIG+="$(UNISON_SOLVER_CONFIG)" -o $@ $<
+	qmake-qt4 TARGET="gecode-solver" CONFIG+="$(UNISON_SOLVER_CONFIG)" -o $@ $<
 
 $(SOLVERSTATICBIN): $(GENMAKEFILESTATIC)
 	$(MAKE) -C $(SOLVERDIR) -f $(notdir $<)
 	strip --strip-debug $(SOLVERSTATICBIN)
 
 $(GENMAKEFILESTATIC): $(SOLVERPROJECT) $(SOLVERSRC)
-	qmake TARGET="gecode-solver-static" CONFIG+="static" -o $@ $<
+	qmake-qt4 TARGET="gecode-solver-static" CONFIG+="static" -o $@ $<
 
 clean-solver:
 	rm -f $(SOLVERDIR)/*.o $(SOLVERDIR)/*~ $(GENMAKEFILE) $(GENMAKEFILESTATIC) $(SOLVERDIR)/moc_*.cpp
