@@ -82,7 +82,7 @@ while (my $line = <STDIN>) {
 	my $min = $1;
 	my $max = $2;
 	open(my $lb, '>', $lbfile);
-	print $lb "{\"lower bound\":[$min]}\n";
+	print $lb "{\"lower_bound\":[$min]}\n";
 	close($lb);
 	# DO NOT REMOVE
 	print STDERR "$line\n";
