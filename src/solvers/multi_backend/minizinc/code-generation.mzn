@@ -1085,28 +1085,28 @@ constraint
         value_precede_chain(domop_temps[j], [t(o) | o in domop_operands[j]])
     );
 
-%% mandatory temporary reuse (hairy!)
-constraint
-    forall(j in index_set(domuse_p))(
-          let {int: P = domuse_p[j], % use operand
-	       int: Q = domuse_q[j], % use operand
-	       int: R = domuse_r[j], % def operand
-	       int: T = min(operand_temps[R]),
-	       int: I = operand_definer[P]} in (
-	      if not (op_type[I] in {TYPE_COMBINE,TYPE_LOW,TYPE_HIGH})
-	         % and not operand_lastuse[P] % guaranteed by model2dzn
-		 % and forall(j in index_set(preassign_reg))(preassign_operand[j]!=P) % guaranteed by model2dzn
-	      then
-		  forall(atm in index_set(atom_regs))(
-		      let {set of int: insns = {i | i in op_instructions[I] where i>0 /\ operand_atom[P,i]=atm}} in (
-		          if (card(insns)>=1) then
-			      (temp_eq(Q,T) /\ insn_in(I,insns) /\ r[T] in atom_regs[atm] -> temp_eq(P,T))
-			  else true endif
-		      )
-		  )
-	      else true endif
-	  )
-    );
+%% mandatory temporary reuse (hairy, and most likely useless)
+% constraint
+%     forall(j in index_set(domuse_p))(
+%           let {int: P = domuse_p[j], % use operand
+% 	       int: Q = domuse_q[j], % use operand
+% 	       int: R = domuse_r[j], % def operand
+% 	       int: T = min(operand_temps[R]),
+% 	       int: I = operand_definer[P]} in (
+% 	      if not (op_type[I] in {TYPE_COMBINE,TYPE_LOW,TYPE_HIGH})
+% 	         % and not operand_lastuse[P] % guaranteed by model2dzn
+% 		 % and forall(j in index_set(preassign_reg))(preassign_operand[j]!=P) % guaranteed by model2dzn
+% 	      then
+% 		  forall(atm in index_set(atom_regs))(
+% 		      let {set of int: insns = {i | i in op_instructions[I] where i>0 /\ operand_atom[P,i]=atm}} in (
+% 		          if (card(insns)>=1) then
+% 			      (temp_eq(Q,T) /\ insn_in(I,insns) /\ r[T] in atom_regs[atm] -> temp_eq(P,T))
+% 			  else true endif
+% 		      )
+% 		  )
+% 	      else true endif
+% 	  )
+%     );
 
 %% before
 constraint

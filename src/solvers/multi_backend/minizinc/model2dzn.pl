@@ -304,6 +304,7 @@ model2dzn(AVL0) :-
 	write_array(domop_operands, array(1..Ndomop, set(int)), DomopOpnds),
 	write_array(domop_temps, array(1..Ndomop, set(int)), DomopTemps),
 	%
+	avl_fetch(preassign, AVL, Preassign),
 	avl_fetch(domuses, AVL, Domuse),
 	(   foreach([P2,Q2,R2],Domuse),
 	    fromto(Ps1,Ps2,Ps3,[]),
