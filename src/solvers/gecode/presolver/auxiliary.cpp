@@ -345,6 +345,17 @@ bool is_mandatory(const Parameters& input, operation o) {
 #endif
 }
 
+void p_finite_register_classes(const Parameters& input, operand p, set<register_class>& RC) {
+  operation o = input.oper[p];
+  unsigned int nbinsn = input.instructions[o].size();
+  int prel = p - input.operands[o][0];
+  for(unsigned int j=0; j<nbinsn; j++) {
+    register_class rc = input.rclass[o][j][prel];
+    if (!input.infinite[input.space[rc]])
+      RC.insert(rc);
+  }
+}  
+
 presolver_conj normal_conjunction(const Parameters& input, const presolver_conj& c) {
   presolver_conj normal;
 

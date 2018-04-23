@@ -83,6 +83,8 @@ bool temp_is_unsafe(const Parameters& input, const temporary t) {
   return false;
 }
 
+#if 0
+
 static bool temp_users_predef(Parameters& input, temporary t, set<int>& rdom) {
   for (operand p : input.users[t]) {
     int r = input.p_preassign[p];
@@ -93,8 +95,6 @@ static bool temp_users_predef(Parameters& input, temporary t, set<int>& rdom) {
   }
   return true;
 }
-
-#if 0
 
 void temp_domain(Parameters& input) {
   vector<temporary> deferred_in, deferred_combine;
@@ -247,3 +247,119 @@ void temp_domain(Parameters& input) {
 }
 
 #endif
+
+void suppress_copies(Parameters& input, block b, vector<presolver_conj>& Nogoods) {
+  int calls = 0;
+  // collect register classes and their sizes
+  map<register_class,int> C2W;
+  map<register_class,int> C2S;
+  map<register_class,vector<register_atom>> C2Inflated;
+  map<temporary,vector<register_atom>> T2Inflated;
+  for (operation o : input.ops[b]) {
+    for (unsigned int ii = 0; ii < input.instructions[o].size(); ii++) {
+      for (unsigned pi = 0; pi < input.operands[o].size(); pi++) {
+	operand p = input.operands[o][pi];
+	if (input.instructions[o][ii] != NULL_INSTRUCTION) {
+	  register_class rc = input.rclass[o][ii][pi];
+	  if (!input.infinite[input.space[rc]]) 
+	    C2W[rc] = input.operand_width[p];
+	}
+      }
+    }
+  }
+  // compute inflated set of register atoms per class
+  for (const pair<register_class,int>& rcw : C2W) {
+    register_class rc = rcw.first;
+    int w = rcw.second;
+    if (rc > 0) {
+      vector<register_atom> inflated;
+      for (register_atom a : input.atoms[rc])
+	for (int i=0; i<w; i++)
+	  inflated.push_back(a+i);
+      C2Inflated[rc] = inflated;
+      C2S[rc] = inflated.size();
+    }
+  }
+  // compute inflated set of register atoms per temp, except LOW/HIGH/COMBINE/defuse
+  for (operation o : input.ops[b]) {
+    if (input.type[o]==CALL)
+      calls++;
+    if (is_mandatory(input, o) && input.type[o]!=LOW && input.type[o]!=HIGH && input.type[o]!=COMBINE)
+      for (operand p : input.operands[o])
+	if (!input.use[p]) {
+	  bool usedef = false;
+	  for (pair<operand,operand>& pp : input.redefined[o])
+	    if (pp.second==p)
+	      usedef = true;
+	  if (!usedef) {
+	    temporary t = input.temps[p][0];
+	    int w = input.width[t];
+	    vector<register_atom> inflated;
+	    for (register_atom a : input.temp_domain[t])
+	      for (int i=0; i<w; i++)
+		inflated.push_back(a+i);
+	    T2Inflated[t] = inflated;
+	  }
+	}
+  }
+  // now check C2Inflated vs. T2Inflated, discover which classes have slack >= 0
+  for (const pair<register_class,vector<register_atom>>& rcInf : C2Inflated) {
+    register_class rc = rcInf.first;
+    int cw = C2W[rc];
+    for (const pair<temporary,vector<register_atom>>& tInf : T2Inflated) {
+      temporary t = tInf.first;
+      if(ord_intersect(rcInf.second, tInf.second))
+	C2S[rc] -= max(input.width[t], cw);
+    }
+  }
+  // find temporaries subject to copy suppression
+  for (operation o : input.ops[b])
+    if (is_mandatory(input, o)) {
+      unsigned int nbopnd = input.operands[o].size();
+      for(unsigned int i=0; i<nbopnd; i++) {
+	operand p = input.operands[o][i];
+	int r = input.p_preassign[p];
+	if (!input.use[p] && (r<0 || ord_contains(input.callersaved, r))) { // skip callee-saved, skip reserved
+	  temporary t = input.temps[p][0];
+	  vector<operand> users = input.users[t];
+	  operand p_store = users[0];
+	  operation o_store = input.oper[p_store];
+	  set<register_class> RCp;
+	  if (input.temps[p_store][0] == NULL_TEMPORARY && input.type[o_store] == COPY) {
+	    p_finite_register_classes(input, first_def(input, o_store), RCp);
+	  } else {
+	    p_finite_register_classes(input, p, RCp);
+	  }
+	  RCp.erase(0);
+	  for (register_class rc : RCp)
+	    if (C2S[rc] < 0)
+	      goto skip_this_p;
+	  int free = 0, constrained = 0;
+	  for (operand q : users)
+	    if (input.temps[q][0] != NULL_TEMPORARY) {
+	      bool is_constrained = true;
+	      if (input.p_preassign[q] < 0 && input.type[input.oper[q]] != OUT) {
+		set<register_class> RCq;
+		p_finite_register_classes(input, q, RCq);
+		RCq.erase(0);
+		if (RCp.size() <= 1 && RCp == RCq)
+		  is_constrained = false;
+	      }
+	      if (is_constrained)
+		constrained++;
+	      else
+		free++;
+	    }
+	  int ub = constrained + min(calls+1,free) + 1;
+	  for (operand q : input.users[t])
+	    if (input.temps[q][0] == NULL_TEMPORARY && input.type[input.oper[q]] == COPY)
+	      if (--ub < 0) {
+		UnisonConstraintExpr e(ACTIVE_EXPR, {input.oper[q]}, {});
+		presolver_conj conj = {e};
+		Nogoods.push_back(conj);
+	      }
+	}
+      skip_this_p: ;
+      }
+    }
+}

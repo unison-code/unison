@@ -213,6 +213,7 @@ void disconnect_operand(Parameters& input, operand p) {
 }
 
 void populate_r_domain(Model * m, temporary t, vector<int>& domain) {
+  domain.clear();
   for (IntVarValues rr(m->r(t)); rr(); ++rr)
     domain.push_back(rr.val());
 }

@@ -161,11 +161,14 @@ void presolve(Parameters & input, PresolverOptions & options) {
   if (timeout(t, options, "last_use", t0))
     return;
 
-  // 4: <JSON.before, Nogoods0> <- BEFOREVSNOGOODS(GENBEFORE())
+  // 4: <JSON.before, Nogoods0> <- BEFOREVSNOGOODS(GENBEFORE()) + SUPPRESSED COPIES
 
   t0.start();
   vector<presolver_conj> Nogoods;
   BeforePresolver::presolve(input, Nogoods);
+  temp_domain(input);
+  for (const block b : input.B)
+    suppress_copies(input, b, Nogoods);  
   if (timeout(t, options, "before", t0))
     return;
 

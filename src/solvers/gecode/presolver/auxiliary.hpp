@@ -93,6 +93,22 @@ vector<T> ord_intersection(const vector<T>& v1, const vector<T>& v2){
   return i;
 }
 
+// Returns whether the sorted vectors v1 and v2 intersect
+template <typename T>
+bool ord_intersect(const vector<T>& v1, const vector<T>& v2) {
+  typename vector<T>::const_iterator i = v1.begin();
+  typename vector<T>::const_iterator j = v2.begin();
+  while (i != v1.end() && j != v2.end()) {
+    if (*i == *j)
+      return true;
+    else if (*i < *j)
+      ++i;
+    else
+      ++j;
+  }
+  return false;
+}
+
 // Returns the union of the sorted vectors v1 and v2
 template <typename T>
 vector<T> ord_union(const vector<T>& v1, const vector<T>& v2){
@@ -200,6 +216,8 @@ bool is_preassigned_callee_saved(const Parameters& input, operand p);
 
 // Is operation mandatory?
 bool is_mandatory(const Parameters& input, operation o);
+
+void p_finite_register_classes(const Parameters& input, operand p, set<register_class>& RC);
 
 presolver_conj normal_conjunction(const Parameters& input, const presolver_conj& c);
 

@@ -48,5 +48,6 @@
 
 bool temp_is_unsafe(const Parameters& input, const temporary t);
 void temp_domain(Parameters& input);
+void suppress_copies(Parameters& input, block b, vector<presolver_conj>& Nogoods);
 
 #endif
