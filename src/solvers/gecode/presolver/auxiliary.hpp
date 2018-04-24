@@ -206,13 +206,22 @@ Digraph dd_graph(const Parameters& input, block b);
 block block_containing(const Parameters& input, const vector<operand>& P);
 
 // Is operand not preassigned?
-bool is_preassigned_not(const Parameters& input, operand p);
+bool p_preassigned_not(const Parameters& input, operand p);
 
 // Is operand preassigned caller-saved?
-bool is_preassigned_caller_saved(const Parameters& input, operand p);
+bool p_preassigned_caller_saved(const Parameters& input, operand p);
 
 // Is operand preassigned callee-saved?
-bool is_preassigned_callee_saved(const Parameters& input, operand p);
+bool p_preassigned_callee_saved(const Parameters& input, operand p);
+
+// Is temporary not preassigned?
+bool t_preassigned_not(const Parameters& input, temporary t);
+
+// Is temporary preassigned caller-saved?
+bool t_preassigned_caller_saved(const Parameters& input, temporary t);
+
+// Is temporary preassigned callee-saved?
+bool t_preassigned_callee_saved(const Parameters& input, temporary t);
 
 // Is operation mandatory?
 bool is_mandatory(const Parameters& input, operation o);

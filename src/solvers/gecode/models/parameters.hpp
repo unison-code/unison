@@ -600,8 +600,8 @@ public:
   // for sure preassigned reg of t, or -1
   vector<int> t_preassign;
 
-  // whether r is callee-saved
-  vector<bool> r_calleesaved;
+  // what is register atom: RA_CALLEE_SAVED, RA_CALLER_SAVED, or RA_RESERVED
+  vector<enum RegisterAtomClass> ra_class;
 
   // allowed combinations of active operations, per block
   vector<vector<PresolverActiveTable>> bactive_tables;

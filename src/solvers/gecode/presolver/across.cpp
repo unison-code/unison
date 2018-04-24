@@ -56,9 +56,8 @@ void presolve_across(PresolverAsserts& PA,
     gen_across_call(PA, input, oset, b, CondBefore, Across);
     alt_across_call(PA, input, oset, b, AltAcross);
   }
-  for(const PresolverAcrossTuple& acr : Across) {
+  for(const PresolverAcrossTuple& acr : Across)
     nogoods_or_across(input, acr, Nogoods, Across1);
-  }
 }
 
 void alt_across_to_json(Parameters& input,
@@ -130,7 +129,7 @@ void across_to_json(Parameters& input,
 
 void collect_at_call(const Parameters& input, operation o, vector<operand>& P, vector<temporary>& T) {
   for(operand p : oper_uses(input, o)) {
-    if(is_preassigned_callee_saved(input, p)) {
+    if(p_preassigned_callee_saved(input, p)) { // reserved: EXCLUDED
       P.push_back(p);
       for(temporary t : opnd_temps(input, p))
 	vector_insert(T, t);
@@ -164,7 +163,7 @@ void gen_across_call(PresolverAsserts& PA,
     collect_before_call(PA, input, o1, b, Before);
     collect_after_call(PA, input, o1, b, After);
     cond_before_items(PA, input, Before, After, o1, b, CondBefore);
-
+    
     // rephrased algorithm
     for(const pair<temporary,presolver_disj>& bef : Before) {
       if(After.find(bef.first) != After.end()) {
@@ -239,7 +238,7 @@ void collect_after_call(PresolverAsserts& PA, const Parameters& input, operation
 	  After[tu].push_back(Conj);
 	}
       }
-      if(!is_preassigned_callee_saved(input, p)) { // preassigned: not or caller-saved
+      if(!p_preassigned_callee_saved(input, p)) { // preassigned: not or caller-saved OR RESERVED
 	for(temporary tu : opnd_temps(input, p)) {
 	  if(tu!=NULL_TEMPORARY) {
 	    if(oper_type(input, temp_oper(input, tu))!=FUN) {
@@ -311,8 +310,7 @@ void nogoods_or_across(const Parameters& input,
 		       vector<PresolverAcrossTuple>& Across) {
   presolver_disj Disj;
   temporary t = acr.t;
-  int r = input.t_preassign[t];
-  bool cstemp = r<0 ? false : !input.r_calleesaved[r];
+  bool cstemp = t_preassigned_caller_saved(input, t);
   for(const presolver_conj& c : acr.d) {
     presolver_conj c2;
     bool csopnd = false;
@@ -322,11 +320,8 @@ void nogoods_or_across(const Parameters& input,
 	vector<temporary> ts = opnd_temps(input, p);
 	if(ts.size()==1 || (ts.size()==2 && ts[0]==NULL_TEMPORARY))
 	  continue;
-	if(l.data[1]==t) {
-	  int pr = input.p_preassign[p];
-	  if(pr>=0 && !input.r_calleesaved[pr])
-	    csopnd = true;
-	}
+	if(l.data[1]==t && p_preassigned_caller_saved(input, p))
+	  csopnd = true;
       }
       c2.push_back(l);
     }
@@ -352,7 +347,7 @@ vector<temporary> across_candidates(PresolverAsserts& PA, const Parameters& inpu
   for(operation o : input.ops[b]) {
     if(o!=o1 && !ord_contains(successors, o)) {
       for(operand p : oper_defs(input, o))
-	if(!is_preassigned_caller_saved(input, p)) { // preassigned: not or non-caller-saved
+	if(!p_preassigned_caller_saved(input, p)) { // preassigned: not or callee-saved or reserved
 	  for(temporary t : opnd_temps(input, p)) {
 	    if(t!=NULL_TEMPORARY) {
 	      vector_insert(C, t);
@@ -364,7 +359,7 @@ vector<temporary> across_candidates(PresolverAsserts& PA, const Parameters& inpu
   for(operation o : input.ops[b]) {
     if(is_mandatory(input, o) && !ord_contains(predecessors, o)) {
       for(operand p : oper_uses(input, o)) {
-	if(o!=o1 || is_preassigned_callee_saved(input, p)) { // preassigned: non-caller-saved
+	if(o!=o1 || p_preassigned_callee_saved(input, p)) { // preassigned: callee-saved, but not reserved
 	  for(temporary t : opnd_temps(input, p)) {
 	    if(t!=NULL_TEMPORARY) {
 	      vector_insert(U, t);
@@ -383,23 +378,21 @@ pair<bool,presolver_conj> cond_caller_saved(const Parameters& input,
 					    operand p,
 					    temporary t,
 					    const presolver_conj& c) {
-  if(!is_preassigned_not(input, p)) {
-    if(is_preassigned_callee_saved(input, p)) { // preassigned: non-caller-saved
-      return make_pair(false, c);
-    } else {
-      return make_pair(true, c);
-    }
-  }
+  if (t_preassigned_caller_saved(input, t))
+    return make_pair(true, c);
+  else if (!t_preassigned_not(input, t))
+    return make_pair(false, c);
+  else if(p_preassigned_caller_saved(input, p))
+    return make_pair(true, c);
+  else if(!p_preassigned_not(input, p))
+    return make_pair(false, c);
   for(const UnisonConstraintExpr& l : c) {
     if(l.id==CONNECTS_EXPR && l.data[1]==t) {
       operand q = l.data[0];
-      if(!is_preassigned_not(input, q)) {
-	if(is_preassigned_callee_saved(input, q)) { // preassigned: non-caller-saved
-	  return make_pair(false, c);
-	} else {
-	  return make_pair(true, c);
-	}
-      }
+      if(p_preassigned_caller_saved(input, q))
+	return make_pair(true, c);
+      else if(!p_preassigned_not(input, q))
+	return make_pair(false, c);
     }
   }
   UnisonConstraintExpr e(CALLER_SAVED_EXPR, {t}, {});
@@ -436,7 +429,7 @@ void cond_before_items(PresolverAsserts& PA,
   for(const pair<temporary,presolver_disj>& bef : cond_before_filter(input, Before, {})) {
     temporary t = bef.first;
     operand p = temp_def(input, t);
-    if(is_preassigned_not(input, p)) { // not preassigned
+    if(p_preassigned_not(input, p)) { // not preassigned
       t2before[t] = kernel_set(bef.second, {}, -1);
       t2either[t] = 0;
     }
@@ -445,13 +438,13 @@ void cond_before_items(PresolverAsserts& PA,
     temporary t = aft.first;
     operand p = temp_def(input, t);
     presolver_disj kern = kernel_set(aft.second, {}, -1);
-    if(!is_preassigned_not(input, p)) { // preassigned
+    if(!p_preassigned_not(input, p)) { // preassigned
       goto nexta;
     }
     if (kern.size()==1) {
       for(const UnisonConstraintExpr& l : kern[0]) {
 	if(l.id==CONNECTS_EXPR && l.data[1]==aft.first &&
-	   !is_preassigned_not(input, l.data[0])) { // eq(p(p),t(t)) where p is preassigned
+	   !p_preassigned_not(input, l.data[0])) { // eq(p(p),t(t)) where p is preassigned
 	  goto nexta;
 	}
       }
@@ -501,11 +494,17 @@ map<temporary,presolver_disj> cond_before_filter(const Parameters& input,
       Filtered[t] = {};
     } else {
       for(const presolver_conj& c : kv.second) {
-	UnisonConstraintExpr e(CALLER_SAVED_EXPR, {t}, {});
-	presolver_conj c2 = {e};
+	presolver_conj c2;
+	if(t_preassigned_caller_saved(input, t)) {
+	} else if(!t_preassigned_not(input, t)) {
+	  goto nextc;
+	} else {
+	  UnisonConstraintExpr e(CALLER_SAVED_EXPR, {t}, {});
+	  c2.push_back(e);
+	}
 	for(const UnisonConstraintExpr& l : c) {
 	  if(l.id==CONNECTS_EXPR && l.data[1]==t && // eq(p(p),t(t)) where
-	     is_preassigned_callee_saved(input, l.data[0])) { // p preassigned non-caller-saved
+	     p_preassigned_callee_saved(input, l.data[0])) { // p preassigned callee-saved, but not reserved
 	    goto nextc;
 	  }
 	}
@@ -541,7 +540,7 @@ void alt_across_call(PresolverAsserts& PA,
     }
     for(operation o : successors) {
       for(operand p : oper_uses(input, o)) {
-	if(ord_intersection(input.temps[p], PA.remat).empty()) {
+	if(!ord_intersect(input.temps[p], PA.remat)) {
 	  vector_insert(UseAfter, first_temp(input, p));
 	}
       }
@@ -568,7 +567,7 @@ void alt_across_call(PresolverAsserts& PA,
 	       ord_contains(UseOnly, td) &&
 	       !ord_contains(S, tu) &&
 	       !ord_contains(S, td) &&
-	       ord_intersection(input.temps[pu], PA.remat).empty()) {
+	       !ord_intersect(input.temps[pu], PA.remat)) {
 	      S.push_back(tu);
 	      S.push_back(td);
 	      PresolverSetAcrossTuple T;

@@ -319,7 +319,7 @@ void suppress_copies(Parameters& input, block b, vector<presolver_conj>& Nogoods
       for(unsigned int i=0; i<nbopnd; i++) {
 	operand p = input.operands[o][i];
 	int r = input.p_preassign[p];
-	if (!input.use[p] && (r<0 || ord_contains(input.callersaved, r))) { // skip callee-saved, skip reserved
+	if (!input.use[p] && (r<0 || input.ra_class[r]==RA_CALLER_SAVED)) { // skip callee-saved, skip reserved
 	  temporary t = input.temps[p][0];
 	  vector<operand> users = input.users[t];
 	  operand p_store = users[0];

@@ -246,8 +246,7 @@ BeforePresolver::lh_descendants(const operand p,
 
       presolver_conj _C = C;
 
-      if(ord_intersection(tp,tu).size() > 0) {
-
+      if(ord_intersect(tp,tu)) {
 	if(tp != tu){
 	  UnisonConstraintExpr _l(SHARE_EXPR, {u,p}, {});
 	  _C.push_back(_l);
@@ -281,8 +280,7 @@ vector<vector<operand> > BeforePresolver::emit_before(const vector<vector<int> >
 
       else if(((r + w) > rr) &&
 	      ((rr + ww) > r) &&
-	      ord_intersection(input.temps[p],
-			   input.temps[pp]).empty()) {
+	      !ord_intersect(input.temps[p], input.temps[pp])) {
 	vector_insert(V, {p,pp});
       }
     }

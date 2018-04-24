@@ -402,6 +402,9 @@ typedef pair<operation, unsigned int> InstructionAssignment;
 
 class GistOptionsStub {};
 
+enum RegisterAtomClass
+  {RA_CALLEE_SAVED, RA_CALLER_SAVED, RA_RESERVED};
+
 enum TemporandType
   {TEMPORAND_OPERAND, TEMPORAND_TEMPORARY, TEMPORAND_REGISTER, TEMPORAND_NONE};
 

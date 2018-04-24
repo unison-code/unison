@@ -198,7 +198,7 @@ void InfeasiblePresolver::setup(void) {
       for (const operand q :
 	     ord_intersection(input.operands[input.ops[b].back()], P_c)) {
 
-	if(ord_intersection(input.temps[p], input.temps[q]).empty()) {
+	if(!ord_intersect(input.temps[p], input.temps[q])) {
 	  D_7.push_back({Temporand::p(p), Temporand::p(q)});
 	}
       }
@@ -341,7 +341,7 @@ void InfeasiblePresolver::redefined_operand_nogoods(vector<presolver_conj>& Nogo
                     q = qq.first, q2 = qq.second;
 	    unsigned int d1i = find_index(input.operands[o1], p2);
 	    unsigned int d2i = find_index(input.operands[o2], q2);
-	    if(!ord_intersection(input.temps[p], input.temps[q]).empty()) {
+	    if(ord_intersect(input.temps[p], input.temps[q])) {
 	      vector<presolver_conj> D;
 	      unsigned int n = 0;
 	      for (unsigned int i1i = 0; i1i < input.instructions[o1].size(); i1i++) {
@@ -469,7 +469,7 @@ void InfeasiblePresolver::regdomain_nogoods(vector<presolver_conj>& Nogoods) {
     vector<register_atom> pd = P2D[p];
     if(input.use[p]) {
       for(temporary t : input.temps[p]) {
-	if(t != NULL_TEMPORARY && ord_intersection(pd, T2D[t]).empty()) {
+	if(t != NULL_TEMPORARY && !ord_intersect(pd, T2D[t])) {
 	  UnisonConstraintExpr e(CONNECTS_EXPR, {p,t}, {});
 	  presolver_conj c = {e};
 	  Nogoods.push_back(c);
@@ -681,7 +681,7 @@ bool InfeasiblePresolver::has_use_proxy(const temporand_set& C, const operation 
 bool InfeasiblePresolver::has_disjoint_temporary_domains(const vector<operand>& P) {
   for(unsigned i = 0; i < P.size()-1; i++) {
     for(unsigned j = i+1; j < P.size(); j++) {
-      if(ord_intersection(input.temps[P[i]], input.temps[P[j]]).size() > 0) {
+      if(ord_intersect(input.temps[P[i]], input.temps[P[j]])) {
 	return false;
       }
     }
@@ -888,8 +888,7 @@ void InfeasiblePresolver::emit_nogood(const vector<vector<operand> >* R,
 	  vector<operand> Ps2 = it2->second;
 
 	  // Ts1 and Ts2 belongs to same basic block and are disjoint
-	  if(input.tb[Ts1[0]] == input.tb[Ts2[0]] &&
-	     ord_intersection(Ts1,Ts2).size() == 0) {
+	  if(input.tb[Ts1[0]] == input.tb[Ts2[0]] && !ord_intersect(Ts1,Ts2)) {
 	    // TODO: this might be a bug, in mpeg2.gethdr.Get_Hdr there is operands
 	    //       from different blocks in Ps1 or Ps2, thus the order of them
 	    //       in the vector determines whether the cluse evaluates to true

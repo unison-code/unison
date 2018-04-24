@@ -66,7 +66,7 @@ void last_use(PresolverAsserts& PA, Parameters& input) {
       case FUN:
 	// For all p in OperUses(o)
 	for (operand p : input.operands[o])
-	  if (input.use[p] && is_preassigned_caller_saved(input, p))
+	  if (input.use[p] && p_preassigned_caller_saved(input, p)) // caller-saved, but not reserved
 	    input.last_use.push_back(p);
 	break;
       case LINEAR:

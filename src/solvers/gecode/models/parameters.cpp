@@ -225,7 +225,7 @@ void Parameters::compute_derived() {
   ultimate_source.clear();
   p_preassign.clear();
   t_preassign.clear();
-  r_calleesaved.clear();
+  ra_class.clear();
   bactive_tables.clear();
   gactive_tables.clear();
   btmp_tables.clear();
@@ -755,9 +755,11 @@ void Parameters::compute_derived() {
   }
 
   int nregs = atoms[0].size();	// safe over-estimation
-  init_vector(r_calleesaved, nregs, true); // also the default for regs that are neither: Hexagon 29/30/31
+  init_vector(ra_class, nregs, RA_RESERVED); // the default for regs that are neither: Hexagon 29/30/31
+  for(int r : calleesaved)
+    ra_class[r] = RA_CALLEE_SAVED;
   for(int r : callersaved)
-    r_calleesaved[r] = false;
+    ra_class[r] = RA_CALLER_SAVED;
 
   unsigned cnt;
   const Parameters * input = this;

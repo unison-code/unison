@@ -318,31 +318,38 @@ block block_containing(const Parameters& input, const vector<operand>& P) {
     return b;
 }
 
-bool is_preassigned_not(const Parameters& input, operand p) {
+bool p_preassigned_not(const Parameters& input, operand p) {
   int r = input.p_preassign[p];
   return r<0;
 }
 
-bool is_preassigned_caller_saved(const Parameters& input, operand p) {
+bool p_preassigned_caller_saved(const Parameters& input, operand p) {
   int r = input.p_preassign[p];
-  return (r>=0 && !input.r_calleesaved[r]);
+  return (r>=0 && input.ra_class[r]==RA_CALLER_SAVED);
 }
 
-bool is_preassigned_callee_saved(const Parameters& input, operand p) {
+bool p_preassigned_callee_saved(const Parameters& input, operand p) {
   int r = input.p_preassign[p];
-  return (r>=0 && input.r_calleesaved[r]);
+  return (r>=0 && input.ra_class[r]==RA_CALLEE_SAVED);
+}
+
+bool t_preassigned_not(const Parameters& input, temporary t) {
+  int r = input.t_preassign[t];
+  return r<0;
+}
+
+bool t_preassigned_caller_saved(const Parameters& input, temporary t) {
+  int r = input.t_preassign[t];
+  return (r>=0 && input.ra_class[r]==RA_CALLER_SAVED);
+}
+
+bool t_preassigned_callee_saved(const Parameters& input, temporary t) {
+  int r = input.t_preassign[t];
+  return (r>=0 && input.ra_class[r]==RA_CALLEE_SAVED);
 }
 
 bool is_mandatory(const Parameters& input, operation o) {
-    return input.instructions[o][0] != NULL_INSTRUCTION;
-#if 0
-    return std::any_of(
-            input.mandatory.begin(),
-            input.mandatory.end(),
-            [o](vector<operation> block_mandatory_ops) {
-                return ord_contains(block_mandatory_ops, o);
-            });
-#endif
+  return input.instructions[o][0] != NULL_INSTRUCTION;
 }
 
 void p_finite_register_classes(const Parameters& input, operand p, set<register_class>& RC) {
