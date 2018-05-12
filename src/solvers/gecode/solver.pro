@@ -101,13 +101,6 @@ CONFIG -= qt
 CONFIG += warn_on
 QT += script
 
-CONFIG(static) {
-
-TARGET = gecode-solver-static
-LIBS += -pthread -static
-
-}
-
 CONFIG(graphics) {
 
   CONFIG += qt

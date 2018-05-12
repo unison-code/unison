@@ -68,7 +68,6 @@ UNISON_SOLVER_CONFIG ?= graphics
 SOLVERPROJECT := $(SOLVERDIR)/solver.pro
 
 GENMAKEFILE = $(SOLVERDIR)/generated.mk
-GENMAKEFILESTATIC = $(SOLVERDIR)/generated-static.mk
 
 OSX_SOLVERBIN = $(SOLVERDIR)/gecode-solver.app/Contents/MacOS/gecode-solver
 
@@ -81,15 +80,8 @@ $(SOLVERBIN): $(GENMAKEFILE)
 $(GENMAKEFILE): $(SOLVERPROJECT) $(SOLVERSRC)
 	qmake-qt4 TARGET="gecode-solver" CONFIG+="$(UNISON_SOLVER_CONFIG)" -o $@ $<
 
-$(SOLVERSTATICBIN): $(GENMAKEFILESTATIC)
-	$(MAKE) -C $(SOLVERDIR) -f $(notdir $<)
-	strip --strip-debug $(SOLVERSTATICBIN)
-
-$(GENMAKEFILESTATIC): $(SOLVERPROJECT) $(SOLVERSRC)
-	qmake-qt4 TARGET="gecode-solver-static" CONFIG+="static" -o $@ $<
-
 clean-solver:
-	rm -f $(SOLVERDIR)/*.o $(SOLVERDIR)/*~ $(GENMAKEFILE) $(GENMAKEFILESTATIC) $(SOLVERDIR)/moc_*.cpp
+	rm -f $(SOLVERDIR)/*.o $(SOLVERDIR)/*~ $(GENMAKEFILE) $(SOLVERDIR)/moc_*.cpp
 
 veryclean-solver: clean-solver
 	rm -f $(SOLVERBIN)
