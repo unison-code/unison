@@ -78,7 +78,7 @@ $(SOLVERBIN): $(GENMAKEFILE)
 	fi; \
 
 $(GENMAKEFILE): $(SOLVERPROJECT) $(SOLVERSRC)
-	qmake-qt4 TARGET="gecode-solver" CONFIG+="$(UNISON_SOLVER_CONFIG)" -o $@ $<
+	qmake TARGET="gecode-solver" CONFIG+="$(UNISON_SOLVER_CONFIG)" -o $@ $<
 
 clean-solver:
 	rm -f $(SOLVERDIR)/*.o $(SOLVERDIR)/*~ $(GENMAKEFILE) $(SOLVERDIR)/moc_*.cpp

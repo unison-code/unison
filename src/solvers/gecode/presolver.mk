@@ -76,7 +76,7 @@ $(PRESOLVERBIN): $(PRESOLVERGENMAKEFILE)
 	fi; \
 
 $(PRESOLVERGENMAKEFILE): $(PRESOLVERPROJECT) $(PRESOLVERSRC)
-	qmake-qt4 TARGET="gecode-presolver" CONFIG+="$(UNISON_SOLVER_CONFIG)" -o $@ $<
+	qmake TARGET="gecode-presolver" CONFIG+="$(UNISON_SOLVER_CONFIG)" -o $@ $<
 
 clean-presolver:
 	rm -f $(PRESOLVERDIR)/*.o $(PRESOLVERDIR)/*~ $(PRESOLVERGENMAKEFILE) $(PRESOLVERDIR)/moc_*.cpp
