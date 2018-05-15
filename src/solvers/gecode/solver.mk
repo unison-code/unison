@@ -71,7 +71,10 @@ GENMAKEFILE = $(SOLVERDIR)/generated.mk
 
 OSX_SOLVERBIN = $(SOLVERDIR)/gecode-solver.app/Contents/MacOS/gecode-solver
 
-$(SOLVERBIN): $(GENMAKEFILE)
+# FIXME: the presolver dependency is added to prevent linking shared object
+# files that are not yet ready. The right solution is to structure the Qt
+# project files appropriately, possibly using TEMPLATE and SUBDIRS.
+$(SOLVERBIN): $(GENMAKEFILE)  $(PRESOLVERBIN)
 	$(MAKE) -C $(SOLVERDIR) -f $(notdir $<)
 	if [ -e $(OSX_SOLVERBIN) ]; then \
 	    cp $(OSX_SOLVERBIN) $(SOLVERBIN); \
