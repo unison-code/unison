@@ -267,7 +267,7 @@ Library
                    parsec >= 3.1
 
   Build-Depends: base >= 4.0,
-                 fgl >= 5.5.3,
+                 fgl >= 5.6.0,
                  pretty >= 1.0,
                  graphviz >= 2999.17,
                  split >= 0.1,
