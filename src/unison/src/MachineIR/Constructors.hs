@@ -24,6 +24,7 @@ module MachineIR.Constructors
          mkMachineFunctionPropertyJumpTable,
          mkMachineFunctionPropertyRemovedFreqs,
          mkMachineFunctionPropertyVersion,
+         mkMachineFunctionPropertyRegisters,
          -- * MachineJumpTableEntry constructors
          mkMachineJumpTableEntry,
          -- * MachineBlock constructors
@@ -95,6 +96,7 @@ mkMachineFunctionPropertyRegClasses = MachineFunctionPropertyRegClasses
 mkMachineFunctionPropertyJumpTable = MachineFunctionPropertyJumpTable
 mkMachineFunctionPropertyRemovedFreqs = MachineFunctionPropertyRemovedFreqs
 mkMachineFunctionPropertyVersion = MachineFunctionPropertyVersion
+mkMachineFunctionPropertyRegisters = MachineFunctionPropertyRegisters
 
 mkMachineJumpTableEntry = MachineJumpTableEntry
 

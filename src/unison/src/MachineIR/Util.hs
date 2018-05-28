@@ -32,12 +32,14 @@ module MachineIR.Util
          expandBlockPseudos,
          miToList,
          listToMi,
-         fallthroughBlock
+         fallthroughBlock,
+         registerClassMap
        )
        where
 
 import Data.List
 import Data.Maybe
+import qualified Data.Map as M
 
 import Common.Util
 
@@ -163,3 +165,7 @@ fallthroughBlock (MachineBlock {mbId = i1} :
              b2 @ MachineBlock {mbId = i2} : bs) =
                   (i1, i2) : fallthroughBlock (b2 : bs)
 fallthroughBlock [MachineBlock {mbId = i1}] = [(i1, -1)]
+
+registerClassMap mf =
+  M.fromList $ concat $ maybeToList $ fmap mfPropertyRegisters $
+  find isMachineFunctionPropertyRegisters (mfProperties mf)
