@@ -127,7 +127,7 @@ registers rc = error ("unmatched: registers " ++ show rc)
 
 -- | Index type (low/high/copy) of subregisters
 
-subRegIndexType subreg = error ("unmatched: subRegIndexType " ++ show subreg)
+subRegIndexType _ subreg = error ("unmatched: subRegIndexType " ++ show subreg)
 
 -- | Map from infinite register class to register usage
 

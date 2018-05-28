@@ -15,14 +15,18 @@ import MachineIR
 import Unison
 import Unison.Target.API
 
+import qualified Data.Map as M
+
 lowerInsertSubRegs mf target =
   let stf      = subRegIndexType target
+      tid2rc   = registerClassMap mf
       newId    = newMachineTempId mf
-      (mf', _) = traverseMachineFunction (lowerInsertInstrSubRegs stf) newId mf
+      (mf', _) = traverseMachineFunction (lowerInsertInstrSubRegs stf tid2rc)
+                 newId mf
   in mf'
 
-lowerInsertInstrSubRegs stf (accIs, id) (mi @
-  MachineSingle {msOperands = [d @ MachineTemp {},
+lowerInsertInstrSubRegs stf tid2rc (accIs, id) (mi @
+  MachineSingle {msOperands = [d @ MachineTemp {mtId = did},
                                s1,
                                s2 @ MachineTemp {},
                                sr]}
@@ -30,43 +34,43 @@ lowerInsertInstrSubRegs stf (accIs, id) (mi @
   | isMachineInsertSubReg mi =
   let subreg     = toSubRegIndex sr
       (id', mis) =
-        case stf subreg of
-          LowSubRegIndex ->
+        case stf (tid2rc M.! did) subreg of
+          [LowSubRegIndex] ->
             let t  = mkSimpleMachineTemp id
                 hi = mi {msOpcode = mkMachineVirtualOpc HIGH,
                          msOperands = [t, s1]}
                 co = mi {msOpcode = mkMachineVirtualOpc COMBINE,
                          msOperands = [d, s2, t]}
             in (id + 1, [hi, co])
-          HighSubRegIndex ->
+          [HighSubRegIndex] ->
             let t  = mkSimpleMachineTemp id
                 lo = mi {msOpcode = mkMachineVirtualOpc LOW,
                          msOperands = [t, s1]}
                 co = mi {msOpcode = mkMachineVirtualOpc COMBINE,
                          msOperands = [d, t, s2]}
             in (id + 1, [lo, co])
-          CopySubRegIndex -> (id, [mi {msOpcode = mkMachineVirtualOpc COPY,
+          [CopySubRegIndex] -> (id, [mi {msOpcode = mkMachineVirtualOpc COPY,
                                        msOperands = [d, s2]}])
-  in lowerInsertInstrSubRegs stf (accIs ++ mis, id') is
+  in lowerInsertInstrSubRegs stf tid2rc (accIs ++ mis, id') is
   | isMachineSubregToReg mi =
   let subreg     = toSubRegIndex sr
       (id', mis) =
-        case stf subreg of
-          CopySubRegIndex -> (id, [mi {msOpcode = mkMachineVirtualOpc COPY,
+        case stf (tid2rc M.! did) subreg of
+          [CopySubRegIndex] -> (id, [mi {msOpcode = mkMachineVirtualOpc COPY,
                                        msOperands = [d, s2]}])
           sri ->
             let t   = mkSimpleMachineTemp id
                 de  = mi {msOpcode = mkMachineVirtualOpc IMPLICIT_DEF,
                           msOperands = [t]}
                 mos = case sri of
-                       LowSubRegIndex  -> [d, s2, t]
-                       HighSubRegIndex -> [d, t, s2]
+                       [LowSubRegIndex]  -> [d, s2, t]
+                       [HighSubRegIndex] -> [d, t, s2]
                 co = mi {msOpcode = mkMachineVirtualOpc COMBINE,
                          msOperands = mos}
             in (id + 1, [de, co])
-  in lowerInsertInstrSubRegs stf (accIs ++ mis, id') is
+  in lowerInsertInstrSubRegs stf tid2rc (accIs ++ mis, id') is
 
-lowerInsertInstrSubRegs stf (accIs, id) (mi : is) =
-  lowerInsertInstrSubRegs stf (accIs ++ [mi], id) is
+lowerInsertInstrSubRegs stf tid2rc (accIs, id) (mi : is) =
+  lowerInsertInstrSubRegs stf tid2rc (accIs ++ [mi], id) is
 
-lowerInsertInstrSubRegs _ (is, acc) [] = (is, acc)
+lowerInsertInstrSubRegs _ _ (is, acc) [] = (is, acc)
