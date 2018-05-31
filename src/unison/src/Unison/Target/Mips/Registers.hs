@@ -114,7 +114,7 @@ reserved = [ZERO, K0, K1, SP]
 
 -- | Index type (low/high/copy) of subregisters
 
-subRegIndexType subreg = error ("unmatched: subRegIndexType " ++ show subreg)
+subRegIndexType _ subreg = error ("unmatched: subRegIndexType " ++ show subreg)
 
 -- | Caller- and callee-saved registers (extracted from "SYSTEM V APPLICATION
 -- BINARY INTERFACE MIPS RISC Processor Supplement", 3rd Edition, 1996)

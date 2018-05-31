@@ -60,6 +60,7 @@ parseFunction :: Read i => Read r => MachineIRVersion -> (String, String) ->
 parseFunction v (rawIR, rawMIR) =
   let ir  = decodeYaml rawIR  :: String
       mir = decodeYaml rawMIR :: MIRFunction
+      mrs = fmap toMachineFunctionPropertyRegisters (registers mir)
       mjt = fmap toMachineFunctionPropertyJumpTable (jumpTable mir)
       mfs = fmap toMachineFunctionPropertyFixedStack (fixedStack mir)
       ms  = fmap toMachineFunctionPropertyStack (stack mir)
@@ -67,14 +68,15 @@ parseFunction v (rawIR, rawMIR) =
         Left e -> error ("error parsing body of '"
                          ++ name mir ++ "':\n" ++ show e)
         Right mf -> mf {mfName = name mir, mfIR = ir,
-                        mfProperties = maybeToList mjt ++ maybeToList mfs ++
-                                       maybeToList ms}
+                        mfProperties = maybeToList mrs ++ maybeToList mjt ++
+                                       maybeToList mfs ++ maybeToList ms}
       mf1 = mapToMachineInstruction readTargetOpcode mf
       mf2 = mapToMachineInstruction (mapToMachineOperand readOperand) mf1
   in mf2
 
 data MIRFunction = MIRFunction {
   name :: String,
+  registers :: Maybe [MIRRegisterObject],
   fixedStack :: Maybe [MIRStackObject],
   stack :: Maybe [MIRStackObject],
   jumpTable :: Maybe MIRJumpTable,
@@ -85,6 +87,7 @@ instance FromJSON MIRFunction where
     parseJSON (Object v) =
       MIRFunction <$>
       (v .: "name") <*>
+      (v .:? "registers") <*>
       (v .:? "fixedStack") <*>
       (v .:? "stack") <*>
       (v .:? "jumpTable") <*>
@@ -108,6 +111,18 @@ instance FromJSON MIRStackObject where
       (v .:  "alignment") <*>
       (v .:? "callee-saved-register")
     parseJSON _ = error "Can't parse MIRStackObject from YAML"
+
+data MIRRegisterObject = MIRRegisterObject {
+  rId    :: Integer,
+  rClass  :: String
+} deriving Show
+
+instance FromJSON MIRRegisterObject where
+    parseJSON (Object v) =
+      MIRRegisterObject <$>
+      (v .:  "id") <*>
+      (v .:  "class")
+    parseJSON _ = error "Can't parse MIRRegisterObject from YAML"
 
 data MIRJumpTable = MIRJumpTable {
   kind    :: String,
@@ -650,6 +665,11 @@ concatInstructions id entry ret exit instructions =
         (Just ()) -> [mkMachineSingle (mkMachineVirtualOpc EXIT) [] []]
         Nothing -> []
    in en ++ instructions ++ r ++ ex
+
+toMachineFunctionPropertyRegisters rs =
+    mkMachineFunctionPropertyRegisters (map toMachineFunctionRegister rs)
+
+toMachineFunctionRegister MIRRegisterObject {rId = id, rClass = cl} = (id, cl)
 
 toMachineFunctionPropertyFixedStack fso =
     mkMachineFunctionPropertyFixedFrame (map toMachineFrameObjectInfo fso)

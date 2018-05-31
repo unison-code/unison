@@ -15,6 +15,7 @@ This file is part of Unison, see http://unison-code.github.io
 module MachineIR.Predicates
        (
          -- * MachineFunctionProperty predicates
+         isMachineFunctionPropertyRegisters,
          isMachineFunctionPropertyFixedFrame,
          isMachineFunctionPropertyFrame,
          isMachineFunctionPropertyJumpTable,
@@ -65,6 +66,9 @@ module MachineIR.Predicates
 import MachineIR.Base
 
 import Unison.Base
+
+isMachineFunctionPropertyRegisters MachineFunctionPropertyRegisters {} = True
+isMachineFunctionPropertyRegisters _ = False
 
 isMachineFunctionPropertyFixedFrame MachineFunctionPropertyFixedFrame {} = True
 isMachineFunctionPropertyFixedFrame _ = False

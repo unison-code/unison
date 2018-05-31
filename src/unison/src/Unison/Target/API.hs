@@ -263,9 +263,11 @@ data TargetDescription i r rc s = TargetDescription {
       -- | Possibly an upper bound of the number of register atoms in the given
       -- infinite register class
       tInfRegClassBound :: TargetOptions -> RegisterClass rc -> Maybe Integer,
-      -- | Index type of the given sub-register index (see
-      -- 'MachineSubRegIndex')
-      tSubRegIndexType  :: TargetOptions -> SubRegIndex -> SubRegIndexType,
+      -- | Chained index type of the given sub-register index (see
+      -- 'MachineSubRegIndex') for the given register class (in String
+      -- format). A chain [t1, t2, .., tn] is to be interpreted as "the t1 part
+      -- of the t2 part of .. of the tnth part of the register"
+      tSubRegIndexType  :: TargetOptions -> String -> SubRegIndex -> [SubRegIndexType],
       -- | Caller-saved registers
       tCallerSaved      :: TargetOptions -> [r],
       -- | Callee-saved registers

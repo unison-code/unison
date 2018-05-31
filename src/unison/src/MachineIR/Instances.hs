@@ -53,6 +53,12 @@ docEnd = "..."
 showMachineFunction v (name, mps, mbs) =
     docBegin ++ newLine ++
     fill 17 "name:" ++ name ++ newLine ++
+    (case find isMachineFunctionPropertyRegisters mps of
+        (Just mfr) ->
+          fill 17 "registers:" ++ newLine ++
+          nest' 2 (concatMap showMachineRegister $
+                   mfPropertyRegisters mfr)
+        Nothing -> "") ++
     (case find isMachineFunctionPropertyFixedFrame mps of
         (Just mff) ->
           fill 17 "fixedStack:" ++ newLine ++
@@ -78,6 +84,9 @@ showMachineFunction v (name, mps, mbs) =
     fill 18 "body:" ++ "|" ++ newLine ++
     nest' 2 (showMachineBasicBlocks v mbs) ++ newLine ++
     docEnd ++ newLine
+
+showMachineRegister (id, cl) =
+  "- { id: " ++ show id ++ ", class: " ++ cl ++ "}" ++ newLine
 
 showMachineFrameObjectInfo v
   MachineFrameObjectInfo {mfoiIndex = id, mfoiOffset = off, mfoiSize = size,

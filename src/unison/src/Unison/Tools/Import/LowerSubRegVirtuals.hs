@@ -15,38 +15,44 @@ import MachineIR
 import Unison
 import Unison.Target.API
 
-lowerSubRegVirtuals mf @ MachineFunction {mfBlocks = mbs} target =
-  let stf  = subRegIndexType target
-      mbs' = map (lowerSubRegVirtualsInBlock stf) mbs
-      mf'  = mf {mfBlocks = mbs'}
+import qualified Data.Map as M
+
+lowerSubRegVirtuals mf @ MachineFunction {} target =
+  let stf      = subRegIndexType target
+      tid2rc   = registerClassMap mf
+      newId    = newMachineTempId mf
+      (mf', _) = traverseMachineFunction (lowerSubRegVirtual stf tid2rc)
+                 newId mf
   in mf'
 
-lowerSubRegVirtualsInBlock stf mb @ MachineBlock {mbInstructions = mis} =
-  let mis' = map (lowerSubRegVirtual stf) mis
-  in mb {mbInstructions = mis'}
-
-lowerSubRegVirtual stf mi @
+lowerSubRegVirtual stf tid2rc (accIs, id) (mi @
   MachineSingle {msOperands = [d @ MachineTemp {},
-                               s @ MachineTemp {}, sr]}
+                               s @ MachineTemp {mtId = sid}, sr]} : is)
   | isMachineExtractSubReg mi =
     let subreg = toSubRegIndex sr
         opcode =
-          case stf subreg of
-            LowSubRegIndex -> LOW
-            HighSubRegIndex -> HIGH
-            CopySubRegIndex -> COPY
-    in mi {msOpcode = mkMachineVirtualOpc opcode, msOperands = [d, s]}
+          case stf (tid2rc M.! sid) subreg of
+            [LowSubRegIndex]  -> LOW
+            [HighSubRegIndex] -> HIGH
+            [CopySubRegIndex] -> COPY
+        mi' = mi {msOpcode = mkMachineVirtualOpc opcode, msOperands = [d, s]}
+    in lowerSubRegVirtual stf tid2rc (accIs ++ [mi'], id) is
 
-lowerSubRegVirtual stf mi @
+lowerSubRegVirtual stf tid2rc (accIs, id) (mi @
   MachineSingle {msOperands = [d @ MachineTemp {},
-                               s1 @ MachineTemp {}, sr1,
-                               s2 @ MachineTemp {}, sr2]}
+                               s1 @ MachineTemp {mtId = s1id}, sr1,
+                               s2 @ MachineTemp {mtId = s2id}, sr2]} : is)
   | isMachineRegSequence mi =
     let subreg1  = toSubRegIndex sr1
         subreg2  = toSubRegIndex sr2
-        operands = case (stf subreg1, stf subreg2) of
-                     (LowSubRegIndex, HighSubRegIndex) -> ([d, s1, s2])
-                     (HighSubRegIndex, LowSubRegIndex) -> ([d, s2, s1])
-    in mi {msOpcode = mkMachineVirtualOpc COMBINE, msOperands = operands}
+        operands = case (stf (tid2rc M.! s1id) subreg1,
+                         stf (tid2rc M.! s2id) subreg2) of
+                     ([LowSubRegIndex], [HighSubRegIndex]) -> ([d, s1, s2])
+                     ([HighSubRegIndex], [LowSubRegIndex]) -> ([d, s2, s1])
+        mi' = mi {msOpcode = mkMachineVirtualOpc COMBINE, msOperands = operands}
+    in lowerSubRegVirtual stf tid2rc (accIs ++ [mi'], id) is
 
-lowerSubRegVirtual _ mi = mi
+lowerSubRegVirtual stf tid2rc (accIs, id) (mi : is) =
+  lowerSubRegVirtual stf tid2rc (accIs ++ [mi], id) is
+
+lowerSubRegVirtual _ _ (is, acc) [] = (is, acc)

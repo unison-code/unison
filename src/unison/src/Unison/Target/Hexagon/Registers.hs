@@ -115,13 +115,13 @@ hexagonSP = R29
 
 -- | Index type (low/high/copy) of subregisters
 
-subRegIndexType sr
+subRegIndexType _ sr
     | sr == (NamedSubRegIndex "subreg_hireg") ||
-      sr == (RawSubRegIndex 1) = HighSubRegIndex
-subRegIndexType sr
+      sr == (RawSubRegIndex 1) = [HighSubRegIndex]
+subRegIndexType _ sr
     | sr == (NamedSubRegIndex "subreg_loreg") ||
-      sr == (RawSubRegIndex 2) = LowSubRegIndex
-subRegIndexType subreg = error ("unmatched: subRegIndexType " ++ show subreg)
+      sr == (RawSubRegIndex 2) = [LowSubRegIndex]
+subRegIndexType _ subreg = error ("unmatched: subRegIndexType " ++ show subreg)
 
 -- | Map from infinite register class to register usage
 

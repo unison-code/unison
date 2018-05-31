@@ -84,6 +84,9 @@ data MachineFunctionProperty r =
   -- | MIR version for parsing and emission
   MachineFunctionPropertyVersion {
     mfPropertyVersion :: MachineIRVersion
+    } |
+  MachineFunctionPropertyRegisters {
+    mfPropertyRegisters :: [(Integer, String)]
     }
   deriving (Eq, Ord)
 
