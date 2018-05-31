@@ -21,8 +21,6 @@ import Data.Ord
 import Data.Aeson
 import Data.Aeson.Encode.Pretty
 import qualified Data.ByteString.Lazy.Char8 as BSL
-import qualified Data.Text.Lazy.Builder as DTB
-import Data.Scientific
 
 import Common.Util
 import Unison.Driver
@@ -59,9 +57,7 @@ run (baseFile, scaleFreq, oldModel, applyBaseFile, tightPressureBound,
                 (strictlyBetter, unsatisfiable, scaleFreq, mirVersion)
                 aux target f ps
          ps'' = presolver oldModel aux target f ps'
-     emitOutput jsonFile ((BSL.unpack (encodePretty' jsonConfig ps'')))
-
-jsonConfig = defConfig {confNumFormat = Custom showNumber}
+     emitOutput jsonFile ((BSL.unpack (encodePretty ps'')))
 
 modeler (scaleFreq, noCC) aux target f =
   toJSON (M.fromList (IS.parameters scaleFreq aux f target ++
@@ -174,8 +170,3 @@ difference l1 l2 = l1 \\ l2
 
 goalObject (DynamicGoal o) = o
 goalObject (StaticGoal o)  = o
-
-showNumber i =
-  case floatingOrInteger i of
-   Right i' -> DTB.fromString (show (toInteger i'))
-   Left r -> DTB.fromString (show r)

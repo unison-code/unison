@@ -276,10 +276,9 @@ Library
                  filepath >= 1.1,
                  text >= 1.0,
                  aeson >= 0.7,
-                 aeson-pretty >= 0.8.1,
+                 aeson-pretty == 0.7.2,
                  bytestring >= 0.9,
                  unordered-containers >= 0.2,
-                 scientific >= 0.3,
                  directory >= 1.2,
                  process >= 1.2,
                  HUnit
