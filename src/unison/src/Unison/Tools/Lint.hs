@@ -54,6 +54,7 @@ runLint rawArgs f target =
                    (I.singleEntryBlock, singleEntryBlock args),
                    (I.allEntryOpsPreAssigned, allEntryOpsPreAssigned args),
                    (I.allExitOpsPreAssigned, allExitOpsPreAssigned args),
+                   (I.allFunOpsPreAssigned, allFunOpsPreAssigned args),
                    (I.noComponentConflicts, noComponentConflicts args),
                    (I.noCostOverflow, noCostOverflow args),
                    (I.noAmbiguousPhis, noAmbiguousPhis args),

@@ -36,7 +36,7 @@ run args @
    _rematType, baseFile, _scaleFreq, _applyBaseFile, _tightPressureBound,
    _strictlyBetter, _unsatisfiable, _removeReds, _keepNops, _solverFlag,
    mirVersion, inFile, _debug, _verbose, _intermediate, _lint, outFile, outTemp,
-   _presolver, _solver, _sizeThreshold) targetWithOption =
+   _presolver, _solver, _sizeThreshold, _explicitCallRegs) targetWithOption =
   do mirInput         <- strictReadFile inFile
      maybeAsmMirInput <- maybeStrictReadFile baseFile
      let mirInputs    = splitDocs mirVersion mirInput
@@ -66,7 +66,7 @@ runFunction
    rematType, _baseFile, scaleFreq, applyBaseFile, tightPressureBound,
    strictlyBetter, unsatisfiable, removeReds, keepNops, solverFlag, mirVersion,
    inFile, debug, verbose, intermediate, lint, _outFile, _outTemp, presolver,
-   solver, sizeThreshold)
+   solver, sizeThreshold, explicitCallRegs)
   targetWithOption (mir, asmMir) =
   do prefix <- getTempPrefix
      let maybePutStrLn = when verbose . hPutStrLn stderr
@@ -86,8 +86,8 @@ runFunction
        Import.run
        (estimateFreq, simplifyControlFlow, noCC, noReserved, maxBlockSize,
         implementFrames, rematType, function, goal, mirVersion, sizeThreshold,
-        inFile, debug, intermediate, lint, lintPragma, Just uniFile)
-       mirInput targetWithOption
+        explicitCallRegs, inFile, debug, intermediate, lint, lintPragma,
+        Just uniFile) mirInput targetWithOption
 
      case importResult of
       -- import succeeds:

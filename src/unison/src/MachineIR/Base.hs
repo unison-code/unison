@@ -185,6 +185,7 @@ data MachineVirtualOpcode =
   REG_SEQUENCE |
   SUBREG_TO_REG |
   COMBINE |
+  FUN |
   ADJCALLSTACKUP |
   ADJCALLSTACKDOWN |
   ANNOTATION_LABEL |
@@ -362,7 +363,8 @@ data MachineOperand r =
   -- | Free-form register (does not correspond to any LLVM operand, for
   -- temporary use only)
   MachineFreeReg {
-    mfrRegName :: String
+    mfrRegName  :: String,
+    mfrRegFlags :: [MachineRegState]
     }
   deriving (Eq, Ord)
 

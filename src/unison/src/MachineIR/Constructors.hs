@@ -50,6 +50,7 @@ module MachineIR.Constructors
          mkMachineSubTemp,
          mkMachineSubRegIndex,
          mkMachineReg,
+         mkMachineCompleteReg,
          mkMachineImm,
          mkMachineFPImm,
          mkMachineRawFPImm,
@@ -74,6 +75,7 @@ module MachineIR.Constructors
          mkMachineCFIDefReg,
          mkMachineCFIOffset,
          mkMachineCFIAdjustCfaOffset,
+         mkMachineFreeReg,
          -- * MachineRegState constructors
          mkMachineRegImplicit,
          mkMachineRegImplicitDefine,
@@ -123,6 +125,7 @@ mkSimpleMachineTemp id = mkMachineTemp id [] Nothing
 mkMachineSubTemp = MachineSubTemp
 mkMachineSubRegIndex = MachineSubRegIndex
 mkMachineReg name = MachineReg name []
+mkMachineCompleteReg name states = MachineReg name states
 mkMachineImm = MachineImm
 mkMachineFPImm = MachineFPImm
 mkMachineRawFPImm = MachineRawFPImm
@@ -147,6 +150,7 @@ mkMachineCFIDefOffset = MachineCFIDefOffset
 mkMachineCFIDefReg = MachineCFIDefReg
 mkMachineCFIOffset = MachineCFIOffset
 mkMachineCFIAdjustCfaOffset = MachineCFIAdjustCfaOffset
+mkMachineFreeReg = MachineFreeReg
 
 mkMachineRegImplicit = MachineRegImplicit
 mkMachineRegImplicitDefine = MachineRegImplicitDefine

@@ -28,6 +28,7 @@ module Unison.Test.Invariants
      singleEntryBlock,
      allEntryOpsPreAssigned,
      allExitOpsPreAssigned,
+     allFunOpsPreAssigned,
      noComponentConflicts,
      noCostOverflow,
      noAmbiguousPhis,
@@ -363,17 +364,23 @@ singleEntryBlock Function {fCode = code} _ =
            ("several entry blocks: " ++ show (map bLab es))]
 
 allEntryOpsPreAssigned f _ =
-    let i = blockIn $ entryBlock (fCode f)
+    let o = blockIn $ entryBlock (fCode f)
     in testAllElements
        (preAssignedOp "allEntryOpsPreAssigned" "entry")
-       (oDefs i)
+       (oDefs o)
 
 allExitOpsPreAssigned f _ =
     let bs = exitBlocks (fCode f)
-        is = map blockOut bs
+        os = map blockOut bs
     in testAllElements
        (preAssignedOp "allExitOpsPreAssigned" "exit")
-       (concatMap oUses is)
+       (concatMap oUses os)
+
+allFunOpsPreAssigned f _ =
+    let os = [o | o <- flatCode f, isFun o]
+    in testAllElements
+       (preAssignedOp "allFunOpsPreAssigned" "fun")
+       (concatMap oAllOps os)
 
 preAssignedOp n s o
     | isPreAssigned o = Nothing

@@ -55,7 +55,9 @@ import Unison.Tools.Import.LiftMachineUndefs
 import Unison.Tools.Import.ExtractSubRegs
 import Unison.Tools.Import.LowerInsertSubRegs
 import Unison.Tools.Import.LowerSubRegVirtuals
+import Unison.Tools.Import.LowerCalls
 
+import Unison.Tools.Import.ConnectCalls
 import Unison.Tools.Import.RemoveUnreachableBlocks
 import Unison.Tools.Import.CorrectDoubleBranches
 import Unison.Tools.Import.AdjustPhiLabels
@@ -79,19 +81,21 @@ import Unison.Tools.Import.TagRemats
 
 run (estimateFreq, simplifyControlFlow, noCC, noReserved, maxBlockSize,
      implementFrames, rematType, function, goal, mirVersion, sizeThreshold,
-     mirFile, debug, intermediate, lint, lintPragma, uniFile) mir target =
+     explicitCallRegs, mirFile, debug, intermediate, lint, lintPragma, uniFile)
+    mir target =
     let mfs = MachineIR.parse mirVersion mir
         mf  = selectFunction function mfs
         (mf', partialMfs) =
             applyTransformations
-            (mirTransformations (estimateFreq, simplifyControlFlow))
+            (mirTransformations (estimateFreq, simplifyControlFlow,
+                                 explicitCallRegs))
             target mf
         ff = buildFunction target mf'
         (f, partialFs) =
             applyTransformations
             (uniTransformations (goal, noCC, noReserved, maxBlockSize,
                                  estimateFreq, implementFrames, rematType,
-                                 lintPragma))
+                                 lintPragma, explicitCallRegs))
             target ff
         baseName = takeBaseName mirFile
     in case selected function mfs of
@@ -107,7 +111,7 @@ run (estimateFreq, simplifyControlFlow, noCC, noReserved, maxBlockSize,
                              invokeLint f target
                         return (Right uniFile)
 
-mirTransformations (estimateFreq, simplifyControlFlow) =
+mirTransformations (estimateFreq, simplifyControlFlow, explicitCallRegs) =
     [(dropDebugLocations, "dropDebugLocations", True),
      (normalizePhis, "normalizePhis", True),
      (liftBlockFreqs, "liftBlockFreqs", True),
@@ -124,12 +128,14 @@ mirTransformations (estimateFreq, simplifyControlFlow) =
      (extractSubRegs, "extractSubRegs", True),
      (lowerInsertSubRegs, "lowerInsertSubRegs", True),
      (lowerSubRegVirtuals, "lowerSubRegVirtuals", True),
+     (lowerCalls, "lowerCalls", explicitCallRegs),
      (runPreProcess, "runPreProcess", True)]
 
 uniTransformations (goal, noCC, noReserved, maxBlockSize, estimateFreq,
-                    implementFrames, rematType, lintPragma) =
+                    implementFrames, rematType, lintPragma, explicitCallRegs) =
     [(liftGoal goal, "liftGoal", True),
      (addDelimiters, "addDelimiters", True),
+     (connectCalls, "connectClass", explicitCallRegs),
      (postponeBranches, "postponeBranches", True),
      (removeUnreachableBlocks, "removeUnreachableBlocks", True),
      (renameBlocks, "renameBlocks", True),
@@ -139,7 +145,7 @@ uniTransformations (goal, noCC, noReserved, maxBlockSize, estimateFreq,
      (removeUselessVirtuals, "removeUselessVirtuals", True),
      (relocateDefines, "relocateDefines", True),
      (runTargetTransforms ImportPreLift, "runTargetTransforms", True),
-     (extractCallRegs, "extractCallRegs", True),
+     (extractCallRegs, "extractCallRegs", not explicitCallRegs),
      (liftRegs, "liftRegs", True),
      (runTargetTransforms ImportPostLift, "runTargetTransforms", True),
      (enforceCallerSaved, "enforceCallerSaved", not noCC),

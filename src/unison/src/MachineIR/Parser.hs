@@ -12,7 +12,7 @@ Main authors:
 
 This file is part of Unison, see http://unison-code.github.io
 -}
-{-# LANGUAGE OverloadedStrings, FlexibleContexts, CPP #-}
+{-# LANGUAGE OverloadedStrings, FlexibleContexts, CPP, NoMonomorphismRestriction #-}
 module MachineIR.Parser
        (MachineIR.Parser.parse, splitDocs, combineDocs, mirOperand, mirFI,
         mirJTI) where
@@ -400,7 +400,8 @@ fIName =
      string "<unnamed alloca>" <|> many1 alphaNumDashDotUnderscore
      return ()
 
-mirSpecificReg v states = try (mirVirtualReg v states) <|> mirMachineReg
+mirSpecificReg v states =
+  try (mirVirtualReg v states) <|> (mirMachineReg states)
 
 mirVirtualReg v states =
   do id <- decimal
@@ -429,16 +430,16 @@ mirTiedDef =
      string ")"
      return id
 
-mirMachineReg = try mirLongNullReg <|> mirMachineFreeReg
+mirMachineReg states = try mirLongNullReg <|> (mirMachineFreeReg states)
 
 mirLongNullReg =
   do string "noreg"
      return mkMachineNullReg
 
-mirMachineFreeReg =
+mirMachineFreeReg states =
   do name <- many alphaNumDashDotUnderscore
      optional (try mirTiedDef)
-     return (MachineFreeReg name)
+     return (mkMachineFreeReg name states)
 
 mirRegFlag =
     try mirRegImplicitDefine <|>
@@ -703,7 +704,8 @@ readTargetOpcode mi @ MachineSingle {
   mi {msOpcode = mkMachineTargetOpc (read opc)}
 readTargetOpcode mi = mi
 
-readOperand (MachineFreeReg name) = mkMachineReg (read name)
+readOperand (MachineFreeReg name states) =
+  mkMachineCompleteReg (read name) states
 readOperand mo = mo
 
 mkMachineBundleWithHeader

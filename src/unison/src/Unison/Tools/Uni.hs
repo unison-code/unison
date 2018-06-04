@@ -47,8 +47,9 @@ mainWithTargets targets = do
                  do _ <- Import.run
                          (estimateFreq, simplifyControlFlow, noCC, noReserved,
                           maxBlockSize, implementFrames, rematType, function,
-                          goal, mirVersion, sizeThreshold, inFile, debug,
-                          intermediate, lint, lintPragma, outFile)
+                          goal, mirVersion, sizeThreshold, explicitCallRegs,
+                          inFile, debug, intermediate, lint, lintPragma,
+                          outFile)
                          input (target, targetOption)
                     return ()
     Linearize{..} ->
@@ -143,6 +144,6 @@ mainWithTargets targets = do
             baseFile, scaleFreq, applyBaseFile, tightPressureBound,
             strictlyBetter, unsatisfiable, removeReds, keepNops, solverFlag, mirVersion,
             inFile, debug, verbose, intermediate, lint, outFile, outTemp,
-            presolver, solver, sizeThreshold)
+            presolver, solver, sizeThreshold, explicitCallRegs)
            (target, targetOption)
          return ()

@@ -22,7 +22,8 @@ import Unison.Graphs.Hoopl.ReachingDefinitions
 import qualified Unison.Graphs.BCFG as BCFG
 import qualified Unison.Graphs.ICFG as ICFG
 
--- TODO: with some special call operation handling, can replace ExtractCallRegs
+-- TODO: update targets to work with new '--explicitcallregs' flag, then get rid
+-- of ExtractCallRegs pass (this pass should do all register lifting work).
 
 -- TODO: check that there should not be any 'orphan' after this pass
 
@@ -51,7 +52,7 @@ renameUse o ds rd2t u =
     case filter (\rd -> rdVariable rd == u) ds of
       [rd] ->
         let t = mkTemp $ rd2t M.! rd
-        in if isOut o then preAssign t u else t
+        in if isPreAssignable o then preAssign t u else t
       [] -> u
       _ -> error ("multiple defs reach a register use: need phi functions!")
 
@@ -61,5 +62,7 @@ renameDef o rd2t d =
          Just tid ->
              let t = mkTemp tid
              -- TODO: how do we handle pre-assignments, in general?
-             in if isIn o then preAssign t d else t
+             in if isPreAssignable o then preAssign t d else t
          Nothing -> d
+
+isPreAssignable o = isIn o || isOut o || isFun o

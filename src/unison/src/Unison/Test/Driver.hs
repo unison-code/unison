@@ -117,7 +117,8 @@ runUnison unisonTargets testArgs mirFile =
                    True,
                    presolver testArgs,
                    solver testArgs,
-                   Nothing)
+                   Nothing,
+                   False)
                   (target, targetOption args)
         properties1 <- assertOutJson upd properties prefix
         let unisonMirFile = addExtension "unison.mir" prefix

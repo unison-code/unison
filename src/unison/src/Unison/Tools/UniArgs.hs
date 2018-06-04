@@ -28,7 +28,7 @@ data Uni =
                noCC :: Bool, noReserved :: Bool, maxBlockSize :: Maybe Integer,
                rematType :: RematType, function :: Maybe String,
                goal :: Maybe String, mirVersion :: MachineIRVersion,
-               sizeThreshold :: Maybe Integer} |
+               sizeThreshold :: Maybe Integer, explicitCallRegs :: Bool} |
     Linearize {targetName :: String, inFile :: FilePath, targetOption :: [String],
                outFile :: Maybe FilePath, debug :: Bool, intermediate :: Bool,
                lint :: Bool, lintPragma :: Bool} |
@@ -71,10 +71,11 @@ data Uni =
                noCongruentCopy :: Bool, noIsolatedGlobals :: Bool,
                uniqueOperationIds :: Bool, uniqueOperandIds :: Bool,
                singleEntryBlock :: Bool, allEntryOpsPreAssigned :: Bool,
-               allExitOpsPreAssigned :: Bool, noComponentConflicts :: Bool,
-               noCostOverflow :: Bool, noAmbiguousPhis :: Bool,
-               allResourcesDefined :: Bool, allRegClassesReal :: Bool,
-               noReservedRegRedef :: Bool, noEmptyBlock :: Bool} |
+               allExitOpsPreAssigned :: Bool, allFunOpsPreAssigned :: Bool,
+               noComponentConflicts :: Bool, noCostOverflow :: Bool,
+               noAmbiguousPhis :: Bool, allResourcesDefined :: Bool,
+               allRegClassesReal :: Bool, noReservedRegRedef :: Bool,
+               noEmptyBlock :: Bool} |
     Count     {targetName :: String, inFile :: FilePath, targetOption :: [String],
                outFile :: Maybe FilePath, singleRow :: Bool} |
     Legalize  {targetName :: String, inFile :: FilePath, targetOption :: [String],
@@ -96,7 +97,8 @@ data Uni =
                unsatisfiable :: Bool, removeReds :: Bool, keepNops :: Bool,
                solverFlag :: [String], mirVersion :: MachineIRVersion,
                outTemp :: Bool, presolver :: Maybe FilePath,
-               solver :: Maybe FilePath, sizeThreshold :: Maybe Integer}
+               solver :: Maybe FilePath, sizeThreshold :: Maybe Integer,
+               explicitCallRegs :: Bool}
     deriving (Data, Typeable, Show, Eq)
 
 allModes = [import', linearize', extend', augment', model', export', analyze',
@@ -128,7 +130,8 @@ import' = Import {
                           NoRemat &= help "No rematerialization"],
   function        = Nothing &= help "Name of the function to import from the input MachineIR",
   goal            = Nothing &= help "Optimization goal (one of {speed, size})",
-  sizeThreshold   = Nothing &= help "Function size over which solving is skipped"}
+  sizeThreshold   = Nothing &= help "Function size over which solving is skipped",
+  explicitCallRegs = False &= help "Extract call uses and definitions explicitly from their operands"}
   &= help "Import a MachineIR function into Unison"
 
 linearize' = Linearize {} &= help "Transform a Unison function into Linear SSA form"
@@ -187,6 +190,7 @@ lint' = Lint {
   singleEntryBlock         = True,
   allEntryOpsPreAssigned   = True,
   allExitOpsPreAssigned    = True,
+  allFunOpsPreAssigned     = True,
   noComponentConflicts     = True,
   noCostOverflow           = True,
   noAmbiguousPhis          = True,

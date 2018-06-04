@@ -29,6 +29,7 @@ module MachineIR.Predicates
          isMachineVirtual,
          isMachineTarget,
          isMachineBranch,
+         isMachineCallOrTailCall,
          isMachineLast,
          isMachineExtractSubReg,
          isMachineInsertSubReg,
@@ -56,6 +57,8 @@ module MachineIR.Predicates
          isMachineNullReg,
          isMachineDebugLocation,
          isMachineConstantPoolIndex,
+         isMachineRegImplicit,
+         isMachineRegImplicitDef,
          -- * MachineRegState predicates
          isMachineRegUndef,
          -- * MachineFunction predicates
@@ -105,9 +108,14 @@ isMachineBranch itf MachineBundle {mbInstrs = mis} =
 isMachineBranch _ mi
   | isMachineVirtual mi = False
 isMachineBranch itf MachineSingle {msOpcode = MachineTargetOpc i} =
-  case itf i of
-    BranchInstructionType -> True
-    _ -> False
+  itf i == BranchInstructionType
+
+isMachineCallOrTailCall itf MachineBundle {mbInstrs = mis} =
+  any (isMachineCallOrTailCall itf) mis
+isMachineCallOrTailCall _ mi
+  | isMachineVirtual mi = False
+isMachineCallOrTailCall itf MachineSingle {msOpcode = MachineTargetOpc i} =
+  itf i == CallInstructionType || itf i == TailCallInstructionType
 
 isMachineLast MachineSingle {msOpcode = MachineVirtualOpc opc}
   | opc `elem` [EXIT, RETURN] = True
@@ -191,6 +199,14 @@ isMachineDebugLocation _ = False
 
 isMachineConstantPoolIndex MachineConstantPoolIndex {} = True
 isMachineConstantPoolIndex _ = False
+
+isMachineRegImplicit MachineReg {mrFlags = fs}
+  | MachineRegImplicit `elem` fs = True
+isMachineRegImplicit _ = False
+
+isMachineRegImplicitDef MachineReg {mrFlags = fs}
+  | MachineRegImplicitDefine `elem` fs = True
+isMachineRegImplicitDef _ = False
 
 isMachineRegUndef MachineRegUndef {} = True
 isMachineRegUndef _ = False
