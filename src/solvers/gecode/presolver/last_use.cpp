@@ -36,7 +36,8 @@
 
 void last_use(PresolverAsserts& PA, Parameters& input) {
     map<temporary, vector<operand>> M;
-
+    unsigned int prev_op_type = IN;
+    
     // For all o in JSON.O where o is mandatory
     for(operation o : input.O) {
       // For all p in OperUses(o) where p is mandatory
@@ -64,10 +65,11 @@ void last_use(PresolverAsserts& PA, Parameters& input) {
 	break;
 	// if OperType(o) = FUNCTION
       case FUN:
-	// For all p in OperUses(o)
-	for (operand p : input.operands[o])
-	  if (input.use[p] && p_preassigned_caller_saved(input, p)) // caller-saved, but not reserved
-	    input.last_use.push_back(p);
+	if (prev_op_type != TAILCALL) // after tail-recursive (fun), there will be (out) which can reuse operands!
+	  // For all p in OperUses(o)
+	  for (operand p : input.operands[o])
+	    if (input.use[p] && p_preassigned_caller_saved(input, p)) // caller-saved, but not reserved
+	      input.last_use.push_back(p);
 	break;
       case LINEAR:
 	  // If there exist C in JSON.strictly_congr, def d in C, use u in C
@@ -77,6 +79,7 @@ void last_use(PresolverAsserts& PA, Parameters& input) {
 	  input.last_use.push_back(ud.first);
 	break;
       }
+      prev_op_type = op_type;
     }
 
     // For all _ -> P in M
