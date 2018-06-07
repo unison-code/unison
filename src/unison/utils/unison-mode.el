@@ -31,11 +31,11 @@
 ;; Block labels
 '("b[0-9]+" . font-lock-function-name-face)
 ;; Keywords
-`(,(regexp-opt '("function" "adjacent" "fixed\-frame" "frame" "jump\-table" "goal" "source" "rematerializable" "stack\-pointer\-offset" "stack-arg-size" "removed-freqs") 'symbol) . font-lock-keyword-face)
+`(,(regexp-opt '("function" "adjacent" "fixed\-frame" "frame" "jump\-table" "goal" "source" "rematerializable" "stack\-pointer\-offset" "stack-arg-size" "removed-freqs" "constants") 'symbol) . font-lock-keyword-face)
 ;; Builtins
 '("\\bcall\\b" . font-lock-builtin-face)
 '("\\mem-[0-9]+\\b" . font-lock-builtin-face)
-`(,(regexp-opt '("entry" "freq" "exit" "return" "freq" "writes" "reads" "activators" "mem" "virtualcopy" "remat\-origin" "remat" "jtblocks" "split" "taken") 'symbol) . font-lock-builtin-face)
+`(,(regexp-opt '("entry" "freq" "exit" "return" "freq" "writes" "reads" "activators" "mem" "virtualcopy" "remat\-origin" "remat" "jtblocks" "split\-barrier" "split" "taken") 'symbol) . font-lock-builtin-face)
 ;; Virtual operations
 `(,(regexp-opt '("define" "in" "out" "combine" "kill" "copy" "fun" "pack" "high" "low" "destroy" "setup" "split2" "split4" "phi") 'symbol) . font-lock-builtin-face)
 )
