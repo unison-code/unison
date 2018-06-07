@@ -490,7 +490,9 @@ data Attributes i r = Attributes {
   -- | Whether the operation is prescheduled and in what issue cycle
   aPrescheduled :: Maybe IssueCycle,
   -- | Identifier of the rematerialization copy's origin, if any
-  aRematOrigin  :: Maybe OperationId
+  aRematOrigin  :: Maybe OperationId,
+  -- | Whether block splitting is allowed after the operation
+  aSplitBarrier :: Bool
 } deriving (Eq)
 
 -- | Object representing the side-effect of an 'Operation'. Operations can write

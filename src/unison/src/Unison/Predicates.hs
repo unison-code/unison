@@ -58,6 +58,7 @@ module Unison.Predicates
         isBundle,
         isDerivedFromVirtualCopy,
         isRemat,
+        isSplitBarrier,
         -- * Operation predicates
         isNaturalOpr,
         isLinearOpr,
@@ -316,6 +317,9 @@ isDerivedFromVirtualCopy _ = False
 
 isRemat SingleOperation {oAs = Attributes {aRemat = True}} = True
 isRemat _ = False
+
+isSplitBarrier SingleOperation {oAs = Attributes {aSplitBarrier = True}} = True
+isSplitBarrier _ = False
 
 isNullInstruction (General NullInstruction) = True
 isNullInstruction _ = False

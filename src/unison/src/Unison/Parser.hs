@@ -65,7 +65,7 @@ data LsOperand r =
 data LsAttributes r =
   LsAttributes (LsAttribute r) (LsAttribute r) (LsAttribute r) (LsAttribute r)
                (LsAttribute r) (LsAttribute r) (LsAttribute r) (LsAttribute r)
-               (LsAttribute r) (LsAttribute r) (LsAttribute r)
+               (LsAttribute r) (LsAttribute r) (LsAttribute r) (LsAttribute r)
   deriving (Show)
 
 data LsAttribute r =
@@ -79,7 +79,8 @@ data LsAttribute r =
   LsJTBlocks [LsOperand r] |
   LsBranchTaken (Maybe Bool) |
   LsPrescheduled (Maybe IssueCycle) |
-  LsRematOrigin (Maybe OperationId)
+  LsRematOrigin (Maybe OperationId) |
+  LsSplitBarrier Bool
   deriving (Show)
 
 data LsRWObject =
@@ -322,7 +323,8 @@ attributes =
                             (fetchAttr (LsJTBlocks []) isLsJTBlocks attrs)
                             (fetchAttr (LsBranchTaken Nothing) isLsBranchTaken attrs)
                             (fetchAttr (LsPrescheduled Nothing) isLsPrescheduled attrs)
-                            (fetchAttr (LsRematOrigin Nothing) isLsRematOrigin attrs))
+                            (fetchAttr (LsRematOrigin Nothing) isLsRematOrigin attrs)
+                            (fetchAttr (LsSplitBarrier False) isLsSplitBarrier attrs))
 
 attribute = try (sideEffectListAttribute "reads" LsReads)
             <|> sideEffectListAttribute "writes" LsWrites
@@ -335,6 +337,7 @@ attribute = try (sideEffectListAttribute "reads" LsReads)
             <|> operandListAttribute "jtblocks" LsJTBlocks
             <|> boolAttribute "taken" (LsBranchTaken . Just)
             <|> integerAttribute "cycle" (LsPrescheduled . Just)
+            <|> simpleAttribute "split-barrier" (LsSplitBarrier True)
 
 sideEffectListAttribute = attributeList sideEffect
 
@@ -625,6 +628,9 @@ isLsPrescheduled _                  = False
 isLsRematOrigin (LsRematOrigin _) = True
 isLsRematOrigin _                 = False
 
+isLsSplitBarrier (LsSplitBarrier _) = True
+isLsSplitBarrier _                 = False
+
 toFunction target
   (cmms, name, body, cs, rts, ffobjs, fobjs, sp, ss, consts, (jtk, jt), goal,
    rfs, src) =
@@ -728,9 +734,9 @@ readInstr (LsTargetInstruction i) = TargetInstruction (read i)
 toAttributes (LsAttributes (LsReads reads) (LsWrites writes) (LsAttrCall call)
               (LsMem mem) (LsActivators acs) (LsVirtualCopy vcopy)
               (LsRemat rm) (LsJTBlocks bs) (LsBranchTaken bt)
-              (LsPrescheduled pa) (LsRematOrigin ro)) =
+              (LsPrescheduled pa) (LsRematOrigin ro) (LsSplitBarrier sb)) =
   mkAttributes (map toRWObject reads) (map toRWObject writes) call mem
-               (map readInstr acs) vcopy rm (map lsBlockRefId bs) bt pa ro
+               (map readInstr acs) vcopy rm (map lsBlockRefId bs) bt pa ro sb
 
 lsBlockRefId (LsBlockRef bid) = bid
 
@@ -744,6 +750,7 @@ mkNullLsAttributes =
   LsAttributes (LsReads []) (LsWrites []) (LsAttrCall Nothing) (LsMem Nothing)
   (LsActivators []) (LsVirtualCopy False) (LsRemat False) (LsJTBlocks [])
   (LsBranchTaken Nothing) (LsPrescheduled Nothing) (LsRematOrigin Nothing)
+  (LsSplitBarrier False)
 
 mkNullLsBlockAttributes = LsBlockAttributes []
 

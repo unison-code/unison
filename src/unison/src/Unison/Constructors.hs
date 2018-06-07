@@ -159,13 +159,15 @@ mkBlock = Block
 
 mkDummyBlock = mkBlock (-1) mkNullBlockAttributes
 
-mkAttributes reads writes call mem acts vcopy remat jtblocks btaken pres rorig =
+mkAttributes reads writes call mem acts vcopy remat jtblocks btaken pres rorig
+             splitBar =
     Attributes {aReads = reads, aWrites = writes, aCall = call,
                 aMem = mem, aActivators = acts, aVirtualCopy = vcopy,
                 aRemat = remat, aJTBlocks = jtblocks, aBranchTaken = btaken,
-                aPrescheduled = pres, aRematOrigin = rorig}
+                aPrescheduled = pres, aRematOrigin = rorig,
+                aSplitBarrier = splitBar}
 
-mkNullAttributes = mkAttributes [] [] Nothing Nothing [] False False [] Nothing Nothing Nothing
+mkNullAttributes = mkAttributes [] [] Nothing Nothing [] False False [] Nothing Nothing Nothing False
 
 mkBlockAttributes entry exit return freq split =
     BlockAttributes {aEntry = entry, aExit = exit, aReturn = return,

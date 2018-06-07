@@ -37,7 +37,8 @@ splitBlock maxSize acc b @ Block {bCode = code} =
       []      -> (acc, [b])
       lengths -> splitIntoBlocks lengths acc b
 
-data SplitState = Splittable | WithinCall | PostCall Integer | WithinPhi Integer
+data SplitState =
+  Splittable | WithinCall | PostCall Integer | WithinPhi Integer | NoSplit
 
 {-
 This assumes the following code sequence for function calls:
@@ -54,7 +55,10 @@ splittable (PostCall p') (p, o)
     | otherwise = (Splittable, [p', p])
 splittable _ (p, o) | isPhi o = (WithinPhi p, [])
 splittable (WithinPhi p') (p, _) = (Splittable, [p', p])
+splittable Splittable (p, o)
+    | isSplitBarrier o = (NoSplit, [])
 splittable Splittable (p, _) = (Splittable, [p])
+splittable NoSplit _ = (NoSplit, [])
 
 distanceTo x y = abs (y - x)
 

@@ -52,6 +52,7 @@ module Unison.Util
         mapToAttrRemat,
         mapToAttrJTBlocks,
         mapToAttrRematOrigin,
+        mapToAttrSplitBarrier,
         isTailCallFun,
         isTerminator,
         callOf,
@@ -341,6 +342,12 @@ mapToAttrRematOrigin ::  (Maybe OperationId -> Maybe OperationId) ->
 mapToAttrRematOrigin f o @ SingleOperation {
   oAs = as @ Attributes {aRematOrigin = ro}} =
   o {oAs = as {aRematOrigin = f ro}}
+
+mapToAttrSplitBarrier :: (Bool -> Bool) -> BlockOperation i r ->
+                         BlockOperation i r
+mapToAttrSplitBarrier f o @ SingleOperation {
+  oAs = as @ Attributes {aSplitBarrier = sb}} =
+  o {oAs = as {aSplitBarrier = f sb}}
 
 isTailCallFun :: [BlockOperation i r] -> BlockOperation i r -> Bool
 isTailCallFun code i
