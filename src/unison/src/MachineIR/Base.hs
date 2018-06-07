@@ -85,8 +85,13 @@ data MachineFunctionProperty r =
   MachineFunctionPropertyVersion {
     mfPropertyVersion :: MachineIRVersion
     } |
+  -- | Register class of each temporary (id, class)
   MachineFunctionPropertyRegisters {
     mfPropertyRegisters :: [(Integer, String)]
+    } |
+  -- | Constant information (id, value, alignment)
+  MachineFunctionPropertyConstants {
+    mfPropertyConstants :: [(Integer, String, Integer)]
     }
   deriving (Eq, Ord)
 

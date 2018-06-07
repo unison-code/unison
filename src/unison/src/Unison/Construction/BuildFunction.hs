@@ -31,9 +31,10 @@ buildFunction target MachineFunction {mfName = name, mfBlocks = blocks,
       code = snd $ foldl (buildBlock itf oif) (0, []) blocks
       ffos = buildFixedStackFrame mps
       fos  = buildStackFrame mps
+      cs   = buildConstants mps
       jt   = buildJumpTable (find isMachineFunctionPropertyJumpTable mps)
       rfs  = buildRemovedFreqs (find isMachineFunctionPropertyRemovedFreqs mps)
-      f    = mkCompleteFunction [] name code [] [] ffos fos 0 0 jt [] rfs ir
+      f    = mkCompleteFunction [] name code [] [] ffos fos 0 0 cs jt [] rfs ir
   in f
 
 buildBlock itf oif (id, code)
@@ -78,3 +79,8 @@ buildJumpTableEntry (MachineJumpTableEntry id bs) =
 
 buildRemovedFreqs Nothing = []
 buildRemovedFreqs (Just rfs) = mfPropertyRemovedFreqs rfs
+
+buildConstants mps =
+  case find isMachineFunctionPropertyConstants mps of
+   Nothing -> []
+   Just cs -> mfPropertyConstants cs

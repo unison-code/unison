@@ -16,6 +16,7 @@ module MachineIR.Predicates
        (
          -- * MachineFunctionProperty predicates
          isMachineFunctionPropertyRegisters,
+         isMachineFunctionPropertyConstants,
          isMachineFunctionPropertyFixedFrame,
          isMachineFunctionPropertyFrame,
          isMachineFunctionPropertyJumpTable,
@@ -72,6 +73,9 @@ import Unison.Base
 
 isMachineFunctionPropertyRegisters MachineFunctionPropertyRegisters {} = True
 isMachineFunctionPropertyRegisters _ = False
+
+isMachineFunctionPropertyConstants MachineFunctionPropertyConstants {} = True
+isMachineFunctionPropertyConstants _ = False
 
 isMachineFunctionPropertyFixedFrame MachineFunctionPropertyFixedFrame {} = True
 isMachineFunctionPropertyFixedFrame _ = False

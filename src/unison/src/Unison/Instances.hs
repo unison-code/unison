@@ -122,7 +122,8 @@ instance (Show i, Show r) => ShowSimple (Function i r) where
   showSimple f = show (f {fSource = ""})
 
 instance (Show i, Show r) => Show (Function i r) where
-    show (Function comments name code cs' rts ffobjs fobjs sp ss jt goal rfs src) =
+    show (Function comments name code cs' rts ffobjs fobjs sp ss consts jt goal
+          rfs src) =
       concatMap showComment comments ++
       showSectionName "function" ++ " " ++ name ++ newLine ++
       concatMap show code ++
@@ -136,6 +137,8 @@ instance (Show i, Show r) => Show (Function i r) where
       showFrameObjects False fobjs ++
       showSectionName "stack-pointer-offset" ++ " " ++ show sp ++ newLine ++
       showSectionName "stack-arg-size" ++ " " ++ show ss ++ newLine ++
+      showSectionName "constants" ++ newLine ++
+      showConstantObjects consts ++
       showSectionName "jump-table" ++ newLine ++
       showJumpTableEntries jt ++
       showSectionName "goal" ++ maybeShowGoal goal ++ newLine ++
@@ -353,6 +356,14 @@ showFrameObject fixed fo =
              Nothing -> [])))
 
 showFrameObjectProperty (p, v) = p ++ " = " ++ v
+
+showConstantObjects [] = ""
+showConstantObjects consts =
+  concat [wsString ++ showConstantObject c ++ newLine | c <- consts]
+
+showConstantObject (id, v, a) =
+  "%const." ++ show id ++ ": value = " ++ showConstantValue v ++ ", align = " ++
+  show a
 
 instance Show JumpTableEntry where
     show e = jumpTablePrefix ++ show (jtId e) ++ ": " ++

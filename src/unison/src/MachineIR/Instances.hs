@@ -14,7 +14,8 @@ Main authors:
 This file is part of Unison, see http://unison-code.github.io
 -}
 {-# LANGUAGE FlexibleContexts #-}
-module MachineIR.Instances (showMir, showMachineOperand, jumpTablePrefix) where
+module MachineIR.Instances (showMir, showMachineOperand, jumpTablePrefix,
+                            showConstantValue) where
 
 import Data.List
 import Data.Char
@@ -71,6 +72,12 @@ showMachineFunction v (name, mps, mbs) =
           nest' 2 (concatMap (showMachineFrameObjectInfo v) $
                    mfPropertyFrame mf)
         Nothing -> "") ++
+    (case find isMachineFunctionPropertyConstants mps of
+        (Just mfc) ->
+          fill 17 "constants:" ++ newLine ++
+          nest' 2 (concatMap showMachineConstants $
+                   mfPropertyConstants mfc)
+        Nothing -> "") ++
     (case find isMachineFunctionPropertyJumpTable mps of
         (Just mjt) ->
           fill 17 "jumpTable:" ++ newLine ++
@@ -87,6 +94,15 @@ showMachineFunction v (name, mps, mbs) =
 
 showMachineRegister (id, cl) =
   "- { id: " ++ show id ++ ", class: " ++ cl ++ "}" ++ newLine
+
+showMachineConstants (id, v, a) =
+  fill 19 "- id:" ++ show id ++ newLine ++
+  fill 19 "  value:" ++ showConstantValue v ++ newLine ++
+  fill 19 "  alignment:" ++ show a ++ newLine
+
+showConstantValue v
+  | head v == '<' = "\'" ++ v ++ "\'"
+  | otherwise = v
 
 showMachineFrameObjectInfo v
   MachineFrameObjectInfo {mfoiIndex = id, mfoiOffset = off, mfoiSize = size,

@@ -161,6 +161,8 @@ data Function i r = Function {
       fStackPointerOffset :: Integer,
       -- | Argument-passing section size in the stack frame (default is 0)
       fStackArgSize :: Integer,
+      -- | Constant information (id, value, alignment)
+      fConstants :: [(Integer, String, Integer)],
       -- | Jump table kind and entries
       fJumpTable   :: (String, [JumpTableEntry]),
       -- | Goal(s) for which the function is to be optimized

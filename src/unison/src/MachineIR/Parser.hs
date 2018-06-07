@@ -15,7 +15,7 @@ This file is part of Unison, see http://unison-code.github.io
 {-# LANGUAGE OverloadedStrings, FlexibleContexts, CPP, NoMonomorphismRestriction #-}
 module MachineIR.Parser
        (MachineIR.Parser.parse, splitDocs, combineDocs, mirOperand, mirFI,
-        mirJTI) where
+        mirJTI, mirConstantPoolIndex) where
 
 import Data.Maybe
 import Data.Char
@@ -64,12 +64,14 @@ parseFunction v (rawIR, rawMIR) =
       mjt = fmap toMachineFunctionPropertyJumpTable (jumpTable mir)
       mfs = fmap toMachineFunctionPropertyFixedStack (fixedStack mir)
       ms  = fmap toMachineFunctionPropertyStack (stack mir)
+      mcs = fmap toMachineFunctionPropertyConstants (constants mir)
       mf  = case P.parse (mirBody v) "" (body mir) of
         Left e -> error ("error parsing body of '"
                          ++ name mir ++ "':\n" ++ show e)
         Right mf -> mf {mfName = name mir, mfIR = ir,
                         mfProperties = maybeToList mrs ++ maybeToList mjt ++
-                                       maybeToList mfs ++ maybeToList ms}
+                                       maybeToList mfs ++ maybeToList ms ++
+                                       maybeToList mcs}
       mf1 = mapToMachineInstruction readTargetOpcode mf
       mf2 = mapToMachineInstruction (mapToMachineOperand readOperand) mf1
   in mf2
@@ -79,6 +81,7 @@ data MIRFunction = MIRFunction {
   registers :: Maybe [MIRRegisterObject],
   fixedStack :: Maybe [MIRStackObject],
   stack :: Maybe [MIRStackObject],
+  constants :: Maybe [MIRConstantObject],
   jumpTable :: Maybe MIRJumpTable,
   body :: String
 } deriving Show
@@ -90,6 +93,7 @@ instance FromJSON MIRFunction where
       (v .:? "registers") <*>
       (v .:? "fixedStack") <*>
       (v .:? "stack") <*>
+      (v .:? "constants") <*>
       (v .:? "jumpTable") <*>
       (v .: "body")
     parseJSON _ = error "Can't parse MIRFunction from YAML"
@@ -123,6 +127,20 @@ instance FromJSON MIRRegisterObject where
       (v .:  "id") <*>
       (v .:  "class")
     parseJSON _ = error "Can't parse MIRRegisterObject from YAML"
+
+data MIRConstantObject = MIRConstantObject {
+  cId    :: Integer,
+  cValue :: String,
+  cAli   :: Integer
+} deriving Show
+
+instance FromJSON MIRConstantObject where
+    parseJSON (Object v) =
+      MIRConstantObject <$>
+      (v .:  "id") <*>
+      (v .:  "value") <*>
+      (v .:  "alignment")
+    parseJSON _ = error "Can't parse MIRConstantObject from YAML"
 
 data MIRJumpTable = MIRJumpTable {
   kind    :: String,
@@ -682,6 +700,12 @@ toMachineFrameObjectInfo
   MIRStackObject {sId = id, sOffset = off, sSize = s, sAlignment = ali,
                   sCalleeSavedRegister = csreg} =
     mkMachineFrameObjectInfo id off s ali (maybeRead csreg)
+
+toMachineFunctionPropertyConstants rs =
+    mkMachineFunctionPropertyConstants (map toMachineFunctionConstant rs)
+
+toMachineFunctionConstant MIRConstantObject {cId = id, cValue = v, cAli = a} =
+  (id, v, a)
 
 maybeRead Nothing   = Nothing
 maybeRead (Just "") = Nothing

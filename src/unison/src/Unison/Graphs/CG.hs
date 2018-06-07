@@ -42,7 +42,7 @@ fromBlock :: Ord r => Block i r -> [CongruenceTuple r] -> CGraph i r
 fromBlock b @ Block {bCode = code} cs =
   let ts  = S.fromList $ tUniqueOps code
       bcs = [(t, t') | (t, t') <- cs, S.member t ts && S.member t' ts]
-  in fromFunction (mkFunction [b] bcs [] [] [] 0 0 ("", []) [] [] "")
+  in fromFunction (mkFunction [b] bcs [] [] [] 0 0 [] ("", []) [] [] "")
 
 boundaryTemporaries :: Ord r => [BlockOperation i r] -> S.Set (Operand r)
 boundaryTemporaries = S.fromList . tUniqueOps . filter isDelimiter
