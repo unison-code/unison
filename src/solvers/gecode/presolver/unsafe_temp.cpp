@@ -338,7 +338,7 @@ void suppress_copies(Parameters& input, block b, vector<presolver_conj>& Nogoods
 	  for (operand q : users)
 	    if (input.temps[q][0] != NULL_TEMPORARY) {
 	      bool is_constrained = true;
-	      if (input.p_preassign[q] < 0 && input.type[input.oper[q]] != OUT) {
+	      if (input.p_preassign[q] < 0 && input.type[input.oper[q]] != OUT && !ord_contains(input.last_use, q)) {
 		set<register_class> RCq;
 		p_finite_register_classes(input, q, RCq);
 		RCq.erase(0);
