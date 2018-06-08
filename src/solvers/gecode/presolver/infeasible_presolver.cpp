@@ -418,18 +418,17 @@ void InfeasiblePresolver::xchg_nogoods(vector<presolver_conj>& Nogoods) {
 }
 
 void InfeasiblePresolver::regdomain_nogoods(vector<presolver_conj>& Nogoods) {
-  map<vector<instruction>,vector<operation>> M;
+  map<vector<vector<register_class>>,vector<operation>> M;
   map<operand,vector<register_atom>> P2D;
   map<temporary,vector<register_atom>> T2D;
   // group operations by insn set and use, def counts
   for(operation o : input.O) {
-    vector<instruction> is(input.instructions[o]);
-    is.push_back(input.operands[o].size());
-    M[is].push_back(o);
+    vector<vector<register_class>> key(input.rclass[o]);
+    M[key].push_back(o);
   }
   // for each group, for each operand, compute its MGRD (most general reg domain) from atoms
   // for each temp, get its MGRD from its definer
-  for(const pair<vector<instruction>,vector<operation>> is_os : M) {
+  for(const pair<vector<vector<register_class>>,vector<operation>>& is_os : M) {
     map<unsigned int,vector<register_atom>> MGRD;
     // mgrd_per_operand(is_os.second[0], MGRD);
     operation o1 = is_os.second[0];
@@ -445,7 +444,6 @@ void InfeasiblePresolver::regdomain_nogoods(vector<presolver_conj>& Nogoods) {
       }
     }
     for(operation o : is_os.second) {
-      unsigned int nbopnd = input.operands[o1].size();
       for(unsigned int i=0; i<nbopnd; i++) {
 	operand p = input.operands[o][i];
 	if(input.use[p]) {
