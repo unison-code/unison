@@ -54,7 +54,6 @@ void last_use(PresolverAsserts& PA, Parameters& input) {
 
       unsigned int op_type = oper_type(input, o);
       switch (op_type) {
-      case TAILCALL:
       case OUT:
       case KILL:
 	// For all p in OperUses(o)
