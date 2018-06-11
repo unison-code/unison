@@ -74,6 +74,10 @@ string show(const UnisonConstraintExpr e) {
   return show(vector<string>{show((int)e.id), show(e.data), show(e.children)}, ", ");
 }
 
+string show(const PresolverBefore b) {
+  return show(vector<string>{show(b.p), show(b.q), show(b.d)}, ", ");
+}
+
 string show(const PresolverBeforeJSON b) {
   return show(vector<string>{show(b.p), show(b.q), show(b.e)}, ", ");
 }

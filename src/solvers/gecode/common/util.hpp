@@ -195,6 +195,8 @@ string show(const Temporand);
 
 string show(const UnisonConstraintExpr);
 
+string show(const PresolverBefore);
+
 string show(const PresolverBeforeJSON);
 
 string show(const PresolverDominates);
@@ -239,6 +241,13 @@ string show(const C& container, string l = ",", string pre = "",
     i++;
   }
   s << pre << show(*it) << limits[1];
+  return s.str();
+}
+
+template <typename C1, typename C2>
+string show(const pair<C1,C2>& container, string limits = "(,)") {
+  stringstream s;
+  s << limits[0] << show(container.first) << limits[1] << show(container.second) << limits[2];
   return s.str();
 }
 
