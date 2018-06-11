@@ -72,11 +72,10 @@ void BeforePresolver::gen_before(beforeset& B) {
 	operand p = C[i];
 	operand q = C[j];
 
-	// p are in and q are out of the same block and are not copy related
+	// p are (in) and q are (out) of the same block
 	if(input.pb[p] == input.pb[q] &&
 	   input.type[input.oper[p]] == IN &&
-	   input.type[input.oper[q]] == OUT &&
-	   !ord_contains(copy_rel_operands[p],q)) {
+	   input.type[input.oper[q]] == OUT) {
 	  // B <- B union Before1(p,q)
 	  before1(p,q,B);
 	}
@@ -106,7 +105,7 @@ void BeforePresolver::gen_before(beforeset& B) {
     Digraph G = Digraph(P);
     Digraph GR = G.reduction();
 
-   // B <- B union {<p,q,{ø}> | <p,q> in R}
+   // B <- B union {<p,q,{{}}> | <p,q> in R}
     for(const edge& e : GR.edges()) {
       PresolverBefore pb;
       pb.p = e.first;
@@ -115,7 +114,7 @@ void BeforePresolver::gen_before(beforeset& B) {
     }
   }
 
-  // B <- B union {<p,q,{ø}> | p in input.last_use && the temporary of
+  // B <- B union {<p,q,{{}}> | p in input.last_use && the temporary of
   //                      p can't be live past p, and q is def of the
   //                      same operation as p.}
   for(operand p : input.last_use) {
@@ -141,7 +140,7 @@ void BeforePresolver::gen_before(beforeset& B) {
     }
   }
 
-  // B <- B union {<p,q,{ø}> | p defines t, which is not unsafe and has its single use in the operation defining q.}
+  // B <- B union {<p,q,{{}}> | p defines t, which is not unsafe and has its single use in the operation defining q.}
   for(operand p : input.P) {
     if(!input.use[p]) {
       vector<temporary> ts = input.temps[p];
@@ -188,7 +187,21 @@ void BeforePresolver::gen_before(beforeset& B) {
 }
 
 
+void BeforePresolver::before1(operand p, operand q, vector<PresolverBefore>& B) {
 
+  if(!ord_contains(copy_rel_operands[p], q)) {
+    PresolverBefore pb;
+    pb.p = p;
+    pb.q = q;
+    B.push_back(pb);
+  }
+}
+
+#if 0
+// [MC] June 11, 2018
+// This idea with lh_descendants is probably not worth it, because such descendants
+// can have zero live ranges, and so the implied constraints would have to
+// carefully check that in OPERAND_OVERLAP_EXPR.
 void BeforePresolver::before1(operand p, operand q, vector<PresolverBefore>& B) {
 
   // LH <- {OperOpnds(o) | o in Input.O and OperType(o) in {LOW, HIGH, SPLIT2, SPLIT4}}
@@ -203,26 +216,29 @@ void BeforePresolver::before1(operand p, operand q, vector<PresolverBefore>& B) 
   presolver_conj C;
   const vector<pair<operand, presolver_conj> >& P = lh_descendants(p, C, LH);
   const vector<pair<operand, presolver_conj> >& Q = lh_descendants(q, C, LH);
-
+  
   for(const pair<operand, presolver_conj>& pc : P) {
-    for(const pair<operand, presolver_conj>& qc : Q) {
-      PresolverBefore pb;
-      pb.p = pc.first;
-      pb.q = qc.first;
-
-      // Only add non-empty
-      presolver_conj conj;
-      for(const UnisonConstraintExpr& lit : pc.second)
-	/* FIXME if(!lit.empty())*/ vector_insert(conj, lit);
-      for(const UnisonConstraintExpr& lit : qc.second)
-	/* FIXME if(!lit.empty())*/ vector_insert(conj, lit);
-
-      if(!conj.empty()) {
-	pb.d.push_back(conj);
+    vector<operand> pcopies = copy_rel_operands[pc.first];
+    for(const pair<operand, presolver_conj>& qc : Q)
+      if(!ord_contains(pcopies,qc.first)) {
+	PresolverBefore pb;
+	pb.p = pc.first;
+	pb.q = qc.first;
+	
+	// Only add non-empty
+	presolver_conj conj;
+	for(const UnisonConstraintExpr& lit : pc.second)
+	  /* FIXME if(!lit.empty())*/ vector_insert(conj, lit);
+	for(const UnisonConstraintExpr& lit : qc.second)
+	  /* FIXME if(!lit.empty())*/ vector_insert(conj, lit);
+	
+	if(!conj.empty()) {
+	  pb.d.push_back(conj);
+	}
+	
+	if (pb.p != p || pb.q != q)
+	  B.push_back(pb);
       }
-
-      B.push_back(pb);
-    }
   }
 }
 
@@ -260,6 +276,7 @@ BeforePresolver::lh_descendants(const operand p,
   }
   return V;
 }
+#endif
 
 
 vector<vector<operand> > BeforePresolver::emit_before(const vector<vector<int> >& C) {
@@ -289,19 +306,15 @@ vector<vector<operand> > BeforePresolver::emit_before(const vector<vector<int> >
   return V;
 }
 
-
 void BeforePresolver::before_vs_nogoods(beforeset& T, vector<presolver_conj>& Nogoods) {
   for(PresolverBefore& t : T) {
-    // before <- {t | t = <p,q,{ø}> in T}
+    // before <- {t | t = <p,q,{{}}> in T}
+    // nogoods <- {conj union {overlap(p(p), p(q))} | <p,q,conj> in T where conj = {_|_}}
     if(t.d.empty()) {
       UnisonConstraintExpr e(AND_EXPR, {}, {});
       PresolverBeforeJSON u(t.p, t.q, e);
       input.before.push_back(u);
-    }
-
-    // nogoods <- {Conj union {overlap(p(p), p(q))} | <p,q,{conj}> in T
-    //                                                      and conj != ø}
-    else {
+    } else {
       UnisonConstraintExpr e(OPERAND_OVERLAP_EXPR, {t.p,t.q}, {});
       presolver_conj _conj = {e};
 

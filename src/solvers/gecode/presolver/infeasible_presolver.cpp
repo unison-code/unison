@@ -821,7 +821,7 @@ void InfeasiblePresolver::emit_nogood(const vector<vector<operand> >* R,
   if (R == nullptr) {
     Nogoods.push_back(Conj);
   } else {
-    // M <- P <- ø
+    // M <- P <- {}
     map<vector<temporary>, vector<operand> > M;
     vector<operand> P, Q;
 
@@ -901,7 +901,11 @@ void InfeasiblePresolver::emit_nogood(const vector<vector<operand> >* R,
 	       (even_operand[minPs1] && odd_operand[minPs2])) {
 	      Nogoods.push_back(Conj);
 	    }
-
+#if 0
+// [MC] June 11, 2018
+// This idea is probably not worth it, because operands like p3, p4 below
+// can have zero live ranges, and so the implied constraints would have to
+// carefully check that in OPERAND_OVERLAP_EXPR.
 	    else if(!exist_before(*R, Ps1, Ps2)) {
 	      operand p3 = min(minPs1, minPs2);
 	      operand p4 = max(minPs1, minPs2);
@@ -913,6 +917,7 @@ void InfeasiblePresolver::emit_nogood(const vector<vector<operand> >* R,
 	      vector_insert(C,l);
 	      Nogoods.push_back(C);
 	    }
+#endif
 	  }
 	}
       }
@@ -964,9 +969,9 @@ vector<vector<nogood_cand_set> > InfeasiblePresolver::gen_candidates(const vecto
   //
   // Psuedo code:
   //
-  // DCands <- ø
+  // DCands <- {}
   // For every d in D,
-  //   cands <- ø
+  //   cands <- {}
   //   for every x in d,
   //      if there exist a mapping from root(x) in M,
   //          cand.add(M[root(x)])
@@ -1113,7 +1118,7 @@ void InfeasiblePresolver::detect_cycles(void) {
   cutoff = (options.timeout() + timer.stop()) / 2;
 
   for(const UnisonConstraintExpr& prec : input.precedences) {
-    // T <- {<j,i,-n,d> | <i,j,n,d> in input.precedences && i < j & (d = {ø} || d = {{a(i)}})}
+    // T <- {<j,i,-n,d> | <i,j,n,d> in input.precedences && i < j && (d = {{}} || d = {{a(i)}})}
 
     UnisonConstraintExpr prec_c(AND_EXPR, {}, {});
     vector<int> data = prec.data;
