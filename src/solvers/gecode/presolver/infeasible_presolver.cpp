@@ -477,15 +477,39 @@ void InfeasiblePresolver::regdomain_nogoods(vector<presolver_conj>& Nogoods) {
   }
 }
 
+static void add_adhoc_constraint_instructions(UnisonConstraintExpr& e, vector<instruction>& A) {
+  switch (e.id) {
+  case OR_EXPR:
+  case AND_EXPR:
+  case XOR_EXPR:
+  case IMPLIES_EXPR:
+  case NOT_EXPR:
+    for (UnisonConstraintExpr& e0 : e.children)
+      add_adhoc_constraint_instructions(e0, A);
+    break;
+
+  case IMPLEMENTS_EXPR:
+    A.push_back(e.data[1]);
+    break;
+
+  default:
+    break;
+  }
+}
+
 void InfeasiblePresolver::dominsn_nogoods(vector<presolver_conj>& Nogoods) {
   // exclude instructions that imply alignment and the null instruction
-  vector<int> A;
+  vector<instruction> A;
   A.push_back(NULL_INSTRUCTION);
-  for(const vector<int>& tuple : input.aligned) {
+  for(const vector<instruction>& tuple : input.aligned) {
       instruction i = tuple[1], j = tuple[3];
       A.push_back(i);
       A.push_back(j);
   }
+  // exclude instructions that are mentioned in adhoc
+  for (UnisonConstraintExpr& e : input.E)
+    add_adhoc_constraint_instructions(e, A);
+  // set as ordered list
   sort(A.begin(), A.end());
   A.erase(unique(A.begin(), A.end()), A.end());
   // build M: potential alt. insns, their reg classes, and operations in which they occur
