@@ -79,6 +79,9 @@ while [ $# -gt  1 ]; do
       --no-member)
         member='false'
       ;;
+      --no-lb)
+        lbflag=''
+      ;;
       --free)
         freeflag=$freedefault
       ;;
