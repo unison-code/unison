@@ -500,6 +500,10 @@ model2dzn(AVL0) :-
 	),
 	write_array(temp_domain, array(0..MAXT,set(int)), TempDomain2),
 	%
+	compute_wcet(AVL, Wcet),
+	length(Wcet, WcetLen),
+	write_array(wcet, array(1..WcetLen,1..2,int), Wcet),
+	%
 	exprs_postlude(LOp, LArg1, LArg2, LArg3, Lchildren),
 	length(LOp, Nexpr),
 	write_array(expr_op, array(1..Nexpr,int), LOp),
@@ -511,6 +515,106 @@ model2dzn(AVL0) :-
 	length(Sets, Nset),
 	write_array(sets, array(1..Nset,set(int)), Sets).
 
+compute_wcet(AVL, Wcet1) :-
+	avl_fetch(ops, AVL, Opss),
+	avl_fetch(instructions, AVL, Insns),
+	avl_fetch(operands, AVL, Operands),
+	avl_fetch(lat, AVL, Lat),
+	avl_fetch(con, AVL, Con),
+	avl_fetch(dur, AVL, Dur),
+	avl_fetch(off, AVL, Off),
+	avl_fetch(dep, AVL, Dep),
+	avl_fetch(dist, AVL, Dist),
+	append(Dep, DepF),
+	append(Dist, DistF),
+	avl_fetch(use, AVL, Use),
+	avl_fetch(def_opr, AVL, DefOpr),
+	avl_fetch(minlive, AVL, MinLive),
+	(   foreach(U,Use),
+	    fromto(UseSet1,UseSet2,UseSet3,[]),
+	    count(P,0,_)
+	do  (U = 1 -> UseSet2 = [P|UseSet3] ; UseSet2 = UseSet3)
+	),
+	(   foreach([Src,_],DepF),
+	    foreach(Dis,DistF),
+	    foreach(Src-Dis,Src2Dis1)
+	do  true
+	),
+	keysort(Src2Dis1, Src2Dis2),
+	keyclumped(Src2Dis2, Src2Dis3),
+	ord_list_to_avl(Src2Dis3, Src2DisAVL),
+	(   foreach(DO,DefOpr),
+	    foreach(ML,MinLive),
+	    foreach(DO-ML,O2ML1)
+	do  true
+	),
+	keysort(O2ML1, O2ML2),
+	keyclumped(O2ML2, O2ML3),
+	ord_list_to_avl(O2ML3, O2MLAVL),
+	(   foreach(Ops1,Opss),
+	    foreach(Block1,Blocks),
+	    foreach(Last1,Lasts),
+	    fromto(Insns,InsnsTail1,InsnsTail2,[]),
+	    fromto(Operands,OperandsTail1,OperandsTail2,[]),
+	    fromto(Lat,LatTail1,LatTail2,[])
+	do  length(Ops1, N),
+	    prefix_length(InsnsTail1, Insns1, N),
+	    length(Insns1, N),
+	    append(Insns1, InsnsTail2, InsnsTail1),
+	    prefix_length(OperandsTail1, Operands1, N),
+	    length(Operands1, N),
+	    append(Operands1, OperandsTail2, OperandsTail1),
+	    prefix_length(LatTail1, Lat1, N),
+	    length(Lat1, N),
+	    append(Lat1, LatTail2, LatTail1),
+	    last(Ops1, Last1),
+	    transpose([Ops1,Insns1,Operands1,Lat1], Block1)
+	),
+	(   foreach(Block2,Blocks),
+	    foreach(Last2,Lasts),
+	    fromto(Wcet1,Wcet2,Wcet7,[]),
+	    param(Con,Dur,Off,UseSet1,Src2DisAVL,O2MLAVL)
+	do  (   foreach([O2,InsnsO2,OperandsO2,LatO2],Block2),
+		fromto(Wcet2,Wcet3,Wcet6,Wcet7),
+		param(Con,Dur,Off,UseSet1,Src2DisAVL,O2MLAVL,Last2)
+	    do  (   O2 = Last2 -> Wcet3 = [[O2,0]|Wcet6]
+		;   (   foreach(_,InsnsO2),
+			foreach([0],Src2DisO2Tdefault)
+			do  true
+		    ),
+		    (   avl_fetch(O2, Src2DisAVL, Src2DisO2) -> transpose(Src2DisO2, Src2DisO2T) ; Src2DisO2T = Src2DisO2Tdefault),
+		    (   avl_fetch(O2, O2MLAVL, MLs) -> max_member(MaxMinLive, MLs) ; MaxMinLive = 0),
+		    (   foreach(I,InsnsO2),
+			foreach(LatO2II,LatO2),
+			foreach(Src2DisO2TII,Src2DisO2T),
+			fromto(Wcet3,Wcet4,Wcet5,Wcet6),
+			param(O2,Con,Dur,Off,UseSet1,OperandsO2,MaxMinLive)
+		    do  Wcet4 = [[O2,W]|Wcet5],
+		        nth0(I, Con, ConI),
+			nth0(I, Dur, DurI),
+			nth0(I, Off, OffI),
+			(   foreach(CI,ConI),
+			    foreach(DI,DurI),
+			    foreach(OI,OffI),
+			    fromto(0,MaxDur1,MaxDur2,MaxDur3)
+			do  (CI = 0 -> MaxDur2 = MaxDur1 ; MaxDur2 is max(MaxDur1,DI + OI))
+			),
+			(   foreach(LatO2IIP,LatO2II),
+			    foreach(P1,OperandsO2),
+			    fromto(0,MaxUseLat1,MaxUseLat2,MaxUseLat3),
+			    fromto(0,MaxDefLat1,MaxDefLat2,MaxDefLat3),
+			    param(UseSet1)
+			do  (   ord_member(P1, UseSet1) -> MaxUseLat2 is max(MaxUseLat1,LatO2IIP), MaxDefLat2 = MaxDefLat1
+			    ;   otherwise -> MaxDefLat2 is max(MaxDefLat1,LatO2IIP), MaxUseLat2 = MaxUseLat1
+			    )
+			),
+			max_member(MaxDist3, Src2DisO2TII),
+			W is max(MaxDur3, max(MaxUseLat3 + MaxDefLat3, max(MaxDist3, MaxMinLive)))
+		    )
+		)
+	    )
+	).
+	
 pairs_to_arrays(AVL, Tag, FirstArr, SecondArr) :-
 	avl_fetch(Tag, AVL, Data),
 	(   foreach([X1,Y1],Data),
