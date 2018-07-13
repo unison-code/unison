@@ -48,6 +48,7 @@ my $state = 1;
 my $soln = 0;
 my $proven = 0;
 my $cost = -1;
+my $lb_found = 0;
 my @buf = ();
 
 while (my $line = <STDIN>) {
@@ -79,6 +80,7 @@ while (my $line = <STDIN>) {
         print($log "}\n");
         close $log;
     } elsif (($lbfile ne "-") && ($line =~ m/% root level bounds on objective: min (\S+) max (\S+)/)) {
+        $lb_found = 1;
 	my $min = $1;
 	my $max = $2;
 	open(my $lb, '>', $lbfile);
@@ -117,3 +119,9 @@ if ($proven) {
     print "\"proven\": false\n";
 }
 print("}\n");
+
+if (($lbfile ne "-") && (!$lb_found)) {
+    open(my $lb, '>', $lbfile);
+    print $lb "{\"lower_bound\":[-1]}\n";
+    close($lb);
+}
