@@ -101,8 +101,11 @@ showMachineConstants (id, v, a) =
   fill 19 "  alignment:" ++ show a ++ newLine
 
 showConstantValue v
-  | head v == '<' = "\'" ++ v ++ "\'"
+  | head v `elem` ['<', '['] = escape v
+  | '+' `elem` v = escape v
   | otherwise = v
+
+escape s = "\'" ++ s ++ "\'"
 
 showMachineFrameObjectInfo v
   MachineFrameObjectInfo {mfoiIndex = id, mfoiOffset = off, mfoiSize = size,
