@@ -1270,15 +1270,9 @@ constraint
 				 else {} endif,
 	     set of int: unspill = if nrows>=2 then {cs_spill_transpose[2,j] | j in 1..ncols}
 				   else {} endif} in (
-	    forall(j in 1..nrows)(
-		decreasing([a[cs_spill_transpose[j,k]] | k in 1..ncols]) /\
-		forall(k in 2..ncols)(
-		  if j=1 then % spill
-		    a[cs_spill_transpose[j,k]] -> c[cs_spill_transpose[j,k-1]] <= c[cs_spill_transpose[j,k]]
-		  else % unspill
-		    a[cs_spill_transpose[j,k]] -> c[cs_spill_transpose[j,k-1]] >= c[cs_spill_transpose[j,k]]
-		  endif
-		)
+	    decreasing([a[cs_spill_transpose[1,k]] | k in 1..ncols]) /\
+	    forall(k in 2..ncols)(
+		a[cs_spill_transpose[1,k]] -> c[cs_spill_transpose[1,k-1]] <= c[cs_spill_transpose[1,k]]
 	    ) /\
 	    if spill subset bb_ops[1] /\ unspill subset bb_ops[1] then
 		forall(k in 1..ncols)(
