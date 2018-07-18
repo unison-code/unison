@@ -383,13 +383,13 @@ choices :: Eq r => BlockOperation i r -> Int
 choices = length . oAllOperands
 
 atomToAtomicRegName ra =
-  let r2a   = M.toList $ regFirstAtom ra
-      a2rs  = [(a, [(registerUsage ra r, r)]) | (r, a) <- r2a]
+  let r2rc  = M.fromList $
+              concat [[(r, rc) | r <- raRegisters ra rc] | rc <- raRcs ra]
+      r2a   = M.toList $ regFirstAtom ra
+      a2rs  = [(a, [(raRcUsage ra (r2rc M.! r), r)]) | (r, a) <- r2a]
       a2rss = M.toList $ M.fromListWith (++) a2rs
       a2rs' = M.fromList $ map (second (snd . minimum)) a2rss
   in a2rs'
-
-registerUsage ra r = raRcUsage ra (registerClass ra r)
 
 operandWidth t2w p = t2w M.! (head $ extractTemps p)
 
