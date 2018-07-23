@@ -38,6 +38,7 @@ PresolverOptions::PresolverOptions(void)
   : InstanceOptions("Unison presolver"),
 
     _output_file("o", "output file", ""),
+    _dzn_file("dzn", "dzn file", ""),
     _timeout("t", "timeout", 30000.0),
     _verbose("verbose", "verbose mode (false)", false),
     _regions("regions", "find regions (true)", true),

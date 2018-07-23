@@ -47,6 +47,7 @@ protected:
   // Interface
 
   Driver::StringValueOption _output_file; // Output file
+  Driver::StringValueOption _dzn_file; // .dzn file
   Driver::DoubleOption _timeout; // Timeout
   Driver::BoolOption _verbose; // Verbose mode
   Driver::BoolOption _regions; // Find regions
@@ -61,6 +62,7 @@ public:
   PresolverOptions(void);
 
   string output_file(void) const {return _output_file.value();}
+  string dzn_file(void) const {return _dzn_file.value();}
   double timeout(void) const {return _timeout.value();}
   bool verbose(void) const {return _verbose.value();}
   bool regions(void) const {return _regions.value();}
