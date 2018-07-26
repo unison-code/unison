@@ -845,7 +845,9 @@ data SubRegIndexType =
     -- | Specifies that the sub-register index corresponds to the high part
     HighSubRegIndex |
     -- | Specifies that the sub-register index corresponds to both parts
-    CopySubRegIndex
+    CopySubRegIndex |
+    -- | Specifies that the sub-register index is to be lowered manually
+    CustomSubRegIndex
     deriving (Eq, Show)
 
 -- | Information about the branch performed by a 'Branch' operation.
