@@ -956,6 +956,9 @@ data ConstraintExpr i rc =
     -- | Literal expressing that the temporary connected to an operand is
     -- assigned to a register class
     AllocatedExpr MoperandId (RegisterClass rc) |
+    -- | Literal expressing that two operands are aligned with a certain
+    -- distance
+    AlignedExpr MoperandId MoperandId Integer |
     -- | Emission-only, internal version of operation implementation literal
     EImplementsExpr OperationId (IndexedInstruction i) |
     -- | Emission-only, internal version of temporary allocation literal

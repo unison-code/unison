@@ -340,6 +340,8 @@ bool in_block(UnisonConstraintExpr & e, block b, const Parameters * input) {
   case TEMPORARY_OVERLAP_EXPR:
   case CALLER_SAVED_EXPR:
     return (input->tb[e.data[0]] == b);
+  case ALIGNED_EXPR:
+    return (input->pb[e.data[0]] == b);
   }
   GECODE_NEVER;
   return true;

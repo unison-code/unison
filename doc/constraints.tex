@@ -153,6 +153,7 @@ and
       \satisfy{\tuple{\code{temporary-overlap}, t, t'}} & \iff \temporaryLiveStart{t} < \temporaryLiveEnd{t'} \land \temporaryLiveStart{t'} < \temporaryLiveEnd{t}\\
       \satisfy{\tuple{\code{caller-saved}, t}} & \iff \temporaryRegister{t} \in \callerSavedAtoms{} \\
       \satisfy{\tuple{\code{allocated}, p, rc}} & \iff \temporaryRegister{\operandTemporary{p}} \in \atoms{rc} \\
+      \satisfy{\tuple{\code{aligned}, p, q, n}} & \iff \temporaryRegister{\operandTemporary{q}} = \temporaryRegister{\operandTemporary{p}} + n \\
     \end{aligned}
   \end{equation*}
 }

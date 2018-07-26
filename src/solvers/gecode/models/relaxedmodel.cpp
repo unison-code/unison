@@ -127,6 +127,8 @@ BoolVar RelaxedModel::relaxed_adhoc_constraint_var(UnisonConstraintExpr & e) {
       dom(*this, ry(e.data[0]), IntSet(cs), v);
     }
     return v;
+  case ALIGNED_EXPR:
+    return var(ry(e.data[1]) == (ry(e.data[0]) + e.data[2]));
   default:
     GECODE_NEVER;
   }

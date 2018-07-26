@@ -77,6 +77,7 @@ instance ToJSON (ConstraintExpr i rc) where
   toJSON e @ (TemporaryOverlapExpr tid1 tid2) = toJSON (exprId e, tid1, tid2)
   toJSON e @ (CallerSavedExpr tid) = toJSON (exprId e, tid)
   toJSON e @ (EAllocatedExpr pid irc) = toJSON (exprId e, pid, irc)
+  toJSON e @ (AlignedExpr pid1 pid2 d) = toJSON (exprId e, pid1, pid2, d)
 
 exprId :: ConstraintExpr i rc -> Integer
 exprId OrExpr {}               = 0
@@ -93,5 +94,6 @@ exprId OperandOverlapExpr {}   = 10
 exprId TemporaryOverlapExpr {} = 11
 exprId CallerSavedExpr {}      = 12
 exprId EAllocatedExpr {}       = 13
+exprId AlignedExpr {}          = 14
 
 unionMaps (Object m1) (Object m2) = Object (HM.union m1 m2)

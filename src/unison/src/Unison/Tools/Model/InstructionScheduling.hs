@@ -262,3 +262,4 @@ lowerConstraintExpr _ e @ TemporaryOverlapExpr {} = e
 lowerConstraintExpr _ e @ CallerSavedExpr {} = e
 lowerConstraintExpr (_, ra) (AllocatedExpr pid rc) =
   EAllocatedExpr pid (raIndexedRc ra rc)
+lowerConstraintExpr _ e @ AlignedExpr {} = e
