@@ -26,12 +26,24 @@ generalizeOperandsInBlock (id, fcode) b @ Block {bCode = code} =
   let (id', code') = foldl generalizeOperandsInInstr (id, []) code
   in (id', fcode ++ [b {bCode = code'}])
 
-generalizeOperandsInInstr (id, code) i =
-  let t2p = zip (nub $ tUses [i] ++ tDefs [i]) [id..]
+-- (combine) operations with the same used temporaries must get different
+-- operand identifiers to be able to apply the alignment constraints.
+generalizeOperandsInInstr (id, code)
+  o @ SingleOperation {oOpr = Virtual ci @
+                              Combine {oCombineLowU = lu, oCombineHighU = hu,
+                                       oCombineD = d}} =
+  let [lu', hu', d'] =
+        map (\(pid, t) -> toSingletonChoice pid t) (zip [id..] [lu, hu, d])
+      o'  = o {oOpr = Virtual ci {oCombineLowU = lu', oCombineHighU = hu',
+                                  oCombineD = d'}}
+  in (id + 3, code ++ [o'])
+
+generalizeOperandsInInstr (id, code) o =
+  let t2p = zip (nub $ tUses [o] ++ tDefs [o]) [id..]
       gf  = map $ generalizeOperand (M.fromList t2p)
       id' = if null t2p then id else snd (last t2p) + 1
-      i'  = mapToOperands gf gf i
-  in (id', code ++ [i'])
+      o'  = mapToOperands gf gf o
+  in (id', code ++ [o'])
 
 generalizeOperand t2p t
   | M.member t t2p = toSingletonChoice (t2p M.! t) t
