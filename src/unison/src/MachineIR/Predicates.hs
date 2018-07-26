@@ -57,6 +57,8 @@ module MachineIR.Predicates
          isMachineProperty,
          isMachineNullReg,
          isMachineDebugLocation,
+         isMachineTemp,
+         isMachineSubRegIndex,
          isMachineConstantPoolIndex,
          isMachineRegImplicit,
          isMachineRegImplicitDef,
@@ -211,6 +213,12 @@ isMachineRegImplicit _ = False
 isMachineRegImplicitDef MachineReg {mrFlags = fs}
   | MachineRegImplicitDefine `elem` fs = True
 isMachineRegImplicitDef _ = False
+
+isMachineTemp MachineTemp {} = True
+isMachineTemp _ = False
+
+isMachineSubRegIndex MachineSubRegIndex {} = True
+isMachineSubRegIndex _ = False
 
 isMachineRegUndef MachineRegUndef {} = True
 isMachineRegUndef _ = False
