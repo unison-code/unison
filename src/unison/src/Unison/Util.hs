@@ -1222,6 +1222,8 @@ fromMachineInstruction itf oif
                   ADJCALLSTACKUP   -> mkFrameDestroy id (head us')
                   SUBREG_TO_REG ->
                     error ("unexpected 'SUBREG_TO_REG' machine instruction, should be lowered before this point")
+                  REG_SEQUENCE ->
+                    error ("unexpected 'REG_SEQUENCE' machine instruction, should be lowered before this point")
               (MachineTargetOpc i) ->
                 case itf i of
                   CopyInstructionType ->
