@@ -34,9 +34,10 @@ run args @
   (_estimateFreq, _simplifyControlFlow, _noCC, _noReserved, _maxBlockSize,
    _implementFrames, _function, _goal, _noCross, _oldModel, _expandCopies,
    _rematType, baseFile, _scaleFreq, _applyBaseFile, _tightPressureBound,
-   _strictlyBetter, _unsatisfiable, _removeReds, _keepNops, _solverFlag,
-   mirVersion, inFile, _debug, _verbose, _intermediate, _lint, outFile, outTemp,
-   _presolver, _solver, _sizeThreshold, _explicitCallRegs) targetWithOption =
+   _strictlyBetter, _unsatisfiable, _removeReds, _keepNops, _presolverFlag,
+   _solverFlag, mirVersion, inFile, _debug, _verbose, _intermediate, _lint,
+   outFile, outTemp, _presolver, _solver, _sizeThreshold, _explicitCallRegs)
+  targetWithOption =
   do mirInput         <- strictReadFile inFile
      maybeAsmMirInput <- maybeStrictReadFile baseFile
      let mirInputs    = splitDocs mirVersion mirInput
@@ -62,9 +63,9 @@ run args @
 
 runFunction
   (estimateFreq, simplifyControlFlow, noCC, noReserved, maxBlockSize,
-   implementFrames, function, goal, noCross, oldModel, expandCopies,
-   rematType, _baseFile, scaleFreq, applyBaseFile, tightPressureBound,
-   strictlyBetter, unsatisfiable, removeReds, keepNops, solverFlag, mirVersion,
+   implementFrames, function, goal, noCross, oldModel, expandCopies, rematType,
+   _baseFile, scaleFreq, applyBaseFile, tightPressureBound, strictlyBetter,
+   unsatisfiable, removeReds, keepNops, presolverFlag, solverFlag, mirVersion,
    inFile, debug, verbose, intermediate, lint, _outFile, _outTemp, presolver,
    solver, sizeThreshold, explicitCallRegs)
   targetWithOption (mir, asmMir) =
@@ -124,22 +125,23 @@ runFunction
              altUniInput targetWithOption
 
            let extJsonFile   = addExtension "ext.json" prefix
+               splitPSFlags  = concatMap (splitOn "=") presolverFlag
                presolverPath = case presolver of
                                 Just path -> path
                                 Nothing -> "gecode-presolver"
            maybePutStrLn ("Running '" ++ presolverPath ++ "'...")
            callProcess presolverPath
-             (["-o", extJsonFile] ++ ["-verbose" | verbose] ++
-              ["-t", "180000", jsonFile])
+             (["-o", extJsonFile] ++ ["-verbose" | verbose] ++ splitPSFlags ++
+              [jsonFile])
 
-           let outJsonFile = addExtension "out.json" prefix
-               splitFlags  = concatMap (splitOn "=") solverFlag
-               solverPath  = case solver of
-                                Just path -> path
-                                Nothing -> "gecode-solver"
+           let outJsonFile  = addExtension "out.json" prefix
+               splitSvFlags = concatMap (splitOn "=") solverFlag
+               solverPath   = case solver of
+                                 Just path -> path
+                                 Nothing -> "gecode-solver"
            maybePutStrLn ("Running '" ++ solverPath ++ "'...")
            callProcess solverPath
-             (["-o", outJsonFile] ++ ["-verbose" | verbose] ++ splitFlags ++
+             (["-o", outJsonFile] ++ ["-verbose" | verbose] ++ splitSvFlags ++
               [extJsonFile])
 
            let unisonMirFile = addExtension "unison.mir" prefix

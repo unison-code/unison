@@ -139,11 +139,12 @@ mainWithTargets targets = do
       case pickTarget targetName targets of
        (Any target) -> do
          Run.run
-           (estimateFreq, simplifyControlFlow, noCC, noReserved, maxBlockSize, implementFrames,
-            function, goal, noCross, oldModel, expandCopies, rematType,
-            baseFile, scaleFreq, applyBaseFile, tightPressureBound,
-            strictlyBetter, unsatisfiable, removeReds, keepNops, solverFlag, mirVersion,
-            inFile, debug, verbose, intermediate, lint, outFile, outTemp,
-            presolver, solver, sizeThreshold, explicitCallRegs)
+           (estimateFreq, simplifyControlFlow, noCC, noReserved, maxBlockSize,
+            implementFrames, function, goal, noCross, oldModel, expandCopies,
+            rematType, baseFile, scaleFreq, applyBaseFile, tightPressureBound,
+            strictlyBetter, unsatisfiable, removeReds, keepNops, presolverFlag,
+            solverFlag, mirVersion, inFile, debug, verbose, intermediate, lint,
+            outFile, outTemp, presolver, solver, sizeThreshold,
+            explicitCallRegs)
            (target, targetOption)
          return ()
