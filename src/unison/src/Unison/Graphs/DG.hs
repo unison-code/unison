@@ -174,7 +174,7 @@ controlLatency lfs p c
     | otherwise  = [maybeEval (-) pl cl | pl <- lfs p] where cl = head (lfs c)
 
 callFunctionLatency p c
-    | (isCall p || isTailCall p) && isFun c = [Just 1]
+    | (isCall p || isTailCall p) && isFun c = [Just 1 | _ <- oInstructions p]
     | isFun p && (isCall c || isTailCall c) = [Just (-1)]
 
 mkLEdge lfs t (p, c) =
