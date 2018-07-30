@@ -370,8 +370,10 @@ lowestRc ra rc1 rc2 =
       as2rc = inverseMap rc2as
       aset  = (M.!) rc2as . rcClass
       as    = intersect (aset rc1) (aset rc2)
-      lrc   = raIndexedRc ra (as2rc M.! as)
-  in lrc
+  in case M.lookup as as2rc of
+       Just rc -> raIndexedRc ra rc
+         -- TODO: add a test in 'uni lint' for this
+       Nothing -> error ("the intersection of " ++ show rc1 ++ " and " ++ show rc2 ++ " is empty")
 
 topClass ra = raIndexedRc ra topRc
 
