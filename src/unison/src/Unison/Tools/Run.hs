@@ -36,7 +36,8 @@ run args @
    _rematType, baseFile, _scaleFreq, _applyBaseFile, _tightPressureBound,
    _strictlyBetter, _unsatisfiable, _removeReds, _keepNops, _presolverFlag,
    _solverFlag, mirVersion, inFile, _debug, _verbose, _intermediate, _lint,
-   outFile, outTemp, _presolver, _solver, _sizeThreshold, _explicitCallRegs)
+   outFile, outTemp, cleanTemp, _presolver, _solver, _sizeThreshold,
+   _explicitCallRegs)
   targetWithOption =
   do mirInput         <- strictReadFile inFile
      maybeAsmMirInput <- maybeStrictReadFile baseFile
@@ -47,9 +48,11 @@ run args @
             Nothing          -> replicate (length mirInputs) Nothing
      prefixes <- mapM (runFunction args targetWithOption)
                       (zip mirInputs asmMirInputs)
-     mapM removeFile prefixes
      unisonMirOutputs <- mapM (strictReadFile . addExtension "unison.mir")
                          prefixes
+     when cleanTemp $
+       mapM_ removeFileIfExists (concatMap addUnisonExtensions prefixes)
+
      prefix <- getTempPrefix
      let unisonMirFile =
            case outFile of
@@ -59,15 +62,16 @@ run args @
          unisonMirOutput = combineDocs mirVersion
                            (concatMap (splitDocs mirVersion) unisonMirOutputs)
      emitOutput unisonMirFile unisonMirOutput
-     return (prefix, prefixes)
+     when cleanTemp $ removeFileIfExists prefix
+     return prefixes
 
 runFunction
   (estimateFreq, simplifyControlFlow, noCC, noReserved, maxBlockSize,
    implementFrames, function, goal, noCross, oldModel, expandCopies, rematType,
    _baseFile, scaleFreq, applyBaseFile, tightPressureBound, strictlyBetter,
    unsatisfiable, removeReds, keepNops, presolverFlag, solverFlag, mirVersion,
-   inFile, debug, verbose, intermediate, lint, _outFile, _outTemp, presolver,
-   solver, sizeThreshold, explicitCallRegs)
+   inFile, debug, verbose, intermediate, lint, _outFile, _cleanTemp, _outTemp,
+   presolver, solver, sizeThreshold, explicitCallRegs)
   targetWithOption (mir, asmMir) =
   do prefix <- getTempPrefix
      let maybePutStrLn = when verbose . hPutStrLn stderr
@@ -178,3 +182,14 @@ getTempPrefix =
   do tmp <- getTemporaryDirectory
      prefix <- unisonPrefixFile tmp
      return prefix
+
+addUnisonExtensions prefix =
+  (map (\e -> addExtension e prefix)
+   ["uni", "lssa.uni", "ext.uni", "alt.uni", "json", "ext.json", "out.json",
+    "llvm.mir", "unison.mir"]) ++
+  [prefix]
+
+removeFileIfExists fileName =
+  do fileExists <- doesFileExist fileName
+     when fileExists (removeFile fileName)
+     return ()

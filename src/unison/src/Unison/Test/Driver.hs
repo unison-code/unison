@@ -84,7 +84,7 @@ runUnison unisonTargets testArgs mirFile =
      when sp $ hPutStrLn stderr ("Running test " ++ mirFile ++ "...")
      case pickTarget (testTarget properties) unisonTargets of
       (Any target) -> do
-        (_, [prefix])
+        [prefix]
                <- Run.run
                   (estimateFreq args,
                    simplifyControlFlow args,
@@ -116,6 +116,7 @@ runUnison unisonTargets testArgs mirFile =
                    True,
                    Nothing,
                    True,
+                   False,
                    presolver testArgs,
                    solver testArgs,
                    Nothing,

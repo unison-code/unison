@@ -144,7 +144,7 @@ mainWithTargets targets = do
             rematType, baseFile, scaleFreq, applyBaseFile, tightPressureBound,
             strictlyBetter, unsatisfiable, removeReds, keepNops, presolverFlag,
             solverFlag, mirVersion, inFile, debug, verbose, intermediate, lint,
-            outFile, outTemp, presolver, solver, sizeThreshold,
+            outFile, outTemp, cleanTemp, presolver, solver, sizeThreshold,
             explicitCallRegs)
            (target, targetOption)
          return ()
