@@ -47,6 +47,7 @@ PresolverOptions::PresolverOptions(void)
 
 {
   add(_output_file);
+  add(_dzn_file);
   add(_timeout);
   add(_verbose);
   add(_regions);
