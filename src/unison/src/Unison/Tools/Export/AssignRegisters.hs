@@ -39,7 +39,10 @@ assignRegisters tight registers f @ Function {fCode = code} target =
     in f {fCode = code'}
 
 toRegOrNull _ (RegisterAtom (-1), _) = NullTemporary
-toRegOrNull aw2r aw                  = aw2r M.! aw
+toRegOrNull aw2r aw =
+  case M.lookup aw aw2r of
+  Just r -> r
+  Nothing -> error ("no register could be found corresponding to the (atom, width) combination " ++ show aw)
 
 applyMapToChoice k2t tc @ MOperand {altTemps = ts} =
     tc {altTemps = map (applyMap' k2t) ts}
