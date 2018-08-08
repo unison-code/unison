@@ -175,5 +175,5 @@ data MipsItinerary = NoItinerary
                    | II_WSBH
                    | II_XOR
                    | II_XORI
-                   deriving (Eq, Read, Show)
+                   deriving (Eq, Ord, Read, Show)
 

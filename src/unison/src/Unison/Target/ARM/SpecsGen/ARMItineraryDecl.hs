@@ -238,5 +238,5 @@ data ARMItinerary = NoItinerary
                   | IIC_iTSTsi
                   | IIC_iPop
                   | IIC_iPop_Br
-                  deriving (Eq, Read, Show)
+                  deriving (Eq, Ord, Read, Show)
 

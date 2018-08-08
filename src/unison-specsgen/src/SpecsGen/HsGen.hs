@@ -369,7 +369,7 @@ hsDataDecl targetName cs =
 hsItinDecl targetName cs =
   HsDataDecl dummySrcLoc [] (HsIdent (targetName ++ "Itinerary")) []
   [HsConDecl dummySrcLoc (HsIdent c) [] | c <- cs]
-  [name "Eq", name "Read", name "Show"]
+  [name "Eq", name "Ord", name "Read", name "Show"]
 
 hsInstDecl targetName ss =
   HsInstDecl dummySrcLoc [] (name "Show")
