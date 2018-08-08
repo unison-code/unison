@@ -219,6 +219,8 @@ string show(const PresolverAcrossTuple);
 
 string show(const PresolverAcrossItemJSON);
 
+string show(const PresolverWCET);
+
 string show(const PresolverSetAcross);
 
 string show(const PresolverPrecedence x);
@@ -272,6 +274,8 @@ string emit_json(const PresolverDominates at);
 string emit_json(const PresolverInstrCond at);
 
 string emit_json(const PresolverValuePrecedeChain at);
+
+string emit_json(const PresolverWCET wcet);
 
 string emit_json(const UnisonConstraintExpr e);
 

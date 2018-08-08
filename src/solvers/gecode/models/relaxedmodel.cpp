@@ -105,12 +105,11 @@ BoolVar RelaxedModel::relaxed_adhoc_constraint_var(UnisonConstraintExpr & e) {
     return u(e.data[0], e.data[1]);
   case IMPLEMENTS_EXPR:
     return imp(e.data[0], e.data[1]);
-  case DISTANCE_EXPR:
-    return var(c(e.data[1]) >= (c(e.data[0]) + e.data[2]));
   case SHARE_EXPR:
     // This is fine because the temps of one will always be a prefix of the
     // temps of the other
     return var(y(e.data[0]) == y(e.data[1]));
+  case DISTANCE_EXPR:
   case OPERAND_OVERLAP_EXPR:
   case TEMPORARY_OVERLAP_EXPR:
     return BoolVar(*this, 0, 1);

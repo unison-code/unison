@@ -171,6 +171,7 @@ string produce_json(Parameters &input, int presolver_time)
        << emit_json_line("long_latency_def_use", input.long_latency_def_use)
        << emit_json_line("subsumed_resources", input.subsumed_resources)
        << emit_json_line("temp_domain", input.temp_domain)
+       << emit_json_line("wcet", input.wcet)
        << emit_json_line("freq_scale", input.freq_scale)
        << emit_json_line_last("presolver_time", presolver_time)
        << "}\n";
@@ -390,62 +391,6 @@ Quad dznQuad(UnisonConstraintExpr& e, map<Quad,int>& quadMap, vector<Quad>& quad
 int dznEncode(UnisonConstraintExpr& e, map<Quad,int>& quadMap, vector<Quad>& quadList) {
   Quad quad = dznQuad(e, quadMap, quadList);
   return dznEncodeQuad(quad, quadMap, quadList);
-}
-
-void computeWCET(Parameters &input, vector<vector<int>>& wcet) {
-  for (int o : input.O) {
-    if (input.type[o] == OUT) {
-      wcet.push_back({o, 0});
-    } else {
-      block b = input.oblock[o];
-      int maxminlive = 0;
-      
-      for (temporary t : input.tmp[b])
-	if (input.def_opr[t] == o && input.minlive[t] > maxminlive)
-	  maxminlive = input.minlive[t];
-      for (unsigned int ii = 0; ii < input.instructions[o].size(); ii++) {
-	instruction i = input.instructions[o][ii];
-	vector<int> opdurs;
-	int maxdeflat = 0;
-	int maxduroff = 0;
-
-	for (resource r : input.R)
-	  if (input.con[i][r]) {
-	    int duroff = input.dur[i][r] + input.off[i][r];
-	    if (maxduroff < duroff)
-	      maxduroff = duroff;
-	  }
-	opdurs.push_back(maxduroff);
-
-	for (unsigned pi = 0; pi < input.operands[o].size(); pi++) {
-	  operand p = input.operands[o][pi];
-	  if (!input.use[p]) {
-	    int l1 = input.lat[o][ii][pi];
-	    for (operand q : input.users[input.single_temp[p]]) {
-	      operation o2 = input.oper[q];
-	      for (unsigned qi = 0; qi < input.operands[o2].size(); qi++) {
-		if (input.operands[o2][qi]==q)
-		  for (unsigned int jj = 0; jj < input.instructions[o2].size(); jj++) {
-		    int l2 = input.lat[o2][jj][qi];
-		    if (maxdeflat < l1+l2)
-		      maxdeflat = l1+l2;
-		  }
-	      }
-	    }
-	  }	    
-	}
-	opdurs.push_back(maxdeflat);
-
-	int maxdist = 0;
-	for (unsigned int e = 0; e < input.dep[b].size(); e++)
-	  if ((o == input.dep[b][e][0]) && (input.dist[b][e][ii] > maxdist))
-	    maxdist = input.dist[b][e][ii];
-	opdurs.push_back(maxdist);
-	opdurs.push_back(maxminlive);
-	wcet.push_back({o, max_of(opdurs)});
-      }
-    }
-  }
 }
 
 string emit_dzn(const bool b, int opt) {
@@ -908,7 +853,8 @@ string produce_dzn(Parameters &input) {
       for (unsigned int pp = 0; pp < input.operands[o].size(); pp++)
 	if (input.bypass[o][ii][pp])
 	  bypass_table.push_back({o, input.instructions[o][ii], input.operands[o][pp]});
-  computeWCET(input, wcet);
+  for (PresolverWCET& w : input.wcet)
+    wcet.push_back({w.o, w.i, w.d});
   for (Quad& quad : quadList) {
     expr_op.push_back(quad.id);
     expr_arg1.push_back(quad.arg1);

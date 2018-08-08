@@ -119,6 +119,7 @@ void presolve(Parameters & input, PresolverOptions & options) {
   input.active_tables.clear();
   input.tmp_tables.clear();
   input.dominates.clear();
+  input.wcet.clear();
 
   // Abort if the problem is trivially unfeasible
   
@@ -142,6 +143,10 @@ void presolve(Parameters & input, PresolverOptions & options) {
 
   if (timeout(t, options, "trivial unfeasibility", t0))
     return;
+  
+  // 35: JSON.wcet
+  
+  computeWCET(input);
 
   // 1: JSON.strictly_congr <- GENCONGR()
 
@@ -463,11 +468,11 @@ void presolve(Parameters & input, PresolverOptions & options) {
   
   subsumed_resources(input);
   
-  // 35: JSON.temp_domain
+  // 36: JSON.temp_domain
   
   temp_domain(input);
   
-  // 37: JSON.precedences <- JSON.precedences U NormalizePrecedences(GenRegionPrecedences())
+  // 38: JSON.precedences <- JSON.precedences U NormalizePrecedences(GenRegionPrecedences())
 
   if (options.regions()) {
     t0.start();
@@ -478,7 +483,7 @@ void presolve(Parameters & input, PresolverOptions & options) {
       return;
   }
 
-  // 36: Tidy()
+  // 37: Tidy()
   tidy(input);
 
   // these can cause huge printouts and should be protected from timeouts

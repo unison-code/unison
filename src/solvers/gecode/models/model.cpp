@@ -413,56 +413,6 @@ double Model::pressure(operand p, register_class rc) const {
   return (double) input->operand_width[p] / (double) (input->atoms[rc].size());
 }
 
-int Model::worst(operation o) const {
-
-  block b = input->oblock[o];
-
-  vector<int> durs;
-
-  for (unsigned int ii = 0; ii < input->instructions[o].size(); ii++) {
-
-    instruction i = input->instructions[o][ii];
-    vector<int> opdurs;
-
-    vector<int> duroff;
-    for (resource r : input->R)
-      duroff.push_back(input->dur[i][r] + input->off[i][r]);
-    int maxdur = max_of(duroff);
-    opdurs.push_back(maxdur);
-
-    int maxuselat = 0, maxdeflat = 0;
-    for (unsigned pi = 0; pi < input->operands[o].size(); pi++) {
-      operand p = input->operands[o][pi];
-      if (input->use[p] && input->lat[o][ii][pi] > maxuselat)
-        maxuselat = input->lat[o][ii][pi];
-      if (!input->use[p] && input->lat[o][ii][pi] > maxdeflat)
-        maxdeflat = input->lat[o][ii][pi];
-    }
-    opdurs.push_back(maxuselat + maxdeflat);
-
-    int maxdist = 0;
-    for (unsigned int e = 0; e < input->dep[b].size(); e++) {
-      if ((o == input->dep[b][e][0]) && (input->dist[b][e][ii] > maxdist))
-        maxdist = input->dist[b][e][ii];
-      if ((o == input->dep[b][e][1]) && (max_of(input->dist[b][e]) > maxdist))
-        maxdist = max_of(input->dist[b][e]);
-    }
-    opdurs.push_back(maxdist);
-
-    int maxminlive = 0;
-    for (temporary t : input->tmp[b])
-      if (input->def_opr[t] == o && input->minlive[t] > maxminlive)
-        maxminlive = input->minlive[t];
-    opdurs.push_back(maxminlive);
-
-    durs.push_back(max_of(opdurs));
-
-  }
-
-  return max_of(durs);
-
-}
-
 bool Model::may_saturate(block b, register_atom fa, register_atom la) const {
   pair<int,int> C = make_pair(0, c(input->out[b]).max());
   // TODO: there should be a better way
@@ -1202,7 +1152,6 @@ void Model::post_improved_model_constraints(block b) {
       post_space_capacity_constraints(b);
     post_branch_issue_cycle_constraints(b);
     post_active_first_copy_constraints(b);
-    post_sequential_upper_bound_constraints(b);
     post_callee_saved_symmetry_breaking_constraints(b);
     if (!options->disable_precedence_variables()) {
       post_irreflexive_precedence_constraints(b);
@@ -1616,20 +1565,6 @@ void Model::post_active_first_copy_constraints(block b) {
 
 }
 
-void Model::post_sequential_upper_bound_constraints(block b) {
-
-  // The makespan cannot be larger than that of a sequential schedule:
-
-  IntArgs durs;
-  BoolVarArgs as;
-  for (operation o : input->ops[b]) {
-    durs << worst(o);
-    as << a(o);
-  }
-  constraint(c(input->out[b]) < sum(durs, as));
-
-}
-
 void Model::post_callee_saved_symmetry_breaking_constraints(block b) {
 
   // Assuming all callee-saved registers and copies are symmetric,
@@ -1832,6 +1767,7 @@ void Model::post_presolver_constraints(block b) {
     post_diffregs_constraints(b);
     post_difftemps_constraints(b);
     post_dominates_constraints(b);
+    post_wcet_constraints(b);
     // TODO: to be revisited after minlive model improvement
     // post_killer_operand_constraints(b);
     post_mandatory_reuse_constraints(b);
@@ -2165,6 +2101,42 @@ void Model::post_diffregs_constraints(block b) {
 
   for(vector<operand> ps : input->bdiffregs[b])
     disjoint_operand_registers(ps);
+}
+
+void Model::post_wcet_constraints(block b) {
+
+  // Longest tolerable inter-issue distance
+
+  IntVarArgs worst;
+  map<operation,vector<int>> slacks;
+  if (input->bwcet[b].empty())
+    return;
+  for(PresolverWCET& wcet : input->bwcet[b])
+    slacks[wcet.o].push_back(wcet.d);
+  for(auto kv : slacks) {
+    operation o = kv.first;
+    bool allOne = true;
+    bool allOneButFirst = true;
+    bool first = true;
+    bool mand = input->instructions[o][0] != NULL_INSTRUCTION;
+    
+    for(int d : kv.second) {
+      if (d!=1) allOne = false;
+      if (!first && d!=1) allOneButFirst = false;
+      first = false;
+    }
+    if(allOne) {
+      worst << var(1);
+    } else if(allOneButFirst && !mand) {
+      IntVar ia;
+      Gecode::channel(*this, ia, a(o), IPL_DOM);
+      worst << ia;
+    } else {
+      worst << var(element(kv.second, i(o)));
+    }
+  }
+  constraint(c(input->out[b]) < sum(worst));
+    
 }
 
 void Model::post_killer_operand_constraints(block b) {

@@ -160,4 +160,6 @@ void test_redundancy(Parameters & input, GlobalModel * gm);
 
 void subsumed_resources(Parameters& input);
 
+void computeWCET(Parameters& input);
+
 #endif

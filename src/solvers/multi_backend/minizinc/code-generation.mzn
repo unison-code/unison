@@ -257,7 +257,7 @@ array[int] of int: exrelated_q;
 array[int] of set of int: exrelated_rows;
 array[int,int] of int: exrelated_ext;
 
-%% dominance
+%% see JSON wcet
 array[int,int] of int: wcet;
 
 %% extra storage for constraint expressions
@@ -1407,16 +1407,16 @@ constraint
   );
 
 var 0..MAXC: o_wcet(0..MAXO: o) =
-  let {array[int] of var int: wcs = [wcet[jj,2] | jj in index_set_1of2(wcet) where wcet[jj,1] = o],
-       int: nwcs = length(wcs),
-       int: two = max(nwcs,1)}
+  let {array[int] of var int: wcs = [wcet[jj,3] | jj in index_set_1of2(wcet) where wcet[jj,1] = o],
+       int: nwcs = length(wcs)}
   in if forall(jj in 1..nwcs)(wcs[jj] = 1)
        then a[o]
      else if not op_mand[o] /\ forall(jj in 2..nwcs)(wcs[jj] = 1)
        then a[o]
      else if op_mand[o]
        then wcs[ii[o]]
-       else a[o] * wcs[ii[o]]
+     else
+       a[o] * wcs[ii[o]]
      endif endif endif;
 
 %% output

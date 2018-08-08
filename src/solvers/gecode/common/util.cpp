@@ -124,6 +124,10 @@ string show(const PresolverAcrossItemJSON x) {
   return show(vector<string>{show(x.t), show(x.e)}, ", ");
 }
 
+string show(const PresolverWCET x) {
+  return show(vector<string>{show(x.o), show(x.i), show(x.d)}, ", ");
+}
+
 string show(const PresolverSetAcross x) {
   return show(vector<string>{show(x.o), show(x.ras), show(x.tsets)}, ", ");
 }
@@ -201,6 +205,10 @@ string emit_json(const PresolverInstrCond x) {
 
 string emit_json(const PresolverValuePrecedeChain pvc) {
   return show(vector<string>{emit_json(pvc.ts), emit_json(pvc.rss)}, ", ");
+}
+
+string emit_json(const PresolverWCET wcet) {
+  return show(vector<string>{emit_json(wcet.o), emit_json(wcet.i), emit_json(wcet.d)}, ", ");
 }
 
 string emit_json(const UnisonConstraintExpr e) {

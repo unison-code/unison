@@ -349,6 +349,9 @@ public:
   // [MC] register atom domain of each temp
   vector<vector<register_atom> > temp_domain;
 
+  // [MC] max tolerable latency to the following issue
+  vector<PresolverWCET> wcet;
+
   Parameters(JSONVALUE root);
 
   // emit parameters in JSON format
@@ -647,6 +650,9 @@ public:
   // set of diffregs, per block
   vector<vector<vector<operand> > > bdiffregs;
 
+  // max tolerable latency to the following issue, per block
+  vector<vector<PresolverWCET> > bwcet;
+
   // Number of objectives
   unsigned int N;
 
@@ -669,6 +675,7 @@ protected:
   void get_element(JSONVALUE root, PresolverSetAcross & sa);
   void get_element(JSONVALUE root, PresolverDominates & d);
   void get_element(JSONVALUE root, PresolverInstrCond & d);
+  void get_element(JSONVALUE root, PresolverWCET & d);
   void get_element(JSONVALUE root, PresolverValuePrecedeChain & d);
 
   template<class T>

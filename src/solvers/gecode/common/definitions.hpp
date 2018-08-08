@@ -370,6 +370,19 @@ public:
 };
 
 
+class PresolverWCET {
+public:
+  operation o;
+  instruction i;
+  latency d;
+  // CONSTRUCTORS
+  PresolverWCET():
+    o(-1), i(-1), d(-1) { }
+  PresolverWCET(operation o, instruction i, latency d):
+    o(o), i(i), d(d) { }
+};
+
+
 typedef pair<operation, unsigned int> InstructionAssignment;
 
 #ifdef GRAPHICS

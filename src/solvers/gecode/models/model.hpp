@@ -394,7 +394,6 @@ public:
   void post_branch_issue_cycle_constraints(block b);
   void post_redefined_operand_constraints(block b);
   void post_active_first_copy_constraints(block b);
-  void post_sequential_upper_bound_constraints(block b);
   void post_callee_saved_symmetry_breaking_constraints(block b);
   void post_irreflexive_precedence_constraints(block b);
   void post_transitive_precedence_constraints(block b);
@@ -416,6 +415,7 @@ public:
   void post_dominates_constraints(block b);
   void post_difftemps_constraints(block b);
   void post_diffregs_constraints(block b);
+  void post_wcet_constraints(block b);
   void post_predecessors_constraints(block b);
   void post_successors_constraints(block b);
   void post_killer_operand_constraints(block b);

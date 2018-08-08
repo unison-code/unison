@@ -142,7 +142,8 @@ Parameters::Parameters(JSONVALUE root) :
   long_latency_index  (get_3d_vector<int>(getRoot(root, "long_latency_index"))),
   long_latency_def_use  (get_2d_vector<int>(getRoot(root, "long_latency_def_use"))),
   subsumed_resources  (get_2d_vector<int>(getRoot(root, "subsumed_resources"))),
-  temp_domain  (get_2d_vector<int>(getRoot(root, "temp_domain")))
+  temp_domain  (get_2d_vector<int>(getRoot(root, "temp_domain"))),
+  wcet     (get_vector<PresolverWCET>(getRoot(root, "wcet")))
 {
   compute_derived();
 }
@@ -242,6 +243,7 @@ void Parameters::compute_derived() {
   bdominates.clear();
   bdifftemps.clear();
   bdiffregs.clear();
+  bwcet.clear();
   N = 0;
 
   for (unsigned int rc = 0; rc < space.size(); rc++) RC.push_back(rc);
@@ -905,6 +907,12 @@ void Parameters::compute_derived() {
     bprecs[oblock[item[0]]].push_back(item);
   }
 
+  vector<PresolverWCET> empty_wcet;
+  init_vector(bwcet, B.size(), empty_wcet);
+  for (PresolverWCET item : wcet) {
+    bwcet[oblock[item.o]].push_back(item);
+  }
+
   N = maxf.size();
 }
 
@@ -1242,6 +1250,17 @@ void Parameters::get_element(QScriptValue root, PresolverInstrCond & d) {
   d.q = iti.value().toInt32();
 }
 
+void Parameters::get_element(QScriptValue root, PresolverWCET & x) {
+  assert(root.isArray());
+  QScriptValueIterator iti(root);
+  iti.next();
+  x.o = iti.value().toInt32();
+  iti.next();
+  x.i = iti.value().toInt32();
+  iti.next();
+  x.d = iti.value().toInt32();
+}
+
 void Parameters::get_element(QScriptValue root, PresolverValuePrecedeChain & d) {
   assert(root.isArray());
   QScriptValueIterator iti(root);
@@ -1422,6 +1441,16 @@ void Parameters::get_element(Json::Value root, PresolverInstrCond & d) {
   d.i = (*iti).asInt();
   iti++;
   d.q = (*iti).asInt();
+}
+
+void Parameters::get_element(Json::Value root, PresolverWCET & x) {
+  assert(root.isArray());
+  Json::ValueIterator iti = root.begin();
+  x.o = (*iti).asInt();
+  iti++;
+  x.i = (*iti).asInt();
+  iti++;
+  x.d = (*iti).asInt();
 }
 
 void Parameters::get_element(Json::Value root, PresolverValuePrecedeChain & d) {
