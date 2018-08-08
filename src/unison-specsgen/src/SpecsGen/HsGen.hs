@@ -14,6 +14,7 @@ module SpecsGen.HsGen
      constantExtendedOperation,
      extendRemats,
      expand,
+     preProcess,
      promote,
      update,
      makeBound,
@@ -211,6 +212,13 @@ addField f (YMap fs) = YMap (fs ++ [f])
 deleteField df (YMap fs) = YMap (filter (not . isField df) fs)
 
 isField f (f', _) = f == f'
+
+preProcess is pp = map (maybePreProcessInstr (idMap pp)) is
+
+maybePreProcessInstr id2pp i =
+  case M.lookup (oId i) id2pp of
+   Just pp -> foldl replaceField i (yMap pp)
+   Nothing -> i
 
 promote effs i =
     let rs    = sideEffects $ iAffectedBy i

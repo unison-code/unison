@@ -43,7 +43,7 @@ data SpecsGen =
               constantExtend :: Bool, infiniteRegClass :: [String],
               abstractRegClass :: [String], promoteEffect :: [String],
               regClass :: [String], boundRegClass :: [String],
-              rematFile :: Maybe FilePath}
+              rematFile :: Maybe FilePath, preProcessFile :: Maybe FilePath}
     deriving (Data, Typeable, Show)
 
 specsgen = cmdArgsMode $ SpecsGen
@@ -57,7 +57,8 @@ specsgen = cmdArgsMode $ SpecsGen
              promoteEffect = [],
              regClass = [],
              boundRegClass = [],
-             rematFile = Nothing
+             rematFile = Nothing,
+             preProcessFile = Nothing
            }
     &= summary "Generates partial Haskell files (.hs) with target information from the given YAML description (.yaml)\nRoberto Castaneda Lozano roberto.castaneda@ri.se"
 
@@ -65,31 +66,37 @@ runSpecsGen tPreMod tExtension =
     do sg @ SpecsGen{..} <- cmdArgsRun specsgen
        yaml  <- mapM strictReadFile files
        remat <- maybe (return "") strictReadFile rematFile
+       prep  <- maybe (return "") strictReadFile preProcessFile
        let is   = concatMap yamlInstructions yaml
-           is1  = expand is
+           is'  = maybePreProcess prep is
+           is1  = expand is'
            is2  = is1 ++ extendRemats is1 (yamlInstructions remat)
-           is3  = is2 ++
-                  if constantExtend then mapMaybe constantExtendedOperation is2
+           is3  = maybePreProcess prep is2
+           is4  = is3 ++
+                  if constantExtend then mapMaybe constantExtendedOperation is3
                   else []
-           is4 = map (promote promoteEffect) is3
-           is5 = map (update regClass) is4
-           is6 = map (makeBound boundRegClass) is5
-           is7 = tPreMod is6 -- Hand off yaml to target for target-specific modifications
+           is5 = map (promote promoteEffect) is4
+           is6 = map (update regClass) is5
+           is7 = map (makeBound boundRegClass) is6
+           is8 = tPreMod is7 -- Hand off yaml to target for target-specific modifications
            abstractRegClass' = abstractRegClass ++ ["Unknown"]
        writeHsFile outputDir "OperandInfo"
-         (emitOperandInfo targetName (infiniteRegClass, abstractRegClass') is7)
-       writeHsFile outputDir "AlignedPairs" (emitAlignedPairs targetName is7)
-       writeHsFile outputDir (targetName ++ "InstructionDecl") (emitInstructionDecl targetName is7)
-       writeHsFile outputDir "ReadOp" (emitReadOp targetName is7)
-       writeHsFile outputDir "ShowInstance" (emitShowInstance targetName is7)
-       writeHsFile outputDir "ReadWriteInfo" (emitReadWriteInfo targetName is7)
-       writeHsFile outputDir "Itinerary" (emitItinerary targetName is7)
-       writeHsFile outputDir "Size" (emitSize targetName is7)
-       writeHsFile outputDir "InstructionType" (emitInstructionType targetName is7)
-       writeHsFile outputDir "AllInstructions" (emitAllInstructions targetName is7)
-       writeHsFile outputDir (targetName ++ "ItineraryDecl") (emitItineraryDecl targetName is7)
-       writeHsFile outputDir "Parent" (emitParent targetName is7)
-       tExtension sg is7
+         (emitOperandInfo targetName (infiniteRegClass, abstractRegClass') is8)
+       writeHsFile outputDir "AlignedPairs" (emitAlignedPairs targetName is8)
+       writeHsFile outputDir (targetName ++ "InstructionDecl") (emitInstructionDecl targetName is8)
+       writeHsFile outputDir "ReadOp" (emitReadOp targetName is8)
+       writeHsFile outputDir "ShowInstance" (emitShowInstance targetName is8)
+       writeHsFile outputDir "ReadWriteInfo" (emitReadWriteInfo targetName is8)
+       writeHsFile outputDir "Itinerary" (emitItinerary targetName is8)
+       writeHsFile outputDir "Size" (emitSize targetName is8)
+       writeHsFile outputDir "InstructionType" (emitInstructionType targetName is8)
+       writeHsFile outputDir "AllInstructions" (emitAllInstructions targetName is8)
+       writeHsFile outputDir (targetName ++ "ItineraryDecl") (emitItineraryDecl targetName is8)
+       writeHsFile outputDir "Parent" (emitParent targetName is8)
+       tExtension sg is8
+
+maybePreProcess "" is   = is
+maybePreProcess prep is = preProcess is (yamlInstructions prep)
 
 writeHsFile dir base f =
     let name = dir </> addExtension base ".hs"
