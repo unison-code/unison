@@ -20,6 +20,7 @@ freedefault='--fzn-flag -f'
 rndflag=''
 nogoods=''
 lbfile='-'
+dznfile='-'
 setuponly='false'
 tail=' '
 while [ $# -gt  1 ]; do
@@ -110,6 +111,10 @@ while [ $# -gt  1 ]; do
         lbfile=$1
 	shift
       ;;
+      -dzn)
+        dznfile=$1
+	shift
+      ;;
       --fzn-flag)
 	tail=$tail'--fzn-flag '$1' '
 	shift
@@ -120,9 +125,12 @@ while [ $# -gt  1 ]; do
     esac
 done
 DIRBASENAME=${1%.ext.json}
-EXTJSON=$1
-shift
-echo "json2dzn('${EXTJSON}'),halt." | sicstus -f --nologo --noinfo -l $MINIZINC_DIR/model2dzn.pl
+if [ $dznfile == '-' ]; then
+  EXTJSON=$1
+  dznfile=$DIRBASENAME.dzn
+  shift
+  echo "json2dzn('${EXTJSON}'),halt." | sicstus -f --nologo --noinfo -l $MINIZINC_DIR/model2dzn.pl
+fi
 cat $MINIZINC_DIR/code-generation.mzn $MINIZINC_DIR/${search} > $DIRBASENAME.mzn
 if [ $mzn = 'mzn-gecode' ]; then
   pflag='-p'
@@ -138,4 +146,4 @@ if [ $setuponly = true ]; then
     exit 0
 fi
 set -x
-time ${mzn} ${allsolns} ${statflag} ${pflag} ${pvalue} ${freeflag} ${rndflag} ${toflag} ${nogoods} -D good_cumulative=${cumulative} -D good_diffn=${diffn} -D good_member=${member} ${tail} $DIRBASENAME.mzn $DIRBASENAME.dzn | $COMMON_DIR/outfilter.pl ${OUTJSON}.last ${lbfile} | aeson-pretty > ${OUTJSON}
+time ${mzn} ${allsolns} ${statflag} ${pflag} ${pvalue} ${freeflag} ${rndflag} ${toflag} ${nogoods} -D good_cumulative=${cumulative} -D good_diffn=${diffn} -D good_member=${member} ${tail} $DIRBASENAME.mzn $dznfile | $COMMON_DIR/outfilter.pl ${OUTJSON}.last ${lbfile} | aeson-pretty > ${OUTJSON}

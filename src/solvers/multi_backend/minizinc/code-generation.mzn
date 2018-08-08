@@ -90,7 +90,6 @@ array[int] of set of int: op_operands;
 array[int] of set of int: op_instructions;
 array[int] of int: op_type;
 array[int] of bool: op_mand;
-array[int] of int: op_order;
 
 %% see JSON atoms
 array[int] of set of int: atom_regs; % atom -> registers

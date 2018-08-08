@@ -408,32 +408,40 @@ void computeWCET(Parameters &input, vector<vector<int>>& wcet) {
       for (unsigned int ii = 0; ii < input.instructions[o].size(); ii++) {
 	instruction i = input.instructions[o][ii];
 	vector<int> opdurs;
-	vector<int> duroff;
-	int maxuselat = 0, maxdeflat = 0;
+	int maxdeflat = 0;
+	int maxduroff = 0;
 
 	for (resource r : input.R)
-	  if (input.con[i][r])
-	    duroff.push_back(input.dur[i][r] + input.off[i][r]);
-	duroff.push_back(0);
-	opdurs.push_back(max_of(duroff));
+	  if (input.con[i][r]) {
+	    int duroff = input.dur[i][r] + input.off[i][r];
+	    if (maxduroff < duroff)
+	      maxduroff = duroff;
+	  }
+	opdurs.push_back(maxduroff);
 
 	for (unsigned pi = 0; pi < input.operands[o].size(); pi++) {
 	  operand p = input.operands[o][pi];
-	  if (input.use[p] && input.lat[o][ii][pi] > maxuselat)
-	    maxuselat = input.lat[o][ii][pi];
-	  if (!input.use[p] && input.lat[o][ii][pi] > maxdeflat)
-	    maxdeflat = input.lat[o][ii][pi];
+	  if (!input.use[p]) {
+	    int l1 = input.lat[o][ii][pi];
+	    for (operand q : input.users[input.single_temp[p]]) {
+	      operation o2 = input.oper[q];
+	      for (unsigned qi = 0; qi < input.operands[o2].size(); qi++) {
+		if (input.operands[o2][qi]==q)
+		  for (unsigned int jj = 0; jj < input.instructions[o2].size(); jj++) {
+		    int l2 = input.lat[o2][jj][qi];
+		    if (maxdeflat < l1+l2)
+		      maxdeflat = l1+l2;
+		  }
+	      }
+	    }
+	  }	    
 	}
-	opdurs.push_back(maxuselat + maxdeflat);
+	opdurs.push_back(maxdeflat);
 
 	int maxdist = 0;
-	for (unsigned int e = 0; e < input.dep[b].size(); e++) {
+	for (unsigned int e = 0; e < input.dep[b].size(); e++)
 	  if ((o == input.dep[b][e][0]) && (input.dist[b][e][ii] > maxdist))
 	    maxdist = input.dist[b][e][ii];
-	  // the following two lines are irrelevant for wcet, I think
-	  // if ((o == input.dep[b][e][1]) && (max_of(input.dist[b][e]) > maxdist))
-	  // maxdist = max_of(input.dist[b][e]);
-	}
 	opdurs.push_back(maxdist);
 	opdurs.push_back(maxminlive);
 	wcet.push_back({o, max_of(opdurs)});
@@ -599,84 +607,75 @@ bool at_least_one_table(vector<vector<int>> tuples) {
 
 
 string produce_dzn(Parameters &input) {
+  map<FDSet,int> setMap;
+  map<Quad,int> quadMap;
+  map<vector<int>,vector<int>> actMap;
   stringstream dzn;
-  vector<FDSet> bb_ops;
-  vector<vector<int>> flat_operands;
-  vector<FDSet> bb_operands;
-  vector<FDSet> bb_temps;
-  vector<FDSet> bb_subsumed;
-  vector<FDSet> op_operands;
-  vector<FDSet> op_instructions;
-  vector<FDSet> atom_regs;
-  vector<FDSet> range;
-  vector<FDSet> congr;
-  vector<FDSet> strictly_congr;
-  vector<vector<FDSet>> long_latency_index;
-  vector<FDSet> operand_temps;
-  vector<FDSet> related_temps;
-  vector<FDSet> temp_uses;
-  vector<FDSet> difftemp;
-  vector<FDSet> diffreg;
-  vector<FDSet> calleesaved_spill;
-  vector<FDSet> emptyset;
-  vector<bool> last_use;
-  vector<int> maxatom;
-  vector<int> nogood, precedence, adhoc;
-  vector<pair<int,int>> len_bb(input.maxc.size());
-  vector<int> bb_order;
-  vector<bool> mand;
-  vector<int> infinite;
-  vector<int> space;
-  vector<int> ints;
-  vector<vector<int>> con_transpose(input.cap.size());
-  vector<vector<int>> dur_transpose(input.cap.size());
-  vector<vector<int>> off_transpose(input.cap.size());
-  vector<vector<int>> preassign(2);
-  vector<vector<int>> aligned(4);
-  vector<vector<int>> adjacent(2);
-  vector<vector<int>> quasi_adjacent(2);
-  vector<vector<int>> long_latency_def_use(2);
-  vector<int> operand_definer;
-  vector<vector<int>> operand_atom;
-  vector<int> before_pred, before_succ, before_cond; 
-  vector<int> across_op, across_item_temp, across_item_cond;
   vector<FDSet> across_regs, across_items;
-  vector<int> setacross_op;
+  vector<FDSet> activator_insns, activator_ops;
+  vector<FDSet> atom_regs;
+  vector<FDSet> bb_operands, bb_ops, bb_subsumed, bb_temps;
+  vector<FDSet> calleesaved_spill;
+  vector<FDSet> congr;
+  vector<FDSet> diffreg;
+  vector<FDSet> difftemp;
+  vector<FDSet> dominate_instructions, dominate_temps;
+  vector<FDSet> emptyset;
+  vector<FDSet> expr_children;
+  vector<FDSet> exrelated_rows;
+  vector<FDSet> op_instructions, op_operands;
+  vector<FDSet> operand_temps;
+  vector<FDSet> predecessors_preds, successors_succs;
+  vector<FDSet> range;
+  vector<FDSet> related_temps;
+  vector<FDSet> relation_ops, relation_range, relation_temps;
+  vector<FDSet> setList;
   vector<FDSet> setacross_regs, setacross_tempsets;
-  vector<vector<FDSet>> domop(2);
-  vector<vector<int>> domuse(3);
-  vector<int> dominate_ing;
-  vector<int> dominate_ed;
-  vector<FDSet> dominate_instructions;
-  vector<FDSet> dominate_temps;
+  vector<FDSet> strictly_congr;
   vector<FDSet> table_exists_ops;
   vector<FDSet> table_iffall_ops;
-  vector<FDSet> relation_ops;
-  vector<FDSet> relation_temps;
-  vector<int> relation_ntuples;
-  vector<FDSet> relation_range;
-  vector<vector<int>> cs_spill_t(2);
-  vector<FDSet> activator_insns;
-  vector<FDSet> activator_ops;
-  map<vector<int>,vector<int>> act;
-  vector<FDSet> predecessors_preds, successors_succs;
-  vector<int> predecessors_succ, predecessors_lat, successors_pred, successors_lat;
-  vector<int> value_precede_min, value_precede_max, value_precede_temps;
-  vector<FDSet> value_precede_regs;
-  vector<vector<int>> lat_table;
-  vector<int> preschedule_op, preschedule_cycle;
-  vector<int> exrelated_p, exrelated_q;
-  vector<vector<int>> exrelated_ext;
-  vector<FDSet> exrelated_rows;
-  vector<vector<int>> bypass_table;
   vector<FDSet> temp_domain;
-  vector<vector<int>> wcet;
-  vector<int> expr_op, expr_arg1, expr_arg2, expr_arg3;
-  vector<FDSet> expr_children;
-  map<Quad,int> quadMap;
+  vector<FDSet> temp_uses;
+  vector<FDSet> value_precede_regs;
   vector<Quad> quadList;
-  map<FDSet,int> setMap;
-  vector<FDSet> setList;
+  vector<bool> last_use;
+  vector<bool> mand;
+  vector<int> across_op, across_item_temp, across_item_cond;
+  vector<int> bb_order;
+  vector<int> before_pred, before_succ, before_cond; 
+  vector<int> dominate_ed, dominate_ing;
+  vector<int> expr_op, expr_arg1, expr_arg2, expr_arg3;
+  vector<int> exrelated_p, exrelated_q;
+  vector<int> infinite;
+  vector<int> ints;
+  vector<int> maxatom;
+  vector<int> nogood, precedence, adhoc;
+  vector<int> operand_definer;
+  vector<int> predecessors_succ, predecessors_lat, successors_pred, successors_lat;
+  vector<int> preschedule_op, preschedule_cycle;
+  vector<int> relation_ntuples;
+  vector<int> setacross_op;
+  vector<int> space;
+  vector<int> value_precede_min, value_precede_max, value_precede_temps;
+  vector<pair<int,int>> len_bb(input.maxc.size());
+  vector<vector<FDSet>> domop(2);
+  vector<vector<FDSet>> long_latency_index;
+  vector<vector<int>> adjacent(2);
+  vector<vector<int>> aligned(4);
+  vector<vector<int>> bypass_table;
+  vector<vector<int>> con_transpose(input.cap.size());
+  vector<vector<int>> cs_spill_t(2);
+  vector<vector<int>> domuse(3);
+  vector<vector<int>> dur_transpose(input.cap.size());
+  vector<vector<int>> exrelated_ext;
+  vector<vector<int>> flat_operands;
+  vector<vector<int>> lat_table;
+  vector<vector<int>> long_latency_def_use(2);
+  vector<vector<int>> off_transpose(input.cap.size());
+  vector<vector<int>> operand_atom;
+  vector<vector<int>> preassign(2);
+  vector<vector<int>> quasi_adjacent(2);
+  vector<vector<int>> wcet;
 
   for (vector<int>& os : input.ops) {
     vector<int> ps;
@@ -871,8 +870,8 @@ string produce_dzn(Parameters &input) {
   }
   for (unsigned int ii=0; ii<input.activators.size(); ii++)
     if (!input.activators[ii].empty())
-      act[input.activators[ii]].push_back(ii);
-  for (auto& kv : act) {
+      actMap[input.activators[ii]].push_back(ii);
+  for (auto& kv : actMap) {
     activator_insns.push_back(FDSet(kv.first));
     activator_ops.push_back(FDSet(kv.second));
   }
@@ -901,7 +900,7 @@ string produce_dzn(Parameters &input) {
     for (unsigned int ii = 0; ii < input.instructions[o].size(); ii++)
       for (unsigned int pp = 0; pp < input.operands[o].size(); pp++) {
 	int l = input.lat[o][ii][pp];
-	lat_table.push_back({o, input.instructions[o][ii], input.instructions[o][pp], l});
+	lat_table.push_back({o, input.instructions[o][ii], input.operands[o][pp], l});
 	minl = min(minl, l);
 	maxl = max(maxl, l);
       }
@@ -944,7 +943,7 @@ string produce_dzn(Parameters &input) {
        << emit_dzn_line("bb_operands", bb_operands)
        << emit_dzn_line("bb_temps", bb_temps)
        << emit_dzn_line("bb_subsumed", bb_subsumed)
-       << emit_dzn_line("bb_freq", input.freq)
+       << emit_dzn_line("bb_frequency", input.freq)
        << emit_dzn_line("bb_maxcycle", input.maxc)
        << emit_dzn_line("bb_optional_min", input.optional_min)
        << emit_dzn_line("bb_order", bb_order)
