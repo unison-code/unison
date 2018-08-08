@@ -50,6 +50,7 @@ protected:
   // Interface
 
   Driver::StringValueOption _output_file; // Output file
+  Driver::StringValueOption _dzn_file; // Dzn file (ignored)
   Driver::BoolOption _verbose; // Verbose mode
   Driver::BoolOption _emit_improvement; // Emit estimated improvement
   Driver::StringValueOption _lower_bound_file; // Lower bound file
@@ -136,6 +137,7 @@ public:
   ModelOptions(void);
 
   string output_file(void) const {return _output_file.value();}
+  string dzn_file(void) const {return _dzn_file.value();}
   bool verbose(void) const {return _verbose.value();}
   bool emit_improvement(void) const {return _emit_improvement.value();}
   string lower_bound_file(void) const {return _lower_bound_file.value();}

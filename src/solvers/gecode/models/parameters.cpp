@@ -137,8 +137,6 @@ Parameters::Parameters(JSONVALUE root) :
   diffregs      (get_2d_vector<int>(getRoot(root, "diffregs"))),
   calleesaved_spill (get_2d_vector<int>(getRoot(root, "calleesaved_spill"))),
   strictly_congr    (get_2d_vector<int>(getRoot(root, "strictly_congr"))),
-  predecessors      (get_vector<PresolverPred>(getRoot(root, "predecessors"))),
-  successors      (get_vector<PresolverSucc>(getRoot(root, "successors"))),
   value_precede_chains  (get_vector<PresolverValuePrecedeChain>(getRoot(root, "value_precede_chains"))),
   quasi_adjacent  (get_2d_vector<int>(getRoot(root, "quasi_adjacent"))),
   long_latency_index  (get_3d_vector<int>(getRoot(root, "long_latency_index"))),
@@ -244,8 +242,6 @@ void Parameters::compute_derived() {
   bdominates.clear();
   bdifftemps.clear();
   bdiffregs.clear();
-  bpredecessors.clear();
-  bsuccessors.clear();
   N = 0;
 
   for (unsigned int rc = 0; rc < space.size(); rc++) RC.push_back(rc);
@@ -909,18 +905,6 @@ void Parameters::compute_derived() {
     bprecs[oblock[item[0]]].push_back(item);
   }
 
-  vector<PresolverPred> empty_predecessors;
-  init_vector(bpredecessors, B.size(), empty_predecessors);
-  for (PresolverPred item : predecessors) {
-    bpredecessors[oblock[item.q]].push_back(item);
-  }
-
-  vector<PresolverSucc> empty_successors;
-  init_vector(bsuccessors, B.size(), empty_successors);
-  for (PresolverSucc item : successors) {
-    bsuccessors[oblock[item.p]].push_back(item);
-  }
-
   N = maxf.size();
 }
 
@@ -1247,28 +1231,6 @@ void Parameters::get_element(QScriptValue root, PresolverDominates & d) {
   d.temps = get_vector<temporary>(iti.value());
 }
 
-void Parameters::get_element(QScriptValue root, PresolverPred & d) {
-  assert(root.isArray());
-  QScriptValueIterator iti(root);
-  iti.next();
-  d.p = get_vector<operation>(iti.value());
-  iti.next();
-  d.q = iti.value().toInt32();
-  iti.next();
-  d.d = iti.value().toInt32();
-}
-
-void Parameters::get_element(QScriptValue root, PresolverSucc & d) {
-  assert(root.isArray());
-  QScriptValueIterator iti(root);
-  iti.next();
-  d.p = iti.value().toInt32();
-  iti.next();
-  d.q = get_vector<operation>(iti.value());
-  iti.next();
-  d.d = iti.value().toInt32();
-}
-
 void Parameters::get_element(QScriptValue root, PresolverInstrCond & d) {
   assert(root.isArray());
   QScriptValueIterator iti(root);
@@ -1450,26 +1412,6 @@ void Parameters::get_element(Json::Value root, PresolverDominates & d) {
   d.ins = get_vector<operation>(*iti);
   iti++;
   d.temps = get_vector<temporary>(*iti);
-}
-
-void Parameters::get_element(Json::Value root, PresolverPred & d) {
-  assert(root.isArray());
-  Json::ValueIterator iti = root.begin();
-  d.p = get_vector<operation>(*iti);
-  iti++;
-  d.q = (*iti).asInt();
-  iti++;
-  d.d = (*iti).asInt();
-}
-
-void Parameters::get_element(Json::Value root, PresolverSucc & d) {
-  assert(root.isArray());
-  Json::ValueIterator iti = root.begin();
-  d.p = (*iti).asInt();
-  iti++;
-  d.q = get_vector<operation>(*iti);
-  iti++;
-  d.d = (*iti).asInt();
 }
 
 void Parameters::get_element(Json::Value root, PresolverInstrCond & d) {

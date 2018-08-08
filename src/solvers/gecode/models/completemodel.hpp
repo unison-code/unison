@@ -99,11 +99,7 @@ public:
   void post_slack_balancing_constraints(void);
 
   void post_improved_model_constraints(void);
-#if MCSLACK
   void post_slack_functional_constraints(void);
-#else
-  void post_slack_lower_bound_constraints(void);
-#endif
 
   void post_presolver_constraints(void);
 

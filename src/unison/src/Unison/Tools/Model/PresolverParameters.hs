@@ -61,8 +61,6 @@ parameters oldModel (_, dgs, _, _, ra, _)
       diffregs = [] :: [Integer]
       calleesaved_spill = [] :: [Integer]
       strictly_congr = [] :: [Integer]
-      predecessors = [] :: [Integer]
-      successors = [] :: [Integer]
       quasi_adjacent = [] :: [Integer]
       long_latency_index = [] :: [Integer]
       long_latency_def_use = [] :: [Integer]
@@ -113,8 +111,6 @@ parameters oldModel (_, dgs, _, _, ra, _)
       ("diffregs", toJSON diffregs),
       ("calleesaved_spill", toJSON calleesaved_spill),
       ("strictly_congr", toJSON strictly_congr),
-      ("predecessors", toJSON predecessors),
-      ("successors", toJSON successors),
       ("quasi_adjacent", toJSON quasi_adjacent),
       ("long_latency_index", toJSON long_latency_index),
       ("long_latency_def_use", toJSON long_latency_def_use),

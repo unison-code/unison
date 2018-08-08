@@ -112,14 +112,6 @@ string show(const PresolverCopyTmpTable t) {
   return show(vector<string>{show(t.os), show(t.ps), show(t.tuples)}, ", ");
 }
 
-string show(const PresolverPred p) {
-  return show(vector<string>{show(p.p), show(p.q), show(p.d)}, ", ");
-}
-
-string show(const PresolverSucc p) {
-  return show(vector<string>{show(p.p), show(p.q), show(p.d)}, ", ");
-}
-
 string show(const PresolverAcrossJSON x) {
   return show(vector<string>{show(x.o), show(x.ras), show(x.as)}, ", ");
 }
@@ -200,16 +192,6 @@ string emit_json(const PresolverSetAcross x) {
 string emit_json(const PresolverDominates x) {
   return show(vector<string>{emit_json(x.o1), emit_json(x.o2),
         emit_json(x.ins), emit_json(x.temps)}, ", ");
-}
-
-string emit_json(const PresolverPred x) {
-  return show(vector<string>{emit_json(x.p), emit_json(x.q),
-        emit_json(x.d)}, ", ");
-}
-
-string emit_json(const PresolverSucc x) {
-  return show(vector<string>{emit_json(x.p), emit_json(x.q),
-        emit_json(x.d)}, ", ");
 }
 
 string emit_json(const PresolverInstrCond x) {

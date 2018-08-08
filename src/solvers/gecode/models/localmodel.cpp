@@ -226,28 +226,6 @@ void LocalModel::post_operand_symmetry_breaking_constraints(block b) {
 
 }
 
-#if !MCMOD
-
-void LocalModel::post_register_symmetry_breaking_constraints(block b) {
-
-  IntVarArgs rys;
-  for (operand p : input->ope[b]) {
-    for (int w = 0; w < input->operand_width[p]; w++) {
-      IntVar rypw(*this, ry(p).min() + w, ry(p).max() + w);
-      constraint(rypw == ry(p) + w);
-      assert_bounded(rypw);
-      rys << rypw;
-    }
-  }
-
-  for (set<register_atom> interchangeable : interchangeable_atoms(false, b)) {
-    IntArgs ras(interchangeable.begin(), interchangeable.end());
-    precede(*this, rys, ras);
-  }
-
-}
-
-#else
 
 void LocalModel::post_register_symmetry_breaking_constraints(block b) {
   vector<PresolverValuePrecedeChain> chains = value_precede_chains(*input, this, false, b);
@@ -270,7 +248,6 @@ void LocalModel::post_register_symmetry_breaking_constraints(block b) {
   }
 }
 
-#endif
 
 void LocalModel::constrain_cost(IntRelType irt, int cost) {
   rel(*this, f(b, 0), irt, cost, ipl);

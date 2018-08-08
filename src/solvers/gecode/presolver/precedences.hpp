@@ -160,46 +160,4 @@ void test_redundancy(Parameters & input, GlobalModel * gm);
 
 void subsumed_resources(Parameters& input);
 
-#if 0
-
-void gen_predecessors_successors(Parameters& input);
-
-int makespan(Parameters& input, const vector<operation>& N);
-
-class MakeSpanModel : public Space {
-
-public:
-
-  Parameters * input;
-  ModelOptions * options;
-  IntPropLevel ipl;
-
-  // Decision variables
-
-  IntVarArray v_c;
-  IntVarArray v_i;
-  IntVar v_span;
-
-  // convenience
-
-  void constraint(const BoolExpr &e) {rel(*this, e, ipl);}
-
-  IntVar var(const LinIntExpr &e) {return expr(*this, e, ipl);}
-
-  // constructors
-
-  MakeSpanModel(Parameters * p_input, ModelOptions * p_options, IntPropLevel p_ipl);
-
-  MakeSpanModel(MakeSpanModel& cg);
-
-  MakeSpanModel* copy(void);
-
-  // constraints
-
-  void post(const vector<operation>& ops);
-
-};
-
-#endif
-
 #endif

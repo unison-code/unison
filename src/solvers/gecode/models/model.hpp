@@ -331,11 +331,6 @@ public:
   // Domain of resource consumption cost variable by the given operations
   IntArgs consumption_domain(resource r, vector<operation> & is) const;
 
-#if !MCMOD
-  // Classes of interchangeable register atoms
-  set<set<register_atom> > interchangeable_atoms(bool global, block b) const;
-#endif
-
   // Constructors
 
   Model(Parameters * p_input, ModelOptions * p_options, IntPropLevel p_ipl);

@@ -213,14 +213,8 @@ void CompleteModel::post_slack_balancing_constraints(void) {
 void CompleteModel::post_improved_model_constraints(void) {
   for (block b : input->B)
     Model::post_improved_model_constraints(b);
-#if MCSLACK
   post_slack_functional_constraints();
-#else
-  post_slack_lower_bound_constraints();
-#endif
 }
-
-#if MCSLACK
 
 void CompleteModel::post_slack_functional_constraints(void) {
 
@@ -266,61 +260,10 @@ void CompleteModel::post_slack_functional_constraints(void) {
   
 }
 
-#else
-
-void CompleteModel::post_slack_lower_bound_constraints(void) {
-
-  // The slack of (in) or (out) congruent operands is larger than the latencies
-  // of their dependent operands:
-
-  for (global_congruence g : input->G) {
-    congruence c = input->regular[g];
-    vector<operand> ins, outs;
-    for (operand p : input->congr[c]) {
-      if (input->global_operand[p]) {
-        if (input->type[input->oper[p]] == IN) {
-          ins.push_back(p);
-        } else { // type == OUT
-          outs.push_back(p);
-        }
-      }
-    }
-
-    if (ins.size() > 0) {
-      IntVarArgs lats;
-      for (operand p : ins) {
-        temporary t = input->single_temp[p];
-        for (operand q : input->users[t]) lats << lt(q);
-      }
-      for (operand p : ins) {
-        constraint(s(p) >= - max(lats));
-      }
-    }
-
-    if (outs.size() > 0) {
-      IntVarArgs lats;
-      for (operand p : outs) {
-        for (temporary t : input->real_temps[p]) {
-          operand q = input->definer[t];
-          lats << lt(q);
-        }
-      }
-      for (operand p : outs) {
-        constraint(s(p) >= - max(lats));
-      }
-    }
-
-  }
-
-}
-
-#endif
-
 void CompleteModel::post_presolver_constraints(void) {
   for (block b : input->B)
     Model::post_presolver_constraints(b);
   if (!options->disable_presolver_constraints()) {
-#if MCMOD
     // cross-block synchronisation of spill/unspill ops
     for (const vector<operation>& os : input->calleesaved_spill) {
       operation spillop = os[0];
@@ -346,7 +289,6 @@ void CompleteModel::post_presolver_constraints(void) {
       ts.finalize();
       extensional(*this, as, ts);
     }
-#endif
   }
 }
 

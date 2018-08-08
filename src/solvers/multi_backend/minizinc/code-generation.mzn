@@ -235,16 +235,6 @@ array[int,int] of int: cs_spill_transpose;
 array[int] of set of int: activator_insns;
 array[int] of set of int: activator_ops;
 
-%% see JSON predecessors
-array[int] of set of int: predecessors_preds;
-array[int] of int: predecessors_succ;
-array[int] of int: predecessors_lat;
-
-%% see JSON successors
-array[int] of set of int: successors_succs;
-array[int] of int: successors_pred;
-array[int] of int: successors_lat;
-
 %% see JSON value_precede_chain
 array[int] of int: value_precede_min;
 array[int] of int: value_precede_max;
@@ -1291,18 +1281,6 @@ constraint
          int: nt = sum(j in js)(temp_width[value_precede_temps[j]]),
          array[1..nt] of var int: chain = [r[v]+d | j in js, v in {value_precede_temps[j]}, d in 0..temp_width[v]-1]} in
 	value_precede_chain([v | v in value_precede_regs[x]], chain)
-  );
-
-%% predecessors -- DISABLED
-constraint
-  forall(x in index_set(predecessors_preds))(
-    min([c[o] | o in predecessors_preds[x]]) + predecessors_lat[x] <= c[predecessors_succ[x]]
-  );
-
-%% successors -- DISABLED
-constraint
-  forall(x in index_set(successors_succs))(
-     c[successors_pred[x]] + successors_lat[x] <= max([c[o] | o in successors_succs[x]])
   );
 
 %% IMPORTED FROM Model::

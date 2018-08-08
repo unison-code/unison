@@ -90,8 +90,6 @@ void presolve(Parameters & input, PresolverOptions & options) {
   vector<UnisonConstraintExpr> precedences2_ref = input.precedences2;
   vector<vector<operation>> calleesaved_spill_ref = input.calleesaved_spill;
   vector<PresolverValuePrecedeChain> value_precede_chains_ref = input.value_precede_chains;
-  vector<PresolverPred> predecessors_ref = input.predecessors;
-  vector<PresolverSucc> successors_ref = input.successors;
   vector<vector<operand> > quasi_adjacent_ref = input.quasi_adjacent;
   vector<vector<vector<int> > > long_latency_index_ref = input.long_latency_index;
   vector<vector<operand> > long_latency_def_use_ref = input.long_latency_def_use;
@@ -115,8 +113,6 @@ void presolve(Parameters & input, PresolverOptions & options) {
   input.precedences2.clear();
   input.calleesaved_spill.clear();
   input.value_precede_chains.clear();
-  input.predecessors.clear();
-  input.successors.clear();
   input.quasi_adjacent.clear();
   input.long_latency_index.clear();
   input.long_latency_def_use.clear();
@@ -508,8 +504,6 @@ void presolve(Parameters & input, PresolverOptions & options) {
     run_test("precedences2", precedences2_ref, input.precedences2);
     run_test("calleesaved_spill", calleesaved_spill_ref, input.calleesaved_spill);
     run_test("value_precede_chains", value_precede_chains_ref, input.value_precede_chains);
-    run_test("predecessors", predecessors_ref, input.predecessors);
-    run_test("successors", successors_ref, input.successors);
     run_test("quasi_adjacent", quasi_adjacent_ref, input.quasi_adjacent);
     run_test("long_latency_index", long_latency_index_ref, input.long_latency_index);
     run_test("long_latency_def_use", long_latency_def_use_ref, input.long_latency_def_use);

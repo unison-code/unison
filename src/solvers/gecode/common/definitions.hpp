@@ -264,26 +264,6 @@ public:
   }
 };
 
-class PresolverPred {
-public:
-  vector<operation> p;
-  operation q;
-  int d;
-  bool operator==(const PresolverPred& that) const {
-    return (p == that.p) && (q == that.q) && (d == that.d);
-  }
-};
-
-class PresolverSucc {
-public:
-  operation p;
-  vector<operation> q;
-  int d;
-  bool operator==(const PresolverSucc& that) const {
-    return (p == that.p) && (q == that.q) && (d == that.d);
-  }
-};
-
 class PresolverInstrCond {
 public:
   operation o;

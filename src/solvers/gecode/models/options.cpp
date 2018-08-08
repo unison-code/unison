@@ -41,6 +41,7 @@ ModelOptions::ModelOptions(void)
   : InstanceOptions("Unison"),
 
     _output_file("o", "output file", ""),
+    _dzn_file("dzn", "dzn file (ignored)", ""),
     _verbose("verbose", "verbose mode", true),
     _emit_improvement("emit-improvement", "emit estimated improvement", false),
     _lower_bound_file("l", "lower bound file", ""),
@@ -116,6 +117,7 @@ ModelOptions::ModelOptions(void)
 
 {
   add(_output_file);
+  add(_dzn_file);
   add(_verbose);
   add(_emit_improvement);
   add(_lower_bound_file);

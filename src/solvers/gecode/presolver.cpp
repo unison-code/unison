@@ -165,8 +165,6 @@ string produce_json(Parameters &input, int presolver_time)
        << emit_json_line("diffregs", input.diffregs)
        << emit_json_line("calleesaved_spill", input.calleesaved_spill)
        << emit_json_line("strictly_congr", input.strictly_congr)
-       << emit_json_line("predecessors", input.predecessors)
-       << emit_json_line("successors", input.successors)
        << emit_json_line("value_precede_chains", input.value_precede_chains)
        << emit_json_line("quasi_adjacent", input.quasi_adjacent)
        << emit_json_line("long_latency_index", input.long_latency_index)
@@ -625,7 +623,6 @@ string produce_dzn(Parameters &input) {
   vector<FDSet> exrelated_rows;
   vector<FDSet> op_instructions, op_operands;
   vector<FDSet> operand_temps;
-  vector<FDSet> predecessors_preds, successors_succs;
   vector<FDSet> range;
   vector<FDSet> related_temps;
   vector<FDSet> relation_ops, relation_range, relation_temps;
@@ -651,7 +648,6 @@ string produce_dzn(Parameters &input) {
   vector<int> maxatom;
   vector<int> nogood, precedence, adhoc;
   vector<int> operand_definer;
-  vector<int> predecessors_succ, predecessors_lat, successors_pred, successors_lat;
   vector<int> preschedule_op, preschedule_cycle;
   vector<int> relation_ntuples;
   vector<int> setacross_op;
@@ -875,16 +871,6 @@ string produce_dzn(Parameters &input) {
     activator_insns.push_back(FDSet(kv.first));
     activator_ops.push_back(FDSet(kv.second));
   }
-  for (PresolverPred& is : input.predecessors) {
-    predecessors_preds.push_back(FDSet(is.p));
-    predecessors_succ.push_back(is.q);
-    predecessors_lat.push_back(is.d);
-  }
-  for (PresolverSucc& is : input.successors) {
-    successors_pred.push_back(is.p);
-    successors_succs.push_back(FDSet(is.q));
-    successors_lat.push_back(is.d);
-  }
   for (PresolverValuePrecedeChain& item : input.value_precede_chains) {
     unsigned int sofar = value_precede_temps.size();
     value_precede_temps.insert(value_precede_temps.end(), item.ts.begin(), item.ts.end());
@@ -1026,12 +1012,6 @@ string produce_dzn(Parameters &input) {
        << emit_dzn_line("cs_spill_transpose", cs_spill_t)
        << emit_dzn_line("activator_insns", activator_insns)
        << emit_dzn_line("activator_ops", activator_ops)
-       << emit_dzn_line("predecessors_preds", predecessors_preds)
-       << emit_dzn_line("predecessors_succ", predecessors_succ)
-       << emit_dzn_line("predecessors_lat", predecessors_lat)
-       << emit_dzn_line("successors_pred", successors_pred)
-       << emit_dzn_line("successors_succs", successors_succs)
-       << emit_dzn_line("successors_lat", successors_lat)
        << emit_dzn_line("value_precede_min", value_precede_min)
        << emit_dzn_line("value_precede_max", value_precede_max)
        << emit_dzn_line("value_precede_regs", value_precede_regs)

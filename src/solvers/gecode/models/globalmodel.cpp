@@ -233,18 +233,6 @@ GlobalModel::GlobalModel(Parameters * p_input, ModelOptions * p_options,
   // Cost of each block
   CompleteModel::post_cost_definition();
 
-#if !MCMOD
-  // the fear: is this really compatible with local register symmetry breaking?
-  // Symmetry breaking (depends on the result of propagating all other
-  // constraints)
-  if (!options->disable_improving()) {
-    Gecode::SpaceStatus ss = status();
-    if (ss != SS_FAILED &&
-        !options->disable_register_symmetry_breaking_constraints()) {
-      post_register_symmetry_breaking_constraints();
-    }
-  }
-#endif
 }
 
 GlobalModel::GlobalModel(GlobalModel& cg) :
@@ -437,46 +425,6 @@ void GlobalModel::post_global_cost_domain_constraints() {
 
 }
 
-#if !MCMOD
-
-void GlobalModel::post_register_symmetry_breaking_constraints() {
-
-  vector<global_congruence> Gs(input->G);
-
-  // Gs is a list of global congruences sorted in {descending order by
-  // width, ascending order by id}. The latter is important for
-  // callee-saved congruences.
-
-  sort(Gs.begin(), Gs.end(),
-       [this]
-       (const global_congruence g1,
-        const global_congruence g2) -> bool
-       {
-         operand p1 = input->representative[input->regular[g1]],
-                 p2 = input->representative[input->regular[g2]];
-         return make_tuple(-input->operand_width[p1], p1) <
-                make_tuple(-input->operand_width[p2], p2);
-       });
-
-  IntVarArgs grys;
-  for (global_congruence g : Gs) {
-    operand p = input->representative[input->regular[g]];
-    for (int w = 0; w < input->operand_width[p]; w++) {
-      IntVar rypw(*this, ry(p).min() + w, ry(p).max() + w);
-      constraint(rypw == ry(p) + w);
-      assert_bounded(rypw);
-      grys << rypw;
-    }
-  }
-
-  for (set<register_atom> interchangeable : interchangeable_atoms(true, -1)) {
-    IntArgs ras(interchangeable.begin(), interchangeable.end());
-    precede(*this, grys, ras);
-  }
-
-}
-
-#else
 
 void GlobalModel::post_register_symmetry_breaking_constraints(void) {
   vector<PresolverValuePrecedeChain> chains = value_precede_chains(*input, this, true, -1);
@@ -491,8 +439,6 @@ void GlobalModel::post_register_symmetry_breaking_constraints(void) {
     }
   }
 }
-
-#endif
 
 
 void GlobalModel::post_active_operation(operation o) {
