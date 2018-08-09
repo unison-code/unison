@@ -151,8 +151,9 @@ LocalModel::LocalModel(Parameters * p_input, ModelOptions * p_options,
       post_operand_symmetry_breaking_constraints(b);
     ss = status();
     if (ss == SS_FAILED) return;
-    if (!options->disable_register_symmetry_breaking_constraints())
-      post_register_symmetry_breaking_constraints(b);
+    // cannot be trusted
+    // if (!options->disable_register_symmetry_breaking_constraints())
+    //   post_register_symmetry_breaking_constraints(b);
   }
 
 }

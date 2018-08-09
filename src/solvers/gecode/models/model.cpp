@@ -2128,7 +2128,7 @@ void Model::post_wcet_constraints(block b) {
     if(allOne) {
       worst << var(1);
     } else if(allOneButFirst && !mand) {
-      IntVar ia;
+      IntVar ia(*this, 0, 1);
       Gecode::channel(*this, ia, a(o), IPL_DOM);
       worst << ia;
     } else {
