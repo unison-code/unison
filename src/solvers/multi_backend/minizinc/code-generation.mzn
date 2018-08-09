@@ -1413,11 +1413,9 @@ var 0..MAXC: o_wcet(0..MAXO: o) =
        then a[o]
      else if not op_mand[o] /\ forall(jj in 2..nwcs)(wcs[jj] = 1)
        then a[o]
-     else if op_mand[o]
-       then wcs[ii[o]]
      else
-       a[o] * wcs[ii[o]]
-     endif endif endif;
+       wcs[ii[o]]
+     endif endif;
 
 %% output
 

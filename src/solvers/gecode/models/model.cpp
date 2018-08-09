@@ -2135,7 +2135,7 @@ void Model::post_wcet_constraints(block b) {
       worst << var(element(kv.second, i(o)));
     }
   }
-  constraint(c(input->out[b]) < sum(worst));
+  constraint(c(input->out[b]) <= sum(worst));
     
 }
 

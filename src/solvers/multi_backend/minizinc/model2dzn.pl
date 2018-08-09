@@ -407,28 +407,6 @@ model2dzn(AVL0) :-
 	write_array(activator_insns, array(1.._,set(int)), ActInsns1),
 	write_array(activator_ops, array(1.._,set(int)), ActOps1),
 	%
-	avl_fetch(predecessors, AVL, Predecessors),
-	(   foreach([PPred,PSucc,PLat],Predecessors),
-	    foreach(PPredSet,PPredSets),
-	    foreach(PSucc,PSuccs),
-	    foreach(PLat,PLats)
-	do  encode(list(int), set(int), PPred, PPredSet)
-	),
-	write_array(predecessors_preds, array(1.._,set(int)), PPredSets),
-	write_array(predecessors_succ, array(1.._,int), PSuccs),
-	write_array(predecessors_lat, array(1.._,int), PLats),
-	%
-	avl_fetch(successors, AVL, Successors),
-	(   foreach([PPred2,PSucc2,PLat2],Successors),
-	    foreach(PSuccSet2,PSuccSets2),
-	    foreach(PPred2,PPreds2),
-	    foreach(PLat2,PLats2)
-	do  encode(list(int), set(int), PSucc2, PSuccSet2)
-	),
-	write_array(successors_succs, array(1.._,set(int)), PSuccSets2),
-	write_array(successors_pred, array(1.._,int), PPreds2),
-	write_array(successors_lat, array(1.._,int), PLats2),
-	%
 	avl_fetch(value_precede_chains, AVL, VPChain),
 	(   foreach([VPTs,VPRss],VPChain),
 	    foreach(VPTs,VPTss),

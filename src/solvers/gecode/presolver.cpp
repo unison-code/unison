@@ -741,12 +741,12 @@ string produce_dzn(Parameters &input) {
   for (UnisonConstraintExpr& e : input.nogoods)
     nogood.push_back(dznEncode(e, quadMap, quadList));
   for (PresolverAcrossJSON& a : input.across) {
-    unsigned int ii = 1;
     across_op.push_back(a.o);
     across_regs.push_back(FDSet(a.ras));
     vector<int> items;
     for (PresolverAcrossItemJSON& aitem : a.as) {
-      items.push_back(ii++);
+      int sofar = across_item_temp.size();
+      items.push_back(sofar+1);
       across_item_temp.push_back(aitem.t);
       across_item_cond.push_back(dznEncode(aitem.e, quadMap, quadList));
     }

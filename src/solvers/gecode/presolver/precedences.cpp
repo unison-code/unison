@@ -1214,42 +1214,46 @@ void computeWCET(Parameters &input) {
       for (unsigned int ii = 0; ii < input.instructions[o].size(); ii++) {
 	instruction i = input.instructions[o][ii];
 	vector<int> opdurs;
-	int maxdeflat = 0;
-	int maxduroff = 0;
+	if (i == NULL_INSTRUCTION) {
+	  opdurs.push_back(0);
+	} else {
+	  int maxdeflat = 0;
+	  int maxduroff = 0;
 
-	for (resource r : input.R)
-	  if (input.con[i][r]) {
-	    int duroff = input.dur[i][r] + input.off[i][r];
-	    if (maxduroff < duroff)
-	      maxduroff = duroff;
-	  }
-	opdurs.push_back(maxduroff);
-
-	for (unsigned pi = 0; pi < input.operands[o].size(); pi++) {
-	  operand p = input.operands[o][pi];
-	  if (!input.use[p]) {
-	    int l1 = input.lat[o][ii][pi];
-	    for (operand q : input.users[input.single_temp[p]]) {
-	      operation o2 = input.oper[q];
-	      for (unsigned qi = 0; qi < input.operands[o2].size(); qi++) {
-		if (input.operands[o2][qi]==q)
-		  for (unsigned int jj = 0; jj < input.instructions[o2].size(); jj++) {
-		    int l2 = input.lat[o2][jj][qi];
-		    if (maxdeflat < l1+l2)
-		      maxdeflat = l1+l2;
-		  }
-	      }
+	  for (resource r : input.R)
+	    if (input.con[i][r]) {
+	      int duroff = input.dur[i][r] + input.off[i][r];
+	      if (maxduroff < duroff)
+		maxduroff = duroff;
 	    }
-	  }	    
-	}
-	opdurs.push_back(maxdeflat);
+	  opdurs.push_back(maxduroff);
 
-	int maxdist = 0;
-	for (unsigned int e = 0; e < input.dep[b].size(); e++)
-	  if ((o == input.dep[b][e][0]) && (input.dist[b][e][ii] > maxdist))
-	    maxdist = input.dist[b][e][ii];
-	opdurs.push_back(maxdist);
-	opdurs.push_back(maxminlive);
+	  for (unsigned pi = 0; pi < input.operands[o].size(); pi++) {
+	    operand p = input.operands[o][pi];
+	    if (!input.use[p]) {
+	      int l1 = input.lat[o][ii][pi];
+	      for (operand q : input.users[input.single_temp[p]]) {
+		operation o2 = input.oper[q];
+		for (unsigned qi = 0; qi < input.operands[o2].size(); qi++) {
+		  if (input.operands[o2][qi]==q)
+		    for (unsigned int jj = 0; jj < input.instructions[o2].size(); jj++) {
+		      int l2 = input.lat[o2][jj][qi];
+		      if (maxdeflat < l1+l2)
+			maxdeflat = l1+l2;
+		    }
+		}
+	      }
+	    }	    
+	  }
+	  opdurs.push_back(maxdeflat);
+
+	  int maxdist = 0;
+	  for (unsigned int e = 0; e < input.dep[b].size(); e++)
+	    if ((o == input.dep[b][e][0]) && (input.dist[b][e][ii] > maxdist))
+	      maxdist = input.dist[b][e][ii];
+	  opdurs.push_back(maxdist);
+	  opdurs.push_back(maxminlive);
+	}
 	input.wcet.push_back(PresolverWCET(o, i, max_of(opdurs)));
       }
     }
