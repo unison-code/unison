@@ -67,7 +67,8 @@ bool compression_3(const vector<vector<int>>& S);
 
 // Return sorted keys according to the cardinality of their value. If same
 // cardinality sort according to key
-vector<vector<temporary>> sort_increasing_T(const map<vector<temporary>,vector<temporary>>& M);
+void sort_increasing_T(map<vector<temporary>,vector<temporary>>& M,
+                       vector<vector<temporary>>& ret_keys);
 
 /*****************************************************************************
     Code related to:
@@ -95,8 +96,8 @@ void gen_active_tables(Parameters & input, Support::Timer & t,
 
 void assert_active_tables(Parameters & input,
 			  RelaxedModel * base,
-			  const map<vector<temporary>,vector<temporary>>& M,
-			  const vector<vector<int>>& keys,
+			  map<vector<temporary>,vector<temporary>>& M,
+			  vector<vector<temporary>>& ret_keys,
 			  int timeout);
 
 void decompose_copy_set(Parameters & input,
@@ -106,7 +107,8 @@ void decompose_copy_set(Parameters & input,
 
 void assert_tmp_tables(Parameters & input,
 		       RelaxedModel * base,
-		       const map<vector<temporary>,vector<temporary>>& M,
+		       map<vector<temporary>,vector<temporary>>& M,
+		       vector<vector<temporary>>& ret_keys,
 		       int timeout);
 
 void tidy(Parameters & input);

@@ -69,11 +69,9 @@ bool compression_1(const vector<vector<int>>& S) {
 	return false;
     }
     return true;
-  }
-
-  // if the rows in S only has one column, return true if
-  // there are one row with 1 and one with 0
-  else if(S[0].size() == 1){
+  } else if(S[0].size() == 1) {
+    // if the rows in S only has one column, return true if
+    // there are one row with 1 and one with 0
     bool ex = false;
     for(const vector<int>& s1 : S) {
       ex = false;
@@ -128,13 +126,10 @@ bool compression_3(const vector<vector<int>>& S) {
   return b;
 }
 
-vector<vector<temporary>> sort_increasing_T(const map<vector<temporary>,vector<temporary>>& M) {
-  vector<vector<temporary>> ret_keys;
-
-  // Store all keys in new vector
-  for(auto it = M.begin(); it != M.end(); it++) {
-    ret_keys.push_back(it->first);
-  }
+void sort_increasing_T(map<vector<temporary>,vector<temporary>>& M,
+                       vector<vector<temporary>>& ret_keys) {
+  for (auto& kv : M)
+    ret_keys.push_back(kv.first);
 
   sort(ret_keys.begin(), ret_keys.end(),
        [M](vector<temporary> a, vector<temporary> b) {
@@ -146,7 +141,6 @@ vector<vector<temporary>> sort_increasing_T(const map<vector<temporary>,vector<t
 	 }
 	 return a_size < b_size;
       });
-  return ret_keys;
 }
 
 /*****************************************************************************
@@ -176,7 +170,7 @@ void temp_domination(Parameters & input) {
       	for(auto it = M.begin(); it != M.end(); it++) {
 	  tuple<vector<temporary>, vector<instruction>> k = it->first;
 	  vector<temporary> T2 = get<0>(k);
-	  vector<temporary> T1 = M.at(k);
+	  vector<temporary> T1 = M[k];
 
 	  if(*(T2.begin()) == *(T.begin()) && subseteq(T1, T) && T1.size() >= 2)
 	    vector_insert(N[T1], p);
@@ -235,16 +229,13 @@ void gen_dominates(Parameters & input) {
     - JSON.optional_min
     - JSON.tmp_tables
 *****************************************************************************/
-void gen_active_tables(Parameters & input, Support::Timer & t,
+void gen_active_tables(Parameters & input, Support::Timer & timer,
                        PresolverOptions & options) {
 
-  // Post constraints
   ModelOptions moptions;
   RelaxedModel * base = new RelaxedModel(&input, &moptions, IPL_DOM);
   Gecode::SpaceStatus ss = base->status();
   assert(ss != SS_FAILED);
-  vector<vector<int>> keys;
-  vector<vector<int>> keys2;
   map<vector<temporary>, vector<temporary>> M;
 
   for(const vector<operand>& copyrel1 : input.copyrel) {
@@ -256,13 +247,16 @@ void gen_active_tables(Parameters & input, Support::Timer & t,
       }
     }
     if (copies.size() >= 2) {
-      temporary th = copies[0];
-      vector<temporary> tmin = {th};
-      vector_insert(keys, tmin);
-      for(temporary tt : copies)
-	if (tt != th)
-	  vector_insert(M[tmin], tt);
+      temporary t1 = copies[0];
+      block b1 = input.oblock[input.def_opr[t1]];
+      vector<temporary> tkey = {t1};
+      vector<temporary> T1(next(copies.begin()), copies.end());
+	for (temporary t : T1)
+	  if (input.oblock[input.def_opr[t]] != b1)
+	    goto next1;
+      M[tkey] = T1;
     }
+  next1: ;
   }
   for(const UnisonConstraintExpr& n : input.nogoods) {
     if(n.id == AND_EXPR && n.children[0].id == CONNECTS_EXPR && n.children[1].id == CONNECTS_EXPR) {
@@ -272,61 +266,67 @@ void gen_active_tables(Parameters & input, Support::Timer & t,
 
       temporary t1 = first_temp_but_null(input, p1);
       temporary t2 = first_temp_but_null(input, p2);
+      block b1 = input.oblock[input.def_opr[t1]];
+      block b2 = input.oblock[input.def_opr[t1]];
 
-      if(t1 != t2) {
-      	vector<temporary> T1(next(input.temps[p1].begin()), input.temps[p1].end());
-      	vector<temporary> T2(next(input.temps[p2].begin()), input.temps[p2].end());
-
-      	for (temporary t3 : ord_union(T1, T2)) {
-  	  vector<temporary> t1t2 = {t1, t2};
-  	  vector_insert(M[t1t2], t3);
-	  vector_insert(keys2, t1t2);
-      	}
+      if(t1 != t2 && b1==b2) {
+	int opt1 = (input.temps[p1][0] == NULL_TEMPORARY);
+	int opt2 = (input.temps[p2][0] == NULL_TEMPORARY);
+      	vector<temporary> T1(next(input.temps[p1].begin(), opt1+1), input.temps[p1].end());
+      	vector<temporary> T2(next(input.temps[p2].begin(), opt2+1), input.temps[p2].end());
+	vector<temporary> tkey = {t1, t2};
+	vector<temporary> T12 = ord_union(T1, T2);
+	for (temporary t : T12)
+	  if (input.oblock[input.def_opr[t]] != b1)
+	    goto next12;
+	M[tkey] = T12;
       }
+    next12: ;
     }
   }
 
-  keys.insert(keys.end(), keys2.begin(), keys2.end());
+  vector<vector<temporary>> ret_keys;
+  sort_increasing_T(M, ret_keys);
 
   // Time quantum for assert_active_tables: 50% of time left
-  int tqa = (options.timeout() - t.stop()) / 2;
-  assert_active_tables(input, base, M, keys, tqa);
+  int tqa = (options.timeout() - timer.stop()) / 2;
+  assert_active_tables(input, base, M, ret_keys, tqa);
 
   // Time quantum for assert_tmp_tables: 95% of time left
-  int tqt = 19*(options.timeout() - t.stop()) / 20;
-  assert_tmp_tables(input, base, M, tqt);
+  int tqt = 19*(options.timeout() - timer.stop()) / 20;
+  assert_tmp_tables(input, base, M, ret_keys, tqt);
 
   delete base;
 }
 
 void assert_active_tables(Parameters & input,
 			  RelaxedModel * base,
-			  const map<vector<temporary>,vector<temporary>>& M,
-			  const vector<vector<int>>& keys,
+			  map<vector<temporary>,vector<temporary>>& M,
+			  vector<vector<temporary>>& ret_keys,
 			  int timeout) {
 
   vector<PresolverActiveTable> active_tables;
 
-  Support::Timer t;
-  for(const vector<int>& k : keys) {
+  Support::Timer timer;
+  for(const vector<temporary>& key : ret_keys) {
     vector<operation> O;
+    vector<operand> P;
 
     if(timeout <= 0)
       break;
 
-    for(temporary t : M.at(k))
-      O.push_back(input.def_opr[t]);
-
-    vector<operand> P;
-    for(operation o : O)
+    for(temporary t : M[key]) {
+      operation o = input.def_opr[t];
+      O.push_back(o);
       for(operand p : input.operands[o])
 	P.push_back(p);
+    }
 
-    t.start();
+    timer.start();
 
     // Solve problem
     ActiveTableResult result = get_labelings(base, O, P, timeout);
-    timeout -= (int) t.stop();
+    timeout -= (int) timer.stop();
 
     // Store result of no timeout
     if(result.timeout_status == RELAXED_NO_TIMEOUT) {
@@ -338,10 +338,9 @@ void assert_active_tables(Parameters & input,
       } else {
         decompose_copy_set(input, O, result.labelings, active_tables);
       }
-    }
-
-    else if(result.timeout_status == RELAXED_TIMEOUT)
+    } else if(result.timeout_status == RELAXED_TIMEOUT) {
       break;
+    }
   }
   input.active_tables = active_tables;
 }
@@ -368,10 +367,9 @@ void decompose_copy_set(Parameters & input,
       }
       decompose_copy_set(input, O1, S1, active_tables);
     }
-
+    else if((ind = compression_2(S, O)) >= 0) {
     // i:th variable stuck-at 1
     // compression 2
-    else if((ind = compression_2(S, O)) >= 0) {
       PresolverActiveTable tmp{{O[ind]}, {{1}}};
       active_tables.push_back(tmp);
       vector<int> O1;
@@ -390,12 +388,9 @@ void decompose_copy_set(Parameters & input,
 	S1.push_back(temp_s);
       }
       decompose_copy_set(input, O1, S1, active_tables);
-    }
-
+    } else if(O.size() >= 3 && compression_3(S)) {
     // The last variable implies the other variables
     // compression 3
-    else if(O.size() >= 3 && compression_3(S)) {
-
       for(uint o = 0; o < O.size()-1; o++){
 	PresolverActiveTable tmp{{O[o], O[O.size()-1]},
 	                        {{0,0}, {1,0}, {1,1}}};
@@ -412,9 +407,7 @@ void decompose_copy_set(Parameters & input,
       }
 
       decompose_copy_set(input, O1, S1, active_tables);
-    }
-
-    else if(O.size() >= 1) {
+    } else if(O.size() >= 1) {
       PresolverActiveTable tmp{O, S};
       active_tables.push_back(tmp);
     }
@@ -423,7 +416,8 @@ void decompose_copy_set(Parameters & input,
 
 void assert_tmp_tables(Parameters & input,
 		       RelaxedModel * base,
-		       const map<vector<temporary>,vector<temporary>>& M,
+		       map<vector<temporary>,vector<temporary>>& M,
+		       vector<vector<temporary>>& ret_keys,
 		       int timeout) {
 
   map<temporary, vector<operand>> P2U;
@@ -438,25 +432,24 @@ void assert_tmp_tables(Parameters & input,
     }
   }
 
-  Support::Timer t;
-  for(const vector<temporary>& key : sort_increasing_T(M)) {
+  Support::Timer timer;
+  for(const vector<temporary>& key : ret_keys) {
     if(key.size() == 1) {
       if(timeout <= 0)
 	break;
 
       temporary k = key[0];
       vector<operation> O;
+      vector<operand> P = P2U[k];
 
-      for(temporary t : M.at(key))
+      for(temporary t : M[key])
 	O.push_back(input.def_opr[t]);
 
-      vector<operand> P = P2U.at(k);
-
-      t.start();
+      timer.start();
 
       // Solve problem
       TmpTableResult result = get_labelings(input, base, O, P, timeout);
-      timeout -= (int) t.stop();
+      timeout -= (int) timer.stop();
 
       if(result.timeout_status == RELAXED_NO_TIMEOUT) {
         // if no labeling is produced, fail and return
@@ -469,10 +462,9 @@ void assert_tmp_tables(Parameters & input,
             tmp_table{O, P, trim_tmp_tables(result.labelings, k)};
           tmp_tables.push_back(tmp_table);
         }
-      }
-
-      else if(result.timeout_status == RELAXED_TIMEOUT)
+      } else if(result.timeout_status == RELAXED_TIMEOUT) {
 	break;
+      }
     }
   }
   input.tmp_tables = tmp_tables;
