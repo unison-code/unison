@@ -59,8 +59,12 @@ run args @
             Just file -> Just file
             Nothing -> if outTemp then Just (addExtension "unison.mir" prefix)
                        else Nothing
-         unisonMirOutput = combineDocs mirVersion
-                           (concatMap (splitDocs mirVersion) unisonMirOutputs)
+         unisonMirOutput =
+           case mirInputs of
+             -- empty module: return IR (should be the same as asmMirInput)
+             [] -> mirInput
+             _  -> combineDocs mirVersion
+                   (concatMap (splitDocs mirVersion) unisonMirOutputs)
      emitOutput unisonMirFile unisonMirOutput
      when cleanTemp $ removeFileIfExists prefix
      return prefixes
