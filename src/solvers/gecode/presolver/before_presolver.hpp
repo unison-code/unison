@@ -76,15 +76,6 @@ private:
   // depending on them via a low or high operation
   void before1(operand p, operand q, beforeset& b);
 
-#if 0
-  // Generate set of conditional operands, that functionally
-  // depending on p via a low or high operation
-  vector<pair<operand, presolver_conj> >
-  lh_descendants(const operand p,
-		 const presolver_conj& C,
-		 const vector<vector<operand> >& LH);
-#endif
-
   // Generate unconditional befores for operands preassigned to
   // overlapping registers
   vector<vector<operand> > emit_before(const vector<vector<int> >& C);

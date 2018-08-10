@@ -925,23 +925,6 @@ void InfeasiblePresolver::emit_nogood(const vector<vector<operand> >* R,
 	       (even_operand[minPs1] && odd_operand[minPs2])) {
 	      Nogoods.push_back(Conj);
 	    }
-#if 0
-// [MC] June 11, 2018
-// This idea is probably not worth it, because operands like p3, p4 below
-// can have zero live ranges, and so the implied constraints would have to
-// carefully check that in OPERAND_OVERLAP_EXPR.
-	    else if(!exist_before(*R, Ps1, Ps2)) {
-	      operand p3 = min(minPs1, minPs2);
-	      operand p4 = max(minPs1, minPs2);
-
-	      UnisonConstraintExpr l(OPERAND_OVERLAP_EXPR, {p3,p4}, {});
-	      presolver_conj C(Conj);
-
-	      // Conj union l
-	      vector_insert(C,l);
-	      Nogoods.push_back(C);
-	    }
-#endif
 	  }
 	}
       }

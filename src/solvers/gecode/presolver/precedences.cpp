@@ -427,33 +427,6 @@ void partition_nodes(Digraph& G,
   }
 }
 
-#if 0
-// naive depth-first search
-static int longest_path(Digraph& G,
-			map<unsigned long,int>& pweight,
-			map<unsigned long,int>& pweight_c,
-			operation src,
-			operation sink,
-			int len) {
-  if (src > sink) {
-    return 0;
-  } else if (src == sink) {
-    return len;
-  } else {
-    int lp = len;
-    vector<operation> ns = G.neighbors(src);
-    for (operation n : ns) {
-      unsigned long key = FastPair(src,n);
-      int weight = (pweight.find(key) != pweight.end() ? pweight[key] : 0);
-      int weight_c = (pweight_c.find(key) != pweight_c.end() ? pweight_c[key] : 0);
-      int nl = longest_path(G, pweight, pweight_c, n, sink, len+max(weight,weight_c));
-      lp = max(nl,lp);
-    }
-    return lp;
-  }
-}
-#endif
-
 static bool has_edge_inside(map<unsigned long,int>& pweight_c,
 			    operation lb,
 			    operation ub) {
@@ -485,28 +458,6 @@ void gen_region_per_partition(const Parameters& input,
       }
     }
   }
-
-#if 0
-  if (!ass.empty()) {
-    operand p = ass[0];
-    temporary t = ass[1];
-    operation src = focus[0];
-    operation sink = focus[1];
-    int lat = focus[2];
-    int lp = longest_path(G, pweight, pweight_c, src, sink, 0);
-
-    // vector<operation> region = ord_union(G.reachables(src), {src});
-    // map<operation,int> src_cps = dag_longest_paths_fwd(region, pweight);
-    // by construction, sink is reachable from src
-    if(lp<lat) {
-      UnisonConstraintExpr e(CONNECTS_EXPR, {p,t}, {});
-      presolver_conj Conj({e});
-      PresolverPrecedence pred(src, sink, lat, presolver_disj({Conj}));
-      PO.push_back(pred);
-      // pweight[FastPair(src,sink)] = lat; // only holds under assumption p...=t...
-    }
-  }
-#endif
   
   for(const pair<operation,vector<pair<operation,operation>>>& b_edges : M) {
     Digraph G = Digraph(b_edges.second);

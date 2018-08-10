@@ -35,28 +35,6 @@
 
 #include "presolverprocedures.hpp"
 
-#if 0
-// Return if e is member in V.
-bool member(const std::vector<int>& V, int e);
-
-template<typename T> bool member(const std::vector<T>& V, const T& e){
-  for(T v : V) {
-    if(v == e) return true;
-  }
-  return false;
-}
-
-// Inserts e into v, if not already in v.
-// v is a set stored in a vector
-template<typename T>
-void vector_insert(std::vector<T>& v, const T& e){
-  typename std::vector<T>::iterator it = std::lower_bound(v.begin(), v.end(), e);
-  if(it == v.end() || e < *it){
-    v.insert(it, e);
-  }
-}
-#endif
-
 TmpTableResult get_labelings(Parameters& input, RelaxedModel * base,
 			     vector<operation> O, vector<operand> P,
 			     int timeout) {
@@ -70,8 +48,8 @@ TmpTableResult get_labelings(Parameters& input, RelaxedModel * base,
   opt.stop = relaxedStop;
 
   RelaxedModel * r_base = (RelaxedModel *) base->clone();
-  r_base->post_active_operation_branching(O);
   r_base->post_operand_temporary_branching(P);
+  r_base->post_active_operation_branching(O);
 
   DFS<RelaxedModel> e(r_base, opt);
 
