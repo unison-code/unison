@@ -258,19 +258,19 @@ void RelaxedModel::post_active_operation_branching(vector<operation> O) {
   BoolVarArgs as;
   for(operation o : O)
     as << a(o);
-  branch(*this, as, BOOL_VAR_NONE(), BOOL_VAL_MIN());
+  branch(*this, as, BOOL_VAR_AFC_MAX(), BOOL_VAL_MIN());
 }
 
 void RelaxedModel::post_operand_temporary_branching(vector<operand> P) {
   IntVarArgs ts;
   for(operand p : P)
     ts << y(p);
-  branch(*this, ts, INT_VAR_AFC_MIN(),INT_VALUES_MIN());
+  branch(*this, ts, INT_VAR_AFC_MAX(),INT_VALUES_MIN());
 }
 
 void RelaxedModel::post_instruction_operation_branching(vector<operation> O) {
   IntVarArgs is;
   for(operation o : O)
     is << i(o);
-  branch(*this, is, INT_VAR_AFC_MIN(), INT_VALUES_MIN());
+  branch(*this, is, INT_VAR_AFC_MAX(), INT_VALUES_MIN());
 }
