@@ -106,11 +106,12 @@ runChuffed flags to memLimit extJson lowerBoundFile outJsonFile =
          "--setuponly"] ++
         (if null lowerBoundFile then [] else ["-l", lowerBoundFile]) ++
         (splitFlags flags) ++
+        ["-dzn", prefix extJson ++ ".dzn"] ++
         [extJson])
      -- now call the underlying 'minizinc' process that is killable (unlike
      -- what is executed from 'minizinc-solver')
      let mznChuffed = if memLimit then "mzn-crippled-chuffed" else "mzn-chuffed"
-         pre = (take (length extJson - 9) extJson)
+         pre = prefix extJson
          mzn = pre ++ ".mzn"
          dzn = pre ++ ".dzn"
          out = pre ++ ".out"
@@ -137,6 +138,8 @@ runChuffed flags to memLimit extJson lowerBoundFile outJsonFile =
      hClose inf
      hClose outf
      return outJsonFile
+
+prefix extJson = take (length extJson - 9) extJson
 
 fznFlag opt = ["--fzn-flag", opt]
 
