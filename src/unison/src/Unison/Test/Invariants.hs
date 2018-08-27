@@ -205,13 +205,16 @@ consistentOperand _
 consistentOperand _ (Bound MachineNullReg, TemporaryInfo {}) = Nothing
 consistentOperand _ (Bound (MachineFrameIndex {}), TemporaryInfo {}) = Nothing
 consistentOperand (rc2u, t2w) (o, TemporaryInfo {oiRegClass = rc}) =
-  let t     = firstTemp o
-      width = t2w M.! t
-  in if (t2w M.! t) /= (rc2u M.! rc) then
-       Just ("the inferred width of temporary " ++ show t ++ " (" ++ show width ++
-             ") is inconsistent with corresponding register class (" ++ show rc ++
-             ") given in the target description")
-       else Nothing
+    if null (extractTemps o) then
+       Just ("operand " ++ show o ++ " has no temporaries")
+    else
+      let t     = firstTemp o
+          width = t2w M.! t
+      in if (t2w M.! t) /= (rc2u M.! rc) then
+           Just ("the inferred width of temporary " ++ show t ++ " (" ++ show width ++
+                 ") is inconsistent with corresponding register class (" ++ show rc ++
+                 ") given in the target description")
+           else Nothing
 consistentOperand _ (Bound _, BoundInfo)       = Nothing
 consistentOperand _ (BlockRef _, BlockRefInfo) = Nothing
 consistentOperand _ (o, oi) =
