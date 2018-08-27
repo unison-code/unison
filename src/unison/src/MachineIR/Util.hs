@@ -54,7 +54,9 @@ flattenMachineBlock MachineBlock {mbId = id, mbInstructions = is} =
 
 newMachineBlockId mf = maxZ (map mbId (mfBlocks mf)) + 1
 
-newMachineTempId mf = maxZ [maxTempId mi | mi <- flattenMachineFunction mf] + 1
+newMachineTempId mf =
+  maxZ ((M.keys $ registerClassMap mf) ++
+        [maxTempId mi | mi <- flattenMachineFunction mf]) + 1
 maxTempId mi @ MachineSingle {} =
   maxZ [id | MachineTemp {mtId = id} <- msOperands mi]
 maxTempId MachineBundle {mbInstrs = mis} = maxZ (map maxTempId mis)
