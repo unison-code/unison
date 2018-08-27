@@ -1219,7 +1219,11 @@ fromMachineInstruction itf oif
                   COMBINE          -> mkCombine id (us' !! 0) (us' !! 1) (head ds')
                   FUN              -> mkFun id us' ds'
                   ADJCALLSTACKDOWN -> mkFrameSetup id (head us')
+                  ADJCALLSTACKDOWN32 -> mkFrameSetup id (head us')
+                  ADJCALLSTACKDOWN64 -> mkFrameSetup id (head us')
                   ADJCALLSTACKUP   -> mkFrameDestroy id (head us')
+                  ADJCALLSTACKUP32   -> mkFrameDestroy id (head us')
+                  ADJCALLSTACKUP64   -> mkFrameDestroy id (head us')
                   SUBREG_TO_REG ->
                     error ("unexpected 'SUBREG_TO_REG' machine instruction, should be lowered before this point")
                   REG_SEQUENCE ->
@@ -1275,7 +1279,8 @@ splitMachineVirtualOperands opcode operands
     (filter isMachineRegImplicit operands,
      filter isMachineRegImplicitDef operands)
 splitMachineVirtualOperands opcode (s:_)
-  | opcode `elem` [ADJCALLSTACKDOWN, ADJCALLSTACKUP] = ([s], [])
+  | opcode `elem` [ADJCALLSTACKDOWN, ADJCALLSTACKDOWN32, ADJCALLSTACKDOWN64,
+                   ADJCALLSTACKUP, ADJCALLSTACKUP32, ADJCALLSTACKUP64] = ([s], [])
 splitMachineVirtualOperands opcode _
   | opcode `elem` [SUBREG_TO_REG] =
       error ("unexpected 'SUBREG_TO_REG' machine instruction, should be lowered before this point")
