@@ -110,10 +110,10 @@ maxTempWidth tight code t2w
 maxTWInCode t2w code = sum $ map ((M.!) t2w) (tUniqueOps code)
 
 -- TODO: round up so that the result is a multiple of the width of the infinite
--- register space for which the bound is computed (hard-coded to 16 here)
+-- register space for which the bound is computed (hard-coded to 32 here)
 roundToRc n =
     let n' = toRational n
-        w  = 16
+        w  = 32
     in w * (ceiling (n' / (toRational w)))
 
 -- | Tests whether r1 and r2 overlap according to a map from registers to atoms
