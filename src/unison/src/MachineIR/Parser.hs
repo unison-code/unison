@@ -547,9 +547,20 @@ mirBlockFreq =
      return (mkMachineBlockFreq address freq)
 
 mirDebugLocation =
-  do string "debug-location !"
-     id <- decimal
+  do string "debug-location "
+     id <- try mirRegularDebugLocation <|> mirAddressDebugLocation
      return (mkMachineDebugLocation id)
+
+mirRegularDebugLocation =
+  do string "!"
+     id <- decimal
+     return id
+
+mirAddressDebugLocation =
+  do string "<0"
+     address <- hexadecimal
+     string ">"
+     return address
 
 mirMCSymbol =
   do string "<mcsymbol "
