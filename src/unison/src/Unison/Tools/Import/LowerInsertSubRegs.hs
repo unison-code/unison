@@ -71,7 +71,7 @@ lowerInsertInstrSubRegs' [LowSubRegIndex] id mi @ MachineSingle {msOperands = [d
 lowerInsertInstrSubRegs' [HighSubRegIndex] id mi @ MachineSingle {msOperands = [d, s1, s2, _]}
   = let t  = mkSimpleMachineTemp id
         lo = mi {msOpcode = mkMachineVirtualOpc LOW, msOperands = [t, s1]}
-        co = mi {msOpcode = mkMachineVirtualOpc COMBINE, msOperands = [d, s2, t]}
+        co = mi {msOpcode = mkMachineVirtualOpc COMBINE, msOperands = [d, t, s2]}
     in (id + 1, [lo, co])
 lowerInsertInstrSubRegs' [LowSubRegIndex, LowSubRegIndex] id mi @ MachineSingle {msOperands = [d, s1, s2, _]}
   = let t     = mkSimpleMachineTemp id
