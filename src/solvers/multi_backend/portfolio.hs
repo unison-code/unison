@@ -94,6 +94,7 @@ tryUntilSuccess a =
      case result of
       Left ex ->
         do putStrLn $ show ex ++ ", trying again..."
+           threadDelay 5000000
            tryUntilSuccess a
       Right () -> return ()
 
