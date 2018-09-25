@@ -49,6 +49,7 @@ my $soln = 0;
 my $proven = 0;
 my $cost = -1;
 my $lb_found = 0;
+my $lb_value = 0;
 my @buf = ();
 
 while (my $line = <STDIN>) {
@@ -83,11 +84,15 @@ while (my $line = <STDIN>) {
         $lb_found = 1;
 	my $min = $1;
 	my $max = $2;
-	open(my $lb, '>', $lbfile);
-	print $lb "{\"lower_bound\":[$min]}\n";
-	close($lb);
-	# DO NOT REMOVE
-	print STDERR "$line\n";
+        # Record new bound only if it improves the previous one
+        if ($min > $lb_value) {
+            $lb_value = $min;
+            open(my $lb, '>', $lbfile);
+            print $lb "{\"lower_bound\":[$min]}\n";
+            close($lb);
+            # DO NOT REMOVE
+            print STDERR "$line\n";
+        }
     } elsif ($line =~ "%") {
 	# DO NOT REMOVE
 	print STDERR "$line\n";
