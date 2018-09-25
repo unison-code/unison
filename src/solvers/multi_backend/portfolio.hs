@@ -342,13 +342,8 @@ presolverTime input =
   let preTime = lookupOrFail "input" input "presolver_time"
   in fromJson preTime :: Integer
 
-toJSONMap = BSL.unpack . encodePretty' jsonConfig
-toJSONString = BSL.unpack . encodePretty' jsonConfig . toJSON
-jsonConfig = defConfig {confNumFormat = Custom showInteger}
-showInteger i =
-  case floatingOrInteger i of
-   Right i' -> DTB.fromString (show (toInteger i'))
-   Left r -> error ("expecting integer but got " ++ show r)
+toJSONMap = BSL.unpack . encodePretty
+toJSONString = BSL.unpack . encodePretty . toJSON
 
 lookupOrFail name map key =
   case HM.lookup  key map of

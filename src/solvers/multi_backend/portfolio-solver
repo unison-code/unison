@@ -2,5 +2,6 @@
 # Assumes that the environment variable UNISON_DIR is set to the top of the
 # Unison repo
 MULTIBACKEND_DIR=$UNISON_DIR/src/solvers/multi_backend
-ghc -O2 --make -threaded $MULTIBACKEND_DIR/portfolio.hs
+# Assume aeson-pretty-0.7.2 which prints integers without decimals
+ghc -O2 --make -threaded $MULTIBACKEND_DIR/portfolio.hs  -package aeson-pretty-0.7.2
 $MULTIBACKEND_DIR/portfolio "$@" +RTS -N2
