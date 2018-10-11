@@ -59,7 +59,7 @@ target =
       API.tBranchInfo       = const branchInfo,
       API.tPreProcess       = preProcess,
       API.tPostProcess      = const postProcess,
-      API.tTransforms       = const transforms,
+      API.tTransforms       = transforms,
       API.tCopies           = const copies,
       API.tRematInstrs      = const rematInstrs,
       API.tFromCopy         = const fromCopy,
@@ -676,16 +676,16 @@ addHint False i | isNewValueCmpJump i = read (init (show i) ++ "nt")
 addHint _ i = i
 
 -- | Gives a list of function transformers
-transforms ImportPreLift = [liftStackArgSize,
-                            peephole extractReturnRegs,
-                            peephole foldStackPointerCopy,
-                            mapToOperation addAlternativeInstructions]
-transforms AugmentPreRW = [peephole expandJumps]
-transforms AugmentPostRW = [mapToOperation addControlBarrier,
-                            addCSLoadEffects]
-transforms ExportPostOffs = [allocateArgArea, alignAllocFrame]
-transforms ExportPreLow = [shiftFrameOffsets]
-transforms _ = []
+transforms _ ImportPreLift = [liftStackArgSize,
+                              peephole extractReturnRegs,
+                              peephole foldStackPointerCopy,
+                              mapToOperation addAlternativeInstructions]
+transforms to AugmentPreRW = [peephole (expandJumps to)]
+transforms _ AugmentPostRW = [mapToOperation addControlBarrier,
+                             addCSLoadEffects]
+transforms _ ExportPostOffs = [allocateArgArea, alignAllocFrame]
+transforms _ ExportPreLow = [shiftFrameOffsets]
+transforms _ _ = []
 
 -- | Latency of read-write dependencies
 
