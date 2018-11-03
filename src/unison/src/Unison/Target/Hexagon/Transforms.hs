@@ -132,7 +132,7 @@ isJumpOpr o =
 -- ->
 -- o1: [p3{-, t3}] <- {-, C2_cmpeqi} [p1{-, t1, ..}, p2{-, t2, ..}]
 
-expandJumps _ (
+expandJumps _ _ (
   c @ SingleOperation {oOpr = Natural (Linear {
                                           oIs = [TargetInstruction i],
                                           oDs = [MOperand {altTemps = [d]}]})}
@@ -151,7 +151,7 @@ expandJumps _ (
 -- o3: [] <- jump_merge [p34{t2, t3},b]
 -- (where p3, p4 are renumbered copies of the operands of 'c')
 
-expandJumps f (
+expandJumps to f (
   j @ SingleOperation {oOpr = Natural jo @ (Branch {
                          oBranchIs = [TargetInstruction i],
                          oBranchUs = [p1 @ MOperand {altTemps = ts}, l]}),
@@ -187,11 +187,12 @@ expandJumps f (
              -- alternative instructions to 'cjl' above
              | otherwise ->
                let i' = newValueJump i
-               in [j {oOpr = Natural jo {oBranchIs = [TargetInstruction i']}}]
+                   is = [i'] ++ (if preserveDominatedIns to then [i] else [])
+               in [j {oOpr = Natural jo {oBranchIs = map TargetInstruction is}}]
            _ -> [j]
     in (os, ejs)
 
-expandJumps _ (o : rest) _ = (rest, [o])
+expandJumps _ _ (o : rest) _ = (rest, [o])
 
 blockOf code o = find (\b -> any (isIdOf o) (bCode b)) code
 

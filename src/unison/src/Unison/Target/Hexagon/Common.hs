@@ -10,7 +10,8 @@ Main authors:
 This file is part of Unison, see http://unison-code.github.io
 -}
 module Unison.Target.Hexagon.Common
-    (singleIssue, isNVJmpInstr, isNVJmp, isCmp, isCmpInstr, isJmp, isJmpInstr,
+    (singleIssue, preserveDominatedIns, isNVJmpInstr, isNVJmp, isCmp, isCmpInstr,
+     isJmp, isJmpInstr,
      isLinearJump, isLinearNewValueCmpJump, isNewValueCmpJump, isJumpNew,
      isMemAccessWithOff, memAccessAlignment, isOldValueStoreInstr,
      newValueStoreInstr, isMuxTransferInstr, isCondTransferInstr,
@@ -30,6 +31,8 @@ import qualified Unison.Target.API as API
 import Unison.Target.Hexagon.SpecsGen.HexagonInstructionDecl
 
 singleIssue to = API.isBoolOption "single-issue" to
+
+preserveDominatedIns to = API.isBoolOption "preserve-dominated-ins" to
 
 instance Read HexagonInstruction where
   readsPrec _ strOp = [(SpecsGen.readOp strOp, "")]
