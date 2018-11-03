@@ -37,7 +37,6 @@ import System.Process
 import System.Process.Internals
 import System.Directory
 import System.IO
-import System.IO.Silently
 import System.Environment
 import System.Timeout
 import Data.Time
@@ -116,7 +115,7 @@ runChuffed flags to memLimit extJson lowerBoundFile outJsonFile =
          dzn = pre ++ ".dzn"
          out = pre ++ ".out"
      setEnv "FLATZINC_CMD" "fzn-chuffed"
-     tryUntilSuccess $ hSilence [stderr] $ callProcess mznChuffed
+     tryUntilSuccess $ callSilentProcess mznChuffed
        (concatMap fznFlag (["--verbosity", "3",
                             "-f",
                             "--rnd-seed", "123456"] ++
@@ -145,6 +144,14 @@ chuffedTimeoutFlags to
   -- always honor the kill signal)
   | to >= 0 = ["--time-out", show (to `div` timeoutFactor)]
   | otherwise = []
+
+callSilentProcess exec args =
+  withFile "/dev/null" WriteMode
+  (\handle ->
+    do (_, _, _, h) <- createProcess (proc exec args)
+                       {std_err = UseHandle handle}
+       waitForProcess h
+       return ())
 
 splitFlags :: String -> [String]
 splitFlags flags =
