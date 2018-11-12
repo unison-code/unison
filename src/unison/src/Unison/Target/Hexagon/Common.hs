@@ -191,4 +191,4 @@ mayLoad' = mayLoad SpecsGen.readWriteInfo
 mayStore' STW_nv = True
 mayStore' i = mayStore (SpecsGen.readWriteInfo) i
 
-spillInstrs = [STW, STD, STW_nv, LDW, LDD]
+spillInstrs = [STW, STD, STD_cs, STW_nv, LDW, LDD]

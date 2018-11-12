@@ -1018,12 +1018,13 @@ itinerary i
        S4_storerd_ur, S4_storerd_ur_ce, S4_storerf_ap, S4_storerf_ap_ce,
        S4_storerf_ur, S4_storerf_ur_ce, S4_storerh_ap, S4_storerh_ap_ce,
        S4_storerh_ur, S4_storerh_ur_ce, S4_storeri_ap, S4_storeri_ap_ce,
-       S4_storeri_ur, S4_storeri_ur_ce, STD, STD_ce, STW, STW_ce,
-       STriq_pred_V6, STriq_pred_V6_128B, STriq_pred_V6_128B_ce,
-       STriq_pred_V6_ce, STriq_pred_vec_V6, STriq_pred_vec_V6_128B,
-       STriq_pred_vec_V6_128B_ce, STriq_pred_vec_V6_ce, STriv_pseudo_V6,
-       STriv_pseudo_V6_128B, STriv_pseudo_V6_128B_ce, STriv_pseudo_V6_ce,
-       STrivv_pseudo_V6, STrivv_pseudo_V6_128B, STrivv_pseudo_V6_128B_ce,
+       S4_storeri_ur, S4_storeri_ur_ce, STD, STD_ce, STD_cs, STD_cs_ce,
+       STW, STW_ce, STriq_pred_V6, STriq_pred_V6_128B,
+       STriq_pred_V6_128B_ce, STriq_pred_V6_ce, STriq_pred_vec_V6,
+       STriq_pred_vec_V6_128B, STriq_pred_vec_V6_128B_ce,
+       STriq_pred_vec_V6_ce, STriv_pseudo_V6, STriv_pseudo_V6_128B,
+       STriv_pseudo_V6_128B_ce, STriv_pseudo_V6_ce, STrivv_pseudo_V6,
+       STrivv_pseudo_V6_128B, STrivv_pseudo_V6_128B_ce,
        STrivv_pseudo_V6_ce, STriw_pred, STriw_pred_ce]
     = ST_tc_st_SLOT01
   | i `elem`

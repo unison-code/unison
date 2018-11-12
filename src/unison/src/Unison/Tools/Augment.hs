@@ -28,6 +28,7 @@ import Unison.Transformations.RenameOperations
 import Unison.Transformations.CleanPragmas
 import Unison.Transformations.AddPragmas
 import Unison.Transformations.RunTargetTransforms
+import Unison.Transformations.ReorderInstructions
 
 import Unison.Tools.Augment.GeneralizeOperands
 import Unison.Tools.Augment.GeneralizeCongruences
@@ -74,6 +75,7 @@ augmenterTransformations (implementFrames, noCross, oldModel, expandCopies',
      (renameTemps, "renameTemps", True),
      (renameMOperands, "renameMOperands", True),
      (renameOperations, "renameOperations", True),
+     (reorderInstructions, "reorderInstructions", True),
      (cleanPragmas augmentPragmaTools, "cleanPragmas", True),
      (addPragmas augmentPragmas, "addPragmas", lintPragma)]
 

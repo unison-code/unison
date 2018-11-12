@@ -67,7 +67,7 @@ operandInfo i
     =
     ([TemporaryInfo (RegisterClass DoubleRegs) 0 False],
      [TemporaryInfo (RegisterClass IntRegs) 1 False])
-  | i `elem` [STD, STD_ce] =
+  | i `elem` [STD, STD_ce, STD_cs, STD_cs_ce] =
     ([TemporaryInfo (RegisterClass DoubleRegs) 0 False],
      [TemporaryInfo (InfiniteRegisterClass M64) 1 False])
   | i `elem`

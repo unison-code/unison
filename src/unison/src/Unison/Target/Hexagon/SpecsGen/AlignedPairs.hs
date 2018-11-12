@@ -918,12 +918,12 @@ alignedPairs i ([_], [_])
        MVW, MVW_ce, S2_brev, S2_svsathb, S2_svsathub, S2_vrndpackwh,
        S2_vrndpackwhs, S2_vsathb, S2_vsathub, S2_vsatwh, S2_vsatwuh,
        S2_vsplatrb, S2_vsplatrh, S2_vsxtbh, S2_vsxthw, S2_vtrunehb,
-       S2_vtrunohb, S2_vzxtbh, S2_vzxthw, STD, STD_ce, STW, STW_ce,
-       STW_nv, STW_nv_ce, TFR_FI_fi_demat_fi, TFR_FI_fi_demat_fi_ce,
-       TFR_FI_fi_remat_fi, TFR_FI_fi_remat_fi_ce, TFR_PdFalse_demat,
-       TFR_PdFalse_demat_ce, TFR_PdFalse_remat, TFR_PdFalse_remat_ce,
-       TFR_PdTrue_demat, TFR_PdTrue_demat_ce, TFR_PdTrue_remat,
-       TFR_PdTrue_remat_ce, Ret_dealloc_merge]
+       S2_vtrunohb, S2_vzxtbh, S2_vzxthw, STD, STD_ce, STD_cs, STD_cs_ce,
+       STW, STW_ce, STW_nv, STW_nv_ce, TFR_FI_fi_demat_fi,
+       TFR_FI_fi_demat_fi_ce, TFR_FI_fi_remat_fi, TFR_FI_fi_remat_fi_ce,
+       TFR_PdFalse_demat, TFR_PdFalse_demat_ce, TFR_PdFalse_remat,
+       TFR_PdFalse_remat_ce, TFR_PdTrue_demat, TFR_PdTrue_demat_ce,
+       TFR_PdTrue_remat, TFR_PdTrue_remat_ce, Ret_dealloc_merge]
     = []
 alignedPairs i ([_, _], [])
   | i `elem`

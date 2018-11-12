@@ -2573,6 +2573,7 @@ data HexagonInstruction = A2_abs
                         | S2_storerf_io_fi
                         | S2_pstorerif_io_fi
                         | STD
+                        | STD_cs
                         | STW
                         | STW_nv
                         | TFR_FI_fi
@@ -3685,6 +3686,7 @@ data HexagonInstruction = A2_abs
                         | S2_storerf_io_fi_ce
                         | S2_pstorerif_io_fi_ce
                         | STD_ce
+                        | STD_cs_ce
                         | STW_ce
                         | STW_nv_ce
                         | TFR_FI_fi_ce

@@ -61,6 +61,7 @@ Library
                    Unison.Transformations.RenameBlocks
                    Unison.Transformations.SortGlobalTemps
                    Unison.Transformations.RenameOperations
+                   Unison.Transformations.ReorderInstructions
                    Unison.Transformations.PostponeBranches
                    Unison.Transformations.PropagatePhiCongruences
                    Unison.Transformations.EstimateFrequency

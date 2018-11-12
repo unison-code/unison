@@ -326,6 +326,10 @@ instruction-set:
         type:   copy
         << :    [*st, *d2M]
 
+      - id:     STD_cs
+        type:   copy
+        << :    [*st, *d2M]
+
       - id:     STW
         type:   copy
         << :    [*st, *r2m]

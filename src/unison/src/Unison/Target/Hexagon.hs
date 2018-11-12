@@ -84,7 +84,7 @@ target =
 -- | Gives the type of natural operation according to the instruction
 
 instructionType i
-    | i `elem` [MVW, MVD, STW, STD, LDW, LDD, MVPR, MVRP, STW_nv] =
+    | i `elem` [MVW, MVD, STW, STD, STD_cs, LDW, LDD, MVPR, MVRP, STW_nv] =
         CopyInstructionType
     | i `elem` [TCRETURNi, TCRETURNi_ce] = TailCallInstructionType
     | otherwise = SpecsGen.instructionType i
@@ -158,7 +158,7 @@ copies (f, cst, cg, ra, _, _) False t rs d [u]
     in
       (
        if isEntryTemp (fCode f) t
-       then [mkNullInstruction, TargetInstruction (storeOp w)]
+       then [mkNullInstruction, TargetInstruction (calleeSavedStoreOp w)]
        else [],
        [if isExitTemp (fCode f) t
         then [mkNullInstruction, TargetInstruction (loadOp w)]
@@ -227,6 +227,9 @@ moveOp 2 = MVD
 storeOp 1 = STW
 storeOp 2 = STD
 
+calleeSavedStoreOp 1 = STW
+calleeSavedStoreOp 2 = STD_cs
+
 loadOp 1 = LDW
 loadOp 2 = LDD
 
@@ -255,7 +258,7 @@ fromCopy _ Copy {oCopyIs = [TargetInstruction i], oCopyS = s, oCopyD = d}
     Linear {oIs = [TargetInstruction (fromCopyInstr i)],
             oUs = [s],
             oDs = [d]}
-  | i `elem` [STW, STD, STW_nv] =
+  | i `elem` [STW, STD, STD_cs, STW_nv] =
     Linear {oIs = [TargetInstruction (fromCopyInstr i)],
             oUs = [mkOprHexagonSP, mkBoundMachineFrameObject i d, s],
             oDs = []}
@@ -287,12 +290,13 @@ mkBoundMachineFrameObject i (Register r) =
 
 stackSize op
   | op `elem` [STW, STW_nv, LDW] = 4
-  | op `elem` [STD, LDD] = 8
+  | op `elem` [STD, STD_cs, LDD] = 8
 
 fromCopyInstr i
   | isJust (SpecsGen.parent i) = fromJust (SpecsGen.parent i)
 fromCopyInstr STW = S2_storeri_io
-fromCopyInstr STD = S2_storerd_io
+fromCopyInstr i
+  | i `elem` [STD, STD_cs] = S2_storerd_io
 fromCopyInstr STW_nv = S2_storerinew_io
 fromCopyInstr LDW = L2_loadri_io
 fromCopyInstr LDD = L2_loadrd_io
