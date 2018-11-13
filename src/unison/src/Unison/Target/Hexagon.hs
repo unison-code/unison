@@ -63,7 +63,7 @@ target =
       API.tCopies           = const copies,
       API.tRematInstrs      = const rematInstrs,
       API.tFromCopy         = const fromCopy,
-      API.tOperandInfo      = const operandInfo,
+      API.tOperandInfo      = operandInfo,
       API.tAlignedPairs     = const SpecsGen.alignedPairs,
       API.tPackedPairs      = const (const (const [])),
       API.tRelatedPairs     = const (const []),
@@ -78,7 +78,7 @@ target =
       API.tReadWriteLatency = const readWriteLatency,
       API.tAlternativeTemps = const alternativeTemps,
       API.tExpandCopy       = const expandCopy,
-      API.tConstraints      = const constraints
+      API.tConstraints      = constraints
     }
 
 -- | Gives the type of natural operation according to the instruction
@@ -307,7 +307,7 @@ fromCopyInstr LDD = L2_loadrd_io
 -- TODO: this is terrible! we need to respecify the operand info of all
 -- instructions with use latency -1... can we do this better? (e.g. via custom
 -- Haskell functions specified in hexagon-manual.yaml).
-operandInfo i
+operandInfo to i
   | i `elem`
       [J2_jumpfnew, J2_jumpfnewpt, J2_jumptnew, J2_jumptnewpt]
     = ([TemporaryInfo (RegisterClass F32) (-1) True, BlockRefInfo], [])
@@ -337,10 +337,18 @@ operandInfo i
     -- Mark uses in merge return instructions as bypassing
   | i `elem` [Jr_merge, Ret_dealloc_merge] =
       first (map markAsBypass) $ SpecsGen.operandInfo i
+  | isComboNVCJ i && usePredicateRegsForNvcj to =
+      mapTuple (map f32ToPredRegs) (SpecsGen.operandInfo i)
   | otherwise = SpecsGen.operandInfo i
+
+isComboNVCJ i = "combo" `isInfixOf` (show i)
 
 markAsBypass ti @ TemporaryInfo {} = ti {oiBypassing = True}
 markAsBypass pi = pi
+
+f32ToPredRegs ti @ TemporaryInfo {oiRegClass = RegisterClass F32} =
+  ti {oiRegClass = RegisterClass PredRegs}
+f32ToPredRegs oi = oi
 
 baseInstr i
   | isConstantExtended i = nonConstantExtendedInstr i
@@ -490,7 +498,7 @@ addFrameIndexInstr mi @ MachineSingle {msOpcode = MachineTargetOpc i,
                                        msOperands = operands}
   | isMachineVirtual mi = mi
   | any isMachineFrameIndex operands &&
-    any isTemporaryInfo (fst $ operandInfo i) =
+    any isTemporaryInfo (fst $ operandInfo [] i) =
       mi {msOpcode = mkMachineTargetOpc $ read (show i ++ "_fi")}
   | otherwise = mi
 
@@ -522,9 +530,10 @@ machineInstructionToList MachineBundle {mbInstrs = mis} = mis
 -- | Target dependent post-processing functions
 
 postProcess = [lintStackAlignment,
-               constantDeExtend, removeFrameIndex, normalizeJumpMerges,
-               normalizeNVJumps, normalizeJRInstrs, expandCondTransfers,
-               addJumpHints, flip addImplicitRegs (target, [])]
+               constantDeExtend, removeFrameIndex,
+               normalizeNewValueCmpJump, normalizeNVJumps, normalizeJRInstrs,
+               expandCondTransfers, addJumpHints,
+               flip addImplicitRegs (target, [])]
 
 lintStackAlignment = mapToTargetMachineInstruction lintStackAlignmentInInstr
 
@@ -581,29 +590,42 @@ removeFrameIndexInstr mi @ MachineSingle {msOpcode = MachineTargetOpc i,
 
 mkMachineRegSP = mkMachineReg hexagonSP
 
-normalizeJumpMerges = mapToMachineBlock normalizeJumpMergesInBlock
+normalizeNewValueCmpJump = mapToMachineBlock normalizeNewValueCmpJumpInBlock
 
-normalizeJumpMergesInBlock mb @ MachineBlock {mbInstructions = mis} =
-  case find isJumpMerge (concatMap miToList mis) of
-   Just MachineSingle {msOperands = [_, l], msProperties = mps} ->
-     let mb1 = filterMachineInstructionsBlock (not . isJumpMerge) mb
+normalizeNewValueCmpJumpInBlock mb @ MachineBlock {mbInstructions = mis} =
+  case find isCmpComboMachineInstr (concatMap miToList mis) of
+   Just MachineSingle {msOpcode = MachineTargetOpc i,
+                       msOperands = [_, src1, src2]} ->
+     let mb1 = filterMachineInstructionsBlock (not . isCmpComboMachineInstr) mb
          mb2 = concatMapToMachineInstructionBlock
-               (normalizeLinearJump mps l) mb1
+               (normalizeNewValueCmpJumpCombo i [src1, src2]) mb1
      in mb2
-   _ -> mb
+   Nothing -> mb
 
-isJumpMerge MachineSingle {msOpcode = MachineTargetOpc Jump_merge} = True
-isJumpMerge _ = False
+isCmpComboMachineInstr MachineSingle {msOpcode = MachineTargetOpc i} =
+  isCmpComboInstr i
+isCmpComboMachineInstr _ = False
 
-normalizeLinearJump mps l mi @ MachineSingle {msOpcode = MachineTargetOpc i,
-                                              msOperands = (_:mops)}
-  | isLinearNewValueCmpJump i || isLinearJump i =
-    [mi {msOpcode = mkMachineTargetOpc $ branchJump i,
-         msOperands = mops ++ [l],
-         msProperties = mps}]
-normalizeLinearJump _ _ mi = [mi]
+normalizeNewValueCmpJumpCombo ci mops
+  mi @ MachineSingle {msOpcode = MachineTargetOpc i, msOperands = [_, l]}
+  | isNewValueCmpJump i =
+    [mi {msOpcode = mkMachineTargetOpc $ realNewValueJumpInstr ci i,
+         msOperands = mops ++ [l]}]
+normalizeNewValueCmpJumpCombo _ _ mi = [mi]
 
-branchJump jmp = read $ dropSuffix "_linear" (show jmp)
+realNewValueJumpInstr cmp jmp =
+  read $
+  "J4_" ++
+  (dropPrefix "CX_" $ dropSuffix "_combo" $ show cmp) ++ "_" ++
+  (if isTrueNVCmpJump cmp jmp then "t" else "f") ++
+  "_jumpnv_t"
+
+isTrueNVCmpJump cmp jmp
+  | cmp `elem` [C2_cmplt_combo, C2_cmpltu_combo] = not (isTrueNVJump jmp)
+  | otherwise = isTrueNVJump jmp
+
+isTrueNVJump J4_combo_t_jumpnv_t = True
+isTrueNVJump J4_combo_f_jumpnv_t = False
 
 normalizeNVJumps = mapToTargetMachineInstruction normalizeNVJump
 
@@ -685,8 +707,7 @@ transforms _ ImportPreLift = [liftStackArgSize,
                               peephole foldStackPointerCopy,
                               mapToOperation addAlternativeInstructions]
 transforms to AugmentPreRW = [peephole (expandJumps to)]
-transforms _ AugmentPostRW = [mapToOperation addControlBarrier,
-                             addCSLoadEffects]
+transforms _ AugmentPostRW = [addCSLoadEffects]
 transforms _ ExportPostOffs = [allocateArgArea, alignAllocFrame]
 transforms _ ExportPreLow = [shiftFrameOffsets]
 transforms _ _ = []
@@ -727,7 +748,9 @@ expandCopy _ _ o = [o]
 
 -- | Custom processor constraints
 
-constraints f = forbiddenNewValueConstraints (flatCode f)
+constraints to f = forbiddenNewValueConstraints (flatCode f) ++
+                   if usePredicateRegsForNvcj to then
+                     foldMatch newValueCmpJumpComboConstraints [] f else []
 
 -- new-value instructions (with bypassing operands) cannot use the result
 -- of conditional transfers
@@ -747,7 +770,7 @@ forbiddenNVForCT did t i u =
   concatMap (forbiddenNVForUser did t i u) (oInstructions u)
 
 forbiddenNVForUser did t i u (TargetInstruction i') =
-  let pbs = [p | (p, True) <- tempBypasses operandInfo u i',
+  let pbs = [p | (p, True) <- tempBypasses (operandInfo []) u i',
              t `elem` extractTemps p]
   in [forbiddenNewValueConstraint (operandId p) (tId t) did i (oId u) i'
      | p <- pbs]
@@ -758,3 +781,28 @@ forbiddenNewValueConstraint pid tid did di uid ui =
            [ConnectsExpr pid tid,
             ImplementsExpr did (TargetInstruction di),
             ImplementsExpr uid (TargetInstruction ui)])
+
+newValueCmpJumpComboConstraints (
+  c @ SingleOperation {oOpr = Natural (Linear {
+                                          oIs = is,
+                                          oDs = [MOperand {altTemps = [d]}]})}
+  :
+  code) constraints
+  | any isCmpComboTargetInstr is =
+      case find (\j -> isBranch j && isPotentialUser d j) code of
+       Just j ->
+         let ci = fromJust $ find isCmpComboTargetInstr is
+             ce = ImplementsExpr (oId c) ci
+             ji = fromJust $ find isJumpComboTargetInstr (oInstructions j)
+             je = ImplementsExpr (oId j) ji
+             cc = AndExpr [ImpliesExpr ce je, ImpliesExpr je ce]
+         in (code, constraints ++ [cc])
+       Nothing -> (code, constraints)
+
+newValueCmpJumpComboConstraints (_ : code) constraints = (code, constraints)
+
+isCmpComboTargetInstr (TargetInstruction i) = isCmpComboInstr i
+isCmpComboTargetInstr _ = False
+
+isJumpComboTargetInstr (TargetInstruction i) = isComboNVCJ i
+isJumpComboTargetInstr _ = False

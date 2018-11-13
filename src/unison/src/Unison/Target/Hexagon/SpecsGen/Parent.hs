@@ -1082,6 +1082,13 @@ parent i
       [A2_tfrsi_demat, A2_tfrsi_demat_ce, A2_tfrsi_remat,
        A2_tfrsi_remat_ce, A2_tfrsi_source, A2_tfrsi_source_ce]
     = Just A2_tfrsi
+  | i `elem` [C2_cmpeq_combo] = Just C2_cmpeq
+  | i `elem` [C2_cmpeqi_combo, C2_cmpeqi_combo_ce] = Just C2_cmpeqi
+  | i `elem` [C2_cmpgt_combo] = Just C2_cmpgt
+  | i `elem` [C2_cmpgti_combo, C2_cmpgti_combo_ce] = Just C2_cmpgti
+  | i `elem` [C2_cmpgtu_combo] = Just C2_cmpgtu
+  | i `elem` [C2_cmpgtui_combo, C2_cmpgtui_combo_ce] =
+    Just C2_cmpgtui
   | i `elem` [C2_mux_tfr, C2_mux_tfr_new] = Just C2_mux
   | i `elem`
       [C2_muxii_tfr, C2_muxii_tfr_ce, C2_muxii_tfr_new,
@@ -1097,53 +1104,43 @@ parent i
     = Just C2_muxri
   | i `elem` [MVPR, MVPR_ce] = Just C2_tfrpr
   | i `elem` [MVRP, MVRP_ce] = Just C2_tfrrp
+  | i `elem` [C2_cmplt_combo] = Just C4_cmplte
+  | i `elem` [C2_cmpltu_combo] = Just C4_cmplteu
   | i `elem`
       [CONST64_Int_Real_demat, CONST64_Int_Real_demat_ce,
        CONST64_Int_Real_remat, CONST64_Int_Real_remat_ce,
        CONST64_Int_Real_source, CONST64_Int_Real_source_ce]
     = Just CONST64_Int_Real
   | i `elem`
-      [J2_jumpf_linear, J2_jumpf_nv, J2_jumpf_nv_ce, J2_jumpf_nv_linear]
+      [J2_jumpf_nv, J2_jumpf_nv_ce, J4_combo_f_jumpnv_t,
+       J4_combo_f_jumpnv_t_ce]
     = Just J2_jumpf
   | i `elem`
-      [J2_jumpt_linear, J2_jumpt_nv, J2_jumpt_nv_ce, J2_jumpt_nv_linear]
+      [J2_jumpt_nv, J2_jumpt_nv_ce, J4_combo_t_jumpnv_t,
+       J4_combo_t_jumpnv_t_ce]
     = Just J2_jumpt
-  | i `elem` [J4_cmpeq_f_jumpnv_t_linear] = Just J4_cmpeq_f_jumpnv_t
-  | i `elem` [J4_cmpeq_t_jumpnv_t_linear] = Just J4_cmpeq_t_jumpnv_t
-  | i `elem`
-      [J4_cmpeqi_f_jumpnv_t_linear, J4_cmpeqi_f_jumpnv_t_linear_ce]
-    = Just J4_cmpeqi_f_jumpnv_t
-  | i `elem`
-      [J4_cmpeqi_t_jumpnv_t_linear, J4_cmpeqi_t_jumpnv_t_linear_ce]
-    = Just J4_cmpeqi_t_jumpnv_t
-  | i `elem` [J4_cmpeqn1_t_jumpnv_t_linear] =
+  | i `elem` [J4_cmpeq_f_jumpnv_t_combo] = Just J4_cmpeq_f_jumpnv_t
+  | i `elem` [J4_cmpeq_t_jumpnv_t_combo] = Just J4_cmpeq_t_jumpnv_t
+  | i `elem` [J4_cmpeqi_f_jumpnv_t_combo] = Just J4_cmpeqi_f_jumpnv_t
+  | i `elem` [J4_cmpeqi_t_jumpnv_t_combo] = Just J4_cmpeqi_t_jumpnv_t
+  | i `elem` [J4_cmpeqn1_t_jumpnv_t_combo] =
     Just J4_cmpeqn1_t_jumpnv_t
-  | i `elem` [J4_cmpgt_f_jumpnv_t_linear] = Just J4_cmpgt_f_jumpnv_t
-  | i `elem` [J4_cmpgt_t_jumpnv_t_linear] = Just J4_cmpgt_t_jumpnv_t
-  | i `elem`
-      [J4_cmpgti_f_jumpnv_t_linear, J4_cmpgti_f_jumpnv_t_linear_ce]
-    = Just J4_cmpgti_f_jumpnv_t
-  | i `elem`
-      [J4_cmpgti_t_jumpnv_t_linear, J4_cmpgti_t_jumpnv_t_linear_ce]
-    = Just J4_cmpgti_t_jumpnv_t
-  | i `elem` [J4_cmpgtn1_t_jumpnv_t_linear] =
+  | i `elem` [J4_cmpgt_f_jumpnv_t_combo] = Just J4_cmpgt_f_jumpnv_t
+  | i `elem` [J4_cmpgt_t_jumpnv_t_combo] = Just J4_cmpgt_t_jumpnv_t
+  | i `elem` [J4_cmpgti_f_jumpnv_t_combo] = Just J4_cmpgti_f_jumpnv_t
+  | i `elem` [J4_cmpgti_t_jumpnv_t_combo] = Just J4_cmpgti_t_jumpnv_t
+  | i `elem` [J4_cmpgtn1_t_jumpnv_t_combo] =
     Just J4_cmpgtn1_t_jumpnv_t
-  | i `elem` [J4_cmpgtu_f_jumpnv_t_linear] =
-    Just J4_cmpgtu_f_jumpnv_t
-  | i `elem` [J4_cmpgtu_t_jumpnv_t_linear] =
-    Just J4_cmpgtu_t_jumpnv_t
-  | i `elem`
-      [J4_cmpgtui_f_jumpnv_t_linear, J4_cmpgtui_f_jumpnv_t_linear_ce]
-    = Just J4_cmpgtui_f_jumpnv_t
-  | i `elem`
-      [J4_cmpgtui_t_jumpnv_t_linear, J4_cmpgtui_t_jumpnv_t_linear_ce]
-    = Just J4_cmpgtui_t_jumpnv_t
-  | i `elem` [J4_cmplt_f_jumpnv_t_linear] = Just J4_cmplt_f_jumpnv_t
-  | i `elem` [J4_cmplt_t_jumpnv_t_linear] = Just J4_cmplt_t_jumpnv_t
-  | i `elem` [J4_cmpltu_f_jumpnv_t_linear] =
-    Just J4_cmpltu_f_jumpnv_t
-  | i `elem` [J4_cmpltu_t_jumpnv_t_linear] =
-    Just J4_cmpltu_t_jumpnv_t
+  | i `elem` [J4_cmpgtu_f_jumpnv_t_combo] = Just J4_cmpgtu_f_jumpnv_t
+  | i `elem` [J4_cmpgtu_t_jumpnv_t_combo] = Just J4_cmpgtu_t_jumpnv_t
+  | i `elem` [J4_cmpgtui_f_jumpnv_t_combo] =
+    Just J4_cmpgtui_f_jumpnv_t
+  | i `elem` [J4_cmpgtui_t_jumpnv_t_combo] =
+    Just J4_cmpgtui_t_jumpnv_t
+  | i `elem` [J4_cmplt_f_jumpnv_t_combo] = Just J4_cmplt_f_jumpnv_t
+  | i `elem` [J4_cmplt_t_jumpnv_t_combo] = Just J4_cmplt_t_jumpnv_t
+  | i `elem` [J4_cmpltu_f_jumpnv_t_combo] = Just J4_cmpltu_f_jumpnv_t
+  | i `elem` [J4_cmpltu_t_jumpnv_t_combo] = Just J4_cmpltu_t_jumpnv_t
   | i `elem` [JMPret_dealloc_linear, JMPret_linear] = Just JMPret
   | i `elem` [L2_deallocframe_linear] = Just L2_deallocframe
   | i `elem`

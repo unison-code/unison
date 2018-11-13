@@ -16,7 +16,6 @@ module Unison.Target.Hexagon.Transforms
      addAlternativeInstructions,
      expandJumps,
      discardSpills,
-     addControlBarrier,
      addCSLoadEffects,
      allocateArgArea,
      alignAllocFrame,
@@ -130,57 +129,49 @@ isJumpOpr o =
 -- o1: [p3{t3}] <- C2_cmpeqi [p1{t1, ..},p2{t2, ..}]
 -- (where t3 is used by a J2_jumpt/J2_jumpf instruction in the block)
 -- ->
--- o1: [p3{-, t3}] <- {-, C2_cmpeqi} [p1{-, t1, ..}, p2{-, t2, ..}]
+-- o1: [p3{t3}] <- {C2_cmpeqi, C2_cmpeqi_combo} [p1{t1, ..}, p2{t2, ..}]
 
 expandJumps _ _ (
   c @ SingleOperation {oOpr = Natural (Linear {
                                           oIs = [TargetInstruction i],
+                                          oUs = [_, u2],
                                           oDs = [MOperand {altTemps = [d]}]})}
   :
   os) _ | isCmpInstr i && any (\j -> isJumpOpr j && isPotentialUser d j) os =
-  let c' = makeOptional c
-  in (os, [c'])
+  let -- if the compare instruction i can form a new-value compare and jump
+      -- (together with its corresponding jump), add a combo-cmp instruction
+      ci = cmpComboInstr i
+      c1 = if isNewValueJumpCandidateInstr i u2 then
+              mapToInstructions (\is -> is ++ [TargetInstruction ci]) c
+           else c
+  in (os, [c1])
 
 -- Example:
 --
 -- o1: [] <- J2_jumpf [p1{t1}, b]
 -- (where t1 is defined by a cmp instruction 'c' in the block)
 -- ->
--- o1: [p2{-, t2}] <- {-, J2_jumpf_linear} [p1{-, t1}]
--- o2: [p5{-, t3}] <- {-, J4_cmpeqi_f_jumpnv_t_linear} [p3{-, t3}, p4{-, t4}]
--- o3: [] <- jump_merge [p34{t2, t3},b]
--- (where p3, p4 are renumbered copies of the operands of 'c')
+-- o1: [] <- {J2_jumpf, J2_jumpf_nv, J4_combo_f_jumpnv_t} [p1{t1},b]
 
 expandJumps to f (
   j @ SingleOperation {oOpr = Natural jo @ (Branch {
                          oBranchIs = [TargetInstruction i],
-                         oBranchUs = [p1 @ MOperand {altTemps = ts}, l]}),
-                       oAs = as}
+                         oBranchUs = [MOperand {altTemps = ts}, _]})}
   :
-  os) (tid, oid, pid)
-  | isConditionalBranchInstr i =
+  os) _ | isConditionalBranchInstr i =
     let bcode = bCode $ fromJust $ blockOf (fCode f) j
         -- normally we expect |ds| == 1
         ds = [potentialDefiner t bcode | t <- ts,
               not (isCopy $ potentialDefiner t bcode)]
         ejs =
           case ds of
-           [c @ SingleOperation {oOpr = Natural (Linear {
+           [SingleOperation {oOpr = Natural (Linear {
                                         oIs = [TargetInstruction ci],
                                         oUs = [_, u2]})}]
              -- A new-value compare and jump can be used
              | isNewValueJumpCandidateInstr ci u2 ->
-               let jis = linearJumps i
-                   jl  = mkLinear oid (map TargetInstruction jis) [p1]
-                         [mkMOp pid [mkTemp tid]]
-                   cji = linearNewValueCmpJump ci i
-                   cjl = mkLinear (oid + 1) [TargetInstruction cji]
-                         (map updateMOperandId (zip [pid + 1 ..] (oUses c)))
-                         [mkMOp (pid + 3) [mkTemp tid + 1]]
-                   jm  = (mkBranch (oid + 2) [TargetInstruction Jump_merge]
-                          [mkMOp (pid + 4) (map mkTemp [tid, tid + 1]), l])
-                         {oAs = as}
-               in map makeOptional [jl, cjl] ++ [jm]
+               let jis = [i, newValueJump i, newValueCmpJump i]
+               in [j {oOpr = Natural jo {oBranchIs = map TargetInstruction jis}}]
              -- Still allow the jump to fetch its input in the same cycle. TODO:
              -- this is pessimistic w.r.t. size, study better how to create and
              -- add "J2_cmpeqi_f_jump_t_linear" and the like and add as
@@ -196,35 +187,12 @@ expandJumps _ _ (o : rest) _ = (rest, [o])
 
 blockOf code o = find (\b -> any (isIdOf o) (bCode b)) code
 
-updateMOperandId (pid, p @ MOperand {}) = p {operandId = pid}
-updateMOperandId (_, p) = p
-
-linearJumps J2_jumpt = [J2_jumpt_linear, J2_jumpt_nv_linear]
-linearJumps J2_jumpf = [J2_jumpf_linear, J2_jumpf_nv_linear]
-
 newValueJump J2_jumpt = J2_jumpt_nv
 newValueJump J2_jumpf = J2_jumpf_nv
 
 -- We assume the "taken" until 'addJumpHint' during post-processing
-linearNewValueCmpJump cmp jmp =
-  read $
-  "J4_" ++
-  (normalForm $ dropPrefix "C2_" $ show cmp) ++ "_" ++
-  (if isTrueNVCmpJump cmp jmp then "t" else "f") ++
-  "_jumpnv_t_linear"
-
-normalForm "cmplteu" = "cmpltu"
-normalForm "cmplte"  = "cmplt"
-normalForm i = i
-
-isTrueNVCmpJump cmp jmp
-  | cmp `elem` [C4_cmplte, C4_cmplteu] = not (isTrueJump jmp)
-  | otherwise = isTrueJump jmp
-
-isTrueJump J2_jumpt = True
-isTrueJump J2_jumpf = False
-
-mkMOp id ts = mkMOperand id ts Nothing
+newValueCmpJump J2_jumpt = J4_combo_t_jumpnv_t
+newValueCmpJump J2_jumpf = J4_combo_f_jumpnv_t
 
 discardSpills f @ Function {fCode = code} =
   let f1 = mapToOperation (discardSpill (flatten code)) f
@@ -269,14 +237,6 @@ isInactive o =
   case oInstructions o of
    [i] | isNullInstruction i -> True
    _ -> False
-
-addControlBarrier o @ SingleOperation {oOpr = Natural Linear {oIs = is},
-                                       oAs = as} =
-  let is' = [i | TargetInstruction i <- is]
-  in if any (\i -> isLinearJump i || isLinearNewValueCmpJump i) is' then
-       o {oAs = as {aReads = [], aWrites = [ControlSideEffect]}}
-     else o
-addControlBarrier o = o
 
 -- Add R29 read effect to callee-saved loads in exit blocks. This is not
 -- done in general as the side-effect would be too restrictive, we allow

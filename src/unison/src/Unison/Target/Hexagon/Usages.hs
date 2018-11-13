@@ -58,7 +58,7 @@ itineraryUsage i it
       -- with stores as slot 0 will be occupied by i and slot 1 will be occupied
       -- by the instruction feeding i. We model this by saturating the 'Store'
       -- resource.
-    | it `elem` [NCJ_tc_3or4stall_SLOT0] && (isLinearNewValueCmpJump i) =
+    | it `elem` [NCJ_tc_3or4stall_SLOT0] && (isNewValueCmpJump i) =
       slot0 ++ store 2
     | it `elem` [ST_tc_ld_SLOT0] = slot0 ++ store 1
     | it `elem` [LD_tc_ld_SLOT0,  ST_tc_3stall_SLOT0, NCJ_tc_3or4stall_SLOT0,

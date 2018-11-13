@@ -240,6 +240,31 @@ instruction-set:
           uses:               [src1, src2]
           defines:            [dst]
 
+    - instruction-attrs: &cmp-combo
+          size:               0
+          itinerary:          NoItinerary
+
+    - instruction-attrs: &cmp-combo-rr-operands
+          new-operands:
+           - Rs:              [register, use, IntRegs, -1]
+           - Pd:              [register, def, F32]
+
+    - instruction-attrs: &cmp-combo-rr-inv-operands
+          new-operands:
+           - Rt:              [register, use, IntRegs, -1]
+           - Pd:              [register, def, F32]
+
+    - instruction-attrs: &cmp-combo-ri-operands
+          new-operands:
+           - src1:            [register, use, IntRegs, -1]
+           - dst:             [register, def, F32]
+
+    - instruction-attrs: &nv-cmp-jump-combo
+          operands:
+           - src:             [register, use, F32, -1]
+          uses:               [src]
+          defines:            []
+
     - instruction-attrs: &linear-jump-ri
           operands:
            - src1:            [register, use, IntRegs, -1]
@@ -357,125 +382,133 @@ instruction-set:
         parent: C2_tfrrp
         type:   copy
 
-      - id:     J4_cmpeq_f_jumpnv_t_linear
+      - id:     C2_cmpeq_combo
+        parent: C2_cmpeq
+        << :    [*cmp-combo, *cmp-combo-rr-operands]
+
+      - id:     C2_cmpgt_combo
+        parent: C2_cmpgt
+        << :    [*cmp-combo, *cmp-combo-rr-operands]
+
+      - id:     C2_cmpgtu_combo
+        parent: C2_cmpgtu
+        << :    [*cmp-combo, *cmp-combo-rr-operands]
+
+      - id:     C2_cmplt_combo
+        parent: C4_cmplte
+        << :    [*cmp-combo, *cmp-combo-rr-inv-operands]
+
+      - id:     C2_cmpltu_combo
+        parent: C4_cmplteu
+        << :    [*cmp-combo, *cmp-combo-rr-inv-operands]
+
+      - id:     C2_cmpeqi_combo
+        parent: C2_cmpeqi
+        << :    [*cmp-combo, *cmp-combo-ri-operands]
+
+      - id:     C2_cmpgti_combo
+        parent: C2_cmpgti
+        << :    [*cmp-combo, *cmp-combo-ri-operands]
+
+      - id:     C2_cmpgtui_combo
+        parent: C2_cmpgtui
+        << :    [*cmp-combo, *cmp-combo-ri-operands]
+
+      - id:     J4_cmpeq_f_jumpnv_t_combo
         parent: J4_cmpeq_f_jumpnv_t
-        << :    [*linear-jump, *linear-jump-nvr-r]
+        << :    [*nv-cmp-jump-combo]
 
-      - id:     J4_cmpeq_t_jumpnv_t_linear
+      - id:     J4_cmpeq_t_jumpnv_t_combo
         parent: J4_cmpeq_t_jumpnv_t
-        << :    [*linear-jump, *linear-jump-nvr-r]
+        << :    [*nv-cmp-jump-combo]
 
-      - id:     J4_cmpgt_f_jumpnv_t_linear
+      - id:     J4_cmpgt_f_jumpnv_t_combo
         parent: J4_cmpgt_f_jumpnv_t
-        << :    [*linear-jump, *linear-jump-nvr-r]
+        << :    [*nv-cmp-jump-combo]
 
-      - id:     J4_cmpgt_t_jumpnv_t_linear
+      - id:     J4_cmpgt_t_jumpnv_t_combo
         parent: J4_cmpgt_t_jumpnv_t
-        << :    [*linear-jump, *linear-jump-nvr-r]
+        << :    [*nv-cmp-jump-combo]
 
-      - id:     J4_cmpgtu_t_jumpnv_t_linear
+      - id:     J4_cmpgtu_t_jumpnv_t_combo
         parent: J4_cmpgtu_t_jumpnv_t
-        << :    [*linear-jump, *linear-jump-nvr-r]
+        << :    [*nv-cmp-jump-combo]
 
-      - id:     J4_cmpgtu_f_jumpnv_t_linear
+      - id:     J4_cmpgtu_f_jumpnv_t_combo
         parent: J4_cmpgtu_f_jumpnv_t
-        << :    [*linear-jump, *linear-jump-nvr-r]
+        << :    [*nv-cmp-jump-combo]
 
-      - id:     J4_cmplt_t_jumpnv_t_linear
+      - id:     J4_cmplt_t_jumpnv_t_combo
         parent: J4_cmplt_t_jumpnv_t
-        << :    [*linear-jump, *linear-jump-r-nvr]
+        << :    [*nv-cmp-jump-combo]
 
-      - id:     J4_cmplt_f_jumpnv_t_linear
+      - id:     J4_cmplt_f_jumpnv_t_combo
         parent: J4_cmplt_f_jumpnv_t
-        << :    [*linear-jump, *linear-jump-r-nvr]
+        << :    [*nv-cmp-jump-combo]
 
-      - id:     J4_cmpltu_t_jumpnv_t_linear
+      - id:     J4_cmpltu_t_jumpnv_t_combo
         parent: J4_cmpltu_t_jumpnv_t
-        << :    [*linear-jump, *linear-jump-r-nvr]
+        << :    [*nv-cmp-jump-combo]
 
-      - id:     J4_cmpltu_f_jumpnv_t_linear
+      - id:     J4_cmpltu_f_jumpnv_t_combo
         parent: J4_cmpltu_f_jumpnv_t
-        << :    [*linear-jump, *linear-jump-r-nvr]
+        << :    [*nv-cmp-jump-combo]
 
-      - id:     J4_cmpeqi_t_jumpnv_t_linear
+      - id:     J4_cmpeqi_t_jumpnv_t_combo
         parent: J4_cmpeqi_t_jumpnv_t
-        << :    [*linear-jump, *linear-jump-ri]
+        << :    [*nv-cmp-jump-combo]
 
-      - id:     J4_cmpeqi_f_jumpnv_t_linear
+      - id:     J4_cmpeqi_f_jumpnv_t_combo
         parent: J4_cmpeqi_f_jumpnv_t
-        << :    [*linear-jump, *linear-jump-ri]
+        << :    [*nv-cmp-jump-combo]
 
-      - id:     J4_cmpgti_t_jumpnv_t_linear
+      - id:     J4_cmpgti_t_jumpnv_t_combo
         parent: J4_cmpgti_t_jumpnv_t
-        << :    [*linear-jump, *linear-jump-ri]
+        << :    [*nv-cmp-jump-combo]
 
-      - id:     J4_cmpgti_f_jumpnv_t_linear
+      - id:     J4_cmpgti_f_jumpnv_t_combo
         parent: J4_cmpgti_f_jumpnv_t
-        << :    [*linear-jump, *linear-jump-ri]
+        << :    [*nv-cmp-jump-combo]
 
-      - id:     J4_cmpgtui_t_jumpnv_t_linear
+      - id:     J4_cmpgtui_t_jumpnv_t_combo
         parent: J4_cmpgtui_t_jumpnv_t
-        << :    [*linear-jump, *linear-jump-ri]
+        << :    [*nv-cmp-jump-combo]
 
-      - id:     J4_cmpgtui_f_jumpnv_t_linear
+      - id:     J4_cmpgtui_f_jumpnv_t_combo
         parent: J4_cmpgtui_f_jumpnv_t
-        << :    [*linear-jump, *linear-jump-ri]
+        << :    [*nv-cmp-jump-combo]
 
-      - id:     J4_cmpeqn1_t_jumpnv_t_linear
+      - id:     J4_cmpeqn1_t_jumpnv_t_combo
         parent: J4_cmpeqn1_t_jumpnv_t
-        << :    [*linear-jump, *linear-jump-r]
+        << :    [*nv-cmp-jump-combo]
 
-      - id:     J4_cmpgtn1_t_jumpnv_t_linear
+      - id:     J4_cmpgtn1_t_jumpnv_t_combo
         parent: J4_cmpgtn1_t_jumpnv_t
-        << :    [*linear-jump, *linear-jump-r]
+        << :    [*nv-cmp-jump-combo]
 
-      - id:     J2_jumpt_linear
+      - id:     J4_combo_t_jumpnv_t
         parent: J2_jumpt
         << :    [*linear-jump]
-        operands:
-         - src:             [register, use, PredRegs]
-         - dst:             [register, def, F32]
-        uses:               [src]
-        defines:            [dst]
+        new-operands:
+         - src:             [register, use, F32, -1]
+        itinerary:          NCJ_tc_3or4stall_SLOT0
 
-      - id:     J2_jumpf_linear
+      - id:     J4_combo_f_jumpnv_t
         parent: J2_jumpf
         << :    [*linear-jump]
-        operands:
-         - src:             [register, use, PredRegs]
-         - dst:             [register, def, F32]
-        uses:               [src]
-        defines:            [dst]
-
-      - id:     J2_jumpt_nv_linear
-        parent: J2_jumpt
-        << :    [*linear-jump]
-        operands:
-         - src:             [register, use, PredRegs, -1]
-         - dst:             [register, def, F32]
-        uses:               [src]
-        defines:            [dst]
-
-      - id:     J2_jumpf_nv_linear
-        parent: J2_jumpf
-        << :    [*linear-jump]
-        operands:
-         - src:             [register, use, PredRegs, -1]
-         - dst:             [register, def, F32]
-        uses:               [src]
-        defines:            [dst]
+        new-operands:
+         - src:             [register, use, F32, -1]
+        itinerary:          NCJ_tc_3or4stall_SLOT0
 
       - id:     J2_jumpt_nv
         parent: J2_jumpt
-        operands:
+        new-operands:
          - src:             [register, use, PredRegs, -1]
-         - dst:             label
 
       - id:     J2_jumpf_nv
         parent: J2_jumpf
-        operands:
+        new-operands:
          - src:             [register, use, PredRegs, -1]
-         - dst:             label
 
       - id:                 jump_merge
         type:               branch

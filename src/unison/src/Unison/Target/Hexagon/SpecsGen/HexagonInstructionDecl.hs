@@ -2581,28 +2581,34 @@ data HexagonInstruction = A2_abs
                         | MVD
                         | MVPR
                         | MVRP
-                        | J4_cmpeq_f_jumpnv_t_linear
-                        | J4_cmpeq_t_jumpnv_t_linear
-                        | J4_cmpgt_f_jumpnv_t_linear
-                        | J4_cmpgt_t_jumpnv_t_linear
-                        | J4_cmpgtu_t_jumpnv_t_linear
-                        | J4_cmpgtu_f_jumpnv_t_linear
-                        | J4_cmplt_t_jumpnv_t_linear
-                        | J4_cmplt_f_jumpnv_t_linear
-                        | J4_cmpltu_t_jumpnv_t_linear
-                        | J4_cmpltu_f_jumpnv_t_linear
-                        | J4_cmpeqi_t_jumpnv_t_linear
-                        | J4_cmpeqi_f_jumpnv_t_linear
-                        | J4_cmpgti_t_jumpnv_t_linear
-                        | J4_cmpgti_f_jumpnv_t_linear
-                        | J4_cmpgtui_t_jumpnv_t_linear
-                        | J4_cmpgtui_f_jumpnv_t_linear
-                        | J4_cmpeqn1_t_jumpnv_t_linear
-                        | J4_cmpgtn1_t_jumpnv_t_linear
-                        | J2_jumpt_linear
-                        | J2_jumpf_linear
-                        | J2_jumpt_nv_linear
-                        | J2_jumpf_nv_linear
+                        | C2_cmpeq_combo
+                        | C2_cmpgt_combo
+                        | C2_cmpgtu_combo
+                        | C2_cmplt_combo
+                        | C2_cmpltu_combo
+                        | C2_cmpeqi_combo
+                        | C2_cmpgti_combo
+                        | C2_cmpgtui_combo
+                        | J4_cmpeq_f_jumpnv_t_combo
+                        | J4_cmpeq_t_jumpnv_t_combo
+                        | J4_cmpgt_f_jumpnv_t_combo
+                        | J4_cmpgt_t_jumpnv_t_combo
+                        | J4_cmpgtu_t_jumpnv_t_combo
+                        | J4_cmpgtu_f_jumpnv_t_combo
+                        | J4_cmplt_t_jumpnv_t_combo
+                        | J4_cmplt_f_jumpnv_t_combo
+                        | J4_cmpltu_t_jumpnv_t_combo
+                        | J4_cmpltu_f_jumpnv_t_combo
+                        | J4_cmpeqi_t_jumpnv_t_combo
+                        | J4_cmpeqi_f_jumpnv_t_combo
+                        | J4_cmpgti_t_jumpnv_t_combo
+                        | J4_cmpgti_f_jumpnv_t_combo
+                        | J4_cmpgtui_t_jumpnv_t_combo
+                        | J4_cmpgtui_f_jumpnv_t_combo
+                        | J4_cmpeqn1_t_jumpnv_t_combo
+                        | J4_cmpgtn1_t_jumpnv_t_combo
+                        | J4_combo_t_jumpnv_t
+                        | J4_combo_f_jumpnv_t
                         | J2_jumpt_nv
                         | J2_jumpf_nv
                         | Jump_merge
@@ -3694,12 +3700,11 @@ data HexagonInstruction = A2_abs
                         | MVD_ce
                         | MVPR_ce
                         | MVRP_ce
-                        | J4_cmpeqi_t_jumpnv_t_linear_ce
-                        | J4_cmpeqi_f_jumpnv_t_linear_ce
-                        | J4_cmpgti_t_jumpnv_t_linear_ce
-                        | J4_cmpgti_f_jumpnv_t_linear_ce
-                        | J4_cmpgtui_t_jumpnv_t_linear_ce
-                        | J4_cmpgtui_f_jumpnv_t_linear_ce
+                        | C2_cmpeqi_combo_ce
+                        | C2_cmpgti_combo_ce
+                        | C2_cmpgtui_combo_ce
+                        | J4_combo_t_jumpnv_t_ce
+                        | J4_combo_f_jumpnv_t_ce
                         | J2_jumpt_nv_ce
                         | J2_jumpf_nv_ce
                         | Jump_merge_ce
