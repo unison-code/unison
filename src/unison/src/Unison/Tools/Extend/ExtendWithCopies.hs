@@ -107,12 +107,15 @@ extendReferences vc rtmap cf (src, dst) (Just d) us (ti, code, irs, id, t2rs) =
          ucs') = case M.lookup src rtmap of
                   Just (_, ris) -> rematCopies src code ris (dcs, ucs) vc (d, us)
                   Nothing -> (dcs, ucs)
+        ro         = case M.lookup src rtmap of
+                      Just (ro':_, _) -> Just ro'
+                      Nothing -> Nothing
         t'         = if null dcs' then src else mkTemp ti
-        extDefOut  = extend vc rtmap undefT src after (ti, code, [], id, t2rs)
+        extDefOut  = extend vc ro undefT src after (ti, code, [], id, t2rs)
                      (d, dcs')
         (ti', code',
          irs', id',
-         t2rs')    = foldl (extend vc rtmap dst t' before) extDefOut
+         t2rs')    = foldl (extend vc ro dst t' before) extDefOut
                      (zip us ucs')
     in (ti', code', irs ++ irs', id', t2rs')
 
@@ -151,16 +154,12 @@ extend _ _ firstT prevT _ (ti, code, irs, id, t2rs) (oprToExtend, []) =
         t2rs'  = replaceTemp t2rs r
     in (ti, code', irs ++ [(oprToExtend, r)], id, t2rs')
 
-extend vc rtmap firstT prevT pos (ti, code, irs, id, t2rs) (oprToExtend, insts) =
+extend vc ro firstT prevT pos (ti, code, irs, id, t2rs) (oprToExtend, insts) =
     let newT   = mkTemp ti
         ti'    = ti + 1
         id'    = id + 1
         copy   = mkCopy id insts (undoPreAssign prevT) [] (undoPreAssign newT) []
         copy1  = mapToAttrVirtualCopy (const vc) copy
-        ro     = case (M.lookup firstT rtmap, M.lookup prevT rtmap) of
-                  (Just (ro:_, _), _) -> Just ro
-                  (Nothing, Just (ro:_, _)) -> Just ro
-                  (Nothing, Nothing) -> Nothing
         copy2  = mapToAttrRematOrigin (const (fmap oId ro)) copy1
         copy3  = case ro of
                   (Just ro') -> mapToAttrMem (const (aMem $ oAs ro')) copy2
