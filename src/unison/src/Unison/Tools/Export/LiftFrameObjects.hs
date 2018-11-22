@@ -39,7 +39,7 @@ liftFrameObjects f @ Function {fCode = code, fFixedStackFrame = fobjs} _target =
 
 machineFrameObjects o = [mo | (Bound mo) <- oAllOps o, isMachineFrameObject mo]
 
-mfoAtoms (MachineFrameObject o (Just s) _) = [o..o+s-1]
+mfoAtoms (MachineFrameObject o (Just s) _ _) = [o..o+s-1]
 
 mfoAtomUnion mfos = S.toList $ S.fromList $ concatMap mfoAtoms mfos
 
@@ -61,6 +61,6 @@ toFrameIndex o2i (Bound mfo) | isMachineFrameObject mfo =
   in fi
 toFrameIndex _ op = op
 
-toFrameObject o2i (MachineFrameObject o (Just size) align) =
+toFrameObject o2i (MachineFrameObject o (Just size) align _) =
   let idx = fst $ o2i M.! o
   in mkFrameObject idx 0 (Just size) align Nothing
