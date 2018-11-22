@@ -286,7 +286,7 @@ mkOprHexagonSP = Register $ mkTargetRegister hexagonSP
 
 mkBoundMachineFrameObject i (Register r) =
     let size = stackSize i
-    in mkBound (mkMachineFrameObject (infRegPlace r * 4) (Just size) size)
+    in mkBound (mkMachineFrameObject (infRegPlace r * 4) (Just size) size False)
 
 stackSize op
   | op `elem` [STW, STW_nv, LDW] = 4

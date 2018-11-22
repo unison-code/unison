@@ -107,7 +107,7 @@ data StackDirection =
   StackGrowsUp |
   -- | Adding an object to the stack decreases the stack address
   StackGrowsDown
-  deriving Show
+  deriving (Eq, Show)
 
 optionValue option to =
     case find (\o -> option `isPrefixOf` o) to of

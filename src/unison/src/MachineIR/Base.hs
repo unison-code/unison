@@ -288,9 +288,10 @@ data MachineOperand r =
     } |
   -- | Frame object (internal use, does not correspond to any LLVM type)
   MachineFrameObject {
-    mfoOffset    :: Integer,
-    mfoSize      :: Maybe Integer,
-    mfoAlignment :: Integer
+    mfoOffset     :: Integer,
+    mfoSize       :: Maybe Integer,
+    mfoAlignment  :: Integer,
+    mfoFixedSpill :: Bool
     } |
   -- | Frame size (internal use, does not correspond to any LLVM type)
   MachineFrameSize |

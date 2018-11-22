@@ -284,7 +284,7 @@ mkOprArmSP = Register $ mkTargetRegister SP
 
 mkBoundMachineFrameObject i (Register r) =
     let size = stackSize i
-    in mkBound (mkMachineFrameObject (infRegPlace r) (Just size) size)
+    in mkBound (mkMachineFrameObject (infRegPlace r) (Just size) size False)
 
 stackSize i
   | i `elem` [STORE, STORE_T, LOAD, LOAD_T] = 1

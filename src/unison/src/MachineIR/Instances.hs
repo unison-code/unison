@@ -310,8 +310,8 @@ instance Show r => Show (MachineOperand r) where
   show (MachineBlockRef id) = inBraces ["mbb", show id]
   show (MachineFrameIndex index fixed offset) =
     inBraces ["fi", show index, show fixed, show offset]
-  show (MachineFrameObject off size align) =
-    inBraces ["mfo", show off, show size, show align]
+  show (MachineFrameObject off size align fixedSpill) =
+    inBraces ["mfo", show off, show size, show align, show fixedSpill]
   show MachineFrameSize = inBraces ["mfs"]
   show (MachineExternal name) = inBraces ["ext", name]
   show (MachineGlobalAddress address offset) =
