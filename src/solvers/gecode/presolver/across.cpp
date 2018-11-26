@@ -426,6 +426,8 @@ void cond_before_items(PresolverAsserts& PA,
       if (pcs > fuse) pcs = fuse;
     }
   }
+  if (pcs < 0) // can happen if --nocc --noreserved
+    return;
   for(const pair<temporary,presolver_disj>& bef : cond_before_filter(input, Before, {})) {
     temporary t = bef.first;
     operand p = temp_def(input, t);
