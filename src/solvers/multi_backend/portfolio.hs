@@ -122,7 +122,8 @@ runChuffed flags to memLimit extJson lowerBoundFile outJsonFile =
                            chuffedTimeoutFlags to) ++
         ["-a", "-s",
          "-D", "good_cumulative=true",
-         "-D", "good_diffn=false"] ++
+         "-D", "good_diffn=false",
+         "-D", "good_member=true"] ++
         [mzn, dzn, "-o", out])
      -- finally, invoke 'outfilter' to format the output
      inf  <- openFile out ReadMode
