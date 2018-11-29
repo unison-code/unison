@@ -661,7 +661,11 @@ reoderCalleeSavedStores b = moveOperations isCalleeSavedPrologue after isIn b
 isCalleeSavedPrologue o =
   any (\i -> isInstr i o) [VSTMDDB_UPD_d8_15, TPUSH2_r4_7, TFP]
 
-moveFP b = moveOperations (isInstr TFP) after (isInstr TPUSH2_r4_7) b
+moveFP b
+  | any isTPushDel (bCode b) = moveOperations (isInstr TFP) after isTPushDel b
+  | otherwise = b
+
+isTPushDel = isInstr TPUSH2_r4_7
 
 reoderCalleeSavedLoads b =
   foldl (\b0 i -> moveOperations (isInstr i) before isTerm b0)
