@@ -298,7 +298,7 @@ cost out =
   let sol  = parseJson out
       cost = lookupOrFail "sol" sol "cost"
       -- Assumes a single goal as the minizinc solver does not support more
-      [c]  = (fromJson cost) :: [Integer]
+      c:_  = (fromJson cost) :: [Integer]
   in if c == -1 then maxInt else c
 
 maxInt = toInteger (maxBound - 1 :: Int32)
@@ -306,7 +306,8 @@ maxInt = toInteger (maxBound - 1 :: Int32)
 lowerBound lowerBoundJson =
   let json  = parseJson lowerBoundJson
       lbj   = lookupOrFail "json" json "lower_bound"
-      [lb]  = (fromJson lbj) :: [Integer]
+      -- Assumes a single goal as the minizinc solver does not support more
+      lb:_  = (fromJson lbj) :: [Integer]
   in lb
 
 freqFactor input =

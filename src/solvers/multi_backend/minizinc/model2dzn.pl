@@ -75,7 +75,7 @@ model2dzn(AVL0) :-
 	format('MAXF = ~d;\nMAXO = ~d;\nMAXP = ~d;\nMAXT = ~d;\nMAXC = ~d;\nMAXI = ~d;\nMAXR = ~d;\n', [MAXF, MAXO, MAXP, MAXT, MAXC, MAXI, MAXR]),
 	length(BInsns, Nbb),
 	avl_fetch(optimize_resource, AVL0, OptRes),
-	(OptRes = [-1] -> OptCyc = true ; OptCyc = false),
+	(OptRes = [-1|_] -> OptCyc = true; OptCyc = false),
 	format('optimize_cycles = ~w;\n', [OptCyc]),
 	write_array(bb_ops, array(1..Nbb,set(int)), BInsns),
 	write_array(bb_operands, array(1..Nbb,set(int)), BOperands),
@@ -534,7 +534,7 @@ data_to_arrays_zero_based(Data, FirstArr, SecondArr) :-
 
 compute_bb(AVL, MAXF, MAXO, MAXP, MAXT, MAXC, MAXI, MAXR,
 	   Insns, Operands, Temps, Subsumed, Frequency, MaxCycle, OptionalMin, BBOrder) :-
-	avl_fetch(maxf, AVL, MAXF),
+	avl_fetch(maxf, AVL, [MAXF|_]),
 	avl_fetch(freq, AVL, Frequency),
 	avl_fetch(maxc, AVL, MaxCycle),
 	avl_fetch(optional_min, AVL, OptionalMin),
