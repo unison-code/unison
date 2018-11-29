@@ -1080,22 +1080,23 @@ constraint
 	     array[items] of int: cand =
 	         array1d(items, [across_item_temp[k] | k in items]),
 	     array[items] of var bool: active,
-	     array[items] of var -maxwidth*(MAXT+1)..MAXR: selected,
 	     array[int] of var int: allreg =
-	         [x | x in callersaved] ++ [x | x in regs] ++ selected,
+	         [x | x in callersaved] ++ [x | x in regs] ++ [r[cand[k]] | k in items],
 	     array[int] of int: allwidth =
 	         [1 | x in callersaved] ++
 	         [1 | x in regs] ++
-		 [temp_width[cand[k]] | k in items]} in (
+		 [temp_width[cand[k]] | k in items],
+	     array[int] of var int: allresource =
+	         [1 | x in callersaved] ++
+	         [1 | x in regs] ++
+		 active} in (
 	    forall(k in items)(
-	        let {int: ck = cand[k]} in (
+	        let {int: ck = cand[k]} in
 		    (   active[k] <->
 			    eval_expr(across_item_cond[k]) \/
-			    (ls[ck] <= c[opi] /\ c[opi] < le[ck])) /\
-		    selected[k] = ite(active[k], r[ck], -maxwidth*(ck+1))
-		)
+			    (ls[ck] <= c[opi] /\ c[opi] < le[ck]))
 	    ) /\
-	    noverlap(allreg, allwidth)
+	    cumulative(allreg, allwidth, allresource, 1)
 	)
     );
 
@@ -1112,7 +1113,8 @@ constraint
 	     array[int] of var int: allreg =
 	         [x | x in callersaved] ++ [x | x in regs] ++ selected,
 	     array[int] of var int: allwidth =
-	         [1 | x in callersaved] ++ [1 | x in regs] ++ width} in (
+	         [1 | x in callersaved] ++ [1 | x in regs] ++ width,
+	     array[int] of int: allresource = [1 | x in allreg]} in (
 	    forall(it in items)(
 	        let {set of int: cit = cands[it],
 		     array[int] of int: ws  = [temp_width[k] | k in cit],
@@ -1125,9 +1127,13 @@ constraint
 		  lss[k] <= c[opi] /\ c[opi] < les[k]
 		)
 	    ) /\
-	    noverlap(allreg, allwidth)
+	    cumulative(allreg, allwidth, allresource, 1)
 	)
     );
+
+test can_clobber(int: ti, int: thea, int: thew) =
+  card(generic_temp_domain(ti) intersect (thea-temp_width[ti]+1 .. thea+thew-1))>0;
+
 
 %% spill callee-saved if and only if some temp interfers with it
 constraint
@@ -1136,15 +1142,16 @@ constraint
 	     int: ncols = card(index_set_2of2(cs_spill_transpose)),
              set of int: css_ops = {cs_spill_transpose[j,k] | j in 1..nrows, k in 1..ncols},
              set of int: preass_ops = {o | o in 0..MAXO where op_type[o] in {TYPE_IN,TYPE_CALL,TYPE_TAIL,TYPE_FUN}},
-	     set of int: tcands = {o | o in 0..MAXT where not (temp_definer[o] in css_ops union preass_ops)}} in (
+	     set of int: tcands = {t | t in 0..MAXT where not (temp_definer[t] in css_ops union preass_ops)}} in (
 	    forall(j in 1..ncols) (
 	        let {int: theop = cs_spill_transpose[1,j],
 		     int: thepu = min(op_operands[theop]),
 		     int: thetu = single_temp(thepu),
 		     int: thepd = temp_def[thetu],
 		     int: thea = min(k in index_set(preassign_reg) where preassign_operand[k]=thepd)(preassign_reg[k]),
-		     int: thew = temp_width[thetu]} in (
-		    a[theop] <-> exists(ti in tcands)(r[ti]+temp_width[ti] > thea /\ r[ti] in 0..thea+thew-1)
+		     int: thew = temp_width[thetu],
+		     set of int: clcands = {t | t in tcands where can_clobber(t,thea,thew)}} in (
+		    a[theop] <-> exists(ti in clcands)(r[ti] > max(-1,thea-temp_width[ti]) /\ r[ti] < thea+thew)
 		)
 	    )
 	)
