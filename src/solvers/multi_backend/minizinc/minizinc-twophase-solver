@@ -1,0 +1,168 @@
+#!/bin/bash
+# Assumes that the environment variable UNISON_DIR is set to the top of the
+# Unison repo
+MULTIBACKEND_DIR=$UNISON_DIR/src/solvers/multi_backend
+MINIZINC_DIR=$MULTIBACKEND_DIR/minizinc
+COMMON_DIR=$MULTIBACKEND_DIR/common
+search='topdown.mzn'
+allsolns='-a'
+mzn='mzn-gecode'
+cumulative='true'
+diffn='true'
+member='true'
+ncores='1'
+statflag='-s'
+lbflag=''
+toflag=''
+toprefix='--fzn-flag --time-out --fzn-flag '
+freeflag=''
+freedefault='--fzn-flag -f'
+rndflag=''
+nogoods=''
+lbfile='-'
+dznfile='-'
+setuponly='false'
+tail=' '
+while [ $# -gt  1 ]; do
+    opt="$1"
+    shift
+    case "${opt}" in
+      --bottomup | --bottom-up | --bottom_up)
+        search='bottomup.mzn'
+        allsolns=''
+      ;;
+      --topdown | --top-down | --top_down)
+        search='topdown.mzn'
+        allsolns='-a'
+      ;;
+      --gecode)
+        mzn='mzn-gecode'
+      ;;
+      --sicstus)
+        mzn='mzn-sicstus'
+      ;;
+      --g12cpx)
+        mzn='mzn-g12cpx'
+      ;;
+      --cpx)
+        mzn='mzn-cpx'
+      ;;
+      --chuffed)
+        mzn='mzn-chuffed'
+        lbflag='--fzn-flag --verbosity --fzn-flag 3'
+      ;;
+      --or-tools)
+          mzn='mzn-or-tools'
+	  freedefault='--fzn-flag --free_search'
+	  toprefix='--fzn-flag -time_limit --fzn-flag '
+      ;;
+      --or-tools-sat)
+          mzn='mzn-or-tools-sat'
+	  statflag='--fzn-flag --fz_logging'
+	  freedefault='--fzn-flag --free_search'
+	  toprefix='--fzn-flag -time_limit --fzn-flag '
+      ;;
+      --cumulative)
+        cumulative='true'
+      ;;
+      --no-cumulative)
+        cumulative='false'
+      ;;
+      --diffn)
+        diffn='true'
+      ;;
+      --no-diffn)
+        diffn='false'
+      ;;
+      --member)
+        member='true'
+      ;;
+      --no-member)
+        member='false'
+      ;;
+      --no-lb)
+        lbflag=''
+      ;;
+      --free)
+        freeflag=$freedefault
+      ;;
+      --rnd)
+        rndflag='--fzn-flag --rnd-seed --fzn-flag 123456'
+      ;;
+      --vsids)
+        freeflag='--fzn-flag -vsids=true'
+      ;;
+      --to)
+	toflag=$toprefix$1
+	shift
+	;;
+      --nogoods)
+	  nogoods='--fzn-flag --learnt-stats-nogood'
+      ;;
+      -o)
+	OUTJSON=$1
+	shift
+      ;;
+      -p)
+	ncores=$1
+	shift
+      ;;
+      -l)
+        lbfile=$1
+	shift
+      ;;
+      -dzn)
+        dznfile=$1
+	shift
+      ;;
+      --fzn-flag)
+	tail=$tail'--fzn-flag '$1' '
+	shift
+      ;;
+      --setuponly)
+	setuponly=true
+      ;;
+    esac
+done
+DIRBASENAME=${1%.ext.json}
+if [ $dznfile == '-' ]; then
+  EXTJSON=$1
+  dznfile=$DIRBASENAME.dzn
+  shift
+  echo "json2dzn('${EXTJSON}'),halt." | sicstus -f --nologo --noinfo -l $MINIZINC_DIR/model2dzn.pl
+fi
+if [ $mzn = 'mzn-gecode' ]; then
+  pflag='-p'
+  pvalue=${ncores}
+else
+  pflag=''
+  pvalue=''
+fi
+if [ $lbfile != '-' ]; then
+  statflag=$statflag' '$lbflag
+fi
+if [ $setuponly = true ]; then
+    exit 0
+fi
+
+radznfile=$DIRBASENAME.ra.dzn
+isdznfile=$DIRBASENAME.is.dzn
+
+set -x
+
+cp $dznfile $radznfile
+printf "ii_soln = [];\n" >> $radznfile
+printf "rt_soln = [];\n" >> $radznfile
+printf "y_soln = [];\n" >> $radznfile
+printf "r_soln = [];\n" >> $radznfile
+
+cat $MINIZINC_DIR/code-generation-twophase.mzn $MINIZINC_DIR/${search} > $DIRBASENAME.mzn
+
+time ${mzn} ${allsolns} ${statflag} ${pflag} ${pvalue} ${freeflag} ${rndflag} ${toflag} ${nogoods} -D good_cumulative=${cumulative} -D good_diffn=${diffn} -D good_member=${member} -D phase=1 ${tail} $DIRBASENAME.mzn $radznfile | $COMMON_DIR/outfilter.pl ${OUTJSON}.last ${lbfile} > ${OUTJSON}.ra
+
+cp $dznfile $isdznfile
+grep _soln $OUTJSON.ra | sed 's/;,/;/g' >> $isdznfile
+
+time ${mzn} ${allsolns} ${statflag} ${pflag} ${pvalue} ${freeflag} ${rndflag} ${toflag} ${nogoods} -D good_cumulative=${cumulative} -D good_diffn=${diffn} -D good_member=${member} -D phase=2 ${tail} $DIRBASENAME.mzn $isdznfile | $COMMON_DIR/outfilter.pl ${OUTJSON}.last ${lbfile} > ${OUTJSON}.is
+
+grep -v _soln $OUTJSON.is | aeson-pretty > $OUTJSON
