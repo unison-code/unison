@@ -18,6 +18,7 @@ module Unison.Target.Mips.Transforms
      clobberRAInCall,
      insertGPDisp,
      markBarriers,
+     enforceMandatoryFrame,
      cleanClobbers) where
 
 import Unison
@@ -28,6 +29,7 @@ import Unison.Target.Mips.SpecsGen.MipsInstructionDecl
 
 -- | Gives patterns as sequences of instructions and replacements where
 -- | registers are transformed into temporaries
+
 
 rs2ts _ (
   m @ SingleOperation {
@@ -383,6 +385,26 @@ markBarriers o @ SingleOperation {
     oOpr = Natural (Linear {oIs = [TargetInstruction i]}), oAs = as}
   | isBarrierInstr i = o {oAs = as {aReads = [], aWrites = [ControlSideEffect]}}
 markBarriers o = o
+
+{-
+  Mark stack handling instructions mandatory for functions that include calls
+  and do not include exit blocks (as at least the return address needs to be
+  spilled into the stack).
+-}
+
+enforceMandatoryFrame f (
+  a @ SingleOperation {
+     oOpr = (Natural ai @ Linear {oIs = [_, TargetInstruction i]})}
+  :
+  rest) _ | i `elem` [ADDiu_sp, ADDiu_negsp] &&
+            any isCall (flatCode f) &&
+            any isReturnBlock (fCode f) &&
+            none isExitBlock (fCode f) =
+            let a1 = a {oOpr = Natural ai {oIs = [TargetInstruction i]}}
+                a2 = mapToActivators (const []) a1
+            in (rest, [a2])
+
+enforceMandatoryFrame _ (o : rest) _ = (rest, [o])
 
 cleanClobbers f = mapToOperation cleanClobber f
 

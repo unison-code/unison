@@ -423,7 +423,8 @@ transforms ImportPostLift = [peephole clobberRAInCall]
 
 transforms AugmentPreRW = [peephole insertGPDisp]
 
-transforms AugmentPostRW = [mapToOperation markBarriers]
+transforms AugmentPostRW = [mapToOperation markBarriers,
+                            peephole enforceMandatoryFrame]
 
 transforms ExportPreLow = [cleanClobbers]
 
