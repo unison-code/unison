@@ -14,7 +14,7 @@ usages to i =
   let it = SpecsGen.itinerary i
   in mergeUsages (itineraryUsage' to i it)
      ([mkUsage BundleWidth (size i) 1 | size i > 0] ++
-      [mkUsage Issue (issue i) 1])
+      [mkUsage Issue (issue i) 1 | issue i > 0])
 
 itineraryUsage' to i it =
   let us = itineraryUsage i it
