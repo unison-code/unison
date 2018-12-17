@@ -1050,7 +1050,7 @@ void Model::post_processor_resources_constraints(block b) {
       ro << task.o;
     }
 
-    cumulative(*this, input->cap[r], rc, rdur, re, rcon, ro);
+    cumulative(*this, input->cap[r], rc, rdur, re, rcon, ro, IPL_BASIC_ADVANCED);
 
   }
 
@@ -1469,7 +1469,7 @@ void Model::post_space_capacity_constraints(block b) {
         use << min(cap, input->width[t]);
         ot << var(l(t) && (ld(t) > 0) && totally_in_register_space(t, rs));
       }
-      cumulative(*this, cap, st, dur, et, use, ot);
+      cumulative(*this, cap, st, dur, et, use, ot, IPL_BASIC_ADVANCED);
     }
   }
 
