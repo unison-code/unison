@@ -120,8 +120,15 @@ vector<InstructionAssignment> shave_instructions(
 // Propagates, possibly emits the lower bound, and returns the status
 Gecode::SpaceStatus status_lb(GlobalModel * base);
 
+// Gives the optimality gap from a base space, a solution, and a goal index n
+double optimality_gap(GlobalModel * base, const GlobalModel * sol,
+                      unsigned int n);
+
 // Emits the lower bound to a file (if specified by the options)
 void emit_lower_bound(const GlobalModel * base, bool proven = false);
+
+// Emits the initial optimality gap to a file (if specified by the options)
+void emit_initial_gap(GlobalModel * base, const GlobalModel * sol);
 
 // Makes a new local space out of a global one
 LocalModel * make_local(const GlobalModel * gs, block b);

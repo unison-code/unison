@@ -281,21 +281,6 @@ void emit_local(LocalModel * local, unsigned long int iteration, string prefix) 
   fout.close();
 }
 
-double optimality_gap(GlobalModel * base, const GlobalModel * sol,
-                      unsigned int n) {
-  int cost_lb;
-  int max_cost = sol->cost()[n].max();
-  if (base->status() == SS_FAILED) {
-    // If the base space is failed that means we have proven optimality and
-    // the optimality gap should be 0%
-    assert(sol->cost()[n].assigned());
-    cost_lb = sol->cost()[n].val();
-  } else {
-    cost_lb = base->cost()[n].min();
-  }
-  return ((((double)(max_cost - cost_lb)) / (double)cost_lb) * 100.0);
-}
-
 string unsat_report(const GlobalModel * base) {
   stringstream ss;
   ss << "proven absence of solutions with cost less or equal than "
@@ -665,6 +650,10 @@ int main(int argc, char* argv[]) {
   // Post cost upper bound
   base->post_upper_bound(input.maxf);
   Gecode::SpaceStatus ss1 = status_lb(base);
+
+  // Emit initial optimality gap
+  emit_initial_gap(base, base);
+
   if (ss1 == SS_FAILED) { // The problem has no solution
     double execution_time = t.stop();
     if (options.verbose()) {

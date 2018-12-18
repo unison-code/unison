@@ -124,6 +124,21 @@ Gecode::SpaceStatus status_lb(GlobalModel * base) {
   return ss;
 }
 
+double optimality_gap(GlobalModel * base, const GlobalModel * sol,
+                      unsigned int n) {
+  int cost_lb;
+  int max_cost = sol->cost()[n].max();
+  if (base->status() == SS_FAILED) {
+    // If the base space is failed that means we have proven optimality and
+    // the optimality gap should be 0%
+    assert(sol->cost()[n].assigned());
+    cost_lb = sol->cost()[n].val();
+  } else {
+    cost_lb = base->cost()[n].min();
+  }
+  return ((((double)(max_cost - cost_lb)) / (double)cost_lb) * 100.0);
+}
+
 void emit_lower_bound(const GlobalModel * base, bool proven) {
   if (base->options->lower_bound_file().empty()) return;
   vector<int> lbs;
@@ -133,6 +148,20 @@ void emit_lower_bound(const GlobalModel * base, bool proven) {
   ofstream fout;
   fout.open(base->options->lower_bound_file());
   fout << "{\"lower_bound\":" << show(lbs, ", ", "", "[]") << "}" << endl;
+  fout.close();
+}
+
+void emit_initial_gap(GlobalModel * base, const GlobalModel * sol) {
+  if (base->options->initial_gap_file().empty()) return;
+  vector<double> igs;
+  for (unsigned int n = 0; n < base->input->N; n++) {
+    double ig = (base->status() == SS_FAILED) ?
+      0.0 : optimality_gap(base, sol, n);
+    igs.push_back(ig / 100.0);
+  }
+  ofstream fout;
+  fout.open(base->options->initial_gap_file());
+  fout << "{\"initial_gap\":" << show(igs, ", ", "", "[]") << "}" << endl;
   fout.close();
 }
 

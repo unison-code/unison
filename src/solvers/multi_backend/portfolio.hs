@@ -50,7 +50,8 @@ data Portfolio =
              chuffedFlags :: String,
              timeOut :: Maybe Integer,
              memLimit :: Bool,
-             lowerBoundFile :: FilePath}
+             lowerBoundFile :: FilePath,
+             initialGapFile :: FilePath}
   deriving (Data, Typeable, Show)
 
 data Solver = Gecode | Chuffed | NoSolver deriving Eq
@@ -60,11 +61,12 @@ portfolioArgs = cmdArgsMode $ Portfolio
      inFile  = "" &= argPos 1 &= typFile,
      outFile = "" &= name "o" &= help "Output file name" &= typFile,
      verbose = False &= name "v" &= help "Run solvers in verbose mode",
-     gecodeFlags = "" &= help "Flags passed to the Gecode solver",
+     gecodeFlags = "" &= name "e" &= help "Flags passed to the Gecode solver",
      chuffedFlags = "" &= help "Flags passed to the Chuffed solver",
      timeOut = Nothing &= help "Timeout for both solvers (in seconds)",
      memLimit = True &= help "Limit the use of memory by Chuffed to 16 GB",
-     lowerBoundFile = "" &= name "l" &= help "Lower bound file" &= typFile
+     lowerBoundFile = "" &= name "l" &= help "Lower bound file" &= typFile,
+     initialGapFile = "" &= name "g" &= help "Initial optimality gap file" &= typFile
     }
 
 gecodeFile :: FilePath -> String
@@ -72,10 +74,11 @@ gecodeFile outJsonFile = outJsonFile ++ ".gecode"
 chuffedFile :: FilePath -> String
 chuffedFile outJsonFile = outJsonFile ++ ".chuffed"
 
-runGecode flags to v extJson lowerBoundFile outJsonFile =
+runGecode flags to v extJson lowerBoundFile initialGapFile outJsonFile =
   do tryUntilSuccess $ callProcess "gecode-solver"
        (["-o", outJsonFile] ++
         (if null lowerBoundFile then [] else ["-l", lowerBoundFile]) ++
+        (if null initialGapFile then [] else ["-g", initialGapFile]) ++
         ["-verbose" | v] ++ (splitFlags flags) ++
         (gecodeTimeoutFlags to) ++
         [extJson])
@@ -210,7 +213,7 @@ main =
        result <- timeout (fromInteger to)
                  (race
                   (runGecode gecodeFlags to verbose inFile
-                   gecodeLowerBoundFile gecodeOutFile)
+                   gecodeLowerBoundFile initialGapFile gecodeOutFile)
                   (runChuffed chuffedFlags to memLimit inFile
                    chuffedLowerBoundFile chuffedOutFile))
        end <- getCurrentTime

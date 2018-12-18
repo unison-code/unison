@@ -60,6 +60,12 @@ string show(const int i) {
   return s.str();
 }
 
+string show(const double d) {
+  stringstream s;
+  s << d;
+  return s.str();
+}
+
 string show(const string s) {
   return s;
 }

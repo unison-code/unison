@@ -189,6 +189,8 @@ string show_range(const T & r) {
 
 string show(const int);
 
+string show(const double);
+
 string show(const string);
 
 string show(const Temporand);
