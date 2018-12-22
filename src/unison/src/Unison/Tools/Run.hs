@@ -18,6 +18,7 @@ import System.Process
 import Control.Monad
 import Data.List.Split
 import Data.Maybe
+import System.Exit
 
 import Common.Util
 import Unison.Driver
@@ -166,6 +167,9 @@ runFunction
       (Left reason) ->
         do when (verbose && reason == OverSizeThreshold) $
                 hPutStrLn stderr "Size threshold exceeded, skipping function..."
+           when (isNothing baseFile') $
+                do hPutStrLn stderr "A function has been skipped, please provide a default base file (--basefile FILE)"
+                   exitFailure
            let unisonMirFile = addExtension "unison.mir" prefix
            copyFile (fromJust baseFile') unisonMirFile
            return prefix
