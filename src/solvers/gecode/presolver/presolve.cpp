@@ -121,8 +121,15 @@ void presolve(Parameters & input, PresolverOptions & options) {
   input.dominates.clear();
   input.wcet.clear();
 
+  // 35: JSON.wcet
+  //
+  // Must be run first because it is mandatory in 'minizinc-solver'. Cannot time
+  // out before the trivial unfeasibility check below.
+
+  computeWCET(input);
+
   // Abort if the problem is trivially unfeasible
-  
+
   t0.start();
   {
     ModelOptions moptions;
@@ -140,13 +147,6 @@ void presolve(Parameters & input, PresolverOptions & options) {
       return;
     }
   }
-
-  if (timeout(t, options, "trivial unfeasibility", t0))
-    return;
-  
-  // 35: JSON.wcet
-  
-  computeWCET(input);
 
   // 1: JSON.strictly_congr <- GENCONGR()
 
@@ -169,7 +169,7 @@ void presolve(Parameters & input, PresolverOptions & options) {
   BeforePresolver::presolve(input, Nogoods);
   temp_domain(input);
   for (const block b : input.B)
-    suppress_copies(input, b, Nogoods);  
+    suppress_copies(input, b, Nogoods);
   if (timeout(t, options, "before", t0))
     return;
 
@@ -439,7 +439,7 @@ void presolve(Parameters & input, PresolverOptions & options) {
   if (options.tabling()) {
 
   // 29: GenActiveTables(), JSON.tmp_tables
-    
+
     t0.start();
     input.compute_derived();	// refresh for Model:: methods
     gen_active_tables(input, t, options);
@@ -463,21 +463,21 @@ void presolve(Parameters & input, PresolverOptions & options) {
     if (timeout(t, options, "optional_min", t0))
       return;
   } // end of options.tabling()
-  
+
   // 34: JSON.subsumed_resources
-  
+
   subsumed_resources(input);
-  
+
   // 36: JSON.temp_domain
-  
+
   temp_domain(input);
-  
+
   // 38: JSON.precedences <- JSON.precedences U NormalizePrecedences(GenRegionPrecedences())
 
   if (options.regions()) {
     t0.start();
     precedence_set region_precedences;
-    gen_region_precedences(input, min_con_erg, precedences, region_precedences); 
+    gen_region_precedences(input, min_con_erg, precedences, region_precedences);
     normalize_precedences(input, region_precedences, input.precedences);
     if (timeout(t, options, "region_precedences", t0))
       return;
