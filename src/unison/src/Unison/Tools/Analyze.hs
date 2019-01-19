@@ -91,10 +91,10 @@ analyze (estimateFreq, simulateStalls, mirVersion, modelCost, overheadOnly)
 
   in (gs, partialFs ++ partialFs')
 
-associateFunction (cf, _) g @ (DynamicGoal Cycles)            = (g, cf)
-associateFunction (cf, _) g @ (StaticGoal Cycles)             = (g, cf)
-associateFunction (_, rf) g @ (DynamicGoal (ResourceUsage _)) = (g, rf)
-associateFunction (_, rf) g @ (StaticGoal (ResourceUsage _))  = (g, rf)
+associateFunction (cf, _) g @ (DynamicGoal Cycles) = (g, cf)
+associateFunction (cf, _) g @ (StaticGoal Cycles)  = (g, cf)
+associateFunction (_, rf) g @ (DynamicGoal {})     = (g, rf)
+associateFunction (_, rf) g @ (StaticGoal {})      = (g, rf)
 
 analyzerGeneralTransformations (estimateFreq, modelCost, overheadOnly) =
     [(addDelimiters, "addDelimiters", True),

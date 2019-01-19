@@ -77,7 +77,8 @@ target =
       API.tReadWriteLatency = readWriteLatency,
       API.tAlternativeTemps = const alternativeTemps,
       API.tExpandCopy       = const expandCopy,
-      API.tConstraints      = const constraints
+      API.tConstraints      = const constraints,
+      API.tSpillOverhead    = const spillOverhead
     }
 
 instance Read ARMInstruction where
@@ -897,3 +898,25 @@ altLoadStoreConstraints (_ : code) constraints = (code, constraints)
 
 isSingleLoadStore i = i `elem` [TLDRi, T2LDRi12, TSTRi, T2STRi12]
 isDoubleLoadStore i = i `elem` [T2LDRDi8, T2STRDi8]
+
+latency i = maybeMax 0 $ map occupation (usages [] i)
+
+spillOverhead (i, _, _)
+  | i `elem` [TPUSH, TPUSH_r4_7, TPUSH_r8_11, TPUSH2_r4_7, TPUSH2_r4_11, TPUSH_4, TPUSH_4_5, TPUSH_4_6, TPUSH_4_7] = Just (True, latency i)
+spillOverhead (i, _, _)
+  | i `elem` [TPOP, TPOP_RET, TPOP_r4_7, TPOP_r8_11, TPOP2_r4_7, TPOP2_r4_11, TPOP2_r4_7_RET, TPOP2_r4_11_RET, TPOP_RET_4, TPOP_RET_4_5, TPOP_RET_4_6, TPOP_RET_4_7] = Just (False, latency i)
+spillOverhead (i, _, _)
+  | i `elem` [T2STMDB_UPD, T2STMDB_UPD_4_8, T2STMDB_UPD_4_9, T2STMDB_UPD_4_10, T2STMDB_UPD_4_11] = Just (True, latency i)
+spillOverhead (i, _, _)
+  | i `elem` [T2LDMIA, T2LDMIA_RET, T2LDMIA_UPD, T2LDMIA_4, T2LDMIA_UPD_4, T2LDMIA_UPD_4_4, T2LDMIA_UPD_4_5, T2LDMIA_UPD_4_6, T2LDMIA_UPD_4_7, T2LDMIA_UPD_4_8, T2LDMIA_UPD_4_9, T2LDMIA_UPD_4_10, T2LDMIA_UPD_4_11, T2LDMIA_RET_4_8, T2LDMIA_RET_4_9, T2LDMIA_RET_4_10, T2LDMIA_RET_4_11] = Just (False, latency i)
+spillOverhead (i, sp:_, _)
+  | i `elem` [VLDMDIA_UPD, VLDMDIA_UPD_d8_15] && sp == mkOprArmSP = Just (False, latency i)
+spillOverhead (i, sp:_, _)
+  | i `elem` [VSTMDDB_UPD, VSTMDDB_UPD_d8_15] && sp == mkOprArmSP = Just (True, latency i)
+spillOverhead (i, _:sp:_, _)
+  | i `elem` [T2STRBi12, T2STRi12, TSTRspi, VSTRS, TSTRi] && sp == mkOprArmSP = Just (True, latency i)
+spillOverhead (i, _:_:sp:_, _)
+  | i `elem` [T2STRDi8] && sp == mkOprArmSP = Just (True, latency i)
+spillOverhead (i, sp:_, _)
+  | i `elem` [T2LDRBi12, T2LDRi12, TLDRspi, VLDRD, VLDRS, T2LDR_POST, T2LDRDi8, TLDRi] && sp == mkOprArmSP = Just (False, latency i)
+spillOverhead _ = Nothing

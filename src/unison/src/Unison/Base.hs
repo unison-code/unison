@@ -634,7 +634,11 @@ data HighLevelGoal =
   -- | Code size optimization (corresponds to 'StaticGoal BundleWidth')
   Size |
   -- | Spill code overhead optimization (corresponds to 'DynamicGoal Spill')
-  Spill
+  Spill |
+  -- | Spill code overhead (only for analysis, corresponds to 'DynamicGoal SpillOverhead')
+  SpOvh |
+  -- | Number of spills (only for analysis, corresponds to 'StaticGoal SpillAction')
+  SpNo
   deriving (Eq, Ord)
 
 -- | Types corresponding to 'Operation'.
@@ -1065,6 +1069,10 @@ data Goal s =
 data GoalObject s =
     -- | Total estimated execution cycles
     Cycles |
+    -- | Spill code overhead
+    SpillOverhead |
+    -- | Spill action (store)
+    SpillAction |
     -- | Usage of a certain resource
     ResourceUsage s
     deriving Show

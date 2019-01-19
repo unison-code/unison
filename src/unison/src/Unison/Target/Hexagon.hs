@@ -78,7 +78,8 @@ target =
       API.tReadWriteLatency = const readWriteLatency,
       API.tAlternativeTemps = const alternativeTemps,
       API.tExpandCopy       = const expandCopy,
-      API.tConstraints      = constraints
+      API.tConstraints      = constraints,
+      API.tSpillOverhead    = const spillOverhead
     }
 
 -- | Gives the type of natural operation according to the instruction
@@ -806,3 +807,12 @@ isCmpComboTargetInstr _ = False
 
 isJumpComboTargetInstr (TargetInstruction i) = isComboNVCJ i
 isJumpComboTargetInstr _ = False
+
+
+spillOverhead (i, sp:_, _)
+  | i `elem` [S2_storeri_io, S2_storerd_io, S2_storerinew_io] &&
+    sp == mkOprHexagonSP = Just (True, 1)
+spillOverhead (i, sp:_, _)
+  | i `elem` [L2_loadri_io, L2_loadrd_io] &&
+    sp == mkOprHexagonSP = Just (False, 1)
+spillOverhead _ = Nothing

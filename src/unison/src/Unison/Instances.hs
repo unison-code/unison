@@ -390,4 +390,6 @@ instance Read HighLevelGoal where
 readHighLevelGoal "speed" = Speed
 readHighLevelGoal "size"  = Size
 readHighLevelGoal "spill" = Spill
+readHighLevelGoal "spovh" = SpOvh
+readHighLevelGoal "spno" = SpNo
 readHighLevelGoal goal = error ("unmatched: readHighLevelGoal " ++ show goal)

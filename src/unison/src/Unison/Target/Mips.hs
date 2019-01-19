@@ -73,7 +73,8 @@ target =
       API.tReadWriteLatency = readWriteLatency,
       API.tAlternativeTemps = const alternativeTemps,
       API.tExpandCopy       = const expandCopy,
-      API.tConstraints      = const constraints
+      API.tConstraints      = const constraints,
+      API.tSpillOverhead    = const spillOverhead
     }
 
 instance Read MipsInstruction where
@@ -513,3 +514,19 @@ correctUses i info
     | otherwise = info
 
 adjustDefLatency to i = second (map (applyToLatency (const (latency to i))))
+
+latency' i = latency [] i
+
+spillOverhead (i, _:sp:_, _)
+  | i `elem` [SW, SB, SDC1, SWC1] && sp == mkOprMipsSP =
+    Just (True, latency' i)
+spillOverhead (i, sp:_, _)
+  | i `elem` [LW, LBu, LDC1, LWC1] && sp == mkOprMipsSP =
+    Just (False, latency' i)
+spillOverhead (i, _, _)
+  | i `elem` [SW_fi, SB_fi, SWC1_fi] =
+    Just (True, latency' i)
+spillOverhead (i, _, _)
+  | i `elem` [LW_fi, LBu_fi, LDC1_fi, LWC1_fi] =
+    Just (False, latency' i)
+spillOverhead _ = Nothing

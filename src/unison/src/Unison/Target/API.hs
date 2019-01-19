@@ -59,7 +59,8 @@ module Unison.Target.API (
   readWriteLatency,
   alternativeTemps,
   expandCopy,
-  constraints
+  constraints,
+  spillOverhead
   ) where
 
 import Data.List
@@ -195,6 +196,7 @@ readWriteLatency (ti, to) rwo (pi, pa) (ci, ca) =
 alternativeTemps (ti, to) = tAlternativeTemps ti to
 expandCopy (ti, to) = tExpandCopy ti to
 constraints (ti, to) = tConstraints ti to
+spillOverhead (ti, to) = tSpillOverhead ti to
 
 -- | Container with information about a 'Function' along with the
 -- function itself.
@@ -245,6 +247,7 @@ type FunctionInfo i r rc =
 --  'tAlternativeTemps'    -      -         -      x       -     -
 --  'tExpandCopy'          -      -         -      x       -     -
 --  'tConstraints'         -      -         -      -       x     -
+--  'tSpillOverhead'       -      -         -      -       -     -
 -- @
 
 data TargetDescription i r rc s = TargetDescription {
@@ -352,7 +355,11 @@ data TargetDescription i r rc s = TargetDescription {
                            BlockOperation i r -> [BlockOperation i r],
       -- | Custom processor constraints
       tConstraints      :: TargetOptions -> Function i r ->
-                           [ConstraintExpr i rc]
+                           [ConstraintExpr i rc],
+      -- | Spill sign and overhead of a given instruction and operands
+      -- (analysis only)
+      tSpillOverhead    :: TargetOptions -> (i, [Operand r], [Operand r]) ->
+                           Maybe (Bool, Latency)
 }
 
 -- | Any 'TargetDescription'. Used to support multiple targets without

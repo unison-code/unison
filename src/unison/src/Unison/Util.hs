@@ -1444,3 +1444,5 @@ lowerGoal :: Read s => HighLevelGoal -> Goal s
 lowerGoal Speed = DynamicGoal Cycles
 lowerGoal Size  = StaticGoal (ResourceUsage (read "BundleWidth"))
 lowerGoal Spill = DynamicGoal (ResourceUsage (read "SpillCost"))
+lowerGoal SpOvh = DynamicGoal SpillOverhead
+lowerGoal SpNo  = StaticGoal SpillAction
