@@ -12,16 +12,24 @@ import Unison.Target.Mips.SpecsGen.MipsInstructionDecl
 
 usages to i =
   let it = SpecsGen.itinerary i
+      -- if we don't model delay slots, all instructions are serialized by the
+      -- Issue resource
+      is = if noDelaySlots to then [mkUsage Issue 1 1]
+                              else [mkUsage Issue (issue i) 1 | issue i > 0]
   in mergeUsages (itineraryUsage' to i it)
-     ([mkUsage BundleWidth (size i) 1 | size i > 0] ++
-      [mkUsage Issue (issue i) 1 | issue i > 0])
+     ([mkUsage BundleWidth (size i) 1 | size i > 0] ++ is)
 
 itineraryUsage' to i it =
-  let us = itineraryUsage i it
-  in if unitLatency to then
-       [u {occupation = 1, offset = 0}
-       | u  <- us, resource u /= LongDuration]
-     else us
+  let us  = itineraryUsage i it
+      -- if we don't model delay slots, filter out LongDuration resource
+      us1 = if noDelaySlots to then
+              [u | u <- us, resource u /= LongDuration]
+            else us
+      us2 = if unitLatency to then
+              [u {occupation = 1, offset = 0}
+              | u  <- us1, resource u /= LongDuration]
+            else us1
+  in us2
 
 itineraryUsage i _
   | isDelaySlotInstr i = [mkUsage LongDuration 1 1]

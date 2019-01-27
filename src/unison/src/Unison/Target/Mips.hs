@@ -352,7 +352,7 @@ liftToTOpc f = mkMachineTargetOpc . f . mopcTarget
 
 -- | Target dependent post-processing functions
 
-postProcess to = [expandPseudos to, cleanNops, normalizeDelaySlots,
+postProcess to = [expandPseudos to, cleanNops, normalizeDelaySlots to,
                   flip addImplicitRegs (target, [])]
 
 expandPseudos to = mapToMachineBlock (expandBlockPseudos (expandPseudo to))
@@ -397,17 +397,23 @@ cleanNops = filterMachineInstructions (not . isSingleNop)
 isSingleNop MachineSingle {msOpcode = MachineTargetOpc NOP} = True
 isSingleNop _ = False
 
-normalizeDelaySlots = mapToMachineBlock normalizeDelaySlotInBlock
+normalizeDelaySlots to = mapToMachineBlock (normalizeDelaySlotInBlock to)
 
-normalizeDelaySlotInBlock mb @ MachineBlock {mbInstructions = mis} =
-  let mis1 = map normalizeDelaySlot mis
+normalizeDelaySlotInBlock to mb @ MachineBlock {mbInstructions = mis} =
+  let mis1 = concatMap (normalizeDelaySlot to) mis
       mis2 = map removeBundleHead mis1
   in mb {mbInstructions = mis2}
 
-normalizeDelaySlot mb @ MachineBundle {
+normalizeDelaySlot _ mb @ MachineBundle {
   mbInstrs = [mi, mbi @ MachineSingle {msOpcode = MachineTargetOpc i}]}
-  | isDelaySlotInstr i = mb {mbInstrs = [mbi, mi]}
-normalizeDelaySlot mi = mi
+  | isDelaySlotInstr i = [mb {mbInstrs = [mbi, mi]}]
+normalizeDelaySlot to MachineBundle {
+  mbInstrs = [mi, mbi @ MachineSingle {msOpcode = MachineTargetOpc i}]}
+  | isDelaySlotInstr i && noDelaySlots to = [mi, mbi]
+normalizeDelaySlot to MachineBundle {
+  mbInstrs = [mbi @ MachineSingle {msOpcode = MachineTargetOpc i}, mi]}
+  | isDelaySlotInstr i && noDelaySlots to = [mi, mbi]
+normalizeDelaySlot _ mi = [mi]
 
 removeBundleHead mb @ MachineBundle {} = mb {mbHead = False}
 removeBundleHead mi = mi
