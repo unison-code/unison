@@ -282,7 +282,7 @@ mirBundle v =
 mirSingle v n =
   do whiteSpaces n
      ds <- option [] (mirDefOperands v)
-     optional (try frameAnnotation)
+     optional (try opcodeAnnotation)
      opcode <- mirOpcode
      whiteSpace
      us <- mirOperand v `sepBy` comma
@@ -291,9 +291,13 @@ mirSingle v n =
      eol
      return (mkMachineSingle opcode [] (ds ++ us))
 
+opcodeAnnotation = try frameAnnotation <|> try wrapAnnotation
+
 frameAnnotation = try frameSetup <|> try frameDestroy
 frameSetup   = string "frame-setup "
 frameDestroy = string "frame-destroy "
+
+wrapAnnotation = string "nsw "
 
 mirOpcode = try mirVirtualOpcode <|> mirTargetOpcode
 
@@ -452,6 +456,11 @@ mirTiedDef =
      string ")"
      return id
 
+mirLaneMask =
+  do string ":0x"
+     many1 decimal
+     return ()
+
 mirMachineReg states = try mirLongNullReg <|> (mirMachineFreeReg states)
 
 mirLongNullReg =
@@ -461,6 +470,7 @@ mirLongNullReg =
 mirMachineFreeReg states =
   do name <- many alphaNumDashDotUnderscore
      optional (try mirTiedDef)
+     optional (try mirLaneMask)
      return (mkMachineFreeReg name states)
 
 mirRegFlag =
