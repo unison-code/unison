@@ -23,4 +23,4 @@ emitItinerary targetName is =
         [instructionDeclImport targetName, itineraryDeclImport targetName]
         [simpleOpcFunBind "itinerary" rhss]]
 
-toItineraryRhs = toHsCon
+toItineraryRhs = idToHsCon
