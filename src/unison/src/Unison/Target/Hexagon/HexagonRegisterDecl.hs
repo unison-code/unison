@@ -91,5 +91,9 @@ data HexagonRegister =
     USR |
     USR_OVF |
     CS |
-    GP
+    GP |
+    FRAMEKEY |
+    FRAMELIMIT |
+    GOSP |
+    VTMP
     deriving (Eq, Ord)

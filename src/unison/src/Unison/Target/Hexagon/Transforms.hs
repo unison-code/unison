@@ -46,7 +46,7 @@ extractReturnRegs _ (
                                                 oVirtualCopyD = Register ret})}
   :
   j @ SingleOperation {oOpr = Natural Branch {
-                            oBranchIs = [TargetInstruction JMPret]}}
+                            oBranchIs = [TargetInstruction PS_jmpret]}}
   :
   o @ SingleOperation {oOpr = Virtual
                                (Delimiter Out {oOuts = outs})}
@@ -306,7 +306,7 @@ shiftFrameOffset off (Bound mfi @ (MachineFrameIndex {})) =
 shiftFrameOffset _ p = p
 
 isAllocFrameOpr o =
-  isNatural o && targetInst (oInstructions o) == S2_allocframe
+  isNatural o && targetInst (oInstructions o) == S2_allocframe_simplified
 
 -- | Gives alternative instructions with the same semantics
 

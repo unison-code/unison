@@ -9,68 +9,316 @@ alignedPairs i ([], [])
        DuplexIClass3, DuplexIClass4, DuplexIClass5, DuplexIClass6,
        DuplexIClass7, DuplexIClass8, DuplexIClass9, DuplexIClassA,
        DuplexIClassB, DuplexIClassC, DuplexIClassD, DuplexIClassE,
-       DuplexIClassF, L2_deallocframe, L4_return, V4_SL2_deallocframe,
-       V4_SL2_jumpr31, V4_SL2_jumpr31_f, V4_SL2_jumpr31_fnew,
-       V4_SL2_jumpr31_t, V4_SL2_jumpr31_tnew, V4_SL2_return,
-       V4_SL2_return_f, V4_SL2_return_fnew, V4_SL2_return_t,
-       V4_SL2_return_tnew, V6_vhist, Y2_barrier, Y2_isync, Y2_syncht,
-       Y5_l2gclean, Y5_l2gcleaninv, Y5_l2gunlock]
+       DuplexIClassF, FENTRY_CALL, J2_endloop0, J2_endloop01, J2_endloop1,
+       L6_deallocframe_map_to_raw, L6_return_map_to_raw,
+       PATCHABLE_FUNCTION_ENTER, PATCHABLE_FUNCTION_EXIT,
+       SL2_deallocframe, SL2_jumpr31, SL2_jumpr31_f, SL2_jumpr31_fnew,
+       SL2_jumpr31_t, SL2_jumpr31_tnew, SL2_return, SL2_return_f,
+       SL2_return_fnew, SL2_return_t, SL2_return_tnew, V6_vhist,
+       V6_vwhist128, V6_vwhist256, V6_vwhist256_sat, Y2_barrier, Y2_break,
+       Y2_isync, Y2_syncht]
     = []
+alignedPairs i ([], [_]) | i `elem` [PS_qfalse, PS_qtrue] = []
+alignedPairs i ([], [_])
+  | i `elem` [SA1_clrf, SA1_clrfnew, SA1_clrt, SA1_clrtnew] = []
+alignedPairs i ([], [_]) | i `elem` [PS_vdd0] = []
+alignedPairs i ([], [_]) | i `elem` [V6_vd0] = []
+alignedPairs i ([], [_]) | i `elem` [V6_vdd0] = []
 alignedPairs i ([], [_])
   | i `elem`
-      [V4_SA1_clrf, V4_SA1_clrfnew, V4_SA1_clrt, V4_SA1_clrtnew,
-       V4_SA1_setin1]
+      [G_IMPLICIT_DEF, G_IMPLICIT_DEF_ce, IMPLICIT_DEF, IMPLICIT_DEF_ce,
+       L2_deallocframe_linear, L4_return_linear, LOAD_STACK_GUARD,
+       PS_false, PS_true]
     = []
-alignedPairs i ([], [_])
+alignedPairs i ([_], [_]) | i `elem` [PS_aligna, PS_aligna_ce] = []
+alignedPairs i ([_], [_]) | i `elem` [A2_tfrcrr] = []
+alignedPairs i ([_], [_]) | i `elem` [A4_tfrcpp] = []
+alignedPairs i ([_], [_]) | i `elem` [G4_tfrgcrr] = []
+alignedPairs i ([_], [_]) | i `elem` [G4_tfrgcpp] = []
+alignedPairs i ([_], [_, _])
   | i `elem`
-      [HEXAGON_V6_vd0_pseudo, HEXAGON_V6_vd0_pseudo_128B, IMPLICIT_DEF,
-       IMPLICIT_DEF_ce, L2_deallocframe_linear, L4_return_linear,
-       LOAD_STACK_GUARD, TFR_PdFalse, TFR_PdFalse_source, TFR_PdTrue,
-       TFR_PdTrue_source]
+      [L4_loadbsw2_ap, L4_loadbsw2_ap_ce, L4_loadbzw2_ap,
+       L4_loadbzw2_ap_ce, L4_loadrb_ap, L4_loadrb_ap_ce, L4_loadrh_ap,
+       L4_loadrh_ap_ce, L4_loadri_ap, L4_loadri_ap_ce, L4_loadrub_ap,
+       L4_loadrub_ap_ce, L4_loadruh_ap, L4_loadruh_ap_ce]
     = []
-alignedPairs i ([_], [_]) | i `elem` [ALIGNA, ALIGNA_ce] = []
-alignedPairs i ([_], [_])
-  | i `elem` [C2_all8, C2_any8, C2_not] = []
-alignedPairs i ([_], [_]) | i `elem` [C2_tfrpr, MVPR, MVPR_ce] = []
+alignedPairs i ([_], [_, _])
+  | i `elem`
+      [L4_loadbsw4_ap, L4_loadbsw4_ap_ce, L4_loadbzw4_ap,
+       L4_loadbzw4_ap_ce, L4_loadrd_ap, L4_loadrd_ap_ce]
+    = []
+alignedPairs i ([_, _], [_])
+  | i `elem` [J4_jumpseti, J4_jumpseti_ce] = []
 alignedPairs i ([_, _], [_])
   | i `elem`
-      [C2_and, C2_andn, C2_or, C2_orn, C2_xor, C4_fastcorner9,
-       C4_fastcorner9_not]
+      [S4_storerbnew_ap, S4_storerbnew_ap_ce, S4_storerhnew_ap,
+       S4_storerhnew_ap_ce, S4_storerinew_ap, S4_storerinew_ap_ce]
     = []
+alignedPairs i ([_, _], [_])
+  | i `elem`
+      [S4_storerb_ap, S4_storerb_ap_ce, S4_storerf_ap, S4_storerf_ap_ce,
+       S4_storerh_ap, S4_storerh_ap_ce, S4_storeri_ap, S4_storeri_ap_ce]
+    = []
+alignedPairs i ([_, _], [_])
+  | i `elem` [S4_storerd_ap, S4_storerd_ap_ce] = []
+alignedPairs i ([_], [])
+  | i `elem`
+      [A4_ext, A4_ext_ce, J2_call, J2_call_ce, J2_jump, J2_jump_ce,
+       J2_pause, J2_pause_ce, J2_trap0, J2_trap0_ce, J2_trap1_noregmap,
+       J2_trap1_noregmap_ce, PS_call_nr, PS_call_nr_ce,
+       S2_allocframe_simplified, S2_allocframe_simplified_ce,
+       S6_allocframe_to_raw, S6_allocframe_to_raw_ce, SS2_allocframe,
+       SS2_allocframe_ce, V6_vwhist128m, V6_vwhist128m_ce]
+    = []
+alignedPairs i ([_], [_])
+  | i `elem`
+      [SA1_addsp, SA1_addsp_ce, SA1_seti, SA1_seti_ce, SL2_loadri_sp,
+       SL2_loadri_sp_ce]
+    = []
+alignedPairs i ([_], [_])
+  | i `elem`
+      [A2_iconst, A2_iconst_ce, A2_tfrsi, A2_tfrsi_ce, A2_tfrsi_source,
+       A2_tfrsi_source_ce, C4_addipc, C4_addipc_ce, F2_sfimm_n,
+       F2_sfimm_n_ce, F2_sfimm_p, F2_sfimm_p_ce, L2_loadrbgp,
+       L2_loadrbgp_ce, L2_loadrhgp, L2_loadrhgp_ce, L2_loadrhgp_source,
+       L2_loadrhgp_source_ce, L2_loadrigp, L2_loadrigp_ce,
+       L2_loadrigp_source, L2_loadrigp_source_ce, L2_loadrubgp,
+       L2_loadrubgp_ce, L2_loadrubgp_source, L2_loadrubgp_source_ce,
+       L2_loadruhgp, L2_loadruhgp_ce, L2_loadruhgp_source,
+       L2_loadruhgp_source_ce, PS_loadrbabs, PS_loadrbabs_ce,
+       PS_loadrhabs, PS_loadrhabs_ce, PS_loadriabs, PS_loadriabs_ce,
+       PS_loadrubabs, PS_loadrubabs_ce, PS_loadruhabs, PS_loadruhabs_ce]
+    = []
+alignedPairs i ([_], [_])
+  | i `elem`
+      [A2_tfrpi, A2_tfrpi_ce, A2_tfrpi_source, A2_tfrpi_source_ce,
+       F2_dfimm_n, F2_dfimm_n_ce, F2_dfimm_p, F2_dfimm_p_ce, L2_loadrdgp,
+       L2_loadrdgp_ce, PS_loadrdabs, PS_loadrdabs_ce]
+    = []
+alignedPairs i ([_], [_])
+  | i `elem`
+      [SA1_combine0i, SA1_combine0i_ce, SA1_combine1i, SA1_combine1i_ce,
+       SA1_combine2i, SA1_combine2i_ce, SA1_combine3i, SA1_combine3i_ce,
+       SL2_loadrd_sp, SL2_loadrd_sp_ce]
+    = []
+alignedPairs i ([_, _], [])
+  | i `elem`
+      [J2_loop0i, J2_loop0i_ce, J2_loop1i, J2_loop1i_ce, J2_ploop1si,
+       J2_ploop1si_ce, J2_ploop2si, J2_ploop2si_ce, J2_ploop3si,
+       J2_ploop3si_ce]
+    = []
+alignedPairs i ([_, _], [_]) | i `elem` [S2_mask, S2_mask_ce] = []
+alignedPairs i ([_, _], [_])
+  | i `elem`
+      [A2_combineii, A2_combineii_ce, A4_combineii, A4_combineii_ce]
+    = []
+alignedPairs i ([_, _], [])
+  | i `elem`
+      [PS_storerbnewabs, PS_storerbnewabs_ce, PS_storerhnewabs,
+       PS_storerhnewabs_ce, PS_storerinewabs, PS_storerinewabs_ce,
+       S2_storerbnewgp, S2_storerbnewgp_ce, S2_storerhnewgp,
+       S2_storerhnewgp_ce, S2_storerinewgp, S2_storerinewgp_ce]
+    = []
+alignedPairs i ([_, _], [])
+  | i `elem`
+      [J2_loop0r, J2_loop0r_ce, J2_loop1r, J2_loop1r_ce, J2_ploop1sr,
+       J2_ploop1sr_ce, J2_ploop2sr, J2_ploop2sr_ce, J2_ploop3sr,
+       J2_ploop3sr_ce]
+    = []
+alignedPairs i ([_, _], [_])
+  | i `elem` [A2_subri, A2_subri_ce] = []
+alignedPairs i ([_, _], [_])
+  | i `elem` [A4_combineir, A4_combineir_ce] = []
+alignedPairs i ([_, _, _], [_])
+  | i `elem` [M4_mpyri_addi, M4_mpyri_addi_ce] = []
+alignedPairs i ([_, _, _], [_])
+  | i `elem` [M4_mpyrr_addi, M4_mpyrr_addi_ce] = []
+alignedPairs i ([_, _], [])
+  | i `elem` [SS2_storew_sp, SS2_storew_sp_ce] = []
+alignedPairs i ([_, _], [])
+  | i `elem`
+      [PS_storerbabs, PS_storerbabs_ce, PS_storerfabs, PS_storerfabs_ce,
+       PS_storerhabs, PS_storerhabs_ce, PS_storeriabs, PS_storeriabs_ce,
+       S2_storerbgp, S2_storerbgp_ce, S2_storerfgp, S2_storerfgp_ce,
+       S2_storerhgp, S2_storerhgp_ce, S2_storerigp, S2_storerigp_ce]
+    = []
+alignedPairs i ([_, _], [_]) | i `elem` [S4_lsli, S4_lsli_ce] = []
+alignedPairs i ([_, _], [])
+  | i `elem`
+      [PS_storerdabs, PS_storerdabs_ce, S2_storerdgp, S2_storerdgp_ce]
+    = []
+alignedPairs i ([_, _], [])
+  | i `elem` [SS2_stored_sp, SS2_stored_sp_ce] = []
+alignedPairs i ([_, rx32in, _], [rx32in'])
+  | i `elem`
+      [S4_addi_asl_ri, S4_addi_asl_ri_ce, S4_addi_lsr_ri,
+       S4_addi_lsr_ri_ce, S4_andi_asl_ri, S4_andi_asl_ri_ce,
+       S4_andi_lsr_ri, S4_andi_lsr_ri_ce, S4_ori_asl_ri, S4_ori_asl_ri_ce,
+       S4_ori_lsr_ri, S4_ori_lsr_ri_ce, S4_subi_asl_ri, S4_subi_asl_ri_ce,
+       S4_subi_lsr_ri, S4_subi_lsr_ri_ce]
+    = [(rx32in, rx32in')]
+alignedPairs i ([_, _, _], [])
+  | i `elem`
+      [J4_cmpeqi_f_jumpnv_nt, J4_cmpeqi_f_jumpnv_nt_ce,
+       J4_cmpeqi_f_jumpnv_t, J4_cmpeqi_f_jumpnv_t_ce,
+       J4_cmpeqi_t_jumpnv_nt, J4_cmpeqi_t_jumpnv_nt_ce,
+       J4_cmpeqi_t_jumpnv_t, J4_cmpeqi_t_jumpnv_t_ce,
+       J4_cmpgti_f_jumpnv_nt, J4_cmpgti_f_jumpnv_nt_ce,
+       J4_cmpgti_f_jumpnv_t, J4_cmpgti_f_jumpnv_t_ce,
+       J4_cmpgti_t_jumpnv_nt, J4_cmpgti_t_jumpnv_nt_ce,
+       J4_cmpgti_t_jumpnv_t, J4_cmpgti_t_jumpnv_t_ce,
+       J4_cmpgtui_f_jumpnv_nt, J4_cmpgtui_f_jumpnv_nt_ce,
+       J4_cmpgtui_f_jumpnv_t, J4_cmpgtui_f_jumpnv_t_ce,
+       J4_cmpgtui_t_jumpnv_nt, J4_cmpgtui_t_jumpnv_nt_ce,
+       J4_cmpgtui_t_jumpnv_t, J4_cmpgtui_t_jumpnv_t_ce]
+    = []
+alignedPairs i ([_, _], [])
+  | i `elem`
+      [J4_tstbit0_f_jumpnv_nt, J4_tstbit0_f_jumpnv_nt_ce,
+       J4_tstbit0_f_jumpnv_t, J4_tstbit0_f_jumpnv_t_ce,
+       J4_tstbit0_t_jumpnv_nt, J4_tstbit0_t_jumpnv_nt_ce,
+       J4_tstbit0_t_jumpnv_t, J4_tstbit0_t_jumpnv_t_ce]
+    = []
+alignedPairs i ([_, _, _], [])
+  | i `elem`
+      [J4_cmpeq_f_jumpnv_nt, J4_cmpeq_f_jumpnv_nt_ce,
+       J4_cmpeq_f_jumpnv_t, J4_cmpeq_f_jumpnv_t_ce, J4_cmpeq_t_jumpnv_nt,
+       J4_cmpeq_t_jumpnv_nt_ce, J4_cmpeq_t_jumpnv_t,
+       J4_cmpeq_t_jumpnv_t_ce, J4_cmpgt_f_jumpnv_nt,
+       J4_cmpgt_f_jumpnv_nt_ce, J4_cmpgt_f_jumpnv_t,
+       J4_cmpgt_f_jumpnv_t_ce, J4_cmpgt_t_jumpnv_nt,
+       J4_cmpgt_t_jumpnv_nt_ce, J4_cmpgt_t_jumpnv_t,
+       J4_cmpgt_t_jumpnv_t_ce, J4_cmpgtu_f_jumpnv_nt,
+       J4_cmpgtu_f_jumpnv_nt_ce, J4_cmpgtu_f_jumpnv_t,
+       J4_cmpgtu_f_jumpnv_t_ce, J4_cmpgtu_t_jumpnv_nt,
+       J4_cmpgtu_t_jumpnv_nt_ce, J4_cmpgtu_t_jumpnv_t,
+       J4_cmpgtu_t_jumpnv_t_ce]
+    = []
+alignedPairs i ([_, _, _], [])
+  | i `elem`
+      [J4_cmpeqn1_f_jumpnv_nt, J4_cmpeqn1_f_jumpnv_nt_ce,
+       J4_cmpeqn1_f_jumpnv_t, J4_cmpeqn1_f_jumpnv_t_ce,
+       J4_cmpeqn1_t_jumpnv_nt, J4_cmpeqn1_t_jumpnv_nt_ce,
+       J4_cmpeqn1_t_jumpnv_t, J4_cmpeqn1_t_jumpnv_t_ce,
+       J4_cmpgtn1_f_jumpnv_nt, J4_cmpgtn1_f_jumpnv_nt_ce,
+       J4_cmpgtn1_f_jumpnv_t, J4_cmpgtn1_f_jumpnv_t_ce,
+       J4_cmpgtn1_t_jumpnv_nt, J4_cmpgtn1_t_jumpnv_nt_ce,
+       J4_cmpgtn1_t_jumpnv_t, J4_cmpgtn1_t_jumpnv_t_ce]
+    = []
+alignedPairs i ([_], [_])
+  | i `elem` [C2_all8, C2_any8, C2_not, C2_pxfer_map] = []
+alignedPairs i ([_], [_]) | i `elem` [C2_tfrpr, MVPR, MVPR_ce] = []
+alignedPairs i ([_, _], [_])
+  | i `elem` [C2_xor, C4_fastcorner9, C4_fastcorner9_not] = []
 alignedPairs i ([_, _], [_]) | i `elem` [C2_vitpack] = []
 alignedPairs i ([_, _, _], [_])
   | i `elem`
       [C4_and_and, C4_and_andn, C4_and_or, C4_and_orn, C4_or_and,
        C4_or_andn, C4_or_or, C4_or_orn]
     = []
+alignedPairs i ([_, _], [_]) | i `elem` [V6_vcmov, V6_vncmov] = []
+alignedPairs i ([_, _, _], [_])
+  | i `elem` [V6_vccombine, V6_vnccombine] = []
 alignedPairs i ([_], [_]) | i `elem` [C2_mask] = []
-alignedPairs i ([_, _], []) | i `elem` [J2_callrf, J2_callrt] = []
 alignedPairs i ([_, _], [_])
   | i `elem`
-      [A4_paslhf, A4_paslhfnew, A4_paslht, A4_paslhtnew, A4_pasrhf,
-       A4_pasrhfnew, A4_pasrht, A4_pasrhtnew, A4_psxtbf, A4_psxtbfnew,
-       A4_psxtbt, A4_psxtbtnew, A4_psxthf, A4_psxthfnew, A4_psxtht,
-       A4_psxthtnew, A4_pzxtbf, A4_pzxtbfnew, A4_pzxtbt, A4_pzxtbtnew,
-       A4_pzxthf, A4_pzxthfnew, A4_pzxtht, A4_pzxthtnew]
+      [L4_ploadrbf_abs, L4_ploadrbf_abs_ce, L4_ploadrbfnew_abs,
+       L4_ploadrbfnew_abs_ce, L4_ploadrbt_abs, L4_ploadrbt_abs_ce,
+       L4_ploadrbtnew_abs, L4_ploadrbtnew_abs_ce, L4_ploadrhf_abs,
+       L4_ploadrhf_abs_ce, L4_ploadrhfnew_abs, L4_ploadrhfnew_abs_ce,
+       L4_ploadrht_abs, L4_ploadrht_abs_ce, L4_ploadrhtnew_abs,
+       L4_ploadrhtnew_abs_ce, L4_ploadrif_abs, L4_ploadrif_abs_ce,
+       L4_ploadrifnew_abs, L4_ploadrifnew_abs_ce, L4_ploadrit_abs,
+       L4_ploadrit_abs_ce, L4_ploadritnew_abs, L4_ploadritnew_abs_ce,
+       L4_ploadrubf_abs, L4_ploadrubf_abs_ce, L4_ploadrubfnew_abs,
+       L4_ploadrubfnew_abs_ce, L4_ploadrubt_abs, L4_ploadrubt_abs_ce,
+       L4_ploadrubtnew_abs, L4_ploadrubtnew_abs_ce, L4_ploadruhf_abs,
+       L4_ploadruhf_abs_ce, L4_ploadruhfnew_abs, L4_ploadruhfnew_abs_ce,
+       L4_ploadruht_abs, L4_ploadruht_abs_ce, L4_ploadruhtnew_abs,
+       L4_ploadruhtnew_abs_ce]
+    = []
+alignedPairs i ([_, _], [_])
+  | i `elem`
+      [L4_ploadrdf_abs, L4_ploadrdf_abs_ce, L4_ploadrdfnew_abs,
+       L4_ploadrdfnew_abs_ce, L4_ploadrdt_abs, L4_ploadrdt_abs_ce,
+       L4_ploadrdtnew_abs, L4_ploadrdtnew_abs_ce]
+    = []
+alignedPairs i ([_, _], [_])
+  | i `elem` [C2_and, C2_andn, C2_or, C2_orn] = []
+alignedPairs i ([_, _], [_])
+  | i `elem`
+      [L2_ploadrbf_zomap, L2_ploadrbfnew_zomap, L2_ploadrbt_zomap,
+       L2_ploadrbtnew_zomap, L2_ploadrhf_zomap, L2_ploadrhfnew_zomap,
+       L2_ploadrht_zomap, L2_ploadrhtnew_zomap, L2_ploadrif_zomap,
+       L2_ploadrifnew_zomap, L2_ploadrit_zomap, L2_ploadritnew_zomap,
+       L2_ploadrubf_zomap, L2_ploadrubfnew_zomap, L2_ploadrubt_zomap,
+       L2_ploadrubtnew_zomap, L2_ploadruhf_zomap, L2_ploadruhfnew_zomap,
+       L2_ploadruht_zomap, L2_ploadruhtnew_zomap]
+    = []
+alignedPairs i ([_, _], [_])
+  | i `elem`
+      [L2_ploadrdf_zomap, L2_ploadrdfnew_zomap, L2_ploadrdt_zomap,
+       L2_ploadrdtnew_zomap]
     = []
 alignedPairs i ([_, _, _], [_])
   | i `elem`
-      [A2_paddf, A2_paddfnew, A2_paddt, A2_paddtnew, A2_pandf,
-       A2_pandfnew, A2_pandt, A2_pandtnew, A2_porf, A2_porfnew, A2_port,
-       A2_portnew, A2_psubf, A2_psubfnew, A2_psubt, A2_psubtnew, A2_pxorf,
-       A2_pxorfnew, A2_pxort, A2_pxortnew, C2_ccombinewf,
-       C2_ccombinewnewf, C2_ccombinewnewt, C2_ccombinewt, C2_mux,
-       C2_mux_tfr, C2_mux_tfr_new, C2_vmux, MUX64_rr]
+      [L2_ploadrbf_io, L2_ploadrbf_io_ce, L2_ploadrbfnew_io,
+       L2_ploadrbfnew_io_ce, L2_ploadrbt_io, L2_ploadrbt_io_ce,
+       L2_ploadrbtnew_io, L2_ploadrbtnew_io_ce, L2_ploadrhf_io,
+       L2_ploadrhf_io_ce, L2_ploadrhfnew_io, L2_ploadrhfnew_io_ce,
+       L2_ploadrht_io, L2_ploadrht_io_ce, L2_ploadrhtnew_io,
+       L2_ploadrhtnew_io_ce, L2_ploadrif_io, L2_ploadrif_io_ce,
+       L2_ploadrifnew_io, L2_ploadrifnew_io_ce, L2_ploadrit_io,
+       L2_ploadrit_io_ce, L2_ploadritnew_io, L2_ploadritnew_io_ce,
+       L2_ploadrubf_io, L2_ploadrubf_io_ce, L2_ploadrubfnew_io,
+       L2_ploadrubfnew_io_ce, L2_ploadrubt_io, L2_ploadrubt_io_ce,
+       L2_ploadrubtnew_io, L2_ploadrubtnew_io_ce, L2_ploadruhf_io,
+       L2_ploadruhf_io_ce, L2_ploadruhfnew_io, L2_ploadruhfnew_io_ce,
+       L2_ploadruht_io, L2_ploadruht_io_ce, L2_ploadruhtnew_io,
+       L2_ploadruhtnew_io_ce]
     = []
 alignedPairs i ([_, _, _], [_])
   | i `elem`
-      [A2_paddif, A2_paddif_ce, A2_paddifnew, A2_paddifnew_ce, A2_paddit,
-       A2_paddit_ce, A2_padditnew, A2_padditnew_ce, C2_muxir, C2_muxir_ce,
-       C2_muxir_tfr, C2_muxir_tfr_ce, C2_muxir_tfr_new,
-       C2_muxir_tfr_new_ce]
+      [L2_ploadrdf_io, L2_ploadrdf_io_ce, L2_ploadrdfnew_io,
+       L2_ploadrdfnew_io_ce, L2_ploadrdt_io, L2_ploadrdt_io_ce,
+       L2_ploadrdtnew_io, L2_ploadrdtnew_io_ce]
     = []
+alignedPairs i ([_, rx32in, _], [_, rx32in'])
+  | i `elem`
+      [L2_ploadrbf_pi, L2_ploadrbf_pi_ce, L2_ploadrbfnew_pi,
+       L2_ploadrbfnew_pi_ce, L2_ploadrbt_pi, L2_ploadrbt_pi_ce,
+       L2_ploadrbtnew_pi, L2_ploadrbtnew_pi_ce, L2_ploadrhf_pi,
+       L2_ploadrhf_pi_ce, L2_ploadrhfnew_pi, L2_ploadrhfnew_pi_ce,
+       L2_ploadrht_pi, L2_ploadrht_pi_ce, L2_ploadrhtnew_pi,
+       L2_ploadrhtnew_pi_ce, L2_ploadrif_pi, L2_ploadrif_pi_ce,
+       L2_ploadrifnew_pi, L2_ploadrifnew_pi_ce, L2_ploadrit_pi,
+       L2_ploadrit_pi_ce, L2_ploadritnew_pi, L2_ploadritnew_pi_ce,
+       L2_ploadrubf_pi, L2_ploadrubf_pi_ce, L2_ploadrubfnew_pi,
+       L2_ploadrubfnew_pi_ce, L2_ploadrubt_pi, L2_ploadrubt_pi_ce,
+       L2_ploadrubtnew_pi, L2_ploadrubtnew_pi_ce, L2_ploadruhf_pi,
+       L2_ploadruhf_pi_ce, L2_ploadruhfnew_pi, L2_ploadruhfnew_pi_ce,
+       L2_ploadruht_pi, L2_ploadruht_pi_ce, L2_ploadruhtnew_pi,
+       L2_ploadruhtnew_pi_ce]
+    = [(rx32in, rx32in')]
+alignedPairs i ([_, rx32in, _], [_, rx32in'])
+  | i `elem`
+      [L2_ploadrdf_pi, L2_ploadrdf_pi_ce, L2_ploadrdfnew_pi,
+       L2_ploadrdfnew_pi_ce, L2_ploadrdt_pi, L2_ploadrdt_pi_ce,
+       L2_ploadrdtnew_pi, L2_ploadrdtnew_pi_ce]
+    = [(rx32in, rx32in')]
+alignedPairs i ([_, _, _], [_]) | i `elem` [PS_pselect] = []
 alignedPairs i ([_, _], [])
-  | i `elem` [J2_callf, J2_callf_ce, J2_callt, J2_callt_ce] = []
+  | i `elem`
+      [J2_callf, J2_callf_ce, J2_callt, J2_callt_ce, J2_jumpf,
+       J2_jumpf_ce, J2_jumpf_nopred_map, J2_jumpf_nopred_map_ce,
+       J2_jumpf_nv, J2_jumpf_nv_ce, J2_jumpfnew, J2_jumpfnew_ce,
+       J2_jumpfnewpt, J2_jumpfnewpt_ce, J2_jumpfpt, J2_jumpfpt_ce,
+       J2_jumpt, J2_jumpt_ce, J2_jumpt_nopred_map, J2_jumpt_nopred_map_ce,
+       J2_jumpt_nv, J2_jumpt_nv_ce, J2_jumptnew, J2_jumptnew_ce,
+       J2_jumptnewpt, J2_jumptnewpt_ce, J2_jumptpt, J2_jumptpt_ce,
+       J4_combo_f_jumpnv_t, J4_combo_f_jumpnv_t_ce, J4_combo_t_jumpnv_t,
+       J4_combo_t_jumpnv_t_ce]
+    = []
 alignedPairs i ([_, _], [_])
   | i `elem`
       [C2_cmoveif, C2_cmoveif_ce, C2_cmoveit, C2_cmoveit_ce,
@@ -78,13 +326,204 @@ alignedPairs i ([_, _], [_])
     = []
 alignedPairs i ([_, _, _], [_])
   | i `elem`
-      [C2_muxri, C2_muxri_ce, C2_muxri_tfr, C2_muxri_tfr_ce,
-       C2_muxri_tfr_new, C2_muxri_tfr_new_ce]
+      [C2_muxii, C2_muxii_ce, C2_muxii_tfr, C2_muxii_tfr_ce,
+       C2_muxii_tfr_new, C2_muxii_tfr_new_ce]
+    = []
+alignedPairs i ([_, _, _], [_])
+  | i `elem` [C2_muxri, C2_muxri_ce, C2_muxri_tfr, C2_muxri_tfr_ce] =
+    []
+alignedPairs i ([_, _, _, _], [_])
+  | i `elem` [C2_muxri_tfr_new, C2_muxri_tfr_new_ce] = []
+alignedPairs i ([_, _], [])
+  | i `elem`
+      [J2_callrf, J2_callrt, J2_jumprf, J2_jumprf_nopred_map,
+       J2_jumprfnew, J2_jumprfnewpt, J2_jumprfpt, J2_jumprt,
+       J2_jumprt_nopred_map, J2_jumprtnew, J2_jumprtnewpt, J2_jumprtpt]
+    = []
+alignedPairs i ([_, _], [_])
+  | i `elem`
+      [A2_tfrf, A2_tfrfnew, A2_tfrt, A2_tfrtnew, A4_paslhf, A4_paslhfnew,
+       A4_paslht, A4_paslhtnew, A4_pasrhf, A4_pasrhfnew, A4_pasrht,
+       A4_pasrhtnew, A4_psxtbf, A4_psxtbfnew, A4_psxtbt, A4_psxtbtnew,
+       A4_psxthf, A4_psxthfnew, A4_psxtht, A4_psxthtnew, A4_pzxtbf,
+       A4_pzxtbfnew, A4_pzxtbt, A4_pzxtbtnew, A4_pzxthf, A4_pzxthfnew,
+       A4_pzxtht, A4_pzxthtnew]
     = []
 alignedPairs i ([_, _, _], [_])
   | i `elem`
-      [C2_muxii, C2_muxii_ce, C2_muxii_tfr, C2_muxii_tfr_ce,
-       C2_muxii_tfr_new, C2_muxii_tfr_new_ce]
+      [A2_paddif, A2_paddif_ce, A2_paddifnew, A2_paddifnew_ce, A2_paddit,
+       A2_paddit_ce, A2_padditnew, A2_padditnew_ce, C2_muxir, C2_muxir_ce,
+       C2_muxir_tfr, C2_muxir_tfr_ce]
+    = []
+alignedPairs i ([_, _, _, _], [_])
+  | i `elem` [C2_muxir_tfr_new, C2_muxir_tfr_new_ce] = []
+alignedPairs i ([_, _, _], [_])
+  | i `elem`
+      [A2_paddf, A2_paddfnew, A2_paddt, A2_paddtnew, A2_pandf,
+       A2_pandfnew, A2_pandt, A2_pandtnew, A2_porf, A2_porfnew, A2_port,
+       A2_portnew, A2_pxorf, A2_pxorfnew, A2_pxort, A2_pxortnew, C2_mux,
+       C2_mux_tfr, C2_mux_tfr_new]
+    = []
+alignedPairs i ([_, _, _], [_])
+  | i `elem`
+      [C2_ccombinewf, C2_ccombinewnewf, C2_ccombinewnewt, C2_ccombinewt]
+    = []
+alignedPairs i ([_, _], [_])
+  | i `elem` [A2_tfrpf, A2_tfrpfnew, A2_tfrpt, A2_tfrptnew] = []
+alignedPairs i ([_, _, _], [_]) | i `elem` [C2_vmux] = []
+alignedPairs i ([_, _, _], [_])
+  | i `elem` [A2_psubf, A2_psubfnew, A2_psubt, A2_psubtnew] = []
+alignedPairs i ([_], [])
+  | i `elem`
+      [L4_return_map_to_raw_f, L4_return_map_to_raw_fnew_pnt,
+       L4_return_map_to_raw_fnew_pt, L4_return_map_to_raw_t,
+       L4_return_map_to_raw_tnew_pnt, L4_return_map_to_raw_tnew_pt]
+    = []
+alignedPairs i ([_, _, _], [])
+  | i `elem`
+      [S4_pstorerbnewf_abs, S4_pstorerbnewf_abs_ce,
+       S4_pstorerbnewfnew_abs, S4_pstorerbnewfnew_abs_ce,
+       S4_pstorerbnewt_abs, S4_pstorerbnewt_abs_ce,
+       S4_pstorerbnewtnew_abs, S4_pstorerbnewtnew_abs_ce,
+       S4_pstorerhnewf_abs, S4_pstorerhnewf_abs_ce,
+       S4_pstorerhnewfnew_abs, S4_pstorerhnewfnew_abs_ce,
+       S4_pstorerhnewt_abs, S4_pstorerhnewt_abs_ce,
+       S4_pstorerhnewtnew_abs, S4_pstorerhnewtnew_abs_ce,
+       S4_pstorerinewf_abs, S4_pstorerinewf_abs_ce,
+       S4_pstorerinewfnew_abs, S4_pstorerinewfnew_abs_ce,
+       S4_pstorerinewt_abs, S4_pstorerinewt_abs_ce,
+       S4_pstorerinewtnew_abs, S4_pstorerinewtnew_abs_ce]
+    = []
+alignedPairs i ([_, _, _], [])
+  | i `elem`
+      [S4_pstorerbf_abs, S4_pstorerbf_abs_ce, S4_pstorerbfnew_abs,
+       S4_pstorerbfnew_abs_ce, S4_pstorerbt_abs, S4_pstorerbt_abs_ce,
+       S4_pstorerbtnew_abs, S4_pstorerbtnew_abs_ce, S4_pstorerff_abs,
+       S4_pstorerff_abs_ce, S4_pstorerffnew_abs, S4_pstorerffnew_abs_ce,
+       S4_pstorerft_abs, S4_pstorerft_abs_ce, S4_pstorerftnew_abs,
+       S4_pstorerftnew_abs_ce, S4_pstorerhf_abs, S4_pstorerhf_abs_ce,
+       S4_pstorerhfnew_abs, S4_pstorerhfnew_abs_ce, S4_pstorerht_abs,
+       S4_pstorerht_abs_ce, S4_pstorerhtnew_abs, S4_pstorerhtnew_abs_ce,
+       S4_pstorerif_abs, S4_pstorerif_abs_ce, S4_pstorerifnew_abs,
+       S4_pstorerifnew_abs_ce, S4_pstorerit_abs, S4_pstorerit_abs_ce,
+       S4_pstoreritnew_abs, S4_pstoreritnew_abs_ce]
+    = []
+alignedPairs i ([_, _, _], [])
+  | i `elem`
+      [S4_pstorerdf_abs, S4_pstorerdf_abs_ce, S4_pstorerdfnew_abs,
+       S4_pstorerdfnew_abs_ce, S4_pstorerdt_abs, S4_pstorerdt_abs_ce,
+       S4_pstorerdtnew_abs, S4_pstorerdtnew_abs_ce]
+    = []
+alignedPairs i ([_, _], [_])
+  | i `elem`
+      [L4_return_f, L4_return_fnew_pnt, L4_return_fnew_pt, L4_return_t,
+       L4_return_tnew_pnt, L4_return_tnew_pt]
+    = []
+alignedPairs i ([_, _, _], [])
+  | i `elem`
+      [S4_storeirbf_zomap, S4_storeirbf_zomap_ce, S4_storeirbfnew_zomap,
+       S4_storeirbfnew_zomap_ce, S4_storeirbt_zomap,
+       S4_storeirbt_zomap_ce, S4_storeirbtnew_zomap,
+       S4_storeirbtnew_zomap_ce, S4_storeirhf_zomap,
+       S4_storeirhf_zomap_ce, S4_storeirhfnew_zomap,
+       S4_storeirhfnew_zomap_ce, S4_storeirht_zomap,
+       S4_storeirht_zomap_ce, S4_storeirhtnew_zomap,
+       S4_storeirhtnew_zomap_ce, S4_storeirif_zomap,
+       S4_storeirif_zomap_ce, S4_storeirifnew_zomap,
+       S4_storeirifnew_zomap_ce, S4_storeirit_zomap,
+       S4_storeirit_zomap_ce, S4_storeiritnew_zomap,
+       S4_storeiritnew_zomap_ce]
+    = []
+alignedPairs i ([_, _, _, _], [])
+  | i `elem`
+      [S4_storeirbf_io, S4_storeirbf_io_ce, S4_storeirbfnew_io,
+       S4_storeirbfnew_io_ce, S4_storeirbt_io, S4_storeirbt_io_ce,
+       S4_storeirbtnew_io, S4_storeirbtnew_io_ce, S4_storeirhf_io,
+       S4_storeirhf_io_ce, S4_storeirhfnew_io, S4_storeirhfnew_io_ce,
+       S4_storeirht_io, S4_storeirht_io_ce, S4_storeirhtnew_io,
+       S4_storeirhtnew_io_ce, S4_storeirif_io, S4_storeirif_io_ce,
+       S4_storeirifnew_io, S4_storeirifnew_io_ce, S4_storeirit_io,
+       S4_storeirit_io_ce, S4_storeiritnew_io, S4_storeiritnew_io_ce]
+    = []
+alignedPairs i ([_, _, _, _], [])
+  | i `elem`
+      [S2_pstorerbnewf_io, S2_pstorerbnewf_io_ce, S2_pstorerbnewt_io,
+       S2_pstorerbnewt_io_ce, S2_pstorerhnewf_io, S2_pstorerhnewf_io_ce,
+       S2_pstorerhnewt_io, S2_pstorerhnewt_io_ce, S2_pstorerinewf_io,
+       S2_pstorerinewf_io_ce, S2_pstorerinewt_io, S2_pstorerinewt_io_ce,
+       S4_pstorerbnewfnew_io, S4_pstorerbnewfnew_io_ce,
+       S4_pstorerbnewtnew_io, S4_pstorerbnewtnew_io_ce,
+       S4_pstorerhnewfnew_io, S4_pstorerhnewfnew_io_ce,
+       S4_pstorerhnewtnew_io, S4_pstorerhnewtnew_io_ce,
+       S4_pstorerinewfnew_io, S4_pstorerinewfnew_io_ce,
+       S4_pstorerinewtnew_io, S4_pstorerinewtnew_io_ce]
+    = []
+alignedPairs i ([_, _, _, _], [])
+  | i `elem`
+      [S2_pstorerbf_io, S2_pstorerbf_io_ce, S2_pstorerbt_io,
+       S2_pstorerbt_io_ce, S2_pstorerff_io, S2_pstorerff_io_ce,
+       S2_pstorerft_io, S2_pstorerft_io_ce, S2_pstorerhf_io,
+       S2_pstorerhf_io_ce, S2_pstorerht_io, S2_pstorerht_io_ce,
+       S2_pstorerif_io, S2_pstorerif_io_ce, S2_pstorerit_io,
+       S2_pstorerit_io_ce, S4_pstorerbfnew_io, S4_pstorerbfnew_io_ce,
+       S4_pstorerbtnew_io, S4_pstorerbtnew_io_ce, S4_pstorerffnew_io,
+       S4_pstorerffnew_io_ce, S4_pstorerftnew_io, S4_pstorerftnew_io_ce,
+       S4_pstorerhfnew_io, S4_pstorerhfnew_io_ce, S4_pstorerhtnew_io,
+       S4_pstorerhtnew_io_ce, S4_pstorerifnew_io, S4_pstorerifnew_io_ce,
+       S4_pstoreritnew_io, S4_pstoreritnew_io_ce]
+    = []
+alignedPairs i ([_, _, _, _], [])
+  | i `elem`
+      [S2_pstorerdf_io, S2_pstorerdf_io_ce, S2_pstorerdt_io,
+       S2_pstorerdt_io_ce, S4_pstorerdfnew_io, S4_pstorerdfnew_io_ce,
+       S4_pstorerdtnew_io, S4_pstorerdtnew_io_ce]
+    = []
+alignedPairs i ([_, _, _], [])
+  | i `elem`
+      [S2_pstorerbnewf_zomap, S2_pstorerbnewt_zomap,
+       S2_pstorerhnewf_zomap, S2_pstorerhnewt_zomap,
+       S2_pstorerinewf_zomap, S2_pstorerinewt_zomap,
+       S4_pstorerbnewfnew_zomap, S4_pstorerbnewtnew_zomap,
+       S4_pstorerhnewfnew_zomap, S4_pstorerhnewtnew_zomap,
+       S4_pstorerinewfnew_zomap, S4_pstorerinewtnew_zomap]
+    = []
+alignedPairs i ([_, _, _], [])
+  | i `elem`
+      [S2_pstorerbf_zomap, S2_pstorerbt_zomap, S2_pstorerff_zomap,
+       S2_pstorerft_zomap, S2_pstorerhf_zomap, S2_pstorerht_zomap,
+       S2_pstorerif_zomap, S2_pstorerit_zomap, S4_pstorerbfnew_zomap,
+       S4_pstorerbtnew_zomap, S4_pstorerffnew_zomap,
+       S4_pstorerftnew_zomap, S4_pstorerhfnew_zomap,
+       S4_pstorerhtnew_zomap, S4_pstorerifnew_zomap,
+       S4_pstoreritnew_zomap]
+    = []
+alignedPairs i ([_, _, _, _], [_])
+  | i `elem`
+      [L4_ploadrbf_rr, L4_ploadrbf_rr_ce, L4_ploadrbfnew_rr,
+       L4_ploadrbfnew_rr_ce, L4_ploadrbt_rr, L4_ploadrbt_rr_ce,
+       L4_ploadrbtnew_rr, L4_ploadrbtnew_rr_ce, L4_ploadrhf_rr,
+       L4_ploadrhf_rr_ce, L4_ploadrhfnew_rr, L4_ploadrhfnew_rr_ce,
+       L4_ploadrht_rr, L4_ploadrht_rr_ce, L4_ploadrhtnew_rr,
+       L4_ploadrhtnew_rr_ce, L4_ploadrif_rr, L4_ploadrif_rr_ce,
+       L4_ploadrifnew_rr, L4_ploadrifnew_rr_ce, L4_ploadrit_rr,
+       L4_ploadrit_rr_ce, L4_ploadritnew_rr, L4_ploadritnew_rr_ce,
+       L4_ploadrubf_rr, L4_ploadrubf_rr_ce, L4_ploadrubfnew_rr,
+       L4_ploadrubfnew_rr_ce, L4_ploadrubt_rr, L4_ploadrubt_rr_ce,
+       L4_ploadrubtnew_rr, L4_ploadrubtnew_rr_ce, L4_ploadruhf_rr,
+       L4_ploadruhf_rr_ce, L4_ploadruhfnew_rr, L4_ploadruhfnew_rr_ce,
+       L4_ploadruht_rr, L4_ploadruht_rr_ce, L4_ploadruhtnew_rr,
+       L4_ploadruhtnew_rr_ce]
+    = []
+alignedPairs i ([_, _, _, _], [_])
+  | i `elem`
+      [L4_ploadrdf_rr, L4_ploadrdf_rr_ce, L4_ploadrdfnew_rr,
+       L4_ploadrdfnew_rr_ce, L4_ploadrdt_rr, L4_ploadrdt_rr_ce,
+       L4_ploadrdtnew_rr, L4_ploadrdtnew_rr_ce]
+    = []
+alignedPairs i ([_, _, _], [])
+  | i `elem`
+      [S2_pstorerdf_zomap, S2_pstorerdt_zomap, S4_pstorerdfnew_zomap,
+       S4_pstorerdtnew_zomap]
     = []
 alignedPairs i ([_, _, _, _, _], [])
   | i `elem`
@@ -105,109 +544,290 @@ alignedPairs i ([_, _, _, _, _], [])
   | i `elem`
       [S4_pstorerbf_rr, S4_pstorerbf_rr_ce, S4_pstorerbfnew_rr,
        S4_pstorerbfnew_rr_ce, S4_pstorerbt_rr, S4_pstorerbt_rr_ce,
-       S4_pstorerbtnew_rr, S4_pstorerbtnew_rr_ce, S4_pstorerdf_rr,
-       S4_pstorerdf_rr_ce, S4_pstorerdfnew_rr, S4_pstorerdfnew_rr_ce,
-       S4_pstorerdt_rr, S4_pstorerdt_rr_ce, S4_pstorerdtnew_rr,
-       S4_pstorerdtnew_rr_ce, S4_pstorerff_rr, S4_pstorerff_rr_ce,
-       S4_pstorerffnew_rr, S4_pstorerffnew_rr_ce, S4_pstorerft_rr,
-       S4_pstorerft_rr_ce, S4_pstorerftnew_rr, S4_pstorerftnew_rr_ce,
-       S4_pstorerhf_rr, S4_pstorerhf_rr_ce, S4_pstorerhfnew_rr,
-       S4_pstorerhfnew_rr_ce, S4_pstorerht_rr, S4_pstorerht_rr_ce,
-       S4_pstorerhtnew_rr, S4_pstorerhtnew_rr_ce, S4_pstorerif_rr,
-       S4_pstorerif_rr_ce, S4_pstorerifnew_rr, S4_pstorerifnew_rr_ce,
-       S4_pstorerit_rr, S4_pstorerit_rr_ce, S4_pstoreritnew_rr,
-       S4_pstoreritnew_rr_ce]
+       S4_pstorerbtnew_rr, S4_pstorerbtnew_rr_ce, S4_pstorerff_rr,
+       S4_pstorerff_rr_ce, S4_pstorerffnew_rr, S4_pstorerffnew_rr_ce,
+       S4_pstorerft_rr, S4_pstorerft_rr_ce, S4_pstorerftnew_rr,
+       S4_pstorerftnew_rr_ce, S4_pstorerhf_rr, S4_pstorerhf_rr_ce,
+       S4_pstorerhfnew_rr, S4_pstorerhfnew_rr_ce, S4_pstorerht_rr,
+       S4_pstorerht_rr_ce, S4_pstorerhtnew_rr, S4_pstorerhtnew_rr_ce,
+       S4_pstorerif_rr, S4_pstorerif_rr_ce, S4_pstorerifnew_rr,
+       S4_pstorerifnew_rr_ce, S4_pstorerit_rr, S4_pstorerit_rr_ce,
+       S4_pstoreritnew_rr, S4_pstoreritnew_rr_ce]
+    = []
+alignedPairs i ([_, _, _, _, _], [])
+  | i `elem`
+      [S4_pstorerdf_rr, S4_pstorerdf_rr_ce, S4_pstorerdfnew_rr,
+       S4_pstorerdfnew_rr_ce, S4_pstorerdt_rr, S4_pstorerdt_rr_ce,
+       S4_pstorerdtnew_rr, S4_pstorerdtnew_rr_ce]
+    = []
+alignedPairs i ([_, _], []) | i `elem` [V6_zldp0] = []
+alignedPairs i ([_, _], [_])
+  | i `elem`
+      [V6_ldcnp0, V6_ldcnpnt0, V6_ldcp0, V6_ldcpnt0, V6_ldnp0,
+       V6_ldnpnt0, V6_ldp0, V6_ldpnt0, V6_ldtnp0, V6_ldtnpnt0, V6_ldtp0,
+       V6_ldtpnt0]
+    = []
+alignedPairs i ([_, _, _], [])
+  | i `elem` [V6_zLd_pred_ai, V6_zLd_pred_ai_ce] = []
+alignedPairs i ([_, _, _], [_])
+  | i `elem`
+      [V6_vL32b_cur_npred_ai, V6_vL32b_cur_npred_ai_ce,
+       V6_vL32b_cur_pred_ai, V6_vL32b_cur_pred_ai_ce, V6_vL32b_npred_ai,
+       V6_vL32b_npred_ai_ce, V6_vL32b_nt_cur_npred_ai,
+       V6_vL32b_nt_cur_npred_ai_ce, V6_vL32b_nt_cur_pred_ai,
+       V6_vL32b_nt_cur_pred_ai_ce, V6_vL32b_nt_npred_ai,
+       V6_vL32b_nt_npred_ai_ce, V6_vL32b_nt_pred_ai,
+       V6_vL32b_nt_pred_ai_ce, V6_vL32b_nt_tmp_npred_ai,
+       V6_vL32b_nt_tmp_npred_ai_ce, V6_vL32b_nt_tmp_pred_ai,
+       V6_vL32b_nt_tmp_pred_ai_ce, V6_vL32b_pred_ai, V6_vL32b_pred_ai_ce,
+       V6_vL32b_tmp_npred_ai, V6_vL32b_tmp_npred_ai_ce,
+       V6_vL32b_tmp_pred_ai, V6_vL32b_tmp_pred_ai_ce]
     = []
 alignedPairs i ([_, _, _, _], [])
   | i `elem`
-      [S4_storeirbf_io, S4_storeirbf_io_ce, S4_storeirbfnew_io,
-       S4_storeirbfnew_io_ce, S4_storeirbt_io, S4_storeirbt_io_ce,
-       S4_storeirbtnew_io, S4_storeirbtnew_io_ce, S4_storeirhf_io,
-       S4_storeirhf_io_ce, S4_storeirhfnew_io, S4_storeirhfnew_io_ce,
-       S4_storeirht_io, S4_storeirht_io_ce, S4_storeirhtnew_io,
-       S4_storeirhtnew_io_ce, S4_storeirif_io, S4_storeirif_io_ce,
-       S4_storeirifnew_io, S4_storeirifnew_io_ce, S4_storeirit_io,
-       S4_storeirit_io_ce, S4_storeiritnew_io, S4_storeiritnew_io_ce]
+      [V6_vS32b_new_npred_ai, V6_vS32b_new_npred_ai_ce,
+       V6_vS32b_new_pred_ai, V6_vS32b_new_pred_ai_ce,
+       V6_vS32b_nt_new_npred_ai, V6_vS32b_nt_new_npred_ai_ce,
+       V6_vS32b_nt_new_pred_ai, V6_vS32b_nt_new_pred_ai_ce]
+    = []
+alignedPairs i ([_, _, _, _], [])
+  | i `elem`
+      [V6_vS32Ub_npred_ai, V6_vS32Ub_npred_ai_ce, V6_vS32Ub_pred_ai,
+       V6_vS32Ub_pred_ai_ce, V6_vS32b_npred_ai, V6_vS32b_npred_ai_ce,
+       V6_vS32b_nt_npred_ai, V6_vS32b_nt_npred_ai_ce, V6_vS32b_nt_pred_ai,
+       V6_vS32b_nt_pred_ai_ce, V6_vS32b_pred_ai, V6_vS32b_pred_ai_ce]
+    = []
+alignedPairs i ([_, _, _], [])
+  | i `elem`
+      [V6_stnp0, V6_stnpnt0, V6_stp0, V6_stpnt0, V6_stunp0, V6_stup0]
+    = []
+alignedPairs i ([_, rx32in, _], [rx32in'])
+  | i `elem` [V6_zLd_pred_pi, V6_zLd_pred_pi_ce] =
+    [(rx32in, rx32in')]
+alignedPairs i ([_, rx32in, _], [_, rx32in'])
+  | i `elem`
+      [V6_vL32b_cur_npred_pi, V6_vL32b_cur_npred_pi_ce,
+       V6_vL32b_cur_pred_pi, V6_vL32b_cur_pred_pi_ce, V6_vL32b_npred_pi,
+       V6_vL32b_npred_pi_ce, V6_vL32b_nt_cur_npred_pi,
+       V6_vL32b_nt_cur_npred_pi_ce, V6_vL32b_nt_cur_pred_pi,
+       V6_vL32b_nt_cur_pred_pi_ce, V6_vL32b_nt_npred_pi,
+       V6_vL32b_nt_npred_pi_ce, V6_vL32b_nt_pred_pi,
+       V6_vL32b_nt_pred_pi_ce, V6_vL32b_nt_tmp_npred_pi,
+       V6_vL32b_nt_tmp_npred_pi_ce, V6_vL32b_nt_tmp_pred_pi,
+       V6_vL32b_nt_tmp_pred_pi_ce, V6_vL32b_pred_pi, V6_vL32b_pred_pi_ce,
+       V6_vL32b_tmp_npred_pi, V6_vL32b_tmp_npred_pi_ce,
+       V6_vL32b_tmp_pred_pi, V6_vL32b_tmp_pred_pi_ce]
+    = [(rx32in, rx32in')]
+alignedPairs i ([_, rx32in, _, _], [rx32in'])
+  | i `elem`
+      [S2_pstorerbnewf_pi, S2_pstorerbnewf_pi_ce, S2_pstorerbnewfnew_pi,
+       S2_pstorerbnewfnew_pi_ce, S2_pstorerbnewt_pi,
+       S2_pstorerbnewt_pi_ce, S2_pstorerbnewtnew_pi,
+       S2_pstorerbnewtnew_pi_ce, S2_pstorerhnewf_pi,
+       S2_pstorerhnewf_pi_ce, S2_pstorerhnewfnew_pi,
+       S2_pstorerhnewfnew_pi_ce, S2_pstorerhnewt_pi,
+       S2_pstorerhnewt_pi_ce, S2_pstorerhnewtnew_pi,
+       S2_pstorerhnewtnew_pi_ce, S2_pstorerinewf_pi,
+       S2_pstorerinewf_pi_ce, S2_pstorerinewfnew_pi,
+       S2_pstorerinewfnew_pi_ce, S2_pstorerinewt_pi,
+       S2_pstorerinewt_pi_ce, S2_pstorerinewtnew_pi,
+       S2_pstorerinewtnew_pi_ce]
+    = [(rx32in, rx32in')]
+alignedPairs i ([_, rx32in, _, _], [rx32in'])
+  | i `elem`
+      [V6_vS32b_new_npred_pi, V6_vS32b_new_npred_pi_ce,
+       V6_vS32b_new_pred_pi, V6_vS32b_new_pred_pi_ce,
+       V6_vS32b_nt_new_npred_pi, V6_vS32b_nt_new_npred_pi_ce,
+       V6_vS32b_nt_new_pred_pi, V6_vS32b_nt_new_pred_pi_ce]
+    = [(rx32in, rx32in')]
+alignedPairs i ([_, rx32in, _, _], [rx32in'])
+  | i `elem`
+      [S2_pstorerbf_pi, S2_pstorerbf_pi_ce, S2_pstorerbfnew_pi,
+       S2_pstorerbfnew_pi_ce, S2_pstorerbt_pi, S2_pstorerbt_pi_ce,
+       S2_pstorerbtnew_pi, S2_pstorerbtnew_pi_ce, S2_pstorerff_pi,
+       S2_pstorerff_pi_ce, S2_pstorerffnew_pi, S2_pstorerffnew_pi_ce,
+       S2_pstorerft_pi, S2_pstorerft_pi_ce, S2_pstorerftnew_pi,
+       S2_pstorerftnew_pi_ce, S2_pstorerhf_pi, S2_pstorerhf_pi_ce,
+       S2_pstorerhfnew_pi, S2_pstorerhfnew_pi_ce, S2_pstorerht_pi,
+       S2_pstorerht_pi_ce, S2_pstorerhtnew_pi, S2_pstorerhtnew_pi_ce,
+       S2_pstorerif_pi, S2_pstorerif_pi_ce, S2_pstorerifnew_pi,
+       S2_pstorerifnew_pi_ce, S2_pstorerit_pi, S2_pstorerit_pi_ce,
+       S2_pstoreritnew_pi, S2_pstoreritnew_pi_ce]
+    = [(rx32in, rx32in')]
+alignedPairs i ([_, rx32in, _, _], [rx32in'])
+  | i `elem`
+      [S2_pstorerdf_pi, S2_pstorerdf_pi_ce, S2_pstorerdfnew_pi,
+       S2_pstorerdfnew_pi_ce, S2_pstorerdt_pi, S2_pstorerdt_pi_ce,
+       S2_pstorerdtnew_pi, S2_pstorerdtnew_pi_ce]
+    = [(rx32in, rx32in')]
+alignedPairs i ([_, rx32in, _, _], [rx32in'])
+  | i `elem`
+      [V6_vS32Ub_npred_pi, V6_vS32Ub_npred_pi_ce, V6_vS32Ub_pred_pi,
+       V6_vS32Ub_pred_pi_ce, V6_vS32b_npred_pi, V6_vS32b_npred_pi_ce,
+       V6_vS32b_nt_npred_pi, V6_vS32b_nt_npred_pi_ce, V6_vS32b_nt_pred_pi,
+       V6_vS32b_nt_pred_pi_ce, V6_vS32b_pred_pi, V6_vS32b_pred_pi_ce]
+    = [(rx32in, rx32in')]
+alignedPairs i ([_, rx32in, _], [rx32in'])
+  | i `elem` [V6_zLd_pred_ppu] = [(rx32in, rx32in')]
+alignedPairs i ([_, rx32in, _], [_, rx32in'])
+  | i `elem`
+      [V6_vL32b_cur_npred_ppu, V6_vL32b_cur_pred_ppu, V6_vL32b_npred_ppu,
+       V6_vL32b_nt_cur_npred_ppu, V6_vL32b_nt_cur_pred_ppu,
+       V6_vL32b_nt_npred_ppu, V6_vL32b_nt_pred_ppu,
+       V6_vL32b_nt_tmp_npred_ppu, V6_vL32b_nt_tmp_pred_ppu,
+       V6_vL32b_pred_ppu, V6_vL32b_tmp_npred_ppu, V6_vL32b_tmp_pred_ppu]
+    = [(rx32in, rx32in')]
+alignedPairs i ([_, rx32in, _, _], [rx32in'])
+  | i `elem`
+      [V6_vS32b_new_npred_ppu, V6_vS32b_new_pred_ppu,
+       V6_vS32b_nt_new_npred_ppu, V6_vS32b_nt_new_pred_ppu]
+    = [(rx32in, rx32in')]
+alignedPairs i ([_, rx32in, _, _], [rx32in'])
+  | i `elem`
+      [V6_vS32Ub_npred_ppu, V6_vS32Ub_pred_ppu, V6_vS32b_npred_ppu,
+       V6_vS32b_nt_npred_ppu, V6_vS32b_nt_pred_ppu, V6_vS32b_pred_ppu]
+    = [(rx32in, rx32in')]
+alignedPairs i ([_], [_]) | i `elem` [V6_pred_not] = []
+alignedPairs i ([_, _], [_])
+  | i `elem`
+      [V6_pred_and, V6_pred_and_n, V6_pred_or, V6_pred_or_n, V6_pred_xor,
+       V6_shuffeqh, V6_shuffeqw]
+    = []
+alignedPairs i ([_, _, _, _], [])
+  | i `elem` [V6_vgathermhq, V6_vgathermwq] = []
+alignedPairs i ([_, _, _, _, _], [])
+  | i `elem`
+      [V6_vscattermhq, V6_vscattermhq_alt, V6_vscattermwq,
+       V6_vscattermwq_alt]
+    = []
+alignedPairs i ([_, _, _, _], []) | i `elem` [V6_vgathermhwq] = []
+alignedPairs i ([_, _, _, _, _], [])
+  | i `elem` [V6_vscattermhwq, V6_vscattermwhq_alt] = []
+alignedPairs i ([_, _, _], [_]) | i `elem` [V6_vmux] = []
+alignedPairs i ([_, _, _], [_]) | i `elem` [V6_vswap] = []
+alignedPairs i ([_, _], [_])
+  | i `elem`
+      [V6_vandnqrt, V6_vandnqrt_alt, V6_vandqrt, V6_vandqrt_alt]
     = []
 alignedPairs i ([_], [])
   | i `elem`
-      [CALLRv3nr, J2_callr, J4_hintjumpr, Y2_dccleana, Y2_dccleaninva,
-       Y2_dcinva, Y2_dczeroa, Y2_icinva, Y4_trace]
+      [V6_vhistq, V6_vwhist128q, V6_vwhist256q, V6_vwhist256q_sat]
     = []
-alignedPairs i ([_], [_]) | i `elem` [C2_tfrrp, MVRP, MVRP_ce] = []
 alignedPairs i ([_], [_])
+  | i `elem` [V6_vprefixqb, V6_vprefixqh, V6_vprefixqw] = []
+alignedPairs i ([_, _], [])
+  | i `elem` [V6_vwhist128qm, V6_vwhist128qm_ce] = []
+alignedPairs i ([_, _, _, _], [])
   | i `elem`
-      [A2_aslh, A2_asrh, A2_sxtb, A2_sxth, A2_zxtb, A2_zxth,
-       F2_conv_sf2uw, F2_conv_sf2uw_chop, F2_conv_sf2w, F2_conv_sf2w_chop,
-       F2_conv_uw2sf, F2_conv_w2sf, F2_sffixupr, S2_cl0, S2_cl0p, S2_cl1,
-       S2_cl1p, S2_clb, S2_clbnorm, S2_clbp, S2_ct0, S2_ct0p, S2_ct1,
-       S2_ct1p, S4_clbpnorm, V4_SA1_and1, V4_SA1_dec, V4_SA1_inc,
-       V4_SA1_sxtb, V4_SA1_sxth, V4_SA1_tfr, V4_SA1_zxtb, V4_SA1_zxth]
+      [V6_vS32b_nqpred_ai, V6_vS32b_nqpred_ai_ce, V6_vS32b_nt_nqpred_ai,
+       V6_vS32b_nt_nqpred_ai_ce, V6_vS32b_nt_qpred_ai,
+       V6_vS32b_nt_qpred_ai_ce, V6_vS32b_qpred_ai, V6_vS32b_qpred_ai_ce]
     = []
-alignedPairs i ([_], [_, _]) | i `elem` [F2_sfinvsqrta] = []
-alignedPairs i ([_], [_])
+alignedPairs i ([_, _, _], [])
+  | i `elem` [V6_stnq0, V6_stnqnt0, V6_stq0, V6_stqnt0] = []
+alignedPairs i ([_, rx32in, _, _], [rx32in'])
   | i `elem`
-      [F2_conv_sf2d, F2_conv_sf2d_chop, F2_conv_sf2df, F2_conv_sf2ud,
-       F2_conv_sf2ud_chop, F2_conv_uw2df, F2_conv_w2df, V4_SA1_combinerz,
-       V4_SA1_combinezr]
-    = []
-alignedPairs i ([_, _], [_]) | i `elem` [ALLOCA, ALLOCA_ce] = []
+      [V6_vS32b_nqpred_pi, V6_vS32b_nqpred_pi_ce, V6_vS32b_nt_nqpred_pi,
+       V6_vS32b_nt_nqpred_pi_ce, V6_vS32b_nt_qpred_pi,
+       V6_vS32b_nt_qpred_pi_ce, V6_vS32b_qpred_pi, V6_vS32b_qpred_pi_ce]
+    = [(rx32in, rx32in')]
+alignedPairs i ([_, rx32in, _, _], [rx32in'])
+  | i `elem`
+      [V6_vS32b_nqpred_ppu, V6_vS32b_nt_nqpred_ppu,
+       V6_vS32b_nt_qpred_ppu, V6_vS32b_qpred_ppu]
+    = [(rx32in, rx32in')]
 alignedPairs i ([_, _], [_])
+  | i `elem` [V6_vandvnqv, V6_vandvqv] = []
+alignedPairs i ([_, vx32in, _], [vx32in'])
   | i `elem`
-      [A4_cmpbeqi, A4_cmpbeqi_ce, A4_cmpbgti, A4_cmpbgti_ce, A4_cmpbgtui,
-       A4_cmpbgtui_ce, A4_cmpheqi, A4_cmpheqi_ce, A4_cmphgti,
-       A4_cmphgti_ce, A4_cmphgtui, A4_cmphgtui_ce]
+      [V6_vaddbnq, V6_vaddbnq_alt, V6_vaddbq, V6_vaddbq_alt, V6_vaddhnq,
+       V6_vaddhnq_alt, V6_vaddhq, V6_vaddhq_alt, V6_vaddwnq,
+       V6_vaddwnq_alt, V6_vaddwq, V6_vaddwq_alt, V6_vsubbnq,
+       V6_vsubbnq_alt, V6_vsubbq, V6_vsubbq_alt, V6_vsubhnq,
+       V6_vsubhnq_alt, V6_vsubhq, V6_vsubhq_alt, V6_vsubwnq,
+       V6_vsubwnq_alt, V6_vsubwq, V6_vsubwq_alt]
+    = [(vx32in, vx32in')]
+alignedPairs i ([qx4in, _, _], [qx4in'])
+  | i `elem` [V6_vandvrt_acc, V6_vandvrt_acc_alt] = [(qx4in, qx4in')]
+alignedPairs i ([qx4in, _, _], [qx4in'])
+  | i `elem`
+      [V6_MAP_equb_and, V6_MAP_equb_ior, V6_MAP_equb_xor,
+       V6_MAP_equh_and, V6_MAP_equh_ior, V6_MAP_equh_xor, V6_MAP_equw_and,
+       V6_MAP_equw_ior, V6_MAP_equw_xor, V6_veqb_and, V6_veqb_or,
+       V6_veqb_xor, V6_veqh_and, V6_veqh_or, V6_veqh_xor, V6_veqw_and,
+       V6_veqw_or, V6_veqw_xor, V6_vgtb_and, V6_vgtb_or, V6_vgtb_xor,
+       V6_vgth_and, V6_vgth_or, V6_vgth_xor, V6_vgtub_and, V6_vgtub_or,
+       V6_vgtub_xor, V6_vgtuh_and, V6_vgtuh_or, V6_vgtuh_xor,
+       V6_vgtuw_and, V6_vgtuw_or, V6_vgtuw_xor, V6_vgtw_and, V6_vgtw_or,
+       V6_vgtw_xor]
+    = [(qx4in, qx4in')]
+alignedPairs i ([_], []) | i `elem` [PS_callr_nr] = []
+alignedPairs i ([_, _], [_])
+  | i `elem` [PS_alloca, PS_alloca_ce] = []
+alignedPairs i ([_, _], [_])
+  | i `elem` [PS_vloadrq_ai, PS_vloadrq_ai_ce] = []
+alignedPairs i ([_, _, _], [])
+  | i `elem` [PS_vstorerq_ai, PS_vstorerq_ai_ce] = []
+alignedPairs i ([_, _], [_]) | i `elem` [PS_vmulw] = []
+alignedPairs i ([_, _, _], [_]) | i `elem` [PS_fia, PS_fia_ce] = []
+alignedPairs i ([_], [_])
+  | i `elem`
+      [SA1_and1, SA1_inc, SA1_sxtb, SA1_sxth, SA1_tfr, SA1_zxtb,
+       SA1_zxth]
+    = []
+alignedPairs i ([_], [_])
+  | i `elem` [SA1_combinerz, SA1_combinezr] = []
+alignedPairs i ([_, _, _], [])
+  | i `elem`
+      [J4_cmpeqi_fp0_jump_nt, J4_cmpeqi_fp0_jump_nt_ce,
+       J4_cmpeqi_fp0_jump_t, J4_cmpeqi_fp0_jump_t_ce,
+       J4_cmpeqi_fp1_jump_nt, J4_cmpeqi_fp1_jump_nt_ce,
+       J4_cmpeqi_fp1_jump_t, J4_cmpeqi_fp1_jump_t_ce,
+       J4_cmpeqi_tp0_jump_nt, J4_cmpeqi_tp0_jump_nt_ce,
+       J4_cmpeqi_tp0_jump_t, J4_cmpeqi_tp0_jump_t_ce,
+       J4_cmpeqi_tp1_jump_nt, J4_cmpeqi_tp1_jump_nt_ce,
+       J4_cmpeqi_tp1_jump_t, J4_cmpeqi_tp1_jump_t_ce,
+       J4_cmpgti_fp0_jump_nt, J4_cmpgti_fp0_jump_nt_ce,
+       J4_cmpgti_fp0_jump_t, J4_cmpgti_fp0_jump_t_ce,
+       J4_cmpgti_fp1_jump_nt, J4_cmpgti_fp1_jump_nt_ce,
+       J4_cmpgti_fp1_jump_t, J4_cmpgti_fp1_jump_t_ce,
+       J4_cmpgti_tp0_jump_nt, J4_cmpgti_tp0_jump_nt_ce,
+       J4_cmpgti_tp0_jump_t, J4_cmpgti_tp0_jump_t_ce,
+       J4_cmpgti_tp1_jump_nt, J4_cmpgti_tp1_jump_nt_ce,
+       J4_cmpgti_tp1_jump_t, J4_cmpgti_tp1_jump_t_ce,
+       J4_cmpgtui_fp0_jump_nt, J4_cmpgtui_fp0_jump_nt_ce,
+       J4_cmpgtui_fp0_jump_t, J4_cmpgtui_fp0_jump_t_ce,
+       J4_cmpgtui_fp1_jump_nt, J4_cmpgtui_fp1_jump_nt_ce,
+       J4_cmpgtui_fp1_jump_t, J4_cmpgtui_fp1_jump_t_ce,
+       J4_cmpgtui_tp0_jump_nt, J4_cmpgtui_tp0_jump_nt_ce,
+       J4_cmpgtui_tp0_jump_t, J4_cmpgtui_tp0_jump_t_ce,
+       J4_cmpgtui_tp1_jump_nt, J4_cmpgtui_tp1_jump_nt_ce,
+       J4_cmpgtui_tp1_jump_t, J4_cmpgtui_tp1_jump_t_ce]
     = []
 alignedPairs i ([_, _], [])
-  | i `elem` [Y4_l2fetch, Y5_l2fetch] = []
-alignedPairs i ([_, _], [_])
   | i `elem`
-      [A4_cmpbeq, A4_cmpbgt, A4_cmpbgtu, A4_cmpheq, A4_cmphgt,
-       A4_cmphgtu, A4_tlbmatch, C2_bitsclr, C2_bitsset, C2_cmpeq,
-       C2_cmpeq_combo, C2_cmpeqp, C2_cmpgt, C2_cmpgt_combo, C2_cmpgtp,
-       C2_cmpgtu, C2_cmpgtu_combo, C2_cmpgtup, C2_cmplt_combo,
-       C2_cmpltu_combo, C4_cmplte, C4_cmplteu, C4_cmpneq, C4_nbitsclr,
-       C4_nbitsset, S2_storew_locked, S2_tstbit_r, S4_ntstbit_r,
-       S4_stored_locked]
+      [J4_tstbit0_fp0_jump_nt, J4_tstbit0_fp0_jump_nt_ce,
+       J4_tstbit0_fp0_jump_t, J4_tstbit0_fp0_jump_t_ce,
+       J4_tstbit0_fp1_jump_nt, J4_tstbit0_fp1_jump_nt_ce,
+       J4_tstbit0_fp1_jump_t, J4_tstbit0_fp1_jump_t_ce,
+       J4_tstbit0_tp0_jump_nt, J4_tstbit0_tp0_jump_nt_ce,
+       J4_tstbit0_tp0_jump_t, J4_tstbit0_tp0_jump_t_ce,
+       J4_tstbit0_tp1_jump_nt, J4_tstbit0_tp1_jump_nt_ce,
+       J4_tstbit0_tp1_jump_t, J4_tstbit0_tp1_jump_t_ce, SA1_cmpeqi,
+       SA1_cmpeqi_ce, SS2_storebi0, SS2_storebi0_ce, SS2_storebi1,
+       SS2_storebi1_ce, SS2_storewi0, SS2_storewi0_ce, SS2_storewi1,
+       SS2_storewi1_ce]
     = []
 alignedPairs i ([_, _], [_])
   | i `elem`
-      [A2_add, A2_addp, A2_addpsat, A2_addsat, A2_addsp, A2_addsph,
-       A2_addspl, A2_and, A2_andp, A2_combine_hh, A2_combine_hl,
-       A2_combine_lh, A2_combine_ll, A2_combinew, A2_or, A2_orp, A2_sub,
-       A2_subp, A2_subsat, A2_svaddh, A2_svaddhs, A2_svadduhs, A2_svavgh,
-       A2_svavghs, A2_svnavgh, A2_svsubh, A2_svsubhs, A2_svsubuhs, A2_xor,
-       A2_xorp, A4_andn, A4_andnp, A4_bitsplit, A4_modwrapu, A4_orn,
-       A4_ornp, A4_rcmpeq, A4_rcmpneq, F2_sfadd, F2_sffixupd, F2_sffixupn,
-       F2_sfmax, F2_sfmin, F2_sfmpy, F2_sfsub, M2_mpy_hh_s0, M2_mpy_hh_s1,
-       M2_mpy_hl_s0, M2_mpy_hl_s1, M2_mpy_lh_s0, M2_mpy_lh_s1,
-       M2_mpy_ll_s0, M2_mpy_ll_s1, M2_mpy_rnd_hh_s0, M2_mpy_rnd_hh_s1,
-       M2_mpy_rnd_hl_s0, M2_mpy_rnd_hl_s1, M2_mpy_rnd_lh_s0,
-       M2_mpy_rnd_lh_s1, M2_mpy_rnd_ll_s0, M2_mpy_rnd_ll_s1,
-       M2_mpy_sat_hh_s0, M2_mpy_sat_hh_s1, M2_mpy_sat_hl_s0,
-       M2_mpy_sat_hl_s1, M2_mpy_sat_lh_s0, M2_mpy_sat_lh_s1,
-       M2_mpy_sat_ll_s0, M2_mpy_sat_ll_s1, M2_mpy_sat_rnd_hh_s0,
-       M2_mpy_sat_rnd_hh_s1, M2_mpy_sat_rnd_hl_s0, M2_mpy_sat_rnd_hl_s1,
-       M2_mpy_sat_rnd_lh_s0, M2_mpy_sat_rnd_lh_s1, M2_mpy_sat_rnd_ll_s0,
-       M2_mpy_sat_rnd_ll_s1, M2_mpyu_hh_s0, M2_mpyu_hh_s1, M2_mpyu_hl_s0,
-       M2_mpyu_hl_s1, M2_mpyu_lh_s0, M2_mpyu_lh_s1, M2_mpyu_ll_s0,
-       M2_mpyu_ll_s1, S2_clrbit_r, S2_packhl, S2_parityp, S2_setbit_r,
-       S2_togglebit_r, S4_parity, VMULW, Dep_A2_addsat, Dep_A2_subsat,
-       Dep_S2_packhl]
+      [J4_jumpsetr, J4_jumpsetr_ce, SL1_loadri_io, SL1_loadri_io_ce,
+       SL1_loadrub_io, SL1_loadrub_io_ce, SL2_loadrb_io, SL2_loadrb_io_ce,
+       SL2_loadrh_io, SL2_loadrh_io_ce, SL2_loadruh_io, SL2_loadruh_io_ce]
     = []
-alignedPairs i ([_, _], [_, _]) | i `elem` [F2_sfrecipa] = []
-alignedPairs i ([_, _], [_])
+alignedPairs i ([_, _, _], [])
   | i `elem`
-      [M2_cmpyi_s0, M2_cmpyr_s0, M2_cmpys_s0, M2_cmpys_s1, M2_cmpysc_s0,
-       M2_cmpysc_s1, M2_dpmpyss_s0, M2_dpmpyuu_s0, M2_mpyd_hh_s0,
-       M2_mpyd_hh_s1, M2_mpyd_hl_s0, M2_mpyd_hl_s1, M2_mpyd_lh_s0,
-       M2_mpyd_lh_s1, M2_mpyd_ll_s0, M2_mpyd_ll_s1, M2_mpyd_rnd_hh_s0,
-       M2_mpyd_rnd_hh_s1, M2_mpyd_rnd_hl_s0, M2_mpyd_rnd_hl_s1,
-       M2_mpyd_rnd_lh_s0, M2_mpyd_rnd_lh_s1, M2_mpyd_rnd_ll_s0,
-       M2_mpyd_rnd_ll_s1, M2_mpyud_hh_s0, M2_mpyud_hh_s1, M2_mpyud_hl_s0,
-       M2_mpyud_hl_s1, M2_mpyud_lh_s0, M2_mpyud_lh_s1, M2_mpyud_ll_s0,
-       M2_mpyud_ll_s1, M2_vmpy2s_s0, M2_vmpy2s_s1, M2_vmpy2su_s0,
-       M2_vmpy2su_s1, M4_pmpyw, M4_vpmpyh, M5_vmpybsu, M5_vmpybuu]
+      [SS1_storeb_io, SS1_storeb_io_ce, SS1_storew_io, SS1_storew_io_ce,
+       SS2_storeh_io, SS2_storeh_io_ce]
     = []
 alignedPairs i ([_, _, _], [])
   | i `elem`
@@ -236,64 +856,8 @@ alignedPairs i ([_, _, _], [])
        J4_cmpgtu_tp1_jump_nt_ce, J4_cmpgtu_tp1_jump_t,
        J4_cmpgtu_tp1_jump_t_ce]
     = []
-alignedPairs i ([_, _], [_]) | i `elem` [A4_boundscheck] = []
-alignedPairs i ([_, _], [_])
-  | i `elem` [S2_extractu_rp, S4_extract_rp] = []
-alignedPairs i ([_, _, _], [_])
-  | i `elem` [S4_addaddi, S4_addaddi_ce] = []
-alignedPairs i ([_, _, _, _], [])
-  | i `elem`
-      [S4_storerbnew_rr, S4_storerbnew_rr_ce, S4_storerhnew_rr,
-       S4_storerhnew_rr_ce, S4_storerinew_rr, S4_storerinew_rr_ce]
-    = []
-alignedPairs i ([_, _, _, _], [])
-  | i `elem`
-      [S4_storerb_rr, S4_storerb_rr_ce, S4_storerd_rr, S4_storerd_rr_ce,
-       S4_storerf_rr, S4_storerf_rr_ce, S4_storerh_rr, S4_storerh_rr_ce,
-       S4_storeri_rr, S4_storeri_rr_ce]
-    = []
+alignedPairs i ([_, _], [_]) | i `elem` [SA1_dec, SA1_dec_ce] = []
 alignedPairs i ([_, _, _], [])
-  | i `elem`
-      [J4_cmpeqi_fp0_jump_nt, J4_cmpeqi_fp0_jump_nt_ce,
-       J4_cmpeqi_fp0_jump_t, J4_cmpeqi_fp0_jump_t_ce,
-       J4_cmpeqi_fp1_jump_nt, J4_cmpeqi_fp1_jump_nt_ce,
-       J4_cmpeqi_fp1_jump_t, J4_cmpeqi_fp1_jump_t_ce,
-       J4_cmpeqi_tp0_jump_nt, J4_cmpeqi_tp0_jump_nt_ce,
-       J4_cmpeqi_tp0_jump_t, J4_cmpeqi_tp0_jump_t_ce,
-       J4_cmpeqi_tp1_jump_nt, J4_cmpeqi_tp1_jump_nt_ce,
-       J4_cmpeqi_tp1_jump_t, J4_cmpeqi_tp1_jump_t_ce,
-       J4_cmpgti_fp0_jump_nt, J4_cmpgti_fp0_jump_nt_ce,
-       J4_cmpgti_fp0_jump_t, J4_cmpgti_fp0_jump_t_ce,
-       J4_cmpgti_fp1_jump_nt, J4_cmpgti_fp1_jump_nt_ce,
-       J4_cmpgti_fp1_jump_t, J4_cmpgti_fp1_jump_t_ce,
-       J4_cmpgti_tp0_jump_nt, J4_cmpgti_tp0_jump_nt_ce,
-       J4_cmpgti_tp0_jump_t, J4_cmpgti_tp0_jump_t_ce,
-       J4_cmpgti_tp1_jump_nt, J4_cmpgti_tp1_jump_nt_ce,
-       J4_cmpgti_tp1_jump_t, J4_cmpgti_tp1_jump_t_ce,
-       J4_cmpgtui_fp0_jump_nt, J4_cmpgtui_fp0_jump_nt_ce,
-       J4_cmpgtui_fp0_jump_t, J4_cmpgtui_fp0_jump_t_ce,
-       J4_cmpgtui_fp1_jump_nt, J4_cmpgtui_fp1_jump_nt_ce,
-       J4_cmpgtui_fp1_jump_t, J4_cmpgtui_fp1_jump_t_ce,
-       J4_cmpgtui_tp0_jump_nt, J4_cmpgtui_tp0_jump_nt_ce,
-       J4_cmpgtui_tp0_jump_t, J4_cmpgtui_tp0_jump_t_ce,
-       J4_cmpgtui_tp1_jump_nt, J4_cmpgtui_tp1_jump_nt_ce,
-       J4_cmpgtui_tp1_jump_t, J4_cmpgtui_tp1_jump_t_ce]
-    = []
-alignedPairs i ([_, _, _], [_])
-  | i `elem` [TFR_FIA, TFR_FIA_ce] = []
-alignedPairs i ([_, _, _], [])
-  | i `elem`
-      [S4_storeirb_io, S4_storeirb_io_ce, S4_storeirh_io,
-       S4_storeirh_io_ce, S4_storeiri_io, S4_storeiri_io_ce]
-    = []
-alignedPairs i ([_, _], [])
-  | i `elem`
-      [J2_jumprgtez, J2_jumprgtez_ce, J2_jumprgtezpt, J2_jumprgtezpt_ce,
-       J2_jumprltez, J2_jumprltez_ce, J2_jumprltezpt, J2_jumprltezpt_ce,
-       J2_jumprnz, J2_jumprnz_ce, J2_jumprnzpt, J2_jumprnzpt_ce,
-       J2_jumprz, J2_jumprz_ce, J2_jumprzpt, J2_jumprzpt_ce]
-    = []
-alignedPairs i ([_, _], [])
   | i `elem`
       [J4_cmpeqn1_fp0_jump_nt, J4_cmpeqn1_fp0_jump_nt_ce,
        J4_cmpeqn1_fp0_jump_t, J4_cmpeqn1_fp0_jump_t_ce,
@@ -310,94 +874,251 @@ alignedPairs i ([_, _], [])
        J4_cmpgtn1_tp0_jump_nt, J4_cmpgtn1_tp0_jump_nt_ce,
        J4_cmpgtn1_tp0_jump_t, J4_cmpgtn1_tp0_jump_t_ce,
        J4_cmpgtn1_tp1_jump_nt, J4_cmpgtn1_tp1_jump_nt_ce,
-       J4_cmpgtn1_tp1_jump_t, J4_cmpgtn1_tp1_jump_t_ce,
-       J4_tstbit0_fp0_jump_nt, J4_tstbit0_fp0_jump_nt_ce,
-       J4_tstbit0_fp0_jump_t, J4_tstbit0_fp0_jump_t_ce,
-       J4_tstbit0_fp1_jump_nt, J4_tstbit0_fp1_jump_nt_ce,
-       J4_tstbit0_fp1_jump_t, J4_tstbit0_fp1_jump_t_ce,
-       J4_tstbit0_tp0_jump_nt, J4_tstbit0_tp0_jump_nt_ce,
-       J4_tstbit0_tp0_jump_t, J4_tstbit0_tp0_jump_t_ce,
-       J4_tstbit0_tp1_jump_nt, J4_tstbit0_tp1_jump_nt_ce,
-       J4_tstbit0_tp1_jump_t, J4_tstbit0_tp1_jump_t_ce]
+       J4_cmpgtn1_tp1_jump_t, J4_cmpgtn1_tp1_jump_t_ce]
+    = []
+alignedPairs i ([_], [])
+  | i `elem`
+      [J2_callr, J2_jumpr, J4_hintjumpr, Y2_dccleana, Y2_dccleaninva,
+       Y2_dcfetch, Y2_dcinva, Y2_dczeroa, Y2_icinva, Y2_wait, Y4_trace]
+    = []
+alignedPairs i ([_], [_]) | i `elem` [A2_tfrrcr] = []
+alignedPairs i ([_], [_]) | i `elem` [G4_tfrgrcr] = []
+alignedPairs i ([_], [_]) | i `elem` [C2_tfrrp, MVRP, MVRP_ce] = []
+alignedPairs i ([_], [_])
+  | i `elem`
+      [A2_abs, A2_abssat, A2_aslh, A2_asrh, A2_neg, A2_negsat, A2_not,
+       A2_satb, A2_sath, A2_satub, A2_satuh, A2_swiz, A2_sxtb, A2_sxth,
+       A2_tfr, A2_zxtb, A2_zxth, F2_conv_sf2uw, F2_conv_sf2uw_chop,
+       F2_conv_sf2w, F2_conv_sf2w_chop, F2_conv_uw2sf, F2_conv_w2sf,
+       F2_sffixupr, L2_loadbsw2_zomap, L2_loadbzw2_zomap, L2_loadrb_zomap,
+       L2_loadrh_zomap, L2_loadri_zomap, L2_loadrub_zomap,
+       L2_loadruh_zomap, L2_loadw_locked, MVW, MVW_ce, S2_brev, S2_cl0,
+       S2_cl1, S2_clb, S2_clbnorm, S2_ct0, S2_ct1, S2_svsathb,
+       S2_svsathub, S2_vsplatrb]
+    = []
+alignedPairs i ([_], [_, _]) | i `elem` [F2_sfinvsqrta] = []
+alignedPairs i ([_], [_])
+  | i `elem`
+      [A2_sxtw, F2_conv_sf2d, F2_conv_sf2d_chop, F2_conv_sf2df,
+       F2_conv_sf2ud, F2_conv_sf2ud_chop, F2_conv_uw2df, F2_conv_w2df,
+       L2_deallocframe, L2_loadbsw4_zomap, L2_loadbzw4_zomap,
+       L2_loadrd_zomap, L4_loadd_locked, L4_return, S2_vsplatrh,
+       S2_vsxtbh, S2_vsxthw, S2_vzxtbh, S2_vzxthw, S6_vsplatrbp]
+    = []
+alignedPairs i ([_, _], [])
+  | i `elem`
+      [L4_iadd_memopb_zomap, L4_iadd_memopb_zomap_ce,
+       L4_iadd_memoph_zomap, L4_iadd_memoph_zomap_ce,
+       L4_iadd_memopw_zomap, L4_iadd_memopw_zomap_ce,
+       L4_iand_memopb_zomap, L4_iand_memopb_zomap_ce,
+       L4_iand_memoph_zomap, L4_iand_memoph_zomap_ce,
+       L4_iand_memopw_zomap, L4_iand_memopw_zomap_ce, L4_ior_memopb_zomap,
+       L4_ior_memopb_zomap_ce, L4_ior_memoph_zomap,
+       L4_ior_memoph_zomap_ce, L4_ior_memopw_zomap,
+       L4_ior_memopw_zomap_ce, L4_isub_memopb_zomap,
+       L4_isub_memopb_zomap_ce, L4_isub_memoph_zomap,
+       L4_isub_memoph_zomap_ce, L4_isub_memopw_zomap,
+       L4_isub_memopw_zomap_ce, S4_storeirb_zomap, S4_storeirb_zomap_ce,
+       S4_storeirh_zomap, S4_storeirh_zomap_ce, S4_storeiri_zomap,
+       S4_storeiri_zomap_ce]
+    = []
+alignedPairs i ([_, _], [])
+  | i `elem`
+      [J2_jumprgtez, J2_jumprgtez_ce, J2_jumprgtezpt, J2_jumprgtezpt_ce,
+       J2_jumprltez, J2_jumprltez_ce, J2_jumprltezpt, J2_jumprltezpt_ce,
+       J2_jumprnz, J2_jumprnz_ce, J2_jumprnzpt, J2_jumprnzpt_ce,
+       J2_jumprz, J2_jumprz_ce, J2_jumprzpt, J2_jumprzpt_ce, Y2_dcfetchbo,
+       Y2_dcfetchbo_ce]
     = []
 alignedPairs i ([_, _], [_])
-  | i `elem` [J4_jumpsetr, J4_jumpsetr_ce] = []
+  | i `elem`
+      [A4_cmpbeqi, A4_cmpbeqi_ce, A4_cmpbgti, A4_cmpbgti_ce, A4_cmpbgtui,
+       A4_cmpbgtui_ce, A4_cmpheqi, A4_cmpheqi_ce, A4_cmphgti,
+       A4_cmphgti_ce, A4_cmphgtui, A4_cmphgtui_ce, C2_bitsclri,
+       C2_bitsclri_ce, C2_cmpeqi, C2_cmpeqi_ce, C2_cmpeqi_combo,
+       C2_cmpeqi_combo_ce, C2_cmpgei, C2_cmpgei_ce, C2_cmpgeui,
+       C2_cmpgeui_ce, C2_cmpgti, C2_cmpgti_ce, C2_cmpgti_combo,
+       C2_cmpgti_combo_ce, C2_cmpgtui, C2_cmpgtui_ce, C2_cmpgtui_combo,
+       C2_cmpgtui_combo_ce, C4_cmpltei, C4_cmpltei_ce, C4_cmplteui,
+       C4_cmplteui_ce, C4_cmpneqi, C4_cmpneqi_ce, C4_nbitsclri,
+       C4_nbitsclri_ce, F2_sfclass, F2_sfclass_ce, S2_tstbit_i,
+       S2_tstbit_i_ce, S4_ntstbit_i, S4_ntstbit_i_ce]
+    = []
 alignedPairs i ([_, _], [_])
-  | i `elem` [A2_andir, A2_andir_ce, A2_orir, A2_orir_ce] = []
-alignedPairs i ([_, _], [_]) | i `elem` [A2_addi, A2_addi_ce] = []
+  | i `elem`
+      [A2_addi, A2_addi_ce, A2_andir, A2_andir_ce, A2_orir, A2_orir_ce,
+       A4_cround_ri, A4_cround_ri_ce, A4_rcmpeqi, A4_rcmpeqi_ce,
+       A4_rcmpneqi, A4_rcmpneqi_ce, A4_round_ri, A4_round_ri_ce,
+       A4_round_ri_sat, A4_round_ri_sat_ce, L2_loadbsw2_io,
+       L2_loadbsw2_io_ce, L2_loadbzw2_io, L2_loadbzw2_io_ce, L2_loadrb_io,
+       L2_loadrb_io_ce, L2_loadrh_io, L2_loadrh_io_ce, L2_loadri_io,
+       L2_loadri_io_ce, L2_loadrub_io, L2_loadrub_io_ce, L2_loadruh_io,
+       L2_loadruh_io_ce, M2_mpysin, M2_mpysin_ce, M2_mpysip, M2_mpysip_ce,
+       M2_mpysmi, M2_mpysmi_ce, S2_asl_i_r, S2_asl_i_r_ce, S2_asl_i_r_sat,
+       S2_asl_i_r_sat_ce, S2_asr_i_r, S2_asr_i_r_ce, S2_asr_i_r_rnd,
+       S2_asr_i_r_rnd_ce, S2_asr_i_r_rnd_goodsyntax,
+       S2_asr_i_r_rnd_goodsyntax_ce, S2_clrbit_i, S2_clrbit_i_ce,
+       S2_lsr_i_r, S2_lsr_i_r_ce, S2_setbit_i, S2_setbit_i_ce,
+       S2_togglebit_i, S2_togglebit_i_ce, S4_clbaddi, S4_clbaddi_ce,
+       S6_rol_i_r, S6_rol_i_r_ce]
+    = []
 alignedPairs i ([_, _], [_])
-  | i `elem` [S4_clbaddi, S4_clbaddi_ce, S4_clbpaddi, S4_clbpaddi_ce]
+  | i `elem`
+      [A4_bitspliti, A4_bitspliti_ce, A4_combineri, A4_combineri_ce,
+       L2_loadbsw4_io, L2_loadbsw4_io_ce, L2_loadbzw4_io,
+       L2_loadbzw4_io_ce, L2_loadrd_io, L2_loadrd_io_ce]
+    = []
+alignedPairs i ([_, _, _], [])
+  | i `elem`
+      [L4_iadd_memopb_io, L4_iadd_memopb_io_ce, L4_iadd_memoph_io,
+       L4_iadd_memoph_io_ce, L4_iadd_memopw_io, L4_iadd_memopw_io_ce,
+       L4_iand_memopb_io, L4_iand_memopb_io_ce, L4_iand_memoph_io,
+       L4_iand_memoph_io_ce, L4_iand_memopw_io, L4_iand_memopw_io_ce,
+       L4_ior_memopb_io, L4_ior_memopb_io_ce, L4_ior_memoph_io,
+       L4_ior_memoph_io_ce, L4_ior_memopw_io, L4_ior_memopw_io_ce,
+       L4_isub_memopb_io, L4_isub_memopb_io_ce, L4_isub_memoph_io,
+       L4_isub_memoph_io_ce, L4_isub_memopw_io, L4_isub_memopw_io_ce,
+       S4_storeirb_io, S4_storeirb_io_ce, S4_storeirh_io,
+       S4_storeirh_io_ce, S4_storeiri_io, S4_storeiri_io_ce]
     = []
 alignedPairs i ([_, _, _], [_])
+  | i `elem` [S2_extractu, S2_extractu_ce, S4_extract, S4_extract_ce]
+    = []
+alignedPairs i ([_, _, _], [])
+  | i `elem`
+      [S2_storerbnew_io, S2_storerbnew_io_ce, S2_storerhnew_io,
+       S2_storerhnew_io_ce, S2_storerinew_io, S2_storerinew_io_ce]
+    = []
+alignedPairs i ([_, _, _], [])
+  | i `elem`
+      [L4_add_memopb_io, L4_add_memopb_io_ce, L4_add_memoph_io,
+       L4_add_memoph_io_ce, L4_add_memopw_io, L4_add_memopw_io_ce,
+       L4_and_memopb_io, L4_and_memopb_io_ce, L4_and_memoph_io,
+       L4_and_memoph_io_ce, L4_and_memopw_io, L4_and_memopw_io_ce,
+       L4_or_memopb_io, L4_or_memopb_io_ce, L4_or_memoph_io,
+       L4_or_memoph_io_ce, L4_or_memopw_io, L4_or_memopw_io_ce,
+       L4_sub_memopb_io, L4_sub_memopb_io_ce, L4_sub_memoph_io,
+       L4_sub_memoph_io_ce, L4_sub_memopw_io, L4_sub_memopw_io_ce,
+       S2_storerb_io, S2_storerb_io_ce, S2_storerf_io, S2_storerf_io_ce,
+       S2_storerh_io, S2_storerh_io_ce, S2_storeri_io, S2_storeri_io_ce]
+    = []
+alignedPairs i ([_, _, _], [])
+  | i `elem` [S2_storerd_io, S2_storerd_io_ce] = []
+alignedPairs i ([_, _, _], [_])
   | i `elem` [S4_subaddi, S4_subaddi_ce] = []
-alignedPairs i ([_, _], [_])
-  | i `elem` [C2_cmpgei, C2_cmpgei_ce, C2_cmpgeui, C2_cmpgeui_ce] =
-    []
-alignedPairs i ([_, _], [_])
-  | i `elem` [A4_rcmpeqi, A4_rcmpeqi_ce, A4_rcmpneqi, A4_rcmpneqi_ce]
-    = []
-alignedPairs i ([_, _], [_])
-  | i `elem` [A4_combineri, A4_combineri_ce] = []
-alignedPairs i ([_, _], [])
-  | i `elem` [Y2_dcfetchbo, Y2_dcfetchbo_ce] = []
-alignedPairs i ([_, _], [])
-  | i `elem` [V4_SA1_cmpeqi, V4_SA1_cmpeqi_ce] = []
-alignedPairs i ([_, _], [_])
-  | i `elem` [V4_SL2_loadrb_io, V4_SL2_loadrb_io_ce] = []
-alignedPairs i ([_, _], [_])
-  | i `elem`
-      [V4_SL2_loadrh_io, V4_SL2_loadrh_io_ce, V4_SL2_loadruh_io,
-       V4_SL2_loadruh_io_ce]
-    = []
-alignedPairs i ([_, _, _], [])
-  | i `elem` [V4_SS2_storeh_io, V4_SS2_storeh_io_ce] = []
 alignedPairs i ([_, _], [])
   | i `elem`
-      [V4_SS2_storebi0, V4_SS2_storebi0_ce, V4_SS2_storebi1,
-       V4_SS2_storebi1_ce]
+      [S2_storerbnew_zomap, S2_storerhnew_zomap, S2_storerinew_zomap]
     = []
-alignedPairs i ([_, _], [_])
-  | i `elem` [V4_SL1_loadrub_io, V4_SL1_loadrub_io_ce] = []
-alignedPairs i ([_, _, _], [])
-  | i `elem` [V4_SS1_storeb_io, V4_SS1_storeb_io_ce] = []
 alignedPairs i ([_, _], [])
   | i `elem`
-      [V4_SS2_storewi0, V4_SS2_storewi0_ce, V4_SS2_storewi1,
-       V4_SS2_storewi1_ce]
-    = []
-alignedPairs i ([_, _], [_])
-  | i `elem` [V4_SL1_loadri_io, V4_SL1_loadri_io_ce] = []
-alignedPairs i ([_, _, _], [])
-  | i `elem` [V4_SS1_storew_io, V4_SS1_storew_io_ce] = []
-alignedPairs i ([_, _], [_])
-  | i `elem`
-      [F2_sfclass, F2_sfclass_ce, S2_tstbit_i, S2_tstbit_i_ce,
-       S4_ntstbit_i, S4_ntstbit_i_ce]
+      [L4_add_memopb_zomap, L4_add_memoph_zomap, L4_add_memopw_zomap,
+       L4_and_memopb_zomap, L4_and_memoph_zomap, L4_and_memopw_zomap,
+       L4_or_memopb_zomap, L4_or_memoph_zomap, L4_or_memopw_zomap,
+       L4_sub_memopb_zomap, L4_sub_memoph_zomap, L4_sub_memopw_zomap,
+       S2_storerb_zomap, S2_storerf_zomap, S2_storerh_zomap,
+       S2_storeri_zomap, Y4_l2fetch]
     = []
 alignedPairs i ([_, _], [_])
   | i `elem`
-      [S2_clrbit_i, S2_clrbit_i_ce, S2_setbit_i, S2_setbit_i_ce,
-       S2_togglebit_i, S2_togglebit_i_ce]
+      [A4_cmpbeq, A4_cmpbgt, A4_cmpbgtu, A4_cmpheq, A4_cmphgt,
+       A4_cmphgtu, C2_bitsclr, C2_bitsset, C2_cmpeq, C2_cmpeq_combo,
+       C2_cmpgt, C2_cmpgt_combo, C2_cmpgtu, C2_cmpgtu_combo, C2_cmplt,
+       C2_cmplt_combo, C2_cmpltu, C2_cmpltu_combo, C4_cmplte, C4_cmplteu,
+       C4_cmpneq, C4_nbitsclr, C4_nbitsset, F2_sfcmpeq, F2_sfcmpge,
+       F2_sfcmpgt, F2_sfcmpuo, S2_storew_locked, S2_tstbit_r,
+       S4_ntstbit_r]
     = []
 alignedPairs i ([_, _], [_])
   | i `elem`
-      [C2_bitsclri, C2_bitsclri_ce, C4_nbitsclri, C4_nbitsclri_ce]
+      [A2_add, A2_addsat, A2_and, A2_max, A2_maxu, A2_or, A2_svaddh,
+       A2_svaddhs, A2_svadduhs, A2_svavgh, A2_svavghs, A2_xor,
+       A4_cround_rr, A4_modwrapu, A4_rcmpeq, A4_rcmpneq, A4_round_rr,
+       A4_round_rr_sat, F2_sfadd, F2_sffixupd, F2_sffixupn, F2_sfmax,
+       F2_sfmin, F2_sfmpy, F2_sfsub, M2_cmpyrs_s0, M2_cmpyrs_s1,
+       M2_cmpyrsc_s0, M2_cmpyrsc_s1, M2_dpmpyss_rnd_s0, M2_hmmpyh_rs1,
+       M2_hmmpyh_s1, M2_hmmpyl_rs1, M2_hmmpyl_s1, M2_mpy_hh_s0,
+       M2_mpy_hh_s1, M2_mpy_hl_s0, M2_mpy_hl_s1, M2_mpy_lh_s0,
+       M2_mpy_lh_s1, M2_mpy_ll_s0, M2_mpy_ll_s1, M2_mpy_rnd_hh_s0,
+       M2_mpy_rnd_hh_s1, M2_mpy_rnd_hl_s0, M2_mpy_rnd_hl_s1,
+       M2_mpy_rnd_lh_s0, M2_mpy_rnd_lh_s1, M2_mpy_rnd_ll_s0,
+       M2_mpy_rnd_ll_s1, M2_mpy_sat_hh_s0, M2_mpy_sat_hh_s1,
+       M2_mpy_sat_hl_s0, M2_mpy_sat_hl_s1, M2_mpy_sat_lh_s0,
+       M2_mpy_sat_lh_s1, M2_mpy_sat_ll_s0, M2_mpy_sat_ll_s1,
+       M2_mpy_sat_rnd_hh_s0, M2_mpy_sat_rnd_hh_s1, M2_mpy_sat_rnd_hl_s0,
+       M2_mpy_sat_rnd_hl_s1, M2_mpy_sat_rnd_lh_s0, M2_mpy_sat_rnd_lh_s1,
+       M2_mpy_sat_rnd_ll_s0, M2_mpy_sat_rnd_ll_s1, M2_mpy_up,
+       M2_mpy_up_s1, M2_mpy_up_s1_sat, M2_mpyi, M2_mpysu_up,
+       M2_mpyu_hh_s0, M2_mpyu_hh_s1, M2_mpyu_hl_s0, M2_mpyu_hl_s1,
+       M2_mpyu_lh_s0, M2_mpyu_lh_s1, M2_mpyu_ll_s0, M2_mpyu_ll_s1,
+       M2_mpyu_up, M2_mpyui, M2_vmpy2s_s0pack, M2_vmpy2s_s1pack,
+       S2_asl_r_r, S2_asl_r_r_sat, S2_asr_r_r, S2_asr_r_r_sat,
+       S2_clrbit_r, S2_lsl_r_r, S2_lsr_r_r, S2_setbit_r, S2_togglebit_r,
+       S4_parity, Dep_A2_addsat]
     = []
+alignedPairs i ([_, _], [_, _]) | i `elem` [F2_sfrecipa] = []
 alignedPairs i ([_, _], [_])
-  | i `elem` [M2_mpysin, M2_mpysin_ce, M2_mpysip, M2_mpysip_ce] = []
+  | i `elem`
+      [A2_combinew, A4_bitsplit, M2_cmpyi_s0, M2_cmpyr_s0, M2_cmpys_s0,
+       M2_cmpys_s1, M2_cmpysc_s0, M2_cmpysc_s1, M2_dpmpyss_s0,
+       M2_dpmpyuu_s0, M2_mpyd_hh_s0, M2_mpyd_hh_s1, M2_mpyd_hl_s0,
+       M2_mpyd_hl_s1, M2_mpyd_lh_s0, M2_mpyd_lh_s1, M2_mpyd_ll_s0,
+       M2_mpyd_ll_s1, M2_mpyd_rnd_hh_s0, M2_mpyd_rnd_hh_s1,
+       M2_mpyd_rnd_hl_s0, M2_mpyd_rnd_hl_s1, M2_mpyd_rnd_lh_s0,
+       M2_mpyd_rnd_lh_s1, M2_mpyd_rnd_ll_s0, M2_mpyd_rnd_ll_s1,
+       M2_mpyud_hh_s0, M2_mpyud_hh_s1, M2_mpyud_hl_s0, M2_mpyud_hl_s1,
+       M2_mpyud_lh_s0, M2_mpyud_lh_s1, M2_mpyud_ll_s0, M2_mpyud_ll_s1,
+       M2_vmpy2s_s0, M2_vmpy2s_s1, M2_vmpy2su_s0, M2_vmpy2su_s1, M4_pmpyw,
+       M4_vpmpyh, M5_vmpybsu, M5_vmpybuu, S2_packhl, Dep_S2_packhl]
+    = []
+alignedPairs i ([_, _, _], [_])
+  | i `elem`
+      [L4_loadrb_rr, L4_loadrb_rr_ce, L4_loadrh_rr, L4_loadrh_rr_ce,
+       L4_loadri_rr, L4_loadri_rr_ce, L4_loadrub_rr, L4_loadrub_rr_ce,
+       L4_loadruh_rr, L4_loadruh_rr_ce]
+    = []
+alignedPairs i ([_, _, _], [_])
+  | i `elem` [L4_loadrd_rr, L4_loadrd_rr_ce] = []
+alignedPairs i ([_, _, _], []) | i `elem` [L6_memcpy] = []
+alignedPairs i ([_, _], [])
+  | i `elem` [S2_storerd_zomap, Y5_l2fetch] = []
+alignedPairs i ([_, _], [_])
+  | i `elem` [A4_boundscheck, S4_stored_locked] = []
+alignedPairs i ([_, _], [_])
+  | i `elem` [S2_extractu_rp, S4_extract_rp] = []
+alignedPairs i ([_, _], [_]) | i `elem` [A2_addsp] = []
+alignedPairs i ([_, _, _], [_])
+  | i `elem` [S4_addaddi, S4_addaddi_ce] = []
+alignedPairs i ([_, _, _, _], [])
+  | i `elem`
+      [S4_storerbnew_rr, S4_storerbnew_rr_ce, S4_storerhnew_rr,
+       S4_storerhnew_rr_ce, S4_storerinew_rr, S4_storerinew_rr_ce]
+    = []
+alignedPairs i ([_, _, _, _], [])
+  | i `elem`
+      [S4_storerb_rr, S4_storerb_rr_ce, S4_storerf_rr, S4_storerf_rr_ce,
+       S4_storerh_rr, S4_storerh_rr_ce, S4_storeri_rr, S4_storeri_rr_ce]
+    = []
+alignedPairs i ([_, _, _, _], [])
+  | i `elem` [S4_storerd_rr, S4_storerd_rr_ce] = []
+alignedPairs i ([_], [_]) | i `elem` [A4_tfrpcp] = []
+alignedPairs i ([_], [_]) | i `elem` [G4_tfrgpcp] = []
 alignedPairs i ([_], [_])
   | i `elem`
-      [F2_conv_d2sf, F2_conv_df2sf, F2_conv_df2uw, F2_conv_df2uw_chop,
-       F2_conv_df2w, F2_conv_df2w_chop, F2_conv_ud2sf, S5_popcountp]
+      [A2_roundsat, A2_sat, F2_conv_d2sf, F2_conv_df2sf, F2_conv_df2uw,
+       F2_conv_df2uw_chop, F2_conv_df2w, F2_conv_df2w_chop, F2_conv_ud2sf,
+       S2_cl0p, S2_cl1p, S2_clbp, S2_ct0p, S2_ct1p, S2_vrndpackwh,
+       S2_vrndpackwhs, S2_vsathb, S2_vsathub, S2_vsatwh, S2_vsatwuh,
+       S2_vtrunehb, S2_vtrunohb, S4_clbpnorm, S5_popcountp]
     = []
 alignedPairs i ([_], [_])
   | i `elem`
-      [A2_absp, A2_negp, A2_notp, A2_vabsh, A2_vabshsat, A2_vabsw,
-       A2_vabswsat, A2_vconj, F2_conv_d2df, F2_conv_df2d,
+      [A2_absp, A2_negp, A2_notp, A2_tfrp, A2_vabsh, A2_vabshsat,
+       A2_vabsw, A2_vabswsat, A2_vconj, F2_conv_d2df, F2_conv_df2d,
        F2_conv_df2d_chop, F2_conv_df2ud, F2_conv_df2ud_chop,
-       F2_conv_ud2df, S2_brevp, S2_deinterleave, S2_interleave,
-       S2_vsathb_nopack, S2_vsathub_nopack, S2_vsatwh_nopack,
-       S2_vsatwuh_nopack]
+       F2_conv_ud2df, MVD, MVD_ce, S2_brevp, S2_deinterleave,
+       S2_interleave, S2_vsathb_nopack, S2_vsathub_nopack,
+       S2_vsatwh_nopack, S2_vsatwuh_nopack]
     = []
 alignedPairs i ([_, _], [_])
   | i `elem`
@@ -405,32 +1126,65 @@ alignedPairs i ([_, _], [_])
        A4_vcmpbgtui, A4_vcmpbgtui_ce, A4_vcmpheqi, A4_vcmpheqi_ce,
        A4_vcmphgti, A4_vcmphgti_ce, A4_vcmphgtui, A4_vcmphgtui_ce,
        A4_vcmpweqi, A4_vcmpweqi_ce, A4_vcmpwgti, A4_vcmpwgti_ce,
-       A4_vcmpwgtui, A4_vcmpwgtui_ce]
+       A4_vcmpwgtui, A4_vcmpwgtui_ce, F2_dfclass, F2_dfclass_ce]
     = []
+alignedPairs i ([_, _], [_])
+  | i `elem`
+      [S2_asr_i_svw_trun, S2_asr_i_svw_trun_ce, S4_clbpaddi,
+       S4_clbpaddi_ce, S5_asrhub_rnd_sat, S5_asrhub_rnd_sat_ce,
+       S5_asrhub_rnd_sat_goodsyntax, S5_asrhub_rnd_sat_goodsyntax_ce,
+       S5_asrhub_sat, S5_asrhub_sat_ce]
+    = []
+alignedPairs i ([_, _], [_])
+  | i `elem`
+      [S2_asl_i_p, S2_asl_i_p_ce, S2_asl_i_vh, S2_asl_i_vh_ce,
+       S2_asl_i_vw, S2_asl_i_vw_ce, S2_asr_i_p, S2_asr_i_p_ce,
+       S2_asr_i_p_rnd, S2_asr_i_p_rnd_ce, S2_asr_i_p_rnd_goodsyntax,
+       S2_asr_i_p_rnd_goodsyntax_ce, S2_asr_i_vh, S2_asr_i_vh_ce,
+       S2_asr_i_vw, S2_asr_i_vw_ce, S2_lsr_i_p, S2_lsr_i_p_ce,
+       S2_lsr_i_vh, S2_lsr_i_vh_ce, S2_lsr_i_vw, S2_lsr_i_vw_ce,
+       S5_vasrhrnd, S5_vasrhrnd_ce, S5_vasrhrnd_goodsyntax,
+       S5_vasrhrnd_goodsyntax_ce, S6_rol_i_p, S6_rol_i_p_ce]
+    = []
+alignedPairs i ([_, _, _], [_])
+  | i `elem`
+      [S2_extractup, S2_extractup_ce, S4_extractp, S4_extractp_ce]
+    = []
+alignedPairs i ([_, _], [_]) | i `elem` [A4_tlbmatch] = []
 alignedPairs i ([_, _], [_])
   | i `elem`
       [M2_vrcmpys_s1rp, M4_cmpyi_wh, M4_cmpyi_whc, M4_cmpyr_wh,
        M4_cmpyr_whc, S2_asr_r_svw_trun]
     = []
-alignedPairs i ([_, _], [_]) | i `elem` [M2_vrcmpys_s1] = []
+alignedPairs i ([_, _], [_])
+  | i `elem`
+      [M2_vrcmpys_s1, S2_asl_r_p, S2_asl_r_vh, S2_asl_r_vw, S2_asr_r_p,
+       S2_asr_r_vh, S2_asr_r_vw, S2_lsl_r_p, S2_lsl_r_vh, S2_lsl_r_vw,
+       S2_lsr_r_p, S2_lsr_r_vh, S2_lsr_r_vw, S2_vcnegh, S2_vcrotate]
+    = []
 alignedPairs i ([_, _, _], [_])
   | i `elem` [S4_vrcrotate, S4_vrcrotate_ce] = []
 alignedPairs i ([_, _], [_])
   | i `elem`
       [A2_vcmpbeq, A2_vcmpbgtu, A2_vcmpheq, A2_vcmphgt, A2_vcmphgtu,
        A2_vcmpweq, A2_vcmpwgt, A2_vcmpwgtu, A4_boundscheck_hi,
-       A4_boundscheck_lo, A4_vcmpbeq_any, A4_vcmpbgt]
+       A4_boundscheck_lo, A4_vcmpbeq_any, A4_vcmpbgt, A6_vcmpbeq_notany,
+       C2_cmpeqp, C2_cmpgtp, C2_cmpgtup, F2_dfcmpeq, F2_dfcmpge,
+       F2_dfcmpgt, F2_dfcmpuo]
     = []
 alignedPairs i ([_, _], [_])
   | i `elem`
-      [A2_vaddh, A2_vaddhs, A2_vaddub, A2_vaddubs, A2_vadduhs, A2_vaddw,
-       A2_vaddws, A2_vavgh, A2_vavghcr, A2_vavghr, A2_vavgub, A2_vavgubr,
-       A2_vavguh, A2_vavguhr, A2_vavguw, A2_vavguwr, A2_vavgw, A2_vavgwcr,
-       A2_vavgwr, A2_vmaxb, A2_vmaxh, A2_vmaxub, A2_vmaxuh, A2_vmaxuw,
-       A2_vmaxw, A2_vminb, A2_vminh, A2_vminub, A2_vminuh, A2_vminuw,
-       A2_vminw, A2_vnavgh, A2_vnavghcr, A2_vnavghr, A2_vnavgw,
-       A2_vnavgwcr, A2_vnavgwr, A2_vraddub, A2_vrsadub, A2_vsubh,
-       A2_vsubhs, A2_vsubub, A2_vsububs, A2_vsubuhs, A2_vsubw, A2_vsubws,
+      [A5_vaddhubs, M2_vdmpyrs_s0, M2_vdmpyrs_s1, M2_vraddh, M2_vradduh,
+       M2_vrcmpys_s1rp_h, M2_vrcmpys_s1rp_l, S2_parityp]
+    = []
+alignedPairs i ([_, _], [_])
+  | i `elem`
+      [A2_addp, A2_addpsat, A2_addsph, A2_addspl, A2_andp, A2_maxp,
+       A2_maxup, A2_orp, A2_vaddb_map, A2_vaddh, A2_vaddhs, A2_vaddub,
+       A2_vaddubs, A2_vadduhs, A2_vaddw, A2_vaddws, A2_vavgh, A2_vavghcr,
+       A2_vavghr, A2_vavgub, A2_vavgubr, A2_vavguh, A2_vavguhr, A2_vavguw,
+       A2_vavguwr, A2_vavgw, A2_vavgwcr, A2_vavgwr, A2_vraddub,
+       A2_vrsadub, A2_vsubb_map, A2_xorp, F2_dfadd, F2_dfsub,
        M2_mmpyh_rs0, M2_mmpyh_rs1, M2_mmpyh_s0, M2_mmpyh_s1, M2_mmpyl_rs0,
        M2_mmpyl_rs1, M2_mmpyl_s0, M2_mmpyl_s1, M2_mmpyuh_rs0,
        M2_mmpyuh_rs1, M2_mmpyuh_s0, M2_mmpyuh_s1, M2_mmpyul_rs0,
@@ -440,335 +1194,356 @@ alignedPairs i ([_, _], [_])
        M2_vrcmpyi_s0, M2_vrcmpyi_s0c, M2_vrcmpyr_s0, M2_vrcmpyr_s0c,
        M2_vrcmpys_s1_h, M2_vrcmpys_s1_l, M2_vrmpy_s0, M4_vrmpyeh_s0,
        M4_vrmpyeh_s1, M4_vrmpyoh_s0, M4_vrmpyoh_s1, M5_vdmpybsu,
-       M5_vrmpybsu, M5_vrmpybuu]
+       M5_vrmpybsu, M5_vrmpybuu, S2_cabacdecbin, S2_extractup_rp, S2_lfsp,
+       S2_shuffeb, S2_shuffeh, S2_vtrunewh, S2_vtrunowh, S4_extractp_rp,
+       S4_vxaddsubh, S4_vxaddsubhr, S4_vxaddsubw, S4_vxsubaddh,
+       S4_vxsubaddhr, S4_vxsubaddw, S6_vtrunehb_ppp, S6_vtrunohb_ppp]
     = []
 alignedPairs i ([_, _, _], [_])
-  | i `elem` [S2_valignrb, S2_vsplicerb] = []
-alignedPairs i ([_, _, pu], [_, pu'])
-  | i `elem` [A4_addp_c, A4_subp_c] = [(pu, pu')]
+  | i `elem` [S2_vspliceib, S2_vspliceib_ce] = []
+alignedPairs i ([_, _, _], [_]) | i `elem` [S2_vsplicerb] = []
+alignedPairs i ([_, _, px4in], [_, px4in'])
+  | i `elem` [A4_addp_c, A4_subp_c] = [(px4in, px4in')]
+alignedPairs i ([_], []) | i `elem` [V6_zld0] = []
+alignedPairs i ([_], [_])
+  | i `elem` [V6_pred_scalar2, V6_pred_scalar2v2] = []
+alignedPairs i ([_], [_])
+  | i `elem`
+      [V6_ld0, V6_ldnt0, V6_ldntnt0, V6_ldu0, V6_lvsplatb, V6_lvsplath,
+       V6_lvsplatw, V6_zextract]
+    = []
+alignedPairs i ([_, _], [])
+  | i `elem`
+      [V6_vS32b_srls_ai, V6_vS32b_srls_ai_ce, V6_zLd_ai, V6_zLd_ai_ce]
+    = []
+alignedPairs i ([_, _], [_])
+  | i `elem`
+      [V6_vL32Ub_ai, V6_vL32Ub_ai_ce, V6_vL32b_ai, V6_vL32b_ai_ce,
+       V6_vL32b_cur_ai, V6_vL32b_cur_ai_ce, V6_vL32b_nt_ai,
+       V6_vL32b_nt_ai_ce, V6_vL32b_nt_cur_ai, V6_vL32b_nt_cur_ai_ce,
+       V6_vL32b_nt_tmp_ai, V6_vL32b_nt_tmp_ai_ce, V6_vL32b_tmp_ai,
+       V6_vL32b_tmp_ai_ce]
+    = []
 alignedPairs i ([_, _, _], [_])
   | i `elem`
-      [S2_valignib, S2_valignib_ce, S2_vspliceib, S2_vspliceib_ce]
+      [L4_loadbsw2_ur, L4_loadbsw2_ur_ce, L4_loadbzw2_ur,
+       L4_loadbzw2_ur_ce, L4_loadrb_ur, L4_loadrb_ur_ce, L4_loadrh_ur,
+       L4_loadrh_ur_ce, L4_loadri_ur, L4_loadri_ur_ce, L4_loadrub_ur,
+       L4_loadrub_ur_ce, L4_loadruh_ur, L4_loadruh_ur_ce]
     = []
-alignedPairs i ([_, _], [_])
+alignedPairs i ([_, _, _], [_])
   | i `elem`
-      [S5_asrhub_rnd_sat, S5_asrhub_rnd_sat_ce,
-       S5_asrhub_rnd_sat_goodsyntax, S5_asrhub_rnd_sat_goodsyntax_ce,
-       S5_asrhub_sat, S5_asrhub_sat_ce]
+      [L4_loadbsw4_ur, L4_loadbsw4_ur_ce, L4_loadbzw4_ur,
+       L4_loadbzw4_ur_ce, L4_loadrd_ur, L4_loadrd_ur_ce]
     = []
-alignedPairs i ([_, _], [_])
+alignedPairs i ([_, _, _], [])
   | i `elem`
-      [S5_vasrhrnd, S5_vasrhrnd_ce, S5_vasrhrnd_goodsyntax,
-       S5_vasrhrnd_goodsyntax_ce]
+      [V6_vS32b_new_ai, V6_vS32b_new_ai_ce, V6_vS32b_nt_new_ai,
+       V6_vS32b_nt_new_ai_ce]
     = []
-alignedPairs i ([_, _], [_])
-  | i `elem` [F2_dfclass, F2_dfclass_ce] = []
+alignedPairs i ([_, _, _], [])
+  | i `elem`
+      [V6_vS32Ub_ai, V6_vS32Ub_ai_ce, V6_vS32b_ai, V6_vS32b_ai_ce,
+       V6_vS32b_nt_ai, V6_vS32b_nt_ai_ce]
+    = []
+alignedPairs i ([_, _, _], [])
+  | i `elem` [V6_vgathermh, V6_vgathermw] = []
+alignedPairs i ([_, _, _, _], [])
+  | i `elem`
+      [V6_vscattermh, V6_vscattermh_add, V6_vscattermh_add_alt,
+       V6_vscattermh_alt, V6_vscattermw, V6_vscattermw_add,
+       V6_vscattermw_add_alt, V6_vscattermw_alt]
+    = []
+alignedPairs i ([_, _, _], []) | i `elem` [V6_vgathermhw] = []
+alignedPairs i ([_, _, _, _], [])
+  | i `elem`
+      [V6_vscattermhw, V6_vscattermhw_add, V6_vscattermwh_add_alt,
+       V6_vscattermwh_alt]
+    = []
+alignedPairs i ([_, _, _], [])
+  | i `elem`
+      [J4_cmplt_f_jumpnv_nt, J4_cmplt_f_jumpnv_nt_ce,
+       J4_cmplt_f_jumpnv_t, J4_cmplt_f_jumpnv_t_ce, J4_cmplt_t_jumpnv_nt,
+       J4_cmplt_t_jumpnv_nt_ce, J4_cmplt_t_jumpnv_t,
+       J4_cmplt_t_jumpnv_t_ce, J4_cmpltu_f_jumpnv_nt,
+       J4_cmpltu_f_jumpnv_nt_ce, J4_cmpltu_f_jumpnv_t,
+       J4_cmpltu_f_jumpnv_t_ce, J4_cmpltu_t_jumpnv_nt,
+       J4_cmpltu_t_jumpnv_nt_ce, J4_cmpltu_t_jumpnv_t,
+       J4_cmpltu_t_jumpnv_t_ce]
+    = []
+alignedPairs i ([_, _], []) | i `elem` [V6_stn0, V6_stnnt0] = []
 alignedPairs i ([_, _], [_])
   | i `elem`
       [A2_addh_h16_hh, A2_addh_h16_hl, A2_addh_h16_lh, A2_addh_h16_ll,
        A2_addh_h16_sat_hh, A2_addh_h16_sat_hl, A2_addh_h16_sat_lh,
        A2_addh_h16_sat_ll, A2_addh_l16_hl, A2_addh_l16_ll,
-       A2_addh_l16_sat_hl, A2_addh_l16_sat_ll, A2_max, A2_maxp, A2_maxu,
-       A2_maxup, A2_min, A2_minp, A2_minu, A2_minup, A2_subh_h16_hh,
-       A2_subh_h16_hl, A2_subh_h16_lh, A2_subh_h16_ll, A2_subh_h16_sat_hh,
-       A2_subh_h16_sat_hl, A2_subh_h16_sat_lh, A2_subh_h16_sat_ll,
-       A2_subh_l16_hl, A2_subh_l16_ll, A2_subh_l16_sat_hl,
-       A2_subh_l16_sat_ll]
+       A2_addh_l16_sat_hl, A2_addh_l16_sat_ll, A2_combine_hh,
+       A2_combine_hl, A2_combine_lh, A2_combine_ll, A2_min, A2_minu,
+       A2_sub, A2_subh_h16_hh, A2_subh_h16_hl, A2_subh_h16_lh,
+       A2_subh_h16_ll, A2_subh_h16_sat_hh, A2_subh_h16_sat_hl,
+       A2_subh_h16_sat_lh, A2_subh_h16_sat_ll, A2_subh_l16_hl,
+       A2_subh_l16_ll, A2_subh_l16_sat_hl, A2_subh_l16_sat_ll, A2_subsat,
+       A2_svnavgh, A2_svsubh, A2_svsubhs, A2_svsubuhs, A4_andn, A4_orn,
+       Dep_A2_subsat]
     = []
 alignedPairs i ([_, _, _], [_])
   | i `elem` [S2_addasl_rrri, S2_addasl_rrri_ce] = []
+alignedPairs i ([_, _], [])
+  | i `elem` [V6_st0, V6_stnt0, V6_stu0] = []
 alignedPairs i ([_, _], [_])
-  | i `elem` [M2_vabsdiffh, M2_vabsdiffw] = []
-alignedPairs i ([_, _src_, _], [_src_'])
-  | i `elem` [M4_mpyrr_addr] = [(_src_, _src_')]
-alignedPairs i ([_, _src_, _], [_src_'])
-  | i `elem` [S4_or_andix, S4_or_andix_ce] = [(_src_, _src_')]
+  | i `elem`
+      [A2_minp, A2_minup, A2_subp, A2_vmaxb, A2_vmaxh, A2_vmaxub,
+       A2_vmaxuh, A2_vmaxuw, A2_vmaxw, A2_vminb, A2_vminh, A2_vminub,
+       A2_vminuh, A2_vminuw, A2_vminw, A2_vnavgh, A2_vnavghcr, A2_vnavghr,
+       A2_vnavgw, A2_vnavgwcr, A2_vnavgwr, A2_vsubh, A2_vsubhs, A2_vsubub,
+       A2_vsububs, A2_vsubuhs, A2_vsubw, A2_vsubws, A4_andnp, A4_ornp,
+       M2_vabsdiffh, M2_vabsdiffw, M6_vabsdiffb, M6_vabsdiffub,
+       S2_shuffob, S2_shuffoh]
+    = []
+alignedPairs i ([_, _], [_, _]) | i `elem` [A6_vminub_RdP] = []
+alignedPairs i ([_, _, _], [_])
+  | i `elem` [S2_valignib, S2_valignib_ce] = []
+alignedPairs i ([_, _, _], [_]) | i `elem` [S2_valignrb] = []
+alignedPairs i ([_, _, _, _], [])
+  | i `elem`
+      [S4_storerbnew_ur, S4_storerbnew_ur_ce, S4_storerhnew_ur,
+       S4_storerhnew_ur_ce, S4_storerinew_ur, S4_storerinew_ur_ce]
+    = []
+alignedPairs i ([_, _, _, _], [])
+  | i `elem`
+      [S4_storerb_ur, S4_storerb_ur_ce, S4_storerf_ur, S4_storerf_ur_ce,
+       S4_storerh_ur, S4_storerh_ur_ce, S4_storeri_ur, S4_storeri_ur_ce]
+    = []
+alignedPairs i ([_, _, _, _], [])
+  | i `elem` [S4_storerd_ur, S4_storerd_ur_ce] = []
+alignedPairs i ([_, _, _], [_])
+  | i `elem` [M4_mpyri_addr_u2, M4_mpyri_addr_u2_ce] = []
+alignedPairs i ([_, _, _], [_])
+  | i `elem` [M4_mpyri_addr, M4_mpyri_addr_ce] = []
+alignedPairs i ([_, rx32in, _], [rx32in'])
+  | i `elem` [S4_or_andix, S4_or_andix_ce] = [(rx32in, rx32in')]
+alignedPairs i ([_, ry32in, _], [ry32in'])
+  | i `elem` [M4_mpyrr_addr] = [(ry32in, ry32in')]
 alignedPairs i ([rx, _, _], [rx'])
-  | i `elem` [VMULW_ACC] = [(rx, rx')]
-alignedPairs i ([rz, _], [_, rz'])
+  | i `elem` [PS_vmulw_acc] = [(rx, rx')]
+alignedPairs i ([rx16in, _], [rx16in'])
+  | i `elem` [SA1_addi, SA1_addi_ce] = [(rx16in, rx16in')]
+alignedPairs i ([rx16in, _], [rx16in'])
+  | i `elem` [SA1_addrx] = [(rx16in, rx16in')]
+alignedPairs i ([rx32in, _], [_, rx32in'])
   | i `elem`
-      [L2_loadalignb_pbr, L2_loadalignh_pbr, L2_loadbsw2_pbr,
-       L2_loadbsw2_pcr, L2_loadbsw4_pbr, L2_loadbsw4_pcr, L2_loadbzw2_pbr,
-       L2_loadbzw2_pcr, L2_loadbzw4_pbr, L2_loadbzw4_pcr, L2_loadrb_pbr,
-       L2_loadrb_pcr, L2_loadrd_pbr, L2_loadrd_pcr, L2_loadrh_pbr,
-       L2_loadrh_pcr, L2_loadri_pbr, L2_loadri_pcr, L2_loadrub_pbr,
-       L2_loadrub_pcr, L2_loadruh_pbr, L2_loadruh_pcr]
-    = [(rz, rz')]
-alignedPairs i ([rz, _, _], [rz'])
+      [L2_loadbsw2_pi, L2_loadbsw2_pi_ce, L2_loadbzw2_pi,
+       L2_loadbzw2_pi_ce, L2_loadrb_pi, L2_loadrb_pi_ce, L2_loadrh_pi,
+       L2_loadrh_pi_ce, L2_loadri_pi, L2_loadri_pi_ce, L2_loadrub_pi,
+       L2_loadrub_pi_ce, L2_loadruh_pi, L2_loadruh_pi_ce]
+    = [(rx32in, rx32in')]
+alignedPairs i ([rx32in, _], [_, rx32in'])
   | i `elem`
-      [S2_storerbnew_pbr, S2_storerbnew_pcr, S2_storerhnew_pbr,
-       S2_storerhnew_pcr, S2_storerinew_pbr, S2_storerinew_pcr]
-    = [(rz, rz')]
-alignedPairs i ([rz, _, _], [rz'])
+      [L2_loadbsw4_pi, L2_loadbsw4_pi_ce, L2_loadbzw4_pi,
+       L2_loadbzw4_pi_ce, L2_loadrd_pi, L2_loadrd_pi_ce]
+    = [(rx32in, rx32in')]
+alignedPairs i ([rx32in, _], [rx32in'])
   | i `elem`
-      [S2_storerb_pcr, S2_storerd_pcr, S2_storerf_pcr, S2_storerh_pcr,
-       S2_storeri_pcr]
-    = [(rz, rz')]
-alignedPairs i ([rz, _, _], [rz'])
+      [A2_tfrih, A2_tfrih_ce, A2_tfril, A2_tfril_ce, J2_trap1,
+       J2_trap1_ce, S2_allocframe, S2_allocframe_ce, V6_vS32b_srls_pi,
+       V6_vS32b_srls_pi_ce, V6_zLd_pi, V6_zLd_pi_ce]
+    = [(rx32in, rx32in')]
+alignedPairs i ([rx32in, _], [_, rx32in'])
   | i `elem`
-      [S2_storerb_pbr, S2_storerd_pbr, S2_storerf_pbr, S2_storerh_pbr,
-       S2_storeri_pbr]
-    = [(rz, rz')]
-alignedPairs i ([rz, _, _], [_, rz'])
+      [V6_vL32Ub_pi, V6_vL32Ub_pi_ce, V6_vL32b_cur_pi,
+       V6_vL32b_cur_pi_ce, V6_vL32b_nt_cur_pi, V6_vL32b_nt_cur_pi_ce,
+       V6_vL32b_nt_pi, V6_vL32b_nt_pi_ce, V6_vL32b_nt_tmp_pi,
+       V6_vL32b_nt_tmp_pi_ce, V6_vL32b_pi, V6_vL32b_pi_ce,
+       V6_vL32b_tmp_pi, V6_vL32b_tmp_pi_ce]
+    = [(rx32in, rx32in')]
+alignedPairs i ([rx32in, _, _], [_, rx32in'])
   | i `elem`
-      [L2_loadalignb_pci, L2_loadalignb_pci_ce, L2_loadalignh_pci,
-       L2_loadalignh_pci_ce, L2_loadbsw2_pci, L2_loadbsw2_pci_ce,
-       L2_loadbsw4_pci, L2_loadbsw4_pci_ce, L2_loadbzw2_pci,
-       L2_loadbzw2_pci_ce, L2_loadbzw4_pci, L2_loadbzw4_pci_ce,
-       L2_loadrb_pci, L2_loadrb_pci_ce, L2_loadrd_pci, L2_loadrd_pci_ce,
-       L2_loadrh_pci, L2_loadrh_pci_ce, L2_loadri_pci, L2_loadri_pci_ce,
-       L2_loadrub_pci, L2_loadrub_pci_ce, L2_loadruh_pci,
-       L2_loadruh_pci_ce]
-    = [(rz, rz')]
-alignedPairs i ([rz, _, _, _], [rz'])
+      [L2_loadbsw2_pci, L2_loadbsw2_pci_ce, L2_loadbzw2_pci,
+       L2_loadbzw2_pci_ce, L2_loadrb_pci, L2_loadrb_pci_ce, L2_loadrh_pci,
+       L2_loadrh_pci_ce, L2_loadri_pci, L2_loadri_pci_ce, L2_loadrub_pci,
+       L2_loadrub_pci_ce, L2_loadruh_pci, L2_loadruh_pci_ce]
+    = [(rx32in, rx32in')]
+alignedPairs i ([rx32in, _, _], [_, rx32in'])
+  | i `elem`
+      [L2_loadbsw4_pci, L2_loadbsw4_pci_ce, L2_loadbzw4_pci,
+       L2_loadbzw4_pci_ce, L2_loadrd_pci, L2_loadrd_pci_ce]
+    = [(rx32in, rx32in')]
+alignedPairs i ([rx32in, _, _, _], [_, rx32in'])
+  | i `elem`
+      [PS_loadrb_pci, PS_loadrb_pci_ce, PS_loadrd_pci, PS_loadrd_pci_ce,
+       PS_loadrh_pci, PS_loadrh_pci_ce, PS_loadri_pci, PS_loadri_pci_ce,
+       PS_loadrub_pci, PS_loadrub_pci_ce, PS_loadruh_pci,
+       PS_loadruh_pci_ce]
+    = [(rx32in, rx32in')]
+alignedPairs i ([rx32in, _, _, _], [rx32in'])
   | i `elem`
       [S2_storerbnew_pci, S2_storerbnew_pci_ce, S2_storerhnew_pci,
        S2_storerhnew_pci_ce, S2_storerinew_pci, S2_storerinew_pci_ce]
-    = [(rz, rz')]
-alignedPairs i ([rz, _, _, _], [rz'])
+    = [(rx32in, rx32in')]
+alignedPairs i ([rx32in, _, _, _], [rx32in'])
   | i `elem`
-      [S2_storerb_pci, S2_storerb_pci_ce, S2_storerd_pci,
-       S2_storerd_pci_ce, S2_storerf_pci, S2_storerf_pci_ce,
-       S2_storerh_pci, S2_storerh_pci_ce, S2_storeri_pci,
-       S2_storeri_pci_ce]
-    = [(rz, rz')]
-alignedPairs i ([_, _], [_])
-  | i `elem` [J4_jumpseti, J4_jumpseti_ce] = []
-alignedPairs i ([_dst_, _, _, _], [_dst_'])
+      [S2_storerb_pci, S2_storerb_pci_ce, S2_storerf_pci,
+       S2_storerf_pci_ce, S2_storerh_pci, S2_storerh_pci_ce,
+       S2_storeri_pci, S2_storeri_pci_ce]
+    = [(rx32in, rx32in')]
+alignedPairs i ([rx32in, _, _, _, _], [rx32in'])
   | i `elem`
-      [S2_tableidxb, S2_tableidxb_ce, S2_tableidxd, S2_tableidxd_ce,
-       S2_tableidxh, S2_tableidxh_ce, S2_tableidxw, S2_tableidxw_ce]
-    = [(_dst_, _dst_')]
-alignedPairs i ([_dst_, _, _, _], [_dst_'])
+      [PS_storerb_pci, PS_storerb_pci_ce, PS_storerd_pci,
+       PS_storerd_pci_ce, PS_storerf_pci, PS_storerf_pci_ce,
+       PS_storerh_pci, PS_storerh_pci_ce, PS_storeri_pci,
+       PS_storeri_pci_ce]
+    = [(rx32in, rx32in')]
+alignedPairs i ([rx32in, _, _, _], [rx32in'])
+  | i `elem` [S2_storerd_pci, S2_storerd_pci_ce] =
+    [(rx32in, rx32in')]
+alignedPairs i ([rx32in, _, _], [rx32in'])
   | i `elem`
-      [S2_tableidxb_goodsyntax, S2_tableidxb_goodsyntax_ce,
-       S2_tableidxd_goodsyntax, S2_tableidxd_goodsyntax_ce,
-       S2_tableidxh_goodsyntax, S2_tableidxh_goodsyntax_ce,
-       S2_tableidxw_goodsyntax, S2_tableidxw_goodsyntax_ce]
-    = [(_dst_, _dst_')]
-alignedPairs i ([_, _], [_]) | i `elem` [V4_SA1_addrx] = []
-alignedPairs i ([_src_, _, _], [_src_'])
-  | i `elem` [M2_vrcmpys_acc_s1_h, M2_vrcmpys_acc_s1_l] =
-    [(_src_, _src_')]
-alignedPairs i ([_src_, rz, _], [_src_', rz'])
-  | i `elem` [L2_loadalignb_pcr, L2_loadalignh_pcr] =
-    [(_src_, _src_'), (rz, rz')]
-alignedPairs i ([_, _], [_])
-  | i `elem` [V4_SA1_addi, V4_SA1_addi_ce] = []
-alignedPairs i ([_src_, _], [_src_'])
+      [S2_storerbnew_pi, S2_storerbnew_pi_ce, S2_storerhnew_pi,
+       S2_storerhnew_pi_ce, S2_storerinew_pi, S2_storerinew_pi_ce]
+    = [(rx32in, rx32in')]
+alignedPairs i ([rx32in, _, _], [rx32in'])
   | i `elem`
-      [V6_vinsertwr, V6_vinsertwr_128B, V6_vunpackob, V6_vunpackob_128B,
-       V6_vunpackoh, V6_vunpackoh_128B]
-    = [(_src_, _src_')]
-alignedPairs i ([_src_, _, _], [_src_'])
+      [V6_vS32b_new_pi, V6_vS32b_new_pi_ce, V6_vS32b_nt_new_pi,
+       V6_vS32b_nt_new_pi_ce]
+    = [(rx32in, rx32in')]
+alignedPairs i ([rx32in, _, _], [rx32in'])
   | i `elem`
-      [S6_rol_i_p_acc, S6_rol_i_p_acc_ce, S6_rol_i_p_and,
-       S6_rol_i_p_and_ce, S6_rol_i_p_nac, S6_rol_i_p_nac_ce,
-       S6_rol_i_p_or, S6_rol_i_p_or_ce, S6_rol_i_p_xacc,
-       S6_rol_i_p_xacc_ce, S6_rol_i_r_acc, S6_rol_i_r_acc_ce,
-       S6_rol_i_r_and, S6_rol_i_r_and_ce, S6_rol_i_r_nac,
-       S6_rol_i_r_nac_ce, S6_rol_i_r_or, S6_rol_i_r_or_ce,
-       S6_rol_i_r_xacc, S6_rol_i_r_xacc_ce, V6_vandqrt_acc,
-       V6_vandqrt_acc_128B, V6_vandvrt_acc, V6_vandvrt_acc_128B,
-       V6_vaslw_acc, V6_vaslw_acc_128B, V6_vasrw_acc, V6_vasrw_acc_128B,
-       V6_vdmpybus_acc, V6_vdmpybus_acc_128B, V6_vdmpybus_dv_acc,
-       V6_vdmpybus_dv_acc_128B, V6_vdmpyhb_acc, V6_vdmpyhb_acc_128B,
-       V6_vdmpyhb_dv_acc, V6_vdmpyhb_dv_acc_128B, V6_vdmpyhisat_acc,
-       V6_vdmpyhisat_acc_128B, V6_vdmpyhsat_acc, V6_vdmpyhsat_acc_128B,
-       V6_vdmpyhsuisat_acc, V6_vdmpyhsuisat_acc_128B, V6_vdmpyhsusat_acc,
-       V6_vdmpyhsusat_acc_128B, V6_vdmpyhvsat_acc, V6_vdmpyhvsat_acc_128B,
-       V6_vdsaduh_acc, V6_vdsaduh_acc_128B, V6_veqb_and, V6_veqb_and_128B,
-       V6_veqb_or, V6_veqb_or_128B, V6_veqb_xor, V6_veqb_xor_128B,
-       V6_veqh_and, V6_veqh_and_128B, V6_veqh_or, V6_veqh_or_128B,
-       V6_veqh_xor, V6_veqh_xor_128B, V6_veqw_and, V6_veqw_and_128B,
-       V6_veqw_or, V6_veqw_or_128B, V6_veqw_xor, V6_veqw_xor_128B,
-       V6_vgtb_and, V6_vgtb_and_128B, V6_vgtb_or, V6_vgtb_or_128B,
-       V6_vgtb_xor, V6_vgtb_xor_128B, V6_vgth_and, V6_vgth_and_128B,
-       V6_vgth_or, V6_vgth_or_128B, V6_vgth_xor, V6_vgth_xor_128B,
-       V6_vgtub_and, V6_vgtub_and_128B, V6_vgtub_or, V6_vgtub_or_128B,
-       V6_vgtub_xor, V6_vgtub_xor_128B, V6_vgtuh_and, V6_vgtuh_and_128B,
-       V6_vgtuh_or, V6_vgtuh_or_128B, V6_vgtuh_xor, V6_vgtuh_xor_128B,
-       V6_vgtuw_and, V6_vgtuw_and_128B, V6_vgtuw_or, V6_vgtuw_or_128B,
-       V6_vgtuw_xor, V6_vgtuw_xor_128B, V6_vgtw_and, V6_vgtw_and_128B,
-       V6_vgtw_or, V6_vgtw_or_128B, V6_vgtw_xor, V6_vgtw_xor_128B,
-       V6_vmpabus_acc, V6_vmpabus_acc_128B, V6_vmpahb_acc,
-       V6_vmpahb_acc_128B, V6_vmpybus_acc, V6_vmpybus_acc_128B,
-       V6_vmpybusv_acc, V6_vmpybusv_acc_128B, V6_vmpybv_acc,
-       V6_vmpybv_acc_128B, V6_vmpyhsat_acc, V6_vmpyhsat_acc_128B,
-       V6_vmpyhus_acc, V6_vmpyhus_acc_128B, V6_vmpyhv_acc,
-       V6_vmpyhv_acc_128B, V6_vmpyiewh_acc, V6_vmpyiewh_acc_128B,
-       V6_vmpyiewuh_acc, V6_vmpyiewuh_acc_128B, V6_vmpyih_acc,
-       V6_vmpyih_acc_128B, V6_vmpyihb_acc, V6_vmpyihb_acc_128B,
-       V6_vmpyiwb_acc, V6_vmpyiwb_acc_128B, V6_vmpyiwh_acc,
-       V6_vmpyiwh_acc_128B, V6_vmpyowh_rnd_sacc, V6_vmpyowh_rnd_sacc_128B,
-       V6_vmpyowh_sacc, V6_vmpyowh_sacc_128B, V6_vmpyub_acc,
-       V6_vmpyub_acc_128B, V6_vmpyubv_acc, V6_vmpyubv_acc_128B,
-       V6_vmpyuh_acc, V6_vmpyuh_acc_128B, V6_vmpyuhv_acc,
-       V6_vmpyuhv_acc_128B, V6_vrmpybus_acc, V6_vrmpybus_acc_128B,
-       V6_vrmpybusv_acc, V6_vrmpybusv_acc_128B, V6_vrmpybv_acc,
-       V6_vrmpybv_acc_128B, V6_vrmpyub_acc, V6_vrmpyub_acc_128B,
-       V6_vrmpyubv_acc, V6_vrmpyubv_acc_128B, V6_vtmpyb_acc,
-       V6_vtmpyb_acc_128B, V6_vtmpybus_acc, V6_vtmpybus_acc_128B,
-       V6_vtmpyhb_acc, V6_vtmpyhb_acc_128B]
-    = [(_src_, _src_')]
-alignedPairs i ([_src_, _, _], [_src_', _])
-  | i `elem` [A5_ACS] = [(_src_, _src_')]
-alignedPairs i ([_src_, _, _, _], [_src_'])
+      [S2_storerb_pi, S2_storerb_pi_ce, S2_storerf_pi, S2_storerf_pi_ce,
+       S2_storerh_pi, S2_storerh_pi_ce, S2_storeri_pi, S2_storeri_pi_ce]
+    = [(rx32in, rx32in')]
+alignedPairs i ([rx32in, _, _], [rx32in'])
+  | i `elem` [S2_storerd_pi, S2_storerd_pi_ce] = [(rx32in, rx32in')]
+alignedPairs i ([rx32in, _, _], [rx32in'])
   | i `elem`
-      [V6_vlutvvb_oracc, V6_vlutvvb_oracc_128B, V6_vlutvwh_oracc,
-       V6_vlutvwh_oracc_128B, V6_vrmpybusi_acc, V6_vrmpybusi_acc_128B,
-       V6_vrmpybusi_acc_128B_ce, V6_vrmpybusi_acc_ce, V6_vrmpyubi_acc,
-       V6_vrmpyubi_acc_128B, V6_vrmpyubi_acc_128B_ce, V6_vrmpyubi_acc_ce,
-       V6_vrsadubi_acc, V6_vrsadubi_acc_128B, V6_vrsadubi_acc_128B_ce,
-       V6_vrsadubi_acc_ce]
-    = [(_src_, _src_')]
-alignedPairs i ([_, _, _, _], [_]) | i `elem` [Insert4] = []
-alignedPairs i ([_], [_])
+      [V6_vS32Ub_pi, V6_vS32Ub_pi_ce, V6_vS32b_nt_pi, V6_vS32b_nt_pi_ce,
+       V6_vS32b_pi, V6_vS32b_pi_ce]
+    = [(rx32in, rx32in')]
+alignedPairs i ([rx32in, _], [_, rx32in'])
   | i `elem`
-      [L2_loadrbgp, L2_loadrbgp_ce, L2_loadrdgp, L2_loadrdgp_ce,
-       L2_loadrhgp, L2_loadrhgp_ce, L2_loadrhgp_source,
-       L2_loadrhgp_source_ce, L2_loadrigp, L2_loadrigp_ce,
-       L2_loadrigp_source, L2_loadrigp_source_ce, L2_loadrubgp,
-       L2_loadrubgp_ce, L2_loadrubgp_source, L2_loadrubgp_source_ce,
-       L2_loadruhgp, L2_loadruhgp_ce, L2_loadruhgp_source,
-       L2_loadruhgp_source_ce, L4_loadrb_abs, L4_loadrb_abs_ce,
-       L4_loadrb_abs_source, L4_loadrb_abs_source_ce, L4_loadrd_abs,
-       L4_loadrd_abs_ce, L4_loadrd_abs_source, L4_loadrd_abs_source_ce,
-       L4_loadrh_abs, L4_loadrh_abs_ce, L4_loadrh_abs_source,
-       L4_loadrh_abs_source_ce, L4_loadri_abs, L4_loadri_abs_ce,
-       L4_loadri_abs_source, L4_loadri_abs_source_ce, L4_loadrub_abs,
-       L4_loadrub_abs_ce, L4_loadrub_abs_source, L4_loadrub_abs_source_ce,
-       L4_loadruh_abs, L4_loadruh_abs_ce, L4_loadruh_abs_source,
-       L4_loadruh_abs_source_ce]
-    = []
-alignedPairs i ([_], [_, _])
+      [L2_loadbsw2_pbr, L2_loadbsw2_pcr, L2_loadbsw2_pr, L2_loadbzw2_pbr,
+       L2_loadbzw2_pcr, L2_loadbzw2_pr, L2_loadrb_pbr, L2_loadrb_pcr,
+       L2_loadrb_pr, L2_loadrh_pbr, L2_loadrh_pcr, L2_loadrh_pr,
+       L2_loadri_pbr, L2_loadri_pcr, L2_loadri_pr, L2_loadrub_pbr,
+       L2_loadrub_pcr, L2_loadrub_pr, L2_loadruh_pbr, L2_loadruh_pcr,
+       L2_loadruh_pr]
+    = [(rx32in, rx32in')]
+alignedPairs i ([rx32in, _], [_, rx32in'])
   | i `elem`
-      [L4_loadalignb_ap, L4_loadalignb_ap_ce, L4_loadalignh_ap,
-       L4_loadalignh_ap_ce, L4_loadbsw2_ap, L4_loadbsw2_ap_ce,
-       L4_loadbsw4_ap, L4_loadbsw4_ap_ce, L4_loadbzw2_ap,
-       L4_loadbzw2_ap_ce, L4_loadbzw4_ap, L4_loadbzw4_ap_ce, L4_loadrb_ap,
-       L4_loadrb_ap_ce, L4_loadrd_ap, L4_loadrd_ap_ce, L4_loadrh_ap,
-       L4_loadrh_ap_ce, L4_loadri_ap, L4_loadri_ap_ce, L4_loadrub_ap,
-       L4_loadrub_ap_ce, L4_loadruh_ap, L4_loadruh_ap_ce]
-    = []
-alignedPairs i ([_, _], [_])
+      [L2_loadbsw4_pbr, L2_loadbsw4_pcr, L2_loadbsw4_pr, L2_loadbzw4_pbr,
+       L2_loadbzw4_pcr, L2_loadbzw4_pr, L2_loadrd_pbr, L2_loadrd_pcr,
+       L2_loadrd_pr]
+    = [(rx32in, rx32in')]
+alignedPairs i ([rx32in, _], [rx32in'])
+  | i `elem` [V6_vS32b_srls_ppu, V6_zLd_ppu] = [(rx32in, rx32in')]
+alignedPairs i ([rx32in, _], [_, rx32in'])
   | i `elem`
-      [LDrivv_indexed, LDrivv_indexed_128B, LDrivv_indexed_128B_ce,
-       LDrivv_indexed_ce, LDriw_pred, LDriw_pred_ce]
-    = []
-alignedPairs i ([_, _, _], [])
+      [V6_vL32Ub_ppu, V6_vL32b_cur_ppu, V6_vL32b_nt_cur_ppu,
+       V6_vL32b_nt_ppu, V6_vL32b_nt_tmp_ppu, V6_vL32b_ppu,
+       V6_vL32b_tmp_ppu]
+    = [(rx32in, rx32in')]
+alignedPairs i ([rx32in, _, _], [_, rx32in'])
   | i `elem`
-      [STrivv_indexed, STrivv_indexed_128B, STrivv_indexed_128B_ce,
-       STrivv_indexed_ce]
-    = []
-alignedPairs i ([_, _, _], [])
-  | i `elem` [STriw_pred, STriw_pred_ce] = []
-alignedPairs i ([_, _], [])
+      [PS_loadrb_pcr, PS_loadrd_pcr, PS_loadrh_pcr, PS_loadri_pcr,
+       PS_loadrub_pcr, PS_loadruh_pcr]
+    = [(rx32in, rx32in')]
+alignedPairs i ([rx32in, _, _], [rx32in'])
   | i `elem`
-      [S2_storerbabs, S2_storerbabs_ce, S2_storerbgp, S2_storerbgp_ce,
-       S2_storerbnewabs, S2_storerbnewabs_ce, S2_storerbnewgp,
-       S2_storerbnewgp_ce, S2_storerdabs, S2_storerdabs_ce, S2_storerdgp,
-       S2_storerdgp_ce, S2_storerfabs, S2_storerfabs_ce, S2_storerfgp,
-       S2_storerfgp_ce, S2_storerhabs, S2_storerhabs_ce, S2_storerhgp,
-       S2_storerhgp_ce, S2_storerhnewabs, S2_storerhnewabs_ce,
-       S2_storerhnewgp, S2_storerhnewgp_ce, S2_storeriabs,
-       S2_storeriabs_ce, S2_storerigp, S2_storerigp_ce, S2_storerinewabs,
-       S2_storerinewabs_ce, S2_storerinewgp, S2_storerinewgp_ce]
-    = []
-alignedPairs i ([_, _], [_])
+      [S2_storerbnew_pbr, S2_storerbnew_pcr, S2_storerbnew_pr,
+       S2_storerhnew_pbr, S2_storerhnew_pcr, S2_storerhnew_pr,
+       S2_storerinew_pbr, S2_storerinew_pcr, S2_storerinew_pr]
+    = [(rx32in, rx32in')]
+alignedPairs i ([rx32in, _, _], [rx32in'])
+  | i `elem` [V6_vS32b_new_ppu, V6_vS32b_nt_new_ppu] =
+    [(rx32in, rx32in')]
+alignedPairs i ([rx32in, _, _], [rx32in'])
   | i `elem`
-      [S4_storerb_ap, S4_storerb_ap_ce, S4_storerbnew_ap,
-       S4_storerbnew_ap_ce, S4_storerd_ap, S4_storerd_ap_ce,
-       S4_storerf_ap, S4_storerf_ap_ce, S4_storerh_ap, S4_storerh_ap_ce,
-       S4_storerhnew_ap, S4_storerhnew_ap_ce, S4_storeri_ap,
-       S4_storeri_ap_ce, S4_storerinew_ap, S4_storerinew_ap_ce]
-    = []
-alignedPairs i ([_], [])
-  | i `elem` [ADJCALLSTACKDOWN, ADJCALLSTACKDOWN_ce] = []
-alignedPairs i ([_, _], [])
-  | i `elem` [ADJCALLSTACKUP, ADJCALLSTACKUP_ce] = []
-alignedPairs i ([_, _], [_])
+      [S2_storerb_pbr, S2_storerb_pcr, S2_storerb_pr, S2_storerf_pbr,
+       S2_storerf_pcr, S2_storerf_pr, S2_storerh_pbr, S2_storerh_pcr,
+       S2_storerh_pr, S2_storeri_pbr, S2_storeri_pcr, S2_storeri_pr]
+    = [(rx32in, rx32in')]
+alignedPairs i ([rx32in, _, _, _], [rx32in'])
   | i `elem`
-      [LDriq_pred_V6, LDriq_pred_V6_128B, LDriq_pred_V6_128B_ce,
-       LDriq_pred_V6_ce, LDriq_pred_vec_V6, LDriq_pred_vec_V6_128B,
-       LDriq_pred_vec_V6_128B_ce, LDriq_pred_vec_V6_ce, LDriv_pseudo_V6,
-       LDriv_pseudo_V6_128B, LDriv_pseudo_V6_128B_ce, LDriv_pseudo_V6_ce,
-       LDrivv_pseudo_V6, LDrivv_pseudo_V6_128B, LDrivv_pseudo_V6_128B_ce,
-       LDrivv_pseudo_V6_ce]
-    = []
-alignedPairs i ([_, _, _], [])
+      [PS_storerb_pcr, PS_storerd_pcr, PS_storerf_pcr, PS_storerh_pcr,
+       PS_storeri_pcr]
+    = [(rx32in, rx32in')]
+alignedPairs i ([rx32in, _, _], [rx32in'])
+  | i `elem` [S2_storerd_pbr, S2_storerd_pcr, S2_storerd_pr] =
+    [(rx32in, rx32in')]
+alignedPairs i ([rx32in, _, _], [rx32in'])
+  | i `elem` [V6_vS32Ub_ppu, V6_vS32b_nt_ppu, V6_vS32b_ppu] =
+    [(rx32in, rx32in')]
+alignedPairs i ([rx32in, _, _], [rx32in'])
   | i `elem`
-      [L4_add_memopb_io, L4_add_memopb_io_ce, L4_add_memoph_io,
-       L4_add_memoph_io_ce, L4_add_memopw_io, L4_add_memopw_io_ce,
-       L4_and_memopb_io, L4_and_memopb_io_ce, L4_and_memoph_io,
-       L4_and_memoph_io_ce, L4_and_memopw_io, L4_and_memopw_io_ce,
-       L4_iadd_memopb_io, L4_iadd_memopb_io_ce, L4_iadd_memoph_io,
-       L4_iadd_memoph_io_ce, L4_iadd_memopw_io, L4_iadd_memopw_io_ce,
-       L4_iand_memopb_io, L4_iand_memopb_io_ce, L4_iand_memoph_io,
-       L4_iand_memoph_io_ce, L4_iand_memopw_io, L4_iand_memopw_io_ce,
-       L4_ior_memopb_io, L4_ior_memopb_io_ce, L4_ior_memoph_io,
-       L4_ior_memoph_io_ce, L4_ior_memopw_io, L4_ior_memopw_io_ce,
-       L4_isub_memopb_io, L4_isub_memopb_io_ce, L4_isub_memoph_io,
-       L4_isub_memoph_io_ce, L4_isub_memopw_io, L4_isub_memopw_io_ce,
-       L4_or_memopb_io, L4_or_memopb_io_ce, L4_or_memoph_io,
-       L4_or_memoph_io_ce, L4_or_memopw_io, L4_or_memopw_io_ce,
-       L4_sub_memopb_io, L4_sub_memopb_io_ce, L4_sub_memoph_io,
-       L4_sub_memoph_io_ce, L4_sub_memopw_io, L4_sub_memopw_io_ce]
-    = []
-alignedPairs i ([_, _, _], [])
+      [M2_accii, M2_accii_ce, M2_macsin, M2_macsin_ce, M2_macsip,
+       M2_macsip_ce, M2_naccii, M2_naccii_ce, S2_asl_i_r_acc,
+       S2_asl_i_r_acc_ce, S2_asl_i_r_and, S2_asl_i_r_and_ce,
+       S2_asl_i_r_nac, S2_asl_i_r_nac_ce, S2_asl_i_r_or, S2_asl_i_r_or_ce,
+       S2_asl_i_r_xacc, S2_asl_i_r_xacc_ce, S2_asr_i_r_acc,
+       S2_asr_i_r_acc_ce, S2_asr_i_r_and, S2_asr_i_r_and_ce,
+       S2_asr_i_r_nac, S2_asr_i_r_nac_ce, S2_asr_i_r_or, S2_asr_i_r_or_ce,
+       S2_lsr_i_r_acc, S2_lsr_i_r_acc_ce, S2_lsr_i_r_and,
+       S2_lsr_i_r_and_ce, S2_lsr_i_r_nac, S2_lsr_i_r_nac_ce,
+       S2_lsr_i_r_or, S2_lsr_i_r_or_ce, S2_lsr_i_r_xacc,
+       S2_lsr_i_r_xacc_ce, S4_or_andi, S4_or_andi_ce, S4_or_ori,
+       S4_or_ori_ce, S6_rol_i_r_acc, S6_rol_i_r_acc_ce, S6_rol_i_r_and,
+       S6_rol_i_r_and_ce, S6_rol_i_r_nac, S6_rol_i_r_nac_ce,
+       S6_rol_i_r_or, S6_rol_i_r_or_ce, S6_rol_i_r_xacc,
+       S6_rol_i_r_xacc_ce]
+    = [(rx32in, rx32in')]
+alignedPairs i ([rx32in, _, _, _], [rx32in'])
   | i `elem`
-      [STriq_pred_V6, STriq_pred_V6_128B, STriq_pred_V6_128B_ce,
-       STriq_pred_V6_ce, STriq_pred_vec_V6, STriq_pred_vec_V6_128B,
-       STriq_pred_vec_V6_128B_ce, STriq_pred_vec_V6_ce, STriv_pseudo_V6,
-       STriv_pseudo_V6_128B, STriv_pseudo_V6_128B_ce, STriv_pseudo_V6_ce,
-       STrivv_pseudo_V6, STrivv_pseudo_V6_128B, STrivv_pseudo_V6_128B_ce,
-       STrivv_pseudo_V6_ce]
-    = []
-alignedPairs i ([_], [])
+      [S2_insert, S2_insert_ce, S2_tableidxb, S2_tableidxb_ce,
+       S2_tableidxb_goodsyntax, S2_tableidxb_goodsyntax_ce, S2_tableidxd,
+       S2_tableidxd_ce, S2_tableidxd_goodsyntax,
+       S2_tableidxd_goodsyntax_ce, S2_tableidxh, S2_tableidxh_ce,
+       S2_tableidxh_goodsyntax, S2_tableidxh_goodsyntax_ce, S2_tableidxw,
+       S2_tableidxw_ce, S2_tableidxw_goodsyntax,
+       S2_tableidxw_goodsyntax_ce]
+    = [(rx32in, rx32in')]
+alignedPairs i ([rx32in, _, _], [rx32in'])
   | i `elem`
-      [CALLv3nr, CALLv3nr_ce, EH_RETURN_JMPR, J2_call, J2_call_ce,
-       J2_jump, J2_jump_ce, J2_jump_ext, J2_jump_ext_ce, J2_jump_noext,
-       J2_jump_noext_ce, J2_jumpr, JMPret,
-       RESTORE_DEALLOC_BEFORE_TAILCALL_V4,
-       RESTORE_DEALLOC_BEFORE_TAILCALL_V4_EXT,
-       RESTORE_DEALLOC_BEFORE_TAILCALL_V4_EXT_ce,
-       RESTORE_DEALLOC_BEFORE_TAILCALL_V4_ce, RESTORE_DEALLOC_RET_JMP_V4,
-       RESTORE_DEALLOC_RET_JMP_V4_EXT, RESTORE_DEALLOC_RET_JMP_V4_EXT_ce,
-       RESTORE_DEALLOC_RET_JMP_V4_ce, SAVE_REGISTERS_CALL_V4,
-       SAVE_REGISTERS_CALL_V4_EXT, SAVE_REGISTERS_CALL_V4_EXT_ce,
-       SAVE_REGISTERS_CALL_V4_ce, TCRETURNi, TCRETURNi_ce, TCRETURNr]
-    = []
-alignedPairs i ([_], [_]) | i `elem` [JMPret_linear] = []
-alignedPairs i ([_, _], [_])
-  | i `elem` [JMPret_dealloc_linear] = []
-alignedPairs i ([dst2, _, _], [dst2'])
+      [F2_sffma, F2_sffma_lib, F2_sffms, F2_sffms_lib, M2_acci, M2_maci,
+       M2_mnaci, M2_mpy_acc_hh_s0, M2_mpy_acc_hh_s1, M2_mpy_acc_hl_s0,
+       M2_mpy_acc_hl_s1, M2_mpy_acc_lh_s0, M2_mpy_acc_lh_s1,
+       M2_mpy_acc_ll_s0, M2_mpy_acc_ll_s1, M2_mpy_acc_sat_hh_s0,
+       M2_mpy_acc_sat_hh_s1, M2_mpy_acc_sat_hl_s0, M2_mpy_acc_sat_hl_s1,
+       M2_mpy_acc_sat_lh_s0, M2_mpy_acc_sat_lh_s1, M2_mpy_acc_sat_ll_s0,
+       M2_mpy_acc_sat_ll_s1, M2_mpy_nac_hh_s0, M2_mpy_nac_hh_s1,
+       M2_mpy_nac_hl_s0, M2_mpy_nac_hl_s1, M2_mpy_nac_lh_s0,
+       M2_mpy_nac_lh_s1, M2_mpy_nac_ll_s0, M2_mpy_nac_ll_s1,
+       M2_mpy_nac_sat_hh_s0, M2_mpy_nac_sat_hh_s1, M2_mpy_nac_sat_hl_s0,
+       M2_mpy_nac_sat_hl_s1, M2_mpy_nac_sat_lh_s0, M2_mpy_nac_sat_lh_s1,
+       M2_mpy_nac_sat_ll_s0, M2_mpy_nac_sat_ll_s1, M2_mpyu_acc_hh_s0,
+       M2_mpyu_acc_hh_s1, M2_mpyu_acc_hl_s0, M2_mpyu_acc_hl_s1,
+       M2_mpyu_acc_lh_s0, M2_mpyu_acc_lh_s1, M2_mpyu_acc_ll_s0,
+       M2_mpyu_acc_ll_s1, M2_mpyu_nac_hh_s0, M2_mpyu_nac_hh_s1,
+       M2_mpyu_nac_hl_s0, M2_mpyu_nac_hl_s1, M2_mpyu_nac_lh_s0,
+       M2_mpyu_nac_lh_s1, M2_mpyu_nac_ll_s0, M2_mpyu_nac_ll_s1, M2_nacci,
+       M2_xor_xacc, M4_and_and, M4_and_andn, M4_and_or, M4_and_xor,
+       M4_mac_up_s1_sat, M4_nac_up_s1_sat, M4_or_and, M4_or_andn,
+       M4_or_or, M4_or_xor, M4_xor_and, M4_xor_andn, M4_xor_or,
+       S2_asl_r_r_acc, S2_asl_r_r_and, S2_asl_r_r_nac, S2_asl_r_r_or,
+       S2_asr_r_r_acc, S2_asr_r_r_and, S2_asr_r_r_nac, S2_asr_r_r_or,
+       S2_lsl_r_r_acc, S2_lsl_r_r_and, S2_lsl_r_r_nac, S2_lsl_r_r_or,
+       S2_lsr_r_r_acc, S2_lsr_r_r_and, S2_lsr_r_r_nac, S2_lsr_r_r_or]
+    = [(rx32in, rx32in')]
+alignedPairs i ([rx32in, _, _, _], [rx32in'])
+  | i `elem` [F2_sffma_sc] = [(rx32in, rx32in')]
+alignedPairs i ([rx32in, _, _], [rx32in'])
+  | i `elem` [S2_insert_rp] = [(rx32in, rx32in')]
+alignedPairs i ([rx32in, _, _], [rx32in'])
+  | i `elem` [M2_subacc] = [(rx32in, rx32in')]
+alignedPairs i ([rxx32in, _, _], [rxx32in'])
   | i `elem`
-      [F2_sffma, F2_sffma_lib, F2_sffms, F2_sffms_lib, M2_cmaci_s0,
-       M2_cmacr_s0, M2_cmacs_s0, M2_cmacs_s1, M2_cmacsc_s0, M2_cmacsc_s1,
-       M2_cnacs_s0, M2_cnacs_s1, M2_cnacsc_s0, M2_cnacsc_s1,
+      [M2_cmaci_s0, M2_cmacr_s0, M2_cmacs_s0, M2_cmacs_s1, M2_cmacsc_s0,
+       M2_cmacsc_s1, M2_cnacs_s0, M2_cnacs_s1, M2_cnacsc_s0, M2_cnacsc_s1,
        M2_dpmpyss_acc_s0, M2_dpmpyss_nac_s0, M2_dpmpyuu_acc_s0,
-       M2_dpmpyuu_nac_s0, M2_mpy_acc_hh_s0, M2_mpy_acc_hh_s1,
-       M2_mpy_acc_hl_s0, M2_mpy_acc_hl_s1, M2_mpy_acc_lh_s0,
-       M2_mpy_acc_lh_s1, M2_mpy_acc_ll_s0, M2_mpy_acc_ll_s1,
-       M2_mpy_acc_sat_hh_s0, M2_mpy_acc_sat_hh_s1, M2_mpy_acc_sat_hl_s0,
-       M2_mpy_acc_sat_hl_s1, M2_mpy_acc_sat_lh_s0, M2_mpy_acc_sat_lh_s1,
-       M2_mpy_acc_sat_ll_s0, M2_mpy_acc_sat_ll_s1, M2_mpy_nac_hh_s0,
-       M2_mpy_nac_hh_s1, M2_mpy_nac_hl_s0, M2_mpy_nac_hl_s1,
-       M2_mpy_nac_lh_s0, M2_mpy_nac_lh_s1, M2_mpy_nac_ll_s0,
-       M2_mpy_nac_ll_s1, M2_mpy_nac_sat_hh_s0, M2_mpy_nac_sat_hh_s1,
-       M2_mpy_nac_sat_hl_s0, M2_mpy_nac_sat_hl_s1, M2_mpy_nac_sat_lh_s0,
-       M2_mpy_nac_sat_lh_s1, M2_mpy_nac_sat_ll_s0, M2_mpy_nac_sat_ll_s1,
-       M2_mpyd_acc_hh_s0, M2_mpyd_acc_hh_s1, M2_mpyd_acc_hl_s0,
-       M2_mpyd_acc_hl_s1, M2_mpyd_acc_lh_s0, M2_mpyd_acc_lh_s1,
-       M2_mpyd_acc_ll_s0, M2_mpyd_acc_ll_s1, M2_mpyd_nac_hh_s0,
-       M2_mpyd_nac_hh_s1, M2_mpyd_nac_hl_s0, M2_mpyd_nac_hl_s1,
-       M2_mpyd_nac_lh_s0, M2_mpyd_nac_lh_s1, M2_mpyd_nac_ll_s0,
-       M2_mpyd_nac_ll_s1, M2_mpyu_acc_hh_s0, M2_mpyu_acc_hh_s1,
-       M2_mpyu_acc_hl_s0, M2_mpyu_acc_hl_s1, M2_mpyu_acc_lh_s0,
-       M2_mpyu_acc_lh_s1, M2_mpyu_acc_ll_s0, M2_mpyu_acc_ll_s1,
-       M2_mpyu_nac_hh_s0, M2_mpyu_nac_hh_s1, M2_mpyu_nac_hl_s0,
-       M2_mpyu_nac_hl_s1, M2_mpyu_nac_lh_s0, M2_mpyu_nac_lh_s1,
-       M2_mpyu_nac_ll_s0, M2_mpyu_nac_ll_s1, M2_mpyud_acc_hh_s0,
+       M2_dpmpyuu_nac_s0, M2_mpyd_acc_hh_s0, M2_mpyd_acc_hh_s1,
+       M2_mpyd_acc_hl_s0, M2_mpyd_acc_hl_s1, M2_mpyd_acc_lh_s0,
+       M2_mpyd_acc_lh_s1, M2_mpyd_acc_ll_s0, M2_mpyd_acc_ll_s1,
+       M2_mpyd_nac_hh_s0, M2_mpyd_nac_hh_s1, M2_mpyd_nac_hl_s0,
+       M2_mpyd_nac_hl_s1, M2_mpyd_nac_lh_s0, M2_mpyd_nac_lh_s1,
+       M2_mpyd_nac_ll_s0, M2_mpyd_nac_ll_s1, M2_mpyud_acc_hh_s0,
        M2_mpyud_acc_hh_s1, M2_mpyud_acc_hl_s0, M2_mpyud_acc_hl_s1,
        M2_mpyud_acc_lh_s0, M2_mpyud_acc_lh_s1, M2_mpyud_acc_ll_s0,
        M2_mpyud_acc_ll_s1, M2_mpyud_nac_hh_s0, M2_mpyud_nac_hh_s1,
@@ -776,15 +1551,37 @@ alignedPairs i ([dst2, _, _], [dst2'])
        M2_mpyud_nac_lh_s1, M2_mpyud_nac_ll_s0, M2_mpyud_nac_ll_s1,
        M2_vmac2, M2_vmac2s_s0, M2_vmac2s_s1, M2_vmac2su_s0, M2_vmac2su_s1,
        M4_pmpyw_acc, M4_vpmpyh_acc, M5_vmacbsu, M5_vmacbuu]
-    = [(dst2, dst2')]
-alignedPairs i ([dst2, _, _, _], [dst2'])
-  | i `elem` [F2_sffma_sc] = [(dst2, dst2')]
-alignedPairs i ([dst2, _, _], [dst2'])
-  | i `elem` [S2_vrcnegh] = [(dst2, dst2')]
-alignedPairs i ([dst2, _, _, _], [dst2'])
+    = [(rxx32in, rxx32in')]
+alignedPairs i ([rxx32in, _, _], [rxx32in'])
+  | i `elem`
+      [S2_asl_i_p_acc, S2_asl_i_p_acc_ce, S2_asl_i_p_and,
+       S2_asl_i_p_and_ce, S2_asl_i_p_nac, S2_asl_i_p_nac_ce,
+       S2_asl_i_p_or, S2_asl_i_p_or_ce, S2_asl_i_p_xacc,
+       S2_asl_i_p_xacc_ce, S2_asr_i_p_acc, S2_asr_i_p_acc_ce,
+       S2_asr_i_p_and, S2_asr_i_p_and_ce, S2_asr_i_p_nac,
+       S2_asr_i_p_nac_ce, S2_asr_i_p_or, S2_asr_i_p_or_ce, S2_lsr_i_p_acc,
+       S2_lsr_i_p_acc_ce, S2_lsr_i_p_and, S2_lsr_i_p_and_ce,
+       S2_lsr_i_p_nac, S2_lsr_i_p_nac_ce, S2_lsr_i_p_or, S2_lsr_i_p_or_ce,
+       S2_lsr_i_p_xacc, S2_lsr_i_p_xacc_ce, S6_rol_i_p_acc,
+       S6_rol_i_p_acc_ce, S6_rol_i_p_and, S6_rol_i_p_and_ce,
+       S6_rol_i_p_nac, S6_rol_i_p_nac_ce, S6_rol_i_p_or, S6_rol_i_p_or_ce,
+       S6_rol_i_p_xacc, S6_rol_i_p_xacc_ce]
+    = [(rxx32in, rxx32in')]
+alignedPairs i ([rxx32in, _, _, _], [rxx32in'])
+  | i `elem` [S2_insertp, S2_insertp_ce] = [(rxx32in, rxx32in')]
+alignedPairs i ([rxx32in, _, _], [rxx32in'])
+  | i `elem`
+      [M2_vrcmpys_acc_s1, S2_asl_r_p_acc, S2_asl_r_p_and, S2_asl_r_p_nac,
+       S2_asl_r_p_or, S2_asl_r_p_xor, S2_asr_r_p_acc, S2_asr_r_p_and,
+       S2_asr_r_p_nac, S2_asr_r_p_or, S2_asr_r_p_xor, S2_lsl_r_p_acc,
+       S2_lsl_r_p_and, S2_lsl_r_p_nac, S2_lsl_r_p_or, S2_lsl_r_p_xor,
+       S2_lsr_r_p_acc, S2_lsr_r_p_and, S2_lsr_r_p_nac, S2_lsr_r_p_or,
+       S2_lsr_r_p_xor, S2_vrcnegh]
+    = [(rxx32in, rxx32in')]
+alignedPairs i ([rxx32in, _, _, _], [rxx32in'])
   | i `elem` [S4_vrcrotate_acc, S4_vrcrotate_acc_ce] =
-    [(dst2, dst2')]
-alignedPairs i ([dst2, _, _], [dst2'])
+    [(rxx32in, rxx32in')]
+alignedPairs i ([rxx32in, _, _], [rxx32in'])
   | i `elem`
       [A2_vraddub_acc, A2_vrsadub_acc, M2_mmachs_rs0, M2_mmachs_rs1,
        M2_mmachs_s0, M2_mmachs_s1, M2_mmacls_rs0, M2_mmacls_rs1,
@@ -793,85 +1590,451 @@ alignedPairs i ([dst2, _, _], [dst2'])
        M2_mmaculs_s0, M2_mmaculs_s1, M2_vcmac_s0_sat_i, M2_vcmac_s0_sat_r,
        M2_vdmacs_s0, M2_vdmacs_s1, M2_vmac2es, M2_vmac2es_s0,
        M2_vmac2es_s1, M2_vrcmaci_s0, M2_vrcmaci_s0c, M2_vrcmacr_s0,
-       M2_vrcmacr_s0c, M2_vrmac_s0, M4_vrmpyeh_acc_s0, M4_vrmpyeh_acc_s1,
+       M2_vrcmacr_s0c, M2_vrcmpys_acc_s1_h, M2_vrcmpys_acc_s1_l,
+       M2_vrmac_s0, M4_vrmpyeh_acc_s0, M4_vrmpyeh_acc_s1,
        M4_vrmpyoh_acc_s0, M4_vrmpyoh_acc_s1, M4_xor_xacc, M5_vdmacbsu,
-       M5_vrmacbsu, M5_vrmacbuu]
-    = [(dst2, dst2')]
-alignedPairs i ([dst2, _, _], [dst2'])
+       M5_vrmacbsu, M5_vrmacbuu, S2_insertp_rp]
+    = [(rxx32in, rxx32in')]
+alignedPairs i ([rxx32in, _, _], [rxx32in', _])
+  | i `elem` [A5_ACS] = [(rxx32in, rxx32in')]
+alignedPairs i ([rxx32in, _, _], [rxx32in'])
   | i `elem`
       [A4_vrmaxh, A4_vrmaxuh, A4_vrmaxuw, A4_vrmaxw, A4_vrminh,
        A4_vrminuh, A4_vrminuw, A4_vrminw]
-    = [(dst2, dst2')]
-alignedPairs i ([dst2, _, _], [dst2'])
-  | i `elem` [M2_vrcmpys_acc_s1] = [(dst2, dst2')]
-alignedPairs i ([dst2, _, _, _], [dst2'])
-  | i `elem` [S2_insert, S2_insert_ce, S2_insertp, S2_insertp_ce] =
-    [(dst2, dst2')]
-alignedPairs i ([_, _], [_]) | i `elem` [TFR_FI, TFR_FI_ce] = []
+    = [(rxx32in, rxx32in')]
+alignedPairs i ([ryy32in, _], [ryy32in', _])
+  | i `elem`
+      [L4_loadalignb_ap, L4_loadalignb_ap_ce, L4_loadalignh_ap,
+       L4_loadalignh_ap_ce]
+    = [(ryy32in, ryy32in')]
+alignedPairs i ([ryy32in, _], [ryy32in'])
+  | i `elem` [L2_loadalignb_zomap, L2_loadalignh_zomap] =
+    [(ryy32in, ryy32in')]
+alignedPairs i ([ryy32in, _, _], [ryy32in'])
+  | i `elem`
+      [L2_loadalignb_io, L2_loadalignb_io_ce, L2_loadalignh_io,
+       L2_loadalignh_io_ce]
+    = [(ryy32in, ryy32in')]
+alignedPairs i ([ryy32in, _, _, _], [ryy32in'])
+  | i `elem`
+      [L4_loadalignb_ur, L4_loadalignb_ur_ce, L4_loadalignh_ur,
+       L4_loadalignh_ur_ce]
+    = [(ryy32in, ryy32in')]
+alignedPairs i ([ryy32in, rx32in, _], [ryy32in', rx32in'])
+  | i `elem`
+      [L2_loadalignb_pi, L2_loadalignb_pi_ce, L2_loadalignh_pi,
+       L2_loadalignh_pi_ce]
+    = [(ryy32in, ryy32in'), (rx32in, rx32in')]
+alignedPairs i ([ryy32in, rx32in, _, _], [ryy32in', rx32in'])
+  | i `elem`
+      [L2_loadalignb_pci, L2_loadalignb_pci_ce, L2_loadalignh_pci,
+       L2_loadalignh_pci_ce]
+    = [(ryy32in, ryy32in'), (rx32in, rx32in')]
+alignedPairs i ([ryy32in, rx32in, _], [ryy32in', rx32in'])
+  | i `elem`
+      [L2_loadalignb_pbr, L2_loadalignb_pcr, L2_loadalignb_pr,
+       L2_loadalignh_pbr, L2_loadalignh_pcr, L2_loadalignh_pr]
+    = [(ryy32in, ryy32in'), (rx32in, rx32in')]
+alignedPairs i ([_], [_]) | i `elem` [V6_hi, V6_lo] = []
 alignedPairs i ([_], [_])
   | i `elem`
-      [CONST32, CONST32_Int_Real, CONST32_Int_Real_ce, CONST32_ce,
-       CONST64_Int_Real, CONST64_Int_Real_ce, CONST64_Int_Real_source,
-       CONST64_Int_Real_source_ce, FCONST32_nsdata, FCONST32_nsdata_ce,
-       HI_GOT, HI_GOTREL, HI_GOTREL_ce, HI_GOT_ce, LO_GOT, LO_GOTREL,
-       LO_GOTREL_ce, LO_GOT_ce]
+      [V6_vabsb, V6_vabsb_alt, V6_vabsb_sat, V6_vabsb_sat_alt, V6_vabsh,
+       V6_vabsh_alt, V6_vabsh_sat, V6_vabsh_sat_alt, V6_vabsub_alt,
+       V6_vabsuh_alt, V6_vabsuw_alt, V6_vabsw, V6_vabsw_alt, V6_vabsw_sat,
+       V6_vabsw_sat_alt, V6_vassign, V6_vcl0h, V6_vcl0h_alt, V6_vcl0w,
+       V6_vcl0w_alt, V6_vdealb, V6_vdealb_alt, V6_vdealh, V6_vdealh_alt,
+       V6_vnormamth, V6_vnormamth_alt, V6_vnormamtw, V6_vnormamtw_alt,
+       V6_vnot, V6_vpopcounth, V6_vpopcounth_alt, V6_vshuffb,
+       V6_vshuffb_alt, V6_vshuffh, V6_vshuffh_alt]
     = []
+alignedPairs i ([_], [_])
+  | i `elem`
+      [V6_vsb, V6_vsb_alt, V6_vsh, V6_vsh_alt, V6_vunpackb,
+       V6_vunpackb_alt, V6_vunpackh, V6_vunpackh_alt, V6_vunpackub,
+       V6_vunpackub_alt, V6_vunpackuh, V6_vunpackuh_alt, V6_vzb,
+       V6_vzb_alt, V6_vzh, V6_vzh_alt]
+    = []
+alignedPairs i ([_, _], [_])
+  | i `elem` [V6_extractw, V6_extractw_alt] = []
+alignedPairs i ([_, _], [_])
+  | i `elem` [V6_vandvrt, V6_vandvrt_alt] = []
+alignedPairs i ([_, _], [_])
+  | i `elem`
+      [V6_vaslh, V6_vaslh_alt, V6_vaslw, V6_vaslw_alt, V6_vasrh,
+       V6_vasrh_alt, V6_vasrw, V6_vasrw_alt, V6_vdmpybus, V6_vdmpybus_alt,
+       V6_vdmpyhb, V6_vdmpyhb_alt, V6_vdmpyhsat, V6_vdmpyhsat_alt,
+       V6_vdmpyhsusat, V6_vdmpyhsusat_alt, V6_vlsrb, V6_vlsrh,
+       V6_vlsrh_alt, V6_vlsrw, V6_vlsrw_alt, V6_vmpyhsrs, V6_vmpyhsrs_alt,
+       V6_vmpyhss, V6_vmpyhss_alt, V6_vmpyihb, V6_vmpyihb_alt, V6_vmpyiwb,
+       V6_vmpyiwb_alt, V6_vmpyiwh, V6_vmpyiwh_alt, V6_vmpyiwub,
+       V6_vmpyiwub_alt, V6_vmpyuhe, V6_vrmpybus, V6_vrmpybus_alt,
+       V6_vrmpyub, V6_vrmpyub_alt, V6_vror]
+    = []
+alignedPairs i ([_, _], [_])
+  | i `elem`
+      [V6_vmpybus, V6_vmpybus_alt, V6_vmpyh, V6_vmpyh_alt, V6_vmpyub,
+       V6_vmpyub_alt, V6_vmpyuh, V6_vmpyuh_alt]
+    = []
+alignedPairs i ([_, _], [_])
+  | i `elem`
+      [V6_vrmpyzbb_rt, V6_vrmpyzbub_rt, V6_vrmpyzcb_rt, V6_vrmpyzcbs_rt,
+       V6_vrmpyznb_rt]
+    = []
+alignedPairs i ([_, _], [_]) | i `elem` [V6_vlut4] = []
+alignedPairs i ([_, _], [_])
+  | i `elem`
+      [V6_vrmpybub_rtt, V6_vrmpybub_rtt_alt, V6_vrmpyub_rtt,
+       V6_vrmpyub_rtt_alt]
+    = []
+alignedPairs i ([_, rx8in], [_, rx8in'])
+  | i `elem`
+      [V6_vrmpyzbb_rx, V6_vrmpyzbub_rx, V6_vrmpyzcb_rx, V6_vrmpyzcbs_rx,
+       V6_vrmpyznb_rx]
+    = [(rx8in, rx8in')]
+alignedPairs i ([_, _], [_])
+  | i `elem`
+      [V6_MAP_equb, V6_MAP_equh, V6_MAP_equw, V6_veqb, V6_veqh, V6_veqw,
+       V6_vgtb, V6_vgth, V6_vgtub, V6_vgtuh, V6_vgtuw, V6_vgtw]
+    = []
+alignedPairs i ([_, _], [_])
+  | i `elem`
+      [V6_vabsdiffh, V6_vabsdiffh_alt, V6_vabsdiffub, V6_vabsdiffub_alt,
+       V6_vabsdiffuh, V6_vabsdiffuh_alt, V6_vabsdiffw, V6_vabsdiffw_alt,
+       V6_vaddb, V6_vaddb_alt, V6_vaddbsat, V6_vaddbsat_alt, V6_vaddclbh,
+       V6_vaddclbw, V6_vaddh, V6_vaddh_alt, V6_vaddhsat, V6_vaddhsat_alt,
+       V6_vaddubsat, V6_vaddubsat_alt, V6_vaddububb_sat, V6_vadduhsat,
+       V6_vadduhsat_alt, V6_vadduwsat, V6_vadduwsat_alt, V6_vaddw,
+       V6_vaddw_alt, V6_vaddwsat, V6_vaddwsat_alt, V6_vand, V6_vaslhv,
+       V6_vaslhv_alt, V6_vaslwv, V6_vaslwv_alt, V6_vasrhv, V6_vasrhv_alt,
+       V6_vasrwv, V6_vasrwv_alt, V6_vavgb, V6_vavgb_alt, V6_vavgbrnd,
+       V6_vavgbrnd_alt, V6_vavgh, V6_vavgh_alt, V6_vavghrnd,
+       V6_vavghrnd_alt, V6_vavgub, V6_vavgub_alt, V6_vavgubrnd,
+       V6_vavgubrnd_alt, V6_vavguh, V6_vavguh_alt, V6_vavguhrnd,
+       V6_vavguhrnd_alt, V6_vavguw, V6_vavguw_alt, V6_vavguwrnd,
+       V6_vavguwrnd_alt, V6_vavgw, V6_vavgw_alt, V6_vavgwrnd,
+       V6_vavgwrnd_alt, V6_vdealb4w, V6_vdealb4w_alt, V6_vdelta,
+       V6_vdmpyhvsat, V6_vdmpyhvsat_alt, V6_vlsrhv, V6_vlsrhv_alt,
+       V6_vlsrwv, V6_vlsrwv_alt, V6_vmaxb, V6_vmaxb_alt, V6_vmaxh,
+       V6_vmaxh_alt, V6_vmaxub, V6_vmaxub_alt, V6_vmaxuh, V6_vmaxuh_alt,
+       V6_vmaxw, V6_vmaxw_alt, V6_vminb, V6_vminb_alt, V6_vminh,
+       V6_vminh_alt, V6_vminub, V6_vminub_alt, V6_vminuh, V6_vminuh_alt,
+       V6_vminw, V6_vminw_alt, V6_vmpyewuh, V6_vmpyewuh_alt, V6_vmpyhvsrs,
+       V6_vmpyhvsrs_alt, V6_vmpyieoh, V6_vmpyiewuh, V6_vmpyiewuh_alt,
+       V6_vmpyih, V6_vmpyih_alt, V6_vmpyiowh, V6_vmpyiowh_alt, V6_vmpyowh,
+       V6_vmpyowh_alt, V6_vmpyowh_rnd, V6_vmpyowh_rnd_alt, V6_vnavgb,
+       V6_vnavgb_alt, V6_vnavgh, V6_vnavgh_alt, V6_vnavgub,
+       V6_vnavgub_alt, V6_vnavgw, V6_vnavgw_alt, V6_vor, V6_vpackeb,
+       V6_vpackeb_alt, V6_vpackeh, V6_vpackeh_alt, V6_vpackhb_sat,
+       V6_vpackhb_sat_alt, V6_vpackhub_sat, V6_vpackhub_sat_alt,
+       V6_vpackob, V6_vpackob_alt, V6_vpackoh, V6_vpackoh_alt,
+       V6_vpackwh_sat, V6_vpackwh_sat_alt, V6_vpackwuh_sat,
+       V6_vpackwuh_sat_alt, V6_vrdelta, V6_vrmpybusv, V6_vrmpybusv_alt,
+       V6_vrmpybv, V6_vrmpybv_alt, V6_vrmpyubv, V6_vrmpyubv_alt, V6_vrotr,
+       V6_vrotr_alt, V6_vroundhb, V6_vroundhb_alt, V6_vroundhub,
+       V6_vroundhub_alt, V6_vrounduhub, V6_vrounduhub_alt, V6_vrounduwuh,
+       V6_vrounduwuh_alt, V6_vroundwh, V6_vroundwh_alt, V6_vroundwuh,
+       V6_vroundwuh_alt, V6_vsatdw, V6_vsathub, V6_vsathub_alt,
+       V6_vsatuwuh, V6_vsatuwuh_alt, V6_vsatwh, V6_vsatwh_alt, V6_vshufeh,
+       V6_vshufeh_alt, V6_vshuffeb, V6_vshuffeb_alt, V6_vshuffob,
+       V6_vshuffob_alt, V6_vshufoh, V6_vshufoh_alt, V6_vsubb,
+       V6_vsubb_alt, V6_vsubbsat, V6_vsubbsat_alt, V6_vsubh, V6_vsubh_alt,
+       V6_vsubhsat, V6_vsubhsat_alt, V6_vsububsat, V6_vsububsat_alt,
+       V6_vsubububb_sat, V6_vsubuhsat, V6_vsubuhsat_alt, V6_vsubuwsat,
+       V6_vsubuwsat_alt, V6_vsubw, V6_vsubw_alt, V6_vsubwsat,
+       V6_vsubwsat_alt, V6_vxor]
+    = []
+alignedPairs i ([_, _], [_, _])
+  | i `elem` [V6_vaddcarryo, V6_vsubcarryo] = []
+alignedPairs i ([_, _], [_])
+  | i `elem`
+      [V6_vaddhw, V6_vaddhw_alt, V6_vaddubh, V6_vaddubh_alt, V6_vadduhw,
+       V6_vadduhw_alt, V6_vcombine, V6_vmpybusv, V6_vmpybusv_alt,
+       V6_vmpybv, V6_vmpybv_alt, V6_vmpyewuh_64, V6_vmpyhus,
+       V6_vmpyhus_alt, V6_vmpyhv, V6_vmpyhv_alt, V6_vmpyubv,
+       V6_vmpyubv_alt, V6_vmpyuhv, V6_vmpyuhv_alt, V6_vshufoeb,
+       V6_vshufoeb_alt, V6_vshufoeh, V6_vshufoeh_alt, V6_vsubhw,
+       V6_vsubhw_alt, V6_vsububh, V6_vsububh_alt, V6_vsubuhw,
+       V6_vsubuhw_alt]
+    = []
+alignedPairs i ([_, _, _], [_])
+  | i `elem`
+      [V6_valignbi, V6_valignbi_ce, V6_vlalignbi, V6_vlalignbi_ce,
+       V6_vlutvvbi, V6_vlutvvbi_ce]
+    = []
+alignedPairs i ([_, _, _], [_])
+  | i `elem` [V6_vlutvwhi, V6_vlutvwhi_ce] = []
+alignedPairs i ([_, _, _], [_]) | i `elem` [V6_vaddcarrysat] = []
+alignedPairs i ([_, _, qx4in], [_, qx4in'])
+  | i `elem` [V6_vaddcarry, V6_vsubcarry] = [(qx4in, qx4in')]
+alignedPairs i ([_, _, _], [_])
+  | i `elem`
+      [V6_valignb, V6_vasrhbrndsat, V6_vasrhbrndsat_alt, V6_vasrhbsat,
+       V6_vasrhubrndsat, V6_vasrhubrndsat_alt, V6_vasrhubsat,
+       V6_vasrhubsat_alt, V6_vasruhubrndsat, V6_vasruhubsat,
+       V6_vasruwuhrndsat, V6_vasruwuhsat, V6_vasrwh, V6_vasrwh_alt,
+       V6_vasrwhrndsat, V6_vasrwhrndsat_alt, V6_vasrwhsat,
+       V6_vasrwhsat_alt, V6_vasrwuhrndsat, V6_vasrwuhsat,
+       V6_vasrwuhsat_alt, V6_vlalignb, V6_vlutvvb, V6_vlutvvb_nm]
+    = []
+alignedPairs i ([_, _, _], [_])
+  | i `elem` [V6_vdealvdd, V6_vlutvwh, V6_vlutvwh_nm, V6_vshuffvdd] =
+    []
+alignedPairs i ([_], [_]) | i `elem` [V6_vassignp] = []
+alignedPairs i ([_, _], [_])
+  | i `elem`
+      [V6_vdmpyhisat, V6_vdmpyhisat_alt, V6_vdmpyhsuisat,
+       V6_vdmpyhsuisat_alt]
+    = []
+alignedPairs i ([_, _], [_])
+  | i `elem`
+      [V6_vdmpybus_dv, V6_vdmpybus_dv_alt, V6_vdmpyhb_dv,
+       V6_vdmpyhb_dv_alt, V6_vdsaduh, V6_vdsaduh_alt, V6_vmpabus,
+       V6_vmpabus_alt, V6_vmpabuu, V6_vmpabuu_alt, V6_vmpahb,
+       V6_vmpahb_alt, V6_vmpauhb, V6_vmpauhb_alt, V6_vtmpyb,
+       V6_vtmpyb_alt, V6_vtmpybus, V6_vtmpybus_alt, V6_vtmpyhb,
+       V6_vtmpyhb_alt]
+    = []
+alignedPairs i ([_, _, _], [_])
+  | i `elem`
+      [V6_vrmpybusi, V6_vrmpybusi_alt, V6_vrmpybusi_alt_ce,
+       V6_vrmpybusi_ce, V6_vrmpyubi, V6_vrmpyubi_alt, V6_vrmpyubi_alt_ce,
+       V6_vrmpyubi_ce, V6_vrsadubi, V6_vrsadubi_alt, V6_vrsadubi_alt_ce,
+       V6_vrsadubi_ce]
+    = []
+alignedPairs i ([_, _], [_])
+  | i `elem`
+      [V6_vaddb_dv, V6_vaddb_dv_alt, V6_vaddbsat_dv, V6_vaddbsat_dv_alt,
+       V6_vaddh_dv, V6_vaddh_dv_alt, V6_vaddhsat_dv, V6_vaddhsat_dv_alt,
+       V6_vaddubsat_dv, V6_vaddubsat_dv_alt, V6_vadduhsat_dv,
+       V6_vadduhsat_dv_alt, V6_vadduwsat_dv, V6_vadduwsat_dv_alt,
+       V6_vaddw_dv, V6_vaddw_dv_alt, V6_vaddwsat_dv, V6_vaddwsat_dv_alt,
+       V6_vmpabusv, V6_vmpabusv_alt, V6_vmpabuuv, V6_vmpabuuv_alt,
+       V6_vsubb_dv, V6_vsubb_dv_alt, V6_vsubbsat_dv, V6_vsubbsat_dv_alt,
+       V6_vsubh_dv, V6_vsubh_dv_alt, V6_vsubhsat_dv, V6_vsubhsat_dv_alt,
+       V6_vsububsat_dv, V6_vsububsat_dv_alt, V6_vsubuhsat_dv,
+       V6_vsubuhsat_dv_alt, V6_vsubuwsat_dv, V6_vsubuwsat_dv_alt,
+       V6_vsubw_dv, V6_vsubw_dv_alt, V6_vsubwsat_dv, V6_vsubwsat_dv_alt]
+    = []
+alignedPairs i ([vx32in, _, _], [vx32in'])
+  | i `elem`
+      [V6_vandnqrt_acc, V6_vandnqrt_acc_alt, V6_vandqrt_acc,
+       V6_vandqrt_acc_alt]
+    = [(vx32in, vx32in')]
+alignedPairs i ([vx32in, _], [vx32in'])
+  | i `elem` [V6_vinsertwr] = [(vx32in, vx32in')]
+alignedPairs i ([vx32in, _, _], [vx32in'])
+  | i `elem`
+      [V6_vaslh_acc, V6_vaslh_acc_alt, V6_vaslw_acc, V6_vaslw_acc_alt,
+       V6_vasrh_acc, V6_vasrh_acc_alt, V6_vasrw_acc, V6_vasrw_acc_alt,
+       V6_vdmpybus_acc, V6_vdmpybus_acc_alt, V6_vdmpyhb_acc,
+       V6_vdmpyhb_acc_alt, V6_vdmpyhsat_acc, V6_vdmpyhsat_acc_alt,
+       V6_vdmpyhsusat_acc, V6_vdmpyhsusat_acc_alt, V6_vmpyihb_acc,
+       V6_vmpyihb_acc_alt, V6_vmpyiwb_acc, V6_vmpyiwb_acc_alt,
+       V6_vmpyiwh_acc, V6_vmpyiwh_acc_alt, V6_vmpyiwub_acc,
+       V6_vmpyiwub_acc_alt, V6_vmpyuhe_acc, V6_vrmpybus_acc,
+       V6_vrmpybus_acc_alt, V6_vrmpyub_acc, V6_vrmpyub_acc_alt]
+    = [(vx32in, vx32in')]
+alignedPairs i ([vx32in, _, _], [vx32in'])
+  | i `elem` [V6_vmpahhsat, V6_vmpauhuhsat, V6_vmpsuhuhsat] =
+    [(vx32in, vx32in')]
+alignedPairs i ([vx32in, _, _], [vx32in'])
+  | i `elem`
+      [V6_vdmpyhvsat_acc, V6_vdmpyhvsat_acc_alt, V6_vmpyiewh_acc,
+       V6_vmpyiewh_acc_alt, V6_vmpyiewuh_acc, V6_vmpyiewuh_acc_alt,
+       V6_vmpyih_acc, V6_vmpyih_acc_alt, V6_vmpyowh_rnd_sacc,
+       V6_vmpyowh_rnd_sacc_alt, V6_vmpyowh_sacc, V6_vmpyowh_sacc_alt,
+       V6_vrmpybusv_acc, V6_vrmpybusv_acc_alt, V6_vrmpybv_acc,
+       V6_vrmpybv_acc_alt, V6_vrmpyubv_acc, V6_vrmpyubv_acc_alt]
+    = [(vx32in, vx32in')]
+alignedPairs i ([vx32in, _, _, _], [vx32in'])
+  | i `elem` [V6_vlutvvb_oracci, V6_vlutvvb_oracci_ce] =
+    [(vx32in, vx32in')]
+alignedPairs i ([vx32in, _, _, _], [vx32in'])
+  | i `elem` [V6_vlutvvb_oracc] = [(vx32in, vx32in')]
+alignedPairs i ([vx32in, _, _], [vx32in'])
+  | i `elem`
+      [V6_vdmpyhisat_acc, V6_vdmpyhisat_acc_alt, V6_vdmpyhsuisat_acc,
+       V6_vdmpyhsuisat_acc_alt]
+    = [(vx32in, vx32in')]
+alignedPairs i ([vxx32in, _], [vxx32in'])
+  | i `elem`
+      [V6_vunpackob, V6_vunpackob_alt, V6_vunpackoh, V6_vunpackoh_alt]
+    = [(vxx32in, vxx32in')]
+alignedPairs i ([vxx32in, _, _], [vxx32in'])
+  | i `elem`
+      [V6_vmpybus_acc, V6_vmpybus_acc_alt, V6_vmpyh_acc,
+       V6_vmpyh_acc_alt, V6_vmpyhsat_acc, V6_vmpyhsat_acc_alt,
+       V6_vmpyub_acc, V6_vmpyub_acc_alt, V6_vmpyuh_acc, V6_vmpyuh_acc_alt]
+    = [(vxx32in, vxx32in')]
+alignedPairs i ([vxx32in, _, _], [vxx32in'])
+  | i `elem`
+      [V6_vrmpybub_rtt_acc, V6_vrmpybub_rtt_acc_alt, V6_vrmpyub_rtt_acc,
+       V6_vrmpyub_rtt_acc_alt]
+    = [(vxx32in, vxx32in')]
+alignedPairs i ([vxx32in, _, _], [vxx32in'])
+  | i `elem`
+      [V6_vaddhw_acc, V6_vaddhw_acc_alt, V6_vaddubh_acc,
+       V6_vaddubh_acc_alt, V6_vadduhw_acc, V6_vadduhw_acc_alt,
+       V6_vasr_into, V6_vasr_into_alt, V6_vmpybusv_acc,
+       V6_vmpybusv_acc_alt, V6_vmpybv_acc, V6_vmpybv_acc_alt,
+       V6_vmpyhus_acc, V6_vmpyhus_acc_alt, V6_vmpyhv_acc,
+       V6_vmpyhv_acc_alt, V6_vmpyowh_64_acc, V6_vmpyubv_acc,
+       V6_vmpyubv_acc_alt, V6_vmpyuhv_acc, V6_vmpyuhv_acc_alt]
+    = [(vxx32in, vxx32in')]
+alignedPairs i ([vxx32in, _, _, _], [vxx32in'])
+  | i `elem` [V6_vlutvwh_oracci, V6_vlutvwh_oracci_ce] =
+    [(vxx32in, vxx32in')]
+alignedPairs i ([vxx32in, _, _, _], [vxx32in'])
+  | i `elem` [V6_vlutvwh_oracc] = [(vxx32in, vxx32in')]
+alignedPairs i ([vxx32in, _, _], [vxx32in'])
+  | i `elem`
+      [V6_vdmpybus_dv_acc, V6_vdmpybus_dv_acc_alt, V6_vdmpyhb_dv_acc,
+       V6_vdmpyhb_dv_acc_alt, V6_vdsaduh_acc, V6_vdsaduh_acc_alt,
+       V6_vmpabus_acc, V6_vmpabus_acc_alt, V6_vmpabuu_acc,
+       V6_vmpabuu_acc_alt, V6_vmpahb_acc, V6_vmpahb_acc_alt,
+       V6_vmpauhb_acc, V6_vmpauhb_acc_alt, V6_vtmpyb_acc,
+       V6_vtmpyb_acc_alt, V6_vtmpybus_acc, V6_vtmpybus_acc_alt,
+       V6_vtmpyhb_acc, V6_vtmpyhb_acc_alt]
+    = [(vxx32in, vxx32in')]
+alignedPairs i ([vxx32in, _, _, _], [vxx32in'])
+  | i `elem`
+      [V6_vrmpybusi_acc, V6_vrmpybusi_acc_alt, V6_vrmpybusi_acc_alt_ce,
+       V6_vrmpybusi_acc_ce, V6_vrmpyubi_acc, V6_vrmpyubi_acc_alt,
+       V6_vrmpyubi_acc_alt_ce, V6_vrmpyubi_acc_ce, V6_vrsadubi_acc,
+       V6_vrsadubi_acc_alt, V6_vrsadubi_acc_alt_ce, V6_vrsadubi_acc_ce]
+    = [(vxx32in, vxx32in')]
+alignedPairs i ([vy32in, vx32in, _], [vy32in', vx32in'])
+  | i `elem` [V6_vdeal, V6_vshuff, V6_vtran2x2_map] =
+    [(vy32in, vy32in'), (vx32in, vx32in')]
+alignedPairs i ([vyyyy32in, _, _], [vyyyy32in'])
+  | i `elem`
+      [V6_vrmpyzbb_rt_acc, V6_vrmpyzbub_rt_acc, V6_vrmpyzcb_rt_acc,
+       V6_vrmpyzcbs_rt_acc, V6_vrmpyznb_rt_acc]
+    = [(vyyyy32in, vyyyy32in')]
+alignedPairs i ([vyyyy32in, _, rx8in], [vyyyy32in', rx8in'])
+  | i `elem`
+      [V6_vrmpyzbb_rx_acc, V6_vrmpyzbub_rx_acc, V6_vrmpyzcb_rx_acc,
+       V6_vrmpyzcbs_rx_acc, V6_vrmpyznb_rx_acc]
+    = [(vyyyy32in, vyyyy32in'), (rx8in, rx8in')]
+alignedPairs i ([_, _, _, _], [])
+  | i `elem`
+      [V6_vgathermh_pseudo, V6_vgathermhw_pseudo, V6_vgathermw_pseudo]
+    = []
+alignedPairs i ([_, _, _, _, _], [])
+  | i `elem`
+      [V6_vgathermhq_pseudo, V6_vgathermhwq_pseudo, V6_vgathermwq_pseudo]
+    = []
+alignedPairs i ([_], [_])
+  | i `elem`
+      [G_LOAD, G_LOAD_ce, G_SEXTLOAD, G_SEXTLOAD_ce, G_ZEXTLOAD,
+       G_ZEXTLOAD_ce]
+    = []
+alignedPairs i ([_, _, _], [_])
+  | i `elem` [G_ATOMIC_CMPXCHG, G_ATOMIC_CMPXCHG_ce] = []
+alignedPairs i ([_, _, _], [_, _])
+  | i `elem`
+      [G_ATOMIC_CMPXCHG_WITH_SUCCESS, G_ATOMIC_CMPXCHG_WITH_SUCCESS_ce]
+    = []
+alignedPairs i ([_, _], [_])
+  | i `elem`
+      [LDriw_ctr, LDriw_ctr_ce, LDriw_pred, LDriw_pred_ce, PS_vloadrw_ai,
+       PS_vloadrw_ai_ce, PS_vloadrw_nt_ai, PS_vloadrw_nt_ai_ce,
+       PS_vloadrwu_ai, PS_vloadrwu_ai_ce]
+    = []
+alignedPairs i ([_, _, _], [])
+  | i `elem`
+      [PS_vstorerw_ai, PS_vstorerw_ai_ce, PS_vstorerw_nt_ai,
+       PS_vstorerw_nt_ai_ce, PS_vstorerwu_ai, PS_vstorerwu_ai_ce]
+    = []
+alignedPairs i ([_, _, _], [])
+  | i `elem` [STriw_ctr, STriw_ctr_ce, STriw_pred, STriw_pred_ce] =
+    []
+alignedPairs i ([_, _], [_])
+  | i `elem`
+      [G_ATOMICRMW_ADD, G_ATOMICRMW_ADD_ce, G_ATOMICRMW_AND,
+       G_ATOMICRMW_AND_ce, G_ATOMICRMW_MAX, G_ATOMICRMW_MAX_ce,
+       G_ATOMICRMW_MIN, G_ATOMICRMW_MIN_ce, G_ATOMICRMW_NAND,
+       G_ATOMICRMW_NAND_ce, G_ATOMICRMW_OR, G_ATOMICRMW_OR_ce,
+       G_ATOMICRMW_SUB, G_ATOMICRMW_SUB_ce, G_ATOMICRMW_UMAX,
+       G_ATOMICRMW_UMAX_ce, G_ATOMICRMW_UMIN, G_ATOMICRMW_UMIN_ce,
+       G_ATOMICRMW_XCHG, G_ATOMICRMW_XCHG_ce, G_ATOMICRMW_XOR,
+       G_ATOMICRMW_XOR_ce]
+    = []
+alignedPairs i ([_, _], [])
+  | i `elem`
+      [ADJCALLSTACKDOWN, ADJCALLSTACKDOWN_ce, ADJCALLSTACKUP,
+       ADJCALLSTACKUP_ce]
+    = []
+alignedPairs i ([_], [_])
+  | i `elem` [G_BLOCK_ADDR, G_BLOCK_ADDR_ce] = []
 alignedPairs i ([_], [])
   | i `elem`
-      [CFI_INSTRUCTION, CFI_INSTRUCTION_ce, EH_LABEL, EH_LABEL_ce,
-       GC_LABEL, GC_LABEL_ce, LIFETIME_END, LIFETIME_END_ce,
-       LIFETIME_START, LIFETIME_START_ce]
+      [CALLProfile, CALLProfile_ce, EH_RETURN_JMPR, PS_call_stk,
+       PS_call_stk_ce, PS_jmpret, PS_tailcall_i, PS_tailcall_i_ce,
+       PS_tailcall_r, RESTORE_DEALLOC_BEFORE_TAILCALL_V4,
+       RESTORE_DEALLOC_BEFORE_TAILCALL_V4_EXT,
+       RESTORE_DEALLOC_BEFORE_TAILCALL_V4_EXT_PIC,
+       RESTORE_DEALLOC_BEFORE_TAILCALL_V4_EXT_PIC_ce,
+       RESTORE_DEALLOC_BEFORE_TAILCALL_V4_EXT_ce,
+       RESTORE_DEALLOC_BEFORE_TAILCALL_V4_PIC,
+       RESTORE_DEALLOC_BEFORE_TAILCALL_V4_PIC_ce,
+       RESTORE_DEALLOC_BEFORE_TAILCALL_V4_ce, RESTORE_DEALLOC_RET_JMP_V4,
+       RESTORE_DEALLOC_RET_JMP_V4_EXT, RESTORE_DEALLOC_RET_JMP_V4_EXT_PIC,
+       RESTORE_DEALLOC_RET_JMP_V4_EXT_PIC_ce,
+       RESTORE_DEALLOC_RET_JMP_V4_EXT_ce, RESTORE_DEALLOC_RET_JMP_V4_PIC,
+       RESTORE_DEALLOC_RET_JMP_V4_PIC_ce, RESTORE_DEALLOC_RET_JMP_V4_ce,
+       SAVE_REGISTERS_CALL_V4, SAVE_REGISTERS_CALL_V4STK,
+       SAVE_REGISTERS_CALL_V4STK_EXT, SAVE_REGISTERS_CALL_V4STK_EXT_PIC,
+       SAVE_REGISTERS_CALL_V4STK_EXT_PIC_ce,
+       SAVE_REGISTERS_CALL_V4STK_EXT_ce, SAVE_REGISTERS_CALL_V4STK_PIC,
+       SAVE_REGISTERS_CALL_V4STK_PIC_ce, SAVE_REGISTERS_CALL_V4STK_ce,
+       SAVE_REGISTERS_CALL_V4_EXT, SAVE_REGISTERS_CALL_V4_EXT_PIC,
+       SAVE_REGISTERS_CALL_V4_EXT_PIC_ce, SAVE_REGISTERS_CALL_V4_EXT_ce,
+       SAVE_REGISTERS_CALL_V4_PIC, SAVE_REGISTERS_CALL_V4_PIC_ce,
+       SAVE_REGISTERS_CALL_V4_ce]
+    = []
+alignedPairs i ([_], [_]) | i `elem` [PS_jmpret_linear] = []
+alignedPairs i ([_, _], [_])
+  | i `elem` [PS_jmpret_dealloc_linear] = []
+alignedPairs i ([_, _], [])
+  | i `elem` [PATCHABLE_EVENT_CALL, PATCHABLE_EVENT_CALL_ce] = []
+alignedPairs i ([_, _], [_]) | i `elem` [PS_fi, PS_fi_ce] = []
+alignedPairs i ([_], [])
+  | i `elem`
+      [ANNOTATION_LABEL, ANNOTATION_LABEL_ce, CFI_INSTRUCTION,
+       CFI_INSTRUCTION_ce, EH_LABEL, EH_LABEL_ce, GC_LABEL, GC_LABEL_ce,
+       LIFETIME_END, LIFETIME_END_ce, LIFETIME_START, LIFETIME_START_ce]
     = []
 alignedPairs i ([_, _, _, _, _, _], [_])
   | i `elem` [PATCHPOINT, PATCHPOINT_ce] = []
 alignedPairs i ([_, _, _], [])
   | i `elem` [STACKMAP, STACKMAP_ce] = []
-alignedPairs i ([_], [])
-  | i `elem`
-      [A4_ext, A4_ext_b, A4_ext_b_ce, A4_ext_c, A4_ext_c_ce, A4_ext_ce,
-       A4_ext_g, A4_ext_g_ce]
-    = []
 alignedPairs i ([_], [_])
-  | i `elem` [HI, HI_L, HI_L_ce, HI_ce, LO, LO_H, LO_H_ce, LO_ce] =
-    []
+  | i `elem` [G_CONSTANT, G_CONSTANT_ce, G_FCONSTANT, G_FCONSTANT_ce]
+    = []
+alignedPairs i ([_], [_]) | i `elem` [HI, HI_ce, LO, LO_ce] = []
 alignedPairs i ([_, _, _], [_])
   | i `elem` [SUBREG_TO_REG, SUBREG_TO_REG_ce] = []
+alignedPairs i ([_, _], [])
+  | i `elem`
+      [G_INTRINSIC, G_INTRINSIC_W_SIDE_EFFECTS,
+       G_INTRINSIC_W_SIDE_EFFECTS_ce, G_INTRINSIC_ce]
+    = []
+alignedPairs i ([_], []) | i `elem` [DBG_LABEL, DBG_LABEL_ce] = []
+alignedPairs i ([_], []) | i `elem` [G_VASTART, G_VASTART_ce] = []
+alignedPairs i ([_, _], [_]) | i `elem` [G_VAARG, G_VAARG_ce] = []
 alignedPairs i ([_], [_])
-  | i `elem` [HI_PIC, HI_PIC_ce, LO_PIC, LO_PIC_ce] = []
+  | i `elem` [SA1_setin1, SA1_setin1_ce] = []
 alignedPairs i ([_], [])
-  | i `elem` [ENDLOOP0, ENDLOOP0_ce, ENDLOOP1, ENDLOOP1_ce] = []
-alignedPairs i ([_, _], [])
   | i `elem`
-      [J2_loop0i, J2_loop0i_ce, J2_loop0iext, J2_loop0iext_ce, J2_loop0r,
-       J2_loop0r_ce, J2_loop0rext, J2_loop0rext_ce, J2_loop1i,
-       J2_loop1i_ce, J2_loop1iext, J2_loop1iext_ce, J2_loop1r,
-       J2_loop1r_ce, J2_loop1rext, J2_loop1rext_ce]
+      [DUPLEX_Pseudo, DUPLEX_Pseudo_ce, ENDLOOP0, ENDLOOP01,
+       ENDLOOP01_ce, ENDLOOP0_ce, ENDLOOP1, ENDLOOP1_ce]
     = []
 alignedPairs i ([_, _], [])
   | i `elem`
-      [J2_ploop1sr, J2_ploop1sr_ce, J2_ploop2sr, J2_ploop2sr_ce,
-       J2_ploop3sr, J2_ploop3sr_ce]
+      [J2_loop0iext, J2_loop0iext_ce, J2_loop0rext, J2_loop0rext_ce,
+       J2_loop1iext, J2_loop1iext_ce, J2_loop1rext, J2_loop1rext_ce]
     = []
-alignedPairs i ([_, _], [])
-  | i `elem`
-      [J2_ploop1si, J2_ploop1si_ce, J2_ploop2si, J2_ploop2si_ce,
-       J2_ploop3si, J2_ploop3si_ce]
-    = []
-alignedPairs i ([_, _], [_])
-  | i `elem` [A2_subri, A2_subri_ce] = []
-alignedPairs i ([_], [_])
-  | i `elem`
-      [A2_tfrsi, A2_tfrsi_ce, A2_tfrsi_source, A2_tfrsi_source_ce]
-    = []
-alignedPairs i ([_, _], [_]) | i `elem` [S4_lsli, S4_lsli_ce] = []
-alignedPairs i ([_, _], [])
-  | i `elem` [V4_SS2_stored_sp, V4_SS2_stored_sp_ce] = []
-alignedPairs i ([_, _], [_])
-  | i `elem` [A4_combineir, A4_combineir_ce] = []
-alignedPairs i ([_, _], [_])
-  | i `elem` [A2_combineii, A2_combineii_ce] = []
-alignedPairs i ([_, _], [_])
-  | i `elem` [A4_combineii, A4_combineii_ce] = []
 alignedPairs i ([_], [])
   | i `elem`
       [J4_cmpeq_f_jumpnv_t_combo, J4_cmpeq_t_jumpnv_t_combo,
@@ -882,265 +2045,86 @@ alignedPairs i ([_], [])
        J4_cmpgtu_f_jumpnv_t_combo, J4_cmpgtu_t_jumpnv_t_combo,
        J4_cmpgtui_f_jumpnv_t_combo, J4_cmpgtui_t_jumpnv_t_combo,
        J4_cmplt_f_jumpnv_t_combo, J4_cmplt_t_jumpnv_t_combo,
-       J4_cmpltu_f_jumpnv_t_combo, J4_cmpltu_t_jumpnv_t_combo,
-       L4_return_f, L4_return_fnew_pnt, L4_return_fnew_pt, L4_return_t,
-       L4_return_tnew_pnt, L4_return_tnew_pt, Jr_merge]
+       J4_cmpltu_f_jumpnv_t_combo, J4_cmpltu_t_jumpnv_t_combo, Jr_merge]
     = []
 alignedPairs i ([_], [_])
   | i `elem`
-      [A2_abs, A2_abssat, A2_negsat, A2_not, A2_roundsat, A2_sat,
-       A2_satb, A2_sath, A2_satub, A2_satuh, A2_swiz, A2_sxtw, A2_tfr,
-       A2_tfrcrr, A2_tfrp, A2_tfrpi_demat, A2_tfrpi_demat_ce,
-       A2_tfrpi_remat, A2_tfrpi_remat_ce, A2_tfrrcr, A2_tfrsi_demat,
-       A2_tfrsi_demat_ce, A2_tfrsi_remat, A2_tfrsi_remat_ce, A4_tfrcpp,
-       A4_tfrpcp, C2_pxfer_map, CONST64_Int_Real_demat,
-       CONST64_Int_Real_demat_ce, CONST64_Int_Real_remat,
-       CONST64_Int_Real_remat_ce, COPY, COPY_ce, F2_dfimm_n,
-       F2_dfimm_n_ce, F2_dfimm_p, F2_dfimm_p_ce, F2_sfimm_n,
-       F2_sfimm_n_ce, F2_sfimm_p, F2_sfimm_p_ce, L2_loadrb_io_fi_demat_fi,
-       L2_loadrb_io_fi_demat_fi_ce, L2_loadrb_io_fi_remat_fi,
-       L2_loadrb_io_fi_remat_fi_ce, L2_loadrd_io_fi_demat_fi,
-       L2_loadrd_io_fi_demat_fi_ce, L2_loadrd_io_fi_remat_fi,
-       L2_loadrd_io_fi_remat_fi_ce, L2_loadrhgp_demat,
-       L2_loadrhgp_demat_ce, L2_loadrhgp_remat, L2_loadrhgp_remat_ce,
-       L2_loadri_io_fi_demat_fi, L2_loadri_io_fi_demat_fi_ce,
-       L2_loadri_io_fi_remat_fi, L2_loadri_io_fi_remat_fi_ce,
-       L2_loadrigp_demat, L2_loadrigp_demat_ce, L2_loadrigp_remat,
-       L2_loadrigp_remat_ce, L2_loadrubgp_demat, L2_loadrubgp_demat_ce,
-       L2_loadrubgp_remat, L2_loadrubgp_remat_ce,
-       L2_loadruh_io_fi_demat_fi, L2_loadruh_io_fi_demat_fi_ce,
-       L2_loadruh_io_fi_remat_fi, L2_loadruh_io_fi_remat_fi_ce,
-       L2_loadruhgp_demat, L2_loadruhgp_demat_ce, L2_loadruhgp_remat,
-       L2_loadruhgp_remat_ce, L2_loadw_locked, L4_loadd_locked,
-       L4_loadrb_abs_demat, L4_loadrb_abs_demat_ce, L4_loadrb_abs_remat,
-       L4_loadrb_abs_remat_ce, L4_loadrd_abs_demat,
-       L4_loadrd_abs_demat_ce, L4_loadrd_abs_remat,
-       L4_loadrd_abs_remat_ce, L4_loadrh_abs_demat,
-       L4_loadrh_abs_demat_ce, L4_loadrh_abs_remat,
-       L4_loadrh_abs_remat_ce, L4_loadri_abs_demat,
-       L4_loadri_abs_demat_ce, L4_loadri_abs_remat,
-       L4_loadri_abs_remat_ce, L4_loadrub_abs_demat,
-       L4_loadrub_abs_demat_ce, L4_loadrub_abs_remat,
-       L4_loadrub_abs_remat_ce, L4_loadruh_abs_demat,
-       L4_loadruh_abs_demat_ce, L4_loadruh_abs_remat,
-       L4_loadruh_abs_remat_ce, LDD, LDD_ce, LDW, LDW_ce, MVD, MVD_ce,
-       MVW, MVW_ce, S2_brev, S2_svsathb, S2_svsathub, S2_vrndpackwh,
-       S2_vrndpackwhs, S2_vsathb, S2_vsathub, S2_vsatwh, S2_vsatwuh,
-       S2_vsplatrb, S2_vsplatrh, S2_vsxtbh, S2_vsxthw, S2_vtrunehb,
-       S2_vtrunohb, S2_vzxtbh, S2_vzxthw, STD, STD_ce, STD_cs, STD_cs_ce,
-       STW, STW_ce, STW_nv, STW_nv_ce, TFR_FI_fi_demat_fi,
+      [A2_tfrpi_demat, A2_tfrpi_demat_ce, A2_tfrpi_remat,
+       A2_tfrpi_remat_ce, A2_tfrsi_demat, A2_tfrsi_demat_ce,
+       A2_tfrsi_remat, A2_tfrsi_remat_ce, COPY, COPY_ce, G_ADDRSPACE_CAST,
+       G_ADDRSPACE_CAST_ce, G_ANYEXT, G_ANYEXT_ce, G_BITCAST,
+       G_BITCAST_ce, G_BSWAP, G_BSWAP_ce, G_CTLZ, G_CTLZ_ZERO_UNDEF,
+       G_CTLZ_ZERO_UNDEF_ce, G_CTLZ_ce, G_CTPOP, G_CTPOP_ce, G_CTTZ,
+       G_CTTZ_ZERO_UNDEF, G_CTTZ_ZERO_UNDEF_ce, G_CTTZ_ce, G_FABS,
+       G_FABS_ce, G_FNEG, G_FNEG_ce, G_FPEXT, G_FPEXT_ce, G_FPTOSI,
+       G_FPTOSI_ce, G_FPTOUI, G_FPTOUI_ce, G_FPTRUNC, G_FPTRUNC_ce,
+       G_GLOBAL_VALUE, G_GLOBAL_VALUE_ce, G_INTTOPTR, G_INTTOPTR_ce,
+       G_PTRTOINT, G_PTRTOINT_ce, G_SEXT, G_SEXT_ce, G_SITOFP,
+       G_SITOFP_ce, G_TRUNC, G_TRUNC_ce, G_UITOFP, G_UITOFP_ce, G_ZEXT,
+       G_ZEXT_ce, L2_loadrb_io_fi_demat_fi, L2_loadrb_io_fi_demat_fi_ce,
+       L2_loadrb_io_fi_remat_fi, L2_loadrb_io_fi_remat_fi_ce,
+       L2_loadrd_io_fi_demat_fi, L2_loadrd_io_fi_demat_fi_ce,
+       L2_loadrd_io_fi_remat_fi, L2_loadrd_io_fi_remat_fi_ce,
+       L2_loadrhgp_demat, L2_loadrhgp_demat_ce, L2_loadrhgp_remat,
+       L2_loadrhgp_remat_ce, L2_loadri_io_fi_demat_fi,
+       L2_loadri_io_fi_demat_fi_ce, L2_loadri_io_fi_remat_fi,
+       L2_loadri_io_fi_remat_fi_ce, L2_loadrigp_demat,
+       L2_loadrigp_demat_ce, L2_loadrigp_remat, L2_loadrigp_remat_ce,
+       L2_loadrubgp_demat, L2_loadrubgp_demat_ce, L2_loadrubgp_remat,
+       L2_loadrubgp_remat_ce, L2_loadruh_io_fi_demat_fi,
+       L2_loadruh_io_fi_demat_fi_ce, L2_loadruh_io_fi_remat_fi,
+       L2_loadruh_io_fi_remat_fi_ce, L2_loadruhgp_demat,
+       L2_loadruhgp_demat_ce, L2_loadruhgp_remat, L2_loadruhgp_remat_ce,
+       LDD, LDD_ce, LDW, LDW_ce, STD, STD_ce, STD_cs, STD_cs_ce, STW,
+       STW_ce, STW_nv, STW_nv_ce, TFR_FI_fi_demat_fi,
        TFR_FI_fi_demat_fi_ce, TFR_FI_fi_remat_fi, TFR_FI_fi_remat_fi_ce,
-       TFR_PdFalse_demat, TFR_PdFalse_demat_ce, TFR_PdFalse_remat,
-       TFR_PdFalse_remat_ce, TFR_PdTrue_demat, TFR_PdTrue_demat_ce,
-       TFR_PdTrue_remat, TFR_PdTrue_remat_ce, Ret_dealloc_merge]
+       Ret_dealloc_merge]
     = []
+alignedPairs i ([_], [_, _])
+  | i `elem` [G_UNMERGE_VALUES, G_UNMERGE_VALUES_ce] = []
+alignedPairs i ([_, _], []) | i `elem` [G_STORE, G_STORE_ce] = []
+alignedPairs i ([_, _], [_])
+  | i `elem` [G_PTR_MASK, G_PTR_MASK_ce] = []
 alignedPairs i ([_, _], [])
   | i `elem`
-      [J2_jump_extf, J2_jump_extf_ce, J2_jump_extfnew,
-       J2_jump_extfnew_ce, J2_jump_extfnewpt, J2_jump_extfnewpt_ce,
-       J2_jump_extt, J2_jump_extt_ce, J2_jump_exttnew, J2_jump_exttnew_ce,
-       J2_jump_exttnewpt, J2_jump_exttnewpt_ce, J2_jump_noextf,
-       J2_jump_noextf_ce, J2_jump_noextfnew, J2_jump_noextfnew_ce,
-       J2_jump_noextfnewpt, J2_jump_noextfnewpt_ce, J2_jump_noextt,
-       J2_jump_noextt_ce, J2_jump_noexttnew, J2_jump_noexttnew_ce,
-       J2_jump_noexttnewpt, J2_jump_noexttnewpt_ce, J2_jumpf, J2_jumpf_ce,
-       J2_jumpf_nv, J2_jumpf_nv_ce, J2_jumpfnew, J2_jumpfnew_ce,
-       J2_jumpfnewpt, J2_jumpfnewpt_ce, J2_jumprf, J2_jumprfnew,
-       J2_jumprfnewpt, J2_jumprt, J2_jumprtnew, J2_jumprtnewpt, J2_jumpt,
-       J2_jumpt_ce, J2_jumpt_nv, J2_jumpt_nv_ce, J2_jumptnew,
-       J2_jumptnew_ce, J2_jumptnewpt, J2_jumptnewpt_ce,
-       J4_combo_f_jumpnv_t, J4_combo_f_jumpnv_t_ce, J4_combo_t_jumpnv_t,
-       J4_combo_t_jumpnv_t_ce, JMPretf, JMPretfnew, JMPretfnewpt, JMPrett,
-       JMPrettnew, JMPrettnewpt, Jump_merge, Jump_merge_ce]
+      [PS_jmpretf, PS_jmpretfnew, PS_jmpretfnewpt, PS_jmprett,
+       PS_jmprettnew, PS_jmprettnewpt, Jump_merge, Jump_merge_ce]
     = []
+alignedPairs i ([_, _, _], [_])
+  | i `elem` [G_INSERT_VECTOR_ELT, G_INSERT_VECTOR_ELT_ce] = []
+alignedPairs i ([_, _], [_])
+  | i `elem` [G_EXTRACT_VECTOR_ELT, G_EXTRACT_VECTOR_ELT_ce] = []
+alignedPairs i ([_, _], [_])
+  | i `elem` [G_EXTRACT, G_EXTRACT_ce] = []
+alignedPairs i ([_, _, _], [_])
+  | i `elem` [G_INSERT, G_INSERT_ce] = []
 alignedPairs i ([_, _], [_])
   | i `elem` [COPY_TO_REGCLASS, COPY_TO_REGCLASS_ce] = []
 alignedPairs i ([_, _], [_])
   | i `elem`
-      [A4_bitspliti, A4_bitspliti_ce, A4_cround_ri, A4_cround_ri_ce,
-       A4_round_ri, A4_round_ri_ce, A4_round_ri_sat, A4_round_ri_sat_ce,
-       S2_asl_i_r, S2_asl_i_r_ce, S2_asl_i_r_sat, S2_asl_i_r_sat_ce,
-       S2_asr_i_r, S2_asr_i_r_ce, S2_asr_i_r_rnd, S2_asr_i_r_rnd_ce,
-       S2_asr_i_r_rnd_goodsyntax, S2_asr_i_r_rnd_goodsyntax_ce,
-       S2_asr_i_svw_trun, S2_asr_i_svw_trun_ce, S2_lsr_i_r, S2_lsr_i_r_ce]
+      [G_BUILD_VECTOR, G_BUILD_VECTOR_TRUNC, G_BUILD_VECTOR_TRUNC_ce,
+       G_BUILD_VECTOR_ce, G_CONCAT_VECTORS, G_CONCAT_VECTORS_ce,
+       G_MERGE_VALUES, G_MERGE_VALUES_ce]
     = []
 alignedPairs i ([_], [])
-  | i `elem`
-      [V6_vhistq, Y5_l2unlocka, Y6_l2gcleaninvpa, Y6_l2gcleanpa]
-    = []
+  | i `elem` [G_BR, G_BRINDIRECT, G_BRINDIRECT_ce, G_BR_ce] = []
 alignedPairs i ([_], [_])
   | i `elem`
-      [A2_tfrpi, A2_tfrpi_ce, A2_tfrpi_source, A2_tfrpi_source_ce,
-       ARGEXTEND, CONST32_Float_Real, CONST32_Float_Real_ce,
-       CONST64_Float_Real, CONST64_Float_Real_ce, HEXAGON_V6_hi,
-       HEXAGON_V6_hi_128B, HEXAGON_V6_lo, HEXAGON_V6_lo_128B,
-       HEXAGON_V6_vassignp, HEXAGON_V6_vassignp_128B, TFRI64_V4,
-       TFRI64_V4_ce, TFRI_f, TFRI_f_ce, V6_lvsplatw, V6_lvsplatw_128B,
-       V6_pred_not, V6_pred_not_128B, V6_pred_scalar2,
-       V6_pred_scalar2_128B, V6_vabsh, V6_vabsh_128B, V6_vabsh_sat,
-       V6_vabsh_sat_128B, V6_vabsw, V6_vabsw_128B, V6_vabsw_sat,
-       V6_vabsw_sat_128B, V6_vassign, V6_vassign_128B, V6_vcl0h,
-       V6_vcl0h_128B, V6_vcl0w, V6_vcl0w_128B, V6_vdealb, V6_vdealb_128B,
-       V6_vdealh, V6_vdealh_128B, V6_vnormamth, V6_vnormamth_128B,
-       V6_vnormamtw, V6_vnormamtw_128B, V6_vnot, V6_vnot_128B,
-       V6_vpopcounth, V6_vpopcounth_128B, V6_vsb, V6_vsb_128B, V6_vsh,
-       V6_vsh_128B, V6_vshuffb, V6_vshuffb_128B, V6_vshuffh,
-       V6_vshuffh_128B, V6_vunpackb, V6_vunpackb_128B, V6_vunpackh,
-       V6_vunpackh_128B, V6_vunpackub, V6_vunpackub_128B, V6_vunpackuh,
-       V6_vunpackuh_128B, V6_vzb, V6_vzb_128B, V6_vzh, V6_vzh_128B,
-       Y5_l2locka]
-    = []
-alignedPairs i ([src1, _, _], [src1'])
-  | i `elem`
-      [S2_asl_r_r_acc, S2_asl_r_r_and, S2_asl_r_r_nac, S2_asl_r_r_or,
-       S2_asr_r_r_acc, S2_asr_r_r_and, S2_asr_r_r_nac, S2_asr_r_r_or,
-       S2_lsl_r_r_acc, S2_lsl_r_r_and, S2_lsl_r_r_nac, S2_lsl_r_r_or,
-       S2_lsr_r_r_acc, S2_lsr_r_r_and, S2_lsr_r_r_nac, S2_lsr_r_r_or]
-    = [(src1, src1')]
-alignedPairs i ([src1, _, _], [src1'])
-  | i `elem` [S4_or_andi, S4_or_andi_ce, S4_or_ori, S4_or_ori_ce] =
-    [(src1, src1')]
-alignedPairs i ([src1, _, _], [src1'])
-  | i `elem`
-      [S2_asl_i_r_acc, S2_asl_i_r_acc_ce, S2_asl_i_r_and,
-       S2_asl_i_r_and_ce, S2_asl_i_r_nac, S2_asl_i_r_nac_ce,
-       S2_asl_i_r_or, S2_asl_i_r_or_ce, S2_asl_i_r_xacc,
-       S2_asl_i_r_xacc_ce, S2_asr_i_r_acc, S2_asr_i_r_acc_ce,
-       S2_asr_i_r_and, S2_asr_i_r_and_ce, S2_asr_i_r_nac,
-       S2_asr_i_r_nac_ce, S2_asr_i_r_or, S2_asr_i_r_or_ce, S2_lsr_i_r_acc,
-       S2_lsr_i_r_acc_ce, S2_lsr_i_r_and, S2_lsr_i_r_and_ce,
-       S2_lsr_i_r_nac, S2_lsr_i_r_nac_ce, S2_lsr_i_r_or, S2_lsr_i_r_or_ce,
-       S2_lsr_i_r_xacc, S2_lsr_i_r_xacc_ce]
-    = [(src1, src1')]
-alignedPairs i ([src1, _, _], [src1'])
-  | i `elem`
-      [S2_asl_r_p_acc, S2_asl_r_p_and, S2_asl_r_p_nac, S2_asl_r_p_or,
-       S2_asl_r_p_xor, S2_asr_r_p_acc, S2_asr_r_p_and, S2_asr_r_p_nac,
-       S2_asr_r_p_or, S2_asr_r_p_xor, S2_lsl_r_p_acc, S2_lsl_r_p_and,
-       S2_lsl_r_p_nac, S2_lsl_r_p_or, S2_lsl_r_p_xor, S2_lsr_r_p_acc,
-       S2_lsr_r_p_and, S2_lsr_r_p_nac, S2_lsr_r_p_or, S2_lsr_r_p_xor]
-    = [(src1, src1')]
-alignedPairs i ([src1, _, _], [src1'])
-  | i `elem`
-      [S2_asl_i_p_acc, S2_asl_i_p_acc_ce, S2_asl_i_p_and,
-       S2_asl_i_p_and_ce, S2_asl_i_p_nac, S2_asl_i_p_nac_ce,
-       S2_asl_i_p_or, S2_asl_i_p_or_ce, S2_asl_i_p_xacc,
-       S2_asl_i_p_xacc_ce, S2_asr_i_p_acc, S2_asr_i_p_acc_ce,
-       S2_asr_i_p_and, S2_asr_i_p_and_ce, S2_asr_i_p_nac,
-       S2_asr_i_p_nac_ce, S2_asr_i_p_or, S2_asr_i_p_or_ce, S2_lsr_i_p_acc,
-       S2_lsr_i_p_acc_ce, S2_lsr_i_p_and, S2_lsr_i_p_and_ce,
-       S2_lsr_i_p_nac, S2_lsr_i_p_nac_ce, S2_lsr_i_p_or, S2_lsr_i_p_or_ce,
-       S2_lsr_i_p_xacc, S2_lsr_i_p_xacc_ce]
-    = [(src1, src1')]
-alignedPairs i ([_, _src_, _], [_src_'])
-  | i `elem`
-      [V6_vaddbnq, V6_vaddbnq_128B, V6_vaddbq, V6_vaddbq_128B,
-       V6_vaddhnq, V6_vaddhnq_128B, V6_vaddhq, V6_vaddhq_128B, V6_vaddwnq,
-       V6_vaddwnq_128B, V6_vaddwq, V6_vaddwq_128B, V6_vsubbnq,
-       V6_vsubbnq_128B, V6_vsubbq, V6_vsubbq_128B, V6_vsubhnq,
-       V6_vsubhnq_128B, V6_vsubhq, V6_vsubhq_128B, V6_vsubwnq,
-       V6_vsubwnq_128B, V6_vsubwq, V6_vsubwq_128B]
-    = [(_src_, _src_')]
-alignedPairs i ([_, _], [_])
-  | i `elem`
-      [L4_ploadrbf_abs, L4_ploadrbf_abs_ce, L4_ploadrbfnew_abs,
-       L4_ploadrbfnew_abs_ce, L4_ploadrbt_abs, L4_ploadrbt_abs_ce,
-       L4_ploadrbtnew_abs, L4_ploadrbtnew_abs_ce, L4_ploadrdf_abs,
-       L4_ploadrdf_abs_ce, L4_ploadrdfnew_abs, L4_ploadrdfnew_abs_ce,
-       L4_ploadrdt_abs, L4_ploadrdt_abs_ce, L4_ploadrdtnew_abs,
-       L4_ploadrdtnew_abs_ce, L4_ploadrhf_abs, L4_ploadrhf_abs_ce,
-       L4_ploadrhfnew_abs, L4_ploadrhfnew_abs_ce, L4_ploadrht_abs,
-       L4_ploadrht_abs_ce, L4_ploadrhtnew_abs, L4_ploadrhtnew_abs_ce,
-       L4_ploadrif_abs, L4_ploadrif_abs_ce, L4_ploadrifnew_abs,
-       L4_ploadrifnew_abs_ce, L4_ploadrit_abs, L4_ploadrit_abs_ce,
-       L4_ploadritnew_abs, L4_ploadritnew_abs_ce, L4_ploadrubf_abs,
-       L4_ploadrubf_abs_ce, L4_ploadrubfnew_abs, L4_ploadrubfnew_abs_ce,
-       L4_ploadrubt_abs, L4_ploadrubt_abs_ce, L4_ploadrubtnew_abs,
-       L4_ploadrubtnew_abs_ce, L4_ploadruhf_abs, L4_ploadruhf_abs_ce,
-       L4_ploadruhfnew_abs, L4_ploadruhfnew_abs_ce, L4_ploadruht_abs,
-       L4_ploadruht_abs_ce, L4_ploadruhtnew_abs, L4_ploadruhtnew_abs_ce]
-    = []
-alignedPairs i ([_, _, _], [])
-  | i `elem`
-      [S4_pstorerbf_abs, S4_pstorerbf_abs_ce, S4_pstorerbfnew_abs,
-       S4_pstorerbfnew_abs_ce, S4_pstorerbnewf_abs,
-       S4_pstorerbnewf_abs_ce, S4_pstorerbnewfnew_abs,
-       S4_pstorerbnewfnew_abs_ce, S4_pstorerbnewt_abs,
-       S4_pstorerbnewt_abs_ce, S4_pstorerbnewtnew_abs,
-       S4_pstorerbnewtnew_abs_ce, S4_pstorerbt_abs, S4_pstorerbt_abs_ce,
-       S4_pstorerbtnew_abs, S4_pstorerbtnew_abs_ce, S4_pstorerdf_abs,
-       S4_pstorerdf_abs_ce, S4_pstorerdfnew_abs, S4_pstorerdfnew_abs_ce,
-       S4_pstorerdt_abs, S4_pstorerdt_abs_ce, S4_pstorerdtnew_abs,
-       S4_pstorerdtnew_abs_ce, S4_pstorerff_abs, S4_pstorerff_abs_ce,
-       S4_pstorerffnew_abs, S4_pstorerffnew_abs_ce, S4_pstorerft_abs,
-       S4_pstorerft_abs_ce, S4_pstorerftnew_abs, S4_pstorerftnew_abs_ce,
-       S4_pstorerhf_abs, S4_pstorerhf_abs_ce, S4_pstorerhfnew_abs,
-       S4_pstorerhfnew_abs_ce, S4_pstorerhnewf_abs,
-       S4_pstorerhnewf_abs_ce, S4_pstorerhnewfnew_abs,
-       S4_pstorerhnewfnew_abs_ce, S4_pstorerhnewt_abs,
-       S4_pstorerhnewt_abs_ce, S4_pstorerhnewtnew_abs,
-       S4_pstorerhnewtnew_abs_ce, S4_pstorerht_abs, S4_pstorerht_abs_ce,
-       S4_pstorerhtnew_abs, S4_pstorerhtnew_abs_ce, S4_pstorerif_abs,
-       S4_pstorerif_abs_ce, S4_pstorerifnew_abs, S4_pstorerifnew_abs_ce,
-       S4_pstorerinewf_abs, S4_pstorerinewf_abs_ce,
-       S4_pstorerinewfnew_abs, S4_pstorerinewfnew_abs_ce,
-       S4_pstorerinewt_abs, S4_pstorerinewt_abs_ce,
-       S4_pstorerinewtnew_abs, S4_pstorerinewtnew_abs_ce,
-       S4_pstorerit_abs, S4_pstorerit_abs_ce, S4_pstoreritnew_abs,
-       S4_pstoreritnew_abs_ce]
-    = []
-alignedPairs i ([_, _], [])
-  | i `elem`
-      [J4_cmpeqn1_f_jumpnv_nt, J4_cmpeqn1_f_jumpnv_nt_ce,
-       J4_cmpeqn1_f_jumpnv_t, J4_cmpeqn1_f_jumpnv_t_ce,
-       J4_cmpeqn1_t_jumpnv_nt, J4_cmpeqn1_t_jumpnv_nt_ce,
-       J4_cmpeqn1_t_jumpnv_t, J4_cmpeqn1_t_jumpnv_t_ce,
-       J4_cmpgtn1_f_jumpnv_nt, J4_cmpgtn1_f_jumpnv_nt_ce,
-       J4_cmpgtn1_f_jumpnv_t, J4_cmpgtn1_f_jumpnv_t_ce,
-       J4_cmpgtn1_t_jumpnv_nt, J4_cmpgtn1_t_jumpnv_nt_ce,
-       J4_cmpgtn1_t_jumpnv_t, J4_cmpgtn1_t_jumpnv_t_ce,
-       J4_tstbit0_f_jumpnv_nt, J4_tstbit0_f_jumpnv_nt_ce,
-       J4_tstbit0_f_jumpnv_t, J4_tstbit0_f_jumpnv_t_ce,
-       J4_tstbit0_t_jumpnv_nt, J4_tstbit0_t_jumpnv_nt_ce,
-       J4_tstbit0_t_jumpnv_t, J4_tstbit0_t_jumpnv_t_ce]
+      [G_FCEIL, G_FCEIL_ce, G_FCOS, G_FCOS_ce, G_FEXP, G_FEXP2,
+       G_FEXP2_ce, G_FEXP_ce, G_FLOG, G_FLOG10, G_FLOG10_ce, G_FLOG2,
+       G_FLOG2_ce, G_FLOG_ce, G_FSIN, G_FSIN_ce, G_FSQRT, G_FSQRT_ce,
+       G_INTRINSIC_ROUND, G_INTRINSIC_ROUND_ce, G_INTRINSIC_TRUNC,
+       G_INTRINSIC_TRUNC_ce, TFRI64_V4, TFRI64_V4_ce]
     = []
 alignedPairs i ([_, _], [_])
   | i `elem`
-      [L2_loadbsw2_io, L2_loadbsw2_io_ce, L2_loadbsw4_io,
-       L2_loadbsw4_io_ce, L2_loadbzw2_io, L2_loadbzw2_io_ce,
-       L2_loadbzw4_io, L2_loadbzw4_io_ce, L2_loadrb_io, L2_loadrb_io_ce,
-       L2_loadrd_io, L2_loadrd_io_ce, L2_loadrh_io, L2_loadrh_io_ce,
-       L2_loadri_io, L2_loadri_io_ce, L2_loadrub_io, L2_loadrub_io_ce,
-       L2_loadruh_io, L2_loadruh_io_ce]
-    = []
-alignedPairs i ([src1, _], [_, src1'])
-  | i `elem`
-      [L2_loadbsw2_pi, L2_loadbsw2_pi_ce, L2_loadbsw4_pi,
-       L2_loadbsw4_pi_ce, L2_loadbzw2_pi, L2_loadbzw2_pi_ce,
-       L2_loadbzw4_pi, L2_loadbzw4_pi_ce, L2_loadrb_pi, L2_loadrb_pi_ce,
-       L2_loadrd_pi, L2_loadrd_pi_ce, L2_loadrh_pi, L2_loadrh_pi_ce,
-       L2_loadri_pi, L2_loadri_pi_ce, L2_loadrub_pi, L2_loadrub_pi_ce,
-       L2_loadruh_pi, L2_loadruh_pi_ce]
-    = [(src1, src1')]
-alignedPairs i ([src1, _, _], [src1'])
-  | i `elem`
-      [S2_storerb_pi, S2_storerb_pi_ce, S2_storerbnew_pi,
-       S2_storerbnew_pi_ce, S2_storerd_pi, S2_storerd_pi_ce,
-       S2_storerf_pi, S2_storerf_pi_ce, S2_storerh_pi, S2_storerh_pi_ce,
-       S2_storerhnew_pi, S2_storerhnew_pi_ce, S2_storeri_pi,
-       S2_storeri_pi_ce, S2_storerinew_pi, S2_storerinew_pi_ce]
-    = [(src1, src1')]
-alignedPairs i ([_, _], [_])
-  | i `elem`
-      [A2_tfrf, A2_tfrfnew, A2_tfrpf, A2_tfrpfnew, A2_tfrpt, A2_tfrptnew,
-       A2_tfrt, A2_tfrtnew, A4_cround_rr, A4_round_rr, A4_round_rr_sat,
-       A5_vaddhubs, C2_cmpeqi, C2_cmpeqi_ce, C2_cmpeqi_combo,
-       C2_cmpeqi_combo_ce, C2_cmpgti, C2_cmpgti_ce, C2_cmpgti_combo,
-       C2_cmpgti_combo_ce, C2_cmpgtui, C2_cmpgtui_ce, C2_cmpgtui_combo,
-       C2_cmpgtui_combo_ce, C4_cmpltei, C4_cmpltei_ce, C4_cmplteui,
-       C4_cmplteui_ce, C4_cmpneqi, C4_cmpneqi_ce, F2_dfcmpeq, F2_dfcmpge,
-       F2_dfcmpgt, F2_dfcmpuo, F2_sfcmpeq, F2_sfcmpge, F2_sfcmpgt,
-       F2_sfcmpuo, L2_loadrb_io_fi, L2_loadrb_io_fi_ce,
+      [G_ADD, G_ADD_ce, G_AND, G_AND_ce, G_ASHR, G_ASHR_ce, G_FADD,
+       G_FADD_ce, G_FDIV, G_FDIV_ce, G_FMUL, G_FMUL_ce, G_FPOW, G_FPOW_ce,
+       G_FREM, G_FREM_ce, G_FSUB, G_FSUB_ce, G_GEP, G_GEP_ce, G_LSHR,
+       G_LSHR_ce, G_MUL, G_MUL_ce, G_OR, G_OR_ce, G_SDIV, G_SDIV_ce,
+       G_SHL, G_SHL_ce, G_SMULH, G_SMULH_ce, G_SREM, G_SREM_ce, G_SUB,
+       G_SUB_ce, G_UDIV, G_UDIV_ce, G_UMULH, G_UMULH_ce, G_UREM,
+       G_UREM_ce, G_XOR, G_XOR_ce, L2_loadrb_io_fi, L2_loadrb_io_fi_ce,
        L2_loadrb_io_fi_source_fi, L2_loadrb_io_fi_source_fi_ce,
        L2_loadrd_io_fi, L2_loadrd_io_fi_ce, L2_loadrd_io_fi_source_fi,
        L2_loadrd_io_fi_source_fi_ce, L2_loadrh_io_fi, L2_loadrh_io_fi_ce,
@@ -1148,468 +2132,33 @@ alignedPairs i ([_, _], [_])
        L2_loadri_io_fi_source_fi_ce, L2_loadrub_io_fi,
        L2_loadrub_io_fi_ce, L2_loadruh_io_fi, L2_loadruh_io_fi_ce,
        L2_loadruh_io_fi_source_fi, L2_loadruh_io_fi_source_fi_ce,
-       M2_cmpyrs_s0, M2_cmpyrs_s1, M2_cmpyrsc_s0, M2_cmpyrsc_s1,
-       M2_dpmpyss_rnd_s0, M2_hmmpyh_rs1, M2_hmmpyh_s1, M2_hmmpyl_rs1,
-       M2_hmmpyl_s1, M2_mpy_up, M2_mpy_up_s1, M2_mpy_up_s1_sat, M2_mpyi,
-       M2_mpysmi, M2_mpysmi_ce, M2_mpysu_up, M2_mpyu_up, M2_mpyui,
-       M2_vdmpyrs_s0, M2_vdmpyrs_s1, M2_vmpy2s_s0pack, M2_vmpy2s_s1pack,
-       M2_vraddh, M2_vradduh, M2_vrcmpys_s1rp_h, M2_vrcmpys_s1rp_l,
-       S2_asl_i_p, S2_asl_i_p_ce, S2_asl_i_vh, S2_asl_i_vh_ce,
-       S2_asl_i_vw, S2_asl_i_vw_ce, S2_asl_r_p, S2_asl_r_r,
-       S2_asl_r_r_sat, S2_asl_r_vh, S2_asl_r_vw, S2_asr_i_p,
-       S2_asr_i_p_ce, S2_asr_i_p_rnd, S2_asr_i_p_rnd_ce,
-       S2_asr_i_p_rnd_goodsyntax, S2_asr_i_p_rnd_goodsyntax_ce,
-       S2_asr_i_vh, S2_asr_i_vh_ce, S2_asr_i_vw, S2_asr_i_vw_ce,
-       S2_asr_r_p, S2_asr_r_r, S2_asr_r_r_sat, S2_asr_r_vh, S2_asr_r_vw,
-       S2_cabacdecbin, S2_extractup_rp, S2_lfsp, S2_lsl_r_p, S2_lsl_r_r,
-       S2_lsl_r_vh, S2_lsl_r_vw, S2_lsr_i_p, S2_lsr_i_p_ce, S2_lsr_i_vh,
-       S2_lsr_i_vh_ce, S2_lsr_i_vw, S2_lsr_i_vw_ce, S2_lsr_r_p,
-       S2_lsr_r_r, S2_lsr_r_vh, S2_lsr_r_vw, S2_shuffeb, S2_shuffeh,
-       S2_shuffob, S2_shuffoh, S2_vcnegh, S2_vcrotate, S2_vtrunewh,
-       S2_vtrunowh, S4_extractp_rp, S4_vxaddsubh, S4_vxaddsubhr,
-       S4_vxaddsubw, S4_vxsubaddh, S4_vxsubaddhr, S4_vxsubaddw,
-       S6_rol_i_p, S6_rol_i_p_ce, S6_rol_i_r, S6_rol_i_r_ce,
-       TFRI64_V2_ext, TFRI64_V2_ext_ce, TFRI_cNotPt_f, TFRI_cNotPt_f_ce,
-       TFRI_cPt_f, TFRI_cPt_f_ce, TFR_FI_fi, TFR_FI_fi_ce,
-       TFR_FI_fi_source_fi, TFR_FI_fi_source_fi_ce, V6_extractw,
-       V6_extractw_128B, V6_pred_and, V6_pred_and_128B, V6_pred_and_n,
-       V6_pred_and_n_128B, V6_pred_or, V6_pred_or_128B, V6_pred_or_n,
-       V6_pred_or_n_128B, V6_pred_xor, V6_pred_xor_128B, V6_vL32Ub_ai,
-       V6_vL32Ub_ai_128B, V6_vL32Ub_ai_128B_ce, V6_vL32Ub_ai_ce,
-       V6_vL32b_ai, V6_vL32b_ai_128B, V6_vL32b_ai_128B_ce, V6_vL32b_ai_ce,
-       V6_vL32b_cur_ai, V6_vL32b_cur_ai_128B, V6_vL32b_cur_ai_128B_ce,
-       V6_vL32b_cur_ai_ce, V6_vL32b_nt_ai, V6_vL32b_nt_ai_128B,
-       V6_vL32b_nt_ai_128B_ce, V6_vL32b_nt_ai_ce, V6_vL32b_nt_cur_ai,
-       V6_vL32b_nt_cur_ai_128B, V6_vL32b_nt_cur_ai_128B_ce,
-       V6_vL32b_nt_cur_ai_ce, V6_vL32b_nt_tmp_ai, V6_vL32b_nt_tmp_ai_128B,
-       V6_vL32b_nt_tmp_ai_128B_ce, V6_vL32b_nt_tmp_ai_ce, V6_vL32b_tmp_ai,
-       V6_vL32b_tmp_ai_128B, V6_vL32b_tmp_ai_128B_ce, V6_vL32b_tmp_ai_ce,
-       V6_vabsdiffh, V6_vabsdiffh_128B, V6_vabsdiffub, V6_vabsdiffub_128B,
-       V6_vabsdiffuh, V6_vabsdiffuh_128B, V6_vabsdiffw, V6_vabsdiffw_128B,
-       V6_vaddb, V6_vaddb_128B, V6_vaddb_dv, V6_vaddb_dv_128B, V6_vaddh,
-       V6_vaddh_128B, V6_vaddh_dv, V6_vaddh_dv_128B, V6_vaddhsat,
-       V6_vaddhsat_128B, V6_vaddhsat_dv, V6_vaddhsat_dv_128B, V6_vaddhw,
-       V6_vaddhw_128B, V6_vaddubh, V6_vaddubh_128B, V6_vaddubsat,
-       V6_vaddubsat_128B, V6_vaddubsat_dv, V6_vaddubsat_dv_128B,
-       V6_vadduhsat, V6_vadduhsat_128B, V6_vadduhsat_dv,
-       V6_vadduhsat_dv_128B, V6_vadduhw, V6_vadduhw_128B, V6_vaddw,
-       V6_vaddw_128B, V6_vaddw_dv, V6_vaddw_dv_128B, V6_vaddwsat,
-       V6_vaddwsat_128B, V6_vaddwsat_dv, V6_vaddwsat_dv_128B, V6_vand,
-       V6_vand_128B, V6_vandqrt, V6_vandqrt_128B, V6_vandvrt,
-       V6_vandvrt_128B, V6_vaslh, V6_vaslh_128B, V6_vaslhv,
-       V6_vaslhv_128B, V6_vaslw, V6_vaslw_128B, V6_vaslwv, V6_vaslwv_128B,
-       V6_vasrh, V6_vasrh_128B, V6_vasrhv, V6_vasrhv_128B, V6_vasrw,
-       V6_vasrw_128B, V6_vasrwv, V6_vasrwv_128B, V6_vavgh, V6_vavgh_128B,
-       V6_vavghrnd, V6_vavghrnd_128B, V6_vavgub, V6_vavgub_128B,
-       V6_vavgubrnd, V6_vavgubrnd_128B, V6_vavguh, V6_vavguh_128B,
-       V6_vavguhrnd, V6_vavguhrnd_128B, V6_vavgw, V6_vavgw_128B,
-       V6_vavgwrnd, V6_vavgwrnd_128B, V6_vcmov, V6_vcmov_128B,
-       V6_vcombine, V6_vcombine_128B, V6_vdealb4w, V6_vdealb4w_128B,
-       V6_vdelta, V6_vdelta_128B, V6_vdmpybus, V6_vdmpybus_128B,
-       V6_vdmpybus_dv, V6_vdmpybus_dv_128B, V6_vdmpyhb, V6_vdmpyhb_128B,
-       V6_vdmpyhb_dv, V6_vdmpyhb_dv_128B, V6_vdmpyhisat,
-       V6_vdmpyhisat_128B, V6_vdmpyhsat, V6_vdmpyhsat_128B,
-       V6_vdmpyhsuisat, V6_vdmpyhsuisat_128B, V6_vdmpyhsusat,
-       V6_vdmpyhsusat_128B, V6_vdmpyhvsat, V6_vdmpyhvsat_128B, V6_vdsaduh,
-       V6_vdsaduh_128B, V6_veqb, V6_veqb_128B, V6_veqh, V6_veqh_128B,
-       V6_veqw, V6_veqw_128B, V6_vgtb, V6_vgtb_128B, V6_vgth,
-       V6_vgth_128B, V6_vgtub, V6_vgtub_128B, V6_vgtuh, V6_vgtuh_128B,
-       V6_vgtuw, V6_vgtuw_128B, V6_vgtw, V6_vgtw_128B, V6_vlsrh,
-       V6_vlsrh_128B, V6_vlsrhv, V6_vlsrhv_128B, V6_vlsrw, V6_vlsrw_128B,
-       V6_vlsrwv, V6_vlsrwv_128B, V6_vmaxh, V6_vmaxh_128B, V6_vmaxub,
-       V6_vmaxub_128B, V6_vmaxuh, V6_vmaxuh_128B, V6_vmaxw, V6_vmaxw_128B,
-       V6_vminh, V6_vminh_128B, V6_vminub, V6_vminub_128B, V6_vminuh,
-       V6_vminuh_128B, V6_vminw, V6_vminw_128B, V6_vmpabus,
-       V6_vmpabus_128B, V6_vmpabusv, V6_vmpabusv_128B, V6_vmpabuuv,
-       V6_vmpabuuv_128B, V6_vmpahb, V6_vmpahb_128B, V6_vmpybus,
-       V6_vmpybus_128B, V6_vmpybusv, V6_vmpybusv_128B, V6_vmpybv,
-       V6_vmpybv_128B, V6_vmpyewuh, V6_vmpyewuh_128B, V6_vmpyh,
-       V6_vmpyh_128B, V6_vmpyhsrs, V6_vmpyhsrs_128B, V6_vmpyhss,
-       V6_vmpyhss_128B, V6_vmpyhus, V6_vmpyhus_128B, V6_vmpyhv,
-       V6_vmpyhv_128B, V6_vmpyhvsrs, V6_vmpyhvsrs_128B, V6_vmpyieoh,
-       V6_vmpyieoh_128B, V6_vmpyiewuh, V6_vmpyiewuh_128B, V6_vmpyih,
-       V6_vmpyih_128B, V6_vmpyihb, V6_vmpyihb_128B, V6_vmpyiowh,
-       V6_vmpyiowh_128B, V6_vmpyiwb, V6_vmpyiwb_128B, V6_vmpyiwh,
-       V6_vmpyiwh_128B, V6_vmpyowh, V6_vmpyowh_128B, V6_vmpyowh_rnd,
-       V6_vmpyowh_rnd_128B, V6_vmpyub, V6_vmpyub_128B, V6_vmpyubv,
-       V6_vmpyubv_128B, V6_vmpyuh, V6_vmpyuh_128B, V6_vmpyuhv,
-       V6_vmpyuhv_128B, V6_vnavgh, V6_vnavgh_128B, V6_vnavgub,
-       V6_vnavgub_128B, V6_vnavgw, V6_vnavgw_128B, V6_vncmov,
-       V6_vncmov_128B, V6_vor, V6_vor_128B, V6_vpackeb, V6_vpackeb_128B,
-       V6_vpackeh, V6_vpackeh_128B, V6_vpackhb_sat, V6_vpackhb_sat_128B,
-       V6_vpackhub_sat, V6_vpackhub_sat_128B, V6_vpackob, V6_vpackob_128B,
-       V6_vpackoh, V6_vpackoh_128B, V6_vpackwh_sat, V6_vpackwh_sat_128B,
-       V6_vpackwuh_sat, V6_vpackwuh_sat_128B, V6_vrdelta, V6_vrdelta_128B,
-       V6_vrmpybus, V6_vrmpybus_128B, V6_vrmpybusv, V6_vrmpybusv_128B,
-       V6_vrmpybv, V6_vrmpybv_128B, V6_vrmpyub, V6_vrmpyub_128B,
-       V6_vrmpyubv, V6_vrmpyubv_128B, V6_vror, V6_vror_128B, V6_vroundhb,
-       V6_vroundhb_128B, V6_vroundhub, V6_vroundhub_128B, V6_vroundwh,
-       V6_vroundwh_128B, V6_vroundwuh, V6_vroundwuh_128B, V6_vsathub,
-       V6_vsathub_128B, V6_vsatwh, V6_vsatwh_128B, V6_vshufeh,
-       V6_vshufeh_128B, V6_vshuffeb, V6_vshuffeb_128B, V6_vshuffob,
-       V6_vshuffob_128B, V6_vshufoeb, V6_vshufoeb_128B, V6_vshufoeh,
-       V6_vshufoeh_128B, V6_vshufoh, V6_vshufoh_128B, V6_vsubb,
-       V6_vsubb_128B, V6_vsubb_dv, V6_vsubb_dv_128B, V6_vsubh,
-       V6_vsubh_128B, V6_vsubh_dv, V6_vsubh_dv_128B, V6_vsubhsat,
-       V6_vsubhsat_128B, V6_vsubhsat_dv, V6_vsubhsat_dv_128B, V6_vsubhw,
-       V6_vsubhw_128B, V6_vsububh, V6_vsububh_128B, V6_vsububsat,
-       V6_vsububsat_128B, V6_vsububsat_dv, V6_vsububsat_dv_128B,
-       V6_vsubuhsat, V6_vsubuhsat_128B, V6_vsubuhsat_dv,
-       V6_vsubuhsat_dv_128B, V6_vsubuhw, V6_vsubuhw_128B, V6_vsubw,
-       V6_vsubw_128B, V6_vsubw_dv, V6_vsubw_dv_128B, V6_vsubwsat,
-       V6_vsubwsat_128B, V6_vsubwsat_dv, V6_vsubwsat_dv_128B, V6_vtmpyb,
-       V6_vtmpyb_128B, V6_vtmpybus, V6_vtmpybus_128B, V6_vtmpyhb,
-       V6_vtmpyhb_128B, V6_vxor, V6_vxor_128B]
+       TFRI64_V2_ext, TFRI64_V2_ext_ce, TFR_FI_fi, TFR_FI_fi_ce,
+       TFR_FI_fi_source_fi, TFR_FI_fi_source_fi_ce]
     = []
-alignedPairs i ([src1, _], [_, src1'])
+alignedPairs i ([_, _], [_, _])
   | i `elem`
-      [L2_loadbsw2_pr, L2_loadbsw4_pr, L2_loadbzw2_pr, L2_loadbzw4_pr,
-       L2_loadrb_pr, L2_loadrd_pr, L2_loadrh_pr, L2_loadri_pr,
-       L2_loadrub_pr, L2_loadruh_pr, V6_vL32Ub_pi, V6_vL32Ub_pi_128B,
-       V6_vL32Ub_pi_128B_ce, V6_vL32Ub_pi_ce, V6_vL32Ub_ppu,
-       V6_vL32b_cur_pi, V6_vL32b_cur_pi_128B, V6_vL32b_cur_pi_128B_ce,
-       V6_vL32b_cur_pi_ce, V6_vL32b_cur_ppu, V6_vL32b_nt_cur_pi,
-       V6_vL32b_nt_cur_pi_128B, V6_vL32b_nt_cur_pi_128B_ce,
-       V6_vL32b_nt_cur_pi_ce, V6_vL32b_nt_cur_ppu, V6_vL32b_nt_pi,
-       V6_vL32b_nt_pi_128B, V6_vL32b_nt_pi_128B_ce, V6_vL32b_nt_pi_ce,
-       V6_vL32b_nt_ppu, V6_vL32b_nt_tmp_pi, V6_vL32b_nt_tmp_pi_128B,
-       V6_vL32b_nt_tmp_pi_128B_ce, V6_vL32b_nt_tmp_pi_ce,
-       V6_vL32b_nt_tmp_ppu, V6_vL32b_pi, V6_vL32b_pi_128B,
-       V6_vL32b_pi_128B_ce, V6_vL32b_pi_ce, V6_vL32b_ppu, V6_vL32b_tmp_pi,
-       V6_vL32b_tmp_pi_128B, V6_vL32b_tmp_pi_128B_ce, V6_vL32b_tmp_pi_ce,
-       V6_vL32b_tmp_ppu]
-    = [(src1, src1')]
+      [G_SADDO, G_SADDO_ce, G_SMULO, G_SMULO_ce, G_SSUBO, G_SSUBO_ce,
+       G_UADDO, G_UADDO_ce, G_UMULO, G_UMULO_ce, G_USUBO, G_USUBO_ce]
+    = []
+alignedPairs i ([_, _, _], [_, _])
+  | i `elem`
+      [G_SADDE, G_SADDE_ce, G_SSUBE, G_SSUBE_ce, G_UADDE, G_UADDE_ce,
+       G_USUBE, G_USUBE_ce]
+    = []
 alignedPairs i ([_, _, _], [])
   | i `elem`
-      [J4_cmpeq_f_jumpnv_nt, J4_cmpeq_f_jumpnv_nt_ce,
-       J4_cmpeq_f_jumpnv_t, J4_cmpeq_f_jumpnv_t_ce, J4_cmpeq_t_jumpnv_nt,
-       J4_cmpeq_t_jumpnv_nt_ce, J4_cmpeq_t_jumpnv_t,
-       J4_cmpeq_t_jumpnv_t_ce, J4_cmpeqi_f_jumpnv_nt,
-       J4_cmpeqi_f_jumpnv_nt_ce, J4_cmpeqi_f_jumpnv_t,
-       J4_cmpeqi_f_jumpnv_t_ce, J4_cmpeqi_t_jumpnv_nt,
-       J4_cmpeqi_t_jumpnv_nt_ce, J4_cmpeqi_t_jumpnv_t,
-       J4_cmpeqi_t_jumpnv_t_ce, J4_cmpgt_f_jumpnv_nt,
-       J4_cmpgt_f_jumpnv_nt_ce, J4_cmpgt_f_jumpnv_t,
-       J4_cmpgt_f_jumpnv_t_ce, J4_cmpgt_t_jumpnv_nt,
-       J4_cmpgt_t_jumpnv_nt_ce, J4_cmpgt_t_jumpnv_t,
-       J4_cmpgt_t_jumpnv_t_ce, J4_cmpgti_f_jumpnv_nt,
-       J4_cmpgti_f_jumpnv_nt_ce, J4_cmpgti_f_jumpnv_t,
-       J4_cmpgti_f_jumpnv_t_ce, J4_cmpgti_t_jumpnv_nt,
-       J4_cmpgti_t_jumpnv_nt_ce, J4_cmpgti_t_jumpnv_t,
-       J4_cmpgti_t_jumpnv_t_ce, J4_cmpgtu_f_jumpnv_nt,
-       J4_cmpgtu_f_jumpnv_nt_ce, J4_cmpgtu_f_jumpnv_t,
-       J4_cmpgtu_f_jumpnv_t_ce, J4_cmpgtu_t_jumpnv_nt,
-       J4_cmpgtu_t_jumpnv_nt_ce, J4_cmpgtu_t_jumpnv_t,
-       J4_cmpgtu_t_jumpnv_t_ce, J4_cmpgtui_f_jumpnv_nt,
-       J4_cmpgtui_f_jumpnv_nt_ce, J4_cmpgtui_f_jumpnv_t,
-       J4_cmpgtui_f_jumpnv_t_ce, J4_cmpgtui_t_jumpnv_nt,
-       J4_cmpgtui_t_jumpnv_nt_ce, J4_cmpgtui_t_jumpnv_t,
-       J4_cmpgtui_t_jumpnv_t_ce, J4_cmplt_f_jumpnv_nt,
-       J4_cmplt_f_jumpnv_nt_ce, J4_cmplt_f_jumpnv_t,
-       J4_cmplt_f_jumpnv_t_ce, J4_cmplt_t_jumpnv_nt,
-       J4_cmplt_t_jumpnv_nt_ce, J4_cmplt_t_jumpnv_t,
-       J4_cmplt_t_jumpnv_t_ce, J4_cmpltu_f_jumpnv_nt,
-       J4_cmpltu_f_jumpnv_nt_ce, J4_cmpltu_f_jumpnv_t,
-       J4_cmpltu_f_jumpnv_t_ce, J4_cmpltu_t_jumpnv_nt,
-       J4_cmpltu_t_jumpnv_nt_ce, J4_cmpltu_t_jumpnv_t,
-       J4_cmpltu_t_jumpnv_t_ce]
+      [S2_storerb_io_fi, S2_storerb_io_fi_ce, S2_storerd_io_fi,
+       S2_storerd_io_fi_ce, S2_storerf_io_fi, S2_storerf_io_fi_ce,
+       S2_storerh_io_fi, S2_storerh_io_fi_ce, S2_storeri_io_fi,
+       S2_storeri_io_fi_ce, S2_storerinew_io_fi, S2_storerinew_io_fi_ce,
+       S4_storeiri_io_fi, S4_storeiri_io_fi_ce]
     = []
 alignedPairs i ([_, _, _], [_])
-  | i `elem`
-      [L2_ploadrbf_io, L2_ploadrbf_io_ce, L2_ploadrbfnew_io,
-       L2_ploadrbfnew_io_ce, L2_ploadrbt_io, L2_ploadrbt_io_ce,
-       L2_ploadrbtnew_io, L2_ploadrbtnew_io_ce, L2_ploadrdf_io,
-       L2_ploadrdf_io_ce, L2_ploadrdfnew_io, L2_ploadrdfnew_io_ce,
-       L2_ploadrdt_io, L2_ploadrdt_io_ce, L2_ploadrdtnew_io,
-       L2_ploadrdtnew_io_ce, L2_ploadrhf_io, L2_ploadrhf_io_ce,
-       L2_ploadrhfnew_io, L2_ploadrhfnew_io_ce, L2_ploadrht_io,
-       L2_ploadrht_io_ce, L2_ploadrhtnew_io, L2_ploadrhtnew_io_ce,
-       L2_ploadrif_io, L2_ploadrif_io_ce, L2_ploadrifnew_io,
-       L2_ploadrifnew_io_ce, L2_ploadrit_io, L2_ploadrit_io_ce,
-       L2_ploadritnew_io, L2_ploadritnew_io_ce, L2_ploadrubf_io,
-       L2_ploadrubf_io_ce, L2_ploadrubfnew_io, L2_ploadrubfnew_io_ce,
-       L2_ploadrubt_io, L2_ploadrubt_io_ce, L2_ploadrubtnew_io,
-       L2_ploadrubtnew_io_ce, L2_ploadruhf_io, L2_ploadruhf_io_ce,
-       L2_ploadruhfnew_io, L2_ploadruhfnew_io_ce, L2_ploadruht_io,
-       L2_ploadruht_io_ce, L2_ploadruhtnew_io, L2_ploadruhtnew_io_ce]
-    = []
-alignedPairs i ([_, src2, _], [_, src2'])
-  | i `elem`
-      [L2_ploadrbf_pi, L2_ploadrbf_pi_ce, L2_ploadrbfnew_pi,
-       L2_ploadrbfnew_pi_ce, L2_ploadrbt_pi, L2_ploadrbt_pi_ce,
-       L2_ploadrbtnew_pi, L2_ploadrbtnew_pi_ce, L2_ploadrdf_pi,
-       L2_ploadrdf_pi_ce, L2_ploadrdfnew_pi, L2_ploadrdfnew_pi_ce,
-       L2_ploadrdt_pi, L2_ploadrdt_pi_ce, L2_ploadrdtnew_pi,
-       L2_ploadrdtnew_pi_ce, L2_ploadrhf_pi, L2_ploadrhf_pi_ce,
-       L2_ploadrhfnew_pi, L2_ploadrhfnew_pi_ce, L2_ploadrht_pi,
-       L2_ploadrht_pi_ce, L2_ploadrhtnew_pi, L2_ploadrhtnew_pi_ce,
-       L2_ploadrif_pi, L2_ploadrif_pi_ce, L2_ploadrifnew_pi,
-       L2_ploadrifnew_pi_ce, L2_ploadrit_pi, L2_ploadrit_pi_ce,
-       L2_ploadritnew_pi, L2_ploadritnew_pi_ce, L2_ploadrubf_pi,
-       L2_ploadrubf_pi_ce, L2_ploadrubfnew_pi, L2_ploadrubfnew_pi_ce,
-       L2_ploadrubt_pi, L2_ploadrubt_pi_ce, L2_ploadrubtnew_pi,
-       L2_ploadrubtnew_pi_ce, L2_ploadruhf_pi, L2_ploadruhf_pi_ce,
-       L2_ploadruhfnew_pi, L2_ploadruhfnew_pi_ce, L2_ploadruht_pi,
-       L2_ploadruht_pi_ce, L2_ploadruhtnew_pi, L2_ploadruhtnew_pi_ce]
-    = [(src2, src2')]
-alignedPairs i ([src1, _, _], [src1'])
-  | i `elem`
-      [L2_loadalignb_io, L2_loadalignb_io_ce, L2_loadalignh_io,
-       L2_loadalignh_io_ce]
-    = [(src1, src1')]
-alignedPairs i ([src1, src2, _], [src1', src2'])
-  | i `elem`
-      [L2_loadalignb_pi, L2_loadalignb_pi_ce, L2_loadalignh_pi,
-       L2_loadalignh_pi_ce]
-    = [(src1, src1'), (src2, src2')]
-alignedPairs i ([_, src2, _, _], [src2'])
-  | i `elem`
-      [S2_pstorerbf_pi, S2_pstorerbf_pi_ce, S2_pstorerbfnew_pi,
-       S2_pstorerbfnew_pi_ce, S2_pstorerbnewf_pi, S2_pstorerbnewf_pi_ce,
-       S2_pstorerbnewfnew_pi, S2_pstorerbnewfnew_pi_ce,
-       S2_pstorerbnewt_pi, S2_pstorerbnewt_pi_ce, S2_pstorerbnewtnew_pi,
-       S2_pstorerbnewtnew_pi_ce, S2_pstorerbt_pi, S2_pstorerbt_pi_ce,
-       S2_pstorerbtnew_pi, S2_pstorerbtnew_pi_ce, S2_pstorerdf_pi,
-       S2_pstorerdf_pi_ce, S2_pstorerdfnew_pi, S2_pstorerdfnew_pi_ce,
-       S2_pstorerdt_pi, S2_pstorerdt_pi_ce, S2_pstorerdtnew_pi,
-       S2_pstorerdtnew_pi_ce, S2_pstorerff_pi, S2_pstorerff_pi_ce,
-       S2_pstorerffnew_pi, S2_pstorerffnew_pi_ce, S2_pstorerft_pi,
-       S2_pstorerft_pi_ce, S2_pstorerftnew_pi, S2_pstorerftnew_pi_ce,
-       S2_pstorerhf_pi, S2_pstorerhf_pi_ce, S2_pstorerhfnew_pi,
-       S2_pstorerhfnew_pi_ce, S2_pstorerhnewf_pi, S2_pstorerhnewf_pi_ce,
-       S2_pstorerhnewfnew_pi, S2_pstorerhnewfnew_pi_ce,
-       S2_pstorerhnewt_pi, S2_pstorerhnewt_pi_ce, S2_pstorerhnewtnew_pi,
-       S2_pstorerhnewtnew_pi_ce, S2_pstorerht_pi, S2_pstorerht_pi_ce,
-       S2_pstorerhtnew_pi, S2_pstorerhtnew_pi_ce, S2_pstorerif_pi,
-       S2_pstorerif_pi_ce, S2_pstorerifnew_pi, S2_pstorerifnew_pi_ce,
-       S2_pstorerinewf_pi, S2_pstorerinewf_pi_ce, S2_pstorerinewfnew_pi,
-       S2_pstorerinewfnew_pi_ce, S2_pstorerinewt_pi,
-       S2_pstorerinewt_pi_ce, S2_pstorerinewtnew_pi,
-       S2_pstorerinewtnew_pi_ce, S2_pstorerit_pi, S2_pstorerit_pi_ce,
-       S2_pstoreritnew_pi, S2_pstoreritnew_pi_ce]
-    = [(src2, src2')]
-alignedPairs i ([_, _, _], [])
-  | i `elem`
-      [S2_storerb_io, S2_storerb_io_ce, S2_storerb_io_fi,
-       S2_storerb_io_fi_ce, S2_storerbnew_io, S2_storerbnew_io_ce,
-       S2_storerd_io, S2_storerd_io_ce, S2_storerd_io_fi,
-       S2_storerd_io_fi_ce, S2_storerf_io, S2_storerf_io_ce,
-       S2_storerf_io_fi, S2_storerf_io_fi_ce, S2_storerh_io,
-       S2_storerh_io_ce, S2_storerh_io_fi, S2_storerh_io_fi_ce,
-       S2_storerhnew_io, S2_storerhnew_io_ce, S2_storeri_io,
-       S2_storeri_io_ce, S2_storeri_io_fi, S2_storeri_io_fi_ce,
-       S2_storerinew_io, S2_storerinew_io_ce, S2_storerinew_io_fi,
-       S2_storerinew_io_fi_ce, S4_storeiri_io_fi, S4_storeiri_io_fi_ce,
-       V6_vS32Ub_ai, V6_vS32Ub_ai_128B, V6_vS32Ub_ai_128B_ce,
-       V6_vS32Ub_ai_ce, V6_vS32b_ai, V6_vS32b_ai_128B,
-       V6_vS32b_ai_128B_ce, V6_vS32b_ai_ce, V6_vS32b_new_ai,
-       V6_vS32b_new_ai_128B, V6_vS32b_new_ai_128B_ce, V6_vS32b_new_ai_ce,
-       V6_vS32b_nt_ai, V6_vS32b_nt_ai_128B, V6_vS32b_nt_ai_128B_ce,
-       V6_vS32b_nt_ai_ce, V6_vS32b_nt_new_ai, V6_vS32b_nt_new_ai_128B,
-       V6_vS32b_nt_new_ai_128B_ce, V6_vS32b_nt_new_ai_ce]
-    = []
-alignedPairs i ([_, _, _], [_])
-  | i `elem`
-      [L4_loadalignb_ur, L4_loadalignb_ur_ce, L4_loadalignh_ur,
-       L4_loadalignh_ur_ce, L4_loadbsw2_ur, L4_loadbsw2_ur_ce,
-       L4_loadbsw4_ur, L4_loadbsw4_ur_ce, L4_loadbzw2_ur,
-       L4_loadbzw2_ur_ce, L4_loadbzw4_ur, L4_loadbzw4_ur_ce, L4_loadrb_ur,
-       L4_loadrb_ur_ce, L4_loadrd_ur, L4_loadrd_ur_ce, L4_loadrh_ur,
-       L4_loadrh_ur_ce, L4_loadri_ur, L4_loadri_ur_ce, L4_loadrub_ur,
-       L4_loadrub_ur_ce, L4_loadruh_ur, L4_loadruh_ur_ce,
-       M4_mpyri_addr_u2, M4_mpyri_addr_u2_ce, MUX_ir_f, MUX_ir_f_ce,
-       MUX_ri_f, MUX_ri_f_ce, S2_cabacencbin, S2_extractu, S2_extractu_ce,
-       S2_extractup, S2_extractup_ce, S4_extract, S4_extract_ce,
-       S4_extractp, S4_extractp_ce, V6_valignb, V6_valignb_128B,
-       V6_valignbi, V6_valignbi_128B, V6_valignbi_128B_ce, V6_valignbi_ce,
-       V6_vasrhbrndsat, V6_vasrhbrndsat_128B, V6_vasrhubrndsat,
-       V6_vasrhubrndsat_128B, V6_vasrhubsat, V6_vasrhubsat_128B,
-       V6_vasrwh, V6_vasrwh_128B, V6_vasrwhrndsat, V6_vasrwhrndsat_128B,
-       V6_vasrwhsat, V6_vasrwhsat_128B, V6_vasrwuhsat, V6_vasrwuhsat_128B,
-       V6_vccombine, V6_vccombine_128B, V6_vdealvdd, V6_vdealvdd_128B,
-       V6_vlalignb, V6_vlalignb_128B, V6_vlalignbi, V6_vlalignbi_128B,
-       V6_vlalignbi_128B_ce, V6_vlalignbi_ce, V6_vlutvvb, V6_vlutvvb_128B,
-       V6_vlutvwh, V6_vlutvwh_128B, V6_vmux, V6_vmux_128B, V6_vnccombine,
-       V6_vnccombine_128B, V6_vrmpybusi, V6_vrmpybusi_128B,
-       V6_vrmpybusi_128B_ce, V6_vrmpybusi_ce, V6_vrmpyubi,
-       V6_vrmpyubi_128B, V6_vrmpyubi_128B_ce, V6_vrmpyubi_ce, V6_vrsadubi,
-       V6_vrsadubi_128B, V6_vrsadubi_128B_ce, V6_vrsadubi_ce,
-       V6_vshuffvdd, V6_vshuffvdd_128B, V6_vswap, V6_vswap_128B,
-       VSelectDblPseudo_V6, VSelectPseudo_V6]
-    = []
-alignedPairs i ([src1, _, _], [src1'])
-  | i `elem`
-      [M2_acci, M2_accii, M2_accii_ce, M2_maci, M2_macsin, M2_macsin_ce,
-       M2_macsip, M2_macsip_ce, M2_nacci, M2_naccii, M2_naccii_ce,
-       M2_subacc, M2_xor_xacc, M4_and_and, M4_and_andn, M4_and_or,
-       M4_and_xor, M4_mac_up_s1_sat, M4_nac_up_s1_sat, M4_or_and,
-       M4_or_andn, M4_or_or, M4_or_xor, M4_xor_and, M4_xor_andn,
-       M4_xor_or, S2_insert_rp, S2_insertp_rp, S2_storerb_pbr_pseudo,
-       S2_storerb_pr, S2_storerbnew_pr, S2_storerd_pbr_pseudo,
-       S2_storerd_pr, S2_storerf_pbr_pseudo, S2_storerf_pr,
-       S2_storerh_pbr_pseudo, S2_storerh_pr, S2_storerhnew_pr,
-       S2_storeri_pbr_pseudo, S2_storeri_pr, S2_storerinew_pr,
-       V6_vS32Ub_pi, V6_vS32Ub_pi_128B, V6_vS32Ub_pi_128B_ce,
-       V6_vS32Ub_pi_ce, V6_vS32Ub_ppu, V6_vS32b_new_pi,
-       V6_vS32b_new_pi_128B, V6_vS32b_new_pi_128B_ce, V6_vS32b_new_pi_ce,
-       V6_vS32b_new_ppu, V6_vS32b_nt_new_pi, V6_vS32b_nt_new_pi_128B,
-       V6_vS32b_nt_new_pi_128B_ce, V6_vS32b_nt_new_pi_ce,
-       V6_vS32b_nt_new_ppu, V6_vS32b_nt_pi, V6_vS32b_nt_pi_128B,
-       V6_vS32b_nt_pi_128B_ce, V6_vS32b_nt_pi_ce, V6_vS32b_nt_ppu,
-       V6_vS32b_pi, V6_vS32b_pi_128B, V6_vS32b_pi_128B_ce, V6_vS32b_pi_ce,
-       V6_vS32b_ppu]
-    = [(src1, src1')]
-alignedPairs i ([src1, _, _], [src1', _])
-  | i `elem`
-      [L2_loadrb_pbr_pseudo, L2_loadrd_pbr_pseudo, L2_loadrh_pbr_pseudo,
-       L2_loadri_pbr_pseudo, L2_loadrub_pbr_pseudo, L2_loadruh_pbr_pseudo]
-    = [(src1, src1')]
-alignedPairs i ([src1, src2, _], [src1', src2'])
-  | i `elem`
-      [L2_loadalignb_pr, L2_loadalignh_pr, V6_vdeal, V6_vdeal_128B,
-       V6_vshuff, V6_vshuff_128B]
-    = [(src1, src1'), (src2, src2')]
+  | i `elem` [G_FMA, G_FMA_ce, PS_vselect, PS_wselect] = []
 alignedPairs i ([_, _, _, _], [])
-  | i `elem`
-      [S2_pstorerbf_io, S2_pstorerbf_io_ce, S2_pstorerbnewf_io,
-       S2_pstorerbnewf_io_ce, S2_pstorerbnewt_io, S2_pstorerbnewt_io_ce,
-       S2_pstorerbt_io, S2_pstorerbt_io_ce, S2_pstorerdf_io,
-       S2_pstorerdf_io_ce, S2_pstorerdt_io, S2_pstorerdt_io_ce,
-       S2_pstorerff_io, S2_pstorerff_io_ce, S2_pstorerft_io,
-       S2_pstorerft_io_ce, S2_pstorerhf_io, S2_pstorerhf_io_ce,
-       S2_pstorerhnewf_io, S2_pstorerhnewf_io_ce, S2_pstorerhnewt_io,
-       S2_pstorerhnewt_io_ce, S2_pstorerht_io, S2_pstorerht_io_ce,
-       S2_pstorerif_io, S2_pstorerif_io_ce, S2_pstorerif_io_fi,
-       S2_pstorerif_io_fi_ce, S2_pstorerinewf_io, S2_pstorerinewf_io_ce,
-       S2_pstorerinewt_io, S2_pstorerinewt_io_ce, S2_pstorerit_io,
-       S2_pstorerit_io_ce, S4_pstorerbfnew_io, S4_pstorerbfnew_io_ce,
-       S4_pstorerbnewfnew_io, S4_pstorerbnewfnew_io_ce,
-       S4_pstorerbnewtnew_io, S4_pstorerbnewtnew_io_ce,
-       S4_pstorerbtnew_io, S4_pstorerbtnew_io_ce, S4_pstorerdfnew_io,
-       S4_pstorerdfnew_io_ce, S4_pstorerdtnew_io, S4_pstorerdtnew_io_ce,
-       S4_pstorerffnew_io, S4_pstorerffnew_io_ce, S4_pstorerftnew_io,
-       S4_pstorerftnew_io_ce, S4_pstorerhfnew_io, S4_pstorerhfnew_io_ce,
-       S4_pstorerhnewfnew_io, S4_pstorerhnewfnew_io_ce,
-       S4_pstorerhnewtnew_io, S4_pstorerhnewtnew_io_ce,
-       S4_pstorerhtnew_io, S4_pstorerhtnew_io_ce, S4_pstorerifnew_io,
-       S4_pstorerifnew_io_ce, S4_pstorerinewfnew_io,
-       S4_pstorerinewfnew_io_ce, S4_pstorerinewtnew_io,
-       S4_pstorerinewtnew_io_ce, S4_pstoreritnew_io,
-       S4_pstoreritnew_io_ce, S4_storerb_ur, S4_storerb_ur_ce,
-       S4_storerbnew_ur, S4_storerbnew_ur_ce, S4_storerd_ur,
-       S4_storerd_ur_ce, S4_storerf_ur, S4_storerf_ur_ce, S4_storerh_ur,
-       S4_storerh_ur_ce, S4_storerhnew_ur, S4_storerhnew_ur_ce,
-       S4_storeri_ur, S4_storeri_ur_ce, S4_storerinew_ur,
-       S4_storerinew_ur_ce, V6_vS32Ub_npred_ai, V6_vS32Ub_npred_ai_128B,
-       V6_vS32Ub_npred_ai_128B_ce, V6_vS32Ub_npred_ai_ce,
-       V6_vS32Ub_pred_ai, V6_vS32Ub_pred_ai_128B,
-       V6_vS32Ub_pred_ai_128B_ce, V6_vS32Ub_pred_ai_ce,
-       V6_vS32b_new_npred_ai, V6_vS32b_new_npred_ai_128B,
-       V6_vS32b_new_npred_ai_128B_ce, V6_vS32b_new_npred_ai_ce,
-       V6_vS32b_new_pred_ai, V6_vS32b_new_pred_ai_128B,
-       V6_vS32b_new_pred_ai_128B_ce, V6_vS32b_new_pred_ai_ce,
-       V6_vS32b_npred_ai, V6_vS32b_npred_ai_128B,
-       V6_vS32b_npred_ai_128B_ce, V6_vS32b_npred_ai_ce,
-       V6_vS32b_nqpred_ai, V6_vS32b_nqpred_ai_128B,
-       V6_vS32b_nqpred_ai_128B_ce, V6_vS32b_nqpred_ai_ce,
-       V6_vS32b_nt_new_npred_ai, V6_vS32b_nt_new_npred_ai_128B,
-       V6_vS32b_nt_new_npred_ai_128B_ce, V6_vS32b_nt_new_npred_ai_ce,
-       V6_vS32b_nt_new_pred_ai, V6_vS32b_nt_new_pred_ai_128B,
-       V6_vS32b_nt_new_pred_ai_128B_ce, V6_vS32b_nt_new_pred_ai_ce,
-       V6_vS32b_nt_npred_ai, V6_vS32b_nt_npred_ai_128B,
-       V6_vS32b_nt_npred_ai_128B_ce, V6_vS32b_nt_npred_ai_ce,
-       V6_vS32b_nt_nqpred_ai, V6_vS32b_nt_nqpred_ai_128B,
-       V6_vS32b_nt_nqpred_ai_128B_ce, V6_vS32b_nt_nqpred_ai_ce,
-       V6_vS32b_nt_pred_ai, V6_vS32b_nt_pred_ai_128B,
-       V6_vS32b_nt_pred_ai_128B_ce, V6_vS32b_nt_pred_ai_ce,
-       V6_vS32b_nt_qpred_ai, V6_vS32b_nt_qpred_ai_128B,
-       V6_vS32b_nt_qpred_ai_128B_ce, V6_vS32b_nt_qpred_ai_ce,
-       V6_vS32b_pred_ai, V6_vS32b_pred_ai_128B, V6_vS32b_pred_ai_128B_ce,
-       V6_vS32b_pred_ai_ce, V6_vS32b_qpred_ai, V6_vS32b_qpred_ai_128B,
-       V6_vS32b_qpred_ai_128B_ce, V6_vS32b_qpred_ai_ce]
-    = []
-alignedPairs i ([src1, _, _, _], [src1'])
-  | i `elem`
-      [S2_storerb_pci_pseudo, S2_storerb_pci_pseudo_ce,
-       S2_storerd_pci_pseudo, S2_storerd_pci_pseudo_ce,
-       S2_storerf_pci_pseudo, S2_storerf_pci_pseudo_ce,
-       S2_storerh_pci_pseudo, S2_storerh_pci_pseudo_ce,
-       S2_storeri_pci_pseudo, S2_storeri_pci_pseudo_ce]
-    = [(src1, src1')]
-alignedPairs i ([src1, _, _, _], [src1', _])
-  | i `elem`
-      [L2_loadrb_pci_pseudo, L2_loadrb_pci_pseudo_ce,
-       L2_loadrd_pci_pseudo, L2_loadrd_pci_pseudo_ce,
-       L2_loadrh_pci_pseudo, L2_loadrh_pci_pseudo_ce,
-       L2_loadri_pci_pseudo, L2_loadri_pci_pseudo_ce,
-       L2_loadrub_pci_pseudo, L2_loadrub_pci_pseudo_ce,
-       L2_loadruh_pci_pseudo, L2_loadruh_pci_pseudo_ce]
-    = [(src1, src1')]
-alignedPairs i ([_, src2, _, _], [src2'])
-  | i `elem`
-      [V6_vS32Ub_npred_pi, V6_vS32Ub_npred_pi_128B,
-       V6_vS32Ub_npred_pi_128B_ce, V6_vS32Ub_npred_pi_ce,
-       V6_vS32Ub_npred_ppu, V6_vS32Ub_pred_pi, V6_vS32Ub_pred_pi_128B,
-       V6_vS32Ub_pred_pi_128B_ce, V6_vS32Ub_pred_pi_ce,
-       V6_vS32Ub_pred_ppu, V6_vS32b_new_npred_pi,
-       V6_vS32b_new_npred_pi_128B, V6_vS32b_new_npred_pi_128B_ce,
-       V6_vS32b_new_npred_pi_ce, V6_vS32b_new_npred_ppu,
-       V6_vS32b_new_pred_pi, V6_vS32b_new_pred_pi_128B,
-       V6_vS32b_new_pred_pi_128B_ce, V6_vS32b_new_pred_pi_ce,
-       V6_vS32b_new_pred_ppu, V6_vS32b_npred_pi, V6_vS32b_npred_pi_128B,
-       V6_vS32b_npred_pi_128B_ce, V6_vS32b_npred_pi_ce,
-       V6_vS32b_npred_ppu, V6_vS32b_nqpred_pi, V6_vS32b_nqpred_pi_128B,
-       V6_vS32b_nqpred_pi_128B_ce, V6_vS32b_nqpred_pi_ce,
-       V6_vS32b_nqpred_ppu, V6_vS32b_nt_new_npred_pi,
-       V6_vS32b_nt_new_npred_pi_128B, V6_vS32b_nt_new_npred_pi_128B_ce,
-       V6_vS32b_nt_new_npred_pi_ce, V6_vS32b_nt_new_npred_ppu,
-       V6_vS32b_nt_new_pred_pi, V6_vS32b_nt_new_pred_pi_128B,
-       V6_vS32b_nt_new_pred_pi_128B_ce, V6_vS32b_nt_new_pred_pi_ce,
-       V6_vS32b_nt_new_pred_ppu, V6_vS32b_nt_npred_pi,
-       V6_vS32b_nt_npred_pi_128B, V6_vS32b_nt_npred_pi_128B_ce,
-       V6_vS32b_nt_npred_pi_ce, V6_vS32b_nt_npred_ppu,
-       V6_vS32b_nt_nqpred_pi, V6_vS32b_nt_nqpred_pi_128B,
-       V6_vS32b_nt_nqpred_pi_128B_ce, V6_vS32b_nt_nqpred_pi_ce,
-       V6_vS32b_nt_nqpred_ppu, V6_vS32b_nt_pred_pi,
-       V6_vS32b_nt_pred_pi_128B, V6_vS32b_nt_pred_pi_128B_ce,
-       V6_vS32b_nt_pred_pi_ce, V6_vS32b_nt_pred_ppu, V6_vS32b_nt_qpred_pi,
-       V6_vS32b_nt_qpred_pi_128B, V6_vS32b_nt_qpred_pi_128B_ce,
-       V6_vS32b_nt_qpred_pi_ce, V6_vS32b_nt_qpred_ppu, V6_vS32b_pred_pi,
-       V6_vS32b_pred_pi_128B, V6_vS32b_pred_pi_128B_ce,
-       V6_vS32b_pred_pi_ce, V6_vS32b_pred_ppu, V6_vS32b_qpred_pi,
-       V6_vS32b_qpred_pi_128B, V6_vS32b_qpred_pi_128B_ce,
-       V6_vS32b_qpred_pi_ce, V6_vS32b_qpred_ppu]
-    = [(src2, src2')]
-alignedPairs i ([_, _, _, _], [_])
-  | i `elem`
-      [L4_ploadrbf_rr, L4_ploadrbf_rr_ce, L4_ploadrbfnew_rr,
-       L4_ploadrbfnew_rr_ce, L4_ploadrbt_rr, L4_ploadrbt_rr_ce,
-       L4_ploadrbtnew_rr, L4_ploadrbtnew_rr_ce, L4_ploadrdf_rr,
-       L4_ploadrdf_rr_ce, L4_ploadrdfnew_rr, L4_ploadrdfnew_rr_ce,
-       L4_ploadrdt_rr, L4_ploadrdt_rr_ce, L4_ploadrdtnew_rr,
-       L4_ploadrdtnew_rr_ce, L4_ploadrhf_rr, L4_ploadrhf_rr_ce,
-       L4_ploadrhfnew_rr, L4_ploadrhfnew_rr_ce, L4_ploadrht_rr,
-       L4_ploadrht_rr_ce, L4_ploadrhtnew_rr, L4_ploadrhtnew_rr_ce,
-       L4_ploadrif_rr, L4_ploadrif_rr_ce, L4_ploadrifnew_rr,
-       L4_ploadrifnew_rr_ce, L4_ploadrit_rr, L4_ploadrit_rr_ce,
-       L4_ploadritnew_rr, L4_ploadritnew_rr_ce, L4_ploadrubf_rr,
-       L4_ploadrubf_rr_ce, L4_ploadrubfnew_rr, L4_ploadrubfnew_rr_ce,
-       L4_ploadrubt_rr, L4_ploadrubt_rr_ce, L4_ploadrubtnew_rr,
-       L4_ploadrubtnew_rr_ce, L4_ploadruhf_rr, L4_ploadruhf_rr_ce,
-       L4_ploadruhfnew_rr, L4_ploadruhfnew_rr_ce, L4_ploadruht_rr,
-       L4_ploadruht_rr_ce, L4_ploadruhtnew_rr, L4_ploadruhtnew_rr_ce]
-    = []
-alignedPairs i ([_, _, _], [_])
-  | i `elem`
-      [L4_loadrb_rr, L4_loadrb_rr_ce, L4_loadrd_rr, L4_loadrd_rr_ce,
-       L4_loadrh_rr, L4_loadrh_rr_ce, L4_loadri_rr, L4_loadri_rr_ce,
-       L4_loadrub_rr, L4_loadrub_rr_ce, L4_loadruh_rr, L4_loadruh_rr_ce]
-    = []
-alignedPairs i ([_, _, _], [_])
-  | i `elem` [M4_mpyri_addr, M4_mpyri_addr_ce] = []
-alignedPairs i ([src1, _], [src1'])
-  | i `elem` [A2_tfrih, A2_tfrih_ce, A2_tfril, A2_tfril_ce] =
-    [(src1, src1')]
+  | i `elem` [S2_pstorerif_io_fi, S2_pstorerif_io_fi_ce] = []
+alignedPairs i ([_], [_])
+  | i `elem` [G_FRAME_INDEX, G_FRAME_INDEX_ce] = []
 alignedPairs i ([_, _], [_])
   | i `elem` [EXTRACT_SUBREG, EXTRACT_SUBREG_ce] = []
 alignedPairs i ([supersrc, _, _], [supersrc'])
@@ -1619,46 +2168,31 @@ alignedPairs i ([_, _], [_])
   | i `elem` [REG_SEQUENCE, REG_SEQUENCE_ce] = []
 alignedPairs i ([_, _], [])
   | i `elem` [LOCAL_ESCAPE, LOCAL_ESCAPE_ce] = []
-alignedPairs i ([_], [])
-  | i `elem` [S2_allocframe, S2_allocframe_ce] = []
-alignedPairs i ([_], [_])
+alignedPairs i ([_, _, _], [_])
   | i `elem`
-      [V4_SA1_combine0i, V4_SA1_combine0i_ce, V4_SA1_combine1i,
-       V4_SA1_combine1i_ce, V4_SA1_combine2i, V4_SA1_combine2i_ce,
-       V4_SA1_combine3i, V4_SA1_combine3i_ce]
+      [G_FCMP, G_FCMP_ce, G_ICMP, G_ICMP_ce, G_SELECT, G_SELECT_ce]
+    = []
+alignedPairs i ([_, _], []) | i `elem` [G_BRCOND, G_BRCOND_ce] = []
+alignedPairs i ([_, _, _], [])
+  | i `elem`
+      [PATCHABLE_TYPED_EVENT_CALL, PATCHABLE_TYPED_EVENT_CALL_ce]
     = []
 alignedPairs i ([_], [_])
-  | i `elem` [V4_SL2_loadri_sp, V4_SL2_loadri_sp_ce] = []
-alignedPairs i ([_, _], [])
-  | i `elem` [V4_SS2_storew_sp, V4_SS2_storew_sp_ce] = []
-alignedPairs i ([_], [])
-  | i `elem` [V4_SS2_allocframe, V4_SS2_allocframe_ce] = []
-alignedPairs i ([_], [_])
-  | i `elem` [V4_SL2_loadrd_sp, V4_SL2_loadrd_sp_ce] = []
-alignedPairs i ([_], [_])
-  | i `elem` [C4_addipc, C4_addipc_ce, V4_SA1_seti, V4_SA1_seti_ce] =
-    []
+  | i `elem` [CONST32, CONST32_ce, CONST64, CONST64_ce] = []
 alignedPairs i ([_, _, _], [_])
-  | i `elem` [M4_mpyrr_addi, M4_mpyrr_addi_ce] = []
-alignedPairs i ([_, _, _], [_])
-  | i `elem` [M4_mpyri_addi, M4_mpyri_addi_ce] = []
-alignedPairs i ([_], [_])
-  | i `elem` [V4_SA1_addsp, V4_SA1_addsp_ce] = []
-alignedPairs i ([_, rx, _], [rx'])
-  | i `elem`
-      [S4_addi_asl_ri, S4_addi_asl_ri_ce, S4_addi_lsr_ri,
-       S4_addi_lsr_ri_ce, S4_andi_asl_ri, S4_andi_asl_ri_ce,
-       S4_andi_lsr_ri, S4_andi_lsr_ri_ce, S4_ori_asl_ri, S4_ori_asl_ri_ce,
-       S4_ori_lsr_ri, S4_ori_lsr_ri_ce, S4_subi_asl_ri, S4_subi_asl_ri_ce,
-       S4_subi_lsr_ri, S4_subi_lsr_ri_ce]
-    = [(rx, rx')]
+  | i `elem` [G_SHUFFLE_VECTOR, G_SHUFFLE_VECTOR_ce] = []
 alignedPairs i ([_], [])
   | i `elem`
       [BUNDLE, BUNDLE_ce, DBG_VALUE, DBG_VALUE_ce, INLINEASM,
-       INLINEASM_ce, KILL, KILL_ce, PHI, PHI_ce, STATEPOINT,
+       INLINEASM_BR, INLINEASM_BR_ce, INLINEASM_ce, KILL, KILL_ce,
+       PATCHABLE_OP, PATCHABLE_OP_ce, PATCHABLE_RET, PATCHABLE_RET_ce,
+       PATCHABLE_TAIL_CALL, PATCHABLE_TAIL_CALL_ce, STATEPOINT,
        STATEPOINT_ce]
     = []
 alignedPairs i ([_], [_])
-  | i `elem` [FAULTING_LOAD_OP, FAULTING_LOAD_OP_ce] = []
+  | i `elem`
+      [FAULTING_OP, FAULTING_OP_ce, G_PHI, G_PHI_ce, ICALL_BRANCH_FUNNEL,
+       ICALL_BRANCH_FUNNEL_ce, PHI, PHI_ce]
+    = []
 alignedPairs _ _ = []
 

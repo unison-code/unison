@@ -26,6 +26,14 @@ data HexagonRegisterClass =
     VecPredRegs128B |
     VectorRegs |
     VectorRegs128B |
+    GeneralDoubleLow8Regs |
+    GeneralSubRegs |
+    GuestRegs |
+    GuestRegs64 |
+    HvxQR |
+    HvxVQR |
+    HvxVR |
+    HvxWR |
     F32 |
     M32 |
     M64 |

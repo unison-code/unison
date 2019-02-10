@@ -37,6 +37,7 @@ data HexagonInstruction = A2_abs
                         | A2_combine_ll
                         | A2_combineii
                         | A2_combinew
+                        | A2_iconst
                         | A2_max
                         | A2_maxp
                         | A2_maxu
@@ -45,6 +46,7 @@ data HexagonInstruction = A2_abs
                         | A2_minp
                         | A2_minu
                         | A2_minup
+                        | A2_neg
                         | A2_negp
                         | A2_negsat
                         | A2_nop
@@ -132,6 +134,7 @@ data HexagonInstruction = A2_abs
                         | A2_vabshsat
                         | A2_vabsw
                         | A2_vabswsat
+                        | A2_vaddb_map
                         | A2_vaddh
                         | A2_vaddhs
                         | A2_vaddub
@@ -182,6 +185,7 @@ data HexagonInstruction = A2_abs
                         | A2_vraddub_acc
                         | A2_vrsadub
                         | A2_vrsadub_acc
+                        | A2_vsubb_map
                         | A2_vsubh
                         | A2_vsubhs
                         | A2_vsubub
@@ -219,9 +223,6 @@ data HexagonInstruction = A2_abs
                         | A4_cround_ri
                         | A4_cround_rr
                         | A4_ext
-                        | A4_ext_b
-                        | A4_ext_c
-                        | A4_ext_g
                         | A4_modwrapu
                         | A4_orn
                         | A4_ornp
@@ -282,11 +283,11 @@ data HexagonInstruction = A2_abs
                         | A4_vrminw
                         | A5_ACS
                         | A5_vaddhubs
+                        | A6_vcmpbeq_notany
+                        | A6_vminub_RdP
                         | ADJCALLSTACKDOWN
                         | ADJCALLSTACKUP
-                        | ALIGNA
-                        | ALLOCA
-                        | ARGEXTEND
+                        | ANNOTATION_LABEL
                         | BUNDLE
                         | C2_all8
                         | C2_and
@@ -314,6 +315,8 @@ data HexagonInstruction = A2_abs
                         | C2_cmpgtu
                         | C2_cmpgtui
                         | C2_cmpgtup
+                        | C2_cmplt
+                        | C2_cmpltu
                         | C2_mask
                         | C2_mux
                         | C2_muxii
@@ -348,17 +351,15 @@ data HexagonInstruction = A2_abs
                         | C4_or_andn
                         | C4_or_or
                         | C4_or_orn
-                        | CALLRv3nr
-                        | CALLv3nr
+                        | CALLProfile
                         | CFI_INSTRUCTION
                         | CONST32
-                        | CONST32_Float_Real
-                        | CONST32_Int_Real
-                        | CONST64_Float_Real
-                        | CONST64_Int_Real
+                        | CONST64
                         | COPY
                         | COPY_TO_REGCLASS
+                        | DBG_LABEL
                         | DBG_VALUE
+                        | DUPLEX_Pseudo
                         | DuplexIClass0
                         | DuplexIClass1
                         | DuplexIClass2
@@ -378,6 +379,7 @@ data HexagonInstruction = A2_abs
                         | EH_LABEL
                         | EH_RETURN_JMPR
                         | ENDLOOP0
+                        | ENDLOOP01
                         | ENDLOOP1
                         | EXTRACT_SUBREG
                         | F2_conv_d2df
@@ -406,6 +408,7 @@ data HexagonInstruction = A2_abs
                         | F2_conv_uw2sf
                         | F2_conv_w2df
                         | F2_conv_w2sf
+                        | F2_dfadd
                         | F2_dfclass
                         | F2_dfcmpeq
                         | F2_dfcmpge
@@ -413,6 +416,7 @@ data HexagonInstruction = A2_abs
                         | F2_dfcmpuo
                         | F2_dfimm_n
                         | F2_dfimm_p
+                        | F2_dfsub
                         | F2_sfadd
                         | F2_sfclass
                         | F2_sfcmpeq
@@ -435,54 +439,151 @@ data HexagonInstruction = A2_abs
                         | F2_sfmpy
                         | F2_sfrecipa
                         | F2_sfsub
-                        | FAULTING_LOAD_OP
-                        | FCONST32_nsdata
+                        | FAULTING_OP
+                        | FENTRY_CALL
+                        | G4_tfrgcpp
+                        | G4_tfrgcrr
+                        | G4_tfrgpcp
+                        | G4_tfrgrcr
                         | GC_LABEL
-                        | HEXAGON_V6_hi
-                        | HEXAGON_V6_hi_128B
-                        | HEXAGON_V6_lo
-                        | HEXAGON_V6_lo_128B
-                        | HEXAGON_V6_vassignp
-                        | HEXAGON_V6_vassignp_128B
-                        | HEXAGON_V6_vd0_pseudo
-                        | HEXAGON_V6_vd0_pseudo_128B
+                        | G_ADD
+                        | G_ADDRSPACE_CAST
+                        | G_AND
+                        | G_ANYEXT
+                        | G_ASHR
+                        | G_ATOMICRMW_ADD
+                        | G_ATOMICRMW_AND
+                        | G_ATOMICRMW_MAX
+                        | G_ATOMICRMW_MIN
+                        | G_ATOMICRMW_NAND
+                        | G_ATOMICRMW_OR
+                        | G_ATOMICRMW_SUB
+                        | G_ATOMICRMW_UMAX
+                        | G_ATOMICRMW_UMIN
+                        | G_ATOMICRMW_XCHG
+                        | G_ATOMICRMW_XOR
+                        | G_ATOMIC_CMPXCHG
+                        | G_ATOMIC_CMPXCHG_WITH_SUCCESS
+                        | G_BITCAST
+                        | G_BLOCK_ADDR
+                        | G_BR
+                        | G_BRCOND
+                        | G_BRINDIRECT
+                        | G_BSWAP
+                        | G_BUILD_VECTOR
+                        | G_BUILD_VECTOR_TRUNC
+                        | G_CONCAT_VECTORS
+                        | G_CONSTANT
+                        | G_CTLZ
+                        | G_CTLZ_ZERO_UNDEF
+                        | G_CTPOP
+                        | G_CTTZ
+                        | G_CTTZ_ZERO_UNDEF
+                        | G_EXTRACT
+                        | G_EXTRACT_VECTOR_ELT
+                        | G_FABS
+                        | G_FADD
+                        | G_FCEIL
+                        | G_FCMP
+                        | G_FCONSTANT
+                        | G_FCOS
+                        | G_FDIV
+                        | G_FEXP
+                        | G_FEXP2
+                        | G_FLOG
+                        | G_FLOG10
+                        | G_FLOG2
+                        | G_FMA
+                        | G_FMUL
+                        | G_FNEG
+                        | G_FPEXT
+                        | G_FPOW
+                        | G_FPTOSI
+                        | G_FPTOUI
+                        | G_FPTRUNC
+                        | G_FRAME_INDEX
+                        | G_FREM
+                        | G_FSIN
+                        | G_FSQRT
+                        | G_FSUB
+                        | G_GEP
+                        | G_GLOBAL_VALUE
+                        | G_ICMP
+                        | G_IMPLICIT_DEF
+                        | G_INSERT
+                        | G_INSERT_VECTOR_ELT
+                        | G_INTRINSIC
+                        | G_INTRINSIC_ROUND
+                        | G_INTRINSIC_TRUNC
+                        | G_INTRINSIC_W_SIDE_EFFECTS
+                        | G_INTTOPTR
+                        | G_LOAD
+                        | G_LSHR
+                        | G_MERGE_VALUES
+                        | G_MUL
+                        | G_OR
+                        | G_PHI
+                        | G_PTRTOINT
+                        | G_PTR_MASK
+                        | G_SADDE
+                        | G_SADDO
+                        | G_SDIV
+                        | G_SELECT
+                        | G_SEXT
+                        | G_SEXTLOAD
+                        | G_SHL
+                        | G_SHUFFLE_VECTOR
+                        | G_SITOFP
+                        | G_SMULH
+                        | G_SMULO
+                        | G_SREM
+                        | G_SSUBE
+                        | G_SSUBO
+                        | G_STORE
+                        | G_SUB
+                        | G_TRUNC
+                        | G_UADDE
+                        | G_UADDO
+                        | G_UDIV
+                        | G_UITOFP
+                        | G_UMULH
+                        | G_UMULO
+                        | G_UNMERGE_VALUES
+                        | G_UREM
+                        | G_USUBE
+                        | G_USUBO
+                        | G_VAARG
+                        | G_VASTART
+                        | G_XOR
+                        | G_ZEXT
+                        | G_ZEXTLOAD
                         | HI
-                        | HI_GOT
-                        | HI_GOTREL
-                        | HI_L
-                        | HI_PIC
+                        | ICALL_BRANCH_FUNNEL
                         | IMPLICIT_DEF
                         | INLINEASM
+                        | INLINEASM_BR
                         | INSERT_SUBREG
-                        | Insert4
                         | J2_call
                         | J2_callf
                         | J2_callr
                         | J2_callrf
                         | J2_callrt
                         | J2_callt
+                        | J2_endloop0
+                        | J2_endloop01
+                        | J2_endloop1
                         | J2_jump
-                        | J2_jump_ext
-                        | J2_jump_extf
-                        | J2_jump_extfnew
-                        | J2_jump_extfnewpt
-                        | J2_jump_extt
-                        | J2_jump_exttnew
-                        | J2_jump_exttnewpt
-                        | J2_jump_noext
-                        | J2_jump_noextf
-                        | J2_jump_noextfnew
-                        | J2_jump_noextfnewpt
-                        | J2_jump_noextt
-                        | J2_jump_noexttnew
-                        | J2_jump_noexttnewpt
                         | J2_jumpf
+                        | J2_jumpf_nopred_map
                         | J2_jumpfnew
                         | J2_jumpfnewpt
+                        | J2_jumpfpt
                         | J2_jumpr
                         | J2_jumprf
+                        | J2_jumprf_nopred_map
                         | J2_jumprfnew
                         | J2_jumprfnewpt
+                        | J2_jumprfpt
                         | J2_jumprgtez
                         | J2_jumprgtezpt
                         | J2_jumprltez
@@ -490,13 +591,17 @@ data HexagonInstruction = A2_abs
                         | J2_jumprnz
                         | J2_jumprnzpt
                         | J2_jumprt
+                        | J2_jumprt_nopred_map
                         | J2_jumprtnew
                         | J2_jumprtnewpt
+                        | J2_jumprtpt
                         | J2_jumprz
                         | J2_jumprzpt
                         | J2_jumpt
+                        | J2_jumpt_nopred_map
                         | J2_jumptnew
                         | J2_jumptnewpt
+                        | J2_jumptpt
                         | J2_loop0i
                         | J2_loop0iext
                         | J2_loop0r
@@ -505,12 +610,16 @@ data HexagonInstruction = A2_abs
                         | J2_loop1iext
                         | J2_loop1r
                         | J2_loop1rext
+                        | J2_pause
                         | J2_ploop1si
                         | J2_ploop1sr
                         | J2_ploop2si
                         | J2_ploop2sr
                         | J2_ploop3si
                         | J2_ploop3sr
+                        | J2_trap0
+                        | J2_trap1
+                        | J2_trap1_noregmap
                         | J4_cmpeq_f_jumpnv_nt
                         | J4_cmpeq_f_jumpnv_t
                         | J4_cmpeq_fp0_jump_nt
@@ -630,13 +739,6 @@ data HexagonInstruction = A2_abs
                         | J4_tstbit0_tp0_jump_t
                         | J4_tstbit0_tp1_jump_nt
                         | J4_tstbit0_tp1_jump_t
-                        | JMPret
-                        | JMPretf
-                        | JMPretfnew
-                        | JMPretfnewpt
-                        | JMPrett
-                        | JMPrettnew
-                        | JMPrettnewpt
                         | KILL
                         | L2_deallocframe
                         | L2_loadalignb_io
@@ -645,157 +747,199 @@ data HexagonInstruction = A2_abs
                         | L2_loadalignb_pcr
                         | L2_loadalignb_pi
                         | L2_loadalignb_pr
+                        | L2_loadalignb_zomap
                         | L2_loadalignh_io
                         | L2_loadalignh_pbr
                         | L2_loadalignh_pci
                         | L2_loadalignh_pcr
                         | L2_loadalignh_pi
                         | L2_loadalignh_pr
+                        | L2_loadalignh_zomap
                         | L2_loadbsw2_io
                         | L2_loadbsw2_pbr
                         | L2_loadbsw2_pci
                         | L2_loadbsw2_pcr
                         | L2_loadbsw2_pi
                         | L2_loadbsw2_pr
+                        | L2_loadbsw2_zomap
                         | L2_loadbsw4_io
                         | L2_loadbsw4_pbr
                         | L2_loadbsw4_pci
                         | L2_loadbsw4_pcr
                         | L2_loadbsw4_pi
                         | L2_loadbsw4_pr
+                        | L2_loadbsw4_zomap
                         | L2_loadbzw2_io
                         | L2_loadbzw2_pbr
                         | L2_loadbzw2_pci
                         | L2_loadbzw2_pcr
                         | L2_loadbzw2_pi
                         | L2_loadbzw2_pr
+                        | L2_loadbzw2_zomap
                         | L2_loadbzw4_io
                         | L2_loadbzw4_pbr
                         | L2_loadbzw4_pci
                         | L2_loadbzw4_pcr
                         | L2_loadbzw4_pi
                         | L2_loadbzw4_pr
+                        | L2_loadbzw4_zomap
                         | L2_loadrb_io
                         | L2_loadrb_pbr
-                        | L2_loadrb_pbr_pseudo
                         | L2_loadrb_pci
-                        | L2_loadrb_pci_pseudo
                         | L2_loadrb_pcr
                         | L2_loadrb_pi
                         | L2_loadrb_pr
+                        | L2_loadrb_zomap
                         | L2_loadrbgp
                         | L2_loadrd_io
                         | L2_loadrd_pbr
-                        | L2_loadrd_pbr_pseudo
                         | L2_loadrd_pci
-                        | L2_loadrd_pci_pseudo
                         | L2_loadrd_pcr
                         | L2_loadrd_pi
                         | L2_loadrd_pr
+                        | L2_loadrd_zomap
                         | L2_loadrdgp
                         | L2_loadrh_io
                         | L2_loadrh_pbr
-                        | L2_loadrh_pbr_pseudo
                         | L2_loadrh_pci
-                        | L2_loadrh_pci_pseudo
                         | L2_loadrh_pcr
                         | L2_loadrh_pi
                         | L2_loadrh_pr
+                        | L2_loadrh_zomap
                         | L2_loadrhgp
                         | L2_loadri_io
                         | L2_loadri_pbr
-                        | L2_loadri_pbr_pseudo
                         | L2_loadri_pci
-                        | L2_loadri_pci_pseudo
                         | L2_loadri_pcr
                         | L2_loadri_pi
                         | L2_loadri_pr
+                        | L2_loadri_zomap
                         | L2_loadrigp
                         | L2_loadrub_io
                         | L2_loadrub_pbr
-                        | L2_loadrub_pbr_pseudo
                         | L2_loadrub_pci
-                        | L2_loadrub_pci_pseudo
                         | L2_loadrub_pcr
                         | L2_loadrub_pi
                         | L2_loadrub_pr
+                        | L2_loadrub_zomap
                         | L2_loadrubgp
                         | L2_loadruh_io
                         | L2_loadruh_pbr
-                        | L2_loadruh_pbr_pseudo
                         | L2_loadruh_pci
-                        | L2_loadruh_pci_pseudo
                         | L2_loadruh_pcr
                         | L2_loadruh_pi
                         | L2_loadruh_pr
+                        | L2_loadruh_zomap
                         | L2_loadruhgp
                         | L2_loadw_locked
                         | L2_ploadrbf_io
                         | L2_ploadrbf_pi
+                        | L2_ploadrbf_zomap
                         | L2_ploadrbfnew_io
                         | L2_ploadrbfnew_pi
+                        | L2_ploadrbfnew_zomap
                         | L2_ploadrbt_io
                         | L2_ploadrbt_pi
+                        | L2_ploadrbt_zomap
                         | L2_ploadrbtnew_io
                         | L2_ploadrbtnew_pi
+                        | L2_ploadrbtnew_zomap
                         | L2_ploadrdf_io
                         | L2_ploadrdf_pi
+                        | L2_ploadrdf_zomap
                         | L2_ploadrdfnew_io
                         | L2_ploadrdfnew_pi
+                        | L2_ploadrdfnew_zomap
                         | L2_ploadrdt_io
                         | L2_ploadrdt_pi
+                        | L2_ploadrdt_zomap
                         | L2_ploadrdtnew_io
                         | L2_ploadrdtnew_pi
+                        | L2_ploadrdtnew_zomap
                         | L2_ploadrhf_io
                         | L2_ploadrhf_pi
+                        | L2_ploadrhf_zomap
                         | L2_ploadrhfnew_io
                         | L2_ploadrhfnew_pi
+                        | L2_ploadrhfnew_zomap
                         | L2_ploadrht_io
                         | L2_ploadrht_pi
+                        | L2_ploadrht_zomap
                         | L2_ploadrhtnew_io
                         | L2_ploadrhtnew_pi
+                        | L2_ploadrhtnew_zomap
                         | L2_ploadrif_io
                         | L2_ploadrif_pi
+                        | L2_ploadrif_zomap
                         | L2_ploadrifnew_io
                         | L2_ploadrifnew_pi
+                        | L2_ploadrifnew_zomap
                         | L2_ploadrit_io
                         | L2_ploadrit_pi
+                        | L2_ploadrit_zomap
                         | L2_ploadritnew_io
                         | L2_ploadritnew_pi
+                        | L2_ploadritnew_zomap
                         | L2_ploadrubf_io
                         | L2_ploadrubf_pi
+                        | L2_ploadrubf_zomap
                         | L2_ploadrubfnew_io
                         | L2_ploadrubfnew_pi
+                        | L2_ploadrubfnew_zomap
                         | L2_ploadrubt_io
                         | L2_ploadrubt_pi
+                        | L2_ploadrubt_zomap
                         | L2_ploadrubtnew_io
                         | L2_ploadrubtnew_pi
+                        | L2_ploadrubtnew_zomap
                         | L2_ploadruhf_io
                         | L2_ploadruhf_pi
+                        | L2_ploadruhf_zomap
                         | L2_ploadruhfnew_io
                         | L2_ploadruhfnew_pi
+                        | L2_ploadruhfnew_zomap
                         | L2_ploadruht_io
                         | L2_ploadruht_pi
+                        | L2_ploadruht_zomap
                         | L2_ploadruhtnew_io
                         | L2_ploadruhtnew_pi
+                        | L2_ploadruhtnew_zomap
                         | L4_add_memopb_io
+                        | L4_add_memopb_zomap
                         | L4_add_memoph_io
+                        | L4_add_memoph_zomap
                         | L4_add_memopw_io
+                        | L4_add_memopw_zomap
                         | L4_and_memopb_io
+                        | L4_and_memopb_zomap
                         | L4_and_memoph_io
+                        | L4_and_memoph_zomap
                         | L4_and_memopw_io
+                        | L4_and_memopw_zomap
                         | L4_iadd_memopb_io
+                        | L4_iadd_memopb_zomap
                         | L4_iadd_memoph_io
+                        | L4_iadd_memoph_zomap
                         | L4_iadd_memopw_io
+                        | L4_iadd_memopw_zomap
                         | L4_iand_memopb_io
+                        | L4_iand_memopb_zomap
                         | L4_iand_memoph_io
+                        | L4_iand_memoph_zomap
                         | L4_iand_memopw_io
+                        | L4_iand_memopw_zomap
                         | L4_ior_memopb_io
+                        | L4_ior_memopb_zomap
                         | L4_ior_memoph_io
+                        | L4_ior_memoph_zomap
                         | L4_ior_memopw_io
+                        | L4_ior_memopw_zomap
                         | L4_isub_memopb_io
+                        | L4_isub_memopb_zomap
                         | L4_isub_memoph_io
+                        | L4_isub_memoph_zomap
                         | L4_isub_memopw_io
+                        | L4_isub_memopw_zomap
                         | L4_loadalignb_ap
                         | L4_loadalignb_ur
                         | L4_loadalignh_ap
@@ -809,33 +953,30 @@ data HexagonInstruction = A2_abs
                         | L4_loadbzw4_ap
                         | L4_loadbzw4_ur
                         | L4_loadd_locked
-                        | L4_loadrb_abs
                         | L4_loadrb_ap
                         | L4_loadrb_rr
                         | L4_loadrb_ur
-                        | L4_loadrd_abs
                         | L4_loadrd_ap
                         | L4_loadrd_rr
                         | L4_loadrd_ur
-                        | L4_loadrh_abs
                         | L4_loadrh_ap
                         | L4_loadrh_rr
                         | L4_loadrh_ur
-                        | L4_loadri_abs
                         | L4_loadri_ap
                         | L4_loadri_rr
                         | L4_loadri_ur
-                        | L4_loadrub_abs
                         | L4_loadrub_ap
                         | L4_loadrub_rr
                         | L4_loadrub_ur
-                        | L4_loadruh_abs
                         | L4_loadruh_ap
                         | L4_loadruh_rr
                         | L4_loadruh_ur
                         | L4_or_memopb_io
+                        | L4_or_memopb_zomap
                         | L4_or_memoph_io
+                        | L4_or_memoph_zomap
                         | L4_or_memopw_io
+                        | L4_or_memopw_zomap
                         | L4_ploadrbf_abs
                         | L4_ploadrbf_rr
                         | L4_ploadrbfnew_abs
@@ -888,32 +1029,31 @@ data HexagonInstruction = A2_abs
                         | L4_return_f
                         | L4_return_fnew_pnt
                         | L4_return_fnew_pt
+                        | L4_return_map_to_raw_f
+                        | L4_return_map_to_raw_fnew_pnt
+                        | L4_return_map_to_raw_fnew_pt
+                        | L4_return_map_to_raw_t
+                        | L4_return_map_to_raw_tnew_pnt
+                        | L4_return_map_to_raw_tnew_pt
                         | L4_return_t
                         | L4_return_tnew_pnt
                         | L4_return_tnew_pt
                         | L4_sub_memopb_io
+                        | L4_sub_memopb_zomap
                         | L4_sub_memoph_io
+                        | L4_sub_memoph_zomap
                         | L4_sub_memopw_io
-                        | LDriq_pred_V6
-                        | LDriq_pred_V6_128B
-                        | LDriq_pred_vec_V6
-                        | LDriq_pred_vec_V6_128B
-                        | LDriv_pseudo_V6
-                        | LDriv_pseudo_V6_128B
-                        | LDrivv_indexed
-                        | LDrivv_indexed_128B
-                        | LDrivv_pseudo_V6
-                        | LDrivv_pseudo_V6_128B
+                        | L4_sub_memopw_zomap
+                        | L6_deallocframe_map_to_raw
+                        | L6_memcpy
+                        | L6_return_map_to_raw
+                        | LDriw_ctr
                         | LDriw_pred
                         | LIFETIME_END
                         | LIFETIME_START
                         | LO
                         | LOAD_STACK_GUARD
                         | LOCAL_ESCAPE
-                        | LO_GOT
-                        | LO_GOTREL
-                        | LO_H
-                        | LO_PIC
                         | M2_acci
                         | M2_accii
                         | M2_cmaci_s0
@@ -982,6 +1122,7 @@ data HexagonInstruction = A2_abs
                         | M2_mmpyul_rs1
                         | M2_mmpyul_s0
                         | M2_mmpyul_s1
+                        | M2_mnaci
                         | M2_mpy_acc_hh_s0
                         | M2_mpy_acc_hh_s1
                         | M2_mpy_acc_hl_s0
@@ -1236,16 +1377,96 @@ data HexagonInstruction = A2_abs
                         | M5_vrmacbuu
                         | M5_vrmpybsu
                         | M5_vrmpybuu
-                        | MUX64_rr
-                        | MUX_ir_f
-                        | MUX_ri_f
+                        | M6_vabsdiffb
+                        | M6_vabsdiffub
+                        | PATCHABLE_EVENT_CALL
+                        | PATCHABLE_FUNCTION_ENTER
+                        | PATCHABLE_FUNCTION_EXIT
+                        | PATCHABLE_OP
+                        | PATCHABLE_RET
+                        | PATCHABLE_TAIL_CALL
+                        | PATCHABLE_TYPED_EVENT_CALL
                         | PATCHPOINT
                         | PHI
+                        | PS_aligna
+                        | PS_alloca
+                        | PS_call_nr
+                        | PS_call_stk
+                        | PS_callr_nr
+                        | PS_false
+                        | PS_fi
+                        | PS_fia
+                        | PS_jmpret
+                        | PS_jmpretf
+                        | PS_jmpretfnew
+                        | PS_jmpretfnewpt
+                        | PS_jmprett
+                        | PS_jmprettnew
+                        | PS_jmprettnewpt
+                        | PS_loadrb_pci
+                        | PS_loadrb_pcr
+                        | PS_loadrbabs
+                        | PS_loadrd_pci
+                        | PS_loadrd_pcr
+                        | PS_loadrdabs
+                        | PS_loadrh_pci
+                        | PS_loadrh_pcr
+                        | PS_loadrhabs
+                        | PS_loadri_pci
+                        | PS_loadri_pcr
+                        | PS_loadriabs
+                        | PS_loadrub_pci
+                        | PS_loadrub_pcr
+                        | PS_loadrubabs
+                        | PS_loadruh_pci
+                        | PS_loadruh_pcr
+                        | PS_loadruhabs
+                        | PS_pselect
+                        | PS_qfalse
+                        | PS_qtrue
+                        | PS_storerb_pci
+                        | PS_storerb_pcr
+                        | PS_storerbabs
+                        | PS_storerbnewabs
+                        | PS_storerd_pci
+                        | PS_storerd_pcr
+                        | PS_storerdabs
+                        | PS_storerf_pci
+                        | PS_storerf_pcr
+                        | PS_storerfabs
+                        | PS_storerh_pci
+                        | PS_storerh_pcr
+                        | PS_storerhabs
+                        | PS_storerhnewabs
+                        | PS_storeri_pci
+                        | PS_storeri_pcr
+                        | PS_storeriabs
+                        | PS_storerinewabs
+                        | PS_tailcall_i
+                        | PS_tailcall_r
+                        | PS_true
+                        | PS_vdd0
+                        | PS_vloadrq_ai
+                        | PS_vloadrw_ai
+                        | PS_vloadrw_nt_ai
+                        | PS_vloadrwu_ai
+                        | PS_vmulw
+                        | PS_vmulw_acc
+                        | PS_vselect
+                        | PS_vstorerq_ai
+                        | PS_vstorerw_ai
+                        | PS_vstorerw_nt_ai
+                        | PS_vstorerwu_ai
+                        | PS_wselect
                         | REG_SEQUENCE
                         | RESTORE_DEALLOC_BEFORE_TAILCALL_V4
                         | RESTORE_DEALLOC_BEFORE_TAILCALL_V4_EXT
+                        | RESTORE_DEALLOC_BEFORE_TAILCALL_V4_EXT_PIC
+                        | RESTORE_DEALLOC_BEFORE_TAILCALL_V4_PIC
                         | RESTORE_DEALLOC_RET_JMP_V4
                         | RESTORE_DEALLOC_RET_JMP_V4_EXT
+                        | RESTORE_DEALLOC_RET_JMP_V4_EXT_PIC
+                        | RESTORE_DEALLOC_RET_JMP_V4_PIC
                         | S2_addasl_rrri
                         | S2_allocframe
                         | S2_asl_i_p
@@ -1312,7 +1533,6 @@ data HexagonInstruction = A2_abs
                         | S2_brev
                         | S2_brevp
                         | S2_cabacdecbin
-                        | S2_cabacencbin
                         | S2_cl0
                         | S2_cl0p
                         | S2_cl1
@@ -1377,55 +1597,72 @@ data HexagonInstruction = A2_abs
                         | S2_lsr_r_r_or
                         | S2_lsr_r_vh
                         | S2_lsr_r_vw
+                        | S2_mask
                         | S2_packhl
                         | S2_parityp
                         | S2_pstorerbf_io
                         | S2_pstorerbf_pi
+                        | S2_pstorerbf_zomap
                         | S2_pstorerbfnew_pi
                         | S2_pstorerbnewf_io
                         | S2_pstorerbnewf_pi
+                        | S2_pstorerbnewf_zomap
                         | S2_pstorerbnewfnew_pi
                         | S2_pstorerbnewt_io
                         | S2_pstorerbnewt_pi
+                        | S2_pstorerbnewt_zomap
                         | S2_pstorerbnewtnew_pi
                         | S2_pstorerbt_io
                         | S2_pstorerbt_pi
+                        | S2_pstorerbt_zomap
                         | S2_pstorerbtnew_pi
                         | S2_pstorerdf_io
                         | S2_pstorerdf_pi
+                        | S2_pstorerdf_zomap
                         | S2_pstorerdfnew_pi
                         | S2_pstorerdt_io
                         | S2_pstorerdt_pi
+                        | S2_pstorerdt_zomap
                         | S2_pstorerdtnew_pi
                         | S2_pstorerff_io
                         | S2_pstorerff_pi
+                        | S2_pstorerff_zomap
                         | S2_pstorerffnew_pi
                         | S2_pstorerft_io
                         | S2_pstorerft_pi
+                        | S2_pstorerft_zomap
                         | S2_pstorerftnew_pi
                         | S2_pstorerhf_io
                         | S2_pstorerhf_pi
+                        | S2_pstorerhf_zomap
                         | S2_pstorerhfnew_pi
                         | S2_pstorerhnewf_io
                         | S2_pstorerhnewf_pi
+                        | S2_pstorerhnewf_zomap
                         | S2_pstorerhnewfnew_pi
                         | S2_pstorerhnewt_io
                         | S2_pstorerhnewt_pi
+                        | S2_pstorerhnewt_zomap
                         | S2_pstorerhnewtnew_pi
                         | S2_pstorerht_io
                         | S2_pstorerht_pi
+                        | S2_pstorerht_zomap
                         | S2_pstorerhtnew_pi
                         | S2_pstorerif_io
                         | S2_pstorerif_pi
+                        | S2_pstorerif_zomap
                         | S2_pstorerifnew_pi
                         | S2_pstorerinewf_io
                         | S2_pstorerinewf_pi
+                        | S2_pstorerinewf_zomap
                         | S2_pstorerinewfnew_pi
                         | S2_pstorerinewt_io
                         | S2_pstorerinewt_pi
+                        | S2_pstorerinewt_zomap
                         | S2_pstorerinewtnew_pi
                         | S2_pstorerit_io
                         | S2_pstorerit_pi
+                        | S2_pstorerit_zomap
                         | S2_pstoreritnew_pi
                         | S2_setbit_i
                         | S2_setbit_r
@@ -1435,13 +1672,11 @@ data HexagonInstruction = A2_abs
                         | S2_shuffoh
                         | S2_storerb_io
                         | S2_storerb_pbr
-                        | S2_storerb_pbr_pseudo
                         | S2_storerb_pci
-                        | S2_storerb_pci_pseudo
                         | S2_storerb_pcr
                         | S2_storerb_pi
                         | S2_storerb_pr
-                        | S2_storerbabs
+                        | S2_storerb_zomap
                         | S2_storerbgp
                         | S2_storerbnew_io
                         | S2_storerbnew_pbr
@@ -1449,37 +1684,31 @@ data HexagonInstruction = A2_abs
                         | S2_storerbnew_pcr
                         | S2_storerbnew_pi
                         | S2_storerbnew_pr
-                        | S2_storerbnewabs
+                        | S2_storerbnew_zomap
                         | S2_storerbnewgp
                         | S2_storerd_io
                         | S2_storerd_pbr
-                        | S2_storerd_pbr_pseudo
                         | S2_storerd_pci
-                        | S2_storerd_pci_pseudo
                         | S2_storerd_pcr
                         | S2_storerd_pi
                         | S2_storerd_pr
-                        | S2_storerdabs
+                        | S2_storerd_zomap
                         | S2_storerdgp
                         | S2_storerf_io
                         | S2_storerf_pbr
-                        | S2_storerf_pbr_pseudo
                         | S2_storerf_pci
-                        | S2_storerf_pci_pseudo
                         | S2_storerf_pcr
                         | S2_storerf_pi
                         | S2_storerf_pr
-                        | S2_storerfabs
+                        | S2_storerf_zomap
                         | S2_storerfgp
                         | S2_storerh_io
                         | S2_storerh_pbr
-                        | S2_storerh_pbr_pseudo
                         | S2_storerh_pci
-                        | S2_storerh_pci_pseudo
                         | S2_storerh_pcr
                         | S2_storerh_pi
                         | S2_storerh_pr
-                        | S2_storerhabs
+                        | S2_storerh_zomap
                         | S2_storerhgp
                         | S2_storerhnew_io
                         | S2_storerhnew_pbr
@@ -1487,17 +1716,15 @@ data HexagonInstruction = A2_abs
                         | S2_storerhnew_pcr
                         | S2_storerhnew_pi
                         | S2_storerhnew_pr
-                        | S2_storerhnewabs
+                        | S2_storerhnew_zomap
                         | S2_storerhnewgp
                         | S2_storeri_io
                         | S2_storeri_pbr
-                        | S2_storeri_pbr_pseudo
                         | S2_storeri_pci
-                        | S2_storeri_pci_pseudo
                         | S2_storeri_pcr
                         | S2_storeri_pi
                         | S2_storeri_pr
-                        | S2_storeriabs
+                        | S2_storeri_zomap
                         | S2_storerigp
                         | S2_storerinew_io
                         | S2_storerinew_pbr
@@ -1505,7 +1732,7 @@ data HexagonInstruction = A2_abs
                         | S2_storerinew_pcr
                         | S2_storerinew_pi
                         | S2_storerinew_pr
-                        | S2_storerinewabs
+                        | S2_storerinew_zomap
                         | S2_storerinewgp
                         | S2_storew_locked
                         | S2_svsathb
@@ -1575,97 +1802,128 @@ data HexagonInstruction = A2_abs
                         | S4_pstorerbfnew_abs
                         | S4_pstorerbfnew_io
                         | S4_pstorerbfnew_rr
+                        | S4_pstorerbfnew_zomap
                         | S4_pstorerbnewf_abs
                         | S4_pstorerbnewf_rr
                         | S4_pstorerbnewfnew_abs
                         | S4_pstorerbnewfnew_io
                         | S4_pstorerbnewfnew_rr
+                        | S4_pstorerbnewfnew_zomap
                         | S4_pstorerbnewt_abs
                         | S4_pstorerbnewt_rr
                         | S4_pstorerbnewtnew_abs
                         | S4_pstorerbnewtnew_io
                         | S4_pstorerbnewtnew_rr
+                        | S4_pstorerbnewtnew_zomap
                         | S4_pstorerbt_abs
                         | S4_pstorerbt_rr
                         | S4_pstorerbtnew_abs
                         | S4_pstorerbtnew_io
                         | S4_pstorerbtnew_rr
+                        | S4_pstorerbtnew_zomap
                         | S4_pstorerdf_abs
                         | S4_pstorerdf_rr
                         | S4_pstorerdfnew_abs
                         | S4_pstorerdfnew_io
                         | S4_pstorerdfnew_rr
+                        | S4_pstorerdfnew_zomap
                         | S4_pstorerdt_abs
                         | S4_pstorerdt_rr
                         | S4_pstorerdtnew_abs
                         | S4_pstorerdtnew_io
                         | S4_pstorerdtnew_rr
+                        | S4_pstorerdtnew_zomap
                         | S4_pstorerff_abs
                         | S4_pstorerff_rr
                         | S4_pstorerffnew_abs
                         | S4_pstorerffnew_io
                         | S4_pstorerffnew_rr
+                        | S4_pstorerffnew_zomap
                         | S4_pstorerft_abs
                         | S4_pstorerft_rr
                         | S4_pstorerftnew_abs
                         | S4_pstorerftnew_io
                         | S4_pstorerftnew_rr
+                        | S4_pstorerftnew_zomap
                         | S4_pstorerhf_abs
                         | S4_pstorerhf_rr
                         | S4_pstorerhfnew_abs
                         | S4_pstorerhfnew_io
                         | S4_pstorerhfnew_rr
+                        | S4_pstorerhfnew_zomap
                         | S4_pstorerhnewf_abs
                         | S4_pstorerhnewf_rr
                         | S4_pstorerhnewfnew_abs
                         | S4_pstorerhnewfnew_io
                         | S4_pstorerhnewfnew_rr
+                        | S4_pstorerhnewfnew_zomap
                         | S4_pstorerhnewt_abs
                         | S4_pstorerhnewt_rr
                         | S4_pstorerhnewtnew_abs
                         | S4_pstorerhnewtnew_io
                         | S4_pstorerhnewtnew_rr
+                        | S4_pstorerhnewtnew_zomap
                         | S4_pstorerht_abs
                         | S4_pstorerht_rr
                         | S4_pstorerhtnew_abs
                         | S4_pstorerhtnew_io
                         | S4_pstorerhtnew_rr
+                        | S4_pstorerhtnew_zomap
                         | S4_pstorerif_abs
                         | S4_pstorerif_rr
                         | S4_pstorerifnew_abs
                         | S4_pstorerifnew_io
                         | S4_pstorerifnew_rr
+                        | S4_pstorerifnew_zomap
                         | S4_pstorerinewf_abs
                         | S4_pstorerinewf_rr
                         | S4_pstorerinewfnew_abs
                         | S4_pstorerinewfnew_io
                         | S4_pstorerinewfnew_rr
+                        | S4_pstorerinewfnew_zomap
                         | S4_pstorerinewt_abs
                         | S4_pstorerinewt_rr
                         | S4_pstorerinewtnew_abs
                         | S4_pstorerinewtnew_io
                         | S4_pstorerinewtnew_rr
+                        | S4_pstorerinewtnew_zomap
                         | S4_pstorerit_abs
                         | S4_pstorerit_rr
                         | S4_pstoreritnew_abs
                         | S4_pstoreritnew_io
                         | S4_pstoreritnew_rr
+                        | S4_pstoreritnew_zomap
                         | S4_stored_locked
                         | S4_storeirb_io
+                        | S4_storeirb_zomap
                         | S4_storeirbf_io
+                        | S4_storeirbf_zomap
                         | S4_storeirbfnew_io
+                        | S4_storeirbfnew_zomap
                         | S4_storeirbt_io
+                        | S4_storeirbt_zomap
                         | S4_storeirbtnew_io
+                        | S4_storeirbtnew_zomap
                         | S4_storeirh_io
+                        | S4_storeirh_zomap
                         | S4_storeirhf_io
+                        | S4_storeirhf_zomap
                         | S4_storeirhfnew_io
+                        | S4_storeirhfnew_zomap
                         | S4_storeirht_io
+                        | S4_storeirht_zomap
                         | S4_storeirhtnew_io
+                        | S4_storeirhtnew_zomap
                         | S4_storeiri_io
+                        | S4_storeiri_zomap
                         | S4_storeirif_io
+                        | S4_storeirif_zomap
                         | S4_storeirifnew_io
+                        | S4_storeirifnew_zomap
                         | S4_storeirit_io
+                        | S4_storeirit_zomap
                         | S4_storeiritnew_io
+                        | S4_storeiritnew_zomap
                         | S4_storerb_ap
                         | S4_storerb_rr
                         | S4_storerb_ur
@@ -1707,6 +1965,7 @@ data HexagonInstruction = A2_abs
                         | S5_popcountp
                         | S5_vasrhrnd
                         | S5_vasrhrnd_goodsyntax
+                        | S6_allocframe_to_raw
                         | S6_rol_i_p
                         | S6_rol_i_p_acc
                         | S6_rol_i_p_and
@@ -1719,840 +1978,977 @@ data HexagonInstruction = A2_abs
                         | S6_rol_i_r_nac
                         | S6_rol_i_r_or
                         | S6_rol_i_r_xacc
+                        | S6_vsplatrbp
+                        | S6_vtrunehb_ppp
+                        | S6_vtrunohb_ppp
+                        | SA1_addi
+                        | SA1_addrx
+                        | SA1_addsp
+                        | SA1_and1
+                        | SA1_clrf
+                        | SA1_clrfnew
+                        | SA1_clrt
+                        | SA1_clrtnew
+                        | SA1_cmpeqi
+                        | SA1_combine0i
+                        | SA1_combine1i
+                        | SA1_combine2i
+                        | SA1_combine3i
+                        | SA1_combinerz
+                        | SA1_combinezr
+                        | SA1_dec
+                        | SA1_inc
+                        | SA1_seti
+                        | SA1_setin1
+                        | SA1_sxtb
+                        | SA1_sxth
+                        | SA1_tfr
+                        | SA1_zxtb
+                        | SA1_zxth
                         | SAVE_REGISTERS_CALL_V4
+                        | SAVE_REGISTERS_CALL_V4STK
+                        | SAVE_REGISTERS_CALL_V4STK_EXT
+                        | SAVE_REGISTERS_CALL_V4STK_EXT_PIC
+                        | SAVE_REGISTERS_CALL_V4STK_PIC
                         | SAVE_REGISTERS_CALL_V4_EXT
+                        | SAVE_REGISTERS_CALL_V4_EXT_PIC
+                        | SAVE_REGISTERS_CALL_V4_PIC
+                        | SL1_loadri_io
+                        | SL1_loadrub_io
+                        | SL2_deallocframe
+                        | SL2_jumpr31
+                        | SL2_jumpr31_f
+                        | SL2_jumpr31_fnew
+                        | SL2_jumpr31_t
+                        | SL2_jumpr31_tnew
+                        | SL2_loadrb_io
+                        | SL2_loadrd_sp
+                        | SL2_loadrh_io
+                        | SL2_loadri_sp
+                        | SL2_loadruh_io
+                        | SL2_return
+                        | SL2_return_f
+                        | SL2_return_fnew
+                        | SL2_return_t
+                        | SL2_return_tnew
+                        | SS1_storeb_io
+                        | SS1_storew_io
+                        | SS2_allocframe
+                        | SS2_storebi0
+                        | SS2_storebi1
+                        | SS2_stored_sp
+                        | SS2_storeh_io
+                        | SS2_storew_sp
+                        | SS2_storewi0
+                        | SS2_storewi1
                         | STACKMAP
                         | STATEPOINT
-                        | STriq_pred_V6
-                        | STriq_pred_V6_128B
-                        | STriq_pred_vec_V6
-                        | STriq_pred_vec_V6_128B
-                        | STriv_pseudo_V6
-                        | STriv_pseudo_V6_128B
-                        | STrivv_indexed
-                        | STrivv_indexed_128B
-                        | STrivv_pseudo_V6
-                        | STrivv_pseudo_V6_128B
+                        | STriw_ctr
                         | STriw_pred
                         | SUBREG_TO_REG
-                        | TCRETURNi
-                        | TCRETURNr
                         | TFRI64_V2_ext
                         | TFRI64_V4
-                        | TFRI_cNotPt_f
-                        | TFRI_cPt_f
-                        | TFRI_f
-                        | TFR_FI
-                        | TFR_FIA
-                        | TFR_PdFalse
-                        | TFR_PdTrue
-                        | V4_SA1_addi
-                        | V4_SA1_addrx
-                        | V4_SA1_addsp
-                        | V4_SA1_and1
-                        | V4_SA1_clrf
-                        | V4_SA1_clrfnew
-                        | V4_SA1_clrt
-                        | V4_SA1_clrtnew
-                        | V4_SA1_cmpeqi
-                        | V4_SA1_combine0i
-                        | V4_SA1_combine1i
-                        | V4_SA1_combine2i
-                        | V4_SA1_combine3i
-                        | V4_SA1_combinerz
-                        | V4_SA1_combinezr
-                        | V4_SA1_dec
-                        | V4_SA1_inc
-                        | V4_SA1_seti
-                        | V4_SA1_setin1
-                        | V4_SA1_sxtb
-                        | V4_SA1_sxth
-                        | V4_SA1_tfr
-                        | V4_SA1_zxtb
-                        | V4_SA1_zxth
-                        | V4_SL1_loadri_io
-                        | V4_SL1_loadrub_io
-                        | V4_SL2_deallocframe
-                        | V4_SL2_jumpr31
-                        | V4_SL2_jumpr31_f
-                        | V4_SL2_jumpr31_fnew
-                        | V4_SL2_jumpr31_t
-                        | V4_SL2_jumpr31_tnew
-                        | V4_SL2_loadrb_io
-                        | V4_SL2_loadrd_sp
-                        | V4_SL2_loadrh_io
-                        | V4_SL2_loadri_sp
-                        | V4_SL2_loadruh_io
-                        | V4_SL2_return
-                        | V4_SL2_return_f
-                        | V4_SL2_return_fnew
-                        | V4_SL2_return_t
-                        | V4_SL2_return_tnew
-                        | V4_SS1_storeb_io
-                        | V4_SS1_storew_io
-                        | V4_SS2_allocframe
-                        | V4_SS2_storebi0
-                        | V4_SS2_storebi1
-                        | V4_SS2_stored_sp
-                        | V4_SS2_storeh_io
-                        | V4_SS2_storew_sp
-                        | V4_SS2_storewi0
-                        | V4_SS2_storewi1
+                        | V6_MAP_equb
+                        | V6_MAP_equb_and
+                        | V6_MAP_equb_ior
+                        | V6_MAP_equb_xor
+                        | V6_MAP_equh
+                        | V6_MAP_equh_and
+                        | V6_MAP_equh_ior
+                        | V6_MAP_equh_xor
+                        | V6_MAP_equw
+                        | V6_MAP_equw_and
+                        | V6_MAP_equw_ior
+                        | V6_MAP_equw_xor
                         | V6_extractw
-                        | V6_extractw_128B
+                        | V6_extractw_alt
+                        | V6_hi
+                        | V6_ld0
+                        | V6_ldcnp0
+                        | V6_ldcnpnt0
+                        | V6_ldcp0
+                        | V6_ldcpnt0
+                        | V6_ldnp0
+                        | V6_ldnpnt0
+                        | V6_ldnt0
+                        | V6_ldntnt0
+                        | V6_ldp0
+                        | V6_ldpnt0
+                        | V6_ldtnp0
+                        | V6_ldtnpnt0
+                        | V6_ldtp0
+                        | V6_ldtpnt0
+                        | V6_ldu0
+                        | V6_lo
+                        | V6_lvsplatb
+                        | V6_lvsplath
                         | V6_lvsplatw
-                        | V6_lvsplatw_128B
                         | V6_pred_and
-                        | V6_pred_and_128B
                         | V6_pred_and_n
-                        | V6_pred_and_n_128B
                         | V6_pred_not
-                        | V6_pred_not_128B
                         | V6_pred_or
-                        | V6_pred_or_128B
                         | V6_pred_or_n
-                        | V6_pred_or_n_128B
                         | V6_pred_scalar2
-                        | V6_pred_scalar2_128B
+                        | V6_pred_scalar2v2
                         | V6_pred_xor
-                        | V6_pred_xor_128B
+                        | V6_shuffeqh
+                        | V6_shuffeqw
+                        | V6_st0
+                        | V6_stn0
+                        | V6_stnnt0
+                        | V6_stnp0
+                        | V6_stnpnt0
+                        | V6_stnq0
+                        | V6_stnqnt0
+                        | V6_stnt0
+                        | V6_stp0
+                        | V6_stpnt0
+                        | V6_stq0
+                        | V6_stqnt0
+                        | V6_stu0
+                        | V6_stunp0
+                        | V6_stup0
                         | V6_vL32Ub_ai
-                        | V6_vL32Ub_ai_128B
                         | V6_vL32Ub_pi
-                        | V6_vL32Ub_pi_128B
                         | V6_vL32Ub_ppu
                         | V6_vL32b_ai
-                        | V6_vL32b_ai_128B
                         | V6_vL32b_cur_ai
-                        | V6_vL32b_cur_ai_128B
+                        | V6_vL32b_cur_npred_ai
+                        | V6_vL32b_cur_npred_pi
+                        | V6_vL32b_cur_npred_ppu
                         | V6_vL32b_cur_pi
-                        | V6_vL32b_cur_pi_128B
                         | V6_vL32b_cur_ppu
+                        | V6_vL32b_cur_pred_ai
+                        | V6_vL32b_cur_pred_pi
+                        | V6_vL32b_cur_pred_ppu
+                        | V6_vL32b_npred_ai
+                        | V6_vL32b_npred_pi
+                        | V6_vL32b_npred_ppu
                         | V6_vL32b_nt_ai
-                        | V6_vL32b_nt_ai_128B
                         | V6_vL32b_nt_cur_ai
-                        | V6_vL32b_nt_cur_ai_128B
+                        | V6_vL32b_nt_cur_npred_ai
+                        | V6_vL32b_nt_cur_npred_pi
+                        | V6_vL32b_nt_cur_npred_ppu
                         | V6_vL32b_nt_cur_pi
-                        | V6_vL32b_nt_cur_pi_128B
                         | V6_vL32b_nt_cur_ppu
+                        | V6_vL32b_nt_cur_pred_ai
+                        | V6_vL32b_nt_cur_pred_pi
+                        | V6_vL32b_nt_cur_pred_ppu
+                        | V6_vL32b_nt_npred_ai
+                        | V6_vL32b_nt_npred_pi
+                        | V6_vL32b_nt_npred_ppu
                         | V6_vL32b_nt_pi
-                        | V6_vL32b_nt_pi_128B
                         | V6_vL32b_nt_ppu
+                        | V6_vL32b_nt_pred_ai
+                        | V6_vL32b_nt_pred_pi
+                        | V6_vL32b_nt_pred_ppu
                         | V6_vL32b_nt_tmp_ai
-                        | V6_vL32b_nt_tmp_ai_128B
+                        | V6_vL32b_nt_tmp_npred_ai
+                        | V6_vL32b_nt_tmp_npred_pi
+                        | V6_vL32b_nt_tmp_npred_ppu
                         | V6_vL32b_nt_tmp_pi
-                        | V6_vL32b_nt_tmp_pi_128B
                         | V6_vL32b_nt_tmp_ppu
+                        | V6_vL32b_nt_tmp_pred_ai
+                        | V6_vL32b_nt_tmp_pred_pi
+                        | V6_vL32b_nt_tmp_pred_ppu
                         | V6_vL32b_pi
-                        | V6_vL32b_pi_128B
                         | V6_vL32b_ppu
+                        | V6_vL32b_pred_ai
+                        | V6_vL32b_pred_pi
+                        | V6_vL32b_pred_ppu
                         | V6_vL32b_tmp_ai
-                        | V6_vL32b_tmp_ai_128B
+                        | V6_vL32b_tmp_npred_ai
+                        | V6_vL32b_tmp_npred_pi
+                        | V6_vL32b_tmp_npred_ppu
                         | V6_vL32b_tmp_pi
-                        | V6_vL32b_tmp_pi_128B
                         | V6_vL32b_tmp_ppu
+                        | V6_vL32b_tmp_pred_ai
+                        | V6_vL32b_tmp_pred_pi
+                        | V6_vL32b_tmp_pred_ppu
                         | V6_vS32Ub_ai
-                        | V6_vS32Ub_ai_128B
                         | V6_vS32Ub_npred_ai
-                        | V6_vS32Ub_npred_ai_128B
                         | V6_vS32Ub_npred_pi
-                        | V6_vS32Ub_npred_pi_128B
                         | V6_vS32Ub_npred_ppu
                         | V6_vS32Ub_pi
-                        | V6_vS32Ub_pi_128B
                         | V6_vS32Ub_ppu
                         | V6_vS32Ub_pred_ai
-                        | V6_vS32Ub_pred_ai_128B
                         | V6_vS32Ub_pred_pi
-                        | V6_vS32Ub_pred_pi_128B
                         | V6_vS32Ub_pred_ppu
                         | V6_vS32b_ai
-                        | V6_vS32b_ai_128B
                         | V6_vS32b_new_ai
-                        | V6_vS32b_new_ai_128B
                         | V6_vS32b_new_npred_ai
-                        | V6_vS32b_new_npred_ai_128B
                         | V6_vS32b_new_npred_pi
-                        | V6_vS32b_new_npred_pi_128B
                         | V6_vS32b_new_npred_ppu
                         | V6_vS32b_new_pi
-                        | V6_vS32b_new_pi_128B
                         | V6_vS32b_new_ppu
                         | V6_vS32b_new_pred_ai
-                        | V6_vS32b_new_pred_ai_128B
                         | V6_vS32b_new_pred_pi
-                        | V6_vS32b_new_pred_pi_128B
                         | V6_vS32b_new_pred_ppu
                         | V6_vS32b_npred_ai
-                        | V6_vS32b_npred_ai_128B
                         | V6_vS32b_npred_pi
-                        | V6_vS32b_npred_pi_128B
                         | V6_vS32b_npred_ppu
                         | V6_vS32b_nqpred_ai
-                        | V6_vS32b_nqpred_ai_128B
                         | V6_vS32b_nqpred_pi
-                        | V6_vS32b_nqpred_pi_128B
                         | V6_vS32b_nqpred_ppu
                         | V6_vS32b_nt_ai
-                        | V6_vS32b_nt_ai_128B
                         | V6_vS32b_nt_new_ai
-                        | V6_vS32b_nt_new_ai_128B
                         | V6_vS32b_nt_new_npred_ai
-                        | V6_vS32b_nt_new_npred_ai_128B
                         | V6_vS32b_nt_new_npred_pi
-                        | V6_vS32b_nt_new_npred_pi_128B
                         | V6_vS32b_nt_new_npred_ppu
                         | V6_vS32b_nt_new_pi
-                        | V6_vS32b_nt_new_pi_128B
                         | V6_vS32b_nt_new_ppu
                         | V6_vS32b_nt_new_pred_ai
-                        | V6_vS32b_nt_new_pred_ai_128B
                         | V6_vS32b_nt_new_pred_pi
-                        | V6_vS32b_nt_new_pred_pi_128B
                         | V6_vS32b_nt_new_pred_ppu
                         | V6_vS32b_nt_npred_ai
-                        | V6_vS32b_nt_npred_ai_128B
                         | V6_vS32b_nt_npred_pi
-                        | V6_vS32b_nt_npred_pi_128B
                         | V6_vS32b_nt_npred_ppu
                         | V6_vS32b_nt_nqpred_ai
-                        | V6_vS32b_nt_nqpred_ai_128B
                         | V6_vS32b_nt_nqpred_pi
-                        | V6_vS32b_nt_nqpred_pi_128B
                         | V6_vS32b_nt_nqpred_ppu
                         | V6_vS32b_nt_pi
-                        | V6_vS32b_nt_pi_128B
                         | V6_vS32b_nt_ppu
                         | V6_vS32b_nt_pred_ai
-                        | V6_vS32b_nt_pred_ai_128B
                         | V6_vS32b_nt_pred_pi
-                        | V6_vS32b_nt_pred_pi_128B
                         | V6_vS32b_nt_pred_ppu
                         | V6_vS32b_nt_qpred_ai
-                        | V6_vS32b_nt_qpred_ai_128B
                         | V6_vS32b_nt_qpred_pi
-                        | V6_vS32b_nt_qpred_pi_128B
                         | V6_vS32b_nt_qpred_ppu
                         | V6_vS32b_pi
-                        | V6_vS32b_pi_128B
                         | V6_vS32b_ppu
                         | V6_vS32b_pred_ai
-                        | V6_vS32b_pred_ai_128B
                         | V6_vS32b_pred_pi
-                        | V6_vS32b_pred_pi_128B
                         | V6_vS32b_pred_ppu
                         | V6_vS32b_qpred_ai
-                        | V6_vS32b_qpred_ai_128B
                         | V6_vS32b_qpred_pi
-                        | V6_vS32b_qpred_pi_128B
                         | V6_vS32b_qpred_ppu
+                        | V6_vS32b_srls_ai
+                        | V6_vS32b_srls_pi
+                        | V6_vS32b_srls_ppu
+                        | V6_vabsb
+                        | V6_vabsb_alt
+                        | V6_vabsb_sat
+                        | V6_vabsb_sat_alt
                         | V6_vabsdiffh
-                        | V6_vabsdiffh_128B
+                        | V6_vabsdiffh_alt
                         | V6_vabsdiffub
-                        | V6_vabsdiffub_128B
+                        | V6_vabsdiffub_alt
                         | V6_vabsdiffuh
-                        | V6_vabsdiffuh_128B
+                        | V6_vabsdiffuh_alt
                         | V6_vabsdiffw
-                        | V6_vabsdiffw_128B
+                        | V6_vabsdiffw_alt
                         | V6_vabsh
-                        | V6_vabsh_128B
+                        | V6_vabsh_alt
                         | V6_vabsh_sat
-                        | V6_vabsh_sat_128B
+                        | V6_vabsh_sat_alt
+                        | V6_vabsub_alt
+                        | V6_vabsuh_alt
+                        | V6_vabsuw_alt
                         | V6_vabsw
-                        | V6_vabsw_128B
+                        | V6_vabsw_alt
                         | V6_vabsw_sat
-                        | V6_vabsw_sat_128B
+                        | V6_vabsw_sat_alt
                         | V6_vaddb
-                        | V6_vaddb_128B
+                        | V6_vaddb_alt
                         | V6_vaddb_dv
-                        | V6_vaddb_dv_128B
+                        | V6_vaddb_dv_alt
                         | V6_vaddbnq
-                        | V6_vaddbnq_128B
+                        | V6_vaddbnq_alt
                         | V6_vaddbq
-                        | V6_vaddbq_128B
+                        | V6_vaddbq_alt
+                        | V6_vaddbsat
+                        | V6_vaddbsat_alt
+                        | V6_vaddbsat_dv
+                        | V6_vaddbsat_dv_alt
+                        | V6_vaddcarry
+                        | V6_vaddcarryo
+                        | V6_vaddcarrysat
+                        | V6_vaddclbh
+                        | V6_vaddclbw
                         | V6_vaddh
-                        | V6_vaddh_128B
+                        | V6_vaddh_alt
                         | V6_vaddh_dv
-                        | V6_vaddh_dv_128B
+                        | V6_vaddh_dv_alt
                         | V6_vaddhnq
-                        | V6_vaddhnq_128B
+                        | V6_vaddhnq_alt
                         | V6_vaddhq
-                        | V6_vaddhq_128B
+                        | V6_vaddhq_alt
                         | V6_vaddhsat
-                        | V6_vaddhsat_128B
+                        | V6_vaddhsat_alt
                         | V6_vaddhsat_dv
-                        | V6_vaddhsat_dv_128B
+                        | V6_vaddhsat_dv_alt
                         | V6_vaddhw
-                        | V6_vaddhw_128B
+                        | V6_vaddhw_acc
+                        | V6_vaddhw_acc_alt
+                        | V6_vaddhw_alt
                         | V6_vaddubh
-                        | V6_vaddubh_128B
+                        | V6_vaddubh_acc
+                        | V6_vaddubh_acc_alt
+                        | V6_vaddubh_alt
                         | V6_vaddubsat
-                        | V6_vaddubsat_128B
+                        | V6_vaddubsat_alt
                         | V6_vaddubsat_dv
-                        | V6_vaddubsat_dv_128B
+                        | V6_vaddubsat_dv_alt
+                        | V6_vaddububb_sat
                         | V6_vadduhsat
-                        | V6_vadduhsat_128B
+                        | V6_vadduhsat_alt
                         | V6_vadduhsat_dv
-                        | V6_vadduhsat_dv_128B
+                        | V6_vadduhsat_dv_alt
                         | V6_vadduhw
-                        | V6_vadduhw_128B
+                        | V6_vadduhw_acc
+                        | V6_vadduhw_acc_alt
+                        | V6_vadduhw_alt
+                        | V6_vadduwsat
+                        | V6_vadduwsat_alt
+                        | V6_vadduwsat_dv
+                        | V6_vadduwsat_dv_alt
                         | V6_vaddw
-                        | V6_vaddw_128B
+                        | V6_vaddw_alt
                         | V6_vaddw_dv
-                        | V6_vaddw_dv_128B
+                        | V6_vaddw_dv_alt
                         | V6_vaddwnq
-                        | V6_vaddwnq_128B
+                        | V6_vaddwnq_alt
                         | V6_vaddwq
-                        | V6_vaddwq_128B
+                        | V6_vaddwq_alt
                         | V6_vaddwsat
-                        | V6_vaddwsat_128B
+                        | V6_vaddwsat_alt
                         | V6_vaddwsat_dv
-                        | V6_vaddwsat_dv_128B
+                        | V6_vaddwsat_dv_alt
                         | V6_valignb
-                        | V6_valignb_128B
                         | V6_valignbi
-                        | V6_valignbi_128B
                         | V6_vand
-                        | V6_vand_128B
+                        | V6_vandnqrt
+                        | V6_vandnqrt_acc
+                        | V6_vandnqrt_acc_alt
+                        | V6_vandnqrt_alt
                         | V6_vandqrt
-                        | V6_vandqrt_128B
                         | V6_vandqrt_acc
-                        | V6_vandqrt_acc_128B
+                        | V6_vandqrt_acc_alt
+                        | V6_vandqrt_alt
+                        | V6_vandvnqv
+                        | V6_vandvqv
                         | V6_vandvrt
-                        | V6_vandvrt_128B
                         | V6_vandvrt_acc
-                        | V6_vandvrt_acc_128B
+                        | V6_vandvrt_acc_alt
+                        | V6_vandvrt_alt
                         | V6_vaslh
-                        | V6_vaslh_128B
+                        | V6_vaslh_acc
+                        | V6_vaslh_acc_alt
+                        | V6_vaslh_alt
                         | V6_vaslhv
-                        | V6_vaslhv_128B
+                        | V6_vaslhv_alt
                         | V6_vaslw
-                        | V6_vaslw_128B
                         | V6_vaslw_acc
-                        | V6_vaslw_acc_128B
+                        | V6_vaslw_acc_alt
+                        | V6_vaslw_alt
                         | V6_vaslwv
-                        | V6_vaslwv_128B
+                        | V6_vaslwv_alt
+                        | V6_vasr_into
+                        | V6_vasr_into_alt
                         | V6_vasrh
-                        | V6_vasrh_128B
+                        | V6_vasrh_acc
+                        | V6_vasrh_acc_alt
+                        | V6_vasrh_alt
                         | V6_vasrhbrndsat
-                        | V6_vasrhbrndsat_128B
+                        | V6_vasrhbrndsat_alt
+                        | V6_vasrhbsat
                         | V6_vasrhubrndsat
-                        | V6_vasrhubrndsat_128B
+                        | V6_vasrhubrndsat_alt
                         | V6_vasrhubsat
-                        | V6_vasrhubsat_128B
+                        | V6_vasrhubsat_alt
                         | V6_vasrhv
-                        | V6_vasrhv_128B
+                        | V6_vasrhv_alt
+                        | V6_vasruhubrndsat
+                        | V6_vasruhubsat
+                        | V6_vasruwuhrndsat
+                        | V6_vasruwuhsat
                         | V6_vasrw
-                        | V6_vasrw_128B
                         | V6_vasrw_acc
-                        | V6_vasrw_acc_128B
+                        | V6_vasrw_acc_alt
+                        | V6_vasrw_alt
                         | V6_vasrwh
-                        | V6_vasrwh_128B
+                        | V6_vasrwh_alt
                         | V6_vasrwhrndsat
-                        | V6_vasrwhrndsat_128B
+                        | V6_vasrwhrndsat_alt
                         | V6_vasrwhsat
-                        | V6_vasrwhsat_128B
+                        | V6_vasrwhsat_alt
+                        | V6_vasrwuhrndsat
                         | V6_vasrwuhsat
-                        | V6_vasrwuhsat_128B
+                        | V6_vasrwuhsat_alt
                         | V6_vasrwv
-                        | V6_vasrwv_128B
+                        | V6_vasrwv_alt
                         | V6_vassign
-                        | V6_vassign_128B
+                        | V6_vassignp
+                        | V6_vavgb
+                        | V6_vavgb_alt
+                        | V6_vavgbrnd
+                        | V6_vavgbrnd_alt
                         | V6_vavgh
-                        | V6_vavgh_128B
+                        | V6_vavgh_alt
                         | V6_vavghrnd
-                        | V6_vavghrnd_128B
+                        | V6_vavghrnd_alt
                         | V6_vavgub
-                        | V6_vavgub_128B
+                        | V6_vavgub_alt
                         | V6_vavgubrnd
-                        | V6_vavgubrnd_128B
+                        | V6_vavgubrnd_alt
                         | V6_vavguh
-                        | V6_vavguh_128B
+                        | V6_vavguh_alt
                         | V6_vavguhrnd
-                        | V6_vavguhrnd_128B
+                        | V6_vavguhrnd_alt
+                        | V6_vavguw
+                        | V6_vavguw_alt
+                        | V6_vavguwrnd
+                        | V6_vavguwrnd_alt
                         | V6_vavgw
-                        | V6_vavgw_128B
+                        | V6_vavgw_alt
                         | V6_vavgwrnd
-                        | V6_vavgwrnd_128B
+                        | V6_vavgwrnd_alt
                         | V6_vccombine
-                        | V6_vccombine_128B
                         | V6_vcl0h
-                        | V6_vcl0h_128B
+                        | V6_vcl0h_alt
                         | V6_vcl0w
-                        | V6_vcl0w_128B
+                        | V6_vcl0w_alt
                         | V6_vcmov
-                        | V6_vcmov_128B
                         | V6_vcombine
-                        | V6_vcombine_128B
+                        | V6_vd0
+                        | V6_vdd0
                         | V6_vdeal
-                        | V6_vdeal_128B
                         | V6_vdealb
                         | V6_vdealb4w
-                        | V6_vdealb4w_128B
-                        | V6_vdealb_128B
+                        | V6_vdealb4w_alt
+                        | V6_vdealb_alt
                         | V6_vdealh
-                        | V6_vdealh_128B
+                        | V6_vdealh_alt
                         | V6_vdealvdd
-                        | V6_vdealvdd_128B
                         | V6_vdelta
-                        | V6_vdelta_128B
                         | V6_vdmpybus
-                        | V6_vdmpybus_128B
                         | V6_vdmpybus_acc
-                        | V6_vdmpybus_acc_128B
+                        | V6_vdmpybus_acc_alt
+                        | V6_vdmpybus_alt
                         | V6_vdmpybus_dv
-                        | V6_vdmpybus_dv_128B
                         | V6_vdmpybus_dv_acc
-                        | V6_vdmpybus_dv_acc_128B
+                        | V6_vdmpybus_dv_acc_alt
+                        | V6_vdmpybus_dv_alt
                         | V6_vdmpyhb
-                        | V6_vdmpyhb_128B
                         | V6_vdmpyhb_acc
-                        | V6_vdmpyhb_acc_128B
+                        | V6_vdmpyhb_acc_alt
+                        | V6_vdmpyhb_alt
                         | V6_vdmpyhb_dv
-                        | V6_vdmpyhb_dv_128B
                         | V6_vdmpyhb_dv_acc
-                        | V6_vdmpyhb_dv_acc_128B
+                        | V6_vdmpyhb_dv_acc_alt
+                        | V6_vdmpyhb_dv_alt
                         | V6_vdmpyhisat
-                        | V6_vdmpyhisat_128B
                         | V6_vdmpyhisat_acc
-                        | V6_vdmpyhisat_acc_128B
+                        | V6_vdmpyhisat_acc_alt
+                        | V6_vdmpyhisat_alt
                         | V6_vdmpyhsat
-                        | V6_vdmpyhsat_128B
                         | V6_vdmpyhsat_acc
-                        | V6_vdmpyhsat_acc_128B
+                        | V6_vdmpyhsat_acc_alt
+                        | V6_vdmpyhsat_alt
                         | V6_vdmpyhsuisat
-                        | V6_vdmpyhsuisat_128B
                         | V6_vdmpyhsuisat_acc
-                        | V6_vdmpyhsuisat_acc_128B
+                        | V6_vdmpyhsuisat_acc_alt
+                        | V6_vdmpyhsuisat_alt
                         | V6_vdmpyhsusat
-                        | V6_vdmpyhsusat_128B
                         | V6_vdmpyhsusat_acc
-                        | V6_vdmpyhsusat_acc_128B
+                        | V6_vdmpyhsusat_acc_alt
+                        | V6_vdmpyhsusat_alt
                         | V6_vdmpyhvsat
-                        | V6_vdmpyhvsat_128B
                         | V6_vdmpyhvsat_acc
-                        | V6_vdmpyhvsat_acc_128B
+                        | V6_vdmpyhvsat_acc_alt
+                        | V6_vdmpyhvsat_alt
                         | V6_vdsaduh
-                        | V6_vdsaduh_128B
                         | V6_vdsaduh_acc
-                        | V6_vdsaduh_acc_128B
+                        | V6_vdsaduh_acc_alt
+                        | V6_vdsaduh_alt
                         | V6_veqb
-                        | V6_veqb_128B
                         | V6_veqb_and
-                        | V6_veqb_and_128B
                         | V6_veqb_or
-                        | V6_veqb_or_128B
                         | V6_veqb_xor
-                        | V6_veqb_xor_128B
                         | V6_veqh
-                        | V6_veqh_128B
                         | V6_veqh_and
-                        | V6_veqh_and_128B
                         | V6_veqh_or
-                        | V6_veqh_or_128B
                         | V6_veqh_xor
-                        | V6_veqh_xor_128B
                         | V6_veqw
-                        | V6_veqw_128B
                         | V6_veqw_and
-                        | V6_veqw_and_128B
                         | V6_veqw_or
-                        | V6_veqw_or_128B
                         | V6_veqw_xor
-                        | V6_veqw_xor_128B
+                        | V6_vgathermh
+                        | V6_vgathermh_pseudo
+                        | V6_vgathermhq
+                        | V6_vgathermhq_pseudo
+                        | V6_vgathermhw
+                        | V6_vgathermhw_pseudo
+                        | V6_vgathermhwq
+                        | V6_vgathermhwq_pseudo
+                        | V6_vgathermw
+                        | V6_vgathermw_pseudo
+                        | V6_vgathermwq
+                        | V6_vgathermwq_pseudo
                         | V6_vgtb
-                        | V6_vgtb_128B
                         | V6_vgtb_and
-                        | V6_vgtb_and_128B
                         | V6_vgtb_or
-                        | V6_vgtb_or_128B
                         | V6_vgtb_xor
-                        | V6_vgtb_xor_128B
                         | V6_vgth
-                        | V6_vgth_128B
                         | V6_vgth_and
-                        | V6_vgth_and_128B
                         | V6_vgth_or
-                        | V6_vgth_or_128B
                         | V6_vgth_xor
-                        | V6_vgth_xor_128B
                         | V6_vgtub
-                        | V6_vgtub_128B
                         | V6_vgtub_and
-                        | V6_vgtub_and_128B
                         | V6_vgtub_or
-                        | V6_vgtub_or_128B
                         | V6_vgtub_xor
-                        | V6_vgtub_xor_128B
                         | V6_vgtuh
-                        | V6_vgtuh_128B
                         | V6_vgtuh_and
-                        | V6_vgtuh_and_128B
                         | V6_vgtuh_or
-                        | V6_vgtuh_or_128B
                         | V6_vgtuh_xor
-                        | V6_vgtuh_xor_128B
                         | V6_vgtuw
-                        | V6_vgtuw_128B
                         | V6_vgtuw_and
-                        | V6_vgtuw_and_128B
                         | V6_vgtuw_or
-                        | V6_vgtuw_or_128B
                         | V6_vgtuw_xor
-                        | V6_vgtuw_xor_128B
                         | V6_vgtw
-                        | V6_vgtw_128B
                         | V6_vgtw_and
-                        | V6_vgtw_and_128B
                         | V6_vgtw_or
-                        | V6_vgtw_or_128B
                         | V6_vgtw_xor
-                        | V6_vgtw_xor_128B
                         | V6_vhist
                         | V6_vhistq
                         | V6_vinsertwr
-                        | V6_vinsertwr_128B
                         | V6_vlalignb
-                        | V6_vlalignb_128B
                         | V6_vlalignbi
-                        | V6_vlalignbi_128B
+                        | V6_vlsrb
                         | V6_vlsrh
-                        | V6_vlsrh_128B
+                        | V6_vlsrh_alt
                         | V6_vlsrhv
-                        | V6_vlsrhv_128B
+                        | V6_vlsrhv_alt
                         | V6_vlsrw
-                        | V6_vlsrw_128B
+                        | V6_vlsrw_alt
                         | V6_vlsrwv
-                        | V6_vlsrwv_128B
+                        | V6_vlsrwv_alt
+                        | V6_vlut4
                         | V6_vlutvvb
-                        | V6_vlutvvb_128B
+                        | V6_vlutvvb_nm
                         | V6_vlutvvb_oracc
-                        | V6_vlutvvb_oracc_128B
+                        | V6_vlutvvb_oracci
+                        | V6_vlutvvbi
                         | V6_vlutvwh
-                        | V6_vlutvwh_128B
+                        | V6_vlutvwh_nm
                         | V6_vlutvwh_oracc
-                        | V6_vlutvwh_oracc_128B
+                        | V6_vlutvwh_oracci
+                        | V6_vlutvwhi
+                        | V6_vmaxb
+                        | V6_vmaxb_alt
                         | V6_vmaxh
-                        | V6_vmaxh_128B
+                        | V6_vmaxh_alt
                         | V6_vmaxub
-                        | V6_vmaxub_128B
+                        | V6_vmaxub_alt
                         | V6_vmaxuh
-                        | V6_vmaxuh_128B
+                        | V6_vmaxuh_alt
                         | V6_vmaxw
-                        | V6_vmaxw_128B
+                        | V6_vmaxw_alt
+                        | V6_vminb
+                        | V6_vminb_alt
                         | V6_vminh
-                        | V6_vminh_128B
+                        | V6_vminh_alt
                         | V6_vminub
-                        | V6_vminub_128B
+                        | V6_vminub_alt
                         | V6_vminuh
-                        | V6_vminuh_128B
+                        | V6_vminuh_alt
                         | V6_vminw
-                        | V6_vminw_128B
+                        | V6_vminw_alt
                         | V6_vmpabus
-                        | V6_vmpabus_128B
                         | V6_vmpabus_acc
-                        | V6_vmpabus_acc_128B
+                        | V6_vmpabus_acc_alt
+                        | V6_vmpabus_alt
                         | V6_vmpabusv
-                        | V6_vmpabusv_128B
+                        | V6_vmpabusv_alt
+                        | V6_vmpabuu
+                        | V6_vmpabuu_acc
+                        | V6_vmpabuu_acc_alt
+                        | V6_vmpabuu_alt
                         | V6_vmpabuuv
-                        | V6_vmpabuuv_128B
+                        | V6_vmpabuuv_alt
                         | V6_vmpahb
-                        | V6_vmpahb_128B
                         | V6_vmpahb_acc
-                        | V6_vmpahb_acc_128B
+                        | V6_vmpahb_acc_alt
+                        | V6_vmpahb_alt
+                        | V6_vmpahhsat
+                        | V6_vmpauhb
+                        | V6_vmpauhb_acc
+                        | V6_vmpauhb_acc_alt
+                        | V6_vmpauhb_alt
+                        | V6_vmpauhuhsat
+                        | V6_vmpsuhuhsat
                         | V6_vmpybus
-                        | V6_vmpybus_128B
                         | V6_vmpybus_acc
-                        | V6_vmpybus_acc_128B
+                        | V6_vmpybus_acc_alt
+                        | V6_vmpybus_alt
                         | V6_vmpybusv
-                        | V6_vmpybusv_128B
                         | V6_vmpybusv_acc
-                        | V6_vmpybusv_acc_128B
+                        | V6_vmpybusv_acc_alt
+                        | V6_vmpybusv_alt
                         | V6_vmpybv
-                        | V6_vmpybv_128B
                         | V6_vmpybv_acc
-                        | V6_vmpybv_acc_128B
+                        | V6_vmpybv_acc_alt
+                        | V6_vmpybv_alt
                         | V6_vmpyewuh
-                        | V6_vmpyewuh_128B
+                        | V6_vmpyewuh_64
+                        | V6_vmpyewuh_alt
                         | V6_vmpyh
-                        | V6_vmpyh_128B
+                        | V6_vmpyh_acc
+                        | V6_vmpyh_acc_alt
+                        | V6_vmpyh_alt
                         | V6_vmpyhsat_acc
-                        | V6_vmpyhsat_acc_128B
+                        | V6_vmpyhsat_acc_alt
                         | V6_vmpyhsrs
-                        | V6_vmpyhsrs_128B
+                        | V6_vmpyhsrs_alt
                         | V6_vmpyhss
-                        | V6_vmpyhss_128B
+                        | V6_vmpyhss_alt
                         | V6_vmpyhus
-                        | V6_vmpyhus_128B
                         | V6_vmpyhus_acc
-                        | V6_vmpyhus_acc_128B
+                        | V6_vmpyhus_acc_alt
+                        | V6_vmpyhus_alt
                         | V6_vmpyhv
-                        | V6_vmpyhv_128B
                         | V6_vmpyhv_acc
-                        | V6_vmpyhv_acc_128B
+                        | V6_vmpyhv_acc_alt
+                        | V6_vmpyhv_alt
                         | V6_vmpyhvsrs
-                        | V6_vmpyhvsrs_128B
+                        | V6_vmpyhvsrs_alt
                         | V6_vmpyieoh
-                        | V6_vmpyieoh_128B
                         | V6_vmpyiewh_acc
-                        | V6_vmpyiewh_acc_128B
+                        | V6_vmpyiewh_acc_alt
                         | V6_vmpyiewuh
-                        | V6_vmpyiewuh_128B
                         | V6_vmpyiewuh_acc
-                        | V6_vmpyiewuh_acc_128B
+                        | V6_vmpyiewuh_acc_alt
+                        | V6_vmpyiewuh_alt
                         | V6_vmpyih
-                        | V6_vmpyih_128B
                         | V6_vmpyih_acc
-                        | V6_vmpyih_acc_128B
+                        | V6_vmpyih_acc_alt
+                        | V6_vmpyih_alt
                         | V6_vmpyihb
-                        | V6_vmpyihb_128B
                         | V6_vmpyihb_acc
-                        | V6_vmpyihb_acc_128B
+                        | V6_vmpyihb_acc_alt
+                        | V6_vmpyihb_alt
                         | V6_vmpyiowh
-                        | V6_vmpyiowh_128B
+                        | V6_vmpyiowh_alt
                         | V6_vmpyiwb
-                        | V6_vmpyiwb_128B
                         | V6_vmpyiwb_acc
-                        | V6_vmpyiwb_acc_128B
+                        | V6_vmpyiwb_acc_alt
+                        | V6_vmpyiwb_alt
                         | V6_vmpyiwh
-                        | V6_vmpyiwh_128B
                         | V6_vmpyiwh_acc
-                        | V6_vmpyiwh_acc_128B
+                        | V6_vmpyiwh_acc_alt
+                        | V6_vmpyiwh_alt
+                        | V6_vmpyiwub
+                        | V6_vmpyiwub_acc
+                        | V6_vmpyiwub_acc_alt
+                        | V6_vmpyiwub_alt
                         | V6_vmpyowh
-                        | V6_vmpyowh_128B
+                        | V6_vmpyowh_64_acc
+                        | V6_vmpyowh_alt
                         | V6_vmpyowh_rnd
-                        | V6_vmpyowh_rnd_128B
+                        | V6_vmpyowh_rnd_alt
                         | V6_vmpyowh_rnd_sacc
-                        | V6_vmpyowh_rnd_sacc_128B
+                        | V6_vmpyowh_rnd_sacc_alt
                         | V6_vmpyowh_sacc
-                        | V6_vmpyowh_sacc_128B
+                        | V6_vmpyowh_sacc_alt
                         | V6_vmpyub
-                        | V6_vmpyub_128B
                         | V6_vmpyub_acc
-                        | V6_vmpyub_acc_128B
+                        | V6_vmpyub_acc_alt
+                        | V6_vmpyub_alt
                         | V6_vmpyubv
-                        | V6_vmpyubv_128B
                         | V6_vmpyubv_acc
-                        | V6_vmpyubv_acc_128B
+                        | V6_vmpyubv_acc_alt
+                        | V6_vmpyubv_alt
                         | V6_vmpyuh
-                        | V6_vmpyuh_128B
                         | V6_vmpyuh_acc
-                        | V6_vmpyuh_acc_128B
+                        | V6_vmpyuh_acc_alt
+                        | V6_vmpyuh_alt
+                        | V6_vmpyuhe
+                        | V6_vmpyuhe_acc
                         | V6_vmpyuhv
-                        | V6_vmpyuhv_128B
                         | V6_vmpyuhv_acc
-                        | V6_vmpyuhv_acc_128B
+                        | V6_vmpyuhv_acc_alt
+                        | V6_vmpyuhv_alt
                         | V6_vmux
-                        | V6_vmux_128B
+                        | V6_vnavgb
+                        | V6_vnavgb_alt
                         | V6_vnavgh
-                        | V6_vnavgh_128B
+                        | V6_vnavgh_alt
                         | V6_vnavgub
-                        | V6_vnavgub_128B
+                        | V6_vnavgub_alt
                         | V6_vnavgw
-                        | V6_vnavgw_128B
+                        | V6_vnavgw_alt
                         | V6_vnccombine
-                        | V6_vnccombine_128B
                         | V6_vncmov
-                        | V6_vncmov_128B
                         | V6_vnormamth
-                        | V6_vnormamth_128B
+                        | V6_vnormamth_alt
                         | V6_vnormamtw
-                        | V6_vnormamtw_128B
+                        | V6_vnormamtw_alt
                         | V6_vnot
-                        | V6_vnot_128B
                         | V6_vor
-                        | V6_vor_128B
                         | V6_vpackeb
-                        | V6_vpackeb_128B
+                        | V6_vpackeb_alt
                         | V6_vpackeh
-                        | V6_vpackeh_128B
+                        | V6_vpackeh_alt
                         | V6_vpackhb_sat
-                        | V6_vpackhb_sat_128B
+                        | V6_vpackhb_sat_alt
                         | V6_vpackhub_sat
-                        | V6_vpackhub_sat_128B
+                        | V6_vpackhub_sat_alt
                         | V6_vpackob
-                        | V6_vpackob_128B
+                        | V6_vpackob_alt
                         | V6_vpackoh
-                        | V6_vpackoh_128B
+                        | V6_vpackoh_alt
                         | V6_vpackwh_sat
-                        | V6_vpackwh_sat_128B
+                        | V6_vpackwh_sat_alt
                         | V6_vpackwuh_sat
-                        | V6_vpackwuh_sat_128B
+                        | V6_vpackwuh_sat_alt
                         | V6_vpopcounth
-                        | V6_vpopcounth_128B
+                        | V6_vpopcounth_alt
+                        | V6_vprefixqb
+                        | V6_vprefixqh
+                        | V6_vprefixqw
                         | V6_vrdelta
-                        | V6_vrdelta_128B
+                        | V6_vrmpybub_rtt
+                        | V6_vrmpybub_rtt_acc
+                        | V6_vrmpybub_rtt_acc_alt
+                        | V6_vrmpybub_rtt_alt
                         | V6_vrmpybus
-                        | V6_vrmpybus_128B
                         | V6_vrmpybus_acc
-                        | V6_vrmpybus_acc_128B
+                        | V6_vrmpybus_acc_alt
+                        | V6_vrmpybus_alt
                         | V6_vrmpybusi
-                        | V6_vrmpybusi_128B
                         | V6_vrmpybusi_acc
-                        | V6_vrmpybusi_acc_128B
+                        | V6_vrmpybusi_acc_alt
+                        | V6_vrmpybusi_alt
                         | V6_vrmpybusv
-                        | V6_vrmpybusv_128B
                         | V6_vrmpybusv_acc
-                        | V6_vrmpybusv_acc_128B
+                        | V6_vrmpybusv_acc_alt
+                        | V6_vrmpybusv_alt
                         | V6_vrmpybv
-                        | V6_vrmpybv_128B
                         | V6_vrmpybv_acc
-                        | V6_vrmpybv_acc_128B
+                        | V6_vrmpybv_acc_alt
+                        | V6_vrmpybv_alt
                         | V6_vrmpyub
-                        | V6_vrmpyub_128B
                         | V6_vrmpyub_acc
-                        | V6_vrmpyub_acc_128B
+                        | V6_vrmpyub_acc_alt
+                        | V6_vrmpyub_alt
+                        | V6_vrmpyub_rtt
+                        | V6_vrmpyub_rtt_acc
+                        | V6_vrmpyub_rtt_acc_alt
+                        | V6_vrmpyub_rtt_alt
                         | V6_vrmpyubi
-                        | V6_vrmpyubi_128B
                         | V6_vrmpyubi_acc
-                        | V6_vrmpyubi_acc_128B
+                        | V6_vrmpyubi_acc_alt
+                        | V6_vrmpyubi_alt
                         | V6_vrmpyubv
-                        | V6_vrmpyubv_128B
                         | V6_vrmpyubv_acc
-                        | V6_vrmpyubv_acc_128B
+                        | V6_vrmpyubv_acc_alt
+                        | V6_vrmpyubv_alt
+                        | V6_vrmpyzbb_rt
+                        | V6_vrmpyzbb_rt_acc
+                        | V6_vrmpyzbb_rx
+                        | V6_vrmpyzbb_rx_acc
+                        | V6_vrmpyzbub_rt
+                        | V6_vrmpyzbub_rt_acc
+                        | V6_vrmpyzbub_rx
+                        | V6_vrmpyzbub_rx_acc
+                        | V6_vrmpyzcb_rt
+                        | V6_vrmpyzcb_rt_acc
+                        | V6_vrmpyzcb_rx
+                        | V6_vrmpyzcb_rx_acc
+                        | V6_vrmpyzcbs_rt
+                        | V6_vrmpyzcbs_rt_acc
+                        | V6_vrmpyzcbs_rx
+                        | V6_vrmpyzcbs_rx_acc
+                        | V6_vrmpyznb_rt
+                        | V6_vrmpyznb_rt_acc
+                        | V6_vrmpyznb_rx
+                        | V6_vrmpyznb_rx_acc
                         | V6_vror
-                        | V6_vror_128B
+                        | V6_vrotr
+                        | V6_vrotr_alt
                         | V6_vroundhb
-                        | V6_vroundhb_128B
+                        | V6_vroundhb_alt
                         | V6_vroundhub
-                        | V6_vroundhub_128B
+                        | V6_vroundhub_alt
+                        | V6_vrounduhub
+                        | V6_vrounduhub_alt
+                        | V6_vrounduwuh
+                        | V6_vrounduwuh_alt
                         | V6_vroundwh
-                        | V6_vroundwh_128B
+                        | V6_vroundwh_alt
                         | V6_vroundwuh
-                        | V6_vroundwuh_128B
+                        | V6_vroundwuh_alt
                         | V6_vrsadubi
-                        | V6_vrsadubi_128B
                         | V6_vrsadubi_acc
-                        | V6_vrsadubi_acc_128B
+                        | V6_vrsadubi_acc_alt
+                        | V6_vrsadubi_alt
+                        | V6_vsatdw
                         | V6_vsathub
-                        | V6_vsathub_128B
+                        | V6_vsathub_alt
+                        | V6_vsatuwuh
+                        | V6_vsatuwuh_alt
                         | V6_vsatwh
-                        | V6_vsatwh_128B
+                        | V6_vsatwh_alt
                         | V6_vsb
-                        | V6_vsb_128B
+                        | V6_vsb_alt
+                        | V6_vscattermh
+                        | V6_vscattermh_add
+                        | V6_vscattermh_add_alt
+                        | V6_vscattermh_alt
+                        | V6_vscattermhq
+                        | V6_vscattermhq_alt
+                        | V6_vscattermhw
+                        | V6_vscattermhw_add
+                        | V6_vscattermhwq
+                        | V6_vscattermw
+                        | V6_vscattermw_add
+                        | V6_vscattermw_add_alt
+                        | V6_vscattermw_alt
+                        | V6_vscattermwh_add_alt
+                        | V6_vscattermwh_alt
+                        | V6_vscattermwhq_alt
+                        | V6_vscattermwq
+                        | V6_vscattermwq_alt
                         | V6_vsh
-                        | V6_vsh_128B
+                        | V6_vsh_alt
                         | V6_vshufeh
-                        | V6_vshufeh_128B
+                        | V6_vshufeh_alt
                         | V6_vshuff
-                        | V6_vshuff_128B
                         | V6_vshuffb
-                        | V6_vshuffb_128B
+                        | V6_vshuffb_alt
                         | V6_vshuffeb
-                        | V6_vshuffeb_128B
+                        | V6_vshuffeb_alt
                         | V6_vshuffh
-                        | V6_vshuffh_128B
+                        | V6_vshuffh_alt
                         | V6_vshuffob
-                        | V6_vshuffob_128B
+                        | V6_vshuffob_alt
                         | V6_vshuffvdd
-                        | V6_vshuffvdd_128B
                         | V6_vshufoeb
-                        | V6_vshufoeb_128B
+                        | V6_vshufoeb_alt
                         | V6_vshufoeh
-                        | V6_vshufoeh_128B
+                        | V6_vshufoeh_alt
                         | V6_vshufoh
-                        | V6_vshufoh_128B
+                        | V6_vshufoh_alt
                         | V6_vsubb
-                        | V6_vsubb_128B
+                        | V6_vsubb_alt
                         | V6_vsubb_dv
-                        | V6_vsubb_dv_128B
+                        | V6_vsubb_dv_alt
                         | V6_vsubbnq
-                        | V6_vsubbnq_128B
+                        | V6_vsubbnq_alt
                         | V6_vsubbq
-                        | V6_vsubbq_128B
+                        | V6_vsubbq_alt
+                        | V6_vsubbsat
+                        | V6_vsubbsat_alt
+                        | V6_vsubbsat_dv
+                        | V6_vsubbsat_dv_alt
+                        | V6_vsubcarry
+                        | V6_vsubcarryo
                         | V6_vsubh
-                        | V6_vsubh_128B
+                        | V6_vsubh_alt
                         | V6_vsubh_dv
-                        | V6_vsubh_dv_128B
+                        | V6_vsubh_dv_alt
                         | V6_vsubhnq
-                        | V6_vsubhnq_128B
+                        | V6_vsubhnq_alt
                         | V6_vsubhq
-                        | V6_vsubhq_128B
+                        | V6_vsubhq_alt
                         | V6_vsubhsat
-                        | V6_vsubhsat_128B
+                        | V6_vsubhsat_alt
                         | V6_vsubhsat_dv
-                        | V6_vsubhsat_dv_128B
+                        | V6_vsubhsat_dv_alt
                         | V6_vsubhw
-                        | V6_vsubhw_128B
+                        | V6_vsubhw_alt
                         | V6_vsububh
-                        | V6_vsububh_128B
+                        | V6_vsububh_alt
                         | V6_vsububsat
-                        | V6_vsububsat_128B
+                        | V6_vsububsat_alt
                         | V6_vsububsat_dv
-                        | V6_vsububsat_dv_128B
+                        | V6_vsububsat_dv_alt
+                        | V6_vsubububb_sat
                         | V6_vsubuhsat
-                        | V6_vsubuhsat_128B
+                        | V6_vsubuhsat_alt
                         | V6_vsubuhsat_dv
-                        | V6_vsubuhsat_dv_128B
+                        | V6_vsubuhsat_dv_alt
                         | V6_vsubuhw
-                        | V6_vsubuhw_128B
+                        | V6_vsubuhw_alt
+                        | V6_vsubuwsat
+                        | V6_vsubuwsat_alt
+                        | V6_vsubuwsat_dv
+                        | V6_vsubuwsat_dv_alt
                         | V6_vsubw
-                        | V6_vsubw_128B
+                        | V6_vsubw_alt
                         | V6_vsubw_dv
-                        | V6_vsubw_dv_128B
+                        | V6_vsubw_dv_alt
                         | V6_vsubwnq
-                        | V6_vsubwnq_128B
+                        | V6_vsubwnq_alt
                         | V6_vsubwq
-                        | V6_vsubwq_128B
+                        | V6_vsubwq_alt
                         | V6_vsubwsat
-                        | V6_vsubwsat_128B
+                        | V6_vsubwsat_alt
                         | V6_vsubwsat_dv
-                        | V6_vsubwsat_dv_128B
+                        | V6_vsubwsat_dv_alt
                         | V6_vswap
-                        | V6_vswap_128B
                         | V6_vtmpyb
-                        | V6_vtmpyb_128B
                         | V6_vtmpyb_acc
-                        | V6_vtmpyb_acc_128B
+                        | V6_vtmpyb_acc_alt
+                        | V6_vtmpyb_alt
                         | V6_vtmpybus
-                        | V6_vtmpybus_128B
                         | V6_vtmpybus_acc
-                        | V6_vtmpybus_acc_128B
+                        | V6_vtmpybus_acc_alt
+                        | V6_vtmpybus_alt
                         | V6_vtmpyhb
-                        | V6_vtmpyhb_128B
                         | V6_vtmpyhb_acc
-                        | V6_vtmpyhb_acc_128B
+                        | V6_vtmpyhb_acc_alt
+                        | V6_vtmpyhb_alt
+                        | V6_vtran2x2_map
                         | V6_vunpackb
-                        | V6_vunpackb_128B
+                        | V6_vunpackb_alt
                         | V6_vunpackh
-                        | V6_vunpackh_128B
+                        | V6_vunpackh_alt
                         | V6_vunpackob
-                        | V6_vunpackob_128B
+                        | V6_vunpackob_alt
                         | V6_vunpackoh
-                        | V6_vunpackoh_128B
+                        | V6_vunpackoh_alt
                         | V6_vunpackub
-                        | V6_vunpackub_128B
+                        | V6_vunpackub_alt
                         | V6_vunpackuh
-                        | V6_vunpackuh_128B
+                        | V6_vunpackuh_alt
+                        | V6_vwhist128
+                        | V6_vwhist128m
+                        | V6_vwhist128q
+                        | V6_vwhist128qm
+                        | V6_vwhist256
+                        | V6_vwhist256_sat
+                        | V6_vwhist256q
+                        | V6_vwhist256q_sat
                         | V6_vxor
-                        | V6_vxor_128B
                         | V6_vzb
-                        | V6_vzb_128B
+                        | V6_vzb_alt
                         | V6_vzh
-                        | V6_vzh_128B
-                        | VMULW
-                        | VMULW_ACC
-                        | VSelectDblPseudo_V6
-                        | VSelectPseudo_V6
+                        | V6_vzh_alt
+                        | V6_zLd_ai
+                        | V6_zLd_pi
+                        | V6_zLd_ppu
+                        | V6_zLd_pred_ai
+                        | V6_zLd_pred_pi
+                        | V6_zLd_pred_ppu
+                        | V6_zextract
+                        | V6_zld0
+                        | V6_zldp0
                         | Y2_barrier
+                        | Y2_break
                         | Y2_dccleana
                         | Y2_dccleaninva
+                        | Y2_dcfetch
                         | Y2_dcfetchbo
                         | Y2_dcinva
                         | Y2_dczeroa
                         | Y2_icinva
                         | Y2_isync
                         | Y2_syncht
+                        | Y2_wait
                         | Y4_l2fetch
                         | Y4_trace
                         | Y5_l2fetch
-                        | Y5_l2gclean
-                        | Y5_l2gcleaninv
-                        | Y5_l2gunlock
-                        | Y5_l2locka
-                        | Y5_l2unlocka
-                        | Y6_l2gcleaninvpa
-                        | Y6_l2gcleanpa
                         | Dep_A2_addsat
                         | Dep_A2_subsat
                         | Dep_S2_packhl
@@ -2613,10 +3009,10 @@ data HexagonInstruction = A2_abs
                         | J2_jumpf_nv
                         | Jump_merge
                         | L2_deallocframe_linear
-                        | JMPret_dealloc_linear
+                        | PS_jmpret_dealloc_linear
                         | L4_return_linear
                         | Ret_dealloc_merge
-                        | JMPret_linear
+                        | PS_jmpret_linear
                         | Jr_merge
                         | C2_mux_tfr
                         | C2_muxii_tfr
@@ -2626,6 +3022,7 @@ data HexagonInstruction = A2_abs
                         | C2_muxii_tfr_new
                         | C2_muxir_tfr_new
                         | C2_muxri_tfr_new
+                        | S2_allocframe_simplified
                         | A2_tfrsi_source
                         | A2_tfrsi_demat
                         | A2_tfrsi_remat
@@ -2641,21 +3038,6 @@ data HexagonInstruction = A2_abs
                         | L2_loadruh_io_fi_source_fi
                         | L2_loadruh_io_fi_demat_fi
                         | L2_loadruh_io_fi_remat_fi
-                        | L4_loadrb_abs_source
-                        | L4_loadrb_abs_demat
-                        | L4_loadrb_abs_remat
-                        | L4_loadri_abs_source
-                        | L4_loadri_abs_demat
-                        | L4_loadri_abs_remat
-                        | L4_loadrh_abs_source
-                        | L4_loadrh_abs_demat
-                        | L4_loadrh_abs_remat
-                        | L4_loadruh_abs_source
-                        | L4_loadruh_abs_demat
-                        | L4_loadruh_abs_remat
-                        | L4_loadrub_abs_source
-                        | L4_loadrub_abs_demat
-                        | L4_loadrub_abs_remat
                         | TFR_FI_fi_source_fi
                         | TFR_FI_fi_demat_fi
                         | TFR_FI_fi_remat_fi
@@ -2671,24 +3053,13 @@ data HexagonInstruction = A2_abs
                         | L2_loadruhgp_source
                         | L2_loadruhgp_demat
                         | L2_loadruhgp_remat
-                        | CONST64_Int_Real_source
-                        | CONST64_Int_Real_demat
-                        | CONST64_Int_Real_remat
                         | L2_loadrd_io_fi_source_fi
                         | L2_loadrd_io_fi_demat_fi
                         | L2_loadrd_io_fi_remat_fi
-                        | L4_loadrd_abs_source
-                        | L4_loadrd_abs_demat
-                        | L4_loadrd_abs_remat
-                        | TFR_PdFalse_source
-                        | TFR_PdFalse_demat
-                        | TFR_PdFalse_remat
-                        | TFR_PdTrue_source
-                        | TFR_PdTrue_demat
-                        | TFR_PdTrue_remat
                         | A2_addi_ce
                         | A2_andir_ce
                         | A2_combineii_ce
+                        | A2_iconst_ce
                         | A2_orir_ce
                         | A2_paddif_ce
                         | A2_paddifnew_ce
@@ -2711,9 +3082,6 @@ data HexagonInstruction = A2_abs
                         | A4_combineri_ce
                         | A4_cround_ri_ce
                         | A4_ext_ce
-                        | A4_ext_b_ce
-                        | A4_ext_c_ce
-                        | A4_ext_g_ce
                         | A4_rcmpeqi_ce
                         | A4_rcmpneqi_ce
                         | A4_round_ri_ce
@@ -2729,8 +3097,7 @@ data HexagonInstruction = A2_abs
                         | A4_vcmpwgtui_ce
                         | ADJCALLSTACKDOWN_ce
                         | ADJCALLSTACKUP_ce
-                        | ALIGNA_ce
-                        | ALLOCA_ce
+                        | ANNOTATION_LABEL_ce
                         | BUNDLE_ce
                         | C2_bitsclri_ce
                         | C2_cmoveif_ce
@@ -2750,18 +3117,18 @@ data HexagonInstruction = A2_abs
                         | C4_cmplteui_ce
                         | C4_cmpneqi_ce
                         | C4_nbitsclri_ce
-                        | CALLv3nr_ce
+                        | CALLProfile_ce
                         | CFI_INSTRUCTION_ce
                         | CONST32_ce
-                        | CONST32_Float_Real_ce
-                        | CONST32_Int_Real_ce
-                        | CONST64_Float_Real_ce
-                        | CONST64_Int_Real_ce
+                        | CONST64_ce
                         | COPY_ce
                         | COPY_TO_REGCLASS_ce
+                        | DBG_LABEL_ce
                         | DBG_VALUE_ce
+                        | DUPLEX_Pseudo_ce
                         | EH_LABEL_ce
                         | ENDLOOP0_ce
+                        | ENDLOOP01_ce
                         | ENDLOOP1_ce
                         | EXTRACT_SUBREG_ce
                         | F2_dfclass_ce
@@ -2770,38 +3137,134 @@ data HexagonInstruction = A2_abs
                         | F2_sfclass_ce
                         | F2_sfimm_n_ce
                         | F2_sfimm_p_ce
-                        | FAULTING_LOAD_OP_ce
-                        | FCONST32_nsdata_ce
+                        | FAULTING_OP_ce
                         | GC_LABEL_ce
+                        | G_ADD_ce
+                        | G_ADDRSPACE_CAST_ce
+                        | G_AND_ce
+                        | G_ANYEXT_ce
+                        | G_ASHR_ce
+                        | G_ATOMICRMW_ADD_ce
+                        | G_ATOMICRMW_AND_ce
+                        | G_ATOMICRMW_MAX_ce
+                        | G_ATOMICRMW_MIN_ce
+                        | G_ATOMICRMW_NAND_ce
+                        | G_ATOMICRMW_OR_ce
+                        | G_ATOMICRMW_SUB_ce
+                        | G_ATOMICRMW_UMAX_ce
+                        | G_ATOMICRMW_UMIN_ce
+                        | G_ATOMICRMW_XCHG_ce
+                        | G_ATOMICRMW_XOR_ce
+                        | G_ATOMIC_CMPXCHG_ce
+                        | G_ATOMIC_CMPXCHG_WITH_SUCCESS_ce
+                        | G_BITCAST_ce
+                        | G_BLOCK_ADDR_ce
+                        | G_BR_ce
+                        | G_BRCOND_ce
+                        | G_BRINDIRECT_ce
+                        | G_BSWAP_ce
+                        | G_BUILD_VECTOR_ce
+                        | G_BUILD_VECTOR_TRUNC_ce
+                        | G_CONCAT_VECTORS_ce
+                        | G_CONSTANT_ce
+                        | G_CTLZ_ce
+                        | G_CTLZ_ZERO_UNDEF_ce
+                        | G_CTPOP_ce
+                        | G_CTTZ_ce
+                        | G_CTTZ_ZERO_UNDEF_ce
+                        | G_EXTRACT_ce
+                        | G_EXTRACT_VECTOR_ELT_ce
+                        | G_FABS_ce
+                        | G_FADD_ce
+                        | G_FCEIL_ce
+                        | G_FCMP_ce
+                        | G_FCONSTANT_ce
+                        | G_FCOS_ce
+                        | G_FDIV_ce
+                        | G_FEXP_ce
+                        | G_FEXP2_ce
+                        | G_FLOG_ce
+                        | G_FLOG10_ce
+                        | G_FLOG2_ce
+                        | G_FMA_ce
+                        | G_FMUL_ce
+                        | G_FNEG_ce
+                        | G_FPEXT_ce
+                        | G_FPOW_ce
+                        | G_FPTOSI_ce
+                        | G_FPTOUI_ce
+                        | G_FPTRUNC_ce
+                        | G_FRAME_INDEX_ce
+                        | G_FREM_ce
+                        | G_FSIN_ce
+                        | G_FSQRT_ce
+                        | G_FSUB_ce
+                        | G_GEP_ce
+                        | G_GLOBAL_VALUE_ce
+                        | G_ICMP_ce
+                        | G_IMPLICIT_DEF_ce
+                        | G_INSERT_ce
+                        | G_INSERT_VECTOR_ELT_ce
+                        | G_INTRINSIC_ce
+                        | G_INTRINSIC_ROUND_ce
+                        | G_INTRINSIC_TRUNC_ce
+                        | G_INTRINSIC_W_SIDE_EFFECTS_ce
+                        | G_INTTOPTR_ce
+                        | G_LOAD_ce
+                        | G_LSHR_ce
+                        | G_MERGE_VALUES_ce
+                        | G_MUL_ce
+                        | G_OR_ce
+                        | G_PHI_ce
+                        | G_PTRTOINT_ce
+                        | G_PTR_MASK_ce
+                        | G_SADDE_ce
+                        | G_SADDO_ce
+                        | G_SDIV_ce
+                        | G_SELECT_ce
+                        | G_SEXT_ce
+                        | G_SEXTLOAD_ce
+                        | G_SHL_ce
+                        | G_SHUFFLE_VECTOR_ce
+                        | G_SITOFP_ce
+                        | G_SMULH_ce
+                        | G_SMULO_ce
+                        | G_SREM_ce
+                        | G_SSUBE_ce
+                        | G_SSUBO_ce
+                        | G_STORE_ce
+                        | G_SUB_ce
+                        | G_TRUNC_ce
+                        | G_UADDE_ce
+                        | G_UADDO_ce
+                        | G_UDIV_ce
+                        | G_UITOFP_ce
+                        | G_UMULH_ce
+                        | G_UMULO_ce
+                        | G_UNMERGE_VALUES_ce
+                        | G_UREM_ce
+                        | G_USUBE_ce
+                        | G_USUBO_ce
+                        | G_VAARG_ce
+                        | G_VASTART_ce
+                        | G_XOR_ce
+                        | G_ZEXT_ce
+                        | G_ZEXTLOAD_ce
                         | HI_ce
-                        | HI_GOT_ce
-                        | HI_GOTREL_ce
-                        | HI_L_ce
-                        | HI_PIC_ce
+                        | ICALL_BRANCH_FUNNEL_ce
                         | IMPLICIT_DEF_ce
                         | INLINEASM_ce
+                        | INLINEASM_BR_ce
                         | INSERT_SUBREG_ce
                         | J2_call_ce
                         | J2_callf_ce
                         | J2_callt_ce
                         | J2_jump_ce
-                        | J2_jump_ext_ce
-                        | J2_jump_extf_ce
-                        | J2_jump_extfnew_ce
-                        | J2_jump_extfnewpt_ce
-                        | J2_jump_extt_ce
-                        | J2_jump_exttnew_ce
-                        | J2_jump_exttnewpt_ce
-                        | J2_jump_noext_ce
-                        | J2_jump_noextf_ce
-                        | J2_jump_noextfnew_ce
-                        | J2_jump_noextfnewpt_ce
-                        | J2_jump_noextt_ce
-                        | J2_jump_noexttnew_ce
-                        | J2_jump_noexttnewpt_ce
                         | J2_jumpf_ce
+                        | J2_jumpf_nopred_map_ce
                         | J2_jumpfnew_ce
                         | J2_jumpfnewpt_ce
+                        | J2_jumpfpt_ce
                         | J2_jumprgtez_ce
                         | J2_jumprgtezpt_ce
                         | J2_jumprltez_ce
@@ -2811,8 +3274,10 @@ data HexagonInstruction = A2_abs
                         | J2_jumprz_ce
                         | J2_jumprzpt_ce
                         | J2_jumpt_ce
+                        | J2_jumpt_nopred_map_ce
                         | J2_jumptnew_ce
                         | J2_jumptnewpt_ce
+                        | J2_jumptpt_ce
                         | J2_loop0i_ce
                         | J2_loop0iext_ce
                         | J2_loop0r_ce
@@ -2821,12 +3286,16 @@ data HexagonInstruction = A2_abs
                         | J2_loop1iext_ce
                         | J2_loop1r_ce
                         | J2_loop1rext_ce
+                        | J2_pause_ce
                         | J2_ploop1si_ce
                         | J2_ploop1sr_ce
                         | J2_ploop2si_ce
                         | J2_ploop2sr_ce
                         | J2_ploop3si_ce
                         | J2_ploop3sr_ce
+                        | J2_trap0_ce
+                        | J2_trap1_ce
+                        | J2_trap1_noregmap_ce
                         | J4_cmpeq_f_jumpnv_nt_ce
                         | J4_cmpeq_f_jumpnv_t_ce
                         | J4_cmpeq_fp0_jump_nt_ce
@@ -2966,32 +3435,26 @@ data HexagonInstruction = A2_abs
                         | L2_loadbzw4_pi_ce
                         | L2_loadrb_io_ce
                         | L2_loadrb_pci_ce
-                        | L2_loadrb_pci_pseudo_ce
                         | L2_loadrb_pi_ce
                         | L2_loadrbgp_ce
                         | L2_loadrd_io_ce
                         | L2_loadrd_pci_ce
-                        | L2_loadrd_pci_pseudo_ce
                         | L2_loadrd_pi_ce
                         | L2_loadrdgp_ce
                         | L2_loadrh_io_ce
                         | L2_loadrh_pci_ce
-                        | L2_loadrh_pci_pseudo_ce
                         | L2_loadrh_pi_ce
                         | L2_loadrhgp_ce
                         | L2_loadri_io_ce
                         | L2_loadri_pci_ce
-                        | L2_loadri_pci_pseudo_ce
                         | L2_loadri_pi_ce
                         | L2_loadrigp_ce
                         | L2_loadrub_io_ce
                         | L2_loadrub_pci_ce
-                        | L2_loadrub_pci_pseudo_ce
                         | L2_loadrub_pi_ce
                         | L2_loadrubgp_ce
                         | L2_loadruh_io_ce
                         | L2_loadruh_pci_ce
-                        | L2_loadruh_pci_pseudo_ce
                         | L2_loadruh_pi_ce
                         | L2_loadruhgp_ce
                         | L2_ploadrbf_io_ce
@@ -3049,17 +3512,29 @@ data HexagonInstruction = A2_abs
                         | L4_and_memoph_io_ce
                         | L4_and_memopw_io_ce
                         | L4_iadd_memopb_io_ce
+                        | L4_iadd_memopb_zomap_ce
                         | L4_iadd_memoph_io_ce
+                        | L4_iadd_memoph_zomap_ce
                         | L4_iadd_memopw_io_ce
+                        | L4_iadd_memopw_zomap_ce
                         | L4_iand_memopb_io_ce
+                        | L4_iand_memopb_zomap_ce
                         | L4_iand_memoph_io_ce
+                        | L4_iand_memoph_zomap_ce
                         | L4_iand_memopw_io_ce
+                        | L4_iand_memopw_zomap_ce
                         | L4_ior_memopb_io_ce
+                        | L4_ior_memopb_zomap_ce
                         | L4_ior_memoph_io_ce
+                        | L4_ior_memoph_zomap_ce
                         | L4_ior_memopw_io_ce
+                        | L4_ior_memopw_zomap_ce
                         | L4_isub_memopb_io_ce
+                        | L4_isub_memopb_zomap_ce
                         | L4_isub_memoph_io_ce
+                        | L4_isub_memoph_zomap_ce
                         | L4_isub_memopw_io_ce
+                        | L4_isub_memopw_zomap_ce
                         | L4_loadalignb_ap_ce
                         | L4_loadalignb_ur_ce
                         | L4_loadalignh_ap_ce
@@ -3072,27 +3547,21 @@ data HexagonInstruction = A2_abs
                         | L4_loadbzw2_ur_ce
                         | L4_loadbzw4_ap_ce
                         | L4_loadbzw4_ur_ce
-                        | L4_loadrb_abs_ce
                         | L4_loadrb_ap_ce
                         | L4_loadrb_rr_ce
                         | L4_loadrb_ur_ce
-                        | L4_loadrd_abs_ce
                         | L4_loadrd_ap_ce
                         | L4_loadrd_rr_ce
                         | L4_loadrd_ur_ce
-                        | L4_loadrh_abs_ce
                         | L4_loadrh_ap_ce
                         | L4_loadrh_rr_ce
                         | L4_loadrh_ur_ce
-                        | L4_loadri_abs_ce
                         | L4_loadri_ap_ce
                         | L4_loadri_rr_ce
                         | L4_loadri_ur_ce
-                        | L4_loadrub_abs_ce
                         | L4_loadrub_ap_ce
                         | L4_loadrub_rr_ce
                         | L4_loadrub_ur_ce
-                        | L4_loadruh_abs_ce
                         | L4_loadruh_ap_ce
                         | L4_loadruh_rr_ce
                         | L4_loadruh_ur_ce
@@ -3150,25 +3619,12 @@ data HexagonInstruction = A2_abs
                         | L4_sub_memopb_io_ce
                         | L4_sub_memoph_io_ce
                         | L4_sub_memopw_io_ce
-                        | LDriq_pred_V6_ce
-                        | LDriq_pred_V6_128B_ce
-                        | LDriq_pred_vec_V6_ce
-                        | LDriq_pred_vec_V6_128B_ce
-                        | LDriv_pseudo_V6_ce
-                        | LDriv_pseudo_V6_128B_ce
-                        | LDrivv_indexed_ce
-                        | LDrivv_indexed_128B_ce
-                        | LDrivv_pseudo_V6_ce
-                        | LDrivv_pseudo_V6_128B_ce
+                        | LDriw_ctr_ce
                         | LDriw_pred_ce
                         | LIFETIME_END_ce
                         | LIFETIME_START_ce
                         | LO_ce
                         | LOCAL_ESCAPE_ce
-                        | LO_GOT_ce
-                        | LO_GOTREL_ce
-                        | LO_H_ce
-                        | LO_PIC_ce
                         | M2_accii_ce
                         | M2_macsin_ce
                         | M2_macsip_ce
@@ -3180,15 +3636,62 @@ data HexagonInstruction = A2_abs
                         | M4_mpyri_addr_ce
                         | M4_mpyri_addr_u2_ce
                         | M4_mpyrr_addi_ce
-                        | MUX_ir_f_ce
-                        | MUX_ri_f_ce
+                        | PATCHABLE_EVENT_CALL_ce
+                        | PATCHABLE_OP_ce
+                        | PATCHABLE_RET_ce
+                        | PATCHABLE_TAIL_CALL_ce
+                        | PATCHABLE_TYPED_EVENT_CALL_ce
                         | PATCHPOINT_ce
                         | PHI_ce
+                        | PS_aligna_ce
+                        | PS_alloca_ce
+                        | PS_call_nr_ce
+                        | PS_call_stk_ce
+                        | PS_fi_ce
+                        | PS_fia_ce
+                        | PS_loadrb_pci_ce
+                        | PS_loadrbabs_ce
+                        | PS_loadrd_pci_ce
+                        | PS_loadrdabs_ce
+                        | PS_loadrh_pci_ce
+                        | PS_loadrhabs_ce
+                        | PS_loadri_pci_ce
+                        | PS_loadriabs_ce
+                        | PS_loadrub_pci_ce
+                        | PS_loadrubabs_ce
+                        | PS_loadruh_pci_ce
+                        | PS_loadruhabs_ce
+                        | PS_storerb_pci_ce
+                        | PS_storerbabs_ce
+                        | PS_storerbnewabs_ce
+                        | PS_storerd_pci_ce
+                        | PS_storerdabs_ce
+                        | PS_storerf_pci_ce
+                        | PS_storerfabs_ce
+                        | PS_storerh_pci_ce
+                        | PS_storerhabs_ce
+                        | PS_storerhnewabs_ce
+                        | PS_storeri_pci_ce
+                        | PS_storeriabs_ce
+                        | PS_storerinewabs_ce
+                        | PS_tailcall_i_ce
+                        | PS_vloadrq_ai_ce
+                        | PS_vloadrw_ai_ce
+                        | PS_vloadrw_nt_ai_ce
+                        | PS_vloadrwu_ai_ce
+                        | PS_vstorerq_ai_ce
+                        | PS_vstorerw_ai_ce
+                        | PS_vstorerw_nt_ai_ce
+                        | PS_vstorerwu_ai_ce
                         | REG_SEQUENCE_ce
                         | RESTORE_DEALLOC_BEFORE_TAILCALL_V4_ce
                         | RESTORE_DEALLOC_BEFORE_TAILCALL_V4_EXT_ce
+                        | RESTORE_DEALLOC_BEFORE_TAILCALL_V4_EXT_PIC_ce
+                        | RESTORE_DEALLOC_BEFORE_TAILCALL_V4_PIC_ce
                         | RESTORE_DEALLOC_RET_JMP_V4_ce
                         | RESTORE_DEALLOC_RET_JMP_V4_EXT_ce
+                        | RESTORE_DEALLOC_RET_JMP_V4_EXT_PIC_ce
+                        | RESTORE_DEALLOC_RET_JMP_V4_PIC_ce
                         | S2_addasl_rrri_ce
                         | S2_allocframe_ce
                         | S2_asl_i_p_ce
@@ -3242,6 +3745,7 @@ data HexagonInstruction = A2_abs
                         | S2_lsr_i_r_xacc_ce
                         | S2_lsr_i_vh_ce
                         | S2_lsr_i_vw_ce
+                        | S2_mask_ce
                         | S2_pstorerbf_io_ce
                         | S2_pstorerbf_pi_ce
                         | S2_pstorerbfnew_pi_ce
@@ -3293,48 +3797,35 @@ data HexagonInstruction = A2_abs
                         | S2_setbit_i_ce
                         | S2_storerb_io_ce
                         | S2_storerb_pci_ce
-                        | S2_storerb_pci_pseudo_ce
                         | S2_storerb_pi_ce
-                        | S2_storerbabs_ce
                         | S2_storerbgp_ce
                         | S2_storerbnew_io_ce
                         | S2_storerbnew_pci_ce
                         | S2_storerbnew_pi_ce
-                        | S2_storerbnewabs_ce
                         | S2_storerbnewgp_ce
                         | S2_storerd_io_ce
                         | S2_storerd_pci_ce
-                        | S2_storerd_pci_pseudo_ce
                         | S2_storerd_pi_ce
-                        | S2_storerdabs_ce
                         | S2_storerdgp_ce
                         | S2_storerf_io_ce
                         | S2_storerf_pci_ce
-                        | S2_storerf_pci_pseudo_ce
                         | S2_storerf_pi_ce
-                        | S2_storerfabs_ce
                         | S2_storerfgp_ce
                         | S2_storerh_io_ce
                         | S2_storerh_pci_ce
-                        | S2_storerh_pci_pseudo_ce
                         | S2_storerh_pi_ce
-                        | S2_storerhabs_ce
                         | S2_storerhgp_ce
                         | S2_storerhnew_io_ce
                         | S2_storerhnew_pci_ce
                         | S2_storerhnew_pi_ce
-                        | S2_storerhnewabs_ce
                         | S2_storerhnewgp_ce
                         | S2_storeri_io_ce
                         | S2_storeri_pci_ce
-                        | S2_storeri_pci_pseudo_ce
                         | S2_storeri_pi_ce
-                        | S2_storeriabs_ce
                         | S2_storerigp_ce
                         | S2_storerinew_io_ce
                         | S2_storerinew_pci_ce
                         | S2_storerinew_pi_ce
-                        | S2_storerinewabs_ce
                         | S2_storerinewgp_ce
                         | S2_tableidxb_ce
                         | S2_tableidxb_goodsyntax_ce
@@ -3445,20 +3936,35 @@ data HexagonInstruction = A2_abs
                         | S4_pstoreritnew_io_ce
                         | S4_pstoreritnew_rr_ce
                         | S4_storeirb_io_ce
+                        | S4_storeirb_zomap_ce
                         | S4_storeirbf_io_ce
+                        | S4_storeirbf_zomap_ce
                         | S4_storeirbfnew_io_ce
+                        | S4_storeirbfnew_zomap_ce
                         | S4_storeirbt_io_ce
+                        | S4_storeirbt_zomap_ce
                         | S4_storeirbtnew_io_ce
+                        | S4_storeirbtnew_zomap_ce
                         | S4_storeirh_io_ce
+                        | S4_storeirh_zomap_ce
                         | S4_storeirhf_io_ce
+                        | S4_storeirhf_zomap_ce
                         | S4_storeirhfnew_io_ce
+                        | S4_storeirhfnew_zomap_ce
                         | S4_storeirht_io_ce
+                        | S4_storeirht_zomap_ce
                         | S4_storeirhtnew_io_ce
+                        | S4_storeirhtnew_zomap_ce
                         | S4_storeiri_io_ce
+                        | S4_storeiri_zomap_ce
                         | S4_storeirif_io_ce
+                        | S4_storeirif_zomap_ce
                         | S4_storeirifnew_io_ce
+                        | S4_storeirifnew_zomap_ce
                         | S4_storeirit_io_ce
+                        | S4_storeirit_zomap_ce
                         | S4_storeiritnew_io_ce
+                        | S4_storeiritnew_zomap_ce
                         | S4_storerb_ap_ce
                         | S4_storerb_rr_ce
                         | S4_storerb_ur_ce
@@ -3493,6 +3999,7 @@ data HexagonInstruction = A2_abs
                         | S5_asrhub_sat_ce
                         | S5_vasrhrnd_ce
                         | S5_vasrhrnd_goodsyntax_ce
+                        | S6_allocframe_to_raw_ce
                         | S6_rol_i_p_ce
                         | S6_rol_i_p_acc_ce
                         | S6_rol_i_p_and_ce
@@ -3505,175 +4012,150 @@ data HexagonInstruction = A2_abs
                         | S6_rol_i_r_nac_ce
                         | S6_rol_i_r_or_ce
                         | S6_rol_i_r_xacc_ce
+                        | SA1_addi_ce
+                        | SA1_addsp_ce
+                        | SA1_cmpeqi_ce
+                        | SA1_combine0i_ce
+                        | SA1_combine1i_ce
+                        | SA1_combine2i_ce
+                        | SA1_combine3i_ce
+                        | SA1_dec_ce
+                        | SA1_seti_ce
+                        | SA1_setin1_ce
                         | SAVE_REGISTERS_CALL_V4_ce
+                        | SAVE_REGISTERS_CALL_V4STK_ce
+                        | SAVE_REGISTERS_CALL_V4STK_EXT_ce
+                        | SAVE_REGISTERS_CALL_V4STK_EXT_PIC_ce
+                        | SAVE_REGISTERS_CALL_V4STK_PIC_ce
                         | SAVE_REGISTERS_CALL_V4_EXT_ce
+                        | SAVE_REGISTERS_CALL_V4_EXT_PIC_ce
+                        | SAVE_REGISTERS_CALL_V4_PIC_ce
+                        | SL1_loadri_io_ce
+                        | SL1_loadrub_io_ce
+                        | SL2_loadrb_io_ce
+                        | SL2_loadrd_sp_ce
+                        | SL2_loadrh_io_ce
+                        | SL2_loadri_sp_ce
+                        | SL2_loadruh_io_ce
+                        | SS1_storeb_io_ce
+                        | SS1_storew_io_ce
+                        | SS2_allocframe_ce
+                        | SS2_storebi0_ce
+                        | SS2_storebi1_ce
+                        | SS2_stored_sp_ce
+                        | SS2_storeh_io_ce
+                        | SS2_storew_sp_ce
+                        | SS2_storewi0_ce
+                        | SS2_storewi1_ce
                         | STACKMAP_ce
                         | STATEPOINT_ce
-                        | STriq_pred_V6_ce
-                        | STriq_pred_V6_128B_ce
-                        | STriq_pred_vec_V6_ce
-                        | STriq_pred_vec_V6_128B_ce
-                        | STriv_pseudo_V6_ce
-                        | STriv_pseudo_V6_128B_ce
-                        | STrivv_indexed_ce
-                        | STrivv_indexed_128B_ce
-                        | STrivv_pseudo_V6_ce
-                        | STrivv_pseudo_V6_128B_ce
+                        | STriw_ctr_ce
                         | STriw_pred_ce
                         | SUBREG_TO_REG_ce
-                        | TCRETURNi_ce
                         | TFRI64_V2_ext_ce
                         | TFRI64_V4_ce
-                        | TFRI_cNotPt_f_ce
-                        | TFRI_cPt_f_ce
-                        | TFRI_f_ce
-                        | TFR_FI_ce
-                        | TFR_FIA_ce
-                        | V4_SA1_addi_ce
-                        | V4_SA1_addsp_ce
-                        | V4_SA1_cmpeqi_ce
-                        | V4_SA1_combine0i_ce
-                        | V4_SA1_combine1i_ce
-                        | V4_SA1_combine2i_ce
-                        | V4_SA1_combine3i_ce
-                        | V4_SA1_seti_ce
-                        | V4_SL1_loadri_io_ce
-                        | V4_SL1_loadrub_io_ce
-                        | V4_SL2_loadrb_io_ce
-                        | V4_SL2_loadrd_sp_ce
-                        | V4_SL2_loadrh_io_ce
-                        | V4_SL2_loadri_sp_ce
-                        | V4_SL2_loadruh_io_ce
-                        | V4_SS1_storeb_io_ce
-                        | V4_SS1_storew_io_ce
-                        | V4_SS2_allocframe_ce
-                        | V4_SS2_storebi0_ce
-                        | V4_SS2_storebi1_ce
-                        | V4_SS2_stored_sp_ce
-                        | V4_SS2_storeh_io_ce
-                        | V4_SS2_storew_sp_ce
-                        | V4_SS2_storewi0_ce
-                        | V4_SS2_storewi1_ce
                         | V6_vL32Ub_ai_ce
-                        | V6_vL32Ub_ai_128B_ce
                         | V6_vL32Ub_pi_ce
-                        | V6_vL32Ub_pi_128B_ce
                         | V6_vL32b_ai_ce
-                        | V6_vL32b_ai_128B_ce
                         | V6_vL32b_cur_ai_ce
-                        | V6_vL32b_cur_ai_128B_ce
+                        | V6_vL32b_cur_npred_ai_ce
+                        | V6_vL32b_cur_npred_pi_ce
                         | V6_vL32b_cur_pi_ce
-                        | V6_vL32b_cur_pi_128B_ce
+                        | V6_vL32b_cur_pred_ai_ce
+                        | V6_vL32b_cur_pred_pi_ce
+                        | V6_vL32b_npred_ai_ce
+                        | V6_vL32b_npred_pi_ce
                         | V6_vL32b_nt_ai_ce
-                        | V6_vL32b_nt_ai_128B_ce
                         | V6_vL32b_nt_cur_ai_ce
-                        | V6_vL32b_nt_cur_ai_128B_ce
+                        | V6_vL32b_nt_cur_npred_ai_ce
+                        | V6_vL32b_nt_cur_npred_pi_ce
                         | V6_vL32b_nt_cur_pi_ce
-                        | V6_vL32b_nt_cur_pi_128B_ce
+                        | V6_vL32b_nt_cur_pred_ai_ce
+                        | V6_vL32b_nt_cur_pred_pi_ce
+                        | V6_vL32b_nt_npred_ai_ce
+                        | V6_vL32b_nt_npred_pi_ce
                         | V6_vL32b_nt_pi_ce
-                        | V6_vL32b_nt_pi_128B_ce
+                        | V6_vL32b_nt_pred_ai_ce
+                        | V6_vL32b_nt_pred_pi_ce
                         | V6_vL32b_nt_tmp_ai_ce
-                        | V6_vL32b_nt_tmp_ai_128B_ce
+                        | V6_vL32b_nt_tmp_npred_ai_ce
+                        | V6_vL32b_nt_tmp_npred_pi_ce
                         | V6_vL32b_nt_tmp_pi_ce
-                        | V6_vL32b_nt_tmp_pi_128B_ce
+                        | V6_vL32b_nt_tmp_pred_ai_ce
+                        | V6_vL32b_nt_tmp_pred_pi_ce
                         | V6_vL32b_pi_ce
-                        | V6_vL32b_pi_128B_ce
+                        | V6_vL32b_pred_ai_ce
+                        | V6_vL32b_pred_pi_ce
                         | V6_vL32b_tmp_ai_ce
-                        | V6_vL32b_tmp_ai_128B_ce
+                        | V6_vL32b_tmp_npred_ai_ce
+                        | V6_vL32b_tmp_npred_pi_ce
                         | V6_vL32b_tmp_pi_ce
-                        | V6_vL32b_tmp_pi_128B_ce
+                        | V6_vL32b_tmp_pred_ai_ce
+                        | V6_vL32b_tmp_pred_pi_ce
                         | V6_vS32Ub_ai_ce
-                        | V6_vS32Ub_ai_128B_ce
                         | V6_vS32Ub_npred_ai_ce
-                        | V6_vS32Ub_npred_ai_128B_ce
                         | V6_vS32Ub_npred_pi_ce
-                        | V6_vS32Ub_npred_pi_128B_ce
                         | V6_vS32Ub_pi_ce
-                        | V6_vS32Ub_pi_128B_ce
                         | V6_vS32Ub_pred_ai_ce
-                        | V6_vS32Ub_pred_ai_128B_ce
                         | V6_vS32Ub_pred_pi_ce
-                        | V6_vS32Ub_pred_pi_128B_ce
                         | V6_vS32b_ai_ce
-                        | V6_vS32b_ai_128B_ce
                         | V6_vS32b_new_ai_ce
-                        | V6_vS32b_new_ai_128B_ce
                         | V6_vS32b_new_npred_ai_ce
-                        | V6_vS32b_new_npred_ai_128B_ce
                         | V6_vS32b_new_npred_pi_ce
-                        | V6_vS32b_new_npred_pi_128B_ce
                         | V6_vS32b_new_pi_ce
-                        | V6_vS32b_new_pi_128B_ce
                         | V6_vS32b_new_pred_ai_ce
-                        | V6_vS32b_new_pred_ai_128B_ce
                         | V6_vS32b_new_pred_pi_ce
-                        | V6_vS32b_new_pred_pi_128B_ce
                         | V6_vS32b_npred_ai_ce
-                        | V6_vS32b_npred_ai_128B_ce
                         | V6_vS32b_npred_pi_ce
-                        | V6_vS32b_npred_pi_128B_ce
                         | V6_vS32b_nqpred_ai_ce
-                        | V6_vS32b_nqpred_ai_128B_ce
                         | V6_vS32b_nqpred_pi_ce
-                        | V6_vS32b_nqpred_pi_128B_ce
                         | V6_vS32b_nt_ai_ce
-                        | V6_vS32b_nt_ai_128B_ce
                         | V6_vS32b_nt_new_ai_ce
-                        | V6_vS32b_nt_new_ai_128B_ce
                         | V6_vS32b_nt_new_npred_ai_ce
-                        | V6_vS32b_nt_new_npred_ai_128B_ce
                         | V6_vS32b_nt_new_npred_pi_ce
-                        | V6_vS32b_nt_new_npred_pi_128B_ce
                         | V6_vS32b_nt_new_pi_ce
-                        | V6_vS32b_nt_new_pi_128B_ce
                         | V6_vS32b_nt_new_pred_ai_ce
-                        | V6_vS32b_nt_new_pred_ai_128B_ce
                         | V6_vS32b_nt_new_pred_pi_ce
-                        | V6_vS32b_nt_new_pred_pi_128B_ce
                         | V6_vS32b_nt_npred_ai_ce
-                        | V6_vS32b_nt_npred_ai_128B_ce
                         | V6_vS32b_nt_npred_pi_ce
-                        | V6_vS32b_nt_npred_pi_128B_ce
                         | V6_vS32b_nt_nqpred_ai_ce
-                        | V6_vS32b_nt_nqpred_ai_128B_ce
                         | V6_vS32b_nt_nqpred_pi_ce
-                        | V6_vS32b_nt_nqpred_pi_128B_ce
                         | V6_vS32b_nt_pi_ce
-                        | V6_vS32b_nt_pi_128B_ce
                         | V6_vS32b_nt_pred_ai_ce
-                        | V6_vS32b_nt_pred_ai_128B_ce
                         | V6_vS32b_nt_pred_pi_ce
-                        | V6_vS32b_nt_pred_pi_128B_ce
                         | V6_vS32b_nt_qpred_ai_ce
-                        | V6_vS32b_nt_qpred_ai_128B_ce
                         | V6_vS32b_nt_qpred_pi_ce
-                        | V6_vS32b_nt_qpred_pi_128B_ce
                         | V6_vS32b_pi_ce
-                        | V6_vS32b_pi_128B_ce
                         | V6_vS32b_pred_ai_ce
-                        | V6_vS32b_pred_ai_128B_ce
                         | V6_vS32b_pred_pi_ce
-                        | V6_vS32b_pred_pi_128B_ce
                         | V6_vS32b_qpred_ai_ce
-                        | V6_vS32b_qpred_ai_128B_ce
                         | V6_vS32b_qpred_pi_ce
-                        | V6_vS32b_qpred_pi_128B_ce
+                        | V6_vS32b_srls_ai_ce
+                        | V6_vS32b_srls_pi_ce
                         | V6_valignbi_ce
-                        | V6_valignbi_128B_ce
                         | V6_vlalignbi_ce
-                        | V6_vlalignbi_128B_ce
+                        | V6_vlutvvb_oracci_ce
+                        | V6_vlutvvbi_ce
+                        | V6_vlutvwh_oracci_ce
+                        | V6_vlutvwhi_ce
                         | V6_vrmpybusi_ce
-                        | V6_vrmpybusi_128B_ce
                         | V6_vrmpybusi_acc_ce
-                        | V6_vrmpybusi_acc_128B_ce
+                        | V6_vrmpybusi_acc_alt_ce
+                        | V6_vrmpybusi_alt_ce
                         | V6_vrmpyubi_ce
-                        | V6_vrmpyubi_128B_ce
                         | V6_vrmpyubi_acc_ce
-                        | V6_vrmpyubi_acc_128B_ce
+                        | V6_vrmpyubi_acc_alt_ce
+                        | V6_vrmpyubi_alt_ce
                         | V6_vrsadubi_ce
-                        | V6_vrsadubi_128B_ce
                         | V6_vrsadubi_acc_ce
-                        | V6_vrsadubi_acc_128B_ce
+                        | V6_vrsadubi_acc_alt_ce
+                        | V6_vrsadubi_alt_ce
+                        | V6_vwhist128m_ce
+                        | V6_vwhist128qm_ce
+                        | V6_zLd_ai_ce
+                        | V6_zLd_pi_ce
+                        | V6_zLd_pred_ai_ce
+                        | V6_zLd_pred_pi_ce
                         | Y2_dcfetchbo_ce
                         | L2_loadrb_io_fi_ce
                         | L2_loadrh_io_fi_ce
@@ -3714,6 +4196,7 @@ data HexagonInstruction = A2_abs
                         | C2_muxii_tfr_new_ce
                         | C2_muxir_tfr_new_ce
                         | C2_muxri_tfr_new_ce
+                        | S2_allocframe_simplified_ce
                         | A2_tfrsi_source_ce
                         | A2_tfrsi_demat_ce
                         | A2_tfrsi_remat_ce
@@ -3729,21 +4212,6 @@ data HexagonInstruction = A2_abs
                         | L2_loadruh_io_fi_source_fi_ce
                         | L2_loadruh_io_fi_demat_fi_ce
                         | L2_loadruh_io_fi_remat_fi_ce
-                        | L4_loadrb_abs_source_ce
-                        | L4_loadrb_abs_demat_ce
-                        | L4_loadrb_abs_remat_ce
-                        | L4_loadri_abs_source_ce
-                        | L4_loadri_abs_demat_ce
-                        | L4_loadri_abs_remat_ce
-                        | L4_loadrh_abs_source_ce
-                        | L4_loadrh_abs_demat_ce
-                        | L4_loadrh_abs_remat_ce
-                        | L4_loadruh_abs_source_ce
-                        | L4_loadruh_abs_demat_ce
-                        | L4_loadruh_abs_remat_ce
-                        | L4_loadrub_abs_source_ce
-                        | L4_loadrub_abs_demat_ce
-                        | L4_loadrub_abs_remat_ce
                         | TFR_FI_fi_source_fi_ce
                         | TFR_FI_fi_demat_fi_ce
                         | TFR_FI_fi_remat_fi_ce
@@ -3759,18 +4227,8 @@ data HexagonInstruction = A2_abs
                         | L2_loadruhgp_source_ce
                         | L2_loadruhgp_demat_ce
                         | L2_loadruhgp_remat_ce
-                        | CONST64_Int_Real_source_ce
-                        | CONST64_Int_Real_demat_ce
-                        | CONST64_Int_Real_remat_ce
                         | L2_loadrd_io_fi_source_fi_ce
                         | L2_loadrd_io_fi_demat_fi_ce
                         | L2_loadrd_io_fi_remat_fi_ce
-                        | L4_loadrd_abs_source_ce
-                        | L4_loadrd_abs_demat_ce
-                        | L4_loadrd_abs_remat_ce
-                        | TFR_PdFalse_demat_ce
-                        | TFR_PdFalse_remat_ce
-                        | TFR_PdTrue_demat_ce
-                        | TFR_PdTrue_remat_ce
                         deriving (Eq, Ord)
 

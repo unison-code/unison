@@ -109,7 +109,7 @@ newValueStoreVersions = M.fromList
    (S2_storerb_pi, S2_storerbnew_pi),
    (S2_storerh_io, S2_storerhnew_io),
    (S2_storerh_pi, S2_storerhnew_pi),
-   (S2_storeriabs, S2_storerinewabs),
+   (PS_storeriabs, PS_storerinewabs),
    (S2_storeri_io, S2_storerinew_io),
    (S2_storeri_io_fi, S2_storerinew_io_fi),
    (S2_storeri_pi, S2_storerinew_pi),
@@ -119,7 +119,7 @@ newValueStoreVersions = M.fromList
    (S2_storerb_pi_ce, S2_storerbnew_pi_ce),
    (S2_storerh_io_ce, S2_storerhnew_io_ce),
    (S2_storerh_pi_ce, S2_storerhnew_pi_ce),
-   (S2_storeriabs_ce, S2_storerinewabs_ce),
+   (PS_storeriabs_ce, PS_storerinewabs_ce),
    (S2_storeri_io_ce, S2_storerinew_io_ce),
    (S2_storeri_io_fi_ce, S2_storerinew_io_fi_ce),
    (S2_storeri_pi_ce, S2_storerinew_pi_ce),
@@ -176,21 +176,22 @@ rematVersions = M.fromList
    (L2_loadri_io_fi, RematTriple L2_loadri_io_fi_source_fi L2_loadri_io_fi_demat_fi L2_loadri_io_fi_remat_fi),
    (L2_loadrb_io_fi, RematTriple L2_loadrb_io_fi_source_fi L2_loadrb_io_fi_demat_fi L2_loadrb_io_fi_remat_fi),
    (L2_loadruh_io_fi, RematTriple L2_loadruh_io_fi_source_fi L2_loadruh_io_fi_demat_fi L2_loadruh_io_fi_remat_fi),
-   (L4_loadrb_abs_ce, RematTriple L4_loadrb_abs_source_ce L4_loadrb_abs_demat_ce L4_loadrb_abs_remat_ce),
-   (L4_loadri_abs_ce, RematTriple L4_loadri_abs_source_ce L4_loadri_abs_demat_ce L4_loadri_abs_remat_ce),
-   (L4_loadrh_abs_ce, RematTriple L4_loadrh_abs_source_ce L4_loadrh_abs_demat_ce L4_loadrh_abs_remat_ce),
-   (L4_loadruh_abs_ce, RematTriple L4_loadruh_abs_source_ce L4_loadruh_abs_demat_ce L4_loadruh_abs_remat_ce),
-   (L4_loadrub_abs_ce, RematTriple L4_loadrub_abs_source_ce L4_loadrub_abs_demat_ce L4_loadrub_abs_remat_ce),
+   --(L4_loadrb_abs_ce, RematTriple L4_loadrb_abs_source_ce L4_loadrb_abs_demat_ce L4_loadrb_abs_remat_ce),
+   --(L4_loadri_abs_ce, RematTriple L4_loadri_abs_source_ce L4_loadri_abs_demat_ce L4_loadri_abs_remat_ce),
+   --(L4_loadrh_abs_ce, RematTriple L4_loadrh_abs_source_ce L4_loadrh_abs_demat_ce L4_loadrh_abs_remat_ce),
+   --(L4_loadruh_abs_ce, RematTriple L4_loadruh_abs_source_ce L4_loadruh_abs_demat_ce L4_loadruh_abs_remat_ce),
+   --(L4_loadrub_abs_ce, RematTriple L4_loadrub_abs_source_ce L4_loadrub_abs_demat_ce L4_loadrub_abs_remat_ce),
    (TFR_FI_fi, RematTriple TFR_FI_fi_source_fi TFR_FI_fi_demat_fi TFR_FI_fi_remat_fi),
    (L2_loadrigp, RematTriple L2_loadrigp_source L2_loadrigp_demat L2_loadrigp_remat),
    (L2_loadrhgp, RematTriple L2_loadrhgp_source L2_loadrhgp_demat L2_loadrhgp_remat),
    (L2_loadrubgp, RematTriple L2_loadrubgp_source L2_loadrubgp_demat L2_loadrubgp_remat),
    (L2_loadruhgp, RematTriple L2_loadruhgp_source L2_loadruhgp_demat L2_loadruhgp_remat),
-   (CONST64_Int_Real, RematTriple CONST64_Int_Real_source CONST64_Int_Real_demat CONST64_Int_Real_remat),
-   (L2_loadrd_io_fi, RematTriple L2_loadrd_io_fi_source_fi L2_loadrd_io_fi_demat_fi L2_loadrd_io_fi_remat_fi),
-   (L4_loadrd_abs_ce, RematTriple L4_loadrd_abs_source_ce L4_loadrd_abs_demat_ce L4_loadrd_abs_remat_ce),
-   (TFR_PdFalse, RematTriple TFR_PdFalse_source TFR_PdFalse_demat TFR_PdFalse_remat),
-   (TFR_PdTrue, RematTriple TFR_PdTrue_source TFR_PdTrue_demat TFR_PdTrue_remat)]
+   --(CONST64_Int_Real, RematTriple CONST64_Int_Real_source CONST64_Int_Real_demat CONST64_Int_Real_remat),
+   (L2_loadrd_io_fi, RematTriple L2_loadrd_io_fi_source_fi L2_loadrd_io_fi_demat_fi L2_loadrd_io_fi_remat_fi)
+   --(L4_loadrd_abs_ce, RematTriple L4_loadrd_abs_source_ce L4_loadrd_abs_demat_ce L4_loadrd_abs_remat_ce),
+   --(TFR_PdFalse, RematTriple TFR_PdFalse_source TFR_PdFalse_demat TFR_PdFalse_remat),
+   --(TFR_PdTrue, RematTriple TFR_PdTrue_source TFR_PdTrue_demat TFR_PdTrue_remat)
+  ]
 
 constantExtendedInstr :: HexagonInstruction -> HexagonInstruction
 constantExtendedInstr i = read $ show i ++ "_ce"

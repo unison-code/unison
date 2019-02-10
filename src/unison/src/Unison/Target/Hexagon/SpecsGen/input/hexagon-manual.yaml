@@ -246,18 +246,18 @@ instruction-set:
 
     - instruction-attrs: &cmp-combo-rr-operands
           new-operands:
-           - Rs:              [register, use, IntRegs, -1]
-           - Pd:              [register, def, F32]
+           - Rs32:            [register, use, IntRegs, -1]
+           - Pd4:             [register, def, F32]
 
     - instruction-attrs: &cmp-combo-rr-inv-operands
           new-operands:
-           - Rt:              [register, use, IntRegs, -1]
-           - Pd:              [register, def, F32]
+           - Rt32:            [register, use, IntRegs, -1]
+           - Pd4:             [register, def, F32]
 
     - instruction-attrs: &cmp-combo-ri-operands
           new-operands:
-           - src1:            [register, use, IntRegs, -1]
-           - dst:             [register, def, F32]
+           - Rs32:            [register, use, IntRegs, -1]
+           - Pd4:             [register, def, F32]
 
     - instruction-attrs: &nv-cmp-jump-combo
           operands:
@@ -490,25 +490,25 @@ instruction-set:
         parent: J2_jumpt
         << :    [*linear-jump]
         new-operands:
-         - src:             [register, use, F32, -1]
+         - Pu4:             [register, use, F32, -1]
         itinerary:          NCJ_tc_3or4stall_SLOT0
 
       - id:     J4_combo_f_jumpnv_t
         parent: J2_jumpf
         << :    [*linear-jump]
         new-operands:
-         - src:             [register, use, F32, -1]
+         - Pu4:             [register, use, F32, -1]
         itinerary:          NCJ_tc_3or4stall_SLOT0
 
       - id:     J2_jumpt_nv
         parent: J2_jumpt
         new-operands:
-         - src:             [register, use, PredRegs, -1]
+         - Pu4:             [register, use, PredRegs, -1]
 
       - id:     J2_jumpf_nv
         parent: J2_jumpf
         new-operands:
-         - src:             [register, use, PredRegs, -1]
+         - Pu4:             [register, use, PredRegs, -1]
 
       - id:                 jump_merge
         type:               branch
@@ -524,6 +524,7 @@ instruction-set:
         parent:             L2_deallocframe
         operands:
          - dst:             [register, def, F32]
+        uses:               []
         defines:            [dst]
         affects:
            - R29:             register
@@ -531,8 +532,8 @@ instruction-set:
            - R31:             register
         affected-by:
 
-      - id:                 JMPret_dealloc_linear
-        parent:             JMPret
+      - id:                 PS_jmpret_dealloc_linear
+        parent:             PS_jmpret
         type:               linear
         operands:
          - dst:             [register, use, IntRegs]
@@ -548,6 +549,7 @@ instruction-set:
         type:               linear
         operands:
          - dst:             [register, def, F32, -1]
+        uses:               []
         defines:            [dst]
         affects:
            - R29:             register
@@ -573,8 +575,8 @@ instruction-set:
          - mem:             memory
          - R30:             register
 
-      - id:                 JMPret_linear
-        parent:             JMPret
+      - id:                 PS_jmpret_linear
+        parent:             PS_jmpret
         type:               linear
         operands:
          - dst:             [register, use, IntRegs]
@@ -616,40 +618,35 @@ instruction-set:
 
       - id:                 C2_mux_tfr_new
         parent:             C2_mux
-        operands:
-         - Rd:              [register, def, IntRegs]
-         - Pu:              [register, use, PredRegs, -1]
-         - Rs:              [register, use, IntRegs]
-         - Rt:              [register, use, IntRegs]
+        new-operands:
+         - Pu4:             [register, use, PredRegs, -1]
         size:               8
         itinerary:          ALU32_SLOT0123_2
 
       - id:                 C2_muxii_tfr_new
         parent:             C2_muxii
-        operands:
-         - Rd:              [register, def, IntRegs]
-         - Pu:              [register, use, PredRegs, -1]
-         - s8:              bound
-         - S8:              bound
+        new-operands:
+         - Pu4:             [register, use, PredRegs, -1]
         size:               8
         itinerary:          ALU32_SLOT0123_2
 
       - id:                 C2_muxir_tfr_new
         parent:             C2_muxir
-        operands:
-         - Rd:              [register, def, IntRegs]
+        new-operands:
          - Pu:              [register, use, PredRegs, -1]
-         - Rs:              [register, use, IntRegs]
-         - s8:              bound
         size:               8
         itinerary:          ALU32_SLOT0123_2
 
       - id:                 C2_muxri_tfr_new
         parent:             C2_muxri
-        operands:
-         - Rd:              [register, def, IntRegs]
+        new-operands:
          - Pu:              [register, use, PredRegs, -1]
-         - s8:              bound
-         - Rs:              [register, use, IntRegs]
         size:               8
         itinerary:          ALU32_SLOT0123_2
+
+      - id:                 S2_allocframe_simplified
+        parent:             S2_allocframe
+        operands:
+         - Ii:              bound
+        uses:               [Ii]
+        defines:            []

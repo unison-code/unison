@@ -87,7 +87,7 @@ target =
 instructionType i
     | i `elem` [MVW, MVD, STW, STD, STD_cs, LDW, LDD, MVPR, MVRP, STW_nv] =
         CopyInstructionType
-    | i `elem` [TCRETURNi, TCRETURNi_ce] = TailCallInstructionType
+--    | i `elem` [TCRETURNi, TCRETURNi_ce] = TailCallInstructionType
     | otherwise = SpecsGen.instructionType i
 
 -- | Gives the target of a jump instruction and the type of jump
@@ -112,7 +112,7 @@ branchInfo (Branch {oBranchIs = ops, oBranchUs = [BlockRef l]})
     BranchInfo Unconditional (Just l)
 
 branchInfo (Branch {oBranchIs = ops})
-  | targetInst ops `elem`  [JMPret, JMPrett, JMPretf, JMPrettnew, JMPretfnew,
+  | targetInst ops `elem`  [PS_jmpret, PS_jmprett, PS_jmpretf, PS_jmprettnew, PS_jmpretfnew,
                             L4_return, L4_return_t, L4_return_f,
                             L4_return_tnew_pt, L4_return_fnew_pt, J2_jumpr,
                             Jr_merge] =
@@ -325,7 +325,7 @@ operandInfo to i
     ([TemporaryInfo (RegisterClass IntRegs) 0 False, BoundInfo,
       TemporaryInfo (RegisterClass IntRegs) (-1) True],
      [TemporaryInfo (RegisterClass IntRegs) 1 False])
-  | baseInstr i `elem` [S2_storerinewabs] =
+  | baseInstr i `elem` [PS_storerinewabs] =
     ([BoundInfo, TemporaryInfo (RegisterClass IntRegs) (-1) True], [])
   | baseInstr i `elem` [S2_storerinew_io_fi] =
     ([BoundInfo, BoundInfo, TemporaryInfo (RegisterClass IntRegs) (-1) True],
@@ -400,9 +400,9 @@ resources to
 nop = Linear [TargetInstruction A2_nop] [] []
 
 readWriteInfo i
-  | i `elem` [JMPret] =
+  | i `elem` [PS_jmpret] =
       addRegRead R31 $ SpecsGen.readWriteInfo i
-  | i `elem` [JMPret_dealloc_linear, L4_return_linear, JMPret_linear,
+  | i `elem` [PS_jmpret_dealloc_linear, L4_return_linear, PS_jmpret_linear,
               Ret_dealloc_merge] =
       second (++ [ControlSideEffect]) $ SpecsGen.readWriteInfo i
   | otherwise = SpecsGen.readWriteInfo i
@@ -416,7 +416,7 @@ implementFrame = const []
 
 -- | Adds function prologue, see HexagonFrameLowering.cpp
 addPrologue (_, oid, _) (e:code) =
-  let af = mkAct $ mkOpt oid S2_allocframe [Bound mkMachineFrameSize] []
+  let af = mkAct $ mkOpt oid S2_allocframe_simplified [Bound mkMachineFrameSize] []
   in [e, af] ++ code
 
 -- | Adds function epilogue, see HexagonFrameLowering.cpp
@@ -424,19 +424,19 @@ addEpilogue (tid, oid, pid) code =
   case split (keepDelimsL $ whenElt isBranch) code of
    [f,
     SingleOperation {oOpr = Natural Branch {
-                        oBranchIs = [TargetInstruction JMPret],
+                        oBranchIs = [TargetInstruction PS_jmpret],
                         oBranchUs = [MOperand {altTemps = [t]}]}}
     :
     e] ->
      let mkOper id ts = mkMOperand (pid + id) ts Nothing
          [t1, t2, t3, t4, t5] = map mkTemp [tid .. tid + 4]
          dfl  = mkOpt oid L2_deallocframe_linear [] [mkOper 0 [t1]]
-         jrdl = mkOpt (oid + 1) JMPret_dealloc_linear
+         jrdl = mkOpt (oid + 1) PS_jmpret_dealloc_linear
                 [mkOper 1 [t], mkOper 2 [t1]] [mkOper 3 [t2]]
          rl   = mkOpt (oid + 2) L4_return_linear [] [mkOper 4 [t3]]
          rdm  = mkAct $ mkOpt (oid + 3) Ret_dealloc_merge [mkOper 5 [t2, t3]]
                 [mkOper 6 [t4]]
-         jrl  = mkOpt (oid + 4) JMPret_linear [mkOper 7 [t]] [mkOper 8 [t5]]
+         jrl  = mkOpt (oid + 4) PS_jmpret_linear [mkOper 7 [t]] [mkOper 8 [t5]]
          jrm  = mkBranch (oid + 5) [TargetInstruction Jr_merge]
                 [mkOper 9 [t4, t5]]
      in f ++ [dfl, jrdl, rl, rdm, jrl, jrm] ++ e
@@ -472,13 +472,14 @@ stackDirection = API.StackGrowsDown
 
 preProcess to = [mapToTargetMachineInstruction preprocessJRInstrs,
                  foldSPCopies, addFrameIndex, constantExtend,
+                 mapToMachineInstruction cleanReturns,
                  if singleIssue to then serialize else id]
 
 -- This is so that we take the additional call cost cost of tail-call jumps
 -- in LLVM solutions when we run 'uni analyze'
-preprocessJRInstrs mi @ MachineSingle {msOpcode   = MachineTargetOpc i,
-                                       msOperands = MachineGlobalAddress {} : _}
-  | i `elem` [J2_jump] = mi {msOpcode = mkMachineTargetOpc TCRETURNi}
+-- preprocessJRInstrs mi @ MachineSingle {msOpcode   = MachineTargetOpc i,
+--                                        msOperands = MachineGlobalAddress {} : _}
+--   | i `elem` [J2_jump] = mi {msOpcode = mkMachineTargetOpc TCRETURNi}
 preprocessJRInstrs mi = mi
 
 foldSPCopies = mapToMachineBlock foldSPCopiesInBlock
@@ -520,6 +521,17 @@ liftToTOpc f = mkMachineTargetOpc . f . mopcTarget
 isConstExtendedProperty =
   isMachineInstructionPropertyCustomOf "constant-extended"
 
+cleanReturns
+  mi @ MachineSingle {msOpcode   = MachineVirtualOpc RETURN,
+                      msOperands = mos} =
+    let mos' = filter (not . isMachineRegWith PC) mos
+    in mi {msOperands = mos'}
+
+cleanReturns mi = mi
+
+isMachineRegWith r MachineReg {mrName = r'} = r == r'
+isMachineRegWith _ _ = False
+
 serialize = mapToMachineBlock serializeBlock
 
 serializeBlock mb @ MachineBlock {mbInstructions = mis} =
@@ -534,6 +546,7 @@ postProcess = [lintStackAlignment,
                constantDeExtend, removeFrameIndex,
                normalizeNewValueCmpJump, normalizeNVJumps, normalizeJRInstrs,
                expandCondTransfers, addJumpHints,
+               normalizeOpcodes,
                flip addImplicitRegs (target, [])]
 
 lintStackAlignment = mapToTargetMachineInstruction lintStackAlignmentInInstr
@@ -644,21 +657,21 @@ normalizeJR mi @ MachineSingle {msOpcode   = MachineTargetOpc i,
                                 msOperands = mops}
   | i == L2_deallocframe_linear =
     [mi {msOpcode = mkMachineTargetOpc L2_deallocframe, msOperands = []}]
-  | i == JMPret_dealloc_linear =
+  | i == PS_jmpret_dealloc_linear =
       case mops of
-       [_, dst, _] -> [mi {msOpcode = mkMachineTargetOpc JMPret,
+       [_, dst, _] -> [mi {msOpcode = mkMachineTargetOpc PS_jmpret,
                            msOperands = [dst]}]
   | i == L4_return_linear =
     [mi {msOpcode = mkMachineTargetOpc L4_return, msOperands = []}]
-  | i == JMPret_linear =
+  | i == PS_jmpret_linear =
       case mops of
-       [_, dst] -> [mi {msOpcode = mkMachineTargetOpc JMPret,
+       [_, dst] -> [mi {msOpcode = mkMachineTargetOpc PS_jmpret,
                         msOperands = [dst]}]
 normalizeJR MachineSingle {msOpcode = MachineTargetOpc i}
   | i `elem` [Ret_dealloc_merge, Jr_merge] = []
-normalizeJR ms @ MachineSingle {msOpcode = MachineTargetOpc i}
-  | i `elem` [TCRETURNi, TCRETURNi_ce] =
-    [ms {msOpcode = mkMachineTargetOpc J2_jump}]
+--normalizeJR ms @ MachineSingle {msOpcode = MachineTargetOpc i}
+--  | i `elem` [TCRETURNi, TCRETURNi_ce] =
+--    [ms {msOpcode = mkMachineTargetOpc J2_jump}]
 normalizeJR mi = [mi]
 
 expandCondTransfers = mapToMachineBlock (expandBlockPseudos expandCondTransfer)
@@ -702,6 +715,13 @@ addHint True J2_jumpfnew = J2_jumpfnewpt
 addHint False i | isNewValueCmpJump i = read (init (show i) ++ "nt")
 addHint _ i = i
 
+normalizeOpcodes = mapToTargetMachineInstruction normalizeOpcode
+
+normalizeOpcode mi @ MachineSingle {msOpcode = MachineTargetOpc i}
+  | i `elem` [S2_allocframe_simplified] =
+      mi {msOpcode = mkMachineTargetOpc (fromJust $ SpecsGen.parent i)}
+normalizeOpcode mi = mi
+
 -- | Gives a list of function transformers
 transforms _ ImportPreLift = [liftStackArgSize,
                               peephole extractReturnRegs,
@@ -730,8 +750,8 @@ readWriteLatency _ ((_, VirtualType _), _) (_, _) = 0
 readWriteLatency _ ((TargetInstruction p, _), _) (_, _) =
     maybeMax 0 $ map occupation (usages [] p)
 
-linearMergeJumps = [JMPret_dealloc_linear, L4_return_linear, Ret_dealloc_merge,
-                    JMPret_linear, Jr_merge]
+linearMergeJumps = [PS_jmpret_dealloc_linear, L4_return_linear, Ret_dealloc_merge,
+                    PS_jmpret_linear, Jr_merge]
 
 isMemoryObject (Memory _) = True
 isMemoryObject AllMemory  = True

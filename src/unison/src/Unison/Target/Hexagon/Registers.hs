@@ -184,7 +184,11 @@ regStrings = M.fromList $
    (USR, "usr"),
    (USR_OVF, "usr_ovf"),
    (CS, "cs"),
-   (GP, "gp")]
+   (GP, "gp"),
+   (FRAMEKEY, "framekey"),
+   (FRAMELIMIT, "framelimit"),
+   (GOSP, "gosp"),
+   (VTMP, "vtmp")]
 
 regStringsWithIndex inc pre rc =
   [(r, pre ++ show idx ++

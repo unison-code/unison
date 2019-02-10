@@ -11,40 +11,40 @@ operandInfo i
        DuplexIClass3, DuplexIClass4, DuplexIClass5, DuplexIClass6,
        DuplexIClass7, DuplexIClass8, DuplexIClass9, DuplexIClassA,
        DuplexIClassB, DuplexIClassC, DuplexIClassD, DuplexIClassE,
-       DuplexIClassF, L2_deallocframe, L4_return, V4_SL2_deallocframe,
-       V4_SL2_jumpr31, V4_SL2_jumpr31_f, V4_SL2_jumpr31_fnew,
-       V4_SL2_jumpr31_t, V4_SL2_jumpr31_tnew, V4_SL2_return,
-       V4_SL2_return_f, V4_SL2_return_fnew, V4_SL2_return_t,
-       V4_SL2_return_tnew, V6_vhist, Y2_barrier, Y2_isync, Y2_syncht,
-       Y5_l2gclean, Y5_l2gcleaninv, Y5_l2gunlock]
+       DuplexIClassF, FENTRY_CALL, J2_endloop0, J2_endloop01, J2_endloop1,
+       L6_deallocframe_map_to_raw, L6_return_map_to_raw,
+       PATCHABLE_FUNCTION_ENTER, PATCHABLE_FUNCTION_EXIT,
+       SL2_deallocframe, SL2_jumpr31, SL2_jumpr31_f, SL2_jumpr31_fnew,
+       SL2_jumpr31_t, SL2_jumpr31_tnew, SL2_return, SL2_return_f,
+       SL2_return_fnew, SL2_return_t, SL2_return_tnew, V6_vhist,
+       V6_vwhist128, V6_vwhist256, V6_vwhist256_sat, Y2_barrier, Y2_break,
+       Y2_isync, Y2_syncht]
     = ([], [])
   | i `elem` [L4_return_linear] =
     ([], [TemporaryInfo (RegisterClass F32) 0 False])
   | i `elem` [L2_deallocframe_linear] =
     ([], [TemporaryInfo (RegisterClass F32) 1 False])
-  | i `elem`
-      [V4_SA1_clrf, V4_SA1_clrfnew, V4_SA1_clrt, V4_SA1_clrtnew,
-       V4_SA1_setin1]
-    = ([], [TemporaryInfo (RegisterClass IntRegs) 1 False])
-  | i `elem` [TFR_PdFalse, TFR_PdTrue] =
+  | i `elem` [SA1_clrf, SA1_clrfnew, SA1_clrt, SA1_clrtnew] =
+    ([], [TemporaryInfo (RegisterClass GeneralSubRegs) 1 False])
+  | i `elem` [PS_qfalse, PS_qtrue] =
+    ([], [TemporaryInfo (RegisterClass HvxQR) 1 False])
+  | i `elem` [V6_vd0] =
+    ([], [TemporaryInfo (RegisterClass HvxVR) 1 False])
+  | i `elem` [PS_vdd0, V6_vdd0] =
+    ([], [TemporaryInfo (RegisterClass HvxWR) 1 False])
+  | i `elem` [PS_false, PS_true] =
     ([], [TemporaryInfo (RegisterClass PredRegs) 1 False])
-  | i `elem` [TFR_PdFalse_source, TFR_PdTrue_source] =
-    ([], [TemporaryInfo (InfiniteRegisterClass RM32) 0 False])
-  | i `elem` [HEXAGON_V6_vd0_pseudo] =
-    ([], [TemporaryInfo (RegisterClass VectorRegs) 1 False])
-  | i `elem` [HEXAGON_V6_vd0_pseudo_128B] =
-    ([], [TemporaryInfo (RegisterClass VectorRegs128B) 1 False])
   | i `elem` [LOAD_STACK_GUARD] =
     ([], [TemporaryInfo (RegisterClass Ptr_rc) 1 False])
-  | i `elem` [IMPLICIT_DEF, IMPLICIT_DEF_ce] = ([], [BoundInfo])
+  | i `elem`
+      [G_IMPLICIT_DEF, G_IMPLICIT_DEF_ce, IMPLICIT_DEF, IMPLICIT_DEF_ce]
+    = ([], [BoundInfo])
   | i `elem` [A2_tfrcrr] =
     ([TemporaryInfo (RegisterClass CtrRegs) 0 False],
      [TemporaryInfo (RegisterClass IntRegs) 1 False])
   | i `elem` [A4_tfrcpp] =
     ([TemporaryInfo (RegisterClass CtrRegs64) 0 False],
      [TemporaryInfo (RegisterClass DoubleRegs) 1 False])
-  | i `elem` [Y6_l2gcleaninvpa, Y6_l2gcleanpa] =
-    ([TemporaryInfo (RegisterClass DoubleRegs) 0 False], [])
   | i `elem` [A4_tfrpcp] =
     ([TemporaryInfo (RegisterClass DoubleRegs) 0 False],
      [TemporaryInfo (RegisterClass CtrRegs64) 1 False])
@@ -58,6 +58,9 @@ operandInfo i
     =
     ([TemporaryInfo (RegisterClass DoubleRegs) 0 False],
      [TemporaryInfo (RegisterClass DoubleRegs) 1 False])
+  | i `elem` [G4_tfrgpcp] =
+    ([TemporaryInfo (RegisterClass DoubleRegs) 0 False],
+     [TemporaryInfo (RegisterClass GuestRegs64) 1 False])
   | i `elem`
       [A2_roundsat, A2_sat, F2_conv_d2sf, F2_conv_df2sf, F2_conv_df2uw,
        F2_conv_df2uw_chop, F2_conv_df2w, F2_conv_df2w_chop, F2_conv_ud2sf,
@@ -71,42 +74,47 @@ operandInfo i
     ([TemporaryInfo (RegisterClass DoubleRegs) 0 False],
      [TemporaryInfo (InfiniteRegisterClass M64) 1 False])
   | i `elem`
-      [A2_tfrpi_demat, A2_tfrpi_demat_ce, CONST64_Int_Real_demat,
-       CONST64_Int_Real_demat_ce, L2_loadrd_io_fi_demat_fi,
-       L2_loadrd_io_fi_demat_fi_ce, L4_loadrd_abs_demat,
-       L4_loadrd_abs_demat_ce]
+      [A2_tfrpi_demat, A2_tfrpi_demat_ce, L2_loadrd_io_fi_demat_fi,
+       L2_loadrd_io_fi_demat_fi_ce]
     =
     ([TemporaryInfo (RegisterClass DoubleRegs) 0 False],
      [TemporaryInfo (InfiniteRegisterClass RM64) 0 False])
   | i `elem`
       [A2_addp, A2_addpsat, A2_addsph, A2_addspl, A2_andp, A2_maxp,
-       A2_maxup, A2_minp, A2_minup, A2_orp, A2_subp, A2_vaddh, A2_vaddhs,
-       A2_vaddub, A2_vaddubs, A2_vadduhs, A2_vaddw, A2_vaddws, A2_vavgh,
-       A2_vavghcr, A2_vavghr, A2_vavgub, A2_vavgubr, A2_vavguh,
-       A2_vavguhr, A2_vavguw, A2_vavguwr, A2_vavgw, A2_vavgwcr, A2_vavgwr,
-       A2_vmaxb, A2_vmaxh, A2_vmaxub, A2_vmaxuh, A2_vmaxuw, A2_vmaxw,
-       A2_vminb, A2_vminh, A2_vminub, A2_vminuh, A2_vminuw, A2_vminw,
-       A2_vnavgh, A2_vnavghcr, A2_vnavghr, A2_vnavgw, A2_vnavgwcr,
-       A2_vnavgwr, A2_vraddub, A2_vrsadub, A2_vsubh, A2_vsubhs, A2_vsubub,
-       A2_vsububs, A2_vsubuhs, A2_vsubw, A2_vsubws, A2_xorp, A4_andnp,
-       A4_ornp, M2_mmpyh_rs0, M2_mmpyh_rs1, M2_mmpyh_s0, M2_mmpyh_s1,
-       M2_mmpyl_rs0, M2_mmpyl_rs1, M2_mmpyl_s0, M2_mmpyl_s1,
-       M2_mmpyuh_rs0, M2_mmpyuh_rs1, M2_mmpyuh_s0, M2_mmpyuh_s1,
-       M2_mmpyul_rs0, M2_mmpyul_rs1, M2_mmpyul_s0, M2_mmpyul_s1,
-       M2_vabsdiffh, M2_vabsdiffw, M2_vcmpy_s0_sat_i, M2_vcmpy_s0_sat_r,
+       A2_maxup, A2_minp, A2_minup, A2_orp, A2_subp, A2_vaddb_map,
+       A2_vaddh, A2_vaddhs, A2_vaddub, A2_vaddubs, A2_vadduhs, A2_vaddw,
+       A2_vaddws, A2_vavgh, A2_vavghcr, A2_vavghr, A2_vavgub, A2_vavgubr,
+       A2_vavguh, A2_vavguhr, A2_vavguw, A2_vavguwr, A2_vavgw, A2_vavgwcr,
+       A2_vavgwr, A2_vmaxb, A2_vmaxh, A2_vmaxub, A2_vmaxuh, A2_vmaxuw,
+       A2_vmaxw, A2_vminb, A2_vminh, A2_vminub, A2_vminuh, A2_vminuw,
+       A2_vminw, A2_vnavgh, A2_vnavghcr, A2_vnavghr, A2_vnavgw,
+       A2_vnavgwcr, A2_vnavgwr, A2_vraddub, A2_vrsadub, A2_vsubb_map,
+       A2_vsubh, A2_vsubhs, A2_vsubub, A2_vsububs, A2_vsubuhs, A2_vsubw,
+       A2_vsubws, A2_xorp, A4_andnp, A4_ornp, F2_dfadd, F2_dfsub,
+       M2_mmpyh_rs0, M2_mmpyh_rs1, M2_mmpyh_s0, M2_mmpyh_s1, M2_mmpyl_rs0,
+       M2_mmpyl_rs1, M2_mmpyl_s0, M2_mmpyl_s1, M2_mmpyuh_rs0,
+       M2_mmpyuh_rs1, M2_mmpyuh_s0, M2_mmpyuh_s1, M2_mmpyul_rs0,
+       M2_mmpyul_rs1, M2_mmpyul_s0, M2_mmpyul_s1, M2_vabsdiffh,
+       M2_vabsdiffw, M2_vcmpy_s0_sat_i, M2_vcmpy_s0_sat_r,
        M2_vcmpy_s1_sat_i, M2_vcmpy_s1_sat_r, M2_vdmpys_s0, M2_vdmpys_s1,
        M2_vmpy2es_s0, M2_vmpy2es_s1, M2_vrcmpyi_s0, M2_vrcmpyi_s0c,
        M2_vrcmpyr_s0, M2_vrcmpyr_s0c, M2_vrcmpys_s1_h, M2_vrcmpys_s1_l,
        M2_vrmpy_s0, M4_vrmpyeh_s0, M4_vrmpyeh_s1, M4_vrmpyoh_s0,
-       M4_vrmpyoh_s1, M5_vdmpybsu, M5_vrmpybsu, M5_vrmpybuu,
-       S2_cabacdecbin, S2_extractup_rp, S2_lfsp, S2_shuffeb, S2_shuffeh,
-       S2_shuffob, S2_shuffoh, S2_vtrunewh, S2_vtrunowh, S4_extractp_rp,
-       S4_vxaddsubh, S4_vxaddsubhr, S4_vxaddsubw, S4_vxsubaddh,
-       S4_vxsubaddhr, S4_vxsubaddw, VMULW]
+       M4_vrmpyoh_s1, M5_vdmpybsu, M5_vrmpybsu, M5_vrmpybuu, M6_vabsdiffb,
+       M6_vabsdiffub, PS_vmulw, S2_cabacdecbin, S2_extractup_rp, S2_lfsp,
+       S2_shuffeb, S2_shuffeh, S2_shuffob, S2_shuffoh, S2_vtrunewh,
+       S2_vtrunowh, S4_extractp_rp, S4_vxaddsubh, S4_vxaddsubhr,
+       S4_vxaddsubw, S4_vxsubaddh, S4_vxsubaddhr, S4_vxsubaddw,
+       S6_vtrunehb_ppp, S6_vtrunohb_ppp]
     =
     ([TemporaryInfo (RegisterClass DoubleRegs) 0 False,
       TemporaryInfo (RegisterClass DoubleRegs) 0 False],
      [TemporaryInfo (RegisterClass DoubleRegs) 1 False])
+  | i `elem` [A6_vminub_RdP] =
+    ([TemporaryInfo (RegisterClass DoubleRegs) 0 False,
+      TemporaryInfo (RegisterClass DoubleRegs) 0 False],
+     [TemporaryInfo (RegisterClass DoubleRegs) 1 False,
+      TemporaryInfo (RegisterClass PredRegs) 1 False])
   | i `elem`
       [A5_vaddhubs, M2_vdmpyrs_s0, M2_vdmpyrs_s1, M2_vraddh, M2_vradduh,
        M2_vrcmpys_s1rp_h, M2_vrcmpys_s1rp_l, S2_parityp]
@@ -117,9 +125,9 @@ operandInfo i
   | i `elem`
       [A2_vcmpbeq, A2_vcmpbgtu, A2_vcmpheq, A2_vcmphgt, A2_vcmphgtu,
        A2_vcmpweq, A2_vcmpwgt, A2_vcmpwgtu, A4_boundscheck_hi,
-       A4_boundscheck_lo, A4_vcmpbeq_any, A4_vcmpbgt, C2_cmpeqp,
-       C2_cmpgtp, C2_cmpgtup, F2_dfcmpeq, F2_dfcmpge, F2_dfcmpgt,
-       F2_dfcmpuo]
+       A4_boundscheck_lo, A4_vcmpbeq_any, A4_vcmpbgt, A6_vcmpbeq_notany,
+       C2_cmpeqp, C2_cmpgtp, C2_cmpgtup, F2_dfcmpeq, F2_dfcmpge,
+       F2_dfcmpgt, F2_dfcmpuo]
     =
     ([TemporaryInfo (RegisterClass DoubleRegs) 0 False,
       TemporaryInfo (RegisterClass DoubleRegs) 0 False],
@@ -135,7 +143,7 @@ operandInfo i
        M2_vrcmacr_s0c, M2_vrcmpys_acc_s1_h, M2_vrcmpys_acc_s1_l,
        M2_vrmac_s0, M4_vrmpyeh_acc_s0, M4_vrmpyeh_acc_s1,
        M4_vrmpyoh_acc_s0, M4_vrmpyoh_acc_s1, M4_xor_xacc, M5_vdmacbsu,
-       M5_vrmacbsu, M5_vrmacbuu, S2_insertp_rp, VMULW_ACC]
+       M5_vrmacbsu, M5_vrmacbuu, PS_vmulw_acc, S2_insertp_rp]
     =
     ([TemporaryInfo (RegisterClass DoubleRegs) 0 False,
       TemporaryInfo (RegisterClass DoubleRegs) 0 False,
@@ -166,7 +174,7 @@ operandInfo i
       TemporaryInfo (RegisterClass DoubleRegs) 0 False,
       TemporaryInfo (RegisterClass IntRegs) 0 False, BoundInfo],
      [TemporaryInfo (RegisterClass DoubleRegs) 1 False])
-  | i `elem` [S2_cabacencbin, S2_valignrb, S2_vsplicerb] =
+  | i `elem` [S2_valignrb, S2_vsplicerb] =
     ([TemporaryInfo (RegisterClass DoubleRegs) 0 False,
       TemporaryInfo (RegisterClass DoubleRegs) 0 False,
       TemporaryInfo (RegisterClass PredRegs) 0 False],
@@ -201,9 +209,10 @@ operandInfo i
       BoundInfo],
      [TemporaryInfo (RegisterClass DoubleRegs) 1 False])
   | i `elem`
-      [M2_vrcmpys_s1, S2_asl_r_p, S2_asl_r_vh, S2_asl_r_vw, S2_asr_r_p,
-       S2_asr_r_vh, S2_asr_r_vw, S2_lsl_r_p, S2_lsl_r_vh, S2_lsl_r_vw,
-       S2_lsr_r_p, S2_lsr_r_vh, S2_lsr_r_vw, S2_vcnegh, S2_vcrotate]
+      [L2_loadalignb_zomap, L2_loadalignh_zomap, M2_vrcmpys_s1,
+       S2_asl_r_p, S2_asl_r_vh, S2_asl_r_vw, S2_asr_r_p, S2_asr_r_vh,
+       S2_asr_r_vw, S2_lsl_r_p, S2_lsl_r_vh, S2_lsl_r_vw, S2_lsr_r_p,
+       S2_lsr_r_vh, S2_lsr_r_vw, S2_vcnegh, S2_vcrotate]
     =
     ([TemporaryInfo (RegisterClass DoubleRegs) 0 False,
       TemporaryInfo (RegisterClass IntRegs) 0 False],
@@ -242,8 +251,8 @@ operandInfo i
       TemporaryInfo (RegisterClass IntRegs) 0 False],
      [TemporaryInfo (RegisterClass DoubleRegs) 1 False])
   | i `elem`
-      [L2_loadalignb_pcr, L2_loadalignb_pr, L2_loadalignh_pcr,
-       L2_loadalignh_pr]
+      [L2_loadalignb_pbr, L2_loadalignb_pcr, L2_loadalignb_pr,
+       L2_loadalignh_pbr, L2_loadalignh_pcr, L2_loadalignh_pr]
     =
     ([TemporaryInfo (RegisterClass DoubleRegs) 0 False,
       TemporaryInfo (RegisterClass IntRegs) 0 False,
@@ -266,6 +275,23 @@ operandInfo i
      [TemporaryInfo (RegisterClass DoubleRegs) 1 False,
       TemporaryInfo (RegisterClass IntRegs) 1 False])
   | i `elem`
+      [L2_loadalignb_pci, L2_loadalignb_pci_ce, L2_loadalignh_pci,
+       L2_loadalignh_pci_ce]
+    =
+    ([TemporaryInfo (RegisterClass DoubleRegs) 0 False,
+      TemporaryInfo (RegisterClass IntRegs) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass ModRegs) 0 False],
+     [TemporaryInfo (RegisterClass DoubleRegs) 1 False,
+      TemporaryInfo (RegisterClass IntRegs) 1 False])
+  | i `elem`
+      [L4_loadalignb_ur, L4_loadalignb_ur_ce, L4_loadalignh_ur,
+       L4_loadalignh_ur_ce]
+    =
+    ([TemporaryInfo (RegisterClass DoubleRegs) 0 False,
+      TemporaryInfo (RegisterClass IntRegs) 0 False, BoundInfo,
+      BoundInfo],
+     [TemporaryInfo (RegisterClass DoubleRegs) 1 False])
+  | i `elem`
       [S2_asl_i_p, S2_asl_i_p_ce, S2_asl_i_vh, S2_asl_i_vh_ce,
        S2_asl_i_vw, S2_asl_i_vw_ce, S2_asr_i_p, S2_asr_i_p_ce,
        S2_asr_i_p_rnd, S2_asr_i_p_rnd_ce, S2_asr_i_p_rnd_goodsyntax,
@@ -277,6 +303,13 @@ operandInfo i
     =
     ([TemporaryInfo (RegisterClass DoubleRegs) 0 False, BoundInfo],
      [TemporaryInfo (RegisterClass DoubleRegs) 1 False])
+  | i `elem`
+      [L4_loadalignb_ap, L4_loadalignb_ap_ce, L4_loadalignh_ap,
+       L4_loadalignh_ap_ce]
+    =
+    ([TemporaryInfo (RegisterClass DoubleRegs) 0 False, BoundInfo],
+     [TemporaryInfo (RegisterClass DoubleRegs) 1 False,
+      TemporaryInfo (RegisterClass IntRegs) 1 False])
   | i `elem`
       [S2_asr_i_svw_trun, S2_asr_i_svw_trun_ce, S4_clbpaddi,
        S4_clbpaddi_ce, S5_asrhub_rnd_sat, S5_asrhub_rnd_sat_ce,
@@ -320,6 +353,655 @@ operandInfo i
   | i `elem` [Ret_dealloc_merge] =
     ([TemporaryInfo (RegisterClass F32) 0 False],
      [TemporaryInfo (RegisterClass F32) 0 False])
+  | i `elem` [SA1_combinerz, SA1_combinezr] =
+    ([TemporaryInfo (RegisterClass GeneralSubRegs) 0 False],
+     [TemporaryInfo (RegisterClass GeneralDoubleLow8Regs) 1 False])
+  | i `elem`
+      [SA1_and1, SA1_inc, SA1_sxtb, SA1_sxth, SA1_tfr, SA1_zxtb,
+       SA1_zxth]
+    =
+    ([TemporaryInfo (RegisterClass GeneralSubRegs) 0 False],
+     [TemporaryInfo (RegisterClass GeneralSubRegs) 1 False])
+  | i `elem` [SA1_addrx] =
+    ([TemporaryInfo (RegisterClass GeneralSubRegs) 0 False,
+      TemporaryInfo (RegisterClass GeneralSubRegs) 0 False],
+     [TemporaryInfo (RegisterClass GeneralSubRegs) 1 False])
+  | i `elem`
+      [J4_cmpeq_fp0_jump_nt, J4_cmpeq_fp0_jump_nt_ce,
+       J4_cmpeq_fp0_jump_t, J4_cmpeq_fp0_jump_t_ce, J4_cmpeq_fp1_jump_nt,
+       J4_cmpeq_fp1_jump_nt_ce, J4_cmpeq_fp1_jump_t,
+       J4_cmpeq_fp1_jump_t_ce, J4_cmpeq_tp0_jump_nt,
+       J4_cmpeq_tp0_jump_nt_ce, J4_cmpeq_tp0_jump_t,
+       J4_cmpeq_tp0_jump_t_ce, J4_cmpeq_tp1_jump_nt,
+       J4_cmpeq_tp1_jump_nt_ce, J4_cmpeq_tp1_jump_t,
+       J4_cmpeq_tp1_jump_t_ce, J4_cmpgt_fp0_jump_nt,
+       J4_cmpgt_fp0_jump_nt_ce, J4_cmpgt_fp0_jump_t,
+       J4_cmpgt_fp0_jump_t_ce, J4_cmpgt_fp1_jump_nt,
+       J4_cmpgt_fp1_jump_nt_ce, J4_cmpgt_fp1_jump_t,
+       J4_cmpgt_fp1_jump_t_ce, J4_cmpgt_tp0_jump_nt,
+       J4_cmpgt_tp0_jump_nt_ce, J4_cmpgt_tp0_jump_t,
+       J4_cmpgt_tp0_jump_t_ce, J4_cmpgt_tp1_jump_nt,
+       J4_cmpgt_tp1_jump_nt_ce, J4_cmpgt_tp1_jump_t,
+       J4_cmpgt_tp1_jump_t_ce, J4_cmpgtu_fp0_jump_nt,
+       J4_cmpgtu_fp0_jump_nt_ce, J4_cmpgtu_fp0_jump_t,
+       J4_cmpgtu_fp0_jump_t_ce, J4_cmpgtu_fp1_jump_nt,
+       J4_cmpgtu_fp1_jump_nt_ce, J4_cmpgtu_fp1_jump_t,
+       J4_cmpgtu_fp1_jump_t_ce, J4_cmpgtu_tp0_jump_nt,
+       J4_cmpgtu_tp0_jump_nt_ce, J4_cmpgtu_tp0_jump_t,
+       J4_cmpgtu_tp0_jump_t_ce, J4_cmpgtu_tp1_jump_nt,
+       J4_cmpgtu_tp1_jump_nt_ce, J4_cmpgtu_tp1_jump_t,
+       J4_cmpgtu_tp1_jump_t_ce]
+    =
+    ([TemporaryInfo (RegisterClass GeneralSubRegs) 0 False,
+      TemporaryInfo (RegisterClass GeneralSubRegs) 0 False,
+      BlockRefInfo],
+     [])
+  | i `elem`
+      [SA1_cmpeqi, SA1_cmpeqi_ce, SS2_storebi0, SS2_storebi0_ce,
+       SS2_storebi1, SS2_storebi1_ce, SS2_storewi0, SS2_storewi0_ce,
+       SS2_storewi1, SS2_storewi1_ce]
+    =
+    ([TemporaryInfo (RegisterClass GeneralSubRegs) 0 False, BoundInfo],
+     [])
+  | i `elem`
+      [SA1_addi, SA1_addi_ce, SA1_dec, SA1_dec_ce, SL1_loadri_io,
+       SL1_loadri_io_ce, SL1_loadrub_io, SL1_loadrub_io_ce, SL2_loadrb_io,
+       SL2_loadrb_io_ce, SL2_loadrh_io, SL2_loadrh_io_ce, SL2_loadruh_io,
+       SL2_loadruh_io_ce]
+    =
+    ([TemporaryInfo (RegisterClass GeneralSubRegs) 0 False, BoundInfo],
+     [TemporaryInfo (RegisterClass GeneralSubRegs) 1 False])
+  | i `elem`
+      [SS1_storeb_io, SS1_storeb_io_ce, SS1_storew_io, SS1_storew_io_ce,
+       SS2_storeh_io, SS2_storeh_io_ce]
+    =
+    ([TemporaryInfo (RegisterClass GeneralSubRegs) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass GeneralSubRegs) 0 False],
+     [])
+  | i `elem`
+      [J4_cmpeqi_fp0_jump_nt, J4_cmpeqi_fp0_jump_nt_ce,
+       J4_cmpeqi_fp0_jump_t, J4_cmpeqi_fp0_jump_t_ce,
+       J4_cmpeqi_fp1_jump_nt, J4_cmpeqi_fp1_jump_nt_ce,
+       J4_cmpeqi_fp1_jump_t, J4_cmpeqi_fp1_jump_t_ce,
+       J4_cmpeqi_tp0_jump_nt, J4_cmpeqi_tp0_jump_nt_ce,
+       J4_cmpeqi_tp0_jump_t, J4_cmpeqi_tp0_jump_t_ce,
+       J4_cmpeqi_tp1_jump_nt, J4_cmpeqi_tp1_jump_nt_ce,
+       J4_cmpeqi_tp1_jump_t, J4_cmpeqi_tp1_jump_t_ce,
+       J4_cmpeqn1_fp0_jump_nt, J4_cmpeqn1_fp0_jump_nt_ce,
+       J4_cmpeqn1_fp0_jump_t, J4_cmpeqn1_fp0_jump_t_ce,
+       J4_cmpeqn1_fp1_jump_nt, J4_cmpeqn1_fp1_jump_nt_ce,
+       J4_cmpeqn1_fp1_jump_t, J4_cmpeqn1_fp1_jump_t_ce,
+       J4_cmpeqn1_tp0_jump_nt, J4_cmpeqn1_tp0_jump_nt_ce,
+       J4_cmpeqn1_tp0_jump_t, J4_cmpeqn1_tp0_jump_t_ce,
+       J4_cmpeqn1_tp1_jump_nt, J4_cmpeqn1_tp1_jump_nt_ce,
+       J4_cmpeqn1_tp1_jump_t, J4_cmpeqn1_tp1_jump_t_ce,
+       J4_cmpgti_fp0_jump_nt, J4_cmpgti_fp0_jump_nt_ce,
+       J4_cmpgti_fp0_jump_t, J4_cmpgti_fp0_jump_t_ce,
+       J4_cmpgti_fp1_jump_nt, J4_cmpgti_fp1_jump_nt_ce,
+       J4_cmpgti_fp1_jump_t, J4_cmpgti_fp1_jump_t_ce,
+       J4_cmpgti_tp0_jump_nt, J4_cmpgti_tp0_jump_nt_ce,
+       J4_cmpgti_tp0_jump_t, J4_cmpgti_tp0_jump_t_ce,
+       J4_cmpgti_tp1_jump_nt, J4_cmpgti_tp1_jump_nt_ce,
+       J4_cmpgti_tp1_jump_t, J4_cmpgti_tp1_jump_t_ce,
+       J4_cmpgtn1_fp0_jump_nt, J4_cmpgtn1_fp0_jump_nt_ce,
+       J4_cmpgtn1_fp0_jump_t, J4_cmpgtn1_fp0_jump_t_ce,
+       J4_cmpgtn1_fp1_jump_nt, J4_cmpgtn1_fp1_jump_nt_ce,
+       J4_cmpgtn1_fp1_jump_t, J4_cmpgtn1_fp1_jump_t_ce,
+       J4_cmpgtn1_tp0_jump_nt, J4_cmpgtn1_tp0_jump_nt_ce,
+       J4_cmpgtn1_tp0_jump_t, J4_cmpgtn1_tp0_jump_t_ce,
+       J4_cmpgtn1_tp1_jump_nt, J4_cmpgtn1_tp1_jump_nt_ce,
+       J4_cmpgtn1_tp1_jump_t, J4_cmpgtn1_tp1_jump_t_ce,
+       J4_cmpgtui_fp0_jump_nt, J4_cmpgtui_fp0_jump_nt_ce,
+       J4_cmpgtui_fp0_jump_t, J4_cmpgtui_fp0_jump_t_ce,
+       J4_cmpgtui_fp1_jump_nt, J4_cmpgtui_fp1_jump_nt_ce,
+       J4_cmpgtui_fp1_jump_t, J4_cmpgtui_fp1_jump_t_ce,
+       J4_cmpgtui_tp0_jump_nt, J4_cmpgtui_tp0_jump_nt_ce,
+       J4_cmpgtui_tp0_jump_t, J4_cmpgtui_tp0_jump_t_ce,
+       J4_cmpgtui_tp1_jump_nt, J4_cmpgtui_tp1_jump_nt_ce,
+       J4_cmpgtui_tp1_jump_t, J4_cmpgtui_tp1_jump_t_ce]
+    =
+    ([TemporaryInfo (RegisterClass GeneralSubRegs) 0 False, BoundInfo,
+      BlockRefInfo],
+     [])
+  | i `elem`
+      [J4_tstbit0_fp0_jump_nt, J4_tstbit0_fp0_jump_nt_ce,
+       J4_tstbit0_fp0_jump_t, J4_tstbit0_fp0_jump_t_ce,
+       J4_tstbit0_fp1_jump_nt, J4_tstbit0_fp1_jump_nt_ce,
+       J4_tstbit0_fp1_jump_t, J4_tstbit0_fp1_jump_t_ce,
+       J4_tstbit0_tp0_jump_nt, J4_tstbit0_tp0_jump_nt_ce,
+       J4_tstbit0_tp0_jump_t, J4_tstbit0_tp0_jump_t_ce,
+       J4_tstbit0_tp1_jump_nt, J4_tstbit0_tp1_jump_nt_ce,
+       J4_tstbit0_tp1_jump_t, J4_tstbit0_tp1_jump_t_ce]
+    =
+    ([TemporaryInfo (RegisterClass GeneralSubRegs) 0 False,
+      BlockRefInfo],
+     [])
+  | i `elem` [J4_jumpsetr, J4_jumpsetr_ce] =
+    ([TemporaryInfo (RegisterClass GeneralSubRegs) 0 False,
+      BlockRefInfo],
+     [TemporaryInfo (RegisterClass GeneralSubRegs) 1 False])
+  | i `elem` [G4_tfrgcrr] =
+    ([TemporaryInfo (RegisterClass GuestRegs) 0 False],
+     [TemporaryInfo (RegisterClass IntRegs) 1 False])
+  | i `elem` [G4_tfrgcpp] =
+    ([TemporaryInfo (RegisterClass GuestRegs64) 0 False],
+     [TemporaryInfo (RegisterClass DoubleRegs) 1 False])
+  | i `elem`
+      [V6_vhistq, V6_vwhist128q, V6_vwhist256q, V6_vwhist256q_sat]
+    = ([TemporaryInfo (RegisterClass HvxQR) 0 False], [])
+  | i `elem` [V6_pred_not] =
+    ([TemporaryInfo (RegisterClass HvxQR) 0 False],
+     [TemporaryInfo (RegisterClass HvxQR) 1 False])
+  | i `elem` [V6_vprefixqb, V6_vprefixqh, V6_vprefixqw] =
+    ([TemporaryInfo (RegisterClass HvxQR) 0 False],
+     [TemporaryInfo (RegisterClass HvxVR) 1 False])
+  | i `elem`
+      [V6_pred_and, V6_pred_and_n, V6_pred_or, V6_pred_or_n, V6_pred_xor,
+       V6_shuffeqh, V6_shuffeqw]
+    =
+    ([TemporaryInfo (RegisterClass HvxQR) 0 False,
+      TemporaryInfo (RegisterClass HvxQR) 0 False],
+     [TemporaryInfo (RegisterClass HvxQR) 1 False])
+  | i `elem` [V6_vandvnqv, V6_vandvqv] =
+    ([TemporaryInfo (RegisterClass HvxQR) 0 False,
+      TemporaryInfo (RegisterClass HvxVR) 0 False],
+     [TemporaryInfo (RegisterClass HvxVR) 1 False])
+  | i `elem`
+      [V6_MAP_equb_and, V6_MAP_equb_ior, V6_MAP_equb_xor,
+       V6_MAP_equh_and, V6_MAP_equh_ior, V6_MAP_equh_xor, V6_MAP_equw_and,
+       V6_MAP_equw_ior, V6_MAP_equw_xor, V6_veqb_and, V6_veqb_or,
+       V6_veqb_xor, V6_veqh_and, V6_veqh_or, V6_veqh_xor, V6_veqw_and,
+       V6_veqw_or, V6_veqw_xor, V6_vgtb_and, V6_vgtb_or, V6_vgtb_xor,
+       V6_vgth_and, V6_vgth_or, V6_vgth_xor, V6_vgtub_and, V6_vgtub_or,
+       V6_vgtub_xor, V6_vgtuh_and, V6_vgtuh_or, V6_vgtuh_xor,
+       V6_vgtuw_and, V6_vgtuw_or, V6_vgtuw_xor, V6_vgtw_and, V6_vgtw_or,
+       V6_vgtw_xor]
+    =
+    ([TemporaryInfo (RegisterClass HvxQR) 0 False,
+      TemporaryInfo (RegisterClass HvxVR) 0 False,
+      TemporaryInfo (RegisterClass HvxVR) 0 False],
+     [TemporaryInfo (RegisterClass HvxQR) 1 False])
+  | i `elem`
+      [V6_vaddbnq, V6_vaddbnq_alt, V6_vaddbq, V6_vaddbq_alt, V6_vaddhnq,
+       V6_vaddhnq_alt, V6_vaddhq, V6_vaddhq_alt, V6_vaddwnq,
+       V6_vaddwnq_alt, V6_vaddwq, V6_vaddwq_alt, V6_vmux, V6_vsubbnq,
+       V6_vsubbnq_alt, V6_vsubbq, V6_vsubbq_alt, V6_vsubhnq,
+       V6_vsubhnq_alt, V6_vsubhq, V6_vsubhq_alt, V6_vsubwnq,
+       V6_vsubwnq_alt, V6_vsubwq, V6_vsubwq_alt]
+    =
+    ([TemporaryInfo (RegisterClass HvxQR) 0 False,
+      TemporaryInfo (RegisterClass HvxVR) 0 False,
+      TemporaryInfo (RegisterClass HvxVR) 0 False],
+     [TemporaryInfo (RegisterClass HvxVR) 1 False])
+  | i `elem` [V6_vswap] =
+    ([TemporaryInfo (RegisterClass HvxQR) 0 False,
+      TemporaryInfo (RegisterClass HvxVR) 0 False,
+      TemporaryInfo (RegisterClass HvxVR) 0 False],
+     [TemporaryInfo (RegisterClass HvxWR) 1 False])
+  | i `elem` [V6_vandvrt_acc, V6_vandvrt_acc_alt] =
+    ([TemporaryInfo (RegisterClass HvxQR) 0 False,
+      TemporaryInfo (RegisterClass HvxVR) 0 False,
+      TemporaryInfo (RegisterClass IntRegs) 0 False],
+     [TemporaryInfo (RegisterClass HvxQR) 1 False])
+  | i `elem`
+      [V6_vandnqrt, V6_vandnqrt_alt, V6_vandqrt, V6_vandqrt_alt]
+    =
+    ([TemporaryInfo (RegisterClass HvxQR) 0 False,
+      TemporaryInfo (RegisterClass IntRegs) 0 False],
+     [TemporaryInfo (RegisterClass HvxVR) 1 False])
+  | i `elem` [V6_stnq0, V6_stnqnt0, V6_stq0, V6_stqnt0] =
+    ([TemporaryInfo (RegisterClass HvxQR) 0 False,
+      TemporaryInfo (RegisterClass IntRegs) 0 False,
+      TemporaryInfo (RegisterClass HvxVR) 0 False],
+     [])
+  | i `elem` [V6_vgathermhq, V6_vgathermwq] =
+    ([TemporaryInfo (RegisterClass HvxQR) 0 False,
+      TemporaryInfo (RegisterClass IntRegs) 0 False,
+      TemporaryInfo (RegisterClass ModRegs) 0 False,
+      TemporaryInfo (RegisterClass HvxVR) 0 False],
+     [])
+  | i `elem`
+      [V6_vS32b_nqpred_ppu, V6_vS32b_nt_nqpred_ppu,
+       V6_vS32b_nt_qpred_ppu, V6_vS32b_qpred_ppu]
+    =
+    ([TemporaryInfo (RegisterClass HvxQR) 0 False,
+      TemporaryInfo (RegisterClass IntRegs) 0 False,
+      TemporaryInfo (RegisterClass ModRegs) 0 False,
+      TemporaryInfo (RegisterClass HvxVR) 0 False],
+     [TemporaryInfo (RegisterClass IntRegs) 1 False])
+  | i `elem`
+      [V6_vscattermhq, V6_vscattermhq_alt, V6_vscattermwq,
+       V6_vscattermwq_alt]
+    =
+    ([TemporaryInfo (RegisterClass HvxQR) 0 False,
+      TemporaryInfo (RegisterClass IntRegs) 0 False,
+      TemporaryInfo (RegisterClass ModRegs) 0 False,
+      TemporaryInfo (RegisterClass HvxVR) 0 False,
+      TemporaryInfo (RegisterClass HvxVR) 0 False],
+     [])
+  | i `elem` [V6_vgathermhwq] =
+    ([TemporaryInfo (RegisterClass HvxQR) 0 False,
+      TemporaryInfo (RegisterClass IntRegs) 0 False,
+      TemporaryInfo (RegisterClass ModRegs) 0 False,
+      TemporaryInfo (RegisterClass HvxWR) 0 False],
+     [])
+  | i `elem` [V6_vscattermhwq, V6_vscattermwhq_alt] =
+    ([TemporaryInfo (RegisterClass HvxQR) 0 False,
+      TemporaryInfo (RegisterClass IntRegs) 0 False,
+      TemporaryInfo (RegisterClass ModRegs) 0 False,
+      TemporaryInfo (RegisterClass HvxWR) 0 False,
+      TemporaryInfo (RegisterClass HvxVR) 0 False],
+     [])
+  | i `elem`
+      [V6_vS32b_nqpred_ai, V6_vS32b_nqpred_ai_ce, V6_vS32b_nt_nqpred_ai,
+       V6_vS32b_nt_nqpred_ai_ce, V6_vS32b_nt_qpred_ai,
+       V6_vS32b_nt_qpred_ai_ce, V6_vS32b_qpred_ai, V6_vS32b_qpred_ai_ce]
+    =
+    ([TemporaryInfo (RegisterClass HvxQR) 0 False,
+      TemporaryInfo (RegisterClass IntRegs) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass HvxVR) 0 False],
+     [])
+  | i `elem`
+      [V6_vS32b_nqpred_pi, V6_vS32b_nqpred_pi_ce, V6_vS32b_nt_nqpred_pi,
+       V6_vS32b_nt_nqpred_pi_ce, V6_vS32b_nt_qpred_pi,
+       V6_vS32b_nt_qpred_pi_ce, V6_vS32b_qpred_pi, V6_vS32b_qpred_pi_ce]
+    =
+    ([TemporaryInfo (RegisterClass HvxQR) 0 False,
+      TemporaryInfo (RegisterClass IntRegs) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass HvxVR) 0 False],
+     [TemporaryInfo (RegisterClass IntRegs) 1 False])
+  | i `elem` [V6_vwhist128qm, V6_vwhist128qm_ce] =
+    ([TemporaryInfo (RegisterClass HvxQR) 0 False, BoundInfo], [])
+  | i `elem`
+      [V6_vrmpyzbb_rt_acc, V6_vrmpyzbub_rt_acc, V6_vrmpyzcb_rt_acc,
+       V6_vrmpyzcbs_rt_acc, V6_vrmpyznb_rt_acc]
+    =
+    ([TemporaryInfo (RegisterClass HvxVQR) 0 False,
+      TemporaryInfo (RegisterClass HvxVR) 0 False,
+      TemporaryInfo (RegisterClass IntRegsLow8) 0 False],
+     [TemporaryInfo (RegisterClass HvxVQR) 1 False])
+  | i `elem`
+      [V6_vrmpyzbb_rx_acc, V6_vrmpyzbub_rx_acc, V6_vrmpyzcb_rx_acc,
+       V6_vrmpyzcbs_rx_acc, V6_vrmpyznb_rx_acc]
+    =
+    ([TemporaryInfo (RegisterClass HvxVQR) 0 False,
+      TemporaryInfo (RegisterClass HvxVR) 0 False,
+      TemporaryInfo (RegisterClass IntRegsLow8) 0 False],
+     [TemporaryInfo (RegisterClass HvxVQR) 1 False,
+      TemporaryInfo (RegisterClass IntRegsLow8) 1 False])
+  | i `elem`
+      [V6_vabsb, V6_vabsb_alt, V6_vabsb_sat, V6_vabsb_sat_alt, V6_vabsh,
+       V6_vabsh_alt, V6_vabsh_sat, V6_vabsh_sat_alt, V6_vabsub_alt,
+       V6_vabsuh_alt, V6_vabsuw_alt, V6_vabsw, V6_vabsw_alt, V6_vabsw_sat,
+       V6_vabsw_sat_alt, V6_vassign, V6_vcl0h, V6_vcl0h_alt, V6_vcl0w,
+       V6_vcl0w_alt, V6_vdealb, V6_vdealb_alt, V6_vdealh, V6_vdealh_alt,
+       V6_vnormamth, V6_vnormamth_alt, V6_vnormamtw, V6_vnormamtw_alt,
+       V6_vnot, V6_vpopcounth, V6_vpopcounth_alt, V6_vshuffb,
+       V6_vshuffb_alt, V6_vshuffh, V6_vshuffh_alt]
+    =
+    ([TemporaryInfo (RegisterClass HvxVR) 0 False],
+     [TemporaryInfo (RegisterClass HvxVR) 1 False])
+  | i `elem`
+      [V6_vsb, V6_vsb_alt, V6_vsh, V6_vsh_alt, V6_vunpackb,
+       V6_vunpackb_alt, V6_vunpackh, V6_vunpackh_alt, V6_vunpackub,
+       V6_vunpackub_alt, V6_vunpackuh, V6_vunpackuh_alt, V6_vzb,
+       V6_vzb_alt, V6_vzh, V6_vzh_alt]
+    =
+    ([TemporaryInfo (RegisterClass HvxVR) 0 False],
+     [TemporaryInfo (RegisterClass HvxWR) 1 False])
+  | i `elem` [V6_vlut4] =
+    ([TemporaryInfo (RegisterClass HvxVR) 0 False,
+      TemporaryInfo (RegisterClass DoubleRegs) 0 False],
+     [TemporaryInfo (RegisterClass HvxVR) 1 False])
+  | i `elem`
+      [V6_vrmpybub_rtt, V6_vrmpybub_rtt_alt, V6_vrmpyub_rtt,
+       V6_vrmpyub_rtt_alt]
+    =
+    ([TemporaryInfo (RegisterClass HvxVR) 0 False,
+      TemporaryInfo (RegisterClass DoubleRegs) 0 False],
+     [TemporaryInfo (RegisterClass HvxWR) 1 False])
+  | i `elem`
+      [V6_vandnqrt_acc, V6_vandnqrt_acc_alt, V6_vandqrt_acc,
+       V6_vandqrt_acc_alt]
+    =
+    ([TemporaryInfo (RegisterClass HvxVR) 0 False,
+      TemporaryInfo (RegisterClass HvxQR) 0 False,
+      TemporaryInfo (RegisterClass IntRegs) 0 False],
+     [TemporaryInfo (RegisterClass HvxVR) 1 False])
+  | i `elem`
+      [V6_MAP_equb, V6_MAP_equh, V6_MAP_equw, V6_veqb, V6_veqh, V6_veqw,
+       V6_vgtb, V6_vgth, V6_vgtub, V6_vgtuh, V6_vgtuw, V6_vgtw]
+    =
+    ([TemporaryInfo (RegisterClass HvxVR) 0 False,
+      TemporaryInfo (RegisterClass HvxVR) 0 False],
+     [TemporaryInfo (RegisterClass HvxQR) 1 False])
+  | i `elem`
+      [V6_vabsdiffh, V6_vabsdiffh_alt, V6_vabsdiffub, V6_vabsdiffub_alt,
+       V6_vabsdiffuh, V6_vabsdiffuh_alt, V6_vabsdiffw, V6_vabsdiffw_alt,
+       V6_vaddb, V6_vaddb_alt, V6_vaddbsat, V6_vaddbsat_alt, V6_vaddclbh,
+       V6_vaddclbw, V6_vaddh, V6_vaddh_alt, V6_vaddhsat, V6_vaddhsat_alt,
+       V6_vaddubsat, V6_vaddubsat_alt, V6_vaddububb_sat, V6_vadduhsat,
+       V6_vadduhsat_alt, V6_vadduwsat, V6_vadduwsat_alt, V6_vaddw,
+       V6_vaddw_alt, V6_vaddwsat, V6_vaddwsat_alt, V6_vand, V6_vaslhv,
+       V6_vaslhv_alt, V6_vaslwv, V6_vaslwv_alt, V6_vasrhv, V6_vasrhv_alt,
+       V6_vasrwv, V6_vasrwv_alt, V6_vavgb, V6_vavgb_alt, V6_vavgbrnd,
+       V6_vavgbrnd_alt, V6_vavgh, V6_vavgh_alt, V6_vavghrnd,
+       V6_vavghrnd_alt, V6_vavgub, V6_vavgub_alt, V6_vavgubrnd,
+       V6_vavgubrnd_alt, V6_vavguh, V6_vavguh_alt, V6_vavguhrnd,
+       V6_vavguhrnd_alt, V6_vavguw, V6_vavguw_alt, V6_vavguwrnd,
+       V6_vavguwrnd_alt, V6_vavgw, V6_vavgw_alt, V6_vavgwrnd,
+       V6_vavgwrnd_alt, V6_vdealb4w, V6_vdealb4w_alt, V6_vdelta,
+       V6_vdmpyhvsat, V6_vdmpyhvsat_alt, V6_vlsrhv, V6_vlsrhv_alt,
+       V6_vlsrwv, V6_vlsrwv_alt, V6_vmaxb, V6_vmaxb_alt, V6_vmaxh,
+       V6_vmaxh_alt, V6_vmaxub, V6_vmaxub_alt, V6_vmaxuh, V6_vmaxuh_alt,
+       V6_vmaxw, V6_vmaxw_alt, V6_vminb, V6_vminb_alt, V6_vminh,
+       V6_vminh_alt, V6_vminub, V6_vminub_alt, V6_vminuh, V6_vminuh_alt,
+       V6_vminw, V6_vminw_alt, V6_vmpyewuh, V6_vmpyewuh_alt, V6_vmpyhvsrs,
+       V6_vmpyhvsrs_alt, V6_vmpyieoh, V6_vmpyiewuh, V6_vmpyiewuh_alt,
+       V6_vmpyih, V6_vmpyih_alt, V6_vmpyiowh, V6_vmpyiowh_alt, V6_vmpyowh,
+       V6_vmpyowh_alt, V6_vmpyowh_rnd, V6_vmpyowh_rnd_alt, V6_vnavgb,
+       V6_vnavgb_alt, V6_vnavgh, V6_vnavgh_alt, V6_vnavgub,
+       V6_vnavgub_alt, V6_vnavgw, V6_vnavgw_alt, V6_vor, V6_vpackeb,
+       V6_vpackeb_alt, V6_vpackeh, V6_vpackeh_alt, V6_vpackhb_sat,
+       V6_vpackhb_sat_alt, V6_vpackhub_sat, V6_vpackhub_sat_alt,
+       V6_vpackob, V6_vpackob_alt, V6_vpackoh, V6_vpackoh_alt,
+       V6_vpackwh_sat, V6_vpackwh_sat_alt, V6_vpackwuh_sat,
+       V6_vpackwuh_sat_alt, V6_vrdelta, V6_vrmpybusv, V6_vrmpybusv_alt,
+       V6_vrmpybv, V6_vrmpybv_alt, V6_vrmpyubv, V6_vrmpyubv_alt, V6_vrotr,
+       V6_vrotr_alt, V6_vroundhb, V6_vroundhb_alt, V6_vroundhub,
+       V6_vroundhub_alt, V6_vrounduhub, V6_vrounduhub_alt, V6_vrounduwuh,
+       V6_vrounduwuh_alt, V6_vroundwh, V6_vroundwh_alt, V6_vroundwuh,
+       V6_vroundwuh_alt, V6_vsatdw, V6_vsathub, V6_vsathub_alt,
+       V6_vsatuwuh, V6_vsatuwuh_alt, V6_vsatwh, V6_vsatwh_alt, V6_vshufeh,
+       V6_vshufeh_alt, V6_vshuffeb, V6_vshuffeb_alt, V6_vshuffob,
+       V6_vshuffob_alt, V6_vshufoh, V6_vshufoh_alt, V6_vsubb,
+       V6_vsubb_alt, V6_vsubbsat, V6_vsubbsat_alt, V6_vsubh, V6_vsubh_alt,
+       V6_vsubhsat, V6_vsubhsat_alt, V6_vsububsat, V6_vsububsat_alt,
+       V6_vsubububb_sat, V6_vsubuhsat, V6_vsubuhsat_alt, V6_vsubuwsat,
+       V6_vsubuwsat_alt, V6_vsubw, V6_vsubw_alt, V6_vsubwsat,
+       V6_vsubwsat_alt, V6_vxor]
+    =
+    ([TemporaryInfo (RegisterClass HvxVR) 0 False,
+      TemporaryInfo (RegisterClass HvxVR) 0 False],
+     [TemporaryInfo (RegisterClass HvxVR) 1 False])
+  | i `elem` [V6_vaddcarryo, V6_vsubcarryo] =
+    ([TemporaryInfo (RegisterClass HvxVR) 0 False,
+      TemporaryInfo (RegisterClass HvxVR) 0 False],
+     [TemporaryInfo (RegisterClass HvxVR) 1 False,
+      TemporaryInfo (RegisterClass HvxQR) 1 False])
+  | i `elem`
+      [V6_vaddhw, V6_vaddhw_alt, V6_vaddubh, V6_vaddubh_alt, V6_vadduhw,
+       V6_vadduhw_alt, V6_vcombine, V6_vmpybusv, V6_vmpybusv_alt,
+       V6_vmpybv, V6_vmpybv_alt, V6_vmpyewuh_64, V6_vmpyhus,
+       V6_vmpyhus_alt, V6_vmpyhv, V6_vmpyhv_alt, V6_vmpyubv,
+       V6_vmpyubv_alt, V6_vmpyuhv, V6_vmpyuhv_alt, V6_vshufoeb,
+       V6_vshufoeb_alt, V6_vshufoeh, V6_vshufoeh_alt, V6_vsubhw,
+       V6_vsubhw_alt, V6_vsububh, V6_vsububh_alt, V6_vsubuhw,
+       V6_vsubuhw_alt]
+    =
+    ([TemporaryInfo (RegisterClass HvxVR) 0 False,
+      TemporaryInfo (RegisterClass HvxVR) 0 False],
+     [TemporaryInfo (RegisterClass HvxWR) 1 False])
+  | i `elem` [V6_vmpahhsat, V6_vmpauhuhsat, V6_vmpsuhuhsat] =
+    ([TemporaryInfo (RegisterClass HvxVR) 0 False,
+      TemporaryInfo (RegisterClass HvxVR) 0 False,
+      TemporaryInfo (RegisterClass DoubleRegs) 0 False],
+     [TemporaryInfo (RegisterClass HvxVR) 1 False])
+  | i `elem` [V6_vaddcarrysat] =
+    ([TemporaryInfo (RegisterClass HvxVR) 0 False,
+      TemporaryInfo (RegisterClass HvxVR) 0 False,
+      TemporaryInfo (RegisterClass HvxQR) 0 False],
+     [TemporaryInfo (RegisterClass HvxVR) 1 False])
+  | i `elem` [V6_vaddcarry, V6_vsubcarry] =
+    ([TemporaryInfo (RegisterClass HvxVR) 0 False,
+      TemporaryInfo (RegisterClass HvxVR) 0 False,
+      TemporaryInfo (RegisterClass HvxQR) 0 False],
+     [TemporaryInfo (RegisterClass HvxVR) 1 False,
+      TemporaryInfo (RegisterClass HvxQR) 1 False])
+  | i `elem`
+      [V6_vdmpyhvsat_acc, V6_vdmpyhvsat_acc_alt, V6_vmpyiewh_acc,
+       V6_vmpyiewh_acc_alt, V6_vmpyiewuh_acc, V6_vmpyiewuh_acc_alt,
+       V6_vmpyih_acc, V6_vmpyih_acc_alt, V6_vmpyowh_rnd_sacc,
+       V6_vmpyowh_rnd_sacc_alt, V6_vmpyowh_sacc, V6_vmpyowh_sacc_alt,
+       V6_vrmpybusv_acc, V6_vrmpybusv_acc_alt, V6_vrmpybv_acc,
+       V6_vrmpybv_acc_alt, V6_vrmpyubv_acc, V6_vrmpyubv_acc_alt]
+    =
+    ([TemporaryInfo (RegisterClass HvxVR) 0 False,
+      TemporaryInfo (RegisterClass HvxVR) 0 False,
+      TemporaryInfo (RegisterClass HvxVR) 0 False],
+     [TemporaryInfo (RegisterClass HvxVR) 1 False])
+  | i `elem` [V6_vlutvvb_oracc] =
+    ([TemporaryInfo (RegisterClass HvxVR) 0 False,
+      TemporaryInfo (RegisterClass HvxVR) 0 False,
+      TemporaryInfo (RegisterClass HvxVR) 0 False,
+      TemporaryInfo (RegisterClass IntRegsLow8) 0 False],
+     [TemporaryInfo (RegisterClass HvxVR) 1 False])
+  | i `elem` [V6_vlutvvb_oracci, V6_vlutvvb_oracci_ce] =
+    ([TemporaryInfo (RegisterClass HvxVR) 0 False,
+      TemporaryInfo (RegisterClass HvxVR) 0 False,
+      TemporaryInfo (RegisterClass HvxVR) 0 False, BoundInfo],
+     [TemporaryInfo (RegisterClass HvxVR) 1 False])
+  | i `elem`
+      [V6_vaslh_acc, V6_vaslh_acc_alt, V6_vaslw_acc, V6_vaslw_acc_alt,
+       V6_vasrh_acc, V6_vasrh_acc_alt, V6_vasrw_acc, V6_vasrw_acc_alt,
+       V6_vdmpybus_acc, V6_vdmpybus_acc_alt, V6_vdmpyhb_acc,
+       V6_vdmpyhb_acc_alt, V6_vdmpyhsat_acc, V6_vdmpyhsat_acc_alt,
+       V6_vdmpyhsusat_acc, V6_vdmpyhsusat_acc_alt, V6_vmpyihb_acc,
+       V6_vmpyihb_acc_alt, V6_vmpyiwb_acc, V6_vmpyiwb_acc_alt,
+       V6_vmpyiwh_acc, V6_vmpyiwh_acc_alt, V6_vmpyiwub_acc,
+       V6_vmpyiwub_acc_alt, V6_vmpyuhe_acc, V6_vrmpybus_acc,
+       V6_vrmpybus_acc_alt, V6_vrmpyub_acc, V6_vrmpyub_acc_alt]
+    =
+    ([TemporaryInfo (RegisterClass HvxVR) 0 False,
+      TemporaryInfo (RegisterClass HvxVR) 0 False,
+      TemporaryInfo (RegisterClass IntRegs) 0 False],
+     [TemporaryInfo (RegisterClass HvxVR) 1 False])
+  | i `elem` [V6_vdeal, V6_vshuff, V6_vtran2x2_map] =
+    ([TemporaryInfo (RegisterClass HvxVR) 0 False,
+      TemporaryInfo (RegisterClass HvxVR) 0 False,
+      TemporaryInfo (RegisterClass IntRegs) 0 False],
+     [TemporaryInfo (RegisterClass HvxVR) 1 False,
+      TemporaryInfo (RegisterClass HvxVR) 1 False])
+  | i `elem`
+      [V6_valignb, V6_vasrhbrndsat, V6_vasrhbrndsat_alt, V6_vasrhbsat,
+       V6_vasrhubrndsat, V6_vasrhubrndsat_alt, V6_vasrhubsat,
+       V6_vasrhubsat_alt, V6_vasruhubrndsat, V6_vasruhubsat,
+       V6_vasruwuhrndsat, V6_vasruwuhsat, V6_vasrwh, V6_vasrwh_alt,
+       V6_vasrwhrndsat, V6_vasrwhrndsat_alt, V6_vasrwhsat,
+       V6_vasrwhsat_alt, V6_vasrwuhrndsat, V6_vasrwuhsat,
+       V6_vasrwuhsat_alt, V6_vlalignb, V6_vlutvvb, V6_vlutvvb_nm]
+    =
+    ([TemporaryInfo (RegisterClass HvxVR) 0 False,
+      TemporaryInfo (RegisterClass HvxVR) 0 False,
+      TemporaryInfo (RegisterClass IntRegsLow8) 0 False],
+     [TemporaryInfo (RegisterClass HvxVR) 1 False])
+  | i `elem` [V6_vdealvdd, V6_vlutvwh, V6_vlutvwh_nm, V6_vshuffvdd] =
+    ([TemporaryInfo (RegisterClass HvxVR) 0 False,
+      TemporaryInfo (RegisterClass HvxVR) 0 False,
+      TemporaryInfo (RegisterClass IntRegsLow8) 0 False],
+     [TemporaryInfo (RegisterClass HvxWR) 1 False])
+  | i `elem`
+      [V6_valignbi, V6_valignbi_ce, V6_vlalignbi, V6_vlalignbi_ce,
+       V6_vlutvvbi, V6_vlutvvbi_ce]
+    =
+    ([TemporaryInfo (RegisterClass HvxVR) 0 False,
+      TemporaryInfo (RegisterClass HvxVR) 0 False, BoundInfo],
+     [TemporaryInfo (RegisterClass HvxVR) 1 False])
+  | i `elem` [V6_vlutvwhi, V6_vlutvwhi_ce] =
+    ([TemporaryInfo (RegisterClass HvxVR) 0 False,
+      TemporaryInfo (RegisterClass HvxVR) 0 False, BoundInfo],
+     [TemporaryInfo (RegisterClass HvxWR) 1 False])
+  | i `elem`
+      [V6_vdmpyhisat_acc, V6_vdmpyhisat_acc_alt, V6_vdmpyhsuisat_acc,
+       V6_vdmpyhsuisat_acc_alt]
+    =
+    ([TemporaryInfo (RegisterClass HvxVR) 0 False,
+      TemporaryInfo (RegisterClass HvxWR) 0 False,
+      TemporaryInfo (RegisterClass IntRegs) 0 False],
+     [TemporaryInfo (RegisterClass HvxVR) 1 False])
+  | i `elem` [V6_vandvrt, V6_vandvrt_alt] =
+    ([TemporaryInfo (RegisterClass HvxVR) 0 False,
+      TemporaryInfo (RegisterClass IntRegs) 0 False],
+     [TemporaryInfo (RegisterClass HvxQR) 1 False])
+  | i `elem`
+      [V6_vaslh, V6_vaslh_alt, V6_vaslw, V6_vaslw_alt, V6_vasrh,
+       V6_vasrh_alt, V6_vasrw, V6_vasrw_alt, V6_vdmpybus, V6_vdmpybus_alt,
+       V6_vdmpyhb, V6_vdmpyhb_alt, V6_vdmpyhsat, V6_vdmpyhsat_alt,
+       V6_vdmpyhsusat, V6_vdmpyhsusat_alt, V6_vinsertwr, V6_vlsrb,
+       V6_vlsrh, V6_vlsrh_alt, V6_vlsrw, V6_vlsrw_alt, V6_vmpyhsrs,
+       V6_vmpyhsrs_alt, V6_vmpyhss, V6_vmpyhss_alt, V6_vmpyihb,
+       V6_vmpyihb_alt, V6_vmpyiwb, V6_vmpyiwb_alt, V6_vmpyiwh,
+       V6_vmpyiwh_alt, V6_vmpyiwub, V6_vmpyiwub_alt, V6_vmpyuhe,
+       V6_vrmpybus, V6_vrmpybus_alt, V6_vrmpyub, V6_vrmpyub_alt, V6_vror]
+    =
+    ([TemporaryInfo (RegisterClass HvxVR) 0 False,
+      TemporaryInfo (RegisterClass IntRegs) 0 False],
+     [TemporaryInfo (RegisterClass HvxVR) 1 False])
+  | i `elem`
+      [V6_vmpybus, V6_vmpybus_alt, V6_vmpyh, V6_vmpyh_alt, V6_vmpyub,
+       V6_vmpyub_alt, V6_vmpyuh, V6_vmpyuh_alt]
+    =
+    ([TemporaryInfo (RegisterClass HvxVR) 0 False,
+      TemporaryInfo (RegisterClass IntRegs) 0 False],
+     [TemporaryInfo (RegisterClass HvxWR) 1 False])
+  | i `elem` [V6_extractw, V6_extractw_alt] =
+    ([TemporaryInfo (RegisterClass HvxVR) 0 False,
+      TemporaryInfo (RegisterClass IntRegs) 0 False],
+     [TemporaryInfo (RegisterClass IntRegs) 1 False])
+  | i `elem`
+      [V6_vrmpyzbb_rt, V6_vrmpyzbub_rt, V6_vrmpyzcb_rt, V6_vrmpyzcbs_rt,
+       V6_vrmpyznb_rt]
+    =
+    ([TemporaryInfo (RegisterClass HvxVR) 0 False,
+      TemporaryInfo (RegisterClass IntRegsLow8) 0 False],
+     [TemporaryInfo (RegisterClass HvxVQR) 1 False])
+  | i `elem`
+      [V6_vrmpyzbb_rx, V6_vrmpyzbub_rx, V6_vrmpyzcb_rx, V6_vrmpyzcbs_rx,
+       V6_vrmpyznb_rx]
+    =
+    ([TemporaryInfo (RegisterClass HvxVR) 0 False,
+      TemporaryInfo (RegisterClass IntRegsLow8) 0 False],
+     [TemporaryInfo (RegisterClass HvxVQR) 1 False,
+      TemporaryInfo (RegisterClass IntRegsLow8) 1 False])
+  | i `elem` [V6_hi, V6_lo] =
+    ([TemporaryInfo (RegisterClass HvxWR) 0 False],
+     [TemporaryInfo (RegisterClass HvxVR) 1 False])
+  | i `elem` [V6_vassignp] =
+    ([TemporaryInfo (RegisterClass HvxWR) 0 False],
+     [TemporaryInfo (RegisterClass HvxWR) 1 False])
+  | i `elem`
+      [V6_vunpackob, V6_vunpackob_alt, V6_vunpackoh, V6_vunpackoh_alt]
+    =
+    ([TemporaryInfo (RegisterClass HvxWR) 0 False,
+      TemporaryInfo (RegisterClass HvxVR) 0 False],
+     [TemporaryInfo (RegisterClass HvxWR) 1 False])
+  | i `elem`
+      [V6_vrmpybub_rtt_acc, V6_vrmpybub_rtt_acc_alt, V6_vrmpyub_rtt_acc,
+       V6_vrmpyub_rtt_acc_alt]
+    =
+    ([TemporaryInfo (RegisterClass HvxWR) 0 False,
+      TemporaryInfo (RegisterClass HvxVR) 0 False,
+      TemporaryInfo (RegisterClass DoubleRegs) 0 False],
+     [TemporaryInfo (RegisterClass HvxWR) 1 False])
+  | i `elem`
+      [V6_vaddhw_acc, V6_vaddhw_acc_alt, V6_vaddubh_acc,
+       V6_vaddubh_acc_alt, V6_vadduhw_acc, V6_vadduhw_acc_alt,
+       V6_vasr_into, V6_vasr_into_alt, V6_vmpybusv_acc,
+       V6_vmpybusv_acc_alt, V6_vmpybv_acc, V6_vmpybv_acc_alt,
+       V6_vmpyhus_acc, V6_vmpyhus_acc_alt, V6_vmpyhv_acc,
+       V6_vmpyhv_acc_alt, V6_vmpyowh_64_acc, V6_vmpyubv_acc,
+       V6_vmpyubv_acc_alt, V6_vmpyuhv_acc, V6_vmpyuhv_acc_alt]
+    =
+    ([TemporaryInfo (RegisterClass HvxWR) 0 False,
+      TemporaryInfo (RegisterClass HvxVR) 0 False,
+      TemporaryInfo (RegisterClass HvxVR) 0 False],
+     [TemporaryInfo (RegisterClass HvxWR) 1 False])
+  | i `elem` [V6_vlutvwh_oracc] =
+    ([TemporaryInfo (RegisterClass HvxWR) 0 False,
+      TemporaryInfo (RegisterClass HvxVR) 0 False,
+      TemporaryInfo (RegisterClass HvxVR) 0 False,
+      TemporaryInfo (RegisterClass IntRegsLow8) 0 False],
+     [TemporaryInfo (RegisterClass HvxWR) 1 False])
+  | i `elem` [V6_vlutvwh_oracci, V6_vlutvwh_oracci_ce] =
+    ([TemporaryInfo (RegisterClass HvxWR) 0 False,
+      TemporaryInfo (RegisterClass HvxVR) 0 False,
+      TemporaryInfo (RegisterClass HvxVR) 0 False, BoundInfo],
+     [TemporaryInfo (RegisterClass HvxWR) 1 False])
+  | i `elem`
+      [V6_vmpybus_acc, V6_vmpybus_acc_alt, V6_vmpyh_acc,
+       V6_vmpyh_acc_alt, V6_vmpyhsat_acc, V6_vmpyhsat_acc_alt,
+       V6_vmpyub_acc, V6_vmpyub_acc_alt, V6_vmpyuh_acc, V6_vmpyuh_acc_alt]
+    =
+    ([TemporaryInfo (RegisterClass HvxWR) 0 False,
+      TemporaryInfo (RegisterClass HvxVR) 0 False,
+      TemporaryInfo (RegisterClass IntRegs) 0 False],
+     [TemporaryInfo (RegisterClass HvxWR) 1 False])
+  | i `elem`
+      [V6_vaddb_dv, V6_vaddb_dv_alt, V6_vaddbsat_dv, V6_vaddbsat_dv_alt,
+       V6_vaddh_dv, V6_vaddh_dv_alt, V6_vaddhsat_dv, V6_vaddhsat_dv_alt,
+       V6_vaddubsat_dv, V6_vaddubsat_dv_alt, V6_vadduhsat_dv,
+       V6_vadduhsat_dv_alt, V6_vadduwsat_dv, V6_vadduwsat_dv_alt,
+       V6_vaddw_dv, V6_vaddw_dv_alt, V6_vaddwsat_dv, V6_vaddwsat_dv_alt,
+       V6_vmpabusv, V6_vmpabusv_alt, V6_vmpabuuv, V6_vmpabuuv_alt,
+       V6_vsubb_dv, V6_vsubb_dv_alt, V6_vsubbsat_dv, V6_vsubbsat_dv_alt,
+       V6_vsubh_dv, V6_vsubh_dv_alt, V6_vsubhsat_dv, V6_vsubhsat_dv_alt,
+       V6_vsububsat_dv, V6_vsububsat_dv_alt, V6_vsubuhsat_dv,
+       V6_vsubuhsat_dv_alt, V6_vsubuwsat_dv, V6_vsubuwsat_dv_alt,
+       V6_vsubw_dv, V6_vsubw_dv_alt, V6_vsubwsat_dv, V6_vsubwsat_dv_alt]
+    =
+    ([TemporaryInfo (RegisterClass HvxWR) 0 False,
+      TemporaryInfo (RegisterClass HvxWR) 0 False],
+     [TemporaryInfo (RegisterClass HvxWR) 1 False])
+  | i `elem`
+      [V6_vdmpybus_dv_acc, V6_vdmpybus_dv_acc_alt, V6_vdmpyhb_dv_acc,
+       V6_vdmpyhb_dv_acc_alt, V6_vdsaduh_acc, V6_vdsaduh_acc_alt,
+       V6_vmpabus_acc, V6_vmpabus_acc_alt, V6_vmpabuu_acc,
+       V6_vmpabuu_acc_alt, V6_vmpahb_acc, V6_vmpahb_acc_alt,
+       V6_vmpauhb_acc, V6_vmpauhb_acc_alt, V6_vtmpyb_acc,
+       V6_vtmpyb_acc_alt, V6_vtmpybus_acc, V6_vtmpybus_acc_alt,
+       V6_vtmpyhb_acc, V6_vtmpyhb_acc_alt]
+    =
+    ([TemporaryInfo (RegisterClass HvxWR) 0 False,
+      TemporaryInfo (RegisterClass HvxWR) 0 False,
+      TemporaryInfo (RegisterClass IntRegs) 0 False],
+     [TemporaryInfo (RegisterClass HvxWR) 1 False])
+  | i `elem`
+      [V6_vrmpybusi_acc, V6_vrmpybusi_acc_alt, V6_vrmpybusi_acc_alt_ce,
+       V6_vrmpybusi_acc_ce, V6_vrmpyubi_acc, V6_vrmpyubi_acc_alt,
+       V6_vrmpyubi_acc_alt_ce, V6_vrmpyubi_acc_ce, V6_vrsadubi_acc,
+       V6_vrsadubi_acc_alt, V6_vrsadubi_acc_alt_ce, V6_vrsadubi_acc_ce]
+    =
+    ([TemporaryInfo (RegisterClass HvxWR) 0 False,
+      TemporaryInfo (RegisterClass HvxWR) 0 False,
+      TemporaryInfo (RegisterClass IntRegs) 0 False, BoundInfo],
+     [TemporaryInfo (RegisterClass HvxWR) 1 False])
+  | i `elem`
+      [V6_vdmpyhisat, V6_vdmpyhisat_alt, V6_vdmpyhsuisat,
+       V6_vdmpyhsuisat_alt]
+    =
+    ([TemporaryInfo (RegisterClass HvxWR) 0 False,
+      TemporaryInfo (RegisterClass IntRegs) 0 False],
+     [TemporaryInfo (RegisterClass HvxVR) 1 False])
+  | i `elem`
+      [V6_vdmpybus_dv, V6_vdmpybus_dv_alt, V6_vdmpyhb_dv,
+       V6_vdmpyhb_dv_alt, V6_vdsaduh, V6_vdsaduh_alt, V6_vmpabus,
+       V6_vmpabus_alt, V6_vmpabuu, V6_vmpabuu_alt, V6_vmpahb,
+       V6_vmpahb_alt, V6_vmpauhb, V6_vmpauhb_alt, V6_vtmpyb,
+       V6_vtmpyb_alt, V6_vtmpybus, V6_vtmpybus_alt, V6_vtmpyhb,
+       V6_vtmpyhb_alt]
+    =
+    ([TemporaryInfo (RegisterClass HvxWR) 0 False,
+      TemporaryInfo (RegisterClass IntRegs) 0 False],
+     [TemporaryInfo (RegisterClass HvxWR) 1 False])
+  | i `elem`
+      [V6_vrmpybusi, V6_vrmpybusi_alt, V6_vrmpybusi_alt_ce,
+       V6_vrmpybusi_ce, V6_vrmpyubi, V6_vrmpyubi_alt, V6_vrmpyubi_alt_ce,
+       V6_vrmpyubi_ce, V6_vrsadubi, V6_vrsadubi_alt, V6_vrsadubi_alt_ce,
+       V6_vrsadubi_ce]
+    =
+    ([TemporaryInfo (RegisterClass HvxWR) 0 False,
+      TemporaryInfo (RegisterClass IntRegs) 0 False, BoundInfo],
+     [TemporaryInfo (RegisterClass HvxWR) 1 False])
   | i `elem` [STW_nv, STW_nv_ce] =
     ([TemporaryInfo (RegisterClass IntRegs) (-1) True],
      [TemporaryInfo (InfiniteRegisterClass M32) 1 False])
@@ -334,9 +1016,9 @@ operandInfo i
     ([TemporaryInfo (RegisterClass IntRegs) (-1) True, BoundInfo],
      [TemporaryInfo (RegisterClass F32) 1 False])
   | i `elem`
-      [CALLRv3nr, EH_RETURN_JMPR, J2_callr, J2_jumpr, J4_hintjumpr,
-       JMPret, TCRETURNr, Y2_dccleana, Y2_dccleaninva, Y2_dcinva,
-       Y2_dczeroa, Y2_icinva, Y4_trace, Y5_l2unlocka]
+      [EH_RETURN_JMPR, J2_callr, J2_jumpr, J4_hintjumpr, PS_callr_nr,
+       PS_jmpret, PS_tailcall_r, V6_zld0, Y2_dccleana, Y2_dccleaninva,
+       Y2_dcfetch, Y2_dcinva, Y2_dczeroa, Y2_icinva, Y2_wait, Y4_trace]
     = ([TemporaryInfo (RegisterClass IntRegs) 0 False], [])
   | i `elem` [A2_tfrrcr] =
     ([TemporaryInfo (RegisterClass IntRegs) 0 False],
@@ -344,23 +1026,37 @@ operandInfo i
   | i `elem`
       [A2_sxtw, F2_conv_sf2d, F2_conv_sf2d_chop, F2_conv_sf2df,
        F2_conv_sf2ud, F2_conv_sf2ud_chop, F2_conv_uw2df, F2_conv_w2df,
-       L4_loadd_locked, S2_vsplatrh, S2_vsxtbh, S2_vsxthw, S2_vzxtbh,
-       S2_vzxthw, V4_SA1_combinerz, V4_SA1_combinezr]
+       L2_deallocframe, L2_loadbsw4_zomap, L2_loadbzw4_zomap,
+       L2_loadrd_zomap, L4_loadd_locked, L4_return, S2_vsplatrh,
+       S2_vsxtbh, S2_vsxthw, S2_vzxtbh, S2_vzxthw, S6_vsplatrbp]
     =
     ([TemporaryInfo (RegisterClass IntRegs) 0 False],
      [TemporaryInfo (RegisterClass DoubleRegs) 1 False])
-  | i `elem` [JMPret_linear] =
+  | i `elem` [PS_jmpret_linear] =
     ([TemporaryInfo (RegisterClass IntRegs) 0 False],
      [TemporaryInfo (RegisterClass F32) 0 False])
+  | i `elem` [G4_tfrgrcr] =
+    ([TemporaryInfo (RegisterClass IntRegs) 0 False],
+     [TemporaryInfo (RegisterClass GuestRegs) 1 False])
+  | i `elem` [V6_pred_scalar2, V6_pred_scalar2v2] =
+    ([TemporaryInfo (RegisterClass IntRegs) 0 False],
+     [TemporaryInfo (RegisterClass HvxQR) 1 False])
   | i `elem`
-      [A2_abs, A2_abssat, A2_aslh, A2_asrh, A2_negsat, A2_not, A2_satb,
-       A2_sath, A2_satub, A2_satuh, A2_swiz, A2_sxtb, A2_sxth, A2_tfr,
-       A2_zxtb, A2_zxth, ARGEXTEND, F2_conv_sf2uw, F2_conv_sf2uw_chop,
+      [V6_ld0, V6_ldnt0, V6_ldntnt0, V6_ldu0, V6_lvsplatb, V6_lvsplath,
+       V6_lvsplatw, V6_zextract]
+    =
+    ([TemporaryInfo (RegisterClass IntRegs) 0 False],
+     [TemporaryInfo (RegisterClass HvxVR) 1 False])
+  | i `elem`
+      [A2_abs, A2_abssat, A2_aslh, A2_asrh, A2_neg, A2_negsat, A2_not,
+       A2_satb, A2_sath, A2_satub, A2_satuh, A2_swiz, A2_sxtb, A2_sxth,
+       A2_tfr, A2_zxtb, A2_zxth, F2_conv_sf2uw, F2_conv_sf2uw_chop,
        F2_conv_sf2w, F2_conv_sf2w_chop, F2_conv_uw2sf, F2_conv_w2sf,
-       F2_sffixupr, L2_loadw_locked, MVW, MVW_ce, S2_brev, S2_cl0, S2_cl1,
-       S2_clb, S2_clbnorm, S2_ct0, S2_ct1, S2_svsathb, S2_svsathub,
-       S2_vsplatrb, V4_SA1_and1, V4_SA1_dec, V4_SA1_inc, V4_SA1_sxtb,
-       V4_SA1_sxth, V4_SA1_tfr, V4_SA1_zxtb, V4_SA1_zxth]
+       F2_sffixupr, L2_loadbsw2_zomap, L2_loadbzw2_zomap, L2_loadrb_zomap,
+       L2_loadrh_zomap, L2_loadri_zomap, L2_loadrub_zomap,
+       L2_loadruh_zomap, L2_loadw_locked, MVW, MVW_ce, S2_brev, S2_cl0,
+       S2_cl1, S2_clb, S2_clbnorm, S2_ct0, S2_ct1, S2_svsathb,
+       S2_svsathub, S2_vsplatrb]
     =
     ([TemporaryInfo (RegisterClass IntRegs) 0 False],
      [TemporaryInfo (RegisterClass IntRegs) 1 False])
@@ -371,7 +1067,7 @@ operandInfo i
   | i `elem` [STW, STW_ce] =
     ([TemporaryInfo (RegisterClass IntRegs) 0 False],
      [TemporaryInfo (InfiniteRegisterClass M32) 1 False])
-  | i `elem` [C2_tfrrp, MVRP, MVRP_ce, Y5_l2locka] =
+  | i `elem` [C2_tfrrp, MVRP, MVRP_ce] =
     ([TemporaryInfo (RegisterClass IntRegs) 0 False],
      [TemporaryInfo (RegisterClass PredRegs) 1 False])
   | i `elem`
@@ -381,28 +1077,12 @@ operandInfo i
        L2_loadri_io_fi_demat_fi_ce, L2_loadrigp_demat,
        L2_loadrigp_demat_ce, L2_loadrubgp_demat, L2_loadrubgp_demat_ce,
        L2_loadruh_io_fi_demat_fi, L2_loadruh_io_fi_demat_fi_ce,
-       L2_loadruhgp_demat, L2_loadruhgp_demat_ce, L4_loadrb_abs_demat,
-       L4_loadrb_abs_demat_ce, L4_loadrh_abs_demat,
-       L4_loadrh_abs_demat_ce, L4_loadri_abs_demat,
-       L4_loadri_abs_demat_ce, L4_loadrub_abs_demat,
-       L4_loadrub_abs_demat_ce, L4_loadruh_abs_demat,
-       L4_loadruh_abs_demat_ce, TFR_FI_fi_demat_fi, TFR_FI_fi_demat_fi_ce]
+       L2_loadruhgp_demat, L2_loadruhgp_demat_ce, TFR_FI_fi_demat_fi,
+       TFR_FI_fi_demat_fi_ce]
     =
     ([TemporaryInfo (RegisterClass IntRegs) 0 False],
      [TemporaryInfo (InfiniteRegisterClass RM32) 0 False])
-  | i `elem` [V6_pred_scalar2] =
-    ([TemporaryInfo (RegisterClass IntRegs) 0 False],
-     [TemporaryInfo (RegisterClass VecPredRegs) 1 False])
-  | i `elem` [V6_pred_scalar2_128B] =
-    ([TemporaryInfo (RegisterClass IntRegs) 0 False],
-     [TemporaryInfo (RegisterClass VecPredRegs128B) 1 False])
-  | i `elem` [V6_lvsplatw] =
-    ([TemporaryInfo (RegisterClass IntRegs) 0 False],
-     [TemporaryInfo (RegisterClass VectorRegs) 1 False])
-  | i `elem` [V6_lvsplatw_128B] =
-    ([TemporaryInfo (RegisterClass IntRegs) 0 False],
-     [TemporaryInfo (RegisterClass VectorRegs128B) 1 False])
-  | i `elem` [Y5_l2fetch] =
+  | i `elem` [S2_storerd_zomap, Y5_l2fetch] =
     ([TemporaryInfo (RegisterClass IntRegs) 0 False,
       TemporaryInfo (RegisterClass DoubleRegs) 0 False],
      [])
@@ -418,25 +1098,41 @@ operandInfo i
     ([TemporaryInfo (RegisterClass IntRegs) 0 False,
       TemporaryInfo (RegisterClass DoubleRegs) 0 False],
      [TemporaryInfo (RegisterClass PredRegs) 1 False])
-  | i `elem` [S2_storerd_pbr_pseudo] =
-    ([TemporaryInfo (RegisterClass IntRegs) 0 False,
-      TemporaryInfo (RegisterClass DoubleRegs) 0 False,
-      TemporaryInfo (RegisterClass IntRegs) 0 False],
-     [TemporaryInfo (RegisterClass IntRegs) 1 False])
-  | i `elem` [S2_storerd_pci_pseudo, S2_storerd_pci_pseudo_ce] =
-    ([TemporaryInfo (RegisterClass IntRegs) 0 False,
-      TemporaryInfo (RegisterClass DoubleRegs) 0 False,
-      TemporaryInfo (RegisterClass IntRegs) 0 False, BoundInfo],
-     [TemporaryInfo (RegisterClass IntRegs) 1 False])
-  | i `elem` [JMPret_dealloc_linear] =
+  | i `elem` [PS_jmpret_dealloc_linear] =
     ([TemporaryInfo (RegisterClass IntRegs) 0 False,
       TemporaryInfo (RegisterClass F32) 0 False],
      [TemporaryInfo (RegisterClass F32) 0 False])
+  | i `elem` [V6_vgathermhq_pseudo, V6_vgathermwq_pseudo] =
+    ([TemporaryInfo (RegisterClass IntRegs) 0 False,
+      TemporaryInfo (RegisterClass HvxQR) 0 False,
+      TemporaryInfo (RegisterClass IntRegs) 0 False,
+      TemporaryInfo (RegisterClass ModRegs) 0 False,
+      TemporaryInfo (RegisterClass HvxVR) 0 False],
+     [])
+  | i `elem` [V6_vgathermhwq_pseudo] =
+    ([TemporaryInfo (RegisterClass IntRegs) 0 False,
+      TemporaryInfo (RegisterClass HvxQR) 0 False,
+      TemporaryInfo (RegisterClass IntRegs) 0 False,
+      TemporaryInfo (RegisterClass ModRegs) 0 False,
+      TemporaryInfo (RegisterClass HvxWR) 0 False],
+     [])
+  | i `elem` [V6_st0, V6_stn0, V6_stnnt0, V6_stnt0, V6_stu0] =
+    ([TemporaryInfo (RegisterClass IntRegs) 0 False,
+      TemporaryInfo (RegisterClass HvxVR) 0 False],
+     [])
   | i `elem` [C2_cmplt_combo, C2_cmpltu_combo] =
     ([TemporaryInfo (RegisterClass IntRegs) 0 False,
       TemporaryInfo (RegisterClass IntRegs) (-1) True],
      [TemporaryInfo (RegisterClass F32) 1 False])
-  | i `elem` [Y4_l2fetch] =
+  | i `elem`
+      [L4_add_memopb_zomap, L4_add_memoph_zomap, L4_add_memopw_zomap,
+       L4_and_memopb_zomap, L4_and_memoph_zomap, L4_and_memopw_zomap,
+       L4_or_memopb_zomap, L4_or_memoph_zomap, L4_or_memopw_zomap,
+       L4_sub_memopb_zomap, L4_sub_memoph_zomap, L4_sub_memopw_zomap,
+       S2_storerb_zomap, S2_storerbnew_zomap, S2_storerf_zomap,
+       S2_storerh_zomap, S2_storerhnew_zomap, S2_storeri_zomap,
+       S2_storerinew_zomap, Y4_l2fetch]
+    =
     ([TemporaryInfo (RegisterClass IntRegs) 0 False,
       TemporaryInfo (RegisterClass IntRegs) 0 False],
      [])
@@ -489,7 +1185,7 @@ operandInfo i
        M2_mpyu_up, M2_mpyui, M2_vmpy2s_s0pack, M2_vmpy2s_s1pack,
        S2_asl_r_r, S2_asl_r_r_sat, S2_asr_r_r, S2_asr_r_r_sat,
        S2_clrbit_r, S2_lsl_r_r, S2_lsr_r_r, S2_setbit_r, S2_togglebit_r,
-       S4_parity, V4_SA1_addrx, Dep_A2_addsat, Dep_A2_subsat]
+       S4_parity, Dep_A2_addsat, Dep_A2_subsat]
     =
     ([TemporaryInfo (RegisterClass IntRegs) 0 False,
       TemporaryInfo (RegisterClass IntRegs) 0 False],
@@ -502,9 +1198,9 @@ operandInfo i
   | i `elem`
       [A4_cmpbeq, A4_cmpbgt, A4_cmpbgtu, A4_cmpheq, A4_cmphgt,
        A4_cmphgtu, C2_bitsclr, C2_bitsset, C2_cmpeq, C2_cmpgt, C2_cmpgtu,
-       C4_cmplte, C4_cmplteu, C4_cmpneq, C4_nbitsclr, C4_nbitsset,
-       F2_sfcmpeq, F2_sfcmpge, F2_sfcmpgt, F2_sfcmpuo, S2_storew_locked,
-       S2_tstbit_r, S4_ntstbit_r]
+       C2_cmplt, C2_cmpltu, C4_cmplte, C4_cmplteu, C4_cmpneq, C4_nbitsclr,
+       C4_nbitsset, F2_sfcmpeq, F2_sfcmpge, F2_sfcmpgt, F2_sfcmpuo,
+       S2_storew_locked, S2_tstbit_r, S4_ntstbit_r]
     =
     ([TemporaryInfo (RegisterClass IntRegs) 0 False,
       TemporaryInfo (RegisterClass IntRegs) 0 False],
@@ -516,7 +1212,7 @@ operandInfo i
      [TemporaryInfo (RegisterClass IntRegs) 1 False])
   | i `elem`
       [F2_sffma, F2_sffma_lib, F2_sffms, F2_sffms_lib, M2_acci, M2_maci,
-       M2_mpy_acc_hh_s0, M2_mpy_acc_hh_s1, M2_mpy_acc_hl_s0,
+       M2_mnaci, M2_mpy_acc_hh_s0, M2_mpy_acc_hh_s1, M2_mpy_acc_hl_s0,
        M2_mpy_acc_hl_s1, M2_mpy_acc_lh_s0, M2_mpy_acc_lh_s1,
        M2_mpy_acc_ll_s0, M2_mpy_acc_ll_s1, M2_mpy_acc_sat_hh_s0,
        M2_mpy_acc_sat_hh_s1, M2_mpy_acc_sat_hl_s0, M2_mpy_acc_sat_hl_s1,
@@ -539,69 +1235,35 @@ operandInfo i
        S2_asl_r_r_nac, S2_asl_r_r_or, S2_asr_r_r_acc, S2_asr_r_r_and,
        S2_asr_r_r_nac, S2_asr_r_r_or, S2_lsl_r_r_acc, S2_lsl_r_r_and,
        S2_lsl_r_r_nac, S2_lsl_r_r_or, S2_lsr_r_r_acc, S2_lsr_r_r_and,
-       S2_lsr_r_r_nac, S2_lsr_r_r_or, S2_storerb_pbr_pseudo,
-       S2_storerf_pbr_pseudo, S2_storerh_pbr_pseudo,
-       S2_storeri_pbr_pseudo]
+       S2_lsr_r_r_nac, S2_lsr_r_r_or]
     =
     ([TemporaryInfo (RegisterClass IntRegs) 0 False,
       TemporaryInfo (RegisterClass IntRegs) 0 False,
       TemporaryInfo (RegisterClass IntRegs) 0 False],
      [TemporaryInfo (RegisterClass IntRegs) 1 False])
-  | i `elem` [L2_loadrd_pbr_pseudo] =
-    ([TemporaryInfo (RegisterClass IntRegs) 0 False,
-      TemporaryInfo (RegisterClass IntRegs) 0 False,
-      TemporaryInfo (RegisterClass IntRegs) 0 False],
-     [TemporaryInfo (RegisterClass IntRegs) 1 False,
-      TemporaryInfo (RegisterClass DoubleRegs) 1 False])
-  | i `elem`
-      [L2_loadrb_pbr_pseudo, L2_loadrh_pbr_pseudo, L2_loadri_pbr_pseudo,
-       L2_loadrub_pbr_pseudo, L2_loadruh_pbr_pseudo]
-    =
-    ([TemporaryInfo (RegisterClass IntRegs) 0 False,
-      TemporaryInfo (RegisterClass IntRegs) 0 False,
-      TemporaryInfo (RegisterClass IntRegs) 0 False],
-     [TemporaryInfo (RegisterClass IntRegs) 1 False,
-      TemporaryInfo (RegisterClass IntRegs) 1 False])
-  | i `elem` [Insert4] =
-    ([TemporaryInfo (RegisterClass IntRegs) 0 False,
-      TemporaryInfo (RegisterClass IntRegs) 0 False,
-      TemporaryInfo (RegisterClass IntRegs) 0 False,
-      TemporaryInfo (RegisterClass IntRegs) 0 False],
-     [TemporaryInfo (RegisterClass DoubleRegs) 1 False])
   | i `elem` [F2_sffma_sc] =
     ([TemporaryInfo (RegisterClass IntRegs) 0 False,
       TemporaryInfo (RegisterClass IntRegs) 0 False,
       TemporaryInfo (RegisterClass IntRegs) 0 False,
       TemporaryInfo (RegisterClass PredRegs) 0 False],
      [TemporaryInfo (RegisterClass IntRegs) 1 False])
-  | i `elem`
-      [S2_storerb_pci_pseudo, S2_storerb_pci_pseudo_ce,
-       S2_storerf_pci_pseudo, S2_storerf_pci_pseudo_ce,
-       S2_storerh_pci_pseudo, S2_storerh_pci_pseudo_ce,
-       S2_storeri_pci_pseudo, S2_storeri_pci_pseudo_ce]
-    =
+  | i `elem` [L6_memcpy] =
     ([TemporaryInfo (RegisterClass IntRegs) 0 False,
       TemporaryInfo (RegisterClass IntRegs) 0 False,
-      TemporaryInfo (RegisterClass IntRegs) 0 False, BoundInfo],
-     [TemporaryInfo (RegisterClass IntRegs) 1 False])
-  | i `elem` [L2_loadrd_pci_pseudo, L2_loadrd_pci_pseudo_ce] =
+      TemporaryInfo (RegisterClass ModRegs) 0 False],
+     [])
+  | i `elem` [V6_vgathermh_pseudo, V6_vgathermw_pseudo] =
     ([TemporaryInfo (RegisterClass IntRegs) 0 False,
       TemporaryInfo (RegisterClass IntRegs) 0 False,
-      TemporaryInfo (RegisterClass IntRegs) 0 False, BoundInfo],
-     [TemporaryInfo (RegisterClass IntRegs) 1 False,
-      TemporaryInfo (RegisterClass DoubleRegs) 1 False])
-  | i `elem`
-      [L2_loadrb_pci_pseudo, L2_loadrb_pci_pseudo_ce,
-       L2_loadrh_pci_pseudo, L2_loadrh_pci_pseudo_ce,
-       L2_loadri_pci_pseudo, L2_loadri_pci_pseudo_ce,
-       L2_loadrub_pci_pseudo, L2_loadrub_pci_pseudo_ce,
-       L2_loadruh_pci_pseudo, L2_loadruh_pci_pseudo_ce]
-    =
+      TemporaryInfo (RegisterClass ModRegs) 0 False,
+      TemporaryInfo (RegisterClass HvxVR) 0 False],
+     [])
+  | i `elem` [V6_vgathermhw_pseudo] =
     ([TemporaryInfo (RegisterClass IntRegs) 0 False,
       TemporaryInfo (RegisterClass IntRegs) 0 False,
-      TemporaryInfo (RegisterClass IntRegs) 0 False, BoundInfo],
-     [TemporaryInfo (RegisterClass IntRegs) 1 False,
-      TemporaryInfo (RegisterClass IntRegs) 1 False])
+      TemporaryInfo (RegisterClass ModRegs) 0 False,
+      TemporaryInfo (RegisterClass HvxWR) 0 False],
+     [])
   | i `elem` [L4_loadrd_rr, L4_loadrd_rr_ce] =
     ([TemporaryInfo (RegisterClass IntRegs) 0 False,
       TemporaryInfo (RegisterClass IntRegs) 0 False, BoundInfo],
@@ -611,21 +1273,22 @@ operandInfo i
        L4_loadri_rr, L4_loadri_rr_ce, L4_loadrub_rr, L4_loadrub_rr_ce,
        L4_loadruh_rr, L4_loadruh_rr_ce, M2_accii, M2_accii_ce, M2_macsin,
        M2_macsin_ce, M2_macsip, M2_macsip_ce, M2_naccii, M2_naccii_ce,
-       M4_mpyri_addr, M4_mpyri_addr_ce, S2_addasl_rrri, S2_addasl_rrri_ce,
-       S2_asl_i_r_acc, S2_asl_i_r_acc_ce, S2_asl_i_r_and,
-       S2_asl_i_r_and_ce, S2_asl_i_r_nac, S2_asl_i_r_nac_ce,
-       S2_asl_i_r_or, S2_asl_i_r_or_ce, S2_asl_i_r_xacc,
-       S2_asl_i_r_xacc_ce, S2_asr_i_r_acc, S2_asr_i_r_acc_ce,
-       S2_asr_i_r_and, S2_asr_i_r_and_ce, S2_asr_i_r_nac,
-       S2_asr_i_r_nac_ce, S2_asr_i_r_or, S2_asr_i_r_or_ce, S2_lsr_i_r_acc,
-       S2_lsr_i_r_acc_ce, S2_lsr_i_r_and, S2_lsr_i_r_and_ce,
-       S2_lsr_i_r_nac, S2_lsr_i_r_nac_ce, S2_lsr_i_r_or, S2_lsr_i_r_or_ce,
-       S2_lsr_i_r_xacc, S2_lsr_i_r_xacc_ce, S4_addaddi, S4_addaddi_ce,
-       S4_or_andi, S4_or_andi_ce, S4_or_andix, S4_or_andix_ce, S4_or_ori,
+       M4_mpyri_addr, M4_mpyri_addr_ce, PS_fia, PS_fia_ce, S2_addasl_rrri,
+       S2_addasl_rrri_ce, S2_asl_i_r_acc, S2_asl_i_r_acc_ce,
+       S2_asl_i_r_and, S2_asl_i_r_and_ce, S2_asl_i_r_nac,
+       S2_asl_i_r_nac_ce, S2_asl_i_r_or, S2_asl_i_r_or_ce,
+       S2_asl_i_r_xacc, S2_asl_i_r_xacc_ce, S2_asr_i_r_acc,
+       S2_asr_i_r_acc_ce, S2_asr_i_r_and, S2_asr_i_r_and_ce,
+       S2_asr_i_r_nac, S2_asr_i_r_nac_ce, S2_asr_i_r_or, S2_asr_i_r_or_ce,
+       S2_lsr_i_r_acc, S2_lsr_i_r_acc_ce, S2_lsr_i_r_and,
+       S2_lsr_i_r_and_ce, S2_lsr_i_r_nac, S2_lsr_i_r_nac_ce,
+       S2_lsr_i_r_or, S2_lsr_i_r_or_ce, S2_lsr_i_r_xacc,
+       S2_lsr_i_r_xacc_ce, S4_addaddi, S4_addaddi_ce, S4_or_andi,
+       S4_or_andi_ce, S4_or_andix, S4_or_andix_ce, S4_or_ori,
        S4_or_ori_ce, S6_rol_i_r_acc, S6_rol_i_r_acc_ce, S6_rol_i_r_and,
        S6_rol_i_r_and_ce, S6_rol_i_r_nac, S6_rol_i_r_nac_ce,
        S6_rol_i_r_or, S6_rol_i_r_or_ce, S6_rol_i_r_xacc,
-       S6_rol_i_r_xacc_ce, TFR_FIA, TFR_FIA_ce]
+       S6_rol_i_r_xacc_ce]
     =
     ([TemporaryInfo (RegisterClass IntRegs) 0 False,
       TemporaryInfo (RegisterClass IntRegs) 0 False, BoundInfo],
@@ -661,41 +1324,17 @@ operandInfo i
      [TemporaryInfo (RegisterClass IntRegs) 1 False])
   | i `elem`
       [J4_cmpeq_f_jumpnv_nt, J4_cmpeq_f_jumpnv_nt_ce,
-       J4_cmpeq_f_jumpnv_t, J4_cmpeq_f_jumpnv_t_ce, J4_cmpeq_fp0_jump_nt,
-       J4_cmpeq_fp0_jump_nt_ce, J4_cmpeq_fp0_jump_t,
-       J4_cmpeq_fp0_jump_t_ce, J4_cmpeq_fp1_jump_nt,
-       J4_cmpeq_fp1_jump_nt_ce, J4_cmpeq_fp1_jump_t,
-       J4_cmpeq_fp1_jump_t_ce, J4_cmpeq_t_jumpnv_nt,
+       J4_cmpeq_f_jumpnv_t, J4_cmpeq_f_jumpnv_t_ce, J4_cmpeq_t_jumpnv_nt,
        J4_cmpeq_t_jumpnv_nt_ce, J4_cmpeq_t_jumpnv_t,
-       J4_cmpeq_t_jumpnv_t_ce, J4_cmpeq_tp0_jump_nt,
-       J4_cmpeq_tp0_jump_nt_ce, J4_cmpeq_tp0_jump_t,
-       J4_cmpeq_tp0_jump_t_ce, J4_cmpeq_tp1_jump_nt,
-       J4_cmpeq_tp1_jump_nt_ce, J4_cmpeq_tp1_jump_t,
-       J4_cmpeq_tp1_jump_t_ce, J4_cmpgt_f_jumpnv_nt,
+       J4_cmpeq_t_jumpnv_t_ce, J4_cmpgt_f_jumpnv_nt,
        J4_cmpgt_f_jumpnv_nt_ce, J4_cmpgt_f_jumpnv_t,
-       J4_cmpgt_f_jumpnv_t_ce, J4_cmpgt_fp0_jump_nt,
-       J4_cmpgt_fp0_jump_nt_ce, J4_cmpgt_fp0_jump_t,
-       J4_cmpgt_fp0_jump_t_ce, J4_cmpgt_fp1_jump_nt,
-       J4_cmpgt_fp1_jump_nt_ce, J4_cmpgt_fp1_jump_t,
-       J4_cmpgt_fp1_jump_t_ce, J4_cmpgt_t_jumpnv_nt,
+       J4_cmpgt_f_jumpnv_t_ce, J4_cmpgt_t_jumpnv_nt,
        J4_cmpgt_t_jumpnv_nt_ce, J4_cmpgt_t_jumpnv_t,
-       J4_cmpgt_t_jumpnv_t_ce, J4_cmpgt_tp0_jump_nt,
-       J4_cmpgt_tp0_jump_nt_ce, J4_cmpgt_tp0_jump_t,
-       J4_cmpgt_tp0_jump_t_ce, J4_cmpgt_tp1_jump_nt,
-       J4_cmpgt_tp1_jump_nt_ce, J4_cmpgt_tp1_jump_t,
-       J4_cmpgt_tp1_jump_t_ce, J4_cmpgtu_f_jumpnv_nt,
+       J4_cmpgt_t_jumpnv_t_ce, J4_cmpgtu_f_jumpnv_nt,
        J4_cmpgtu_f_jumpnv_nt_ce, J4_cmpgtu_f_jumpnv_t,
-       J4_cmpgtu_f_jumpnv_t_ce, J4_cmpgtu_fp0_jump_nt,
-       J4_cmpgtu_fp0_jump_nt_ce, J4_cmpgtu_fp0_jump_t,
-       J4_cmpgtu_fp0_jump_t_ce, J4_cmpgtu_fp1_jump_nt,
-       J4_cmpgtu_fp1_jump_nt_ce, J4_cmpgtu_fp1_jump_t,
-       J4_cmpgtu_fp1_jump_t_ce, J4_cmpgtu_t_jumpnv_nt,
+       J4_cmpgtu_f_jumpnv_t_ce, J4_cmpgtu_t_jumpnv_nt,
        J4_cmpgtu_t_jumpnv_nt_ce, J4_cmpgtu_t_jumpnv_t,
-       J4_cmpgtu_t_jumpnv_t_ce, J4_cmpgtu_tp0_jump_nt,
-       J4_cmpgtu_tp0_jump_nt_ce, J4_cmpgtu_tp0_jump_t,
-       J4_cmpgtu_tp0_jump_t_ce, J4_cmpgtu_tp1_jump_nt,
-       J4_cmpgtu_tp1_jump_nt_ce, J4_cmpgtu_tp1_jump_t,
-       J4_cmpgtu_tp1_jump_t_ce, J4_cmplt_f_jumpnv_nt,
+       J4_cmpgtu_t_jumpnv_t_ce, J4_cmplt_f_jumpnv_nt,
        J4_cmplt_f_jumpnv_nt_ce, J4_cmplt_f_jumpnv_t,
        J4_cmplt_f_jumpnv_t_ce, J4_cmplt_t_jumpnv_nt,
        J4_cmplt_t_jumpnv_nt_ce, J4_cmplt_t_jumpnv_t,
@@ -709,14 +1348,27 @@ operandInfo i
       TemporaryInfo (RegisterClass IntRegs) 0 False, BlockRefInfo],
      [])
   | i `elem`
-      [L2_loadalignb_pbr, L2_loadalignh_pbr, L2_loadbsw4_pbr,
-       L2_loadbsw4_pcr, L2_loadbsw4_pr, L2_loadbzw4_pbr, L2_loadbzw4_pcr,
-       L2_loadbzw4_pr, L2_loadrd_pbr, L2_loadrd_pcr, L2_loadrd_pr]
+      [L2_loadbsw4_pbr, L2_loadbsw4_pcr, L2_loadbsw4_pr, L2_loadbzw4_pbr,
+       L2_loadbzw4_pcr, L2_loadbzw4_pr, L2_loadrd_pbr, L2_loadrd_pcr,
+       L2_loadrd_pr]
     =
     ([TemporaryInfo (RegisterClass IntRegs) 0 False,
       TemporaryInfo (RegisterClass ModRegs) 0 False],
      [TemporaryInfo (RegisterClass DoubleRegs) 1 False,
       TemporaryInfo (RegisterClass IntRegs) 1 False])
+  | i `elem`
+      [V6_vL32Ub_ppu, V6_vL32b_cur_ppu, V6_vL32b_nt_cur_ppu,
+       V6_vL32b_nt_ppu, V6_vL32b_nt_tmp_ppu, V6_vL32b_ppu,
+       V6_vL32b_tmp_ppu]
+    =
+    ([TemporaryInfo (RegisterClass IntRegs) 0 False,
+      TemporaryInfo (RegisterClass ModRegs) 0 False],
+     [TemporaryInfo (RegisterClass HvxVR) 1 False,
+      TemporaryInfo (RegisterClass IntRegs) 1 False])
+  | i `elem` [V6_vS32b_srls_ppu, V6_zLd_ppu] =
+    ([TemporaryInfo (RegisterClass IntRegs) 0 False,
+      TemporaryInfo (RegisterClass ModRegs) 0 False],
+     [TemporaryInfo (RegisterClass IntRegs) 1 False])
   | i `elem`
       [L2_loadbsw2_pbr, L2_loadbsw2_pcr, L2_loadbsw2_pr, L2_loadbzw2_pbr,
        L2_loadbzw2_pcr, L2_loadbzw2_pr, L2_loadrb_pbr, L2_loadrb_pcr,
@@ -729,20 +1381,60 @@ operandInfo i
       TemporaryInfo (RegisterClass ModRegs) 0 False],
      [TemporaryInfo (RegisterClass IntRegs) 1 False,
       TemporaryInfo (RegisterClass IntRegs) 1 False])
-  | i `elem`
-      [V6_vL32Ub_ppu, V6_vL32b_cur_ppu, V6_vL32b_nt_cur_ppu,
-       V6_vL32b_nt_ppu, V6_vL32b_nt_tmp_ppu, V6_vL32b_ppu,
-       V6_vL32b_tmp_ppu]
-    =
-    ([TemporaryInfo (RegisterClass IntRegs) 0 False,
-      TemporaryInfo (RegisterClass ModRegs) 0 False],
-     [TemporaryInfo (RegisterClass VectorRegs) 1 False,
-      TemporaryInfo (RegisterClass IntRegs) 1 False])
   | i `elem` [S2_storerd_pbr, S2_storerd_pcr, S2_storerd_pr] =
     ([TemporaryInfo (RegisterClass IntRegs) 0 False,
       TemporaryInfo (RegisterClass ModRegs) 0 False,
       TemporaryInfo (RegisterClass DoubleRegs) 0 False],
      [TemporaryInfo (RegisterClass IntRegs) 1 False])
+  | i `elem` [PS_storerd_pcr] =
+    ([TemporaryInfo (RegisterClass IntRegs) 0 False,
+      TemporaryInfo (RegisterClass ModRegs) 0 False,
+      TemporaryInfo (RegisterClass DoubleRegs) 0 False,
+      TemporaryInfo (RegisterClass IntRegs) 0 False],
+     [TemporaryInfo (RegisterClass IntRegs) 1 False])
+  | i `elem` [V6_vgathermh, V6_vgathermw] =
+    ([TemporaryInfo (RegisterClass IntRegs) 0 False,
+      TemporaryInfo (RegisterClass ModRegs) 0 False,
+      TemporaryInfo (RegisterClass HvxVR) 0 False],
+     [])
+  | i `elem`
+      [V6_vS32Ub_ppu, V6_vS32b_new_ppu, V6_vS32b_nt_new_ppu,
+       V6_vS32b_nt_ppu, V6_vS32b_ppu]
+    =
+    ([TemporaryInfo (RegisterClass IntRegs) 0 False,
+      TemporaryInfo (RegisterClass ModRegs) 0 False,
+      TemporaryInfo (RegisterClass HvxVR) 0 False],
+     [TemporaryInfo (RegisterClass IntRegs) 1 False])
+  | i `elem`
+      [V6_vscattermh, V6_vscattermh_add, V6_vscattermh_add_alt,
+       V6_vscattermh_alt, V6_vscattermw, V6_vscattermw_add,
+       V6_vscattermw_add_alt, V6_vscattermw_alt]
+    =
+    ([TemporaryInfo (RegisterClass IntRegs) 0 False,
+      TemporaryInfo (RegisterClass ModRegs) 0 False,
+      TemporaryInfo (RegisterClass HvxVR) 0 False,
+      TemporaryInfo (RegisterClass HvxVR) 0 False],
+     [])
+  | i `elem` [V6_vgathermhw] =
+    ([TemporaryInfo (RegisterClass IntRegs) 0 False,
+      TemporaryInfo (RegisterClass ModRegs) 0 False,
+      TemporaryInfo (RegisterClass HvxWR) 0 False],
+     [])
+  | i `elem`
+      [V6_vscattermhw, V6_vscattermhw_add, V6_vscattermwh_add_alt,
+       V6_vscattermwh_alt]
+    =
+    ([TemporaryInfo (RegisterClass IntRegs) 0 False,
+      TemporaryInfo (RegisterClass ModRegs) 0 False,
+      TemporaryInfo (RegisterClass HvxWR) 0 False,
+      TemporaryInfo (RegisterClass HvxVR) 0 False],
+     [])
+  | i `elem` [PS_loadrd_pcr] =
+    ([TemporaryInfo (RegisterClass IntRegs) 0 False,
+      TemporaryInfo (RegisterClass ModRegs) 0 False,
+      TemporaryInfo (RegisterClass IntRegs) 0 False],
+     [TemporaryInfo (RegisterClass DoubleRegs) 1 False,
+      TemporaryInfo (RegisterClass IntRegs) 1 False])
   | i `elem`
       [S2_storerb_pbr, S2_storerb_pcr, S2_storerb_pr, S2_storerbnew_pbr,
        S2_storerbnew_pcr, S2_storerbnew_pr, S2_storerf_pbr,
@@ -756,19 +1448,42 @@ operandInfo i
       TemporaryInfo (RegisterClass IntRegs) 0 False],
      [TemporaryInfo (RegisterClass IntRegs) 1 False])
   | i `elem`
-      [V6_vS32Ub_ppu, V6_vS32b_new_ppu, V6_vS32b_nt_new_ppu,
-       V6_vS32b_nt_ppu, V6_vS32b_ppu]
+      [PS_loadrb_pcr, PS_loadrh_pcr, PS_loadri_pcr, PS_loadrub_pcr,
+       PS_loadruh_pcr]
     =
     ([TemporaryInfo (RegisterClass IntRegs) 0 False,
       TemporaryInfo (RegisterClass ModRegs) 0 False,
-      TemporaryInfo (RegisterClass VectorRegs) 0 False],
+      TemporaryInfo (RegisterClass IntRegs) 0 False],
+     [TemporaryInfo (RegisterClass IntRegs) 1 False,
+      TemporaryInfo (RegisterClass IntRegs) 1 False])
+  | i `elem`
+      [PS_storerb_pcr, PS_storerf_pcr, PS_storerh_pcr, PS_storeri_pcr]
+    =
+    ([TemporaryInfo (RegisterClass IntRegs) 0 False,
+      TemporaryInfo (RegisterClass ModRegs) 0 False,
+      TemporaryInfo (RegisterClass IntRegs) 0 False,
+      TemporaryInfo (RegisterClass IntRegs) 0 False],
      [TemporaryInfo (RegisterClass IntRegs) 1 False])
   | i `elem`
-      [V4_SA1_cmpeqi, V4_SA1_cmpeqi_ce, V4_SS2_storebi0,
-       V4_SS2_storebi0_ce, V4_SS2_storebi1, V4_SS2_storebi1_ce,
-       V4_SS2_storewi0, V4_SS2_storewi0_ce, V4_SS2_storewi1,
-       V4_SS2_storewi1_ce, Y2_dcfetchbo, Y2_dcfetchbo_ce]
+      [L4_iadd_memopb_zomap, L4_iadd_memopb_zomap_ce,
+       L4_iadd_memoph_zomap, L4_iadd_memoph_zomap_ce,
+       L4_iadd_memopw_zomap, L4_iadd_memopw_zomap_ce,
+       L4_iand_memopb_zomap, L4_iand_memopb_zomap_ce,
+       L4_iand_memoph_zomap, L4_iand_memoph_zomap_ce,
+       L4_iand_memopw_zomap, L4_iand_memopw_zomap_ce, L4_ior_memopb_zomap,
+       L4_ior_memopb_zomap_ce, L4_ior_memoph_zomap,
+       L4_ior_memoph_zomap_ce, L4_ior_memopw_zomap,
+       L4_ior_memopw_zomap_ce, L4_isub_memopb_zomap,
+       L4_isub_memopb_zomap_ce, L4_isub_memoph_zomap,
+       L4_isub_memoph_zomap_ce, L4_isub_memopw_zomap,
+       L4_isub_memopw_zomap_ce, S4_storeirb_zomap, S4_storeirb_zomap_ce,
+       S4_storeirh_zomap, S4_storeirh_zomap_ce, S4_storeiri_zomap,
+       S4_storeiri_zomap_ce, V6_vS32b_srls_ai, V6_vS32b_srls_ai_ce,
+       V6_zLd_ai, V6_zLd_ai_ce, Y2_dcfetchbo, Y2_dcfetchbo_ce]
     = ([TemporaryInfo (RegisterClass IntRegs) 0 False, BoundInfo], [])
+  | i `elem` [LDriw_ctr, LDriw_ctr_ce] =
+    ([TemporaryInfo (RegisterClass IntRegs) 0 False, BoundInfo],
+     [TemporaryInfo (RegisterClass CtrRegs) 1 False])
   | i `elem`
       [A4_bitspliti, A4_bitspliti_ce, A4_combineri, A4_combineri_ce,
        L2_loadbsw4_io, L2_loadbsw4_io_ce, L2_loadbzw4_io,
@@ -783,27 +1498,53 @@ operandInfo i
     ([TemporaryInfo (RegisterClass IntRegs) 0 False, BoundInfo],
      [TemporaryInfo (RegisterClass DoubleRegs) 1 False,
       TemporaryInfo (RegisterClass IntRegs) 1 False])
+  | i `elem` [PS_vloadrq_ai, PS_vloadrq_ai_ce] =
+    ([TemporaryInfo (RegisterClass IntRegs) 0 False, BoundInfo],
+     [TemporaryInfo (RegisterClass HvxQR) 1 False])
+  | i `elem`
+      [V6_vL32Ub_ai, V6_vL32Ub_ai_ce, V6_vL32b_ai, V6_vL32b_ai_ce,
+       V6_vL32b_cur_ai, V6_vL32b_cur_ai_ce, V6_vL32b_nt_ai,
+       V6_vL32b_nt_ai_ce, V6_vL32b_nt_cur_ai, V6_vL32b_nt_cur_ai_ce,
+       V6_vL32b_nt_tmp_ai, V6_vL32b_nt_tmp_ai_ce, V6_vL32b_tmp_ai,
+       V6_vL32b_tmp_ai_ce]
+    =
+    ([TemporaryInfo (RegisterClass IntRegs) 0 False, BoundInfo],
+     [TemporaryInfo (RegisterClass HvxVR) 1 False])
+  | i `elem`
+      [V6_vL32Ub_pi, V6_vL32Ub_pi_ce, V6_vL32b_cur_pi,
+       V6_vL32b_cur_pi_ce, V6_vL32b_nt_cur_pi, V6_vL32b_nt_cur_pi_ce,
+       V6_vL32b_nt_pi, V6_vL32b_nt_pi_ce, V6_vL32b_nt_tmp_pi,
+       V6_vL32b_nt_tmp_pi_ce, V6_vL32b_pi, V6_vL32b_pi_ce,
+       V6_vL32b_tmp_pi, V6_vL32b_tmp_pi_ce]
+    =
+    ([TemporaryInfo (RegisterClass IntRegs) 0 False, BoundInfo],
+     [TemporaryInfo (RegisterClass HvxVR) 1 False,
+      TemporaryInfo (RegisterClass IntRegs) 1 False])
+  | i `elem`
+      [PS_vloadrw_ai, PS_vloadrw_ai_ce, PS_vloadrw_nt_ai,
+       PS_vloadrw_nt_ai_ce, PS_vloadrwu_ai, PS_vloadrwu_ai_ce]
+    =
+    ([TemporaryInfo (RegisterClass IntRegs) 0 False, BoundInfo],
+     [TemporaryInfo (RegisterClass HvxWR) 1 False])
   | i `elem`
       [A2_addi, A2_addi_ce, A2_andir, A2_andir_ce, A2_orir, A2_orir_ce,
        A2_tfrih, A2_tfrih_ce, A2_tfril, A2_tfril_ce, A4_cround_ri,
        A4_cround_ri_ce, A4_rcmpeqi, A4_rcmpeqi_ce, A4_rcmpneqi,
        A4_rcmpneqi_ce, A4_round_ri, A4_round_ri_ce, A4_round_ri_sat,
-       A4_round_ri_sat_ce, ALLOCA, ALLOCA_ce, L2_loadbsw2_io,
+       A4_round_ri_sat_ce, J2_trap1, J2_trap1_ce, L2_loadbsw2_io,
        L2_loadbsw2_io_ce, L2_loadbzw2_io, L2_loadbzw2_io_ce, L2_loadrb_io,
        L2_loadrb_io_ce, L2_loadrh_io, L2_loadrh_io_ce, L2_loadri_io,
        L2_loadri_io_ce, L2_loadrub_io, L2_loadrub_io_ce, L2_loadruh_io,
        L2_loadruh_io_ce, M2_mpysin, M2_mpysin_ce, M2_mpysip, M2_mpysip_ce,
-       M2_mpysmi, M2_mpysmi_ce, S2_asl_i_r, S2_asl_i_r_ce, S2_asl_i_r_sat,
-       S2_asl_i_r_sat_ce, S2_asr_i_r, S2_asr_i_r_ce, S2_asr_i_r_rnd,
-       S2_asr_i_r_rnd_ce, S2_asr_i_r_rnd_goodsyntax,
+       M2_mpysmi, M2_mpysmi_ce, PS_alloca, PS_alloca_ce, PS_fi, PS_fi_ce,
+       S2_allocframe, S2_allocframe_ce, S2_asl_i_r, S2_asl_i_r_ce,
+       S2_asl_i_r_sat, S2_asl_i_r_sat_ce, S2_asr_i_r, S2_asr_i_r_ce,
+       S2_asr_i_r_rnd, S2_asr_i_r_rnd_ce, S2_asr_i_r_rnd_goodsyntax,
        S2_asr_i_r_rnd_goodsyntax_ce, S2_clrbit_i, S2_clrbit_i_ce,
        S2_lsr_i_r, S2_lsr_i_r_ce, S2_setbit_i, S2_setbit_i_ce,
        S2_togglebit_i, S2_togglebit_i_ce, S4_clbaddi, S4_clbaddi_ce,
-       S6_rol_i_r, S6_rol_i_r_ce, TFR_FI, TFR_FI_ce, V4_SA1_addi,
-       V4_SA1_addi_ce, V4_SL1_loadri_io, V4_SL1_loadri_io_ce,
-       V4_SL1_loadrub_io, V4_SL1_loadrub_io_ce, V4_SL2_loadrb_io,
-       V4_SL2_loadrb_io_ce, V4_SL2_loadrh_io, V4_SL2_loadrh_io_ce,
-       V4_SL2_loadruh_io, V4_SL2_loadruh_io_ce]
+       S6_rol_i_r, S6_rol_i_r_ce, V6_vS32b_srls_pi, V6_vS32b_srls_pi_ce,
+       V6_zLd_pi, V6_zLd_pi_ce]
     =
     ([TemporaryInfo (RegisterClass IntRegs) 0 False, BoundInfo],
      [TemporaryInfo (RegisterClass IntRegs) 1 False])
@@ -830,67 +1571,10 @@ operandInfo i
     =
     ([TemporaryInfo (RegisterClass IntRegs) 0 False, BoundInfo],
      [TemporaryInfo (RegisterClass PredRegs) 1 False])
-  | i `elem`
-      [LDrivv_indexed, LDrivv_indexed_ce, LDrivv_pseudo_V6,
-       LDrivv_pseudo_V6_ce]
-    =
-    ([TemporaryInfo (RegisterClass IntRegs) 0 False, BoundInfo],
-     [TemporaryInfo (RegisterClass VecDblRegs) 1 False])
-  | i `elem`
-      [LDrivv_indexed_128B, LDrivv_indexed_128B_ce,
-       LDrivv_pseudo_V6_128B, LDrivv_pseudo_V6_128B_ce]
-    =
-    ([TemporaryInfo (RegisterClass IntRegs) 0 False, BoundInfo],
-     [TemporaryInfo (RegisterClass VecDblRegs128B) 1 False])
-  | i `elem` [LDriq_pred_V6, LDriq_pred_V6_ce] =
-    ([TemporaryInfo (RegisterClass IntRegs) 0 False, BoundInfo],
-     [TemporaryInfo (RegisterClass VecPredRegs) 1 False])
-  | i `elem` [LDriq_pred_V6_128B, LDriq_pred_V6_128B_ce] =
-    ([TemporaryInfo (RegisterClass IntRegs) 0 False, BoundInfo],
-     [TemporaryInfo (RegisterClass VecPredRegs128B) 1 False])
-  | i `elem`
-      [LDriq_pred_vec_V6, LDriq_pred_vec_V6_ce, LDriv_pseudo_V6,
-       LDriv_pseudo_V6_ce, V6_vL32Ub_ai, V6_vL32Ub_ai_ce, V6_vL32b_ai,
-       V6_vL32b_ai_ce, V6_vL32b_cur_ai, V6_vL32b_cur_ai_ce,
-       V6_vL32b_nt_ai, V6_vL32b_nt_ai_ce, V6_vL32b_nt_cur_ai,
-       V6_vL32b_nt_cur_ai_ce, V6_vL32b_nt_tmp_ai, V6_vL32b_nt_tmp_ai_ce,
-       V6_vL32b_tmp_ai, V6_vL32b_tmp_ai_ce]
-    =
-    ([TemporaryInfo (RegisterClass IntRegs) 0 False, BoundInfo],
-     [TemporaryInfo (RegisterClass VectorRegs) 1 False])
-  | i `elem`
-      [V6_vL32Ub_pi, V6_vL32Ub_pi_ce, V6_vL32b_cur_pi,
-       V6_vL32b_cur_pi_ce, V6_vL32b_nt_cur_pi, V6_vL32b_nt_cur_pi_ce,
-       V6_vL32b_nt_pi, V6_vL32b_nt_pi_ce, V6_vL32b_nt_tmp_pi,
-       V6_vL32b_nt_tmp_pi_ce, V6_vL32b_pi, V6_vL32b_pi_ce,
-       V6_vL32b_tmp_pi, V6_vL32b_tmp_pi_ce]
-    =
-    ([TemporaryInfo (RegisterClass IntRegs) 0 False, BoundInfo],
-     [TemporaryInfo (RegisterClass VectorRegs) 1 False,
-      TemporaryInfo (RegisterClass IntRegs) 1 False])
-  | i `elem`
-      [LDriq_pred_vec_V6_128B, LDriq_pred_vec_V6_128B_ce,
-       LDriv_pseudo_V6_128B, LDriv_pseudo_V6_128B_ce, V6_vL32Ub_ai_128B,
-       V6_vL32Ub_ai_128B_ce, V6_vL32b_ai_128B, V6_vL32b_ai_128B_ce,
-       V6_vL32b_cur_ai_128B, V6_vL32b_cur_ai_128B_ce, V6_vL32b_nt_ai_128B,
-       V6_vL32b_nt_ai_128B_ce, V6_vL32b_nt_cur_ai_128B,
-       V6_vL32b_nt_cur_ai_128B_ce, V6_vL32b_nt_tmp_ai_128B,
-       V6_vL32b_nt_tmp_ai_128B_ce, V6_vL32b_tmp_ai_128B,
-       V6_vL32b_tmp_ai_128B_ce]
-    =
-    ([TemporaryInfo (RegisterClass IntRegs) 0 False, BoundInfo],
-     [TemporaryInfo (RegisterClass VectorRegs128B) 1 False])
-  | i `elem`
-      [V6_vL32Ub_pi_128B, V6_vL32Ub_pi_128B_ce, V6_vL32b_cur_pi_128B,
-       V6_vL32b_cur_pi_128B_ce, V6_vL32b_nt_cur_pi_128B,
-       V6_vL32b_nt_cur_pi_128B_ce, V6_vL32b_nt_pi_128B,
-       V6_vL32b_nt_pi_128B_ce, V6_vL32b_nt_tmp_pi_128B,
-       V6_vL32b_nt_tmp_pi_128B_ce, V6_vL32b_pi_128B, V6_vL32b_pi_128B_ce,
-       V6_vL32b_tmp_pi_128B, V6_vL32b_tmp_pi_128B_ce]
-    =
-    ([TemporaryInfo (RegisterClass IntRegs) 0 False, BoundInfo],
-     [TemporaryInfo (RegisterClass VectorRegs128B) 1 False,
-      TemporaryInfo (RegisterClass IntRegs) 1 False])
+  | i `elem` [STriw_ctr, STriw_ctr_ce] =
+    ([TemporaryInfo (RegisterClass IntRegs) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass CtrRegs) 0 False],
+     [])
   | i `elem` [S2_storerd_io, S2_storerd_io_ce] =
     ([TemporaryInfo (RegisterClass IntRegs) 0 False, BoundInfo,
       TemporaryInfo (RegisterClass DoubleRegs) 0 False],
@@ -899,6 +1583,33 @@ operandInfo i
     ([TemporaryInfo (RegisterClass IntRegs) 0 False, BoundInfo,
       TemporaryInfo (RegisterClass DoubleRegs) 0 False],
      [TemporaryInfo (RegisterClass IntRegs) 1 False])
+  | i `elem` [PS_vstorerq_ai, PS_vstorerq_ai_ce] =
+    ([TemporaryInfo (RegisterClass IntRegs) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass HvxQR) 0 False],
+     [])
+  | i `elem`
+      [V6_vS32Ub_ai, V6_vS32Ub_ai_ce, V6_vS32b_ai, V6_vS32b_ai_ce,
+       V6_vS32b_new_ai, V6_vS32b_new_ai_ce, V6_vS32b_nt_ai,
+       V6_vS32b_nt_ai_ce, V6_vS32b_nt_new_ai, V6_vS32b_nt_new_ai_ce]
+    =
+    ([TemporaryInfo (RegisterClass IntRegs) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass HvxVR) 0 False],
+     [])
+  | i `elem`
+      [V6_vS32Ub_pi, V6_vS32Ub_pi_ce, V6_vS32b_new_pi,
+       V6_vS32b_new_pi_ce, V6_vS32b_nt_new_pi, V6_vS32b_nt_new_pi_ce,
+       V6_vS32b_nt_pi, V6_vS32b_nt_pi_ce, V6_vS32b_pi, V6_vS32b_pi_ce]
+    =
+    ([TemporaryInfo (RegisterClass IntRegs) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass HvxVR) 0 False],
+     [TemporaryInfo (RegisterClass IntRegs) 1 False])
+  | i `elem`
+      [PS_vstorerw_ai, PS_vstorerw_ai_ce, PS_vstorerw_nt_ai,
+       PS_vstorerw_nt_ai_ce, PS_vstorerwu_ai, PS_vstorerwu_ai_ce]
+    =
+    ([TemporaryInfo (RegisterClass IntRegs) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass HvxWR) 0 False],
+     [])
   | i `elem`
       [L4_add_memopb_io, L4_add_memopb_io_ce, L4_add_memoph_io,
        L4_add_memoph_io_ce, L4_add_memopw_io, L4_add_memopw_io_ce,
@@ -912,9 +1623,7 @@ operandInfo i
        S2_storerbnew_io_ce, S2_storerf_io, S2_storerf_io_ce,
        S2_storerh_io, S2_storerh_io_ce, S2_storerhnew_io,
        S2_storerhnew_io_ce, S2_storeri_io, S2_storeri_io_ce,
-       S2_storerinew_io, S2_storerinew_io_ce, V4_SS1_storeb_io,
-       V4_SS1_storeb_io_ce, V4_SS1_storew_io, V4_SS1_storew_io_ce,
-       V4_SS2_storeh_io, V4_SS2_storeh_io_ce]
+       S2_storerinew_io, S2_storerinew_io_ce]
     =
     ([TemporaryInfo (RegisterClass IntRegs) 0 False, BoundInfo,
       TemporaryInfo (RegisterClass IntRegs) 0 False],
@@ -931,10 +1640,8 @@ operandInfo i
       TemporaryInfo (RegisterClass IntRegs) 0 False],
      [TemporaryInfo (RegisterClass IntRegs) 1 False])
   | i `elem`
-      [L2_loadalignb_pci, L2_loadalignb_pci_ce, L2_loadalignh_pci,
-       L2_loadalignh_pci_ce, L2_loadbsw4_pci, L2_loadbsw4_pci_ce,
-       L2_loadbzw4_pci, L2_loadbzw4_pci_ce, L2_loadrd_pci,
-       L2_loadrd_pci_ce]
+      [L2_loadbsw4_pci, L2_loadbsw4_pci_ce, L2_loadbzw4_pci,
+       L2_loadbzw4_pci_ce, L2_loadrd_pci, L2_loadrd_pci_ce]
     =
     ([TemporaryInfo (RegisterClass IntRegs) 0 False, BoundInfo,
       TemporaryInfo (RegisterClass ModRegs) 0 False],
@@ -955,6 +1662,18 @@ operandInfo i
       TemporaryInfo (RegisterClass ModRegs) 0 False,
       TemporaryInfo (RegisterClass DoubleRegs) 0 False],
      [TemporaryInfo (RegisterClass IntRegs) 1 False])
+  | i `elem` [PS_storerd_pci, PS_storerd_pci_ce] =
+    ([TemporaryInfo (RegisterClass IntRegs) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass ModRegs) 0 False,
+      TemporaryInfo (RegisterClass DoubleRegs) 0 False,
+      TemporaryInfo (RegisterClass IntRegs) 0 False],
+     [TemporaryInfo (RegisterClass IntRegs) 1 False])
+  | i `elem` [PS_loadrd_pci, PS_loadrd_pci_ce] =
+    ([TemporaryInfo (RegisterClass IntRegs) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass ModRegs) 0 False,
+      TemporaryInfo (RegisterClass IntRegs) 0 False],
+     [TemporaryInfo (RegisterClass DoubleRegs) 1 False,
+      TemporaryInfo (RegisterClass IntRegs) 1 False])
   | i `elem`
       [S2_storerb_pci, S2_storerb_pci_ce, S2_storerbnew_pci,
        S2_storerbnew_pci_ce, S2_storerf_pci, S2_storerf_pci_ce,
@@ -966,70 +1685,30 @@ operandInfo i
       TemporaryInfo (RegisterClass ModRegs) 0 False,
       TemporaryInfo (RegisterClass IntRegs) 0 False],
      [TemporaryInfo (RegisterClass IntRegs) 1 False])
+  | i `elem`
+      [PS_loadrb_pci, PS_loadrb_pci_ce, PS_loadrh_pci, PS_loadrh_pci_ce,
+       PS_loadri_pci, PS_loadri_pci_ce, PS_loadrub_pci, PS_loadrub_pci_ce,
+       PS_loadruh_pci, PS_loadruh_pci_ce]
+    =
+    ([TemporaryInfo (RegisterClass IntRegs) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass ModRegs) 0 False,
+      TemporaryInfo (RegisterClass IntRegs) 0 False],
+     [TemporaryInfo (RegisterClass IntRegs) 1 False,
+      TemporaryInfo (RegisterClass IntRegs) 1 False])
+  | i `elem`
+      [PS_storerb_pci, PS_storerb_pci_ce, PS_storerf_pci,
+       PS_storerf_pci_ce, PS_storerh_pci, PS_storerh_pci_ce,
+       PS_storeri_pci, PS_storeri_pci_ce]
+    =
+    ([TemporaryInfo (RegisterClass IntRegs) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass ModRegs) 0 False,
+      TemporaryInfo (RegisterClass IntRegs) 0 False,
+      TemporaryInfo (RegisterClass IntRegs) 0 False],
+     [TemporaryInfo (RegisterClass IntRegs) 1 False])
   | i `elem` [STriw_pred, STriw_pred_ce] =
     ([TemporaryInfo (RegisterClass IntRegs) 0 False, BoundInfo,
       TemporaryInfo (RegisterClass PredRegs) 0 False],
      [])
-  | i `elem`
-      [STrivv_indexed, STrivv_indexed_ce, STrivv_pseudo_V6,
-       STrivv_pseudo_V6_ce]
-    =
-    ([TemporaryInfo (RegisterClass IntRegs) 0 False, BoundInfo,
-      TemporaryInfo (RegisterClass VecDblRegs) 0 False],
-     [])
-  | i `elem`
-      [STrivv_indexed_128B, STrivv_indexed_128B_ce,
-       STrivv_pseudo_V6_128B, STrivv_pseudo_V6_128B_ce]
-    =
-    ([TemporaryInfo (RegisterClass IntRegs) 0 False, BoundInfo,
-      TemporaryInfo (RegisterClass VecDblRegs128B) 0 False],
-     [])
-  | i `elem` [STriq_pred_V6, STriq_pred_V6_ce] =
-    ([TemporaryInfo (RegisterClass IntRegs) 0 False, BoundInfo,
-      TemporaryInfo (RegisterClass VecPredRegs) 0 False],
-     [])
-  | i `elem` [STriq_pred_V6_128B, STriq_pred_V6_128B_ce] =
-    ([TemporaryInfo (RegisterClass IntRegs) 0 False, BoundInfo,
-      TemporaryInfo (RegisterClass VecPredRegs128B) 0 False],
-     [])
-  | i `elem`
-      [STriq_pred_vec_V6, STriq_pred_vec_V6_ce, STriv_pseudo_V6,
-       STriv_pseudo_V6_ce, V6_vS32Ub_ai, V6_vS32Ub_ai_ce, V6_vS32b_ai,
-       V6_vS32b_ai_ce, V6_vS32b_new_ai, V6_vS32b_new_ai_ce,
-       V6_vS32b_nt_ai, V6_vS32b_nt_ai_ce, V6_vS32b_nt_new_ai,
-       V6_vS32b_nt_new_ai_ce]
-    =
-    ([TemporaryInfo (RegisterClass IntRegs) 0 False, BoundInfo,
-      TemporaryInfo (RegisterClass VectorRegs) 0 False],
-     [])
-  | i `elem`
-      [V6_vS32Ub_pi, V6_vS32Ub_pi_ce, V6_vS32b_new_pi,
-       V6_vS32b_new_pi_ce, V6_vS32b_nt_new_pi, V6_vS32b_nt_new_pi_ce,
-       V6_vS32b_nt_pi, V6_vS32b_nt_pi_ce, V6_vS32b_pi, V6_vS32b_pi_ce]
-    =
-    ([TemporaryInfo (RegisterClass IntRegs) 0 False, BoundInfo,
-      TemporaryInfo (RegisterClass VectorRegs) 0 False],
-     [TemporaryInfo (RegisterClass IntRegs) 1 False])
-  | i `elem`
-      [STriq_pred_vec_V6_128B, STriq_pred_vec_V6_128B_ce,
-       STriv_pseudo_V6_128B, STriv_pseudo_V6_128B_ce, V6_vS32Ub_ai_128B,
-       V6_vS32Ub_ai_128B_ce, V6_vS32b_ai_128B, V6_vS32b_ai_128B_ce,
-       V6_vS32b_new_ai_128B, V6_vS32b_new_ai_128B_ce, V6_vS32b_nt_ai_128B,
-       V6_vS32b_nt_ai_128B_ce, V6_vS32b_nt_new_ai_128B,
-       V6_vS32b_nt_new_ai_128B_ce]
-    =
-    ([TemporaryInfo (RegisterClass IntRegs) 0 False, BoundInfo,
-      TemporaryInfo (RegisterClass VectorRegs128B) 0 False],
-     [])
-  | i `elem`
-      [V6_vS32Ub_pi_128B, V6_vS32Ub_pi_128B_ce, V6_vS32b_new_pi_128B,
-       V6_vS32b_new_pi_128B_ce, V6_vS32b_nt_new_pi_128B,
-       V6_vS32b_nt_new_pi_128B_ce, V6_vS32b_nt_pi_128B,
-       V6_vS32b_nt_pi_128B_ce, V6_vS32b_pi_128B, V6_vS32b_pi_128B_ce]
-    =
-    ([TemporaryInfo (RegisterClass IntRegs) 0 False, BoundInfo,
-      TemporaryInfo (RegisterClass VectorRegs128B) 0 False],
-     [TemporaryInfo (RegisterClass IntRegs) 1 False])
   | i `elem`
       [L4_iadd_memopb_io, L4_iadd_memopb_io_ce, L4_iadd_memoph_io,
        L4_iadd_memoph_io_ce, L4_iadd_memopw_io, L4_iadd_memopw_io_ce,
@@ -1046,9 +1725,8 @@ operandInfo i
       BoundInfo],
      [])
   | i `elem`
-      [L4_loadalignb_ur, L4_loadalignb_ur_ce, L4_loadalignh_ur,
-       L4_loadalignh_ur_ce, L4_loadbsw4_ur, L4_loadbsw4_ur_ce,
-       L4_loadbzw4_ur, L4_loadbzw4_ur_ce, L4_loadrd_ur, L4_loadrd_ur_ce]
+      [L4_loadbsw4_ur, L4_loadbsw4_ur_ce, L4_loadbzw4_ur,
+       L4_loadbzw4_ur_ce, L4_loadrd_ur, L4_loadrd_ur_ce]
     =
     ([TemporaryInfo (RegisterClass IntRegs) 0 False, BoundInfo,
       BoundInfo],
@@ -1080,40 +1758,24 @@ operandInfo i
   | i `elem`
       [J4_cmpeqi_f_jumpnv_nt, J4_cmpeqi_f_jumpnv_nt_ce,
        J4_cmpeqi_f_jumpnv_t, J4_cmpeqi_f_jumpnv_t_ce,
-       J4_cmpeqi_fp0_jump_nt, J4_cmpeqi_fp0_jump_nt_ce,
-       J4_cmpeqi_fp0_jump_t, J4_cmpeqi_fp0_jump_t_ce,
-       J4_cmpeqi_fp1_jump_nt, J4_cmpeqi_fp1_jump_nt_ce,
-       J4_cmpeqi_fp1_jump_t, J4_cmpeqi_fp1_jump_t_ce,
        J4_cmpeqi_t_jumpnv_nt, J4_cmpeqi_t_jumpnv_nt_ce,
        J4_cmpeqi_t_jumpnv_t, J4_cmpeqi_t_jumpnv_t_ce,
-       J4_cmpeqi_tp0_jump_nt, J4_cmpeqi_tp0_jump_nt_ce,
-       J4_cmpeqi_tp0_jump_t, J4_cmpeqi_tp0_jump_t_ce,
-       J4_cmpeqi_tp1_jump_nt, J4_cmpeqi_tp1_jump_nt_ce,
-       J4_cmpeqi_tp1_jump_t, J4_cmpeqi_tp1_jump_t_ce,
+       J4_cmpeqn1_f_jumpnv_nt, J4_cmpeqn1_f_jumpnv_nt_ce,
+       J4_cmpeqn1_f_jumpnv_t, J4_cmpeqn1_f_jumpnv_t_ce,
+       J4_cmpeqn1_t_jumpnv_nt, J4_cmpeqn1_t_jumpnv_nt_ce,
+       J4_cmpeqn1_t_jumpnv_t, J4_cmpeqn1_t_jumpnv_t_ce,
        J4_cmpgti_f_jumpnv_nt, J4_cmpgti_f_jumpnv_nt_ce,
        J4_cmpgti_f_jumpnv_t, J4_cmpgti_f_jumpnv_t_ce,
-       J4_cmpgti_fp0_jump_nt, J4_cmpgti_fp0_jump_nt_ce,
-       J4_cmpgti_fp0_jump_t, J4_cmpgti_fp0_jump_t_ce,
-       J4_cmpgti_fp1_jump_nt, J4_cmpgti_fp1_jump_nt_ce,
-       J4_cmpgti_fp1_jump_t, J4_cmpgti_fp1_jump_t_ce,
        J4_cmpgti_t_jumpnv_nt, J4_cmpgti_t_jumpnv_nt_ce,
        J4_cmpgti_t_jumpnv_t, J4_cmpgti_t_jumpnv_t_ce,
-       J4_cmpgti_tp0_jump_nt, J4_cmpgti_tp0_jump_nt_ce,
-       J4_cmpgti_tp0_jump_t, J4_cmpgti_tp0_jump_t_ce,
-       J4_cmpgti_tp1_jump_nt, J4_cmpgti_tp1_jump_nt_ce,
-       J4_cmpgti_tp1_jump_t, J4_cmpgti_tp1_jump_t_ce,
+       J4_cmpgtn1_f_jumpnv_nt, J4_cmpgtn1_f_jumpnv_nt_ce,
+       J4_cmpgtn1_f_jumpnv_t, J4_cmpgtn1_f_jumpnv_t_ce,
+       J4_cmpgtn1_t_jumpnv_nt, J4_cmpgtn1_t_jumpnv_nt_ce,
+       J4_cmpgtn1_t_jumpnv_t, J4_cmpgtn1_t_jumpnv_t_ce,
        J4_cmpgtui_f_jumpnv_nt, J4_cmpgtui_f_jumpnv_nt_ce,
        J4_cmpgtui_f_jumpnv_t, J4_cmpgtui_f_jumpnv_t_ce,
-       J4_cmpgtui_fp0_jump_nt, J4_cmpgtui_fp0_jump_nt_ce,
-       J4_cmpgtui_fp0_jump_t, J4_cmpgtui_fp0_jump_t_ce,
-       J4_cmpgtui_fp1_jump_nt, J4_cmpgtui_fp1_jump_nt_ce,
-       J4_cmpgtui_fp1_jump_t, J4_cmpgtui_fp1_jump_t_ce,
        J4_cmpgtui_t_jumpnv_nt, J4_cmpgtui_t_jumpnv_nt_ce,
-       J4_cmpgtui_t_jumpnv_t, J4_cmpgtui_t_jumpnv_t_ce,
-       J4_cmpgtui_tp0_jump_nt, J4_cmpgtui_tp0_jump_nt_ce,
-       J4_cmpgtui_tp0_jump_t, J4_cmpgtui_tp0_jump_t_ce,
-       J4_cmpgtui_tp1_jump_nt, J4_cmpgtui_tp1_jump_nt_ce,
-       J4_cmpgtui_tp1_jump_t, J4_cmpgtui_tp1_jump_t_ce]
+       J4_cmpgtui_t_jumpnv_t, J4_cmpgtui_t_jumpnv_t_ce]
     =
     ([TemporaryInfo (RegisterClass IntRegs) 0 False, BoundInfo,
       BlockRefInfo],
@@ -1123,47 +1785,12 @@ operandInfo i
        J2_jumprltez, J2_jumprltez_ce, J2_jumprltezpt, J2_jumprltezpt_ce,
        J2_jumprnz, J2_jumprnz_ce, J2_jumprnzpt, J2_jumprnzpt_ce,
        J2_jumprz, J2_jumprz_ce, J2_jumprzpt, J2_jumprzpt_ce,
-       J4_cmpeqn1_f_jumpnv_nt, J4_cmpeqn1_f_jumpnv_nt_ce,
-       J4_cmpeqn1_f_jumpnv_t, J4_cmpeqn1_f_jumpnv_t_ce,
-       J4_cmpeqn1_fp0_jump_nt, J4_cmpeqn1_fp0_jump_nt_ce,
-       J4_cmpeqn1_fp0_jump_t, J4_cmpeqn1_fp0_jump_t_ce,
-       J4_cmpeqn1_fp1_jump_nt, J4_cmpeqn1_fp1_jump_nt_ce,
-       J4_cmpeqn1_fp1_jump_t, J4_cmpeqn1_fp1_jump_t_ce,
-       J4_cmpeqn1_t_jumpnv_nt, J4_cmpeqn1_t_jumpnv_nt_ce,
-       J4_cmpeqn1_t_jumpnv_t, J4_cmpeqn1_t_jumpnv_t_ce,
-       J4_cmpeqn1_tp0_jump_nt, J4_cmpeqn1_tp0_jump_nt_ce,
-       J4_cmpeqn1_tp0_jump_t, J4_cmpeqn1_tp0_jump_t_ce,
-       J4_cmpeqn1_tp1_jump_nt, J4_cmpeqn1_tp1_jump_nt_ce,
-       J4_cmpeqn1_tp1_jump_t, J4_cmpeqn1_tp1_jump_t_ce,
-       J4_cmpgtn1_f_jumpnv_nt, J4_cmpgtn1_f_jumpnv_nt_ce,
-       J4_cmpgtn1_f_jumpnv_t, J4_cmpgtn1_f_jumpnv_t_ce,
-       J4_cmpgtn1_fp0_jump_nt, J4_cmpgtn1_fp0_jump_nt_ce,
-       J4_cmpgtn1_fp0_jump_t, J4_cmpgtn1_fp0_jump_t_ce,
-       J4_cmpgtn1_fp1_jump_nt, J4_cmpgtn1_fp1_jump_nt_ce,
-       J4_cmpgtn1_fp1_jump_t, J4_cmpgtn1_fp1_jump_t_ce,
-       J4_cmpgtn1_t_jumpnv_nt, J4_cmpgtn1_t_jumpnv_nt_ce,
-       J4_cmpgtn1_t_jumpnv_t, J4_cmpgtn1_t_jumpnv_t_ce,
-       J4_cmpgtn1_tp0_jump_nt, J4_cmpgtn1_tp0_jump_nt_ce,
-       J4_cmpgtn1_tp0_jump_t, J4_cmpgtn1_tp0_jump_t_ce,
-       J4_cmpgtn1_tp1_jump_nt, J4_cmpgtn1_tp1_jump_nt_ce,
-       J4_cmpgtn1_tp1_jump_t, J4_cmpgtn1_tp1_jump_t_ce,
        J4_tstbit0_f_jumpnv_nt, J4_tstbit0_f_jumpnv_nt_ce,
        J4_tstbit0_f_jumpnv_t, J4_tstbit0_f_jumpnv_t_ce,
-       J4_tstbit0_fp0_jump_nt, J4_tstbit0_fp0_jump_nt_ce,
-       J4_tstbit0_fp0_jump_t, J4_tstbit0_fp0_jump_t_ce,
-       J4_tstbit0_fp1_jump_nt, J4_tstbit0_fp1_jump_nt_ce,
-       J4_tstbit0_fp1_jump_t, J4_tstbit0_fp1_jump_t_ce,
        J4_tstbit0_t_jumpnv_nt, J4_tstbit0_t_jumpnv_nt_ce,
-       J4_tstbit0_t_jumpnv_t, J4_tstbit0_t_jumpnv_t_ce,
-       J4_tstbit0_tp0_jump_nt, J4_tstbit0_tp0_jump_nt_ce,
-       J4_tstbit0_tp0_jump_t, J4_tstbit0_tp0_jump_t_ce,
-       J4_tstbit0_tp1_jump_nt, J4_tstbit0_tp1_jump_nt_ce,
-       J4_tstbit0_tp1_jump_t, J4_tstbit0_tp1_jump_t_ce]
+       J4_tstbit0_t_jumpnv_t, J4_tstbit0_t_jumpnv_t_ce]
     =
     ([TemporaryInfo (RegisterClass IntRegs) 0 False, BlockRefInfo], [])
-  | i `elem` [J4_jumpsetr, J4_jumpsetr_ce] =
-    ([TemporaryInfo (RegisterClass IntRegs) 0 False, BlockRefInfo],
-     [TemporaryInfo (RegisterClass IntRegs) 1 False])
   | i `elem` [LDW, LDW_ce] =
     ([TemporaryInfo (InfiniteRegisterClass M32) 0 False],
      [TemporaryInfo (RegisterClass IntRegs) 1 False])
@@ -1173,14 +1800,6 @@ operandInfo i
   | i `elem` [C2_mux_tfr_new] =
     ([TemporaryInfo (RegisterClass PredRegs) (-1) True,
       TemporaryInfo (RegisterClass IntRegs) 0 False,
-      TemporaryInfo (RegisterClass IntRegs) 0 False],
-     [TemporaryInfo (RegisterClass IntRegs) 1 False])
-  | i `elem` [C2_muxir_tfr_new, C2_muxir_tfr_new_ce] =
-    ([TemporaryInfo (RegisterClass PredRegs) (-1) True,
-      TemporaryInfo (RegisterClass IntRegs) 0 False, BoundInfo],
-     [TemporaryInfo (RegisterClass IntRegs) 1 False])
-  | i `elem` [C2_muxri_tfr_new, C2_muxri_tfr_new_ce] =
-    ([TemporaryInfo (RegisterClass PredRegs) (-1) True, BoundInfo,
       TemporaryInfo (RegisterClass IntRegs) 0 False],
      [TemporaryInfo (RegisterClass IntRegs) 1 False])
   | i `elem` [C2_muxii_tfr_new, C2_muxii_tfr_new_ce] =
@@ -1193,8 +1812,9 @@ operandInfo i
     ([TemporaryInfo (RegisterClass PredRegs) (-1) True, BlockRefInfo],
      [])
   | i `elem`
-      [L4_return_f, L4_return_fnew_pnt, L4_return_fnew_pt, L4_return_t,
-       L4_return_tnew_pnt, L4_return_tnew_pt]
+      [L4_return_map_to_raw_f, L4_return_map_to_raw_fnew_pnt,
+       L4_return_map_to_raw_fnew_pt, L4_return_map_to_raw_t,
+       L4_return_map_to_raw_tnew_pnt, L4_return_map_to_raw_tnew_pt]
     = ([TemporaryInfo (RegisterClass PredRegs) 0 False], [])
   | i `elem` [C2_mask] =
     ([TemporaryInfo (RegisterClass PredRegs) 0 False],
@@ -1205,40 +1825,111 @@ operandInfo i
   | i `elem` [C2_all8, C2_any8, C2_not, C2_pxfer_map] =
     ([TemporaryInfo (RegisterClass PredRegs) 0 False],
      [TemporaryInfo (RegisterClass PredRegs) 1 False])
-  | i `elem`
-      [TFR_PdFalse_demat, TFR_PdFalse_demat_ce, TFR_PdTrue_demat,
-       TFR_PdTrue_demat_ce]
-    =
-    ([TemporaryInfo (RegisterClass PredRegs) 0 False],
-     [TemporaryInfo (InfiniteRegisterClass RM32) 0 False])
   | i `elem` [A2_tfrpf, A2_tfrpfnew, A2_tfrpt, A2_tfrptnew] =
     ([TemporaryInfo (RegisterClass PredRegs) 0 False,
       TemporaryInfo (RegisterClass DoubleRegs) 0 False],
      [TemporaryInfo (RegisterClass DoubleRegs) 1 False])
-  | i `elem` [C2_vmux, MUX64_rr] =
+  | i `elem` [C2_vmux, PS_pselect] =
     ([TemporaryInfo (RegisterClass PredRegs) 0 False,
       TemporaryInfo (RegisterClass DoubleRegs) 0 False,
       TemporaryInfo (RegisterClass DoubleRegs) 0 False],
      [TemporaryInfo (RegisterClass DoubleRegs) 1 False])
+  | i `elem` [V6_vcmov, V6_vncmov] =
+    ([TemporaryInfo (RegisterClass PredRegs) 0 False,
+      TemporaryInfo (RegisterClass HvxVR) 0 False],
+     [TemporaryInfo (RegisterClass HvxVR) 1 False])
+  | i `elem` [PS_vselect] =
+    ([TemporaryInfo (RegisterClass PredRegs) 0 False,
+      TemporaryInfo (RegisterClass HvxVR) 0 False,
+      TemporaryInfo (RegisterClass HvxVR) 0 False],
+     [TemporaryInfo (RegisterClass HvxVR) 1 False])
+  | i `elem` [V6_vccombine, V6_vnccombine] =
+    ([TemporaryInfo (RegisterClass PredRegs) 0 False,
+      TemporaryInfo (RegisterClass HvxVR) 0 False,
+      TemporaryInfo (RegisterClass HvxVR) 0 False],
+     [TemporaryInfo (RegisterClass HvxWR) 1 False])
+  | i `elem` [PS_wselect] =
+    ([TemporaryInfo (RegisterClass PredRegs) 0 False,
+      TemporaryInfo (RegisterClass HvxWR) 0 False,
+      TemporaryInfo (RegisterClass HvxWR) 0 False],
+     [TemporaryInfo (RegisterClass HvxWR) 1 False])
   | i `elem`
-      [J2_callrf, J2_callrt, J2_jumprf, J2_jumprfnew, J2_jumprfnewpt,
-       J2_jumprt, J2_jumprtnew, J2_jumprtnewpt, JMPretf, JMPretfnew,
-       JMPretfnewpt, JMPrett, JMPrettnew, JMPrettnewpt]
+      [J2_callrf, J2_callrt, J2_jumprf, J2_jumprf_nopred_map,
+       J2_jumprfnew, J2_jumprfnewpt, J2_jumprfpt, J2_jumprt,
+       J2_jumprt_nopred_map, J2_jumprtnew, J2_jumprtnewpt, J2_jumprtpt,
+       PS_jmpretf, PS_jmpretfnew, PS_jmpretfnewpt, PS_jmprett,
+       PS_jmprettnew, PS_jmprettnewpt, V6_zldp0]
     =
     ([TemporaryInfo (RegisterClass PredRegs) 0 False,
       TemporaryInfo (RegisterClass IntRegs) 0 False],
      [])
+  | i `elem`
+      [L2_ploadrdf_zomap, L2_ploadrdfnew_zomap, L2_ploadrdt_zomap,
+       L2_ploadrdtnew_zomap, L4_return_f, L4_return_fnew_pnt,
+       L4_return_fnew_pt, L4_return_t, L4_return_tnew_pnt,
+       L4_return_tnew_pt]
+    =
+    ([TemporaryInfo (RegisterClass PredRegs) 0 False,
+      TemporaryInfo (RegisterClass IntRegs) 0 False],
+     [TemporaryInfo (RegisterClass DoubleRegs) 1 False])
+  | i `elem`
+      [V6_ldcnp0, V6_ldcnpnt0, V6_ldcp0, V6_ldcpnt0, V6_ldnp0,
+       V6_ldnpnt0, V6_ldp0, V6_ldpnt0, V6_ldtnp0, V6_ldtnpnt0, V6_ldtp0,
+       V6_ldtpnt0]
+    =
+    ([TemporaryInfo (RegisterClass PredRegs) 0 False,
+      TemporaryInfo (RegisterClass IntRegs) 0 False],
+     [TemporaryInfo (RegisterClass HvxVR) 1 False])
   | i `elem`
       [A2_tfrf, A2_tfrfnew, A2_tfrt, A2_tfrtnew, A4_paslhf, A4_paslhfnew,
        A4_paslht, A4_paslhtnew, A4_pasrhf, A4_pasrhfnew, A4_pasrht,
        A4_pasrhtnew, A4_psxtbf, A4_psxtbfnew, A4_psxtbt, A4_psxtbtnew,
        A4_psxthf, A4_psxthfnew, A4_psxtht, A4_psxthtnew, A4_pzxtbf,
        A4_pzxtbfnew, A4_pzxtbt, A4_pzxtbtnew, A4_pzxthf, A4_pzxthfnew,
-       A4_pzxtht, A4_pzxthtnew]
+       A4_pzxtht, A4_pzxthtnew, L2_ploadrbf_zomap, L2_ploadrbfnew_zomap,
+       L2_ploadrbt_zomap, L2_ploadrbtnew_zomap, L2_ploadrhf_zomap,
+       L2_ploadrhfnew_zomap, L2_ploadrht_zomap, L2_ploadrhtnew_zomap,
+       L2_ploadrif_zomap, L2_ploadrifnew_zomap, L2_ploadrit_zomap,
+       L2_ploadritnew_zomap, L2_ploadrubf_zomap, L2_ploadrubfnew_zomap,
+       L2_ploadrubt_zomap, L2_ploadrubtnew_zomap, L2_ploadruhf_zomap,
+       L2_ploadruhfnew_zomap, L2_ploadruht_zomap, L2_ploadruhtnew_zomap]
     =
     ([TemporaryInfo (RegisterClass PredRegs) 0 False,
       TemporaryInfo (RegisterClass IntRegs) 0 False],
      [TemporaryInfo (RegisterClass IntRegs) 1 False])
+  | i `elem`
+      [S2_pstorerdf_zomap, S2_pstorerdt_zomap, S4_pstorerdfnew_zomap,
+       S4_pstorerdtnew_zomap]
+    =
+    ([TemporaryInfo (RegisterClass PredRegs) 0 False,
+      TemporaryInfo (RegisterClass IntRegs) 0 False,
+      TemporaryInfo (RegisterClass DoubleRegs) 0 False],
+     [])
+  | i `elem`
+      [V6_stnp0, V6_stnpnt0, V6_stp0, V6_stpnt0, V6_stunp0, V6_stup0]
+    =
+    ([TemporaryInfo (RegisterClass PredRegs) 0 False,
+      TemporaryInfo (RegisterClass IntRegs) 0 False,
+      TemporaryInfo (RegisterClass HvxVR) 0 False],
+     [])
+  | i `elem`
+      [S2_pstorerbf_zomap, S2_pstorerbnewf_zomap, S2_pstorerbnewt_zomap,
+       S2_pstorerbt_zomap, S2_pstorerff_zomap, S2_pstorerft_zomap,
+       S2_pstorerhf_zomap, S2_pstorerhnewf_zomap, S2_pstorerhnewt_zomap,
+       S2_pstorerht_zomap, S2_pstorerif_zomap, S2_pstorerinewf_zomap,
+       S2_pstorerinewt_zomap, S2_pstorerit_zomap, S4_pstorerbfnew_zomap,
+       S4_pstorerbnewfnew_zomap, S4_pstorerbnewtnew_zomap,
+       S4_pstorerbtnew_zomap, S4_pstorerffnew_zomap,
+       S4_pstorerftnew_zomap, S4_pstorerhfnew_zomap,
+       S4_pstorerhnewfnew_zomap, S4_pstorerhnewtnew_zomap,
+       S4_pstorerhtnew_zomap, S4_pstorerifnew_zomap,
+       S4_pstorerinewfnew_zomap, S4_pstorerinewtnew_zomap,
+       S4_pstoreritnew_zomap]
+    =
+    ([TemporaryInfo (RegisterClass PredRegs) 0 False,
+      TemporaryInfo (RegisterClass IntRegs) 0 False,
+      TemporaryInfo (RegisterClass IntRegs) 0 False],
+     [])
   | i `elem`
       [C2_ccombinewf, C2_ccombinewnewf, C2_ccombinewnewt, C2_ccombinewt]
     =
@@ -1324,6 +2015,23 @@ operandInfo i
       TemporaryInfo (RegisterClass IntRegs) 0 False],
      [])
   | i `elem`
+      [V6_vL32b_cur_npred_ppu, V6_vL32b_cur_pred_ppu, V6_vL32b_npred_ppu,
+       V6_vL32b_nt_cur_npred_ppu, V6_vL32b_nt_cur_pred_ppu,
+       V6_vL32b_nt_npred_ppu, V6_vL32b_nt_pred_ppu,
+       V6_vL32b_nt_tmp_npred_ppu, V6_vL32b_nt_tmp_pred_ppu,
+       V6_vL32b_pred_ppu, V6_vL32b_tmp_npred_ppu, V6_vL32b_tmp_pred_ppu]
+    =
+    ([TemporaryInfo (RegisterClass PredRegs) 0 False,
+      TemporaryInfo (RegisterClass IntRegs) 0 False,
+      TemporaryInfo (RegisterClass ModRegs) 0 False],
+     [TemporaryInfo (RegisterClass HvxVR) 1 False,
+      TemporaryInfo (RegisterClass IntRegs) 1 False])
+  | i `elem` [V6_zLd_pred_ppu] =
+    ([TemporaryInfo (RegisterClass PredRegs) 0 False,
+      TemporaryInfo (RegisterClass IntRegs) 0 False,
+      TemporaryInfo (RegisterClass ModRegs) 0 False],
+     [TemporaryInfo (RegisterClass IntRegs) 1 False])
+  | i `elem`
       [V6_vS32Ub_npred_ppu, V6_vS32Ub_pred_ppu, V6_vS32b_new_npred_ppu,
        V6_vS32b_new_pred_ppu, V6_vS32b_npred_ppu,
        V6_vS32b_nt_new_npred_ppu, V6_vS32b_nt_new_pred_ppu,
@@ -1332,8 +2040,25 @@ operandInfo i
     ([TemporaryInfo (RegisterClass PredRegs) 0 False,
       TemporaryInfo (RegisterClass IntRegs) 0 False,
       TemporaryInfo (RegisterClass ModRegs) 0 False,
-      TemporaryInfo (RegisterClass VectorRegs) 0 False],
+      TemporaryInfo (RegisterClass HvxVR) 0 False],
      [TemporaryInfo (RegisterClass IntRegs) 1 False])
+  | i `elem`
+      [S4_storeirbf_zomap, S4_storeirbf_zomap_ce, S4_storeirbfnew_zomap,
+       S4_storeirbfnew_zomap_ce, S4_storeirbt_zomap,
+       S4_storeirbt_zomap_ce, S4_storeirbtnew_zomap,
+       S4_storeirbtnew_zomap_ce, S4_storeirhf_zomap,
+       S4_storeirhf_zomap_ce, S4_storeirhfnew_zomap,
+       S4_storeirhfnew_zomap_ce, S4_storeirht_zomap,
+       S4_storeirht_zomap_ce, S4_storeirhtnew_zomap,
+       S4_storeirhtnew_zomap_ce, S4_storeirif_zomap,
+       S4_storeirif_zomap_ce, S4_storeirifnew_zomap,
+       S4_storeirifnew_zomap_ce, S4_storeirit_zomap,
+       S4_storeirit_zomap_ce, S4_storeiritnew_zomap,
+       S4_storeiritnew_zomap_ce, V6_zLd_pred_ai, V6_zLd_pred_ai_ce]
+    =
+    ([TemporaryInfo (RegisterClass PredRegs) 0 False,
+      TemporaryInfo (RegisterClass IntRegs) 0 False, BoundInfo],
+     [])
   | i `elem`
       [L2_ploadrdf_io, L2_ploadrdf_io_ce, L2_ploadrdfnew_io,
        L2_ploadrdfnew_io_ce, L2_ploadrdt_io, L2_ploadrdt_io_ce,
@@ -1352,6 +2077,39 @@ operandInfo i
      [TemporaryInfo (RegisterClass DoubleRegs) 1 False,
       TemporaryInfo (RegisterClass IntRegs) 1 False])
   | i `elem`
+      [V6_vL32b_cur_npred_ai, V6_vL32b_cur_npred_ai_ce,
+       V6_vL32b_cur_pred_ai, V6_vL32b_cur_pred_ai_ce, V6_vL32b_npred_ai,
+       V6_vL32b_npred_ai_ce, V6_vL32b_nt_cur_npred_ai,
+       V6_vL32b_nt_cur_npred_ai_ce, V6_vL32b_nt_cur_pred_ai,
+       V6_vL32b_nt_cur_pred_ai_ce, V6_vL32b_nt_npred_ai,
+       V6_vL32b_nt_npred_ai_ce, V6_vL32b_nt_pred_ai,
+       V6_vL32b_nt_pred_ai_ce, V6_vL32b_nt_tmp_npred_ai,
+       V6_vL32b_nt_tmp_npred_ai_ce, V6_vL32b_nt_tmp_pred_ai,
+       V6_vL32b_nt_tmp_pred_ai_ce, V6_vL32b_pred_ai, V6_vL32b_pred_ai_ce,
+       V6_vL32b_tmp_npred_ai, V6_vL32b_tmp_npred_ai_ce,
+       V6_vL32b_tmp_pred_ai, V6_vL32b_tmp_pred_ai_ce]
+    =
+    ([TemporaryInfo (RegisterClass PredRegs) 0 False,
+      TemporaryInfo (RegisterClass IntRegs) 0 False, BoundInfo],
+     [TemporaryInfo (RegisterClass HvxVR) 1 False])
+  | i `elem`
+      [V6_vL32b_cur_npred_pi, V6_vL32b_cur_npred_pi_ce,
+       V6_vL32b_cur_pred_pi, V6_vL32b_cur_pred_pi_ce, V6_vL32b_npred_pi,
+       V6_vL32b_npred_pi_ce, V6_vL32b_nt_cur_npred_pi,
+       V6_vL32b_nt_cur_npred_pi_ce, V6_vL32b_nt_cur_pred_pi,
+       V6_vL32b_nt_cur_pred_pi_ce, V6_vL32b_nt_npred_pi,
+       V6_vL32b_nt_npred_pi_ce, V6_vL32b_nt_pred_pi,
+       V6_vL32b_nt_pred_pi_ce, V6_vL32b_nt_tmp_npred_pi,
+       V6_vL32b_nt_tmp_npred_pi_ce, V6_vL32b_nt_tmp_pred_pi,
+       V6_vL32b_nt_tmp_pred_pi_ce, V6_vL32b_pred_pi, V6_vL32b_pred_pi_ce,
+       V6_vL32b_tmp_npred_pi, V6_vL32b_tmp_npred_pi_ce,
+       V6_vL32b_tmp_pred_pi, V6_vL32b_tmp_pred_pi_ce]
+    =
+    ([TemporaryInfo (RegisterClass PredRegs) 0 False,
+      TemporaryInfo (RegisterClass IntRegs) 0 False, BoundInfo],
+     [TemporaryInfo (RegisterClass HvxVR) 1 False,
+      TemporaryInfo (RegisterClass IntRegs) 1 False])
+  | i `elem`
       [A2_paddif, A2_paddif_ce, A2_paddifnew, A2_paddifnew_ce, A2_paddit,
        A2_paddit_ce, A2_padditnew, A2_padditnew_ce, C2_muxir, C2_muxir_ce,
        C2_muxir_tfr, C2_muxir_tfr_ce, L2_ploadrbf_io, L2_ploadrbf_io_ce,
@@ -1367,7 +2125,8 @@ operandInfo i
        L2_ploadrubt_io_ce, L2_ploadrubtnew_io, L2_ploadrubtnew_io_ce,
        L2_ploadruhf_io, L2_ploadruhf_io_ce, L2_ploadruhfnew_io,
        L2_ploadruhfnew_io_ce, L2_ploadruht_io, L2_ploadruht_io_ce,
-       L2_ploadruhtnew_io, L2_ploadruhtnew_io_ce, MUX_ir_f, MUX_ir_f_ce]
+       L2_ploadruhtnew_io, L2_ploadruhtnew_io_ce, V6_zLd_pred_pi,
+       V6_zLd_pred_pi_ce]
     =
     ([TemporaryInfo (RegisterClass PredRegs) 0 False,
       TemporaryInfo (RegisterClass IntRegs) 0 False, BoundInfo],
@@ -1409,6 +2168,34 @@ operandInfo i
     ([TemporaryInfo (RegisterClass PredRegs) 0 False,
       TemporaryInfo (RegisterClass IntRegs) 0 False, BoundInfo,
       TemporaryInfo (RegisterClass DoubleRegs) 0 False],
+     [TemporaryInfo (RegisterClass IntRegs) 1 False])
+  | i `elem`
+      [V6_vS32Ub_npred_ai, V6_vS32Ub_npred_ai_ce, V6_vS32Ub_pred_ai,
+       V6_vS32Ub_pred_ai_ce, V6_vS32b_new_npred_ai,
+       V6_vS32b_new_npred_ai_ce, V6_vS32b_new_pred_ai,
+       V6_vS32b_new_pred_ai_ce, V6_vS32b_npred_ai, V6_vS32b_npred_ai_ce,
+       V6_vS32b_nt_new_npred_ai, V6_vS32b_nt_new_npred_ai_ce,
+       V6_vS32b_nt_new_pred_ai, V6_vS32b_nt_new_pred_ai_ce,
+       V6_vS32b_nt_npred_ai, V6_vS32b_nt_npred_ai_ce, V6_vS32b_nt_pred_ai,
+       V6_vS32b_nt_pred_ai_ce, V6_vS32b_pred_ai, V6_vS32b_pred_ai_ce]
+    =
+    ([TemporaryInfo (RegisterClass PredRegs) 0 False,
+      TemporaryInfo (RegisterClass IntRegs) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass HvxVR) 0 False],
+     [])
+  | i `elem`
+      [V6_vS32Ub_npred_pi, V6_vS32Ub_npred_pi_ce, V6_vS32Ub_pred_pi,
+       V6_vS32Ub_pred_pi_ce, V6_vS32b_new_npred_pi,
+       V6_vS32b_new_npred_pi_ce, V6_vS32b_new_pred_pi,
+       V6_vS32b_new_pred_pi_ce, V6_vS32b_npred_pi, V6_vS32b_npred_pi_ce,
+       V6_vS32b_nt_new_npred_pi, V6_vS32b_nt_new_npred_pi_ce,
+       V6_vS32b_nt_new_pred_pi, V6_vS32b_nt_new_pred_pi_ce,
+       V6_vS32b_nt_npred_pi, V6_vS32b_nt_npred_pi_ce, V6_vS32b_nt_pred_pi,
+       V6_vS32b_nt_pred_pi_ce, V6_vS32b_pred_pi, V6_vS32b_pred_pi_ce]
+    =
+    ([TemporaryInfo (RegisterClass PredRegs) 0 False,
+      TemporaryInfo (RegisterClass IntRegs) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass HvxVR) 0 False],
      [TemporaryInfo (RegisterClass IntRegs) 1 False])
   | i `elem`
       [S2_pstorerbf_io, S2_pstorerbf_io_ce, S2_pstorerbnewf_io,
@@ -1464,65 +2251,10 @@ operandInfo i
       TemporaryInfo (RegisterClass IntRegs) 0 False, BoundInfo,
       TemporaryInfo (RegisterClass IntRegs) 0 False],
      [TemporaryInfo (RegisterClass IntRegs) 1 False])
-  | i `elem`
-      [V6_vS32Ub_npred_ai, V6_vS32Ub_npred_ai_ce, V6_vS32Ub_pred_ai,
-       V6_vS32Ub_pred_ai_ce, V6_vS32b_new_npred_ai,
-       V6_vS32b_new_npred_ai_ce, V6_vS32b_new_pred_ai,
-       V6_vS32b_new_pred_ai_ce, V6_vS32b_npred_ai, V6_vS32b_npred_ai_ce,
-       V6_vS32b_nt_new_npred_ai, V6_vS32b_nt_new_npred_ai_ce,
-       V6_vS32b_nt_new_pred_ai, V6_vS32b_nt_new_pred_ai_ce,
-       V6_vS32b_nt_npred_ai, V6_vS32b_nt_npred_ai_ce, V6_vS32b_nt_pred_ai,
-       V6_vS32b_nt_pred_ai_ce, V6_vS32b_pred_ai, V6_vS32b_pred_ai_ce]
-    =
+  | i `elem` [C2_muxir_tfr_new, C2_muxir_tfr_new_ce] =
     ([TemporaryInfo (RegisterClass PredRegs) 0 False,
       TemporaryInfo (RegisterClass IntRegs) 0 False, BoundInfo,
-      TemporaryInfo (RegisterClass VectorRegs) 0 False],
-     [])
-  | i `elem`
-      [V6_vS32Ub_npred_pi, V6_vS32Ub_npred_pi_ce, V6_vS32Ub_pred_pi,
-       V6_vS32Ub_pred_pi_ce, V6_vS32b_new_npred_pi,
-       V6_vS32b_new_npred_pi_ce, V6_vS32b_new_pred_pi,
-       V6_vS32b_new_pred_pi_ce, V6_vS32b_npred_pi, V6_vS32b_npred_pi_ce,
-       V6_vS32b_nt_new_npred_pi, V6_vS32b_nt_new_npred_pi_ce,
-       V6_vS32b_nt_new_pred_pi, V6_vS32b_nt_new_pred_pi_ce,
-       V6_vS32b_nt_npred_pi, V6_vS32b_nt_npred_pi_ce, V6_vS32b_nt_pred_pi,
-       V6_vS32b_nt_pred_pi_ce, V6_vS32b_pred_pi, V6_vS32b_pred_pi_ce]
-    =
-    ([TemporaryInfo (RegisterClass PredRegs) 0 False,
-      TemporaryInfo (RegisterClass IntRegs) 0 False, BoundInfo,
-      TemporaryInfo (RegisterClass VectorRegs) 0 False],
-     [TemporaryInfo (RegisterClass IntRegs) 1 False])
-  | i `elem`
-      [V6_vS32Ub_npred_ai_128B, V6_vS32Ub_npred_ai_128B_ce,
-       V6_vS32Ub_pred_ai_128B, V6_vS32Ub_pred_ai_128B_ce,
-       V6_vS32b_new_npred_ai_128B, V6_vS32b_new_npred_ai_128B_ce,
-       V6_vS32b_new_pred_ai_128B, V6_vS32b_new_pred_ai_128B_ce,
-       V6_vS32b_npred_ai_128B, V6_vS32b_npred_ai_128B_ce,
-       V6_vS32b_nt_new_npred_ai_128B, V6_vS32b_nt_new_npred_ai_128B_ce,
-       V6_vS32b_nt_new_pred_ai_128B, V6_vS32b_nt_new_pred_ai_128B_ce,
-       V6_vS32b_nt_npred_ai_128B, V6_vS32b_nt_npred_ai_128B_ce,
-       V6_vS32b_nt_pred_ai_128B, V6_vS32b_nt_pred_ai_128B_ce,
-       V6_vS32b_pred_ai_128B, V6_vS32b_pred_ai_128B_ce]
-    =
-    ([TemporaryInfo (RegisterClass PredRegs) 0 False,
-      TemporaryInfo (RegisterClass IntRegs) 0 False, BoundInfo,
-      TemporaryInfo (RegisterClass VectorRegs128B) 0 False],
-     [])
-  | i `elem`
-      [V6_vS32Ub_npred_pi_128B, V6_vS32Ub_npred_pi_128B_ce,
-       V6_vS32Ub_pred_pi_128B, V6_vS32Ub_pred_pi_128B_ce,
-       V6_vS32b_new_npred_pi_128B, V6_vS32b_new_npred_pi_128B_ce,
-       V6_vS32b_new_pred_pi_128B, V6_vS32b_new_pred_pi_128B_ce,
-       V6_vS32b_npred_pi_128B, V6_vS32b_npred_pi_128B_ce,
-       V6_vS32b_nt_new_npred_pi_128B, V6_vS32b_nt_new_npred_pi_128B_ce,
-       V6_vS32b_nt_new_pred_pi_128B, V6_vS32b_nt_new_pred_pi_128B_ce,
-       V6_vS32b_nt_npred_pi_128B, V6_vS32b_nt_npred_pi_128B_ce,
-       V6_vS32b_nt_pred_pi_128B, V6_vS32b_nt_pred_pi_128B_ce,
-       V6_vS32b_pred_pi_128B, V6_vS32b_pred_pi_128B_ce]
-    =
-    ([TemporaryInfo (RegisterClass PredRegs) 0 False,
-      TemporaryInfo (RegisterClass IntRegs) 0 False, BoundInfo,
-      TemporaryInfo (RegisterClass VectorRegs128B) 0 False],
+      TemporaryInfo (RegisterClass PredRegs) (-1) True],
      [TemporaryInfo (RegisterClass IntRegs) 1 False])
   | i `elem`
       [S4_storeirbf_io, S4_storeirbf_io_ce, S4_storeirbfnew_io,
@@ -1557,34 +2289,6 @@ operandInfo i
       TemporaryInfo (RegisterClass PredRegs) 0 False,
       TemporaryInfo (RegisterClass PredRegs) 0 False],
      [TemporaryInfo (RegisterClass PredRegs) 1 False])
-  | i `elem` [VSelectDblPseudo_V6] =
-    ([TemporaryInfo (RegisterClass PredRegs) 0 False,
-      TemporaryInfo (RegisterClass VecDblRegs) 0 False,
-      TemporaryInfo (RegisterClass VecDblRegs) 0 False],
-     [TemporaryInfo (RegisterClass VecDblRegs) 1 False])
-  | i `elem` [V6_vcmov, V6_vncmov] =
-    ([TemporaryInfo (RegisterClass PredRegs) 0 False,
-      TemporaryInfo (RegisterClass VectorRegs) 0 False],
-     [TemporaryInfo (RegisterClass VectorRegs) 1 False])
-  | i `elem` [V6_vccombine, V6_vnccombine] =
-    ([TemporaryInfo (RegisterClass PredRegs) 0 False,
-      TemporaryInfo (RegisterClass VectorRegs) 0 False,
-      TemporaryInfo (RegisterClass VectorRegs) 0 False],
-     [TemporaryInfo (RegisterClass VecDblRegs) 1 False])
-  | i `elem` [VSelectPseudo_V6] =
-    ([TemporaryInfo (RegisterClass PredRegs) 0 False,
-      TemporaryInfo (RegisterClass VectorRegs) 0 False,
-      TemporaryInfo (RegisterClass VectorRegs) 0 False],
-     [TemporaryInfo (RegisterClass VectorRegs) 1 False])
-  | i `elem` [V6_vcmov_128B, V6_vncmov_128B] =
-    ([TemporaryInfo (RegisterClass PredRegs) 0 False,
-      TemporaryInfo (RegisterClass VectorRegs128B) 0 False],
-     [TemporaryInfo (RegisterClass VectorRegs128B) 1 False])
-  | i `elem` [V6_vccombine_128B, V6_vnccombine_128B] =
-    ([TemporaryInfo (RegisterClass PredRegs) 0 False,
-      TemporaryInfo (RegisterClass VectorRegs128B) 0 False,
-      TemporaryInfo (RegisterClass VectorRegs128B) 0 False],
-     [TemporaryInfo (RegisterClass VecDblRegs128B) 1 False])
   | i `elem` [J2_callf, J2_callf_ce, J2_callt, J2_callt_ce] =
     ([TemporaryInfo (RegisterClass PredRegs) 0 False, BoundInfo], [])
   | i `elem`
@@ -1610,8 +2314,7 @@ operandInfo i
        L4_ploadrubtnew_abs, L4_ploadrubtnew_abs_ce, L4_ploadruhf_abs,
        L4_ploadruhf_abs_ce, L4_ploadruhfnew_abs, L4_ploadruhfnew_abs_ce,
        L4_ploadruht_abs, L4_ploadruht_abs_ce, L4_ploadruhtnew_abs,
-       L4_ploadruhtnew_abs_ce, TFRI_cNotPt_f, TFRI_cNotPt_f_ce,
-       TFRI_cPt_f, TFRI_cPt_f_ce]
+       L4_ploadruhtnew_abs_ce]
     =
     ([TemporaryInfo (RegisterClass PredRegs) 0 False, BoundInfo],
      [TemporaryInfo (RegisterClass IntRegs) 1 False])
@@ -1651,12 +2354,14 @@ operandInfo i
     ([TemporaryInfo (RegisterClass PredRegs) 0 False, BoundInfo,
       TemporaryInfo (RegisterClass IntRegs) 0 False],
      [])
-  | i `elem`
-      [C2_muxri, C2_muxri_ce, C2_muxri_tfr, C2_muxri_tfr_ce, MUX_ri_f,
-       MUX_ri_f_ce]
-    =
+  | i `elem` [C2_muxri, C2_muxri_ce, C2_muxri_tfr, C2_muxri_tfr_ce] =
     ([TemporaryInfo (RegisterClass PredRegs) 0 False, BoundInfo,
       TemporaryInfo (RegisterClass IntRegs) 0 False],
+     [TemporaryInfo (RegisterClass IntRegs) 1 False])
+  | i `elem` [C2_muxri_tfr_new, C2_muxri_tfr_new_ce] =
+    ([TemporaryInfo (RegisterClass PredRegs) 0 False, BoundInfo,
+      TemporaryInfo (RegisterClass IntRegs) 0 False,
+      TemporaryInfo (RegisterClass PredRegs) (-1) True],
      [TemporaryInfo (RegisterClass IntRegs) 1 False])
   | i `elem` [C2_muxii, C2_muxii_ce, C2_muxii_tfr, C2_muxii_tfr_ce] =
     ([TemporaryInfo (RegisterClass PredRegs) 0 False, BoundInfo,
@@ -1667,17 +2372,12 @@ operandInfo i
       BoundInfo, TemporaryInfo (RegisterClass IntRegs) 0 False],
      [])
   | i `elem`
-      [J2_jump_extf, J2_jump_extf_ce, J2_jump_extfnew,
-       J2_jump_extfnew_ce, J2_jump_extfnewpt, J2_jump_extfnewpt_ce,
-       J2_jump_extt, J2_jump_extt_ce, J2_jump_exttnew, J2_jump_exttnew_ce,
-       J2_jump_exttnewpt, J2_jump_exttnewpt_ce, J2_jump_noextf,
-       J2_jump_noextf_ce, J2_jump_noextfnew, J2_jump_noextfnew_ce,
-       J2_jump_noextfnewpt, J2_jump_noextfnewpt_ce, J2_jump_noextt,
-       J2_jump_noextt_ce, J2_jump_noexttnew, J2_jump_noexttnew_ce,
-       J2_jump_noexttnewpt, J2_jump_noexttnewpt_ce, J2_jumpf, J2_jumpf_ce,
-       J2_jumpfnew, J2_jumpfnew_ce, J2_jumpfnewpt, J2_jumpfnewpt_ce,
-       J2_jumpt, J2_jumpt_ce, J2_jumptnew, J2_jumptnew_ce, J2_jumptnewpt,
-       J2_jumptnewpt_ce]
+      [J2_jumpf, J2_jumpf_ce, J2_jumpf_nopred_map,
+       J2_jumpf_nopred_map_ce, J2_jumpfnew, J2_jumpfnew_ce, J2_jumpfnewpt,
+       J2_jumpfnewpt_ce, J2_jumpfpt, J2_jumpfpt_ce, J2_jumpt, J2_jumpt_ce,
+       J2_jumpt_nopred_map, J2_jumpt_nopred_map_ce, J2_jumptnew,
+       J2_jumptnew_ce, J2_jumptnewpt, J2_jumptnewpt_ce, J2_jumptpt,
+       J2_jumptpt_ce]
     =
     ([TemporaryInfo (RegisterClass PredRegs) 0 False, BlockRefInfo],
      [])
@@ -1688,658 +2388,91 @@ operandInfo i
        L2_loadri_io_fi_remat_fi_ce, L2_loadrigp_remat,
        L2_loadrigp_remat_ce, L2_loadrubgp_remat, L2_loadrubgp_remat_ce,
        L2_loadruh_io_fi_remat_fi, L2_loadruh_io_fi_remat_fi_ce,
-       L2_loadruhgp_remat, L2_loadruhgp_remat_ce, L4_loadrb_abs_remat,
-       L4_loadrb_abs_remat_ce, L4_loadrh_abs_remat,
-       L4_loadrh_abs_remat_ce, L4_loadri_abs_remat,
-       L4_loadri_abs_remat_ce, L4_loadrub_abs_remat,
-       L4_loadrub_abs_remat_ce, L4_loadruh_abs_remat,
-       L4_loadruh_abs_remat_ce, TFR_FI_fi_remat_fi, TFR_FI_fi_remat_fi_ce]
+       L2_loadruhgp_remat, L2_loadruhgp_remat_ce, TFR_FI_fi_remat_fi,
+       TFR_FI_fi_remat_fi_ce]
     =
     ([TemporaryInfo (InfiniteRegisterClass RM32) 0 False],
      [TemporaryInfo (RegisterClass IntRegs) 1 False])
   | i `elem`
-      [TFR_PdFalse_remat, TFR_PdFalse_remat_ce, TFR_PdTrue_remat,
-       TFR_PdTrue_remat_ce]
-    =
-    ([TemporaryInfo (InfiniteRegisterClass RM32) 0 False],
-     [TemporaryInfo (RegisterClass PredRegs) 1 False])
-  | i `elem`
-      [A2_tfrpi_remat, A2_tfrpi_remat_ce, CONST64_Int_Real_remat,
-       CONST64_Int_Real_remat_ce, L2_loadrd_io_fi_remat_fi,
-       L2_loadrd_io_fi_remat_fi_ce, L4_loadrd_abs_remat,
-       L4_loadrd_abs_remat_ce]
+      [A2_tfrpi_remat, A2_tfrpi_remat_ce, L2_loadrd_io_fi_remat_fi,
+       L2_loadrd_io_fi_remat_fi_ce]
     =
     ([TemporaryInfo (InfiniteRegisterClass RM64) 0 False],
      [TemporaryInfo (RegisterClass DoubleRegs) 1 False])
-  | i `elem` [HEXAGON_V6_vassignp] =
-    ([TemporaryInfo (RegisterClass VecDblRegs) 0 False],
-     [TemporaryInfo (RegisterClass VecDblRegs) 1 False])
-  | i `elem` [HEXAGON_V6_hi, HEXAGON_V6_lo] =
-    ([TemporaryInfo (RegisterClass VecDblRegs) 0 False],
-     [TemporaryInfo (RegisterClass VectorRegs) 1 False])
   | i `elem`
-      [V6_vdmpybus_dv, V6_vdmpyhb_dv, V6_vdsaduh, V6_vmpabus, V6_vmpahb,
-       V6_vtmpyb, V6_vtmpybus, V6_vtmpyhb]
-    =
-    ([TemporaryInfo (RegisterClass VecDblRegs) 0 False,
-      TemporaryInfo (RegisterClass IntRegs) 0 False],
-     [TemporaryInfo (RegisterClass VecDblRegs) 1 False])
-  | i `elem` [V6_vdmpyhisat, V6_vdmpyhsuisat] =
-    ([TemporaryInfo (RegisterClass VecDblRegs) 0 False,
-      TemporaryInfo (RegisterClass IntRegs) 0 False],
-     [TemporaryInfo (RegisterClass VectorRegs) 1 False])
+      [LOCAL_ESCAPE, LOCAL_ESCAPE_ce, PATCHABLE_EVENT_CALL,
+       PATCHABLE_EVENT_CALL_ce]
+    = ([TemporaryInfo (RegisterClass Ptr_rc) 0 False, BoundInfo], [])
   | i `elem`
-      [V6_vrmpybusi, V6_vrmpybusi_ce, V6_vrmpyubi, V6_vrmpyubi_ce,
-       V6_vrsadubi, V6_vrsadubi_ce]
-    =
-    ([TemporaryInfo (RegisterClass VecDblRegs) 0 False,
-      TemporaryInfo (RegisterClass IntRegs) 0 False, BoundInfo],
-     [TemporaryInfo (RegisterClass VecDblRegs) 1 False])
-  | i `elem`
-      [V6_vaddb_dv, V6_vaddh_dv, V6_vaddhsat_dv, V6_vaddubsat_dv,
-       V6_vadduhsat_dv, V6_vaddw_dv, V6_vaddwsat_dv, V6_vmpabusv,
-       V6_vmpabuuv, V6_vsubb_dv, V6_vsubh_dv, V6_vsubhsat_dv,
-       V6_vsububsat_dv, V6_vsubuhsat_dv, V6_vsubw_dv, V6_vsubwsat_dv]
-    =
-    ([TemporaryInfo (RegisterClass VecDblRegs) 0 False,
-      TemporaryInfo (RegisterClass VecDblRegs) 0 False],
-     [TemporaryInfo (RegisterClass VecDblRegs) 1 False])
-  | i `elem`
-      [V6_vdmpybus_dv_acc, V6_vdmpyhb_dv_acc, V6_vdsaduh_acc,
-       V6_vmpabus_acc, V6_vmpahb_acc, V6_vtmpyb_acc, V6_vtmpybus_acc,
-       V6_vtmpyhb_acc]
-    =
-    ([TemporaryInfo (RegisterClass VecDblRegs) 0 False,
-      TemporaryInfo (RegisterClass VecDblRegs) 0 False,
-      TemporaryInfo (RegisterClass IntRegs) 0 False],
-     [TemporaryInfo (RegisterClass VecDblRegs) 1 False])
-  | i `elem`
-      [V6_vrmpybusi_acc, V6_vrmpybusi_acc_ce, V6_vrmpyubi_acc,
-       V6_vrmpyubi_acc_ce, V6_vrsadubi_acc, V6_vrsadubi_acc_ce]
-    =
-    ([TemporaryInfo (RegisterClass VecDblRegs) 0 False,
-      TemporaryInfo (RegisterClass VecDblRegs) 0 False,
-      TemporaryInfo (RegisterClass IntRegs) 0 False, BoundInfo],
-     [TemporaryInfo (RegisterClass VecDblRegs) 1 False])
-  | i `elem` [V6_vunpackob, V6_vunpackoh] =
-    ([TemporaryInfo (RegisterClass VecDblRegs) 0 False,
-      TemporaryInfo (RegisterClass VectorRegs) 0 False],
-     [TemporaryInfo (RegisterClass VecDblRegs) 1 False])
-  | i `elem`
-      [V6_vmpybus_acc, V6_vmpyhsat_acc, V6_vmpyub_acc, V6_vmpyuh_acc]
-    =
-    ([TemporaryInfo (RegisterClass VecDblRegs) 0 False,
-      TemporaryInfo (RegisterClass VectorRegs) 0 False,
-      TemporaryInfo (RegisterClass IntRegs) 0 False],
-     [TemporaryInfo (RegisterClass VecDblRegs) 1 False])
-  | i `elem`
-      [V6_vmpybusv_acc, V6_vmpybv_acc, V6_vmpyhus_acc, V6_vmpyhv_acc,
-       V6_vmpyubv_acc, V6_vmpyuhv_acc]
-    =
-    ([TemporaryInfo (RegisterClass VecDblRegs) 0 False,
-      TemporaryInfo (RegisterClass VectorRegs) 0 False,
-      TemporaryInfo (RegisterClass VectorRegs) 0 False],
-     [TemporaryInfo (RegisterClass VecDblRegs) 1 False])
-  | i `elem` [V6_vlutvwh_oracc] =
-    ([TemporaryInfo (RegisterClass VecDblRegs) 0 False,
-      TemporaryInfo (RegisterClass VectorRegs) 0 False,
-      TemporaryInfo (RegisterClass VectorRegs) 0 False,
-      TemporaryInfo (RegisterClass IntRegsLow8) 0 False],
-     [TemporaryInfo (RegisterClass VecDblRegs) 1 False])
-  | i `elem` [HEXAGON_V6_vassignp_128B] =
-    ([TemporaryInfo (RegisterClass VecDblRegs128B) 0 False],
-     [TemporaryInfo (RegisterClass VecDblRegs128B) 1 False])
-  | i `elem` [HEXAGON_V6_hi_128B, HEXAGON_V6_lo_128B] =
-    ([TemporaryInfo (RegisterClass VecDblRegs128B) 0 False],
-     [TemporaryInfo (RegisterClass VectorRegs128B) 1 False])
-  | i `elem`
-      [V6_vdmpybus_dv_128B, V6_vdmpyhb_dv_128B, V6_vdsaduh_128B,
-       V6_vmpabus_128B, V6_vmpahb_128B, V6_vtmpyb_128B, V6_vtmpybus_128B,
-       V6_vtmpyhb_128B]
-    =
-    ([TemporaryInfo (RegisterClass VecDblRegs128B) 0 False,
-      TemporaryInfo (RegisterClass IntRegs) 0 False],
-     [TemporaryInfo (RegisterClass VecDblRegs128B) 1 False])
-  | i `elem` [V6_vdmpyhisat_128B, V6_vdmpyhsuisat_128B] =
-    ([TemporaryInfo (RegisterClass VecDblRegs128B) 0 False,
-      TemporaryInfo (RegisterClass IntRegs) 0 False],
-     [TemporaryInfo (RegisterClass VectorRegs128B) 1 False])
-  | i `elem`
-      [V6_vrmpybusi_128B, V6_vrmpybusi_128B_ce, V6_vrmpyubi_128B,
-       V6_vrmpyubi_128B_ce, V6_vrsadubi_128B, V6_vrsadubi_128B_ce]
-    =
-    ([TemporaryInfo (RegisterClass VecDblRegs128B) 0 False,
-      TemporaryInfo (RegisterClass IntRegs) 0 False, BoundInfo],
-     [TemporaryInfo (RegisterClass VecDblRegs128B) 1 False])
-  | i `elem`
-      [V6_vaddb_dv_128B, V6_vaddh_dv_128B, V6_vaddhsat_dv_128B,
-       V6_vaddubsat_dv_128B, V6_vadduhsat_dv_128B, V6_vaddw_dv_128B,
-       V6_vaddwsat_dv_128B, V6_vmpabusv_128B, V6_vmpabuuv_128B,
-       V6_vsubb_dv_128B, V6_vsubh_dv_128B, V6_vsubhsat_dv_128B,
-       V6_vsububsat_dv_128B, V6_vsubuhsat_dv_128B, V6_vsubw_dv_128B,
-       V6_vsubwsat_dv_128B]
-    =
-    ([TemporaryInfo (RegisterClass VecDblRegs128B) 0 False,
-      TemporaryInfo (RegisterClass VecDblRegs128B) 0 False],
-     [TemporaryInfo (RegisterClass VecDblRegs128B) 1 False])
-  | i `elem`
-      [V6_vdmpybus_dv_acc_128B, V6_vdmpyhb_dv_acc_128B,
-       V6_vdsaduh_acc_128B, V6_vmpabus_acc_128B, V6_vmpahb_acc_128B,
-       V6_vtmpyb_acc_128B, V6_vtmpybus_acc_128B, V6_vtmpyhb_acc_128B]
-    =
-    ([TemporaryInfo (RegisterClass VecDblRegs128B) 0 False,
-      TemporaryInfo (RegisterClass VecDblRegs128B) 0 False,
-      TemporaryInfo (RegisterClass IntRegs) 0 False],
-     [TemporaryInfo (RegisterClass VecDblRegs128B) 1 False])
-  | i `elem`
-      [V6_vrmpybusi_acc_128B, V6_vrmpybusi_acc_128B_ce,
-       V6_vrmpyubi_acc_128B, V6_vrmpyubi_acc_128B_ce,
-       V6_vrsadubi_acc_128B, V6_vrsadubi_acc_128B_ce]
-    =
-    ([TemporaryInfo (RegisterClass VecDblRegs128B) 0 False,
-      TemporaryInfo (RegisterClass VecDblRegs128B) 0 False,
-      TemporaryInfo (RegisterClass IntRegs) 0 False, BoundInfo],
-     [TemporaryInfo (RegisterClass VecDblRegs128B) 1 False])
-  | i `elem` [V6_vunpackob_128B, V6_vunpackoh_128B] =
-    ([TemporaryInfo (RegisterClass VecDblRegs128B) 0 False,
-      TemporaryInfo (RegisterClass VectorRegs128B) 0 False],
-     [TemporaryInfo (RegisterClass VecDblRegs128B) 1 False])
-  | i `elem`
-      [V6_vmpybus_acc_128B, V6_vmpyhsat_acc_128B, V6_vmpyub_acc_128B,
-       V6_vmpyuh_acc_128B]
-    =
-    ([TemporaryInfo (RegisterClass VecDblRegs128B) 0 False,
-      TemporaryInfo (RegisterClass VectorRegs128B) 0 False,
-      TemporaryInfo (RegisterClass IntRegs) 0 False],
-     [TemporaryInfo (RegisterClass VecDblRegs128B) 1 False])
-  | i `elem`
-      [V6_vmpybusv_acc_128B, V6_vmpybv_acc_128B, V6_vmpyhus_acc_128B,
-       V6_vmpyhv_acc_128B, V6_vmpyubv_acc_128B, V6_vmpyuhv_acc_128B]
-    =
-    ([TemporaryInfo (RegisterClass VecDblRegs128B) 0 False,
-      TemporaryInfo (RegisterClass VectorRegs128B) 0 False,
-      TemporaryInfo (RegisterClass VectorRegs128B) 0 False],
-     [TemporaryInfo (RegisterClass VecDblRegs128B) 1 False])
-  | i `elem` [V6_vlutvwh_oracc_128B] =
-    ([TemporaryInfo (RegisterClass VecDblRegs128B) 0 False,
-      TemporaryInfo (RegisterClass VectorRegs128B) 0 False,
-      TemporaryInfo (RegisterClass VectorRegs128B) 0 False,
-      TemporaryInfo (RegisterClass IntRegsLow8) 0 False],
-     [TemporaryInfo (RegisterClass VecDblRegs128B) 1 False])
-  | i `elem` [V6_vhistq] =
-    ([TemporaryInfo (RegisterClass VecPredRegs) 0 False], [])
-  | i `elem` [V6_pred_not] =
-    ([TemporaryInfo (RegisterClass VecPredRegs) 0 False],
-     [TemporaryInfo (RegisterClass VecPredRegs) 1 False])
-  | i `elem` [V6_vandqrt] =
-    ([TemporaryInfo (RegisterClass VecPredRegs) 0 False,
-      TemporaryInfo (RegisterClass IntRegs) 0 False],
-     [TemporaryInfo (RegisterClass VectorRegs) 1 False])
-  | i `elem`
-      [V6_vS32b_nqpred_ppu, V6_vS32b_nt_nqpred_ppu,
-       V6_vS32b_nt_qpred_ppu, V6_vS32b_qpred_ppu]
-    =
-    ([TemporaryInfo (RegisterClass VecPredRegs) 0 False,
-      TemporaryInfo (RegisterClass IntRegs) 0 False,
-      TemporaryInfo (RegisterClass ModRegs) 0 False,
-      TemporaryInfo (RegisterClass VectorRegs) 0 False],
-     [TemporaryInfo (RegisterClass IntRegs) 1 False])
-  | i `elem`
-      [V6_vS32b_nqpred_ai, V6_vS32b_nqpred_ai_ce, V6_vS32b_nt_nqpred_ai,
-       V6_vS32b_nt_nqpred_ai_ce, V6_vS32b_nt_qpred_ai,
-       V6_vS32b_nt_qpred_ai_ce, V6_vS32b_qpred_ai, V6_vS32b_qpred_ai_ce]
-    =
-    ([TemporaryInfo (RegisterClass VecPredRegs) 0 False,
-      TemporaryInfo (RegisterClass IntRegs) 0 False, BoundInfo,
-      TemporaryInfo (RegisterClass VectorRegs) 0 False],
-     [])
-  | i `elem`
-      [V6_vS32b_nqpred_pi, V6_vS32b_nqpred_pi_ce, V6_vS32b_nt_nqpred_pi,
-       V6_vS32b_nt_nqpred_pi_ce, V6_vS32b_nt_qpred_pi,
-       V6_vS32b_nt_qpred_pi_ce, V6_vS32b_qpred_pi, V6_vS32b_qpred_pi_ce]
-    =
-    ([TemporaryInfo (RegisterClass VecPredRegs) 0 False,
-      TemporaryInfo (RegisterClass IntRegs) 0 False, BoundInfo,
-      TemporaryInfo (RegisterClass VectorRegs) 0 False],
-     [TemporaryInfo (RegisterClass IntRegs) 1 False])
-  | i `elem`
-      [V6_vS32b_nqpred_ai_128B, V6_vS32b_nqpred_ai_128B_ce,
-       V6_vS32b_nt_nqpred_ai_128B, V6_vS32b_nt_nqpred_ai_128B_ce,
-       V6_vS32b_nt_qpred_ai_128B, V6_vS32b_nt_qpred_ai_128B_ce,
-       V6_vS32b_qpred_ai_128B, V6_vS32b_qpred_ai_128B_ce]
-    =
-    ([TemporaryInfo (RegisterClass VecPredRegs) 0 False,
-      TemporaryInfo (RegisterClass IntRegs) 0 False, BoundInfo,
-      TemporaryInfo (RegisterClass VectorRegs128B) 0 False],
-     [])
-  | i `elem`
-      [V6_vS32b_nqpred_pi_128B, V6_vS32b_nqpred_pi_128B_ce,
-       V6_vS32b_nt_nqpred_pi_128B, V6_vS32b_nt_nqpred_pi_128B_ce,
-       V6_vS32b_nt_qpred_pi_128B, V6_vS32b_nt_qpred_pi_128B_ce,
-       V6_vS32b_qpred_pi_128B, V6_vS32b_qpred_pi_128B_ce]
-    =
-    ([TemporaryInfo (RegisterClass VecPredRegs) 0 False,
-      TemporaryInfo (RegisterClass IntRegs) 0 False, BoundInfo,
-      TemporaryInfo (RegisterClass VectorRegs128B) 0 False],
-     [TemporaryInfo (RegisterClass IntRegs) 1 False])
-  | i `elem`
-      [V6_pred_and, V6_pred_and_n, V6_pred_or, V6_pred_or_n, V6_pred_xor]
-    =
-    ([TemporaryInfo (RegisterClass VecPredRegs) 0 False,
-      TemporaryInfo (RegisterClass VecPredRegs) 0 False],
-     [TemporaryInfo (RegisterClass VecPredRegs) 1 False])
-  | i `elem` [V6_vandvrt_acc] =
-    ([TemporaryInfo (RegisterClass VecPredRegs) 0 False,
-      TemporaryInfo (RegisterClass VectorRegs) 0 False,
-      TemporaryInfo (RegisterClass IntRegs) 0 False],
-     [TemporaryInfo (RegisterClass VecPredRegs) 1 False])
-  | i `elem` [V6_vswap] =
-    ([TemporaryInfo (RegisterClass VecPredRegs) 0 False,
-      TemporaryInfo (RegisterClass VectorRegs) 0 False,
-      TemporaryInfo (RegisterClass VectorRegs) 0 False],
-     [TemporaryInfo (RegisterClass VecDblRegs) 1 False])
-  | i `elem`
-      [V6_veqb_and, V6_veqb_or, V6_veqb_xor, V6_veqh_and, V6_veqh_or,
-       V6_veqh_xor, V6_veqw_and, V6_veqw_or, V6_veqw_xor, V6_vgtb_and,
-       V6_vgtb_or, V6_vgtb_xor, V6_vgth_and, V6_vgth_or, V6_vgth_xor,
-       V6_vgtub_and, V6_vgtub_or, V6_vgtub_xor, V6_vgtuh_and, V6_vgtuh_or,
-       V6_vgtuh_xor, V6_vgtuw_and, V6_vgtuw_or, V6_vgtuw_xor, V6_vgtw_and,
-       V6_vgtw_or, V6_vgtw_xor]
-    =
-    ([TemporaryInfo (RegisterClass VecPredRegs) 0 False,
-      TemporaryInfo (RegisterClass VectorRegs) 0 False,
-      TemporaryInfo (RegisterClass VectorRegs) 0 False],
-     [TemporaryInfo (RegisterClass VecPredRegs) 1 False])
-  | i `elem`
-      [V6_vaddbnq, V6_vaddbq, V6_vaddhnq, V6_vaddhq, V6_vaddwnq,
-       V6_vaddwq, V6_vmux, V6_vsubbnq, V6_vsubbq, V6_vsubhnq, V6_vsubhq,
-       V6_vsubwnq, V6_vsubwq]
-    =
-    ([TemporaryInfo (RegisterClass VecPredRegs) 0 False,
-      TemporaryInfo (RegisterClass VectorRegs) 0 False,
-      TemporaryInfo (RegisterClass VectorRegs) 0 False],
-     [TemporaryInfo (RegisterClass VectorRegs) 1 False])
-  | i `elem` [V6_pred_not_128B] =
-    ([TemporaryInfo (RegisterClass VecPredRegs128B) 0 False],
-     [TemporaryInfo (RegisterClass VecPredRegs128B) 1 False])
-  | i `elem` [V6_vandqrt_128B] =
-    ([TemporaryInfo (RegisterClass VecPredRegs128B) 0 False,
-      TemporaryInfo (RegisterClass IntRegs) 0 False],
-     [TemporaryInfo (RegisterClass VectorRegs128B) 1 False])
-  | i `elem`
-      [V6_pred_and_128B, V6_pred_and_n_128B, V6_pred_or_128B,
-       V6_pred_or_n_128B, V6_pred_xor_128B]
-    =
-    ([TemporaryInfo (RegisterClass VecPredRegs128B) 0 False,
-      TemporaryInfo (RegisterClass VecPredRegs128B) 0 False],
-     [TemporaryInfo (RegisterClass VecPredRegs128B) 1 False])
-  | i `elem` [V6_vandvrt_acc_128B] =
-    ([TemporaryInfo (RegisterClass VecPredRegs128B) 0 False,
-      TemporaryInfo (RegisterClass VectorRegs128B) 0 False,
-      TemporaryInfo (RegisterClass IntRegs) 0 False],
-     [TemporaryInfo (RegisterClass VecPredRegs128B) 1 False])
-  | i `elem` [V6_vswap_128B] =
-    ([TemporaryInfo (RegisterClass VecPredRegs128B) 0 False,
-      TemporaryInfo (RegisterClass VectorRegs128B) 0 False,
-      TemporaryInfo (RegisterClass VectorRegs128B) 0 False],
-     [TemporaryInfo (RegisterClass VecDblRegs128B) 1 False])
-  | i `elem`
-      [V6_veqb_and_128B, V6_veqb_or_128B, V6_veqb_xor_128B,
-       V6_veqh_and_128B, V6_veqh_or_128B, V6_veqh_xor_128B,
-       V6_veqw_and_128B, V6_veqw_or_128B, V6_veqw_xor_128B,
-       V6_vgtb_and_128B, V6_vgtb_or_128B, V6_vgtb_xor_128B,
-       V6_vgth_and_128B, V6_vgth_or_128B, V6_vgth_xor_128B,
-       V6_vgtub_and_128B, V6_vgtub_or_128B, V6_vgtub_xor_128B,
-       V6_vgtuh_and_128B, V6_vgtuh_or_128B, V6_vgtuh_xor_128B,
-       V6_vgtuw_and_128B, V6_vgtuw_or_128B, V6_vgtuw_xor_128B,
-       V6_vgtw_and_128B, V6_vgtw_or_128B, V6_vgtw_xor_128B]
-    =
-    ([TemporaryInfo (RegisterClass VecPredRegs128B) 0 False,
-      TemporaryInfo (RegisterClass VectorRegs128B) 0 False,
-      TemporaryInfo (RegisterClass VectorRegs128B) 0 False],
-     [TemporaryInfo (RegisterClass VecPredRegs128B) 1 False])
-  | i `elem`
-      [V6_vaddbnq_128B, V6_vaddbq_128B, V6_vaddhnq_128B, V6_vaddhq_128B,
-       V6_vaddwnq_128B, V6_vaddwq_128B, V6_vmux_128B, V6_vsubbnq_128B,
-       V6_vsubbq_128B, V6_vsubhnq_128B, V6_vsubhq_128B, V6_vsubwnq_128B,
-       V6_vsubwq_128B]
-    =
-    ([TemporaryInfo (RegisterClass VecPredRegs128B) 0 False,
-      TemporaryInfo (RegisterClass VectorRegs128B) 0 False,
-      TemporaryInfo (RegisterClass VectorRegs128B) 0 False],
-     [TemporaryInfo (RegisterClass VectorRegs128B) 1 False])
-  | i `elem`
-      [V6_vsb, V6_vsh, V6_vunpackb, V6_vunpackh, V6_vunpackub,
-       V6_vunpackuh, V6_vzb, V6_vzh]
-    =
-    ([TemporaryInfo (RegisterClass VectorRegs) 0 False],
-     [TemporaryInfo (RegisterClass VecDblRegs) 1 False])
-  | i `elem`
-      [V6_vabsh, V6_vabsh_sat, V6_vabsw, V6_vabsw_sat, V6_vassign,
-       V6_vcl0h, V6_vcl0w, V6_vdealb, V6_vdealh, V6_vnormamth,
-       V6_vnormamtw, V6_vnot, V6_vpopcounth, V6_vshuffb, V6_vshuffh]
-    =
-    ([TemporaryInfo (RegisterClass VectorRegs) 0 False],
-     [TemporaryInfo (RegisterClass VectorRegs) 1 False])
-  | i `elem` [V6_extractw] =
-    ([TemporaryInfo (RegisterClass VectorRegs) 0 False,
-      TemporaryInfo (RegisterClass IntRegs) 0 False],
-     [TemporaryInfo (RegisterClass IntRegs) 1 False])
-  | i `elem` [V6_vmpybus, V6_vmpyh, V6_vmpyub, V6_vmpyuh] =
-    ([TemporaryInfo (RegisterClass VectorRegs) 0 False,
-      TemporaryInfo (RegisterClass IntRegs) 0 False],
-     [TemporaryInfo (RegisterClass VecDblRegs) 1 False])
-  | i `elem` [V6_vandvrt] =
-    ([TemporaryInfo (RegisterClass VectorRegs) 0 False,
-      TemporaryInfo (RegisterClass IntRegs) 0 False],
-     [TemporaryInfo (RegisterClass VecPredRegs) 1 False])
-  | i `elem`
-      [V6_vaslh, V6_vaslw, V6_vasrh, V6_vasrw, V6_vdmpybus, V6_vdmpyhb,
-       V6_vdmpyhsat, V6_vdmpyhsusat, V6_vinsertwr, V6_vlsrh, V6_vlsrw,
-       V6_vmpyhsrs, V6_vmpyhss, V6_vmpyihb, V6_vmpyiwb, V6_vmpyiwh,
-       V6_vrmpybus, V6_vrmpyub, V6_vror]
-    =
-    ([TemporaryInfo (RegisterClass VectorRegs) 0 False,
-      TemporaryInfo (RegisterClass IntRegs) 0 False],
-     [TemporaryInfo (RegisterClass VectorRegs) 1 False])
-  | i `elem` [V6_vdmpyhisat_acc, V6_vdmpyhsuisat_acc] =
-    ([TemporaryInfo (RegisterClass VectorRegs) 0 False,
-      TemporaryInfo (RegisterClass VecDblRegs) 0 False,
-      TemporaryInfo (RegisterClass IntRegs) 0 False],
-     [TemporaryInfo (RegisterClass VectorRegs) 1 False])
-  | i `elem` [V6_vandqrt_acc] =
-    ([TemporaryInfo (RegisterClass VectorRegs) 0 False,
-      TemporaryInfo (RegisterClass VecPredRegs) 0 False,
-      TemporaryInfo (RegisterClass IntRegs) 0 False],
-     [TemporaryInfo (RegisterClass VectorRegs) 1 False])
-  | i `elem`
-      [V6_vaddhw, V6_vaddubh, V6_vadduhw, V6_vcombine, V6_vmpybusv,
-       V6_vmpybv, V6_vmpyhus, V6_vmpyhv, V6_vmpyubv, V6_vmpyuhv,
-       V6_vshufoeb, V6_vshufoeh, V6_vsubhw, V6_vsububh, V6_vsubuhw]
-    =
-    ([TemporaryInfo (RegisterClass VectorRegs) 0 False,
-      TemporaryInfo (RegisterClass VectorRegs) 0 False],
-     [TemporaryInfo (RegisterClass VecDblRegs) 1 False])
-  | i `elem`
-      [V6_veqb, V6_veqh, V6_veqw, V6_vgtb, V6_vgth, V6_vgtub, V6_vgtuh,
-       V6_vgtuw, V6_vgtw]
-    =
-    ([TemporaryInfo (RegisterClass VectorRegs) 0 False,
-      TemporaryInfo (RegisterClass VectorRegs) 0 False],
-     [TemporaryInfo (RegisterClass VecPredRegs) 1 False])
-  | i `elem`
-      [V6_vabsdiffh, V6_vabsdiffub, V6_vabsdiffuh, V6_vabsdiffw,
-       V6_vaddb, V6_vaddh, V6_vaddhsat, V6_vaddubsat, V6_vadduhsat,
-       V6_vaddw, V6_vaddwsat, V6_vand, V6_vaslhv, V6_vaslwv, V6_vasrhv,
-       V6_vasrwv, V6_vavgh, V6_vavghrnd, V6_vavgub, V6_vavgubrnd,
-       V6_vavguh, V6_vavguhrnd, V6_vavgw, V6_vavgwrnd, V6_vdealb4w,
-       V6_vdelta, V6_vdmpyhvsat, V6_vlsrhv, V6_vlsrwv, V6_vmaxh,
-       V6_vmaxub, V6_vmaxuh, V6_vmaxw, V6_vminh, V6_vminub, V6_vminuh,
-       V6_vminw, V6_vmpyewuh, V6_vmpyhvsrs, V6_vmpyieoh, V6_vmpyiewuh,
-       V6_vmpyih, V6_vmpyiowh, V6_vmpyowh, V6_vmpyowh_rnd, V6_vnavgh,
-       V6_vnavgub, V6_vnavgw, V6_vor, V6_vpackeb, V6_vpackeh,
-       V6_vpackhb_sat, V6_vpackhub_sat, V6_vpackob, V6_vpackoh,
-       V6_vpackwh_sat, V6_vpackwuh_sat, V6_vrdelta, V6_vrmpybusv,
-       V6_vrmpybv, V6_vrmpyubv, V6_vroundhb, V6_vroundhub, V6_vroundwh,
-       V6_vroundwuh, V6_vsathub, V6_vsatwh, V6_vshufeh, V6_vshuffeb,
-       V6_vshuffob, V6_vshufoh, V6_vsubb, V6_vsubh, V6_vsubhsat,
-       V6_vsububsat, V6_vsubuhsat, V6_vsubw, V6_vsubwsat, V6_vxor]
-    =
-    ([TemporaryInfo (RegisterClass VectorRegs) 0 False,
-      TemporaryInfo (RegisterClass VectorRegs) 0 False],
-     [TemporaryInfo (RegisterClass VectorRegs) 1 False])
-  | i `elem`
-      [V6_vaslw_acc, V6_vasrw_acc, V6_vdmpybus_acc, V6_vdmpyhb_acc,
-       V6_vdmpyhsat_acc, V6_vdmpyhsusat_acc, V6_vmpyihb_acc,
-       V6_vmpyiwb_acc, V6_vmpyiwh_acc, V6_vrmpybus_acc, V6_vrmpyub_acc]
-    =
-    ([TemporaryInfo (RegisterClass VectorRegs) 0 False,
-      TemporaryInfo (RegisterClass VectorRegs) 0 False,
-      TemporaryInfo (RegisterClass IntRegs) 0 False],
-     [TemporaryInfo (RegisterClass VectorRegs) 1 False])
-  | i `elem` [V6_vdeal, V6_vshuff] =
-    ([TemporaryInfo (RegisterClass VectorRegs) 0 False,
-      TemporaryInfo (RegisterClass VectorRegs) 0 False,
-      TemporaryInfo (RegisterClass IntRegs) 0 False],
-     [TemporaryInfo (RegisterClass VectorRegs) 1 False,
-      TemporaryInfo (RegisterClass VectorRegs) 1 False])
-  | i `elem` [V6_vdealvdd, V6_vlutvwh, V6_vshuffvdd] =
-    ([TemporaryInfo (RegisterClass VectorRegs) 0 False,
-      TemporaryInfo (RegisterClass VectorRegs) 0 False,
-      TemporaryInfo (RegisterClass IntRegsLow8) 0 False],
-     [TemporaryInfo (RegisterClass VecDblRegs) 1 False])
-  | i `elem`
-      [V6_valignb, V6_vasrhbrndsat, V6_vasrhubrndsat, V6_vasrhubsat,
-       V6_vasrwh, V6_vasrwhrndsat, V6_vasrwhsat, V6_vasrwuhsat,
-       V6_vlalignb, V6_vlutvvb]
-    =
-    ([TemporaryInfo (RegisterClass VectorRegs) 0 False,
-      TemporaryInfo (RegisterClass VectorRegs) 0 False,
-      TemporaryInfo (RegisterClass IntRegsLow8) 0 False],
-     [TemporaryInfo (RegisterClass VectorRegs) 1 False])
-  | i `elem`
-      [V6_vdmpyhvsat_acc, V6_vmpyiewh_acc, V6_vmpyiewuh_acc,
-       V6_vmpyih_acc, V6_vmpyowh_rnd_sacc, V6_vmpyowh_sacc,
-       V6_vrmpybusv_acc, V6_vrmpybv_acc, V6_vrmpyubv_acc]
-    =
-    ([TemporaryInfo (RegisterClass VectorRegs) 0 False,
-      TemporaryInfo (RegisterClass VectorRegs) 0 False,
-      TemporaryInfo (RegisterClass VectorRegs) 0 False],
-     [TemporaryInfo (RegisterClass VectorRegs) 1 False])
-  | i `elem` [V6_vlutvvb_oracc] =
-    ([TemporaryInfo (RegisterClass VectorRegs) 0 False,
-      TemporaryInfo (RegisterClass VectorRegs) 0 False,
-      TemporaryInfo (RegisterClass VectorRegs) 0 False,
-      TemporaryInfo (RegisterClass IntRegsLow8) 0 False],
-     [TemporaryInfo (RegisterClass VectorRegs) 1 False])
-  | i `elem`
-      [V6_valignbi, V6_valignbi_ce, V6_vlalignbi, V6_vlalignbi_ce]
-    =
-    ([TemporaryInfo (RegisterClass VectorRegs) 0 False,
-      TemporaryInfo (RegisterClass VectorRegs) 0 False, BoundInfo],
-     [TemporaryInfo (RegisterClass VectorRegs) 1 False])
-  | i `elem`
-      [V6_vsb_128B, V6_vsh_128B, V6_vunpackb_128B, V6_vunpackh_128B,
-       V6_vunpackub_128B, V6_vunpackuh_128B, V6_vzb_128B, V6_vzh_128B]
-    =
-    ([TemporaryInfo (RegisterClass VectorRegs128B) 0 False],
-     [TemporaryInfo (RegisterClass VecDblRegs128B) 1 False])
-  | i `elem`
-      [V6_vabsh_128B, V6_vabsh_sat_128B, V6_vabsw_128B,
-       V6_vabsw_sat_128B, V6_vassign_128B, V6_vcl0h_128B, V6_vcl0w_128B,
-       V6_vdealb_128B, V6_vdealh_128B, V6_vnormamth_128B,
-       V6_vnormamtw_128B, V6_vnot_128B, V6_vpopcounth_128B,
-       V6_vshuffb_128B, V6_vshuffh_128B]
-    =
-    ([TemporaryInfo (RegisterClass VectorRegs128B) 0 False],
-     [TemporaryInfo (RegisterClass VectorRegs128B) 1 False])
-  | i `elem` [V6_extractw_128B] =
-    ([TemporaryInfo (RegisterClass VectorRegs128B) 0 False,
-      TemporaryInfo (RegisterClass IntRegs) 0 False],
-     [TemporaryInfo (RegisterClass IntRegs) 1 False])
-  | i `elem`
-      [V6_vmpybus_128B, V6_vmpyh_128B, V6_vmpyub_128B, V6_vmpyuh_128B]
-    =
-    ([TemporaryInfo (RegisterClass VectorRegs128B) 0 False,
-      TemporaryInfo (RegisterClass IntRegs) 0 False],
-     [TemporaryInfo (RegisterClass VecDblRegs128B) 1 False])
-  | i `elem` [V6_vandvrt_128B] =
-    ([TemporaryInfo (RegisterClass VectorRegs128B) 0 False,
-      TemporaryInfo (RegisterClass IntRegs) 0 False],
-     [TemporaryInfo (RegisterClass VecPredRegs128B) 1 False])
-  | i `elem`
-      [V6_vaslh_128B, V6_vaslw_128B, V6_vasrh_128B, V6_vasrw_128B,
-       V6_vdmpybus_128B, V6_vdmpyhb_128B, V6_vdmpyhsat_128B,
-       V6_vdmpyhsusat_128B, V6_vinsertwr_128B, V6_vlsrh_128B,
-       V6_vlsrw_128B, V6_vmpyhsrs_128B, V6_vmpyhss_128B, V6_vmpyihb_128B,
-       V6_vmpyiwb_128B, V6_vmpyiwh_128B, V6_vrmpybus_128B,
-       V6_vrmpyub_128B, V6_vror_128B]
-    =
-    ([TemporaryInfo (RegisterClass VectorRegs128B) 0 False,
-      TemporaryInfo (RegisterClass IntRegs) 0 False],
-     [TemporaryInfo (RegisterClass VectorRegs128B) 1 False])
-  | i `elem` [V6_vdmpyhisat_acc_128B, V6_vdmpyhsuisat_acc_128B] =
-    ([TemporaryInfo (RegisterClass VectorRegs128B) 0 False,
-      TemporaryInfo (RegisterClass VecDblRegs128B) 0 False,
-      TemporaryInfo (RegisterClass IntRegs) 0 False],
-     [TemporaryInfo (RegisterClass VectorRegs128B) 1 False])
-  | i `elem` [V6_vandqrt_acc_128B] =
-    ([TemporaryInfo (RegisterClass VectorRegs128B) 0 False,
-      TemporaryInfo (RegisterClass VecPredRegs128B) 0 False,
-      TemporaryInfo (RegisterClass IntRegs) 0 False],
-     [TemporaryInfo (RegisterClass VectorRegs128B) 1 False])
-  | i `elem`
-      [V6_vaddhw_128B, V6_vaddubh_128B, V6_vadduhw_128B,
-       V6_vcombine_128B, V6_vmpybusv_128B, V6_vmpybv_128B,
-       V6_vmpyhus_128B, V6_vmpyhv_128B, V6_vmpyubv_128B, V6_vmpyuhv_128B,
-       V6_vshufoeb_128B, V6_vshufoeh_128B, V6_vsubhw_128B,
-       V6_vsububh_128B, V6_vsubuhw_128B]
-    =
-    ([TemporaryInfo (RegisterClass VectorRegs128B) 0 False,
-      TemporaryInfo (RegisterClass VectorRegs128B) 0 False],
-     [TemporaryInfo (RegisterClass VecDblRegs128B) 1 False])
-  | i `elem`
-      [V6_veqb_128B, V6_veqh_128B, V6_veqw_128B, V6_vgtb_128B,
-       V6_vgth_128B, V6_vgtub_128B, V6_vgtuh_128B, V6_vgtuw_128B,
-       V6_vgtw_128B]
-    =
-    ([TemporaryInfo (RegisterClass VectorRegs128B) 0 False,
-      TemporaryInfo (RegisterClass VectorRegs128B) 0 False],
-     [TemporaryInfo (RegisterClass VecPredRegs128B) 1 False])
-  | i `elem`
-      [V6_vabsdiffh_128B, V6_vabsdiffub_128B, V6_vabsdiffuh_128B,
-       V6_vabsdiffw_128B, V6_vaddb_128B, V6_vaddh_128B, V6_vaddhsat_128B,
-       V6_vaddubsat_128B, V6_vadduhsat_128B, V6_vaddw_128B,
-       V6_vaddwsat_128B, V6_vand_128B, V6_vaslhv_128B, V6_vaslwv_128B,
-       V6_vasrhv_128B, V6_vasrwv_128B, V6_vavgh_128B, V6_vavghrnd_128B,
-       V6_vavgub_128B, V6_vavgubrnd_128B, V6_vavguh_128B,
-       V6_vavguhrnd_128B, V6_vavgw_128B, V6_vavgwrnd_128B,
-       V6_vdealb4w_128B, V6_vdelta_128B, V6_vdmpyhvsat_128B,
-       V6_vlsrhv_128B, V6_vlsrwv_128B, V6_vmaxh_128B, V6_vmaxub_128B,
-       V6_vmaxuh_128B, V6_vmaxw_128B, V6_vminh_128B, V6_vminub_128B,
-       V6_vminuh_128B, V6_vminw_128B, V6_vmpyewuh_128B, V6_vmpyhvsrs_128B,
-       V6_vmpyieoh_128B, V6_vmpyiewuh_128B, V6_vmpyih_128B,
-       V6_vmpyiowh_128B, V6_vmpyowh_128B, V6_vmpyowh_rnd_128B,
-       V6_vnavgh_128B, V6_vnavgub_128B, V6_vnavgw_128B, V6_vor_128B,
-       V6_vpackeb_128B, V6_vpackeh_128B, V6_vpackhb_sat_128B,
-       V6_vpackhub_sat_128B, V6_vpackob_128B, V6_vpackoh_128B,
-       V6_vpackwh_sat_128B, V6_vpackwuh_sat_128B, V6_vrdelta_128B,
-       V6_vrmpybusv_128B, V6_vrmpybv_128B, V6_vrmpyubv_128B,
-       V6_vroundhb_128B, V6_vroundhub_128B, V6_vroundwh_128B,
-       V6_vroundwuh_128B, V6_vsathub_128B, V6_vsatwh_128B,
-       V6_vshufeh_128B, V6_vshuffeb_128B, V6_vshuffob_128B,
-       V6_vshufoh_128B, V6_vsubb_128B, V6_vsubh_128B, V6_vsubhsat_128B,
-       V6_vsububsat_128B, V6_vsubuhsat_128B, V6_vsubw_128B,
-       V6_vsubwsat_128B, V6_vxor_128B]
-    =
-    ([TemporaryInfo (RegisterClass VectorRegs128B) 0 False,
-      TemporaryInfo (RegisterClass VectorRegs128B) 0 False],
-     [TemporaryInfo (RegisterClass VectorRegs128B) 1 False])
-  | i `elem`
-      [V6_vaslw_acc_128B, V6_vasrw_acc_128B, V6_vdmpybus_acc_128B,
-       V6_vdmpyhb_acc_128B, V6_vdmpyhsat_acc_128B,
-       V6_vdmpyhsusat_acc_128B, V6_vmpyihb_acc_128B, V6_vmpyiwb_acc_128B,
-       V6_vmpyiwh_acc_128B, V6_vrmpybus_acc_128B, V6_vrmpyub_acc_128B]
-    =
-    ([TemporaryInfo (RegisterClass VectorRegs128B) 0 False,
-      TemporaryInfo (RegisterClass VectorRegs128B) 0 False,
-      TemporaryInfo (RegisterClass IntRegs) 0 False],
-     [TemporaryInfo (RegisterClass VectorRegs128B) 1 False])
-  | i `elem` [V6_vdeal_128B, V6_vshuff_128B] =
-    ([TemporaryInfo (RegisterClass VectorRegs128B) 0 False,
-      TemporaryInfo (RegisterClass VectorRegs128B) 0 False,
-      TemporaryInfo (RegisterClass IntRegs) 0 False],
-     [TemporaryInfo (RegisterClass VectorRegs128B) 1 False,
-      TemporaryInfo (RegisterClass VectorRegs128B) 1 False])
-  | i `elem` [V6_vdealvdd_128B, V6_vlutvwh_128B, V6_vshuffvdd_128B] =
-    ([TemporaryInfo (RegisterClass VectorRegs128B) 0 False,
-      TemporaryInfo (RegisterClass VectorRegs128B) 0 False,
-      TemporaryInfo (RegisterClass IntRegsLow8) 0 False],
-     [TemporaryInfo (RegisterClass VecDblRegs128B) 1 False])
-  | i `elem`
-      [V6_valignb_128B, V6_vasrhbrndsat_128B, V6_vasrhubrndsat_128B,
-       V6_vasrhubsat_128B, V6_vasrwh_128B, V6_vasrwhrndsat_128B,
-       V6_vasrwhsat_128B, V6_vasrwuhsat_128B, V6_vlalignb_128B,
-       V6_vlutvvb_128B]
-    =
-    ([TemporaryInfo (RegisterClass VectorRegs128B) 0 False,
-      TemporaryInfo (RegisterClass VectorRegs128B) 0 False,
-      TemporaryInfo (RegisterClass IntRegsLow8) 0 False],
-     [TemporaryInfo (RegisterClass VectorRegs128B) 1 False])
-  | i `elem`
-      [V6_vdmpyhvsat_acc_128B, V6_vmpyiewh_acc_128B,
-       V6_vmpyiewuh_acc_128B, V6_vmpyih_acc_128B,
-       V6_vmpyowh_rnd_sacc_128B, V6_vmpyowh_sacc_128B,
-       V6_vrmpybusv_acc_128B, V6_vrmpybv_acc_128B, V6_vrmpyubv_acc_128B]
-    =
-    ([TemporaryInfo (RegisterClass VectorRegs128B) 0 False,
-      TemporaryInfo (RegisterClass VectorRegs128B) 0 False,
-      TemporaryInfo (RegisterClass VectorRegs128B) 0 False],
-     [TemporaryInfo (RegisterClass VectorRegs128B) 1 False])
-  | i `elem` [V6_vlutvvb_oracc_128B] =
-    ([TemporaryInfo (RegisterClass VectorRegs128B) 0 False,
-      TemporaryInfo (RegisterClass VectorRegs128B) 0 False,
-      TemporaryInfo (RegisterClass VectorRegs128B) 0 False,
-      TemporaryInfo (RegisterClass IntRegsLow8) 0 False],
-     [TemporaryInfo (RegisterClass VectorRegs128B) 1 False])
-  | i `elem`
-      [V6_valignbi_128B, V6_valignbi_128B_ce, V6_vlalignbi_128B,
-       V6_vlalignbi_128B_ce]
-    =
-    ([TemporaryInfo (RegisterClass VectorRegs128B) 0 False,
-      TemporaryInfo (RegisterClass VectorRegs128B) 0 False, BoundInfo],
-     [TemporaryInfo (RegisterClass VectorRegs128B) 1 False])
-  | i `elem` [LOCAL_ESCAPE, LOCAL_ESCAPE_ce] =
-    ([TemporaryInfo (RegisterClass Ptr_rc) 0 False, BoundInfo], [])
-  | i `elem`
-      [A4_ext, A4_ext_c, A4_ext_c_ce, A4_ext_ce, A4_ext_g, A4_ext_g_ce,
-       ADJCALLSTACKDOWN, ADJCALLSTACKDOWN_ce, BUNDLE, BUNDLE_ce, CALLv3nr,
-       CALLv3nr_ce, CFI_INSTRUCTION, CFI_INSTRUCTION_ce, DBG_VALUE,
-       DBG_VALUE_ce, EH_LABEL, EH_LABEL_ce, GC_LABEL, GC_LABEL_ce,
-       INLINEASM, INLINEASM_ce, J2_call, J2_call_ce, KILL, KILL_ce,
-       LIFETIME_END, LIFETIME_END_ce, LIFETIME_START, LIFETIME_START_ce,
-       PHI, PHI_ce, RESTORE_DEALLOC_BEFORE_TAILCALL_V4,
+      [A4_ext, A4_ext_ce, ANNOTATION_LABEL, ANNOTATION_LABEL_ce, BUNDLE,
+       BUNDLE_ce, CALLProfile, CALLProfile_ce, CFI_INSTRUCTION,
+       CFI_INSTRUCTION_ce, DBG_LABEL, DBG_LABEL_ce, DBG_VALUE,
+       DBG_VALUE_ce, DUPLEX_Pseudo, DUPLEX_Pseudo_ce, EH_LABEL,
+       EH_LABEL_ce, GC_LABEL, GC_LABEL_ce, G_BR, G_BRINDIRECT,
+       G_BRINDIRECT_ce, G_BR_ce, G_VASTART, G_VASTART_ce, INLINEASM,
+       INLINEASM_BR, INLINEASM_BR_ce, INLINEASM_ce, J2_call, J2_call_ce,
+       J2_pause, J2_pause_ce, J2_trap0, J2_trap0_ce, J2_trap1_noregmap,
+       J2_trap1_noregmap_ce, KILL, KILL_ce, LIFETIME_END, LIFETIME_END_ce,
+       LIFETIME_START, LIFETIME_START_ce, PATCHABLE_OP, PATCHABLE_OP_ce,
+       PATCHABLE_RET, PATCHABLE_RET_ce, PATCHABLE_TAIL_CALL,
+       PATCHABLE_TAIL_CALL_ce, PS_call_nr, PS_call_nr_ce, PS_call_stk,
+       PS_call_stk_ce, PS_tailcall_i, PS_tailcall_i_ce,
+       RESTORE_DEALLOC_BEFORE_TAILCALL_V4,
        RESTORE_DEALLOC_BEFORE_TAILCALL_V4_EXT,
+       RESTORE_DEALLOC_BEFORE_TAILCALL_V4_EXT_PIC,
+       RESTORE_DEALLOC_BEFORE_TAILCALL_V4_EXT_PIC_ce,
        RESTORE_DEALLOC_BEFORE_TAILCALL_V4_EXT_ce,
-       RESTORE_DEALLOC_BEFORE_TAILCALL_V4_ce, S2_allocframe,
-       S2_allocframe_ce, SAVE_REGISTERS_CALL_V4,
-       SAVE_REGISTERS_CALL_V4_EXT, SAVE_REGISTERS_CALL_V4_EXT_ce,
-       SAVE_REGISTERS_CALL_V4_ce, STATEPOINT, STATEPOINT_ce, TCRETURNi,
-       TCRETURNi_ce, V4_SS2_allocframe, V4_SS2_allocframe_ce]
+       RESTORE_DEALLOC_BEFORE_TAILCALL_V4_PIC,
+       RESTORE_DEALLOC_BEFORE_TAILCALL_V4_PIC_ce,
+       RESTORE_DEALLOC_BEFORE_TAILCALL_V4_ce, S2_allocframe_simplified,
+       S2_allocframe_simplified_ce, S6_allocframe_to_raw,
+       S6_allocframe_to_raw_ce, SAVE_REGISTERS_CALL_V4,
+       SAVE_REGISTERS_CALL_V4STK, SAVE_REGISTERS_CALL_V4STK_EXT,
+       SAVE_REGISTERS_CALL_V4STK_EXT_PIC,
+       SAVE_REGISTERS_CALL_V4STK_EXT_PIC_ce,
+       SAVE_REGISTERS_CALL_V4STK_EXT_ce, SAVE_REGISTERS_CALL_V4STK_PIC,
+       SAVE_REGISTERS_CALL_V4STK_PIC_ce, SAVE_REGISTERS_CALL_V4STK_ce,
+       SAVE_REGISTERS_CALL_V4_EXT, SAVE_REGISTERS_CALL_V4_EXT_PIC,
+       SAVE_REGISTERS_CALL_V4_EXT_PIC_ce, SAVE_REGISTERS_CALL_V4_EXT_ce,
+       SAVE_REGISTERS_CALL_V4_PIC, SAVE_REGISTERS_CALL_V4_PIC_ce,
+       SAVE_REGISTERS_CALL_V4_ce, SS2_allocframe, SS2_allocframe_ce,
+       STATEPOINT, STATEPOINT_ce, V6_vwhist128m, V6_vwhist128m_ce]
     = ([BoundInfo], [])
   | i `elem`
-      [A2_tfrpi, A2_tfrpi_ce, CONST64_Float_Real, CONST64_Float_Real_ce,
-       CONST64_Int_Real, CONST64_Int_Real_ce, F2_dfimm_n, F2_dfimm_n_ce,
-       F2_dfimm_p, F2_dfimm_p_ce, L2_loadrdgp, L2_loadrdgp_ce,
-       L4_loadrd_abs, L4_loadrd_abs_ce, TFRI64_V4, TFRI64_V4_ce,
-       V4_SA1_combine0i, V4_SA1_combine0i_ce, V4_SA1_combine1i,
-       V4_SA1_combine1i_ce, V4_SA1_combine2i, V4_SA1_combine2i_ce,
-       V4_SA1_combine3i, V4_SA1_combine3i_ce, V4_SL2_loadrd_sp,
-       V4_SL2_loadrd_sp_ce]
+      [A2_tfrpi, A2_tfrpi_ce, CONST64, CONST64_ce, F2_dfimm_n,
+       F2_dfimm_n_ce, F2_dfimm_p, F2_dfimm_p_ce, L2_loadrdgp,
+       L2_loadrdgp_ce, PS_loadrdabs, PS_loadrdabs_ce, TFRI64_V4,
+       TFRI64_V4_ce]
     = ([BoundInfo], [TemporaryInfo (RegisterClass DoubleRegs) 1 False])
   | i `elem`
-      [L4_loadalignb_ap, L4_loadalignb_ap_ce, L4_loadalignh_ap,
-       L4_loadalignh_ap_ce, L4_loadbsw4_ap, L4_loadbsw4_ap_ce,
-       L4_loadbzw4_ap, L4_loadbzw4_ap_ce, L4_loadrd_ap, L4_loadrd_ap_ce]
+      [L4_loadbsw4_ap, L4_loadbsw4_ap_ce, L4_loadbzw4_ap,
+       L4_loadbzw4_ap_ce, L4_loadrd_ap, L4_loadrd_ap_ce]
     =
     ([BoundInfo],
      [TemporaryInfo (RegisterClass DoubleRegs) 1 False,
       TemporaryInfo (RegisterClass IntRegs) 1 False])
   | i `elem`
-      [A2_tfrsi, A2_tfrsi_ce, ALIGNA, ALIGNA_ce, C4_addipc, C4_addipc_ce,
-       CONST32, CONST32_Float_Real, CONST32_Float_Real_ce,
-       CONST32_Int_Real, CONST32_Int_Real_ce, CONST32_ce, F2_sfimm_n,
-       F2_sfimm_n_ce, F2_sfimm_p, F2_sfimm_p_ce, FCONST32_nsdata,
-       FCONST32_nsdata_ce, HI, HI_GOT, HI_GOTREL, HI_GOTREL_ce, HI_GOT_ce,
-       HI_L, HI_L_ce, HI_PIC, HI_PIC_ce, HI_ce, L2_loadrbgp,
-       L2_loadrbgp_ce, L2_loadrhgp, L2_loadrhgp_ce, L2_loadrigp,
-       L2_loadrigp_ce, L2_loadrubgp, L2_loadrubgp_ce, L2_loadruhgp,
-       L2_loadruhgp_ce, L4_loadrb_abs, L4_loadrb_abs_ce, L4_loadrh_abs,
-       L4_loadrh_abs_ce, L4_loadri_abs, L4_loadri_abs_ce, L4_loadrub_abs,
-       L4_loadrub_abs_ce, L4_loadruh_abs, L4_loadruh_abs_ce, LO, LO_GOT,
-       LO_GOTREL, LO_GOTREL_ce, LO_GOT_ce, LO_H, LO_H_ce, LO_PIC,
-       LO_PIC_ce, LO_ce, TFRI_f, TFRI_f_ce, V4_SA1_addsp, V4_SA1_addsp_ce,
-       V4_SA1_seti, V4_SA1_seti_ce, V4_SL2_loadri_sp, V4_SL2_loadri_sp_ce]
+      [SA1_combine0i, SA1_combine0i_ce, SA1_combine1i, SA1_combine1i_ce,
+       SA1_combine2i, SA1_combine2i_ce, SA1_combine3i, SA1_combine3i_ce,
+       SL2_loadrd_sp, SL2_loadrd_sp_ce]
+    =
+    ([BoundInfo],
+     [TemporaryInfo (RegisterClass GeneralDoubleLow8Regs) 1 False])
+  | i `elem`
+      [SA1_addsp, SA1_addsp_ce, SA1_seti, SA1_seti_ce, SA1_setin1,
+       SA1_setin1_ce, SL2_loadri_sp, SL2_loadri_sp_ce]
+    =
+    ([BoundInfo],
+     [TemporaryInfo (RegisterClass GeneralSubRegs) 1 False])
+  | i `elem`
+      [A2_iconst, A2_iconst_ce, A2_tfrsi, A2_tfrsi_ce, C4_addipc,
+       C4_addipc_ce, CONST32, CONST32_ce, F2_sfimm_n, F2_sfimm_n_ce,
+       F2_sfimm_p, F2_sfimm_p_ce, HI, HI_ce, L2_loadrbgp, L2_loadrbgp_ce,
+       L2_loadrhgp, L2_loadrhgp_ce, L2_loadrigp, L2_loadrigp_ce,
+       L2_loadrubgp, L2_loadrubgp_ce, L2_loadruhgp, L2_loadruhgp_ce, LO,
+       LO_ce, PS_aligna, PS_aligna_ce, PS_loadrbabs, PS_loadrbabs_ce,
+       PS_loadrhabs, PS_loadrhabs_ce, PS_loadriabs, PS_loadriabs_ce,
+       PS_loadrubabs, PS_loadrubabs_ce, PS_loadruhabs, PS_loadruhabs_ce]
     = ([BoundInfo], [TemporaryInfo (RegisterClass IntRegs) 1 False])
   | i `elem`
       [L4_loadbsw2_ap, L4_loadbsw2_ap_ce, L4_loadbzw2_ap,
@@ -2354,40 +2487,58 @@ operandInfo i
       [A2_tfrsi_source, A2_tfrsi_source_ce, L2_loadrhgp_source,
        L2_loadrhgp_source_ce, L2_loadrigp_source, L2_loadrigp_source_ce,
        L2_loadrubgp_source, L2_loadrubgp_source_ce, L2_loadruhgp_source,
-       L2_loadruhgp_source_ce, L4_loadrb_abs_source,
-       L4_loadrb_abs_source_ce, L4_loadrh_abs_source,
-       L4_loadrh_abs_source_ce, L4_loadri_abs_source,
-       L4_loadri_abs_source_ce, L4_loadrub_abs_source,
-       L4_loadrub_abs_source_ce, L4_loadruh_abs_source,
-       L4_loadruh_abs_source_ce]
+       L2_loadruhgp_source_ce]
     =
     ([BoundInfo], [TemporaryInfo (InfiniteRegisterClass RM32) 0 False])
-  | i `elem`
-      [A2_tfrpi_source, A2_tfrpi_source_ce, CONST64_Int_Real_source,
-       CONST64_Int_Real_source_ce, L4_loadrd_abs_source,
-       L4_loadrd_abs_source_ce]
-    =
+  | i `elem` [A2_tfrpi_source, A2_tfrpi_source_ce] =
     ([BoundInfo], [TemporaryInfo (InfiniteRegisterClass RM64) 0 False])
-  | i `elem` [COPY, COPY_ce, FAULTING_LOAD_OP, FAULTING_LOAD_OP_ce] =
-    ([BoundInfo], [BoundInfo])
   | i `elem`
-      [S2_storerdabs, S2_storerdabs_ce, S2_storerdgp, S2_storerdgp_ce,
-       V4_SS2_stored_sp, V4_SS2_stored_sp_ce]
+      [COPY, COPY_ce, FAULTING_OP, FAULTING_OP_ce, G_ADDRSPACE_CAST,
+       G_ADDRSPACE_CAST_ce, G_ANYEXT, G_ANYEXT_ce, G_BITCAST,
+       G_BITCAST_ce, G_BLOCK_ADDR, G_BLOCK_ADDR_ce, G_BSWAP, G_BSWAP_ce,
+       G_CONSTANT, G_CONSTANT_ce, G_CTLZ, G_CTLZ_ZERO_UNDEF,
+       G_CTLZ_ZERO_UNDEF_ce, G_CTLZ_ce, G_CTPOP, G_CTPOP_ce, G_CTTZ,
+       G_CTTZ_ZERO_UNDEF, G_CTTZ_ZERO_UNDEF_ce, G_CTTZ_ce, G_FABS,
+       G_FABS_ce, G_FCEIL, G_FCEIL_ce, G_FCONSTANT, G_FCONSTANT_ce,
+       G_FCOS, G_FCOS_ce, G_FEXP, G_FEXP2, G_FEXP2_ce, G_FEXP_ce, G_FLOG,
+       G_FLOG10, G_FLOG10_ce, G_FLOG2, G_FLOG2_ce, G_FLOG_ce, G_FNEG,
+       G_FNEG_ce, G_FPEXT, G_FPEXT_ce, G_FPTOSI, G_FPTOSI_ce, G_FPTOUI,
+       G_FPTOUI_ce, G_FPTRUNC, G_FPTRUNC_ce, G_FRAME_INDEX,
+       G_FRAME_INDEX_ce, G_FSIN, G_FSIN_ce, G_FSQRT, G_FSQRT_ce,
+       G_GLOBAL_VALUE, G_GLOBAL_VALUE_ce, G_INTRINSIC_ROUND,
+       G_INTRINSIC_ROUND_ce, G_INTRINSIC_TRUNC, G_INTRINSIC_TRUNC_ce,
+       G_INTTOPTR, G_INTTOPTR_ce, G_LOAD, G_LOAD_ce, G_PHI, G_PHI_ce,
+       G_PTRTOINT, G_PTRTOINT_ce, G_SEXT, G_SEXTLOAD, G_SEXTLOAD_ce,
+       G_SEXT_ce, G_SITOFP, G_SITOFP_ce, G_TRUNC, G_TRUNC_ce, G_UITOFP,
+       G_UITOFP_ce, G_ZEXT, G_ZEXTLOAD, G_ZEXTLOAD_ce, G_ZEXT_ce,
+       ICALL_BRANCH_FUNNEL, ICALL_BRANCH_FUNNEL_ce, PHI, PHI_ce]
+    = ([BoundInfo], [BoundInfo])
+  | i `elem` [G_UNMERGE_VALUES, G_UNMERGE_VALUES_ce] =
+    ([BoundInfo], [BoundInfo, BoundInfo])
+  | i `elem`
+      [PS_storerdabs, PS_storerdabs_ce, S2_storerdgp, S2_storerdgp_ce]
     =
     ([BoundInfo, TemporaryInfo (RegisterClass DoubleRegs) 0 False], [])
   | i `elem` [S4_storerd_ap, S4_storerd_ap_ce] =
     ([BoundInfo, TemporaryInfo (RegisterClass DoubleRegs) 0 False],
      [TemporaryInfo (RegisterClass IntRegs) 1 False])
+  | i `elem` [SS2_stored_sp, SS2_stored_sp_ce] =
+    ([BoundInfo,
+      TemporaryInfo (RegisterClass GeneralDoubleLow8Regs) 0 False],
+     [])
+  | i `elem` [SS2_storew_sp, SS2_storew_sp_ce] =
+    ([BoundInfo, TemporaryInfo (RegisterClass GeneralSubRegs) 0 False],
+     [])
   | i `elem`
-      [S2_storerbabs, S2_storerbabs_ce, S2_storerbgp, S2_storerbgp_ce,
-       S2_storerbnewabs, S2_storerbnewabs_ce, S2_storerbnewgp,
-       S2_storerbnewgp_ce, S2_storerfabs, S2_storerfabs_ce, S2_storerfgp,
-       S2_storerfgp_ce, S2_storerhabs, S2_storerhabs_ce, S2_storerhgp,
-       S2_storerhgp_ce, S2_storerhnewabs, S2_storerhnewabs_ce,
-       S2_storerhnewgp, S2_storerhnewgp_ce, S2_storeriabs,
-       S2_storeriabs_ce, S2_storerigp, S2_storerigp_ce, S2_storerinewabs,
-       S2_storerinewabs_ce, S2_storerinewgp, S2_storerinewgp_ce,
-       V4_SS2_storew_sp, V4_SS2_storew_sp_ce]
+      [PS_storerbabs, PS_storerbabs_ce, PS_storerbnewabs,
+       PS_storerbnewabs_ce, PS_storerfabs, PS_storerfabs_ce,
+       PS_storerhabs, PS_storerhabs_ce, PS_storerhnewabs,
+       PS_storerhnewabs_ce, PS_storeriabs, PS_storeriabs_ce,
+       PS_storerinewabs, PS_storerinewabs_ce, S2_storerbgp,
+       S2_storerbgp_ce, S2_storerbnewgp, S2_storerbnewgp_ce, S2_storerfgp,
+       S2_storerfgp_ce, S2_storerhgp, S2_storerhgp_ce, S2_storerhnewgp,
+       S2_storerhnewgp_ce, S2_storerigp, S2_storerigp_ce, S2_storerinewgp,
+       S2_storerinewgp_ce]
     = ([BoundInfo, TemporaryInfo (RegisterClass IntRegs) 0 False], [])
   | i `elem` [A4_combineir, A4_combineir_ce] =
     ([BoundInfo, TemporaryInfo (RegisterClass IntRegs) 0 False],
@@ -2416,8 +2567,18 @@ operandInfo i
     ([BoundInfo, TemporaryInfo (RegisterClass IntRegs) 0 False,
       BoundInfo],
      [TemporaryInfo (RegisterClass IntRegs) 1 False])
-  | i `elem` [ADJCALLSTACKUP, ADJCALLSTACKUP_ce] =
-    ([BoundInfo, BoundInfo], [])
+  | i `elem`
+      [PATCHABLE_TYPED_EVENT_CALL, PATCHABLE_TYPED_EVENT_CALL_ce]
+    =
+    ([BoundInfo, TemporaryInfo (RegisterClass Ptr_rc) 0 False,
+      BoundInfo],
+     [])
+  | i `elem`
+      [ADJCALLSTACKDOWN, ADJCALLSTACKDOWN_ce, ADJCALLSTACKUP,
+       ADJCALLSTACKUP_ce, G_BRCOND, G_BRCOND_ce, G_INTRINSIC,
+       G_INTRINSIC_W_SIDE_EFFECTS, G_INTRINSIC_W_SIDE_EFFECTS_ce,
+       G_INTRINSIC_ce, G_STORE, G_STORE_ce]
+    = ([BoundInfo, BoundInfo], [])
   | i `elem`
       [A2_combineii, A2_combineii_ce, A4_combineii, A4_combineii_ce,
        L2_loadrd_io_fi, L2_loadrd_io_fi_ce, TFRI64_V2_ext,
@@ -2429,7 +2590,7 @@ operandInfo i
       [L2_loadrb_io_fi, L2_loadrb_io_fi_ce, L2_loadrh_io_fi,
        L2_loadrh_io_fi_ce, L2_loadri_io_fi, L2_loadri_io_fi_ce,
        L2_loadrub_io_fi, L2_loadrub_io_fi_ce, L2_loadruh_io_fi,
-       L2_loadruh_io_fi_ce, TFR_FI_fi, TFR_FI_fi_ce]
+       L2_loadruh_io_fi_ce, S2_mask, S2_mask_ce, TFR_FI_fi, TFR_FI_fi_ce]
     =
     ([BoundInfo, BoundInfo],
      [TemporaryInfo (RegisterClass IntRegs) 1 False])
@@ -2448,8 +2609,30 @@ operandInfo i
      [TemporaryInfo (InfiniteRegisterClass RM64) 0 False])
   | i `elem`
       [COPY_TO_REGCLASS, COPY_TO_REGCLASS_ce, EXTRACT_SUBREG,
-       EXTRACT_SUBREG_ce, REG_SEQUENCE, REG_SEQUENCE_ce]
+       EXTRACT_SUBREG_ce, G_ADD, G_ADD_ce, G_AND, G_AND_ce, G_ASHR,
+       G_ASHR_ce, G_ATOMICRMW_ADD, G_ATOMICRMW_ADD_ce, G_ATOMICRMW_AND,
+       G_ATOMICRMW_AND_ce, G_ATOMICRMW_MAX, G_ATOMICRMW_MAX_ce,
+       G_ATOMICRMW_MIN, G_ATOMICRMW_MIN_ce, G_ATOMICRMW_NAND,
+       G_ATOMICRMW_NAND_ce, G_ATOMICRMW_OR, G_ATOMICRMW_OR_ce,
+       G_ATOMICRMW_SUB, G_ATOMICRMW_SUB_ce, G_ATOMICRMW_UMAX,
+       G_ATOMICRMW_UMAX_ce, G_ATOMICRMW_UMIN, G_ATOMICRMW_UMIN_ce,
+       G_ATOMICRMW_XCHG, G_ATOMICRMW_XCHG_ce, G_ATOMICRMW_XOR,
+       G_ATOMICRMW_XOR_ce, G_BUILD_VECTOR, G_BUILD_VECTOR_TRUNC,
+       G_BUILD_VECTOR_TRUNC_ce, G_BUILD_VECTOR_ce, G_CONCAT_VECTORS,
+       G_CONCAT_VECTORS_ce, G_EXTRACT, G_EXTRACT_VECTOR_ELT,
+       G_EXTRACT_VECTOR_ELT_ce, G_EXTRACT_ce, G_FADD, G_FADD_ce, G_FDIV,
+       G_FDIV_ce, G_FMUL, G_FMUL_ce, G_FPOW, G_FPOW_ce, G_FREM, G_FREM_ce,
+       G_FSUB, G_FSUB_ce, G_GEP, G_GEP_ce, G_LSHR, G_LSHR_ce,
+       G_MERGE_VALUES, G_MERGE_VALUES_ce, G_MUL, G_MUL_ce, G_OR, G_OR_ce,
+       G_PTR_MASK, G_PTR_MASK_ce, G_SDIV, G_SDIV_ce, G_SHL, G_SHL_ce,
+       G_SMULH, G_SMULH_ce, G_SREM, G_SREM_ce, G_SUB, G_SUB_ce, G_UDIV,
+       G_UDIV_ce, G_UMULH, G_UMULH_ce, G_UREM, G_UREM_ce, G_VAARG,
+       G_VAARG_ce, G_XOR, G_XOR_ce, REG_SEQUENCE, REG_SEQUENCE_ce]
     = ([BoundInfo, BoundInfo], [BoundInfo])
+  | i `elem`
+      [G_SADDO, G_SADDO_ce, G_SMULO, G_SMULO_ce, G_SSUBO, G_SSUBO_ce,
+       G_UADDO, G_UADDO_ce, G_UMULO, G_UMULO_ce, G_USUBO, G_USUBO_ce]
+    = ([BoundInfo, BoundInfo], [BoundInfo, BoundInfo])
   | i `elem` [S2_storerd_io_fi, S2_storerd_io_fi_ce] =
     ([BoundInfo, BoundInfo,
       TemporaryInfo (RegisterClass DoubleRegs) 0 False],
@@ -2466,21 +2649,31 @@ operandInfo i
   | i `elem` [STACKMAP, STACKMAP_ce] =
     ([BoundInfo, BoundInfo, BoundInfo], [])
   | i `elem`
-      [INSERT_SUBREG, INSERT_SUBREG_ce, SUBREG_TO_REG, SUBREG_TO_REG_ce]
+      [G_ATOMIC_CMPXCHG, G_ATOMIC_CMPXCHG_ce, G_FCMP, G_FCMP_ce, G_FMA,
+       G_FMA_ce, G_ICMP, G_ICMP_ce, G_INSERT, G_INSERT_VECTOR_ELT,
+       G_INSERT_VECTOR_ELT_ce, G_INSERT_ce, G_SELECT, G_SELECT_ce,
+       G_SHUFFLE_VECTOR, G_SHUFFLE_VECTOR_ce, INSERT_SUBREG,
+       INSERT_SUBREG_ce, SUBREG_TO_REG, SUBREG_TO_REG_ce]
     = ([BoundInfo, BoundInfo, BoundInfo], [BoundInfo])
+  | i `elem`
+      [G_ATOMIC_CMPXCHG_WITH_SUCCESS, G_ATOMIC_CMPXCHG_WITH_SUCCESS_ce,
+       G_SADDE, G_SADDE_ce, G_SSUBE, G_SSUBE_ce, G_UADDE, G_UADDE_ce,
+       G_USUBE, G_USUBE_ce]
+    = ([BoundInfo, BoundInfo, BoundInfo], [BoundInfo, BoundInfo])
   | i `elem` [PATCHPOINT, PATCHPOINT_ce] =
     ([BoundInfo, BoundInfo, BoundInfo, BoundInfo, BoundInfo,
       BoundInfo],
      [BoundInfo])
   | i `elem` [J4_jumpseti, J4_jumpseti_ce] =
     ([BoundInfo, BlockRefInfo],
-     [TemporaryInfo (RegisterClass IntRegs) 1 False])
+     [TemporaryInfo (RegisterClass GeneralSubRegs) 1 False])
   | i `elem`
-      [A4_ext_b, A4_ext_b_ce, ENDLOOP0, ENDLOOP0_ce, ENDLOOP1,
-       ENDLOOP1_ce, J2_jump, J2_jump_ce, J2_jump_ext, J2_jump_ext_ce,
-       J2_jump_noext, J2_jump_noext_ce, RESTORE_DEALLOC_RET_JMP_V4,
-       RESTORE_DEALLOC_RET_JMP_V4_EXT, RESTORE_DEALLOC_RET_JMP_V4_EXT_ce,
-       RESTORE_DEALLOC_RET_JMP_V4_ce]
+      [ENDLOOP0, ENDLOOP01, ENDLOOP01_ce, ENDLOOP0_ce, ENDLOOP1,
+       ENDLOOP1_ce, J2_jump, J2_jump_ce, RESTORE_DEALLOC_RET_JMP_V4,
+       RESTORE_DEALLOC_RET_JMP_V4_EXT, RESTORE_DEALLOC_RET_JMP_V4_EXT_PIC,
+       RESTORE_DEALLOC_RET_JMP_V4_EXT_PIC_ce,
+       RESTORE_DEALLOC_RET_JMP_V4_EXT_ce, RESTORE_DEALLOC_RET_JMP_V4_PIC,
+       RESTORE_DEALLOC_RET_JMP_V4_PIC_ce, RESTORE_DEALLOC_RET_JMP_V4_ce]
     = ([BlockRefInfo], [])
   | i `elem`
       [J2_loop0r, J2_loop0r_ce, J2_loop0rext, J2_loop0rext_ce, J2_loop1r,

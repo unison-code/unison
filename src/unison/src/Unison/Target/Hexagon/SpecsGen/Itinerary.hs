@@ -5,57 +5,9 @@ import Unison.Target.Hexagon.SpecsGen.HexagonInstructionDecl
 import Unison.Target.Hexagon.SpecsGen.HexagonItineraryDecl
 itinerary i
   | i `elem`
-      [A2_andir, A2_andir_ce, A2_aslh, A2_asrh, A2_combineii,
-       A2_combineii_ce, A2_nop, A2_not, A2_orir, A2_orir_ce, A2_paddif,
-       A2_paddif_ce, A2_paddifnew, A2_paddifnew_ce, A2_paddit,
-       A2_paddit_ce, A2_padditnew, A2_padditnew_ce, A2_subri, A2_subri_ce,
-       A2_sxtb, A2_sxth, A2_tfr, A2_tfrf, A2_tfrfnew, A2_tfrih,
-       A2_tfrih_ce, A2_tfril, A2_tfril_ce, A2_tfrp, A2_tfrpf, A2_tfrpfnew,
-       A2_tfrpt, A2_tfrptnew, A2_tfrsi, A2_tfrsi_ce, A2_tfrsi_remat,
-       A2_tfrsi_remat_ce, A2_tfrt, A2_tfrtnew, A2_zxtb, A2_zxth,
-       A4_combineii, A4_combineii_ce, A4_combineir, A4_combineir_ce,
-       A4_combineri, A4_combineri_ce, A4_paslhf, A4_paslhfnew, A4_paslht,
-       A4_paslhtnew, A4_pasrhf, A4_pasrhfnew, A4_pasrht, A4_pasrhtnew,
-       A4_psxtbf, A4_psxtbfnew, A4_psxtbt, A4_psxtbtnew, A4_psxthf,
-       A4_psxthfnew, A4_psxtht, A4_psxthtnew, A4_pzxtbf, A4_pzxtbfnew,
-       A4_pzxtbt, A4_pzxtbtnew, A4_pzxthf, A4_pzxthfnew, A4_pzxtht,
-       A4_pzxthtnew, A4_rcmpeqi, A4_rcmpeqi_ce, A4_rcmpneqi,
-       A4_rcmpneqi_ce, ALIGNA, ALIGNA_ce, ALLOCA, ALLOCA_ce, ARGEXTEND,
-       C2_cmoveif, C2_cmoveif_ce, C2_cmoveit, C2_cmoveit_ce,
-       C2_cmovenewif, C2_cmovenewif_ce, C2_cmovenewit, C2_cmovenewit_ce,
-       C2_cmpgei, C2_cmpgei_ce, C2_cmpgeui, C2_cmpgeui_ce, C2_muxii,
-       C2_muxii_ce, C2_muxir, C2_muxir_ce, C2_muxri, C2_muxri_ce, HI,
-       HI_GOT, HI_GOTREL, HI_GOTREL_ce, HI_GOT_ce, HI_L, HI_L_ce, HI_PIC,
-       HI_PIC_ce, HI_ce, LO, LO_GOT, LO_GOTREL, LO_GOTREL_ce, LO_GOT_ce,
-       LO_H, LO_H_ce, LO_PIC, LO_PIC_ce, LO_ce, MUX_ir_f, MUX_ir_f_ce,
-       MUX_ri_f, MUX_ri_f_ce, MVD, MVD_ce, MVW, MVW_ce, TFRI_cNotPt_f,
-       TFRI_cNotPt_f_ce, TFRI_cPt_f, TFRI_cPt_f_ce, TFRI_f, TFRI_f_ce,
-       TFR_FI, TFR_FIA, TFR_FIA_ce, TFR_FI_ce, TFR_FI_fi, TFR_FI_fi_ce,
-       TFR_FI_fi_remat_fi, TFR_FI_fi_remat_fi_ce]
+      [TFR_FI_fi, TFR_FI_fi_ce, TFR_FI_fi_remat_fi,
+       TFR_FI_fi_remat_fi_ce]
     = ALU32_2op_tc_1_SLOT0123
-  | i `elem`
-      [C2_cmpeqi, C2_cmpeqi_ce, C2_cmpgti, C2_cmpgti_ce, C2_cmpgtui,
-       C2_cmpgtui_ce, C4_cmpltei, C4_cmpltei_ce, C4_cmplteui,
-       C4_cmplteui_ce, C4_cmpneqi, C4_cmpneqi_ce]
-    = ALU32_2op_tc_2early_SLOT0123
-  | i `elem`
-      [A2_add, A2_and, A2_combine_hh, A2_combine_hl, A2_combine_lh,
-       A2_combine_ll, A2_combinew, A2_or, A2_paddf, A2_paddfnew, A2_paddt,
-       A2_paddtnew, A2_pandf, A2_pandfnew, A2_pandt, A2_pandtnew, A2_porf,
-       A2_porfnew, A2_port, A2_portnew, A2_psubf, A2_psubfnew, A2_psubt,
-       A2_psubtnew, A2_pxorf, A2_pxorfnew, A2_pxort, A2_pxortnew, A2_sub,
-       A2_svaddh, A2_svavgh, A2_svnavgh, A2_svsubh, A2_xor, A4_andn,
-       A4_orn, A4_rcmpeq, A4_rcmpneq, C2_ccombinewf, C2_ccombinewnewf,
-       C2_ccombinewnewt, C2_ccombinewt, C2_mux, C4_cmplte, C4_cmplteu,
-       C4_cmpneq, S2_packhl]
-    = ALU32_3op_tc_1_SLOT0123
-  | i `elem`
-      [A2_addsat, A2_subsat, A2_svaddhs, A2_svadduhs, A2_svavghs,
-       A2_svsubhs, A2_svsubuhs]
-    = ALU32_3op_tc_2_SLOT0123
-  | i `elem` [C2_cmpeq, C2_cmpgt, C2_cmpgtu] =
-    ALU32_3op_tc_2early_SLOT0123
-  | i `elem` [A2_addi, A2_addi_ce] = ALU32_ADDI_tc_1_SLOT0123
   | i `elem`
       [C2_mux_tfr, C2_mux_tfr_new, C2_muxii_tfr, C2_muxii_tfr_ce,
        C2_muxii_tfr_new, C2_muxii_tfr_new_ce, C2_muxir_tfr,
@@ -64,801 +16,97 @@ itinerary i
        C2_muxri_tfr_new_ce]
     = ALU32_SLOT0123_2
   | i `elem`
-      [A2_addh_h16_hh, A2_addh_h16_hl, A2_addh_h16_lh, A2_addh_h16_ll,
-       A2_addh_l16_hl, A2_addh_l16_ll, A2_addp, A2_addsp, A2_addsph,
-       A2_addspl, A2_andp, A2_orp, A2_subh_h16_hh, A2_subh_h16_hl,
-       A2_subh_h16_lh, A2_subh_h16_ll, A2_subh_l16_hl, A2_subh_l16_ll,
-       A2_subp, A2_tfrpi, A2_tfrpi_ce, A2_tfrpi_remat, A2_tfrpi_remat_ce,
-       A2_vaddh, A2_vaddub, A2_vaddw, A2_vavgh, A2_vavgub, A2_vavguh,
-       A2_vavguw, A2_vavgw, A2_vnavgh, A2_vnavgw, A2_vsubh, A2_vsubub,
-       A2_vsubw, A2_xorp, A4_andnp, A4_bitsplit, A4_ornp, C2_vmux,
-       MUX64_rr, S4_ori_asl_ri, S4_ori_asl_ri_ce, S4_ori_lsr_ri,
-       S4_ori_lsr_ri_ce, S4_subi_asl_ri, S4_subi_asl_ri_ce,
-       S4_subi_lsr_ri, S4_subi_lsr_ri_ce, TFRI64_V2_ext, TFRI64_V2_ext_ce,
-       TFRI64_V4, TFRI64_V4_ce, Dep_S2_packhl]
-    = ALU64_tc_1_SLOT23
+      [V6_vgathermh_pseudo, V6_vgathermhq_pseudo, V6_vgathermhw_pseudo,
+       V6_vgathermhwq_pseudo, V6_vgathermw_pseudo, V6_vgathermwq_pseudo]
+    = CVI_GATHER_PSEUDO
+  | i `elem` [V6_hi, V6_lo, V6_vassignp, V6_vd0] = CVI_VA
   | i `elem`
-      [A2_addh_h16_sat_hh, A2_addh_h16_sat_hl, A2_addh_h16_sat_lh,
-       A2_addh_h16_sat_ll, A2_addh_l16_sat_hl, A2_addh_l16_sat_ll,
-       A2_addpsat, A2_max, A2_maxp, A2_maxu, A2_maxup, A2_min, A2_minp,
-       A2_minu, A2_minup, A2_subh_h16_sat_hh, A2_subh_h16_sat_hl,
-       A2_subh_h16_sat_lh, A2_subh_h16_sat_ll, A2_subh_l16_sat_hl,
-       A2_subh_l16_sat_ll, A2_vaddhs, A2_vaddubs, A2_vadduhs, A2_vaddws,
-       A2_vavghcr, A2_vavghr, A2_vavgubr, A2_vavguhr, A2_vavguwr,
-       A2_vavgwcr, A2_vavgwr, A2_vmaxb, A2_vmaxh, A2_vmaxub, A2_vmaxuh,
-       A2_vmaxuw, A2_vmaxw, A2_vminb, A2_vminh, A2_vminub, A2_vminuh,
-       A2_vminuw, A2_vminw, A2_vnavghcr, A2_vnavghr, A2_vnavgwcr,
-       A2_vnavgwr, A2_vsubhs, A2_vsububs, A2_vsubuhs, A2_vsubws,
-       A4_boundscheck_hi, A4_boundscheck_lo, A4_modwrapu, S2_parityp,
-       S4_addaddi, S4_addaddi_ce, S4_addi_asl_ri, S4_addi_asl_ri_ce,
-       S4_addi_lsr_ri, S4_addi_lsr_ri_ce, S4_andi_asl_ri,
-       S4_andi_asl_ri_ce, S4_andi_lsr_ri, S4_andi_lsr_ri_ce, S4_or_andi,
-       S4_or_andi_ce, S4_or_andix, S4_or_andix_ce, S4_or_ori,
-       S4_or_ori_ce, S4_parity, S4_subaddi, S4_subaddi_ce, Dep_A2_addsat,
-       Dep_A2_subsat]
-    = ALU64_tc_2_SLOT23
-  | i `elem`
-      [A2_vcmpbeq, A2_vcmpbgtu, A2_vcmpheq, A2_vcmphgt, A2_vcmphgtu,
-       A2_vcmpweq, A2_vcmpwgt, A2_vcmpwgtu, A4_cmpbeqi, A4_cmpbeqi_ce,
-       A4_cmpbgti, A4_cmpbgti_ce, A4_cmpbgtui, A4_cmpbgtui_ce, A4_cmpheqi,
-       A4_cmpheqi_ce, A4_cmphgti, A4_cmphgti_ce, A4_cmphgtui,
-       A4_cmphgtui_ce, A4_tlbmatch, A4_vcmpbeq_any, A4_vcmpbeqi,
-       A4_vcmpbeqi_ce, A4_vcmpbgt, A4_vcmpbgti, A4_vcmpbgti_ce,
-       A4_vcmpbgtui, A4_vcmpbgtui_ce, A4_vcmpheqi, A4_vcmpheqi_ce,
-       A4_vcmphgti, A4_vcmphgti_ce, A4_vcmphgtui, A4_vcmphgtui_ce,
-       A4_vcmpweqi, A4_vcmpweqi_ce, A4_vcmpwgti, A4_vcmpwgti_ce,
-       A4_vcmpwgtui, A4_vcmpwgtui_ce, C2_cmpeqp, C2_cmpgtp, C2_cmpgtup,
-       F2_dfclass, F2_dfclass_ce, F2_dfcmpeq, F2_dfcmpge, F2_dfcmpgt,
-       F2_dfcmpuo, F2_sfcmpeq, F2_sfcmpge, F2_sfcmpgt, F2_sfcmpuo]
-    = ALU64_tc_2early_SLOT23
-  | i `elem`
-      [F2_dfimm_n, F2_dfimm_n_ce, F2_dfimm_p, F2_dfimm_p_ce, F2_sfimm_n,
-       F2_sfimm_n_ce, F2_sfimm_p, F2_sfimm_p_ce, M4_mpyri_addi,
-       M4_mpyri_addi_ce, M4_mpyri_addr, M4_mpyri_addr_ce,
-       M4_mpyri_addr_u2, M4_mpyri_addr_u2_ce, M4_mpyrr_addi,
-       M4_mpyrr_addi_ce]
-    = ALU64_tc_3x_SLOT23
-  | i `elem`
-      [J4_cmpeq_fp0_jump_nt, J4_cmpeq_fp0_jump_nt_ce,
-       J4_cmpeq_fp0_jump_t, J4_cmpeq_fp0_jump_t_ce, J4_cmpeq_fp1_jump_nt,
-       J4_cmpeq_fp1_jump_nt_ce, J4_cmpeq_fp1_jump_t,
-       J4_cmpeq_fp1_jump_t_ce, J4_cmpeq_tp0_jump_nt,
-       J4_cmpeq_tp0_jump_nt_ce, J4_cmpeq_tp0_jump_t,
-       J4_cmpeq_tp0_jump_t_ce, J4_cmpeq_tp1_jump_nt,
-       J4_cmpeq_tp1_jump_nt_ce, J4_cmpeq_tp1_jump_t,
-       J4_cmpeq_tp1_jump_t_ce, J4_cmpeqi_fp0_jump_nt,
-       J4_cmpeqi_fp0_jump_nt_ce, J4_cmpeqi_fp0_jump_t,
-       J4_cmpeqi_fp0_jump_t_ce, J4_cmpeqi_fp1_jump_nt,
-       J4_cmpeqi_fp1_jump_nt_ce, J4_cmpeqi_fp1_jump_t,
-       J4_cmpeqi_fp1_jump_t_ce, J4_cmpeqi_tp0_jump_nt,
-       J4_cmpeqi_tp0_jump_nt_ce, J4_cmpeqi_tp0_jump_t,
-       J4_cmpeqi_tp0_jump_t_ce, J4_cmpeqi_tp1_jump_nt,
-       J4_cmpeqi_tp1_jump_nt_ce, J4_cmpeqi_tp1_jump_t,
-       J4_cmpeqi_tp1_jump_t_ce, J4_cmpeqn1_fp0_jump_nt,
-       J4_cmpeqn1_fp0_jump_nt_ce, J4_cmpeqn1_fp0_jump_t,
-       J4_cmpeqn1_fp0_jump_t_ce, J4_cmpeqn1_fp1_jump_nt,
-       J4_cmpeqn1_fp1_jump_nt_ce, J4_cmpeqn1_fp1_jump_t,
-       J4_cmpeqn1_fp1_jump_t_ce, J4_cmpeqn1_tp0_jump_nt,
-       J4_cmpeqn1_tp0_jump_nt_ce, J4_cmpeqn1_tp0_jump_t,
-       J4_cmpeqn1_tp0_jump_t_ce, J4_cmpeqn1_tp1_jump_nt,
-       J4_cmpeqn1_tp1_jump_nt_ce, J4_cmpeqn1_tp1_jump_t,
-       J4_cmpeqn1_tp1_jump_t_ce, J4_cmpgt_fp0_jump_nt,
-       J4_cmpgt_fp0_jump_nt_ce, J4_cmpgt_fp0_jump_t,
-       J4_cmpgt_fp0_jump_t_ce, J4_cmpgt_fp1_jump_nt,
-       J4_cmpgt_fp1_jump_nt_ce, J4_cmpgt_fp1_jump_t,
-       J4_cmpgt_fp1_jump_t_ce, J4_cmpgt_tp0_jump_nt,
-       J4_cmpgt_tp0_jump_nt_ce, J4_cmpgt_tp0_jump_t,
-       J4_cmpgt_tp0_jump_t_ce, J4_cmpgt_tp1_jump_nt,
-       J4_cmpgt_tp1_jump_nt_ce, J4_cmpgt_tp1_jump_t,
-       J4_cmpgt_tp1_jump_t_ce, J4_cmpgti_fp0_jump_nt,
-       J4_cmpgti_fp0_jump_nt_ce, J4_cmpgti_fp0_jump_t,
-       J4_cmpgti_fp0_jump_t_ce, J4_cmpgti_fp1_jump_nt,
-       J4_cmpgti_fp1_jump_nt_ce, J4_cmpgti_fp1_jump_t,
-       J4_cmpgti_fp1_jump_t_ce, J4_cmpgti_tp0_jump_nt,
-       J4_cmpgti_tp0_jump_nt_ce, J4_cmpgti_tp0_jump_t,
-       J4_cmpgti_tp0_jump_t_ce, J4_cmpgti_tp1_jump_nt,
-       J4_cmpgti_tp1_jump_nt_ce, J4_cmpgti_tp1_jump_t,
-       J4_cmpgti_tp1_jump_t_ce, J4_cmpgtn1_fp0_jump_nt,
-       J4_cmpgtn1_fp0_jump_nt_ce, J4_cmpgtn1_fp0_jump_t,
-       J4_cmpgtn1_fp0_jump_t_ce, J4_cmpgtn1_fp1_jump_nt,
-       J4_cmpgtn1_fp1_jump_nt_ce, J4_cmpgtn1_fp1_jump_t,
-       J4_cmpgtn1_fp1_jump_t_ce, J4_cmpgtn1_tp0_jump_nt,
-       J4_cmpgtn1_tp0_jump_nt_ce, J4_cmpgtn1_tp0_jump_t,
-       J4_cmpgtn1_tp0_jump_t_ce, J4_cmpgtn1_tp1_jump_nt,
-       J4_cmpgtn1_tp1_jump_nt_ce, J4_cmpgtn1_tp1_jump_t,
-       J4_cmpgtn1_tp1_jump_t_ce, J4_cmpgtu_fp0_jump_nt,
-       J4_cmpgtu_fp0_jump_nt_ce, J4_cmpgtu_fp0_jump_t,
-       J4_cmpgtu_fp0_jump_t_ce, J4_cmpgtu_fp1_jump_nt,
-       J4_cmpgtu_fp1_jump_nt_ce, J4_cmpgtu_fp1_jump_t,
-       J4_cmpgtu_fp1_jump_t_ce, J4_cmpgtu_tp0_jump_nt,
-       J4_cmpgtu_tp0_jump_nt_ce, J4_cmpgtu_tp0_jump_t,
-       J4_cmpgtu_tp0_jump_t_ce, J4_cmpgtu_tp1_jump_nt,
-       J4_cmpgtu_tp1_jump_nt_ce, J4_cmpgtu_tp1_jump_t,
-       J4_cmpgtu_tp1_jump_t_ce, J4_cmpgtui_fp0_jump_nt,
-       J4_cmpgtui_fp0_jump_nt_ce, J4_cmpgtui_fp0_jump_t,
-       J4_cmpgtui_fp0_jump_t_ce, J4_cmpgtui_fp1_jump_nt,
-       J4_cmpgtui_fp1_jump_nt_ce, J4_cmpgtui_fp1_jump_t,
-       J4_cmpgtui_fp1_jump_t_ce, J4_cmpgtui_tp0_jump_nt,
-       J4_cmpgtui_tp0_jump_nt_ce, J4_cmpgtui_tp0_jump_t,
-       J4_cmpgtui_tp0_jump_t_ce, J4_cmpgtui_tp1_jump_nt,
-       J4_cmpgtui_tp1_jump_nt_ce, J4_cmpgtui_tp1_jump_t,
-       J4_cmpgtui_tp1_jump_t_ce, J4_jumpseti, J4_jumpseti_ce, J4_jumpsetr,
-       J4_jumpsetr_ce, J4_tstbit0_fp0_jump_nt, J4_tstbit0_fp0_jump_nt_ce,
-       J4_tstbit0_fp0_jump_t, J4_tstbit0_fp0_jump_t_ce,
-       J4_tstbit0_fp1_jump_nt, J4_tstbit0_fp1_jump_nt_ce,
-       J4_tstbit0_fp1_jump_t, J4_tstbit0_fp1_jump_t_ce,
-       J4_tstbit0_tp0_jump_nt, J4_tstbit0_tp0_jump_nt_ce,
-       J4_tstbit0_tp0_jump_t, J4_tstbit0_tp0_jump_t_ce,
-       J4_tstbit0_tp1_jump_nt, J4_tstbit0_tp1_jump_nt_ce,
-       J4_tstbit0_tp1_jump_t, J4_tstbit0_tp1_jump_t_ce]
-    = COMPOUND
-  | i `elem` [C4_addipc, C4_addipc_ce] = CR_tc_2_SLOT3
-  | i `elem`
-      [C2_all8, C2_and, C2_andn, C2_any8, C2_not, C2_or, C2_orn, C2_xor,
-       C4_and_and, C4_and_andn, C4_and_or, C4_and_orn, C4_fastcorner9,
-       C4_fastcorner9_not, C4_or_and, C4_or_andn, C4_or_or, C4_or_orn]
-    = CR_tc_2early_SLOT23
-  | i `elem`
-      [J2_jumprgtez, J2_jumprgtez_ce, J2_jumprgtezpt, J2_jumprgtezpt_ce,
-       J2_jumprltez, J2_jumprltez_ce, J2_jumprltezpt, J2_jumprltezpt_ce,
-       J2_jumprnz, J2_jumprnz_ce, J2_jumprnzpt, J2_jumprnzpt_ce,
-       J2_jumprz, J2_jumprz_ce, J2_jumprzpt, J2_jumprzpt_ce, J2_ploop1si,
-       J2_ploop1si_ce, J2_ploop1sr, J2_ploop1sr_ce, J2_ploop2si,
-       J2_ploop2si_ce, J2_ploop2sr, J2_ploop2sr_ce, J2_ploop3si,
-       J2_ploop3si_ce, J2_ploop3sr, J2_ploop3sr_ce, Y4_trace]
-    = CR_tc_2early_SLOT3
-  | i `elem`
-      [A2_tfrcrr, A2_tfrrcr, A4_tfrcpp, A4_tfrpcp, J2_loop0i,
-       J2_loop0i_ce, J2_loop0iext, J2_loop0iext_ce, J2_loop0r,
-       J2_loop0r_ce, J2_loop0rext, J2_loop0rext_ce, J2_loop1i,
-       J2_loop1i_ce, J2_loop1iext, J2_loop1iext_ce, J2_loop1r,
-       J2_loop1r_ce, J2_loop1rext, J2_loop1rext_ce]
-    = CR_tc_3x_SLOT3
-  | i `elem` [V6_vhist, V6_vhistq] = CVI_HIST
-  | i `elem`
-      [HEXAGON_V6_hi, HEXAGON_V6_hi_128B, HEXAGON_V6_lo,
-       HEXAGON_V6_lo_128B, HEXAGON_V6_vassignp, HEXAGON_V6_vassignp_128B,
-       HEXAGON_V6_vd0_pseudo, HEXAGON_V6_vd0_pseudo_128B, V6_pred_not,
-       V6_pred_not_128B, V6_vabsh, V6_vabsh_128B, V6_vabsh_sat,
-       V6_vabsh_sat_128B, V6_vabsw, V6_vabsw_128B, V6_vabsw_sat,
-       V6_vabsw_sat_128B, V6_vaddb, V6_vaddb_128B, V6_vaddbnq,
-       V6_vaddbnq_128B, V6_vaddbq, V6_vaddbq_128B, V6_vaddh,
-       V6_vaddh_128B, V6_vaddhnq, V6_vaddhnq_128B, V6_vaddhq,
-       V6_vaddhq_128B, V6_vaddhsat, V6_vaddhsat_128B, V6_vaddubsat,
-       V6_vaddubsat_128B, V6_vadduhsat, V6_vadduhsat_128B, V6_vaddw,
-       V6_vaddw_128B, V6_vaddwnq, V6_vaddwnq_128B, V6_vaddwq,
-       V6_vaddwq_128B, V6_vaddwsat, V6_vaddwsat_128B, V6_vand,
-       V6_vand_128B, V6_vassign, V6_vassign_128B, V6_vavgh, V6_vavgh_128B,
-       V6_vavghrnd, V6_vavghrnd_128B, V6_vavgub, V6_vavgub_128B,
-       V6_vavgubrnd, V6_vavgubrnd_128B, V6_vavguh, V6_vavguh_128B,
-       V6_vavguhrnd, V6_vavguhrnd_128B, V6_vavgw, V6_vavgw_128B,
-       V6_vavgwrnd, V6_vavgwrnd_128B, V6_vcmov, V6_vcmov_128B, V6_veqb,
-       V6_veqb_128B, V6_veqb_and, V6_veqb_and_128B, V6_veqb_or,
-       V6_veqb_or_128B, V6_veqb_xor, V6_veqb_xor_128B, V6_veqh,
-       V6_veqh_128B, V6_veqh_and, V6_veqh_and_128B, V6_veqh_or,
-       V6_veqh_or_128B, V6_veqh_xor, V6_veqh_xor_128B, V6_veqw,
-       V6_veqw_128B, V6_veqw_and, V6_veqw_and_128B, V6_veqw_or,
-       V6_veqw_or_128B, V6_veqw_xor, V6_veqw_xor_128B, V6_vgtb,
-       V6_vgtb_128B, V6_vgtb_and, V6_vgtb_and_128B, V6_vgtb_or,
-       V6_vgtb_or_128B, V6_vgtb_xor, V6_vgtb_xor_128B, V6_vgth,
-       V6_vgth_128B, V6_vgth_and, V6_vgth_and_128B, V6_vgth_or,
-       V6_vgth_or_128B, V6_vgth_xor, V6_vgth_xor_128B, V6_vgtub,
-       V6_vgtub_128B, V6_vgtub_and, V6_vgtub_and_128B, V6_vgtub_or,
-       V6_vgtub_or_128B, V6_vgtub_xor, V6_vgtub_xor_128B, V6_vgtuh,
-       V6_vgtuh_128B, V6_vgtuh_and, V6_vgtuh_and_128B, V6_vgtuh_or,
-       V6_vgtuh_or_128B, V6_vgtuh_xor, V6_vgtuh_xor_128B, V6_vgtuw,
-       V6_vgtuw_128B, V6_vgtuw_and, V6_vgtuw_and_128B, V6_vgtuw_or,
-       V6_vgtuw_or_128B, V6_vgtuw_xor, V6_vgtuw_xor_128B, V6_vgtw,
-       V6_vgtw_128B, V6_vgtw_and, V6_vgtw_and_128B, V6_vgtw_or,
-       V6_vgtw_or_128B, V6_vgtw_xor, V6_vgtw_xor_128B, V6_vmaxh,
-       V6_vmaxh_128B, V6_vmaxub, V6_vmaxub_128B, V6_vmaxuh,
-       V6_vmaxuh_128B, V6_vmaxw, V6_vmaxw_128B, V6_vminh, V6_vminh_128B,
-       V6_vminub, V6_vminub_128B, V6_vminuh, V6_vminuh_128B, V6_vminw,
-       V6_vminw_128B, V6_vmux, V6_vmux_128B, V6_vnavgh, V6_vnavgh_128B,
-       V6_vnavgub, V6_vnavgub_128B, V6_vnavgw, V6_vnavgw_128B, V6_vncmov,
-       V6_vncmov_128B, V6_vnot, V6_vnot_128B, V6_vor, V6_vor_128B,
-       V6_vshufeh, V6_vshufeh_128B, V6_vshuffeb, V6_vshuffeb_128B,
-       V6_vshuffob, V6_vshuffob_128B, V6_vshufoh, V6_vshufoh_128B,
-       V6_vsubb, V6_vsubb_128B, V6_vsubbnq, V6_vsubbnq_128B, V6_vsubbq,
-       V6_vsubbq_128B, V6_vsubh, V6_vsubh_128B, V6_vsubhnq,
-       V6_vsubhnq_128B, V6_vsubhq, V6_vsubhq_128B, V6_vsubhsat,
-       V6_vsubhsat_128B, V6_vsububsat, V6_vsububsat_128B, V6_vsubuhsat,
-       V6_vsubuhsat_128B, V6_vsubw, V6_vsubw_128B, V6_vsubwnq,
-       V6_vsubwnq_128B, V6_vsubwq, V6_vsubwq_128B, V6_vsubwsat,
-       V6_vsubwsat_128B, V6_vxor, V6_vxor_128B]
-    = CVI_VA
-  | i `elem`
-      [V6_pred_and, V6_pred_and_128B, V6_pred_and_n, V6_pred_and_n_128B,
-       V6_pred_or, V6_pred_or_128B, V6_pred_or_n, V6_pred_or_n_128B,
-       V6_pred_xor, V6_pred_xor_128B, V6_vaddb_dv, V6_vaddb_dv_128B,
-       V6_vaddh_dv, V6_vaddh_dv_128B, V6_vaddhsat_dv, V6_vaddhsat_dv_128B,
-       V6_vaddubsat_dv, V6_vaddubsat_dv_128B, V6_vadduhsat_dv,
-       V6_vadduhsat_dv_128B, V6_vaddw_dv, V6_vaddw_dv_128B,
-       V6_vaddwsat_dv, V6_vaddwsat_dv_128B, V6_vccombine,
-       V6_vccombine_128B, V6_vcombine, V6_vcombine_128B, V6_vnccombine,
-       V6_vnccombine_128B, V6_vsb, V6_vsb_128B, V6_vsh, V6_vsh_128B,
-       V6_vshufoeb, V6_vshufoeb_128B, V6_vshufoeh, V6_vshufoeh_128B,
-       V6_vsubb_dv, V6_vsubb_dv_128B, V6_vsubh_dv, V6_vsubh_dv_128B,
-       V6_vsubhsat_dv, V6_vsubhsat_dv_128B, V6_vsububsat_dv,
-       V6_vsububsat_dv_128B, V6_vsubuhsat_dv, V6_vsubuhsat_dv_128B,
-       V6_vsubw_dv, V6_vsubw_dv_128B, V6_vsubwsat_dv, V6_vsubwsat_dv_128B,
-       V6_vswap, V6_vswap_128B, V6_vzb, V6_vzb_128B, V6_vzh, V6_vzh_128B,
-       VSelectDblPseudo_V6, VSelectPseudo_V6]
-    = CVI_VA_DV
-  | i `elem` [V6_vsathub, V6_vsathub_128B, V6_vsatwh, V6_vsatwh_128B]
-    = CVI_VINLANESAT
-  | i `elem` [V6_vL32b_cur_ppu, V6_vL32b_nt_cur_ppu] = CVI_VM_CUR_LD
-  | i `elem`
-      [LDrivv_indexed, LDrivv_indexed_128B, LDrivv_indexed_128B_ce,
-       LDrivv_indexed_ce, V6_vL32b_ai, V6_vL32b_ai_128B,
-       V6_vL32b_ai_128B_ce, V6_vL32b_ai_ce, V6_vL32b_cur_ai,
-       V6_vL32b_cur_ai_128B, V6_vL32b_cur_ai_128B_ce, V6_vL32b_cur_ai_ce,
-       V6_vL32b_cur_pi, V6_vL32b_cur_pi_128B, V6_vL32b_cur_pi_128B_ce,
-       V6_vL32b_cur_pi_ce, V6_vL32b_nt_ai, V6_vL32b_nt_ai_128B,
-       V6_vL32b_nt_ai_128B_ce, V6_vL32b_nt_ai_ce, V6_vL32b_nt_cur_ai,
-       V6_vL32b_nt_cur_ai_128B, V6_vL32b_nt_cur_ai_128B_ce,
-       V6_vL32b_nt_cur_ai_ce, V6_vL32b_nt_cur_pi, V6_vL32b_nt_cur_pi_128B,
-       V6_vL32b_nt_cur_pi_128B_ce, V6_vL32b_nt_cur_pi_ce, V6_vL32b_nt_pi,
-       V6_vL32b_nt_pi_128B, V6_vL32b_nt_pi_128B_ce, V6_vL32b_nt_pi_ce,
-       V6_vL32b_nt_ppu, V6_vL32b_pi, V6_vL32b_pi_128B,
-       V6_vL32b_pi_128B_ce, V6_vL32b_pi_ce, V6_vL32b_ppu]
-    = CVI_VM_LD
-  | i `elem`
-      [V6_vS32b_new_ai, V6_vS32b_new_ai_128B, V6_vS32b_new_ai_128B_ce,
-       V6_vS32b_new_ai_ce, V6_vS32b_new_npred_ai,
-       V6_vS32b_new_npred_ai_128B, V6_vS32b_new_npred_ai_128B_ce,
-       V6_vS32b_new_npred_ai_ce, V6_vS32b_new_npred_pi,
-       V6_vS32b_new_npred_pi_128B, V6_vS32b_new_npred_pi_128B_ce,
-       V6_vS32b_new_npred_pi_ce, V6_vS32b_new_npred_ppu, V6_vS32b_new_pi,
-       V6_vS32b_new_pi_128B, V6_vS32b_new_pi_128B_ce, V6_vS32b_new_pi_ce,
-       V6_vS32b_new_ppu, V6_vS32b_new_pred_ai, V6_vS32b_new_pred_ai_128B,
-       V6_vS32b_new_pred_ai_128B_ce, V6_vS32b_new_pred_ai_ce,
-       V6_vS32b_new_pred_pi, V6_vS32b_new_pred_pi_128B,
-       V6_vS32b_new_pred_pi_128B_ce, V6_vS32b_new_pred_pi_ce,
-       V6_vS32b_new_pred_ppu, V6_vS32b_nt_new_ai, V6_vS32b_nt_new_ai_128B,
-       V6_vS32b_nt_new_ai_128B_ce, V6_vS32b_nt_new_ai_ce,
-       V6_vS32b_nt_new_npred_ai, V6_vS32b_nt_new_npred_ai_128B,
-       V6_vS32b_nt_new_npred_ai_128B_ce, V6_vS32b_nt_new_npred_ai_ce,
-       V6_vS32b_nt_new_npred_pi, V6_vS32b_nt_new_npred_pi_128B,
-       V6_vS32b_nt_new_npred_pi_128B_ce, V6_vS32b_nt_new_npred_pi_ce,
-       V6_vS32b_nt_new_npred_ppu, V6_vS32b_nt_new_pi,
-       V6_vS32b_nt_new_pi_128B, V6_vS32b_nt_new_pi_128B_ce,
-       V6_vS32b_nt_new_pi_ce, V6_vS32b_nt_new_ppu,
-       V6_vS32b_nt_new_pred_ai, V6_vS32b_nt_new_pred_ai_128B,
-       V6_vS32b_nt_new_pred_ai_128B_ce, V6_vS32b_nt_new_pred_ai_ce,
-       V6_vS32b_nt_new_pred_pi, V6_vS32b_nt_new_pred_pi_128B,
-       V6_vS32b_nt_new_pred_pi_128B_ce, V6_vS32b_nt_new_pred_pi_ce,
-       V6_vS32b_nt_new_pred_ppu]
-    = CVI_VM_NEW_ST
-  | i `elem`
-      [STrivv_indexed, STrivv_indexed_128B, STrivv_indexed_128B_ce,
-       STrivv_indexed_ce, V6_vS32b_ai, V6_vS32b_ai_128B,
-       V6_vS32b_ai_128B_ce, V6_vS32b_ai_ce, V6_vS32b_npred_ai,
-       V6_vS32b_npred_ai_128B, V6_vS32b_npred_ai_128B_ce,
-       V6_vS32b_npred_ai_ce, V6_vS32b_npred_pi, V6_vS32b_npred_pi_128B,
-       V6_vS32b_npred_pi_128B_ce, V6_vS32b_npred_pi_ce,
-       V6_vS32b_npred_ppu, V6_vS32b_nqpred_ai, V6_vS32b_nqpred_ai_128B,
-       V6_vS32b_nqpred_ai_128B_ce, V6_vS32b_nqpred_ai_ce,
-       V6_vS32b_nqpred_pi, V6_vS32b_nqpred_pi_128B,
-       V6_vS32b_nqpred_pi_128B_ce, V6_vS32b_nqpred_pi_ce,
-       V6_vS32b_nqpred_ppu, V6_vS32b_nt_ai, V6_vS32b_nt_ai_128B,
-       V6_vS32b_nt_ai_128B_ce, V6_vS32b_nt_ai_ce, V6_vS32b_nt_npred_ai,
-       V6_vS32b_nt_npred_ai_128B, V6_vS32b_nt_npred_ai_128B_ce,
-       V6_vS32b_nt_npred_ai_ce, V6_vS32b_nt_npred_pi,
-       V6_vS32b_nt_npred_pi_128B, V6_vS32b_nt_npred_pi_128B_ce,
-       V6_vS32b_nt_npred_pi_ce, V6_vS32b_nt_npred_ppu,
-       V6_vS32b_nt_nqpred_ai, V6_vS32b_nt_nqpred_ai_128B,
-       V6_vS32b_nt_nqpred_ai_128B_ce, V6_vS32b_nt_nqpred_ai_ce,
-       V6_vS32b_nt_nqpred_pi, V6_vS32b_nt_nqpred_pi_128B,
-       V6_vS32b_nt_nqpred_pi_128B_ce, V6_vS32b_nt_nqpred_pi_ce,
-       V6_vS32b_nt_nqpred_ppu, V6_vS32b_nt_pi, V6_vS32b_nt_pi_128B,
-       V6_vS32b_nt_pi_128B_ce, V6_vS32b_nt_pi_ce, V6_vS32b_nt_ppu,
-       V6_vS32b_nt_pred_ai, V6_vS32b_nt_pred_ai_128B,
-       V6_vS32b_nt_pred_ai_128B_ce, V6_vS32b_nt_pred_ai_ce,
-       V6_vS32b_nt_pred_pi, V6_vS32b_nt_pred_pi_128B,
-       V6_vS32b_nt_pred_pi_128B_ce, V6_vS32b_nt_pred_pi_ce,
-       V6_vS32b_nt_pred_ppu, V6_vS32b_nt_qpred_ai,
-       V6_vS32b_nt_qpred_ai_128B, V6_vS32b_nt_qpred_ai_128B_ce,
-       V6_vS32b_nt_qpred_ai_ce, V6_vS32b_nt_qpred_pi,
-       V6_vS32b_nt_qpred_pi_128B, V6_vS32b_nt_qpred_pi_128B_ce,
-       V6_vS32b_nt_qpred_pi_ce, V6_vS32b_nt_qpred_ppu, V6_vS32b_pi,
-       V6_vS32b_pi_128B, V6_vS32b_pi_128B_ce, V6_vS32b_pi_ce,
-       V6_vS32b_ppu, V6_vS32b_pred_ai, V6_vS32b_pred_ai_128B,
-       V6_vS32b_pred_ai_128B_ce, V6_vS32b_pred_ai_ce, V6_vS32b_pred_pi,
-       V6_vS32b_pred_pi_128B, V6_vS32b_pred_pi_128B_ce,
-       V6_vS32b_pred_pi_ce, V6_vS32b_pred_ppu, V6_vS32b_qpred_ai,
-       V6_vS32b_qpred_ai_128B, V6_vS32b_qpred_ai_128B_ce,
-       V6_vS32b_qpred_ai_ce, V6_vS32b_qpred_pi, V6_vS32b_qpred_pi_128B,
-       V6_vS32b_qpred_pi_128B_ce, V6_vS32b_qpred_pi_ce,
-       V6_vS32b_qpred_ppu]
-    = CVI_VM_ST
-  | i `elem`
-      [V6_vS32Ub_ai, V6_vS32Ub_ai_128B, V6_vS32Ub_ai_128B_ce,
-       V6_vS32Ub_ai_ce, V6_vS32Ub_npred_ai, V6_vS32Ub_npred_ai_128B,
-       V6_vS32Ub_npred_ai_128B_ce, V6_vS32Ub_npred_ai_ce,
-       V6_vS32Ub_npred_pi, V6_vS32Ub_npred_pi_128B,
-       V6_vS32Ub_npred_pi_128B_ce, V6_vS32Ub_npred_pi_ce,
-       V6_vS32Ub_npred_ppu, V6_vS32Ub_pi, V6_vS32Ub_pi_128B,
-       V6_vS32Ub_pi_128B_ce, V6_vS32Ub_pi_ce, V6_vS32Ub_ppu,
-       V6_vS32Ub_pred_ai, V6_vS32Ub_pred_ai_128B,
-       V6_vS32Ub_pred_ai_128B_ce, V6_vS32Ub_pred_ai_ce, V6_vS32Ub_pred_pi,
-       V6_vS32Ub_pred_pi_128B, V6_vS32Ub_pred_pi_128B_ce,
-       V6_vS32Ub_pred_pi_ce, V6_vS32Ub_pred_ppu]
-    = CVI_VM_STU
-  | i `elem`
-      [V6_vL32b_nt_tmp_ai, V6_vL32b_nt_tmp_ai_128B,
-       V6_vL32b_nt_tmp_ai_128B_ce, V6_vL32b_nt_tmp_ai_ce,
-       V6_vL32b_nt_tmp_pi, V6_vL32b_nt_tmp_pi_128B,
-       V6_vL32b_nt_tmp_pi_128B_ce, V6_vL32b_nt_tmp_pi_ce,
-       V6_vL32b_nt_tmp_ppu, V6_vL32b_tmp_ai, V6_vL32b_tmp_ai_128B,
-       V6_vL32b_tmp_ai_128B_ce, V6_vL32b_tmp_ai_ce, V6_vL32b_tmp_pi,
-       V6_vL32b_tmp_pi_128B, V6_vL32b_tmp_pi_128B_ce, V6_vL32b_tmp_pi_ce,
-       V6_vL32b_tmp_ppu]
-    = CVI_VM_TMP_LD
-  | i `elem`
-      [V6_vL32Ub_ai, V6_vL32Ub_ai_128B, V6_vL32Ub_ai_128B_ce,
-       V6_vL32Ub_ai_ce, V6_vL32Ub_pi, V6_vL32Ub_pi_128B,
-       V6_vL32Ub_pi_128B_ce, V6_vL32Ub_pi_ce, V6_vL32Ub_ppu]
-    = CVI_VM_VP_LDU
-  | i `elem`
-      [V6_vdealb, V6_vdealb4w, V6_vdealb4w_128B, V6_vdealb_128B,
-       V6_vdealh, V6_vdealh_128B, V6_vdelta, V6_vdelta_128B, V6_vpackeb,
-       V6_vpackeb_128B, V6_vpackeh, V6_vpackeh_128B, V6_vpackhb_sat,
-       V6_vpackhb_sat_128B, V6_vpackhub_sat, V6_vpackhub_sat_128B,
-       V6_vpackob, V6_vpackob_128B, V6_vpackoh, V6_vpackoh_128B,
-       V6_vpackwh_sat, V6_vpackwh_sat_128B, V6_vpackwuh_sat,
-       V6_vpackwuh_sat_128B, V6_vrdelta, V6_vrdelta_128B, V6_vror,
-       V6_vror_128B, V6_vshuffb, V6_vshuffb_128B, V6_vshuffh,
-       V6_vshuffh_128B]
-    = CVI_VP
-  | i `elem`
-      [V6_pred_scalar2, V6_pred_scalar2_128B, V6_valignb,
-       V6_valignb_128B, V6_valignbi, V6_valignbi_128B,
-       V6_valignbi_128B_ce, V6_valignbi_ce, V6_vlalignb, V6_vlalignb_128B,
-       V6_vlalignbi, V6_vlalignbi_128B, V6_vlalignbi_128B_ce,
-       V6_vlalignbi_ce, V6_vlutvvb, V6_vlutvvb_128B]
-    = CVI_VP_LONG
-  | i `elem`
-      [V6_vunpackb, V6_vunpackb_128B, V6_vunpackh, V6_vunpackh_128B,
-       V6_vunpackub, V6_vunpackub_128B, V6_vunpackuh, V6_vunpackuh_128B]
-    = CVI_VP_VS
-  | i `elem`
-      [V6_vdealvdd, V6_vdealvdd_128B, V6_vlutvvb_oracc,
-       V6_vlutvvb_oracc_128B, V6_vlutvwh, V6_vlutvwh_128B,
-       V6_vlutvwh_oracc, V6_vlutvwh_oracc_128B, V6_vshuffvdd,
-       V6_vshuffvdd_128B, V6_vunpackob, V6_vunpackob_128B, V6_vunpackoh,
-       V6_vunpackoh_128B]
-    = CVI_VP_VS_LONG
-  | i `elem` [V6_vdeal, V6_vdeal_128B, V6_vshuff, V6_vshuff_128B] =
-    CVI_VP_VS_LONG_EARLY
-  | i `elem`
-      [V6_vaslh, V6_vaslh_128B, V6_vaslhv, V6_vaslhv_128B, V6_vaslw,
-       V6_vaslw_128B, V6_vaslw_acc, V6_vaslw_acc_128B, V6_vaslwv,
-       V6_vaslwv_128B, V6_vasrh, V6_vasrh_128B, V6_vasrhbrndsat,
-       V6_vasrhbrndsat_128B, V6_vasrhubrndsat, V6_vasrhubrndsat_128B,
-       V6_vasrhubsat, V6_vasrhubsat_128B, V6_vasrhv, V6_vasrhv_128B,
-       V6_vasrw, V6_vasrw_128B, V6_vasrw_acc, V6_vasrw_acc_128B,
-       V6_vasrwh, V6_vasrwh_128B, V6_vasrwhrndsat, V6_vasrwhrndsat_128B,
-       V6_vasrwhsat, V6_vasrwhsat_128B, V6_vasrwuhsat, V6_vasrwuhsat_128B,
-       V6_vasrwv, V6_vasrwv_128B, V6_vcl0h, V6_vcl0h_128B, V6_vcl0w,
-       V6_vcl0w_128B, V6_vlsrh, V6_vlsrh_128B, V6_vlsrhv, V6_vlsrhv_128B,
-       V6_vlsrw, V6_vlsrw_128B, V6_vlsrwv, V6_vlsrwv_128B, V6_vnormamth,
-       V6_vnormamth_128B, V6_vnormamtw, V6_vnormamtw_128B, V6_vpopcounth,
-       V6_vpopcounth_128B, V6_vroundhb, V6_vroundhb_128B, V6_vroundhub,
-       V6_vroundhub_128B, V6_vroundwh, V6_vroundwh_128B, V6_vroundwuh,
-       V6_vroundwuh_128B]
-    = CVI_VS
-  | i `elem`
-      [V6_vabsdiffh, V6_vabsdiffh_128B, V6_vabsdiffub,
-       V6_vabsdiffub_128B, V6_vabsdiffuh, V6_vabsdiffuh_128B,
-       V6_vabsdiffw, V6_vabsdiffw_128B, V6_vdmpybus, V6_vdmpybus_128B,
-       V6_vdmpybus_acc, V6_vdmpybus_acc_128B, V6_vdmpyhb, V6_vdmpyhb_128B,
-       V6_vdmpyhb_acc, V6_vdmpyhb_acc_128B, V6_vmpyieoh, V6_vmpyieoh_128B,
-       V6_vmpyihb_acc, V6_vmpyihb_acc_128B, V6_vmpyiwb, V6_vmpyiwb_128B,
-       V6_vmpyiwb_acc, V6_vmpyiwb_acc_128B, V6_vrmpybus, V6_vrmpybus_128B,
-       V6_vrmpybus_acc, V6_vrmpybus_acc_128B, V6_vrmpybusv,
-       V6_vrmpybusv_128B, V6_vrmpybv, V6_vrmpybv_128B, V6_vrmpyub,
-       V6_vrmpyub_128B, V6_vrmpyub_acc, V6_vrmpyub_acc_128B, V6_vrmpyubv,
-       V6_vrmpyubv_128B]
-    = CVI_VX
-  | i `elem`
-      [V6_vaddhw, V6_vaddhw_128B, V6_vaddubh, V6_vaddubh_128B,
-       V6_vadduhw, V6_vadduhw_128B, V6_vdmpybus_dv, V6_vdmpybus_dv_128B,
-       V6_vdmpybus_dv_acc, V6_vdmpybus_dv_acc_128B, V6_vdmpyhb_dv,
-       V6_vdmpyhb_dv_128B, V6_vdmpyhb_dv_acc, V6_vdmpyhb_dv_acc_128B,
-       V6_vdmpyhisat, V6_vdmpyhisat_128B, V6_vdmpyhisat_acc,
-       V6_vdmpyhisat_acc_128B, V6_vdmpyhsat, V6_vdmpyhsat_128B,
-       V6_vdmpyhsat_acc, V6_vdmpyhsat_acc_128B, V6_vdmpyhsuisat,
-       V6_vdmpyhsuisat_128B, V6_vdmpyhsuisat_acc,
-       V6_vdmpyhsuisat_acc_128B, V6_vdmpyhsusat, V6_vdmpyhsusat_128B,
-       V6_vdmpyhsusat_acc, V6_vdmpyhsusat_acc_128B, V6_vdmpyhvsat,
-       V6_vdmpyhvsat_128B, V6_vdmpyhvsat_acc, V6_vdmpyhvsat_acc_128B,
-       V6_vdsaduh, V6_vdsaduh_128B, V6_vdsaduh_acc, V6_vdsaduh_acc_128B,
-       V6_vmpabus, V6_vmpabus_128B, V6_vmpabus_acc, V6_vmpabus_acc_128B,
-       V6_vmpahb, V6_vmpahb_128B, V6_vmpahb_acc, V6_vmpahb_acc_128B,
-       V6_vmpybus, V6_vmpybus_128B, V6_vmpybus_acc, V6_vmpybus_acc_128B,
-       V6_vmpybusv, V6_vmpybusv_128B, V6_vmpybusv_acc,
-       V6_vmpybusv_acc_128B, V6_vmpybv, V6_vmpybv_128B, V6_vmpybv_acc,
-       V6_vmpybv_acc_128B, V6_vmpyewuh, V6_vmpyewuh_128B, V6_vmpyh,
-       V6_vmpyh_128B, V6_vmpyhsat_acc, V6_vmpyhsat_acc_128B, V6_vmpyhsrs,
-       V6_vmpyhsrs_128B, V6_vmpyhss, V6_vmpyhss_128B, V6_vmpyhus,
-       V6_vmpyhus_128B, V6_vmpyhus_acc, V6_vmpyhus_acc_128B, V6_vmpyhv,
-       V6_vmpyhv_128B, V6_vmpyhv_acc, V6_vmpyhv_acc_128B, V6_vmpyhvsrs,
-       V6_vmpyhvsrs_128B, V6_vmpyiewh_acc, V6_vmpyiewh_acc_128B,
-       V6_vmpyiewuh, V6_vmpyiewuh_128B, V6_vmpyiewuh_acc,
-       V6_vmpyiewuh_acc_128B, V6_vmpyih, V6_vmpyih_128B, V6_vmpyih_acc,
-       V6_vmpyih_acc_128B, V6_vmpyiowh, V6_vmpyiowh_128B, V6_vmpyiwh,
-       V6_vmpyiwh_128B, V6_vmpyiwh_acc, V6_vmpyiwh_acc_128B, V6_vmpyowh,
-       V6_vmpyowh_128B, V6_vmpyowh_rnd, V6_vmpyowh_rnd_128B,
-       V6_vmpyowh_rnd_sacc, V6_vmpyowh_rnd_sacc_128B, V6_vmpyowh_sacc,
-       V6_vmpyowh_sacc_128B, V6_vmpyub, V6_vmpyub_128B, V6_vmpyub_acc,
-       V6_vmpyub_acc_128B, V6_vmpyubv, V6_vmpyubv_128B, V6_vmpyubv_acc,
-       V6_vmpyubv_acc_128B, V6_vmpyuh, V6_vmpyuh_128B, V6_vmpyuh_acc,
-       V6_vmpyuh_acc_128B, V6_vmpyuhv, V6_vmpyuhv_128B, V6_vmpyuhv_acc,
-       V6_vmpyuhv_acc_128B, V6_vrmpybusv_acc, V6_vrmpybusv_acc_128B,
-       V6_vrmpybv_acc, V6_vrmpybv_acc_128B, V6_vrmpyubv_acc,
-       V6_vrmpyubv_acc_128B, V6_vsubhw, V6_vsubhw_128B, V6_vsububh,
-       V6_vsububh_128B, V6_vsubuhw, V6_vsubuhw_128B, V6_vtmpyb,
-       V6_vtmpyb_128B, V6_vtmpyb_acc, V6_vtmpyb_acc_128B, V6_vtmpybus,
-       V6_vtmpybus_128B, V6_vtmpybus_acc, V6_vtmpybus_acc_128B,
-       V6_vtmpyhb, V6_vtmpyhb_128B, V6_vtmpyhb_acc, V6_vtmpyhb_acc_128B]
-    = CVI_VX_DV
-  | i `elem`
-      [V6_vmpabusv, V6_vmpabusv_128B, V6_vmpabuuv, V6_vmpabuuv_128B,
-       V6_vrmpybusi, V6_vrmpybusi_128B, V6_vrmpybusi_128B_ce,
-       V6_vrmpybusi_acc, V6_vrmpybusi_acc_128B, V6_vrmpybusi_acc_128B_ce,
-       V6_vrmpybusi_acc_ce, V6_vrmpybusi_ce, V6_vrmpyubi,
-       V6_vrmpyubi_128B, V6_vrmpyubi_128B_ce, V6_vrmpyubi_acc,
-       V6_vrmpyubi_acc_128B, V6_vrmpyubi_acc_128B_ce, V6_vrmpyubi_acc_ce,
-       V6_vrmpyubi_ce, V6_vrsadubi, V6_vrsadubi_128B, V6_vrsadubi_128B_ce,
-       V6_vrsadubi_acc, V6_vrsadubi_acc_128B, V6_vrsadubi_acc_128B_ce,
-       V6_vrsadubi_acc_ce, V6_vrsadubi_ce]
-    = CVI_VX_DV_LONG
-  | i `elem`
-      [V6_lvsplatw, V6_lvsplatw_128B, V6_vandqrt, V6_vandqrt_128B,
-       V6_vandqrt_acc, V6_vandqrt_acc_128B, V6_vandvrt, V6_vandvrt_128B,
-       V6_vandvrt_acc, V6_vandvrt_acc_128B, V6_vinsertwr,
-       V6_vinsertwr_128B]
-    = CVI_VX_LATE
-  | i `elem` [V6_vmpyihb, V6_vmpyihb_128B] = CVI_VX_LONG
-  | i `elem`
-      [DuplexIClass0, DuplexIClass1, DuplexIClass2, DuplexIClass3,
-       DuplexIClass4, DuplexIClass5, DuplexIClass6, DuplexIClass7,
-       DuplexIClass8, DuplexIClass9, DuplexIClassA, DuplexIClassB,
-       DuplexIClassC, DuplexIClassD, DuplexIClassE, DuplexIClassF]
+      [DUPLEX_Pseudo, DUPLEX_Pseudo_ce, DuplexIClass0, DuplexIClass1,
+       DuplexIClass2, DuplexIClass3, DuplexIClass4, DuplexIClass5,
+       DuplexIClass6, DuplexIClass7, DuplexIClass8, DuplexIClass9,
+       DuplexIClassA, DuplexIClassB, DuplexIClassC, DuplexIClassD,
+       DuplexIClassE, DuplexIClassF]
     = DUPLEX
   | i `elem`
-      [A4_ext, A4_ext_b, A4_ext_b_ce, A4_ext_c, A4_ext_c_ce, A4_ext_ce,
-       A4_ext_g, A4_ext_g_ce]
-    = EXTENDER_tc_1_SLOT0123
-  | i `elem` [ENDLOOP0, ENDLOOP0_ce, ENDLOOP1, ENDLOOP1_ce] =
-    J_tc_2early_SLOT0123
-  | i `elem`
-      [CALLRv3nr, EH_RETURN_JMPR, J2_callr, J2_callrf, J2_callrt,
-       J2_jumpr, J2_jumprf, J2_jumprfnew, J2_jumprfnewpt, J2_jumprt,
-       J2_jumprtnew, J2_jumprtnewpt, J4_hintjumpr, JMPret,
-       JMPret_dealloc_linear, JMPret_linear, JMPretf, JMPretfnew,
-       JMPretfnewpt, JMPrett, JMPrettnew, JMPrettnewpt, TCRETURNr,
-       Y2_icinva, Y2_isync]
-    = J_tc_2early_SLOT2
-  | i `elem`
-      [CALLv3nr, CALLv3nr_ce, J2_call, J2_call_ce, J2_callf, J2_callf_ce,
-       J2_callt, J2_callt_ce, J2_jump, J2_jump_ce, J2_jump_ext,
-       J2_jump_ext_ce, J2_jump_extf, J2_jump_extf_ce, J2_jump_extfnew,
-       J2_jump_extfnew_ce, J2_jump_extfnewpt, J2_jump_extfnewpt_ce,
-       J2_jump_extt, J2_jump_extt_ce, J2_jump_exttnew, J2_jump_exttnew_ce,
-       J2_jump_exttnewpt, J2_jump_exttnewpt_ce, J2_jump_noext,
-       J2_jump_noext_ce, J2_jump_noextf, J2_jump_noextf_ce,
-       J2_jump_noextfnew, J2_jump_noextfnew_ce, J2_jump_noextfnewpt,
-       J2_jump_noextfnewpt_ce, J2_jump_noextt, J2_jump_noextt_ce,
-       J2_jump_noexttnew, J2_jump_noexttnew_ce, J2_jump_noexttnewpt,
-       J2_jump_noexttnewpt_ce, J2_jumpf, J2_jumpf_ce, J2_jumpf_nv,
-       J2_jumpf_nv_ce, J2_jumpfnew, J2_jumpfnew_ce, J2_jumpfnewpt,
-       J2_jumpfnewpt_ce, J2_jumpt, J2_jumpt_ce, J2_jumpt_nv,
-       J2_jumpt_nv_ce, J2_jumptnew, J2_jumptnew_ce, J2_jumptnewpt,
-       J2_jumptnewpt_ce, RESTORE_DEALLOC_BEFORE_TAILCALL_V4,
-       RESTORE_DEALLOC_BEFORE_TAILCALL_V4_EXT,
-       RESTORE_DEALLOC_BEFORE_TAILCALL_V4_EXT_ce,
-       RESTORE_DEALLOC_BEFORE_TAILCALL_V4_ce, RESTORE_DEALLOC_RET_JMP_V4,
-       RESTORE_DEALLOC_RET_JMP_V4_EXT, RESTORE_DEALLOC_RET_JMP_V4_EXT_ce,
-       RESTORE_DEALLOC_RET_JMP_V4_ce, SAVE_REGISTERS_CALL_V4,
-       SAVE_REGISTERS_CALL_V4_EXT, SAVE_REGISTERS_CALL_V4_EXT_ce,
-       SAVE_REGISTERS_CALL_V4_ce, TCRETURNi, TCRETURNi_ce]
-    = J_tc_2early_SLOT23
-  | i `elem`
-      [L4_return, L4_return_f, L4_return_fnew_pnt, L4_return_fnew_pt,
-       L4_return_linear, L4_return_t, L4_return_tnew_pnt,
-       L4_return_tnew_pt]
-    = LD_tc_3or4stall_SLOT0
-  | i `elem`
-      [L2_loadw_locked, L4_loadd_locked, V6_extractw, V6_extractw_128B,
-       Y2_dcfetchbo, Y2_dcfetchbo_ce]
-    = LD_tc_ld_SLOT0
-  | i `elem`
-      [CONST32, CONST32_Float_Real, CONST32_Float_Real_ce,
-       CONST32_Int_Real, CONST32_Int_Real_ce, CONST32_ce,
-       CONST64_Float_Real, CONST64_Float_Real_ce, CONST64_Int_Real,
-       CONST64_Int_Real_ce, CONST64_Int_Real_remat,
-       CONST64_Int_Real_remat_ce, FCONST32_nsdata, FCONST32_nsdata_ce,
-       L2_deallocframe, L2_deallocframe_linear, L2_loadalignb_io,
-       L2_loadalignb_io_ce, L2_loadalignb_pbr, L2_loadalignb_pci,
-       L2_loadalignb_pci_ce, L2_loadalignb_pcr, L2_loadalignb_pi,
-       L2_loadalignb_pi_ce, L2_loadalignb_pr, L2_loadalignh_io,
-       L2_loadalignh_io_ce, L2_loadalignh_pbr, L2_loadalignh_pci,
-       L2_loadalignh_pci_ce, L2_loadalignh_pcr, L2_loadalignh_pi,
-       L2_loadalignh_pi_ce, L2_loadalignh_pr, L2_loadbsw2_io,
-       L2_loadbsw2_io_ce, L2_loadbsw2_pbr, L2_loadbsw2_pci,
-       L2_loadbsw2_pci_ce, L2_loadbsw2_pcr, L2_loadbsw2_pi,
-       L2_loadbsw2_pi_ce, L2_loadbsw2_pr, L2_loadbsw4_io,
-       L2_loadbsw4_io_ce, L2_loadbsw4_pbr, L2_loadbsw4_pci,
-       L2_loadbsw4_pci_ce, L2_loadbsw4_pcr, L2_loadbsw4_pi,
-       L2_loadbsw4_pi_ce, L2_loadbsw4_pr, L2_loadbzw2_io,
-       L2_loadbzw2_io_ce, L2_loadbzw2_pbr, L2_loadbzw2_pci,
-       L2_loadbzw2_pci_ce, L2_loadbzw2_pcr, L2_loadbzw2_pi,
-       L2_loadbzw2_pi_ce, L2_loadbzw2_pr, L2_loadbzw4_io,
-       L2_loadbzw4_io_ce, L2_loadbzw4_pbr, L2_loadbzw4_pci,
-       L2_loadbzw4_pci_ce, L2_loadbzw4_pcr, L2_loadbzw4_pi,
-       L2_loadbzw4_pi_ce, L2_loadbzw4_pr, L2_loadrb_io, L2_loadrb_io_ce,
-       L2_loadrb_io_fi, L2_loadrb_io_fi_ce, L2_loadrb_io_fi_remat_fi,
-       L2_loadrb_io_fi_remat_fi_ce, L2_loadrb_pbr, L2_loadrb_pbr_pseudo,
-       L2_loadrb_pci, L2_loadrb_pci_ce, L2_loadrb_pci_pseudo,
-       L2_loadrb_pci_pseudo_ce, L2_loadrb_pcr, L2_loadrb_pi,
-       L2_loadrb_pi_ce, L2_loadrb_pr, L2_loadrd_io, L2_loadrd_io_ce,
-       L2_loadrd_io_fi, L2_loadrd_io_fi_ce, L2_loadrd_io_fi_remat_fi,
-       L2_loadrd_io_fi_remat_fi_ce, L2_loadrd_pbr, L2_loadrd_pbr_pseudo,
-       L2_loadrd_pci, L2_loadrd_pci_ce, L2_loadrd_pci_pseudo,
-       L2_loadrd_pci_pseudo_ce, L2_loadrd_pcr, L2_loadrd_pi,
-       L2_loadrd_pi_ce, L2_loadrd_pr, L2_loadrh_io, L2_loadrh_io_ce,
-       L2_loadrh_io_fi, L2_loadrh_io_fi_ce, L2_loadrh_pbr,
-       L2_loadrh_pbr_pseudo, L2_loadrh_pci, L2_loadrh_pci_ce,
-       L2_loadrh_pci_pseudo, L2_loadrh_pci_pseudo_ce, L2_loadrh_pcr,
-       L2_loadrh_pi, L2_loadrh_pi_ce, L2_loadrh_pr, L2_loadri_io,
-       L2_loadri_io_ce, L2_loadri_io_fi, L2_loadri_io_fi_ce,
-       L2_loadri_io_fi_remat_fi, L2_loadri_io_fi_remat_fi_ce,
-       L2_loadri_pbr, L2_loadri_pbr_pseudo, L2_loadri_pci,
-       L2_loadri_pci_ce, L2_loadri_pci_pseudo, L2_loadri_pci_pseudo_ce,
-       L2_loadri_pcr, L2_loadri_pi, L2_loadri_pi_ce, L2_loadri_pr,
-       L2_loadrub_io, L2_loadrub_io_ce, L2_loadrub_io_fi,
-       L2_loadrub_io_fi_ce, L2_loadrub_pbr, L2_loadrub_pbr_pseudo,
-       L2_loadrub_pci, L2_loadrub_pci_ce, L2_loadrub_pci_pseudo,
-       L2_loadrub_pci_pseudo_ce, L2_loadrub_pcr, L2_loadrub_pi,
-       L2_loadrub_pi_ce, L2_loadrub_pr, L2_loadruh_io, L2_loadruh_io_ce,
+      [CONST32, CONST32_ce, CONST64, CONST64_ce, L2_loadrb_io_fi,
+       L2_loadrb_io_fi_ce, L2_loadrb_io_fi_remat_fi,
+       L2_loadrb_io_fi_remat_fi_ce, L2_loadrd_io_fi, L2_loadrd_io_fi_ce,
+       L2_loadrd_io_fi_remat_fi, L2_loadrd_io_fi_remat_fi_ce,
+       L2_loadrh_io_fi, L2_loadrh_io_fi_ce, L2_loadri_io_fi,
+       L2_loadri_io_fi_ce, L2_loadri_io_fi_remat_fi,
+       L2_loadri_io_fi_remat_fi_ce, L2_loadrub_io_fi, L2_loadrub_io_fi_ce,
        L2_loadruh_io_fi, L2_loadruh_io_fi_ce, L2_loadruh_io_fi_remat_fi,
-       L2_loadruh_io_fi_remat_fi_ce, L2_loadruh_pbr,
-       L2_loadruh_pbr_pseudo, L2_loadruh_pci, L2_loadruh_pci_ce,
-       L2_loadruh_pci_pseudo, L2_loadruh_pci_pseudo_ce, L2_loadruh_pcr,
-       L2_loadruh_pi, L2_loadruh_pi_ce, L2_loadruh_pr, L2_ploadrbf_pi,
-       L2_ploadrbf_pi_ce, L2_ploadrbfnew_pi, L2_ploadrbfnew_pi_ce,
-       L2_ploadrbt_pi, L2_ploadrbt_pi_ce, L2_ploadrbtnew_pi,
-       L2_ploadrbtnew_pi_ce, L2_ploadrdf_pi, L2_ploadrdf_pi_ce,
-       L2_ploadrdfnew_pi, L2_ploadrdfnew_pi_ce, L2_ploadrdt_pi,
-       L2_ploadrdt_pi_ce, L2_ploadrdtnew_pi, L2_ploadrdtnew_pi_ce,
-       L2_ploadrhf_pi, L2_ploadrhf_pi_ce, L2_ploadrhfnew_pi,
-       L2_ploadrhfnew_pi_ce, L2_ploadrht_pi, L2_ploadrht_pi_ce,
-       L2_ploadrhtnew_pi, L2_ploadrhtnew_pi_ce, L2_ploadrif_pi,
-       L2_ploadrif_pi_ce, L2_ploadrifnew_pi, L2_ploadrifnew_pi_ce,
-       L2_ploadrit_pi, L2_ploadrit_pi_ce, L2_ploadritnew_pi,
-       L2_ploadritnew_pi_ce, L2_ploadrubf_pi, L2_ploadrubf_pi_ce,
-       L2_ploadrubfnew_pi, L2_ploadrubfnew_pi_ce, L2_ploadrubt_pi,
-       L2_ploadrubt_pi_ce, L2_ploadrubtnew_pi, L2_ploadrubtnew_pi_ce,
-       L2_ploadruhf_pi, L2_ploadruhf_pi_ce, L2_ploadruhfnew_pi,
-       L2_ploadruhfnew_pi_ce, L2_ploadruht_pi, L2_ploadruht_pi_ce,
-       L2_ploadruhtnew_pi, L2_ploadruhtnew_pi_ce, L4_loadalignb_ap,
-       L4_loadalignb_ap_ce, L4_loadalignb_ur, L4_loadalignb_ur_ce,
-       L4_loadalignh_ap, L4_loadalignh_ap_ce, L4_loadalignh_ur,
-       L4_loadalignh_ur_ce, L4_loadbsw2_ap, L4_loadbsw2_ap_ce,
-       L4_loadbsw2_ur, L4_loadbsw2_ur_ce, L4_loadbsw4_ap,
-       L4_loadbsw4_ap_ce, L4_loadbsw4_ur, L4_loadbsw4_ur_ce,
-       L4_loadbzw2_ap, L4_loadbzw2_ap_ce, L4_loadbzw2_ur,
-       L4_loadbzw2_ur_ce, L4_loadbzw4_ap, L4_loadbzw4_ap_ce,
-       L4_loadbzw4_ur, L4_loadbzw4_ur_ce, L4_loadrb_ap, L4_loadrb_ap_ce,
-       L4_loadrb_ur, L4_loadrb_ur_ce, L4_loadrd_ap, L4_loadrd_ap_ce,
-       L4_loadrd_ur, L4_loadrd_ur_ce, L4_loadrh_ap, L4_loadrh_ap_ce,
-       L4_loadrh_ur, L4_loadrh_ur_ce, L4_loadri_ap, L4_loadri_ap_ce,
-       L4_loadri_ur, L4_loadri_ur_ce, L4_loadrub_ap, L4_loadrub_ap_ce,
-       L4_loadrub_ur, L4_loadrub_ur_ce, L4_loadruh_ap, L4_loadruh_ap_ce,
-       L4_loadruh_ur, L4_loadruh_ur_ce, L4_ploadrbf_abs,
-       L4_ploadrbf_abs_ce, L4_ploadrbfnew_abs, L4_ploadrbfnew_abs_ce,
-       L4_ploadrbt_abs, L4_ploadrbt_abs_ce, L4_ploadrbtnew_abs,
-       L4_ploadrbtnew_abs_ce, L4_ploadrdf_abs, L4_ploadrdf_abs_ce,
-       L4_ploadrdfnew_abs, L4_ploadrdfnew_abs_ce, L4_ploadrdt_abs,
-       L4_ploadrdt_abs_ce, L4_ploadrdtnew_abs, L4_ploadrdtnew_abs_ce,
-       L4_ploadrhf_abs, L4_ploadrhf_abs_ce, L4_ploadrhfnew_abs,
-       L4_ploadrhfnew_abs_ce, L4_ploadrht_abs, L4_ploadrht_abs_ce,
-       L4_ploadrhtnew_abs, L4_ploadrhtnew_abs_ce, L4_ploadrif_abs,
-       L4_ploadrif_abs_ce, L4_ploadrifnew_abs, L4_ploadrifnew_abs_ce,
-       L4_ploadrit_abs, L4_ploadrit_abs_ce, L4_ploadritnew_abs,
-       L4_ploadritnew_abs_ce, L4_ploadrubf_abs, L4_ploadrubf_abs_ce,
-       L4_ploadrubfnew_abs, L4_ploadrubfnew_abs_ce, L4_ploadrubt_abs,
-       L4_ploadrubt_abs_ce, L4_ploadrubtnew_abs, L4_ploadrubtnew_abs_ce,
-       L4_ploadruhf_abs, L4_ploadruhf_abs_ce, L4_ploadruhfnew_abs,
-       L4_ploadruhfnew_abs_ce, L4_ploadruht_abs, L4_ploadruht_abs_ce,
-       L4_ploadruhtnew_abs, L4_ploadruhtnew_abs_ce, LDD, LDD_ce, LDW,
-       LDW_ce, LDriq_pred_V6, LDriq_pred_V6_128B, LDriq_pred_V6_128B_ce,
-       LDriq_pred_V6_ce, LDriq_pred_vec_V6, LDriq_pred_vec_V6_128B,
-       LDriq_pred_vec_V6_128B_ce, LDriq_pred_vec_V6_ce, LDriv_pseudo_V6,
-       LDriv_pseudo_V6_128B, LDriv_pseudo_V6_128B_ce, LDriv_pseudo_V6_ce,
-       LDrivv_pseudo_V6, LDrivv_pseudo_V6_128B, LDrivv_pseudo_V6_128B_ce,
-       LDrivv_pseudo_V6_ce, LDriw_pred, LDriw_pred_ce]
+       L2_loadruh_io_fi_remat_fi_ce, LDD, LDD_ce, LDW, LDW_ce, LDriw_ctr,
+       LDriw_ctr_ce, LDriw_pred, LDriw_pred_ce]
     = LD_tc_ld_SLOT01
   | i `elem`
-      [M2_acci, M2_accii, M2_accii_ce, M2_nacci, M2_naccii, M2_naccii_ce,
-       M2_subacc, M2_vabsdiffh, M2_vabsdiffw, M2_xor_xacc, M4_and_and,
-       M4_and_andn, M4_and_or, M4_and_xor, M4_or_and, M4_or_andn,
-       M4_or_or, M4_or_xor, M4_xor_and, M4_xor_andn, M4_xor_or]
-    = M_tc_2_SLOT23
-  | i `elem`
-      [F2_sffma, F2_sffma_lib, F2_sffma_sc, F2_sffms, F2_sffms_lib]
-    = M_tc_3_SLOT23
-  | i `elem` [F2_sfadd, F2_sffixupd, F2_sffixupn, F2_sfmpy, F2_sfsub]
-    = M_tc_3or4x_SLOT23
-  | i `elem` [A5_ACS] = M_tc_3stall_SLOT23
-  | i `elem`
-      [A2_vraddub, A2_vraddub_acc, A2_vrsadub, A2_vrsadub_acc,
-       A4_boundscheck, F2_sfmax, F2_sfmin, F2_sfrecipa, M2_cmaci_s0,
-       M2_cmacr_s0, M2_cmacs_s0, M2_cmacs_s1, M2_cmacsc_s0, M2_cmacsc_s1,
-       M2_cmpyi_s0, M2_cmpyr_s0, M2_cmpyrs_s0, M2_cmpyrs_s1,
-       M2_cmpyrsc_s0, M2_cmpyrsc_s1, M2_cmpys_s0, M2_cmpys_s1,
-       M2_cmpysc_s0, M2_cmpysc_s1, M2_cnacs_s0, M2_cnacs_s1, M2_cnacsc_s0,
-       M2_cnacsc_s1, M2_dpmpyss_acc_s0, M2_dpmpyss_nac_s0,
-       M2_dpmpyss_rnd_s0, M2_dpmpyss_s0, M2_dpmpyuu_acc_s0,
-       M2_dpmpyuu_nac_s0, M2_dpmpyuu_s0, M2_hmmpyh_rs1, M2_hmmpyh_s1,
-       M2_hmmpyl_rs1, M2_hmmpyl_s1, M2_maci, M2_macsin, M2_macsin_ce,
-       M2_macsip, M2_macsip_ce, M2_mmachs_rs0, M2_mmachs_rs1,
-       M2_mmachs_s0, M2_mmachs_s1, M2_mmacls_rs0, M2_mmacls_rs1,
-       M2_mmacls_s0, M2_mmacls_s1, M2_mmacuhs_rs0, M2_mmacuhs_rs1,
-       M2_mmacuhs_s0, M2_mmacuhs_s1, M2_mmaculs_rs0, M2_mmaculs_rs1,
-       M2_mmaculs_s0, M2_mmaculs_s1, M2_mmpyh_rs0, M2_mmpyh_rs1,
-       M2_mmpyh_s0, M2_mmpyh_s1, M2_mmpyl_rs0, M2_mmpyl_rs1, M2_mmpyl_s0,
-       M2_mmpyl_s1, M2_mmpyuh_rs0, M2_mmpyuh_rs1, M2_mmpyuh_s0,
-       M2_mmpyuh_s1, M2_mmpyul_rs0, M2_mmpyul_rs1, M2_mmpyul_s0,
-       M2_mmpyul_s1, M2_mpy_acc_hh_s0, M2_mpy_acc_hh_s1, M2_mpy_acc_hl_s0,
-       M2_mpy_acc_hl_s1, M2_mpy_acc_lh_s0, M2_mpy_acc_lh_s1,
-       M2_mpy_acc_ll_s0, M2_mpy_acc_ll_s1, M2_mpy_acc_sat_hh_s0,
-       M2_mpy_acc_sat_hh_s1, M2_mpy_acc_sat_hl_s0, M2_mpy_acc_sat_hl_s1,
-       M2_mpy_acc_sat_lh_s0, M2_mpy_acc_sat_lh_s1, M2_mpy_acc_sat_ll_s0,
-       M2_mpy_acc_sat_ll_s1, M2_mpy_hh_s0, M2_mpy_hh_s1, M2_mpy_hl_s0,
-       M2_mpy_hl_s1, M2_mpy_lh_s0, M2_mpy_lh_s1, M2_mpy_ll_s0,
-       M2_mpy_ll_s1, M2_mpy_nac_hh_s0, M2_mpy_nac_hh_s1, M2_mpy_nac_hl_s0,
-       M2_mpy_nac_hl_s1, M2_mpy_nac_lh_s0, M2_mpy_nac_lh_s1,
-       M2_mpy_nac_ll_s0, M2_mpy_nac_ll_s1, M2_mpy_nac_sat_hh_s0,
-       M2_mpy_nac_sat_hh_s1, M2_mpy_nac_sat_hl_s0, M2_mpy_nac_sat_hl_s1,
-       M2_mpy_nac_sat_lh_s0, M2_mpy_nac_sat_lh_s1, M2_mpy_nac_sat_ll_s0,
-       M2_mpy_nac_sat_ll_s1, M2_mpy_rnd_hh_s0, M2_mpy_rnd_hh_s1,
-       M2_mpy_rnd_hl_s0, M2_mpy_rnd_hl_s1, M2_mpy_rnd_lh_s0,
-       M2_mpy_rnd_lh_s1, M2_mpy_rnd_ll_s0, M2_mpy_rnd_ll_s1,
-       M2_mpy_sat_hh_s0, M2_mpy_sat_hh_s1, M2_mpy_sat_hl_s0,
-       M2_mpy_sat_hl_s1, M2_mpy_sat_lh_s0, M2_mpy_sat_lh_s1,
-       M2_mpy_sat_ll_s0, M2_mpy_sat_ll_s1, M2_mpy_sat_rnd_hh_s0,
-       M2_mpy_sat_rnd_hh_s1, M2_mpy_sat_rnd_hl_s0, M2_mpy_sat_rnd_hl_s1,
-       M2_mpy_sat_rnd_lh_s0, M2_mpy_sat_rnd_lh_s1, M2_mpy_sat_rnd_ll_s0,
-       M2_mpy_sat_rnd_ll_s1, M2_mpy_up, M2_mpy_up_s1, M2_mpy_up_s1_sat,
-       M2_mpyd_acc_hh_s0, M2_mpyd_acc_hh_s1, M2_mpyd_acc_hl_s0,
-       M2_mpyd_acc_hl_s1, M2_mpyd_acc_lh_s0, M2_mpyd_acc_lh_s1,
-       M2_mpyd_acc_ll_s0, M2_mpyd_acc_ll_s1, M2_mpyd_hh_s0, M2_mpyd_hh_s1,
-       M2_mpyd_hl_s0, M2_mpyd_hl_s1, M2_mpyd_lh_s0, M2_mpyd_lh_s1,
-       M2_mpyd_ll_s0, M2_mpyd_ll_s1, M2_mpyd_nac_hh_s0, M2_mpyd_nac_hh_s1,
-       M2_mpyd_nac_hl_s0, M2_mpyd_nac_hl_s1, M2_mpyd_nac_lh_s0,
-       M2_mpyd_nac_lh_s1, M2_mpyd_nac_ll_s0, M2_mpyd_nac_ll_s1,
-       M2_mpyd_rnd_hh_s0, M2_mpyd_rnd_hh_s1, M2_mpyd_rnd_hl_s0,
-       M2_mpyd_rnd_hl_s1, M2_mpyd_rnd_lh_s0, M2_mpyd_rnd_lh_s1,
-       M2_mpyd_rnd_ll_s0, M2_mpyd_rnd_ll_s1, M2_mpyi, M2_mpysin,
-       M2_mpysin_ce, M2_mpysip, M2_mpysip_ce, M2_mpysmi, M2_mpysmi_ce,
-       M2_mpysu_up, M2_mpyu_acc_hh_s0, M2_mpyu_acc_hh_s1,
-       M2_mpyu_acc_hl_s0, M2_mpyu_acc_hl_s1, M2_mpyu_acc_lh_s0,
-       M2_mpyu_acc_lh_s1, M2_mpyu_acc_ll_s0, M2_mpyu_acc_ll_s1,
-       M2_mpyu_hh_s0, M2_mpyu_hh_s1, M2_mpyu_hl_s0, M2_mpyu_hl_s1,
-       M2_mpyu_lh_s0, M2_mpyu_lh_s1, M2_mpyu_ll_s0, M2_mpyu_ll_s1,
-       M2_mpyu_nac_hh_s0, M2_mpyu_nac_hh_s1, M2_mpyu_nac_hl_s0,
-       M2_mpyu_nac_hl_s1, M2_mpyu_nac_lh_s0, M2_mpyu_nac_lh_s1,
-       M2_mpyu_nac_ll_s0, M2_mpyu_nac_ll_s1, M2_mpyu_up,
-       M2_mpyud_acc_hh_s0, M2_mpyud_acc_hh_s1, M2_mpyud_acc_hl_s0,
-       M2_mpyud_acc_hl_s1, M2_mpyud_acc_lh_s0, M2_mpyud_acc_lh_s1,
-       M2_mpyud_acc_ll_s0, M2_mpyud_acc_ll_s1, M2_mpyud_hh_s0,
-       M2_mpyud_hh_s1, M2_mpyud_hl_s0, M2_mpyud_hl_s1, M2_mpyud_lh_s0,
-       M2_mpyud_lh_s1, M2_mpyud_ll_s0, M2_mpyud_ll_s1, M2_mpyud_nac_hh_s0,
-       M2_mpyud_nac_hh_s1, M2_mpyud_nac_hl_s0, M2_mpyud_nac_hl_s1,
-       M2_mpyud_nac_lh_s0, M2_mpyud_nac_lh_s1, M2_mpyud_nac_ll_s0,
-       M2_mpyud_nac_ll_s1, M2_mpyui, M2_vcmac_s0_sat_i, M2_vcmac_s0_sat_r,
-       M2_vcmpy_s0_sat_i, M2_vcmpy_s0_sat_r, M2_vcmpy_s1_sat_i,
-       M2_vcmpy_s1_sat_r, M2_vdmacs_s0, M2_vdmacs_s1, M2_vdmpyrs_s0,
-       M2_vdmpyrs_s1, M2_vdmpys_s0, M2_vdmpys_s1, M2_vmac2, M2_vmac2es,
-       M2_vmac2es_s0, M2_vmac2es_s1, M2_vmac2s_s0, M2_vmac2s_s1,
-       M2_vmac2su_s0, M2_vmac2su_s1, M2_vmpy2es_s0, M2_vmpy2es_s1,
-       M2_vmpy2s_s0, M2_vmpy2s_s0pack, M2_vmpy2s_s1, M2_vmpy2s_s1pack,
-       M2_vmpy2su_s0, M2_vmpy2su_s1, M2_vraddh, M2_vradduh, M2_vrcmaci_s0,
-       M2_vrcmaci_s0c, M2_vrcmacr_s0, M2_vrcmacr_s0c, M2_vrcmpyi_s0,
-       M2_vrcmpyi_s0c, M2_vrcmpyr_s0, M2_vrcmpyr_s0c, M2_vrcmpys_acc_s1,
-       M2_vrcmpys_acc_s1_h, M2_vrcmpys_acc_s1_l, M2_vrcmpys_s1,
-       M2_vrcmpys_s1_h, M2_vrcmpys_s1_l, M2_vrcmpys_s1rp,
-       M2_vrcmpys_s1rp_h, M2_vrcmpys_s1rp_l, M2_vrmac_s0, M2_vrmpy_s0,
-       M4_mac_up_s1_sat, M4_mpyrr_addr, M4_nac_up_s1_sat, M4_pmpyw,
-       M4_pmpyw_acc, M4_vpmpyh, M4_vpmpyh_acc, M4_vrmpyeh_acc_s0,
-       M4_vrmpyeh_acc_s1, M4_vrmpyeh_s0, M4_vrmpyeh_s1, M4_vrmpyoh_acc_s0,
-       M4_vrmpyoh_acc_s1, M4_vrmpyoh_s0, M4_vrmpyoh_s1, M5_vdmacbsu,
-       M5_vdmpybsu, M5_vmacbsu, M5_vmacbuu, M5_vmpybsu, M5_vmpybuu,
-       M5_vrmacbsu, M5_vrmacbuu, M5_vrmpybsu, M5_vrmpybuu,
-       S2_asr_i_p_rnd_goodsyntax, S2_asr_i_p_rnd_goodsyntax_ce]
-    = M_tc_3x_SLOT23
-  | i `elem`
-      [J4_cmpeq_f_jumpnv_nt, J4_cmpeq_f_jumpnv_nt_ce,
-       J4_cmpeq_f_jumpnv_t, J4_cmpeq_f_jumpnv_t_ce,
-       J4_cmpeq_f_jumpnv_t_combo, J4_cmpeq_t_jumpnv_nt,
-       J4_cmpeq_t_jumpnv_nt_ce, J4_cmpeq_t_jumpnv_t,
-       J4_cmpeq_t_jumpnv_t_ce, J4_cmpeq_t_jumpnv_t_combo,
-       J4_cmpeqi_f_jumpnv_nt, J4_cmpeqi_f_jumpnv_nt_ce,
-       J4_cmpeqi_f_jumpnv_t, J4_cmpeqi_f_jumpnv_t_ce,
-       J4_cmpeqi_f_jumpnv_t_combo, J4_cmpeqi_t_jumpnv_nt,
-       J4_cmpeqi_t_jumpnv_nt_ce, J4_cmpeqi_t_jumpnv_t,
-       J4_cmpeqi_t_jumpnv_t_ce, J4_cmpeqi_t_jumpnv_t_combo,
-       J4_cmpeqn1_f_jumpnv_nt, J4_cmpeqn1_f_jumpnv_nt_ce,
-       J4_cmpeqn1_f_jumpnv_t, J4_cmpeqn1_f_jumpnv_t_ce,
-       J4_cmpeqn1_t_jumpnv_nt, J4_cmpeqn1_t_jumpnv_nt_ce,
-       J4_cmpeqn1_t_jumpnv_t, J4_cmpeqn1_t_jumpnv_t_ce,
-       J4_cmpeqn1_t_jumpnv_t_combo, J4_cmpgt_f_jumpnv_nt,
-       J4_cmpgt_f_jumpnv_nt_ce, J4_cmpgt_f_jumpnv_t,
-       J4_cmpgt_f_jumpnv_t_ce, J4_cmpgt_f_jumpnv_t_combo,
-       J4_cmpgt_t_jumpnv_nt, J4_cmpgt_t_jumpnv_nt_ce, J4_cmpgt_t_jumpnv_t,
-       J4_cmpgt_t_jumpnv_t_ce, J4_cmpgt_t_jumpnv_t_combo,
-       J4_cmpgti_f_jumpnv_nt, J4_cmpgti_f_jumpnv_nt_ce,
-       J4_cmpgti_f_jumpnv_t, J4_cmpgti_f_jumpnv_t_ce,
-       J4_cmpgti_f_jumpnv_t_combo, J4_cmpgti_t_jumpnv_nt,
-       J4_cmpgti_t_jumpnv_nt_ce, J4_cmpgti_t_jumpnv_t,
-       J4_cmpgti_t_jumpnv_t_ce, J4_cmpgti_t_jumpnv_t_combo,
-       J4_cmpgtn1_f_jumpnv_nt, J4_cmpgtn1_f_jumpnv_nt_ce,
-       J4_cmpgtn1_f_jumpnv_t, J4_cmpgtn1_f_jumpnv_t_ce,
-       J4_cmpgtn1_t_jumpnv_nt, J4_cmpgtn1_t_jumpnv_nt_ce,
-       J4_cmpgtn1_t_jumpnv_t, J4_cmpgtn1_t_jumpnv_t_ce,
-       J4_cmpgtn1_t_jumpnv_t_combo, J4_cmpgtu_f_jumpnv_nt,
-       J4_cmpgtu_f_jumpnv_nt_ce, J4_cmpgtu_f_jumpnv_t,
-       J4_cmpgtu_f_jumpnv_t_ce, J4_cmpgtu_f_jumpnv_t_combo,
-       J4_cmpgtu_t_jumpnv_nt, J4_cmpgtu_t_jumpnv_nt_ce,
-       J4_cmpgtu_t_jumpnv_t, J4_cmpgtu_t_jumpnv_t_ce,
-       J4_cmpgtu_t_jumpnv_t_combo, J4_cmpgtui_f_jumpnv_nt,
-       J4_cmpgtui_f_jumpnv_nt_ce, J4_cmpgtui_f_jumpnv_t,
-       J4_cmpgtui_f_jumpnv_t_ce, J4_cmpgtui_f_jumpnv_t_combo,
-       J4_cmpgtui_t_jumpnv_nt, J4_cmpgtui_t_jumpnv_nt_ce,
-       J4_cmpgtui_t_jumpnv_t, J4_cmpgtui_t_jumpnv_t_ce,
-       J4_cmpgtui_t_jumpnv_t_combo, J4_cmplt_f_jumpnv_nt,
-       J4_cmplt_f_jumpnv_nt_ce, J4_cmplt_f_jumpnv_t,
-       J4_cmplt_f_jumpnv_t_ce, J4_cmplt_f_jumpnv_t_combo,
-       J4_cmplt_t_jumpnv_nt, J4_cmplt_t_jumpnv_nt_ce, J4_cmplt_t_jumpnv_t,
-       J4_cmplt_t_jumpnv_t_ce, J4_cmplt_t_jumpnv_t_combo,
-       J4_cmpltu_f_jumpnv_nt, J4_cmpltu_f_jumpnv_nt_ce,
-       J4_cmpltu_f_jumpnv_t, J4_cmpltu_f_jumpnv_t_ce,
-       J4_cmpltu_f_jumpnv_t_combo, J4_cmpltu_t_jumpnv_nt,
-       J4_cmpltu_t_jumpnv_nt_ce, J4_cmpltu_t_jumpnv_t,
-       J4_cmpltu_t_jumpnv_t_ce, J4_cmpltu_t_jumpnv_t_combo,
-       J4_combo_f_jumpnv_t, J4_combo_f_jumpnv_t_ce, J4_combo_t_jumpnv_t,
-       J4_combo_t_jumpnv_t_ce, J4_tstbit0_f_jumpnv_nt,
-       J4_tstbit0_f_jumpnv_nt_ce, J4_tstbit0_f_jumpnv_t,
-       J4_tstbit0_f_jumpnv_t_ce, J4_tstbit0_t_jumpnv_nt,
-       J4_tstbit0_t_jumpnv_nt_ce, J4_tstbit0_t_jumpnv_t,
-       J4_tstbit0_t_jumpnv_t_ce, S2_storerbnew_pbr, S2_storerbnew_pci,
-       S2_storerbnew_pci_ce, S2_storerbnew_pcr, S2_storerhnew_pbr,
-       S2_storerhnew_pci, S2_storerhnew_pci_ce, S2_storerhnew_pcr,
-       S2_storerinew_pbr, S2_storerinew_pci, S2_storerinew_pci_ce,
-       S2_storerinew_pcr, S4_storerbnew_ap, S4_storerbnew_ap_ce,
-       S4_storerbnew_ur, S4_storerbnew_ur_ce, S4_storerhnew_ap,
-       S4_storerhnew_ap_ce, S4_storerhnew_ur, S4_storerhnew_ur_ce,
-       S4_storerinew_ap, S4_storerinew_ap_ce, S4_storerinew_ur,
-       S4_storerinew_ur_ce, STW_nv, STW_nv_ce]
+      [J4_combo_f_jumpnv_t, J4_combo_f_jumpnv_t_ce, J4_combo_t_jumpnv_t,
+       J4_combo_t_jumpnv_t_ce, STW_nv, STW_nv_ce]
     = NCJ_tc_3or4stall_SLOT0
   | i `elem`
       [A2_tfrpi_demat, A2_tfrpi_demat_ce, A2_tfrpi_source,
        A2_tfrpi_source_ce, A2_tfrsi_demat, A2_tfrsi_demat_ce,
-       A2_tfrsi_source, A2_tfrsi_source_ce, BUNDLE, BUNDLE_ce,
-       C2_cmpeq_combo, C2_cmpeqi_combo, C2_cmpeqi_combo_ce,
-       C2_cmpgt_combo, C2_cmpgti_combo, C2_cmpgti_combo_ce,
-       C2_cmpgtu_combo, C2_cmpgtui_combo, C2_cmpgtui_combo_ce,
-       C2_cmplt_combo, C2_cmpltu_combo, CFI_INSTRUCTION,
-       CFI_INSTRUCTION_ce, CONST64_Int_Real_demat,
-       CONST64_Int_Real_demat_ce, CONST64_Int_Real_source,
-       CONST64_Int_Real_source_ce, COPY, COPY_TO_REGCLASS,
-       COPY_TO_REGCLASS_ce, COPY_ce, DBG_VALUE, DBG_VALUE_ce, EH_LABEL,
-       EH_LABEL_ce, EXTRACT_SUBREG, EXTRACT_SUBREG_ce, FAULTING_LOAD_OP,
-       FAULTING_LOAD_OP_ce, GC_LABEL, GC_LABEL_ce, IMPLICIT_DEF,
-       IMPLICIT_DEF_ce, INLINEASM, INLINEASM_ce, INSERT_SUBREG,
+       A2_tfrsi_source, A2_tfrsi_source_ce, ANNOTATION_LABEL,
+       ANNOTATION_LABEL_ce, BUNDLE, BUNDLE_ce, C2_cmpeq_combo,
+       C2_cmpeqi_combo, C2_cmpeqi_combo_ce, C2_cmpgt_combo,
+       C2_cmpgti_combo, C2_cmpgti_combo_ce, C2_cmpgtu_combo,
+       C2_cmpgtui_combo, C2_cmpgtui_combo_ce, C2_cmplt_combo,
+       C2_cmpltu_combo, CFI_INSTRUCTION, CFI_INSTRUCTION_ce, COPY,
+       COPY_TO_REGCLASS, COPY_TO_REGCLASS_ce, COPY_ce, DBG_LABEL,
+       DBG_LABEL_ce, DBG_VALUE, DBG_VALUE_ce, EH_LABEL, EH_LABEL_ce,
+       EXTRACT_SUBREG, EXTRACT_SUBREG_ce, FAULTING_OP, FAULTING_OP_ce,
+       FENTRY_CALL, GC_LABEL, GC_LABEL_ce, G_ADD, G_ADDRSPACE_CAST,
+       G_ADDRSPACE_CAST_ce, G_ADD_ce, G_AND, G_AND_ce, G_ANYEXT,
+       G_ANYEXT_ce, G_ASHR, G_ASHR_ce, G_ATOMICRMW_ADD,
+       G_ATOMICRMW_ADD_ce, G_ATOMICRMW_AND, G_ATOMICRMW_AND_ce,
+       G_ATOMICRMW_MAX, G_ATOMICRMW_MAX_ce, G_ATOMICRMW_MIN,
+       G_ATOMICRMW_MIN_ce, G_ATOMICRMW_NAND, G_ATOMICRMW_NAND_ce,
+       G_ATOMICRMW_OR, G_ATOMICRMW_OR_ce, G_ATOMICRMW_SUB,
+       G_ATOMICRMW_SUB_ce, G_ATOMICRMW_UMAX, G_ATOMICRMW_UMAX_ce,
+       G_ATOMICRMW_UMIN, G_ATOMICRMW_UMIN_ce, G_ATOMICRMW_XCHG,
+       G_ATOMICRMW_XCHG_ce, G_ATOMICRMW_XOR, G_ATOMICRMW_XOR_ce,
+       G_ATOMIC_CMPXCHG, G_ATOMIC_CMPXCHG_WITH_SUCCESS,
+       G_ATOMIC_CMPXCHG_WITH_SUCCESS_ce, G_ATOMIC_CMPXCHG_ce, G_BITCAST,
+       G_BITCAST_ce, G_BLOCK_ADDR, G_BLOCK_ADDR_ce, G_BR, G_BRCOND,
+       G_BRCOND_ce, G_BRINDIRECT, G_BRINDIRECT_ce, G_BR_ce, G_BSWAP,
+       G_BSWAP_ce, G_BUILD_VECTOR, G_BUILD_VECTOR_TRUNC,
+       G_BUILD_VECTOR_TRUNC_ce, G_BUILD_VECTOR_ce, G_CONCAT_VECTORS,
+       G_CONCAT_VECTORS_ce, G_CONSTANT, G_CONSTANT_ce, G_CTLZ,
+       G_CTLZ_ZERO_UNDEF, G_CTLZ_ZERO_UNDEF_ce, G_CTLZ_ce, G_CTPOP,
+       G_CTPOP_ce, G_CTTZ, G_CTTZ_ZERO_UNDEF, G_CTTZ_ZERO_UNDEF_ce,
+       G_CTTZ_ce, G_EXTRACT, G_EXTRACT_VECTOR_ELT,
+       G_EXTRACT_VECTOR_ELT_ce, G_EXTRACT_ce, G_FABS, G_FABS_ce, G_FADD,
+       G_FADD_ce, G_FCEIL, G_FCEIL_ce, G_FCMP, G_FCMP_ce, G_FCONSTANT,
+       G_FCONSTANT_ce, G_FCOS, G_FCOS_ce, G_FDIV, G_FDIV_ce, G_FEXP,
+       G_FEXP2, G_FEXP2_ce, G_FEXP_ce, G_FLOG, G_FLOG10, G_FLOG10_ce,
+       G_FLOG2, G_FLOG2_ce, G_FLOG_ce, G_FMA, G_FMA_ce, G_FMUL, G_FMUL_ce,
+       G_FNEG, G_FNEG_ce, G_FPEXT, G_FPEXT_ce, G_FPOW, G_FPOW_ce,
+       G_FPTOSI, G_FPTOSI_ce, G_FPTOUI, G_FPTOUI_ce, G_FPTRUNC,
+       G_FPTRUNC_ce, G_FRAME_INDEX, G_FRAME_INDEX_ce, G_FREM, G_FREM_ce,
+       G_FSIN, G_FSIN_ce, G_FSQRT, G_FSQRT_ce, G_FSUB, G_FSUB_ce, G_GEP,
+       G_GEP_ce, G_GLOBAL_VALUE, G_GLOBAL_VALUE_ce, G_ICMP, G_ICMP_ce,
+       G_IMPLICIT_DEF, G_IMPLICIT_DEF_ce, G_INSERT, G_INSERT_VECTOR_ELT,
+       G_INSERT_VECTOR_ELT_ce, G_INSERT_ce, G_INTRINSIC,
+       G_INTRINSIC_ROUND, G_INTRINSIC_ROUND_ce, G_INTRINSIC_TRUNC,
+       G_INTRINSIC_TRUNC_ce, G_INTRINSIC_W_SIDE_EFFECTS,
+       G_INTRINSIC_W_SIDE_EFFECTS_ce, G_INTRINSIC_ce, G_INTTOPTR,
+       G_INTTOPTR_ce, G_LOAD, G_LOAD_ce, G_LSHR, G_LSHR_ce,
+       G_MERGE_VALUES, G_MERGE_VALUES_ce, G_MUL, G_MUL_ce, G_OR, G_OR_ce,
+       G_PHI, G_PHI_ce, G_PTRTOINT, G_PTRTOINT_ce, G_PTR_MASK,
+       G_PTR_MASK_ce, G_SADDE, G_SADDE_ce, G_SADDO, G_SADDO_ce, G_SDIV,
+       G_SDIV_ce, G_SELECT, G_SELECT_ce, G_SEXT, G_SEXTLOAD,
+       G_SEXTLOAD_ce, G_SEXT_ce, G_SHL, G_SHL_ce, G_SHUFFLE_VECTOR,
+       G_SHUFFLE_VECTOR_ce, G_SITOFP, G_SITOFP_ce, G_SMULH, G_SMULH_ce,
+       G_SMULO, G_SMULO_ce, G_SREM, G_SREM_ce, G_SSUBE, G_SSUBE_ce,
+       G_SSUBO, G_SSUBO_ce, G_STORE, G_STORE_ce, G_SUB, G_SUB_ce, G_TRUNC,
+       G_TRUNC_ce, G_UADDE, G_UADDE_ce, G_UADDO, G_UADDO_ce, G_UDIV,
+       G_UDIV_ce, G_UITOFP, G_UITOFP_ce, G_UMULH, G_UMULH_ce, G_UMULO,
+       G_UMULO_ce, G_UNMERGE_VALUES, G_UNMERGE_VALUES_ce, G_UREM,
+       G_UREM_ce, G_USUBE, G_USUBE_ce, G_USUBO, G_USUBO_ce, G_VAARG,
+       G_VAARG_ce, G_VASTART, G_VASTART_ce, G_XOR, G_XOR_ce, G_ZEXT,
+       G_ZEXTLOAD, G_ZEXTLOAD_ce, G_ZEXT_ce, ICALL_BRANCH_FUNNEL,
+       ICALL_BRANCH_FUNNEL_ce, IMPLICIT_DEF, IMPLICIT_DEF_ce, INLINEASM,
+       INLINEASM_BR, INLINEASM_BR_ce, INLINEASM_ce, INSERT_SUBREG,
        INSERT_SUBREG_ce, KILL, KILL_ce, L2_loadrb_io_fi_demat_fi,
        L2_loadrb_io_fi_demat_fi_ce, L2_loadrb_io_fi_source_fi,
        L2_loadrb_io_fi_source_fi_ce, L2_loadrd_io_fi_demat_fi,
@@ -873,237 +121,429 @@ itinerary i
        L2_loadruh_io_fi_demat_fi, L2_loadruh_io_fi_demat_fi_ce,
        L2_loadruh_io_fi_source_fi, L2_loadruh_io_fi_source_fi_ce,
        L2_loadruhgp_demat, L2_loadruhgp_demat_ce, L2_loadruhgp_source,
-       L2_loadruhgp_source_ce, L4_loadrb_abs_demat,
-       L4_loadrb_abs_demat_ce, L4_loadrb_abs_source,
-       L4_loadrb_abs_source_ce, L4_loadrd_abs_demat,
-       L4_loadrd_abs_demat_ce, L4_loadrd_abs_source,
-       L4_loadrd_abs_source_ce, L4_loadrh_abs_demat,
-       L4_loadrh_abs_demat_ce, L4_loadrh_abs_source,
-       L4_loadrh_abs_source_ce, L4_loadri_abs_demat,
-       L4_loadri_abs_demat_ce, L4_loadri_abs_source,
-       L4_loadri_abs_source_ce, L4_loadrub_abs_demat,
-       L4_loadrub_abs_demat_ce, L4_loadrub_abs_source,
-       L4_loadrub_abs_source_ce, L4_loadruh_abs_demat,
-       L4_loadruh_abs_demat_ce, L4_loadruh_abs_source,
-       L4_loadruh_abs_source_ce, LIFETIME_END, LIFETIME_END_ce,
+       L2_loadruhgp_source_ce, LIFETIME_END, LIFETIME_END_ce,
        LIFETIME_START, LIFETIME_START_ce, LOAD_STACK_GUARD, LOCAL_ESCAPE,
-       LOCAL_ESCAPE_ce, PATCHPOINT, PATCHPOINT_ce, PHI, PHI_ce,
-       REG_SEQUENCE, REG_SEQUENCE_ce, STACKMAP, STACKMAP_ce, STATEPOINT,
-       STATEPOINT_ce, SUBREG_TO_REG, SUBREG_TO_REG_ce, TFR_FI_fi_demat_fi,
+       LOCAL_ESCAPE_ce, PATCHABLE_EVENT_CALL, PATCHABLE_EVENT_CALL_ce,
+       PATCHABLE_FUNCTION_ENTER, PATCHABLE_FUNCTION_EXIT, PATCHABLE_OP,
+       PATCHABLE_OP_ce, PATCHABLE_RET, PATCHABLE_RET_ce,
+       PATCHABLE_TAIL_CALL, PATCHABLE_TAIL_CALL_ce,
+       PATCHABLE_TYPED_EVENT_CALL, PATCHABLE_TYPED_EVENT_CALL_ce,
+       PATCHPOINT, PATCHPOINT_ce, PHI, PHI_ce, REG_SEQUENCE,
+       REG_SEQUENCE_ce, STACKMAP, STACKMAP_ce, STATEPOINT, STATEPOINT_ce,
+       SUBREG_TO_REG, SUBREG_TO_REG_ce, TFR_FI_fi_demat_fi,
        TFR_FI_fi_demat_fi_ce, TFR_FI_fi_source_fi, TFR_FI_fi_source_fi_ce,
-       TFR_PdFalse_demat, TFR_PdFalse_demat_ce, TFR_PdFalse_source,
-       TFR_PdTrue_demat, TFR_PdTrue_demat_ce, TFR_PdTrue_source, Jr_merge,
-       Jump_merge, Jump_merge_ce, Ret_dealloc_merge]
+       Jr_merge, Jump_merge, Jump_merge_ce, Ret_dealloc_merge]
     = NoItinerary
   | i `elem`
-      [V4_SA1_addi, V4_SA1_addi_ce, V4_SA1_addrx, V4_SA1_addsp,
-       V4_SA1_addsp_ce, V4_SA1_and1, V4_SA1_clrf, V4_SA1_clrfnew,
-       V4_SA1_clrt, V4_SA1_clrtnew, V4_SA1_cmpeqi, V4_SA1_cmpeqi_ce,
-       V4_SA1_combine0i, V4_SA1_combine0i_ce, V4_SA1_combine1i,
-       V4_SA1_combine1i_ce, V4_SA1_combine2i, V4_SA1_combine2i_ce,
-       V4_SA1_combine3i, V4_SA1_combine3i_ce, V4_SA1_combinerz,
-       V4_SA1_combinezr, V4_SA1_dec, V4_SA1_inc, V4_SA1_seti,
-       V4_SA1_seti_ce, V4_SA1_setin1, V4_SA1_sxtb, V4_SA1_sxth,
-       V4_SA1_tfr, V4_SA1_zxtb, V4_SA1_zxth, V4_SL1_loadri_io,
-       V4_SL1_loadri_io_ce, V4_SL1_loadrub_io, V4_SL1_loadrub_io_ce,
-       V4_SL2_deallocframe, V4_SL2_jumpr31, V4_SL2_jumpr31_f,
-       V4_SL2_jumpr31_fnew, V4_SL2_jumpr31_t, V4_SL2_jumpr31_tnew,
-       V4_SL2_loadrb_io, V4_SL2_loadrb_io_ce, V4_SL2_loadrd_sp,
-       V4_SL2_loadrd_sp_ce, V4_SL2_loadrh_io, V4_SL2_loadrh_io_ce,
-       V4_SL2_loadri_sp, V4_SL2_loadri_sp_ce, V4_SL2_loadruh_io,
-       V4_SL2_loadruh_io_ce, V4_SL2_return, V4_SL2_return_f,
-       V4_SL2_return_fnew, V4_SL2_return_t, V4_SL2_return_tnew,
-       V4_SS1_storeb_io, V4_SS1_storeb_io_ce, V4_SS1_storew_io,
-       V4_SS1_storew_io_ce, V4_SS2_allocframe, V4_SS2_allocframe_ce,
-       V4_SS2_storebi0, V4_SS2_storebi0_ce, V4_SS2_storebi1,
-       V4_SS2_storebi1_ce, V4_SS2_stored_sp, V4_SS2_stored_sp_ce,
-       V4_SS2_storeh_io, V4_SS2_storeh_io_ce, V4_SS2_storew_sp,
-       V4_SS2_storew_sp_ce, V4_SS2_storewi0, V4_SS2_storewi0_ce,
-       V4_SS2_storewi1, V4_SS2_storewi1_ce]
-    = PREFIX
-  | i `elem`
-      [ADJCALLSTACKDOWN, ADJCALLSTACKDOWN_ce, ADJCALLSTACKUP,
-       ADJCALLSTACKUP_ce]
+      [A2_iconst, A2_iconst_ce, ADJCALLSTACKDOWN, ADJCALLSTACKDOWN_ce,
+       ADJCALLSTACKUP, ADJCALLSTACKUP_ce, PS_aligna, PS_aligna_ce,
+       PS_alloca, PS_alloca_ce, PS_fi, PS_fi_ce, PS_fia, PS_fia_ce,
+       PS_tailcall_i, PS_tailcall_i_ce, PS_vloadrq_ai, PS_vloadrq_ai_ce,
+       PS_vstorerq_ai, PS_vstorerq_ai_ce, V6_MAP_equb, V6_MAP_equb_and,
+       V6_MAP_equb_ior, V6_MAP_equb_xor, V6_MAP_equh, V6_MAP_equh_and,
+       V6_MAP_equh_ior, V6_MAP_equh_xor, V6_MAP_equw, V6_MAP_equw_and,
+       V6_MAP_equw_ior, V6_MAP_equw_xor, V6_extractw_alt, V6_ld0,
+       V6_ldcnp0, V6_ldcnpnt0, V6_ldcp0, V6_ldcpnt0, V6_ldnp0, V6_ldnpnt0,
+       V6_ldnt0, V6_ldntnt0, V6_ldp0, V6_ldpnt0, V6_ldtnp0, V6_ldtnpnt0,
+       V6_ldtp0, V6_ldtpnt0, V6_ldu0, V6_st0, V6_stn0, V6_stnnt0,
+       V6_stnp0, V6_stnpnt0, V6_stnq0, V6_stnqnt0, V6_stnt0, V6_stp0,
+       V6_stpnt0, V6_stq0, V6_stqnt0, V6_stu0, V6_stunp0, V6_stup0,
+       V6_vabsb_alt, V6_vabsb_sat_alt, V6_vabsdiffh_alt,
+       V6_vabsdiffub_alt, V6_vabsdiffuh_alt, V6_vabsdiffw_alt,
+       V6_vabsh_alt, V6_vabsh_sat_alt, V6_vabsw_alt, V6_vabsw_sat_alt,
+       V6_vaddb_alt, V6_vaddb_dv_alt, V6_vaddbnq_alt, V6_vaddbq_alt,
+       V6_vaddbsat_alt, V6_vaddbsat_dv_alt, V6_vaddh_alt, V6_vaddh_dv_alt,
+       V6_vaddhnq_alt, V6_vaddhq_alt, V6_vaddhsat_alt, V6_vaddhsat_dv_alt,
+       V6_vaddhw_acc_alt, V6_vaddhw_alt, V6_vaddubh_acc_alt,
+       V6_vaddubh_alt, V6_vaddubsat_alt, V6_vaddubsat_dv_alt,
+       V6_vadduhsat_alt, V6_vadduhsat_dv_alt, V6_vadduhw_acc_alt,
+       V6_vadduhw_alt, V6_vadduwsat_alt, V6_vadduwsat_dv_alt,
+       V6_vaddw_alt, V6_vaddw_dv_alt, V6_vaddwnq_alt, V6_vaddwq_alt,
+       V6_vaddwsat_alt, V6_vaddwsat_dv_alt, V6_vandnqrt_acc_alt,
+       V6_vandnqrt_alt, V6_vandqrt_acc_alt, V6_vandqrt_alt,
+       V6_vandvrt_acc_alt, V6_vandvrt_alt, V6_vaslh_acc_alt, V6_vaslh_alt,
+       V6_vaslhv_alt, V6_vaslw_acc_alt, V6_vaslw_alt, V6_vaslwv_alt,
+       V6_vasr_into_alt, V6_vasrh_acc_alt, V6_vasrh_alt, V6_vasrhv_alt,
+       V6_vasrw_acc_alt, V6_vasrw_alt, V6_vasrwv_alt, V6_vavgb_alt,
+       V6_vavgbrnd_alt, V6_vavgh_alt, V6_vavghrnd_alt, V6_vavgub_alt,
+       V6_vavgubrnd_alt, V6_vavguh_alt, V6_vavguhrnd_alt, V6_vavguw_alt,
+       V6_vavguwrnd_alt, V6_vavgw_alt, V6_vavgwrnd_alt, V6_vcl0h_alt,
+       V6_vcl0w_alt, V6_vdealb4w_alt, V6_vdealb_alt, V6_vdealh_alt,
+       V6_vdmpybus_acc_alt, V6_vdmpybus_alt, V6_vdmpybus_dv_acc_alt,
+       V6_vdmpybus_dv_alt, V6_vdmpyhb_acc_alt, V6_vdmpyhb_alt,
+       V6_vdmpyhb_dv_acc_alt, V6_vdmpyhb_dv_alt, V6_vdmpyhisat_acc_alt,
+       V6_vdmpyhisat_alt, V6_vdmpyhsat_acc_alt, V6_vdmpyhsat_alt,
+       V6_vdmpyhsuisat_acc_alt, V6_vdmpyhsuisat_alt,
+       V6_vdmpyhsusat_acc_alt, V6_vdmpyhsusat_alt, V6_vdmpyhvsat_acc_alt,
+       V6_vdmpyhvsat_alt, V6_vdsaduh_acc_alt, V6_vdsaduh_alt,
+       V6_vlsrh_alt, V6_vlsrhv_alt, V6_vlsrw_alt, V6_vlsrwv_alt,
+       V6_vmaxb_alt, V6_vmaxh_alt, V6_vmaxub_alt, V6_vmaxuh_alt,
+       V6_vmaxw_alt, V6_vminb_alt, V6_vminh_alt, V6_vminub_alt,
+       V6_vminuh_alt, V6_vminw_alt, V6_vmpabus_acc_alt, V6_vmpabus_alt,
+       V6_vmpabusv_alt, V6_vmpabuu_acc_alt, V6_vmpabuu_alt,
+       V6_vmpabuuv_alt, V6_vmpahb_acc_alt, V6_vmpahb_alt,
+       V6_vmpauhb_acc_alt, V6_vmpauhb_alt, V6_vmpybus_acc_alt,
+       V6_vmpybus_alt, V6_vmpybusv_acc_alt, V6_vmpybusv_alt,
+       V6_vmpybv_acc_alt, V6_vmpybv_alt, V6_vmpyewuh_alt,
+       V6_vmpyh_acc_alt, V6_vmpyh_alt, V6_vmpyhsat_acc_alt,
+       V6_vmpyhsrs_alt, V6_vmpyhss_alt, V6_vmpyhus_acc_alt,
+       V6_vmpyhus_alt, V6_vmpyhv_acc_alt, V6_vmpyhv_alt, V6_vmpyhvsrs_alt,
+       V6_vmpyiewh_acc_alt, V6_vmpyiewuh_acc_alt, V6_vmpyiewuh_alt,
+       V6_vmpyih_acc_alt, V6_vmpyih_alt, V6_vmpyihb_acc_alt,
+       V6_vmpyihb_alt, V6_vmpyiowh_alt, V6_vmpyiwb_acc_alt,
+       V6_vmpyiwb_alt, V6_vmpyiwh_acc_alt, V6_vmpyiwh_alt,
+       V6_vmpyiwub_acc_alt, V6_vmpyiwub_alt, V6_vmpyowh_alt,
+       V6_vmpyowh_rnd_alt, V6_vmpyowh_rnd_sacc_alt, V6_vmpyowh_sacc_alt,
+       V6_vmpyub_acc_alt, V6_vmpyub_alt, V6_vmpyubv_acc_alt,
+       V6_vmpyubv_alt, V6_vmpyuh_acc_alt, V6_vmpyuh_alt,
+       V6_vmpyuhv_acc_alt, V6_vmpyuhv_alt, V6_vnavgb_alt, V6_vnavgh_alt,
+       V6_vnavgub_alt, V6_vnavgw_alt, V6_vnormamth_alt, V6_vnormamtw_alt,
+       V6_vpackeb_alt, V6_vpackeh_alt, V6_vpackhb_sat_alt,
+       V6_vpackhub_sat_alt, V6_vpackob_alt, V6_vpackoh_alt,
+       V6_vpackwh_sat_alt, V6_vpackwuh_sat_alt, V6_vpopcounth_alt,
+       V6_vrmpybub_rtt_acc_alt, V6_vrmpybub_rtt_alt, V6_vrmpybus_acc_alt,
+       V6_vrmpybus_alt, V6_vrmpybusi_acc_alt, V6_vrmpybusi_acc_alt_ce,
+       V6_vrmpybusi_alt, V6_vrmpybusi_alt_ce, V6_vrmpybusv_acc_alt,
+       V6_vrmpybusv_alt, V6_vrmpybv_acc_alt, V6_vrmpybv_alt,
+       V6_vrmpyub_acc_alt, V6_vrmpyub_alt, V6_vrmpyub_rtt_acc_alt,
+       V6_vrmpyub_rtt_alt, V6_vrmpyubi_acc_alt, V6_vrmpyubi_acc_alt_ce,
+       V6_vrmpyubi_alt, V6_vrmpyubi_alt_ce, V6_vrmpyubv_acc_alt,
+       V6_vrmpyubv_alt, V6_vrotr_alt, V6_vroundhb_alt, V6_vroundhub_alt,
+       V6_vrounduhub_alt, V6_vrounduwuh_alt, V6_vroundwh_alt,
+       V6_vroundwuh_alt, V6_vrsadubi_acc_alt, V6_vrsadubi_acc_alt_ce,
+       V6_vrsadubi_alt, V6_vrsadubi_alt_ce, V6_vsathub_alt,
+       V6_vsatuwuh_alt, V6_vsatwh_alt, V6_vsb_alt, V6_vscattermh_add_alt,
+       V6_vscattermh_alt, V6_vscattermhq_alt, V6_vscattermw_add_alt,
+       V6_vscattermw_alt, V6_vscattermwh_add_alt, V6_vscattermwh_alt,
+       V6_vscattermwhq_alt, V6_vscattermwq_alt, V6_vsh_alt,
+       V6_vshufeh_alt, V6_vshuffb_alt, V6_vshuffeb_alt, V6_vshuffh_alt,
+       V6_vshuffob_alt, V6_vshufoeb_alt, V6_vshufoeh_alt, V6_vshufoh_alt,
+       V6_vsubb_alt, V6_vsubb_dv_alt, V6_vsubbnq_alt, V6_vsubbq_alt,
+       V6_vsubbsat_alt, V6_vsubbsat_dv_alt, V6_vsubh_alt, V6_vsubh_dv_alt,
+       V6_vsubhnq_alt, V6_vsubhq_alt, V6_vsubhsat_alt, V6_vsubhsat_dv_alt,
+       V6_vsubhw_alt, V6_vsububh_alt, V6_vsububsat_alt,
+       V6_vsububsat_dv_alt, V6_vsubuhsat_alt, V6_vsubuhsat_dv_alt,
+       V6_vsubuhw_alt, V6_vsubuwsat_alt, V6_vsubuwsat_dv_alt,
+       V6_vsubw_alt, V6_vsubw_dv_alt, V6_vsubwnq_alt, V6_vsubwq_alt,
+       V6_vsubwsat_alt, V6_vsubwsat_dv_alt, V6_vtmpyb_acc_alt,
+       V6_vtmpyb_alt, V6_vtmpybus_acc_alt, V6_vtmpybus_alt,
+       V6_vtmpyhb_acc_alt, V6_vtmpyhb_alt, V6_vtran2x2_map,
+       V6_vunpackb_alt, V6_vunpackh_alt, V6_vunpackob_alt,
+       V6_vunpackoh_alt, V6_vunpackub_alt, V6_vunpackuh_alt, V6_vzb_alt,
+       V6_vzh_alt, V6_zld0, V6_zldp0]
     = PSEUDO
-  | i `elem` [Insert4, VMULW, VMULW_ACC] = PSEUDOM
-  | i `elem` [Y4_l2fetch, Y5_l2fetch, Y5_l2locka] =
-    ST_tc_3stall_SLOT0
+  | i `elem` [PS_vmulw, PS_vmulw_acc] = PSEUDOM
+  | i `elem` [S2_storerinew_io_fi, S2_storerinew_io_fi_ce] =
+    ST_tc_st_SLOT0
   | i `elem`
-      [S2_allocframe, S2_allocframe_ce, S2_storew_locked,
-       S4_stored_locked, Y2_dccleana, Y2_dccleaninva, Y2_dcinva,
-       Y2_dczeroa, Y2_syncht]
-    = ST_tc_ld_SLOT0
-  | i `elem`
-      [S2_pstorerbnewf_pi, S2_pstorerbnewf_pi_ce, S2_pstorerbnewfnew_pi,
-       S2_pstorerbnewfnew_pi_ce, S2_pstorerbnewt_pi,
-       S2_pstorerbnewt_pi_ce, S2_pstorerbnewtnew_pi,
-       S2_pstorerbnewtnew_pi_ce, S2_pstorerhnewf_pi,
-       S2_pstorerhnewf_pi_ce, S2_pstorerhnewfnew_pi,
-       S2_pstorerhnewfnew_pi_ce, S2_pstorerhnewt_pi,
-       S2_pstorerhnewt_pi_ce, S2_pstorerhnewtnew_pi,
-       S2_pstorerhnewtnew_pi_ce, S2_pstorerinewf_pi,
-       S2_pstorerinewf_pi_ce, S2_pstorerinewfnew_pi,
-       S2_pstorerinewfnew_pi_ce, S2_pstorerinewt_pi,
-       S2_pstorerinewt_pi_ce, S2_pstorerinewtnew_pi,
-       S2_pstorerinewtnew_pi_ce, S2_storerbnew_io, S2_storerbnew_io_ce,
-       S2_storerbnew_pi, S2_storerbnew_pi_ce, S2_storerbnew_pr,
-       S2_storerhnew_io, S2_storerhnew_io_ce, S2_storerhnew_pi,
-       S2_storerhnew_pi_ce, S2_storerhnew_pr, S2_storerinew_io,
-       S2_storerinew_io_ce, S2_storerinew_io_fi, S2_storerinew_io_fi_ce,
-       S2_storerinew_pi, S2_storerinew_pi_ce, S2_storerinew_pr,
-       S4_pstorerbnewf_abs, S4_pstorerbnewf_abs_ce,
-       S4_pstorerbnewfnew_abs, S4_pstorerbnewfnew_abs_ce,
-       S4_pstorerbnewt_abs, S4_pstorerbnewt_abs_ce,
-       S4_pstorerbnewtnew_abs, S4_pstorerbnewtnew_abs_ce,
-       S4_pstorerhnewf_abs, S4_pstorerhnewf_abs_ce,
-       S4_pstorerhnewfnew_abs, S4_pstorerhnewfnew_abs_ce,
-       S4_pstorerhnewt_abs, S4_pstorerhnewt_abs_ce,
-       S4_pstorerhnewtnew_abs, S4_pstorerhnewtnew_abs_ce,
-       S4_pstorerinewf_abs, S4_pstorerinewf_abs_ce,
-       S4_pstorerinewfnew_abs, S4_pstorerinewfnew_abs_ce,
-       S4_pstorerinewt_abs, S4_pstorerinewt_abs_ce,
-       S4_pstorerinewtnew_abs, S4_pstorerinewtnew_abs_ce, Y2_barrier,
-       Y5_l2gclean, Y5_l2gcleaninv, Y5_l2gunlock, Y5_l2unlocka,
-       Y6_l2gcleaninvpa, Y6_l2gcleanpa]
-    = ST_tc_st_SLOT0
-  | i `elem`
-      [S2_pstorerbf_pi, S2_pstorerbf_pi_ce, S2_pstorerbfnew_pi,
-       S2_pstorerbfnew_pi_ce, S2_pstorerbt_pi, S2_pstorerbt_pi_ce,
-       S2_pstorerbtnew_pi, S2_pstorerbtnew_pi_ce, S2_pstorerdf_pi,
-       S2_pstorerdf_pi_ce, S2_pstorerdfnew_pi, S2_pstorerdfnew_pi_ce,
-       S2_pstorerdt_pi, S2_pstorerdt_pi_ce, S2_pstorerdtnew_pi,
-       S2_pstorerdtnew_pi_ce, S2_pstorerff_pi, S2_pstorerff_pi_ce,
-       S2_pstorerffnew_pi, S2_pstorerffnew_pi_ce, S2_pstorerft_pi,
-       S2_pstorerft_pi_ce, S2_pstorerftnew_pi, S2_pstorerftnew_pi_ce,
-       S2_pstorerhf_pi, S2_pstorerhf_pi_ce, S2_pstorerhfnew_pi,
-       S2_pstorerhfnew_pi_ce, S2_pstorerht_pi, S2_pstorerht_pi_ce,
-       S2_pstorerhtnew_pi, S2_pstorerhtnew_pi_ce, S2_pstorerif_pi,
-       S2_pstorerif_pi_ce, S2_pstorerifnew_pi, S2_pstorerifnew_pi_ce,
-       S2_pstorerit_pi, S2_pstorerit_pi_ce, S2_pstoreritnew_pi,
-       S2_pstoreritnew_pi_ce, S2_storerb_io, S2_storerb_io_ce,
-       S2_storerb_io_fi, S2_storerb_io_fi_ce, S2_storerb_pbr,
-       S2_storerb_pbr_pseudo, S2_storerb_pci, S2_storerb_pci_ce,
-       S2_storerb_pci_pseudo, S2_storerb_pci_pseudo_ce, S2_storerb_pcr,
-       S2_storerb_pi, S2_storerb_pi_ce, S2_storerb_pr, S2_storerd_io,
-       S2_storerd_io_ce, S2_storerd_io_fi, S2_storerd_io_fi_ce,
-       S2_storerd_pbr, S2_storerd_pbr_pseudo, S2_storerd_pci,
-       S2_storerd_pci_ce, S2_storerd_pci_pseudo, S2_storerd_pci_pseudo_ce,
-       S2_storerd_pcr, S2_storerd_pi, S2_storerd_pi_ce, S2_storerd_pr,
-       S2_storerf_io, S2_storerf_io_ce, S2_storerf_io_fi,
-       S2_storerf_io_fi_ce, S2_storerf_pbr, S2_storerf_pbr_pseudo,
-       S2_storerf_pci, S2_storerf_pci_ce, S2_storerf_pci_pseudo,
-       S2_storerf_pci_pseudo_ce, S2_storerf_pcr, S2_storerf_pi,
-       S2_storerf_pi_ce, S2_storerf_pr, S2_storerh_io, S2_storerh_io_ce,
-       S2_storerh_io_fi, S2_storerh_io_fi_ce, S2_storerh_pbr,
-       S2_storerh_pbr_pseudo, S2_storerh_pci, S2_storerh_pci_ce,
-       S2_storerh_pci_pseudo, S2_storerh_pci_pseudo_ce, S2_storerh_pcr,
-       S2_storerh_pi, S2_storerh_pi_ce, S2_storerh_pr, S2_storeri_io,
-       S2_storeri_io_ce, S2_storeri_io_fi, S2_storeri_io_fi_ce,
-       S2_storeri_pbr, S2_storeri_pbr_pseudo, S2_storeri_pci,
-       S2_storeri_pci_ce, S2_storeri_pci_pseudo, S2_storeri_pci_pseudo_ce,
-       S2_storeri_pcr, S2_storeri_pi, S2_storeri_pi_ce, S2_storeri_pr,
-       S4_pstorerbf_abs, S4_pstorerbf_abs_ce, S4_pstorerbfnew_abs,
-       S4_pstorerbfnew_abs_ce, S4_pstorerbt_abs, S4_pstorerbt_abs_ce,
-       S4_pstorerbtnew_abs, S4_pstorerbtnew_abs_ce, S4_pstorerdf_abs,
-       S4_pstorerdf_abs_ce, S4_pstorerdfnew_abs, S4_pstorerdfnew_abs_ce,
-       S4_pstorerdt_abs, S4_pstorerdt_abs_ce, S4_pstorerdtnew_abs,
-       S4_pstorerdtnew_abs_ce, S4_pstorerff_abs, S4_pstorerff_abs_ce,
-       S4_pstorerffnew_abs, S4_pstorerffnew_abs_ce, S4_pstorerft_abs,
-       S4_pstorerft_abs_ce, S4_pstorerftnew_abs, S4_pstorerftnew_abs_ce,
-       S4_pstorerhf_abs, S4_pstorerhf_abs_ce, S4_pstorerhfnew_abs,
-       S4_pstorerhfnew_abs_ce, S4_pstorerht_abs, S4_pstorerht_abs_ce,
-       S4_pstorerhtnew_abs, S4_pstorerhtnew_abs_ce, S4_pstorerif_abs,
-       S4_pstorerif_abs_ce, S4_pstorerifnew_abs, S4_pstorerifnew_abs_ce,
-       S4_pstorerit_abs, S4_pstorerit_abs_ce, S4_pstoreritnew_abs,
-       S4_pstoreritnew_abs_ce, S4_storerb_ap, S4_storerb_ap_ce,
-       S4_storerb_ur, S4_storerb_ur_ce, S4_storerd_ap, S4_storerd_ap_ce,
-       S4_storerd_ur, S4_storerd_ur_ce, S4_storerf_ap, S4_storerf_ap_ce,
-       S4_storerf_ur, S4_storerf_ur_ce, S4_storerh_ap, S4_storerh_ap_ce,
-       S4_storerh_ur, S4_storerh_ur_ce, S4_storeri_ap, S4_storeri_ap_ce,
-       S4_storeri_ur, S4_storeri_ur_ce, STD, STD_ce, STD_cs, STD_cs_ce,
-       STW, STW_ce, STriq_pred_V6, STriq_pred_V6_128B,
-       STriq_pred_V6_128B_ce, STriq_pred_V6_ce, STriq_pred_vec_V6,
-       STriq_pred_vec_V6_128B, STriq_pred_vec_V6_128B_ce,
-       STriq_pred_vec_V6_ce, STriv_pseudo_V6, STriv_pseudo_V6_128B,
-       STriv_pseudo_V6_128B_ce, STriv_pseudo_V6_ce, STrivv_pseudo_V6,
-       STrivv_pseudo_V6_128B, STrivv_pseudo_V6_128B_ce,
-       STrivv_pseudo_V6_ce, STriw_pred, STriw_pred_ce]
+      [S2_storerb_io_fi, S2_storerb_io_fi_ce, S2_storerd_io_fi,
+       S2_storerd_io_fi_ce, S2_storerh_io_fi, S2_storerh_io_fi_ce,
+       S2_storeri_io_fi, S2_storeri_io_fi_ce, STD, STD_ce, STD_cs,
+       STD_cs_ce, STW, STW_ce, STriw_ctr, STriw_ctr_ce, STriw_pred,
+       STriw_pred_ce]
     = ST_tc_st_SLOT01
+  | i `elem` [S4_storeiri_io_fi, S4_storeiri_io_fi_ce] =
+    V4LDST_tc_st_SLOT01
   | i `elem`
-      [A2_absp, A2_negp, A2_notp, A2_roundsat, A2_sat, A2_satb, A2_sath,
-       A2_satub, A2_satuh, A2_swiz, A2_sxtw, A2_vabsh, A2_vabshsat,
-       A2_vabsw, A2_vabswsat, A2_vconj, C2_mask, C2_pxfer_map, C2_tfrpr,
-       C2_vitpack, F2_sfinvsqrta, MVPR, MVPR_ce, S2_asl_i_p,
-       S2_asl_i_p_ce, S2_asl_i_r, S2_asl_i_r_ce, S2_asl_i_vh,
-       S2_asl_i_vh_ce, S2_asl_i_vw, S2_asl_i_vw_ce, S2_asr_i_p,
-       S2_asr_i_p_ce, S2_asr_i_p_rnd, S2_asr_i_p_rnd_ce, S2_asr_i_r,
-       S2_asr_i_r_ce, S2_asr_i_r_rnd_goodsyntax,
-       S2_asr_i_r_rnd_goodsyntax_ce, S2_asr_i_vh, S2_asr_i_vh_ce,
-       S2_asr_i_vw, S2_asr_i_vw_ce, S2_brevp, S2_cabacencbin, S2_cl0,
-       S2_cl0p, S2_cl1, S2_cl1p, S2_clb, S2_clbnorm, S2_clbp, S2_clrbit_i,
-       S2_clrbit_i_ce, S2_ct0, S2_ct0p, S2_ct1, S2_ct1p, S2_deinterleave,
-       S2_interleave, S2_lsr_i_p, S2_lsr_i_p_ce, S2_lsr_i_r,
-       S2_lsr_i_r_ce, S2_lsr_i_vh, S2_lsr_i_vh_ce, S2_lsr_i_vw,
-       S2_lsr_i_vw_ce, S2_setbit_i, S2_setbit_i_ce, S2_svsathb,
-       S2_svsathub, S2_tableidxb, S2_tableidxb_ce,
-       S2_tableidxb_goodsyntax, S2_tableidxb_goodsyntax_ce, S2_tableidxd,
-       S2_tableidxd_ce, S2_tableidxd_goodsyntax,
-       S2_tableidxd_goodsyntax_ce, S2_tableidxh, S2_tableidxh_ce,
-       S2_tableidxh_goodsyntax, S2_tableidxh_goodsyntax_ce, S2_tableidxw,
-       S2_tableidxw_ce, S2_tableidxw_goodsyntax,
-       S2_tableidxw_goodsyntax_ce, S2_togglebit_i, S2_togglebit_i_ce,
-       S2_vsathb, S2_vsathb_nopack, S2_vsathub, S2_vsathub_nopack,
-       S2_vsatwh, S2_vsatwh_nopack, S2_vsatwuh, S2_vsatwuh_nopack,
-       S2_vsplatrb, S2_vsplatrh, S2_vsxtbh, S2_vsxthw, S2_vtrunehb,
-       S2_vtrunohb, S2_vzxtbh, S2_vzxthw, S4_clbpnorm,
-       S5_asrhub_rnd_sat_goodsyntax, S5_asrhub_rnd_sat_goodsyntax_ce,
+      [A2_vavghcr, A2_vavgwcr, A2_vnavghcr, A2_vnavghr, A2_vnavgwcr,
+       A2_vnavgwr, A4_cround_ri, A4_cround_ri_ce, A4_cround_rr,
+       A4_round_ri, A4_round_ri_ce, A4_round_ri_sat, A4_round_ri_sat_ce,
+       A4_round_rr, A4_round_rr_sat, A5_vaddhubs, M2_vabsdiffh,
+       M2_vabsdiffw, S2_asr_i_p_rnd, S2_asr_i_p_rnd_ce,
+       S2_asr_i_p_rnd_goodsyntax, S2_asr_i_p_rnd_goodsyntax_ce,
+       S2_asr_i_r_rnd, S2_asr_i_r_rnd_ce, S2_asr_i_r_rnd_goodsyntax,
+       S2_asr_i_r_rnd_goodsyntax_ce, S2_extractu_rp, S2_extractup_rp,
+       S2_lfsp, S2_parityp, S2_vcrotate, S4_clbaddi, S4_clbaddi_ce,
+       S4_clbpaddi, S4_clbpaddi_ce, S4_extract_rp, S4_extractp_rp,
+       S4_parity, S4_vxaddsubhr, S4_vxsubaddhr, S5_asrhub_rnd_sat,
+       S5_asrhub_rnd_sat_ce, S5_asrhub_rnd_sat_goodsyntax,
+       S5_asrhub_rnd_sat_goodsyntax_ce, S5_asrhub_sat, S5_asrhub_sat_ce,
        S5_vasrhrnd, S5_vasrhrnd_ce, S5_vasrhrnd_goodsyntax,
-       S5_vasrhrnd_goodsyntax_ce, S6_rol_i_p, S6_rol_i_p_acc,
-       S6_rol_i_p_acc_ce, S6_rol_i_p_and, S6_rol_i_p_and_ce,
-       S6_rol_i_p_ce, S6_rol_i_p_nac, S6_rol_i_p_nac_ce, S6_rol_i_p_or,
-       S6_rol_i_p_or_ce, S6_rol_i_p_xacc, S6_rol_i_p_xacc_ce, S6_rol_i_r,
-       S6_rol_i_r_acc, S6_rol_i_r_acc_ce, S6_rol_i_r_and,
-       S6_rol_i_r_and_ce, S6_rol_i_r_ce, S6_rol_i_r_nac,
-       S6_rol_i_r_nac_ce, S6_rol_i_r_or, S6_rol_i_r_or_ce,
-       S6_rol_i_r_xacc, S6_rol_i_r_xacc_ce, TFR_PdFalse,
-       TFR_PdFalse_remat, TFR_PdFalse_remat_ce, TFR_PdTrue,
-       TFR_PdTrue_remat, TFR_PdTrue_remat_ce]
-    = S_2op_tc_1_SLOT23
+       S5_vasrhrnd_goodsyntax_ce]
+    = Tc_002cb246
   | i `elem`
-      [A2_abs, A2_abssat, A2_negsat, A4_bitspliti, A4_bitspliti_ce,
-       A4_cround_ri, A4_cround_ri_ce, A4_round_ri, A4_round_ri_ce,
-       A4_round_ri_sat, A4_round_ri_sat_ce, S2_asl_i_p_acc,
-       S2_asl_i_p_acc_ce, S2_asl_i_p_and, S2_asl_i_p_and_ce,
-       S2_asl_i_p_nac, S2_asl_i_p_nac_ce, S2_asl_i_p_or, S2_asl_i_p_or_ce,
-       S2_asl_i_p_xacc, S2_asl_i_p_xacc_ce, S2_asl_i_r_acc,
-       S2_asl_i_r_acc_ce, S2_asl_i_r_and, S2_asl_i_r_and_ce,
-       S2_asl_i_r_nac, S2_asl_i_r_nac_ce, S2_asl_i_r_or, S2_asl_i_r_or_ce,
-       S2_asl_i_r_sat, S2_asl_i_r_sat_ce, S2_asl_i_r_xacc,
-       S2_asl_i_r_xacc_ce, S2_asr_i_p_acc, S2_asr_i_p_acc_ce,
-       S2_asr_i_p_and, S2_asr_i_p_and_ce, S2_asr_i_p_nac,
-       S2_asr_i_p_nac_ce, S2_asr_i_p_or, S2_asr_i_p_or_ce, S2_asr_i_r_acc,
-       S2_asr_i_r_acc_ce, S2_asr_i_r_and, S2_asr_i_r_and_ce,
-       S2_asr_i_r_nac, S2_asr_i_r_nac_ce, S2_asr_i_r_or, S2_asr_i_r_or_ce,
-       S2_asr_i_r_rnd, S2_asr_i_r_rnd_ce, S2_asr_i_svw_trun,
-       S2_asr_i_svw_trun_ce, S2_brev, S2_extractu, S2_extractu_ce,
-       S2_extractup, S2_extractup_ce, S2_insert, S2_insert_ce, S2_insertp,
-       S2_insertp_ce, S2_lsr_i_p_acc, S2_lsr_i_p_acc_ce, S2_lsr_i_p_and,
-       S2_lsr_i_p_and_ce, S2_lsr_i_p_nac, S2_lsr_i_p_nac_ce,
-       S2_lsr_i_p_or, S2_lsr_i_p_or_ce, S2_lsr_i_p_xacc,
-       S2_lsr_i_p_xacc_ce, S2_lsr_i_r_acc, S2_lsr_i_r_acc_ce,
-       S2_lsr_i_r_and, S2_lsr_i_r_and_ce, S2_lsr_i_r_nac,
-       S2_lsr_i_r_nac_ce, S2_lsr_i_r_or, S2_lsr_i_r_or_ce,
-       S2_lsr_i_r_xacc, S2_lsr_i_r_xacc_ce, S2_vrndpackwh, S2_vrndpackwhs,
-       S4_clbaddi, S4_clbaddi_ce, S4_clbpaddi, S4_clbpaddi_ce, S4_extract,
-       S4_extract_ce, S4_extractp, S4_extractp_ce, S5_asrhub_rnd_sat,
-       S5_asrhub_rnd_sat_ce, S5_asrhub_sat, S5_asrhub_sat_ce,
-       S5_popcountp]
-    = S_2op_tc_2_SLOT23
+      [PS_storerbabs, PS_storerbabs_ce, PS_storerdabs, PS_storerdabs_ce,
+       PS_storerfabs, PS_storerfabs_ce, PS_storerhabs, PS_storerhabs_ce,
+       PS_storeriabs, PS_storeriabs_ce, S2_storerbgp, S2_storerbgp_ce,
+       S2_storerdgp, S2_storerdgp_ce, S2_storerfgp, S2_storerfgp_ce,
+       S2_storerhgp, S2_storerhgp_ce, S2_storerigp, S2_storerigp_ce,
+       SS2_stored_sp, SS2_stored_sp_ce, SS2_storew_sp, SS2_storew_sp_ce]
+    = Tc_0371abea
+  | i `elem` [V6_vunpackb, V6_vunpackh, V6_vunpackub, V6_vunpackuh] =
+    Tc_04da405a
+  | i `elem` [V6_vgathermhw] = Tc_05058f6f
+  | i `elem` [V6_vgathermhq, V6_vgathermwq] = Tc_05ac6f98
   | i `elem`
-      [C2_bitsclri, C2_bitsclri_ce, C2_tfrrp, C4_nbitsclri,
-       C4_nbitsclri_ce, F2_sfclass, F2_sfclass_ce, MVRP, MVRP_ce,
-       S2_tstbit_i, S2_tstbit_i_ce, S4_ntstbit_i, S4_ntstbit_i_ce]
-    = S_2op_tc_2early_SLOT23
+      [A2_paddfnew, A2_paddifnew, A2_paddifnew_ce, A2_padditnew,
+       A2_padditnew_ce, A2_paddtnew, A2_pandfnew, A2_pandtnew, A2_porfnew,
+       A2_portnew, A2_psubfnew, A2_psubtnew, A2_pxorfnew, A2_pxortnew,
+       A2_tfrfnew, A2_tfrtnew, C2_ccombinewnewf, C2_ccombinewnewt]
+    = Tc_05c070ec
+  | i `elem`
+      [V6_vaddclbh, V6_vaddclbw, V6_vaslhv, V6_vaslwv, V6_vasrhv,
+       V6_vasrwv, V6_vlsrhv, V6_vlsrwv, V6_vrotr, V6_vroundhb,
+       V6_vroundhub, V6_vrounduhub, V6_vrounduwuh, V6_vroundwh,
+       V6_vroundwuh]
+    = Tc_05ca8cfd
+  | i `elem`
+      [M2_macsin, M2_macsin_ce, M2_macsip, M2_macsip_ce, M4_mpyri_addi,
+       M4_mpyri_addi_ce, M4_mpyri_addr, M4_mpyri_addr_ce]
+    = Tc_05d3a09b
+  | i `elem`
+      [J4_jumpseti, J4_jumpseti_ce, J4_jumpsetr, J4_jumpsetr_ce]
+    = Tc_0663f615
+  | i `elem`
+      [V6_vaddhw_acc, V6_vaddubh_acc, V6_vadduhw_acc, V6_vdmpyhvsat_acc,
+       V6_vmpybusv_acc, V6_vmpybv_acc, V6_vmpyhus_acc, V6_vmpyhv_acc,
+       V6_vmpyiewh_acc, V6_vmpyiewuh_acc, V6_vmpyih_acc,
+       V6_vmpyowh_64_acc, V6_vmpyowh_rnd_sacc, V6_vmpyowh_sacc,
+       V6_vmpyubv_acc, V6_vmpyuhv_acc, V6_vrmpybusv_acc, V6_vrmpybv_acc,
+       V6_vrmpyubv_acc]
+    = Tc_08a4f1b6
+  | i `elem`
+      [L4_iadd_memopb_io, L4_iadd_memopb_io_ce, L4_iadd_memopb_zomap,
+       L4_iadd_memopb_zomap_ce, L4_iadd_memoph_io, L4_iadd_memoph_io_ce,
+       L4_iadd_memoph_zomap, L4_iadd_memoph_zomap_ce, L4_iadd_memopw_io,
+       L4_iadd_memopw_io_ce, L4_iadd_memopw_zomap,
+       L4_iadd_memopw_zomap_ce, L4_iand_memopb_io, L4_iand_memopb_io_ce,
+       L4_iand_memopb_zomap, L4_iand_memopb_zomap_ce, L4_iand_memoph_io,
+       L4_iand_memoph_io_ce, L4_iand_memoph_zomap,
+       L4_iand_memoph_zomap_ce, L4_iand_memopw_io, L4_iand_memopw_io_ce,
+       L4_iand_memopw_zomap, L4_iand_memopw_zomap_ce, L4_ior_memopb_io,
+       L4_ior_memopb_io_ce, L4_ior_memopb_zomap, L4_ior_memopb_zomap_ce,
+       L4_ior_memoph_io, L4_ior_memoph_io_ce, L4_ior_memoph_zomap,
+       L4_ior_memoph_zomap_ce, L4_ior_memopw_io, L4_ior_memopw_io_ce,
+       L4_ior_memopw_zomap, L4_ior_memopw_zomap_ce, L4_isub_memopb_io,
+       L4_isub_memopb_io_ce, L4_isub_memopb_zomap,
+       L4_isub_memopb_zomap_ce, L4_isub_memoph_io, L4_isub_memoph_io_ce,
+       L4_isub_memoph_zomap, L4_isub_memoph_zomap_ce, L4_isub_memopw_io,
+       L4_isub_memopw_io_ce, L4_isub_memopw_zomap,
+       L4_isub_memopw_zomap_ce]
+    = Tc_096199d3
+  | i `elem` [SA1_addi, SA1_addi_ce, SA1_addrx, SA1_dec, SA1_dec_ce]
+    = Tc_0a705168
+  | i `elem`
+      [A2_negp, A2_notp, A2_sat, A2_satb, A2_sath, A2_satub, A2_satuh,
+       A2_swiz, A2_sxtw, C2_mask, C2_tfrpr, MVPR, MVPR_ce, S2_svsathb,
+       S2_svsathub, S2_vsathb, S2_vsathb_nopack, S2_vsathub,
+       S2_vsathub_nopack, S2_vsatwh, S2_vsatwh_nopack, S2_vsatwuh,
+       S2_vsatwuh_nopack, S2_vsplatrb, S2_vsplatrh, S2_vsxtbh, S2_vsxthw,
+       S2_vtrunehb, S2_vtrunohb, S2_vzxtbh, S2_vzxthw]
+    = Tc_0ae0825c
+  | i `elem`
+      [V6_vdmpybus_dv, V6_vdmpyhb_dv, V6_vdmpyhisat, V6_vdmpyhsat,
+       V6_vdmpyhsuisat, V6_vdmpyhsusat, V6_vdsaduh, V6_vmpabus,
+       V6_vmpabuu, V6_vmpahb, V6_vmpauhb, V6_vmpybus, V6_vmpyh,
+       V6_vmpyhsrs, V6_vmpyhss, V6_vmpyiwh, V6_vmpyub, V6_vmpyuh,
+       V6_vtmpyb, V6_vtmpybus, V6_vtmpyhb]
+    = Tc_0b04c6c7
+  | i `elem`
+      [S4_storeirbf_io, S4_storeirbf_io_ce, S4_storeirbf_zomap,
+       S4_storeirbf_zomap_ce, S4_storeirbt_io, S4_storeirbt_io_ce,
+       S4_storeirbt_zomap, S4_storeirbt_zomap_ce, S4_storeirhf_io,
+       S4_storeirhf_io_ce, S4_storeirhf_zomap, S4_storeirhf_zomap_ce,
+       S4_storeirht_io, S4_storeirht_io_ce, S4_storeirht_zomap,
+       S4_storeirht_zomap_ce, S4_storeirif_io, S4_storeirif_io_ce,
+       S4_storeirif_zomap, S4_storeirif_zomap_ce, S4_storeirit_io,
+       S4_storeirit_io_ce, S4_storeirit_zomap, S4_storeirit_zomap_ce]
+    = Tc_0b2be201
+  | i `elem` [G4_tfrgcpp, G4_tfrgcrr] = Tc_0d8f5752
+  | i `elem`
+      [V6_pred_not, V6_vabsb, V6_vabsb_sat, V6_vabsh, V6_vabsh_sat,
+       V6_vabsub_alt, V6_vabsuh_alt, V6_vabsuw_alt, V6_vabsw,
+       V6_vabsw_sat, V6_vassign, V6_vnot]
+    = Tc_0ec46cf9
+  | i `elem`
+      [V6_vS32Ub_npred_ai, V6_vS32Ub_npred_ai_ce, V6_vS32Ub_pred_ai,
+       V6_vS32Ub_pred_ai_ce]
+    = Tc_131f1c81
+  | i `elem` [V6_vhist, V6_vwhist128, V6_vwhist256, V6_vwhist256_sat]
+    = Tc_1381a97c
+  | i `elem` [S4_vrcrotate, S4_vrcrotate_ce] = Tc_13bfbcf9
+  | i `elem`
+      [S4_storerb_ur, S4_storerb_ur_ce, S4_storerd_ur, S4_storerd_ur_ce,
+       S4_storerf_ur, S4_storerf_ur_ce, S4_storerh_ur, S4_storerh_ur_ce,
+       S4_storeri_ur, S4_storeri_ur_ce]
+    = Tc_14b272fa
+  | i `elem`
+      [S2_brev, S2_brevp, S2_cl0, S2_cl0p, S2_cl1, S2_cl1p, S2_clb,
+       S2_clbnorm, S2_clbp, S2_ct0, S2_ct0p, S2_ct1, S2_ct1p,
+       S2_deinterleave, S2_interleave, S2_vrndpackwh, S4_clbpnorm]
+    = Tc_14b5c689
+  | i `elem`
+      [L2_deallocframe, L2_deallocframe_linear,
+       L6_deallocframe_map_to_raw]
+    = Tc_15aa71c5
+  | i `elem` [V6_vrmpybub_rtt_acc, V6_vrmpyub_rtt_acc] = Tc_15fdf750
+  | i `elem`
+      [V6_vasrhbrndsat, V6_vasrhbrndsat_alt, V6_vasrhbsat,
+       V6_vasrhubrndsat, V6_vasrhubrndsat_alt, V6_vasrhubsat,
+       V6_vasrhubsat_alt, V6_vasruhubrndsat, V6_vasruhubsat,
+       V6_vasruwuhrndsat, V6_vasruwuhsat, V6_vasrwh, V6_vasrwh_alt,
+       V6_vasrwhrndsat, V6_vasrwhrndsat_alt, V6_vasrwhsat,
+       V6_vasrwhsat_alt, V6_vasrwuhrndsat, V6_vasrwuhsat,
+       V6_vasrwuhsat_alt]
+    = Tc_16ff9ef8
+  | i `elem` [Y2_wait] = Tc_174516e8
+  | i `elem`
+      [L2_loadbsw2_io, L2_loadbsw2_io_ce, L2_loadbsw2_zomap,
+       L2_loadbsw4_io, L2_loadbsw4_io_ce, L2_loadbsw4_zomap,
+       L2_loadbzw2_io, L2_loadbzw2_io_ce, L2_loadbzw2_zomap,
+       L2_loadbzw4_io, L2_loadbzw4_io_ce, L2_loadbzw4_zomap, L2_loadrb_io,
+       L2_loadrb_io_ce, L2_loadrb_zomap, L2_loadrd_io, L2_loadrd_io_ce,
+       L2_loadrd_zomap, L2_loadrh_io, L2_loadrh_io_ce, L2_loadrh_zomap,
+       L2_loadri_io, L2_loadri_io_ce, L2_loadri_zomap, L2_loadrub_io,
+       L2_loadrub_io_ce, L2_loadrub_zomap, L2_loadruh_io,
+       L2_loadruh_io_ce, L2_loadruh_zomap, SL1_loadri_io,
+       SL1_loadri_io_ce, SL1_loadrub_io, SL1_loadrub_io_ce, SL2_loadrb_io,
+       SL2_loadrb_io_ce, SL2_loadrh_io, SL2_loadrh_io_ce, SL2_loadruh_io,
+       SL2_loadruh_io_ce]
+    = Tc_17e0d2cd
+  | i `elem`
+      [V6_vS32b_nqpred_pi, V6_vS32b_nqpred_pi_ce, V6_vS32b_nqpred_ppu,
+       V6_vS32b_nt_nqpred_pi, V6_vS32b_nt_nqpred_pi_ce,
+       V6_vS32b_nt_nqpred_ppu, V6_vS32b_nt_qpred_pi,
+       V6_vS32b_nt_qpred_pi_ce, V6_vS32b_nt_qpred_ppu, V6_vS32b_qpred_pi,
+       V6_vS32b_qpred_pi_ce, V6_vS32b_qpred_ppu]
+    = Tc_191381c1
+  | i `elem` [M4_mpyri_addr_u2, M4_mpyri_addr_u2_ce] = Tc_1a2fd869
+  | i `elem`
+      [V6_vrmpybusi, V6_vrmpybusi_ce, V6_vrmpyubi, V6_vrmpyubi_ce,
+       V6_vrsadubi, V6_vrsadubi_ce]
+    = Tc_1ad8a370
+  | i `elem` [J2_callrf, J2_callrt] = Tc_1ad90acd
+  | i `elem`
+      [A2_tfrpfnew, A2_tfrptnew, A4_paslhfnew, A4_paslhtnew,
+       A4_pasrhfnew, A4_pasrhtnew, A4_psxtbfnew, A4_psxtbtnew,
+       A4_psxthfnew, A4_psxthtnew, A4_pzxtbfnew, A4_pzxtbtnew,
+       A4_pzxthfnew, A4_pzxthtnew, C2_cmovenewif, C2_cmovenewif_ce,
+       C2_cmovenewit, C2_cmovenewit_ce]
+    = Tc_1ae57e39
+  | i `elem` [J2_endloop0, J2_endloop01, J2_endloop1] = Tc_1b6f7cec
+  | i `elem`
+      [V6_vL32b_cur_pi, V6_vL32b_cur_pi_ce, V6_vL32b_cur_ppu,
+       V6_vL32b_nt_cur_pi, V6_vL32b_nt_cur_pi_ce, V6_vL32b_nt_cur_ppu,
+       V6_vL32b_nt_pi, V6_vL32b_nt_pi_ce, V6_vL32b_nt_ppu, V6_vL32b_pi,
+       V6_vL32b_pi_ce, V6_vL32b_ppu]
+    = Tc_1ba8a0cd
+  | i `elem`
+      [J2_ploop1si, J2_ploop1si_ce, J2_ploop2si, J2_ploop2si_ce,
+       J2_ploop3si, J2_ploop3si_ce]
+    = Tc_1c4528a2
+  | i `elem` [A2_svavgh, A2_svnavgh] = Tc_1c80410a
+  | i `elem` [J2_callf, J2_callf_ce, J2_callt, J2_callt_ce] =
+    Tc_1d81e60e
+  | i `elem`
+      [A6_vcmpbeq_notany, S6_rol_i_p, S6_rol_i_p_ce, S6_rol_i_r,
+       S6_rol_i_r_ce, S6_vtrunehb_ppp, S6_vtrunohb_ppp]
+    = Tc_1fc97744
+  | i `elem`
+      [V6_vS32b_srls_pi, V6_vS32b_srls_pi_ce, V6_vS32b_srls_ppu]
+    = Tc_20a4bbec
+  | i `elem`
+      [J2_jumpfnew, J2_jumpfnew_ce, J2_jumpfnewpt, J2_jumpfnewpt_ce,
+       J2_jumptnew, J2_jumptnew_ce, J2_jumptnewpt, J2_jumptnewpt_ce]
+    = Tc_20cdee80
+  | i `elem`
+      [J4_tstbit0_fp0_jump_nt, J4_tstbit0_fp0_jump_nt_ce,
+       J4_tstbit0_fp0_jump_t, J4_tstbit0_fp0_jump_t_ce,
+       J4_tstbit0_fp1_jump_nt, J4_tstbit0_fp1_jump_nt_ce,
+       J4_tstbit0_fp1_jump_t, J4_tstbit0_fp1_jump_t_ce,
+       J4_tstbit0_tp0_jump_nt, J4_tstbit0_tp0_jump_nt_ce,
+       J4_tstbit0_tp0_jump_t, J4_tstbit0_tp0_jump_t_ce,
+       J4_tstbit0_tp1_jump_nt, J4_tstbit0_tp1_jump_nt_ce,
+       J4_tstbit0_tp1_jump_t, J4_tstbit0_tp1_jump_t_ce]
+    = Tc_2332b92e
+  | i `elem`
+      [S2_pstorerbf_pi, S2_pstorerbf_pi_ce, S2_pstorerbt_pi,
+       S2_pstorerbt_pi_ce, S2_pstorerdf_pi, S2_pstorerdf_pi_ce,
+       S2_pstorerdt_pi, S2_pstorerdt_pi_ce, S2_pstorerff_pi,
+       S2_pstorerff_pi_ce, S2_pstorerft_pi, S2_pstorerft_pi_ce,
+       S2_pstorerhf_pi, S2_pstorerhf_pi_ce, S2_pstorerht_pi,
+       S2_pstorerht_pi_ce, S2_pstorerif_pi, S2_pstorerif_pi_ce,
+       S2_pstorerit_pi, S2_pstorerit_pi_ce]
+    = Tc_24b66c99
+  | i `elem`
+      [V6_vaddbnq, V6_vaddbq, V6_vaddcarrysat, V6_vaddhnq, V6_vaddhq,
+       V6_vaddwnq, V6_vaddwq, V6_veqb_and, V6_veqb_or, V6_veqb_xor,
+       V6_veqh_and, V6_veqh_or, V6_veqh_xor, V6_veqw_and, V6_veqw_or,
+       V6_veqw_xor, V6_vgtb_and, V6_vgtb_or, V6_vgtb_xor, V6_vgth_and,
+       V6_vgth_or, V6_vgth_xor, V6_vgtub_and, V6_vgtub_or, V6_vgtub_xor,
+       V6_vgtuh_and, V6_vgtuh_or, V6_vgtuh_xor, V6_vgtuw_and, V6_vgtuw_or,
+       V6_vgtuw_xor, V6_vgtw_and, V6_vgtw_or, V6_vgtw_xor, V6_vmux,
+       V6_vsubbnq, V6_vsubbq, V6_vsubhnq, V6_vsubhq, V6_vsubwnq,
+       V6_vsubwq]
+    = Tc_257f6f7c
+  | i `elem`
+      [L4_ploadrbfnew_rr, L4_ploadrbfnew_rr_ce, L4_ploadrbtnew_rr,
+       L4_ploadrbtnew_rr_ce, L4_ploadrdfnew_rr, L4_ploadrdfnew_rr_ce,
+       L4_ploadrdtnew_rr, L4_ploadrdtnew_rr_ce, L4_ploadrhfnew_rr,
+       L4_ploadrhfnew_rr_ce, L4_ploadrhtnew_rr, L4_ploadrhtnew_rr_ce,
+       L4_ploadrifnew_rr, L4_ploadrifnew_rr_ce, L4_ploadritnew_rr,
+       L4_ploadritnew_rr_ce, L4_ploadrubfnew_rr, L4_ploadrubfnew_rr_ce,
+       L4_ploadrubtnew_rr, L4_ploadrubtnew_rr_ce, L4_ploadruhfnew_rr,
+       L4_ploadruhfnew_rr_ce, L4_ploadruhtnew_rr, L4_ploadruhtnew_rr_ce]
+    = Tc_25a78932
+  | i `elem`
+      [V6_vrmpyzbb_rx, V6_vrmpyzbub_rx, V6_vrmpyzcb_rx, V6_vrmpyzcbs_rx,
+       V6_vrmpyznb_rx]
+    = Tc_26a377fe
+  | i `elem` [L4_return_f, L4_return_map_to_raw_f, L4_return_t] =
+    Tc_2b8da4c2
+  | i `elem` [V6_vunpackob, V6_vunpackoh] = Tc_2c745bb8
+  | i `elem`
+      [V6_vrmpyzbb_rx_acc, V6_vrmpyzbub_rx_acc, V6_vrmpyzcb_rx_acc,
+       V6_vrmpyzcbs_rx_acc, V6_vrmpyznb_rx_acc]
+    = Tc_2d4051cd
+  | i `elem` [V6_vandnqrt_acc, V6_vandqrt_acc, V6_vandvrt_acc] =
+    Tc_2e8f5f6e
+  | i `elem` [A2_nop] = Tc_2eabeebe
+  | i `elem` [F2_dfadd, F2_dfsub] = Tc_2f7c551d
+  | i `elem` [F2_sfrecipa] = Tc_2ff964b4
+  | i `elem` [V6_vaslh_acc, V6_vaslw_acc, V6_vasrh_acc, V6_vasrw_acc]
+    = Tc_309dbb4f
+  | i `elem`
+      [S2_storerb_io, S2_storerb_io_ce, S2_storerb_zomap, S2_storerd_io,
+       S2_storerd_io_ce, S2_storerd_zomap, S2_storerf_io,
+       S2_storerf_io_ce, S2_storerf_io_fi, S2_storerf_io_fi_ce,
+       S2_storerf_zomap, S2_storerh_io, S2_storerh_io_ce,
+       S2_storerh_zomap, S2_storeri_io, S2_storeri_io_ce,
+       S2_storeri_zomap, SS1_storeb_io, SS1_storeb_io_ce, SS1_storew_io,
+       SS1_storew_io_ce, SS2_storeh_io, SS2_storeh_io_ce]
+    = Tc_30b9bb4a
+  | i `elem`
+      [J2_ploop1sr, J2_ploop1sr_ce, J2_ploop2sr, J2_ploop2sr_ce,
+       J2_ploop3sr, J2_ploop3sr_ce]
+    = Tc_32779c6f
+  | i `elem`
+      [SL2_return, SL2_return_f, SL2_return_fnew, SL2_return_t,
+       SL2_return_tnew]
+    = Tc_36153880
+  | i `elem`
+      [S4_pstorerbf_abs, S4_pstorerbf_abs_ce, S4_pstorerbt_abs,
+       S4_pstorerbt_abs_ce, S4_pstorerdf_abs, S4_pstorerdf_abs_ce,
+       S4_pstorerdt_abs, S4_pstorerdt_abs_ce, S4_pstorerff_abs,
+       S4_pstorerff_abs_ce, S4_pstorerft_abs, S4_pstorerft_abs_ce,
+       S4_pstorerhf_abs, S4_pstorerhf_abs_ce, S4_pstorerht_abs,
+       S4_pstorerht_abs_ce, S4_pstorerif_abs, S4_pstorerif_abs_ce,
+       S4_pstorerit_abs, S4_pstorerit_abs_ce]
+    = Tc_362c6592
+  | i `elem`
+      [V6_vL32b_nt_tmp_npred_ai, V6_vL32b_nt_tmp_npred_ai_ce,
+       V6_vL32b_nt_tmp_pred_ai, V6_vL32b_nt_tmp_pred_ai_ce,
+       V6_vL32b_tmp_npred_ai, V6_vL32b_tmp_npred_ai_ce,
+       V6_vL32b_tmp_pred_ai, V6_vL32b_tmp_pred_ai_ce]
+    = Tc_3904b926
+  | i `elem`
+      [S4_pstorerbf_rr, S4_pstorerbf_rr_ce, S4_pstorerbt_rr,
+       S4_pstorerbt_rr_ce, S4_pstorerdf_rr, S4_pstorerdf_rr_ce,
+       S4_pstorerdt_rr, S4_pstorerdt_rr_ce, S4_pstorerff_rr,
+       S4_pstorerff_rr_ce, S4_pstorerft_rr, S4_pstorerft_rr_ce,
+       S4_pstorerhf_rr, S4_pstorerhf_rr_ce, S4_pstorerht_rr,
+       S4_pstorerht_rr_ce, S4_pstorerif_rr, S4_pstorerif_rr_ce,
+       S4_pstorerit_rr, S4_pstorerit_rr_ce]
+    = Tc_3962fa26
+  | i `elem` [SL2_deallocframe] = Tc_39dfefe8
   | i `elem`
       [F2_conv_d2df, F2_conv_d2sf, F2_conv_df2d, F2_conv_df2d_chop,
        F2_conv_df2sf, F2_conv_df2ud, F2_conv_df2ud_chop, F2_conv_df2uw,
@@ -1113,49 +553,817 @@ itinerary i
        F2_conv_sf2w, F2_conv_sf2w_chop, F2_conv_ud2df, F2_conv_ud2sf,
        F2_conv_uw2df, F2_conv_uw2sf, F2_conv_w2df, F2_conv_w2sf,
        F2_sffixupr]
-    = S_2op_tc_3or4x_SLOT23
+    = Tc_3a867367
+  | i `elem` [PS_vselect, V6_vcmov, V6_vncmov] = Tc_3aacf4a8
+  | i `elem` [V6_zLd_pred_pi, V6_zLd_pred_pi_ce, V6_zLd_pred_ppu] =
+    Tc_3ad719fb
+  | i `elem` [F2_sfadd, F2_sffixupd, F2_sffixupn, F2_sfmpy, F2_sfsub]
+    = Tc_3b470976
   | i `elem`
-      [A4_addp_c, A4_subp_c, M4_xor_xacc, S2_asl_r_p, S2_asl_r_r,
-       S2_asl_r_vh, S2_asl_r_vw, S2_asr_r_p, S2_asr_r_r,
-       S2_asr_r_svw_trun, S2_asr_r_vh, S2_asr_r_vw, S2_cabacdecbin,
-       S2_clrbit_r, S2_insert_rp, S2_insertp_rp, S2_lsl_r_p, S2_lsl_r_r,
-       S2_lsl_r_vh, S2_lsl_r_vw, S2_lsr_r_p, S2_lsr_r_r, S2_lsr_r_vh,
-       S2_lsr_r_vw, S2_setbit_r, S2_shuffeb, S2_shuffeh, S2_shuffob,
-       S2_shuffoh, S2_togglebit_r, S2_valignib, S2_valignib_ce,
-       S2_valignrb, S2_vspliceib, S2_vspliceib_ce, S2_vsplicerb,
-       S2_vtrunewh, S2_vtrunowh, S4_lsli, S4_lsli_ce]
-    = S_3op_tc_1_SLOT23
+      [L4_loadbsw2_ap, L4_loadbsw2_ap_ce, L4_loadbsw4_ap,
+       L4_loadbsw4_ap_ce, L4_loadbzw2_ap, L4_loadbzw2_ap_ce,
+       L4_loadbzw4_ap, L4_loadbzw4_ap_ce, L4_loadrb_ap, L4_loadrb_ap_ce,
+       L4_loadrd_ap, L4_loadrd_ap_ce, L4_loadrh_ap, L4_loadrh_ap_ce,
+       L4_loadri_ap, L4_loadri_ap_ce, L4_loadrub_ap, L4_loadrub_ap_ce,
+       L4_loadruh_ap, L4_loadruh_ap_ce, L4_ploadrbfnew_abs,
+       L4_ploadrbfnew_abs_ce, L4_ploadrbtnew_abs, L4_ploadrbtnew_abs_ce,
+       L4_ploadrdfnew_abs, L4_ploadrdfnew_abs_ce, L4_ploadrdtnew_abs,
+       L4_ploadrdtnew_abs_ce, L4_ploadrhfnew_abs, L4_ploadrhfnew_abs_ce,
+       L4_ploadrhtnew_abs, L4_ploadrhtnew_abs_ce, L4_ploadrifnew_abs,
+       L4_ploadrifnew_abs_ce, L4_ploadritnew_abs, L4_ploadritnew_abs_ce,
+       L4_ploadrubfnew_abs, L4_ploadrubfnew_abs_ce, L4_ploadrubtnew_abs,
+       L4_ploadrubtnew_abs_ce, L4_ploadruhfnew_abs,
+       L4_ploadruhfnew_abs_ce, L4_ploadruhtnew_abs,
+       L4_ploadruhtnew_abs_ce]
+    = Tc_3b5b7ef9
+  | i `elem` [J2_callr, PS_callr_nr] = Tc_3bd75825
+  | i `elem` [V6_vL32Ub_pi, V6_vL32Ub_pi_ce, V6_vL32Ub_ppu] =
+    Tc_3c56e5ce
   | i `elem`
-      [A4_cround_rr, A4_round_rr, A4_round_rr_sat, A5_vaddhubs,
-       S2_addasl_rrri, S2_addasl_rrri_ce, S2_asl_r_p_acc, S2_asl_r_p_and,
-       S2_asl_r_p_nac, S2_asl_r_p_or, S2_asl_r_p_xor, S2_asl_r_r_acc,
-       S2_asl_r_r_and, S2_asl_r_r_nac, S2_asl_r_r_or, S2_asl_r_r_sat,
-       S2_asr_r_p_acc, S2_asr_r_p_and, S2_asr_r_p_nac, S2_asr_r_p_or,
-       S2_asr_r_p_xor, S2_asr_r_r_acc, S2_asr_r_r_and, S2_asr_r_r_nac,
-       S2_asr_r_r_or, S2_asr_r_r_sat, S2_extractu_rp, S2_extractup_rp,
-       S2_lfsp, S2_lsl_r_p_acc, S2_lsl_r_p_and, S2_lsl_r_p_nac,
-       S2_lsl_r_p_or, S2_lsl_r_p_xor, S2_lsl_r_r_acc, S2_lsl_r_r_and,
-       S2_lsl_r_r_nac, S2_lsl_r_r_or, S2_lsr_r_p_acc, S2_lsr_r_p_and,
-       S2_lsr_r_p_nac, S2_lsr_r_p_or, S2_lsr_r_p_xor, S2_lsr_r_r_acc,
-       S2_lsr_r_r_and, S2_lsr_r_r_nac, S2_lsr_r_r_or, S2_vcnegh,
-       S2_vcrotate, S4_extract_rp, S4_extractp_rp, S4_vxaddsubh,
-       S4_vxaddsubhr, S4_vxaddsubw, S4_vxsubaddh, S4_vxsubaddhr,
-       S4_vxsubaddw]
-    = S_3op_tc_2_SLOT23
+      [L2_loadalignb_pbr, L2_loadalignb_pcr, L2_loadalignb_pi,
+       L2_loadalignb_pi_ce, L2_loadalignb_pr, L2_loadalignh_pbr,
+       L2_loadalignh_pcr, L2_loadalignh_pi, L2_loadalignh_pi_ce,
+       L2_loadalignh_pr, L2_ploadrbf_pi, L2_ploadrbf_pi_ce,
+       L2_ploadrbt_pi, L2_ploadrbt_pi_ce, L2_ploadrdf_pi,
+       L2_ploadrdf_pi_ce, L2_ploadrdt_pi, L2_ploadrdt_pi_ce,
+       L2_ploadrhf_pi, L2_ploadrhf_pi_ce, L2_ploadrht_pi,
+       L2_ploadrht_pi_ce, L2_ploadrif_pi, L2_ploadrif_pi_ce,
+       L2_ploadrit_pi, L2_ploadrit_pi_ce, L2_ploadrubf_pi,
+       L2_ploadrubf_pi_ce, L2_ploadrubt_pi, L2_ploadrubt_pi_ce,
+       L2_ploadruhf_pi, L2_ploadruhf_pi_ce, L2_ploadruht_pi,
+       L2_ploadruht_pi_ce]
+    = Tc_3c76b0ff
+  | i `elem` [V6_vS32b_srls_ai, V6_vS32b_srls_ai_ce] = Tc_3ce09744
   | i `elem`
-      [A4_cmpbeq, A4_cmpbgt, A4_cmpbgtu, A4_cmpheq, A4_cmphgt,
-       A4_cmphgtu, C2_bitsclr, C2_bitsset, C4_nbitsclr, C4_nbitsset,
-       S2_tstbit_r, S4_ntstbit_r]
-    = S_3op_tc_2early_SLOT23
+      [J4_cmpeqi_fp0_jump_nt, J4_cmpeqi_fp0_jump_nt_ce,
+       J4_cmpeqi_fp0_jump_t, J4_cmpeqi_fp0_jump_t_ce,
+       J4_cmpeqi_fp1_jump_nt, J4_cmpeqi_fp1_jump_nt_ce,
+       J4_cmpeqi_fp1_jump_t, J4_cmpeqi_fp1_jump_t_ce,
+       J4_cmpeqi_tp0_jump_nt, J4_cmpeqi_tp0_jump_nt_ce,
+       J4_cmpeqi_tp0_jump_t, J4_cmpeqi_tp0_jump_t_ce,
+       J4_cmpeqi_tp1_jump_nt, J4_cmpeqi_tp1_jump_nt_ce,
+       J4_cmpeqi_tp1_jump_t, J4_cmpeqi_tp1_jump_t_ce,
+       J4_cmpeqn1_fp0_jump_nt, J4_cmpeqn1_fp0_jump_nt_ce,
+       J4_cmpeqn1_fp0_jump_t, J4_cmpeqn1_fp0_jump_t_ce,
+       J4_cmpeqn1_fp1_jump_nt, J4_cmpeqn1_fp1_jump_nt_ce,
+       J4_cmpeqn1_fp1_jump_t, J4_cmpeqn1_fp1_jump_t_ce,
+       J4_cmpeqn1_tp0_jump_nt, J4_cmpeqn1_tp0_jump_nt_ce,
+       J4_cmpeqn1_tp0_jump_t, J4_cmpeqn1_tp0_jump_t_ce,
+       J4_cmpeqn1_tp1_jump_nt, J4_cmpeqn1_tp1_jump_nt_ce,
+       J4_cmpeqn1_tp1_jump_t, J4_cmpeqn1_tp1_jump_t_ce,
+       J4_cmpgti_fp0_jump_nt, J4_cmpgti_fp0_jump_nt_ce,
+       J4_cmpgti_fp0_jump_t, J4_cmpgti_fp0_jump_t_ce,
+       J4_cmpgti_fp1_jump_nt, J4_cmpgti_fp1_jump_nt_ce,
+       J4_cmpgti_fp1_jump_t, J4_cmpgti_fp1_jump_t_ce,
+       J4_cmpgti_tp0_jump_nt, J4_cmpgti_tp0_jump_nt_ce,
+       J4_cmpgti_tp0_jump_t, J4_cmpgti_tp0_jump_t_ce,
+       J4_cmpgti_tp1_jump_nt, J4_cmpgti_tp1_jump_nt_ce,
+       J4_cmpgti_tp1_jump_t, J4_cmpgti_tp1_jump_t_ce,
+       J4_cmpgtn1_fp0_jump_nt, J4_cmpgtn1_fp0_jump_nt_ce,
+       J4_cmpgtn1_fp0_jump_t, J4_cmpgtn1_fp0_jump_t_ce,
+       J4_cmpgtn1_fp1_jump_nt, J4_cmpgtn1_fp1_jump_nt_ce,
+       J4_cmpgtn1_fp1_jump_t, J4_cmpgtn1_fp1_jump_t_ce,
+       J4_cmpgtn1_tp0_jump_nt, J4_cmpgtn1_tp0_jump_nt_ce,
+       J4_cmpgtn1_tp0_jump_t, J4_cmpgtn1_tp0_jump_t_ce,
+       J4_cmpgtn1_tp1_jump_nt, J4_cmpgtn1_tp1_jump_nt_ce,
+       J4_cmpgtn1_tp1_jump_t, J4_cmpgtn1_tp1_jump_t_ce,
+       J4_cmpgtui_fp0_jump_nt, J4_cmpgtui_fp0_jump_nt_ce,
+       J4_cmpgtui_fp0_jump_t, J4_cmpgtui_fp0_jump_t_ce,
+       J4_cmpgtui_fp1_jump_nt, J4_cmpgtui_fp1_jump_nt_ce,
+       J4_cmpgtui_fp1_jump_t, J4_cmpgtui_fp1_jump_t_ce,
+       J4_cmpgtui_tp0_jump_nt, J4_cmpgtui_tp0_jump_nt_ce,
+       J4_cmpgtui_tp0_jump_t, J4_cmpgtui_tp0_jump_t_ce,
+       J4_cmpgtui_tp1_jump_nt, J4_cmpgtui_tp1_jump_nt_ce,
+       J4_cmpgtui_tp1_jump_t, J4_cmpgtui_tp1_jump_t_ce]
+    = Tc_3d495a39
+  | i `elem`
+      [V6_vS32b_nt_pi, V6_vS32b_nt_pi_ce, V6_vS32b_nt_ppu, V6_vS32b_pi,
+       V6_vS32b_pi_ce, V6_vS32b_ppu]
+    = Tc_3e2aaafc
+  | i `elem`
+      [S4_pstorerbfnew_rr, S4_pstorerbfnew_rr_ce, S4_pstorerbtnew_rr,
+       S4_pstorerbtnew_rr_ce, S4_pstorerdfnew_rr, S4_pstorerdfnew_rr_ce,
+       S4_pstorerdtnew_rr, S4_pstorerdtnew_rr_ce, S4_pstorerffnew_rr,
+       S4_pstorerffnew_rr_ce, S4_pstorerftnew_rr, S4_pstorerftnew_rr_ce,
+       S4_pstorerhfnew_rr, S4_pstorerhfnew_rr_ce, S4_pstorerhtnew_rr,
+       S4_pstorerhtnew_rr_ce, S4_pstorerifnew_rr, S4_pstorerifnew_rr_ce,
+       S4_pstoreritnew_rr, S4_pstoreritnew_rr_ce]
+    = Tc_40116ca8
+  | i `elem` [A2_tfrrcr, A4_tfrpcp] = Tc_434c8e1e
+  | i `elem`
+      [A2_addh_l16_hl, A2_addh_l16_ll, A2_subh_l16_hl, A2_subh_l16_ll,
+       A4_bitsplit, A4_bitspliti, A4_bitspliti_ce, C2_vitpack,
+       S2_asr_i_svw_trun, S2_asr_i_svw_trun_ce, S2_asr_r_svw_trun]
+    = Tc_4414d8b1
+  | i `elem`
+      [V6_vS32b_nqpred_ai, V6_vS32b_nqpred_ai_ce, V6_vS32b_nt_nqpred_ai,
+       V6_vS32b_nt_nqpred_ai_ce, V6_vS32b_nt_qpred_ai,
+       V6_vS32b_nt_qpred_ai_ce, V6_vS32b_qpred_ai, V6_vS32b_qpred_ai_ce]
+    = Tc_447d9895
+  | i `elem`
+      [L2_loadbsw2_pbr, L2_loadbsw2_pcr, L2_loadbsw2_pi,
+       L2_loadbsw2_pi_ce, L2_loadbsw2_pr, L2_loadbsw4_pbr,
+       L2_loadbsw4_pcr, L2_loadbsw4_pi, L2_loadbsw4_pi_ce, L2_loadbsw4_pr,
+       L2_loadbzw2_pbr, L2_loadbzw2_pcr, L2_loadbzw2_pi,
+       L2_loadbzw2_pi_ce, L2_loadbzw2_pr, L2_loadbzw4_pbr,
+       L2_loadbzw4_pcr, L2_loadbzw4_pi, L2_loadbzw4_pi_ce, L2_loadbzw4_pr,
+       L2_loadrb_pbr, L2_loadrb_pcr, L2_loadrb_pi, L2_loadrb_pi_ce,
+       L2_loadrb_pr, L2_loadrd_pbr, L2_loadrd_pcr, L2_loadrd_pi,
+       L2_loadrd_pi_ce, L2_loadrd_pr, L2_loadrh_pbr, L2_loadrh_pcr,
+       L2_loadrh_pi, L2_loadrh_pi_ce, L2_loadrh_pr, L2_loadri_pbr,
+       L2_loadri_pcr, L2_loadri_pi, L2_loadri_pi_ce, L2_loadri_pr,
+       L2_loadrub_pbr, L2_loadrub_pcr, L2_loadrub_pi, L2_loadrub_pi_ce,
+       L2_loadrub_pr, L2_loadruh_pbr, L2_loadruh_pcr, L2_loadruh_pi,
+       L2_loadruh_pi_ce, L2_loadruh_pr, L2_ploadrbfnew_io,
+       L2_ploadrbfnew_io_ce, L2_ploadrbfnew_zomap, L2_ploadrbtnew_io,
+       L2_ploadrbtnew_io_ce, L2_ploadrbtnew_zomap, L2_ploadrdfnew_io,
+       L2_ploadrdfnew_io_ce, L2_ploadrdfnew_zomap, L2_ploadrdtnew_io,
+       L2_ploadrdtnew_io_ce, L2_ploadrdtnew_zomap, L2_ploadrhfnew_io,
+       L2_ploadrhfnew_io_ce, L2_ploadrhfnew_zomap, L2_ploadrhtnew_io,
+       L2_ploadrhtnew_io_ce, L2_ploadrhtnew_zomap, L2_ploadrifnew_io,
+       L2_ploadrifnew_io_ce, L2_ploadrifnew_zomap, L2_ploadritnew_io,
+       L2_ploadritnew_io_ce, L2_ploadritnew_zomap, L2_ploadrubfnew_io,
+       L2_ploadrubfnew_io_ce, L2_ploadrubfnew_zomap, L2_ploadrubtnew_io,
+       L2_ploadrubtnew_io_ce, L2_ploadrubtnew_zomap, L2_ploadruhfnew_io,
+       L2_ploadruhfnew_io_ce, L2_ploadruhfnew_zomap, L2_ploadruhtnew_io,
+       L2_ploadruhtnew_io_ce, L2_ploadruhtnew_zomap, PS_loadrb_pcr,
+       PS_loadrd_pcr, PS_loadrh_pcr, PS_loadri_pcr, PS_loadrub_pcr,
+       PS_loadruh_pcr]
+    = Tc_44d3da28
+  | i `elem`
+      [V6_vL32b_cur_npred_pi, V6_vL32b_cur_npred_pi_ce,
+       V6_vL32b_cur_npred_ppu, V6_vL32b_cur_pred_pi,
+       V6_vL32b_cur_pred_pi_ce, V6_vL32b_cur_pred_ppu, V6_vL32b_npred_pi,
+       V6_vL32b_npred_pi_ce, V6_vL32b_npred_ppu, V6_vL32b_nt_cur_npred_pi,
+       V6_vL32b_nt_cur_npred_pi_ce, V6_vL32b_nt_cur_npred_ppu,
+       V6_vL32b_nt_cur_pred_pi, V6_vL32b_nt_cur_pred_pi_ce,
+       V6_vL32b_nt_cur_pred_ppu, V6_vL32b_nt_npred_pi,
+       V6_vL32b_nt_npred_pi_ce, V6_vL32b_nt_npred_ppu,
+       V6_vL32b_nt_pred_pi, V6_vL32b_nt_pred_pi_ce, V6_vL32b_nt_pred_ppu,
+       V6_vL32b_pred_pi, V6_vL32b_pred_pi_ce, V6_vL32b_pred_ppu]
+    = Tc_453fe68d
+  | i `elem` [F2_sffma_sc] = Tc_4560740b
+  | i `elem`
+      [V6_vdealb4w, V6_vdelta, V6_vpackeb, V6_vpackeh, V6_vpackhb_sat,
+       V6_vpackhub_sat, V6_vpackob, V6_vpackoh, V6_vpackwh_sat,
+       V6_vpackwuh_sat, V6_vrdelta]
+    = Tc_46d6c3e0
+  | i `elem` [A4_tlbmatch] = Tc_4837eefb
+  | i `elem` [SS2_allocframe, SS2_allocframe_ce] = Tc_49a8207d
+  | i `elem`
+      [CALLProfile, CALLProfile_ce, J2_call, J2_call_ce, PS_call_nr,
+       PS_call_nr_ce, PS_call_stk, PS_call_stk_ce,
+       RESTORE_DEALLOC_BEFORE_TAILCALL_V4,
+       RESTORE_DEALLOC_BEFORE_TAILCALL_V4_EXT,
+       RESTORE_DEALLOC_BEFORE_TAILCALL_V4_EXT_PIC,
+       RESTORE_DEALLOC_BEFORE_TAILCALL_V4_EXT_PIC_ce,
+       RESTORE_DEALLOC_BEFORE_TAILCALL_V4_EXT_ce,
+       RESTORE_DEALLOC_BEFORE_TAILCALL_V4_PIC,
+       RESTORE_DEALLOC_BEFORE_TAILCALL_V4_PIC_ce,
+       RESTORE_DEALLOC_BEFORE_TAILCALL_V4_ce, SAVE_REGISTERS_CALL_V4,
+       SAVE_REGISTERS_CALL_V4STK, SAVE_REGISTERS_CALL_V4STK_EXT,
+       SAVE_REGISTERS_CALL_V4STK_EXT_PIC,
+       SAVE_REGISTERS_CALL_V4STK_EXT_PIC_ce,
+       SAVE_REGISTERS_CALL_V4STK_EXT_ce, SAVE_REGISTERS_CALL_V4STK_PIC,
+       SAVE_REGISTERS_CALL_V4STK_PIC_ce, SAVE_REGISTERS_CALL_V4STK_ce,
+       SAVE_REGISTERS_CALL_V4_EXT, SAVE_REGISTERS_CALL_V4_EXT_PIC,
+       SAVE_REGISTERS_CALL_V4_EXT_PIC_ce, SAVE_REGISTERS_CALL_V4_EXT_ce,
+       SAVE_REGISTERS_CALL_V4_PIC, SAVE_REGISTERS_CALL_V4_PIC_ce,
+       SAVE_REGISTERS_CALL_V4_ce]
+    = Tc_4ae7b58b
+  | i `elem`
+      [S4_pstorerbnewf_abs, S4_pstorerbnewf_abs_ce, S4_pstorerbnewt_abs,
+       S4_pstorerbnewt_abs_ce, S4_pstorerhnewf_abs,
+       S4_pstorerhnewf_abs_ce, S4_pstorerhnewt_abs,
+       S4_pstorerhnewt_abs_ce, S4_pstorerinewf_abs,
+       S4_pstorerinewf_abs_ce, S4_pstorerinewt_abs,
+       S4_pstorerinewt_abs_ce]
+    = Tc_4b68bce4
+  | i `elem`
+      [A2_paddf, A2_paddif, A2_paddif_ce, A2_paddit, A2_paddit_ce,
+       A2_paddt, A2_pandf, A2_pandt, A2_porf, A2_port, A2_psubf, A2_psubt,
+       A2_pxorf, A2_pxort, A2_tfrf, A2_tfrt, C2_ccombinewf, C2_ccombinewt,
+       C2_mux, C2_muxii, C2_muxii_ce, C2_muxir, C2_muxir_ce, C2_muxri,
+       C2_muxri_ce]
+    = Tc_4c5ba658
+  | i `elem` [L4_return_map_to_raw_t] = Tc_4d5fa3a1
+  | i `elem`
+      [V6_vcl0h, V6_vcl0w, V6_vnormamth, V6_vnormamtw, V6_vpopcounth,
+       V6_vprefixqb, V6_vprefixqh, V6_vprefixqw]
+    = Tc_51d0ecc3
+  | i `elem`
+      [V6_vL32b_nt_tmp_ai, V6_vL32b_nt_tmp_ai_ce, V6_vL32b_tmp_ai,
+       V6_vL32b_tmp_ai_ce]
+    = Tc_52447ecc
+  | i `elem`
+      [S2_pstorerbfnew_pi, S2_pstorerbfnew_pi_ce, S2_pstorerbtnew_pi,
+       S2_pstorerbtnew_pi_ce, S2_pstorerdfnew_pi, S2_pstorerdfnew_pi_ce,
+       S2_pstorerdtnew_pi, S2_pstorerdtnew_pi_ce, S2_pstorerffnew_pi,
+       S2_pstorerffnew_pi_ce, S2_pstorerftnew_pi, S2_pstorerftnew_pi_ce,
+       S2_pstorerhfnew_pi, S2_pstorerhfnew_pi_ce, S2_pstorerhtnew_pi,
+       S2_pstorerhtnew_pi_ce, S2_pstorerifnew_pi, S2_pstorerifnew_pi_ce,
+       S2_pstoreritnew_pi, S2_pstoreritnew_pi_ce]
+    = Tc_53559e35
+  | i `elem` [V6_extractw] = Tc_540c3da3
+  | i `elem`
+      [V6_vS32b_npred_pi, V6_vS32b_npred_pi_ce, V6_vS32b_npred_ppu,
+       V6_vS32b_nt_npred_pi, V6_vS32b_nt_npred_pi_ce,
+       V6_vS32b_nt_npred_ppu, V6_vS32b_nt_pred_pi, V6_vS32b_nt_pred_pi_ce,
+       V6_vS32b_nt_pred_ppu, V6_vS32b_pred_pi, V6_vS32b_pred_pi_ce,
+       V6_vS32b_pred_ppu]
+    = Tc_54a0dc47
+  | i `elem` [V6_vdeal, V6_vshuff] = Tc_561aaa58
+  | i `elem`
+      [J4_cmpeq_fp0_jump_nt, J4_cmpeq_fp0_jump_nt_ce,
+       J4_cmpeq_fp0_jump_t, J4_cmpeq_fp0_jump_t_ce, J4_cmpeq_fp1_jump_nt,
+       J4_cmpeq_fp1_jump_nt_ce, J4_cmpeq_fp1_jump_t,
+       J4_cmpeq_fp1_jump_t_ce, J4_cmpeq_tp0_jump_nt,
+       J4_cmpeq_tp0_jump_nt_ce, J4_cmpeq_tp0_jump_t,
+       J4_cmpeq_tp0_jump_t_ce, J4_cmpeq_tp1_jump_nt,
+       J4_cmpeq_tp1_jump_nt_ce, J4_cmpeq_tp1_jump_t,
+       J4_cmpeq_tp1_jump_t_ce, J4_cmpgt_fp0_jump_nt,
+       J4_cmpgt_fp0_jump_nt_ce, J4_cmpgt_fp0_jump_t,
+       J4_cmpgt_fp0_jump_t_ce, J4_cmpgt_fp1_jump_nt,
+       J4_cmpgt_fp1_jump_nt_ce, J4_cmpgt_fp1_jump_t,
+       J4_cmpgt_fp1_jump_t_ce, J4_cmpgt_tp0_jump_nt,
+       J4_cmpgt_tp0_jump_nt_ce, J4_cmpgt_tp0_jump_t,
+       J4_cmpgt_tp0_jump_t_ce, J4_cmpgt_tp1_jump_nt,
+       J4_cmpgt_tp1_jump_nt_ce, J4_cmpgt_tp1_jump_t,
+       J4_cmpgt_tp1_jump_t_ce, J4_cmpgtu_fp0_jump_nt,
+       J4_cmpgtu_fp0_jump_nt_ce, J4_cmpgtu_fp0_jump_t,
+       J4_cmpgtu_fp0_jump_t_ce, J4_cmpgtu_fp1_jump_nt,
+       J4_cmpgtu_fp1_jump_nt_ce, J4_cmpgtu_fp1_jump_t,
+       J4_cmpgtu_fp1_jump_t_ce, J4_cmpgtu_tp0_jump_nt,
+       J4_cmpgtu_tp0_jump_nt_ce, J4_cmpgtu_tp0_jump_t,
+       J4_cmpgtu_tp0_jump_t_ce, J4_cmpgtu_tp1_jump_nt,
+       J4_cmpgtu_tp1_jump_nt_ce, J4_cmpgtu_tp1_jump_t,
+       J4_cmpgtu_tp1_jump_t_ce]
+    = Tc_56336eb0
+  | i `elem`
+      [PS_qfalse, PS_qtrue, V6_vaddb, V6_vaddbsat, V6_vaddh, V6_vaddhsat,
+       V6_vaddubsat, V6_vaddububb_sat, V6_vadduhsat, V6_vadduwsat,
+       V6_vaddw, V6_vaddwsat, V6_vand, V6_vandvnqv, V6_vandvqv, V6_vavgb,
+       V6_vavgbrnd, V6_vavgh, V6_vavghrnd, V6_vavgub, V6_vavgubrnd,
+       V6_vavguh, V6_vavguhrnd, V6_vavguw, V6_vavguwrnd, V6_vavgw,
+       V6_vavgwrnd, V6_veqb, V6_veqh, V6_veqw, V6_vgtb, V6_vgth, V6_vgtub,
+       V6_vgtuh, V6_vgtuw, V6_vgtw, V6_vmaxb, V6_vmaxh, V6_vmaxub,
+       V6_vmaxuh, V6_vmaxw, V6_vminb, V6_vminh, V6_vminub, V6_vminuh,
+       V6_vminw, V6_vnavgb, V6_vnavgh, V6_vnavgub, V6_vnavgw, V6_vor,
+       V6_vsatdw, V6_vsatuwuh, V6_vshufeh, V6_vshuffeb, V6_vshuffob,
+       V6_vshufoh, V6_vsubb, V6_vsubbsat, V6_vsubh, V6_vsubhsat,
+       V6_vsububsat, V6_vsubububb_sat, V6_vsubuhsat, V6_vsubuwsat,
+       V6_vsubw, V6_vsubwsat, V6_vxor]
+    = Tc_56c4f9fe
+  | i `elem`
+      [V6_valignb, V6_valignbi, V6_valignbi_ce, V6_vlalignb,
+       V6_vlalignbi, V6_vlalignbi_ce, V6_vlutvvb, V6_vlutvvb_nm,
+       V6_vlutvvbi, V6_vlutvvbi_ce]
+    = Tc_56e64202
+  | i `elem`
+      [C2_cmpeqi, C2_cmpeqi_ce, C2_cmpgei, C2_cmpgei_ce, C2_cmpgeui,
+       C2_cmpgeui_ce, C2_cmpgti, C2_cmpgti_ce, C2_cmpgtui, C2_cmpgtui_ce,
+       C2_cmplt, C2_cmpltu, C4_cmpltei, C4_cmpltei_ce, C4_cmplteui,
+       C4_cmplteui_ce, C4_cmpneqi, C4_cmpneqi_ce]
+    = Tc_56f114f4
+  | i `elem`
+      [A2_aslh, A2_asrh, A2_neg, A2_not, A2_sxtb, A2_sxth, A2_tfr,
+       A2_tfrsi, A2_tfrsi_ce, A2_tfrsi_remat, A2_tfrsi_remat_ce, A2_zxth,
+       MVW, MVW_ce]
+    = Tc_57890846
+  | i `elem` [V6_vscattermhwq] = Tc_58d21193
+  | i `elem`
+      [A2_add, A2_addi, A2_addi_ce, A2_and, A2_andir, A2_andir_ce,
+       A2_combine_hh, A2_combine_hl, A2_combine_lh, A2_combine_ll,
+       A2_combineii, A2_combineii_ce, A2_combinew, A2_or, A2_orir,
+       A2_orir_ce, A2_sub, A2_subri, A2_subri_ce, A2_svaddh, A2_svsubh,
+       A2_tfrih, A2_tfrih_ce, A2_tfril, A2_tfril_ce, A2_tfrp, A2_tfrpf,
+       A2_tfrpi, A2_tfrpi_ce, A2_tfrpi_remat, A2_tfrpi_remat_ce, A2_tfrpt,
+       A2_xor, A2_zxtb, A4_andn, A4_combineii, A4_combineii_ce,
+       A4_combineir, A4_combineir_ce, A4_combineri, A4_combineri_ce,
+       A4_orn, A4_paslhf, A4_paslht, A4_pasrhf, A4_pasrht, A4_psxtbf,
+       A4_psxtbt, A4_psxthf, A4_psxtht, A4_pzxtbf, A4_pzxtbt, A4_pzxthf,
+       A4_pzxtht, A4_rcmpeq, A4_rcmpeqi, A4_rcmpeqi_ce, A4_rcmpneq,
+       A4_rcmpneqi, A4_rcmpneqi_ce, C2_cmoveif, C2_cmoveif_ce, C2_cmoveit,
+       C2_cmoveit_ce, HI, HI_ce, LO, LO_ce, MVD, MVD_ce, PS_pselect,
+       S2_packhl, TFRI64_V2_ext, TFRI64_V2_ext_ce, TFRI64_V4,
+       TFRI64_V4_ce]
+    = Tc_5a2711e5
+  | i `elem` [S2_storew_locked, S4_stored_locked] = Tc_5abb5e3f
+  | i `elem`
+      [S4_storerb_rr, S4_storerb_rr_ce, S4_storerd_rr, S4_storerd_rr_ce,
+       S4_storerf_rr, S4_storerf_rr_ce, S4_storerh_rr, S4_storerh_rr_ce,
+       S4_storeri_rr, S4_storeri_rr_ce]
+    = Tc_5aee39f7
   | i `elem`
       [A4_vrmaxh, A4_vrmaxuh, A4_vrmaxuw, A4_vrmaxw, A4_vrminh,
        A4_vrminuh, A4_vrminuw, A4_vrminw]
-    = S_3op_tc_3_SLOT23
+    = Tc_5b54b33f
+  | i `elem` [SA1_cmpeqi, SA1_cmpeqi_ce] = Tc_5b7c0967
   | i `elem`
-      [M4_cmpyi_wh, M4_cmpyi_whc, M4_cmpyr_wh, M4_cmpyr_whc, S2_vrcnegh,
-       S4_vrcrotate, S4_vrcrotate_acc, S4_vrcrotate_acc_ce,
-       S4_vrcrotate_ce]
-    = S_3op_tc_3x_SLOT23
+      [PS_storerbnewabs, PS_storerbnewabs_ce, PS_storerhnewabs,
+       PS_storerhnewabs_ce, PS_storerinewabs, PS_storerinewabs_ce,
+       S2_storerbnewgp, S2_storerbnewgp_ce, S2_storerhnewgp,
+       S2_storerhnewgp_ce, S2_storerinewgp, S2_storerinewgp_ce]
+    = Tc_5bf126a6
+  | i `elem` [V6_pred_scalar2, V6_pred_scalar2v2, V6_zextract] =
+    Tc_5bf8afbb
+  | i `elem` [Y2_icinva] = Tc_5d7f5414
+  | i `elem`
+      [L2_loadalignb_io, L2_loadalignb_io_ce, L2_loadalignb_zomap,
+       L2_loadalignh_io, L2_loadalignh_io_ce, L2_loadalignh_zomap,
+       L2_ploadrbf_io, L2_ploadrbf_io_ce, L2_ploadrbf_zomap,
+       L2_ploadrbt_io, L2_ploadrbt_io_ce, L2_ploadrbt_zomap,
+       L2_ploadrdf_io, L2_ploadrdf_io_ce, L2_ploadrdf_zomap,
+       L2_ploadrdt_io, L2_ploadrdt_io_ce, L2_ploadrdt_zomap,
+       L2_ploadrhf_io, L2_ploadrhf_io_ce, L2_ploadrhf_zomap,
+       L2_ploadrht_io, L2_ploadrht_io_ce, L2_ploadrht_zomap,
+       L2_ploadrif_io, L2_ploadrif_io_ce, L2_ploadrif_zomap,
+       L2_ploadrit_io, L2_ploadrit_io_ce, L2_ploadrit_zomap,
+       L2_ploadrubf_io, L2_ploadrubf_io_ce, L2_ploadrubf_zomap,
+       L2_ploadrubt_io, L2_ploadrubt_io_ce, L2_ploadrubt_zomap,
+       L2_ploadruhf_io, L2_ploadruhf_io_ce, L2_ploadruhf_zomap,
+       L2_ploadruht_io, L2_ploadruht_io_ce, L2_ploadruht_zomap]
+    = Tc_5ef37dc4
+  | i `elem`
+      [A2_vavgh, A2_vavgub, A2_vavguh, A2_vavguw, A2_vavgw, A2_vnavgh,
+       A2_vnavgw]
+    = Tc_6132ba3d
+  | i `elem`
+      [A2_addsat, A2_subsat, A2_svaddhs, A2_svadduhs, A2_svsubhs,
+       A2_svsubuhs]
+    = Tc_61830035
+  | i `elem`
+      [V6_vrmpyzbb_rt, V6_vrmpyzbub_rt, V6_vrmpyzcb_rt, V6_vrmpyzcbs_rt,
+       V6_vrmpyznb_rt]
+    = Tc_61bf7c03
+  | i `elem`
+      [C2_and, C2_andn, C2_or, C2_orn, C2_pxfer_map, C2_xor,
+       C4_fastcorner9, C4_fastcorner9_not, PS_false, PS_true]
+    = Tc_640086b5
+  | i `elem`
+      [A4_cmpbeqi, A4_cmpbeqi_ce, A4_cmpbgti, A4_cmpbgti_ce, A4_cmpbgtui,
+       A4_cmpbgtui_ce, A4_cmpheqi, A4_cmpheqi_ce, A4_cmphgti,
+       A4_cmphgti_ce, A4_cmphgtui, A4_cmphgtui_ce, A4_vcmpbeqi,
+       A4_vcmpbeqi_ce, A4_vcmpbgti, A4_vcmpbgti_ce, A4_vcmpbgtui,
+       A4_vcmpbgtui_ce, A4_vcmpheqi, A4_vcmpheqi_ce, A4_vcmphgti,
+       A4_vcmphgti_ce, A4_vcmphgtui, A4_vcmphgtui_ce, A4_vcmpweqi,
+       A4_vcmpweqi_ce, A4_vcmpwgti, A4_vcmpwgti_ce, A4_vcmpwgtui,
+       A4_vcmpwgtui_ce, C2_bitsclri, C2_bitsclri_ce, C4_nbitsclri,
+       C4_nbitsclri_ce, F2_dfclass, F2_dfclass_ce, F2_sfclass,
+       F2_sfclass_ce, S2_tstbit_i, S2_tstbit_i_ce, S4_ntstbit_i,
+       S4_ntstbit_i_ce]
+    = Tc_643b4717
+  | i `elem`
+      [V6_vdmpybus, V6_vdmpyhb, V6_vmpyihb, V6_vmpyiwb, V6_vmpyiwub,
+       V6_vmpyuhe, V6_vrmpybus, V6_vrmpyub]
+    = Tc_649072c2
+  | i `elem`
+      [V6_vdmpybus_dv_acc, V6_vdmpyhb_dv_acc, V6_vdmpyhisat_acc,
+       V6_vdmpyhsat_acc, V6_vdmpyhsuisat_acc, V6_vdmpyhsusat_acc,
+       V6_vdsaduh_acc, V6_vmpabus_acc, V6_vmpabuu_acc, V6_vmpahb_acc,
+       V6_vmpauhb_acc, V6_vmpybus_acc, V6_vmpyh_acc, V6_vmpyhsat_acc,
+       V6_vmpyiwh_acc, V6_vmpyub_acc, V6_vmpyuh_acc, V6_vtmpyb_acc,
+       V6_vtmpybus_acc, V6_vtmpyhb_acc]
+    = Tc_660769f1
+  | i `elem`
+      [V6_vL32b_nt_tmp_pi, V6_vL32b_nt_tmp_pi_ce, V6_vL32b_nt_tmp_ppu,
+       V6_vL32b_tmp_pi, V6_vL32b_tmp_pi_ce, V6_vL32b_tmp_ppu]
+    = Tc_663c80a7
+  | i `elem`
+      [S4_storerbnew_rr, S4_storerbnew_rr_ce, S4_storerhnew_rr,
+       S4_storerhnew_rr_ce, S4_storerinew_rr, S4_storerinew_rr_ce]
+    = Tc_67435e81
+  | i `elem` [L4_return, L4_return_linear, L6_return_map_to_raw] =
+    Tc_675e4897
+  | i `elem`
+      [A2_addh_h16_hh, A2_addh_h16_hl, A2_addh_h16_lh, A2_addh_h16_ll,
+       A2_addsp, A2_addsph, A2_addspl, A2_subh_h16_hh, A2_subh_h16_hl,
+       A2_subh_h16_lh, A2_subh_h16_ll]
+    = Tc_679309b8
+  | i `elem`
+      [V6_vS32b_new_pi, V6_vS32b_new_pi_ce, V6_vS32b_new_ppu,
+       V6_vS32b_nt_new_pi, V6_vS32b_nt_new_pi_ce, V6_vS32b_nt_new_ppu]
+    = Tc_6942b6e0
+  | i `elem` [Y4_trace] = Tc_6b25e783
+  | i `elem` [V6_vror] = Tc_6e7fa133
+  | i `elem` [S5_popcountp] = Tc_703e822c
+  | i `elem` [V6_vswap] = Tc_71646d06
+  | i `elem`
+      [V6_vS32b_new_npred_ai, V6_vS32b_new_npred_ai_ce,
+       V6_vS32b_new_pred_ai, V6_vS32b_new_pred_ai_ce,
+       V6_vS32b_nt_new_npred_ai, V6_vS32b_nt_new_npred_ai_ce,
+       V6_vS32b_nt_new_pred_ai, V6_vS32b_nt_new_pred_ai_ce]
+    = Tc_7177e272
+  | i `elem`
+      [L4_add_memopb_io, L4_add_memopb_io_ce, L4_add_memopb_zomap,
+       L4_add_memoph_io, L4_add_memoph_io_ce, L4_add_memoph_zomap,
+       L4_add_memopw_io, L4_add_memopw_io_ce, L4_add_memopw_zomap,
+       L4_and_memopb_io, L4_and_memopb_io_ce, L4_and_memopb_zomap,
+       L4_and_memoph_io, L4_and_memoph_io_ce, L4_and_memoph_zomap,
+       L4_and_memopw_io, L4_and_memopw_io_ce, L4_and_memopw_zomap,
+       L4_or_memopb_io, L4_or_memopb_io_ce, L4_or_memopb_zomap,
+       L4_or_memoph_io, L4_or_memoph_io_ce, L4_or_memoph_zomap,
+       L4_or_memopw_io, L4_or_memopw_io_ce, L4_or_memopw_zomap,
+       L4_sub_memopb_io, L4_sub_memopb_io_ce, L4_sub_memopb_zomap,
+       L4_sub_memoph_io, L4_sub_memoph_io_ce, L4_sub_memoph_zomap,
+       L4_sub_memopw_io, L4_sub_memopw_io_ce, L4_sub_memopw_zomap]
+    = Tc_7186d325
+  | i `elem` [V6_vdd0] = Tc_718b5c53
+  | i `elem` [V6_vscattermhw, V6_vscattermhw_add] = Tc_7273323b
+  | i `elem`
+      [V6_vaslh, V6_vaslw, V6_vasrh, V6_vasrw, V6_vlsrb, V6_vlsrh,
+       V6_vlsrw]
+    = Tc_7417e785
+  | i `elem`
+      [L4_ploadrbf_abs, L4_ploadrbf_abs_ce, L4_ploadrbt_abs,
+       L4_ploadrbt_abs_ce, L4_ploadrdf_abs, L4_ploadrdf_abs_ce,
+       L4_ploadrdt_abs, L4_ploadrdt_abs_ce, L4_ploadrhf_abs,
+       L4_ploadrhf_abs_ce, L4_ploadrht_abs, L4_ploadrht_abs_ce,
+       L4_ploadrif_abs, L4_ploadrif_abs_ce, L4_ploadrit_abs,
+       L4_ploadrit_abs_ce, L4_ploadrubf_abs, L4_ploadrubf_abs_ce,
+       L4_ploadrubt_abs, L4_ploadrubt_abs_ce, L4_ploadruhf_abs,
+       L4_ploadruhf_abs_ce, L4_ploadruht_abs, L4_ploadruht_abs_ce]
+    = Tc_7646c131
+  | i `elem` [V6_vwhist128qm, V6_vwhist128qm_ce] = Tc_767c4e9d
+  | i `elem` [S2_cabacdecbin] = Tc_76851da1
+  | i `elem`
+      [A2_addh_h16_sat_hh, A2_addh_h16_sat_hl, A2_addh_h16_sat_lh,
+       A2_addh_h16_sat_ll, A2_addh_l16_sat_hl, A2_addh_l16_sat_ll,
+       A2_addpsat, A2_max, A2_maxp, A2_maxu, A2_maxup, A2_min, A2_minp,
+       A2_minu, A2_minup, A2_subh_h16_sat_hh, A2_subh_h16_sat_hl,
+       A2_subh_h16_sat_lh, A2_subh_h16_sat_ll, A2_subh_l16_sat_hl,
+       A2_subh_l16_sat_ll, A2_vaddhs, A2_vaddubs, A2_vadduhs, A2_vaddws,
+       A2_vmaxb, A2_vmaxh, A2_vmaxub, A2_vmaxuh, A2_vmaxuw, A2_vmaxw,
+       A2_vminb, A2_vminh, A2_vminub, A2_vminuh, A2_vminuw, A2_vminw,
+       A2_vsubhs, A2_vsububs, A2_vsubuhs, A2_vsubws, A4_modwrapu,
+       S2_asl_i_r_sat, S2_asl_i_r_sat_ce, S2_asl_r_r_sat, S2_asr_r_r_sat,
+       S2_vcnegh, S4_vxaddsubh, S4_vxaddsubw, S4_vxsubaddh, S4_vxsubaddw,
+       Dep_A2_addsat, Dep_A2_subsat]
+    = Tc_779080bf
+  | i `elem`
+      [S6_rol_i_p_acc, S6_rol_i_p_acc_ce, S6_rol_i_p_and,
+       S6_rol_i_p_and_ce, S6_rol_i_p_nac, S6_rol_i_p_nac_ce,
+       S6_rol_i_p_or, S6_rol_i_p_or_ce, S6_rol_i_p_xacc,
+       S6_rol_i_p_xacc_ce, S6_rol_i_r_acc, S6_rol_i_r_acc_ce,
+       S6_rol_i_r_and, S6_rol_i_r_and_ce, S6_rol_i_r_nac,
+       S6_rol_i_r_nac_ce, S6_rol_i_r_or, S6_rol_i_r_or_ce,
+       S6_rol_i_r_xacc, S6_rol_i_r_xacc_ce]
+    = Tc_784490da
+  | i `elem`
+      [L2_loadalignb_pci, L2_loadalignb_pci_ce, L2_loadalignh_pci,
+       L2_loadalignh_pci_ce]
+    = Tc_785f65a7
+  | i `elem`
+      [L4_loadalignb_ap, L4_loadalignb_ap_ce, L4_loadalignh_ap,
+       L4_loadalignh_ap_ce]
+    = Tc_7a91e76a
+  | i `elem` [V6_vaddcarry, V6_vsubcarry] = Tc_7e6a3e89
+  | i `elem`
+      [S2_pstorerbnewf_pi, S2_pstorerbnewf_pi_ce, S2_pstorerbnewt_pi,
+       S2_pstorerbnewt_pi_ce, S2_pstorerhnewf_pi, S2_pstorerhnewf_pi_ce,
+       S2_pstorerhnewt_pi, S2_pstorerhnewt_pi_ce, S2_pstorerinewf_pi,
+       S2_pstorerinewf_pi_ce, S2_pstorerinewt_pi, S2_pstorerinewt_pi_ce]
+    = Tc_838b34ea
+  | i `elem`
+      [J2_jumprf, J2_jumprf_nopred_map, J2_jumprt, J2_jumprt_nopred_map,
+       PS_jmpretf, PS_jmprett]
+    = Tc_85c9c08f
+  | i `elem`
+      [A2_vcmpbeq, A2_vcmpbgtu, A2_vcmpheq, A2_vcmphgt, A2_vcmphgtu,
+       A2_vcmpweq, A2_vcmpwgt, A2_vcmpwgtu, A4_boundscheck,
+       A4_boundscheck_hi, A4_boundscheck_lo, A4_cmpbeq, A4_cmpbgt,
+       A4_cmpbgtu, A4_cmpheq, A4_cmphgt, A4_cmphgtu, A4_vcmpbeq_any,
+       A4_vcmpbgt, C2_bitsclr, C2_bitsset, C2_cmpeqp, C2_cmpgtp,
+       C2_cmpgtup, C4_nbitsclr, C4_nbitsset, F2_dfcmpeq, F2_dfcmpge,
+       F2_dfcmpgt, F2_dfcmpuo, F2_sfcmpeq, F2_sfcmpge, F2_sfcmpgt,
+       F2_sfcmpuo, S2_tstbit_r, S4_ntstbit_r]
+    = Tc_85d5d03f
+  | i `elem` [A4_ext, A4_ext_ce] = Tc_862b3e70
+  | i `elem` [V6_vsathub, V6_vsatwh] = Tc_8772086c
+  | i `elem`
+      [V6_vdealvdd, V6_vlutvwh, V6_vlutvwh_nm, V6_vlutvwhi,
+       V6_vlutvwhi_ce, V6_vshuffvdd]
+    = Tc_87adc037
+  | i `elem` [F2_sfmax, F2_sfmin] = Tc_88b4f13d
+  | i `elem`
+      [SS2_storebi0, SS2_storebi0_ce, SS2_storebi1, SS2_storebi1_ce,
+       SS2_storewi0, SS2_storewi0_ce, SS2_storewi1, SS2_storewi1_ce]
+    = Tc_89e94ad3
+  | i `elem` [Y2_isync] = Tc_8b121f4a
+  | i `elem` [SA1_clrfnew, SA1_clrtnew] = Tc_8b3e402a
+  | i `elem`
+      [J4_tstbit0_f_jumpnv_nt, J4_tstbit0_f_jumpnv_nt_ce,
+       J4_tstbit0_f_jumpnv_t, J4_tstbit0_f_jumpnv_t_ce,
+       J4_tstbit0_t_jumpnv_nt, J4_tstbit0_t_jumpnv_nt_ce,
+       J4_tstbit0_t_jumpnv_t, J4_tstbit0_t_jumpnv_t_ce]
+    = Tc_8c945be0
+  | i `elem` [Y2_barrier, Y2_syncht] = Tc_8c99de45
+  | i `elem` [J2_pause, J2_pause_ce] = Tc_8d9d0154
+  | i `elem` [V6_vscattermhq, V6_vscattermwq] = Tc_8e420e4d
+  | i `elem`
+      [S2_pstorerbnewf_io, S2_pstorerbnewf_io_ce, S2_pstorerbnewf_zomap,
+       S2_pstorerbnewt_io, S2_pstorerbnewt_io_ce, S2_pstorerbnewt_zomap,
+       S2_pstorerhnewf_io, S2_pstorerhnewf_io_ce, S2_pstorerhnewf_zomap,
+       S2_pstorerhnewt_io, S2_pstorerhnewt_io_ce, S2_pstorerhnewt_zomap,
+       S2_pstorerinewf_io, S2_pstorerinewf_io_ce, S2_pstorerinewf_zomap,
+       S2_pstorerinewt_io, S2_pstorerinewt_io_ce, S2_pstorerinewt_zomap]
+    = Tc_8fb7ab1b
+  | i `elem` [V6_vmpahhsat, V6_vmpauhuhsat, V6_vmpsuhuhsat] =
+    Tc_90bcc1db
+  | i `elem`
+      [V6_vrmpyzbb_rt_acc, V6_vrmpyzbub_rt_acc, V6_vrmpyzcb_rt_acc,
+       V6_vrmpyzcbs_rt_acc, V6_vrmpyznb_rt_acc]
+    = Tc_933f2b39
+  | i `elem` [V6_vdealb, V6_vdealh, V6_vshuffb, V6_vshuffh] =
+    Tc_946013d8
+  | i `elem` [M6_vabsdiffb, M6_vabsdiffub, S2_mask, S2_mask_ce] =
+    Tc_9461ff31
+  | i `elem`
+      [A2_addp, A2_andp, A2_orp, A2_subp, A2_vaddb_map, A2_vaddh,
+       A2_vaddub, A2_vaddw, A2_vsubb_map, A2_vsubh, A2_vsubub, A2_vsubw,
+       A2_xorp, A4_andnp, A4_ornp, S2_asl_i_p, S2_asl_i_p_ce, S2_asl_i_r,
+       S2_asl_i_r_ce, S2_asl_i_vh, S2_asl_i_vh_ce, S2_asl_i_vw,
+       S2_asl_i_vw_ce, S2_asl_r_p, S2_asl_r_r, S2_asl_r_vh, S2_asl_r_vw,
+       S2_asr_i_p, S2_asr_i_p_ce, S2_asr_i_r, S2_asr_i_r_ce, S2_asr_i_vh,
+       S2_asr_i_vh_ce, S2_asr_i_vw, S2_asr_i_vw_ce, S2_asr_r_p,
+       S2_asr_r_r, S2_asr_r_vh, S2_asr_r_vw, S2_clrbit_i, S2_clrbit_i_ce,
+       S2_clrbit_r, S2_lsl_r_p, S2_lsl_r_r, S2_lsl_r_vh, S2_lsl_r_vw,
+       S2_lsr_i_p, S2_lsr_i_p_ce, S2_lsr_i_r, S2_lsr_i_r_ce, S2_lsr_i_vh,
+       S2_lsr_i_vh_ce, S2_lsr_i_vw, S2_lsr_i_vw_ce, S2_lsr_r_p,
+       S2_lsr_r_r, S2_lsr_r_vh, S2_lsr_r_vw, S2_setbit_i, S2_setbit_i_ce,
+       S2_setbit_r, S2_shuffeb, S2_shuffeh, S2_shuffob, S2_shuffoh,
+       S2_togglebit_i, S2_togglebit_i_ce, S2_togglebit_r, S2_vtrunewh,
+       S2_vtrunowh, S4_lsli, S4_lsli_ce, Dep_S2_packhl]
+    = Tc_946df596
+  | i `elem` [Y2_break] = Tc_9ad9998f
+  | i `elem`
+      [J4_cmpeq_f_jumpnv_nt, J4_cmpeq_f_jumpnv_nt_ce,
+       J4_cmpeq_f_jumpnv_t, J4_cmpeq_f_jumpnv_t_ce,
+       J4_cmpeq_f_jumpnv_t_combo, J4_cmpeq_t_jumpnv_nt,
+       J4_cmpeq_t_jumpnv_nt_ce, J4_cmpeq_t_jumpnv_t,
+       J4_cmpeq_t_jumpnv_t_ce, J4_cmpeq_t_jumpnv_t_combo,
+       J4_cmpgt_f_jumpnv_nt, J4_cmpgt_f_jumpnv_nt_ce, J4_cmpgt_f_jumpnv_t,
+       J4_cmpgt_f_jumpnv_t_ce, J4_cmpgt_f_jumpnv_t_combo,
+       J4_cmpgt_t_jumpnv_nt, J4_cmpgt_t_jumpnv_nt_ce, J4_cmpgt_t_jumpnv_t,
+       J4_cmpgt_t_jumpnv_t_ce, J4_cmpgt_t_jumpnv_t_combo,
+       J4_cmpgtu_f_jumpnv_nt, J4_cmpgtu_f_jumpnv_nt_ce,
+       J4_cmpgtu_f_jumpnv_t, J4_cmpgtu_f_jumpnv_t_ce,
+       J4_cmpgtu_f_jumpnv_t_combo, J4_cmpgtu_t_jumpnv_nt,
+       J4_cmpgtu_t_jumpnv_nt_ce, J4_cmpgtu_t_jumpnv_t,
+       J4_cmpgtu_t_jumpnv_t_ce, J4_cmpgtu_t_jumpnv_t_combo]
+    = Tc_9bfd761f
+  | i `elem` [A4_addp_c, A4_subp_c] = Tc_9c3ecd83
+  | i `elem` [Y2_dcfetchbo, Y2_dcfetchbo_ce] = Tc_9ca930f7
+  | i `elem`
+      [V6_vlutvvb_oracc, V6_vlutvvb_oracci, V6_vlutvvb_oracci_ce,
+       V6_vlutvwh_oracc, V6_vlutvwh_oracci, V6_vlutvwh_oracci_ce]
+    = Tc_9d1dc972
+  | i `elem`
+      [L4_return_fnew_pnt, L4_return_fnew_pt,
+       L4_return_map_to_raw_fnew_pnt, L4_return_map_to_raw_fnew_pt,
+       L4_return_tnew_pnt, L4_return_tnew_pt]
+    = Tc_9da59d12
+  | i `elem` [S4_vrcrotate_acc, S4_vrcrotate_acc_ce] = Tc_9debc299
+  | i `elem`
+      [F2_dfimm_n, F2_dfimm_n_ce, F2_dfimm_p, F2_dfimm_p_ce, F2_sfimm_n,
+       F2_sfimm_n_ce, F2_sfimm_p, F2_sfimm_p_ce]
+    = Tc_9e313203
+  | i `elem`
+      [V6_vscattermh, V6_vscattermh_add, V6_vscattermw,
+       V6_vscattermw_add]
+    = Tc_9f363d21
+  | i `elem`
+      [SA1_addsp, SA1_addsp_ce, SA1_and1, SA1_combine0i,
+       SA1_combine0i_ce, SA1_combine1i, SA1_combine1i_ce, SA1_combine2i,
+       SA1_combine2i_ce, SA1_combine3i, SA1_combine3i_ce, SA1_combinerz,
+       SA1_combinezr, SA1_inc, SA1_seti, SA1_seti_ce, SA1_setin1,
+       SA1_setin1_ce, SA1_sxtb, SA1_sxth, SA1_tfr, SA1_zxtb, SA1_zxth]
+    = Tc_9fc3dae0
+  | i `elem`
+      [ENDLOOP0, ENDLOOP01, ENDLOOP01_ce, ENDLOOP0_ce, ENDLOOP1,
+       ENDLOOP1_ce]
+    = Tc_ENDLOOP
+  | i `elem`
+      [V6_vS32b_npred_ai, V6_vS32b_npred_ai_ce, V6_vS32b_nt_npred_ai,
+       V6_vS32b_nt_npred_ai_ce, V6_vS32b_nt_pred_ai,
+       V6_vS32b_nt_pred_ai_ce, V6_vS32b_pred_ai, V6_vS32b_pred_ai_ce]
+    = Tc_a02a10a8
+  | i `elem` [V6_zLd_pi, V6_zLd_pi_ce, V6_zLd_ppu] = Tc_a0dbea28
+  | i `elem` [SA1_clrf, SA1_clrt] = Tc_a1123dda
+  | i `elem` [S6_vsplatrbp] = Tc_a1c00888
+  | i `elem` [F2_sffma, F2_sffma_lib, F2_sffms, F2_sffms_lib] =
+    Tc_a58fd5cc
+  | i `elem`
+      [L4_loadalignb_ur, L4_loadalignb_ur_ce, L4_loadalignh_ur,
+       L4_loadalignh_ur_ce]
+    = Tc_a5d4aeec
+  | i `elem` [L6_memcpy] = Tc_a6b1eca9
+  | i `elem`
+      [PS_vloadrwu_ai, PS_vloadrwu_ai_ce, V6_vL32Ub_ai, V6_vL32Ub_ai_ce]
+    = Tc_a7e6707d
+  | i `elem` [C4_addipc, C4_addipc_ce] = Tc_a813cf9a
+  | i `elem`
+      [J2_loop0i, J2_loop0i_ce, J2_loop0iext, J2_loop0iext_ce, J2_loop1i,
+       J2_loop1i_ce, J2_loop1iext, J2_loop1iext_ce]
+    = Tc_a9d88b22
+  | i `elem`
+      [V6_vS32b_new_ai, V6_vS32b_new_ai_ce, V6_vS32b_nt_new_ai,
+       V6_vS32b_nt_new_ai_ce]
+    = Tc_ab23f776
+  | i `elem`
+      [V6_vL32b_cur_npred_ai, V6_vL32b_cur_npred_ai_ce,
+       V6_vL32b_cur_pred_ai, V6_vL32b_cur_pred_ai_ce, V6_vL32b_npred_ai,
+       V6_vL32b_npred_ai_ce, V6_vL32b_nt_cur_npred_ai,
+       V6_vL32b_nt_cur_npred_ai_ce, V6_vL32b_nt_cur_pred_ai,
+       V6_vL32b_nt_cur_pred_ai_ce, V6_vL32b_nt_npred_ai,
+       V6_vL32b_nt_npred_ai_ce, V6_vL32b_nt_pred_ai,
+       V6_vL32b_nt_pred_ai_ce, V6_vL32b_pred_ai, V6_vL32b_pred_ai_ce]
+    = Tc_abe8c3b2
+  | i `elem` [V6_vandnqrt, V6_vandqrt, V6_vandvrt, V6_vinsertwr] =
+    Tc_ac4046bc
+  | i `elem`
+      [J2_jump, J2_jump_ce, RESTORE_DEALLOC_RET_JMP_V4,
+       RESTORE_DEALLOC_RET_JMP_V4_EXT, RESTORE_DEALLOC_RET_JMP_V4_EXT_PIC,
+       RESTORE_DEALLOC_RET_JMP_V4_EXT_PIC_ce,
+       RESTORE_DEALLOC_RET_JMP_V4_EXT_ce, RESTORE_DEALLOC_RET_JMP_V4_PIC,
+       RESTORE_DEALLOC_RET_JMP_V4_PIC_ce, RESTORE_DEALLOC_RET_JMP_V4_ce]
+    = Tc_ae53734a
+  | i `elem` [PS_wselect, V6_vccombine, V6_vnccombine] = Tc_af25efd9
+  | i `elem`
+      [V6_vdmpybus_acc, V6_vdmpyhb_acc, V6_vmpyihb_acc, V6_vmpyiwb_acc,
+       V6_vmpyiwub_acc, V6_vmpyuhe_acc, V6_vrmpybus_acc, V6_vrmpyub_acc]
+    = Tc_b091f1c6
+  | i `elem` [V6_vwhist128m, V6_vwhist128m_ce] = Tc_b28e51aa
+  | i `elem`
+      [C4_and_and, C4_and_andn, C4_and_or, C4_and_orn, C4_or_and,
+       C4_or_andn, C4_or_or, C4_or_orn]
+    = Tc_b31c2e97
+  | i `elem`
+      [J4_cmplt_f_jumpnv_nt, J4_cmplt_f_jumpnv_nt_ce,
+       J4_cmplt_f_jumpnv_t, J4_cmplt_f_jumpnv_t_ce,
+       J4_cmplt_f_jumpnv_t_combo, J4_cmplt_t_jumpnv_nt,
+       J4_cmplt_t_jumpnv_nt_ce, J4_cmplt_t_jumpnv_t,
+       J4_cmplt_t_jumpnv_t_ce, J4_cmplt_t_jumpnv_t_combo,
+       J4_cmpltu_f_jumpnv_nt, J4_cmpltu_f_jumpnv_nt_ce,
+       J4_cmpltu_f_jumpnv_t, J4_cmpltu_f_jumpnv_t_ce,
+       J4_cmpltu_f_jumpnv_t_combo, J4_cmpltu_t_jumpnv_nt,
+       J4_cmpltu_t_jumpnv_nt_ce, J4_cmpltu_t_jumpnv_t,
+       J4_cmpltu_t_jumpnv_t_ce, J4_cmpltu_t_jumpnv_t_combo]
+    = Tc_b343892a
+  | i `elem` [L2_loadw_locked, L4_loadd_locked] = Tc_b43e7930
+  | i `elem`
+      [SL2_jumpr31, SL2_jumpr31_f, SL2_jumpr31_fnew, SL2_jumpr31_t,
+       SL2_jumpr31_tnew]
+    = Tc_b4407292
+  | i `elem` [V6_vsb, V6_vsh, V6_vzb, V6_vzh] = Tc_b4416217
+  | i `elem`
+      [S2_allocframe, S2_allocframe_ce, S2_allocframe_simplified,
+       S2_allocframe_simplified_ce, S6_allocframe_to_raw,
+       S6_allocframe_to_raw_ce]
+    = Tc_b44ecf75
+  | i `elem`
+      [C2_vmux, S2_valignib, S2_valignib_ce, S2_valignrb, S2_vspliceib,
+       S2_vspliceib_ce, S2_vsplicerb]
+    = Tc_b4b5c03a
+  | i `elem`
+      [J2_jumprfnew, J2_jumprfnewpt, J2_jumprtnew, J2_jumprtnewpt,
+       PS_jmpretfnew, PS_jmpretfnewpt, PS_jmprettnew, PS_jmprettnewpt]
+    = Tc_b51dc29a
+  | i `elem`
+      [S4_storeirb_io, S4_storeirb_io_ce, S4_storeirb_zomap,
+       S4_storeirb_zomap_ce, S4_storeirh_io, S4_storeirh_io_ce,
+       S4_storeirh_zomap, S4_storeirh_zomap_ce, S4_storeiri_io,
+       S4_storeiri_io_ce, S4_storeiri_zomap, S4_storeiri_zomap_ce]
+    = Tc_b83e6d73
+  | i `elem` [Y2_dccleana, Y2_dccleaninva, Y2_dcinva, Y2_dczeroa] =
+    Tc_b857bf4e
+  | i `elem` [F2_sfinvsqrta] = Tc_b8bffe55
+  | i `elem`
+      [S4_pstorerbnewfnew_rr, S4_pstorerbnewfnew_rr_ce,
+       S4_pstorerbnewtnew_rr, S4_pstorerbnewtnew_rr_ce,
+       S4_pstorerhnewfnew_rr, S4_pstorerhnewfnew_rr_ce,
+       S4_pstorerhnewtnew_rr, S4_pstorerhnewtnew_rr_ce,
+       S4_pstorerinewfnew_rr, S4_pstorerinewfnew_rr_ce,
+       S4_pstorerinewtnew_rr, S4_pstorerinewtnew_rr_ce]
+    = Tc_b90a29b1
+  | i `elem` [A2_tfrcrr, A4_tfrcpp] = Tc_b9272d6c
+  | i `elem`
+      [V6_vL32b_nt_tmp_npred_pi, V6_vL32b_nt_tmp_npred_pi_ce,
+       V6_vL32b_nt_tmp_npred_ppu, V6_vL32b_nt_tmp_pred_pi,
+       V6_vL32b_nt_tmp_pred_pi_ce, V6_vL32b_nt_tmp_pred_ppu,
+       V6_vL32b_tmp_npred_pi, V6_vL32b_tmp_npred_pi_ce,
+       V6_vL32b_tmp_npred_ppu, V6_vL32b_tmp_pred_pi,
+       V6_vL32b_tmp_pred_pi_ce, V6_vL32b_tmp_pred_ppu]
+    = Tc_b9db8205
+  | i `elem`
+      [J2_trap1, J2_trap1_ce, J2_trap1_noregmap, J2_trap1_noregmap_ce]
+    = Tc_b9e09e03
+  | i `elem`
+      [L4_loadbsw2_ur, L4_loadbsw2_ur_ce, L4_loadbsw4_ur,
+       L4_loadbsw4_ur_ce, L4_loadbzw2_ur, L4_loadbzw2_ur_ce,
+       L4_loadbzw4_ur, L4_loadbzw4_ur_ce, L4_loadrb_ur, L4_loadrb_ur_ce,
+       L4_loadrd_ur, L4_loadrd_ur_ce, L4_loadrh_ur, L4_loadrh_ur_ce,
+       L4_loadri_ur, L4_loadri_ur_ce, L4_loadrub_ur, L4_loadrub_ur_ce,
+       L4_loadruh_ur, L4_loadruh_ur_ce]
+    = Tc_bab0eed9
+  | i `elem`
+      [A2_vraddub, A2_vrsadub, M2_cmpyi_s0, M2_cmpyr_s0, M2_cmpyrs_s0,
+       M2_cmpyrs_s1, M2_cmpyrsc_s0, M2_cmpyrsc_s1, M2_cmpys_s0,
+       M2_cmpys_s1, M2_cmpysc_s0, M2_cmpysc_s1, M2_dpmpyss_rnd_s0,
+       M2_dpmpyss_s0, M2_dpmpyuu_s0, M2_hmmpyh_rs1, M2_hmmpyh_s1,
+       M2_hmmpyl_rs1, M2_hmmpyl_s1, M2_mmpyh_rs0, M2_mmpyh_rs1,
+       M2_mmpyh_s0, M2_mmpyh_s1, M2_mmpyl_rs0, M2_mmpyl_rs1, M2_mmpyl_s0,
+       M2_mmpyl_s1, M2_mmpyuh_rs0, M2_mmpyuh_rs1, M2_mmpyuh_s0,
+       M2_mmpyuh_s1, M2_mmpyul_rs0, M2_mmpyul_rs1, M2_mmpyul_s0,
+       M2_mmpyul_s1, M2_mpy_hh_s0, M2_mpy_hh_s1, M2_mpy_hl_s0,
+       M2_mpy_hl_s1, M2_mpy_lh_s0, M2_mpy_lh_s1, M2_mpy_ll_s0,
+       M2_mpy_ll_s1, M2_mpy_rnd_hh_s0, M2_mpy_rnd_hh_s1, M2_mpy_rnd_hl_s0,
+       M2_mpy_rnd_hl_s1, M2_mpy_rnd_lh_s0, M2_mpy_rnd_lh_s1,
+       M2_mpy_rnd_ll_s0, M2_mpy_rnd_ll_s1, M2_mpy_sat_hh_s0,
+       M2_mpy_sat_hh_s1, M2_mpy_sat_hl_s0, M2_mpy_sat_hl_s1,
+       M2_mpy_sat_lh_s0, M2_mpy_sat_lh_s1, M2_mpy_sat_ll_s0,
+       M2_mpy_sat_ll_s1, M2_mpy_sat_rnd_hh_s0, M2_mpy_sat_rnd_hh_s1,
+       M2_mpy_sat_rnd_hl_s0, M2_mpy_sat_rnd_hl_s1, M2_mpy_sat_rnd_lh_s0,
+       M2_mpy_sat_rnd_lh_s1, M2_mpy_sat_rnd_ll_s0, M2_mpy_sat_rnd_ll_s1,
+       M2_mpy_up, M2_mpy_up_s1, M2_mpy_up_s1_sat, M2_mpyd_hh_s0,
+       M2_mpyd_hh_s1, M2_mpyd_hl_s0, M2_mpyd_hl_s1, M2_mpyd_lh_s0,
+       M2_mpyd_lh_s1, M2_mpyd_ll_s0, M2_mpyd_ll_s1, M2_mpyd_rnd_hh_s0,
+       M2_mpyd_rnd_hh_s1, M2_mpyd_rnd_hl_s0, M2_mpyd_rnd_hl_s1,
+       M2_mpyd_rnd_lh_s0, M2_mpyd_rnd_lh_s1, M2_mpyd_rnd_ll_s0,
+       M2_mpyd_rnd_ll_s1, M2_mpyi, M2_mpysu_up, M2_mpyu_hh_s0,
+       M2_mpyu_hh_s1, M2_mpyu_hl_s0, M2_mpyu_hl_s1, M2_mpyu_lh_s0,
+       M2_mpyu_lh_s1, M2_mpyu_ll_s0, M2_mpyu_ll_s1, M2_mpyu_up,
+       M2_mpyud_hh_s0, M2_mpyud_hh_s1, M2_mpyud_hl_s0, M2_mpyud_hl_s1,
+       M2_mpyud_lh_s0, M2_mpyud_lh_s1, M2_mpyud_ll_s0, M2_mpyud_ll_s1,
+       M2_mpyui, M2_vcmpy_s0_sat_i, M2_vcmpy_s0_sat_r, M2_vcmpy_s1_sat_i,
+       M2_vcmpy_s1_sat_r, M2_vdmpyrs_s0, M2_vdmpyrs_s1, M2_vdmpys_s0,
+       M2_vdmpys_s1, M2_vmpy2es_s0, M2_vmpy2es_s1, M2_vmpy2s_s0,
+       M2_vmpy2s_s0pack, M2_vmpy2s_s1, M2_vmpy2s_s1pack, M2_vmpy2su_s0,
+       M2_vmpy2su_s1, M2_vraddh, M2_vradduh, M2_vrcmpyi_s0,
+       M2_vrcmpyi_s0c, M2_vrcmpyr_s0, M2_vrcmpyr_s0c, M2_vrcmpys_s1,
+       M2_vrcmpys_s1_h, M2_vrcmpys_s1_l, M2_vrcmpys_s1rp,
+       M2_vrcmpys_s1rp_h, M2_vrcmpys_s1rp_l, M2_vrmpy_s0, M4_cmpyi_wh,
+       M4_cmpyi_whc, M4_cmpyr_wh, M4_cmpyr_whc, M4_pmpyw, M4_vpmpyh,
+       M4_vrmpyeh_s0, M4_vrmpyeh_s1, M4_vrmpyoh_s0, M4_vrmpyoh_s1,
+       M5_vdmpybsu, M5_vmpybsu, M5_vmpybuu, M5_vrmpybsu, M5_vrmpybuu]
+    = Tc_bafaade3
+  | i `elem` [G4_tfrgpcp, G4_tfrgrcr] = Tc_bcf98408
+  | i `elem`
+      [J4_cmpeqi_f_jumpnv_nt, J4_cmpeqi_f_jumpnv_nt_ce,
+       J4_cmpeqi_f_jumpnv_t, J4_cmpeqi_f_jumpnv_t_ce,
+       J4_cmpeqi_f_jumpnv_t_combo, J4_cmpeqi_t_jumpnv_nt,
+       J4_cmpeqi_t_jumpnv_nt_ce, J4_cmpeqi_t_jumpnv_t,
+       J4_cmpeqi_t_jumpnv_t_ce, J4_cmpeqi_t_jumpnv_t_combo,
+       J4_cmpeqn1_f_jumpnv_nt, J4_cmpeqn1_f_jumpnv_nt_ce,
+       J4_cmpeqn1_f_jumpnv_t, J4_cmpeqn1_f_jumpnv_t_ce,
+       J4_cmpeqn1_t_jumpnv_nt, J4_cmpeqn1_t_jumpnv_nt_ce,
+       J4_cmpeqn1_t_jumpnv_t, J4_cmpeqn1_t_jumpnv_t_ce,
+       J4_cmpeqn1_t_jumpnv_t_combo, J4_cmpgti_f_jumpnv_nt,
+       J4_cmpgti_f_jumpnv_nt_ce, J4_cmpgti_f_jumpnv_t,
+       J4_cmpgti_f_jumpnv_t_ce, J4_cmpgti_f_jumpnv_t_combo,
+       J4_cmpgti_t_jumpnv_nt, J4_cmpgti_t_jumpnv_nt_ce,
+       J4_cmpgti_t_jumpnv_t, J4_cmpgti_t_jumpnv_t_ce,
+       J4_cmpgti_t_jumpnv_t_combo, J4_cmpgtn1_f_jumpnv_nt,
+       J4_cmpgtn1_f_jumpnv_nt_ce, J4_cmpgtn1_f_jumpnv_t,
+       J4_cmpgtn1_f_jumpnv_t_ce, J4_cmpgtn1_t_jumpnv_nt,
+       J4_cmpgtn1_t_jumpnv_nt_ce, J4_cmpgtn1_t_jumpnv_t,
+       J4_cmpgtn1_t_jumpnv_t_ce, J4_cmpgtn1_t_jumpnv_t_combo,
+       J4_cmpgtui_f_jumpnv_nt, J4_cmpgtui_f_jumpnv_nt_ce,
+       J4_cmpgtui_f_jumpnv_t, J4_cmpgtui_f_jumpnv_t_ce,
+       J4_cmpgtui_f_jumpnv_t_combo, J4_cmpgtui_t_jumpnv_nt,
+       J4_cmpgtui_t_jumpnv_nt_ce, J4_cmpgtui_t_jumpnv_t,
+       J4_cmpgtui_t_jumpnv_t_ce, J4_cmpgtui_t_jumpnv_t_combo]
+    = Tc_bd8382d1
+  | i `elem` [M2_mnaci] = Tc_bdceeac1
+  | i `elem`
+      [S2_storerbnew_io, S2_storerbnew_io_ce, S2_storerbnew_zomap,
+       S2_storerhnew_io, S2_storerhnew_io_ce, S2_storerhnew_zomap,
+       S2_storerinew_io, S2_storerinew_io_ce, S2_storerinew_zomap]
+    = Tc_be9602ff
+  | i `elem`
+      [L4_loadrb_rr, L4_loadrb_rr_ce, L4_loadrd_rr, L4_loadrd_rr_ce,
+       L4_loadrh_rr, L4_loadrh_rr_ce, L4_loadri_rr, L4_loadri_rr_ce,
+       L4_loadrub_rr, L4_loadrub_rr_ce, L4_loadruh_rr, L4_loadruh_rr_ce]
+    = Tc_bf061958
+  | i `elem`
+      [S2_insert, S2_insert_ce, S2_insertp, S2_insertp_ce, S2_tableidxb,
+       S2_tableidxb_ce, S2_tableidxb_goodsyntax,
+       S2_tableidxb_goodsyntax_ce, S2_tableidxd, S2_tableidxd_ce,
+       S2_tableidxd_goodsyntax, S2_tableidxd_goodsyntax_ce, S2_tableidxh,
+       S2_tableidxh_ce, S2_tableidxh_goodsyntax,
+       S2_tableidxh_goodsyntax_ce, S2_tableidxw, S2_tableidxw_ce,
+       S2_tableidxw_goodsyntax, S2_tableidxw_goodsyntax_ce]
+    = Tc_bfec0f01
+  | i `elem`
+      [PS_vloadrw_ai, PS_vloadrw_ai_ce, PS_vloadrw_nt_ai,
+       PS_vloadrw_nt_ai_ce, V6_vL32b_ai, V6_vL32b_ai_ce, V6_vL32b_cur_ai,
+       V6_vL32b_cur_ai_ce, V6_vL32b_nt_ai, V6_vL32b_nt_ai_ce,
+       V6_vL32b_nt_cur_ai, V6_vL32b_nt_cur_ai_ce]
+    = Tc_c0749f3c
+  | i `elem`
+      [V6_vabsdiffh, V6_vabsdiffub, V6_vabsdiffuh, V6_vabsdiffw,
+       V6_vmpyieoh, V6_vrmpybusv, V6_vrmpybv, V6_vrmpyubv]
+    = Tc_c127de3a
   | i `elem`
       [L2_loadrbgp, L2_loadrbgp_ce, L2_loadrdgp, L2_loadrdgp_ce,
        L2_loadrhgp, L2_loadrhgp_ce, L2_loadrhgp_remat,
@@ -1163,149 +1371,355 @@ itinerary i
        L2_loadrigp_remat, L2_loadrigp_remat_ce, L2_loadrubgp,
        L2_loadrubgp_ce, L2_loadrubgp_remat, L2_loadrubgp_remat_ce,
        L2_loadruhgp, L2_loadruhgp_ce, L2_loadruhgp_remat,
-       L2_loadruhgp_remat_ce, L2_ploadrbf_io, L2_ploadrbf_io_ce,
-       L2_ploadrbfnew_io, L2_ploadrbfnew_io_ce, L2_ploadrbt_io,
-       L2_ploadrbt_io_ce, L2_ploadrbtnew_io, L2_ploadrbtnew_io_ce,
-       L2_ploadrdf_io, L2_ploadrdf_io_ce, L2_ploadrdfnew_io,
-       L2_ploadrdfnew_io_ce, L2_ploadrdt_io, L2_ploadrdt_io_ce,
-       L2_ploadrdtnew_io, L2_ploadrdtnew_io_ce, L2_ploadrhf_io,
-       L2_ploadrhf_io_ce, L2_ploadrhfnew_io, L2_ploadrhfnew_io_ce,
-       L2_ploadrht_io, L2_ploadrht_io_ce, L2_ploadrhtnew_io,
-       L2_ploadrhtnew_io_ce, L2_ploadrif_io, L2_ploadrif_io_ce,
-       L2_ploadrifnew_io, L2_ploadrifnew_io_ce, L2_ploadrit_io,
-       L2_ploadrit_io_ce, L2_ploadritnew_io, L2_ploadritnew_io_ce,
-       L2_ploadrubf_io, L2_ploadrubf_io_ce, L2_ploadrubfnew_io,
-       L2_ploadrubfnew_io_ce, L2_ploadrubt_io, L2_ploadrubt_io_ce,
-       L2_ploadrubtnew_io, L2_ploadrubtnew_io_ce, L2_ploadruhf_io,
-       L2_ploadruhf_io_ce, L2_ploadruhfnew_io, L2_ploadruhfnew_io_ce,
-       L2_ploadruht_io, L2_ploadruht_io_ce, L2_ploadruhtnew_io,
-       L2_ploadruhtnew_io_ce, L4_loadrb_abs, L4_loadrb_abs_ce,
-       L4_loadrb_abs_remat, L4_loadrb_abs_remat_ce, L4_loadrd_abs,
-       L4_loadrd_abs_ce, L4_loadrd_abs_remat, L4_loadrd_abs_remat_ce,
-       L4_loadrh_abs, L4_loadrh_abs_ce, L4_loadrh_abs_remat,
-       L4_loadrh_abs_remat_ce, L4_loadri_abs, L4_loadri_abs_ce,
-       L4_loadri_abs_remat, L4_loadri_abs_remat_ce, L4_loadrub_abs,
-       L4_loadrub_abs_ce, L4_loadrub_abs_remat, L4_loadrub_abs_remat_ce,
-       L4_loadruh_abs, L4_loadruh_abs_ce, L4_loadruh_abs_remat,
-       L4_loadruh_abs_remat_ce]
-    = V2LDST_tc_ld_SLOT01
+       L2_loadruhgp_remat_ce, PS_loadrbabs, PS_loadrbabs_ce, PS_loadrdabs,
+       PS_loadrdabs_ce, PS_loadrhabs, PS_loadrhabs_ce, PS_loadriabs,
+       PS_loadriabs_ce, PS_loadrubabs, PS_loadrubabs_ce, PS_loadruhabs,
+       PS_loadruhabs_ce, SL2_loadrd_sp, SL2_loadrd_sp_ce, SL2_loadri_sp,
+       SL2_loadri_sp_ce]
+    = Tc_c4db48cb
+  | i `elem` [V6_lvsplatb, V6_lvsplath, V6_lvsplatw] = Tc_c4edf264
   | i `elem`
-      [S2_pstorerbnewf_io, S2_pstorerbnewf_io_ce, S2_pstorerbnewt_io,
-       S2_pstorerbnewt_io_ce, S2_pstorerhnewf_io, S2_pstorerhnewf_io_ce,
-       S2_pstorerhnewt_io, S2_pstorerhnewt_io_ce, S2_pstorerinewf_io,
-       S2_pstorerinewf_io_ce, S2_pstorerinewt_io, S2_pstorerinewt_io_ce,
-       S2_storerbnewabs, S2_storerbnewabs_ce, S2_storerbnewgp,
-       S2_storerbnewgp_ce, S2_storerhnewabs, S2_storerhnewabs_ce,
-       S2_storerhnewgp, S2_storerhnewgp_ce, S2_storerinewabs,
-       S2_storerinewabs_ce, S2_storerinewgp, S2_storerinewgp_ce,
+      [S4_storeirbfnew_io, S4_storeirbfnew_io_ce, S4_storeirbfnew_zomap,
+       S4_storeirbfnew_zomap_ce, S4_storeirbtnew_io,
+       S4_storeirbtnew_io_ce, S4_storeirbtnew_zomap,
+       S4_storeirbtnew_zomap_ce, S4_storeirhfnew_io,
+       S4_storeirhfnew_io_ce, S4_storeirhfnew_zomap,
+       S4_storeirhfnew_zomap_ce, S4_storeirhtnew_io,
+       S4_storeirhtnew_io_ce, S4_storeirhtnew_zomap,
+       S4_storeirhtnew_zomap_ce, S4_storeirifnew_io,
+       S4_storeirifnew_io_ce, S4_storeirifnew_zomap,
+       S4_storeirifnew_zomap_ce, S4_storeiritnew_io,
+       S4_storeiritnew_io_ce, S4_storeiritnew_zomap,
+       S4_storeiritnew_zomap_ce]
+    = Tc_c4f596e3
+  | i `elem`
+      [PS_vstorerw_ai, PS_vstorerw_ai_ce, PS_vstorerw_nt_ai,
+       PS_vstorerw_nt_ai_ce, V6_vS32b_ai, V6_vS32b_ai_ce, V6_vS32b_nt_ai,
+       V6_vS32b_nt_ai_ce]
+    = Tc_c5dba46e
+  | i `elem`
+      [V6_vS32Ub_npred_pi, V6_vS32Ub_npred_pi_ce, V6_vS32Ub_npred_ppu,
+       V6_vS32Ub_pred_pi, V6_vS32Ub_pred_pi_ce, V6_vS32Ub_pred_ppu]
+    = Tc_c7039829
+  | i `elem`
+      [S2_storerbnew_pbr, S2_storerbnew_pcr, S2_storerbnew_pi,
+       S2_storerbnew_pi_ce, S2_storerbnew_pr, S2_storerhnew_pbr,
+       S2_storerhnew_pcr, S2_storerhnew_pi, S2_storerhnew_pi_ce,
+       S2_storerhnew_pr, S2_storerinew_pbr, S2_storerinew_pcr,
+       S2_storerinew_pi, S2_storerinew_pi_ce, S2_storerinew_pr,
        S4_pstorerbnewfnew_io, S4_pstorerbnewfnew_io_ce,
-       S4_pstorerbnewtnew_io, S4_pstorerbnewtnew_io_ce,
+       S4_pstorerbnewfnew_zomap, S4_pstorerbnewtnew_io,
+       S4_pstorerbnewtnew_io_ce, S4_pstorerbnewtnew_zomap,
        S4_pstorerhnewfnew_io, S4_pstorerhnewfnew_io_ce,
-       S4_pstorerhnewtnew_io, S4_pstorerhnewtnew_io_ce,
+       S4_pstorerhnewfnew_zomap, S4_pstorerhnewtnew_io,
+       S4_pstorerhnewtnew_io_ce, S4_pstorerhnewtnew_zomap,
        S4_pstorerinewfnew_io, S4_pstorerinewfnew_io_ce,
-       S4_pstorerinewtnew_io, S4_pstorerinewtnew_io_ce]
-    = V2LDST_tc_st_SLOT0
+       S4_pstorerinewfnew_zomap, S4_pstorerinewtnew_io,
+       S4_pstorerinewtnew_io_ce, S4_pstorerinewtnew_zomap]
+    = Tc_c79a189f
   | i `elem`
-      [S2_pstorerbf_io, S2_pstorerbf_io_ce, S2_pstorerbt_io,
-       S2_pstorerbt_io_ce, S2_pstorerdf_io, S2_pstorerdf_io_ce,
-       S2_pstorerdt_io, S2_pstorerdt_io_ce, S2_pstorerff_io,
-       S2_pstorerff_io_ce, S2_pstorerft_io, S2_pstorerft_io_ce,
-       S2_pstorerhf_io, S2_pstorerhf_io_ce, S2_pstorerht_io,
-       S2_pstorerht_io_ce, S2_pstorerif_io, S2_pstorerif_io_ce,
-       S2_pstorerif_io_fi, S2_pstorerif_io_fi_ce, S2_pstorerit_io,
-       S2_pstorerit_io_ce, S2_storerbabs, S2_storerbabs_ce, S2_storerbgp,
-       S2_storerbgp_ce, S2_storerdabs, S2_storerdabs_ce, S2_storerdgp,
-       S2_storerdgp_ce, S2_storerfabs, S2_storerfabs_ce, S2_storerfgp,
-       S2_storerfgp_ce, S2_storerhabs, S2_storerhabs_ce, S2_storerhgp,
-       S2_storerhgp_ce, S2_storeriabs, S2_storeriabs_ce, S2_storerigp,
-       S2_storerigp_ce, S4_pstorerbfnew_io, S4_pstorerbfnew_io_ce,
-       S4_pstorerbtnew_io, S4_pstorerbtnew_io_ce, S4_pstorerdfnew_io,
-       S4_pstorerdfnew_io_ce, S4_pstorerdtnew_io, S4_pstorerdtnew_io_ce,
-       S4_pstorerffnew_io, S4_pstorerffnew_io_ce, S4_pstorerftnew_io,
-       S4_pstorerftnew_io_ce, S4_pstorerhfnew_io, S4_pstorerhfnew_io_ce,
-       S4_pstorerhtnew_io, S4_pstorerhtnew_io_ce, S4_pstorerifnew_io,
-       S4_pstorerifnew_io_ce, S4_pstoreritnew_io, S4_pstoreritnew_io_ce]
-    = V2LDST_tc_st_SLOT01
+      [M2_mpysin, M2_mpysin_ce, M2_mpysip, M2_mpysip_ce, M2_mpysmi,
+       M2_mpysmi_ce]
+    = Tc_c8ce0b5c
+  | i `elem` [J2_jumpfpt, J2_jumpfpt_ce, J2_jumptpt, J2_jumptpt_ce] =
+    Tc_cd374165
+  | i `elem` [V6_vrmpybub_rtt, V6_vrmpyub_rtt] = Tc_cd94bfe0
   | i `elem`
-      [L4_loadrb_rr, L4_loadrb_rr_ce, L4_loadrd_rr, L4_loadrd_rr_ce,
-       L4_loadrh_rr, L4_loadrh_rr_ce, L4_loadri_rr, L4_loadri_rr_ce,
-       L4_loadrub_rr, L4_loadrub_rr_ce, L4_loadruh_rr, L4_loadruh_rr_ce,
-       L4_ploadrbf_rr, L4_ploadrbf_rr_ce, L4_ploadrbfnew_rr,
-       L4_ploadrbfnew_rr_ce, L4_ploadrbt_rr, L4_ploadrbt_rr_ce,
-       L4_ploadrbtnew_rr, L4_ploadrbtnew_rr_ce, L4_ploadrdf_rr,
-       L4_ploadrdf_rr_ce, L4_ploadrdfnew_rr, L4_ploadrdfnew_rr_ce,
-       L4_ploadrdt_rr, L4_ploadrdt_rr_ce, L4_ploadrdtnew_rr,
-       L4_ploadrdtnew_rr_ce, L4_ploadrhf_rr, L4_ploadrhf_rr_ce,
-       L4_ploadrhfnew_rr, L4_ploadrhfnew_rr_ce, L4_ploadrht_rr,
-       L4_ploadrht_rr_ce, L4_ploadrhtnew_rr, L4_ploadrhtnew_rr_ce,
-       L4_ploadrif_rr, L4_ploadrif_rr_ce, L4_ploadrifnew_rr,
-       L4_ploadrifnew_rr_ce, L4_ploadrit_rr, L4_ploadrit_rr_ce,
-       L4_ploadritnew_rr, L4_ploadritnew_rr_ce, L4_ploadrubf_rr,
-       L4_ploadrubf_rr_ce, L4_ploadrubfnew_rr, L4_ploadrubfnew_rr_ce,
-       L4_ploadrubt_rr, L4_ploadrubt_rr_ce, L4_ploadrubtnew_rr,
-       L4_ploadrubtnew_rr_ce, L4_ploadruhf_rr, L4_ploadruhf_rr_ce,
-       L4_ploadruhfnew_rr, L4_ploadruhfnew_rr_ce, L4_ploadruht_rr,
-       L4_ploadruht_rr_ce, L4_ploadruhtnew_rr, L4_ploadruhtnew_rr_ce]
-    = V4LDST_tc_ld_SLOT01
+      [A2_abs, A2_absp, A2_abssat, A2_negsat, A2_roundsat, A2_vabsh,
+       A2_vabshsat, A2_vabsw, A2_vabswsat, A2_vconj, S2_vrndpackwhs]
+    = Tc_cf8126ae
+  | i `elem` [C2_tfrrp, MVRP, MVRP_ce] = Tc_cfd8378a
+  | i `elem` [A2_svavghs] = Tc_d08ee0f4
+  | i `elem` [A5_ACS] = Tc_d1aa9eaa
   | i `elem`
-      [L4_add_memopb_io, L4_add_memopb_io_ce, L4_add_memoph_io,
-       L4_add_memoph_io_ce, L4_add_memopw_io, L4_add_memopw_io_ce,
-       L4_and_memopb_io, L4_and_memopb_io_ce, L4_and_memoph_io,
-       L4_and_memoph_io_ce, L4_and_memopw_io, L4_and_memopw_io_ce,
-       L4_iadd_memopb_io, L4_iadd_memopb_io_ce, L4_iadd_memoph_io,
-       L4_iadd_memoph_io_ce, L4_iadd_memopw_io, L4_iadd_memopw_io_ce,
-       L4_iand_memopb_io, L4_iand_memopb_io_ce, L4_iand_memoph_io,
-       L4_iand_memoph_io_ce, L4_iand_memopw_io, L4_iand_memopw_io_ce,
-       L4_ior_memopb_io, L4_ior_memopb_io_ce, L4_ior_memoph_io,
-       L4_ior_memoph_io_ce, L4_ior_memopw_io, L4_ior_memopw_io_ce,
-       L4_isub_memopb_io, L4_isub_memopb_io_ce, L4_isub_memoph_io,
-       L4_isub_memoph_io_ce, L4_isub_memopw_io, L4_isub_memopw_io_ce,
-       L4_or_memopb_io, L4_or_memopb_io_ce, L4_or_memoph_io,
-       L4_or_memoph_io_ce, L4_or_memopw_io, L4_or_memopw_io_ce,
-       L4_sub_memopb_io, L4_sub_memopb_io_ce, L4_sub_memoph_io,
-       L4_sub_memoph_io_ce, L4_sub_memopw_io, L4_sub_memopw_io_ce,
-       S4_pstorerbnewf_rr, S4_pstorerbnewf_rr_ce, S4_pstorerbnewfnew_rr,
-       S4_pstorerbnewfnew_rr_ce, S4_pstorerbnewt_rr,
-       S4_pstorerbnewt_rr_ce, S4_pstorerbnewtnew_rr,
-       S4_pstorerbnewtnew_rr_ce, S4_pstorerhnewf_rr,
-       S4_pstorerhnewf_rr_ce, S4_pstorerhnewfnew_rr,
-       S4_pstorerhnewfnew_rr_ce, S4_pstorerhnewt_rr,
-       S4_pstorerhnewt_rr_ce, S4_pstorerhnewtnew_rr,
-       S4_pstorerhnewtnew_rr_ce, S4_pstorerinewf_rr,
-       S4_pstorerinewf_rr_ce, S4_pstorerinewfnew_rr,
-       S4_pstorerinewfnew_rr_ce, S4_pstorerinewt_rr,
-       S4_pstorerinewt_rr_ce, S4_pstorerinewtnew_rr,
-       S4_pstorerinewtnew_rr_ce, S4_storerbnew_rr, S4_storerbnew_rr_ce,
-       S4_storerhnew_rr, S4_storerhnew_rr_ce, S4_storerinew_rr,
-       S4_storerinew_rr_ce]
-    = V4LDST_tc_st_SLOT0
+      [S4_pstorerbnewfnew_abs, S4_pstorerbnewfnew_abs_ce,
+       S4_pstorerbnewtnew_abs, S4_pstorerbnewtnew_abs_ce,
+       S4_pstorerhnewfnew_abs, S4_pstorerhnewfnew_abs_ce,
+       S4_pstorerhnewtnew_abs, S4_pstorerhnewtnew_abs_ce,
+       S4_pstorerinewfnew_abs, S4_pstorerinewfnew_abs_ce,
+       S4_pstorerinewtnew_abs, S4_pstorerinewtnew_abs_ce,
+       S4_storerbnew_ap, S4_storerbnew_ap_ce, S4_storerhnew_ap,
+       S4_storerhnew_ap_ce, S4_storerinew_ap, S4_storerinew_ap_ce]
+    = Tc_d2e63d61
   | i `elem`
-      [S4_pstorerbf_rr, S4_pstorerbf_rr_ce, S4_pstorerbfnew_rr,
-       S4_pstorerbfnew_rr_ce, S4_pstorerbt_rr, S4_pstorerbt_rr_ce,
-       S4_pstorerbtnew_rr, S4_pstorerbtnew_rr_ce, S4_pstorerdf_rr,
-       S4_pstorerdf_rr_ce, S4_pstorerdfnew_rr, S4_pstorerdfnew_rr_ce,
-       S4_pstorerdt_rr, S4_pstorerdt_rr_ce, S4_pstorerdtnew_rr,
-       S4_pstorerdtnew_rr_ce, S4_pstorerff_rr, S4_pstorerff_rr_ce,
-       S4_pstorerffnew_rr, S4_pstorerffnew_rr_ce, S4_pstorerft_rr,
-       S4_pstorerft_rr_ce, S4_pstorerftnew_rr, S4_pstorerftnew_rr_ce,
-       S4_pstorerhf_rr, S4_pstorerhf_rr_ce, S4_pstorerhfnew_rr,
-       S4_pstorerhfnew_rr_ce, S4_pstorerht_rr, S4_pstorerht_rr_ce,
-       S4_pstorerhtnew_rr, S4_pstorerhtnew_rr_ce, S4_pstorerif_rr,
-       S4_pstorerif_rr_ce, S4_pstorerifnew_rr, S4_pstorerifnew_rr_ce,
-       S4_pstorerit_rr, S4_pstorerit_rr_ce, S4_pstoreritnew_rr,
-       S4_pstoreritnew_rr_ce, S4_storeirb_io, S4_storeirb_io_ce,
-       S4_storeirbf_io, S4_storeirbf_io_ce, S4_storeirbfnew_io,
-       S4_storeirbfnew_io_ce, S4_storeirbt_io, S4_storeirbt_io_ce,
-       S4_storeirbtnew_io, S4_storeirbtnew_io_ce, S4_storeirh_io,
-       S4_storeirh_io_ce, S4_storeirhf_io, S4_storeirhf_io_ce,
-       S4_storeirhfnew_io, S4_storeirhfnew_io_ce, S4_storeirht_io,
-       S4_storeirht_io_ce, S4_storeirhtnew_io, S4_storeirhtnew_io_ce,
-       S4_storeiri_io, S4_storeiri_io_ce, S4_storeiri_io_fi,
-       S4_storeiri_io_fi_ce, S4_storeirif_io, S4_storeirif_io_ce,
-       S4_storeirifnew_io, S4_storeirifnew_io_ce, S4_storeirit_io,
-       S4_storeirit_io_ce, S4_storeiritnew_io, S4_storeiritnew_io_ce,
-       S4_storerb_rr, S4_storerb_rr_ce, S4_storerd_rr, S4_storerd_rr_ce,
-       S4_storerf_rr, S4_storerf_rr_ce, S4_storerh_rr, S4_storerh_rr_ce,
-       S4_storeri_rr, S4_storeri_rr_ce]
-    = V4LDST_tc_st_SLOT01
+      [EH_RETURN_JMPR, J2_jumpr, J4_hintjumpr, PS_jmpret,
+       PS_jmpret_dealloc_linear, PS_jmpret_linear, PS_tailcall_r]
+    = Tc_d5b7b0c1
+  | i `elem`
+      [S2_storerbnew_pci, S2_storerbnew_pci_ce, S2_storerhnew_pci,
+       S2_storerhnew_pci_ce, S2_storerinew_pci, S2_storerinew_pci_ce]
+    = Tc_d5c0729a
+  | i `elem` [Y2_dcfetch] = Tc_d63f638c
+  | i `elem`
+      [S2_pstorerbnewfnew_pi, S2_pstorerbnewfnew_pi_ce,
+       S2_pstorerbnewtnew_pi, S2_pstorerbnewtnew_pi_ce,
+       S2_pstorerhnewfnew_pi, S2_pstorerhnewfnew_pi_ce,
+       S2_pstorerhnewtnew_pi, S2_pstorerhnewtnew_pi_ce,
+       S2_pstorerinewfnew_pi, S2_pstorerinewfnew_pi_ce,
+       S2_pstorerinewtnew_pi, S2_pstorerinewtnew_pi_ce]
+    = Tc_d65dbf51
+  | i `elem`
+      [A2_vraddub_acc, A2_vrsadub_acc, M2_cmaci_s0, M2_cmacr_s0,
+       M2_cmacs_s0, M2_cmacs_s1, M2_cmacsc_s0, M2_cmacsc_s1, M2_cnacs_s0,
+       M2_cnacs_s1, M2_cnacsc_s0, M2_cnacsc_s1, M2_dpmpyss_acc_s0,
+       M2_dpmpyss_nac_s0, M2_dpmpyuu_acc_s0, M2_dpmpyuu_nac_s0, M2_maci,
+       M2_mmachs_rs0, M2_mmachs_rs1, M2_mmachs_s0, M2_mmachs_s1,
+       M2_mmacls_rs0, M2_mmacls_rs1, M2_mmacls_s0, M2_mmacls_s1,
+       M2_mmacuhs_rs0, M2_mmacuhs_rs1, M2_mmacuhs_s0, M2_mmacuhs_s1,
+       M2_mmaculs_rs0, M2_mmaculs_rs1, M2_mmaculs_s0, M2_mmaculs_s1,
+       M2_mpy_acc_hh_s0, M2_mpy_acc_hh_s1, M2_mpy_acc_hl_s0,
+       M2_mpy_acc_hl_s1, M2_mpy_acc_lh_s0, M2_mpy_acc_lh_s1,
+       M2_mpy_acc_ll_s0, M2_mpy_acc_ll_s1, M2_mpy_acc_sat_hh_s0,
+       M2_mpy_acc_sat_hh_s1, M2_mpy_acc_sat_hl_s0, M2_mpy_acc_sat_hl_s1,
+       M2_mpy_acc_sat_lh_s0, M2_mpy_acc_sat_lh_s1, M2_mpy_acc_sat_ll_s0,
+       M2_mpy_acc_sat_ll_s1, M2_mpy_nac_hh_s0, M2_mpy_nac_hh_s1,
+       M2_mpy_nac_hl_s0, M2_mpy_nac_hl_s1, M2_mpy_nac_lh_s0,
+       M2_mpy_nac_lh_s1, M2_mpy_nac_ll_s0, M2_mpy_nac_ll_s1,
+       M2_mpy_nac_sat_hh_s0, M2_mpy_nac_sat_hh_s1, M2_mpy_nac_sat_hl_s0,
+       M2_mpy_nac_sat_hl_s1, M2_mpy_nac_sat_lh_s0, M2_mpy_nac_sat_lh_s1,
+       M2_mpy_nac_sat_ll_s0, M2_mpy_nac_sat_ll_s1, M2_mpyd_acc_hh_s0,
+       M2_mpyd_acc_hh_s1, M2_mpyd_acc_hl_s0, M2_mpyd_acc_hl_s1,
+       M2_mpyd_acc_lh_s0, M2_mpyd_acc_lh_s1, M2_mpyd_acc_ll_s0,
+       M2_mpyd_acc_ll_s1, M2_mpyd_nac_hh_s0, M2_mpyd_nac_hh_s1,
+       M2_mpyd_nac_hl_s0, M2_mpyd_nac_hl_s1, M2_mpyd_nac_lh_s0,
+       M2_mpyd_nac_lh_s1, M2_mpyd_nac_ll_s0, M2_mpyd_nac_ll_s1,
+       M2_mpyu_acc_hh_s0, M2_mpyu_acc_hh_s1, M2_mpyu_acc_hl_s0,
+       M2_mpyu_acc_hl_s1, M2_mpyu_acc_lh_s0, M2_mpyu_acc_lh_s1,
+       M2_mpyu_acc_ll_s0, M2_mpyu_acc_ll_s1, M2_mpyu_nac_hh_s0,
+       M2_mpyu_nac_hh_s1, M2_mpyu_nac_hl_s0, M2_mpyu_nac_hl_s1,
+       M2_mpyu_nac_lh_s0, M2_mpyu_nac_lh_s1, M2_mpyu_nac_ll_s0,
+       M2_mpyu_nac_ll_s1, M2_mpyud_acc_hh_s0, M2_mpyud_acc_hh_s1,
+       M2_mpyud_acc_hl_s0, M2_mpyud_acc_hl_s1, M2_mpyud_acc_lh_s0,
+       M2_mpyud_acc_lh_s1, M2_mpyud_acc_ll_s0, M2_mpyud_acc_ll_s1,
+       M2_mpyud_nac_hh_s0, M2_mpyud_nac_hh_s1, M2_mpyud_nac_hl_s0,
+       M2_mpyud_nac_hl_s1, M2_mpyud_nac_lh_s0, M2_mpyud_nac_lh_s1,
+       M2_mpyud_nac_ll_s0, M2_mpyud_nac_ll_s1, M2_vcmac_s0_sat_i,
+       M2_vcmac_s0_sat_r, M2_vdmacs_s0, M2_vdmacs_s1, M2_vmac2,
+       M2_vmac2es, M2_vmac2es_s0, M2_vmac2es_s1, M2_vmac2s_s0,
+       M2_vmac2s_s1, M2_vmac2su_s0, M2_vmac2su_s1, M2_vrcmaci_s0,
+       M2_vrcmaci_s0c, M2_vrcmacr_s0, M2_vrcmacr_s0c, M2_vrcmpys_acc_s1,
+       M2_vrcmpys_acc_s1_h, M2_vrcmpys_acc_s1_l, M2_vrmac_s0,
+       M4_mac_up_s1_sat, M4_mpyrr_addi, M4_mpyrr_addi_ce, M4_mpyrr_addr,
+       M4_nac_up_s1_sat, M4_pmpyw_acc, M4_vpmpyh_acc, M4_vrmpyeh_acc_s0,
+       M4_vrmpyeh_acc_s1, M4_vrmpyoh_acc_s0, M4_vrmpyoh_acc_s1,
+       M5_vdmacbsu, M5_vmacbsu, M5_vmacbuu, M5_vrmacbsu, M5_vrmacbuu,
+       S2_vrcnegh]
+    = Tc_d773585a
+  | i `elem`
+      [V6_vaddhw, V6_vaddubh, V6_vadduhw, V6_vdmpyhvsat, V6_vmpabusv,
+       V6_vmpabuuv, V6_vmpybusv, V6_vmpybv, V6_vmpyewuh, V6_vmpyewuh_64,
+       V6_vmpyhus, V6_vmpyhv, V6_vmpyhvsrs, V6_vmpyiewuh, V6_vmpyih,
+       V6_vmpyiowh, V6_vmpyowh, V6_vmpyowh_rnd, V6_vmpyubv, V6_vmpyuhv,
+       V6_vsubhw, V6_vsububh, V6_vsubuhw]
+    = Tc_d8287c14
+  | i `elem`
+      [J2_jumprgtez, J2_jumprgtez_ce, J2_jumprgtezpt, J2_jumprgtezpt_ce,
+       J2_jumprltez, J2_jumprltez_ce, J2_jumprltezpt, J2_jumprltezpt_ce,
+       J2_jumprnz, J2_jumprnz_ce, J2_jumprnzpt, J2_jumprnzpt_ce,
+       J2_jumprz, J2_jumprz_ce, J2_jumprzpt, J2_jumprzpt_ce]
+    = Tc_d9d43ecb
+  | i `elem`
+      [S4_pstorerbfnew_abs, S4_pstorerbfnew_abs_ce, S4_pstorerbtnew_abs,
+       S4_pstorerbtnew_abs_ce, S4_pstorerdfnew_abs,
+       S4_pstorerdfnew_abs_ce, S4_pstorerdtnew_abs,
+       S4_pstorerdtnew_abs_ce, S4_pstorerffnew_abs,
+       S4_pstorerffnew_abs_ce, S4_pstorerftnew_abs,
+       S4_pstorerftnew_abs_ce, S4_pstorerhfnew_abs,
+       S4_pstorerhfnew_abs_ce, S4_pstorerhtnew_abs,
+       S4_pstorerhtnew_abs_ce, S4_pstorerifnew_abs,
+       S4_pstorerifnew_abs_ce, S4_pstoreritnew_abs,
+       S4_pstoreritnew_abs_ce, S4_storerb_ap, S4_storerb_ap_ce,
+       S4_storerd_ap, S4_storerd_ap_ce, S4_storerf_ap, S4_storerf_ap_ce,
+       S4_storerh_ap, S4_storerh_ap_ce, S4_storeri_ap, S4_storeri_ap_ce]
+    = Tc_da4a37ed
+  | i `elem`
+      [PS_storerb_pcr, PS_storerd_pcr, PS_storerf_pcr, PS_storerh_pcr,
+       PS_storeri_pcr, S2_storerb_pbr, S2_storerb_pcr, S2_storerb_pi,
+       S2_storerb_pi_ce, S2_storerb_pr, S2_storerd_pbr, S2_storerd_pcr,
+       S2_storerd_pi, S2_storerd_pi_ce, S2_storerd_pr, S2_storerf_pbr,
+       S2_storerf_pcr, S2_storerf_pi, S2_storerf_pi_ce, S2_storerf_pr,
+       S2_storerh_pbr, S2_storerh_pcr, S2_storerh_pi, S2_storerh_pi_ce,
+       S2_storerh_pr, S2_storeri_pbr, S2_storeri_pcr, S2_storeri_pi,
+       S2_storeri_pi_ce, S2_storeri_pr, S4_pstorerbfnew_io,
+       S4_pstorerbfnew_io_ce, S4_pstorerbfnew_zomap, S4_pstorerbtnew_io,
+       S4_pstorerbtnew_io_ce, S4_pstorerbtnew_zomap, S4_pstorerdfnew_io,
+       S4_pstorerdfnew_io_ce, S4_pstorerdfnew_zomap, S4_pstorerdtnew_io,
+       S4_pstorerdtnew_io_ce, S4_pstorerdtnew_zomap, S4_pstorerffnew_io,
+       S4_pstorerffnew_io_ce, S4_pstorerffnew_zomap, S4_pstorerftnew_io,
+       S4_pstorerftnew_io_ce, S4_pstorerftnew_zomap, S4_pstorerhfnew_io,
+       S4_pstorerhfnew_io_ce, S4_pstorerhfnew_zomap, S4_pstorerhtnew_io,
+       S4_pstorerhtnew_io_ce, S4_pstorerhtnew_zomap, S4_pstorerifnew_io,
+       S4_pstorerifnew_io_ce, S4_pstorerifnew_zomap, S4_pstoreritnew_io,
+       S4_pstoreritnew_io_ce, S4_pstoreritnew_zomap]
+    = Tc_da97ee82
+  | i `elem`
+      [J2_jumpf, J2_jumpf_ce, J2_jumpf_nopred_map,
+       J2_jumpf_nopred_map_ce, J2_jumpf_nv, J2_jumpf_nv_ce, J2_jumpt,
+       J2_jumpt_ce, J2_jumpt_nopred_map, J2_jumpt_nopred_map_ce,
+       J2_jumpt_nv, J2_jumpt_nv_ce]
+    = Tc_db2bce9c
+  | i `elem`
+      [PS_vdd0, V6_pred_and, V6_pred_and_n, V6_pred_or, V6_pred_or_n,
+       V6_pred_xor, V6_shuffeqh, V6_shuffeqw, V6_vaddb_dv, V6_vaddbsat_dv,
+       V6_vaddh_dv, V6_vaddhsat_dv, V6_vaddubsat_dv, V6_vadduhsat_dv,
+       V6_vadduwsat_dv, V6_vaddw_dv, V6_vaddwsat_dv, V6_vcombine,
+       V6_vshufoeb, V6_vshufoeh, V6_vsubb_dv, V6_vsubbsat_dv, V6_vsubh_dv,
+       V6_vsubhsat_dv, V6_vsububsat_dv, V6_vsubuhsat_dv, V6_vsubuwsat_dv,
+       V6_vsubw_dv, V6_vsubwsat_dv]
+    = Tc_db5555f3
+  | i `elem` [V6_zLd_pred_ai, V6_zLd_pred_ai_ce] = Tc_dd5b0695
+  | i `elem`
+      [C2_cmpeq, C2_cmpgt, C2_cmpgtu, C4_cmplte, C4_cmplteu, C4_cmpneq]
+    = Tc_de4df740
+  | i `elem` [C2_all8, C2_any8, C2_not] = Tc_de554571
+  | i `elem`
+      [J2_loop0r, J2_loop0r_ce, J2_loop0rext, J2_loop0rext_ce, J2_loop1r,
+       J2_loop1r_ce, J2_loop1rext, J2_loop1rext_ce]
+    = Tc_df3319ed
+  | i `elem` [V6_vasr_into] = Tc_df80eeb0
+  | i `elem`
+      [L4_return_map_to_raw_tnew_pnt, L4_return_map_to_raw_tnew_pt]
+    = Tc_e06f432a
+  | i `elem` [V6_vS32Ub_pi, V6_vS32Ub_pi_ce, V6_vS32Ub_ppu] =
+    Tc_e2d2e9e5
+  | i `elem` [V6_vaddcarryo, V6_vsubcarryo] = Tc_e35c1e93
+  | i `elem`
+      [V6_vhistq, V6_vwhist128q, V6_vwhist256q, V6_vwhist256q_sat]
+    = Tc_e3f68a46
+  | i `elem`
+      [A2_vavghr, A2_vavgubr, A2_vavguhr, A2_vavguwr, A2_vavgwr]
+    = Tc_e4a7f9f0
+  | i `elem`
+      [L4_ploadrbf_rr, L4_ploadrbf_rr_ce, L4_ploadrbt_rr,
+       L4_ploadrbt_rr_ce, L4_ploadrdf_rr, L4_ploadrdf_rr_ce,
+       L4_ploadrdt_rr, L4_ploadrdt_rr_ce, L4_ploadrhf_rr,
+       L4_ploadrhf_rr_ce, L4_ploadrht_rr, L4_ploadrht_rr_ce,
+       L4_ploadrif_rr, L4_ploadrif_rr_ce, L4_ploadrit_rr,
+       L4_ploadrit_rr_ce, L4_ploadrubf_rr, L4_ploadrubf_rr_ce,
+       L4_ploadrubt_rr, L4_ploadrubt_rr_ce, L4_ploadruhf_rr,
+       L4_ploadruhf_rr_ce, L4_ploadruht_rr, L4_ploadruht_rr_ce]
+    = Tc_e4b3cb20
+  | i `elem`
+      [V6_vrmpybusi_acc, V6_vrmpybusi_acc_ce, V6_vrmpyubi_acc,
+       V6_vrmpyubi_acc_ce, V6_vrsadubi_acc, V6_vrsadubi_acc_ce]
+    = Tc_e675c45a
+  | i `elem` [V6_zLd_ai, V6_zLd_ai_ce] = Tc_e699ae41
+  | i `elem` [J2_jumprfpt, J2_jumprtpt] = Tc_e78647bd
+  | i `elem`
+      [PS_storerb_pci, PS_storerb_pci_ce, PS_storerd_pci,
+       PS_storerd_pci_ce, PS_storerf_pci, PS_storerf_pci_ce,
+       PS_storerh_pci, PS_storerh_pci_ce, PS_storeri_pci,
+       PS_storeri_pci_ce, S2_storerb_pci, S2_storerb_pci_ce,
+       S2_storerd_pci, S2_storerd_pci_ce, S2_storerf_pci,
+       S2_storerf_pci_ce, S2_storerh_pci, S2_storerh_pci_ce,
+       S2_storeri_pci, S2_storeri_pci_ce]
+    = Tc_e86aa961
+  | i `elem` [V6_vgathermh, V6_vgathermw] = Tc_e8797b98
+  | i `elem`
+      [L2_loadbsw2_pci, L2_loadbsw2_pci_ce, L2_loadbsw4_pci,
+       L2_loadbsw4_pci_ce, L2_loadbzw2_pci, L2_loadbzw2_pci_ce,
+       L2_loadbzw4_pci, L2_loadbzw4_pci_ce, L2_loadrb_pci,
+       L2_loadrb_pci_ce, L2_loadrd_pci, L2_loadrd_pci_ce, L2_loadrh_pci,
+       L2_loadrh_pci_ce, L2_loadri_pci, L2_loadri_pci_ce, L2_loadrub_pci,
+       L2_loadrub_pci_ce, L2_loadruh_pci, L2_loadruh_pci_ce,
+       PS_loadrb_pci, PS_loadrb_pci_ce, PS_loadrd_pci, PS_loadrd_pci_ce,
+       PS_loadrh_pci, PS_loadrh_pci_ce, PS_loadri_pci, PS_loadri_pci_ce,
+       PS_loadrub_pci, PS_loadrub_pci_ce, PS_loadruh_pci,
+       PS_loadruh_pci_ce]
+    = Tc_e93a3d71
+  | i `elem`
+      [S4_pstorerbnewf_rr, S4_pstorerbnewf_rr_ce, S4_pstorerbnewt_rr,
+       S4_pstorerbnewt_rr_ce, S4_pstorerhnewf_rr, S4_pstorerhnewf_rr_ce,
+       S4_pstorerhnewt_rr, S4_pstorerhnewt_rr_ce, S4_pstorerinewf_rr,
+       S4_pstorerinewf_rr_ce, S4_pstorerinewt_rr, S4_pstorerinewt_rr_ce]
+    = Tc_e95795ec
+  | i `elem`
+      [V6_vS32b_new_npred_pi, V6_vS32b_new_npred_pi_ce,
+       V6_vS32b_new_npred_ppu, V6_vS32b_new_pred_pi,
+       V6_vS32b_new_pred_pi_ce, V6_vS32b_new_pred_ppu,
+       V6_vS32b_nt_new_npred_pi, V6_vS32b_nt_new_npred_pi_ce,
+       V6_vS32b_nt_new_npred_ppu, V6_vS32b_nt_new_pred_pi,
+       V6_vS32b_nt_new_pred_pi_ce, V6_vS32b_nt_new_pred_ppu]
+    = Tc_e99d4c2e
+  | i `elem`
+      [L2_ploadrbfnew_pi, L2_ploadrbfnew_pi_ce, L2_ploadrbtnew_pi,
+       L2_ploadrbtnew_pi_ce, L2_ploadrdfnew_pi, L2_ploadrdfnew_pi_ce,
+       L2_ploadrdtnew_pi, L2_ploadrdtnew_pi_ce, L2_ploadrhfnew_pi,
+       L2_ploadrhfnew_pi_ce, L2_ploadrhtnew_pi, L2_ploadrhtnew_pi_ce,
+       L2_ploadrifnew_pi, L2_ploadrifnew_pi_ce, L2_ploadritnew_pi,
+       L2_ploadritnew_pi_ce, L2_ploadrubfnew_pi, L2_ploadrubfnew_pi_ce,
+       L2_ploadrubtnew_pi, L2_ploadrubtnew_pi_ce, L2_ploadruhfnew_pi,
+       L2_ploadruhfnew_pi_ce, L2_ploadruhtnew_pi, L2_ploadruhtnew_pi_ce]
+    = Tc_e9f3243f
+  | i `elem` [V6_vlut4] = Tc_f1de44ef
+  | i `elem`
+      [PS_vstorerwu_ai, PS_vstorerwu_ai_ce, V6_vS32Ub_ai,
+       V6_vS32Ub_ai_ce]
+    = Tc_f21e8abb
+  | i `elem`
+      [M2_xor_xacc, M4_and_and, M4_and_andn, M4_and_or, M4_and_xor,
+       M4_or_and, M4_or_andn, M4_or_or, M4_or_xor, M4_xor_and,
+       M4_xor_andn, M4_xor_or, M4_xor_xacc, S2_asl_i_p_and,
+       S2_asl_i_p_and_ce, S2_asl_i_p_or, S2_asl_i_p_or_ce,
+       S2_asl_i_p_xacc, S2_asl_i_p_xacc_ce, S2_asl_i_r_and,
+       S2_asl_i_r_and_ce, S2_asl_i_r_or, S2_asl_i_r_or_ce,
+       S2_asl_i_r_xacc, S2_asl_i_r_xacc_ce, S2_asl_r_p_and, S2_asl_r_p_or,
+       S2_asl_r_p_xor, S2_asl_r_r_and, S2_asl_r_r_or, S2_asr_i_p_and,
+       S2_asr_i_p_and_ce, S2_asr_i_p_or, S2_asr_i_p_or_ce, S2_asr_i_r_and,
+       S2_asr_i_r_and_ce, S2_asr_i_r_or, S2_asr_i_r_or_ce, S2_asr_r_p_and,
+       S2_asr_r_p_or, S2_asr_r_p_xor, S2_asr_r_r_and, S2_asr_r_r_or,
+       S2_insert_rp, S2_insertp_rp, S2_lsl_r_p_and, S2_lsl_r_p_or,
+       S2_lsl_r_p_xor, S2_lsl_r_r_and, S2_lsl_r_r_or, S2_lsr_i_p_and,
+       S2_lsr_i_p_and_ce, S2_lsr_i_p_or, S2_lsr_i_p_or_ce,
+       S2_lsr_i_p_xacc, S2_lsr_i_p_xacc_ce, S2_lsr_i_r_and,
+       S2_lsr_i_r_and_ce, S2_lsr_i_r_or, S2_lsr_i_r_or_ce,
+       S2_lsr_i_r_xacc, S2_lsr_i_r_xacc_ce, S2_lsr_r_p_and, S2_lsr_r_p_or,
+       S2_lsr_r_p_xor, S2_lsr_r_r_and, S2_lsr_r_r_or, S4_andi_asl_ri,
+       S4_andi_asl_ri_ce, S4_andi_lsr_ri, S4_andi_lsr_ri_ce, S4_or_andi,
+       S4_or_andi_ce, S4_or_andix, S4_or_andix_ce, S4_or_ori,
+       S4_or_ori_ce, S4_ori_asl_ri, S4_ori_asl_ri_ce, S4_ori_lsr_ri,
+       S4_ori_lsr_ri_ce]
+    = Tc_f429765c
+  | i `elem`
+      [M2_acci, M2_accii, M2_accii_ce, M2_nacci, M2_naccii, M2_naccii_ce,
+       M2_subacc, S2_addasl_rrri, S2_addasl_rrri_ce, S2_asl_i_p_acc,
+       S2_asl_i_p_acc_ce, S2_asl_i_p_nac, S2_asl_i_p_nac_ce,
+       S2_asl_i_r_acc, S2_asl_i_r_acc_ce, S2_asl_i_r_nac,
+       S2_asl_i_r_nac_ce, S2_asl_r_p_acc, S2_asl_r_p_nac, S2_asl_r_r_acc,
+       S2_asl_r_r_nac, S2_asr_i_p_acc, S2_asr_i_p_acc_ce, S2_asr_i_p_nac,
+       S2_asr_i_p_nac_ce, S2_asr_i_r_acc, S2_asr_i_r_acc_ce,
+       S2_asr_i_r_nac, S2_asr_i_r_nac_ce, S2_asr_r_p_acc, S2_asr_r_p_nac,
+       S2_asr_r_r_acc, S2_asr_r_r_nac, S2_extractu, S2_extractu_ce,
+       S2_extractup, S2_extractup_ce, S2_lsl_r_p_acc, S2_lsl_r_p_nac,
+       S2_lsl_r_r_acc, S2_lsl_r_r_nac, S2_lsr_i_p_acc, S2_lsr_i_p_acc_ce,
+       S2_lsr_i_p_nac, S2_lsr_i_p_nac_ce, S2_lsr_i_r_acc,
+       S2_lsr_i_r_acc_ce, S2_lsr_i_r_nac, S2_lsr_i_r_nac_ce,
+       S2_lsr_r_p_acc, S2_lsr_r_p_nac, S2_lsr_r_r_acc, S2_lsr_r_r_nac,
+       S4_addaddi, S4_addaddi_ce, S4_addi_asl_ri, S4_addi_asl_ri_ce,
+       S4_addi_lsr_ri, S4_addi_lsr_ri_ce, S4_extract, S4_extract_ce,
+       S4_extractp, S4_extractp_ce, S4_subaddi, S4_subaddi_ce,
+       S4_subi_asl_ri, S4_subi_asl_ri_ce, S4_subi_lsr_ri,
+       S4_subi_lsr_ri_ce]
+    = Tc_f675fee8
+  | i `elem`
+      [S2_pstorerbf_io, S2_pstorerbf_io_ce, S2_pstorerbf_zomap,
+       S2_pstorerbt_io, S2_pstorerbt_io_ce, S2_pstorerbt_zomap,
+       S2_pstorerdf_io, S2_pstorerdf_io_ce, S2_pstorerdf_zomap,
+       S2_pstorerdt_io, S2_pstorerdt_io_ce, S2_pstorerdt_zomap,
+       S2_pstorerff_io, S2_pstorerff_io_ce, S2_pstorerff_zomap,
+       S2_pstorerft_io, S2_pstorerft_io_ce, S2_pstorerft_zomap,
+       S2_pstorerhf_io, S2_pstorerhf_io_ce, S2_pstorerhf_zomap,
+       S2_pstorerht_io, S2_pstorerht_io_ce, S2_pstorerht_zomap,
+       S2_pstorerif_io, S2_pstorerif_io_ce, S2_pstorerif_io_fi,
+       S2_pstorerif_io_fi_ce, S2_pstorerif_zomap, S2_pstorerit_io,
+       S2_pstorerit_io_ce, S2_pstorerit_zomap]
+    = Tc_f8e23f0b
+  | i `elem` [A6_vminub_RdP] = Tc_f9058dd7
+  | i `elem` [J2_trap0, J2_trap0_ce] = Tc_fc3999b4
+  | i `elem`
+      [S4_storerbnew_ur, S4_storerbnew_ur_ce, S4_storerhnew_ur,
+       S4_storerhnew_ur_ce, S4_storerinew_ur, S4_storerinew_ur_ce]
+    = Tc_fcc3ddf9
+  | i `elem` [V6_vgathermhwq] = Tc_fd7610da
+  | i `elem` [Y4_l2fetch, Y5_l2fetch] = Tc_fe211424
 
