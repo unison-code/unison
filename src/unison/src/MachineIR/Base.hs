@@ -143,7 +143,10 @@ data MachineInstruction i r =
     -- first instruction in 'mbInstrs' is the bundle header)
     mbHead :: Bool,
     -- | Instructions in the bundle
-    mbInstrs :: [MachineInstruction i r]
+    mbInstrs :: [MachineInstruction i r],
+    -- | Bundle operands (implicit uses and definitions derived from the bundled
+    -- instructions)
+    mbOperands   :: [MachineOperand r]
     } |
   -- | Machine IR primitive instruction
   MachineSingle {

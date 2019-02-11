@@ -167,8 +167,11 @@ showMachineBasicBlockBody v mis = concatMap (showMachineInstruction v) mis
 instance (Show i, Show r) => Show (MachineInstruction i r) where
     show = (showMachineInstruction LLVM5)
 
-showMachineInstruction v (MachineBundle {mbHead = True, mbInstrs = mis}) =
-  "BUNDLE" ++ showMachineBundleTail v mis
+showMachineInstruction v (MachineBundle {mbHead = True, mbInstrs = mis,
+                                         mbOperands = mos}) =
+  "BUNDLE" ++
+  (if null mos then "" else " " ++ showCS (showMachineOperand v) mos) ++
+  showMachineBundleTail v mis
 
 showMachineInstruction v (MachineBundle {mbHead = False, mbInstrs = mi:mis}) =
   showInlineMachineSingle v mi ++ showMachineBundleTail v mis

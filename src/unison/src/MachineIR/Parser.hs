@@ -276,7 +276,7 @@ mirBundle v =
      whiteSpaces 2
      char '}'
      eol
-     return (mkMachineBundleWithHeader
+     return (mkMachineBundleWithHeader us
              (mkMachineSingle opcode [] us) instructions)
 
 mirSingle v n =
@@ -757,8 +757,8 @@ readOperand (MachineFreeReg name states) =
   mkMachineCompleteReg (read name) states
 readOperand mo = mo
 
-mkMachineBundleWithHeader
+mkMachineBundleWithHeader us
   MachineSingle {msOpcode = MachineVirtualOpc BUNDLE} instructions =
-    mkMachineBundle instructions
-mkMachineBundleWithHeader instruction instructions =
-  MachineBundle False (instruction : instructions)
+    MachineBundle True instructions us
+mkMachineBundleWithHeader _ instruction instructions =
+  MachineBundle False (instruction : instructions) []

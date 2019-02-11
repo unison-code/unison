@@ -11,13 +11,19 @@ This file is part of Unison, see http://unison-code.github.io
 -}
 module MachineIR.Transformations.AddImplicitRegs (addImplicitRegs) where
 
+import Data.List
+import Data.Maybe
+
 import MachineIR
 import Unison
 import Unison.Target.API
 
 addImplicitRegs mf target =
   let rwif = readWriteInfo target
-  in mapToMachineInstruction (addImplicitRegsToInstr rwif) mf
+      oif  = operandInfo target
+      mf1  = mapToMachineInstruction (addImplicitRegsToInstr rwif) mf
+      mf2  = mapToMachineBlock (addImplicitRegsToBundles oif) mf1
+  in mf2
 
 addImplicitRegsToInstr rwif mi @ MachineSingle {msOpcode = MachineTargetOpc i,
                                                 msOperands = mos} =
@@ -28,3 +34,25 @@ addImplicitRegsToInstr rwif mi @ MachineSingle {msOpcode = MachineTargetOpc i,
                (OtherSideEffect d) <- snd rws]
       mos'  = mos ++ imp
   in mi {msOperands = mos'}
+
+addImplicitRegsToBundles oif mb @ MachineBlock {mbInstructions = mis} =
+  mb {mbInstructions = map (addImplicitRegsToBundle oif) mis}
+
+addImplicitRegsToBundle oif mb @ MachineBundle {mbInstrs = mis} =
+  let mos = nub $ concatMap (extractImplicitRegs oif) mis
+  in mb {mbOperands = mos}
+addImplicitRegsToBundle _ mi = mi
+
+extractImplicitRegs oif MachineSingle {msOpcode = MachineTargetOpc i,
+                                       msOperands = mos} =
+  let (ds, us) = splitAt (length $ snd $ oif i) mos
+      ds'      = mapMaybe (takeImplicit mkMachineRegImplicitDefine) ds
+      -- already implicit uses and defines are included in 'us' and not modified
+      -- by 'takeImplicit':
+      us'      = mapMaybe (takeImplicit mkMachineRegImplicit) us
+  in ds' ++ us'
+
+takeImplicit mif mr @ MachineReg {mrFlags = []} = Just mr {mrFlags = [mif]}
+-- pass through implicit operands
+takeImplicit _   mr @ MachineReg {} = Just mr
+takeImplicit _ _ = Nothing
