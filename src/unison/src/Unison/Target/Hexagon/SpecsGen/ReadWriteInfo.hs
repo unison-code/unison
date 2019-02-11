@@ -874,12 +874,12 @@ readWriteInfo i
     ([],
      [OtherSideEffect R29, OtherSideEffect R30, OtherSideEffect R31])
   | i `elem`
-      [L4_return_linear, RESTORE_DEALLOC_BEFORE_TAILCALL_V4,
+      [RESTORE_DEALLOC_BEFORE_TAILCALL_V4,
        RESTORE_DEALLOC_BEFORE_TAILCALL_V4_EXT,
        RESTORE_DEALLOC_BEFORE_TAILCALL_V4_EXT_ce,
        RESTORE_DEALLOC_BEFORE_TAILCALL_V4_ce, RESTORE_DEALLOC_RET_JMP_V4,
        RESTORE_DEALLOC_RET_JMP_V4_EXT, RESTORE_DEALLOC_RET_JMP_V4_EXT_ce,
-       RESTORE_DEALLOC_RET_JMP_V4_ce]
+       RESTORE_DEALLOC_RET_JMP_V4_ce, SL2_return_linear]
     =
     ([],
      [OtherSideEffect R29, OtherSideEffect R30, OtherSideEffect R31,

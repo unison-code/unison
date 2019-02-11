@@ -3010,7 +3010,7 @@ data HexagonInstruction = A2_abs
                         | Jump_merge
                         | L2_deallocframe_linear
                         | PS_jmpret_dealloc_linear
-                        | L4_return_linear
+                        | SL2_return_linear
                         | Ret_dealloc_merge
                         | PS_jmpret_linear
                         | Jr_merge

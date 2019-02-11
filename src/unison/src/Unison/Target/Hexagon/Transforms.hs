@@ -306,7 +306,7 @@ shiftFrameOffset off (Bound mfi @ (MachineFrameIndex {})) =
 shiftFrameOffset _ p = p
 
 isAllocFrameOpr o =
-  isNatural o && targetInst (oInstructions o) == S2_allocframe_simplified
+  isNatural o && targetInst (oInstructions o) == SS2_allocframe
 
 -- | Gives alternative instructions with the same semantics
 

@@ -3025,7 +3025,7 @@ instance Show HexagonInstruction where
         show Jump_merge = "jump_merge"
         show L2_deallocframe_linear = "L2_deallocframe_linear"
         show PS_jmpret_dealloc_linear = "PS_jmpret_dealloc_linear"
-        show L4_return_linear = "L4_return_linear"
+        show SL2_return_linear = "SL2_return_linear"
         show Ret_dealloc_merge = "ret_dealloc_merge"
         show PS_jmpret_linear = "PS_jmpret_linear"
         show Jr_merge = "jr_merge"

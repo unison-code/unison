@@ -113,9 +113,8 @@ branchInfo (Branch {oBranchIs = ops, oBranchUs = [BlockRef l]})
 
 branchInfo (Branch {oBranchIs = ops})
   | targetInst ops `elem`  [PS_jmpret, PS_jmprett, PS_jmpretf, PS_jmprettnew, PS_jmpretfnew,
-                            L4_return, L4_return_t, L4_return_f,
-                            L4_return_tnew_pt, L4_return_fnew_pt, J2_jumpr,
-                            Jr_merge] =
+                            SL2_return, SL2_return_t, SL2_return_f,
+                            J2_jumpr, Jr_merge] =
     BranchInfo Unconditional Nothing
 
 branchInfo (Branch {oBranchIs = ops})
@@ -377,7 +376,7 @@ resources to
      -- Artificial resource to represent the fact that there can only be up
      -- to two regular stores or a single new-value store per bundle (see
      -- Section 5.5 in Hexagon programmer's reference). Also used to avoid
-     -- stores in parallel with L4_return (seems to be disallowed by LLVM)
+     -- stores in parallel with SL2_return (seems to be disallowed by LLVM)
      Resource Store 2,    -- Used by ST and NVST
 
      -- Artificial resource to forbid conditional instructions and new-value
@@ -402,7 +401,7 @@ nop = Linear [TargetInstruction A2_nop] [] []
 readWriteInfo i
   | i `elem` [PS_jmpret] =
       addRegRead R31 $ SpecsGen.readWriteInfo i
-  | i `elem` [PS_jmpret_dealloc_linear, L4_return_linear, PS_jmpret_linear,
+  | i `elem` [PS_jmpret_dealloc_linear, SL2_return_linear, PS_jmpret_linear,
               Ret_dealloc_merge] =
       second (++ [ControlSideEffect]) $ SpecsGen.readWriteInfo i
   | otherwise = SpecsGen.readWriteInfo i
@@ -416,7 +415,7 @@ implementFrame = const []
 
 -- | Adds function prologue, see HexagonFrameLowering.cpp
 addPrologue (_, oid, _) (e:code) =
-  let af = mkAct $ mkOpt oid S2_allocframe_simplified [Bound mkMachineFrameSize] []
+  let af = mkAct $ mkOpt oid SS2_allocframe [Bound mkMachineFrameSize] []
   in [e, af] ++ code
 
 -- | Adds function epilogue, see HexagonFrameLowering.cpp
@@ -433,7 +432,7 @@ addEpilogue (tid, oid, pid) code =
          dfl  = mkOpt oid L2_deallocframe_linear [] [mkOper 0 [t1]]
          jrdl = mkOpt (oid + 1) PS_jmpret_dealloc_linear
                 [mkOper 1 [t], mkOper 2 [t1]] [mkOper 3 [t2]]
-         rl   = mkOpt (oid + 2) L4_return_linear [] [mkOper 4 [t3]]
+         rl   = mkOpt (oid + 2) SL2_return_linear [] [mkOper 4 [t3]]
          rdm  = mkAct $ mkOpt (oid + 3) Ret_dealloc_merge [mkOper 5 [t2, t3]]
                 [mkOper 6 [t4]]
          jrl  = mkOpt (oid + 4) PS_jmpret_linear [mkOper 7 [t]] [mkOper 8 [t5]]
@@ -546,7 +545,6 @@ postProcess = [lintStackAlignment,
                constantDeExtend, removeFrameIndex,
                normalizeNewValueCmpJump, normalizeNVJumps, normalizeJRInstrs,
                expandCondTransfers, addJumpHints,
-               normalizeOpcodes,
                flip addImplicitRegs (target, [])]
 
 lintStackAlignment = mapToTargetMachineInstruction lintStackAlignmentInInstr
@@ -661,8 +659,8 @@ normalizeJR mi @ MachineSingle {msOpcode   = MachineTargetOpc i,
       case mops of
        [_, dst, _] -> [mi {msOpcode = mkMachineTargetOpc PS_jmpret,
                            msOperands = [dst]}]
-  | i == L4_return_linear =
-    [mi {msOpcode = mkMachineTargetOpc L4_return, msOperands = []}]
+  | i == SL2_return_linear =
+    [mi {msOpcode = mkMachineTargetOpc SL2_return, msOperands = []}]
   | i == PS_jmpret_linear =
       case mops of
        [_, dst] -> [mi {msOpcode = mkMachineTargetOpc PS_jmpret,
@@ -715,13 +713,6 @@ addHint True J2_jumpfnew = J2_jumpfnewpt
 addHint False i | isNewValueCmpJump i = read (init (show i) ++ "nt")
 addHint _ i = i
 
-normalizeOpcodes = mapToTargetMachineInstruction normalizeOpcode
-
-normalizeOpcode mi @ MachineSingle {msOpcode = MachineTargetOpc i}
-  | i `elem` [S2_allocframe_simplified] =
-      mi {msOpcode = mkMachineTargetOpc (fromJust $ SpecsGen.parent i)}
-normalizeOpcode mi = mi
-
 -- | Gives a list of function transformers
 transforms _ ImportPreLift = [liftStackArgSize,
                               peephole extractReturnRegs,
@@ -750,7 +741,7 @@ readWriteLatency _ ((_, VirtualType _), _) (_, _) = 0
 readWriteLatency _ ((TargetInstruction p, _), _) (_, _) =
     maybeMax 0 $ map occupation (usages [] p)
 
-linearMergeJumps = [PS_jmpret_dealloc_linear, L4_return_linear, Ret_dealloc_merge,
+linearMergeJumps = [PS_jmpret_dealloc_linear, SL2_return_linear, Ret_dealloc_merge,
                     PS_jmpret_linear, Jr_merge]
 
 isMemoryObject (Memory _) = True

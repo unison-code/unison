@@ -544,8 +544,8 @@ instruction-set:
         affects:
         affected-by:
 
-      - id:                 L4_return_linear
-        parent:             L4_return
+      - id:                 SL2_return_linear
+        parent:             SL2_return
         type:               linear
         operands:
          - dst:             [register, def, F32, -1]

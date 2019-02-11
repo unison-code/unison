@@ -516,8 +516,8 @@ itinerary i
        J2_ploop3sr, J2_ploop3sr_ce]
     = Tc_32779c6f
   | i `elem`
-      [SL2_return, SL2_return_f, SL2_return_fnew, SL2_return_t,
-       SL2_return_tnew]
+      [SL2_return, SL2_return_f, SL2_return_fnew, SL2_return_linear,
+       SL2_return_t, SL2_return_tnew]
     = Tc_36153880
   | i `elem`
       [S4_pstorerbf_abs, S4_pstorerbf_abs_ce, S4_pstorerbt_abs,
@@ -933,8 +933,7 @@ itinerary i
       [S4_storerbnew_rr, S4_storerbnew_rr_ce, S4_storerhnew_rr,
        S4_storerhnew_rr_ce, S4_storerinew_rr, S4_storerinew_rr_ce]
     = Tc_67435e81
-  | i `elem` [L4_return, L4_return_linear, L6_return_map_to_raw] =
-    Tc_675e4897
+  | i `elem` [L4_return, L6_return_map_to_raw] = Tc_675e4897
   | i `elem`
       [A2_addh_h16_hh, A2_addh_h16_hl, A2_addh_h16_lh, A2_addh_h16_ll,
        A2_addsp, A2_addsph, A2_addspl, A2_subh_h16_hh, A2_subh_h16_hl,

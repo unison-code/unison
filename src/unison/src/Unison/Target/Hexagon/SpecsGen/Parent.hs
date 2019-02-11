@@ -1284,7 +1284,6 @@ parent i
       [L2_loadruhgp_demat, L2_loadruhgp_demat_ce, L2_loadruhgp_remat,
        L2_loadruhgp_remat_ce, L2_loadruhgp_source, L2_loadruhgp_source_ce]
     = Just L2_loadruhgp
-  | i `elem` [L4_return_linear] = Just L4_return
   | i `elem` [PS_jmpret_dealloc_linear, PS_jmpret_linear] =
     Just PS_jmpret
   | i `elem` [S2_allocframe_simplified, S2_allocframe_simplified_ce]
@@ -1293,6 +1292,7 @@ parent i
     Just S2_pstorerif_io
   | i `elem` [S2_storerf_io_fi, S2_storerf_io_fi_ce] =
     Just S2_storerf_io
+  | i `elem` [SL2_return_linear] = Just SL2_return
   | i `elem`
       [TFR_FI_fi_demat_fi, TFR_FI_fi_demat_fi_ce, TFR_FI_fi_remat_fi,
        TFR_FI_fi_remat_fi_ce, TFR_FI_fi_source_fi, TFR_FI_fi_source_fi_ce]

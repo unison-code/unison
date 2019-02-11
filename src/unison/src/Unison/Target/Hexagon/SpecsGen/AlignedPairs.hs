@@ -27,8 +27,8 @@ alignedPairs i ([], [_]) | i `elem` [V6_vdd0] = []
 alignedPairs i ([], [_])
   | i `elem`
       [G_IMPLICIT_DEF, G_IMPLICIT_DEF_ce, IMPLICIT_DEF, IMPLICIT_DEF_ce,
-       L2_deallocframe_linear, L4_return_linear, LOAD_STACK_GUARD,
-       PS_false, PS_true]
+       L2_deallocframe_linear, LOAD_STACK_GUARD, PS_false, PS_true,
+       SL2_return_linear]
     = []
 alignedPairs i ([_], [_]) | i `elem` [PS_aligna, PS_aligna_ce] = []
 alignedPairs i ([_], [_]) | i `elem` [A2_tfrcrr] = []

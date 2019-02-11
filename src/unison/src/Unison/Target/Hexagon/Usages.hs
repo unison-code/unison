@@ -29,7 +29,7 @@ usages' i
   | i `elem` spillInstrs || mayLoad' i || mayStore' i =
       mergeUsages (itineraryUsage i $ SpecsGen.itinerary i)
                   [mkUsage SpillCost 1 1]
-  | i `elem` [L4_return_linear] =
+  | i `elem` [SL2_return_linear] =
       mergeUsages (itineraryUsage i $ SpecsGen.itinerary i) (store 2)
   | otherwise = itineraryUsage i $ SpecsGen.itinerary i
 

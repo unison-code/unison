@@ -20,7 +20,7 @@ operandInfo i
        V6_vwhist128, V6_vwhist256, V6_vwhist256_sat, Y2_barrier, Y2_break,
        Y2_isync, Y2_syncht]
     = ([], [])
-  | i `elem` [L4_return_linear] =
+  | i `elem` [SL2_return_linear] =
     ([], [TemporaryInfo (RegisterClass F32) 0 False])
   | i `elem` [L2_deallocframe_linear] =
     ([], [TemporaryInfo (RegisterClass F32) 1 False])
