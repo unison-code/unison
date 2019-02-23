@@ -61,6 +61,7 @@ import Unison.Tools.Import.ConnectCalls
 import Unison.Tools.Import.RemoveUnreachableBlocks
 import Unison.Tools.Import.CorrectDoubleBranches
 import Unison.Tools.Import.AdjustPhiLabels
+import Unison.Tools.Import.MovePhiUndefs
 import Unison.Tools.Import.SimplifyCombinations
 import Unison.Tools.Import.RemoveUselessVirtuals
 import Unison.Tools.Import.RelocateDefines
@@ -141,6 +142,7 @@ uniTransformations (goal, noCC, noReserved, maxBlockSize, estimateFreq,
      (renameBlocks, "renameBlocks", True),
      (correctDoubleBranches, "correctDoubleBranches", True),
      (adjustPhiLabels, "adjustPhiLabels", True),
+     (movePhiUndefs, "movePhiUndefs", True),
      (simplifyCombinations, "simplifyCombinations", True),
      (removeUselessVirtuals, "removeUselessVirtuals", True),
      (relocateDefines, "relocateDefines", True),

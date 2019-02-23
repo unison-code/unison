@@ -24,10 +24,17 @@ normalizePhis mf target =
 
 normalizePhi itf oif mi
     | isMachinePhi mi =
-        toMachineInstruction $ normalizePhiUses $
-        fromMachineInstruction itf oif (-1, mi)
+        let mi1 = toMachineInstruction $ normalizePhiUses $
+                  fromMachineInstruction itf oif (-1, mi)
+            mos = map maybeCopyMtFlags (zip (msOperands mi) (msOperands mi1))
+            mi2 = mi1 {msOperands = mos}
+        in mi2
     | otherwise = mi
 
 normalizePhiUses o =
     let us = concat [[t, mkBlockRef bid] | (t, bid) <- nub $ phiUses o]
     in mapToOperands (const us) id o
+
+maybeCopyMtFlags (MachineTemp {mtFlags = mtfs}, mt @ MachineTemp {}) =
+  mt {mtFlags = mtfs}
+maybeCopyMtFlags (_, mo) = mo

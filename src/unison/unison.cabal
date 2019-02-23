@@ -129,6 +129,7 @@ Library
 
   Other-modules:  Unison.Tools.Import.ConnectCalls
                   Unison.Tools.Import.AdjustPhiLabels
+                  Unison.Tools.Import.MovePhiUndefs
                   Unison.Tools.Import.RemoveUnreachableBlocks
                   Unison.Tools.Import.CorrectDoubleBranches
                   Unison.Tools.Import.DropDebugLocations

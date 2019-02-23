@@ -122,6 +122,7 @@ module Unison.Util
         preAssignments,
         toCongruenceOp,
         tempBlock,
+        oprBlock,
         tempOperand,
         isAugmented,
         mapToOperation,
@@ -853,6 +854,11 @@ tempBlock ::  [Block i r] -> Operand r -> Block i r
 tempBlock code t =
   let defined p b = any (isDefiner p) (bCode b)
   in fromJust $ find (defined t) code
+
+oprBlock :: [Block i r] -> BlockOperation i r -> Block i r
+oprBlock code o =
+  let blockOf o b = any (isIdOf o) (bCode b)
+  in fromJust $ find (blockOf o) code
 
 tempOperand :: Eq r => Operand r -> BlockOperation i r -> Operand r
 tempOperand t o =
