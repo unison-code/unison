@@ -102,7 +102,7 @@ runUnison unisonTargets testArgs mirFile =
                    scaleFreq args,
                    applyBaseFile args,
                    tightPressureBound args,
-                   fromMaybe (strictlyBetter args) (testStrictlyBetter properties),
+                   fromMaybe False (testStrictlyBetter properties),
                    unsatisfiable args,
                    removeReds args,
                    keepNops args,
