@@ -1,0 +1,125 @@
+--- |
+  ; ModuleID = '00128.ll'
+  source_filename = "./tests/single-exec/00128.c"
+  target datalayout = "e-m:e-p:32:32:32-a:0-n16:32-i64:64:64-i32:32:32-i16:16:16-i1:8:8-f32:32:32-f64:64:64-v32:32:32-v64:64:64-v512:512:512-v1024:1024:1024-v2048:2048:2048"
+  target triple = "hexagon"
+  
+  @b = common dso_local local_unnamed_addr global i32 0, align 4
+  @a = common dso_local local_unnamed_addr global i32 0, align 4
+  @c = common dso_local local_unnamed_addr global i8 0, align 1
+  @d = common dso_local local_unnamed_addr global i8 0, align 1
+  @e = common dso_local local_unnamed_addr global i8 0, align 1
+  @f = common dso_local local_unnamed_addr global i32 0, align 4
+  @g = common dso_local local_unnamed_addr global i32 0, align 4
+  @h = common dso_local local_unnamed_addr global i64 0, align 8
+  @i = common dso_local local_unnamed_addr global i64 0, align 8
+  @j = common dso_local local_unnamed_addr global i16 0, align 2
+  @k = common dso_local local_unnamed_addr global i16 0, align 2
+  
+  ; Function Attrs: norecurse nounwind
+  define dso_local i32 @main() local_unnamed_addr #0 {
+  entry:
+    %0 = load i16, i16* @k, align 2, !tbaa !2
+    %conv6 = zext i16 %0 to i32
+    store i32 %conv6, i32* @a, align 4, !tbaa !6
+    store i32 %conv6, i32* @b, align 4, !tbaa !6
+    %conv15 = trunc i16 %0 to i8
+    store i8 %conv15, i8* @c, align 1, !tbaa !8
+    store i8 %conv15, i8* @d, align 1, !tbaa !8
+    store i8 %conv15, i8* @e, align 1, !tbaa !8
+    store i32 %conv6, i32* @f, align 4, !tbaa !9
+    store i32 %conv6, i32* @g, align 4, !tbaa !9
+    %conv60 = zext i16 %0 to i64
+    store i64 %conv60, i64* @h, align 8, !tbaa !11
+    store i64 %conv60, i64* @i, align 8, !tbaa !11
+    store i16 %0, i16* @j, align 2, !tbaa !2
+    ret i32 0
+  }
+  
+  attributes #0 = { norecurse nounwind "correctly-rounded-divide-sqrt-fp-math"="false" "disable-tail-calls"="false" "less-precise-fpmad"="false" "min-legal-vector-width"="0" "no-frame-pointer-elim"="true" "no-frame-pointer-elim-non-leaf" "no-infs-fp-math"="false" "no-jump-tables"="false" "no-nans-fp-math"="false" "no-signed-zeros-fp-math"="false" "no-trapping-math"="false" "stack-protector-buffer-size"="8" "target-cpu"="hexagonv5" "target-features"="-long-calls" "unsafe-fp-math"="false" "use-soft-float"="false" }
+  
+  !llvm.module.flags = !{!0}
+  !llvm.ident = !{!1}
+  
+  !0 = !{i32 1, !"wchar_size", i32 4}
+  !1 = !{!"clang version 9.0.0 (http://llvm.org/git/clang.git 4e215e73ed6b499f3ccf23263c96cd188e0eda2c) (git@github.com:unison-code/llvm.git 9914ec00db7eeaf764045b9071638c2421cd32e7)"}
+  !2 = !{!3, !3, i64 0}
+  !3 = !{!"short", !4, i64 0}
+  !4 = !{!"omnipotent char", !5, i64 0}
+  !5 = !{!"Simple C/C++ TBAA"}
+  !6 = !{!7, !7, i64 0}
+  !7 = !{!"int", !4, i64 0}
+  !8 = !{!4, !4, i64 0}
+  !9 = !{!10, !10, i64 0}
+  !10 = !{!"long", !4, i64 0}
+  !11 = !{!12, !12, i64 0}
+  !12 = !{!"long long", !4, i64 0}
+
+...
+---
+name:            main
+alignment:       4
+exposesReturnsTwice: false
+legalized:       false
+regBankSelected: false
+selected:        false
+failedISel:      false
+tracksRegLiveness: true
+hasWinCFI:       false
+registers:       []
+liveins:         []
+frameInfo:       
+  isFrameAddressTaken: false
+  isReturnAddressTaken: false
+  hasStackMap:     false
+  hasPatchPoint:   false
+  stackSize:       0
+  offsetAdjustment: 0
+  maxAlignment:    0
+  adjustsStack:    false
+  hasCalls:        false
+  stackProtector:  ''
+  maxCallFrameSize: 0
+  cvBytesOfCalleeSavedRegisters: 0
+  hasOpaqueSPAdjustment: false
+  hasVAStart:      false
+  hasMustTailInVarArgFunc: false
+  localFrameSize:  0
+  savePoint:       ''
+  restorePoint:    ''
+fixedStack:      []
+stack:           []
+constants:       []
+body:             |
+  bb.0.entry (freq 8):
+    liveouts: $pc, $d1, $gp, $r2, $r31, $r0
+  
+    ANNOTATION_LABEL <0x9bc1e50> = !{!"unison-block-frequency", i64 8}
+    BUNDLE implicit-def $r2, implicit-def $r3, implicit-def $r0, implicit $gp {
+      renamable $r2 = L2_loadruhgp @k, implicit $gp :: (dereferenceable load 2 from @k, !tbaa !2)
+      renamable $r3 = A2_tfrsi 0
+      $r0 = A2_tfrsi 0
+    }
+    BUNDLE implicit $r2, implicit $gp {
+      S2_storerigp @a, renamable $r2, implicit $gp :: (store 4 into @a, !tbaa !6)
+      S2_storerigp @b, renamable $r2, implicit $gp :: (store 4 into @b, !tbaa !6)
+    }
+    BUNDLE implicit $r2, implicit $gp {
+      S2_storerbgp @c, renamable $r2, implicit $gp :: (store 1 into @c, !tbaa !8)
+      S2_storerbgp @d, renamable $r2, implicit $gp :: (store 1 into @d, !tbaa !8)
+    }
+    BUNDLE implicit $r2, implicit $gp {
+      S2_storerbgp @e, renamable $r2, implicit $gp :: (store 1 into @e, !tbaa !8)
+      S2_storerigp @f, renamable $r2, implicit $gp :: (store 4 into @f, !tbaa !9)
+    }
+    BUNDLE implicit $r2, implicit $gp, implicit $d1 {
+      S2_storerigp @g, renamable $r2, implicit $gp :: (store 4 into @g, !tbaa !9)
+      S2_storerdgp @h, renamable $d1, implicit $gp :: (store 8 into @h, !tbaa !11)
+    }
+    BUNDLE implicit-def dead $pc, implicit $d1, implicit killed $gp, implicit killed $r2, implicit killed $r31, implicit killed $r0 {
+      S2_storerdgp @i, renamable $d1, implicit $gp :: (store 8 into @i, !tbaa !11)
+      S2_storerhgp @j, killed renamable $r2, implicit killed $gp :: (store 2 into @j, !tbaa !2)
+      PS_jmpret killed $r31, implicit-def dead $pc, implicit killed $r0
+    }
+
+...

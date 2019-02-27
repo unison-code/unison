@@ -1,0 +1,68 @@
+--- |
+  ; ModuleID = '00063.ll'
+  source_filename = "./tests/single-exec/00063.c"
+  target datalayout = "e-m:e-p:32:32:32-a:0-n16:32-i64:64:64-i32:32:32-i16:16:16-i1:8:8-f32:32:32-f64:64:64-v32:32:32-v64:64:64-v512:512:512-v1024:1024:1024-v2048:2048:2048"
+  target triple = "hexagon"
+  
+  @x = dso_local local_unnamed_addr global i32 0, align 4
+  
+  ; Function Attrs: norecurse nounwind readnone
+  define dso_local i32 @main() local_unnamed_addr #0 {
+  entry:
+    ret i32 0
+  }
+  
+  attributes #0 = { norecurse nounwind readnone "correctly-rounded-divide-sqrt-fp-math"="false" "disable-tail-calls"="false" "less-precise-fpmad"="false" "min-legal-vector-width"="0" "no-frame-pointer-elim"="true" "no-frame-pointer-elim-non-leaf" "no-infs-fp-math"="false" "no-jump-tables"="false" "no-nans-fp-math"="false" "no-signed-zeros-fp-math"="false" "no-trapping-math"="false" "stack-protector-buffer-size"="8" "target-cpu"="hexagonv5" "target-features"="-long-calls" "unsafe-fp-math"="false" "use-soft-float"="false" }
+  
+  !llvm.module.flags = !{!0}
+  !llvm.ident = !{!1}
+  
+  !0 = !{i32 1, !"wchar_size", i32 4}
+  !1 = !{!"clang version 9.0.0 (http://llvm.org/git/clang.git 4e215e73ed6b499f3ccf23263c96cd188e0eda2c) (git@github.com:unison-code/llvm.git 9914ec00db7eeaf764045b9071638c2421cd32e7)"}
+
+...
+---
+name:            main
+alignment:       4
+exposesReturnsTwice: false
+legalized:       false
+regBankSelected: false
+selected:        false
+failedISel:      false
+tracksRegLiveness: true
+hasWinCFI:       false
+registers:       []
+liveins:         []
+frameInfo:       
+  isFrameAddressTaken: false
+  isReturnAddressTaken: false
+  hasStackMap:     false
+  hasPatchPoint:   false
+  stackSize:       0
+  offsetAdjustment: 0
+  maxAlignment:    0
+  adjustsStack:    false
+  hasCalls:        false
+  stackProtector:  ''
+  maxCallFrameSize: 0
+  cvBytesOfCalleeSavedRegisters: 0
+  hasOpaqueSPAdjustment: false
+  hasVAStart:      false
+  hasMustTailInVarArgFunc: false
+  localFrameSize:  0
+  savePoint:       ''
+  restorePoint:    ''
+fixedStack:      []
+stack:           []
+constants:       []
+body:             |
+  bb.0.entry (freq 8):
+    liveouts: $r0, $pc, $r31
+  
+    ANNOTATION_LABEL <0x9d28c20> = !{!"unison-block-frequency", i64 8}
+    BUNDLE implicit-def dead $r0, implicit-def dead $pc, implicit killed $r31 {
+      $r0 = A2_tfrsi 0
+      PS_jmpret killed $r31, implicit-def dead $pc, implicit internal killed $r0
+    }
+
+...

@@ -1,0 +1,240 @@
+--- |
+  ; ModuleID = '00089.ll'
+  source_filename = "./tests/single-exec/00089.c"
+  target datalayout = "e-m:e-p:32:32:32-a:0-n16:32-i64:64:64-i32:32:32-i16:16:16-i1:8:8-f32:32:32-f64:64:64-v32:32:32-v64:64:64-v512:512:512-v1024:1024:1024-v2048:2048:2048"
+  target triple = "hexagon"
+  
+  %struct.S = type { i32 (...)* }
+  
+  @s = dso_local global %struct.S { i32 (...)* bitcast (i32 ()* @zero to i32 (...)*) }, align 4
+  
+  ; Function Attrs: norecurse nounwind readnone
+  define dso_local i32 @zero() #0 {
+  entry:
+    ret i32 0
+  }
+  
+  ; Function Attrs: norecurse nounwind readnone
+  define dso_local nonnull %struct.S* @anon() #0 {
+  entry:
+    ret %struct.S* @s
+  }
+  
+  ; Function Attrs: norecurse nounwind readnone
+  define dso_local %struct.S* (...)* @go() local_unnamed_addr #0 {
+  entry:
+    ret %struct.S* (...)* bitcast (%struct.S* ()* @anon to %struct.S* (...)*)
+  }
+  
+  ; Function Attrs: nounwind
+  define dso_local i32 @main() local_unnamed_addr #1 {
+  entry:
+    %0 = load i32 ()*, i32 ()** bitcast (%struct.S* @s to i32 ()**), align 4, !tbaa !2
+    %call3 = tail call i32 %0() #2
+    ret i32 %call3
+  }
+  
+  ; Function Attrs: nounwind
+  declare void @llvm.stackprotector(i8*, i8**) #2
+  
+  attributes #0 = { norecurse nounwind readnone "correctly-rounded-divide-sqrt-fp-math"="false" "disable-tail-calls"="false" "less-precise-fpmad"="false" "min-legal-vector-width"="0" "no-frame-pointer-elim"="true" "no-frame-pointer-elim-non-leaf" "no-infs-fp-math"="false" "no-jump-tables"="false" "no-nans-fp-math"="false" "no-signed-zeros-fp-math"="false" "no-trapping-math"="false" "stack-protector-buffer-size"="8" "target-cpu"="hexagonv5" "target-features"="-long-calls" "unsafe-fp-math"="false" "use-soft-float"="false" }
+  attributes #1 = { nounwind "correctly-rounded-divide-sqrt-fp-math"="false" "disable-tail-calls"="false" "less-precise-fpmad"="false" "min-legal-vector-width"="0" "no-frame-pointer-elim"="true" "no-frame-pointer-elim-non-leaf" "no-infs-fp-math"="false" "no-jump-tables"="false" "no-nans-fp-math"="false" "no-signed-zeros-fp-math"="false" "no-trapping-math"="false" "stack-protector-buffer-size"="8" "target-cpu"="hexagonv5" "target-features"="-long-calls" "unsafe-fp-math"="false" "use-soft-float"="false" }
+  attributes #2 = { nounwind }
+  
+  !llvm.module.flags = !{!0}
+  !llvm.ident = !{!1}
+  
+  !0 = !{i32 1, !"wchar_size", i32 4}
+  !1 = !{!"clang version 9.0.0 (http://llvm.org/git/clang.git 4e215e73ed6b499f3ccf23263c96cd188e0eda2c) (git@github.com:unison-code/llvm.git 9914ec00db7eeaf764045b9071638c2421cd32e7)"}
+  !2 = !{!3, !4, i64 0}
+  !3 = !{!"S", !4, i64 0}
+  !4 = !{!"any pointer", !5, i64 0}
+  !5 = !{!"omnipotent char", !6, i64 0}
+  !6 = !{!"Simple C/C++ TBAA"}
+
+...
+---
+name:            zero
+alignment:       4
+exposesReturnsTwice: false
+legalized:       false
+regBankSelected: false
+selected:        false
+failedISel:      false
+tracksRegLiveness: true
+hasWinCFI:       false
+registers:       
+  - { id: 0, class: intregs, preferred-register: '' }
+liveins:         []
+frameInfo:       
+  isFrameAddressTaken: false
+  isReturnAddressTaken: false
+  hasStackMap:     false
+  hasPatchPoint:   false
+  stackSize:       0
+  offsetAdjustment: 0
+  maxAlignment:    0
+  adjustsStack:    false
+  hasCalls:        false
+  stackProtector:  ''
+  maxCallFrameSize: 4294967295
+  cvBytesOfCalleeSavedRegisters: 0
+  hasOpaqueSPAdjustment: false
+  hasVAStart:      false
+  hasMustTailInVarArgFunc: false
+  localFrameSize:  0
+  savePoint:       ''
+  restorePoint:    ''
+fixedStack:      []
+stack:           []
+constants:       []
+body:             |
+  bb.0.entry (freq 8):
+    liveouts: $pc, $r0
+  
+    ANNOTATION_LABEL <0x9a1abb0> = !{!"unison-block-frequency", i64 8}
+    %0:intregs = A2_tfrsi 0
+    $r0 = COPY killed %0
+    PS_jmpret $r31, implicit-def dead $pc, implicit killed $r0
+
+...
+---
+name:            anon
+alignment:       4
+exposesReturnsTwice: false
+legalized:       false
+regBankSelected: false
+selected:        false
+failedISel:      false
+tracksRegLiveness: true
+hasWinCFI:       false
+registers:       
+  - { id: 0, class: intregs, preferred-register: '' }
+liveins:         []
+frameInfo:       
+  isFrameAddressTaken: false
+  isReturnAddressTaken: false
+  hasStackMap:     false
+  hasPatchPoint:   false
+  stackSize:       0
+  offsetAdjustment: 0
+  maxAlignment:    0
+  adjustsStack:    false
+  hasCalls:        false
+  stackProtector:  ''
+  maxCallFrameSize: 4294967295
+  cvBytesOfCalleeSavedRegisters: 0
+  hasOpaqueSPAdjustment: false
+  hasVAStart:      false
+  hasMustTailInVarArgFunc: false
+  localFrameSize:  0
+  savePoint:       ''
+  restorePoint:    ''
+fixedStack:      []
+stack:           []
+constants:       []
+body:             |
+  bb.0.entry (freq 8):
+    liveouts: $pc, $r0
+  
+    ANNOTATION_LABEL <0x9a1abb0> = !{!"unison-block-frequency", i64 8}
+    %0:intregs = A2_tfrsi @s
+    $r0 = COPY killed %0
+    PS_jmpret $r31, implicit-def dead $pc, implicit killed $r0
+
+...
+---
+name:            go
+alignment:       4
+exposesReturnsTwice: false
+legalized:       false
+regBankSelected: false
+selected:        false
+failedISel:      false
+tracksRegLiveness: true
+hasWinCFI:       false
+registers:       
+  - { id: 0, class: intregs, preferred-register: '' }
+liveins:         []
+frameInfo:       
+  isFrameAddressTaken: false
+  isReturnAddressTaken: false
+  hasStackMap:     false
+  hasPatchPoint:   false
+  stackSize:       0
+  offsetAdjustment: 0
+  maxAlignment:    0
+  adjustsStack:    false
+  hasCalls:        false
+  stackProtector:  ''
+  maxCallFrameSize: 4294967295
+  cvBytesOfCalleeSavedRegisters: 0
+  hasOpaqueSPAdjustment: false
+  hasVAStart:      false
+  hasMustTailInVarArgFunc: false
+  localFrameSize:  0
+  savePoint:       ''
+  restorePoint:    ''
+fixedStack:      []
+stack:           []
+constants:       []
+body:             |
+  bb.0.entry (freq 8):
+    liveouts: $pc, $r0
+  
+    ANNOTATION_LABEL <0x9a1abb0> = !{!"unison-block-frequency", i64 8}
+    %0:intregs = A2_tfrsi @anon
+    $r0 = COPY killed %0
+    PS_jmpret $r31, implicit-def dead $pc, implicit killed $r0
+
+...
+---
+name:            main
+alignment:       4
+exposesReturnsTwice: false
+legalized:       false
+regBankSelected: false
+selected:        false
+failedISel:      false
+tracksRegLiveness: true
+hasWinCFI:       false
+registers:       
+  - { id: 0, class: intregs, preferred-register: '' }
+  - { id: 1, class: intregs, preferred-register: '' }
+liveins:         []
+frameInfo:       
+  isFrameAddressTaken: false
+  isReturnAddressTaken: false
+  hasStackMap:     false
+  hasPatchPoint:   false
+  stackSize:       0
+  offsetAdjustment: 0
+  maxAlignment:    0
+  adjustsStack:    false
+  hasCalls:        true
+  stackProtector:  ''
+  maxCallFrameSize: 4294967295
+  cvBytesOfCalleeSavedRegisters: 0
+  hasOpaqueSPAdjustment: false
+  hasVAStart:      false
+  hasMustTailInVarArgFunc: false
+  localFrameSize:  0
+  savePoint:       ''
+  restorePoint:    ''
+fixedStack:      []
+stack:           []
+constants:       []
+body:             |
+  bb.0.entry (freq 8):
+    liveouts: $pc, $r0
+  
+    ANNOTATION_LABEL <0x9a1abb0> = !{!"unison-block-frequency", i64 8}
+    %0:intregs = L2_loadrigp @s, <0x9a218b0> = !{!"unison-memory-partition", i64 0}, implicit $gp :: (dereferenceable load 4 from `i32 ()** bitcast (%struct.S* @s to i32 ()**)`, !tbaa !2)
+    ADJCALLSTACKDOWN 0, 0, implicit-def $r29, implicit-def dead $r30, implicit $r31, implicit $r30, implicit $r29
+    J2_callr killed %0, hexagoncsr, implicit-def dead $pc, implicit-def dead $r31, implicit $r29, implicit-def $r29, implicit-def $r0
+    ADJCALLSTACKUP 0, 0, implicit-def dead $r29, implicit-def dead $r30, implicit-def dead $r31, implicit $r29
+    %1:intregs = COPY killed $r0
+    $r0 = COPY killed %1
+    PS_jmpret $r31, implicit-def dead $pc, implicit killed $r0
+
+...

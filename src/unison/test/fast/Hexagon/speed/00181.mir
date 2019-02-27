@@ -1,0 +1,1566 @@
+--- |
+  ; ModuleID = '00181.ll'
+  source_filename = "./tests/single-exec/00181.c"
+  target datalayout = "e-m:e-p:32:32:32-a:0-n16:32-i64:64:64-i32:32:32-i16:16:16-i1:8:8-f32:32:32-f64:64:64-v32:32:32-v64:64:64-v512:512:512-v1024:1024:1024-v2048:2048:2048"
+  target triple = "hexagon"
+  
+  @.str = private unnamed_addr constant [4 x i8] c"A: \00", align 1
+  @.str.1 = private unnamed_addr constant [5 x i8] c" %d \00", align 1
+  @A = common dso_local global [4 x i32] zeroinitializer, align 8
+  @.str.3 = private unnamed_addr constant [4 x i8] c"B: \00", align 1
+  @B = common dso_local global [4 x i32] zeroinitializer, align 8
+  @.str.4 = private unnamed_addr constant [4 x i8] c"C: \00", align 1
+  @C = common dso_local global [4 x i32] zeroinitializer, align 8
+  @.str.6 = private unnamed_addr constant [51 x i8] c"Solution of Tower of Hanoi Problem with %d Disks\0A\0A\00", align 1
+  @str = private unnamed_addr constant [43 x i8] c"------------------------------------------\00", align 1
+  @str.9 = private unnamed_addr constant [16 x i8] c"Starting state:\00", align 1
+  @str.10 = private unnamed_addr constant [22 x i8] c"\0A\0ASubsequent states:\0A\00", align 1
+  
+  ; Function Attrs: nounwind
+  define dso_local void @PrintAll() local_unnamed_addr #0 {
+  entry:
+    %call = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([4 x i8], [4 x i8]* @.str, i32 0, i32 0))
+    %0 = load i32, i32* getelementptr inbounds ([4 x i32], [4 x i32]* @A, i32 0, i32 0), align 8, !tbaa !2
+    %call1 = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([5 x i8], [5 x i8]* @.str.1, i32 0, i32 0), i32 %0)
+    %1 = load i32, i32* getelementptr inbounds ([4 x i32], [4 x i32]* @A, i32 0, i32 1), align 4, !tbaa !2
+    %call1.1 = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([5 x i8], [5 x i8]* @.str.1, i32 0, i32 0), i32 %1)
+    %2 = load i32, i32* getelementptr inbounds ([4 x i32], [4 x i32]* @A, i32 0, i32 2), align 8, !tbaa !2
+    %call1.2 = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([5 x i8], [5 x i8]* @.str.1, i32 0, i32 0), i32 %2)
+    %3 = load i32, i32* getelementptr inbounds ([4 x i32], [4 x i32]* @A, i32 0, i32 3), align 4, !tbaa !2
+    %call1.3 = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([5 x i8], [5 x i8]* @.str.1, i32 0, i32 0), i32 %3)
+    %putchar = tail call i32 @putchar(i32 10)
+    %call3 = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([4 x i8], [4 x i8]* @.str.3, i32 0, i32 0))
+    %4 = load i32, i32* getelementptr inbounds ([4 x i32], [4 x i32]* @B, i32 0, i32 0), align 8, !tbaa !2
+    %call8 = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([5 x i8], [5 x i8]* @.str.1, i32 0, i32 0), i32 %4)
+    %5 = load i32, i32* getelementptr inbounds ([4 x i32], [4 x i32]* @B, i32 0, i32 1), align 4, !tbaa !2
+    %call8.1 = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([5 x i8], [5 x i8]* @.str.1, i32 0, i32 0), i32 %5)
+    %6 = load i32, i32* getelementptr inbounds ([4 x i32], [4 x i32]* @B, i32 0, i32 2), align 8, !tbaa !2
+    %call8.2 = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([5 x i8], [5 x i8]* @.str.1, i32 0, i32 0), i32 %6)
+    %7 = load i32, i32* getelementptr inbounds ([4 x i32], [4 x i32]* @B, i32 0, i32 3), align 4, !tbaa !2
+    %call8.3 = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([5 x i8], [5 x i8]* @.str.1, i32 0, i32 0), i32 %7)
+    %putchar33 = tail call i32 @putchar(i32 10)
+    %call13 = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([4 x i8], [4 x i8]* @.str.4, i32 0, i32 0))
+    %8 = load i32, i32* getelementptr inbounds ([4 x i32], [4 x i32]* @C, i32 0, i32 0), align 8, !tbaa !2
+    %call18 = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([5 x i8], [5 x i8]* @.str.1, i32 0, i32 0), i32 %8)
+    %9 = load i32, i32* getelementptr inbounds ([4 x i32], [4 x i32]* @C, i32 0, i32 1), align 4, !tbaa !2
+    %call18.1 = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([5 x i8], [5 x i8]* @.str.1, i32 0, i32 0), i32 %9)
+    %10 = load i32, i32* getelementptr inbounds ([4 x i32], [4 x i32]* @C, i32 0, i32 2), align 8, !tbaa !2
+    %call18.2 = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([5 x i8], [5 x i8]* @.str.1, i32 0, i32 0), i32 %10)
+    %11 = load i32, i32* getelementptr inbounds ([4 x i32], [4 x i32]* @C, i32 0, i32 3), align 4, !tbaa !2
+    %call18.3 = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([5 x i8], [5 x i8]* @.str.1, i32 0, i32 0), i32 %11)
+    %putchar34 = tail call i32 @putchar(i32 10)
+    %puts = tail call i32 @puts(i8* getelementptr inbounds ([43 x i8], [43 x i8]* @str, i32 0, i32 0))
+    ret void
+  }
+  
+  ; Function Attrs: nounwind
+  declare dso_local i32 @printf(i8* nocapture readonly, ...) local_unnamed_addr #1
+  
+  ; Function Attrs: nounwind
+  define dso_local i32 @Move(i32* nocapture %source, i32* nocapture %dest) local_unnamed_addr #0 {
+  entry:
+    %0 = load i32, i32* %source, align 4, !tbaa !2
+    %cmp1 = icmp eq i32 %0, 0
+    br i1 %cmp1, label %while.body, label %while.end
+  
+  while.body:                                       ; preds = %entry
+    %cgep = getelementptr inbounds i32, i32* %source, i32 1
+    %1 = load i32, i32* %cgep, align 4, !tbaa !2
+    %cmp1.1 = icmp eq i32 %1, 0
+    br i1 %cmp1.1, label %while.body.1, label %while.end
+  
+  while.end:                                        ; preds = %while.body.2, %while.body.1, %while.body, %entry
+    %i.0.lcssa = phi i32 [ 0, %entry ], [ 1, %while.body ], [ 2, %while.body.1 ], [ %spec.select32, %while.body.2 ]
+    %2 = load i32, i32* %dest, align 4, !tbaa !2
+    %cmp6 = icmp eq i32 %2, 0
+    br i1 %cmp6, label %while.body8, label %while.end10
+  
+  while.body8:                                      ; preds = %while.end
+    %cgep3 = getelementptr inbounds i32, i32* %dest, i32 1
+    %3 = load i32, i32* %cgep3, align 4, !tbaa !2
+    %cmp6.1 = icmp eq i32 %3, 0
+    br i1 %cmp6.1, label %while.body8.1, label %while.end10
+  
+  while.end10:                                      ; preds = %while.body8.2, %while.body8.1, %while.body8, %while.end
+    %j.0.lcssa = phi i32 [ -1, %while.end ], [ 0, %while.body8 ], [ 1, %while.body8.1 ], [ %spec.select, %while.body8.2 ]
+    %cgep6 = getelementptr inbounds i32, i32* %source, i32 %i.0.lcssa
+    %4 = load i32, i32* %cgep6, align 4, !tbaa !2
+    %cgep7 = getelementptr inbounds i32, i32* %dest, i32 %j.0.lcssa
+    store i32 %4, i32* %cgep7, align 4, !tbaa !2
+    store i32 0, i32* %cgep6, align 4, !tbaa !2
+    tail call void @PrintAll()
+    %5 = load i32, i32* %cgep7, align 4, !tbaa !2
+    ret i32 %5
+  
+  while.body8.1:                                    ; preds = %while.body8
+    %cgep4 = getelementptr inbounds i32, i32* %dest, i32 2
+    %6 = load i32, i32* %cgep4, align 4, !tbaa !2
+    %cmp6.2 = icmp eq i32 %6, 0
+    br i1 %cmp6.2, label %while.body8.2, label %while.end10
+  
+  while.body8.2:                                    ; preds = %while.body8.1
+    %cgep5 = getelementptr inbounds i32, i32* %dest, i32 3
+    %7 = load i32, i32* %cgep5, align 4, !tbaa !2
+    %cmp6.3 = icmp eq i32 %7, 0
+    %spec.select = select i1 %cmp6.3, i32 3, i32 2
+    br label %while.end10
+  
+  while.body.1:                                     ; preds = %while.body
+    %cgep1 = getelementptr inbounds i32, i32* %source, i32 2
+    %8 = load i32, i32* %cgep1, align 4, !tbaa !2
+    %cmp1.2 = icmp eq i32 %8, 0
+    br i1 %cmp1.2, label %while.body.2, label %while.end
+  
+  while.body.2:                                     ; preds = %while.body.1
+    %cgep2 = getelementptr inbounds i32, i32* %source, i32 3
+    %9 = load i32, i32* %cgep2, align 4, !tbaa !2
+    %cmp1.3 = icmp eq i32 %9, 0
+    %spec.select32 = select i1 %cmp1.3, i32 4, i32 3
+    br label %while.end
+  }
+  
+  ; Function Attrs: nounwind
+  define dso_local void @Hanoi(i32 %n, i32* nocapture %source, i32* nocapture %dest, i32* nocapture %spare) local_unnamed_addr #0 {
+  entry:
+    %cmp41 = icmp eq i32 %n, 1
+    br i1 %cmp41, label %if.then, label %if.end.lr.ph
+  
+  if.end.lr.ph:                                     ; preds = %entry
+    %0 = and i32 %n, 1
+    %lcmp.mod = icmp eq i32 %0, 0
+    br i1 %lcmp.mod, label %if.end.prol, label %if.end.prol.loopexit
+  
+  if.end.prol:                                      ; preds = %if.end.lr.ph
+    %sub.prol = add nsw i32 %n, -1
+    tail call void @Hanoi(i32 %sub.prol, i32* %source, i32* %spare, i32* %dest)
+    %1 = load i32, i32* %source, align 4, !tbaa !2
+    %cmp1.i13.prol = icmp eq i32 %1, 0
+    br i1 %cmp1.i13.prol, label %while.body.i16.prol, label %while.end.i19.prol
+  
+  while.body.i16.prol:                              ; preds = %if.end.prol
+    %cgep8 = getelementptr inbounds i32, i32* %source, i32 1
+    %2 = load i32, i32* %cgep8, align 4, !tbaa !2
+    %cmp1.1.i15.prol = icmp eq i32 %2, 0
+    br i1 %cmp1.1.i15.prol, label %while.body.1.i35.prol, label %while.end.i19.prol
+  
+  while.body.1.i35.prol:                            ; preds = %while.body.i16.prol
+    %cgep9 = getelementptr inbounds i32, i32* %source, i32 2
+    %3 = load i32, i32* %cgep9, align 4, !tbaa !2
+    %cmp1.2.i34.prol = icmp eq i32 %3, 0
+    br i1 %cmp1.2.i34.prol, label %while.body.2.i39.prol, label %while.end.i19.prol
+  
+  while.body.2.i39.prol:                            ; preds = %while.body.1.i35.prol
+    %cgep10 = getelementptr inbounds i32, i32* %source, i32 3
+    %4 = load i32, i32* %cgep10, align 4, !tbaa !2
+    %cmp1.3.i37.prol = icmp eq i32 %4, 0
+    %spec.select32.i38.prol = select i1 %cmp1.3.i37.prol, i32 4, i32 3
+    br label %while.end.i19.prol
+  
+  while.end.i19.prol:                               ; preds = %while.body.2.i39.prol, %while.body.1.i35.prol, %while.body.i16.prol, %if.end.prol
+    %i.0.lcssa.i17.prol = phi i32 [ 0, %if.end.prol ], [ 1, %while.body.i16.prol ], [ 2, %while.body.1.i35.prol ], [ %spec.select32.i38.prol, %while.body.2.i39.prol ]
+    %5 = load i32, i32* %dest, align 4, !tbaa !2
+    %cmp6.i18.prol = icmp eq i32 %5, 0
+    br i1 %cmp6.i18.prol, label %while.body8.i22.prol, label %Move.exit40.prol
+  
+  while.body8.i22.prol:                             ; preds = %while.end.i19.prol
+    %6 = bitcast i32* %dest to i8*
+    %sunkaddr = getelementptr i8, i8* %6, i32 4
+    %7 = bitcast i8* %sunkaddr to i32*
+    %8 = load i32, i32* %7, align 4, !tbaa !2
+    %cmp6.1.i21.prol = icmp eq i32 %8, 0
+    br i1 %cmp6.1.i21.prol, label %while.body8.1.i28.prol, label %Move.exit40.prol
+  
+  while.body8.1.i28.prol:                           ; preds = %while.body8.i22.prol
+    %9 = bitcast i32* %dest to i8*
+    %sunkaddr23 = getelementptr i8, i8* %9, i32 8
+    %10 = bitcast i8* %sunkaddr23 to i32*
+    %11 = load i32, i32* %10, align 4, !tbaa !2
+    %cmp6.2.i27.prol = icmp eq i32 %11, 0
+    br i1 %cmp6.2.i27.prol, label %while.body8.2.i32.prol, label %Move.exit40.prol
+  
+  while.body8.2.i32.prol:                           ; preds = %while.body8.1.i28.prol
+    %12 = bitcast i32* %dest to i8*
+    %sunkaddr24 = getelementptr i8, i8* %12, i32 12
+    %13 = bitcast i8* %sunkaddr24 to i32*
+    %14 = load i32, i32* %13, align 4, !tbaa !2
+    %cmp6.3.i30.prol = icmp eq i32 %14, 0
+    %spec.select.i31.prol = select i1 %cmp6.3.i30.prol, i32 3, i32 2
+    br label %Move.exit40.prol
+  
+  Move.exit40.prol:                                 ; preds = %while.body8.2.i32.prol, %while.body8.1.i28.prol, %while.body8.i22.prol, %while.end.i19.prol
+    %j.0.lcssa.i23.prol = phi i32 [ -1, %while.end.i19.prol ], [ 0, %while.body8.i22.prol ], [ 1, %while.body8.1.i28.prol ], [ %spec.select.i31.prol, %while.body8.2.i32.prol ]
+    %cgep11 = getelementptr inbounds i32, i32* %source, i32 %i.0.lcssa.i17.prol
+    %15 = load i32, i32* %cgep11, align 4, !tbaa !2
+    %cgep12 = getelementptr inbounds i32, i32* %dest, i32 %j.0.lcssa.i23.prol
+    store i32 %15, i32* %cgep12, align 4, !tbaa !2
+    store i32 0, i32* %cgep11, align 4, !tbaa !2
+    tail call void @PrintAll() #4
+    br label %if.end.prol.loopexit
+  
+  if.end.prol.loopexit:                             ; preds = %Move.exit40.prol, %if.end.lr.ph
+    %spare.tr44.unr = phi i32* [ %spare, %if.end.lr.ph ], [ %source, %Move.exit40.prol ]
+    %source.tr43.unr = phi i32* [ %source, %if.end.lr.ph ], [ %spare, %Move.exit40.prol ]
+    %n.tr42.unr = phi i32 [ %n, %if.end.lr.ph ], [ %sub.prol, %Move.exit40.prol ]
+    %16 = icmp eq i32 %n, 2
+    br i1 %16, label %if.then, label %if.end.lr.ph.new
+  
+  if.end.lr.ph.new:                                 ; preds = %if.end.prol.loopexit
+    %17 = add i32 %n.tr42.unr, -1
+    br label %if.end
+  
+  if.then:                                          ; preds = %Move.exit40.1, %if.end.prol.loopexit, %entry
+    %source.tr.lcssa = phi i32* [ %source, %entry ], [ %spare, %if.end.prol.loopexit ], [ %source.tr43.unr, %Move.exit40.1 ]
+    %18 = load i32, i32* %source.tr.lcssa, align 4, !tbaa !2
+    %cmp1.i = icmp eq i32 %18, 0
+    br i1 %cmp1.i, label %while.body.i, label %while.end.i
+  
+  while.body.i:                                     ; preds = %if.then
+    %cgep = getelementptr inbounds i32, i32* %source.tr.lcssa, i32 1
+    %19 = load i32, i32* %cgep, align 4, !tbaa !2
+    %cmp1.1.i = icmp eq i32 %19, 0
+    br i1 %cmp1.1.i, label %while.body.1.i, label %while.end.i
+  
+  while.end.i:                                      ; preds = %while.body.2.i, %while.body.1.i, %while.body.i, %if.then
+    %i.0.lcssa.i = phi i32 [ 0, %if.then ], [ 1, %while.body.i ], [ 2, %while.body.1.i ], [ %spec.select32.i, %while.body.2.i ]
+    %20 = load i32, i32* %dest, align 4, !tbaa !2
+    %cmp6.i = icmp eq i32 %20, 0
+    br i1 %cmp6.i, label %while.body8.i, label %Move.exit
+  
+  while.body8.i:                                    ; preds = %while.end.i
+    %21 = bitcast i32* %dest to i8*
+    %sunkaddr25 = getelementptr i8, i8* %21, i32 4
+    %22 = bitcast i8* %sunkaddr25 to i32*
+    %23 = load i32, i32* %22, align 4, !tbaa !2
+    %cmp6.1.i = icmp eq i32 %23, 0
+    br i1 %cmp6.1.i, label %while.body8.1.i, label %Move.exit
+  
+  while.body8.1.i:                                  ; preds = %while.body8.i
+    %24 = bitcast i32* %dest to i8*
+    %sunkaddr26 = getelementptr i8, i8* %24, i32 8
+    %25 = bitcast i8* %sunkaddr26 to i32*
+    %26 = load i32, i32* %25, align 4, !tbaa !2
+    %cmp6.2.i = icmp eq i32 %26, 0
+    br i1 %cmp6.2.i, label %while.body8.2.i, label %Move.exit
+  
+  while.body8.2.i:                                  ; preds = %while.body8.1.i
+    %27 = bitcast i32* %dest to i8*
+    %sunkaddr27 = getelementptr i8, i8* %27, i32 12
+    %28 = bitcast i8* %sunkaddr27 to i32*
+    %29 = load i32, i32* %28, align 4, !tbaa !2
+    %cmp6.3.i = icmp eq i32 %29, 0
+    %spec.select.i = select i1 %cmp6.3.i, i32 3, i32 2
+    br label %Move.exit
+  
+  while.body.1.i:                                   ; preds = %while.body.i
+    %cgep1 = getelementptr inbounds i32, i32* %source.tr.lcssa, i32 2
+    %30 = load i32, i32* %cgep1, align 4, !tbaa !2
+    %cmp1.2.i = icmp eq i32 %30, 0
+    br i1 %cmp1.2.i, label %while.body.2.i, label %while.end.i
+  
+  while.body.2.i:                                   ; preds = %while.body.1.i
+    %cgep2 = getelementptr inbounds i32, i32* %source.tr.lcssa, i32 3
+    %31 = load i32, i32* %cgep2, align 4, !tbaa !2
+    %cmp1.3.i = icmp eq i32 %31, 0
+    %spec.select32.i = select i1 %cmp1.3.i, i32 4, i32 3
+    br label %while.end.i
+  
+  Move.exit:                                        ; preds = %while.body8.2.i, %while.body8.1.i, %while.body8.i, %while.end.i
+    %j.0.lcssa.i = phi i32 [ -1, %while.end.i ], [ 0, %while.body8.i ], [ 1, %while.body8.1.i ], [ %spec.select.i, %while.body8.2.i ]
+    %cgep6 = getelementptr inbounds i32, i32* %source.tr.lcssa, i32 %i.0.lcssa.i
+    %32 = load i32, i32* %cgep6, align 4, !tbaa !2
+    %cgep7 = getelementptr inbounds i32, i32* %dest, i32 %j.0.lcssa.i
+    store i32 %32, i32* %cgep7, align 4, !tbaa !2
+    store i32 0, i32* %cgep6, align 4, !tbaa !2
+    tail call void @PrintAll() #4
+    ret void
+  
+  if.end:                                           ; preds = %Move.exit40.1, %if.end.lr.ph.new
+    %lsr.iv = phi i32 [ %lsr.iv.next, %Move.exit40.1 ], [ %17, %if.end.lr.ph.new ]
+    tail call void @Hanoi(i32 %lsr.iv, i32* %source.tr43.unr, i32* %spare.tr44.unr, i32* %dest)
+    %33 = load i32, i32* %source.tr43.unr, align 4, !tbaa !2
+    %cmp1.i13 = icmp eq i32 %33, 0
+    br i1 %cmp1.i13, label %while.body.i16, label %while.end.i19
+  
+  while.body.i16:                                   ; preds = %if.end
+    %cgep16 = getelementptr i32, i32* %source.tr43.unr, i32 1
+    %34 = load i32, i32* %cgep16, align 4, !tbaa !2
+    %cmp1.1.i15 = icmp eq i32 %34, 0
+    br i1 %cmp1.1.i15, label %while.body.1.i35, label %while.end.i19
+  
+  while.end.i19:                                    ; preds = %while.body.2.i39, %while.body.1.i35, %while.body.i16, %if.end
+    %i.0.lcssa.i17 = phi i32 [ 0, %if.end ], [ 1, %while.body.i16 ], [ 2, %while.body.1.i35 ], [ %spec.select32.i38, %while.body.2.i39 ]
+    %35 = load i32, i32* %dest, align 4, !tbaa !2
+    %cmp6.i18 = icmp eq i32 %35, 0
+    br i1 %cmp6.i18, label %while.body8.i22, label %Move.exit40
+  
+  while.body8.i22:                                  ; preds = %while.end.i19
+    %36 = bitcast i32* %dest to i8*
+    %sunkaddr28 = getelementptr i8, i8* %36, i32 4
+    %37 = bitcast i8* %sunkaddr28 to i32*
+    %38 = load i32, i32* %37, align 4, !tbaa !2
+    %cmp6.1.i21 = icmp eq i32 %38, 0
+    br i1 %cmp6.1.i21, label %while.body8.1.i28, label %Move.exit40
+  
+  while.body8.1.i28:                                ; preds = %while.body8.i22
+    %39 = bitcast i32* %dest to i8*
+    %sunkaddr29 = getelementptr i8, i8* %39, i32 8
+    %40 = bitcast i8* %sunkaddr29 to i32*
+    %41 = load i32, i32* %40, align 4, !tbaa !2
+    %cmp6.2.i27 = icmp eq i32 %41, 0
+    br i1 %cmp6.2.i27, label %while.body8.2.i32, label %Move.exit40
+  
+  while.body8.2.i32:                                ; preds = %while.body8.1.i28
+    %42 = bitcast i32* %dest to i8*
+    %sunkaddr30 = getelementptr i8, i8* %42, i32 12
+    %43 = bitcast i8* %sunkaddr30 to i32*
+    %44 = load i32, i32* %43, align 4, !tbaa !2
+    %cmp6.3.i30 = icmp eq i32 %44, 0
+    %spec.select.i31 = select i1 %cmp6.3.i30, i32 3, i32 2
+    br label %Move.exit40
+  
+  while.body.1.i35:                                 ; preds = %while.body.i16
+    %cgep17 = getelementptr i32, i32* %source.tr43.unr, i32 2
+    %45 = load i32, i32* %cgep17, align 4, !tbaa !2
+    %cmp1.2.i34 = icmp eq i32 %45, 0
+    br i1 %cmp1.2.i34, label %while.body.2.i39, label %while.end.i19
+  
+  while.body.2.i39:                                 ; preds = %while.body.1.i35
+    %cgep18 = getelementptr i32, i32* %source.tr43.unr, i32 3
+    %46 = load i32, i32* %cgep18, align 4, !tbaa !2
+    %cmp1.3.i37 = icmp eq i32 %46, 0
+    %spec.select32.i38 = select i1 %cmp1.3.i37, i32 4, i32 3
+    br label %while.end.i19
+  
+  Move.exit40:                                      ; preds = %while.body8.2.i32, %while.body8.1.i28, %while.body8.i22, %while.end.i19
+    %j.0.lcssa.i23 = phi i32 [ -1, %while.end.i19 ], [ 0, %while.body8.i22 ], [ 1, %while.body8.1.i28 ], [ %spec.select.i31, %while.body8.2.i32 ]
+    %cgep19 = getelementptr inbounds i32, i32* %source.tr43.unr, i32 %i.0.lcssa.i17
+    %47 = load i32, i32* %cgep19, align 4, !tbaa !2
+    %cgep20 = getelementptr inbounds i32, i32* %dest, i32 %j.0.lcssa.i23
+    store i32 %47, i32* %cgep20, align 4, !tbaa !2
+    store i32 0, i32* %cgep19, align 4, !tbaa !2
+    tail call void @PrintAll() #4
+    %48 = add i32 %lsr.iv, -1
+    tail call void @Hanoi(i32 %48, i32* %spare.tr44.unr, i32* %source.tr43.unr, i32* %dest)
+    %49 = load i32, i32* %spare.tr44.unr, align 4, !tbaa !2
+    %cmp1.i13.1 = icmp eq i32 %49, 0
+    br i1 %cmp1.i13.1, label %while.body.i16.1, label %while.end.i19.1
+  
+  while.body.i16.1:                                 ; preds = %Move.exit40
+    %cgep13 = getelementptr i32, i32* %spare.tr44.unr, i32 1
+    %50 = load i32, i32* %cgep13, align 4, !tbaa !2
+    %cmp1.1.i15.1 = icmp eq i32 %50, 0
+    br i1 %cmp1.1.i15.1, label %while.body.1.i35.1, label %while.end.i19.1
+  
+  while.body.1.i35.1:                               ; preds = %while.body.i16.1
+    %cgep14 = getelementptr i32, i32* %spare.tr44.unr, i32 2
+    %51 = load i32, i32* %cgep14, align 4, !tbaa !2
+    %cmp1.2.i34.1 = icmp eq i32 %51, 0
+    br i1 %cmp1.2.i34.1, label %while.body.2.i39.1, label %while.end.i19.1
+  
+  while.body.2.i39.1:                               ; preds = %while.body.1.i35.1
+    %cgep15 = getelementptr i32, i32* %spare.tr44.unr, i32 3
+    %52 = load i32, i32* %cgep15, align 4, !tbaa !2
+    %cmp1.3.i37.1 = icmp eq i32 %52, 0
+    %spec.select32.i38.1 = select i1 %cmp1.3.i37.1, i32 4, i32 3
+    br label %while.end.i19.1
+  
+  while.end.i19.1:                                  ; preds = %while.body.2.i39.1, %while.body.1.i35.1, %while.body.i16.1, %Move.exit40
+    %i.0.lcssa.i17.1 = phi i32 [ 0, %Move.exit40 ], [ 1, %while.body.i16.1 ], [ 2, %while.body.1.i35.1 ], [ %spec.select32.i38.1, %while.body.2.i39.1 ]
+    %53 = load i32, i32* %dest, align 4, !tbaa !2
+    %cmp6.i18.1 = icmp eq i32 %53, 0
+    br i1 %cmp6.i18.1, label %while.body8.i22.1, label %Move.exit40.1
+  
+  while.body8.i22.1:                                ; preds = %while.end.i19.1
+    %54 = bitcast i32* %dest to i8*
+    %sunkaddr31 = getelementptr i8, i8* %54, i32 4
+    %55 = bitcast i8* %sunkaddr31 to i32*
+    %56 = load i32, i32* %55, align 4, !tbaa !2
+    %cmp6.1.i21.1 = icmp eq i32 %56, 0
+    br i1 %cmp6.1.i21.1, label %while.body8.1.i28.1, label %Move.exit40.1
+  
+  while.body8.1.i28.1:                              ; preds = %while.body8.i22.1
+    %57 = bitcast i32* %dest to i8*
+    %sunkaddr32 = getelementptr i8, i8* %57, i32 8
+    %58 = bitcast i8* %sunkaddr32 to i32*
+    %59 = load i32, i32* %58, align 4, !tbaa !2
+    %cmp6.2.i27.1 = icmp eq i32 %59, 0
+    br i1 %cmp6.2.i27.1, label %while.body8.2.i32.1, label %Move.exit40.1
+  
+  while.body8.2.i32.1:                              ; preds = %while.body8.1.i28.1
+    %60 = bitcast i32* %dest to i8*
+    %sunkaddr33 = getelementptr i8, i8* %60, i32 12
+    %61 = bitcast i8* %sunkaddr33 to i32*
+    %62 = load i32, i32* %61, align 4, !tbaa !2
+    %cmp6.3.i30.1 = icmp eq i32 %62, 0
+    %spec.select.i31.1 = select i1 %cmp6.3.i30.1, i32 3, i32 2
+    br label %Move.exit40.1
+  
+  Move.exit40.1:                                    ; preds = %while.body8.2.i32.1, %while.body8.1.i28.1, %while.body8.i22.1, %while.end.i19.1
+    %j.0.lcssa.i23.1 = phi i32 [ -1, %while.end.i19.1 ], [ 0, %while.body8.i22.1 ], [ 1, %while.body8.1.i28.1 ], [ %spec.select.i31.1, %while.body8.2.i32.1 ]
+    %cgep21 = getelementptr inbounds i32, i32* %spare.tr44.unr, i32 %i.0.lcssa.i17.1
+    %63 = load i32, i32* %cgep21, align 4, !tbaa !2
+    %cgep22 = getelementptr inbounds i32, i32* %dest, i32 %j.0.lcssa.i23.1
+    store i32 %63, i32* %cgep22, align 4, !tbaa !2
+    store i32 0, i32* %cgep21, align 4, !tbaa !2
+    tail call void @PrintAll() #4
+    %lsr.iv.next = add i32 %lsr.iv, -2
+    %cmp.1 = icmp eq i32 %lsr.iv.next, 0
+    br i1 %cmp.1, label %if.then, label %if.end
+  }
+  
+  ; Function Attrs: nounwind
+  define dso_local i32 @main() local_unnamed_addr #0 {
+  entry:
+    store i32 1, i32* getelementptr inbounds ([4 x i32], [4 x i32]* @A, i32 0, i32 0), align 8, !tbaa !2
+    store i32 2, i32* getelementptr inbounds ([4 x i32], [4 x i32]* @A, i32 0, i32 1), align 4, !tbaa !2
+    store i32 3, i32* getelementptr inbounds ([4 x i32], [4 x i32]* @A, i32 0, i32 2), align 8, !tbaa !2
+    store i32 4, i32* getelementptr inbounds ([4 x i32], [4 x i32]* @A, i32 0, i32 3), align 4, !tbaa !2
+    call void @llvm.memset.p0i8.i32(i8* align 8 bitcast ([4 x i32]* @B to i8*), i8 0, i32 16, i1 false)
+    call void @llvm.memset.p0i8.i32(i8* align 8 bitcast ([4 x i32]* @C to i8*), i8 0, i32 16, i1 false)
+    %call = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([51 x i8], [51 x i8]* @.str.6, i32 0, i32 0), i32 4)
+    %puts = tail call i32 @puts(i8* getelementptr inbounds ([16 x i8], [16 x i8]* @str.9, i32 0, i32 0))
+    tail call void @PrintAll()
+    %puts27 = tail call i32 @puts(i8* getelementptr inbounds ([22 x i8], [22 x i8]* @str.10, i32 0, i32 0))
+    tail call void @Hanoi(i32 4, i32* getelementptr inbounds ([4 x i32], [4 x i32]* @A, i32 0, i32 0), i32* getelementptr inbounds ([4 x i32], [4 x i32]* @B, i32 0, i32 0), i32* getelementptr inbounds ([4 x i32], [4 x i32]* @C, i32 0, i32 0))
+    ret i32 0
+  }
+  
+  ; Function Attrs: nounwind
+  declare i32 @putchar(i32) local_unnamed_addr #2
+  
+  ; Function Attrs: nounwind
+  declare i32 @puts(i8* nocapture readonly) local_unnamed_addr #2
+  
+  ; Function Attrs: argmemonly nounwind
+  declare void @llvm.memset.p0i8.i32(i8* nocapture writeonly, i8, i32, i1) #3
+  
+  ; Function Attrs: nounwind
+  declare void @llvm.stackprotector(i8*, i8**) #4
+  
+  attributes #0 = { nounwind "correctly-rounded-divide-sqrt-fp-math"="false" "disable-tail-calls"="false" "less-precise-fpmad"="false" "min-legal-vector-width"="0" "no-frame-pointer-elim"="true" "no-frame-pointer-elim-non-leaf" "no-infs-fp-math"="false" "no-jump-tables"="false" "no-nans-fp-math"="false" "no-signed-zeros-fp-math"="false" "no-trapping-math"="false" "stack-protector-buffer-size"="8" "target-cpu"="hexagonv5" "target-features"="-long-calls" "unsafe-fp-math"="false" "use-soft-float"="false" }
+  attributes #1 = { nounwind "correctly-rounded-divide-sqrt-fp-math"="false" "disable-tail-calls"="false" "less-precise-fpmad"="false" "no-frame-pointer-elim"="true" "no-frame-pointer-elim-non-leaf" "no-infs-fp-math"="false" "no-nans-fp-math"="false" "no-signed-zeros-fp-math"="false" "no-trapping-math"="false" "stack-protector-buffer-size"="8" "target-cpu"="hexagonv5" "target-features"="-long-calls" "unsafe-fp-math"="false" "use-soft-float"="false" }
+  attributes #2 = { nounwind "target-cpu"="hexagonv5" }
+  attributes #3 = { argmemonly nounwind "target-cpu"="hexagonv5" }
+  attributes #4 = { nounwind }
+  
+  !llvm.module.flags = !{!0}
+  !llvm.ident = !{!1}
+  
+  !0 = !{i32 1, !"wchar_size", i32 4}
+  !1 = !{!"clang version 9.0.0 (http://llvm.org/git/clang.git 4e215e73ed6b499f3ccf23263c96cd188e0eda2c) (git@github.com:unison-code/llvm.git 9914ec00db7eeaf764045b9071638c2421cd32e7)"}
+  !2 = !{!3, !3, i64 0}
+  !3 = !{!"int", !4, i64 0}
+  !4 = !{!"omnipotent char", !5, i64 0}
+  !5 = !{!"Simple C/C++ TBAA"}
+
+...
+---
+name:            PrintAll
+alignment:       4
+exposesReturnsTwice: false
+legalized:       false
+regBankSelected: false
+selected:        false
+failedISel:      false
+tracksRegLiveness: true
+hasWinCFI:       false
+registers:       
+  - { id: 0, class: intregs, preferred-register: '' }
+  - { id: 1, class: intregs, preferred-register: '' }
+  - { id: 2, class: intregs, preferred-register: '' }
+  - { id: 3, class: intregs, preferred-register: '' }
+  - { id: 4, class: intregs, preferred-register: '' }
+  - { id: 5, class: intregs, preferred-register: '' }
+  - { id: 6, class: intregs, preferred-register: '' }
+  - { id: 7, class: intregs, preferred-register: '' }
+  - { id: 8, class: intregs, preferred-register: '' }
+  - { id: 9, class: intregs, preferred-register: '' }
+  - { id: 10, class: intregs, preferred-register: '' }
+  - { id: 11, class: intregs, preferred-register: '' }
+  - { id: 12, class: intregs, preferred-register: '' }
+  - { id: 13, class: intregs, preferred-register: '' }
+  - { id: 14, class: intregs, preferred-register: '' }
+  - { id: 15, class: intregs, preferred-register: '' }
+  - { id: 16, class: intregs, preferred-register: '' }
+  - { id: 17, class: intregs, preferred-register: '' }
+  - { id: 18, class: intregs, preferred-register: '' }
+  - { id: 19, class: intregs, preferred-register: '' }
+  - { id: 20, class: intregs, preferred-register: '' }
+  - { id: 21, class: intregs, preferred-register: '' }
+  - { id: 22, class: intregs, preferred-register: '' }
+  - { id: 23, class: intregs, preferred-register: '' }
+  - { id: 24, class: intregs, preferred-register: '' }
+  - { id: 25, class: intregs, preferred-register: '' }
+  - { id: 26, class: intregs, preferred-register: '' }
+  - { id: 27, class: intregs, preferred-register: '' }
+  - { id: 28, class: intregs, preferred-register: '' }
+  - { id: 29, class: intregs, preferred-register: '' }
+  - { id: 30, class: intregs, preferred-register: '' }
+  - { id: 31, class: intregs, preferred-register: '' }
+  - { id: 32, class: intregs, preferred-register: '' }
+  - { id: 33, class: intregs, preferred-register: '' }
+  - { id: 34, class: intregs, preferred-register: '' }
+  - { id: 35, class: intregs, preferred-register: '' }
+  - { id: 36, class: intregs, preferred-register: '' }
+  - { id: 37, class: intregs, preferred-register: '' }
+  - { id: 38, class: intregs, preferred-register: '' }
+  - { id: 39, class: intregs, preferred-register: '' }
+  - { id: 40, class: intregs, preferred-register: '' }
+  - { id: 41, class: intregs, preferred-register: '' }
+  - { id: 42, class: intregs, preferred-register: '' }
+  - { id: 43, class: intregs, preferred-register: '' }
+  - { id: 44, class: intregs, preferred-register: '' }
+  - { id: 45, class: intregs, preferred-register: '' }
+  - { id: 46, class: intregs, preferred-register: '' }
+  - { id: 47, class: intregs, preferred-register: '' }
+  - { id: 48, class: intregs, preferred-register: '' }
+  - { id: 49, class: intregs, preferred-register: '' }
+  - { id: 50, class: intregs, preferred-register: '' }
+liveins:         []
+frameInfo:       
+  isFrameAddressTaken: false
+  isReturnAddressTaken: false
+  hasStackMap:     false
+  hasPatchPoint:   false
+  stackSize:       0
+  offsetAdjustment: 0
+  maxAlignment:    4
+  adjustsStack:    false
+  hasCalls:        true
+  stackProtector:  ''
+  maxCallFrameSize: 4294967295
+  cvBytesOfCalleeSavedRegisters: 0
+  hasOpaqueSPAdjustment: false
+  hasVAStart:      false
+  hasMustTailInVarArgFunc: false
+  localFrameSize:  0
+  savePoint:       ''
+  restorePoint:    ''
+fixedStack:      []
+stack:           []
+constants:       []
+body:             |
+  bb.0.entry (freq 8):
+    liveouts: $r0
+  
+    ANNOTATION_LABEL <0x9b641d0> = !{!"unison-block-frequency", i64 8}
+    %0:intregs = A2_tfrsi @.str
+    ADJCALLSTACKDOWN 0, 0, implicit-def $r29, implicit-def dead $r30, implicit $r31, implicit $r30, implicit $r29
+    $r0 = COPY killed %0
+    J2_call @printf, hexagoncsr, implicit-def dead $pc, implicit-def dead $r31, implicit $r29, implicit killed $r0, implicit-def $r29, implicit-def dead $r0
+    ADJCALLSTACKUP 0, 0, implicit-def dead $r29, implicit-def dead $r30, implicit-def dead $r31, implicit $r29
+    %48:intregs = A2_tfrsi @A
+    %2:intregs = L2_loadri_io %48, 0, <0x9b64240> = !{!"unison-memory-partition", i64 0} :: (dereferenceable load 4 from `i32* getelementptr inbounds ([4 x i32], [4 x i32]* @A, i32 0, i32 0)`, align 8, !tbaa !2)
+    %3:intregs = COPY $r29
+    S2_storeri_io killed %3, 0, killed %2, <0x9b64240> = !{!"unison-memory-partition", i64 0} :: (store 4 into stack)
+    %4:intregs = A2_tfrsi @.str.1
+    ADJCALLSTACKDOWN 4, 0, implicit-def $r29, implicit-def dead $r30, implicit $r31, implicit $r30, implicit $r29
+    $r0 = COPY %4
+    J2_call @printf, hexagoncsr, implicit-def dead $pc, implicit-def dead $r31, implicit $r29, implicit killed $r0, implicit-def $r29, implicit-def dead $r0
+    ADJCALLSTACKUP 4, 0, implicit-def dead $r29, implicit-def dead $r30, implicit-def dead $r31, implicit $r29
+    %6:intregs = L2_loadri_io %48, 4, <0x9b64240> = !{!"unison-memory-partition", i64 0} :: (dereferenceable load 4 from `i32* getelementptr inbounds ([4 x i32], [4 x i32]* @A, i32 0, i32 1)`, !tbaa !2)
+    %7:intregs = COPY $r29
+    S2_storeri_io killed %7, 0, killed %6, <0x9b64240> = !{!"unison-memory-partition", i64 0} :: (store 4 into stack)
+    ADJCALLSTACKDOWN 4, 0, implicit-def $r29, implicit-def dead $r30, implicit $r31, implicit $r30, implicit $r29
+    $r0 = COPY %4
+    J2_call @printf, hexagoncsr, implicit-def dead $pc, implicit-def dead $r31, implicit $r29, implicit killed $r0, implicit-def $r29, implicit-def dead $r0
+    ADJCALLSTACKUP 4, 0, implicit-def dead $r29, implicit-def dead $r30, implicit-def dead $r31, implicit $r29
+    %9:intregs = L2_loadri_io %48, 8, <0x9b64240> = !{!"unison-memory-partition", i64 0} :: (dereferenceable load 4 from `i32* getelementptr inbounds ([4 x i32], [4 x i32]* @A, i32 0, i32 2)`, align 8, !tbaa !2)
+    %10:intregs = COPY $r29
+    S2_storeri_io killed %10, 0, killed %9, <0x9b64240> = !{!"unison-memory-partition", i64 0} :: (store 4 into stack)
+    ADJCALLSTACKDOWN 4, 0, implicit-def $r29, implicit-def dead $r30, implicit $r31, implicit $r30, implicit $r29
+    $r0 = COPY %4
+    J2_call @printf, hexagoncsr, implicit-def dead $pc, implicit-def dead $r31, implicit $r29, implicit killed $r0, implicit-def $r29, implicit-def dead $r0
+    ADJCALLSTACKUP 4, 0, implicit-def dead $r29, implicit-def dead $r30, implicit-def dead $r31, implicit $r29
+    %12:intregs = L2_loadri_io killed %48, 12, <0x9b64240> = !{!"unison-memory-partition", i64 0} :: (dereferenceable load 4 from `i32* getelementptr inbounds ([4 x i32], [4 x i32]* @A, i32 0, i32 3)`, !tbaa !2)
+    %13:intregs = COPY $r29
+    S2_storeri_io killed %13, 0, killed %12, <0x9b64240> = !{!"unison-memory-partition", i64 0} :: (store 4 into stack)
+    ADJCALLSTACKDOWN 4, 0, implicit-def $r29, implicit-def dead $r30, implicit $r31, implicit $r30, implicit $r29
+    $r0 = COPY %4
+    J2_call @printf, hexagoncsr, implicit-def dead $pc, implicit-def dead $r31, implicit $r29, implicit killed $r0, implicit-def $r29, implicit-def dead $r0
+    ADJCALLSTACKUP 4, 0, implicit-def dead $r29, implicit-def dead $r30, implicit-def dead $r31, implicit $r29
+    %15:intregs = A2_tfrsi 10
+    ADJCALLSTACKDOWN 0, 0, implicit-def $r29, implicit-def dead $r30, implicit $r31, implicit $r30, implicit $r29
+    $r0 = COPY %15
+    J2_call @putchar, hexagoncsr, implicit-def dead $pc, implicit-def dead $r31, implicit $r29, implicit killed $r0, implicit-def $r29, implicit-def dead $r0
+    ADJCALLSTACKUP 0, 0, implicit-def dead $r29, implicit-def dead $r30, implicit-def dead $r31, implicit $r29
+    %17:intregs = A2_tfrsi @.str.3
+    ADJCALLSTACKDOWN 0, 0, implicit-def $r29, implicit-def dead $r30, implicit $r31, implicit $r30, implicit $r29
+    $r0 = COPY killed %17
+    J2_call @printf, hexagoncsr, implicit-def dead $pc, implicit-def dead $r31, implicit $r29, implicit killed $r0, implicit-def $r29, implicit-def dead $r0
+    ADJCALLSTACKUP 0, 0, implicit-def dead $r29, implicit-def dead $r30, implicit-def dead $r31, implicit $r29
+    %49:intregs = A2_tfrsi @B
+    %19:intregs = L2_loadri_io %49, 0, <0x9b64240> = !{!"unison-memory-partition", i64 0} :: (dereferenceable load 4 from `i32* getelementptr inbounds ([4 x i32], [4 x i32]* @B, i32 0, i32 0)`, align 8, !tbaa !2)
+    %20:intregs = COPY $r29
+    S2_storeri_io killed %20, 0, killed %19, <0x9b64240> = !{!"unison-memory-partition", i64 0} :: (store 4 into stack)
+    ADJCALLSTACKDOWN 4, 0, implicit-def $r29, implicit-def dead $r30, implicit $r31, implicit $r30, implicit $r29
+    $r0 = COPY %4
+    J2_call @printf, hexagoncsr, implicit-def dead $pc, implicit-def dead $r31, implicit $r29, implicit killed $r0, implicit-def $r29, implicit-def dead $r0
+    ADJCALLSTACKUP 4, 0, implicit-def dead $r29, implicit-def dead $r30, implicit-def dead $r31, implicit $r29
+    %22:intregs = L2_loadri_io %49, 4, <0x9b64240> = !{!"unison-memory-partition", i64 0} :: (dereferenceable load 4 from `i32* getelementptr inbounds ([4 x i32], [4 x i32]* @B, i32 0, i32 1)`, !tbaa !2)
+    %23:intregs = COPY $r29
+    S2_storeri_io killed %23, 0, killed %22, <0x9b64240> = !{!"unison-memory-partition", i64 0} :: (store 4 into stack)
+    ADJCALLSTACKDOWN 4, 0, implicit-def $r29, implicit-def dead $r30, implicit $r31, implicit $r30, implicit $r29
+    $r0 = COPY %4
+    J2_call @printf, hexagoncsr, implicit-def dead $pc, implicit-def dead $r31, implicit $r29, implicit killed $r0, implicit-def $r29, implicit-def dead $r0
+    ADJCALLSTACKUP 4, 0, implicit-def dead $r29, implicit-def dead $r30, implicit-def dead $r31, implicit $r29
+    %25:intregs = L2_loadri_io %49, 8, <0x9b64240> = !{!"unison-memory-partition", i64 0} :: (dereferenceable load 4 from `i32* getelementptr inbounds ([4 x i32], [4 x i32]* @B, i32 0, i32 2)`, align 8, !tbaa !2)
+    %26:intregs = COPY $r29
+    S2_storeri_io killed %26, 0, killed %25, <0x9b64240> = !{!"unison-memory-partition", i64 0} :: (store 4 into stack)
+    ADJCALLSTACKDOWN 4, 0, implicit-def $r29, implicit-def dead $r30, implicit $r31, implicit $r30, implicit $r29
+    $r0 = COPY %4
+    J2_call @printf, hexagoncsr, implicit-def dead $pc, implicit-def dead $r31, implicit $r29, implicit killed $r0, implicit-def $r29, implicit-def dead $r0
+    ADJCALLSTACKUP 4, 0, implicit-def dead $r29, implicit-def dead $r30, implicit-def dead $r31, implicit $r29
+    %28:intregs = L2_loadri_io killed %49, 12, <0x9b64240> = !{!"unison-memory-partition", i64 0} :: (dereferenceable load 4 from `i32* getelementptr inbounds ([4 x i32], [4 x i32]* @B, i32 0, i32 3)`, !tbaa !2)
+    %29:intregs = COPY $r29
+    S2_storeri_io killed %29, 0, killed %28, <0x9b64240> = !{!"unison-memory-partition", i64 0} :: (store 4 into stack)
+    ADJCALLSTACKDOWN 4, 0, implicit-def $r29, implicit-def dead $r30, implicit $r31, implicit $r30, implicit $r29
+    $r0 = COPY %4
+    J2_call @printf, hexagoncsr, implicit-def dead $pc, implicit-def dead $r31, implicit $r29, implicit killed $r0, implicit-def $r29, implicit-def dead $r0
+    ADJCALLSTACKUP 4, 0, implicit-def dead $r29, implicit-def dead $r30, implicit-def dead $r31, implicit $r29
+    ADJCALLSTACKDOWN 0, 0, implicit-def $r29, implicit-def dead $r30, implicit $r31, implicit $r30, implicit $r29
+    $r0 = COPY %15
+    J2_call @putchar, hexagoncsr, implicit-def dead $pc, implicit-def dead $r31, implicit $r29, implicit killed $r0, implicit-def $r29, implicit-def dead $r0
+    ADJCALLSTACKUP 0, 0, implicit-def dead $r29, implicit-def dead $r30, implicit-def dead $r31, implicit $r29
+    %32:intregs = A2_tfrsi @.str.4
+    ADJCALLSTACKDOWN 0, 0, implicit-def $r29, implicit-def dead $r30, implicit $r31, implicit $r30, implicit $r29
+    $r0 = COPY killed %32
+    J2_call @printf, hexagoncsr, implicit-def dead $pc, implicit-def dead $r31, implicit $r29, implicit killed $r0, implicit-def $r29, implicit-def dead $r0
+    ADJCALLSTACKUP 0, 0, implicit-def dead $r29, implicit-def dead $r30, implicit-def dead $r31, implicit $r29
+    %50:intregs = A2_tfrsi @C
+    %34:intregs = L2_loadri_io %50, 0, <0x9b64240> = !{!"unison-memory-partition", i64 0} :: (dereferenceable load 4 from `i32* getelementptr inbounds ([4 x i32], [4 x i32]* @C, i32 0, i32 0)`, align 8, !tbaa !2)
+    %35:intregs = COPY $r29
+    S2_storeri_io killed %35, 0, killed %34, <0x9b64240> = !{!"unison-memory-partition", i64 0} :: (store 4 into stack)
+    ADJCALLSTACKDOWN 4, 0, implicit-def $r29, implicit-def dead $r30, implicit $r31, implicit $r30, implicit $r29
+    $r0 = COPY %4
+    J2_call @printf, hexagoncsr, implicit-def dead $pc, implicit-def dead $r31, implicit $r29, implicit killed $r0, implicit-def $r29, implicit-def dead $r0
+    ADJCALLSTACKUP 4, 0, implicit-def dead $r29, implicit-def dead $r30, implicit-def dead $r31, implicit $r29
+    %37:intregs = L2_loadri_io %50, 4, <0x9b64240> = !{!"unison-memory-partition", i64 0} :: (dereferenceable load 4 from `i32* getelementptr inbounds ([4 x i32], [4 x i32]* @C, i32 0, i32 1)`, !tbaa !2)
+    %38:intregs = COPY $r29
+    S2_storeri_io killed %38, 0, killed %37, <0x9b64240> = !{!"unison-memory-partition", i64 0} :: (store 4 into stack)
+    ADJCALLSTACKDOWN 4, 0, implicit-def $r29, implicit-def dead $r30, implicit $r31, implicit $r30, implicit $r29
+    $r0 = COPY %4
+    J2_call @printf, hexagoncsr, implicit-def dead $pc, implicit-def dead $r31, implicit $r29, implicit killed $r0, implicit-def $r29, implicit-def dead $r0
+    ADJCALLSTACKUP 4, 0, implicit-def dead $r29, implicit-def dead $r30, implicit-def dead $r31, implicit $r29
+    %40:intregs = L2_loadri_io %50, 8, <0x9b64240> = !{!"unison-memory-partition", i64 0} :: (dereferenceable load 4 from `i32* getelementptr inbounds ([4 x i32], [4 x i32]* @C, i32 0, i32 2)`, align 8, !tbaa !2)
+    %41:intregs = COPY $r29
+    S2_storeri_io killed %41, 0, killed %40, <0x9b64240> = !{!"unison-memory-partition", i64 0} :: (store 4 into stack)
+    ADJCALLSTACKDOWN 4, 0, implicit-def $r29, implicit-def dead $r30, implicit $r31, implicit $r30, implicit $r29
+    $r0 = COPY %4
+    J2_call @printf, hexagoncsr, implicit-def dead $pc, implicit-def dead $r31, implicit $r29, implicit killed $r0, implicit-def $r29, implicit-def dead $r0
+    ADJCALLSTACKUP 4, 0, implicit-def dead $r29, implicit-def dead $r30, implicit-def dead $r31, implicit $r29
+    %43:intregs = L2_loadri_io killed %50, 12, <0x9b64240> = !{!"unison-memory-partition", i64 0} :: (dereferenceable load 4 from `i32* getelementptr inbounds ([4 x i32], [4 x i32]* @C, i32 0, i32 3)`, !tbaa !2)
+    %44:intregs = COPY $r29
+    S2_storeri_io killed %44, 0, killed %43, <0x9b64240> = !{!"unison-memory-partition", i64 0} :: (store 4 into stack)
+    ADJCALLSTACKDOWN 4, 0, implicit-def $r29, implicit-def dead $r30, implicit $r31, implicit $r30, implicit $r29
+    $r0 = COPY killed %4
+    J2_call @printf, hexagoncsr, implicit-def dead $pc, implicit-def dead $r31, implicit $r29, implicit killed $r0, implicit-def $r29, implicit-def dead $r0
+    ADJCALLSTACKUP 4, 0, implicit-def dead $r29, implicit-def dead $r30, implicit-def dead $r31, implicit $r29
+    ADJCALLSTACKDOWN 0, 0, implicit-def $r29, implicit-def dead $r30, implicit $r31, implicit $r30, implicit $r29
+    $r0 = COPY killed %15
+    J2_call @putchar, hexagoncsr, implicit-def dead $pc, implicit-def dead $r31, implicit $r29, implicit killed $r0, implicit-def $r29, implicit-def dead $r0
+    ADJCALLSTACKUP 0, 0, implicit-def dead $r29, implicit-def dead $r30, implicit-def dead $r31, implicit $r29
+    %47:intregs = A2_tfrsi @str
+    $r0 = COPY killed %47
+    PS_tailcall_i @puts, hexagoncsr, implicit killed $r0
+
+...
+---
+name:            Move
+alignment:       4
+exposesReturnsTwice: false
+legalized:       false
+regBankSelected: false
+selected:        false
+failedISel:      false
+tracksRegLiveness: true
+hasWinCFI:       false
+registers:       
+  - { id: 0, class: intregs, preferred-register: '' }
+  - { id: 1, class: intregs, preferred-register: '' }
+  - { id: 2, class: intregs, preferred-register: '' }
+  - { id: 3, class: intregs, preferred-register: '' }
+  - { id: 4, class: intregs, preferred-register: '' }
+  - { id: 5, class: intregs, preferred-register: '' }
+  - { id: 6, class: intregs, preferred-register: '' }
+  - { id: 7, class: intregs, preferred-register: '' }
+  - { id: 8, class: predregs, preferred-register: '' }
+  - { id: 9, class: predregs, preferred-register: '' }
+  - { id: 10, class: intregs, preferred-register: '' }
+  - { id: 11, class: intregs, preferred-register: '' }
+  - { id: 12, class: predregs, preferred-register: '' }
+  - { id: 13, class: intregs, preferred-register: '' }
+  - { id: 14, class: intregs, preferred-register: '' }
+  - { id: 15, class: predregs, preferred-register: '' }
+  - { id: 16, class: predregs, preferred-register: '' }
+  - { id: 17, class: intregs, preferred-register: '' }
+  - { id: 18, class: predregs, preferred-register: '' }
+  - { id: 19, class: intregs, preferred-register: '' }
+  - { id: 20, class: intregs, preferred-register: '' }
+  - { id: 21, class: predregs, preferred-register: '' }
+  - { id: 22, class: predregs, preferred-register: '' }
+  - { id: 23, class: intregs, preferred-register: '' }
+  - { id: 24, class: intregs, preferred-register: '' }
+  - { id: 25, class: predregs, preferred-register: '' }
+  - { id: 26, class: intregs, preferred-register: '' }
+  - { id: 27, class: intregs, preferred-register: '' }
+  - { id: 28, class: predregs, preferred-register: '' }
+  - { id: 29, class: predregs, preferred-register: '' }
+  - { id: 30, class: intregs, preferred-register: '' }
+  - { id: 31, class: predregs, preferred-register: '' }
+  - { id: 32, class: intregs, preferred-register: '' }
+  - { id: 33, class: intregs, preferred-register: '' }
+  - { id: 34, class: intregs, preferred-register: '' }
+liveins:         
+  - { reg: '$r0', virtual-reg: '%4' }
+  - { reg: '$r1', virtual-reg: '%5' }
+frameInfo:       
+  isFrameAddressTaken: false
+  isReturnAddressTaken: false
+  hasStackMap:     false
+  hasPatchPoint:   false
+  stackSize:       0
+  offsetAdjustment: 0
+  maxAlignment:    0
+  adjustsStack:    false
+  hasCalls:        true
+  stackProtector:  ''
+  maxCallFrameSize: 4294967295
+  cvBytesOfCalleeSavedRegisters: 0
+  hasOpaqueSPAdjustment: false
+  hasVAStart:      false
+  hasMustTailInVarArgFunc: false
+  localFrameSize:  0
+  savePoint:       ''
+  restorePoint:    ''
+fixedStack:      []
+stack:           []
+constants:       []
+body:             |
+  bb.0.entry (freq 151):
+    successors: %bb.1(37), %bb.2(62)
+    liveins: $r0, $r1
+  
+    ANNOTATION_LABEL <0x9b90440> = !{!"unison-block-frequency", i64 151}
+    %5:intregs = COPY killed $r1
+    %4:intregs = COPY killed $r0
+    %7:intregs = L2_loadri_io %4, 0, <0x9b64240> = !{!"unison-memory-partition", i64 0} :: (load 4 from %ir.source, !tbaa !2)
+    %8:predregs = C2_cmpeqi killed %7, 0
+    %6:intregs = A2_tfrsi 0
+    J2_jumpf killed %8, %bb.2, implicit-def dead $pc
+    J2_jump %bb.1, implicit-def dead $pc
+  
+  bb.1.while.body (freq 56):
+    successors: %bb.7(37), %bb.2(62)
+  
+    ANNOTATION_LABEL <0x9b35860> = !{!"unison-block-frequency", i64 56}
+    %11:intregs = L2_loadri_io %4, 4, <0x9b64240> = !{!"unison-memory-partition", i64 0} :: (load 4 from %ir.cgep, !tbaa !2)
+    %12:predregs = C2_cmpeqi killed %11, 0
+    %10:intregs = A2_tfrsi 1
+    J2_jumpt killed %12, %bb.7, implicit-def dead $pc
+    J2_jump %bb.2, implicit-def dead $pc
+  
+  bb.2.while.end (freq 151):
+    successors: %bb.3(37), %bb.4(62)
+  
+    ANNOTATION_LABEL <0x9b90440> = !{!"unison-block-frequency", i64 151}
+    %0:intregs = PHI %6, %bb.0, %10, %bb.1, %13, %bb.7, %3, %bb.8
+    %20:intregs = L2_loadri_io %5, 0, <0x9b64240> = !{!"unison-memory-partition", i64 0} :: (load 4 from %ir.dest, !tbaa !2)
+    %21:predregs = C2_cmpeqi killed %20, 0
+    %19:intregs = A2_tfrsi -1
+    J2_jumpf killed %21, %bb.4, implicit-def dead $pc
+    J2_jump %bb.3, implicit-def dead $pc
+  
+  bb.3.while.body8 (freq 56):
+    successors: %bb.5(37), %bb.4(62)
+  
+    ANNOTATION_LABEL <0x9b35860> = !{!"unison-block-frequency", i64 56}
+    %24:intregs = L2_loadri_io %5, 4, <0x9b64240> = !{!"unison-memory-partition", i64 0} :: (load 4 from %ir.cgep3, !tbaa !2)
+    %25:predregs = C2_cmpeqi killed %24, 0
+    %23:intregs = A2_tfrsi 0
+    J2_jumpt killed %25, %bb.5, implicit-def dead $pc
+    J2_jump %bb.4, implicit-def dead $pc
+  
+  bb.4.while.end10 (freq 151):
+    liveouts: $pc, $r0
+  
+    ANNOTATION_LABEL <0x9b90440> = !{!"unison-block-frequency", i64 151}
+    %1:intregs = PHI %19, %bb.2, %23, %bb.3, %26, %bb.5, %2, %bb.6
+    %32:intregs = L4_loadri_rr %4, %0, 2, <0x9b64240> = !{!"unison-memory-partition", i64 0} :: (load 4 from %ir.cgep6, !tbaa !2)
+    S4_storeri_rr %5, %1, 2, killed %32, <0x9b64240> = !{!"unison-memory-partition", i64 0} :: (store 4 into %ir.cgep7, !tbaa !2)
+    %33:intregs = A2_tfrsi 0
+    S4_storeri_rr killed %4, killed %0, 2, killed %33, <0x9b64240> = !{!"unison-memory-partition", i64 0} :: (store 4 into %ir.cgep6, !tbaa !2)
+    ADJCALLSTACKDOWN 0, 0, implicit-def $r29, implicit-def dead $r30, implicit $r31, implicit $r30, implicit $r29
+    J2_call @PrintAll, hexagoncsr, implicit-def dead $pc, implicit-def dead $r31, implicit $r29, implicit-def $r29
+    ADJCALLSTACKUP 0, 0, implicit-def dead $r29, implicit-def dead $r30, implicit-def dead $r31, implicit $r29
+    %34:intregs = L4_loadri_rr killed %5, killed %1, 2, <0x9b64240> = !{!"unison-memory-partition", i64 0} :: (load 4 from %ir.cgep7, !tbaa !2)
+    $r0 = COPY killed %34
+    PS_jmpret $r31, implicit-def dead $pc, implicit killed $r0
+  
+  bb.5.while.body8.1 (freq 21):
+    successors: %bb.6(37), %bb.4(62)
+  
+    ANNOTATION_LABEL <0x9b954d0> = !{!"unison-block-frequency", i64 21}
+    %27:intregs = L2_loadri_io %5, 8, <0x9b64240> = !{!"unison-memory-partition", i64 0} :: (load 4 from %ir.cgep4, !tbaa !2)
+    %28:predregs = C2_cmpeqi killed %27, 0
+    %26:intregs = A2_tfrsi 1
+    J2_jumpf killed %28, %bb.4, implicit-def dead $pc
+    J2_jump %bb.6, implicit-def dead $pc
+  
+  bb.6.while.body8.2 (freq 8):
+    successors: %bb.4(100)
+  
+    ANNOTATION_LABEL <0x9b641d0> = !{!"unison-block-frequency", i64 8}
+    %30:intregs = L2_loadri_io %5, 12, <0x9b64240> = !{!"unison-memory-partition", i64 0} :: (load 4 from %ir.cgep5, !tbaa !2)
+    %31:predregs = C2_cmpeqi killed %30, 0
+    %2:intregs = C2_muxii killed %31, 3, 2
+    J2_jump %bb.4, implicit-def dead $pc
+  
+  bb.7.while.body.1 (freq 21):
+    successors: %bb.8(37), %bb.2(62)
+  
+    ANNOTATION_LABEL <0x9b954d0> = !{!"unison-block-frequency", i64 21}
+    %14:intregs = L2_loadri_io %4, 8, <0x9b64240> = !{!"unison-memory-partition", i64 0} :: (load 4 from %ir.cgep1, !tbaa !2)
+    %15:predregs = C2_cmpeqi killed %14, 0
+    %13:intregs = A2_tfrsi 2
+    J2_jumpf killed %15, %bb.2, implicit-def dead $pc
+    J2_jump %bb.8, implicit-def dead $pc
+  
+  bb.8.while.body.2 (freq 8):
+    successors: %bb.2(100)
+  
+    ANNOTATION_LABEL <0x9b641d0> = !{!"unison-block-frequency", i64 8}
+    %17:intregs = L2_loadri_io %4, 12, <0x9b64240> = !{!"unison-memory-partition", i64 0} :: (load 4 from %ir.cgep2, !tbaa !2)
+    %18:predregs = C2_cmpeqi killed %17, 0
+    %3:intregs = C2_muxii killed %18, 4, 3
+    J2_jump %bb.2, implicit-def dead $pc
+
+...
+---
+name:            Hanoi
+alignment:       4
+exposesReturnsTwice: false
+legalized:       false
+regBankSelected: false
+selected:        false
+failedISel:      false
+tracksRegLiveness: true
+hasWinCFI:       false
+registers:       
+  - { id: 0, class: intregs, preferred-register: '' }
+  - { id: 1, class: intregs, preferred-register: '' }
+  - { id: 2, class: intregs, preferred-register: '' }
+  - { id: 3, class: intregs, preferred-register: '' }
+  - { id: 4, class: intregs, preferred-register: '' }
+  - { id: 5, class: intregs, preferred-register: '' }
+  - { id: 6, class: intregs, preferred-register: '' }
+  - { id: 7, class: intregs, preferred-register: '' }
+  - { id: 8, class: intregs, preferred-register: '' }
+  - { id: 9, class: intregs, preferred-register: '' }
+  - { id: 10, class: intregs, preferred-register: '' }
+  - { id: 11, class: intregs, preferred-register: '' }
+  - { id: 12, class: intregs, preferred-register: '' }
+  - { id: 13, class: intregs, preferred-register: '' }
+  - { id: 14, class: intregs, preferred-register: '' }
+  - { id: 15, class: intregs, preferred-register: '' }
+  - { id: 16, class: intregs, preferred-register: '' }
+  - { id: 17, class: intregs, preferred-register: '' }
+  - { id: 18, class: intregs, preferred-register: '' }
+  - { id: 19, class: intregs, preferred-register: '' }
+  - { id: 20, class: intregs, preferred-register: '' }
+  - { id: 21, class: intregs, preferred-register: '' }
+  - { id: 22, class: intregs, preferred-register: '' }
+  - { id: 23, class: intregs, preferred-register: '' }
+  - { id: 24, class: intregs, preferred-register: '' }
+  - { id: 25, class: intregs, preferred-register: '' }
+  - { id: 26, class: intregs, preferred-register: '' }
+  - { id: 27, class: intregs, preferred-register: '' }
+  - { id: 28, class: predregs, preferred-register: '' }
+  - { id: 29, class: predregs, preferred-register: '' }
+  - { id: 30, class: intregs, preferred-register: '' }
+  - { id: 31, class: intregs, preferred-register: '' }
+  - { id: 32, class: predregs, preferred-register: '' }
+  - { id: 33, class: predregs, preferred-register: '' }
+  - { id: 34, class: intregs, preferred-register: '' }
+  - { id: 35, class: intregs, preferred-register: '' }
+  - { id: 36, class: predregs, preferred-register: '' }
+  - { id: 37, class: predregs, preferred-register: '' }
+  - { id: 38, class: intregs, preferred-register: '' }
+  - { id: 39, class: intregs, preferred-register: '' }
+  - { id: 40, class: predregs, preferred-register: '' }
+  - { id: 41, class: predregs, preferred-register: '' }
+  - { id: 42, class: intregs, preferred-register: '' }
+  - { id: 43, class: predregs, preferred-register: '' }
+  - { id: 44, class: intregs, preferred-register: '' }
+  - { id: 45, class: intregs, preferred-register: '' }
+  - { id: 46, class: predregs, preferred-register: '' }
+  - { id: 47, class: predregs, preferred-register: '' }
+  - { id: 48, class: intregs, preferred-register: '' }
+  - { id: 49, class: intregs, preferred-register: '' }
+  - { id: 50, class: predregs, preferred-register: '' }
+  - { id: 51, class: predregs, preferred-register: '' }
+  - { id: 52, class: intregs, preferred-register: '' }
+  - { id: 53, class: intregs, preferred-register: '' }
+  - { id: 54, class: predregs, preferred-register: '' }
+  - { id: 55, class: predregs, preferred-register: '' }
+  - { id: 56, class: intregs, preferred-register: '' }
+  - { id: 57, class: predregs, preferred-register: '' }
+  - { id: 58, class: intregs, preferred-register: '' }
+  - { id: 59, class: intregs, preferred-register: '' }
+  - { id: 60, class: predregs, preferred-register: '' }
+  - { id: 61, class: intregs, preferred-register: '' }
+  - { id: 62, class: intregs, preferred-register: '' }
+  - { id: 63, class: predregs, preferred-register: '' }
+  - { id: 64, class: predregs, preferred-register: '' }
+  - { id: 65, class: intregs, preferred-register: '' }
+  - { id: 66, class: intregs, preferred-register: '' }
+  - { id: 67, class: predregs, preferred-register: '' }
+  - { id: 68, class: intregs, preferred-register: '' }
+  - { id: 69, class: intregs, preferred-register: '' }
+  - { id: 70, class: predregs, preferred-register: '' }
+  - { id: 71, class: predregs, preferred-register: '' }
+  - { id: 72, class: intregs, preferred-register: '' }
+  - { id: 73, class: predregs, preferred-register: '' }
+  - { id: 74, class: intregs, preferred-register: '' }
+  - { id: 75, class: intregs, preferred-register: '' }
+  - { id: 76, class: predregs, preferred-register: '' }
+  - { id: 77, class: predregs, preferred-register: '' }
+  - { id: 78, class: intregs, preferred-register: '' }
+  - { id: 79, class: intregs, preferred-register: '' }
+  - { id: 80, class: predregs, preferred-register: '' }
+  - { id: 81, class: predregs, preferred-register: '' }
+  - { id: 82, class: intregs, preferred-register: '' }
+  - { id: 83, class: intregs, preferred-register: '' }
+  - { id: 84, class: predregs, preferred-register: '' }
+  - { id: 85, class: predregs, preferred-register: '' }
+  - { id: 86, class: intregs, preferred-register: '' }
+  - { id: 87, class: predregs, preferred-register: '' }
+  - { id: 88, class: intregs, preferred-register: '' }
+  - { id: 89, class: intregs, preferred-register: '' }
+  - { id: 90, class: intregs, preferred-register: '' }
+  - { id: 91, class: intregs, preferred-register: '' }
+  - { id: 92, class: predregs, preferred-register: '' }
+  - { id: 93, class: predregs, preferred-register: '' }
+  - { id: 94, class: intregs, preferred-register: '' }
+  - { id: 95, class: intregs, preferred-register: '' }
+  - { id: 96, class: predregs, preferred-register: '' }
+  - { id: 97, class: predregs, preferred-register: '' }
+  - { id: 98, class: intregs, preferred-register: '' }
+  - { id: 99, class: intregs, preferred-register: '' }
+  - { id: 100, class: predregs, preferred-register: '' }
+  - { id: 101, class: predregs, preferred-register: '' }
+  - { id: 102, class: intregs, preferred-register: '' }
+  - { id: 103, class: predregs, preferred-register: '' }
+  - { id: 104, class: intregs, preferred-register: '' }
+  - { id: 105, class: intregs, preferred-register: '' }
+  - { id: 106, class: predregs, preferred-register: '' }
+  - { id: 107, class: predregs, preferred-register: '' }
+  - { id: 108, class: intregs, preferred-register: '' }
+  - { id: 109, class: intregs, preferred-register: '' }
+  - { id: 110, class: predregs, preferred-register: '' }
+  - { id: 111, class: predregs, preferred-register: '' }
+  - { id: 112, class: intregs, preferred-register: '' }
+  - { id: 113, class: intregs, preferred-register: '' }
+  - { id: 114, class: predregs, preferred-register: '' }
+  - { id: 115, class: predregs, preferred-register: '' }
+  - { id: 116, class: intregs, preferred-register: '' }
+  - { id: 117, class: predregs, preferred-register: '' }
+  - { id: 118, class: intregs, preferred-register: '' }
+  - { id: 119, class: intregs, preferred-register: '' }
+  - { id: 120, class: predregs, preferred-register: '' }
+  - { id: 121, class: intregs, preferred-register: '' }
+  - { id: 122, class: intregs, preferred-register: '' }
+  - { id: 123, class: predregs, preferred-register: '' }
+  - { id: 124, class: predregs, preferred-register: '' }
+  - { id: 125, class: intregs, preferred-register: '' }
+  - { id: 126, class: intregs, preferred-register: '' }
+  - { id: 127, class: predregs, preferred-register: '' }
+  - { id: 128, class: intregs, preferred-register: '' }
+  - { id: 129, class: intregs, preferred-register: '' }
+  - { id: 130, class: predregs, preferred-register: '' }
+  - { id: 131, class: predregs, preferred-register: '' }
+  - { id: 132, class: intregs, preferred-register: '' }
+  - { id: 133, class: predregs, preferred-register: '' }
+  - { id: 134, class: intregs, preferred-register: '' }
+  - { id: 135, class: intregs, preferred-register: '' }
+  - { id: 136, class: predregs, preferred-register: '' }
+  - { id: 137, class: predregs, preferred-register: '' }
+  - { id: 138, class: intregs, preferred-register: '' }
+  - { id: 139, class: intregs, preferred-register: '' }
+  - { id: 140, class: predregs, preferred-register: '' }
+  - { id: 141, class: predregs, preferred-register: '' }
+  - { id: 142, class: intregs, preferred-register: '' }
+  - { id: 143, class: intregs, preferred-register: '' }
+  - { id: 144, class: predregs, preferred-register: '' }
+  - { id: 145, class: predregs, preferred-register: '' }
+  - { id: 146, class: intregs, preferred-register: '' }
+  - { id: 147, class: predregs, preferred-register: '' }
+  - { id: 148, class: intregs, preferred-register: '' }
+  - { id: 149, class: intregs, preferred-register: '' }
+liveins:         
+  - { reg: '$r0', virtual-reg: '%24' }
+  - { reg: '$r1', virtual-reg: '%25' }
+  - { reg: '$r2', virtual-reg: '%26' }
+  - { reg: '$r3', virtual-reg: '%27' }
+frameInfo:       
+  isFrameAddressTaken: false
+  isReturnAddressTaken: false
+  hasStackMap:     false
+  hasPatchPoint:   false
+  stackSize:       0
+  offsetAdjustment: 0
+  maxAlignment:    0
+  adjustsStack:    false
+  hasCalls:        true
+  stackProtector:  ''
+  maxCallFrameSize: 4294967295
+  cvBytesOfCalleeSavedRegisters: 0
+  hasOpaqueSPAdjustment: false
+  hasVAStart:      false
+  hasMustTailInVarArgFunc: false
+  localFrameSize:  0
+  savePoint:       ''
+  restorePoint:    ''
+fixedStack:      []
+stack:           []
+constants:       []
+body:             |
+  bb.0.entry (freq 606):
+    successors: %bb.13(50), %bb.1(50)
+    liveins: $r0, $r1, $r2, $r3
+  
+    ANNOTATION_LABEL <0x9bb2ba0> = !{!"unison-block-frequency", i64 606}
+    %27:intregs = COPY killed $r3
+    %26:intregs = COPY killed $r2
+    %25:intregs = COPY killed $r1
+    %24:intregs = COPY killed $r0
+    %28:predregs = C2_cmpeqi %24, 1
+    J2_jumpt killed %28, %bb.13, implicit-def dead $pc
+    J2_jump %bb.1, implicit-def dead $pc
+  
+  bb.1.if.end.lr.ph (freq 303):
+    successors: %bb.2(50), %bb.11(50)
+  
+    ANNOTATION_LABEL <0x9bbd3e0> = !{!"unison-block-frequency", i64 303}
+    %29:predregs = S2_tstbit_i %24, 0
+    J2_jumpt killed %29, %bb.11, implicit-def dead $pc
+    J2_jump %bb.2, implicit-def dead $pc
+  
+  bb.2.if.end.prol (freq 151):
+    successors: %bb.3(37), %bb.6(62)
+  
+    ANNOTATION_LABEL <0x9b90440> = !{!"unison-block-frequency", i64 151}
+    %0:intregs = nsw A2_addi %24, -1
+    ADJCALLSTACKDOWN 0, 0, implicit-def $r29, implicit-def dead $r30, implicit $r31, implicit $r30, implicit $r29
+    $r0 = COPY %0
+    $r1 = COPY %25
+    $r2 = COPY %27
+    $r3 = COPY %26
+    J2_call @Hanoi, hexagoncsr, implicit-def dead $pc, implicit-def dead $r31, implicit $r29, implicit killed $r0, implicit killed $r1, implicit killed $r2, implicit killed $r3, implicit-def $r29
+    ADJCALLSTACKUP 0, 0, implicit-def dead $r29, implicit-def dead $r30, implicit-def dead $r31, implicit $r29
+    %31:intregs = L2_loadri_io %25, 0, <0x9b64240> = !{!"unison-memory-partition", i64 0} :: (load 4 from %ir.source, !tbaa !2)
+    %32:predregs = C2_cmpeqi killed %31, 0
+    %30:intregs = A2_tfrsi 0
+    J2_jumpf killed %32, %bb.6, implicit-def dead $pc
+    J2_jump %bb.3, implicit-def dead $pc
+  
+  bb.3.while.body.i16.prol (freq 56):
+    successors: %bb.4(37), %bb.6(62)
+  
+    ANNOTATION_LABEL <0x9b35860> = !{!"unison-block-frequency", i64 56}
+    %35:intregs = L2_loadri_io %25, 4, <0x9b64240> = !{!"unison-memory-partition", i64 0} :: (load 4 from %ir.cgep8, !tbaa !2)
+    %36:predregs = C2_cmpeqi killed %35, 0
+    %34:intregs = A2_tfrsi 1
+    J2_jumpf killed %36, %bb.6, implicit-def dead $pc
+    J2_jump %bb.4, implicit-def dead $pc
+  
+  bb.4.while.body.1.i35.prol (freq 21):
+    successors: %bb.5(37), %bb.6(62)
+  
+    ANNOTATION_LABEL <0x9b954d0> = !{!"unison-block-frequency", i64 21}
+    %39:intregs = L2_loadri_io %25, 8, <0x9b64240> = !{!"unison-memory-partition", i64 0} :: (load 4 from %ir.cgep9, !tbaa !2)
+    %40:predregs = C2_cmpeqi killed %39, 0
+    %38:intregs = A2_tfrsi 2
+    J2_jumpf killed %40, %bb.6, implicit-def dead $pc
+    J2_jump %bb.5, implicit-def dead $pc
+  
+  bb.5.while.body.2.i39.prol (freq 8):
+    successors: %bb.6(100)
+  
+    ANNOTATION_LABEL <0x9b641d0> = !{!"unison-block-frequency", i64 8}
+    %42:intregs = L2_loadri_io %25, 12, <0x9b64240> = !{!"unison-memory-partition", i64 0} :: (load 4 from %ir.cgep10, !tbaa !2)
+    %43:predregs = C2_cmpeqi killed %42, 0
+    %1:intregs = C2_muxii killed %43, 4, 3
+  
+  bb.6.while.end.i19.prol (freq 151):
+    successors: %bb.7(37), %bb.10(62)
+  
+    ANNOTATION_LABEL <0x9b90440> = !{!"unison-block-frequency", i64 151}
+    %2:intregs = PHI %30, %bb.2, %34, %bb.3, %38, %bb.4, %1, %bb.5
+    %45:intregs = L2_loadri_io %26, 0, <0x9b64240> = !{!"unison-memory-partition", i64 0} :: (load 4 from %ir.dest, !tbaa !2)
+    %46:predregs = C2_cmpeqi killed %45, 0
+    %44:intregs = A2_tfrsi -1
+    J2_jumpf killed %46, %bb.10, implicit-def dead $pc
+    J2_jump %bb.7, implicit-def dead $pc
+  
+  bb.7.while.body8.i22.prol (freq 56):
+    successors: %bb.8(37), %bb.10(62)
+  
+    ANNOTATION_LABEL <0x9b35860> = !{!"unison-block-frequency", i64 56}
+    %49:intregs = L2_loadri_io %26, 4, <0x9b64240> = !{!"unison-memory-partition", i64 0} :: (load 4 from %ir.7, !tbaa !2)
+    %50:predregs = C2_cmpeqi killed %49, 0
+    %48:intregs = A2_tfrsi 0
+    J2_jumpf killed %50, %bb.10, implicit-def dead $pc
+    J2_jump %bb.8, implicit-def dead $pc
+  
+  bb.8.while.body8.1.i28.prol (freq 21):
+    successors: %bb.9(37), %bb.10(62)
+  
+    ANNOTATION_LABEL <0x9b954d0> = !{!"unison-block-frequency", i64 21}
+    %53:intregs = L2_loadri_io %26, 8, <0x9b64240> = !{!"unison-memory-partition", i64 0} :: (load 4 from %ir.10, !tbaa !2)
+    %54:predregs = C2_cmpeqi killed %53, 0
+    %52:intregs = A2_tfrsi 1
+    J2_jumpf killed %54, %bb.10, implicit-def dead $pc
+    J2_jump %bb.9, implicit-def dead $pc
+  
+  bb.9.while.body8.2.i32.prol (freq 8):
+    successors: %bb.10(100)
+  
+    ANNOTATION_LABEL <0x9b641d0> = !{!"unison-block-frequency", i64 8}
+    %56:intregs = L2_loadri_io %26, 12, <0x9b64240> = !{!"unison-memory-partition", i64 0} :: (load 4 from %ir.13, !tbaa !2)
+    %57:predregs = C2_cmpeqi killed %56, 0
+    %3:intregs = C2_muxii killed %57, 3, 2
+  
+  bb.10.Move.exit40.prol (freq 151):
+    successors: %bb.11(100)
+  
+    ANNOTATION_LABEL <0x9b90440> = !{!"unison-block-frequency", i64 151}
+    %4:intregs = PHI %44, %bb.6, %48, %bb.7, %52, %bb.8, %3, %bb.9
+    %58:intregs = L4_loadri_rr %25, %2, 2, <0x9b64240> = !{!"unison-memory-partition", i64 0} :: (load 4 from %ir.cgep11, !tbaa !2)
+    S4_storeri_rr %26, killed %4, 2, killed %58, <0x9b64240> = !{!"unison-memory-partition", i64 0} :: (store 4 into %ir.cgep12, !tbaa !2)
+    %59:intregs = A2_tfrsi 0
+    S4_storeri_rr %25, killed %2, 2, killed %59, <0x9b64240> = !{!"unison-memory-partition", i64 0} :: (store 4 into %ir.cgep11, !tbaa !2)
+    ADJCALLSTACKDOWN 0, 0, implicit-def $r29, implicit-def dead $r30, implicit $r31, implicit $r30, implicit $r29
+    J2_call @PrintAll, hexagoncsr, implicit-def dead $pc, implicit-def dead $r31, implicit $r29, implicit-def $r29
+    ADJCALLSTACKUP 0, 0, implicit-def dead $r29, implicit-def dead $r30, implicit-def dead $r31, implicit $r29
+  
+  bb.11.if.end.prol.loopexit (freq 303):
+    successors: %bb.13(50), %bb.12(50)
+  
+    ANNOTATION_LABEL <0x9bbd3e0> = !{!"unison-block-frequency", i64 303}
+    %5:intregs = PHI %27, %bb.1, %25, %bb.10
+    %6:intregs = PHI %25, %bb.1, %27, %bb.10
+    %7:intregs = PHI %24, %bb.1, %0, %bb.10
+    %60:predregs = C2_cmpeqi killed %24, 2
+    J2_jumpt killed %60, %bb.13, implicit-def dead $pc
+    J2_jump %bb.12, implicit-def dead $pc
+  
+  bb.12.if.end.lr.ph.new (freq 151):
+    successors: %bb.22(100)
+  
+    ANNOTATION_LABEL <0x9b90440> = !{!"unison-block-frequency", i64 151}
+    %8:intregs = A2_addi killed %7, -1
+    %119:intregs = A2_tfrsi 0
+    J2_jump %bb.22, implicit-def dead $pc
+  
+  bb.13.if.then (freq 606):
+    successors: %bb.14(37), %bb.15(62)
+  
+    ANNOTATION_LABEL <0x9bb2ba0> = !{!"unison-block-frequency", i64 606}
+    %9:intregs = PHI %25, %bb.0, %27, %bb.11, %6, %bb.38
+    %122:intregs = L2_loadri_io %9, 0, <0x9b64240> = !{!"unison-memory-partition", i64 0} :: (load 4 from %ir.source.tr.lcssa, !tbaa !2)
+    %123:predregs = C2_cmpeqi killed %122, 0
+    %121:intregs = A2_tfrsi 0
+    J2_jumpf killed %123, %bb.15, implicit-def dead $pc
+    J2_jump %bb.14, implicit-def dead $pc
+  
+  bb.14.while.body.i (freq 227):
+    successors: %bb.19(37), %bb.15(62)
+  
+    ANNOTATION_LABEL <0x9b49840> = !{!"unison-block-frequency", i64 227}
+    %126:intregs = L2_loadri_io %9, 4, <0x9b64240> = !{!"unison-memory-partition", i64 0} :: (load 4 from %ir.cgep, !tbaa !2)
+    %127:predregs = C2_cmpeqi killed %126, 0
+    %125:intregs = A2_tfrsi 1
+    J2_jumpt killed %127, %bb.19, implicit-def dead $pc
+    J2_jump %bb.15, implicit-def dead $pc
+  
+  bb.15.while.end.i (freq 606):
+    successors: %bb.16(37), %bb.21(62)
+  
+    ANNOTATION_LABEL <0x9bb2ba0> = !{!"unison-block-frequency", i64 606}
+    %10:intregs = PHI %121, %bb.13, %125, %bb.14, %128, %bb.19, %12, %bb.20
+    %135:intregs = L2_loadri_io %26, 0, <0x9b64240> = !{!"unison-memory-partition", i64 0} :: (load 4 from %ir.dest, !tbaa !2)
+    %136:predregs = C2_cmpeqi killed %135, 0
+    %134:intregs = A2_tfrsi -1
+    J2_jumpf killed %136, %bb.21, implicit-def dead $pc
+    J2_jump %bb.16, implicit-def dead $pc
+  
+  bb.16.while.body8.i (freq 227):
+    successors: %bb.17(37), %bb.21(62)
+  
+    ANNOTATION_LABEL <0x9b49840> = !{!"unison-block-frequency", i64 227}
+    %139:intregs = L2_loadri_io %26, 4, <0x9b64240> = !{!"unison-memory-partition", i64 0} :: (load 4 from %ir.22, !tbaa !2)
+    %140:predregs = C2_cmpeqi killed %139, 0
+    %138:intregs = A2_tfrsi 0
+    J2_jumpf killed %140, %bb.21, implicit-def dead $pc
+    J2_jump %bb.17, implicit-def dead $pc
+  
+  bb.17.while.body8.1.i (freq 85):
+    successors: %bb.18(37), %bb.21(62)
+  
+    ANNOTATION_LABEL <0x9b94770> = !{!"unison-block-frequency", i64 85}
+    %143:intregs = L2_loadri_io %26, 8, <0x9b64240> = !{!"unison-memory-partition", i64 0} :: (load 4 from %ir.25, !tbaa !2)
+    %144:predregs = C2_cmpeqi killed %143, 0
+    %142:intregs = A2_tfrsi 1
+    J2_jumpf killed %144, %bb.21, implicit-def dead $pc
+    J2_jump %bb.18, implicit-def dead $pc
+  
+  bb.18.while.body8.2.i (freq 32):
+    successors: %bb.21(100)
+  
+    ANNOTATION_LABEL <0x9b948b0> = !{!"unison-block-frequency", i64 32}
+    %146:intregs = L2_loadri_io %26, 12, <0x9b64240> = !{!"unison-memory-partition", i64 0} :: (load 4 from %ir.28, !tbaa !2)
+    %147:predregs = C2_cmpeqi killed %146, 0
+    %11:intregs = C2_muxii killed %147, 3, 2
+    J2_jump %bb.21, implicit-def dead $pc
+  
+  bb.19.while.body.1.i (freq 85):
+    successors: %bb.20(37), %bb.15(62)
+  
+    ANNOTATION_LABEL <0x9b94770> = !{!"unison-block-frequency", i64 85}
+    %129:intregs = L2_loadri_io %9, 8, <0x9b64240> = !{!"unison-memory-partition", i64 0} :: (load 4 from %ir.cgep1, !tbaa !2)
+    %130:predregs = C2_cmpeqi killed %129, 0
+    %128:intregs = A2_tfrsi 2
+    J2_jumpf killed %130, %bb.15, implicit-def dead $pc
+    J2_jump %bb.20, implicit-def dead $pc
+  
+  bb.20.while.body.2.i (freq 32):
+    successors: %bb.15(100)
+  
+    ANNOTATION_LABEL <0x9b948b0> = !{!"unison-block-frequency", i64 32}
+    %132:intregs = L2_loadri_io %9, 12, <0x9b64240> = !{!"unison-memory-partition", i64 0} :: (load 4 from %ir.cgep2, !tbaa !2)
+    %133:predregs = C2_cmpeqi killed %132, 0
+    %12:intregs = C2_muxii killed %133, 4, 3
+    J2_jump %bb.15, implicit-def dead $pc
+  
+  bb.21.Move.exit (freq 606):
+    liveouts:
+  
+    ANNOTATION_LABEL <0x9bb2ba0> = !{!"unison-block-frequency", i64 606}
+    %13:intregs = PHI %134, %bb.15, %138, %bb.16, %142, %bb.17, %11, %bb.18
+    %148:intregs = L4_loadri_rr %9, %10, 2, <0x9b64240> = !{!"unison-memory-partition", i64 0} :: (load 4 from %ir.cgep6, !tbaa !2)
+    S4_storeri_rr killed %26, killed %13, 2, killed %148, <0x9b64240> = !{!"unison-memory-partition", i64 0} :: (store 4 into %ir.cgep7, !tbaa !2)
+    %149:intregs = A2_tfrsi 0
+    S4_storeri_rr killed %9, killed %10, 2, killed %149, <0x9b64240> = !{!"unison-memory-partition", i64 0} :: (store 4 into %ir.cgep6, !tbaa !2)
+    PS_tailcall_i @PrintAll, hexagoncsr
+  
+  bb.22.if.end (freq 4854):
+    successors: %bb.23(37), %bb.24(62)
+  
+    ANNOTATION_LABEL <0x9b7e700> = !{!"unison-block-frequency", i64 4854}
+    %14:intregs = PHI %8, %bb.12, %23, %bb.38
+    ADJCALLSTACKDOWN 0, 0, implicit-def $r29, implicit-def dead $r30, implicit $r31, implicit $r30, implicit $r29
+    $r0 = COPY %14
+    $r1 = COPY %6
+    $r2 = COPY %5
+    $r3 = COPY %26
+    J2_call @Hanoi, hexagoncsr, implicit-def dead $pc, implicit-def dead $r31, implicit $r29, implicit killed $r0, implicit killed $r1, implicit killed $r2, implicit killed $r3, implicit-def $r29
+    ADJCALLSTACKUP 0, 0, implicit-def dead $r29, implicit-def dead $r30, implicit-def dead $r31, implicit $r29
+    %62:intregs = L2_loadri_io %6, 0, <0x9b64240> = !{!"unison-memory-partition", i64 0} :: (load 4 from %ir.source.tr43.unr, !tbaa !2)
+    %63:predregs = C2_cmpeqi killed %62, 0
+    J2_jumpf killed %63, %bb.24, implicit-def dead $pc
+    J2_jump %bb.23, implicit-def dead $pc
+  
+  bb.23.while.body.i16 (freq 1820):
+    successors: %bb.28(37), %bb.24(62)
+  
+    ANNOTATION_LABEL <0x9bb21d0> = !{!"unison-block-frequency", i64 1820}
+    %66:intregs = L2_loadri_io %6, 4, <0x9b64240> = !{!"unison-memory-partition", i64 0} :: (load 4 from %ir.cgep16, !tbaa !2)
+    %67:predregs = C2_cmpeqi killed %66, 0
+    %65:intregs = A2_tfrsi 1
+    J2_jumpt killed %67, %bb.28, implicit-def dead $pc
+    J2_jump %bb.24, implicit-def dead $pc
+  
+  bb.24.while.end.i19 (freq 4854):
+    successors: %bb.25(37), %bb.30(62)
+  
+    ANNOTATION_LABEL <0x9b7e700> = !{!"unison-block-frequency", i64 4854}
+    %15:intregs = PHI %119, %bb.22, %65, %bb.23, %68, %bb.28, %17, %bb.29
+    %75:intregs = L2_loadri_io %26, 0, <0x9b64240> = !{!"unison-memory-partition", i64 0} :: (load 4 from %ir.dest, !tbaa !2)
+    %76:predregs = C2_cmpeqi killed %75, 0
+    %74:intregs = A2_tfrsi -1
+    J2_jumpf killed %76, %bb.30, implicit-def dead $pc
+    J2_jump %bb.25, implicit-def dead $pc
+  
+  bb.25.while.body8.i22 (freq 1820):
+    successors: %bb.26(37), %bb.30(62)
+  
+    ANNOTATION_LABEL <0x9bb21d0> = !{!"unison-block-frequency", i64 1820}
+    %79:intregs = L2_loadri_io %26, 4, <0x9b64240> = !{!"unison-memory-partition", i64 0} :: (load 4 from %ir.37, !tbaa !2)
+    %80:predregs = C2_cmpeqi killed %79, 0
+    %78:intregs = A2_tfrsi 0
+    J2_jumpf killed %80, %bb.30, implicit-def dead $pc
+    J2_jump %bb.26, implicit-def dead $pc
+  
+  bb.26.while.body8.1.i28 (freq 682):
+    successors: %bb.27(37), %bb.30(62)
+  
+    ANNOTATION_LABEL <0x9bb2350> = !{!"unison-block-frequency", i64 682}
+    %83:intregs = L2_loadri_io %26, 8, <0x9b64240> = !{!"unison-memory-partition", i64 0} :: (load 4 from %ir.40, !tbaa !2)
+    %84:predregs = C2_cmpeqi killed %83, 0
+    %82:intregs = A2_tfrsi 1
+    J2_jumpf killed %84, %bb.30, implicit-def dead $pc
+    J2_jump %bb.27, implicit-def dead $pc
+  
+  bb.27.while.body8.2.i32 (freq 255):
+    successors: %bb.30(100)
+  
+    ANNOTATION_LABEL <0x9ba0de0> = !{!"unison-block-frequency", i64 255}
+    %86:intregs = L2_loadri_io %26, 12, <0x9b64240> = !{!"unison-memory-partition", i64 0} :: (load 4 from %ir.43, !tbaa !2)
+    %87:predregs = C2_cmpeqi killed %86, 0
+    %16:intregs = C2_muxii killed %87, 3, 2
+    J2_jump %bb.30, implicit-def dead $pc
+  
+  bb.28.while.body.1.i35 (freq 682):
+    successors: %bb.29(37), %bb.24(62)
+  
+    ANNOTATION_LABEL <0x9bb2350> = !{!"unison-block-frequency", i64 682}
+    %69:intregs = L2_loadri_io %6, 8, <0x9b64240> = !{!"unison-memory-partition", i64 0} :: (load 4 from %ir.cgep17, !tbaa !2)
+    %70:predregs = C2_cmpeqi killed %69, 0
+    %68:intregs = A2_tfrsi 2
+    J2_jumpf killed %70, %bb.24, implicit-def dead $pc
+    J2_jump %bb.29, implicit-def dead $pc
+  
+  bb.29.while.body.2.i39 (freq 255):
+    successors: %bb.24(100)
+  
+    ANNOTATION_LABEL <0x9ba0de0> = !{!"unison-block-frequency", i64 255}
+    %72:intregs = L2_loadri_io %6, 12, <0x9b64240> = !{!"unison-memory-partition", i64 0} :: (load 4 from %ir.cgep18, !tbaa !2)
+    %73:predregs = C2_cmpeqi killed %72, 0
+    %17:intregs = C2_muxii killed %73, 4, 3
+    J2_jump %bb.24, implicit-def dead $pc
+  
+  bb.30.Move.exit40 (freq 4854):
+    successors: %bb.31(37), %bb.34(62)
+  
+    ANNOTATION_LABEL <0x9b7e700> = !{!"unison-block-frequency", i64 4854}
+    %18:intregs = PHI %74, %bb.24, %78, %bb.25, %82, %bb.26, %16, %bb.27
+    %89:intregs = L4_loadri_rr %6, %15, 2, <0x9b64240> = !{!"unison-memory-partition", i64 0} :: (load 4 from %ir.cgep19, !tbaa !2)
+    S4_storeri_rr %26, killed %18, 2, killed %89, <0x9b64240> = !{!"unison-memory-partition", i64 0} :: (store 4 into %ir.cgep20, !tbaa !2)
+    %88:intregs = A2_tfrsi 0
+    S4_storeri_rr %6, killed %15, 2, %88, <0x9b64240> = !{!"unison-memory-partition", i64 0} :: (store 4 into %ir.cgep19, !tbaa !2)
+    ADJCALLSTACKDOWN 0, 0, implicit-def $r29, implicit-def dead $r30, implicit $r31, implicit $r30, implicit $r29
+    J2_call @PrintAll, hexagoncsr, implicit-def dead $pc, implicit-def dead $r31, implicit $r29, implicit-def $r29
+    ADJCALLSTACKUP 0, 0, implicit-def dead $r29, implicit-def dead $r30, implicit-def dead $r31, implicit $r29
+    %90:intregs = A2_addi %14, -1
+    ADJCALLSTACKDOWN 0, 0, implicit-def $r29, implicit-def dead $r30, implicit $r31, implicit $r30, implicit $r29
+    $r0 = COPY killed %90
+    $r1 = COPY %5
+    $r2 = COPY %6
+    $r3 = COPY %26
+    J2_call @Hanoi, hexagoncsr, implicit-def dead $pc, implicit-def dead $r31, implicit $r29, implicit killed $r0, implicit killed $r1, implicit killed $r2, implicit killed $r3, implicit-def $r29
+    ADJCALLSTACKUP 0, 0, implicit-def dead $r29, implicit-def dead $r30, implicit-def dead $r31, implicit $r29
+    %91:intregs = L2_loadri_io %5, 0, <0x9b64240> = !{!"unison-memory-partition", i64 0} :: (load 4 from %ir.spare.tr44.unr, !tbaa !2)
+    %92:predregs = C2_cmpeqi killed %91, 0
+    J2_jumpf killed %92, %bb.34, implicit-def dead $pc
+    J2_jump %bb.31, implicit-def dead $pc
+  
+  bb.31.while.body.i16.1 (freq 1820):
+    successors: %bb.32(37), %bb.34(62)
+  
+    ANNOTATION_LABEL <0x9bb21d0> = !{!"unison-block-frequency", i64 1820}
+    %95:intregs = L2_loadri_io %5, 4, <0x9b64240> = !{!"unison-memory-partition", i64 0} :: (load 4 from %ir.cgep13, !tbaa !2)
+    %96:predregs = C2_cmpeqi killed %95, 0
+    %94:intregs = A2_tfrsi 1
+    J2_jumpf killed %96, %bb.34, implicit-def dead $pc
+    J2_jump %bb.32, implicit-def dead $pc
+  
+  bb.32.while.body.1.i35.1 (freq 682):
+    successors: %bb.33(37), %bb.34(62)
+  
+    ANNOTATION_LABEL <0x9bb2350> = !{!"unison-block-frequency", i64 682}
+    %99:intregs = L2_loadri_io %5, 8, <0x9b64240> = !{!"unison-memory-partition", i64 0} :: (load 4 from %ir.cgep14, !tbaa !2)
+    %100:predregs = C2_cmpeqi killed %99, 0
+    %98:intregs = A2_tfrsi 2
+    J2_jumpf killed %100, %bb.34, implicit-def dead $pc
+    J2_jump %bb.33, implicit-def dead $pc
+  
+  bb.33.while.body.2.i39.1 (freq 255):
+    successors: %bb.34(100)
+  
+    ANNOTATION_LABEL <0x9ba0de0> = !{!"unison-block-frequency", i64 255}
+    %102:intregs = L2_loadri_io %5, 12, <0x9b64240> = !{!"unison-memory-partition", i64 0} :: (load 4 from %ir.cgep15, !tbaa !2)
+    %103:predregs = C2_cmpeqi killed %102, 0
+    %19:intregs = C2_muxii killed %103, 4, 3
+  
+  bb.34.while.end.i19.1 (freq 4854):
+    successors: %bb.35(37), %bb.38(62)
+  
+    ANNOTATION_LABEL <0x9b7e700> = !{!"unison-block-frequency", i64 4854}
+    %20:intregs = PHI %88, %bb.30, %94, %bb.31, %98, %bb.32, %19, %bb.33
+    %105:intregs = L2_loadri_io %26, 0, <0x9b64240> = !{!"unison-memory-partition", i64 0} :: (load 4 from %ir.dest, !tbaa !2)
+    %106:predregs = C2_cmpeqi killed %105, 0
+    %104:intregs = A2_tfrsi -1
+    J2_jumpf killed %106, %bb.38, implicit-def dead $pc
+    J2_jump %bb.35, implicit-def dead $pc
+  
+  bb.35.while.body8.i22.1 (freq 1820):
+    successors: %bb.36(37), %bb.38(62)
+  
+    ANNOTATION_LABEL <0x9bb21d0> = !{!"unison-block-frequency", i64 1820}
+    %109:intregs = L2_loadri_io %26, 4, <0x9b64240> = !{!"unison-memory-partition", i64 0} :: (load 4 from %ir.55, !tbaa !2)
+    %110:predregs = C2_cmpeqi killed %109, 0
+    %108:intregs = A2_tfrsi 0
+    J2_jumpf killed %110, %bb.38, implicit-def dead $pc
+    J2_jump %bb.36, implicit-def dead $pc
+  
+  bb.36.while.body8.1.i28.1 (freq 682):
+    successors: %bb.37(37), %bb.38(62)
+  
+    ANNOTATION_LABEL <0x9bb2350> = !{!"unison-block-frequency", i64 682}
+    %113:intregs = L2_loadri_io %26, 8, <0x9b64240> = !{!"unison-memory-partition", i64 0} :: (load 4 from %ir.58, !tbaa !2)
+    %114:predregs = C2_cmpeqi killed %113, 0
+    %112:intregs = A2_tfrsi 1
+    J2_jumpf killed %114, %bb.38, implicit-def dead $pc
+    J2_jump %bb.37, implicit-def dead $pc
+  
+  bb.37.while.body8.2.i32.1 (freq 255):
+    successors: %bb.38(100)
+  
+    ANNOTATION_LABEL <0x9ba0de0> = !{!"unison-block-frequency", i64 255}
+    %116:intregs = L2_loadri_io %26, 12, <0x9b64240> = !{!"unison-memory-partition", i64 0} :: (load 4 from %ir.61, !tbaa !2)
+    %117:predregs = C2_cmpeqi killed %116, 0
+    %21:intregs = C2_muxii killed %117, 3, 2
+  
+  bb.38.Move.exit40.1 (freq 4854):
+    successors: %bb.13(3), %bb.22(96)
+  
+    ANNOTATION_LABEL <0x9b7e700> = !{!"unison-block-frequency", i64 4854}
+    %22:intregs = PHI %104, %bb.34, %108, %bb.35, %112, %bb.36, %21, %bb.37
+    %118:intregs = L4_loadri_rr %5, %20, 2, <0x9b64240> = !{!"unison-memory-partition", i64 0} :: (load 4 from %ir.cgep21, !tbaa !2)
+    S4_storeri_rr %26, killed %22, 2, killed %118, <0x9b64240> = !{!"unison-memory-partition", i64 0} :: (store 4 into %ir.cgep22, !tbaa !2)
+    S4_storeri_rr %5, killed %20, 2, %119, <0x9b64240> = !{!"unison-memory-partition", i64 0} :: (store 4 into %ir.cgep21, !tbaa !2)
+    ADJCALLSTACKDOWN 0, 0, implicit-def $r29, implicit-def dead $r30, implicit $r31, implicit $r30, implicit $r29
+    J2_call @PrintAll, hexagoncsr, implicit-def dead $pc, implicit-def dead $r31, implicit $r29, implicit-def $r29
+    ADJCALLSTACKUP 0, 0, implicit-def dead $r29, implicit-def dead $r30, implicit-def dead $r31, implicit $r29
+    %23:intregs = A2_addi killed %14, -2
+    %120:predregs = C2_cmpeqi %23, 0
+    J2_jumpt killed %120, %bb.13, implicit-def dead $pc
+    J2_jump %bb.22, implicit-def dead $pc
+
+...
+---
+name:            main
+alignment:       4
+exposesReturnsTwice: false
+legalized:       false
+regBankSelected: false
+selected:        false
+failedISel:      false
+tracksRegLiveness: true
+hasWinCFI:       false
+registers:       
+  - { id: 0, class: doubleregs, preferred-register: '' }
+  - { id: 1, class: intregs, preferred-register: '' }
+  - { id: 2, class: doubleregs, preferred-register: '' }
+  - { id: 3, class: doubleregs, preferred-register: '' }
+  - { id: 4, class: intregs, preferred-register: '' }
+  - { id: 5, class: intregs, preferred-register: '' }
+  - { id: 6, class: intregs, preferred-register: '' }
+  - { id: 7, class: intregs, preferred-register: '' }
+  - { id: 8, class: intregs, preferred-register: '' }
+  - { id: 9, class: intregs, preferred-register: '' }
+  - { id: 10, class: intregs, preferred-register: '' }
+  - { id: 11, class: intregs, preferred-register: '' }
+  - { id: 12, class: intregs, preferred-register: '' }
+  - { id: 13, class: intregs, preferred-register: '' }
+  - { id: 14, class: intregs, preferred-register: '' }
+  - { id: 15, class: intregs, preferred-register: '' }
+  - { id: 16, class: intregs, preferred-register: '' }
+  - { id: 17, class: doubleregs, preferred-register: '' }
+  - { id: 18, class: doubleregs, preferred-register: '' }
+  - { id: 19, class: doubleregs, preferred-register: '' }
+  - { id: 20, class: doubleregs, preferred-register: '' }
+  - { id: 21, class: doubleregs, preferred-register: '' }
+  - { id: 22, class: doubleregs, preferred-register: '' }
+  - { id: 23, class: doubleregs, preferred-register: '' }
+  - { id: 24, class: doubleregs, preferred-register: '' }
+  - { id: 25, class: intregs, preferred-register: '' }
+  - { id: 26, class: intregs, preferred-register: '' }
+  - { id: 27, class: intregs, preferred-register: '' }
+liveins:         []
+frameInfo:       
+  isFrameAddressTaken: false
+  isReturnAddressTaken: false
+  hasStackMap:     false
+  hasPatchPoint:   false
+  stackSize:       0
+  offsetAdjustment: 0
+  maxAlignment:    4
+  adjustsStack:    false
+  hasCalls:        true
+  stackProtector:  ''
+  maxCallFrameSize: 4294967295
+  cvBytesOfCalleeSavedRegisters: 0
+  hasOpaqueSPAdjustment: false
+  hasVAStart:      false
+  hasMustTailInVarArgFunc: false
+  localFrameSize:  0
+  savePoint:       ''
+  restorePoint:    ''
+fixedStack:      []
+stack:           []
+constants:       []
+body:             |
+  bb.0.entry (freq 8):
+    liveouts: $pc, $r0
+  
+    ANNOTATION_LABEL <0x9b641d0> = !{!"unison-block-frequency", i64 8}
+    %0:doubleregs = CONST64 8589934593
+    %25:intregs = A2_tfrsi @A
+    S2_storerd_io %25, 0, killed %0, <0x9b64240> = !{!"unison-memory-partition", i64 0} :: (store 8 into `i32* getelementptr inbounds ([4 x i32], [4 x i32]* @A, i32 0, i32 0)`)
+    %1:intregs = COPY %25
+    %2:doubleregs = CONST64 17179869187
+    S2_storerd_io killed %25, 8, killed %2, <0x9b64240> = !{!"unison-memory-partition", i64 0} :: (store 8 into `i32* getelementptr inbounds ([4 x i32], [4 x i32]* @A, i32 0, i32 2)`)
+    %21:doubleregs = A2_tfrpi 0
+    %26:intregs = A2_tfrsi @B
+    S2_storerd_io %26, 8, %21, <0x9b64240> = !{!"unison-memory-partition", i64 0} :: (store 8 into `i8* bitcast ([4 x i32]* @B to i8*)` + 8)
+    S2_storerd_io %26, 0, %21, <0x9b64240> = !{!"unison-memory-partition", i64 0} :: (store 8 into `i8* bitcast ([4 x i32]* @B to i8*)`)
+    %4:intregs = COPY killed %26
+    %27:intregs = A2_tfrsi @C
+    S2_storerd_io %27, 8, %21, <0x9b64240> = !{!"unison-memory-partition", i64 0} :: (store 8 into `i8* bitcast ([4 x i32]* @C to i8*)` + 8)
+    S2_storerd_io %27, 0, killed %21, <0x9b64240> = !{!"unison-memory-partition", i64 0} :: (store 8 into `i8* bitcast ([4 x i32]* @C to i8*)`)
+    %5:intregs = COPY killed %27
+    %6:intregs = COPY $r29
+    S4_storeiri_io killed %6, 0, 4, <0x9b64240> = !{!"unison-memory-partition", i64 0} :: (store 4 into stack)
+    %7:intregs = A2_tfrsi @.str.6
+    ADJCALLSTACKDOWN 4, 0, implicit-def $r29, implicit-def dead $r30, implicit $r31, implicit $r30, implicit $r29
+    $r0 = COPY killed %7
+    J2_call @printf, hexagoncsr, implicit-def dead $pc, implicit-def dead $r31, implicit $r29, implicit killed $r0, implicit-def $r29, implicit-def dead $r0
+    ADJCALLSTACKUP 4, 0, implicit-def dead $r29, implicit-def dead $r30, implicit-def dead $r31, implicit $r29
+    %9:intregs = A2_tfrsi @str.9
+    ADJCALLSTACKDOWN 0, 0, implicit-def $r29, implicit-def dead $r30, implicit $r31, implicit $r30, implicit $r29
+    $r0 = COPY killed %9
+    J2_call @puts, hexagoncsr, implicit-def dead $pc, implicit-def dead $r31, implicit $r29, implicit killed $r0, implicit-def $r29, implicit-def dead $r0
+    ADJCALLSTACKUP 0, 0, implicit-def dead $r29, implicit-def dead $r30, implicit-def dead $r31, implicit $r29
+    ADJCALLSTACKDOWN 0, 0, implicit-def $r29, implicit-def dead $r30, implicit $r31, implicit $r30, implicit $r29
+    J2_call @PrintAll, hexagoncsr, implicit-def dead $pc, implicit-def dead $r31, implicit $r29, implicit-def $r29
+    ADJCALLSTACKUP 0, 0, implicit-def dead $r29, implicit-def dead $r30, implicit-def dead $r31, implicit $r29
+    %11:intregs = A2_tfrsi @str.10
+    ADJCALLSTACKDOWN 0, 0, implicit-def $r29, implicit-def dead $r30, implicit $r31, implicit $r30, implicit $r29
+    $r0 = COPY killed %11
+    J2_call @puts, hexagoncsr, implicit-def dead $pc, implicit-def dead $r31, implicit $r29, implicit killed $r0, implicit-def $r29, implicit-def dead $r0
+    ADJCALLSTACKUP 0, 0, implicit-def dead $r29, implicit-def dead $r30, implicit-def dead $r31, implicit $r29
+    %13:intregs = A2_tfrsi 4
+    ADJCALLSTACKDOWN 0, 0, implicit-def $r29, implicit-def dead $r30, implicit $r31, implicit $r30, implicit $r29
+    $r0 = COPY killed %13
+    $r1 = COPY killed %1
+    $r2 = COPY killed %4
+    $r3 = COPY killed %5
+    J2_call @Hanoi, hexagoncsr, implicit-def dead $pc, implicit-def dead $r31, implicit $r29, implicit killed $r0, implicit killed $r1, implicit killed $r2, implicit killed $r3, implicit-def $r29
+    ADJCALLSTACKUP 0, 0, implicit-def dead $r29, implicit-def dead $r30, implicit-def dead $r31, implicit $r29
+    %14:intregs = A2_tfrsi 0
+    $r0 = COPY killed %14
+    PS_jmpret $r31, implicit-def dead $pc, implicit killed $r0
+
+...

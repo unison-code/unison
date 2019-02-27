@@ -1,0 +1,184 @@
+--- |
+  ; ModuleID = '00140.ll'
+  source_filename = "./tests/single-exec/00140.c"
+  target datalayout = "e-m:e-p:32:32:32-a:0-n16:32-i64:64:64-i32:32:32-i16:16:16-i1:8:8-f32:32:32-f64:64:64-v32:32:32-v64:64:64-v512:512:512-v1024:1024:1024-v2048:2048:2048"
+  target triple = "hexagon"
+  
+  %struct.foo = type { i32, i32, i32, i8*, float }
+  
+  ; Function Attrs: norecurse nounwind readonly
+  define dso_local i32 @f1(%struct.foo* byval nocapture readonly align 4 %f, %struct.foo* nocapture readonly %p, i32 %n, ...) local_unnamed_addr #0 {
+  entry:
+    %cgep8 = bitcast %struct.foo* %f to %struct.foo*
+    %cgep39 = bitcast %struct.foo* %cgep8 to i32*
+    %0 = load i32, i32* %cgep39, align 4, !tbaa !2
+    %cgep110 = bitcast %struct.foo* %p to %struct.foo*
+    %cgep611 = bitcast %struct.foo* %cgep110 to i32*
+    %1 = load i32, i32* %cgep611, align 4, !tbaa !2
+    %cmp = icmp eq i32 %0, %1
+    br i1 %cmp, label %if.end, label %return
+  
+  if.end:                                           ; preds = %entry
+    %2 = bitcast %struct.foo* %p to %struct.foo*
+    %cgep7 = getelementptr inbounds %struct.foo, %struct.foo* %2, i32 0, i32 1
+    %3 = load i32, i32* %cgep7, align 4, !tbaa !9
+    %add = add nsw i32 %3, %n
+    br label %return
+  
+  return:                                           ; preds = %if.end, %entry
+    %retval.0 = phi i32 [ %add, %if.end ], [ 0, %entry ]
+    ret i32 %retval.0
+  }
+  
+  ; Function Attrs: nounwind readnone
+  define dso_local i32 @main() local_unnamed_addr #1 {
+  entry:
+    ret i32 0
+  }
+  
+  attributes #0 = { norecurse nounwind readonly "correctly-rounded-divide-sqrt-fp-math"="false" "disable-tail-calls"="false" "less-precise-fpmad"="false" "min-legal-vector-width"="0" "no-frame-pointer-elim"="true" "no-frame-pointer-elim-non-leaf" "no-infs-fp-math"="false" "no-jump-tables"="false" "no-nans-fp-math"="false" "no-signed-zeros-fp-math"="false" "no-trapping-math"="false" "stack-protector-buffer-size"="8" "target-cpu"="hexagonv5" "target-features"="-long-calls" "unsafe-fp-math"="false" "use-soft-float"="false" }
+  attributes #1 = { nounwind readnone "correctly-rounded-divide-sqrt-fp-math"="false" "disable-tail-calls"="false" "less-precise-fpmad"="false" "min-legal-vector-width"="0" "no-frame-pointer-elim"="true" "no-frame-pointer-elim-non-leaf" "no-infs-fp-math"="false" "no-jump-tables"="false" "no-nans-fp-math"="false" "no-signed-zeros-fp-math"="false" "no-trapping-math"="false" "stack-protector-buffer-size"="8" "target-cpu"="hexagonv5" "target-features"="-long-calls" "unsafe-fp-math"="false" "use-soft-float"="false" }
+  
+  !llvm.module.flags = !{!0}
+  !llvm.ident = !{!1}
+  
+  !0 = !{i32 1, !"wchar_size", i32 4}
+  !1 = !{!"clang version 9.0.0 (http://llvm.org/git/clang.git 4e215e73ed6b499f3ccf23263c96cd188e0eda2c) (git@github.com:unison-code/llvm.git 9914ec00db7eeaf764045b9071638c2421cd32e7)"}
+  !2 = !{!3, !4, i64 0}
+  !3 = !{!"foo", !4, i64 0, !4, i64 4, !4, i64 8, !7, i64 12, !8, i64 16}
+  !4 = !{!"int", !5, i64 0}
+  !5 = !{!"omnipotent char", !6, i64 0}
+  !6 = !{!"Simple C/C++ TBAA"}
+  !7 = !{!"any pointer", !5, i64 0}
+  !8 = !{!"float", !5, i64 0}
+  !9 = !{!3, !4, i64 4}
+
+...
+---
+name:            f1
+alignment:       4
+exposesReturnsTwice: false
+legalized:       false
+regBankSelected: false
+selected:        false
+failedISel:      false
+tracksRegLiveness: true
+hasWinCFI:       false
+registers:       
+  - { id: 0, class: intregs, preferred-register: '' }
+  - { id: 1, class: intregs, preferred-register: '' }
+  - { id: 2, class: intregs, preferred-register: '' }
+  - { id: 3, class: intregs, preferred-register: '' }
+  - { id: 4, class: intregs, preferred-register: '' }
+  - { id: 5, class: intregs, preferred-register: '' }
+  - { id: 6, class: intregs, preferred-register: '' }
+  - { id: 7, class: predregs, preferred-register: '' }
+  - { id: 8, class: predregs, preferred-register: '' }
+  - { id: 9, class: intregs, preferred-register: '' }
+liveins:         
+  - { reg: '$r0', virtual-reg: '%2' }
+  - { reg: '$r1', virtual-reg: '%3' }
+frameInfo:       
+  isFrameAddressTaken: false
+  isReturnAddressTaken: false
+  hasStackMap:     false
+  hasPatchPoint:   false
+  stackSize:       0
+  offsetAdjustment: 0
+  maxAlignment:    8
+  adjustsStack:    false
+  hasCalls:        false
+  stackProtector:  ''
+  maxCallFrameSize: 4294967295
+  cvBytesOfCalleeSavedRegisters: 0
+  hasOpaqueSPAdjustment: false
+  hasVAStart:      false
+  hasMustTailInVarArgFunc: false
+  localFrameSize:  0
+  savePoint:       ''
+  restorePoint:    ''
+fixedStack:      
+  - { id: 0, type: default, offset: 32, size: 4, alignment: 8, stack-id: 0, 
+      isImmutable: true, isAliased: false, callee-saved-register: '', callee-saved-restored: true, 
+      debug-info-variable: '', debug-info-expression: '', debug-info-location: '' }
+  - { id: 1, type: default, offset: 8, size: 20, alignment: 8, stack-id: 0, 
+      isImmutable: true, isAliased: false, callee-saved-register: '', callee-saved-restored: true, 
+      debug-info-variable: '', debug-info-expression: '', debug-info-location: '' }
+stack:           []
+constants:       []
+body:             |
+  bb.0.entry (freq 16):
+    successors: %bb.1(50), %bb.2(50)
+    liveins: $r0, $r1
+  
+    ANNOTATION_LABEL <0x7f5fa10> = !{!"unison-block-frequency", i64 16}
+    %3:intregs = COPY killed $r1
+    %2:intregs = COPY killed $r0
+    %5:intregs = L2_loadri_io %fixed-stack.1, 0, <0x7f5fa80> = !{!"unison-memory-partition", i64 0} :: (dereferenceable load 4 from %ir.cgep39, align 8, !tbaa !2)
+    %6:intregs = L2_loadri_io %2, 0, <0x7f5fb80> = !{!"unison-memory-partition", i64 1} :: (load 4 from %ir.cgep611, !tbaa !2)
+    %7:predregs = C2_cmpeq killed %5, killed %6
+    %4:intregs = A2_tfrsi 0
+    J2_jumpf killed %7, %bb.2, implicit-def dead $pc
+    J2_jump %bb.1, implicit-def dead $pc
+  
+  bb.1.if.end (freq 8):
+    successors: %bb.2(100)
+  
+    ANNOTATION_LABEL <0x7f5fbb0> = !{!"unison-block-frequency", i64 8}
+    %9:intregs = L2_loadri_io killed %2, 4, <0x7f5fa80> = !{!"unison-memory-partition", i64 0} :: (load 4 from %ir.cgep7, !tbaa !9)
+    %0:intregs = nsw A2_add killed %9, killed %3
+  
+  bb.2.return (freq 16):
+    liveouts: $pc, $r0
+  
+    ANNOTATION_LABEL <0x7f5fa10> = !{!"unison-block-frequency", i64 16}
+    %1:intregs = PHI %4, %bb.0, %0, %bb.1
+    $r0 = COPY killed %1
+    PS_jmpret $r31, implicit-def dead $pc, implicit killed $r0
+
+...
+---
+name:            main
+alignment:       4
+exposesReturnsTwice: false
+legalized:       false
+regBankSelected: false
+selected:        false
+failedISel:      false
+tracksRegLiveness: true
+hasWinCFI:       false
+registers:       
+  - { id: 0, class: intregs, preferred-register: '' }
+liveins:         []
+frameInfo:       
+  isFrameAddressTaken: false
+  isReturnAddressTaken: false
+  hasStackMap:     false
+  hasPatchPoint:   false
+  stackSize:       0
+  offsetAdjustment: 0
+  maxAlignment:    0
+  adjustsStack:    false
+  hasCalls:        false
+  stackProtector:  ''
+  maxCallFrameSize: 4294967295
+  cvBytesOfCalleeSavedRegisters: 0
+  hasOpaqueSPAdjustment: false
+  hasVAStart:      false
+  hasMustTailInVarArgFunc: false
+  localFrameSize:  0
+  savePoint:       ''
+  restorePoint:    ''
+fixedStack:      []
+stack:           []
+constants:       []
+body:             |
+  bb.0.entry (freq 8):
+    liveouts: $pc, $r0
+  
+    ANNOTATION_LABEL <0x7f5fbb0> = !{!"unison-block-frequency", i64 8}
+    %0:intregs = A2_tfrsi 0
+    $r0 = COPY killed %0
+    PS_jmpret $r31, implicit-def dead $pc, implicit killed $r0
+
+...

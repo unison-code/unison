@@ -1,0 +1,1427 @@
+--- |
+  ; ModuleID = '00181.ll'
+  source_filename = "./tests/single-exec/00181.c"
+  target datalayout = "e-m:e-p:32:32:32-a:0-n16:32-i64:64:64-i32:32:32-i16:16:16-i1:8:8-f32:32:32-f64:64:64-v32:32:32-v64:64:64-v512:512:512-v1024:1024:1024-v2048:2048:2048"
+  target triple = "hexagon"
+  
+  @.str = private unnamed_addr constant [4 x i8] c"A: \00", align 1
+  @.str.1 = private unnamed_addr constant [5 x i8] c" %d \00", align 1
+  @A = common dso_local global [4 x i32] zeroinitializer, align 8
+  @.str.3 = private unnamed_addr constant [4 x i8] c"B: \00", align 1
+  @B = common dso_local global [4 x i32] zeroinitializer, align 8
+  @.str.4 = private unnamed_addr constant [4 x i8] c"C: \00", align 1
+  @C = common dso_local global [4 x i32] zeroinitializer, align 8
+  @.str.6 = private unnamed_addr constant [51 x i8] c"Solution of Tower of Hanoi Problem with %d Disks\0A\0A\00", align 1
+  @str = private unnamed_addr constant [43 x i8] c"------------------------------------------\00", align 1
+  @str.9 = private unnamed_addr constant [16 x i8] c"Starting state:\00", align 1
+  @str.10 = private unnamed_addr constant [22 x i8] c"\0A\0ASubsequent states:\0A\00", align 1
+  
+  ; Function Attrs: nounwind
+  define dso_local void @PrintAll() local_unnamed_addr #0 {
+  entry:
+    %call = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([4 x i8], [4 x i8]* @.str, i32 0, i32 0))
+    %0 = load i32, i32* getelementptr inbounds ([4 x i32], [4 x i32]* @A, i32 0, i32 0), align 8, !tbaa !2
+    %call1 = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([5 x i8], [5 x i8]* @.str.1, i32 0, i32 0), i32 %0)
+    %1 = load i32, i32* getelementptr inbounds ([4 x i32], [4 x i32]* @A, i32 0, i32 1), align 4, !tbaa !2
+    %call1.1 = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([5 x i8], [5 x i8]* @.str.1, i32 0, i32 0), i32 %1)
+    %2 = load i32, i32* getelementptr inbounds ([4 x i32], [4 x i32]* @A, i32 0, i32 2), align 8, !tbaa !2
+    %call1.2 = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([5 x i8], [5 x i8]* @.str.1, i32 0, i32 0), i32 %2)
+    %3 = load i32, i32* getelementptr inbounds ([4 x i32], [4 x i32]* @A, i32 0, i32 3), align 4, !tbaa !2
+    %call1.3 = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([5 x i8], [5 x i8]* @.str.1, i32 0, i32 0), i32 %3)
+    %putchar = tail call i32 @putchar(i32 10)
+    %call3 = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([4 x i8], [4 x i8]* @.str.3, i32 0, i32 0))
+    %4 = load i32, i32* getelementptr inbounds ([4 x i32], [4 x i32]* @B, i32 0, i32 0), align 8, !tbaa !2
+    %call8 = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([5 x i8], [5 x i8]* @.str.1, i32 0, i32 0), i32 %4)
+    %5 = load i32, i32* getelementptr inbounds ([4 x i32], [4 x i32]* @B, i32 0, i32 1), align 4, !tbaa !2
+    %call8.1 = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([5 x i8], [5 x i8]* @.str.1, i32 0, i32 0), i32 %5)
+    %6 = load i32, i32* getelementptr inbounds ([4 x i32], [4 x i32]* @B, i32 0, i32 2), align 8, !tbaa !2
+    %call8.2 = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([5 x i8], [5 x i8]* @.str.1, i32 0, i32 0), i32 %6)
+    %7 = load i32, i32* getelementptr inbounds ([4 x i32], [4 x i32]* @B, i32 0, i32 3), align 4, !tbaa !2
+    %call8.3 = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([5 x i8], [5 x i8]* @.str.1, i32 0, i32 0), i32 %7)
+    %putchar33 = tail call i32 @putchar(i32 10)
+    %call13 = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([4 x i8], [4 x i8]* @.str.4, i32 0, i32 0))
+    %8 = load i32, i32* getelementptr inbounds ([4 x i32], [4 x i32]* @C, i32 0, i32 0), align 8, !tbaa !2
+    %call18 = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([5 x i8], [5 x i8]* @.str.1, i32 0, i32 0), i32 %8)
+    %9 = load i32, i32* getelementptr inbounds ([4 x i32], [4 x i32]* @C, i32 0, i32 1), align 4, !tbaa !2
+    %call18.1 = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([5 x i8], [5 x i8]* @.str.1, i32 0, i32 0), i32 %9)
+    %10 = load i32, i32* getelementptr inbounds ([4 x i32], [4 x i32]* @C, i32 0, i32 2), align 8, !tbaa !2
+    %call18.2 = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([5 x i8], [5 x i8]* @.str.1, i32 0, i32 0), i32 %10)
+    %11 = load i32, i32* getelementptr inbounds ([4 x i32], [4 x i32]* @C, i32 0, i32 3), align 4, !tbaa !2
+    %call18.3 = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([5 x i8], [5 x i8]* @.str.1, i32 0, i32 0), i32 %11)
+    %putchar34 = tail call i32 @putchar(i32 10)
+    %puts = tail call i32 @puts(i8* getelementptr inbounds ([43 x i8], [43 x i8]* @str, i32 0, i32 0))
+    ret void
+  }
+  
+  ; Function Attrs: nounwind
+  declare dso_local i32 @printf(i8* nocapture readonly, ...) local_unnamed_addr #1
+  
+  ; Function Attrs: nounwind
+  define dso_local i32 @Move(i32* nocapture %source, i32* nocapture %dest) local_unnamed_addr #0 {
+  entry:
+    %0 = load i32, i32* %source, align 4, !tbaa !2
+    %cmp1 = icmp eq i32 %0, 0
+    br i1 %cmp1, label %while.body, label %while.end
+  
+  while.body:                                       ; preds = %entry
+    %cgep = getelementptr inbounds i32, i32* %source, i32 1
+    %1 = load i32, i32* %cgep, align 4, !tbaa !2
+    %cmp1.1 = icmp eq i32 %1, 0
+    br i1 %cmp1.1, label %while.body.1, label %while.end
+  
+  while.end:                                        ; preds = %while.body.2, %while.body.1, %while.body, %entry
+    %i.0.lcssa = phi i32 [ 0, %entry ], [ 1, %while.body ], [ 2, %while.body.1 ], [ %spec.select32, %while.body.2 ]
+    %2 = load i32, i32* %dest, align 4, !tbaa !2
+    %cmp6 = icmp eq i32 %2, 0
+    br i1 %cmp6, label %while.body8, label %while.end10
+  
+  while.body8:                                      ; preds = %while.end
+    %cgep3 = getelementptr inbounds i32, i32* %dest, i32 1
+    %3 = load i32, i32* %cgep3, align 4, !tbaa !2
+    %cmp6.1 = icmp eq i32 %3, 0
+    br i1 %cmp6.1, label %while.body8.1, label %while.end10
+  
+  while.end10:                                      ; preds = %while.body8.2, %while.body8.1, %while.body8, %while.end
+    %j.0.lcssa = phi i32 [ -1, %while.end ], [ 0, %while.body8 ], [ 1, %while.body8.1 ], [ %spec.select, %while.body8.2 ]
+    %cgep6 = getelementptr inbounds i32, i32* %source, i32 %i.0.lcssa
+    %4 = load i32, i32* %cgep6, align 4, !tbaa !2
+    %cgep7 = getelementptr inbounds i32, i32* %dest, i32 %j.0.lcssa
+    store i32 %4, i32* %cgep7, align 4, !tbaa !2
+    store i32 0, i32* %cgep6, align 4, !tbaa !2
+    tail call void @PrintAll()
+    %5 = load i32, i32* %cgep7, align 4, !tbaa !2
+    ret i32 %5
+  
+  while.body8.1:                                    ; preds = %while.body8
+    %cgep4 = getelementptr inbounds i32, i32* %dest, i32 2
+    %6 = load i32, i32* %cgep4, align 4, !tbaa !2
+    %cmp6.2 = icmp eq i32 %6, 0
+    br i1 %cmp6.2, label %while.body8.2, label %while.end10
+  
+  while.body8.2:                                    ; preds = %while.body8.1
+    %cgep5 = getelementptr inbounds i32, i32* %dest, i32 3
+    %7 = load i32, i32* %cgep5, align 4, !tbaa !2
+    %cmp6.3 = icmp eq i32 %7, 0
+    %spec.select = select i1 %cmp6.3, i32 3, i32 2
+    br label %while.end10
+  
+  while.body.1:                                     ; preds = %while.body
+    %cgep1 = getelementptr inbounds i32, i32* %source, i32 2
+    %8 = load i32, i32* %cgep1, align 4, !tbaa !2
+    %cmp1.2 = icmp eq i32 %8, 0
+    br i1 %cmp1.2, label %while.body.2, label %while.end
+  
+  while.body.2:                                     ; preds = %while.body.1
+    %cgep2 = getelementptr inbounds i32, i32* %source, i32 3
+    %9 = load i32, i32* %cgep2, align 4, !tbaa !2
+    %cmp1.3 = icmp eq i32 %9, 0
+    %spec.select32 = select i1 %cmp1.3, i32 4, i32 3
+    br label %while.end
+  }
+  
+  ; Function Attrs: nounwind
+  define dso_local void @Hanoi(i32 %n, i32* nocapture %source, i32* nocapture %dest, i32* nocapture %spare) local_unnamed_addr #0 {
+  entry:
+    %cmp41 = icmp eq i32 %n, 1
+    br i1 %cmp41, label %if.then, label %if.end.lr.ph
+  
+  if.end.lr.ph:                                     ; preds = %entry
+    %0 = and i32 %n, 1
+    %lcmp.mod = icmp eq i32 %0, 0
+    br i1 %lcmp.mod, label %if.end.prol, label %if.end.prol.loopexit
+  
+  if.end.prol:                                      ; preds = %if.end.lr.ph
+    %sub.prol = add nsw i32 %n, -1
+    tail call void @Hanoi(i32 %sub.prol, i32* %source, i32* %spare, i32* %dest)
+    %1 = load i32, i32* %source, align 4, !tbaa !2
+    %cmp1.i13.prol = icmp eq i32 %1, 0
+    br i1 %cmp1.i13.prol, label %while.body.i16.prol, label %while.end.i19.prol
+  
+  while.body.i16.prol:                              ; preds = %if.end.prol
+    %cgep8 = getelementptr inbounds i32, i32* %source, i32 1
+    %2 = load i32, i32* %cgep8, align 4, !tbaa !2
+    %cmp1.1.i15.prol = icmp eq i32 %2, 0
+    br i1 %cmp1.1.i15.prol, label %while.body.1.i35.prol, label %while.end.i19.prol
+  
+  while.body.1.i35.prol:                            ; preds = %while.body.i16.prol
+    %cgep9 = getelementptr inbounds i32, i32* %source, i32 2
+    %3 = load i32, i32* %cgep9, align 4, !tbaa !2
+    %cmp1.2.i34.prol = icmp eq i32 %3, 0
+    br i1 %cmp1.2.i34.prol, label %while.body.2.i39.prol, label %while.end.i19.prol
+  
+  while.body.2.i39.prol:                            ; preds = %while.body.1.i35.prol
+    %cgep10 = getelementptr inbounds i32, i32* %source, i32 3
+    %4 = load i32, i32* %cgep10, align 4, !tbaa !2
+    %cmp1.3.i37.prol = icmp eq i32 %4, 0
+    %spec.select32.i38.prol = select i1 %cmp1.3.i37.prol, i32 4, i32 3
+    br label %while.end.i19.prol
+  
+  while.end.i19.prol:                               ; preds = %while.body.2.i39.prol, %while.body.1.i35.prol, %while.body.i16.prol, %if.end.prol
+    %i.0.lcssa.i17.prol = phi i32 [ 0, %if.end.prol ], [ 1, %while.body.i16.prol ], [ 2, %while.body.1.i35.prol ], [ %spec.select32.i38.prol, %while.body.2.i39.prol ]
+    %5 = load i32, i32* %dest, align 4, !tbaa !2
+    %cmp6.i18.prol = icmp eq i32 %5, 0
+    br i1 %cmp6.i18.prol, label %while.body8.i22.prol, label %Move.exit40.prol
+  
+  while.body8.i22.prol:                             ; preds = %while.end.i19.prol
+    %6 = bitcast i32* %dest to i8*
+    %sunkaddr = getelementptr i8, i8* %6, i32 4
+    %7 = bitcast i8* %sunkaddr to i32*
+    %8 = load i32, i32* %7, align 4, !tbaa !2
+    %cmp6.1.i21.prol = icmp eq i32 %8, 0
+    br i1 %cmp6.1.i21.prol, label %while.body8.1.i28.prol, label %Move.exit40.prol
+  
+  while.body8.1.i28.prol:                           ; preds = %while.body8.i22.prol
+    %9 = bitcast i32* %dest to i8*
+    %sunkaddr23 = getelementptr i8, i8* %9, i32 8
+    %10 = bitcast i8* %sunkaddr23 to i32*
+    %11 = load i32, i32* %10, align 4, !tbaa !2
+    %cmp6.2.i27.prol = icmp eq i32 %11, 0
+    br i1 %cmp6.2.i27.prol, label %while.body8.2.i32.prol, label %Move.exit40.prol
+  
+  while.body8.2.i32.prol:                           ; preds = %while.body8.1.i28.prol
+    %12 = bitcast i32* %dest to i8*
+    %sunkaddr24 = getelementptr i8, i8* %12, i32 12
+    %13 = bitcast i8* %sunkaddr24 to i32*
+    %14 = load i32, i32* %13, align 4, !tbaa !2
+    %cmp6.3.i30.prol = icmp eq i32 %14, 0
+    %spec.select.i31.prol = select i1 %cmp6.3.i30.prol, i32 3, i32 2
+    br label %Move.exit40.prol
+  
+  Move.exit40.prol:                                 ; preds = %while.body8.2.i32.prol, %while.body8.1.i28.prol, %while.body8.i22.prol, %while.end.i19.prol
+    %j.0.lcssa.i23.prol = phi i32 [ -1, %while.end.i19.prol ], [ 0, %while.body8.i22.prol ], [ 1, %while.body8.1.i28.prol ], [ %spec.select.i31.prol, %while.body8.2.i32.prol ]
+    %cgep11 = getelementptr inbounds i32, i32* %source, i32 %i.0.lcssa.i17.prol
+    %15 = load i32, i32* %cgep11, align 4, !tbaa !2
+    %cgep12 = getelementptr inbounds i32, i32* %dest, i32 %j.0.lcssa.i23.prol
+    store i32 %15, i32* %cgep12, align 4, !tbaa !2
+    store i32 0, i32* %cgep11, align 4, !tbaa !2
+    tail call void @PrintAll() #4
+    br label %if.end.prol.loopexit
+  
+  if.end.prol.loopexit:                             ; preds = %Move.exit40.prol, %if.end.lr.ph
+    %spare.tr44.unr = phi i32* [ %spare, %if.end.lr.ph ], [ %source, %Move.exit40.prol ]
+    %source.tr43.unr = phi i32* [ %source, %if.end.lr.ph ], [ %spare, %Move.exit40.prol ]
+    %n.tr42.unr = phi i32 [ %n, %if.end.lr.ph ], [ %sub.prol, %Move.exit40.prol ]
+    %16 = icmp eq i32 %n, 2
+    br i1 %16, label %if.then, label %if.end.lr.ph.new
+  
+  if.end.lr.ph.new:                                 ; preds = %if.end.prol.loopexit
+    %17 = add i32 %n.tr42.unr, -1
+    br label %if.end
+  
+  if.then:                                          ; preds = %Move.exit40.1, %if.end.prol.loopexit, %entry
+    %source.tr.lcssa = phi i32* [ %source, %entry ], [ %spare, %if.end.prol.loopexit ], [ %source.tr43.unr, %Move.exit40.1 ]
+    %18 = load i32, i32* %source.tr.lcssa, align 4, !tbaa !2
+    %cmp1.i = icmp eq i32 %18, 0
+    br i1 %cmp1.i, label %while.body.i, label %while.end.i
+  
+  while.body.i:                                     ; preds = %if.then
+    %cgep = getelementptr inbounds i32, i32* %source.tr.lcssa, i32 1
+    %19 = load i32, i32* %cgep, align 4, !tbaa !2
+    %cmp1.1.i = icmp eq i32 %19, 0
+    br i1 %cmp1.1.i, label %while.body.1.i, label %while.end.i
+  
+  while.end.i:                                      ; preds = %while.body.2.i, %while.body.1.i, %while.body.i, %if.then
+    %i.0.lcssa.i = phi i32 [ 0, %if.then ], [ 1, %while.body.i ], [ 2, %while.body.1.i ], [ %spec.select32.i, %while.body.2.i ]
+    %20 = load i32, i32* %dest, align 4, !tbaa !2
+    %cmp6.i = icmp eq i32 %20, 0
+    br i1 %cmp6.i, label %while.body8.i, label %Move.exit
+  
+  while.body8.i:                                    ; preds = %while.end.i
+    %21 = bitcast i32* %dest to i8*
+    %sunkaddr25 = getelementptr i8, i8* %21, i32 4
+    %22 = bitcast i8* %sunkaddr25 to i32*
+    %23 = load i32, i32* %22, align 4, !tbaa !2
+    %cmp6.1.i = icmp eq i32 %23, 0
+    br i1 %cmp6.1.i, label %while.body8.1.i, label %Move.exit
+  
+  while.body8.1.i:                                  ; preds = %while.body8.i
+    %24 = bitcast i32* %dest to i8*
+    %sunkaddr26 = getelementptr i8, i8* %24, i32 8
+    %25 = bitcast i8* %sunkaddr26 to i32*
+    %26 = load i32, i32* %25, align 4, !tbaa !2
+    %cmp6.2.i = icmp eq i32 %26, 0
+    br i1 %cmp6.2.i, label %while.body8.2.i, label %Move.exit
+  
+  while.body8.2.i:                                  ; preds = %while.body8.1.i
+    %27 = bitcast i32* %dest to i8*
+    %sunkaddr27 = getelementptr i8, i8* %27, i32 12
+    %28 = bitcast i8* %sunkaddr27 to i32*
+    %29 = load i32, i32* %28, align 4, !tbaa !2
+    %cmp6.3.i = icmp eq i32 %29, 0
+    %spec.select.i = select i1 %cmp6.3.i, i32 3, i32 2
+    br label %Move.exit
+  
+  while.body.1.i:                                   ; preds = %while.body.i
+    %cgep1 = getelementptr inbounds i32, i32* %source.tr.lcssa, i32 2
+    %30 = load i32, i32* %cgep1, align 4, !tbaa !2
+    %cmp1.2.i = icmp eq i32 %30, 0
+    br i1 %cmp1.2.i, label %while.body.2.i, label %while.end.i
+  
+  while.body.2.i:                                   ; preds = %while.body.1.i
+    %cgep2 = getelementptr inbounds i32, i32* %source.tr.lcssa, i32 3
+    %31 = load i32, i32* %cgep2, align 4, !tbaa !2
+    %cmp1.3.i = icmp eq i32 %31, 0
+    %spec.select32.i = select i1 %cmp1.3.i, i32 4, i32 3
+    br label %while.end.i
+  
+  Move.exit:                                        ; preds = %while.body8.2.i, %while.body8.1.i, %while.body8.i, %while.end.i
+    %j.0.lcssa.i = phi i32 [ -1, %while.end.i ], [ 0, %while.body8.i ], [ 1, %while.body8.1.i ], [ %spec.select.i, %while.body8.2.i ]
+    %cgep6 = getelementptr inbounds i32, i32* %source.tr.lcssa, i32 %i.0.lcssa.i
+    %32 = load i32, i32* %cgep6, align 4, !tbaa !2
+    %cgep7 = getelementptr inbounds i32, i32* %dest, i32 %j.0.lcssa.i
+    store i32 %32, i32* %cgep7, align 4, !tbaa !2
+    store i32 0, i32* %cgep6, align 4, !tbaa !2
+    tail call void @PrintAll() #4
+    ret void
+  
+  if.end:                                           ; preds = %Move.exit40.1, %if.end.lr.ph.new
+    %lsr.iv = phi i32 [ %lsr.iv.next, %Move.exit40.1 ], [ %17, %if.end.lr.ph.new ]
+    tail call void @Hanoi(i32 %lsr.iv, i32* %source.tr43.unr, i32* %spare.tr44.unr, i32* %dest)
+    %33 = load i32, i32* %source.tr43.unr, align 4, !tbaa !2
+    %cmp1.i13 = icmp eq i32 %33, 0
+    br i1 %cmp1.i13, label %while.body.i16, label %while.end.i19
+  
+  while.body.i16:                                   ; preds = %if.end
+    %cgep16 = getelementptr i32, i32* %source.tr43.unr, i32 1
+    %34 = load i32, i32* %cgep16, align 4, !tbaa !2
+    %cmp1.1.i15 = icmp eq i32 %34, 0
+    br i1 %cmp1.1.i15, label %while.body.1.i35, label %while.end.i19
+  
+  while.end.i19:                                    ; preds = %while.body.2.i39, %while.body.1.i35, %while.body.i16, %if.end
+    %i.0.lcssa.i17 = phi i32 [ 0, %if.end ], [ 1, %while.body.i16 ], [ 2, %while.body.1.i35 ], [ %spec.select32.i38, %while.body.2.i39 ]
+    %35 = load i32, i32* %dest, align 4, !tbaa !2
+    %cmp6.i18 = icmp eq i32 %35, 0
+    br i1 %cmp6.i18, label %while.body8.i22, label %Move.exit40
+  
+  while.body8.i22:                                  ; preds = %while.end.i19
+    %36 = bitcast i32* %dest to i8*
+    %sunkaddr28 = getelementptr i8, i8* %36, i32 4
+    %37 = bitcast i8* %sunkaddr28 to i32*
+    %38 = load i32, i32* %37, align 4, !tbaa !2
+    %cmp6.1.i21 = icmp eq i32 %38, 0
+    br i1 %cmp6.1.i21, label %while.body8.1.i28, label %Move.exit40
+  
+  while.body8.1.i28:                                ; preds = %while.body8.i22
+    %39 = bitcast i32* %dest to i8*
+    %sunkaddr29 = getelementptr i8, i8* %39, i32 8
+    %40 = bitcast i8* %sunkaddr29 to i32*
+    %41 = load i32, i32* %40, align 4, !tbaa !2
+    %cmp6.2.i27 = icmp eq i32 %41, 0
+    br i1 %cmp6.2.i27, label %while.body8.2.i32, label %Move.exit40
+  
+  while.body8.2.i32:                                ; preds = %while.body8.1.i28
+    %42 = bitcast i32* %dest to i8*
+    %sunkaddr30 = getelementptr i8, i8* %42, i32 12
+    %43 = bitcast i8* %sunkaddr30 to i32*
+    %44 = load i32, i32* %43, align 4, !tbaa !2
+    %cmp6.3.i30 = icmp eq i32 %44, 0
+    %spec.select.i31 = select i1 %cmp6.3.i30, i32 3, i32 2
+    br label %Move.exit40
+  
+  while.body.1.i35:                                 ; preds = %while.body.i16
+    %cgep17 = getelementptr i32, i32* %source.tr43.unr, i32 2
+    %45 = load i32, i32* %cgep17, align 4, !tbaa !2
+    %cmp1.2.i34 = icmp eq i32 %45, 0
+    br i1 %cmp1.2.i34, label %while.body.2.i39, label %while.end.i19
+  
+  while.body.2.i39:                                 ; preds = %while.body.1.i35
+    %cgep18 = getelementptr i32, i32* %source.tr43.unr, i32 3
+    %46 = load i32, i32* %cgep18, align 4, !tbaa !2
+    %cmp1.3.i37 = icmp eq i32 %46, 0
+    %spec.select32.i38 = select i1 %cmp1.3.i37, i32 4, i32 3
+    br label %while.end.i19
+  
+  Move.exit40:                                      ; preds = %while.body8.2.i32, %while.body8.1.i28, %while.body8.i22, %while.end.i19
+    %j.0.lcssa.i23 = phi i32 [ -1, %while.end.i19 ], [ 0, %while.body8.i22 ], [ 1, %while.body8.1.i28 ], [ %spec.select.i31, %while.body8.2.i32 ]
+    %cgep19 = getelementptr inbounds i32, i32* %source.tr43.unr, i32 %i.0.lcssa.i17
+    %47 = load i32, i32* %cgep19, align 4, !tbaa !2
+    %cgep20 = getelementptr inbounds i32, i32* %dest, i32 %j.0.lcssa.i23
+    store i32 %47, i32* %cgep20, align 4, !tbaa !2
+    store i32 0, i32* %cgep19, align 4, !tbaa !2
+    tail call void @PrintAll() #4
+    %48 = add i32 %lsr.iv, -1
+    tail call void @Hanoi(i32 %48, i32* %spare.tr44.unr, i32* %source.tr43.unr, i32* %dest)
+    %49 = load i32, i32* %spare.tr44.unr, align 4, !tbaa !2
+    %cmp1.i13.1 = icmp eq i32 %49, 0
+    br i1 %cmp1.i13.1, label %while.body.i16.1, label %while.end.i19.1
+  
+  while.body.i16.1:                                 ; preds = %Move.exit40
+    %cgep13 = getelementptr i32, i32* %spare.tr44.unr, i32 1
+    %50 = load i32, i32* %cgep13, align 4, !tbaa !2
+    %cmp1.1.i15.1 = icmp eq i32 %50, 0
+    br i1 %cmp1.1.i15.1, label %while.body.1.i35.1, label %while.end.i19.1
+  
+  while.body.1.i35.1:                               ; preds = %while.body.i16.1
+    %cgep14 = getelementptr i32, i32* %spare.tr44.unr, i32 2
+    %51 = load i32, i32* %cgep14, align 4, !tbaa !2
+    %cmp1.2.i34.1 = icmp eq i32 %51, 0
+    br i1 %cmp1.2.i34.1, label %while.body.2.i39.1, label %while.end.i19.1
+  
+  while.body.2.i39.1:                               ; preds = %while.body.1.i35.1
+    %cgep15 = getelementptr i32, i32* %spare.tr44.unr, i32 3
+    %52 = load i32, i32* %cgep15, align 4, !tbaa !2
+    %cmp1.3.i37.1 = icmp eq i32 %52, 0
+    %spec.select32.i38.1 = select i1 %cmp1.3.i37.1, i32 4, i32 3
+    br label %while.end.i19.1
+  
+  while.end.i19.1:                                  ; preds = %while.body.2.i39.1, %while.body.1.i35.1, %while.body.i16.1, %Move.exit40
+    %i.0.lcssa.i17.1 = phi i32 [ 0, %Move.exit40 ], [ 1, %while.body.i16.1 ], [ 2, %while.body.1.i35.1 ], [ %spec.select32.i38.1, %while.body.2.i39.1 ]
+    %53 = load i32, i32* %dest, align 4, !tbaa !2
+    %cmp6.i18.1 = icmp eq i32 %53, 0
+    br i1 %cmp6.i18.1, label %while.body8.i22.1, label %Move.exit40.1
+  
+  while.body8.i22.1:                                ; preds = %while.end.i19.1
+    %54 = bitcast i32* %dest to i8*
+    %sunkaddr31 = getelementptr i8, i8* %54, i32 4
+    %55 = bitcast i8* %sunkaddr31 to i32*
+    %56 = load i32, i32* %55, align 4, !tbaa !2
+    %cmp6.1.i21.1 = icmp eq i32 %56, 0
+    br i1 %cmp6.1.i21.1, label %while.body8.1.i28.1, label %Move.exit40.1
+  
+  while.body8.1.i28.1:                              ; preds = %while.body8.i22.1
+    %57 = bitcast i32* %dest to i8*
+    %sunkaddr32 = getelementptr i8, i8* %57, i32 8
+    %58 = bitcast i8* %sunkaddr32 to i32*
+    %59 = load i32, i32* %58, align 4, !tbaa !2
+    %cmp6.2.i27.1 = icmp eq i32 %59, 0
+    br i1 %cmp6.2.i27.1, label %while.body8.2.i32.1, label %Move.exit40.1
+  
+  while.body8.2.i32.1:                              ; preds = %while.body8.1.i28.1
+    %60 = bitcast i32* %dest to i8*
+    %sunkaddr33 = getelementptr i8, i8* %60, i32 12
+    %61 = bitcast i8* %sunkaddr33 to i32*
+    %62 = load i32, i32* %61, align 4, !tbaa !2
+    %cmp6.3.i30.1 = icmp eq i32 %62, 0
+    %spec.select.i31.1 = select i1 %cmp6.3.i30.1, i32 3, i32 2
+    br label %Move.exit40.1
+  
+  Move.exit40.1:                                    ; preds = %while.body8.2.i32.1, %while.body8.1.i28.1, %while.body8.i22.1, %while.end.i19.1
+    %j.0.lcssa.i23.1 = phi i32 [ -1, %while.end.i19.1 ], [ 0, %while.body8.i22.1 ], [ 1, %while.body8.1.i28.1 ], [ %spec.select.i31.1, %while.body8.2.i32.1 ]
+    %cgep21 = getelementptr inbounds i32, i32* %spare.tr44.unr, i32 %i.0.lcssa.i17.1
+    %63 = load i32, i32* %cgep21, align 4, !tbaa !2
+    %cgep22 = getelementptr inbounds i32, i32* %dest, i32 %j.0.lcssa.i23.1
+    store i32 %63, i32* %cgep22, align 4, !tbaa !2
+    store i32 0, i32* %cgep21, align 4, !tbaa !2
+    tail call void @PrintAll() #4
+    %lsr.iv.next = add i32 %lsr.iv, -2
+    %cmp.1 = icmp eq i32 %lsr.iv.next, 0
+    br i1 %cmp.1, label %if.then, label %if.end
+  }
+  
+  ; Function Attrs: nounwind
+  define dso_local i32 @main() local_unnamed_addr #0 {
+  entry:
+    store i32 1, i32* getelementptr inbounds ([4 x i32], [4 x i32]* @A, i32 0, i32 0), align 8, !tbaa !2
+    store i32 2, i32* getelementptr inbounds ([4 x i32], [4 x i32]* @A, i32 0, i32 1), align 4, !tbaa !2
+    store i32 3, i32* getelementptr inbounds ([4 x i32], [4 x i32]* @A, i32 0, i32 2), align 8, !tbaa !2
+    store i32 4, i32* getelementptr inbounds ([4 x i32], [4 x i32]* @A, i32 0, i32 3), align 4, !tbaa !2
+    call void @llvm.memset.p0i8.i32(i8* align 8 bitcast ([4 x i32]* @B to i8*), i8 0, i32 16, i1 false)
+    call void @llvm.memset.p0i8.i32(i8* align 8 bitcast ([4 x i32]* @C to i8*), i8 0, i32 16, i1 false)
+    %call = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([51 x i8], [51 x i8]* @.str.6, i32 0, i32 0), i32 4)
+    %puts = tail call i32 @puts(i8* getelementptr inbounds ([16 x i8], [16 x i8]* @str.9, i32 0, i32 0))
+    tail call void @PrintAll()
+    %puts27 = tail call i32 @puts(i8* getelementptr inbounds ([22 x i8], [22 x i8]* @str.10, i32 0, i32 0))
+    tail call void @Hanoi(i32 4, i32* getelementptr inbounds ([4 x i32], [4 x i32]* @A, i32 0, i32 0), i32* getelementptr inbounds ([4 x i32], [4 x i32]* @B, i32 0, i32 0), i32* getelementptr inbounds ([4 x i32], [4 x i32]* @C, i32 0, i32 0))
+    ret i32 0
+  }
+  
+  ; Function Attrs: nounwind
+  declare i32 @putchar(i32) local_unnamed_addr #2
+  
+  ; Function Attrs: nounwind
+  declare i32 @puts(i8* nocapture readonly) local_unnamed_addr #2
+  
+  ; Function Attrs: argmemonly nounwind
+  declare void @llvm.memset.p0i8.i32(i8* nocapture writeonly, i8, i32, i1) #3
+  
+  ; Function Attrs: nounwind
+  declare void @llvm.stackprotector(i8*, i8**) #4
+  
+  attributes #0 = { nounwind "correctly-rounded-divide-sqrt-fp-math"="false" "disable-tail-calls"="false" "less-precise-fpmad"="false" "min-legal-vector-width"="0" "no-frame-pointer-elim"="true" "no-frame-pointer-elim-non-leaf" "no-infs-fp-math"="false" "no-jump-tables"="false" "no-nans-fp-math"="false" "no-signed-zeros-fp-math"="false" "no-trapping-math"="false" "stack-protector-buffer-size"="8" "target-cpu"="hexagonv5" "target-features"="-long-calls" "unsafe-fp-math"="false" "use-soft-float"="false" }
+  attributes #1 = { nounwind "correctly-rounded-divide-sqrt-fp-math"="false" "disable-tail-calls"="false" "less-precise-fpmad"="false" "no-frame-pointer-elim"="true" "no-frame-pointer-elim-non-leaf" "no-infs-fp-math"="false" "no-nans-fp-math"="false" "no-signed-zeros-fp-math"="false" "no-trapping-math"="false" "stack-protector-buffer-size"="8" "target-cpu"="hexagonv5" "target-features"="-long-calls" "unsafe-fp-math"="false" "use-soft-float"="false" }
+  attributes #2 = { nounwind "target-cpu"="hexagonv5" }
+  attributes #3 = { argmemonly nounwind "target-cpu"="hexagonv5" }
+  attributes #4 = { nounwind }
+  
+  !llvm.module.flags = !{!0}
+  !llvm.ident = !{!1}
+  
+  !0 = !{i32 1, !"wchar_size", i32 4}
+  !1 = !{!"clang version 9.0.0 (http://llvm.org/git/clang.git 4e215e73ed6b499f3ccf23263c96cd188e0eda2c) (git@github.com:unison-code/llvm.git 9914ec00db7eeaf764045b9071638c2421cd32e7)"}
+  !2 = !{!3, !3, i64 0}
+  !3 = !{!"int", !4, i64 0}
+  !4 = !{!"omnipotent char", !5, i64 0}
+  !5 = !{!"Simple C/C++ TBAA"}
+
+...
+---
+name:            PrintAll
+alignment:       4
+exposesReturnsTwice: false
+legalized:       false
+regBankSelected: false
+selected:        false
+failedISel:      false
+tracksRegLiveness: true
+hasWinCFI:       false
+registers:       []
+liveins:         []
+frameInfo:       
+  isFrameAddressTaken: false
+  isReturnAddressTaken: false
+  hasStackMap:     false
+  hasPatchPoint:   false
+  stackSize:       16
+  offsetAdjustment: 0
+  maxAlignment:    4
+  adjustsStack:    true
+  hasCalls:        true
+  stackProtector:  ''
+  maxCallFrameSize: 8
+  cvBytesOfCalleeSavedRegisters: 0
+  hasOpaqueSPAdjustment: false
+  hasVAStart:      false
+  hasMustTailInVarArgFunc: false
+  localFrameSize:  0
+  savePoint:       ''
+  restorePoint:    ''
+fixedStack:      
+  - { id: 0, type: spill-slot, offset: -8, size: 8, alignment: 8, stack-id: 0, 
+      callee-saved-register: '$d8', callee-saved-restored: true, debug-info-variable: '', 
+      debug-info-expression: '', debug-info-location: '' }
+stack:           []
+constants:       []
+body:             |
+  bb.0.entry (freq 8):
+    liveins: $d8, $d8
+    exit
+  
+    ANNOTATION_LABEL <0x9643280> = !{!"unison-block-frequency", i64 8}
+    BUNDLE implicit-def $r29, implicit-def $r30, implicit-def $r0, implicit $r29, implicit killed $framekey, implicit killed $framelimit, implicit killed $r30, implicit killed $r31, implicit killed $d8 {
+      $r29 = S2_allocframe $r29, 16, implicit-def $r30, implicit killed $framekey, implicit killed $framelimit, implicit killed $r30, implicit killed $r31 :: (store 4 into stack)
+      $r0 = A2_tfrsi @.str
+      S2_storerd_io internal $r29, -16, killed $d8 :: (store 8 into %fixed-stack.0)
+    }
+    BUNDLE implicit-def dead $pc, implicit-def dead $r31, implicit-def $r29, implicit-def dead $r0, implicit-def $r16, implicit $r29, implicit killed $r0 {
+      J2_call @printf, hexagoncsr, implicit-def dead $pc, implicit-def dead $r31, implicit $r29, implicit killed $r0, implicit-def $r29, implicit-def dead $r0
+      renamable $r16 = A2_tfrsi @A
+    }
+    BUNDLE implicit-def dead $r0, implicit $r16, implicit $r29 {
+      renamable $r0 = L2_loadri_io renamable $r16, 0 :: (dereferenceable load 4 from `i32* getelementptr inbounds ([4 x i32], [4 x i32]* @A, i32 0, i32 0)`, align 8, !tbaa !2)
+      S2_storerinew_io $r29, 0, internal killed renamable $r0 :: (store 4 into stack)
+    }
+    BUNDLE implicit-def $r0, implicit-def dead $pc, implicit-def dead $r31, implicit-def $r29, implicit $r29 {
+      $r0 = A2_tfrsi @.str.1
+      J2_call @printf, hexagoncsr, implicit-def dead $pc, implicit-def dead $r31, implicit $r29, implicit internal killed $r0, implicit-def $r29, implicit-def dead $r0
+    }
+    BUNDLE implicit-def dead $r0, implicit $r16, implicit $r29 {
+      renamable $r0 = L2_loadri_io renamable $r16, 4 :: (dereferenceable load 4 from `i32* getelementptr inbounds ([4 x i32], [4 x i32]* @A, i32 0, i32 1)`, !tbaa !2)
+      S2_storerinew_io $r29, 0, internal killed renamable $r0 :: (store 4 into stack)
+    }
+    BUNDLE implicit-def $r0, implicit-def dead $pc, implicit-def dead $r31, implicit-def $r29, implicit $r29 {
+      $r0 = A2_tfrsi @.str.1
+      J2_call @printf, hexagoncsr, implicit-def dead $pc, implicit-def dead $r31, implicit $r29, implicit internal killed $r0, implicit-def $r29, implicit-def dead $r0
+    }
+    BUNDLE implicit-def dead $r0, implicit $r16, implicit $r29 {
+      renamable $r0 = L2_loadri_io renamable $r16, 8 :: (dereferenceable load 4 from `i32* getelementptr inbounds ([4 x i32], [4 x i32]* @A, i32 0, i32 2)`, align 8, !tbaa !2)
+      S2_storerinew_io $r29, 0, internal killed renamable $r0 :: (store 4 into stack)
+    }
+    BUNDLE implicit-def $r0, implicit-def dead $pc, implicit-def dead $r31, implicit-def $r29, implicit $r29 {
+      $r0 = A2_tfrsi @.str.1
+      J2_call @printf, hexagoncsr, implicit-def dead $pc, implicit-def dead $r31, implicit $r29, implicit internal killed $r0, implicit-def $r29, implicit-def dead $r0
+    }
+    BUNDLE implicit-def dead $r0, implicit killed $r16, implicit $r29 {
+      renamable $r0 = L2_loadri_io killed renamable $r16, 12 :: (dereferenceable load 4 from `i32* getelementptr inbounds ([4 x i32], [4 x i32]* @A, i32 0, i32 3)`, !tbaa !2)
+      S2_storerinew_io $r29, 0, internal killed renamable $r0 :: (store 4 into stack)
+    }
+    BUNDLE implicit-def $r0, implicit-def dead $pc, implicit-def dead $r31, implicit-def $r29, implicit $r29 {
+      $r0 = A2_tfrsi @.str.1
+      J2_call @printf, hexagoncsr, implicit-def dead $pc, implicit-def dead $r31, implicit $r29, implicit internal killed $r0, implicit-def $r29, implicit-def dead $r0
+    }
+    BUNDLE implicit-def $r0, implicit-def dead $pc, implicit-def dead $r31, implicit-def $r29, implicit $r29 {
+      $r0 = A2_tfrsi 10
+      J2_call @putchar, hexagoncsr, implicit-def dead $pc, implicit-def dead $r31, implicit $r29, implicit internal killed $r0, implicit-def $r29, implicit-def dead $r0
+    }
+    BUNDLE implicit-def $r0, implicit-def dead $pc, implicit-def dead $r31, implicit-def $r29, implicit $r29 {
+      $r0 = A2_tfrsi @.str.3
+      J2_call @printf, hexagoncsr, implicit-def dead $pc, implicit-def dead $r31, implicit $r29, implicit internal killed $r0, implicit-def $r29, implicit-def dead $r0
+    }
+    renamable $r16 = A2_tfrsi @B
+    BUNDLE implicit-def dead $r0, implicit $r16, implicit $r29 {
+      renamable $r0 = L2_loadri_io renamable $r16, 0 :: (dereferenceable load 4 from `i32* getelementptr inbounds ([4 x i32], [4 x i32]* @B, i32 0, i32 0)`, align 8, !tbaa !2)
+      S2_storerinew_io $r29, 0, internal killed renamable $r0 :: (store 4 into stack)
+    }
+    BUNDLE implicit-def $r0, implicit-def dead $pc, implicit-def dead $r31, implicit-def $r29, implicit $r29 {
+      $r0 = A2_tfrsi @.str.1
+      J2_call @printf, hexagoncsr, implicit-def dead $pc, implicit-def dead $r31, implicit $r29, implicit internal killed $r0, implicit-def $r29, implicit-def dead $r0
+    }
+    BUNDLE implicit-def dead $r0, implicit $r16, implicit $r29 {
+      renamable $r0 = L2_loadri_io renamable $r16, 4 :: (dereferenceable load 4 from `i32* getelementptr inbounds ([4 x i32], [4 x i32]* @B, i32 0, i32 1)`, !tbaa !2)
+      S2_storerinew_io $r29, 0, internal killed renamable $r0 :: (store 4 into stack)
+    }
+    BUNDLE implicit-def $r0, implicit-def dead $pc, implicit-def dead $r31, implicit-def $r29, implicit $r29 {
+      $r0 = A2_tfrsi @.str.1
+      J2_call @printf, hexagoncsr, implicit-def dead $pc, implicit-def dead $r31, implicit $r29, implicit internal killed $r0, implicit-def $r29, implicit-def dead $r0
+    }
+    BUNDLE implicit-def dead $r0, implicit $r16, implicit $r29 {
+      renamable $r0 = L2_loadri_io renamable $r16, 8 :: (dereferenceable load 4 from `i32* getelementptr inbounds ([4 x i32], [4 x i32]* @B, i32 0, i32 2)`, align 8, !tbaa !2)
+      S2_storerinew_io $r29, 0, internal killed renamable $r0 :: (store 4 into stack)
+    }
+    BUNDLE implicit-def $r0, implicit-def dead $pc, implicit-def dead $r31, implicit-def $r29, implicit $r29 {
+      $r0 = A2_tfrsi @.str.1
+      J2_call @printf, hexagoncsr, implicit-def dead $pc, implicit-def dead $r31, implicit $r29, implicit internal killed $r0, implicit-def $r29, implicit-def dead $r0
+    }
+    BUNDLE implicit-def dead $r0, implicit killed $r16, implicit $r29 {
+      renamable $r0 = L2_loadri_io killed renamable $r16, 12 :: (dereferenceable load 4 from `i32* getelementptr inbounds ([4 x i32], [4 x i32]* @B, i32 0, i32 3)`, !tbaa !2)
+      S2_storerinew_io $r29, 0, internal killed renamable $r0 :: (store 4 into stack)
+    }
+    BUNDLE implicit-def $r0, implicit-def dead $pc, implicit-def dead $r31, implicit-def $r29, implicit $r29 {
+      $r0 = A2_tfrsi @.str.1
+      J2_call @printf, hexagoncsr, implicit-def dead $pc, implicit-def dead $r31, implicit $r29, implicit internal killed $r0, implicit-def $r29, implicit-def dead $r0
+    }
+    BUNDLE implicit-def $r0, implicit-def dead $pc, implicit-def dead $r31, implicit-def $r29, implicit $r29 {
+      $r0 = A2_tfrsi 10
+      J2_call @putchar, hexagoncsr, implicit-def dead $pc, implicit-def dead $r31, implicit $r29, implicit internal killed $r0, implicit-def $r29, implicit-def dead $r0
+    }
+    BUNDLE implicit-def $r0, implicit-def dead $pc, implicit-def dead $r31, implicit-def $r29, implicit $r29 {
+      $r0 = A2_tfrsi @.str.4
+      J2_call @printf, hexagoncsr, implicit-def dead $pc, implicit-def dead $r31, implicit $r29, implicit internal killed $r0, implicit-def $r29, implicit-def dead $r0
+    }
+    renamable $r16 = A2_tfrsi @C
+    BUNDLE implicit-def dead $r0, implicit $r16, implicit $r29 {
+      renamable $r0 = L2_loadri_io renamable $r16, 0 :: (dereferenceable load 4 from `i32* getelementptr inbounds ([4 x i32], [4 x i32]* @C, i32 0, i32 0)`, align 8, !tbaa !2)
+      S2_storerinew_io $r29, 0, internal killed renamable $r0 :: (store 4 into stack)
+    }
+    BUNDLE implicit-def $r0, implicit-def dead $pc, implicit-def dead $r31, implicit-def $r29, implicit $r29 {
+      $r0 = A2_tfrsi @.str.1
+      J2_call @printf, hexagoncsr, implicit-def dead $pc, implicit-def dead $r31, implicit $r29, implicit internal killed $r0, implicit-def $r29, implicit-def dead $r0
+    }
+    BUNDLE implicit-def dead $r0, implicit $r16, implicit $r29 {
+      renamable $r0 = L2_loadri_io renamable $r16, 4 :: (dereferenceable load 4 from `i32* getelementptr inbounds ([4 x i32], [4 x i32]* @C, i32 0, i32 1)`, !tbaa !2)
+      S2_storerinew_io $r29, 0, internal killed renamable $r0 :: (store 4 into stack)
+    }
+    BUNDLE implicit-def $r0, implicit-def dead $pc, implicit-def dead $r31, implicit-def $r29, implicit $r29 {
+      $r0 = A2_tfrsi @.str.1
+      J2_call @printf, hexagoncsr, implicit-def dead $pc, implicit-def dead $r31, implicit $r29, implicit internal killed $r0, implicit-def $r29, implicit-def dead $r0
+    }
+    BUNDLE implicit-def dead $r0, implicit $r16, implicit $r29 {
+      renamable $r0 = L2_loadri_io renamable $r16, 8 :: (dereferenceable load 4 from `i32* getelementptr inbounds ([4 x i32], [4 x i32]* @C, i32 0, i32 2)`, align 8, !tbaa !2)
+      S2_storerinew_io $r29, 0, internal killed renamable $r0 :: (store 4 into stack)
+    }
+    BUNDLE implicit-def $r0, implicit-def dead $pc, implicit-def dead $r31, implicit-def $r29, implicit $r29 {
+      $r0 = A2_tfrsi @.str.1
+      J2_call @printf, hexagoncsr, implicit-def dead $pc, implicit-def dead $r31, implicit $r29, implicit internal killed $r0, implicit-def $r29, implicit-def dead $r0
+    }
+    BUNDLE implicit-def dead $r0, implicit killed $r16, implicit $r29 {
+      renamable $r0 = L2_loadri_io killed renamable $r16, 12 :: (dereferenceable load 4 from `i32* getelementptr inbounds ([4 x i32], [4 x i32]* @C, i32 0, i32 3)`, !tbaa !2)
+      S2_storerinew_io $r29, 0, internal killed renamable $r0 :: (store 4 into stack)
+    }
+    BUNDLE implicit-def $r0, implicit-def dead $pc, implicit-def dead $r31, implicit-def $r29, implicit $r29 {
+      $r0 = A2_tfrsi @.str.1
+      J2_call @printf, hexagoncsr, implicit-def dead $pc, implicit-def dead $r31, implicit $r29, implicit internal killed $r0, implicit-def $r29, implicit-def dead $r0
+    }
+    BUNDLE implicit-def $r0, implicit-def dead $pc, implicit-def dead $r31, implicit-def $r29, implicit $r29 {
+      $r0 = A2_tfrsi 10
+      J2_call @putchar, hexagoncsr, implicit-def dead $pc, implicit-def dead $r31, implicit $r29, implicit internal killed $r0, implicit-def $r29, implicit-def dead $r0
+    }
+    BUNDLE implicit-def $d8, implicit-def $r16, implicit-def $r17, implicit-def $r0, implicit-def $d15, implicit-def $r30, implicit-def $r31, implicit-def $r29, implicit killed $r29, implicit killed $r30, implicit killed $framekey {
+      $d8 = L2_loadrd_io killed $r29, 8 :: (load 8 from %fixed-stack.0)
+      $r0 = A2_tfrsi @str
+      $d15 = L2_deallocframe killed $r30, implicit-def $r29, implicit killed $framekey
+    }
+    J2_jump @puts, hexagoncsr, implicit killed $r0, implicit killed $d8
+
+...
+---
+name:            Move
+alignment:       4
+exposesReturnsTwice: false
+legalized:       false
+regBankSelected: false
+selected:        false
+failedISel:      false
+tracksRegLiveness: true
+hasWinCFI:       false
+registers:       []
+liveins:         
+  - { reg: '$r0', virtual-reg: '' }
+  - { reg: '$r1', virtual-reg: '' }
+frameInfo:       
+  isFrameAddressTaken: false
+  isReturnAddressTaken: false
+  hasStackMap:     false
+  hasPatchPoint:   false
+  stackSize:       8
+  offsetAdjustment: 0
+  maxAlignment:    0
+  adjustsStack:    true
+  hasCalls:        true
+  stackProtector:  ''
+  maxCallFrameSize: 0
+  cvBytesOfCalleeSavedRegisters: 0
+  hasOpaqueSPAdjustment: false
+  hasVAStart:      false
+  hasMustTailInVarArgFunc: false
+  localFrameSize:  0
+  savePoint:       ''
+  restorePoint:    ''
+fixedStack:      
+  - { id: 0, type: spill-slot, offset: -8, size: 8, alignment: 8, stack-id: 0, 
+      callee-saved-register: '$d8', callee-saved-restored: true, debug-info-variable: '', 
+      debug-info-expression: '', debug-info-location: '' }
+stack:           []
+constants:       []
+body:             |
+  bb.0.entry (freq 151):
+    successors: %bb.1(37), %bb.2(62)
+    liveins: $r0, $r1, $d8, $d8
+  
+    ANNOTATION_LABEL <0x965f990> = !{!"unison-block-frequency", i64 151}
+    BUNDLE implicit-def dead $r29, implicit-def $r30, implicit-def $r16, implicit-def $r1, implicit $r29, implicit killed $framekey, implicit killed $framelimit, implicit killed $r30, implicit killed $r31, implicit killed $d8, implicit killed $r1 {
+      $r29 = S2_allocframe $r29, 8, implicit-def $r30, implicit killed $framekey, implicit killed $framelimit, implicit killed $r30, implicit killed $r31 :: (store 4 into stack)
+      S2_storerd_io internal killed $r29, -16, killed $d8 :: (store 8 into %fixed-stack.0)
+      $r16 = A2_tfr killed $r1
+      renamable $r1 = A2_tfrsi 0
+    }
+    BUNDLE implicit-def dead $r2, implicit-def $pc, implicit $r0 {
+      renamable $r2 = L2_loadri_io renamable $r0, 0 :: (load 4 from %ir.source, !tbaa !2)
+      J4_cmpeqi_f_jumpnv_t internal killed $r2, 0, %bb.2, implicit-def $pc
+    }
+  
+  bb.1.while.body (freq 56):
+    successors: %bb.7(37), %bb.2(62)
+    liveins: $r0, $r16
+  
+    ANNOTATION_LABEL <0x968b370> = !{!"unison-block-frequency", i64 56}
+    renamable $r1 = L2_loadri_io renamable $r0, 4, <0x968b3a0> = !{!"unison-memory-partition", i64 0} :: (load 4 from %ir.cgep, !tbaa !2)
+    BUNDLE implicit-def dead $p0, implicit-def $r1, implicit-def $pc, implicit killed $r1 {
+      renamable $p0 = C2_cmpeqi killed renamable $r1, 0
+      renamable $r1 = A2_tfrsi 1
+      J2_jumpfnewpt internal killed $p0, %bb.2, implicit-def $pc
+    }
+  
+  bb.7.while.body.1 (freq 21):
+    successors: %bb.8(37), %bb.2(62)
+    liveins: $r0, $r16
+  
+    ANNOTATION_LABEL <0x968b4a0> = !{!"unison-block-frequency", i64 21}
+    renamable $r1 = L2_loadri_io renamable $r0, 8, <0x968b3a0> = !{!"unison-memory-partition", i64 0} :: (load 4 from %ir.cgep1, !tbaa !2)
+    BUNDLE implicit-def dead $p0, implicit-def $r1, implicit-def $pc, implicit killed $r1 {
+      renamable $p0 = C2_cmpeqi killed renamable $r1, 0
+      renamable $r1 = A2_tfrsi 2
+      J2_jumpfnewpt internal killed $p0, %bb.2, implicit-def $pc
+    }
+  
+  bb.8.while.body.2 (freq 8):
+    successors: %bb.2(100)
+    liveins: $r0, $r1, $r16
+  
+    ANNOTATION_LABEL <0x9643280> = !{!"unison-block-frequency", i64 8}
+    renamable $r2 = L2_loadri_io renamable $r0, 12, <0x968b3a0> = !{!"unison-memory-partition", i64 0} :: (load 4 from %ir.cgep2, !tbaa !2)
+    renamable $p0 = C2_cmpeqi killed renamable $r2, 0
+    $r1 = C2_muxii killed $p0, 4, 3
+  
+  bb.2.while.end (freq 151):
+    successors: %bb.3(37), %bb.6(62)
+    liveins: $r0, $r1, $r16
+  
+    ANNOTATION_LABEL <0x965f990> = !{!"unison-block-frequency", i64 151}
+    BUNDLE implicit-def $r17, implicit-def dead $r2, implicit-def $pc, implicit $r16 {
+      renamable $r17 = A2_tfrsi -1
+      renamable $r2 = L2_loadri_io renamable $r16, 0 :: (load 4 from %ir.dest, !tbaa !2)
+      J4_cmpeqi_f_jumpnv_t internal killed $r2, 0, %bb.6, implicit-def $pc
+    }
+  
+  bb.3.while.body8 (freq 56):
+    successors: %bb.4(37), %bb.6(62)
+    liveins: $r0, $r1, $r16
+  
+    ANNOTATION_LABEL <0x968b370> = !{!"unison-block-frequency", i64 56}
+    BUNDLE implicit-def $r17, implicit-def dead $r2, implicit-def $pc, implicit $r16 {
+      renamable $r17 = A2_tfrsi 0
+      renamable $r2 = L2_loadri_io renamable $r16, 4 :: (load 4 from %ir.cgep3, !tbaa !2)
+      J4_cmpeqi_f_jumpnv_t internal killed $r2, 0, %bb.6, implicit-def $pc
+    }
+  
+  bb.4.while.body8.1 (freq 21):
+    successors: %bb.5(37), %bb.6(62)
+    liveins: $r0, $r1, $r16
+  
+    ANNOTATION_LABEL <0x968b4a0> = !{!"unison-block-frequency", i64 21}
+    BUNDLE implicit-def $r17, implicit-def dead $r2, implicit-def $pc, implicit $r16 {
+      renamable $r17 = A2_tfrsi 1
+      renamable $r2 = L2_loadri_io renamable $r16, 8 :: (load 4 from %ir.cgep4, !tbaa !2)
+      J4_cmpeqi_f_jumpnv_t internal killed $r2, 0, %bb.6, implicit-def $pc
+    }
+  
+  bb.5.while.body8.2 (freq 8):
+    successors: %bb.6(100)
+    liveins: $r0, $r1, $r16, $r17
+  
+    ANNOTATION_LABEL <0x9643280> = !{!"unison-block-frequency", i64 8}
+    renamable $r2 = L2_loadri_io renamable $r16, 12, <0x968b3a0> = !{!"unison-memory-partition", i64 0} :: (load 4 from %ir.cgep5, !tbaa !2)
+    renamable $p0 = C2_cmpeqi killed renamable $r2, 0
+    $r17 = C2_muxii killed $p0, 3, 2
+  
+  bb.6.while.end10 (freq 151):
+    liveins: $r0, $r1, $r16, $r17
+    liveouts: $pc, $r29, $framekey, $pc, $r0, $d8
+  
+    ANNOTATION_LABEL <0x965f990> = !{!"unison-block-frequency", i64 151}
+    BUNDLE implicit-def dead $r2, implicit-def $r4, implicit $r0, implicit $r1, implicit $r16, implicit $r17 {
+      renamable $r2 = L4_loadri_rr renamable $r0, renamable $r1, 2 :: (load 4 from %ir.cgep6, !tbaa !2)
+      S4_storerinew_rr renamable $r16, renamable $r17, 2, internal killed renamable $r2 :: (store 4 into %ir.cgep7, !tbaa !2)
+      $r4 = A2_tfrsi 0
+    }
+    BUNDLE implicit-def dead $pc, implicit-def dead $r31, implicit-def $r29, implicit killed $r0, implicit killed $r1, implicit killed $r4, implicit $r29 {
+      S4_storeri_rr killed renamable $r0, killed renamable $r1, 2, killed $r4 :: (store 4 into %ir.cgep6, !tbaa !2)
+      J2_call @PrintAll, hexagoncsr, implicit-def dead $pc, implicit-def dead $r31, implicit $r29, implicit-def $r29
+    }
+    BUNDLE implicit-def $r0, implicit-def $d8, implicit-def $r16, implicit-def $r17, implicit killed $r16, implicit killed $r17, implicit killed $r29 {
+      renamable $r0 = L4_loadri_rr killed renamable $r16, killed renamable $r17, 2 :: (load 4 from %ir.cgep7, !tbaa !2)
+      $d8 = L2_loadrd_io killed $r29, 0 :: (load 8 from %fixed-stack.0)
+    }
+    $d15 = L4_return killed $r30, <0x968b3a0> = !{!"unison-memory-partition", i64 0}, implicit-def $pc, implicit-def $r29, implicit killed $framekey, implicit-def dead $pc, implicit killed $r0, implicit $d8
+
+...
+---
+name:            Hanoi
+alignment:       4
+exposesReturnsTwice: false
+legalized:       false
+regBankSelected: false
+selected:        false
+failedISel:      false
+tracksRegLiveness: true
+hasWinCFI:       false
+registers:       []
+liveins:         
+  - { reg: '$r0', virtual-reg: '' }
+  - { reg: '$r1', virtual-reg: '' }
+  - { reg: '$r2', virtual-reg: '' }
+  - { reg: '$r3', virtual-reg: '' }
+frameInfo:       
+  isFrameAddressTaken: false
+  isReturnAddressTaken: false
+  hasStackMap:     false
+  hasPatchPoint:   false
+  stackSize:       24
+  offsetAdjustment: 0
+  maxAlignment:    0
+  adjustsStack:    true
+  hasCalls:        true
+  stackProtector:  ''
+  maxCallFrameSize: 0
+  cvBytesOfCalleeSavedRegisters: 0
+  hasOpaqueSPAdjustment: false
+  hasVAStart:      false
+  hasMustTailInVarArgFunc: false
+  localFrameSize:  0
+  savePoint:       ''
+  restorePoint:    ''
+fixedStack:      
+  - { id: 0, type: spill-slot, offset: -24, size: 8, alignment: 8, stack-id: 0, 
+      callee-saved-register: '$d10', callee-saved-restored: true, debug-info-variable: '', 
+      debug-info-expression: '', debug-info-location: '' }
+  - { id: 1, type: spill-slot, offset: -16, size: 8, alignment: 8, stack-id: 0, 
+      callee-saved-register: '$d9', callee-saved-restored: true, debug-info-variable: '', 
+      debug-info-expression: '', debug-info-location: '' }
+  - { id: 2, type: spill-slot, offset: -8, size: 8, alignment: 8, stack-id: 0, 
+      callee-saved-register: '$d8', callee-saved-restored: true, debug-info-variable: '', 
+      debug-info-expression: '', debug-info-location: '' }
+stack:           []
+constants:       []
+body:             |
+  bb.0.entry (freq 606):
+    successors: %bb.1(50), %bb.9(50)
+    liveins: $r0:0x00000001, $r1:0x00000001, $r2:0x00000001, $r3:0x00000001, $d8, $d9, $d10, $d8, $d9, $d10
+  
+    ANNOTATION_LABEL <0x968a490> = !{!"unison-block-frequency", i64 606}
+    BUNDLE implicit-def $r29, implicit-def $r30, implicit-def $p0, implicit-def $d8, implicit-def $r16, implicit-def $r17, implicit $r29, implicit killed $framekey, implicit killed $framelimit, implicit killed $r30, implicit killed $r31, implicit killed $d8, implicit $r0, implicit killed $r1, implicit killed $r2 {
+      $r29 = S2_allocframe $r29, 24, implicit-def $r30, implicit killed $framekey, implicit killed $framelimit, implicit killed $r30, implicit killed $r31 :: (store 4 into stack)
+      S2_storerd_io internal $r29, -16, killed $d8 :: (store 8 into %fixed-stack.2)
+      renamable $p0 = C2_cmpeqi $r0, 1
+      $d8 = A2_combinew killed $r1, killed $r2
+    }
+    BUNDLE implicit-def $pc, implicit killed $r29, implicit killed $d9, implicit killed $d10, implicit killed $p0 {
+      S2_storerd_io $r29, 8, killed $d9 :: (store 8 into %fixed-stack.1)
+      S2_storerd_io killed $r29, 0, killed $d10 :: (store 8 into %fixed-stack.0)
+      J2_jumpt killed $p0, %bb.1, implicit-def $pc
+    }
+  
+  bb.9.if.end.lr.ph (freq 303):
+    successors: %bb.11(50), %bb.10(50)
+    liveins: $r16:0x00000001, $r17:0x00000001, $r3, $r0
+  
+    ANNOTATION_LABEL <0x966b7e0> = !{!"unison-block-frequency", i64 303}
+    BUNDLE implicit-def $r20, implicit-def $r19, implicit-def dead $p0, implicit-def $pc, implicit killed $r0, implicit killed $r3 {
+      $r20 = A2_tfr $r0
+      $r19 = A2_tfr killed $r3
+      renamable $p0 = S2_tstbit_i killed $r0, 0
+      J2_jumptnewpt internal killed $p0, %bb.10, implicit-def $pc
+    }
+  
+  bb.11.if.end.prol (freq 151):
+    successors: %bb.12(37), %bb.15(62)
+    liveins: $r16:0x00000001, $r17:0x00000001, $r19:0x00000001, $r20:0x00000001
+  
+    ANNOTATION_LABEL <0x965f990> = !{!"unison-block-frequency", i64 151}
+    BUNDLE implicit-def $r21, implicit-def $d1, implicit-def $r2, implicit-def $r3, implicit $r20, implicit $r16, implicit $r19 {
+      renamable $r21 = nsw A2_addi renamable $r20, -1
+      $d1 = A2_combinew $r16, $r19
+    }
+    BUNDLE implicit-def $d0, implicit-def dead $r0, implicit-def dead $r1, implicit-def dead $pc, implicit-def dead $r31, implicit-def $r29, implicit $r17, implicit $r21, implicit $r29, implicit killed $r2, implicit killed $r3 {
+      $d0 = A2_combinew $r17, $r21
+      J2_call @Hanoi, hexagoncsr, implicit-def dead $pc, implicit-def dead $r31, implicit $r29, implicit internal killed $r0, implicit internal killed $r1, implicit killed $r2, implicit killed $r3, implicit-def $r29
+    }
+    renamable $r0 = L2_loadri_io renamable $r17, 0, <0x968b3a0> = !{!"unison-memory-partition", i64 0} :: (load 4 from %ir.source, !tbaa !2)
+    BUNDLE implicit-def dead $p0, implicit-def $r0, implicit-def $pc, implicit killed $r0 {
+      renamable $p0 = C2_cmpeqi killed renamable $r0, 0
+      renamable $r0 = A2_tfrsi 0
+      J2_jumpfnewpt internal killed $p0, %bb.15, implicit-def $pc
+    }
+  
+  bb.12.while.body.i16.prol (freq 56):
+    successors: %bb.13(37), %bb.15(62)
+    liveins: $r16:0x00000001, $r17:0x00000001, $r19:0x00000001, $r20:0x00000001, $r21:0x00000001, $r29:0x00000001, $r30:0x00000001, $r31:0x00000001
+  
+    ANNOTATION_LABEL <0x968b370> = !{!"unison-block-frequency", i64 56}
+    renamable $r0 = L2_loadri_io renamable $r17, 4, <0x968b3a0> = !{!"unison-memory-partition", i64 0} :: (load 4 from %ir.cgep8, !tbaa !2)
+    BUNDLE implicit-def dead $p0, implicit-def $r0, implicit-def $pc, implicit killed $r0 {
+      renamable $p0 = C2_cmpeqi killed renamable $r0, 0
+      renamable $r0 = A2_tfrsi 1
+      J2_jumpfnewpt internal killed $p0, %bb.15, implicit-def $pc
+    }
+  
+  bb.13.while.body.1.i35.prol (freq 21):
+    successors: %bb.14(37), %bb.15(62)
+    liveins: $r16:0x00000001, $r17:0x00000001, $r19:0x00000001, $r20:0x00000001, $r21:0x00000001, $r29:0x00000001, $r30:0x00000001, $r31:0x00000001
+  
+    ANNOTATION_LABEL <0x968b4a0> = !{!"unison-block-frequency", i64 21}
+    renamable $r0 = L2_loadri_io renamable $r17, 8, <0x968b3a0> = !{!"unison-memory-partition", i64 0} :: (load 4 from %ir.cgep9, !tbaa !2)
+    BUNDLE implicit-def dead $p0, implicit-def $r0, implicit-def $pc, implicit killed $r0 {
+      renamable $p0 = C2_cmpeqi killed renamable $r0, 0
+      renamable $r0 = A2_tfrsi 2
+      J2_jumpfnewpt internal killed $p0, %bb.15, implicit-def $pc
+    }
+  
+  bb.14.while.body.2.i39.prol (freq 8):
+    successors: %bb.15(100)
+    liveins: $r0:0x00000001, $r16:0x00000001, $r17:0x00000001, $r19:0x00000001, $r20:0x00000001, $r21:0x00000001, $r29:0x00000001, $r30:0x00000001, $r31:0x00000001
+  
+    ANNOTATION_LABEL <0x9643280> = !{!"unison-block-frequency", i64 8}
+    renamable $r1 = L2_loadri_io renamable $r17, 12, <0x968b3a0> = !{!"unison-memory-partition", i64 0} :: (load 4 from %ir.cgep10, !tbaa !2)
+    renamable $p0 = C2_cmpeqi killed renamable $r1, 0
+    $r0 = C2_muxii killed $p0, 4, 3
+  
+  bb.15.while.end.i19.prol (freq 151):
+    successors: %bb.16(37), %bb.19(62)
+    liveins: $r0:0x00000001, $r16:0x00000001, $r17:0x00000001, $r19:0x00000001, $r20:0x00000001, $r21:0x00000001, $r29:0x00000001, $r30:0x00000001, $r31:0x00000001
+  
+    ANNOTATION_LABEL <0x965f990> = !{!"unison-block-frequency", i64 151}
+    renamable $r1 = L2_loadri_io renamable $r16, 0, <0x968b3a0> = !{!"unison-memory-partition", i64 0} :: (load 4 from %ir.dest, !tbaa !2)
+    BUNDLE implicit-def dead $p0, implicit-def $r1, implicit-def $pc, implicit killed $r1 {
+      renamable $p0 = C2_cmpeqi killed renamable $r1, 0
+      renamable $r1 = A2_tfrsi -1
+      J2_jumpfnewpt internal killed $p0, %bb.19, implicit-def $pc
+    }
+  
+  bb.16.while.body8.i22.prol (freq 56):
+    successors: %bb.17(37), %bb.19(62)
+    liveins: $r0:0x00000001, $r16:0x00000001, $r17:0x00000001, $r19:0x00000001, $r20:0x00000001, $r21:0x00000001, $r29:0x00000001, $r30:0x00000001, $r31:0x00000001
+  
+    ANNOTATION_LABEL <0x968b370> = !{!"unison-block-frequency", i64 56}
+    renamable $r1 = L2_loadri_io renamable $r16, 4, <0x968b3a0> = !{!"unison-memory-partition", i64 0} :: (load 4 from %ir.7, !tbaa !2)
+    BUNDLE implicit-def dead $p0, implicit-def $r1, implicit-def $pc, implicit killed $r1 {
+      renamable $p0 = C2_cmpeqi killed renamable $r1, 0
+      renamable $r1 = A2_tfrsi 0
+      J2_jumpfnewpt internal killed $p0, %bb.19, implicit-def $pc
+    }
+  
+  bb.17.while.body8.1.i28.prol (freq 21):
+    successors: %bb.18(37), %bb.19(62)
+    liveins: $r0:0x00000001, $r16:0x00000001, $r17:0x00000001, $r19:0x00000001, $r20:0x00000001, $r21:0x00000001, $r29:0x00000001, $r30:0x00000001, $r31:0x00000001
+  
+    ANNOTATION_LABEL <0x968b4a0> = !{!"unison-block-frequency", i64 21}
+    renamable $r1 = L2_loadri_io renamable $r16, 8, <0x968b3a0> = !{!"unison-memory-partition", i64 0} :: (load 4 from %ir.10, !tbaa !2)
+    BUNDLE implicit-def dead $p0, implicit-def $r1, implicit-def $pc, implicit killed $r1 {
+      renamable $p0 = C2_cmpeqi killed renamable $r1, 0
+      renamable $r1 = A2_tfrsi 1
+      J2_jumpfnewpt internal killed $p0, %bb.19, implicit-def $pc
+    }
+  
+  bb.18.while.body8.2.i32.prol (freq 8):
+    successors: %bb.19(100)
+    liveins: $r0:0x00000001, $r1:0x00000001, $r16:0x00000001, $r17:0x00000001, $r19:0x00000001, $r20:0x00000001, $r21:0x00000001, $r29:0x00000001, $r30:0x00000001, $r31:0x00000001
+  
+    ANNOTATION_LABEL <0x9643280> = !{!"unison-block-frequency", i64 8}
+    renamable $r2 = L2_loadri_io renamable $r16, 12, <0x968b3a0> = !{!"unison-memory-partition", i64 0} :: (load 4 from %ir.13, !tbaa !2)
+    renamable $p0 = C2_cmpeqi killed renamable $r2, 0
+    $r1 = C2_muxii killed $p0, 3, 2
+  
+  bb.19.Move.exit40.prol (freq 151):
+    successors: %bb.2(50), %bb.21(50)
+    liveins: $r0:0x00000001, $r1:0x00000001, $r16:0x00000001, $r17:0x00000001, $r19:0x00000001, $r20:0x00000001, $r21:0x00000001, $r29:0x00000001, $r30:0x00000001, $r31:0x00000001
+  
+    ANNOTATION_LABEL <0x965f990> = !{!"unison-block-frequency", i64 151}
+    BUNDLE implicit-def dead $r2, implicit $r17, implicit $r0, implicit $r16, implicit killed $r1 {
+      renamable $r2 = L4_loadri_rr renamable $r17, renamable $r0, 2 :: (load 4 from %ir.cgep11, !tbaa !2)
+      S4_storerinew_rr renamable $r16, killed renamable $r1, 2, internal killed renamable $r2 :: (store 4 into %ir.cgep12, !tbaa !2)
+    }
+    BUNDLE implicit-def dead $r2, implicit-def dead $pc, implicit-def dead $r31, implicit-def $r29, implicit-def $r18, implicit killed $r17, implicit killed $r0, implicit $r29 {
+      $r2 = A2_tfrsi 0
+      S4_storerinew_rr renamable $r17, killed renamable $r0, 2, internal killed $r2 :: (store 4 into %ir.cgep11, !tbaa !2)
+      J2_call @PrintAll, hexagoncsr, implicit-def dead $pc, implicit-def dead $r31, implicit $r29, implicit-def $r29
+      $r18 = A2_tfr killed $r17
+    }
+    BUNDLE implicit-def $r17, implicit-def dead $p0, implicit-def $pc, implicit $r19, implicit killed $r20 {
+      $r17 = A2_tfr $r19
+      renamable $p0 = C2_cmpeqi killed renamable $r20, 2
+      J2_jumpfnewpt internal killed $p0, %bb.21, implicit-def $pc
+    }
+    J2_jump %bb.2, implicit-def $pc
+  
+  bb.10 (freq 151):
+    successors: %bb.2(50), %bb.21(50)
+    liveins: $r16:0x00000001, $r17:0x00000001, $r19:0x00000001, $r20:0x00000001
+  
+    ANNOTATION_LABEL <0x965f990> = !{!"unison-block-frequency", i64 151}
+    BUNDLE implicit-def $r18, implicit-def $r21, implicit-def dead $p0, implicit-def $pc, implicit $r19, implicit killed $r20 {
+      $r18 = A2_tfr $r19
+      $r21 = A2_tfr $r20
+      renamable $p0 = C2_cmpeqi killed renamable $r20, 2
+      J2_jumptnewpt internal killed $p0, %bb.2, implicit-def $pc
+    }
+  
+  bb.21.if.end.lr.ph.new (freq 151):
+    successors: %bb.22(100)
+    liveins: $r16:0x00000001, $r17:0x00000001, $r18:0x00000001, $r21:0x00000001, $r29:0x00000001, $r30:0x00000001, $r31:0x00000001
+  
+    ANNOTATION_LABEL <0x965f990> = !{!"unison-block-frequency", i64 151}
+    BUNDLE implicit-def $r19, implicit-def $r20, implicit killed $r21 {
+      renamable $r19 = A2_addi killed renamable $r21, -1
+      renamable $r20 = A2_tfrsi 0
+    }
+  
+  bb.22.if.end (align 4, freq 4854):
+    successors: %bb.23(37), %bb.24(62)
+    liveins: $r16:0x00000001, $r17:0x00000001, $r18:0x00000001, $r19:0x00000001, $r20:0x00000001, $r29:0x00000001, $r30:0x00000001, $r31:0x00000001
+  
+    ANNOTATION_LABEL <0x9668090> = !{!"unison-block-frequency", i64 4854}
+    BUNDLE implicit-def $d0, implicit-def dead $r0, implicit-def dead $r1, implicit-def $d1, implicit-def dead $r2, implicit-def dead $r3, implicit-def dead $pc, implicit-def dead $r31, implicit-def $r29, implicit $r17, implicit $r19, implicit $r16, implicit $r18, implicit $r29 {
+      $d0 = A2_combinew $r17, $r19
+      $d1 = A2_combinew $r16, $r18
+      J2_call @Hanoi, hexagoncsr, implicit-def dead $pc, implicit-def dead $r31, implicit $r29, implicit internal killed $r0, implicit internal killed $r1, implicit internal killed $r2, implicit internal killed $r3, implicit-def $r29
+    }
+    renamable $r0 = L2_loadri_io renamable $r17, 0, <0x968b3a0> = !{!"unison-memory-partition", i64 0} :: (load 4 from %ir.source.tr43.unr, !tbaa !2)
+    BUNDLE implicit-def dead $p0, implicit-def $r0, implicit-def $pc, implicit killed $r0 {
+      renamable $p0 = C2_cmpeqi killed renamable $r0, 0
+      renamable $r0 = A2_tfrsi 0
+      J2_jumpfnewpt internal killed $p0, %bb.24, implicit-def $pc
+    }
+  
+  bb.23.while.body.i16 (freq 1820):
+    successors: %bb.39(37), %bb.24(62)
+    liveins: $r16:0x00000001, $r17:0x00000001, $r18:0x00000001, $r19:0x00000001, $r20:0x00000001, $r29:0x00000001, $r30:0x00000001, $r31:0x00000001
+  
+    ANNOTATION_LABEL <0x96681d0> = !{!"unison-block-frequency", i64 1820}
+    renamable $r0 = L2_loadri_io renamable $r17, 4, <0x968b3a0> = !{!"unison-memory-partition", i64 0} :: (load 4 from %ir.cgep16, !tbaa !2)
+    BUNDLE implicit-def dead $p0, implicit-def $r0, implicit-def $pc, implicit killed $r0 {
+      renamable $p0 = C2_cmpeqi killed renamable $r0, 0
+      renamable $r0 = A2_tfrsi 1
+      J2_jumpfnewpt internal killed $p0, %bb.24, implicit-def $pc
+    }
+  
+  bb.39.while.body.1.i35 (freq 682):
+    successors: %bb.40(37), %bb.24(62)
+    liveins: $r16:0x00000001, $r17:0x00000001, $r18:0x00000001, $r19:0x00000001, $r20:0x00000001, $r29:0x00000001, $r30:0x00000001, $r31:0x00000001
+  
+    ANNOTATION_LABEL <0x9686f90> = !{!"unison-block-frequency", i64 682}
+    renamable $r0 = L2_loadri_io renamable $r17, 8, <0x968b3a0> = !{!"unison-memory-partition", i64 0} :: (load 4 from %ir.cgep17, !tbaa !2)
+    BUNDLE implicit-def dead $p0, implicit-def $r0, implicit-def $pc, implicit killed $r0 {
+      renamable $p0 = C2_cmpeqi killed renamable $r0, 0
+      renamable $r0 = A2_tfrsi 2
+      J2_jumpfnewpt internal killed $p0, %bb.24, implicit-def $pc
+    }
+  
+  bb.40.while.body.2.i39 (freq 255):
+    successors: %bb.24(100)
+    liveins: $r0:0x00000001, $r16:0x00000001, $r17:0x00000001, $r18:0x00000001, $r19:0x00000001, $r20:0x00000001, $r29:0x00000001, $r30:0x00000001, $r31:0x00000001
+  
+    ANNOTATION_LABEL <0x9687030> = !{!"unison-block-frequency", i64 255}
+    renamable $r1 = L2_loadri_io renamable $r17, 12, <0x968b3a0> = !{!"unison-memory-partition", i64 0} :: (load 4 from %ir.cgep18, !tbaa !2)
+    renamable $p0 = C2_cmpeqi killed renamable $r1, 0
+    $r0 = C2_muxii killed $p0, 4, 3
+  
+  bb.24.while.end.i19 (align 4, freq 4854):
+    successors: %bb.25(37), %bb.28(62)
+    liveins: $r0:0x00000001, $r16:0x00000001, $r17:0x00000001, $r18:0x00000001, $r19:0x00000001, $r20:0x00000001, $r29:0x00000001, $r30:0x00000001, $r31:0x00000001
+  
+    ANNOTATION_LABEL <0x9668090> = !{!"unison-block-frequency", i64 4854}
+    renamable $r1 = L2_loadri_io renamable $r16, 0, <0x968b3a0> = !{!"unison-memory-partition", i64 0} :: (load 4 from %ir.dest, !tbaa !2)
+    BUNDLE implicit-def dead $p0, implicit-def $r1, implicit-def $pc, implicit killed $r1 {
+      renamable $p0 = C2_cmpeqi killed renamable $r1, 0
+      renamable $r1 = A2_tfrsi -1
+      J2_jumpfnewpt internal killed $p0, %bb.28, implicit-def $pc
+    }
+  
+  bb.25.while.body8.i22 (freq 1820):
+    successors: %bb.26(37), %bb.28(62)
+    liveins: $r0:0x00000001, $r16:0x00000001, $r17:0x00000001, $r18:0x00000001, $r19:0x00000001, $r20:0x00000001, $r29:0x00000001, $r30:0x00000001, $r31:0x00000001
+  
+    ANNOTATION_LABEL <0x96681d0> = !{!"unison-block-frequency", i64 1820}
+    renamable $r1 = L2_loadri_io renamable $r16, 4, <0x968b3a0> = !{!"unison-memory-partition", i64 0} :: (load 4 from %ir.37, !tbaa !2)
+    BUNDLE implicit-def dead $p0, implicit-def $r1, implicit-def $pc, implicit killed $r1 {
+      renamable $p0 = C2_cmpeqi killed renamable $r1, 0
+      renamable $r1 = A2_tfrsi 0
+      J2_jumpfnewpt internal killed $p0, %bb.28, implicit-def $pc
+    }
+  
+  bb.26.while.body8.1.i28 (freq 682):
+    successors: %bb.27(37), %bb.28(62)
+    liveins: $r0:0x00000001, $r16:0x00000001, $r17:0x00000001, $r18:0x00000001, $r19:0x00000001, $r20:0x00000001, $r29:0x00000001, $r30:0x00000001, $r31:0x00000001
+  
+    ANNOTATION_LABEL <0x9686f90> = !{!"unison-block-frequency", i64 682}
+    renamable $r1 = L2_loadri_io renamable $r16, 8, <0x968b3a0> = !{!"unison-memory-partition", i64 0} :: (load 4 from %ir.40, !tbaa !2)
+    BUNDLE implicit-def dead $p0, implicit-def $r1, implicit-def $pc, implicit killed $r1 {
+      renamable $p0 = C2_cmpeqi killed renamable $r1, 0
+      renamable $r1 = A2_tfrsi 1
+      J2_jumpfnewpt internal killed $p0, %bb.28, implicit-def $pc
+    }
+  
+  bb.27.while.body8.2.i32 (freq 255):
+    successors: %bb.28(100)
+    liveins: $r0:0x00000001, $r1:0x00000001, $r16:0x00000001, $r17:0x00000001, $r18:0x00000001, $r19:0x00000001, $r20:0x00000001, $r29:0x00000001, $r30:0x00000001, $r31:0x00000001
+  
+    ANNOTATION_LABEL <0x9687030> = !{!"unison-block-frequency", i64 255}
+    renamable $r2 = L2_loadri_io renamable $r16, 12, <0x968b3a0> = !{!"unison-memory-partition", i64 0} :: (load 4 from %ir.43, !tbaa !2)
+    renamable $p0 = C2_cmpeqi killed renamable $r2, 0
+    $r1 = C2_muxii killed $p0, 3, 2
+  
+  bb.28.Move.exit40 (align 4, freq 4854):
+    successors: %bb.29(37), %bb.32(62)
+    liveins: $r0:0x00000001, $r1:0x00000001, $r16:0x00000001, $r17:0x00000001, $r18:0x00000001, $r19:0x00000001, $r20:0x00000001, $r29:0x00000001, $r30:0x00000001, $r31:0x00000001
+  
+    ANNOTATION_LABEL <0x9668090> = !{!"unison-block-frequency", i64 4854}
+    BUNDLE implicit-def dead $r2, implicit-def $r21, implicit $r17, implicit $r0, implicit $r16, implicit killed $r1 {
+      renamable $r2 = L4_loadri_rr renamable $r17, renamable $r0, 2 :: (load 4 from %ir.cgep19, !tbaa !2)
+      S4_storerinew_rr renamable $r16, killed renamable $r1, 2, internal killed renamable $r2 :: (store 4 into %ir.cgep20, !tbaa !2)
+      renamable $r21 = A2_tfrsi 0
+    }
+    BUNDLE implicit-def dead $pc, implicit-def dead $r31, implicit-def $r29, implicit $r17, implicit killed $r0, implicit $r21, implicit $r29 {
+      S4_storeri_rr renamable $r17, killed renamable $r0, 2, renamable $r21 :: (store 4 into %ir.cgep19, !tbaa !2)
+      J2_call @PrintAll, hexagoncsr, implicit-def dead $pc, implicit-def dead $r31, implicit $r29, implicit-def $r29
+    }
+    BUNDLE implicit-def dead $r0, implicit-def dead $r1, implicit-def $d1, implicit-def dead $r2, implicit-def dead $r3, implicit-def dead $pc, implicit-def dead $r31, implicit-def $r29, implicit $r19, implicit $r18, implicit $r16, implicit $r17, implicit $r29 {
+      renamable $r0 = A2_addi renamable $r19, -1
+      $r1 = A2_tfr $r18
+      $d1 = A2_combinew $r16, $r17
+      J2_call @Hanoi, hexagoncsr, implicit-def dead $pc, implicit-def dead $r31, implicit $r29, implicit internal killed $r0, implicit internal killed $r1, implicit internal killed $r2, implicit internal killed $r3, implicit-def $r29
+    }
+    BUNDLE implicit-def dead $r0, implicit-def $pc, implicit $r18 {
+      renamable $r0 = L2_loadri_io renamable $r18, 0 :: (load 4 from %ir.spare.tr44.unr, !tbaa !2)
+      J4_cmpeqi_f_jumpnv_t internal killed $r0, 0, %bb.32, implicit-def $pc
+    }
+  
+  bb.29.while.body.i16.1 (freq 1820):
+    successors: %bb.30(37), %bb.32(62)
+    liveins: $r16:0x00000001, $r17:0x00000001, $r18:0x00000001, $r19:0x00000001, $r20:0x00000001, $r29:0x00000001, $r30:0x00000001, $r31:0x00000001
+  
+    ANNOTATION_LABEL <0x96681d0> = !{!"unison-block-frequency", i64 1820}
+    BUNDLE implicit-def $r21, implicit-def dead $r0, implicit-def $pc, implicit $r18 {
+      renamable $r21 = A2_tfrsi 1
+      renamable $r0 = L2_loadri_io renamable $r18, 4 :: (load 4 from %ir.cgep13, !tbaa !2)
+      J4_cmpeqi_f_jumpnv_t internal killed $r0, 0, %bb.32, implicit-def $pc
+    }
+  
+  bb.30.while.body.1.i35.1 (freq 682):
+    successors: %bb.31(37), %bb.32(62)
+    liveins: $r16:0x00000001, $r17:0x00000001, $r18:0x00000001, $r19:0x00000001, $r20:0x00000001, $r29:0x00000001, $r30:0x00000001, $r31:0x00000001
+  
+    ANNOTATION_LABEL <0x9686f90> = !{!"unison-block-frequency", i64 682}
+    BUNDLE implicit-def $r21, implicit-def dead $r0, implicit-def $pc, implicit $r18 {
+      renamable $r21 = A2_tfrsi 2
+      renamable $r0 = L2_loadri_io renamable $r18, 8 :: (load 4 from %ir.cgep14, !tbaa !2)
+      J4_cmpeqi_f_jumpnv_t internal killed $r0, 0, %bb.32, implicit-def $pc
+    }
+  
+  bb.31.while.body.2.i39.1 (freq 255):
+    successors: %bb.32(100)
+    liveins: $r16:0x00000001, $r17:0x00000001, $r18:0x00000001, $r19:0x00000001, $r20:0x00000001, $r21:0x00000001, $r29:0x00000001, $r30:0x00000001, $r31:0x00000001
+  
+    ANNOTATION_LABEL <0x9687030> = !{!"unison-block-frequency", i64 255}
+    renamable $r0 = L2_loadri_io renamable $r18, 12, <0x968b3a0> = !{!"unison-memory-partition", i64 0} :: (load 4 from %ir.cgep15, !tbaa !2)
+    renamable $p0 = C2_cmpeqi killed renamable $r0, 0
+    $r21 = C2_muxii killed $p0, 4, 3
+  
+  bb.32.while.end.i19.1 (align 4, freq 4854):
+    successors: %bb.33(37), %bb.36(62)
+    liveins: $r16:0x00000001, $r17:0x00000001, $r18:0x00000001, $r19:0x00000001, $r20:0x00000001, $r21:0x00000001, $r29:0x00000001, $r30:0x00000001, $r31:0x00000001
+  
+    ANNOTATION_LABEL <0x9668090> = !{!"unison-block-frequency", i64 4854}
+    renamable $r0 = L2_loadri_io renamable $r16, 0, <0x968b3a0> = !{!"unison-memory-partition", i64 0} :: (load 4 from %ir.dest, !tbaa !2)
+    BUNDLE implicit-def dead $p0, implicit-def $r0, implicit-def $pc, implicit killed $r0 {
+      renamable $p0 = C2_cmpeqi killed renamable $r0, 0
+      renamable $r0 = A2_tfrsi -1
+      J2_jumpfnewpt internal killed $p0, %bb.36, implicit-def $pc
+    }
+  
+  bb.33.while.body8.i22.1 (freq 1820):
+    successors: %bb.34(37), %bb.36(62)
+    liveins: $r16:0x00000001, $r17:0x00000001, $r18:0x00000001, $r19:0x00000001, $r20:0x00000001, $r21:0x00000001, $r29:0x00000001, $r30:0x00000001, $r31:0x00000001
+  
+    ANNOTATION_LABEL <0x96681d0> = !{!"unison-block-frequency", i64 1820}
+    renamable $r0 = L2_loadri_io renamable $r16, 4, <0x968b3a0> = !{!"unison-memory-partition", i64 0} :: (load 4 from %ir.55, !tbaa !2)
+    BUNDLE implicit-def dead $p0, implicit-def $r0, implicit-def $pc, implicit killed $r0 {
+      renamable $p0 = C2_cmpeqi killed renamable $r0, 0
+      renamable $r0 = A2_tfrsi 0
+      J2_jumpfnewpt internal killed $p0, %bb.36, implicit-def $pc
+    }
+  
+  bb.34.while.body8.1.i28.1 (freq 682):
+    successors: %bb.35(37), %bb.36(62)
+    liveins: $r16:0x00000001, $r17:0x00000001, $r18:0x00000001, $r19:0x00000001, $r20:0x00000001, $r21:0x00000001, $r29:0x00000001, $r30:0x00000001, $r31:0x00000001
+  
+    ANNOTATION_LABEL <0x9686f90> = !{!"unison-block-frequency", i64 682}
+    renamable $r0 = L2_loadri_io renamable $r16, 8, <0x968b3a0> = !{!"unison-memory-partition", i64 0} :: (load 4 from %ir.58, !tbaa !2)
+    BUNDLE implicit-def dead $p0, implicit-def $r0, implicit-def $pc, implicit killed $r0 {
+      renamable $p0 = C2_cmpeqi killed renamable $r0, 0
+      renamable $r0 = A2_tfrsi 1
+      J2_jumpfnewpt internal killed $p0, %bb.36, implicit-def $pc
+    }
+  
+  bb.35.while.body8.2.i32.1 (freq 255):
+    successors: %bb.36(100)
+    liveins: $r0:0x00000001, $r16:0x00000001, $r17:0x00000001, $r18:0x00000001, $r19:0x00000001, $r20:0x00000001, $r21:0x00000001, $r29:0x00000001, $r30:0x00000001, $r31:0x00000001
+  
+    ANNOTATION_LABEL <0x9687030> = !{!"unison-block-frequency", i64 255}
+    renamable $r1 = L2_loadri_io renamable $r16, 12, <0x968b3a0> = !{!"unison-memory-partition", i64 0} :: (load 4 from %ir.61, !tbaa !2)
+    renamable $p0 = C2_cmpeqi killed renamable $r1, 0
+    $r0 = C2_muxii killed $p0, 3, 2
+  
+  bb.36.Move.exit40.1 (align 4, freq 4854):
+    successors: %bb.1(3), %bb.22(96)
+    liveins: $r0:0x00000001, $r16:0x00000001, $r17:0x00000001, $r18:0x00000001, $r19:0x00000001, $r20:0x00000001, $r21:0x00000001, $r29:0x00000001, $r30:0x00000001, $r31:0x00000001
+  
+    ANNOTATION_LABEL <0x9668090> = !{!"unison-block-frequency", i64 4854}
+    BUNDLE implicit-def dead $r1, implicit $r18, implicit $r21, implicit $r16, implicit killed $r0 {
+      renamable $r1 = L4_loadri_rr renamable $r18, renamable $r21, 2 :: (load 4 from %ir.cgep21, !tbaa !2)
+      S4_storerinew_rr renamable $r16, killed renamable $r0, 2, internal killed renamable $r1 :: (store 4 into %ir.cgep22, !tbaa !2)
+    }
+    BUNDLE implicit-def dead $pc, implicit-def dead $r31, implicit-def $r29, implicit $r18, implicit killed $r21, implicit $r20, implicit $r29 {
+      S4_storeri_rr renamable $r18, killed renamable $r21, 2, renamable $r20 :: (store 4 into %ir.cgep21, !tbaa !2)
+      J2_call @PrintAll, hexagoncsr, implicit-def dead $pc, implicit-def dead $r31, implicit $r29, implicit-def $r29
+    }
+    BUNDLE implicit-def $r19, implicit-def $pc, implicit $r19 {
+      renamable $r19 = A2_addi renamable $r19, -2
+      J4_cmpeqi_f_jumpnv_t internal $r19, 0, %bb.22, implicit-def $pc
+    }
+  
+  bb.1 (freq 455):
+    successors: %bb.2(100)
+    liveins: $r16, $r17
+  
+    ANNOTATION_LABEL <0x96b4ff0> = !{!"unison-block-frequency", i64 455}
+    $r19 = A2_tfr killed $r17
+  
+  bb.2.if.then (freq 606):
+    successors: %bb.3(37), %bb.4(62)
+    liveins: $r16:0x00000001, $r19:0x00000001
+  
+    ANNOTATION_LABEL <0x968a490> = !{!"unison-block-frequency", i64 606}
+    renamable $r0 = L2_loadri_io renamable $r19, 0, <0x968b3a0> = !{!"unison-memory-partition", i64 0} :: (load 4 from %ir.source.tr.lcssa, !tbaa !2)
+    BUNDLE implicit-def dead $p0, implicit-def $r0, implicit-def $pc, implicit killed $r0 {
+      renamable $p0 = C2_cmpeqi killed renamable $r0, 0
+      renamable $r0 = A2_tfrsi 0
+      J2_jumpfnewpt internal killed $p0, %bb.4, implicit-def $pc
+    }
+  
+  bb.3.while.body.i (freq 227):
+    successors: %bb.37(37), %bb.4(62)
+    liveins: $r16:0x00000001, $r19:0x00000001
+  
+    ANNOTATION_LABEL <0x96b5130> = !{!"unison-block-frequency", i64 227}
+    renamable $r0 = L2_loadri_io renamable $r19, 4, <0x968b3a0> = !{!"unison-memory-partition", i64 0} :: (load 4 from %ir.cgep, !tbaa !2)
+    BUNDLE implicit-def dead $p0, implicit-def $r0, implicit-def $pc, implicit killed $r0 {
+      renamable $p0 = C2_cmpeqi killed renamable $r0, 0
+      renamable $r0 = A2_tfrsi 1
+      J2_jumpfnewpt internal killed $p0, %bb.4, implicit-def $pc
+    }
+  
+  bb.37.while.body.1.i (freq 85):
+    successors: %bb.38(37), %bb.4(62)
+    liveins: $r16:0x00000001, $r19:0x00000001
+  
+    ANNOTATION_LABEL <0x95fe7d0> = !{!"unison-block-frequency", i64 85}
+    renamable $r0 = L2_loadri_io renamable $r19, 8, <0x968b3a0> = !{!"unison-memory-partition", i64 0} :: (load 4 from %ir.cgep1, !tbaa !2)
+    BUNDLE implicit-def dead $p0, implicit-def $r0, implicit-def $pc, implicit killed $r0 {
+      renamable $p0 = C2_cmpeqi killed renamable $r0, 0
+      renamable $r0 = A2_tfrsi 2
+      J2_jumpfnewpt internal killed $p0, %bb.4, implicit-def $pc
+    }
+  
+  bb.38.while.body.2.i (freq 31):
+    successors: %bb.4(100)
+    liveins: $r0:0x00000001, $r16:0x00000001, $r19:0x00000001
+  
+    ANNOTATION_LABEL <0x95fe8d0> = !{!"unison-block-frequency", i64 31}
+    renamable $r1 = L2_loadri_io renamable $r19, 12, <0x968b3a0> = !{!"unison-memory-partition", i64 0} :: (load 4 from %ir.cgep2, !tbaa !2)
+    renamable $p0 = C2_cmpeqi killed renamable $r1, 0
+    $r0 = C2_muxii killed $p0, 4, 3
+  
+  bb.4.while.end.i (freq 606):
+    successors: %bb.5(37), %bb.8(62)
+    liveins: $r0:0x00000001, $r16:0x00000001, $r19:0x00000001
+  
+    ANNOTATION_LABEL <0x968a490> = !{!"unison-block-frequency", i64 606}
+    renamable $r1 = L2_loadri_io renamable $r16, 0, <0x968b3a0> = !{!"unison-memory-partition", i64 0} :: (load 4 from %ir.dest, !tbaa !2)
+    BUNDLE implicit-def dead $p0, implicit-def $r1, implicit-def $pc, implicit killed $r1 {
+      renamable $p0 = C2_cmpeqi killed renamable $r1, 0
+      renamable $r1 = A2_tfrsi -1
+      J2_jumpfnewpt internal killed $p0, %bb.8, implicit-def $pc
+    }
+  
+  bb.5.while.body8.i (freq 227):
+    successors: %bb.6(37), %bb.8(62)
+    liveins: $r0:0x00000001, $r16:0x00000001, $r19:0x00000001
+  
+    ANNOTATION_LABEL <0x96b5130> = !{!"unison-block-frequency", i64 227}
+    renamable $r1 = L2_loadri_io renamable $r16, 4, <0x968b3a0> = !{!"unison-memory-partition", i64 0} :: (load 4 from %ir.22, !tbaa !2)
+    BUNDLE implicit-def dead $p0, implicit-def $r1, implicit-def $pc, implicit killed $r1 {
+      renamable $p0 = C2_cmpeqi killed renamable $r1, 0
+      renamable $r1 = A2_tfrsi 0
+      J2_jumpfnewpt internal killed $p0, %bb.8, implicit-def $pc
+    }
+  
+  bb.6.while.body8.1.i (freq 85):
+    successors: %bb.7(37), %bb.8(62)
+    liveins: $r0:0x00000001, $r16:0x00000001, $r19:0x00000001
+  
+    ANNOTATION_LABEL <0x95fe7d0> = !{!"unison-block-frequency", i64 85}
+    renamable $r1 = L2_loadri_io renamable $r16, 8, <0x968b3a0> = !{!"unison-memory-partition", i64 0} :: (load 4 from %ir.25, !tbaa !2)
+    BUNDLE implicit-def dead $p0, implicit-def $r1, implicit-def $pc, implicit killed $r1 {
+      renamable $p0 = C2_cmpeqi killed renamable $r1, 0
+      renamable $r1 = A2_tfrsi 1
+      J2_jumpfnewpt internal killed $p0, %bb.8, implicit-def $pc
+    }
+  
+  bb.7.while.body8.2.i (freq 31):
+    successors: %bb.8(100)
+    liveins: $r0:0x00000001, $r1:0x00000001, $r16:0x00000001, $r19:0x00000001
+  
+    ANNOTATION_LABEL <0x95fe8d0> = !{!"unison-block-frequency", i64 31}
+    renamable $r2 = L2_loadri_io renamable $r16, 12, <0x968b3a0> = !{!"unison-memory-partition", i64 0} :: (load 4 from %ir.28, !tbaa !2)
+    renamable $p0 = C2_cmpeqi killed renamable $r2, 0
+    $r1 = C2_muxii killed $p0, 3, 2
+  
+  bb.8.Move.exit (freq 606):
+    liveins: $r0:0x00000001, $r1:0x00000001, $r16:0x00000001, $r19:0x00000001
+    exit
+  
+    ANNOTATION_LABEL <0x968a490> = !{!"unison-block-frequency", i64 606}
+    BUNDLE implicit-def dead $r2, implicit $r19, implicit $r0, implicit killed $r16, implicit killed $r1 {
+      renamable $r2 = L4_loadri_rr renamable $r19, renamable $r0, 2 :: (load 4 from %ir.cgep6, !tbaa !2)
+      S4_storerinew_rr killed renamable $r16, killed renamable $r1, 2, internal killed renamable $r2 :: (store 4 into %ir.cgep7, !tbaa !2)
+    }
+    BUNDLE implicit-def dead $r2, implicit-def $d8, implicit-def $r16, implicit-def $r17, implicit killed $r19, implicit killed $r0, implicit $r29 {
+      $r2 = A2_tfrsi 0
+      S4_storerinew_rr killed renamable $r19, killed renamable $r0, 2, internal killed $r2 :: (store 4 into %ir.cgep6, !tbaa !2)
+      $d8 = L2_loadrd_io $r29, 16 :: (load 8 from %fixed-stack.2)
+    }
+    BUNDLE implicit-def $d9, implicit-def $r18, implicit-def $r19, implicit-def $d10, implicit-def $r20, implicit-def $r21, implicit killed $r29 {
+      $d9 = L2_loadrd_io $r29, 8 :: (load 8 from %fixed-stack.1)
+      $d10 = L2_loadrd_io killed $r29, 0 :: (load 8 from %fixed-stack.0)
+    }
+    BUNDLE implicit-def $d15, implicit-def $r30, implicit-def $r31, implicit-def $r29, implicit killed $r30, implicit killed $framekey, implicit killed $d8, implicit killed $d9, implicit killed $d10 {
+      $d15 = L2_deallocframe killed $r30, implicit-def $r29, implicit killed $framekey
+      J2_jump @PrintAll, hexagoncsr, implicit killed $d8, implicit killed $d9, implicit killed $d10
+    }
+
+...
+---
+name:            main
+alignment:       4
+exposesReturnsTwice: false
+legalized:       false
+regBankSelected: false
+selected:        false
+failedISel:      false
+tracksRegLiveness: true
+hasWinCFI:       false
+registers:       []
+liveins:         []
+frameInfo:       
+  isFrameAddressTaken: false
+  isReturnAddressTaken: false
+  hasStackMap:     false
+  hasPatchPoint:   false
+  stackSize:       8
+  offsetAdjustment: 0
+  maxAlignment:    4
+  adjustsStack:    true
+  hasCalls:        true
+  stackProtector:  ''
+  maxCallFrameSize: 8
+  cvBytesOfCalleeSavedRegisters: 0
+  hasOpaqueSPAdjustment: false
+  hasVAStart:      false
+  hasMustTailInVarArgFunc: false
+  localFrameSize:  0
+  savePoint:       ''
+  restorePoint:    ''
+fixedStack:      []
+stack:           []
+constants:       []
+body:             |
+  bb.0.entry (freq 8):
+    liveouts: $r0, $d15, $r30, $r31, $pc, $r29, $r30, $framekey
+  
+    ANNOTATION_LABEL <0x9643280> = !{!"unison-block-frequency", i64 8}
+    BUNDLE implicit-def $d0, implicit-def $r0, implicit-def $r1, implicit-def $r29, implicit-def $r30, implicit-def $d3, implicit-def $r6, implicit-def $r7, implicit $r29, implicit killed $framekey, implicit killed $framelimit, implicit killed $r30, implicit killed $r31 {
+      renamable $d0 = CONST64 8589934593
+      $r29 = S2_allocframe $r29, 8, implicit-def $r30, implicit killed $framekey, implicit killed $framelimit, implicit killed $r30, implicit killed $r31 :: (store 4 into stack)
+      renamable $d3 = A2_tfrpi 0
+    }
+    BUNDLE implicit $r29, implicit killed $d0 {
+      S4_storeiri_io $r29, 0, 4 :: (store 4 into stack)
+      PS_storerdabs @A, killed renamable $d0
+    }
+    BUNDLE implicit-def $r0, implicit-def $d2, implicit-def $r4, implicit-def $r5 {
+      $r0 = A2_tfrsi @.str.6
+      renamable $d2 = CONST64 17179869187
+    }
+    BUNDLE implicit killed $d2, implicit $d3 {
+      PS_storerdabs @A + 8, killed renamable $d2
+      PS_storerdabs @B + 8, renamable $d3
+    }
+    BUNDLE implicit $d3 {
+      PS_storerdabs @B, renamable $d3
+      PS_storerdabs @C + 8, renamable $d3
+    }
+    BUNDLE implicit-def dead $pc, implicit-def dead $r31, implicit-def $r29, implicit-def dead $r0, implicit killed $d3, implicit $r29, implicit killed $r0 {
+      PS_storerdabs @C, killed renamable $d3
+      J2_call @printf, hexagoncsr, implicit-def dead $pc, implicit-def dead $r31, implicit $r29, implicit killed $r0, implicit-def $r29, implicit-def dead $r0
+    }
+    BUNDLE implicit-def $r0, implicit-def dead $pc, implicit-def dead $r31, implicit-def $r29, implicit $r29 {
+      $r0 = A2_tfrsi @str.9
+      J2_call @puts, hexagoncsr, implicit-def dead $pc, implicit-def dead $r31, implicit $r29, implicit internal killed $r0, implicit-def $r29, implicit-def dead $r0
+    }
+    J2_call @PrintAll, hexagoncsr, implicit-def dead $pc, implicit-def dead $r31, implicit $r29, implicit-def $r29
+    BUNDLE implicit-def $r0, implicit-def dead $pc, implicit-def dead $r31, implicit-def $r29, implicit $r29 {
+      $r0 = A2_tfrsi @str.10
+      J2_call @puts, hexagoncsr, implicit-def dead $pc, implicit-def dead $r31, implicit $r29, implicit internal killed $r0, implicit-def $r29, implicit-def dead $r0
+    }
+    BUNDLE implicit-def $d0, implicit-def $r0, implicit-def $r1, implicit-def $r2 {
+      $d0 = A2_combineii @A, 4
+      $r2 = A2_tfrsi @B
+    }
+    BUNDLE implicit-def dead $r3, implicit-def dead $pc, implicit-def dead $r31, implicit-def $r29, implicit killed $r29, implicit killed $r0, implicit killed $r1, implicit killed $r2 {
+      $r3 = A2_tfrsi @C
+      J2_call @Hanoi, hexagoncsr, implicit-def dead $pc, implicit-def dead $r31, implicit killed $r29, implicit killed $r0, implicit killed $r1, implicit killed $r2, implicit internal killed $r3, implicit-def $r29
+    }
+    BUNDLE implicit-def dead $r0, implicit-def $d15, implicit-def $r30, implicit-def $r31, implicit-def $pc, implicit-def $r29, implicit killed $r30, implicit killed $framekey {
+      $r0 = A2_tfrsi 0
+      $d15 = L4_return killed $r30, implicit-def $pc, implicit-def $r29, implicit killed $framekey, implicit-def dead $pc, implicit internal killed $r0
+    }
+
+...

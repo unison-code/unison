@@ -1,0 +1,377 @@
+--- |
+  ; ModuleID = '00209.ll'
+  source_filename = "./tests/single-exec/00209.c"
+  target datalayout = "e-m:e-p:32:32:32-a:0-n16:32-i64:64:64-i32:32:32-i16:16:16-i1:8:8-f32:32:32-f64:64:64-v32:32:32-v64:64:64-v512:512:512-v1024:1024:1024-v2048:2048:2048"
+  target triple = "hexagon"
+  
+  %struct.S = type opaque
+  
+  @e = common dso_local local_unnamed_addr global i32* null, align 4
+  @e1 = common dso_local local_unnamed_addr global i32* null, align 4
+  @e2 = common dso_local local_unnamed_addr global i32* null, align 4
+  @s = common dso_local local_unnamed_addr global %struct.S* null, align 4
+  @s1 = common dso_local local_unnamed_addr global %struct.S* null, align 4
+  @s2 = common dso_local local_unnamed_addr global %struct.S* null, align 4
+  
+  ; Function Attrs: nounwind
+  define dso_local i32 @f1(i32 (...)* nocapture %fp, i32 %i) local_unnamed_addr #0 {
+  entry:
+    %callee.knr.cast = bitcast i32 (...)* %fp to i32 (i32)*
+    %call = tail call i32 %callee.knr.cast(i32 %i) #2
+    ret i32 %call
+  }
+  
+  ; Function Attrs: nounwind
+  define dso_local i32 @f2(i32 (i32)* nocapture %fp, i32 %i) local_unnamed_addr #0 {
+  entry:
+    %call = tail call i32 %fp(i32 %i) #2
+    ret i32 %call
+  }
+  
+  ; Function Attrs: nounwind
+  define dso_local i32 @f3(i32 (i32)* nocapture %fp, i32 %i) local_unnamed_addr #0 {
+  entry:
+    %call = tail call i32 %fp(i32 %i) #2
+    ret i32 %call
+  }
+  
+  ; Function Attrs: nounwind
+  define dso_local i32 @f4(i32 (i32)** nocapture readonly %fp, i32 %i) local_unnamed_addr #0 {
+  entry:
+    %cgep = getelementptr inbounds i32 (i32)*, i32 (i32)** %fp, i32 %i
+    %0 = load i32 (i32)*, i32 (i32)** %cgep, align 4, !tbaa !2
+    %call = tail call i32 %0(i32 %i) #2
+    ret i32 %call
+  }
+  
+  ; Function Attrs: nounwind
+  define dso_local i32 @f5(i32 (i32 (...)*)* nocapture %fp, i32 (...)* %i) local_unnamed_addr #0 {
+  entry:
+    %call = tail call i32 %fp(i32 (...)* %i) #2
+    ret i32 %call
+  }
+  
+  ; Function Attrs: norecurse nounwind readnone
+  define dso_local i32 @main() local_unnamed_addr #1 {
+  entry:
+    ret i32 0
+  }
+  
+  ; Function Attrs: nounwind
+  declare void @llvm.stackprotector(i8*, i8**) #2
+  
+  attributes #0 = { nounwind "correctly-rounded-divide-sqrt-fp-math"="false" "disable-tail-calls"="false" "less-precise-fpmad"="false" "min-legal-vector-width"="0" "no-frame-pointer-elim"="true" "no-frame-pointer-elim-non-leaf" "no-infs-fp-math"="false" "no-jump-tables"="false" "no-nans-fp-math"="false" "no-signed-zeros-fp-math"="false" "no-trapping-math"="false" "stack-protector-buffer-size"="8" "target-cpu"="hexagonv5" "target-features"="-long-calls" "unsafe-fp-math"="false" "use-soft-float"="false" }
+  attributes #1 = { norecurse nounwind readnone "correctly-rounded-divide-sqrt-fp-math"="false" "disable-tail-calls"="false" "less-precise-fpmad"="false" "min-legal-vector-width"="0" "no-frame-pointer-elim"="true" "no-frame-pointer-elim-non-leaf" "no-infs-fp-math"="false" "no-jump-tables"="false" "no-nans-fp-math"="false" "no-signed-zeros-fp-math"="false" "no-trapping-math"="false" "stack-protector-buffer-size"="8" "target-cpu"="hexagonv5" "target-features"="-long-calls" "unsafe-fp-math"="false" "use-soft-float"="false" }
+  attributes #2 = { nounwind }
+  
+  !llvm.module.flags = !{!0}
+  !llvm.ident = !{!1}
+  
+  !0 = !{i32 1, !"wchar_size", i32 4}
+  !1 = !{!"clang version 9.0.0 (http://llvm.org/git/clang.git 4e215e73ed6b499f3ccf23263c96cd188e0eda2c) (git@github.com:unison-code/llvm.git 9914ec00db7eeaf764045b9071638c2421cd32e7)"}
+  !2 = !{!3, !3, i64 0}
+  !3 = !{!"any pointer", !4, i64 0}
+  !4 = !{!"omnipotent char", !5, i64 0}
+  !5 = !{!"Simple C/C++ TBAA"}
+
+...
+---
+name:            f1
+alignment:       4
+exposesReturnsTwice: false
+legalized:       false
+regBankSelected: false
+selected:        false
+failedISel:      false
+tracksRegLiveness: true
+hasWinCFI:       false
+registers:       []
+liveins:         
+  - { reg: '$r0', virtual-reg: '' }
+  - { reg: '$r1', virtual-reg: '' }
+frameInfo:       
+  isFrameAddressTaken: false
+  isReturnAddressTaken: false
+  hasStackMap:     false
+  hasPatchPoint:   false
+  stackSize:       0
+  offsetAdjustment: 0
+  maxAlignment:    0
+  adjustsStack:    true
+  hasCalls:        true
+  stackProtector:  ''
+  maxCallFrameSize: 0
+  cvBytesOfCalleeSavedRegisters: 0
+  hasOpaqueSPAdjustment: false
+  hasVAStart:      false
+  hasMustTailInVarArgFunc: false
+  localFrameSize:  0
+  savePoint:       ''
+  restorePoint:    ''
+fixedStack:      []
+stack:           []
+constants:       []
+body:             |
+  bb.0.entry (freq 8):
+    liveins: $r0, $r1
+    liveouts: $pc, $r29, $framekey, $pc, $r0
+  
+    ANNOTATION_LABEL <0x7f161b0> = !{!"unison-block-frequency", i64 8}
+    BUNDLE implicit-def $r2, implicit-def $r29, implicit-def $r30, implicit-def $r0, implicit killed $r0, implicit $r29, implicit killed $framekey, implicit killed $framelimit, implicit killed $r30, implicit killed $r31, implicit killed $r1 {
+      $r2 = A2_tfr killed $r0
+      $r29 = S2_allocframe $r29, 0, implicit-def $r30, implicit killed $framekey, implicit killed $framelimit, implicit killed $r30, implicit killed $r31 :: (store 4 into stack)
+      $r0 = A2_tfr killed $r1
+    }
+    J2_callr killed renamable $r2, hexagoncsr, implicit-def dead $pc, implicit-def dead $r31, implicit killed $r29, implicit $r0, implicit-def $r29, implicit-def $r0
+    $d15 = L4_return killed $r30, <0x7f16260> = !{!"unison-memory-partition", i64 0}, implicit-def $pc, implicit-def $r29, implicit killed $framekey, implicit-def dead $pc, implicit killed $r0
+
+...
+---
+name:            f2
+alignment:       4
+exposesReturnsTwice: false
+legalized:       false
+regBankSelected: false
+selected:        false
+failedISel:      false
+tracksRegLiveness: true
+hasWinCFI:       false
+registers:       []
+liveins:         
+  - { reg: '$r0', virtual-reg: '' }
+  - { reg: '$r1', virtual-reg: '' }
+frameInfo:       
+  isFrameAddressTaken: false
+  isReturnAddressTaken: false
+  hasStackMap:     false
+  hasPatchPoint:   false
+  stackSize:       0
+  offsetAdjustment: 0
+  maxAlignment:    0
+  adjustsStack:    true
+  hasCalls:        true
+  stackProtector:  ''
+  maxCallFrameSize: 0
+  cvBytesOfCalleeSavedRegisters: 0
+  hasOpaqueSPAdjustment: false
+  hasVAStart:      false
+  hasMustTailInVarArgFunc: false
+  localFrameSize:  0
+  savePoint:       ''
+  restorePoint:    ''
+fixedStack:      []
+stack:           []
+constants:       []
+body:             |
+  bb.0.entry (freq 8):
+    liveins: $r0, $r1
+    liveouts: $pc, $r29, $framekey, $pc, $r0
+  
+    ANNOTATION_LABEL <0x7f161b0> = !{!"unison-block-frequency", i64 8}
+    BUNDLE implicit-def $r2, implicit-def $r29, implicit-def $r30, implicit-def $r0, implicit killed $r0, implicit $r29, implicit killed $framekey, implicit killed $framelimit, implicit killed $r30, implicit killed $r31, implicit killed $r1 {
+      $r2 = A2_tfr killed $r0
+      $r29 = S2_allocframe $r29, 0, implicit-def $r30, implicit killed $framekey, implicit killed $framelimit, implicit killed $r30, implicit killed $r31 :: (store 4 into stack)
+      $r0 = A2_tfr killed $r1
+    }
+    J2_callr killed renamable $r2, hexagoncsr, implicit-def dead $pc, implicit-def dead $r31, implicit killed $r29, implicit $r0, implicit-def $r29, implicit-def $r0
+    $d15 = L4_return killed $r30, <0x7f16260> = !{!"unison-memory-partition", i64 0}, implicit-def $pc, implicit-def $r29, implicit killed $framekey, implicit-def dead $pc, implicit killed $r0
+
+...
+---
+name:            f3
+alignment:       4
+exposesReturnsTwice: false
+legalized:       false
+regBankSelected: false
+selected:        false
+failedISel:      false
+tracksRegLiveness: true
+hasWinCFI:       false
+registers:       []
+liveins:         
+  - { reg: '$r0', virtual-reg: '' }
+  - { reg: '$r1', virtual-reg: '' }
+frameInfo:       
+  isFrameAddressTaken: false
+  isReturnAddressTaken: false
+  hasStackMap:     false
+  hasPatchPoint:   false
+  stackSize:       0
+  offsetAdjustment: 0
+  maxAlignment:    0
+  adjustsStack:    true
+  hasCalls:        true
+  stackProtector:  ''
+  maxCallFrameSize: 0
+  cvBytesOfCalleeSavedRegisters: 0
+  hasOpaqueSPAdjustment: false
+  hasVAStart:      false
+  hasMustTailInVarArgFunc: false
+  localFrameSize:  0
+  savePoint:       ''
+  restorePoint:    ''
+fixedStack:      []
+stack:           []
+constants:       []
+body:             |
+  bb.0.entry (freq 8):
+    liveins: $r0, $r1
+    liveouts: $pc, $r29, $framekey, $pc, $r0
+  
+    ANNOTATION_LABEL <0x7f161b0> = !{!"unison-block-frequency", i64 8}
+    BUNDLE implicit-def $r2, implicit-def $r29, implicit-def $r30, implicit-def $r0, implicit killed $r0, implicit $r29, implicit killed $framekey, implicit killed $framelimit, implicit killed $r30, implicit killed $r31, implicit killed $r1 {
+      $r2 = A2_tfr killed $r0
+      $r29 = S2_allocframe $r29, 0, implicit-def $r30, implicit killed $framekey, implicit killed $framelimit, implicit killed $r30, implicit killed $r31 :: (store 4 into stack)
+      $r0 = A2_tfr killed $r1
+    }
+    J2_callr killed renamable $r2, hexagoncsr, implicit-def dead $pc, implicit-def dead $r31, implicit killed $r29, implicit $r0, implicit-def $r29, implicit-def $r0
+    $d15 = L4_return killed $r30, <0x7f16260> = !{!"unison-memory-partition", i64 0}, implicit-def $pc, implicit-def $r29, implicit killed $framekey, implicit-def dead $pc, implicit killed $r0
+
+...
+---
+name:            f4
+alignment:       4
+exposesReturnsTwice: false
+legalized:       false
+regBankSelected: false
+selected:        false
+failedISel:      false
+tracksRegLiveness: true
+hasWinCFI:       false
+registers:       []
+liveins:         
+  - { reg: '$r0', virtual-reg: '' }
+  - { reg: '$r1', virtual-reg: '' }
+frameInfo:       
+  isFrameAddressTaken: false
+  isReturnAddressTaken: false
+  hasStackMap:     false
+  hasPatchPoint:   false
+  stackSize:       0
+  offsetAdjustment: 0
+  maxAlignment:    0
+  adjustsStack:    true
+  hasCalls:        true
+  stackProtector:  ''
+  maxCallFrameSize: 0
+  cvBytesOfCalleeSavedRegisters: 0
+  hasOpaqueSPAdjustment: false
+  hasVAStart:      false
+  hasMustTailInVarArgFunc: false
+  localFrameSize:  0
+  savePoint:       ''
+  restorePoint:    ''
+fixedStack:      []
+stack:           []
+constants:       []
+body:             |
+  bb.0.entry (freq 8):
+    liveins: $r0, $r1
+    liveouts: $pc, $r29, $framekey, $pc, $r0
+  
+    ANNOTATION_LABEL <0x7f161b0> = !{!"unison-block-frequency", i64 8}
+    $r29 = S2_allocframe $r29, 0, <0x7f16260> = !{!"unison-memory-partition", i64 0}, implicit-def $r30, implicit killed $framekey, implicit killed $framelimit, implicit killed $r30, implicit killed $r31 :: (store 4 into stack)
+    BUNDLE implicit-def $r2, implicit-def $r0, implicit killed $r0, implicit killed $r1 {
+      renamable $r2 = L4_loadri_rr killed renamable $r0, renamable $r1, 2 :: (load 4 from %ir.cgep, !tbaa !2)
+      $r0 = A2_tfr killed $r1
+    }
+    J2_callr killed renamable $r2, hexagoncsr, implicit-def dead $pc, implicit-def dead $r31, implicit killed $r29, implicit $r0, implicit-def $r29, implicit-def $r0
+    $d15 = L4_return killed $r30, <0x7f16260> = !{!"unison-memory-partition", i64 0}, implicit-def $pc, implicit-def $r29, implicit killed $framekey, implicit-def dead $pc, implicit killed $r0
+
+...
+---
+name:            f5
+alignment:       4
+exposesReturnsTwice: false
+legalized:       false
+regBankSelected: false
+selected:        false
+failedISel:      false
+tracksRegLiveness: true
+hasWinCFI:       false
+registers:       []
+liveins:         
+  - { reg: '$r0', virtual-reg: '' }
+  - { reg: '$r1', virtual-reg: '' }
+frameInfo:       
+  isFrameAddressTaken: false
+  isReturnAddressTaken: false
+  hasStackMap:     false
+  hasPatchPoint:   false
+  stackSize:       0
+  offsetAdjustment: 0
+  maxAlignment:    0
+  adjustsStack:    true
+  hasCalls:        true
+  stackProtector:  ''
+  maxCallFrameSize: 0
+  cvBytesOfCalleeSavedRegisters: 0
+  hasOpaqueSPAdjustment: false
+  hasVAStart:      false
+  hasMustTailInVarArgFunc: false
+  localFrameSize:  0
+  savePoint:       ''
+  restorePoint:    ''
+fixedStack:      []
+stack:           []
+constants:       []
+body:             |
+  bb.0.entry (freq 8):
+    liveins: $r0, $r1
+    liveouts: $pc, $r29, $framekey, $pc, $r0
+  
+    ANNOTATION_LABEL <0x7f161b0> = !{!"unison-block-frequency", i64 8}
+    BUNDLE implicit-def $r2, implicit-def $r29, implicit-def $r30, implicit-def $r0, implicit killed $r0, implicit $r29, implicit killed $framekey, implicit killed $framelimit, implicit killed $r30, implicit killed $r31, implicit killed $r1 {
+      $r2 = A2_tfr killed $r0
+      $r29 = S2_allocframe $r29, 0, implicit-def $r30, implicit killed $framekey, implicit killed $framelimit, implicit killed $r30, implicit killed $r31 :: (store 4 into stack)
+      $r0 = A2_tfr killed $r1
+    }
+    J2_callr killed renamable $r2, hexagoncsr, implicit-def dead $pc, implicit-def dead $r31, implicit killed $r29, implicit $r0, implicit-def $r29, implicit-def $r0
+    $d15 = L4_return killed $r30, <0x7f16260> = !{!"unison-memory-partition", i64 0}, implicit-def $pc, implicit-def $r29, implicit killed $framekey, implicit-def dead $pc, implicit killed $r0
+
+...
+---
+name:            main
+alignment:       4
+exposesReturnsTwice: false
+legalized:       false
+regBankSelected: false
+selected:        false
+failedISel:      false
+tracksRegLiveness: true
+hasWinCFI:       false
+registers:       []
+liveins:         []
+frameInfo:       
+  isFrameAddressTaken: false
+  isReturnAddressTaken: false
+  hasStackMap:     false
+  hasPatchPoint:   false
+  stackSize:       0
+  offsetAdjustment: 0
+  maxAlignment:    0
+  adjustsStack:    false
+  hasCalls:        false
+  stackProtector:  ''
+  maxCallFrameSize: 0
+  cvBytesOfCalleeSavedRegisters: 0
+  hasOpaqueSPAdjustment: false
+  hasVAStart:      false
+  hasMustTailInVarArgFunc: false
+  localFrameSize:  0
+  savePoint:       ''
+  restorePoint:    ''
+fixedStack:      []
+stack:           []
+constants:       []
+body:             |
+  bb.0.entry (freq 8):
+    liveouts: $r0, $pc, $r31
+  
+    ANNOTATION_LABEL <0x7f161b0> = !{!"unison-block-frequency", i64 8}
+    BUNDLE implicit-def dead $r0, implicit-def dead $pc, implicit killed $r31 {
+      $r0 = A2_tfrsi 0
+      PS_jmpret killed $r31, implicit-def dead $pc, implicit internal killed $r0
+    }
+
+...

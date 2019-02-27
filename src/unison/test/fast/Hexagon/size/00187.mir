@@ -1,0 +1,526 @@
+--- |
+  ; ModuleID = '00187.ll'
+  source_filename = "./tests/single-exec/00187.c"
+  target datalayout = "e-m:e-p:32:32:32-a:0-n16:32-i64:64:64-i32:32:32-i16:16:16-i1:8:8-f32:32:32-f64:64:64-v32:32:32-v64:64:64-v512:512:512-v1024:1024:1024-v2048:2048:2048"
+  target triple = "hexagon"
+  
+  %struct._IO_FILE = type { i32, i8*, i8*, i8*, i8*, i8*, i8*, i8*, i8*, i8*, i8*, i8*, %struct._IO_marker*, %struct._IO_FILE*, i32, i32, i32, i16, i8, [1 x i8], i8*, i64, i8*, i8*, i8*, i8*, i32, i32, [40 x i8] }
+  %struct._IO_marker = type { %struct._IO_marker*, %struct._IO_FILE*, i32 }
+  
+  @.str = private unnamed_addr constant [9 x i8] c"fred.txt\00", align 1
+  @.str.1 = private unnamed_addr constant [2 x i8] c"w\00", align 1
+  @.str.2 = private unnamed_addr constant [13 x i8] c"hello\0Ahello\0A\00", align 1
+  @.str.3 = private unnamed_addr constant [2 x i8] c"r\00", align 1
+  @.str.5 = private unnamed_addr constant [3 x i8] c"%s\00", align 1
+  @.str.6 = private unnamed_addr constant [13 x i8] c"ch: %d '%c'\0A\00", align 1
+  @.str.7 = private unnamed_addr constant [6 x i8] c"x: %s\00", align 1
+  @str = private unnamed_addr constant [23 x i8] c"couldn't read fred.txt\00", align 1
+  
+  ; Function Attrs: nounwind
+  define dso_local i32 @main() local_unnamed_addr #0 {
+  entry:
+    %freddy = alloca [7 x i8], align 1
+    %call = tail call %struct._IO_FILE* @fopen(i8* getelementptr inbounds ([9 x i8], [9 x i8]* @.str, i32 0, i32 0), i8* getelementptr inbounds ([2 x i8], [2 x i8]* @.str.1, i32 0, i32 0))
+    %call1 = tail call i32 @fwrite(i8* getelementptr inbounds ([13 x i8], [13 x i8]* @.str.2, i32 0, i32 0), i32 1, i32 12, %struct._IO_FILE* %call)
+    %call2 = tail call i32 @fclose(%struct._IO_FILE* %call)
+    %cgep4 = bitcast [7 x i8]* %freddy to [7 x i8]*
+    %cgep15 = bitcast [7 x i8]* %cgep4 to i8*
+    call void @llvm.lifetime.start.p0i8(i64 7, i8* nonnull %cgep15) #5
+    %call3 = tail call %struct._IO_FILE* @fopen(i8* getelementptr inbounds ([9 x i8], [9 x i8]* @.str, i32 0, i32 0), i8* getelementptr inbounds ([2 x i8], [2 x i8]* @.str.3, i32 0, i32 0))
+    %call4 = call i32 @fread(i8* nonnull %cgep15, i32 1, i32 6, %struct._IO_FILE* %call3)
+    %cmp = icmp eq i32 %call4, 6
+    br i1 %cmp, label %if.end, label %if.then
+  
+  if.then:                                          ; preds = %entry
+    %puts = tail call i32 @puts(i8* getelementptr inbounds ([23 x i8], [23 x i8]* @str, i32 0, i32 0))
+    br label %if.end
+  
+  if.end:                                           ; preds = %if.then, %entry
+    %0 = bitcast [7 x i8]* %freddy to [7 x i8]*
+    %1 = bitcast [7 x i8]* %0 to i8*
+    %2 = bitcast [7 x i8]* %freddy to [7 x i8]*
+    %cgep3 = getelementptr inbounds [7 x i8], [7 x i8]* %2, i32 0, i32 6
+    store i8 0, i8* %cgep3, align 1, !tbaa !2
+    %call6 = tail call i32 @fclose(%struct._IO_FILE* %call3)
+    %call8 = call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([3 x i8], [3 x i8]* @.str.5, i32 0, i32 0), i8* nonnull %1)
+    %call9 = call %struct._IO_FILE* @fopen(i8* getelementptr inbounds ([9 x i8], [9 x i8]* @.str, i32 0, i32 0), i8* getelementptr inbounds ([2 x i8], [2 x i8]* @.str.3, i32 0, i32 0))
+    %call1070 = call i32 @fgetc(%struct._IO_FILE* %call9)
+    %cmp1171 = icmp eq i32 %call1070, -1
+    br i1 %cmp1171, label %while.end, label %while.body
+  
+  while.body:                                       ; preds = %if.end, %while.body
+    %call1072 = phi i32 [ %call10, %while.body ], [ %call1070, %if.end ]
+    %conv12 = and i32 %call1072, 224
+    %cmp13 = icmp eq i32 %conv12, 0
+    %3 = and i32 %call1072, 255
+    %conv17 = select i1 %cmp13, i32 46, i32 %3
+    %call18 = call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([13 x i8], [13 x i8]* @.str.6, i32 0, i32 0), i32 %call1072, i32 %conv17)
+    %call10 = call i32 @fgetc(%struct._IO_FILE* %call9)
+    %cmp11 = icmp eq i32 %call10, -1
+    br i1 %cmp11, label %while.end, label %while.body
+  
+  while.end:                                        ; preds = %while.body, %if.end
+    %call19 = call i32 @fclose(%struct._IO_FILE* %call9)
+    %call20 = call %struct._IO_FILE* @fopen(i8* getelementptr inbounds ([9 x i8], [9 x i8]* @.str, i32 0, i32 0), i8* getelementptr inbounds ([2 x i8], [2 x i8]* @.str.3, i32 0, i32 0))
+    %call2267 = call i32 @_IO_getc(%struct._IO_FILE* %call20) #5
+    %cmp2368 = icmp eq i32 %call2267, -1
+    br i1 %cmp2368, label %while.end34, label %while.body25
+  
+  while.body25:                                     ; preds = %while.end, %while.body25
+    %call2269 = phi i32 [ %call22, %while.body25 ], [ %call2267, %while.end ]
+    %conv27 = and i32 %call2269, 224
+    %cmp28 = icmp eq i32 %conv27, 0
+    %4 = and i32 %call2269, 255
+    %conv32 = select i1 %cmp28, i32 46, i32 %4
+    %call33 = call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([13 x i8], [13 x i8]* @.str.6, i32 0, i32 0), i32 %call2269, i32 %conv32)
+    %call22 = call i32 @_IO_getc(%struct._IO_FILE* %call20) #5
+    %cmp23 = icmp eq i32 %call22, -1
+    br i1 %cmp23, label %while.end34, label %while.body25
+  
+  while.end34:                                      ; preds = %while.body25, %while.end
+    %5 = bitcast [7 x i8]* %freddy to [7 x i8]*
+    %6 = bitcast [7 x i8]* %5 to i8*
+    %call35 = call i32 @fclose(%struct._IO_FILE* %call20)
+    %call36 = call %struct._IO_FILE* @fopen(i8* getelementptr inbounds ([9 x i8], [9 x i8]* @.str, i32 0, i32 0), i8* getelementptr inbounds ([2 x i8], [2 x i8]* @.str.3, i32 0, i32 0))
+    %call3965 = call i8* @fgets(i8* nonnull %6, i32 7, %struct._IO_FILE* %call36)
+    %cmp4066 = icmp eq i8* %call3965, null
+    br i1 %cmp4066, label %while.end45, label %while.body42
+  
+  while.body42:                                     ; preds = %while.end34, %while.body42
+    %7 = bitcast [7 x i8]* %freddy to [7 x i8]*
+    %8 = bitcast [7 x i8]* %7 to i8*
+    %call44 = call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([6 x i8], [6 x i8]* @.str.7, i32 0, i32 0), i8* nonnull %8)
+    %call39 = call i8* @fgets(i8* nonnull %8, i32 7, %struct._IO_FILE* %call36)
+    %cmp40 = icmp eq i8* %call39, null
+    br i1 %cmp40, label %while.end45, label %while.body42
+  
+  while.end45:                                      ; preds = %while.body42, %while.end34
+    %9 = bitcast [7 x i8]* %freddy to [7 x i8]*
+    %10 = bitcast [7 x i8]* %9 to i8*
+    %call46 = call i32 @fclose(%struct._IO_FILE* %call36)
+    call void @llvm.lifetime.end.p0i8(i64 7, i8* nonnull %10) #5
+    ret i32 0
+  }
+  
+  ; Function Attrs: argmemonly nounwind
+  declare void @llvm.lifetime.start.p0i8(i64, i8* nocapture) #1
+  
+  ; Function Attrs: nounwind
+  declare dso_local noalias %struct._IO_FILE* @fopen(i8* nocapture readonly, i8* nocapture readonly) local_unnamed_addr #2
+  
+  ; Function Attrs: nounwind
+  declare dso_local i32 @fwrite(i8* nocapture, i32, i32, %struct._IO_FILE* nocapture) local_unnamed_addr #2
+  
+  ; Function Attrs: nounwind
+  declare dso_local i32 @fclose(%struct._IO_FILE* nocapture) local_unnamed_addr #2
+  
+  ; Function Attrs: nounwind
+  declare dso_local i32 @fread(i8* nocapture, i32, i32, %struct._IO_FILE* nocapture) local_unnamed_addr #2
+  
+  ; Function Attrs: nounwind
+  declare dso_local i32 @printf(i8* nocapture readonly, ...) local_unnamed_addr #2
+  
+  ; Function Attrs: nounwind
+  declare dso_local i32 @fgetc(%struct._IO_FILE* nocapture) local_unnamed_addr #2
+  
+  declare dso_local i32 @_IO_getc(%struct._IO_FILE*) local_unnamed_addr #3
+  
+  ; Function Attrs: nounwind
+  declare dso_local i8* @fgets(i8*, i32, %struct._IO_FILE* nocapture) local_unnamed_addr #2
+  
+  ; Function Attrs: argmemonly nounwind
+  declare void @llvm.lifetime.end.p0i8(i64, i8* nocapture) #1
+  
+  ; Function Attrs: nounwind
+  declare i32 @puts(i8* nocapture readonly) local_unnamed_addr #4
+  
+  ; Function Attrs: nounwind
+  declare void @llvm.stackprotector(i8*, i8**) #5
+  
+  attributes #0 = { nounwind "correctly-rounded-divide-sqrt-fp-math"="false" "disable-tail-calls"="false" "less-precise-fpmad"="false" "min-legal-vector-width"="0" "no-frame-pointer-elim"="true" "no-frame-pointer-elim-non-leaf" "no-infs-fp-math"="false" "no-jump-tables"="false" "no-nans-fp-math"="false" "no-signed-zeros-fp-math"="false" "no-trapping-math"="false" "stack-protector-buffer-size"="8" "target-cpu"="hexagonv5" "target-features"="-long-calls" "unsafe-fp-math"="false" "use-soft-float"="false" }
+  attributes #1 = { argmemonly nounwind "target-cpu"="hexagonv5" }
+  attributes #2 = { nounwind "correctly-rounded-divide-sqrt-fp-math"="false" "disable-tail-calls"="false" "less-precise-fpmad"="false" "no-frame-pointer-elim"="true" "no-frame-pointer-elim-non-leaf" "no-infs-fp-math"="false" "no-nans-fp-math"="false" "no-signed-zeros-fp-math"="false" "no-trapping-math"="false" "stack-protector-buffer-size"="8" "target-cpu"="hexagonv5" "target-features"="-long-calls" "unsafe-fp-math"="false" "use-soft-float"="false" }
+  attributes #3 = { "correctly-rounded-divide-sqrt-fp-math"="false" "disable-tail-calls"="false" "less-precise-fpmad"="false" "no-frame-pointer-elim"="true" "no-frame-pointer-elim-non-leaf" "no-infs-fp-math"="false" "no-nans-fp-math"="false" "no-signed-zeros-fp-math"="false" "no-trapping-math"="false" "stack-protector-buffer-size"="8" "target-cpu"="hexagonv5" "target-features"="-long-calls" "unsafe-fp-math"="false" "use-soft-float"="false" }
+  attributes #4 = { nounwind "target-cpu"="hexagonv5" }
+  attributes #5 = { nounwind }
+  
+  !llvm.module.flags = !{!0}
+  !llvm.ident = !{!1}
+  
+  !0 = !{i32 1, !"wchar_size", i32 4}
+  !1 = !{!"clang version 9.0.0 (http://llvm.org/git/clang.git 4e215e73ed6b499f3ccf23263c96cd188e0eda2c) (git@github.com:unison-code/llvm.git 9914ec00db7eeaf764045b9071638c2421cd32e7)"}
+  !2 = !{!3, !3, i64 0}
+  !3 = !{!"omnipotent char", !4, i64 0}
+  !4 = !{!"Simple C/C++ TBAA"}
+
+...
+---
+name:            main
+alignment:       4
+exposesReturnsTwice: false
+legalized:       false
+regBankSelected: false
+selected:        false
+failedISel:      false
+tracksRegLiveness: true
+hasWinCFI:       false
+registers:       
+  - { id: 0, class: intregs, preferred-register: '' }
+  - { id: 1, class: intregs, preferred-register: '' }
+  - { id: 2, class: intregs, preferred-register: '' }
+  - { id: 3, class: intregs, preferred-register: '' }
+  - { id: 4, class: intregs, preferred-register: '' }
+  - { id: 5, class: intregs, preferred-register: '' }
+  - { id: 6, class: intregs, preferred-register: '' }
+  - { id: 7, class: intregs, preferred-register: '' }
+  - { id: 8, class: intregs, preferred-register: '' }
+  - { id: 9, class: intregs, preferred-register: '' }
+  - { id: 10, class: intregs, preferred-register: '' }
+  - { id: 11, class: intregs, preferred-register: '' }
+  - { id: 12, class: intregs, preferred-register: '' }
+  - { id: 13, class: intregs, preferred-register: '' }
+  - { id: 14, class: intregs, preferred-register: '' }
+  - { id: 15, class: intregs, preferred-register: '' }
+  - { id: 16, class: intregs, preferred-register: '' }
+  - { id: 17, class: intregs, preferred-register: '' }
+  - { id: 18, class: intregs, preferred-register: '' }
+  - { id: 19, class: intregs, preferred-register: '' }
+  - { id: 20, class: intregs, preferred-register: '' }
+  - { id: 21, class: intregs, preferred-register: '' }
+  - { id: 22, class: intregs, preferred-register: '' }
+  - { id: 23, class: predregs, preferred-register: '' }
+  - { id: 24, class: intregs, preferred-register: '' }
+  - { id: 25, class: intregs, preferred-register: '' }
+  - { id: 26, class: intregs, preferred-register: '' }
+  - { id: 27, class: intregs, preferred-register: '' }
+  - { id: 28, class: intregs, preferred-register: '' }
+  - { id: 29, class: intregs, preferred-register: '' }
+  - { id: 30, class: intregs, preferred-register: '' }
+  - { id: 31, class: intregs, preferred-register: '' }
+  - { id: 32, class: intregs, preferred-register: '' }
+  - { id: 33, class: intregs, preferred-register: '' }
+  - { id: 34, class: intregs, preferred-register: '' }
+  - { id: 35, class: predregs, preferred-register: '' }
+  - { id: 36, class: intregs, preferred-register: '' }
+  - { id: 37, class: predregs, preferred-register: '' }
+  - { id: 38, class: intregs, preferred-register: '' }
+  - { id: 39, class: intregs, preferred-register: '' }
+  - { id: 40, class: intregs, preferred-register: '' }
+  - { id: 41, class: intregs, preferred-register: '' }
+  - { id: 42, class: intregs, preferred-register: '' }
+  - { id: 43, class: intregs, preferred-register: '' }
+  - { id: 44, class: predregs, preferred-register: '' }
+  - { id: 45, class: predregs, preferred-register: '' }
+  - { id: 46, class: intregs, preferred-register: '' }
+  - { id: 47, class: intregs, preferred-register: '' }
+  - { id: 48, class: intregs, preferred-register: '' }
+  - { id: 49, class: intregs, preferred-register: '' }
+  - { id: 50, class: intregs, preferred-register: '' }
+  - { id: 51, class: predregs, preferred-register: '' }
+  - { id: 52, class: intregs, preferred-register: '' }
+  - { id: 53, class: predregs, preferred-register: '' }
+  - { id: 54, class: intregs, preferred-register: '' }
+  - { id: 55, class: intregs, preferred-register: '' }
+  - { id: 56, class: intregs, preferred-register: '' }
+  - { id: 57, class: intregs, preferred-register: '' }
+  - { id: 58, class: intregs, preferred-register: '' }
+  - { id: 59, class: intregs, preferred-register: '' }
+  - { id: 60, class: predregs, preferred-register: '' }
+  - { id: 61, class: predregs, preferred-register: '' }
+  - { id: 62, class: intregs, preferred-register: '' }
+  - { id: 63, class: intregs, preferred-register: '' }
+  - { id: 64, class: intregs, preferred-register: '' }
+  - { id: 65, class: intregs, preferred-register: '' }
+  - { id: 66, class: intregs, preferred-register: '' }
+  - { id: 67, class: intregs, preferred-register: '' }
+  - { id: 68, class: intregs, preferred-register: '' }
+  - { id: 69, class: predregs, preferred-register: '' }
+  - { id: 70, class: intregs, preferred-register: '' }
+  - { id: 71, class: intregs, preferred-register: '' }
+  - { id: 72, class: intregs, preferred-register: '' }
+  - { id: 73, class: intregs, preferred-register: '' }
+  - { id: 74, class: intregs, preferred-register: '' }
+  - { id: 75, class: intregs, preferred-register: '' }
+  - { id: 76, class: predregs, preferred-register: '' }
+  - { id: 77, class: predregs, preferred-register: '' }
+  - { id: 78, class: intregs, preferred-register: '' }
+  - { id: 79, class: intregs, preferred-register: '' }
+  - { id: 80, class: intregs, preferred-register: '' }
+  - { id: 81, class: intregs, preferred-register: '' }
+  - { id: 82, class: intregs, preferred-register: '' }
+  - { id: 83, class: intregs, preferred-register: '' }
+  - { id: 84, class: intregs, preferred-register: '' }
+  - { id: 85, class: intregs, preferred-register: '' }
+liveins:         []
+frameInfo:       
+  isFrameAddressTaken: false
+  isReturnAddressTaken: false
+  hasStackMap:     false
+  hasPatchPoint:   false
+  stackSize:       0
+  offsetAdjustment: 0
+  maxAlignment:    4
+  adjustsStack:    false
+  hasCalls:        true
+  stackProtector:  ''
+  maxCallFrameSize: 4294967295
+  cvBytesOfCalleeSavedRegisters: 0
+  hasOpaqueSPAdjustment: false
+  hasVAStart:      false
+  hasMustTailInVarArgFunc: false
+  localFrameSize:  0
+  savePoint:       ''
+  restorePoint:    ''
+fixedStack:      []
+stack:           
+  - { id: 0, name: freddy, type: default, offset: 0, size: 7, alignment: 1, 
+      stack-id: 0, callee-saved-register: '', callee-saved-restored: true, 
+      debug-info-variable: '', debug-info-expression: '', debug-info-location: '' }
+constants:       []
+body:             |
+  bb.0.entry (freq 16):
+    successors: %bb.2(50), %bb.1(50)
+  
+    ANNOTATION_LABEL <0x8f34e40> = !{!"unison-block-frequency", i64 16}
+    %84:intregs = A2_tfrsi @.str + 32767
+    %10:intregs = A2_addi %84, -32767
+    %11:intregs = A2_tfrsi @.str.1
+    ADJCALLSTACKDOWN 0, 0, implicit-def $r29, implicit-def dead $r30, implicit $r31, implicit $r30, implicit $r29
+    $r0 = COPY %10
+    $r1 = COPY killed %11
+    J2_call @fopen, hexagoncsr, implicit-def dead $pc, implicit-def dead $r31, implicit $r29, implicit killed $r0, implicit killed $r1, implicit-def $r29, implicit-def $r0
+    ADJCALLSTACKUP 0, 0, implicit-def dead $r29, implicit-def dead $r30, implicit-def dead $r31, implicit $r29
+    %12:intregs = COPY killed $r0
+    %13:intregs = A2_tfrsi @.str.2
+    %14:intregs = A2_tfrsi 1
+    %15:intregs = A2_tfrsi 12
+    ADJCALLSTACKDOWN 0, 0, implicit-def $r29, implicit-def dead $r30, implicit $r31, implicit $r30, implicit $r29
+    $r0 = COPY killed %13
+    $r1 = COPY %14
+    $r2 = COPY killed %15
+    $r3 = COPY %12
+    J2_call @fwrite, hexagoncsr, implicit-def dead $pc, implicit-def dead $r31, implicit $r29, implicit killed $r0, implicit killed $r1, implicit killed $r2, implicit killed $r3, implicit-def $r29, implicit-def dead $r0
+    ADJCALLSTACKUP 0, 0, implicit-def dead $r29, implicit-def dead $r30, implicit-def dead $r31, implicit $r29
+    ADJCALLSTACKDOWN 0, 0, implicit-def $r29, implicit-def dead $r30, implicit $r31, implicit $r30, implicit $r29
+    $r0 = COPY killed %12
+    J2_call @fclose, hexagoncsr, implicit-def dead $pc, implicit-def dead $r31, implicit $r29, implicit killed $r0, implicit-def $r29, implicit-def dead $r0
+    ADJCALLSTACKUP 0, 0, implicit-def dead $r29, implicit-def dead $r30, implicit-def dead $r31, implicit $r29
+    %85:intregs = A2_tfrsi @.str.3 + 32767
+    %18:intregs = A2_addi %85, -32767
+    ADJCALLSTACKDOWN 0, 0, implicit-def $r29, implicit-def dead $r30, implicit $r31, implicit $r30, implicit $r29
+    $r0 = COPY killed %10
+    $r1 = COPY killed %18
+    J2_call @fopen, hexagoncsr, implicit-def dead $pc, implicit-def dead $r31, implicit $r29, implicit killed $r0, implicit killed $r1, implicit-def $r29, implicit-def $r0
+    ADJCALLSTACKUP 0, 0, implicit-def dead $r29, implicit-def dead $r30, implicit-def dead $r31, implicit $r29
+    %19:intregs = COPY killed $r0
+    %20:intregs = PS_fi %stack.0.freddy, 0
+    %21:intregs = A2_tfrsi 6
+    ADJCALLSTACKDOWN 0, 0, implicit-def $r29, implicit-def dead $r30, implicit $r31, implicit $r30, implicit $r29
+    $r0 = COPY %20
+    $r1 = COPY killed %14
+    $r2 = COPY killed %21
+    $r3 = COPY %19
+    J2_call @fread, hexagoncsr, implicit-def dead $pc, implicit-def dead $r31, implicit $r29, implicit killed $r0, implicit killed $r1, implicit killed $r2, implicit killed $r3, implicit-def $r29, implicit-def $r0
+    ADJCALLSTACKUP 0, 0, implicit-def dead $r29, implicit-def dead $r30, implicit-def dead $r31, implicit $r29
+    %22:intregs = COPY killed $r0
+    %23:predregs = C2_cmpeqi killed %22, 6
+    J2_jumpt killed %23, %bb.2, implicit-def dead $pc
+    J2_jump %bb.1, implicit-def dead $pc
+  
+  bb.1.if.then (freq 8):
+    successors: %bb.2(100)
+  
+    ANNOTATION_LABEL <0x8f357a0> = !{!"unison-block-frequency", i64 8}
+    %24:intregs = A2_tfrsi @str
+    ADJCALLSTACKDOWN 0, 0, implicit-def $r29, implicit-def dead $r30, implicit $r31, implicit $r30, implicit $r29
+    $r0 = COPY killed %24
+    J2_call @puts, hexagoncsr, implicit-def dead $pc, implicit-def dead $r31, implicit $r29, implicit killed $r0, implicit-def $r29, implicit-def dead $r0
+    ADJCALLSTACKUP 0, 0, implicit-def dead $r29, implicit-def dead $r30, implicit-def dead $r31, implicit $r29
+  
+  bb.2.if.end (freq 16):
+    successors: %bb.5(37), %bb.3(62)
+  
+    ANNOTATION_LABEL <0x8f34e40> = !{!"unison-block-frequency", i64 16}
+    S4_storeirb_io %stack.0.freddy, 6, 0, <0x8f352e0> = !{!"unison-memory-partition", i64 0} :: (store 1 into %ir.cgep3, !tbaa !2)
+    ADJCALLSTACKDOWN 0, 0, implicit-def $r29, implicit-def dead $r30, implicit $r31, implicit $r30, implicit $r29
+    $r0 = COPY killed %19
+    J2_call @fclose, hexagoncsr, implicit-def dead $pc, implicit-def dead $r31, implicit $r29, implicit killed $r0, implicit-def $r29, implicit-def dead $r0
+    ADJCALLSTACKUP 0, 0, implicit-def dead $r29, implicit-def dead $r30, implicit-def dead $r31, implicit $r29
+    %27:intregs = COPY $r29
+    S2_storeri_io killed %27, 0, killed %20, <0x8f352e0> = !{!"unison-memory-partition", i64 0} :: (store 4 into stack)
+    %29:intregs = A2_tfrsi @.str.5
+    ADJCALLSTACKDOWN 4, 0, implicit-def $r29, implicit-def dead $r30, implicit $r31, implicit $r30, implicit $r29
+    $r0 = COPY killed %29
+    J2_call @printf, hexagoncsr, implicit-def dead $pc, implicit-def dead $r31, implicit $r29, implicit killed $r0, implicit-def $r29, implicit-def dead $r0
+    ADJCALLSTACKUP 4, 0, implicit-def dead $r29, implicit-def dead $r30, implicit-def dead $r31, implicit $r29
+    %31:intregs = A2_addi %84, -32767
+    %32:intregs = A2_addi %85, -32767
+    ADJCALLSTACKDOWN 0, 0, implicit-def $r29, implicit-def dead $r30, implicit $r31, implicit $r30, implicit $r29
+    $r0 = COPY killed %31
+    $r1 = COPY killed %32
+    J2_call @fopen, hexagoncsr, implicit-def dead $pc, implicit-def dead $r31, implicit $r29, implicit killed $r0, implicit killed $r1, implicit-def $r29, implicit-def $r0
+    ADJCALLSTACKUP 0, 0, implicit-def dead $r29, implicit-def dead $r30, implicit-def dead $r31, implicit $r29
+    %33:intregs = COPY killed $r0
+    ADJCALLSTACKDOWN 0, 0, implicit-def $r29, implicit-def dead $r30, implicit $r31, implicit $r30, implicit $r29
+    $r0 = COPY %33
+    J2_call @fgetc, hexagoncsr, implicit-def dead $pc, implicit-def dead $r31, implicit $r29, implicit killed $r0, implicit-def $r29, implicit-def $r0
+    ADJCALLSTACKUP 0, 0, implicit-def dead $r29, implicit-def dead $r30, implicit-def dead $r31, implicit $r29
+    %34:intregs = COPY killed $r0
+    %35:predregs = C2_cmpeqi %34, -1
+    J2_jumpt killed %35, %bb.5, implicit-def $pc
+  
+  bb.3 (freq 10):
+    successors: %bb.4(100)
+  
+    ANNOTATION_LABEL <0x8f35340> = !{!"unison-block-frequency", i64 10}
+    %36:intregs = A2_tfrsi 224
+    %41:intregs = A2_tfrsi @.str.6
+  
+  bb.4.while.body (freq 319):
+    successors: %bb.5(3), %bb.4(96)
+  
+    ANNOTATION_LABEL <0x8f355c0> = !{!"unison-block-frequency", i64 319}
+    %80:intregs = PHI %34, %bb.3, %43, %bb.4
+    %37:predregs = C2_bitsclr %80, %36
+    %38:intregs = A2_zxtb %80
+    %39:intregs = C2_muxri killed %37, 46, killed %38
+    %40:intregs = COPY $r29
+    S2_storeri_io %40, 0, killed %80, <0x8f352e0> = !{!"unison-memory-partition", i64 0} :: (store 4 into stack)
+    S2_storeri_io killed %40, 4, killed %39, <0x8f3b190> = !{!"unison-memory-partition", i64 1} :: (store 4 into stack + 4)
+    ADJCALLSTACKDOWN 8, 0, implicit-def $r29, implicit-def dead $r30, implicit $r31, implicit $r30, implicit $r29
+    $r0 = COPY %41
+    J2_call @printf, hexagoncsr, implicit-def dead $pc, implicit-def dead $r31, implicit $r29, implicit killed $r0, implicit-def $r29, implicit-def dead $r0
+    ADJCALLSTACKUP 8, 0, implicit-def dead $r29, implicit-def dead $r30, implicit-def dead $r31, implicit $r29
+    ADJCALLSTACKDOWN 0, 0, implicit-def $r29, implicit-def dead $r30, implicit $r31, implicit $r30, implicit $r29
+    $r0 = COPY %33
+    J2_call @fgetc, hexagoncsr, implicit-def dead $pc, implicit-def dead $r31, implicit $r29, implicit killed $r0, implicit-def $r29, implicit-def $r0
+    ADJCALLSTACKUP 0, 0, implicit-def dead $r29, implicit-def dead $r30, implicit-def dead $r31, implicit $r29
+    %43:intregs = COPY killed $r0
+    %44:predregs = C2_cmpeqi %43, -1
+    J2_jumpf killed %44, %bb.4, implicit-def dead $pc
+    J2_jump %bb.5, implicit-def dead $pc
+  
+  bb.5.while.end (freq 16):
+    successors: %bb.8(37), %bb.6(62)
+  
+    ANNOTATION_LABEL <0x8f34e40> = !{!"unison-block-frequency", i64 16}
+    ADJCALLSTACKDOWN 0, 0, implicit-def $r29, implicit-def dead $r30, implicit $r31, implicit $r30, implicit $r29
+    $r0 = COPY killed %33
+    J2_call @fclose, hexagoncsr, implicit-def dead $pc, implicit-def dead $r31, implicit $r29, implicit killed $r0, implicit-def $r29, implicit-def dead $r0
+    ADJCALLSTACKUP 0, 0, implicit-def dead $r29, implicit-def dead $r30, implicit-def dead $r31, implicit $r29
+    %47:intregs = A2_addi %84, -32767
+    %48:intregs = A2_addi %85, -32767
+    ADJCALLSTACKDOWN 0, 0, implicit-def $r29, implicit-def dead $r30, implicit $r31, implicit $r30, implicit $r29
+    $r0 = COPY killed %47
+    $r1 = COPY killed %48
+    J2_call @fopen, hexagoncsr, implicit-def dead $pc, implicit-def dead $r31, implicit $r29, implicit killed $r0, implicit killed $r1, implicit-def $r29, implicit-def $r0
+    ADJCALLSTACKUP 0, 0, implicit-def dead $r29, implicit-def dead $r30, implicit-def dead $r31, implicit $r29
+    %49:intregs = COPY killed $r0
+    ADJCALLSTACKDOWN 0, 0, implicit-def $r29, implicit-def dead $r30, implicit $r31, implicit $r30, implicit $r29
+    $r0 = COPY %49
+    J2_call @_IO_getc, hexagoncsr, implicit-def dead $pc, implicit-def dead $r31, implicit $r29, implicit killed $r0, implicit-def $r29, implicit-def $r0
+    ADJCALLSTACKUP 0, 0, implicit-def dead $r29, implicit-def dead $r30, implicit-def dead $r31, implicit $r29
+    %50:intregs = COPY killed $r0
+    %51:predregs = C2_cmpeqi %50, -1
+    J2_jumpt killed %51, %bb.8, implicit-def $pc
+  
+  bb.6 (freq 10):
+    successors: %bb.7(100)
+  
+    ANNOTATION_LABEL <0x8f35340> = !{!"unison-block-frequency", i64 10}
+    %52:intregs = A2_tfrsi 224
+    %57:intregs = A2_tfrsi @.str.6
+  
+  bb.7.while.body25 (freq 319):
+    successors: %bb.8(3), %bb.7(96)
+  
+    ANNOTATION_LABEL <0x8f355c0> = !{!"unison-block-frequency", i64 319}
+    %82:intregs = PHI %50, %bb.6, %59, %bb.7
+    %53:predregs = C2_bitsclr %82, %52
+    %54:intregs = A2_zxtb %82
+    %55:intregs = C2_muxri killed %53, 46, killed %54
+    %56:intregs = COPY $r29
+    S2_storeri_io %56, 0, killed %82, <0x8f352e0> = !{!"unison-memory-partition", i64 0} :: (store 4 into stack)
+    S2_storeri_io killed %56, 4, killed %55, <0x8f3b190> = !{!"unison-memory-partition", i64 1} :: (store 4 into stack + 4)
+    ADJCALLSTACKDOWN 8, 0, implicit-def $r29, implicit-def dead $r30, implicit $r31, implicit $r30, implicit $r29
+    $r0 = COPY %57
+    J2_call @printf, hexagoncsr, implicit-def dead $pc, implicit-def dead $r31, implicit $r29, implicit killed $r0, implicit-def $r29, implicit-def dead $r0
+    ADJCALLSTACKUP 8, 0, implicit-def dead $r29, implicit-def dead $r30, implicit-def dead $r31, implicit $r29
+    ADJCALLSTACKDOWN 0, 0, implicit-def $r29, implicit-def dead $r30, implicit $r31, implicit $r30, implicit $r29
+    $r0 = COPY %49
+    J2_call @_IO_getc, hexagoncsr, implicit-def dead $pc, implicit-def dead $r31, implicit $r29, implicit killed $r0, implicit-def $r29, implicit-def $r0
+    ADJCALLSTACKUP 0, 0, implicit-def dead $r29, implicit-def dead $r30, implicit-def dead $r31, implicit $r29
+    %59:intregs = COPY killed $r0
+    %60:predregs = C2_cmpeqi %59, -1
+    J2_jumpf killed %60, %bb.7, implicit-def dead $pc
+    J2_jump %bb.8, implicit-def dead $pc
+  
+  bb.8.while.end34 (freq 16):
+    successors: %bb.11(37), %bb.9(62)
+  
+    ANNOTATION_LABEL <0x8f34e40> = !{!"unison-block-frequency", i64 16}
+    ADJCALLSTACKDOWN 0, 0, implicit-def $r29, implicit-def dead $r30, implicit $r31, implicit $r30, implicit $r29
+    $r0 = COPY killed %49
+    J2_call @fclose, hexagoncsr, implicit-def dead $pc, implicit-def dead $r31, implicit $r29, implicit killed $r0, implicit-def $r29, implicit-def dead $r0
+    ADJCALLSTACKUP 0, 0, implicit-def dead $r29, implicit-def dead $r30, implicit-def dead $r31, implicit $r29
+    %63:intregs = A2_addi killed %84, -32767
+    %64:intregs = A2_addi killed %85, -32767
+    ADJCALLSTACKDOWN 0, 0, implicit-def $r29, implicit-def dead $r30, implicit $r31, implicit $r30, implicit $r29
+    $r0 = COPY killed %63
+    $r1 = COPY killed %64
+    J2_call @fopen, hexagoncsr, implicit-def dead $pc, implicit-def dead $r31, implicit $r29, implicit killed $r0, implicit killed $r1, implicit-def $r29, implicit-def $r0
+    ADJCALLSTACKUP 0, 0, implicit-def dead $r29, implicit-def dead $r30, implicit-def dead $r31, implicit $r29
+    %65:intregs = COPY killed $r0
+    %66:intregs = PS_fi %stack.0.freddy, 0
+    %67:intregs = A2_tfrsi 7
+    ADJCALLSTACKDOWN 0, 0, implicit-def $r29, implicit-def dead $r30, implicit $r31, implicit $r30, implicit $r29
+    $r0 = COPY %66
+    $r1 = COPY killed %67
+    $r2 = COPY %65
+    J2_call @fgets, hexagoncsr, implicit-def dead $pc, implicit-def dead $r31, implicit $r29, implicit killed $r0, implicit killed $r1, implicit killed $r2, implicit-def $r29, implicit-def $r0
+    ADJCALLSTACKUP 0, 0, implicit-def dead $r29, implicit-def dead $r30, implicit-def dead $r31, implicit $r29
+    %68:intregs = COPY killed $r0
+    %69:predregs = C2_cmpeqi killed %68, 0
+    J2_jumpt killed %69, %bb.11, implicit-def $pc
+  
+  bb.9 (freq 10):
+    successors: %bb.10(100)
+  
+    ANNOTATION_LABEL <0x8f35340> = !{!"unison-block-frequency", i64 10}
+    %72:intregs = A2_tfrsi @.str.7
+    %74:intregs = A2_tfrsi 7
+  
+  bb.10.while.body42 (freq 319):
+    successors: %bb.11(3), %bb.10(96)
+  
+    ANNOTATION_LABEL <0x8f355c0> = !{!"unison-block-frequency", i64 319}
+    %70:intregs = COPY $r29
+    S2_storeri_io killed %70, 0, %66, <0x8f352e0> = !{!"unison-memory-partition", i64 0} :: (store 4 into stack)
+    ADJCALLSTACKDOWN 4, 0, implicit-def $r29, implicit-def dead $r30, implicit $r31, implicit $r30, implicit $r29
+    $r0 = COPY %72
+    J2_call @printf, hexagoncsr, implicit-def dead $pc, implicit-def dead $r31, implicit $r29, implicit killed $r0, implicit-def $r29, implicit-def dead $r0
+    ADJCALLSTACKUP 4, 0, implicit-def dead $r29, implicit-def dead $r30, implicit-def dead $r31, implicit $r29
+    ADJCALLSTACKDOWN 0, 0, implicit-def $r29, implicit-def dead $r30, implicit $r31, implicit $r30, implicit $r29
+    $r0 = COPY %66
+    $r1 = COPY %74
+    $r2 = COPY %65
+    J2_call @fgets, hexagoncsr, implicit-def dead $pc, implicit-def dead $r31, implicit $r29, implicit killed $r0, implicit killed $r1, implicit killed $r2, implicit-def $r29, implicit-def $r0
+    ADJCALLSTACKUP 0, 0, implicit-def dead $r29, implicit-def dead $r30, implicit-def dead $r31, implicit $r29
+    %75:intregs = COPY killed $r0
+    %76:predregs = C2_cmpeqi killed %75, 0
+    J2_jumpf killed %76, %bb.10, implicit-def dead $pc
+    J2_jump %bb.11, implicit-def dead $pc
+  
+  bb.11.while.end45 (freq 16):
+    liveouts: $pc, $r0
+  
+    ANNOTATION_LABEL <0x8f34e40> = !{!"unison-block-frequency", i64 16}
+    ADJCALLSTACKDOWN 0, 0, implicit-def $r29, implicit-def dead $r30, implicit $r31, implicit $r30, implicit $r29
+    $r0 = COPY killed %65
+    J2_call @fclose, hexagoncsr, implicit-def dead $pc, implicit-def dead $r31, implicit $r29, implicit killed $r0, implicit-def $r29, implicit-def dead $r0
+    ADJCALLSTACKUP 0, 0, implicit-def dead $r29, implicit-def dead $r30, implicit-def dead $r31, implicit $r29
+    %79:intregs = A2_tfrsi 0
+    $r0 = COPY killed %79
+    PS_jmpret $r31, implicit-def dead $pc, implicit killed $r0
+
+...

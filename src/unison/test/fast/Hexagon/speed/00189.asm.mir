@@ -1,0 +1,179 @@
+--- |
+  ; ModuleID = '00189.ll'
+  source_filename = "./tests/single-exec/00189.c"
+  target datalayout = "e-m:e-p:32:32:32-a:0-n16:32-i64:64:64-i32:32:32-i16:16:16-i1:8:8-f32:32:32-f64:64:64-v32:32:32-v64:64:64-v512:512:512-v1024:1024:1024-v2048:2048:2048"
+  target triple = "hexagon"
+  
+  %struct._IO_FILE = type { i32, i8*, i8*, i8*, i8*, i8*, i8*, i8*, i8*, i8*, i8*, i8*, %struct._IO_marker*, %struct._IO_FILE*, i32, i32, i32, i16, i8, [1 x i8], i8*, i64, i8*, i8*, i8*, i8*, i32, i32, [40 x i8] }
+  %struct._IO_marker = type { %struct._IO_marker*, %struct._IO_FILE*, i32 }
+  
+  @.str = private unnamed_addr constant [7 x i8] c"yo %d\0A\00", align 1
+  @f = dso_local local_unnamed_addr global i32 (i32)* @fred, align 4
+  @fprintfptr = dso_local local_unnamed_addr global i32 (%struct._IO_FILE*, i8*, ...)* @fprintf, align 4
+  @stdout = external dso_local local_unnamed_addr global %struct._IO_FILE*, align 4
+  @.str.1 = private unnamed_addr constant [4 x i8] c"%d\0A\00", align 1
+  
+  ; Function Attrs: nounwind
+  define dso_local i32 @fred(i32 %p) #0 {
+  entry:
+    %call = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([7 x i8], [7 x i8]* @.str, i32 0, i32 0), i32 %p)
+    ret i32 42
+  }
+  
+  ; Function Attrs: nounwind
+  declare dso_local i32 @printf(i8* nocapture readonly, ...) local_unnamed_addr #1
+  
+  ; Function Attrs: nounwind
+  declare dso_local i32 @fprintf(%struct._IO_FILE* nocapture, i8* nocapture readonly, ...) #1
+  
+  ; Function Attrs: nounwind
+  define dso_local i32 @main() local_unnamed_addr #0 {
+  entry:
+    %0 = load i32 (%struct._IO_FILE*, i8*, ...)*, i32 (%struct._IO_FILE*, i8*, ...)** @fprintfptr, align 4, !tbaa !2
+    %1 = load %struct._IO_FILE*, %struct._IO_FILE** @stdout, align 4, !tbaa !2
+    %2 = load i32 (i32)*, i32 (i32)** @f, align 4, !tbaa !2
+    %call = tail call i32 %2(i32 24) #2
+    %call1 = tail call i32 (%struct._IO_FILE*, i8*, ...) %0(%struct._IO_FILE* %1, i8* getelementptr inbounds ([4 x i8], [4 x i8]* @.str.1, i32 0, i32 0), i32 %call) #2
+    ret i32 0
+  }
+  
+  ; Function Attrs: nounwind
+  declare void @llvm.stackprotector(i8*, i8**) #2
+  
+  attributes #0 = { nounwind "correctly-rounded-divide-sqrt-fp-math"="false" "disable-tail-calls"="false" "less-precise-fpmad"="false" "min-legal-vector-width"="0" "no-frame-pointer-elim"="true" "no-frame-pointer-elim-non-leaf" "no-infs-fp-math"="false" "no-jump-tables"="false" "no-nans-fp-math"="false" "no-signed-zeros-fp-math"="false" "no-trapping-math"="false" "stack-protector-buffer-size"="8" "target-cpu"="hexagonv5" "target-features"="-long-calls" "unsafe-fp-math"="false" "use-soft-float"="false" }
+  attributes #1 = { nounwind "correctly-rounded-divide-sqrt-fp-math"="false" "disable-tail-calls"="false" "less-precise-fpmad"="false" "no-frame-pointer-elim"="true" "no-frame-pointer-elim-non-leaf" "no-infs-fp-math"="false" "no-nans-fp-math"="false" "no-signed-zeros-fp-math"="false" "no-trapping-math"="false" "stack-protector-buffer-size"="8" "target-cpu"="hexagonv5" "target-features"="-long-calls" "unsafe-fp-math"="false" "use-soft-float"="false" }
+  attributes #2 = { nounwind }
+  
+  !llvm.module.flags = !{!0}
+  !llvm.ident = !{!1}
+  
+  !0 = !{i32 1, !"wchar_size", i32 4}
+  !1 = !{!"clang version 9.0.0 (http://llvm.org/git/clang.git 4e215e73ed6b499f3ccf23263c96cd188e0eda2c) (git@github.com:unison-code/llvm.git 9914ec00db7eeaf764045b9071638c2421cd32e7)"}
+  !2 = !{!3, !3, i64 0}
+  !3 = !{!"any pointer", !4, i64 0}
+  !4 = !{!"omnipotent char", !5, i64 0}
+  !5 = !{!"Simple C/C++ TBAA"}
+
+...
+---
+name:            fred
+alignment:       4
+exposesReturnsTwice: false
+legalized:       false
+regBankSelected: false
+selected:        false
+failedISel:      false
+tracksRegLiveness: true
+hasWinCFI:       false
+registers:       []
+liveins:         
+  - { reg: '$r0', virtual-reg: '' }
+frameInfo:       
+  isFrameAddressTaken: false
+  isReturnAddressTaken: false
+  hasStackMap:     false
+  hasPatchPoint:   false
+  stackSize:       8
+  offsetAdjustment: 0
+  maxAlignment:    4
+  adjustsStack:    true
+  hasCalls:        true
+  stackProtector:  ''
+  maxCallFrameSize: 8
+  cvBytesOfCalleeSavedRegisters: 0
+  hasOpaqueSPAdjustment: false
+  hasVAStart:      false
+  hasMustTailInVarArgFunc: false
+  localFrameSize:  0
+  savePoint:       ''
+  restorePoint:    ''
+fixedStack:      []
+stack:           []
+constants:       []
+body:             |
+  bb.0.entry (freq 8):
+    liveins: $r0
+    liveouts: $r0, $d15, $r30, $r31, $pc, $r29, $r30, $framekey
+  
+    ANNOTATION_LABEL <0x99925d0> = !{!"unison-block-frequency", i64 8}
+    BUNDLE implicit-def $r29, implicit-def $r30, implicit-def $r0, implicit $r29, implicit killed $framekey, implicit killed $framelimit, implicit killed $r30, implicit killed $r31, implicit killed $r0 {
+      $r29 = S2_allocframe $r29, 8, implicit-def $r30, implicit killed $framekey, implicit killed $framelimit, implicit killed $r30, implicit killed $r31 :: (store 4 into stack)
+      S2_storeri_io internal $r29, -16, killed renamable $r0 :: (store 4 into stack)
+      $r0 = A2_tfrsi @.str
+    }
+    J2_call @printf, hexagoncsr, implicit-def dead $pc, implicit-def dead $r31, implicit killed $r29, implicit killed $r0, implicit-def $r29, implicit-def dead $r0
+    BUNDLE implicit-def dead $r0, implicit-def $d15, implicit-def $r30, implicit-def $r31, implicit-def $pc, implicit-def $r29, implicit killed $r30, implicit killed $framekey {
+      $r0 = A2_tfrsi 42
+      $d15 = L4_return killed $r30, implicit-def $pc, implicit-def $r29, implicit killed $framekey, implicit-def dead $pc, implicit internal killed $r0
+    }
+
+...
+---
+name:            main
+alignment:       4
+exposesReturnsTwice: false
+legalized:       false
+regBankSelected: false
+selected:        false
+failedISel:      false
+tracksRegLiveness: true
+hasWinCFI:       false
+registers:       []
+liveins:         []
+frameInfo:       
+  isFrameAddressTaken: false
+  isReturnAddressTaken: false
+  hasStackMap:     false
+  hasPatchPoint:   false
+  stackSize:       16
+  offsetAdjustment: 0
+  maxAlignment:    4
+  adjustsStack:    true
+  hasCalls:        true
+  stackProtector:  ''
+  maxCallFrameSize: 8
+  cvBytesOfCalleeSavedRegisters: 0
+  hasOpaqueSPAdjustment: false
+  hasVAStart:      false
+  hasMustTailInVarArgFunc: false
+  localFrameSize:  0
+  savePoint:       ''
+  restorePoint:    ''
+fixedStack:      
+  - { id: 0, type: spill-slot, offset: -8, size: 8, alignment: 8, stack-id: 0, 
+      callee-saved-register: '$d8', callee-saved-restored: true, debug-info-variable: '', 
+      debug-info-expression: '', debug-info-location: '' }
+stack:           []
+constants:       []
+body:             |
+  bb.0.entry (freq 8):
+    liveins: $d8, $d8
+    liveouts: $r0, $d8, $r16, $r17, $d15, $r30, $r31, $pc, $r29, $r29, $r30, $framekey
+  
+    ANNOTATION_LABEL <0x99925d0> = !{!"unison-block-frequency", i64 8}
+    BUNDLE implicit-def $r29, implicit-def $r30, implicit-def $r1, implicit-def $r0, implicit $r29, implicit killed $framekey, implicit killed $framelimit, implicit killed $r30, implicit killed $r31, implicit $gp {
+      $r29 = S2_allocframe $r29, 16, implicit-def $r30, implicit killed $framekey, implicit killed $framelimit, implicit killed $r30, implicit killed $r31 :: (store 4 into stack)
+      renamable $r1 = L2_loadrigp @f, implicit $gp :: (dereferenceable load 4 from @f, !tbaa !2)
+      $r0 = A2_tfrsi 24
+    }
+    BUNDLE implicit-def $r17, implicit $r29, implicit killed $d8, implicit $gp {
+      S2_storerd_io $r29, 8, killed $d8 :: (store 8 into %fixed-stack.0)
+      renamable $r17 = L2_loadrigp @fprintfptr, implicit $gp :: (dereferenceable load 4 from @fprintfptr, !tbaa !2)
+    }
+    BUNDLE implicit-def $r16, implicit-def dead $pc, implicit-def dead $r31, implicit-def $r29, implicit-def $r0, implicit killed $gp, implicit killed $r1, implicit $r29, implicit $r0 {
+      renamable $r16 = L2_loadrigp @stdout, implicit killed $gp :: (dereferenceable load 4 from @stdout, !tbaa !2)
+      J2_callr killed renamable $r1, hexagoncsr, implicit-def dead $pc, implicit-def dead $r31, implicit $r29, implicit $r0, implicit-def $r29, implicit-def $r0
+    }
+    BUNDLE implicit-def $r1, implicit-def $r0, implicit $r29, implicit killed $r0, implicit killed $r16 {
+      S2_storeri_io $r29, 0, killed renamable $r0 :: (store 4 into stack)
+      $r1 = A2_tfrsi @.str.1
+      $r0 = A2_tfr killed $r16
+    }
+    J2_callr killed renamable $r17, hexagoncsr, implicit-def dead $pc, implicit-def dead $r31, implicit $r29, implicit killed $r0, implicit killed $r1, implicit-def $r29, implicit-def dead $r0
+    BUNDLE implicit-def dead $r0, implicit-def $d8, implicit-def $r16, implicit-def $r17, implicit-def $d15, implicit-def $r30, implicit-def $r31, implicit-def $pc, implicit-def $r29, implicit killed $r29, implicit killed $r30, implicit killed $framekey {
+      $r0 = A2_tfrsi 0
+      $d8 = L2_loadrd_io killed $r29, 8 :: (load 8 from %fixed-stack.0)
+      $d15 = L4_return killed $r30, implicit-def $pc, implicit-def $r29, implicit killed $framekey, implicit-def dead $pc, implicit internal killed $r0, implicit internal $d8
+    }
+
+...

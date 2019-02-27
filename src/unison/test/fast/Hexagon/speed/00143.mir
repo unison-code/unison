@@ -1,0 +1,739 @@
+--- |
+  ; ModuleID = '00143.ll'
+  source_filename = "./tests/single-exec/00143.c"
+  target datalayout = "e-m:e-p:32:32:32-a:0-n16:32-i64:64:64-i32:32:32-i16:16:16-i1:8:8-f32:32:32-f64:64:64-v32:32:32-v64:64:64-v512:512:512-v1024:1024:1024-v2048:2048:2048"
+  target triple = "hexagon"
+  
+  ; Function Attrs: nounwind
+  define dso_local i32 @main() local_unnamed_addr #0 {
+  entry:
+    %a = alloca [39 x i16], align 8
+    %0 = bitcast [39 x i16]* %a to i8*
+    %b = alloca [39 x i16], align 8
+    %1 = bitcast [39 x i16]* %b to i8*
+    call void @llvm.lifetime.start.p0i8(i64 78, i8* nonnull %0) #2
+    call void @llvm.lifetime.start.p0i8(i64 78, i8* nonnull %1) #2
+    call void @llvm.memset.p0i8.i32(i8* nonnull align 8 %1, i8 0, i32 78, i1 false)
+    %cgep175 = bitcast [39 x i16]* %a to [39 x i16]*
+    %cgep173 = getelementptr [39 x i16], [39 x i16]* %cgep175, i32 0, i32 12
+    %scevgep9697 = bitcast i16* %cgep173 to [39 x i16]*
+    br label %for.body
+  
+  for.body:                                         ; preds = %for.body, %entry
+    %lsr.iv113 = phi i16 [ %lsr.iv.next114, %for.body ], [ 0, %entry ]
+    %lsr.iv98 = phi [39 x i16]* [ %2, %for.body ], [ %scevgep9697, %entry ]
+    %n.074 = phi i32 [ 0, %entry ], [ %inc.12, %for.body ]
+    %lsr.iv98100 = bitcast [39 x i16]* %lsr.iv98 to i16*
+    %cgep115 = getelementptr i16, i16* %lsr.iv98100, i32 -12
+    store i16 %lsr.iv113, i16* %cgep115, align 2, !tbaa !2
+    %inc = add nuw nsw i32 %n.074, 1
+    %conv.1 = trunc i32 %inc to i16
+    %cgep116 = getelementptr i16, i16* %lsr.iv98100, i32 -11
+    store i16 %conv.1, i16* %cgep116, align 2, !tbaa !2
+    %inc.1 = add nuw nsw i32 %n.074, 2
+    %conv.2 = trunc i32 %inc.1 to i16
+    %cgep117 = getelementptr i16, i16* %lsr.iv98100, i32 -10
+    store i16 %conv.2, i16* %cgep117, align 2, !tbaa !2
+    %inc.2 = add nuw nsw i32 %n.074, 3
+    %conv.3 = trunc i32 %inc.2 to i16
+    %cgep118 = getelementptr i16, i16* %lsr.iv98100, i32 -9
+    store i16 %conv.3, i16* %cgep118, align 2, !tbaa !2
+    %inc.3 = add nuw nsw i32 %n.074, 4
+    %conv.4 = trunc i32 %inc.3 to i16
+    %cgep119 = getelementptr i16, i16* %lsr.iv98100, i32 -8
+    store i16 %conv.4, i16* %cgep119, align 2, !tbaa !2
+    %inc.4 = add nuw nsw i32 %n.074, 5
+    %conv.5 = trunc i32 %inc.4 to i16
+    %cgep120 = getelementptr i16, i16* %lsr.iv98100, i32 -7
+    store i16 %conv.5, i16* %cgep120, align 2, !tbaa !2
+    %inc.5 = add nuw nsw i32 %n.074, 6
+    %conv.6 = trunc i32 %inc.5 to i16
+    %cgep121 = getelementptr i16, i16* %lsr.iv98100, i32 -6
+    store i16 %conv.6, i16* %cgep121, align 2, !tbaa !2
+    %inc.6 = add nuw nsw i32 %n.074, 7
+    %conv.7 = trunc i32 %inc.6 to i16
+    %cgep122 = getelementptr i16, i16* %lsr.iv98100, i32 -5
+    store i16 %conv.7, i16* %cgep122, align 2, !tbaa !2
+    %inc.7 = add nuw nsw i32 %n.074, 8
+    %conv.8 = trunc i32 %inc.7 to i16
+    %cgep123 = getelementptr i16, i16* %lsr.iv98100, i32 -4
+    store i16 %conv.8, i16* %cgep123, align 2, !tbaa !2
+    %inc.8 = add nuw nsw i32 %n.074, 9
+    %conv.9 = trunc i32 %inc.8 to i16
+    %cgep124 = getelementptr i16, i16* %lsr.iv98100, i32 -3
+    store i16 %conv.9, i16* %cgep124, align 2, !tbaa !2
+    %inc.9 = add nuw nsw i32 %n.074, 10
+    %conv.10 = trunc i32 %inc.9 to i16
+    %cgep125 = getelementptr i16, i16* %lsr.iv98100, i32 -2
+    store i16 %conv.10, i16* %cgep125, align 2, !tbaa !2
+    %inc.10 = add nuw nsw i32 %n.074, 11
+    %conv.11 = trunc i32 %inc.10 to i16
+    %cgep126 = getelementptr i16, i16* %lsr.iv98100, i32 -1
+    store i16 %conv.11, i16* %cgep126, align 2, !tbaa !2
+    %inc.11 = add nuw nsw i32 %n.074, 12
+    %conv.12 = trunc i32 %inc.11 to i16
+    store i16 %conv.12, i16* %lsr.iv98100, align 2, !tbaa !2
+    %inc.12 = add nuw nsw i32 %n.074, 13
+    %cgep127 = getelementptr [39 x i16], [39 x i16]* %lsr.iv98, i32 0, i32 13
+    %2 = bitcast i16* %cgep127 to [39 x i16]*
+    %lsr.iv.next114 = add nuw nsw i16 %lsr.iv113, 13
+    %exitcond.12 = icmp eq i32 %inc.12, 39
+    br i1 %exitcond.12, label %for.end, label %for.body
+  
+  for.end:                                          ; preds = %for.body
+    %3 = bitcast [39 x i16]* %a to [39 x i16]*
+    %cgep128176 = bitcast [39 x i16]* %b to i16*
+    %cgep174177 = bitcast [39 x i16]* %3 to i16*
+    br label %sw.bb4
+  
+  do.body:                                          ; preds = %sw.bb4
+    %cgep169 = getelementptr i16, i16* %from.1, i32 7
+    %4 = load i16, i16* %cgep169, align 2, !tbaa !2
+    %cgep170 = getelementptr i16, i16* %to.1, i32 7
+    store i16 %4, i16* %cgep170, align 2, !tbaa !2
+    %lsr.iv.next79 = add nsw i32 %lsr.iv78, 1
+    %cgep171 = getelementptr i16, i16* %from.1, i32 8
+    %cgep172 = getelementptr i16, i16* %to.1, i32 8
+    br label %sw.bb4
+  
+  sw.bb4:                                           ; preds = %do.body, %for.end
+    %lsr.iv78 = phi i32 [ %lsr.iv.next79, %do.body ], [ -4, %for.end ]
+    %from.1 = phi i16* [ %cgep171, %do.body ], [ %cgep174177, %for.end ]
+    %to.1 = phi i16* [ %cgep172, %do.body ], [ %cgep128176, %for.end ]
+    %5 = load i16, i16* %from.1, align 2, !tbaa !2
+    store i16 %5, i16* %to.1, align 2, !tbaa !2
+    %cgep129 = getelementptr i16, i16* %from.1, i32 1
+    %6 = load i16, i16* %cgep129, align 2, !tbaa !2
+    %cgep130 = getelementptr i16, i16* %to.1, i32 1
+    store i16 %6, i16* %cgep130, align 2, !tbaa !2
+    %cgep131 = getelementptr i16, i16* %from.1, i32 2
+    %7 = load i16, i16* %cgep131, align 2, !tbaa !2
+    %cgep132 = getelementptr i16, i16* %to.1, i32 2
+    store i16 %7, i16* %cgep132, align 2, !tbaa !2
+    %cgep133 = getelementptr i16, i16* %from.1, i32 3
+    %8 = load i16, i16* %cgep133, align 2, !tbaa !2
+    %cgep134 = getelementptr i16, i16* %to.1, i32 3
+    store i16 %8, i16* %cgep134, align 2, !tbaa !2
+    %cgep135 = getelementptr i16, i16* %from.1, i32 4
+    %9 = load i16, i16* %cgep135, align 2, !tbaa !2
+    %cgep136 = getelementptr i16, i16* %to.1, i32 4
+    store i16 %9, i16* %cgep136, align 2, !tbaa !2
+    %cgep137 = getelementptr i16, i16* %from.1, i32 5
+    %10 = load i16, i16* %cgep137, align 2, !tbaa !2
+    %cgep138 = getelementptr i16, i16* %to.1, i32 5
+    store i16 %10, i16* %cgep138, align 2, !tbaa !2
+    %cgep139 = getelementptr i16, i16* %from.1, i32 6
+    %11 = load i16, i16* %cgep139, align 2, !tbaa !2
+    %cgep140 = getelementptr i16, i16* %to.1, i32 6
+    store i16 %11, i16* %cgep140, align 2, !tbaa !2
+    %cmp25 = icmp eq i32 %lsr.iv78, 0
+    br i1 %cmp25, label %for.body30, label %do.body
+  
+  for.cond27:                                       ; preds = %for.body30
+    %uglygep6667 = bitcast i8* %cgep141 to i16*
+    %cgep145 = getelementptr i16, i16* %uglygep6667, i32 1
+    %12 = load i16, i16* %cgep145, align 2, !tbaa !2
+    %uglygep6970 = bitcast i8* %cgep143 to i16*
+    %cgep146 = getelementptr i16, i16* %uglygep6970, i32 1
+    %13 = load i16, i16* %cgep146, align 2, !tbaa !2
+    %cmp35.1 = icmp eq i16 %12, %13
+    br i1 %cmp35.1, label %for.cond27.1, label %cleanup
+  
+  for.body30:                                       ; preds = %sw.bb4, %for.cond27.12
+    %lsr.iv = phi i32 [ %lsr.iv.next, %for.cond27.12 ], [ 0, %sw.bb4 ]
+    %n.973 = phi i32 [ %inc38.12, %for.cond27.12 ], [ 0, %sw.bb4 ]
+    %14 = bitcast [39 x i16]* %b to i8*
+    %15 = bitcast [39 x i16]* %a to i8*
+    %cgep141 = getelementptr i8, i8* %15, i32 %lsr.iv
+    %uglygep89 = bitcast i8* %cgep141 to i16*
+    %cgep142178 = bitcast i16* %uglygep89 to i16*
+    %16 = load i16, i16* %cgep142178, align 2, !tbaa !2
+    %cgep143 = getelementptr i8, i8* %14, i32 %lsr.iv
+    %uglygep23 = bitcast i8* %cgep143 to i16*
+    %cgep144179 = bitcast i16* %uglygep23 to i16*
+    %17 = load i16, i16* %cgep144179, align 2, !tbaa !2
+    %cmp35 = icmp eq i16 %16, %17
+    br i1 %cmp35, label %for.cond27, label %cleanup
+  
+  cleanup:                                          ; preds = %for.cond27.12, %for.cond27.11, %for.cond27.10, %for.cond27.9, %for.cond27.8, %for.cond27.7, %for.cond27.6, %for.cond27.5, %for.cond27.4, %for.cond27.3, %for.cond27.2, %for.cond27.1, %for.body30, %for.cond27
+    %retval.0 = phi i32 [ 1, %for.body30 ], [ 1, %for.cond27 ], [ 1, %for.cond27.1 ], [ 1, %for.cond27.2 ], [ 1, %for.cond27.3 ], [ 1, %for.cond27.4 ], [ 1, %for.cond27.5 ], [ 1, %for.cond27.6 ], [ 1, %for.cond27.7 ], [ 1, %for.cond27.8 ], [ 1, %for.cond27.9 ], [ 1, %for.cond27.10 ], [ 1, %for.cond27.11 ], [ 0, %for.cond27.12 ]
+    %18 = bitcast [39 x i16]* %b to i8*
+    %19 = bitcast [39 x i16]* %a to i8*
+    call void @llvm.lifetime.end.p0i8(i64 78, i8* nonnull %18) #2
+    call void @llvm.lifetime.end.p0i8(i64 78, i8* nonnull %19) #2
+    ret i32 %retval.0
+  
+  for.cond27.1:                                     ; preds = %for.cond27
+    %uglygep7273 = bitcast i8* %cgep141 to i16*
+    %cgep147 = getelementptr i16, i16* %uglygep7273, i32 2
+    %20 = load i16, i16* %cgep147, align 2, !tbaa !2
+    %uglygep7576 = bitcast i8* %cgep143 to i16*
+    %cgep148 = getelementptr i16, i16* %uglygep7576, i32 2
+    %21 = load i16, i16* %cgep148, align 2, !tbaa !2
+    %cmp35.2 = icmp eq i16 %20, %21
+    br i1 %cmp35.2, label %for.cond27.2, label %cleanup
+  
+  for.cond27.2:                                     ; preds = %for.cond27.1
+    %uglygep6364 = bitcast i8* %cgep141 to i16*
+    %cgep149 = getelementptr i16, i16* %uglygep6364, i32 3
+    %22 = load i16, i16* %cgep149, align 2, !tbaa !2
+    %uglygep6061 = bitcast i8* %cgep143 to i16*
+    %cgep150 = getelementptr i16, i16* %uglygep6061, i32 3
+    %23 = load i16, i16* %cgep150, align 2, !tbaa !2
+    %cmp35.3 = icmp eq i16 %22, %23
+    br i1 %cmp35.3, label %for.cond27.3, label %cleanup
+  
+  for.cond27.3:                                     ; preds = %for.cond27.2
+    %uglygep5758 = bitcast i8* %cgep141 to i16*
+    %cgep151 = getelementptr i16, i16* %uglygep5758, i32 4
+    %24 = load i16, i16* %cgep151, align 2, !tbaa !2
+    %uglygep5455 = bitcast i8* %cgep143 to i16*
+    %cgep152 = getelementptr i16, i16* %uglygep5455, i32 4
+    %25 = load i16, i16* %cgep152, align 2, !tbaa !2
+    %cmp35.4 = icmp eq i16 %24, %25
+    br i1 %cmp35.4, label %for.cond27.4, label %cleanup
+  
+  for.cond27.4:                                     ; preds = %for.cond27.3
+    %uglygep5152 = bitcast i8* %cgep141 to i16*
+    %cgep153 = getelementptr i16, i16* %uglygep5152, i32 5
+    %26 = load i16, i16* %cgep153, align 2, !tbaa !2
+    %uglygep4849 = bitcast i8* %cgep143 to i16*
+    %cgep154 = getelementptr i16, i16* %uglygep4849, i32 5
+    %27 = load i16, i16* %cgep154, align 2, !tbaa !2
+    %cmp35.5 = icmp eq i16 %26, %27
+    br i1 %cmp35.5, label %for.cond27.5, label %cleanup
+  
+  for.cond27.5:                                     ; preds = %for.cond27.4
+    %uglygep4546 = bitcast i8* %cgep141 to i16*
+    %cgep155 = getelementptr i16, i16* %uglygep4546, i32 6
+    %28 = load i16, i16* %cgep155, align 2, !tbaa !2
+    %uglygep4243 = bitcast i8* %cgep143 to i16*
+    %cgep156 = getelementptr i16, i16* %uglygep4243, i32 6
+    %29 = load i16, i16* %cgep156, align 2, !tbaa !2
+    %cmp35.6 = icmp eq i16 %28, %29
+    br i1 %cmp35.6, label %for.cond27.6, label %cleanup
+  
+  for.cond27.6:                                     ; preds = %for.cond27.5
+    %uglygep3940 = bitcast i8* %cgep141 to i16*
+    %cgep157 = getelementptr i16, i16* %uglygep3940, i32 7
+    %30 = load i16, i16* %cgep157, align 2, !tbaa !2
+    %uglygep3637 = bitcast i8* %cgep143 to i16*
+    %cgep158 = getelementptr i16, i16* %uglygep3637, i32 7
+    %31 = load i16, i16* %cgep158, align 2, !tbaa !2
+    %cmp35.7 = icmp eq i16 %30, %31
+    br i1 %cmp35.7, label %for.cond27.7, label %cleanup
+  
+  for.cond27.7:                                     ; preds = %for.cond27.6
+    %uglygep3334 = bitcast i8* %cgep141 to i16*
+    %cgep159 = getelementptr i16, i16* %uglygep3334, i32 8
+    %32 = load i16, i16* %cgep159, align 2, !tbaa !2
+    %uglygep3031 = bitcast i8* %cgep143 to i16*
+    %cgep160 = getelementptr i16, i16* %uglygep3031, i32 8
+    %33 = load i16, i16* %cgep160, align 2, !tbaa !2
+    %cmp35.8 = icmp eq i16 %32, %33
+    br i1 %cmp35.8, label %for.cond27.8, label %cleanup
+  
+  for.cond27.8:                                     ; preds = %for.cond27.7
+    %uglygep2728 = bitcast i8* %cgep141 to i16*
+    %cgep161 = getelementptr i16, i16* %uglygep2728, i32 9
+    %34 = load i16, i16* %cgep161, align 2, !tbaa !2
+    %uglygep2425 = bitcast i8* %cgep143 to i16*
+    %cgep162 = getelementptr i16, i16* %uglygep2425, i32 9
+    %35 = load i16, i16* %cgep162, align 2, !tbaa !2
+    %cmp35.9 = icmp eq i16 %34, %35
+    br i1 %cmp35.9, label %for.cond27.9, label %cleanup
+  
+  for.cond27.9:                                     ; preds = %for.cond27.8
+    %uglygep2021 = bitcast i8* %cgep141 to i16*
+    %cgep163 = getelementptr i16, i16* %uglygep2021, i32 10
+    %36 = load i16, i16* %cgep163, align 2, !tbaa !2
+    %uglygep1718 = bitcast i8* %cgep143 to i16*
+    %cgep164 = getelementptr i16, i16* %uglygep1718, i32 10
+    %37 = load i16, i16* %cgep164, align 2, !tbaa !2
+    %cmp35.10 = icmp eq i16 %36, %37
+    br i1 %cmp35.10, label %for.cond27.10, label %cleanup
+  
+  for.cond27.10:                                    ; preds = %for.cond27.9
+    %uglygep1415 = bitcast i8* %cgep141 to i16*
+    %cgep165 = getelementptr i16, i16* %uglygep1415, i32 11
+    %38 = load i16, i16* %cgep165, align 2, !tbaa !2
+    %uglygep1112 = bitcast i8* %cgep143 to i16*
+    %cgep166 = getelementptr i16, i16* %uglygep1112, i32 11
+    %39 = load i16, i16* %cgep166, align 2, !tbaa !2
+    %cmp35.11 = icmp eq i16 %38, %39
+    br i1 %cmp35.11, label %for.cond27.11, label %cleanup
+  
+  for.cond27.11:                                    ; preds = %for.cond27.10
+    %uglygep56 = bitcast i8* %cgep141 to i16*
+    %cgep167 = getelementptr i16, i16* %uglygep56, i32 12
+    %40 = load i16, i16* %cgep167, align 2, !tbaa !2
+    %uglygep1 = bitcast i8* %cgep143 to i16*
+    %cgep168 = getelementptr i16, i16* %uglygep1, i32 12
+    %41 = load i16, i16* %cgep168, align 2, !tbaa !2
+    %cmp35.12 = icmp eq i16 %40, %41
+    %inc38.12 = add nuw nsw i32 %n.973, 13
+    br i1 %cmp35.12, label %for.cond27.12, label %cleanup
+  
+  for.cond27.12:                                    ; preds = %for.cond27.11
+    %lsr.iv.next = add nuw nsw i32 %lsr.iv, 26
+    %cmp28.12 = icmp ult i32 %inc38.12, 39
+    br i1 %cmp28.12, label %for.body30, label %cleanup
+  }
+  
+  ; Function Attrs: argmemonly nounwind
+  declare void @llvm.lifetime.start.p0i8(i64, i8* nocapture) #1
+  
+  ; Function Attrs: argmemonly nounwind
+  declare void @llvm.lifetime.end.p0i8(i64, i8* nocapture) #1
+  
+  ; Function Attrs: argmemonly nounwind
+  declare void @llvm.memset.p0i8.i32(i8* nocapture writeonly, i8, i32, i1) #1
+  
+  ; Function Attrs: nounwind
+  declare void @llvm.stackprotector(i8*, i8**) #2
+  
+  attributes #0 = { nounwind "correctly-rounded-divide-sqrt-fp-math"="false" "disable-tail-calls"="false" "less-precise-fpmad"="false" "min-legal-vector-width"="0" "no-frame-pointer-elim"="true" "no-frame-pointer-elim-non-leaf" "no-infs-fp-math"="false" "no-jump-tables"="false" "no-nans-fp-math"="false" "no-signed-zeros-fp-math"="false" "no-trapping-math"="false" "stack-protector-buffer-size"="8" "target-cpu"="hexagonv5" "target-features"="-long-calls" "unsafe-fp-math"="false" "use-soft-float"="false" }
+  attributes #1 = { argmemonly nounwind "target-cpu"="hexagonv5" }
+  attributes #2 = { nounwind }
+  
+  !llvm.module.flags = !{!0}
+  !llvm.ident = !{!1}
+  
+  !0 = !{i32 1, !"wchar_size", i32 4}
+  !1 = !{!"clang version 9.0.0 (http://llvm.org/git/clang.git 4e215e73ed6b499f3ccf23263c96cd188e0eda2c) (git@github.com:unison-code/llvm.git 9914ec00db7eeaf764045b9071638c2421cd32e7)"}
+  !2 = !{!3, !3, i64 0}
+  !3 = !{!"short", !4, i64 0}
+  !4 = !{!"omnipotent char", !5, i64 0}
+  !5 = !{!"Simple C/C++ TBAA"}
+
+...
+---
+name:            main
+alignment:       4
+exposesReturnsTwice: false
+legalized:       false
+regBankSelected: false
+selected:        false
+failedISel:      false
+tracksRegLiveness: true
+hasWinCFI:       false
+registers:       
+  - { id: 0, class: intregs, preferred-register: '' }
+  - { id: 1, class: intregs, preferred-register: '' }
+  - { id: 2, class: intregs, preferred-register: '' }
+  - { id: 3, class: intregs, preferred-register: '' }
+  - { id: 4, class: intregs, preferred-register: '' }
+  - { id: 5, class: intregs, preferred-register: '' }
+  - { id: 6, class: intregs, preferred-register: '' }
+  - { id: 7, class: intregs, preferred-register: '' }
+  - { id: 8, class: intregs, preferred-register: '' }
+  - { id: 9, class: intregs, preferred-register: '' }
+  - { id: 10, class: intregs, preferred-register: '' }
+  - { id: 11, class: intregs, preferred-register: '' }
+  - { id: 12, class: intregs, preferred-register: '' }
+  - { id: 13, class: intregs, preferred-register: '' }
+  - { id: 14, class: intregs, preferred-register: '' }
+  - { id: 15, class: intregs, preferred-register: '' }
+  - { id: 16, class: intregs, preferred-register: '' }
+  - { id: 17, class: intregs, preferred-register: '' }
+  - { id: 18, class: intregs, preferred-register: '' }
+  - { id: 19, class: intregs, preferred-register: '' }
+  - { id: 20, class: intregs, preferred-register: '' }
+  - { id: 21, class: intregs, preferred-register: '' }
+  - { id: 22, class: intregs, preferred-register: '' }
+  - { id: 23, class: intregs, preferred-register: '' }
+  - { id: 24, class: intregs, preferred-register: '' }
+  - { id: 25, class: intregs, preferred-register: '' }
+  - { id: 26, class: intregs, preferred-register: '' }
+  - { id: 27, class: intregs, preferred-register: '' }
+  - { id: 28, class: intregs, preferred-register: '' }
+  - { id: 29, class: intregs, preferred-register: '' }
+  - { id: 30, class: intregs, preferred-register: '' }
+  - { id: 31, class: intregs, preferred-register: '' }
+  - { id: 32, class: intregs, preferred-register: '' }
+  - { id: 33, class: intregs, preferred-register: '' }
+  - { id: 34, class: intregs, preferred-register: '' }
+  - { id: 35, class: intregs, preferred-register: '' }
+  - { id: 36, class: intregs, preferred-register: '' }
+  - { id: 37, class: intregs, preferred-register: '' }
+  - { id: 38, class: intregs, preferred-register: '' }
+  - { id: 39, class: intregs, preferred-register: '' }
+  - { id: 40, class: predregs, preferred-register: '' }
+  - { id: 41, class: predregs, preferred-register: '' }
+  - { id: 42, class: intregs, preferred-register: '' }
+  - { id: 43, class: intregs, preferred-register: '' }
+  - { id: 44, class: intregs, preferred-register: '' }
+  - { id: 45, class: intregs, preferred-register: '' }
+  - { id: 46, class: intregs, preferred-register: '' }
+  - { id: 47, class: intregs, preferred-register: '' }
+  - { id: 48, class: intregs, preferred-register: '' }
+  - { id: 49, class: intregs, preferred-register: '' }
+  - { id: 50, class: intregs, preferred-register: '' }
+  - { id: 51, class: predregs, preferred-register: '' }
+  - { id: 52, class: intregs, preferred-register: '' }
+  - { id: 53, class: intregs, preferred-register: '' }
+  - { id: 54, class: intregs, preferred-register: '' }
+  - { id: 55, class: intregs, preferred-register: '' }
+  - { id: 56, class: intregs, preferred-register: '' }
+  - { id: 57, class: intregs, preferred-register: '' }
+  - { id: 58, class: predregs, preferred-register: '' }
+  - { id: 59, class: intregs, preferred-register: '' }
+  - { id: 60, class: intregs, preferred-register: '' }
+  - { id: 61, class: intregs, preferred-register: '' }
+  - { id: 62, class: predregs, preferred-register: '' }
+  - { id: 63, class: intregs, preferred-register: '' }
+  - { id: 64, class: intregs, preferred-register: '' }
+  - { id: 65, class: intregs, preferred-register: '' }
+  - { id: 66, class: predregs, preferred-register: '' }
+  - { id: 67, class: predregs, preferred-register: '' }
+  - { id: 68, class: intregs, preferred-register: '' }
+  - { id: 69, class: intregs, preferred-register: '' }
+  - { id: 70, class: intregs, preferred-register: '' }
+  - { id: 71, class: predregs, preferred-register: '' }
+  - { id: 72, class: predregs, preferred-register: '' }
+  - { id: 73, class: intregs, preferred-register: '' }
+  - { id: 74, class: intregs, preferred-register: '' }
+  - { id: 75, class: intregs, preferred-register: '' }
+  - { id: 76, class: predregs, preferred-register: '' }
+  - { id: 77, class: predregs, preferred-register: '' }
+  - { id: 78, class: intregs, preferred-register: '' }
+  - { id: 79, class: intregs, preferred-register: '' }
+  - { id: 80, class: intregs, preferred-register: '' }
+  - { id: 81, class: predregs, preferred-register: '' }
+  - { id: 82, class: predregs, preferred-register: '' }
+  - { id: 83, class: intregs, preferred-register: '' }
+  - { id: 84, class: intregs, preferred-register: '' }
+  - { id: 85, class: intregs, preferred-register: '' }
+  - { id: 86, class: predregs, preferred-register: '' }
+  - { id: 87, class: predregs, preferred-register: '' }
+  - { id: 88, class: intregs, preferred-register: '' }
+  - { id: 89, class: intregs, preferred-register: '' }
+  - { id: 90, class: intregs, preferred-register: '' }
+  - { id: 91, class: predregs, preferred-register: '' }
+  - { id: 92, class: predregs, preferred-register: '' }
+  - { id: 93, class: intregs, preferred-register: '' }
+  - { id: 94, class: intregs, preferred-register: '' }
+  - { id: 95, class: intregs, preferred-register: '' }
+  - { id: 96, class: predregs, preferred-register: '' }
+  - { id: 97, class: predregs, preferred-register: '' }
+  - { id: 98, class: intregs, preferred-register: '' }
+  - { id: 99, class: intregs, preferred-register: '' }
+  - { id: 100, class: intregs, preferred-register: '' }
+  - { id: 101, class: predregs, preferred-register: '' }
+  - { id: 102, class: predregs, preferred-register: '' }
+  - { id: 103, class: intregs, preferred-register: '' }
+  - { id: 104, class: intregs, preferred-register: '' }
+  - { id: 105, class: intregs, preferred-register: '' }
+  - { id: 106, class: predregs, preferred-register: '' }
+  - { id: 107, class: predregs, preferred-register: '' }
+  - { id: 108, class: intregs, preferred-register: '' }
+  - { id: 109, class: intregs, preferred-register: '' }
+  - { id: 110, class: intregs, preferred-register: '' }
+  - { id: 111, class: predregs, preferred-register: '' }
+  - { id: 112, class: predregs, preferred-register: '' }
+  - { id: 113, class: intregs, preferred-register: '' }
+  - { id: 114, class: intregs, preferred-register: '' }
+  - { id: 115, class: intregs, preferred-register: '' }
+  - { id: 116, class: predregs, preferred-register: '' }
+  - { id: 117, class: predregs, preferred-register: '' }
+  - { id: 118, class: intregs, preferred-register: '' }
+  - { id: 119, class: predregs, preferred-register: '' }
+  - { id: 120, class: predregs, preferred-register: '' }
+  - { id: 121, class: intregs, preferred-register: '' }
+liveins:         []
+frameInfo:       
+  isFrameAddressTaken: false
+  isReturnAddressTaken: false
+  hasStackMap:     false
+  hasPatchPoint:   false
+  stackSize:       0
+  offsetAdjustment: 0
+  maxAlignment:    8
+  adjustsStack:    false
+  hasCalls:        true
+  stackProtector:  ''
+  maxCallFrameSize: 4294967295
+  cvBytesOfCalleeSavedRegisters: 0
+  hasOpaqueSPAdjustment: false
+  hasVAStart:      false
+  hasMustTailInVarArgFunc: false
+  localFrameSize:  0
+  savePoint:       ''
+  restorePoint:    ''
+fixedStack:      []
+stack:           
+  - { id: 0, name: a, type: default, offset: 0, size: 78, alignment: 8, 
+      stack-id: 0, callee-saved-register: '', callee-saved-restored: true, 
+      debug-info-variable: '', debug-info-expression: '', debug-info-location: '' }
+  - { id: 1, name: b, type: default, offset: 0, size: 78, alignment: 8, 
+      stack-id: 0, callee-saved-register: '', callee-saved-restored: true, 
+      debug-info-variable: '', debug-info-expression: '', debug-info-location: '' }
+constants:       []
+body:             |
+  bb.0.entry (freq 138):
+    successors: %bb.1(100)
+  
+    ANNOTATION_LABEL <0x8048310> = !{!"unison-block-frequency", i64 138}
+    %24:intregs = PS_fi %stack.1.b, 0
+    %23:intregs = A2_tfrsi 0
+    %25:intregs = A2_tfrsi 78
+    ADJCALLSTACKDOWN 0, 0, implicit-def $r29, implicit-def dead $r30, implicit $r31, implicit $r30, implicit $r29
+    $r0 = COPY killed %24
+    $r1 = COPY %23
+    $r2 = COPY killed %25
+    J2_call &memset, hexagoncsr, implicit-def dead $pc, implicit-def dead $r31, implicit $r29, implicit killed $r0, implicit killed $r1, implicit killed $r2, implicit-def $r29, implicit-def dead $r0
+    ADJCALLSTACKUP 0, 0, implicit-def dead $r29, implicit-def dead $r30, implicit-def dead $r31, implicit $r29
+    %27:intregs = PS_fi %stack.0.a, 0
+    %0:intregs = A2_addi killed %27, 24
+    J2_loop0i %bb.1, 3, implicit-def $lc0, implicit-def $sa0, implicit-def $usr
+  
+  bb.1.for.body (address-taken, freq 4441):
+    successors: %bb.2(3), %bb.1(96)
+  
+    ANNOTATION_LABEL <0x7ff2b50> = !{!"unison-block-frequency", i64 4441}
+    %1:intregs = PHI %23, %bb.0, %6, %bb.1
+    %2:intregs = PHI %0, %bb.0, %5, %bb.1
+    %3:intregs = PHI %23, %bb.0, %4, %bb.1
+    S2_storerh_io %2, -24, %1, <0x7fc6960> = !{!"unison-memory-partition", i64 9} :: (store 2 into %ir.cgep115, !tbaa !2)
+    %28:intregs = nuw nsw A2_addi %3, 1
+    S2_storerh_io %2, -22, killed %28, <0x800f220> = !{!"unison-memory-partition", i64 10} :: (store 2 into %ir.cgep116, !tbaa !2)
+    %29:intregs = nuw nsw A2_addi %3, 2
+    S2_storerh_io %2, -20, killed %29, <0x7ffbb60> = !{!"unison-memory-partition", i64 11} :: (store 2 into %ir.cgep117, !tbaa !2)
+    %30:intregs = nuw nsw A2_addi %3, 3
+    S2_storerh_io %2, -18, killed %30, <0x7ffbc60> = !{!"unison-memory-partition", i64 12} :: (store 2 into %ir.cgep118, !tbaa !2)
+    %31:intregs = nuw nsw A2_addi %3, 4
+    S2_storerh_io %2, -16, killed %31, <0x7ffbc90> = !{!"unison-memory-partition", i64 0} :: (store 2 into %ir.cgep119, !tbaa !2)
+    %32:intregs = nuw nsw A2_addi %3, 5
+    S2_storerh_io %2, -14, killed %32, <0x800bd60> = !{!"unison-memory-partition", i64 1} :: (store 2 into %ir.cgep120, !tbaa !2)
+    %33:intregs = nuw nsw A2_addi %3, 6
+    S2_storerh_io %2, -12, killed %33, <0x800be30> = !{!"unison-memory-partition", i64 2} :: (store 2 into %ir.cgep121, !tbaa !2)
+    %34:intregs = nuw nsw A2_addi %3, 7
+    S2_storerh_io %2, -10, killed %34, <0x7ffe190> = !{!"unison-memory-partition", i64 3} :: (store 2 into %ir.cgep122, !tbaa !2)
+    %35:intregs = nuw nsw A2_addi %3, 8
+    S2_storerh_io %2, -8, killed %35, <0x7ffe260> = !{!"unison-memory-partition", i64 4} :: (store 2 into %ir.cgep123, !tbaa !2)
+    %36:intregs = nuw nsw A2_addi %3, 9
+    S2_storerh_io %2, -6, killed %36, <0x80392f0> = !{!"unison-memory-partition", i64 5} :: (store 2 into %ir.cgep124, !tbaa !2)
+    %37:intregs = nuw nsw A2_addi %3, 10
+    S2_storerh_io %2, -4, killed %37, <0x80393f0> = !{!"unison-memory-partition", i64 6} :: (store 2 into %ir.cgep125, !tbaa !2)
+    %38:intregs = nuw nsw A2_addi %3, 11
+    S2_storerh_io %2, -2, killed %38, <0x7ff66b0> = !{!"unison-memory-partition", i64 7} :: (store 2 into %ir.cgep126, !tbaa !2)
+    %39:intregs = nuw nsw A2_addi %3, 12
+    S2_storerh_io %2, 0, killed %39, <0x7ff67b0> = !{!"unison-memory-partition", i64 8} :: (store 2 into %ir.lsr.iv98100, !tbaa !2)
+    %4:intregs = nuw nsw A2_addi killed %3, 13
+    %5:intregs = A2_addi killed %2, 26
+    %6:intregs = A2_addi killed %1, 13
+    ENDLOOP0 %bb.1, implicit-def $pc, implicit-def $lc0, implicit $sa0, implicit $lc0
+    J2_jump %bb.2, implicit-def dead $pc
+  
+  bb.2.for.end (freq 138):
+    successors: %bb.4(100)
+  
+    ANNOTATION_LABEL <0x8048310> = !{!"unison-block-frequency", i64 138}
+    %7:intregs = PS_fi %stack.1.b, 0
+    %42:intregs = A2_tfrsi -4
+    %8:intregs = PS_fi %stack.0.a, 0
+    J2_jump %bb.4, implicit-def dead $pc
+  
+  bb.3.do.body (freq 4302):
+    successors: %bb.4(100)
+  
+    ANNOTATION_LABEL <0x7ffc860> = !{!"unison-block-frequency", i64 4302}
+    %52:intregs = L2_loadruh_io %13, 14, <0x7ffbc90> = !{!"unison-memory-partition", i64 0} :: (load 2 from %ir.cgep169, !tbaa !2)
+    S2_storerh_io %14, 14, killed %52, <0x800bd60> = !{!"unison-memory-partition", i64 1} :: (store 2 into %ir.cgep170, !tbaa !2)
+    %9:intregs = nsw A2_addi killed %12, 1
+    %10:intregs = A2_addi killed %13, 16
+    %11:intregs = A2_addi killed %14, 16
+  
+  bb.4.sw.bb4 (freq 4441):
+    successors: %bb.5(3), %bb.3(96)
+  
+    ANNOTATION_LABEL <0x7ff2b50> = !{!"unison-block-frequency", i64 4441}
+    %12:intregs = PHI %42, %bb.2, %9, %bb.3
+    %13:intregs = PHI %8, %bb.2, %10, %bb.3
+    %14:intregs = PHI %7, %bb.2, %11, %bb.3
+    %44:intregs = L2_loadruh_io %13, 0, <0x7ffbc90> = !{!"unison-memory-partition", i64 0} :: (load 2 from %ir.from.1, !tbaa !2)
+    S2_storerh_io %14, 0, killed %44, <0x800bd60> = !{!"unison-memory-partition", i64 1} :: (store 2 into %ir.to.1, !tbaa !2)
+    %45:intregs = L2_loadruh_io %13, 2, <0x800be30> = !{!"unison-memory-partition", i64 2} :: (load 2 from %ir.cgep129, !tbaa !2)
+    S2_storerh_io %14, 2, killed %45, <0x7ffe190> = !{!"unison-memory-partition", i64 3} :: (store 2 into %ir.cgep130, !tbaa !2)
+    %46:intregs = L2_loadruh_io %13, 4, <0x7ffe260> = !{!"unison-memory-partition", i64 4} :: (load 2 from %ir.cgep131, !tbaa !2)
+    S2_storerh_io %14, 4, killed %46, <0x80392f0> = !{!"unison-memory-partition", i64 5} :: (store 2 into %ir.cgep132, !tbaa !2)
+    %47:intregs = L2_loadruh_io %13, 6, <0x80393f0> = !{!"unison-memory-partition", i64 6} :: (load 2 from %ir.cgep133, !tbaa !2)
+    S2_storerh_io %14, 6, killed %47, <0x7ff66b0> = !{!"unison-memory-partition", i64 7} :: (store 2 into %ir.cgep134, !tbaa !2)
+    %48:intregs = L2_loadruh_io %13, 8, <0x7ff67b0> = !{!"unison-memory-partition", i64 8} :: (load 2 from %ir.cgep135, !tbaa !2)
+    S2_storerh_io %14, 8, killed %48, <0x7fc6960> = !{!"unison-memory-partition", i64 9} :: (store 2 into %ir.cgep136, !tbaa !2)
+    %49:intregs = L2_loadruh_io %13, 10, <0x800f220> = !{!"unison-memory-partition", i64 10} :: (load 2 from %ir.cgep137, !tbaa !2)
+    S2_storerh_io %14, 10, killed %49, <0x7ffbb60> = !{!"unison-memory-partition", i64 11} :: (store 2 into %ir.cgep138, !tbaa !2)
+    %50:intregs = L2_loadruh_io %13, 12, <0x7ffbc60> = !{!"unison-memory-partition", i64 12} :: (load 2 from %ir.cgep139, !tbaa !2)
+    S2_storerh_io %14, 12, killed %50, <0x7ff6850> = !{!"unison-memory-partition", i64 13} :: (store 2 into %ir.cgep140, !tbaa !2)
+    %51:predregs = C2_cmpeqi %12, 0
+    J2_jumpf killed %51, %bb.3, implicit-def $pc
+  
+  bb.5 (freq 138):
+    successors: %bb.7(100)
+  
+    ANNOTATION_LABEL <0x8048310> = !{!"unison-block-frequency", i64 138}
+    %43:intregs = A2_tfrsi 0
+    %54:intregs = PS_fi %stack.0.a, 0
+    %56:intregs = PS_fi %stack.1.b, 0
+    J2_jump %bb.7, implicit-def $pc
+  
+  bb.6.for.cond27 (freq 374):
+    successors: %bb.9(96), %bb.8(3)
+  
+    ANNOTATION_LABEL <0x8006e60> = !{!"unison-block-frequency", i64 374}
+    %17:intregs = A2_add %54, %15
+    %18:intregs = A2_add %56, %15
+    %60:intregs = L2_loadrh_io %17, 2, <0x7ffbc90> = !{!"unison-memory-partition", i64 0} :: (load 2 from %ir.cgep145, !tbaa !2)
+    %61:intregs = L2_loadrh_io %18, 2, <0x800bd60> = !{!"unison-memory-partition", i64 1} :: (load 2 from %ir.cgep146, !tbaa !2)
+    %62:predregs = C2_cmpeq killed %60, killed %61
+    J2_jumpt killed %62, %bb.9, implicit-def dead $pc
+    J2_jump %bb.8, implicit-def dead $pc
+  
+  bb.7.for.body30 (freq 386):
+    successors: %bb.6(96), %bb.8(3)
+  
+    ANNOTATION_LABEL <0x80458c0> = !{!"unison-block-frequency", i64 386}
+    %15:intregs = PHI %43, %bb.5, %21, %bb.20
+    %16:intregs = PHI %43, %bb.5, %20, %bb.20
+    %55:intregs = L4_loadrh_rr %54, %15, 0, <0x7ffbc90> = !{!"unison-memory-partition", i64 0} :: (load 2 from %ir.cgep142178, !tbaa !2)
+    %57:intregs = L4_loadrh_rr %56, %15, 0, <0x800bd60> = !{!"unison-memory-partition", i64 1} :: (load 2 from %ir.cgep144179, !tbaa !2)
+    %58:predregs = C2_cmpeq killed %55, killed %57
+    %53:intregs = A2_tfrsi 1
+    J2_jumpt killed %58, %bb.6, implicit-def dead $pc
+    J2_jump %bb.8, implicit-def dead $pc
+  
+  bb.8.cleanup (freq 138):
+    liveouts: $pc, $r0
+  
+    ANNOTATION_LABEL <0x8048310> = !{!"unison-block-frequency", i64 138}
+    %19:intregs = PHI %53, %bb.7, %53, %bb.6, %53, %bb.9, %53, %bb.10, %53, %bb.11, %53, %bb.12, %53, %bb.13, %53, %bb.14, %53, %bb.15, %53, %bb.16, %53, %bb.17, %53, %bb.18, %53, %bb.19, %118, %bb.21
+    $r0 = COPY killed %19
+    PS_jmpret $r31, implicit-def dead $pc, implicit killed $r0
+  
+  bb.9.for.cond27.1 (freq 363):
+    successors: %bb.10(96), %bb.8(3)
+  
+    ANNOTATION_LABEL <0x80459c0> = !{!"unison-block-frequency", i64 363}
+    %64:intregs = L2_loadrh_io %17, 4, <0x7ffbc90> = !{!"unison-memory-partition", i64 0} :: (load 2 from %ir.cgep147, !tbaa !2)
+    %65:intregs = L2_loadrh_io %18, 4, <0x800bd60> = !{!"unison-memory-partition", i64 1} :: (load 2 from %ir.cgep148, !tbaa !2)
+    %66:predregs = C2_cmpeq killed %64, killed %65
+    J2_jumpf killed %66, %bb.8, implicit-def dead $pc
+    J2_jump %bb.10, implicit-def dead $pc
+  
+  bb.10.for.cond27.2 (freq 351):
+    successors: %bb.11(96), %bb.8(3)
+  
+    ANNOTATION_LABEL <0x8045ac0> = !{!"unison-block-frequency", i64 351}
+    %69:intregs = L2_loadrh_io %17, 6, <0x7ffbc90> = !{!"unison-memory-partition", i64 0} :: (load 2 from %ir.cgep149, !tbaa !2)
+    %70:intregs = L2_loadrh_io %18, 6, <0x800bd60> = !{!"unison-memory-partition", i64 1} :: (load 2 from %ir.cgep150, !tbaa !2)
+    %71:predregs = C2_cmpeq killed %69, killed %70
+    J2_jumpf killed %71, %bb.8, implicit-def dead $pc
+    J2_jump %bb.11, implicit-def dead $pc
+  
+  bb.11.for.cond27.3 (freq 340):
+    successors: %bb.12(96), %bb.8(3)
+  
+    ANNOTATION_LABEL <0x8045bc0> = !{!"unison-block-frequency", i64 340}
+    %74:intregs = L2_loadrh_io %17, 8, <0x7ffbc90> = !{!"unison-memory-partition", i64 0} :: (load 2 from %ir.cgep151, !tbaa !2)
+    %75:intregs = L2_loadrh_io %18, 8, <0x800bd60> = !{!"unison-memory-partition", i64 1} :: (load 2 from %ir.cgep152, !tbaa !2)
+    %76:predregs = C2_cmpeq killed %74, killed %75
+    J2_jumpf killed %76, %bb.8, implicit-def dead $pc
+    J2_jump %bb.12, implicit-def dead $pc
+  
+  bb.12.for.cond27.4 (freq 330):
+    successors: %bb.13(96), %bb.8(3)
+  
+    ANNOTATION_LABEL <0x800ad40> = !{!"unison-block-frequency", i64 330}
+    %79:intregs = L2_loadrh_io %17, 10, <0x7ffbc90> = !{!"unison-memory-partition", i64 0} :: (load 2 from %ir.cgep153, !tbaa !2)
+    %80:intregs = L2_loadrh_io %18, 10, <0x800bd60> = !{!"unison-memory-partition", i64 1} :: (load 2 from %ir.cgep154, !tbaa !2)
+    %81:predregs = C2_cmpeq killed %79, killed %80
+    J2_jumpf killed %81, %bb.8, implicit-def dead $pc
+    J2_jump %bb.13, implicit-def dead $pc
+  
+  bb.13.for.cond27.5 (freq 319):
+    successors: %bb.14(96), %bb.8(3)
+  
+    ANNOTATION_LABEL <0x800ae40> = !{!"unison-block-frequency", i64 319}
+    %84:intregs = L2_loadrh_io %17, 12, <0x7ffbc90> = !{!"unison-memory-partition", i64 0} :: (load 2 from %ir.cgep155, !tbaa !2)
+    %85:intregs = L2_loadrh_io %18, 12, <0x800bd60> = !{!"unison-memory-partition", i64 1} :: (load 2 from %ir.cgep156, !tbaa !2)
+    %86:predregs = C2_cmpeq killed %84, killed %85
+    J2_jumpf killed %86, %bb.8, implicit-def dead $pc
+    J2_jump %bb.14, implicit-def dead $pc
+  
+  bb.14.for.cond27.6 (freq 309):
+    successors: %bb.15(96), %bb.8(3)
+  
+    ANNOTATION_LABEL <0x800afc0> = !{!"unison-block-frequency", i64 309}
+    %89:intregs = L2_loadrh_io %17, 14, <0x7ffbc90> = !{!"unison-memory-partition", i64 0} :: (load 2 from %ir.cgep157, !tbaa !2)
+    %90:intregs = L2_loadrh_io %18, 14, <0x800bd60> = !{!"unison-memory-partition", i64 1} :: (load 2 from %ir.cgep158, !tbaa !2)
+    %91:predregs = C2_cmpeq killed %89, killed %90
+    J2_jumpf killed %91, %bb.8, implicit-def dead $pc
+    J2_jump %bb.15, implicit-def dead $pc
+  
+  bb.15.for.cond27.7 (freq 300):
+    successors: %bb.16(96), %bb.8(3)
+  
+    ANNOTATION_LABEL <0x8036820> = !{!"unison-block-frequency", i64 300}
+    %94:intregs = L2_loadrh_io %17, 16, <0x7ffbc90> = !{!"unison-memory-partition", i64 0} :: (load 2 from %ir.cgep159, !tbaa !2)
+    %95:intregs = L2_loadrh_io %18, 16, <0x800bd60> = !{!"unison-memory-partition", i64 1} :: (load 2 from %ir.cgep160, !tbaa !2)
+    %96:predregs = C2_cmpeq killed %94, killed %95
+    J2_jumpf killed %96, %bb.8, implicit-def dead $pc
+    J2_jump %bb.16, implicit-def dead $pc
+  
+  bb.16.for.cond27.8 (freq 290):
+    successors: %bb.17(96), %bb.8(3)
+  
+    ANNOTATION_LABEL <0x80369a0> = !{!"unison-block-frequency", i64 290}
+    %99:intregs = L2_loadrh_io %17, 18, <0x7ffbc90> = !{!"unison-memory-partition", i64 0} :: (load 2 from %ir.cgep161, !tbaa !2)
+    %100:intregs = L2_loadrh_io %18, 18, <0x800bd60> = !{!"unison-memory-partition", i64 1} :: (load 2 from %ir.cgep162, !tbaa !2)
+    %101:predregs = C2_cmpeq killed %99, killed %100
+    J2_jumpf killed %101, %bb.8, implicit-def dead $pc
+    J2_jump %bb.17, implicit-def dead $pc
+  
+  bb.17.for.cond27.9 (freq 281):
+    successors: %bb.18(96), %bb.8(3)
+  
+    ANNOTATION_LABEL <0x8036b20> = !{!"unison-block-frequency", i64 281}
+    %104:intregs = L2_loadrh_io %17, 20, <0x7ffbc90> = !{!"unison-memory-partition", i64 0} :: (load 2 from %ir.cgep163, !tbaa !2)
+    %105:intregs = L2_loadrh_io %18, 20, <0x800bd60> = !{!"unison-memory-partition", i64 1} :: (load 2 from %ir.cgep164, !tbaa !2)
+    %106:predregs = C2_cmpeq killed %104, killed %105
+    J2_jumpf killed %106, %bb.8, implicit-def dead $pc
+    J2_jump %bb.18, implicit-def dead $pc
+  
+  bb.18.for.cond27.10 (freq 272):
+    successors: %bb.19(96), %bb.8(3)
+  
+    ANNOTATION_LABEL <0x8039a30> = !{!"unison-block-frequency", i64 272}
+    %109:intregs = L2_loadrh_io %17, 22, <0x7ffbc90> = !{!"unison-memory-partition", i64 0} :: (load 2 from %ir.cgep165, !tbaa !2)
+    %110:intregs = L2_loadrh_io %18, 22, <0x800bd60> = !{!"unison-memory-partition", i64 1} :: (load 2 from %ir.cgep166, !tbaa !2)
+    %111:predregs = C2_cmpeq killed %109, killed %110
+    J2_jumpf killed %111, %bb.8, implicit-def dead $pc
+    J2_jump %bb.19, implicit-def dead $pc
+  
+  bb.19.for.cond27.11 (freq 264):
+    successors: %bb.20(96), %bb.8(3)
+  
+    ANNOTATION_LABEL <0x8039bb0> = !{!"unison-block-frequency", i64 264}
+    %114:intregs = L2_loadrh_io killed %17, 24, <0x7ffbc90> = !{!"unison-memory-partition", i64 0} :: (load 2 from %ir.cgep167, !tbaa !2)
+    %115:intregs = L2_loadrh_io killed %18, 24, <0x800bd60> = !{!"unison-memory-partition", i64 1} :: (load 2 from %ir.cgep168, !tbaa !2)
+    %116:predregs = C2_cmpeq killed %114, killed %115
+    J2_jumpf killed %116, %bb.8, implicit-def dead $pc
+    J2_jump %bb.20, implicit-def dead $pc
+  
+  bb.20.for.cond27.12 (freq 256):
+    successors: %bb.7(96), %bb.21(3)
+  
+    ANNOTATION_LABEL <0x8039d30> = !{!"unison-block-frequency", i64 256}
+    %20:intregs = nuw nsw A2_addi killed %16, 13
+    %21:intregs = nuw nsw A2_addi killed %15, 26
+    %119:predregs = C2_cmpgtui %20, 38
+    J2_jumpf killed %119, %bb.7, implicit-def $pc
+  
+  bb.21 (freq 8):
+    successors: %bb.8(100)
+  
+    ANNOTATION_LABEL <0x8039d60> = !{!"unison-block-frequency", i64 8}
+    %118:intregs = A2_tfrsi 0
+    J2_jump %bb.8, implicit-def $pc
+
+...

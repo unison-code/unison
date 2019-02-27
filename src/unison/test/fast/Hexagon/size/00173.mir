@@ -1,0 +1,187 @@
+--- |
+  ; ModuleID = '00173.ll'
+  source_filename = "./tests/single-exec/00173.c"
+  target datalayout = "e-m:e-p:32:32:32-a:0-n16:32-i64:64:64-i32:32:32-i16:16:16-i1:8:8-f32:32:32-f64:64:64-v32:32:32-v64:64:64-v512:512:512-v1024:1024:1024-v2048:2048:2048"
+  target triple = "hexagon"
+  
+  @.str = private unnamed_addr constant [6 x i8] c"hello\00", align 1
+  @.str.2 = private unnamed_addr constant [8 x i8] c"%c: %d\0A\00", align 1
+  @.str.3 = private unnamed_addr constant [21 x i8] c"copied string is %s\0A\00", align 1
+  
+  ; Function Attrs: nounwind
+  define dso_local i32 @main() local_unnamed_addr #0 {
+  entry:
+    %destarray = alloca [10 x i8], align 8
+    %puts = tail call i32 @puts(i8* getelementptr inbounds ([6 x i8], [6 x i8]* @.str, i32 0, i32 0))
+    %call6 = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([8 x i8], [8 x i8]* @.str.2, i32 0, i32 0), i32 104, i32 104)
+    %call6.1 = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([8 x i8], [8 x i8]* @.str.2, i32 0, i32 0), i32 101, i32 101)
+    %call6.2 = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([8 x i8], [8 x i8]* @.str.2, i32 0, i32 0), i32 108, i32 108)
+    %call6.3 = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([8 x i8], [8 x i8]* @.str.2, i32 0, i32 0), i32 108, i32 108)
+    %call6.4 = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([8 x i8], [8 x i8]* @.str.2, i32 0, i32 0), i32 111, i32 111)
+    %cgep13 = bitcast [10 x i8]* %destarray to [10 x i8]*
+    %cgep114 = bitcast [10 x i8]* %cgep13 to i8*
+    call void @llvm.lifetime.start.p0i8(i64 10, i8* nonnull %cgep114) #4
+    %cgep715 = bitcast [10 x i8]* %cgep13 to i8*
+    store i8 104, i8* %cgep715, align 8, !tbaa !2
+    %cgep8 = getelementptr inbounds [10 x i8], [10 x i8]* %cgep13, i32 0, i32 1
+    store i8 101, i8* %cgep8, align 1, !tbaa !2
+    %cgep9 = getelementptr inbounds [10 x i8], [10 x i8]* %cgep13, i32 0, i32 2
+    store i8 108, i8* %cgep9, align 2, !tbaa !2
+    %cgep10 = getelementptr inbounds [10 x i8], [10 x i8]* %cgep13, i32 0, i32 3
+    store i8 108, i8* %cgep10, align 1, !tbaa !2
+    %cgep11 = getelementptr inbounds [10 x i8], [10 x i8]* %cgep13, i32 0, i32 4
+    store i8 111, i8* %cgep11, align 4, !tbaa !2
+    %cgep12 = getelementptr inbounds [10 x i8], [10 x i8]* %cgep13, i32 0, i32 5
+    store i8 0, i8* %cgep12, align 1, !tbaa !2
+    %call12 = call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([21 x i8], [21 x i8]* @.str.3, i32 0, i32 0), i8* nonnull %cgep114)
+    call void @llvm.lifetime.end.p0i8(i64 10, i8* nonnull %cgep114) #4
+    ret i32 0
+  }
+  
+  ; Function Attrs: argmemonly nounwind
+  declare void @llvm.lifetime.start.p0i8(i64, i8* nocapture) #1
+  
+  ; Function Attrs: nounwind
+  declare dso_local i32 @printf(i8* nocapture readonly, ...) local_unnamed_addr #2
+  
+  ; Function Attrs: argmemonly nounwind
+  declare void @llvm.lifetime.end.p0i8(i64, i8* nocapture) #1
+  
+  ; Function Attrs: nounwind
+  declare i32 @puts(i8* nocapture readonly) local_unnamed_addr #3
+  
+  ; Function Attrs: nounwind
+  declare void @llvm.stackprotector(i8*, i8**) #4
+  
+  attributes #0 = { nounwind "correctly-rounded-divide-sqrt-fp-math"="false" "disable-tail-calls"="false" "less-precise-fpmad"="false" "min-legal-vector-width"="0" "no-frame-pointer-elim"="true" "no-frame-pointer-elim-non-leaf" "no-infs-fp-math"="false" "no-jump-tables"="false" "no-nans-fp-math"="false" "no-signed-zeros-fp-math"="false" "no-trapping-math"="false" "stack-protector-buffer-size"="8" "target-cpu"="hexagonv5" "target-features"="-long-calls" "unsafe-fp-math"="false" "use-soft-float"="false" }
+  attributes #1 = { argmemonly nounwind "target-cpu"="hexagonv5" }
+  attributes #2 = { nounwind "correctly-rounded-divide-sqrt-fp-math"="false" "disable-tail-calls"="false" "less-precise-fpmad"="false" "no-frame-pointer-elim"="true" "no-frame-pointer-elim-non-leaf" "no-infs-fp-math"="false" "no-nans-fp-math"="false" "no-signed-zeros-fp-math"="false" "no-trapping-math"="false" "stack-protector-buffer-size"="8" "target-cpu"="hexagonv5" "target-features"="-long-calls" "unsafe-fp-math"="false" "use-soft-float"="false" }
+  attributes #3 = { nounwind "target-cpu"="hexagonv5" }
+  attributes #4 = { nounwind }
+  
+  !llvm.module.flags = !{!0}
+  !llvm.ident = !{!1}
+  
+  !0 = !{i32 1, !"wchar_size", i32 4}
+  !1 = !{!"clang version 9.0.0 (http://llvm.org/git/clang.git 4e215e73ed6b499f3ccf23263c96cd188e0eda2c) (git@github.com:unison-code/llvm.git 9914ec00db7eeaf764045b9071638c2421cd32e7)"}
+  !2 = !{!3, !3, i64 0}
+  !3 = !{!"omnipotent char", !4, i64 0}
+  !4 = !{!"Simple C/C++ TBAA"}
+
+...
+---
+name:            main
+alignment:       4
+exposesReturnsTwice: false
+legalized:       false
+regBankSelected: false
+selected:        false
+failedISel:      false
+tracksRegLiveness: true
+hasWinCFI:       false
+registers:       
+  - { id: 0, class: intregs, preferred-register: '' }
+  - { id: 1, class: intregs, preferred-register: '' }
+  - { id: 2, class: intregs, preferred-register: '' }
+  - { id: 3, class: intregs, preferred-register: '' }
+  - { id: 4, class: intregs, preferred-register: '' }
+  - { id: 5, class: intregs, preferred-register: '' }
+  - { id: 6, class: intregs, preferred-register: '' }
+  - { id: 7, class: intregs, preferred-register: '' }
+  - { id: 8, class: intregs, preferred-register: '' }
+  - { id: 9, class: intregs, preferred-register: '' }
+  - { id: 10, class: intregs, preferred-register: '' }
+  - { id: 11, class: intregs, preferred-register: '' }
+  - { id: 12, class: intregs, preferred-register: '' }
+  - { id: 13, class: intregs, preferred-register: '' }
+  - { id: 14, class: intregs, preferred-register: '' }
+  - { id: 15, class: intregs, preferred-register: '' }
+  - { id: 16, class: intregs, preferred-register: '' }
+  - { id: 17, class: intregs, preferred-register: '' }
+liveins:         []
+frameInfo:       
+  isFrameAddressTaken: false
+  isReturnAddressTaken: false
+  hasStackMap:     false
+  hasPatchPoint:   false
+  stackSize:       0
+  offsetAdjustment: 0
+  maxAlignment:    8
+  adjustsStack:    false
+  hasCalls:        true
+  stackProtector:  ''
+  maxCallFrameSize: 4294967295
+  cvBytesOfCalleeSavedRegisters: 0
+  hasOpaqueSPAdjustment: false
+  hasVAStart:      false
+  hasMustTailInVarArgFunc: false
+  localFrameSize:  0
+  savePoint:       ''
+  restorePoint:    ''
+fixedStack:      []
+stack:           
+  - { id: 0, name: destarray, type: default, offset: 0, size: 10, alignment: 8, 
+      stack-id: 0, callee-saved-register: '', callee-saved-restored: true, 
+      debug-info-variable: '', debug-info-expression: '', debug-info-location: '' }
+constants:       []
+body:             |
+  bb.0.entry (freq 8):
+    liveouts: $pc, $r0
+  
+    ANNOTATION_LABEL <0x87f1fe0> = !{!"unison-block-frequency", i64 8}
+    %0:intregs = A2_tfrsi @.str
+    ADJCALLSTACKDOWN 0, 0, implicit-def $r29, implicit-def dead $r30, implicit $r31, implicit $r30, implicit $r29
+    $r0 = COPY killed %0
+    J2_call @puts, hexagoncsr, implicit-def dead $pc, implicit-def dead $r31, implicit $r29, implicit killed $r0, implicit-def $r29, implicit-def dead $r0
+    ADJCALLSTACKUP 0, 0, implicit-def dead $r29, implicit-def dead $r30, implicit-def dead $r31, implicit $r29
+    %2:intregs = COPY $r29
+    S4_storeiri_io %2, 4, 104, <0x87fe3c0> = !{!"unison-memory-partition", i64 0} :: (store 4 into stack + 4)
+    S4_storeiri_io killed %2, 0, 104, <0x87fe3c0> = !{!"unison-memory-partition", i64 0} :: (store 4 into stack)
+    %3:intregs = A2_tfrsi @.str.2
+    ADJCALLSTACKDOWN 8, 0, implicit-def $r29, implicit-def dead $r30, implicit $r31, implicit $r30, implicit $r29
+    $r0 = COPY %3
+    J2_call @printf, hexagoncsr, implicit-def dead $pc, implicit-def dead $r31, implicit $r29, implicit killed $r0, implicit-def $r29, implicit-def dead $r0
+    ADJCALLSTACKUP 8, 0, implicit-def dead $r29, implicit-def dead $r30, implicit-def dead $r31, implicit $r29
+    %5:intregs = COPY $r29
+    S4_storeiri_io %5, 4, 101, <0x87fe3c0> = !{!"unison-memory-partition", i64 0} :: (store 4 into stack + 4)
+    S4_storeiri_io killed %5, 0, 101, <0x87fe3c0> = !{!"unison-memory-partition", i64 0} :: (store 4 into stack)
+    ADJCALLSTACKDOWN 8, 0, implicit-def $r29, implicit-def dead $r30, implicit $r31, implicit $r30, implicit $r29
+    $r0 = COPY %3
+    J2_call @printf, hexagoncsr, implicit-def dead $pc, implicit-def dead $r31, implicit $r29, implicit killed $r0, implicit-def $r29, implicit-def dead $r0
+    ADJCALLSTACKUP 8, 0, implicit-def dead $r29, implicit-def dead $r30, implicit-def dead $r31, implicit $r29
+    %7:intregs = COPY $r29
+    S4_storeiri_io %7, 4, 108, <0x87fe3c0> = !{!"unison-memory-partition", i64 0} :: (store 4 into stack + 4)
+    S4_storeiri_io killed %7, 0, 108, <0x87fe3c0> = !{!"unison-memory-partition", i64 0} :: (store 4 into stack)
+    ADJCALLSTACKDOWN 8, 0, implicit-def $r29, implicit-def dead $r30, implicit $r31, implicit $r30, implicit $r29
+    $r0 = COPY %3
+    J2_call @printf, hexagoncsr, implicit-def dead $pc, implicit-def dead $r31, implicit $r29, implicit killed $r0, implicit-def $r29, implicit-def dead $r0
+    ADJCALLSTACKUP 8, 0, implicit-def dead $r29, implicit-def dead $r30, implicit-def dead $r31, implicit $r29
+    %9:intregs = COPY $r29
+    S4_storeiri_io %9, 4, 108, <0x87fe3c0> = !{!"unison-memory-partition", i64 0} :: (store 4 into stack + 4)
+    S4_storeiri_io killed %9, 0, 108, <0x87fe3c0> = !{!"unison-memory-partition", i64 0} :: (store 4 into stack)
+    ADJCALLSTACKDOWN 8, 0, implicit-def $r29, implicit-def dead $r30, implicit $r31, implicit $r30, implicit $r29
+    $r0 = COPY %3
+    J2_call @printf, hexagoncsr, implicit-def dead $pc, implicit-def dead $r31, implicit $r29, implicit killed $r0, implicit-def $r29, implicit-def dead $r0
+    ADJCALLSTACKUP 8, 0, implicit-def dead $r29, implicit-def dead $r30, implicit-def dead $r31, implicit $r29
+    %11:intregs = COPY $r29
+    S4_storeiri_io %11, 4, 111, <0x87fe3c0> = !{!"unison-memory-partition", i64 0} :: (store 4 into stack + 4)
+    S4_storeiri_io killed %11, 0, 111, <0x87fe3c0> = !{!"unison-memory-partition", i64 0} :: (store 4 into stack)
+    ADJCALLSTACKDOWN 8, 0, implicit-def $r29, implicit-def dead $r30, implicit $r31, implicit $r30, implicit $r29
+    $r0 = COPY killed %3
+    J2_call @printf, hexagoncsr, implicit-def dead $pc, implicit-def dead $r31, implicit $r29, implicit killed $r0, implicit-def $r29, implicit-def dead $r0
+    ADJCALLSTACKUP 8, 0, implicit-def dead $r29, implicit-def dead $r30, implicit-def dead $r31, implicit $r29
+    S4_storeiri_io %stack.0.destarray, 0, 1819043176, <0x87fe3c0> = !{!"unison-memory-partition", i64 0} :: (store 4 into %ir.cgep715, align 8)
+    S4_storeirh_io %stack.0.destarray, 4, 111, <0x87fe3c0> = !{!"unison-memory-partition", i64 0} :: (store 2 into %ir.cgep11, align 4)
+    %13:intregs = COPY $r29
+    %14:intregs = PS_fi %stack.0.destarray, 0
+    S2_storeri_io killed %13, 0, killed %14, <0x87fe3c0> = !{!"unison-memory-partition", i64 0} :: (store 4 into stack)
+    %15:intregs = A2_tfrsi @.str.3
+    ADJCALLSTACKDOWN 4, 0, implicit-def $r29, implicit-def dead $r30, implicit $r31, implicit $r30, implicit $r29
+    $r0 = COPY killed %15
+    J2_call @printf, hexagoncsr, implicit-def dead $pc, implicit-def dead $r31, implicit $r29, implicit killed $r0, implicit-def $r29, implicit-def dead $r0
+    ADJCALLSTACKUP 4, 0, implicit-def dead $r29, implicit-def dead $r30, implicit-def dead $r31, implicit $r29
+    %17:intregs = A2_tfrsi 0
+    $r0 = COPY killed %17
+    PS_jmpret $r31, implicit-def dead $pc, implicit killed $r0
+
+...

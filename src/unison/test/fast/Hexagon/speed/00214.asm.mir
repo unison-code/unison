@@ -1,0 +1,328 @@
+--- |
+  ; ModuleID = '00214.ll'
+  source_filename = "./tests/single-exec/00214.c"
+  target datalayout = "e-m:e-p:32:32:32-a:0-n16:32-i64:64:64-i32:32:32-i16:16:16-i1:8:8-f32:32:32-f64:64:64-v32:32:32-v64:64:64-v512:512:512-v1024:1024:1024-v2048:2048:2048"
+  target triple = "hexagon"
+  
+  @_brk_start = common dso_local local_unnamed_addr global i32 0, align 4
+  @_brk_end = common dso_local local_unnamed_addr global i32 0, align 4
+  @str = private unnamed_addr constant [7 x i8] c"wrong1\00", align 1
+  @str.6 = private unnamed_addr constant [5 x i8] c"okay\00", align 1
+  
+  ; Function Attrs: nounwind
+  define dso_local i8* @extend_brk(i32 %size, i32 %align) local_unnamed_addr #0 {
+  entry:
+    %sub = add i32 %align, -1
+    %0 = load i32, i32* @_brk_start, align 4, !tbaa !2
+    %cmp = icmp eq i32 %0, 0
+    br i1 %cmp, label %do.body2, label %do.end4, !prof !6
+  
+  do.body2:                                         ; preds = %entry
+    %puts = tail call i32 @puts(i8* getelementptr inbounds ([7 x i8], [7 x i8]* @str, i32 0, i32 0))
+    br label %do.end4
+  
+  do.end4:                                          ; preds = %do.body2, %entry
+    %1 = load i32, i32* @_brk_end, align 4, !tbaa !2
+    %add = add i32 %sub, %1
+    %neg = sub i32 0, %align
+    %and = and i32 %add, %neg
+    %2 = inttoptr i32 %and to i8*
+    %add5 = add i32 %and, %size
+    store i32 %add5, i32* @_brk_end, align 4, !tbaa !2
+    ret i8* %2
+  }
+  
+  ; Function Attrs: nounwind
+  define dso_local void @bla() local_unnamed_addr #0 {
+  entry:
+    %puts.i = tail call i32 @puts(i8* getelementptr inbounds ([5 x i8], [5 x i8]* @str.6, i32 0, i32 0)) #3
+    ret void
+  }
+  
+  ; Function Attrs: norecurse nounwind readnone
+  define dso_local zeroext i1 @chk(i32 %addr, i32 %limit, i32 %size) local_unnamed_addr #1 {
+  entry:
+    ret i1 undef
+  }
+  
+  ; Function Attrs: nounwind
+  define dso_local i32 @main() local_unnamed_addr #0 {
+  extend_brk.exit:
+    store i32 1024, i32* @_brk_start, align 4, !tbaa !2
+    store i32 5120, i32* @_brk_end, align 4, !tbaa !2
+    %puts4 = tail call i32 @puts(i8* getelementptr inbounds ([5 x i8], [5 x i8]* @str.6, i32 0, i32 0))
+    %puts.i.i = tail call i32 @puts(i8* getelementptr inbounds ([5 x i8], [5 x i8]* @str.6, i32 0, i32 0)) #3
+    ret i32 0
+  }
+  
+  ; Function Attrs: nounwind
+  declare i32 @puts(i8* nocapture readonly) local_unnamed_addr #2
+  
+  ; Function Attrs: nounwind
+  declare void @llvm.stackprotector(i8*, i8**) #3
+  
+  attributes #0 = { nounwind "correctly-rounded-divide-sqrt-fp-math"="false" "disable-tail-calls"="false" "less-precise-fpmad"="false" "min-legal-vector-width"="0" "no-frame-pointer-elim"="true" "no-frame-pointer-elim-non-leaf" "no-infs-fp-math"="false" "no-jump-tables"="false" "no-nans-fp-math"="false" "no-signed-zeros-fp-math"="false" "no-trapping-math"="false" "stack-protector-buffer-size"="8" "target-cpu"="hexagonv5" "target-features"="-long-calls" "unsafe-fp-math"="false" "use-soft-float"="false" }
+  attributes #1 = { norecurse nounwind readnone "correctly-rounded-divide-sqrt-fp-math"="false" "disable-tail-calls"="false" "less-precise-fpmad"="false" "min-legal-vector-width"="0" "no-frame-pointer-elim"="true" "no-frame-pointer-elim-non-leaf" "no-infs-fp-math"="false" "no-jump-tables"="false" "no-nans-fp-math"="false" "no-signed-zeros-fp-math"="false" "no-trapping-math"="false" "stack-protector-buffer-size"="8" "target-cpu"="hexagonv5" "target-features"="-long-calls" "unsafe-fp-math"="false" "use-soft-float"="false" }
+  attributes #2 = { nounwind "target-cpu"="hexagonv5" }
+  attributes #3 = { nounwind }
+  
+  !llvm.module.flags = !{!0}
+  !llvm.ident = !{!1}
+  
+  !0 = !{i32 1, !"wchar_size", i32 4}
+  !1 = !{!"clang version 9.0.0 (http://llvm.org/git/clang.git 4e215e73ed6b499f3ccf23263c96cd188e0eda2c) (git@github.com:unison-code/llvm.git 9914ec00db7eeaf764045b9071638c2421cd32e7)"}
+  !2 = !{!3, !3, i64 0}
+  !3 = !{!"long", !4, i64 0}
+  !4 = !{!"omnipotent char", !5, i64 0}
+  !5 = !{!"Simple C/C++ TBAA"}
+  !6 = !{!"branch_weights", i32 1, i32 2000}
+
+...
+---
+name:            extend_brk
+alignment:       4
+exposesReturnsTwice: false
+legalized:       false
+regBankSelected: false
+selected:        false
+failedISel:      false
+tracksRegLiveness: true
+hasWinCFI:       false
+registers:       []
+liveins:         
+  - { reg: '$r0', virtual-reg: '' }
+  - { reg: '$r1', virtual-reg: '' }
+frameInfo:       
+  isFrameAddressTaken: false
+  isReturnAddressTaken: false
+  hasStackMap:     false
+  hasPatchPoint:   false
+  stackSize:       16
+  offsetAdjustment: 0
+  maxAlignment:    0
+  adjustsStack:    true
+  hasCalls:        true
+  stackProtector:  ''
+  maxCallFrameSize: 0
+  cvBytesOfCalleeSavedRegisters: 0
+  hasOpaqueSPAdjustment: false
+  hasVAStart:      false
+  hasMustTailInVarArgFunc: false
+  localFrameSize:  0
+  savePoint:       ''
+  restorePoint:    ''
+fixedStack:      
+  - { id: 0, type: spill-slot, offset: -16, size: 8, alignment: 8, stack-id: 0, 
+      callee-saved-register: '$d9', callee-saved-restored: true, debug-info-variable: '', 
+      debug-info-expression: '', debug-info-location: '' }
+  - { id: 1, type: spill-slot, offset: -8, size: 8, alignment: 8, stack-id: 0, 
+      callee-saved-register: '$d8', callee-saved-restored: true, debug-info-variable: '', 
+      debug-info-expression: '', debug-info-location: '' }
+stack:           []
+constants:       []
+body:             |
+  bb.0.entry (freq 16008):
+    successors: %bb.1(0), %bb.2(99)
+    liveins: $r0, $r1, $d8, $d9, $d8, $d9
+  
+    ANNOTATION_LABEL <0x8994f80> = !{!"unison-block-frequency", i64 16008}
+    BUNDLE implicit-def $r29, implicit-def $r30, implicit-def $r2, implicit $r29, implicit killed $framekey, implicit killed $framelimit, implicit killed $r30, implicit killed $r31, implicit killed $gp {
+      $r29 = S2_allocframe $r29, 16, implicit-def $r30, implicit killed $framekey, implicit killed $framelimit, implicit killed $r30, implicit killed $r31 :: (store 4 into stack)
+      renamable $r2 = L2_loadrigp @_brk_start, implicit killed $gp :: (dereferenceable load 4 from @_brk_start, !tbaa !2)
+    }
+    BUNDLE implicit-def $p0, implicit-def $d8, implicit-def $r16, implicit-def $r17, implicit killed $r29, implicit killed $d8, implicit killed $d9, implicit killed $r2, implicit $r1, implicit killed $r0 {
+      S2_storerd_io $r29, 8, killed $d8 :: (store 8 into %fixed-stack.1)
+      S2_storerd_io killed $r29, 0, killed $d9 :: (store 8 into %fixed-stack.0)
+      renamable $p0 = C2_cmpeqi killed renamable $r2, 0
+      $d8 = A2_combinew $r1, killed $r0
+    }
+    BUNDLE implicit-def $r18, implicit-def $pc, implicit killed $r1, implicit killed $p0 {
+      renamable $r18 = A2_addi killed $r1, -1
+      J2_jumpt killed $p0, %bb.1, implicit-def $pc
+    }
+  
+  bb.2.do.end4 (freq 16008):
+    liveins: $r16, $r17, $r18
+    liveouts: $pc, $r29, $framekey, $pc, $r0, $d8, $d9
+  
+    ANNOTATION_LABEL <0x8994f80> = !{!"unison-block-frequency", i64 16008}
+    BUNDLE implicit-def $r0, implicit-def $r1, implicit $gp, implicit killed $r17 {
+      renamable $r0 = L2_loadrigp @_brk_end, implicit $gp :: (dereferenceable load 4 from @_brk_end, !tbaa !2)
+      renamable $r1 = A2_subri 0, killed renamable $r17
+    }
+    BUNDLE implicit-def $r0, implicit-def $d9, implicit-def $r18, implicit-def $r19, implicit killed $r18, implicit $r0, implicit $r29 {
+      renamable $r0 = A2_add killed renamable $r18, renamable $r0
+      $d9 = L2_loadrd_io $r29, 0 :: (load 8 from %fixed-stack.0)
+    }
+    renamable $r0 = A2_and renamable $r0, killed renamable $r1
+    BUNDLE implicit-def $r1, implicit-def $d8, implicit-def $r16, implicit-def $r17, implicit $r0, implicit killed $r16, implicit killed $r29 {
+      renamable $r1 = A2_add renamable $r0, killed renamable $r16
+      $d8 = L2_loadrd_io killed $r29, 8 :: (load 8 from %fixed-stack.1)
+    }
+    S2_storerigp @_brk_end, killed renamable $r1, <0x8995070> = !{!"unison-memory-partition", i64 0}, implicit killed $gp :: (store 4 into @_brk_end, !tbaa !2)
+    $d15 = L4_return killed $r30, <0x8995070> = !{!"unison-memory-partition", i64 0}, implicit-def $pc, implicit-def $r29, implicit killed $framekey, implicit-def dead $pc, implicit killed $r0, implicit $d8, implicit $d9
+  
+  bb.1.do.body2 (freq 8):
+    successors: %bb.2(100)
+    liveins: $r16, $r17, $r18
+  
+    ANNOTATION_LABEL <0x8995170> = !{!"unison-block-frequency", i64 8}
+    BUNDLE implicit-def $r0, implicit-def dead $pc, implicit-def dead $r31, implicit-def $r29, implicit killed $r29 {
+      $r0 = A2_tfrsi @str
+      J2_call @puts, hexagoncsr, implicit-def dead $pc, implicit-def dead $r31, implicit killed $r29, implicit internal killed $r0, implicit-def $r29, implicit-def dead $r0
+    }
+    J2_jump %bb.2, implicit-def $pc
+
+...
+---
+name:            bla
+alignment:       4
+exposesReturnsTwice: false
+legalized:       false
+regBankSelected: false
+selected:        false
+failedISel:      false
+tracksRegLiveness: true
+hasWinCFI:       false
+registers:       []
+liveins:         []
+frameInfo:       
+  isFrameAddressTaken: false
+  isReturnAddressTaken: false
+  hasStackMap:     false
+  hasPatchPoint:   false
+  stackSize:       0
+  offsetAdjustment: 0
+  maxAlignment:    0
+  adjustsStack:    false
+  hasCalls:        false
+  stackProtector:  ''
+  maxCallFrameSize: 0
+  cvBytesOfCalleeSavedRegisters: 0
+  hasOpaqueSPAdjustment: false
+  hasVAStart:      false
+  hasMustTailInVarArgFunc: false
+  localFrameSize:  0
+  savePoint:       ''
+  restorePoint:    ''
+fixedStack:      []
+stack:           []
+constants:       []
+body:             |
+  bb.0.entry (freq 8):
+    exit
+  
+    ANNOTATION_LABEL <0x8995170> = !{!"unison-block-frequency", i64 8}
+    BUNDLE implicit-def dead $r0 {
+      $r0 = A2_tfrsi @str.6
+      J2_jump @puts, hexagoncsr, implicit internal killed $r0
+    }
+
+...
+---
+name:            chk
+alignment:       4
+exposesReturnsTwice: false
+legalized:       false
+regBankSelected: false
+selected:        false
+failedISel:      false
+tracksRegLiveness: true
+hasWinCFI:       false
+registers:       []
+liveins:         []
+frameInfo:       
+  isFrameAddressTaken: false
+  isReturnAddressTaken: false
+  hasStackMap:     false
+  hasPatchPoint:   false
+  stackSize:       0
+  offsetAdjustment: 0
+  maxAlignment:    0
+  adjustsStack:    false
+  hasCalls:        false
+  stackProtector:  ''
+  maxCallFrameSize: 0
+  cvBytesOfCalleeSavedRegisters: 0
+  hasOpaqueSPAdjustment: false
+  hasVAStart:      false
+  hasMustTailInVarArgFunc: false
+  localFrameSize:  0
+  savePoint:       ''
+  restorePoint:    ''
+fixedStack:      []
+stack:           []
+constants:       []
+body:             |
+  bb.0.entry (freq 8):
+    liveouts: $r0, $pc, $r31
+  
+    ANNOTATION_LABEL <0x8995170> = !{!"unison-block-frequency", i64 8}
+    BUNDLE implicit-def dead $r0, implicit-def dead $pc, implicit killed $r31 {
+      $r0 = A2_tfrsi 0
+      PS_jmpret killed $r31, implicit-def dead $pc, implicit internal killed $r0
+    }
+
+...
+---
+name:            main
+alignment:       4
+exposesReturnsTwice: false
+legalized:       false
+regBankSelected: false
+selected:        false
+failedISel:      false
+tracksRegLiveness: true
+hasWinCFI:       false
+registers:       []
+liveins:         []
+frameInfo:       
+  isFrameAddressTaken: false
+  isReturnAddressTaken: false
+  hasStackMap:     false
+  hasPatchPoint:   false
+  stackSize:       0
+  offsetAdjustment: 0
+  maxAlignment:    0
+  adjustsStack:    true
+  hasCalls:        true
+  stackProtector:  ''
+  maxCallFrameSize: 0
+  cvBytesOfCalleeSavedRegisters: 0
+  hasOpaqueSPAdjustment: false
+  hasVAStart:      false
+  hasMustTailInVarArgFunc: false
+  localFrameSize:  0
+  savePoint:       ''
+  restorePoint:    ''
+fixedStack:      []
+stack:           []
+constants:       []
+body:             |
+  bb.0.extend_brk.exit (freq 8):
+    liveouts: $r0, $d15, $r30, $r31, $pc, $r29, $r30, $framekey
+  
+    ANNOTATION_LABEL <0x8995170> = !{!"unison-block-frequency", i64 8}
+    BUNDLE implicit-def $r1, implicit-def $r2 {
+      renamable $r1 = A2_tfrsi @_brk_start
+      renamable $r2 = A2_tfrsi @_brk_end
+    }
+    BUNDLE implicit-def $r29, implicit-def $r30, implicit-def $r0, implicit $r29, implicit killed $framekey, implicit killed $framelimit, implicit killed $r30, implicit killed $r31 {
+      $r29 = S2_allocframe $r29, 0, implicit-def $r30, implicit killed $framekey, implicit killed $framelimit, implicit killed $r30, implicit killed $r31 :: (store 4 into stack)
+      $r0 = A2_tfrsi @str.6
+    }
+    BUNDLE implicit killed $r1, implicit killed $r2 {
+      S4_storeiri_io killed renamable $r1, 0, 1024 :: (store 4 into @_brk_start, !tbaa !2)
+      S4_storeiri_io killed renamable $r2, 0, 5120 :: (store 4 into @_brk_end, !tbaa !2)
+    }
+    J2_call @puts, hexagoncsr, implicit-def dead $pc, implicit-def dead $r31, implicit $r29, implicit killed $r0, implicit-def $r29, implicit-def dead $r0
+    BUNDLE implicit-def $r0, implicit-def dead $pc, implicit-def dead $r31, implicit-def $r29, implicit killed $r29 {
+      $r0 = A2_tfrsi @str.6
+      J2_call @puts, hexagoncsr, implicit-def dead $pc, implicit-def dead $r31, implicit killed $r29, implicit internal killed $r0, implicit-def $r29, implicit-def dead $r0
+    }
+    BUNDLE implicit-def dead $r0, implicit-def $d15, implicit-def $r30, implicit-def $r31, implicit-def $pc, implicit-def $r29, implicit killed $r30, implicit killed $framekey {
+      $r0 = A2_tfrsi 0
+      $d15 = L4_return killed $r30, implicit-def $pc, implicit-def $r29, implicit killed $framekey, implicit-def dead $pc, implicit internal killed $r0
+    }
+
+...
