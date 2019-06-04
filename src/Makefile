@@ -89,8 +89,8 @@ clean:
 	$(MAKE) veryclean-solver veryclean-presolver
 
 doc:
-	cd $(UNISONDIR); $(CABALBIN) haddock
-	cd $(UNISONSPECSGENDIR); $(CABALBIN) haddock
+	cd $(UNISONDIR); $(CABALBIN) configure --enable-tests; $(CABALBIN) haddock
+	cd $(UNISONSPECSGENDIR); $(CABALBIN) configure --enable-tests; $(CABALBIN) haddock
 
 haskell-loc:
 	cloc unison/src --exclude-dir=SpecsGen

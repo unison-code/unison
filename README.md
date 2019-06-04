@@ -66,9 +66,23 @@ of LLVM's `llc` code generator. To try it out, just clone the LLVM fork and
 follow the instructions in the `README.md` file from any of the branches with a
 `-unison` suffix.
 
+## Documentation
+
+Check out Unison's work-in-progress
+[manual](https://unison-code.github.io/doc/manual.pdf). The manual's source can
+be found in the `doc` directory.
+
+Source-level documentation is also available for the core Haskell modules of
+Unison (`MachineIR.Base`, `Unison.Base`, and `Unison.Target.API`). To generate
+this documentation in HTML format, just run:
+
+```
+make doc
+```
+
 ## Contact
 
-[Roberto Castañeda Lozano](https://www.sics.se/~rcas/) [<rcas@sics.se>]
+[Roberto Castañeda Lozano](https://robcasloz.github.io/) [<rcas@sics.se>]
 
 ## License
 
