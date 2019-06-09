@@ -224,6 +224,8 @@ alignedPairs i ([_, _], [_])
        FMUL_S_MMR6, FSUB_D_MMR6, FSUB_S_MMR6]
     = []
 alignedPairs i ([_, _], []) | i `elem` [BC1EQZ, BC1NEZ] = []
+alignedPairs i ([_, _, _, _], [])
+  | i `elem` [Register_class_decl_dummy] = []
 alignedPairs i ([_], [_])
   | i `elem` [PseudoMFHI, PseudoMFHI64, PseudoMFLO, PseudoMFLO64] =
     []

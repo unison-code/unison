@@ -1144,6 +1144,6 @@ instructionType i
        Y2_isync, Y2_syncht, Y4_l2fetch, Y4_trace, Y5_l2fetch, Y5_l2gclean,
        Y5_l2gcleaninv, Y5_l2gunlock, Y5_l2locka, Y5_l2unlocka,
        Y6_l2gcleaninvpa, Y6_l2gcleanpa, Dep_A2_addsat, Dep_A2_subsat,
-       Dep_S2_packhl, Ret_dealloc_merge]
+       Dep_S2_packhl, Register_class_decl_dummy, Ret_dealloc_merge]
     = LinearInstructionType
 

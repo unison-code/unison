@@ -483,7 +483,8 @@ readWriteInfo i
        V6_vzh, V6_vzh_128B, VMULW, VMULW_ACC, VSelectDblPseudo_V6,
        VSelectPseudo_V6, Y2_barrier, Y2_dcfetchbo, Y2_dcfetchbo_ce,
        Y2_icinva, Y2_isync, Y4_trace, Dep_A2_addsat, Dep_A2_subsat,
-       Dep_S2_packhl, Jump_merge, Jump_merge_ce]
+       Dep_S2_packhl, Jump_merge, Jump_merge_ce,
+       Register_class_decl_dummy]
     = ([], [])
   | i `elem`
       [S2_pstorerbf_io, S2_pstorerbf_io_ce, S2_pstorerbf_pi,

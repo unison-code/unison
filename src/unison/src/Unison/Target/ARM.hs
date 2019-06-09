@@ -36,8 +36,8 @@ import Unison.Target.ARM.OperandInfo
 import Unison.Target.ARM.Transforms
 import Unison.Target.ARM.Usages
 import Unison.Target.ARM.ARMRegisterDecl
-import Unison.Target.ARM.ARMRegisterClassDecl
 import Unison.Target.ARM.ARMResourceDecl
+import Unison.Target.ARM.SpecsGen.ARMRegisterClassDecl
 import Unison.Target.ARM.SpecsGen.ARMInstructionDecl
 import Unison.Target.ARM.SpecsGen.ARMItineraryDecl
 import qualified Unison.Target.ARM.SpecsGen as SpecsGen

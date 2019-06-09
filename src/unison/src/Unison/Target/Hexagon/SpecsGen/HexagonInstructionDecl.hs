@@ -2626,6 +2626,7 @@ data HexagonInstruction = A2_abs
                         | C2_muxii_tfr_new
                         | C2_muxir_tfr_new
                         | C2_muxri_tfr_new
+                        | Register_class_decl_dummy
                         | A2_tfrsi_source
                         | A2_tfrsi_demat
                         | A2_tfrsi_remat

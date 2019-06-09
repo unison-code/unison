@@ -2260,6 +2260,7 @@ instance Show MipsInstruction where
         show SDC1_sp = "SDC1_sp"
         show LoadGPDisp = "LoadGPDisp"
         show CLOBBER_RA = "CLOBBER_RA"
+        show Register_class_decl_dummy = "register_class_decl_dummy"
         show LDC1_fi_source_fi = "LDC1_fi_source_fi"
         show LDC1_fi_demat_fi = "LDC1_fi_demat_fi"
         show LDC1_fi_remat_fi = "LDC1_fi_remat_fi"

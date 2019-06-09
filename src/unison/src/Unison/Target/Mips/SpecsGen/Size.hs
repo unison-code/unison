@@ -12,7 +12,7 @@ size i
        LOAD_STACK_GUARD, LOCAL_ESCAPE, LUi_demat, LUi_source,
        LWC1_fi_demat_fi, LWC1_fi_source_fi, LW_fi_demat_fi,
        LW_fi_source_fi, PATCHPOINT, PHI, REG_SEQUENCE, STACKMAP,
-       STATEPOINT, SUBREG_TO_REG]
+       STATEPOINT, SUBREG_TO_REG, Register_class_decl_dummy]
     = 0
   | i `elem`
       [ADDIUR1SP_MM, ADDIUR2_MM, ADDIUS5_MM, ADDIUSP_MM, ADDU16_MM,

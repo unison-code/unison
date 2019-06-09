@@ -1491,3 +1491,16 @@ instruction-set:
            - p2:              bound
            - s:               [register, use, CCR]
           uses:               [Rn, ShiftedRm1, ShiftedRm2, Rd, p1, p2, s]
+
+        - id:                 register_class_decl_dummy
+          type:               linear
+          operands:
+           - f32:             [register, use, F32]
+           - crs:             [register, use, CRS]
+           - fcrs:            [register, use, FCRS]
+          uses:               [f32, crs, fcrs]
+          defines:            []
+          size:               0
+          affects:
+          affected-by:
+          itinerary:          NoItinerary

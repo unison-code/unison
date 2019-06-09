@@ -556,6 +556,7 @@ itinerary i
        TLTIU_MM, TLTI_MM, TLTU, TLTU_MM, TLT_MM, TNE, TNEI, TNEI_MM,
        TNE_MM, TRAP, TTLTIU, VSHF_B, VSHF_D, VSHF_H, VSHF_W, WAIT,
        WAIT_MM, WAIT_MMR6, WRDSP, WRDSP_MM, WRPGPR_MMR6, WSBH_MMR6,
-       XORI_B, XORI_MMR6, XOR_MMR6, XOR_V, XORi_MM]
+       XORI_B, XORI_MMR6, XOR_MMR6, XOR_V, XORi_MM,
+       Register_class_decl_dummy]
     = NoItinerary
 

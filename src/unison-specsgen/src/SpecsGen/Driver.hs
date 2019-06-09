@@ -37,6 +37,7 @@ import SpecsGen.InstructionTypeGen
 import SpecsGen.AllInstructionsGen
 import SpecsGen.ItineraryDeclGen
 import SpecsGen.ParentGen
+import SpecsGen.RegisterClassDeclGen
 
 data SpecsGen =
     SpecsGen {files :: [FilePath], targetName :: String, outputDir :: String,
@@ -93,6 +94,7 @@ runSpecsGen tPreMod tExtension =
        writeHsFile outputDir "AllInstructions" (emitAllInstructions targetName is8)
        writeHsFile outputDir (targetName ++ "ItineraryDecl") (emitItineraryDecl targetName is8)
        writeHsFile outputDir "Parent" (emitParent targetName is8)
+       writeHsFile outputDir (targetName ++ "RegisterClassDecl") (emitRegisterClassDecl targetName is8)
        tExtension sg is8
 
 maybePreProcess "" is   = is

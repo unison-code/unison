@@ -33,8 +33,8 @@ import Unison.Target.Hexagon.Transforms
 import Unison.Target.Hexagon.Usages
 import Unison.Target.Hexagon.Common
 import Unison.Target.Hexagon.HexagonRegisterDecl
-import Unison.Target.Hexagon.HexagonRegisterClassDecl
 import Unison.Target.Hexagon.HexagonResourceDecl
+import Unison.Target.Hexagon.SpecsGen.HexagonRegisterClassDecl
 import Unison.Target.Hexagon.SpecsGen.HexagonInstructionDecl
 import qualified Unison.Target.Hexagon.SpecsGen as SpecsGen
 

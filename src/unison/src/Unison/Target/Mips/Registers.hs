@@ -19,7 +19,7 @@ import qualified Data.Map as M
 import Unison
 
 import Unison.Target.Mips.MipsRegisterDecl
-import Unison.Target.Mips.MipsRegisterClassDecl
+import Unison.Target.Mips.SpecsGen.MipsRegisterClassDecl
 
 -- | Register array configuration
 

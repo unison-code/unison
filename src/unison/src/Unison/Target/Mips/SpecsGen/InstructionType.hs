@@ -396,6 +396,6 @@ instructionType i
        WAIT_MMR6, WRDSP, WRDSP_MM, WRPGPR_MMR6, WSBH, WSBH_MM, WSBH_MMR6,
        XOR, XOR16_MM, XOR16_MMR6, XOR64, XORI_B, XORI_MMR6, XOR_MM,
        XOR_MMR6, XOR_V, XOR_V_D_PSEUDO, XOR_V_H_PSEUDO, XOR_V_W_PSEUDO,
-       XORi, XORi64, XORi_MM, XorRxRxRy16]
+       XORi, XORi64, XORi_MM, XorRxRxRy16, Register_class_decl_dummy]
     = LinearInstructionType
 

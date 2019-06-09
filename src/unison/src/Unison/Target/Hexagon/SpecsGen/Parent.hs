@@ -1070,7 +1070,7 @@ parent i
        Y5_l2gcleaninv, Y5_l2gunlock, Y5_l2locka, Y5_l2unlocka,
        Y6_l2gcleaninvpa, Y6_l2gcleanpa, Dep_A2_addsat, Dep_A2_subsat,
        Dep_S2_packhl, Jr_merge, Jump_merge, Jump_merge_ce,
-       Ret_dealloc_merge]
+       Register_class_decl_dummy, Ret_dealloc_merge]
     = Nothing
   | i `elem` [MVW, MVW_ce] = Just A2_tfr
   | i `elem` [MVD, MVD_ce] = Just A2_tfrp

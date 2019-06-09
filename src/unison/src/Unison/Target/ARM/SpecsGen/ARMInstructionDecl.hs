@@ -3067,6 +3067,7 @@ data ARMInstruction = ABS
                     | T2SUBrrcc
                     | T2ADDrrcc
                     | T2ADDrscc
+                    | Register_class_decl_dummy
                     | T2MOVi_source
                     | T2MOVi_demat
                     | T2MOVi_remat

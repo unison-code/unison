@@ -2633,6 +2633,7 @@ readOp "C2_mux_tfr_new" = C2_mux_tfr_new
 readOp "C2_muxii_tfr_new" = C2_muxii_tfr_new
 readOp "C2_muxir_tfr_new" = C2_muxir_tfr_new
 readOp "C2_muxri_tfr_new" = C2_muxri_tfr_new
+readOp "register_class_decl_dummy" = Register_class_decl_dummy
 readOp "A2_tfrsi_source" = A2_tfrsi_source
 readOp "A2_tfrsi_demat" = A2_tfrsi_demat
 readOp "A2_tfrsi_remat" = A2_tfrsi_remat

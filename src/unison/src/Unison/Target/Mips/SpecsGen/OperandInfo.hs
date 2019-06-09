@@ -3,7 +3,7 @@
 module Unison.Target.Mips.SpecsGen.OperandInfo (operandInfo) where
 import Unison
 import Unison.Target.Mips.SpecsGen.MipsInstructionDecl
-import Unison.Target.Mips.MipsRegisterClassDecl
+import Unison.Target.Mips.SpecsGen.MipsRegisterClassDecl
 operandInfo i
   | i `elem`
       [Break16, DERET, DERET_MM, DERET_MMR6, EHB, EHB_MM, EHB_MMR6, ERET,
@@ -1007,6 +1007,12 @@ operandInfo i
     =
     ([TemporaryInfo (RegisterClass GPRMM16OpndZero) 0 False,
       TemporaryInfo (RegisterClass GPRMM16) 0 False, BoundInfo],
+     [])
+  | i `elem` [Register_class_decl_dummy] =
+    ([TemporaryInfo (RegisterClass GPR_ATT7) 0 False,
+      TemporaryInfo (RegisterClass GPR_T89) 0 False,
+      TemporaryInfo (RegisterClass GPR_FPRA) 0 False,
+      TemporaryInfo (RegisterClass AFGR_D09) 0 False],
      [])
   | i `elem` [RDHWR, RDHWR_MM] =
     ([TemporaryInfo (RegisterClass HWRegsOpnd) 0 False],

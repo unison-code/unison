@@ -3,7 +3,7 @@
 module Unison.Target.ARM.SpecsGen.OperandInfo (operandInfo) where
 import Unison
 import Unison.Target.ARM.SpecsGen.ARMInstructionDecl
-import Unison.Target.ARM.ARMRegisterClassDecl
+import Unison.Target.ARM.SpecsGen.ARMRegisterClassDecl
 operandInfo i
   | i `elem`
       [CLREX, Int_eh_sjlj_dispatchsetup, Int_eh_sjlj_setup_dispatch, NOP,
@@ -366,6 +366,11 @@ operandInfo i
     ([TemporaryInfo (RegisterClass DPair) 0 False,
       TemporaryInfo (RegisterClass GPR) 0 False, BoundInfo,
       TemporaryInfo (RegisterClass CCR) 0 False],
+     [])
+  | i `elem` [Register_class_decl_dummy] =
+    ([TemporaryInfo (RegisterClass F32) 0 False,
+      TemporaryInfo (RegisterClass CRS) 0 False,
+      TemporaryInfo (RegisterClass FCRS) 0 False],
      [])
   | i `elem` [VSTMDDB_UPD_d8_15] =
     ([TemporaryInfo (RegisterClass FCS) 0 False],

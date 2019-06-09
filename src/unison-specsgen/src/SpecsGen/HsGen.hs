@@ -38,6 +38,7 @@ module SpecsGen.HsGen
      hsFun,
      hsDataDecl,
      hsItinDecl,
+     hsRegClassDecl,
      hsInstDecl,
      opcPVar,
      mkOpcRhs,
@@ -325,7 +326,7 @@ itineraryDeclImport targetName =
               targetName ++ "ItineraryDecl")
 
 registerClassDeclImport targetName =
-    hsImport ("Unison.Target." ++ targetName ++ "." ++
+    hsImport ("Unison.Target." ++ targetName ++ ".SpecsGen." ++
               targetName ++ "RegisterClassDecl")
 
 hsImport n = HsImportDecl dummySrcLoc (Module n) False Nothing Nothing
@@ -363,12 +364,17 @@ simpleErrorRhs n =
 
 hsDataDecl targetName cs =
   HsDataDecl dummySrcLoc [] (HsIdent (targetInstructionCon targetName)) []
-  [HsConDecl dummySrcLoc (HsIdent c) [] | c <- cs]
+  [HsConDecl dummySrcLoc (HsIdent (toOpType c)) [] | c <- cs]
   [name "Eq", name "Ord"]
 
 hsItinDecl targetName cs =
   HsDataDecl dummySrcLoc [] (HsIdent (targetName ++ "Itinerary")) []
-  [HsConDecl dummySrcLoc (HsIdent c) [] | c <- cs]
+  [HsConDecl dummySrcLoc (HsIdent (toOpType c)) [] | c <- cs]
+  [name "Eq", name "Ord", name "Read", name "Show"]
+
+hsRegClassDecl targetName cs =
+  HsDataDecl dummySrcLoc [] (HsIdent (targetName ++ "RegisterClass")) []
+  [HsConDecl dummySrcLoc (HsIdent (toOpType c)) [] | c <- cs]
   [name "Eq", name "Ord", name "Read", name "Show"]
 
 hsInstDecl targetName ss =

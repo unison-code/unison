@@ -195,3 +195,17 @@ instruction-set:
           affects:
           affected-by:
           itinerary:          NoItinerary
+
+        - id:                 register_class_decl_dummy
+          type:               linear
+          operands:
+           - gpr_att7:        [register, use, GPR_ATT7]
+           - gpr_t89:         [register, use, GPR_T89]
+           - gpr_fpra:        [register, use, GPR_FPRA]
+           - gpr_d09:         [register, use, AFGR_D09]
+          uses:               [gpr_att7, gpr_t89, gpr_fpra, gpr_d09]
+          defines:            []
+          size:               0
+          affects:
+          affected-by:
+          itinerary:          NoItinerary

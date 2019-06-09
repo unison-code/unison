@@ -1012,6 +1012,8 @@ alignedPairs i ([dst, src, _, _], [dst', src'])
 alignedPairs i ([_, _, _, _], [])
   | i `elem` [COPY_STRUCT_BYVAL_I32] = []
 alignedPairs i ([_], []) | i `elem` [SETEND, TSETEND] = []
+alignedPairs i ([_, _, _], [])
+  | i `elem` [Register_class_decl_dummy] = []
 alignedPairs i ([false', _, _, _, _], [false''])
   | i `elem` [T2MOVCCasr, T2MOVCClsl, T2MOVCClsr, T2MOVCCror] =
     [(false', false'')]

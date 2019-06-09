@@ -4,7 +4,7 @@ module Unison.Target.Hexagon.SpecsGen.OperandInfo (operandInfo)
        where
 import Unison
 import Unison.Target.Hexagon.SpecsGen.HexagonInstructionDecl
-import Unison.Target.Hexagon.HexagonRegisterClassDecl
+import Unison.Target.Hexagon.SpecsGen.HexagonRegisterClassDecl
 operandInfo i
   | i `elem`
       [A2_nop, DuplexIClass0, DuplexIClass1, DuplexIClass2,
@@ -1170,6 +1170,12 @@ operandInfo i
   | i `elem` [LDD, LDD_ce] =
     ([TemporaryInfo (InfiniteRegisterClass M64) 0 False],
      [TemporaryInfo (RegisterClass DoubleRegs) 1 False])
+  | i `elem` [Register_class_decl_dummy] =
+    ([TemporaryInfo (RegisterClass P64) 0 False,
+      TemporaryInfo (RegisterClass P128) 0 False,
+      TemporaryInfo (RegisterClass G128) 0 False,
+      TemporaryInfo (RegisterClass G256) 0 False],
+     [])
   | i `elem` [C2_mux_tfr_new] =
     ([TemporaryInfo (RegisterClass PredRegs) (-1) True,
       TemporaryInfo (RegisterClass IntRegs) 0 False,

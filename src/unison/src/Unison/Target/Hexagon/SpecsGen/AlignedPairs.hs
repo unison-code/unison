@@ -847,6 +847,8 @@ alignedPairs i ([_, _], [])
        J2_loop1i_ce, J2_loop1iext, J2_loop1iext_ce, J2_loop1r,
        J2_loop1r_ce, J2_loop1rext, J2_loop1rext_ce]
     = []
+alignedPairs i ([_, _, _, _], [])
+  | i `elem` [Register_class_decl_dummy] = []
 alignedPairs i ([_, _], [])
   | i `elem`
       [J2_ploop1sr, J2_ploop1sr_ce, J2_ploop2sr, J2_ploop2sr_ce,

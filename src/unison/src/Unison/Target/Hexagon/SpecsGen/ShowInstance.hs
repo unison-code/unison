@@ -2632,6 +2632,7 @@ instance Show HexagonInstruction where
         show C2_muxii_tfr_new = "C2_muxii_tfr_new"
         show C2_muxir_tfr_new = "C2_muxir_tfr_new"
         show C2_muxri_tfr_new = "C2_muxri_tfr_new"
+        show Register_class_decl_dummy = "register_class_decl_dummy"
         show A2_tfrsi_source = "A2_tfrsi_source"
         show A2_tfrsi_demat = "A2_tfrsi_demat"
         show A2_tfrsi_remat = "A2_tfrsi_remat"

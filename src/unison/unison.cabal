@@ -203,11 +203,11 @@ Library
                   Unison.Target.Hexagon.Transforms
                   Unison.Target.Hexagon.Usages
                   Unison.Target.Hexagon.HexagonRegisterDecl
-                  Unison.Target.Hexagon.HexagonRegisterClassDecl
                   Unison.Target.Hexagon.HexagonResourceDecl
                   Unison.Target.Hexagon.SpecsGen
                   Unison.Target.Hexagon.SpecsGen.HexagonInstructionDecl
                   Unison.Target.Hexagon.SpecsGen.HexagonItineraryDecl
+                  Unison.Target.Hexagon.SpecsGen.HexagonRegisterClassDecl
                   Unison.Target.Hexagon.SpecsGen.ReadWriteInfo
                   Unison.Target.Hexagon.SpecsGen.OperandInfo
                   Unison.Target.Hexagon.SpecsGen.ReadOp
@@ -224,11 +224,11 @@ Library
                   Unison.Target.ARM.Transforms
                   Unison.Target.ARM.Usages
                   Unison.Target.ARM.ARMRegisterDecl
-                  Unison.Target.ARM.ARMRegisterClassDecl
                   Unison.Target.ARM.ARMResourceDecl
                   Unison.Target.ARM.SpecsGen
                   Unison.Target.ARM.SpecsGen.ARMInstructionDecl
                   Unison.Target.ARM.SpecsGen.ARMItineraryDecl
+                  Unison.Target.ARM.SpecsGen.ARMRegisterClassDecl
                   Unison.Target.ARM.SpecsGen.ReadWriteInfo
                   Unison.Target.ARM.SpecsGen.OperandInfo
                   Unison.Target.ARM.SpecsGen.ReadOp
@@ -244,11 +244,11 @@ Library
                   Unison.Target.Mips.Transforms
                   Unison.Target.Mips.Usages
                   Unison.Target.Mips.MipsRegisterDecl
-                  Unison.Target.Mips.MipsRegisterClassDecl
                   Unison.Target.Mips.MipsResourceDecl
                   Unison.Target.Mips.SpecsGen
                   Unison.Target.Mips.SpecsGen.MipsInstructionDecl
                   Unison.Target.Mips.SpecsGen.MipsItineraryDecl
+                  Unison.Target.Mips.SpecsGen.MipsRegisterClassDecl
                   Unison.Target.Mips.SpecsGen.ReadWriteInfo
                   Unison.Target.Mips.SpecsGen.OperandInfo
                   Unison.Target.Mips.SpecsGen.ReadOp

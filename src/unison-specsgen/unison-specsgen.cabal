@@ -29,6 +29,7 @@ Library
                    SpecsGen.AllInstructionsGen
                    SpecsGen.ItineraryDeclGen
                    SpecsGen.ParentGen
+                   SpecsGen.RegisterClassDeclGen
                    SpecsGen.HsGen
                    SpecsGen.SimpleYaml
                    SpecsGen.Driver

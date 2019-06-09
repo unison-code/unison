@@ -42,7 +42,7 @@ size i
        STATEPOINT_ce, SUBREG_TO_REG, SUBREG_TO_REG_ce, TFR_PdFalse_demat,
        TFR_PdFalse_demat_ce, TFR_PdFalse_source, TFR_PdTrue_demat,
        TFR_PdTrue_demat_ce, TFR_PdTrue_source, Jr_merge, Jump_merge,
-       Jump_merge_ce, Ret_dealloc_merge]
+       Jump_merge_ce, Register_class_decl_dummy, Ret_dealloc_merge]
     = 0
   | i `elem`
       [L2_loadrb_io_fi, L2_loadrb_io_fi_ce, L2_loadrb_io_fi_demat_fi,

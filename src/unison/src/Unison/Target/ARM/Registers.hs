@@ -19,7 +19,7 @@ import qualified Data.Map as M
 
 import Unison
 import Unison.Target.ARM.ARMRegisterDecl
-import Unison.Target.ARM.ARMRegisterClassDecl
+import Unison.Target.ARM.SpecsGen.ARMRegisterClassDecl
 
 -- | Register array
 

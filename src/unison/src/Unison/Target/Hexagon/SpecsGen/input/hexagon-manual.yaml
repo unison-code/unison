@@ -653,3 +653,17 @@ instruction-set:
          - Rs:              [register, use, IntRegs]
         size:               8
         itinerary:          ALU32_SLOT0123_2
+
+      - id:                 register_class_decl_dummy
+        type:               linear
+        operands:
+         - p64:             [register, use, P64]
+         - p128:            [register, use, P128]
+         - g128:            [register, use, G128]
+         - g256:            [register, use, G256]
+        uses:               [p64, p128, g128, g256]
+        defines:            []
+        size:               0
+        affects:
+        affected-by:
+        itinerary:          NoItinerary

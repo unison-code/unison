@@ -33,8 +33,8 @@ import Unison.Target.Mips.Transforms
 import Unison.Target.Mips.Usages
 import Unison.Target.Mips.Common
 import Unison.Target.Mips.MipsRegisterDecl
-import Unison.Target.Mips.MipsRegisterClassDecl
 import Unison.Target.Mips.MipsResourceDecl
+import Unison.Target.Mips.SpecsGen.MipsRegisterClassDecl
 import Unison.Target.Mips.SpecsGen.MipsInstructionDecl
 import qualified Unison.Target.Mips.SpecsGen as SpecsGen
 

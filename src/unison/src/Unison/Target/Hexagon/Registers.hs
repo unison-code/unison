@@ -18,7 +18,7 @@ import qualified Data.Map as M
 
 import Unison
 import Unison.Target.Hexagon.HexagonRegisterDecl
-import Unison.Target.Hexagon.HexagonRegisterClassDecl
+import Unison.Target.Hexagon.SpecsGen.HexagonRegisterClassDecl
 
 -- | Register array
 

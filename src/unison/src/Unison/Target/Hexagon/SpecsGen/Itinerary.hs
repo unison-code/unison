@@ -893,7 +893,8 @@ itinerary i
        TFR_FI_fi_demat_fi_ce, TFR_FI_fi_source_fi, TFR_FI_fi_source_fi_ce,
        TFR_PdFalse_demat, TFR_PdFalse_demat_ce, TFR_PdFalse_source,
        TFR_PdTrue_demat, TFR_PdTrue_demat_ce, TFR_PdTrue_source, Jr_merge,
-       Jump_merge, Jump_merge_ce, Ret_dealloc_merge]
+       Jump_merge, Jump_merge_ce, Register_class_decl_dummy,
+       Ret_dealloc_merge]
     = NoItinerary
   | i `elem`
       [V4_SA1_addi, V4_SA1_addi_ce, V4_SA1_addrx, V4_SA1_addsp,
