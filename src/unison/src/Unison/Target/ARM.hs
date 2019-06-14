@@ -20,7 +20,6 @@ import Control.Arrow
 import Common.Util
 
 import MachineIR hiding (parse)
-import MachineIR.Transformations.AddImplicitRegs
 
 import Unison
 import qualified Unison.Target.API as API
@@ -609,7 +608,6 @@ postProcess to = [expandPseudos to, removeAllNops, removeFrameIndex,
                   removeEmptyBundles, reorderImplicitOperands,
                   exposeCPSRRegister,
                   mapToTargetMachineInstruction expandVarOpInstructions,
-                  flip addImplicitRegs (target, []),
                   demoteImplicitOperands]
 
 expandPseudos to = mapToMachineBlock (expandBlockPseudos (expandPseudo to))

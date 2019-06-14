@@ -28,6 +28,7 @@ import MachineIR.Transformations.SplitTerminators
 import MachineIR.Transformations.RenameMachineBlocks
 import MachineIR.Transformations.DropUnsupportedPseudos
 import MachineIR.Transformations.RunPostProcess
+import MachineIR.Transformations.AddImplicitRegs
 import MachineIR.Transformations.PrepareForEmission
 import Unison.Transformations.FinalizeOperations
 import Unison.Transformations.EstimateFrequency
@@ -78,4 +79,5 @@ mirPostTransformations :: (Eq i, Read i, Read r, Eq r) =>
     MIR.MachineFunction i r, String, Bool)]
 mirPostTransformations mirVersion =
   [(runPostProcess, "runPostProcess", True),
+   (addImplicitRegs, "addImplicitRegs", True),
    (prepareForEmission mirVersion, "prepareForEmission", True)]

@@ -21,7 +21,6 @@ import Control.Arrow
 import Common.Util
 
 import MachineIR hiding (parse)
-import MachineIR.Transformations.AddImplicitRegs
 
 import Unison
 import qualified Unison.Target.API as API
@@ -533,8 +532,7 @@ machineInstructionToList MachineBundle {mbInstrs = mis} = mis
 postProcess = [lintStackAlignment,
                constantDeExtend, removeFrameIndex,
                normalizeNewValueCmpJump, normalizeNVJumps, normalizeJRInstrs,
-               expandCondTransfers, addJumpHints,
-               flip addImplicitRegs (target, [])]
+               expandCondTransfers, addJumpHints]
 
 lintStackAlignment = mapToTargetMachineInstruction lintStackAlignmentInInstr
 

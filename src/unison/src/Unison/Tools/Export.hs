@@ -29,6 +29,7 @@ import Unison.Transformations.RunTargetTransforms
 import MachineIR.Transformations.RunPostProcess
 import MachineIR.Transformations.SimplifyFallthroughs
 import MachineIR.Transformations.RenameMachineBlocks
+import MachineIR.Transformations.AddImplicitRegs
 import MachineIR.Transformations.PrepareForEmission
 
 import Unison.Tools.Export.SelectTemporaries
@@ -124,5 +125,6 @@ mirTransformations mirVersion =
   [(simplifyFallthroughs True, "simplifyFallthroughs", True),
    (renameMachineBlocks, "renameMachineBlocks", True),
    (runPostProcess, "runPostProcess", True),
+   (addImplicitRegs, "addImplicitRegs", True),
    (cleanNops, "cleanNops", True),
    (prepareForEmission mirVersion, "prepareForEmission", True)]
