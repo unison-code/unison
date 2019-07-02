@@ -56,10 +56,17 @@ build-solver: $(SOLVERBIN)
 build-presolver: $(PRESOLVERBIN)
 
 build-unison: prepare-unison
-	cd $(UNISONDIR); $(CABALBIN) configure --enable-tests; $(CABALBIN) build --ghc-options="$(UNISON_GHC_CONFIG)"
+	cd $(UNISONDIR); $(CABALBIN) build --ghc-options="$(UNISON_GHC_CONFIG)"
 
 prepare-unison:
+	$(MAKE) install-deps-unison
+	$(MAKE) configure-unison
+
+install-deps-unison:
 	cd $(UNISONDIR); $(CABALBIN) install --only-dependencies --enable-tests
+
+configure-unison:
+	cd $(UNISONDIR); $(CABALBIN) configure --enable-tests
 
 test:
 	cd $(UNISONDIR); \
@@ -88,9 +95,9 @@ clean:
 	cd $(UNISONSPECSGENDIR); $(CABALBIN) clean
 	$(MAKE) veryclean-solver veryclean-presolver
 
-doc:
-	cd $(UNISONDIR); $(CABALBIN) configure --enable-tests; $(CABALBIN) haddock
-	cd $(UNISONSPECSGENDIR); $(CABALBIN) configure --enable-tests; $(CABALBIN) haddock
+doc: prepare-unison prepare-specsgen
+	cd $(UNISONDIR); $(CABALBIN) haddock
+	cd $(UNISONSPECSGENDIR); $(CABALBIN) haddock
 
 haskell-loc:
 	cloc unison/src --exclude-dir=SpecsGen
@@ -117,10 +124,17 @@ SGARMREMATYAML = $(SGARMROOTDIR)/input/arm-remat.yaml
 
 
 build-specsgen: prepare-specsgen
-	cd $(UNISONSPECSGENDIR); $(CABALBIN) configure; $(CABALBIN) build
+	cd $(UNISONSPECSGENDIR); $(CABALBIN) build
 
 prepare-specsgen:
+	$(MAKE) install-deps-specsgen
+	$(MAKE) configure-specsgen
+
+install-deps-specsgen:
 	cd $(UNISONSPECSGENDIR); $(CABALBIN) install --only-dependencies
+
+configure-specsgen:
+	cd $(UNISONSPECSGENDIR); $(CABALBIN) configure
 
 install-specsgen:
 	cp $(UNISONSPECSGENDIR)/dist/build/specsgen/specsgen $(BINDIR)
