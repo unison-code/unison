@@ -917,11 +917,54 @@ representing the bits with which instructions are encoded.
 
 This chapter explains how target processors are described in Unison.
 %
+Section~\ref{sec:target-structure} describes the structure of the source code
+that implements a target processor description.
+%
 Section~\ref{sec:generation} describes how major parts of the Unison description
 can be generated from a higher-level description.
 %
 Section~\ref{sec:importing} explains how the higher-level description itself can
 be imported from LLVM.
+
+\section{Structure}
+\label{sec:target-structure}
+
+The source code describing a new target is located under the directory
+\code{src/Unison/Target} within the base directory of the \code{Unison} Haskell
+package (\code{src/unison}).
+%
+At the highest level, a processor description is a function that returns a
+parameterized data structure of type \code{TargetDescription i r rc s}, where
+\code{i}, \code{r}, \code{rc}, and \code{s} are the processor's instruction,
+register, register class, and resource types.
+%
+They are typically defined as enumeration types, but can consist of more complex
+types if required by the target description.
+%
+A processor is registered in Unison by simply adding the target description to a
+list provided by the function \code{unisonTargets} in the module
+\code{Unison.Target}.
+
+The \code{TargetDescription} data structure consists of a collection of
+functions that Unison uses to query about the properties of the processor.
+%
+Detailed documentation about the processor functions can be obtained by building
+the code documentation for the Unison package.
+%
+To do this, just go to the \code{src} directory and run:
+%
+\begin{command}
+make doc
+\end{command}
+
+The generated HTML documentation can be found under the \code{dist/doc/html}
+directory within the Unison package.
+%
+The \code{TargetDescription} data type can be found in the module
+\code{Unison/Target/API}.
+
+The rest of this section explains the key abstractions used in the processor
+description and how different parts of it can be generated automatically.
 
 \section{Register Array}
 \label{sec:register-array}
