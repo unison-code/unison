@@ -68,6 +68,9 @@ install-deps-unison:
 configure-unison:
 	cd $(UNISONDIR); $(CABALBIN) configure --enable-tests
 
+doc-unison: prepare-unison
+	cd $(UNISONDIR); $(CABALBIN) haddock
+
 test:
 	cd $(UNISONDIR); \
 	$(CABALBIN) test --show-details=$(UNISON_SHOW_DETAILS) \
@@ -95,9 +98,7 @@ clean:
 	cd $(UNISONSPECSGENDIR); $(CABALBIN) clean
 	$(MAKE) veryclean-solver veryclean-presolver
 
-doc: prepare-unison prepare-specsgen
-	cd $(UNISONDIR); $(CABALBIN) haddock
-	cd $(UNISONSPECSGENDIR); $(CABALBIN) haddock
+doc: doc-unison doc-specsgen
 
 haskell-loc:
 	cloc unison/src --exclude-dir=SpecsGen
@@ -135,6 +136,9 @@ install-deps-specsgen:
 
 configure-specsgen:
 	cd $(UNISONSPECSGENDIR); $(CABALBIN) configure
+
+doc-specsgen: prepare-specsgen
+	cd $(UNISONSPECSGENDIR); $(CABALBIN) haddock
 
 install-specsgen:
 	cp $(UNISONSPECSGENDIR)/dist/build/specsgen/specsgen $(BINDIR)
