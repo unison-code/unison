@@ -1,3 +1,4 @@
+
 {-|
 Copyright   :  Copyright (c) 2016, RISE SICS AB
 License     :  BSD3 (see the LICENSE file)
@@ -20,6 +21,8 @@ module Unison.Target.API (
   AlignedPairsFunction,
   PackedPairsFunction,
   RelatedPairsFunction,
+  CopiesFunction,
+  FromCopyFunction,
   CopyInstructions,
   TargetDescription(..),
   TargetOptions,
@@ -134,11 +137,49 @@ type AlignedPairsFunction i r =
 type PackedPairsFunction i r = BlockOperation i r -> [(Operand r, Operand r)]
 -- | Function that gives related pairs in an operation
 type RelatedPairsFunction i r = BlockOperation i r -> [RegisterTable r]
+-- | Function that gives copy instructions to extend a temporary at its
+-- definition and use points
+type CopiesFunction i r rc =
+  FunctionInfo i r rc
+  -- ^ Auxiliary, global analysis information about the function under
+  -- compilation. This information is computed at the beginning of copy
+  -- extension, so might become progressively obsolete as copies are introduced.
+  -> Bool
+  -- ^ Whether the temporary to be extended is the result of a virtual copy
+  -- @[t'] <- (copy) [t]@. If this is the case, the given copies substitute the
+  -- virtual copy: the definition copies are placed after the definition of @t@;
+  -- the use copies are placed before each use of @t'@.
+  -> Operand r
+  -- ^ Temporary to be extended.
+  -> [r]
+  -- ^ Registers pre-assigned to the temporary to be extended, possibly by
+  -- multiple operations. After copy extension, conflicts caused by different
+  -- pre-assignments to the same temporary should be solved.
+  -> BlockOperation i r
+  -- ^ Definer of the temporary to be extended.
+  -> [BlockOperation i r]
+  -- ^ Users of the temporary to be extended.
+  -> CopyInstructions i
+  -- ^ Copy instructions to be placed after the definition and before each use
+  -- of the temporary to be extended.
 -- | Copy instructions after the definition and before each use of a
 -- temporary
+-- | Function that transforms a copy operation introduced during copy extension
+-- (possibly a rematerialization copy with a supporting rematerialization
+-- origin) into a natural operation with a real target instruction.
+type FromCopyFunction i r =
+  Maybe (NaturalOperation i r)
+  -- ^ Original rematerializable operation, if the copy to be transformed is a
+  -- rematerialization copy (@demat@ or @remat@ copies). 'Nothing' otherwise.
+  -> Operation i r
+  -- ^ Copy operation to be transformed into a natural operation (regular copy,
+  -- @demat@ copy, or @remat@ copy).
+  -> NaturalOperation i r
+  -- ^ Natural operation with a real target instruction that implements the more
+  -- abstract copy operation.
 type CopyInstructions i = ([Instruction i], [[Instruction i]])
 -- | Target-dependent options (typically passed by tools through the
--- command line flag @--targetoption@)
+-- command-line option @--targetoption@)
 type TargetOptions = [String]
 -- | Target description together with target-dependent options
 type TargetWithOptions i r rc s = (TargetDescription i r rc s, TargetOptions)
@@ -206,9 +247,12 @@ type FunctionInfo i r rc =
      BCFGraph i r, Partition (Operand r))
 
 -- | Description of a target processor. Implementing these functions
--- is all that is required for a Unison target. The following table specifies
--- which processor description functions are invoked by each component in the
--- Unison toolchain:
+-- is all that is required for a Unison target. The first argument to all
+-- functions is a list of target-specific options given by the command-line
+-- option @--targetoption@ (the option can be given multiple times).
+--
+-- The following table specifies which processor description functions are
+-- invoked by each component in the Unison toolchain:
 --
 -- @
 --  function            import linearize extend augment model export
@@ -251,23 +295,31 @@ type FunctionInfo i r rc =
 -- @
 
 data TargetDescription i r rc s = TargetDescription {
-      -- | Sequence of atomic (one register atom per register)
-      -- register classes that forms the register array
+      -- | Sequence of atomic register classes that forms the register array.
+      -- A register class has one register atom per register.
       tRegisterArray    :: TargetOptions -> [RegisterClass rc],
       -- | First and last register atoms of the given register
       tRegisterAtoms    :: TargetOptions -> r -> (r, r),
-      -- | Register classes
+      -- | Register classes in the target (the order is not relevant)
       tRegClasses       :: TargetOptions -> [RegisterClass rc],
-      -- | Registers of each register class
+      -- | Registers of the given register class ordered according to their
+      -- position in the register array
       tRegisters        :: TargetOptions -> RegisterClass rc -> [r],
       -- | Number of atoms of each register in the given infinite
-      -- register class
+      -- register class. This is a partial function defined only for infinite
+      -- register classes. Examples of infinite register classes are those
+      -- modeling the stack frame and the rematerialization space
       tInfRegClassUsage :: TargetOptions -> RegisterClass rc -> Integer,
       -- | Possibly an upper bound of the number of register atoms in the given
-      -- infinite register class
+      -- infinite register class. This is a partial function defined only for
+      -- infinite register classes. In most cases, the return value should be
+      -- 'Nothing', but it can be set to 'Just n' (where 'n' is an 'Integer') to
+      -- model bounded register classes that are subsets of infinite register
+      -- classes (for example, the top 'n' locations in a stack frame). See
+      -- 'Unison.Target.ARM.Registers' for an example.
       tInfRegClassBound :: TargetOptions -> RegisterClass rc -> Maybe Integer,
       -- | Chained index type of the given sub-register index (see
-      -- 'MachineSubRegIndex') for the given register class (in String
+      -- 'MachineSubRegIndex') for the given register class (in 'String'
       -- format). A chain [t1, t2, .., tn] is to be interpreted as "the t1 part
       -- of the t2 part of .. of the tnth part of the register"
       tSubRegIndexType  :: TargetOptions -> String -> SubRegIndex -> [SubRegIndexType],
@@ -279,7 +331,8 @@ data TargetDescription i r rc s = TargetDescription {
       tReserved         :: TargetOptions -> [r],
       -- | Type of the given instruction
       tInstructionType  :: TargetOptions -> i -> InstructionT,
-      -- | Information about the branch performed by a 'Branch' operation
+      -- | Information about the branch performed by a 'Branch' operation. This
+      -- is a partial function defined only for branch operations
       tBranchInfo       :: TargetOptions -> NaturalOperation i r ->
                            BranchInfo,
       -- | Target-dependent 'MachineIR' transformations to be applied
@@ -296,17 +349,16 @@ data TargetDescription i r rc s = TargetDescription {
                            [FunctionTransform i r],
       -- | Copy instructions to extend the given temporary between the
       -- given definer and users
-      tCopies           :: TargetOptions -> FunctionInfo i r rc -> Bool ->
-                           Operand r -> [r] -> BlockOperation i r ->
-                           [BlockOperation i r] -> CopyInstructions i,
+      tCopies           :: TargetOptions -> CopiesFunction i r rc,
       -- | Instructions to rematerialize the value defined by the
-      -- given instruction (source instruction, dematerialization copy, and
-      -- rematerialization copy)
+      -- given instruction 'i' (source instruction, dematerialization copy, and
+      -- rematerialization copy). Gives 'Nothing' if 'i' is not rematerializable
+      -- or its corresponding rematerialization instructions are not yet
+      -- defined.
       tRematInstrs      :: TargetOptions -> i -> Maybe (i, i, i),
-      -- | Implementation of the given operation (typically a copy) to be
-      -- applied during the export phase with possibly a supporting remat origin
-      tFromCopy         :: TargetOptions -> Maybe (NaturalOperation i r) ->
-                           Operation i r -> NaturalOperation i r,
+      -- | Implementation of the given operation to be applied during the export
+      -- phase with possibly a supporting rematerialization origin
+      tFromCopy         :: TargetOptions -> FromCopyFunction i r,
       -- | Information about the use and definition operands of the given
       -- instruction
       tOperandInfo      :: TargetOptions -> OperandInfoFunction i rc,
