@@ -22,7 +22,6 @@ module Unison.Target.API (
   PackedPairsFunction,
   RelatedPairsFunction,
   CopiesFunction,
-  FromCopyFunction,
   CopyInstructions,
   TargetDescription(..),
   TargetOptions,
@@ -164,19 +163,6 @@ type CopiesFunction i r rc =
   -- of the temporary to be extended.
 -- | Copy instructions after the definition and before each use of a
 -- temporary
--- | Function that transforms a copy operation introduced during copy extension
--- (possibly a rematerialization copy with a supporting rematerialization
--- origin) into a natural operation with a real target instruction.
-type FromCopyFunction i r =
-  Maybe (NaturalOperation i r)
-  -- ^ Original rematerializable operation, if the copy to be transformed is a
-  -- rematerialization copy (@demat@ or @remat@ copies). 'Nothing' otherwise.
-  -> Operation i r
-  -- ^ Copy operation to be transformed into a natural operation (regular copy,
-  -- @demat@ copy, or @remat@ copy).
-  -> NaturalOperation i r
-  -- ^ Natural operation with a real target instruction that implements the more
-  -- abstract copy operation.
 type CopyInstructions i = ([Instruction i], [[Instruction i]])
 -- | Target-dependent options (typically passed by tools through the
 -- command-line option @--targetoption@)
@@ -209,8 +195,7 @@ postProcess (ti, to) = tPostProcess ti to
 transforms (ti, to) = tTransforms ti to
 copies (ti, to) = tCopies ti to
 rematInstrs (ti, to) = tRematInstrs ti to
-fromCopy (ti, to) ro o =
-    o {oOpr = Natural (tFromCopy ti to (fmap (oNatural . oOpr) ro) (oOpr o))}
+fromCopy (ti, to) o = o {oOpr = Natural (tFromCopy ti to (oOpr o))}
 operandInfo (ti, to) = tOperandInfo ti to
 alignedPairs (ti, to) o @ SingleOperation {oOpr = (Natural {})} =
   concat [[(p, q, tai) | (p, q) <- tAlignedPairs ti to i (oUses o, oDefs o)]
@@ -356,9 +341,10 @@ data TargetDescription i r rc s = TargetDescription {
       -- or its corresponding rematerialization instructions are not yet
       -- defined.
       tRematInstrs      :: TargetOptions -> i -> Maybe (i, i, i),
-      -- | Implementation of the given operation to be applied during the export
-      -- phase with possibly a supporting rematerialization origin
-      tFromCopy         :: TargetOptions -> FromCopyFunction i r,
+      -- | Implementation of the given copy operation (introduced during copy
+      -- extension) as a natural operation with a real target instruction
+      tFromCopy         :: TargetOptions -> Operation i r ->
+                           NaturalOperation i r,
       -- | Information about the use and definition operands of the given
       -- instruction
       tOperandInfo      :: TargetOptions -> OperandInfoFunction i rc,

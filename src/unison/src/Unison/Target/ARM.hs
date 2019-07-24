@@ -223,12 +223,10 @@ isReserved r = r `elem` reserved
 rematInstrs i
   | isRematerializable i =
       Just (sourceInstr i, dematInstr i, rematInstr i)
-  | otherwise = error ("unmatched: rematInstrs " ++ show i)
+  | otherwise = Nothing
 
 -- | Transforms copy instructions into natural instructions
-
--- handle regular copies
-fromCopy _ Copy {oCopyIs = [TargetInstruction i], oCopyS = s, oCopyD = d}
+fromCopy Copy {oCopyIs = [TargetInstruction i], oCopyS = s, oCopyD = d}
   | i `elem` [MOVE, MOVE_ALL, MOVE_D] =
     Linear {oIs = [TargetInstruction (fromCopyInstr i (s, d))],
             oUs = [s] ++ defaultUniPred,
@@ -262,21 +260,8 @@ fromCopy _ Copy {oCopyIs = [TargetInstruction i], oCopyS = s, oCopyD = d}
     Linear {oIs = [TargetInstruction (fromCopyInstr i (s, d))],
             oUs = [mkOprArmSP] ++ defaultUniPred ++ mkPushRegs i,
             oDs = [mkOprArmSP]}
-
--- handle rematerialization copies
-fromCopy (Just (Linear {oUs = us}))
-         Copy {oCopyIs = [TargetInstruction i], oCopyS = s, oCopyD = d}
-  | isDematInstr i =
-    Linear {oIs = [mkNullInstruction], oUs = [s], oDs = [d]}
-  | isRematInstr i =
-    Linear {oIs = [TargetInstruction (originalInstr i)], oUs = us, oDs = [d]}
-
--- handle rematerialization sources
-fromCopy _ (Natural o @ Linear {oIs = [TargetInstruction i]})
-  | isSourceInstr i = o {oIs = [mkNullInstruction]}
-
-fromCopy _ (Natural o) = o
-fromCopy _ o = error ("unmatched pattern: fromCopy " ++ show o)
+fromCopy (Natural o) = o
+fromCopy o = error ("unmatched pattern: fromCopy " ++ show o)
 
 mkPushRegs i = map (Register . TargetRegister) (pushRegs i)
 
