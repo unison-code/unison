@@ -115,7 +115,7 @@ ModelOptions::ModelOptions(void)
     _disable_across_call_disjoint_temporary_set_constraints("disable-across-call-disjoint-temporary-set-constraints", "disable across call disjoint temporary set constraints", false),
     _disable_temporary_symmetry_breaking_constraints("disable-temporary-symmetry-breaking-constraints", "disable temporary symmetry breaking constraints", false),
     _disable_infinite_register_dominance_constraints("disable-infinite-register-dominance-constraints", "disable infinite register dominance constraints", false),
-    _disable_wcet_constraints("disable-wcet-constraints", "disable wcet constraint (longest tolerable inter-issue distance)", false)
+    _disable_wcet_constraints("disable-wcet-constraints", "disable wcet constraints", false)
 
 {
   add(_output_file);
