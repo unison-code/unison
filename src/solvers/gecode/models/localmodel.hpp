@@ -90,6 +90,7 @@ public:
 
   IntAction c_activity;
 
+
   // Auxiliary methods
 
   // Gecode space methods
@@ -100,6 +101,12 @@ public:
   LocalModel(LocalModel& cg);
 
   LocalModel* copy(void);
+
+
+  // Changed to Merit because c_activity is IntAction
+  double action(int i) const;
+
+  static double actionmerit(const Space& home, BoolVar, int i);
 
   // Constraints
 

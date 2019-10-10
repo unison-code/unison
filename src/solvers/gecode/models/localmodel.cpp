@@ -170,6 +170,14 @@ LocalModel* LocalModel::copy(void) {
   return new LocalModel(*this);
 }
 
+double LocalModel::action(int i) const {
+  return c_activity[i];
+}
+
+double LocalModel::actionmerit(const Space& home, BoolVar, int i) {
+  return static_cast<const LocalModel&>(home).action(i);
+}
+
 void LocalModel::post_decision_variable_domain_definitions(void) {
   Model::post_decision_variable_domain_definitions(b);
 }
@@ -291,7 +299,7 @@ void LocalModel::post_aggressive_branchers(void) {
 
 void LocalModel::post_trivial_branchers(void) {
 
-  branch(*this, v_a, BOOL_VAR_ACTION_MAX(c_activity), BOOL_VAL_MIN(),
+  branch(*this, v_a, BOOL_VAR_MERIT_MAX(actionmerit), BOOL_VAL_MIN(),
          NULL, &print_inactive_decision);
 
   branch(*this, v_i, INT_VAR_NONE(), INT_VAL_MIN(),
@@ -317,7 +325,7 @@ void LocalModel::post_minimum_cost_branchers(void) {
   branch(*this, cost(), INT_VAR_NONE(), INT_VAL_MIN(),
          NULL, &print_cost_decision);
 
-  branch(*this, v_a, BOOL_VAR_ACTION_MAX(c_activity), BOOL_VAL_MIN(),
+  branch(*this, v_a, BOOL_VAR_MERIT_MAX(actionmerit), BOOL_VAL_MIN(),
          NULL, &print_inactive_decision);
 
   branch(*this, v_i, INT_VAR_NONE(), INT_VAL_MIN(),
@@ -340,7 +348,7 @@ void LocalModel::post_minimum_cost_branchers(void) {
 
 void LocalModel::post_fail_first_branchers(void) {
 
-  branch(*this, v_a, BOOL_VAR_ACTION_MAX(c_activity), BOOL_VAL_MIN(),
+  branch(*this, v_a, BOOL_VAR_MERIT_MAX(actionmerit), BOOL_VAL_MIN(),
          NULL, &print_inactive_decision);
 
   branch(*this, v_i, INT_VAR_NONE(), INT_VAL_MAX(),
