@@ -5,6 +5,7 @@
  *
  *  Contributing authors:
  *    Daniel Lundén <daniel.lunden@sics.se>
+ *    Rodothea Myrsini Tsoupidi <tsoupidi@kth.se>
  *
  *  This file is part of Unison, see http://unison-code.github.io
  *
