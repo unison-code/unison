@@ -1,8 +1,8 @@
 module Unison.Target.Mips.Common
-       (unitLatency, noDelaySlots, isBarrierInstr, hiddenStackPointerInstruction,
-        isDelaySlotInstr, isClobberRA, isRematerializable, isSourceInstr,
-        isDematInstr, isRematInstr, sourceInstr, dematInstr, rematInstr,
-        originalInstr) where
+       (unitLatency, noDelaySlots, keepNops, isBarrierInstr,
+        hiddenStackPointerInstruction, isDelaySlotInstr, isClobberRA,
+        isRematerializable, isSourceInstr, isDematInstr, isRematInstr,
+        sourceInstr, dematInstr, rematInstr, originalInstr) where
 
 import qualified Data.Map as M
 
@@ -14,6 +14,8 @@ import Unison.Target.Mips.SpecsGen()
 unitLatency to = API.isBoolOption "unit-latency" to
 
 noDelaySlots to = API.isBoolOption "no-delay-slots" to
+
+keepNops to = API.isBoolOption "keep-nops" to
 
 isBarrierInstr i = i `elem` barrierInstrs
 
