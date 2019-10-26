@@ -336,7 +336,8 @@ liftToTOpc f = mkMachineTargetOpc . f . mopcTarget
 
 -- | Target dependent post-processing functions
 
-postProcess to = [expandPseudos to, cleanNops, normalizeDelaySlots to]
+postProcess to = [expandPseudos to, if keepNops to then id else cleanNops,
+                  normalizeDelaySlots to]
 
 expandPseudos to = mapToMachineBlock (expandBlockPseudos (expandPseudo to))
 

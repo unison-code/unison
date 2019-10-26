@@ -5,6 +5,7 @@
  *
  *  Contributing authors:
  *    Daniel Lundén <daniel.lunden@sics.se>
+ *    Rodothea Myrsini Tsoupidi <tsoupidi@kth.se>
  *
  *  This file is part of Unison, see http://unison-code.github.io
  *
@@ -1767,7 +1768,8 @@ void Model::post_presolver_constraints(block b) {
     post_diffregs_constraints(b);
     post_difftemps_constraints(b);
     post_dominates_constraints(b);
-    post_wcet_constraints(b);
+    if (!options->disable_wcet_constraints())
+      post_wcet_constraints(b);
     // TODO: to be revisited after minlive model improvement
     // post_killer_operand_constraints(b);
     post_mandatory_reuse_constraints(b);

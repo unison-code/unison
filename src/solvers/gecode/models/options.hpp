@@ -2,6 +2,9 @@
  *  Main authors:
  *    Roberto Castaneda Lozano <roberto.castaneda@ri.se>
  *
+ *  Contributing authors:
+ *    Rodothea Myrsini Tsoupidi <tsoupidi@kth.se>
+ *
  *  This file is part of Unison, see http://unison-code.github.io
  *
  *  Copyright (c) 2016, RISE SICS AB
@@ -132,6 +135,7 @@ protected:
   Driver::BoolOption _disable_across_call_disjoint_temporary_set_constraints; // Disable across call disjoint temporary set constraints
   Driver::BoolOption _disable_temporary_symmetry_breaking_constraints; // Disable temporary symmetry breaking constraints
   Driver::BoolOption _disable_infinite_register_dominance_constraints; // Disable infinite register dominance constraints
+  Driver::BoolOption _disable_wcet_constraints; // Disable wcet constraints
 
 public:
 
@@ -212,6 +216,7 @@ public:
   bool disable_across_call_disjoint_temporary_set_constraints(void) const {return _disable_across_call_disjoint_temporary_set_constraints.value();}
   bool disable_temporary_symmetry_breaking_constraints(void) const {return _disable_temporary_symmetry_breaking_constraints.value();}
   bool disable_infinite_register_dominance_constraints(void) const {return _disable_infinite_register_dominance_constraints.value();}
+  bool disable_wcet_constraints(void) const {return _disable_wcet_constraints.value();}
 
 };
 

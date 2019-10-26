@@ -16,6 +16,7 @@ import Data.Aeson
 import qualified Data.ByteString.Lazy.Char8 as BSL
 import qualified Data.HashMap.Strict as HM
 import Control.Monad
+import Control.Arrow
 
 import MachineIR
 import Unison
@@ -65,8 +66,11 @@ run (removeReds, keepNops, baseFile, tight, mirVersion, debug, outJsonFile,
            (uniTransformations (fromJust sol) (removeReds, keepNops, tight))
            target f
          mf = toMachineFunction f'
+         -- Pass keepNops option to the target, to control post-processing.
+         target' = if keepNops then second ((++) ["keep-nops"]) target
+                   else target
          (mf', partialMfs) =
-           applyTransformations (mirTransformations mirVersion) target mf
+           applyTransformations (mirTransformations mirVersion) target' mf
          mfBase = case baseMir of
                  (Just base) -> base
                  Nothing     -> ""
