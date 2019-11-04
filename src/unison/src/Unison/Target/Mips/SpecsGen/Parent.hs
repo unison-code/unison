@@ -381,8 +381,18 @@ parent i
        Register_class_decl_dummy]
     = Nothing
   | i `elem` [ADDiu_negsp, ADDiu_sp] = Just ADDiu
+  | i `elem` [B_NOP] = Just B
+  | i `elem` [BC1F_NOP] = Just BC1F
+  | i `elem` [BC1T_NOP] = Just BC1T
+  | i `elem` [BEQ_NOP] = Just BEQ
+  | i `elem` [BGEZ_NOP] = Just BGEZ
+  | i `elem` [BGTZ_NOP] = Just BGTZ
+  | i `elem` [BLEZ_NOP] = Just BLEZ
+  | i `elem` [BLTZ_NOP] = Just BLTZ
+  | i `elem` [BNE_NOP] = Just BNE
   | i `elem` [MOVE_D] = Just FMOV_D32
   | i `elem` [MOVE_F] = Just FMOV_S
+  | i `elem` [JALRPseudo_NOP] = Just JALRPseudo
   | i `elem` [LBu_fi] = Just LBu
   | i `elem` [LBu_fi_demat_fi, LBu_fi_remat_fi, LBu_fi_source_fi] =
     Just LBu_fi
@@ -402,6 +412,9 @@ parent i
     Just LW_fi
   | i `elem` [LoadGPDisp] = Just LoadAddrImm32
   | i `elem` [MOVE] = Just OR
+  | i `elem` [PseudoIndirectBranch_NOP] = Just PseudoIndirectBranch
+  | i `elem` [PseudoReturn_NOP] = Just PseudoReturn
+  | i `elem` [RetRA_NOP] = Just RetRA
   | i `elem` [SB_fi] = Just SB
   | i `elem` [SDC1_sp, STORE_D] = Just SDC1
   | i `elem` [SH_fi] = Just SH

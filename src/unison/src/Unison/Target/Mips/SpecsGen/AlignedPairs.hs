@@ -8,8 +8,9 @@ alignedPairs i ([], [])
       [Break16, DERET, DERET_MM, DERET_MMR6, EHB, EHB_MM, EHB_MMR6, ERET,
        ERETNC, ERETNC_MMR6, ERET_MM, ERET_MMR6, ERet, JrRa16, JrcRa16,
        LoadGPDisp, NOP, PAUSE, PAUSE_MM, PAUSE_MMR6, RetRA, RetRA16,
-       SSNOP, SSNOP_MM, SSNOP_MMR6, TLBINV, TLBINVF, TLBP, TLBP_MM, TLBR,
-       TLBR_MM, TLBWI, TLBWI_MM, TLBWR, TLBWR_MM, TRAP, WAIT]
+       RetRA_NOP, SSNOP, SSNOP_MM, SSNOP_MMR6, TLBINV, TLBINVF, TLBP,
+       TLBP_MM, TLBR, TLBR_MM, TLBWI, TLBWI_MM, TLBWR, TLBWR_MM, TRAP,
+       WAIT]
     = []
 alignedPairs i ([], [_])
   | i `elem` [BPOSGE32_PSEUDO, IMPLICIT_DEF, LOAD_STACK_GUARD] = []
@@ -109,7 +110,9 @@ alignedPairs i ([_, _, _], [_])
 alignedPairs i ([_], [_]) | i `elem` [CFCMSA] = []
 alignedPairs i ([_, _], []) | i `elem` [BC2EQZ, BC2NEZ] = []
 alignedPairs i ([_, _], [])
-  | i `elem` [BC1F, BC1FL, BC1F_MM, BC1T, BC1TL, BC1T_MM] = []
+  | i `elem`
+      [BC1F, BC1FL, BC1F_MM, BC1F_NOP, BC1T, BC1TL, BC1T_MM, BC1T_NOP]
+    = []
 alignedPairs i ([fd_in, _, _], [fd_in'])
   | i `elem`
       [MADDF_D, MADDF_D_MMR6, MADDF_S, MADDF_S_MMR6, MSUBF_D,
@@ -282,7 +285,7 @@ alignedPairs i ([_], [_]) | i `elem` [RDDSP_MM] = []
 alignedPairs i ([_], [])
   | i `elem`
       [B, B16_MM, BAL, BALC, BALC_MMR6, BAL_BR, BC, BC16_MMR6, BC_MMR6,
-       BPOSGE32, B_MMR6_Pseudo, B_MM_Pseudo]
+       BPOSGE32, B_MMR6_Pseudo, B_MM_Pseudo, B_NOP]
     = []
 alignedPairs i ([_, _], [_]) | i `elem` [LWGP_MM, LWSP_MM] = []
 alignedPairs i ([_, _, _], [_])
@@ -323,12 +326,13 @@ alignedPairs i ([_, _], [_])
   | i `elem` [DMFC0, DMFC2, MFC0, MFC2] = []
 alignedPairs i ([_], [])
   | i `elem`
-      [JALR16_MM, JALR64Pseudo, JALRC16_MMR6, JALRPseudo, JALRS16_MM, JR,
-       JR16_MM, JR64, JRC16_MM, JRC16_MMR6, JR_HB, JR_HB_R6, JR_MM,
-       JalOneReg, JumpLinkReg16, MTHI, MTHI64, MTHI_MM, MTLO, MTLO64,
-       MTLO_MM, MTM0, MTM1, MTM2, MTP0, MTP1, MTP2, PseudoIndirectBranch,
-       PseudoIndirectBranch64, PseudoReturn, PseudoReturn64, TAILCALL64_R,
-       TAILCALL_R]
+      [JALR16_MM, JALR64Pseudo, JALRC16_MMR6, JALRPseudo, JALRPseudo_NOP,
+       JALRS16_MM, JR, JR16_MM, JR64, JRC16_MM, JRC16_MMR6, JR_HB,
+       JR_HB_R6, JR_MM, JalOneReg, JumpLinkReg16, MTHI, MTHI64, MTHI_MM,
+       MTLO, MTLO64, MTLO_MM, MTM0, MTM1, MTM2, MTP0, MTP1, MTP2,
+       PseudoIndirectBranch, PseudoIndirectBranch64,
+       PseudoIndirectBranch_NOP, PseudoReturn, PseudoReturn64,
+       PseudoReturn_NOP, TAILCALL64_R, TAILCALL_R]
     = []
 alignedPairs i ([_], [_])
   | i `elem` [MTHI_DSP, MTHI_DSP_MM, MTLO_DSP, MTLO_DSP_MM] = []
@@ -383,10 +387,10 @@ alignedPairs i ([_, _], []) | i `elem` [WRDSP] = []
 alignedPairs i ([_, _], [])
   | i `elem`
       [BEQZ16_MM, BEQZC, BEQZC16_MMR6, BEQZC_MM, BGEZ, BGEZ64, BGEZAL,
-       BGEZALL, BGEZALS_MM, BGEZAL_MM, BGEZL, BGEZ_MM, BGTZ, BGTZ64,
-       BGTZL, BGTZ_MM, BLEZ, BLEZ64, BLEZL, BLEZ_MM, BLTZ, BLTZ64, BLTZAL,
-       BLTZALL, BLTZALS_MM, BLTZAL_MM, BLTZL, BLTZ_MM, BNEZ16_MM, BNEZC,
-       BNEZC16_MMR6, BNEZC_MM]
+       BGEZALL, BGEZALS_MM, BGEZAL_MM, BGEZL, BGEZ_MM, BGEZ_NOP, BGTZ,
+       BGTZ64, BGTZL, BGTZ_MM, BGTZ_NOP, BLEZ, BLEZ64, BLEZL, BLEZ_MM,
+       BLEZ_NOP, BLTZ, BLTZ64, BLTZAL, BLTZALL, BLTZALS_MM, BLTZAL_MM,
+       BLTZL, BLTZ_MM, BLTZ_NOP, BNEZ16_MM, BNEZC, BNEZC16_MMR6, BNEZC_MM]
     = []
 alignedPairs i ([_, _, _], [])
   | i `elem` [BBIT0, BBIT032, BBIT1, BBIT132] = []
@@ -492,10 +496,10 @@ alignedPairs i ([_, _, _], [_])
   | i `elem` [DLSA_R6, LSA_MMR6, LSA_R6] = []
 alignedPairs i ([_, _, _], [])
   | i `elem`
-      [BEQ, BEQ64, BEQC, BEQL, BEQ_MM, BGE, BGEC, BGEL, BGEU, BGEUC,
-       BGEUL, BGT, BGTL, BGTU, BGTUL, BLE, BLEL, BLEU, BLEUL, BLT, BLTC,
-       BLTL, BLTU, BLTUC, BLTUL, BNE, BNE64, BNEC, BNEL, BNE_MM, BNVC,
-       BOVC]
+      [BEQ, BEQ64, BEQC, BEQL, BEQ_MM, BEQ_NOP, BGE, BGEC, BGEL, BGEU,
+       BGEUC, BGEUL, BGT, BGTL, BGTU, BGTUL, BLE, BLEL, BLEU, BLEUL, BLT,
+       BLTC, BLTL, BLTU, BLTUC, BLTUL, BNE, BNE64, BNEC, BNEL, BNE_MM,
+       BNE_NOP, BNVC, BOVC]
     = []
 alignedPairs i ([_, _, _], [])
   | i `elem` [DROL, DROR, ROL, ROR] = []

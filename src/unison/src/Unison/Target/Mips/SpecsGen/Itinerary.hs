@@ -64,15 +64,16 @@ itinerary i
        PseudoSELECTFP_T_D32, PseudoSELECTFP_T_D64, PseudoSELECTFP_T_I,
        PseudoSELECTFP_T_I64, PseudoSELECTFP_T_S, PseudoSELECT_D32,
        PseudoSELECT_D64, PseudoSELECT_I, PseudoSELECT_I64, PseudoSELECT_S,
-       ROL, ROLImm, ROR, RORImm, RetRA, RetRA16, SDivMacro, SNZ_B_PSEUDO,
-       SNZ_D_PSEUDO, SNZ_H_PSEUDO, SNZ_V_PSEUDO, SNZ_W_PSEUDO, SWM_MM,
-       SZ_B_PSEUDO, SZ_D_PSEUDO, SZ_H_PSEUDO, SZ_V_PSEUDO, SZ_W_PSEUDO,
-       SelBeqZ, SelBneZ, SelTBteqZCmp, SelTBteqZCmpi, SelTBteqZSlt,
-       SelTBteqZSlti, SelTBteqZSltiu, SelTBteqZSltu, SelTBtneZCmp,
-       SelTBtneZCmpi, SelTBtneZSlt, SelTBtneZSlti, SelTBtneZSltiu,
-       SelTBtneZSltu, SltCCRxRy16, SltiCCRxImmX16, SltiuCCRxImmX16,
-       SltuCCRxRy16, SltuRxRyRz16, UDivMacro, Ulh, Ulhu, Ulw,
-       XOR_V_D_PSEUDO, XOR_V_H_PSEUDO, XOR_V_W_PSEUDO]
+       ROL, ROLImm, ROR, RORImm, RetRA, RetRA16, RetRA_NOP, SDivMacro,
+       SNZ_B_PSEUDO, SNZ_D_PSEUDO, SNZ_H_PSEUDO, SNZ_V_PSEUDO,
+       SNZ_W_PSEUDO, SWM_MM, SZ_B_PSEUDO, SZ_D_PSEUDO, SZ_H_PSEUDO,
+       SZ_V_PSEUDO, SZ_W_PSEUDO, SelBeqZ, SelBneZ, SelTBteqZCmp,
+       SelTBteqZCmpi, SelTBteqZSlt, SelTBteqZSlti, SelTBteqZSltiu,
+       SelTBteqZSltu, SelTBtneZCmp, SelTBtneZCmpi, SelTBtneZSlt,
+       SelTBtneZSlti, SelTBtneZSltiu, SelTBtneZSltu, SltCCRxRy16,
+       SltiCCRxImmX16, SltiuCCRxImmX16, SltuCCRxRy16, SltuRxRyRz16,
+       UDivMacro, Ulh, Ulhu, Ulw, XOR_V_D_PSEUDO, XOR_V_H_PSEUDO,
+       XOR_V_W_PSEUDO]
     = IIPseudo
   | i `elem`
       [ABS_D_MMR6, ABS_S_MMR6, FABS_D32, FABS_D64, FABS_MM, FABS_S,
@@ -87,20 +88,23 @@ itinerary i
        ANDi64]
     = II_AND
   | i `elem` [ANDi] = II_ANDI
-  | i `elem` [B, B16_MM] = II_B
+  | i `elem` [B, B16_MM, B_NOP] = II_B
   | i `elem` [BADDu] = II_BADDU
   | i `elem` [BBIT0, BBIT032, BBIT1, BBIT132] = II_BBIT
   | i `elem` [BC16_MMR6] = II_BC
-  | i `elem` [BC1F, BC1F_MM] = II_BC1F
+  | i `elem` [BC1F, BC1F_MM, BC1F_NOP] = II_BC1F
   | i `elem` [BC1FL] = II_BC1FL
-  | i `elem` [BC1T, BC1T_MM] = II_BC1T
+  | i `elem` [BC1T, BC1T_MM, BC1T_NOP] = II_BC1T
   | i `elem` [BC1TL] = II_BC1TL
-  | i `elem` [BEQ, BEQ64, BEQL, BEQ_MM, BNE, BNE64, BNEL, BNE_MM] =
-    II_BCC
   | i `elem`
-      [BEQZ16_MM, BEQZC16_MMR6, BGEZ, BGEZ64, BGEZL, BGEZ_MM, BGTZ,
-       BGTZ64, BGTZL, BGTZ_MM, BLEZ, BLEZ64, BLEZL, BLEZ_MM, BLTZ, BLTZ64,
-       BLTZL, BLTZ_MM, BNEZ16_MM, BNEZC16_MMR6]
+      [BEQ, BEQ64, BEQL, BEQ_MM, BEQ_NOP, BNE, BNE64, BNEL, BNE_MM,
+       BNE_NOP]
+    = II_BCC
+  | i `elem`
+      [BEQZ16_MM, BEQZC16_MMR6, BGEZ, BGEZ64, BGEZL, BGEZ_MM, BGEZ_NOP,
+       BGTZ, BGTZ64, BGTZL, BGTZ_MM, BGTZ_NOP, BLEZ, BLEZ64, BLEZL,
+       BLEZ_MM, BLEZ_NOP, BLTZ, BLTZ64, BLTZL, BLTZ_MM, BLTZ_NOP,
+       BNEZ16_MM, BNEZC16_MMR6]
     = II_BCCZ
   | i `elem`
       [BAL_BR, BGEZAL, BGEZALL, BGEZAL_MM, BLTZAL, BLTZALL, BLTZAL_MM]
@@ -177,13 +181,15 @@ itinerary i
        FLOOR_W_S_MM, FLOOR_W_S_MMR6]
     = II_FLOOR
   | i `elem` [DINS, DINSM, DINSU, INS, INS_MM] = II_INS
-  | i `elem` [PseudoIndirectBranch, PseudoIndirectBranch64] =
-    II_IndirectBranchPseudo
+  | i `elem`
+      [PseudoIndirectBranch, PseudoIndirectBranch64,
+       PseudoIndirectBranch_NOP]
+    = II_IndirectBranchPseudo
   | i `elem` [J, J_MM, TAILCALL] = II_J
   | i `elem` [JAL, JALX, JALX_MM, JAL_MM] = II_JAL
   | i `elem`
       [JALR, JALR16_MM, JALR64, JALR64Pseudo, JALRC16_MMR6, JALRPseudo,
-       JALR_MM]
+       JALRPseudo_NOP, JALR_MM]
     = II_JALR
   | i `elem` [JumpLinkReg16] = II_JALRC
   | i `elem` [JALRS16_MM, JALRS_MM] = II_JALRS
@@ -287,7 +293,8 @@ itinerary i
        ROUND_W_D_MMR6, ROUND_W_MM, ROUND_W_S, ROUND_W_S_MM,
        ROUND_W_S_MMR6]
     = II_ROUND
-  | i `elem` [PseudoReturn, PseudoReturn64] = II_ReturnPseudo
+  | i `elem` [PseudoReturn, PseudoReturn64, PseudoReturn_NOP] =
+    II_ReturnPseudo
   | i `elem` [Save16, SaveX16] = II_SAVE
   | i `elem` [SB, SB16_MM, SB16_MMR6, SB64, SB_fi, SbRxRyOffMemX16] =
     II_SB

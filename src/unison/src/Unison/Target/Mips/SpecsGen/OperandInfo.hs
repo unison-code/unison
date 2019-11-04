@@ -9,8 +9,9 @@ operandInfo i
       [Break16, DERET, DERET_MM, DERET_MMR6, EHB, EHB_MM, EHB_MMR6, ERET,
        ERETNC, ERETNC_MMR6, ERET_MM, ERET_MMR6, ERet, JrRa16, JrcRa16,
        LoadGPDisp, NOP, PAUSE, PAUSE_MM, PAUSE_MMR6, RetRA, RetRA16,
-       SSNOP, SSNOP_MM, SSNOP_MMR6, TLBINV, TLBINVF, TLBP, TLBP_MM, TLBR,
-       TLBR_MM, TLBWI, TLBWI_MM, TLBWR, TLBWR_MM, TRAP, WAIT]
+       RetRA_NOP, SSNOP, SSNOP_MM, SSNOP_MMR6, TLBINV, TLBINVF, TLBP,
+       TLBP_MM, TLBR, TLBR_MM, TLBWI, TLBWI_MM, TLBWR, TLBWR_MM, TRAP,
+       WAIT]
     = ([], [])
   | i `elem` [Mfhi16, Mflo16] =
     ([], [TemporaryInfo (RegisterClass CPU16Regs) 1 False])
@@ -337,7 +338,9 @@ operandInfo i
     =
     ([TemporaryInfo (RegisterClass DSPROpnd) 0 False, BoundInfo],
      [TemporaryInfo (RegisterClass DSPROpnd) 1 False])
-  | i `elem` [BC1F, BC1FL, BC1F_MM, BC1T, BC1TL, BC1T_MM] =
+  | i `elem`
+      [BC1F, BC1FL, BC1F_MM, BC1F_NOP, BC1T, BC1TL, BC1T_MM, BC1T_NOP]
+    =
     ([TemporaryInfo (RegisterClass FCCRegsOpnd) 0 False, BlockRefInfo],
      [])
   | i `elem` [FILL_FW_PSEUDO] =
@@ -575,9 +578,10 @@ operandInfo i
       BoundInfo],
      [])
   | i `elem`
-      [JALR16_MM, JALRC16_MMR6, JALRPseudo, JALRS16_MM, JR, JR16_MM,
-       JRC16_MM, JRC16_MMR6, JR_HB, JR_HB_R6, JR_MM, JalOneReg, MTHI,
-       MTHI_MM, MTLO, MTLO_MM, PseudoIndirectBranch, PseudoReturn,
+      [JALR16_MM, JALRC16_MMR6, JALRPseudo, JALRPseudo_NOP, JALRS16_MM,
+       JR, JR16_MM, JRC16_MM, JRC16_MMR6, JR_HB, JR_HB_R6, JR_MM,
+       JalOneReg, MTHI, MTHI_MM, MTLO, MTLO_MM, PseudoIndirectBranch,
+       PseudoIndirectBranch_NOP, PseudoReturn, PseudoReturn_NOP,
        TAILCALL_R]
     = ([TemporaryInfo (RegisterClass GPR32Opnd) 0 False], [])
   | i `elem` [PseudoCVT_D32_W] =
@@ -768,9 +772,10 @@ operandInfo i
       TemporaryInfo (RegisterClass GPR32Opnd) 0 False, BoundInfo],
      [TemporaryInfo (RegisterClass GPR32Opnd) 1 False])
   | i `elem`
-      [BEQ, BEQC, BEQL, BEQ_MM, BGE, BGEC, BGEL, BGEU, BGEUC, BGEUL, BGT,
-       BGTL, BGTU, BGTUL, BLE, BLEL, BLEU, BLEUL, BLT, BLTC, BLTL, BLTU,
-       BLTUC, BLTUL, BNE, BNEC, BNEL, BNE_MM, BNVC, BOVC]
+      [BEQ, BEQC, BEQL, BEQ_MM, BEQ_NOP, BGE, BGEC, BGEL, BGEU, BGEUC,
+       BGEUL, BGT, BGTL, BGTU, BGTUL, BLE, BLEL, BLEU, BLEUL, BLT, BLTC,
+       BLTL, BLTU, BLTUC, BLTUL, BNE, BNEC, BNEL, BNE_MM, BNE_NOP, BNVC,
+       BOVC]
     =
     ([TemporaryInfo (RegisterClass GPR32Opnd) 0 False,
       TemporaryInfo (RegisterClass GPR32Opnd) 0 False, BlockRefInfo],
@@ -847,11 +852,11 @@ operandInfo i
   | i `elem`
       [BEQZALC, BEQZALC_MMR6, BEQZC, BEQZC_MM, BGEZ, BGEZAL, BGEZALC,
        BGEZALC_MMR6, BGEZALL, BGEZALS_MM, BGEZAL_MM, BGEZC, BGEZL,
-       BGEZ_MM, BGTZ, BGTZALC, BGTZALC_MMR6, BGTZC, BGTZL, BGTZ_MM, BLEZ,
-       BLEZALC, BLEZALC_MMR6, BLEZC, BLEZL, BLEZ_MM, BLTZ, BLTZAL,
-       BLTZALC, BLTZALC_MMR6, BLTZALL, BLTZALS_MM, BLTZAL_MM, BLTZC,
-       BLTZL, BLTZ_MM, BNEZALC, BNEZALC_MMR6, BNEZC, BNEZC_MM, JIC,
-       JIC_MMR6]
+       BGEZ_MM, BGEZ_NOP, BGTZ, BGTZALC, BGTZALC_MMR6, BGTZC, BGTZL,
+       BGTZ_MM, BGTZ_NOP, BLEZ, BLEZALC, BLEZALC_MMR6, BLEZC, BLEZL,
+       BLEZ_MM, BLEZ_NOP, BLTZ, BLTZAL, BLTZALC, BLTZALC_MMR6, BLTZALL,
+       BLTZALS_MM, BLTZAL_MM, BLTZC, BLTZL, BLTZ_MM, BLTZ_NOP, BNEZALC,
+       BNEZALC_MMR6, BNEZC, BNEZC_MM, JIC, JIC_MMR6]
     =
     ([TemporaryInfo (RegisterClass GPR32Opnd) 0 False, BlockRefInfo],
      [])
@@ -1625,7 +1630,7 @@ operandInfo i
      [TemporaryInfo (RegisterClass GPR32Opnd) 1 False])
   | i `elem`
       [B, B16_MM, BAL, BALC, BALC_MMR6, BAL_BR, BC, BC16_MMR6, BC_MMR6,
-       BPOSGE32, B_MMR6_Pseudo, B_MM_Pseudo, Bimm16, BimmX16, J,
+       BPOSGE32, B_MMR6_Pseudo, B_MM_Pseudo, B_NOP, Bimm16, BimmX16, J,
        JRADDIUSP, JRCADDIUSP_MMR6, J_MM]
     = ([BlockRefInfo], [])
   | i `elem` [LONG_BRANCH_LUi] =

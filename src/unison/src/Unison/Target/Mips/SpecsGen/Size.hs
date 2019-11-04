@@ -396,4 +396,9 @@ size i
        XORi_MM]
     = 4
   | i `elem` [Jal16, JalB16] = 6
+  | i `elem`
+      [BC1F_NOP, BC1T_NOP, BEQ_NOP, BGEZ_NOP, BGTZ_NOP, BLEZ_NOP,
+       BLTZ_NOP, BNE_NOP, B_NOP, JALRPseudo_NOP, PseudoIndirectBranch_NOP,
+       PseudoReturn_NOP, RetRA_NOP]
+    = 8
 

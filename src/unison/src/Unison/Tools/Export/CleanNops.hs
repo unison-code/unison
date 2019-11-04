@@ -28,6 +28,8 @@ cleanBlockNops n mi @ MachineBlock {mbInstructions = mis} =
 cleanBundleNops n MachineBundle {
   mbInstrs = [mi @ MachineSingle {msOpcode = MachineTargetOpc n'}]}
     | n == n' = mi
+-- Headless bundles model branches with delay slots and should not be cleaned.
+cleanBundleNops _ mb @ MachineBundle {mbHead = False} = mb
 cleanBundleNops n mb @ MachineBundle {mbInstrs = mis} =
     case filter (not . hasTargetOpc n) mis of
       [mi] -> mi

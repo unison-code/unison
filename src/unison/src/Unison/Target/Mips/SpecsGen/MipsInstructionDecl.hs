@@ -2259,6 +2259,19 @@ data MipsInstruction = ABSQ_S_PH
                      | SDC1_sp
                      | LoadGPDisp
                      | CLOBBER_RA
+                     | B_NOP
+                     | BC1F_NOP
+                     | BC1T_NOP
+                     | BEQ_NOP
+                     | BGEZ_NOP
+                     | BGTZ_NOP
+                     | BLEZ_NOP
+                     | BLTZ_NOP
+                     | BNE_NOP
+                     | JALRPseudo_NOP
+                     | PseudoIndirectBranch_NOP
+                     | PseudoReturn_NOP
+                     | RetRA_NOP
                      | Register_class_decl_dummy
                      | LDC1_fi_source_fi
                      | LDC1_fi_demat_fi

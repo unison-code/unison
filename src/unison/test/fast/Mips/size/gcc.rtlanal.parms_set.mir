@@ -98,7 +98,7 @@ unison-test-target: Mips
 unison-test-goal:
 - size
 unison-test-expected-cost:
-- 20
+- 24
 unison-test-function: null
 unison-test-expected-proven: true
 unison-test-strictly-better: null

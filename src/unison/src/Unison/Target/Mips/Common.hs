@@ -1,6 +1,7 @@
 module Unison.Target.Mips.Common
        (unitLatency, noDelaySlots, keepNops, isBarrierInstr,
-        hiddenStackPointerInstruction, isDelaySlotInstr, isClobberRA,
+        hiddenStackPointerInstruction, isDelaySlotInstr, isDelaySlotNOPInstr,
+        delaySlotInstr, delaySlotNOPInstr, addDelaySlotNOPInstr, isClobberRA,
         isRematerializable, isSourceInstr, isDematInstr, isRematInstr,
         sourceInstr, dematInstr, rematInstr, originalInstr) where
 
@@ -31,11 +32,21 @@ hiddenStackPointerVersions = M.fromList
    (SWC1, SWC1_sp),
    (SDC1, SDC1_sp)]
 
-isDelaySlotInstr i = i `elem` delaySlotInstrs
+isDelaySlotInstr i = M.member i delaySlotNOPVersions
+isDelaySlotNOPInstr i = M.member i (inverseMap delaySlotNOPVersions)
+delaySlotInstr i = (inverseMap delaySlotNOPVersions) M.! i
+delaySlotNOPInstr i = delaySlotNOPVersions M.! i
 
-delaySlotInstrs =
-  [B, BC1F, BC1T, BEQ, BGEZ, BGTZ, BLEZ, BLTZ, BNE, JALRPseudo,
-   PseudoIndirectBranch, PseudoReturn, RetRA]
+delaySlotNOPVersions = M.fromList
+  [(B, B_NOP), (BC1F, BC1F_NOP), (BC1T, BC1T_NOP), (BEQ, BEQ_NOP),
+   (BGEZ, BGEZ_NOP), (BGTZ, BGTZ_NOP), (BLEZ, BLEZ_NOP), (BLTZ, BLTZ_NOP),
+   (BNE, BNE_NOP), (JALRPseudo, JALRPseudo_NOP),
+   (PseudoIndirectBranch, PseudoIndirectBranch_NOP),
+   (PseudoReturn, PseudoReturn_NOP), (RetRA, RetRA_NOP)]
+
+addDelaySlotNOPInstr i
+  | isDelaySlotInstr i = [i, delaySlotNOPInstr i]
+  | otherwise = [i]
 
 isClobberRA o =
   isNatural o && (TargetInstruction CLOBBER_RA) `elem` oInstructions o

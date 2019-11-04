@@ -15,6 +15,7 @@ module Unison.Target.Mips.Transforms
      normalizeCallEpilogue,
      extractReturnRegs,
      hideStackPointer,
+     addAlternativeInstructions,
      clobberRAInCall,
      insertGPDisp,
      markBarriers,
@@ -330,6 +331,21 @@ hideStackPointer o @ SingleOperation {
 hideStackPointer o = o
 
 isStackPointer = isTargetReg SP
+
+{-
+    For each delay slot branch, add two alternative instructions: the original
+    instruction (for which there is an ad-hoc constraint requiring something
+    else scheduled in parallel) and a version of the instruction with a NOP and
+    twice the size (to be transformed into a bundle during post-processing).
+-}
+addAlternativeInstructions o
+  | isNatural o =
+    case oInstructions o of
+     [TargetInstruction i] ->
+       let is = map TargetInstruction (addDelaySlotNOPInstr i)
+       in mapToInstructions (const is) o
+     _ -> o
+  | otherwise = o
 
 {-
     Redefine $ra by an operation to be scheduled one cycle before function

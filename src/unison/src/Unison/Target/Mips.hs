@@ -83,21 +83,20 @@ instance Read MipsInstruction where
 
 -- | Gives the target of a jump instruction and the type of jump
 
-branchInfo (Branch {oBranchIs = ops, oBranchUs = [_, BlockRef l]})
-  | targetInst ops `elem` [BGEZ, BLTZ, BGTZ, BLEZ, BEQZC, BEQZALC, BNEZC, BNEZALC, BC1F, BC1T] =
+branchInfo (Branch {oBranchIs = is, oBranchUs = [_, BlockRef l]})
+  | targetInst is `elem`
+    expandBranches [BGEZ, BLTZ, BGTZ, BLEZ, BEQZC, BEQZALC, BNEZC, BNEZALC, BC1F, BC1T] =
     BranchInfo Conditional (Just l)
-branchInfo (Branch {oBranchIs = ops, oBranchUs = [_, _, BlockRef l]})
-  | targetInst ops `elem` [BEQ, BNE] = BranchInfo Conditional (Just l)
-branchInfo (Branch {oBranchIs = [TargetInstruction i], oBranchUs = [BlockRef l]})
-  | i `elem` [B, J] = BranchInfo Unconditional (Just l)
-branchInfo (Branch {oBranchIs = [TargetInstruction JR]}) =
+branchInfo (Branch {oBranchIs = is, oBranchUs = [_, _, BlockRef l]})
+  | targetInst is `elem` expandBranches [BEQ, BNE] = BranchInfo Conditional (Just l)
+branchInfo (Branch {oBranchIs = is, oBranchUs = [BlockRef l]})
+  | targetInst is `elem` expandBranches [B, J] = BranchInfo Unconditional (Just l)
+branchInfo (Branch {oBranchIs = is})
+  | targetInst is `elem` expandBranches [JR, RetRA, PseudoIndirectBranch, PseudoReturn] =
     BranchInfo Unconditional Nothing
-branchInfo (Branch {oBranchIs = [TargetInstruction RetRA]}) =
-    BranchInfo Unconditional Nothing
-branchInfo (Branch {oBranchIs = [TargetInstruction PseudoIndirectBranch]}) =
-    BranchInfo Unconditional Nothing
-branchInfo (Branch {oBranchIs = [TargetInstruction PseudoReturn]}) =
-    BranchInfo Unconditional Nothing
+branchInfo o = error ("unmatched pattern: branchInfo " ++ show (mkSingleOperation (-1) (Natural o)))
+
+expandBranches = concatMap addDelaySlotNOPInstr
 
 -- | Gives a set of def copies and a list of sets of use copies to extend
 -- the given temporary
@@ -336,8 +335,8 @@ liftToTOpc f = mkMachineTargetOpc . f . mopcTarget
 
 -- | Target dependent post-processing functions
 
-postProcess to = [expandPseudos to, if keepNops to then id else cleanNops,
-                  normalizeDelaySlots to]
+postProcess to = [if keepNops to then id else cleanNops, expandPseudos to,
+                  unbundleSingletons, normalizeDelaySlots to]
 
 expandPseudos to = mapToMachineBlock (expandBlockPseudos (expandPseudo to))
 
@@ -348,6 +347,12 @@ expandPseudo to mi @ MachineSingle {msOpcode = MachineTargetOpc LoadGPDisp}
       mi1 = mi {msOpcode = mkMachineTargetOpc LUi, msOperands = [v0, gpd]}
       mi2 = mi {msOpcode = mkMachineTargetOpc ADDiu, msOperands = [v0, v0, gpd]}
   in [[mi1],[mi2]]
+
+expandPseudo _ mi @ MachineSingle {msOpcode = MachineTargetOpc i}
+  | isDelaySlotNOPInstr i =
+  let mi1 = mi {msOpcode = mkMachineTargetOpc (delaySlotInstr i)}
+      mi2 = mkMachineSingle (mkMachineTargetOpc NOP) [] []
+  in [[mi1, mi2]]
 
 expandPseudo _ mi @ MachineSingle {msOpcode   = MachineTargetOpc i,
                                  msOperands = mos} =
@@ -381,6 +386,15 @@ cleanNops = filterMachineInstructions (not . isSingleNop)
 isSingleNop MachineSingle {msOpcode = MachineTargetOpc NOP} = True
 isSingleNop _ = False
 
+-- Unbundle singleton bundles created during pseudo expansion.
+unbundleSingletons = mapToMachineBlock unbundleSingletonsInBlock
+
+unbundleSingletonsInBlock mb @ MachineBlock {mbInstructions = mis} =
+  mb {mbInstructions = map unbundleSingleton mis}
+
+unbundleSingleton MachineBundle {mbInstrs = [mi]} = mi
+unbundleSingleton mi = mi
+
 normalizeDelaySlots to = mapToMachineBlock (normalizeDelaySlotInBlock to)
 
 normalizeDelaySlotInBlock to mb @ MachineBlock {mbInstructions = mis} =
@@ -399,6 +413,7 @@ normalizeDelaySlot to MachineBundle {
   | isDelaySlotInstr i && noDelaySlots to = [mi, mbi]
 normalizeDelaySlot _ mi = [mi]
 
+-- This assumes all remaining bundles are branches with delay slots.
 removeBundleHead mb @ MachineBundle {} = mb {mbHead = False}
 removeBundleHead mi = mi
 
@@ -408,7 +423,8 @@ transforms ImportPreLift = [peephole rs2ts,
                             peephole normalizeCallEpilogue,
                             peephole extractReturnRegs,
                             (\f -> foldReservedRegisters f (target, [])),
-                            mapToOperation hideStackPointer]
+                            mapToOperation hideStackPointer,
+                            mapToOperation addAlternativeInstructions]
 
 transforms ImportPostLift = [peephole clobberRAInCall]
 
@@ -446,7 +462,10 @@ constraints f =
   -- force RA clobbering operations to be scheduled one cycle before their
   -- corresponding call operation (that is, two cycles before the corresponding
   -- (fun) operation):
-  clobberRASchedulingConstraints f
+  clobberRASchedulingConstraints f ++
+  -- force delay slot operations without bundled NOPs to be scheduled in
+  -- parallel with other non-virtual operations in their basic blocks:
+  filledDelaySlotConstraints f
 
 clobberRASchedulingConstraints f =
   let fcode = flatCode f
@@ -456,6 +475,25 @@ clobberRASchedulingConstraint fcode clo =
   let [d]  = extractTemps (oSingleDef clo)
       [fo] = potentialUsers d fcode
   in DistanceExpr (oId fo) (oId clo) (-2)
+
+filledDelaySlotConstraints f = mapMaybe filledDelaySlotConstraint (fCode f)
+
+filledDelaySlotConstraint Block {bCode = code} =
+  case find isDelaySlotOpr code of
+   Just o ->
+     let oid = oId o
+         i   = fromJust $ find (\(TargetInstruction i) -> isDelaySlotNOPInstr i)
+               (oInstructions o)
+         os  = [oId o' | o' <- code, o' /= o, not (isVirtual o')]
+     in Just (OrExpr
+              ([ImplementsExpr oid i] ++
+               [AndExpr [ActiveExpr oid',
+                         DistanceExpr oid oid' 0,
+                         DistanceExpr oid' oid 0] | oid' <- os]))
+   Nothing -> Nothing
+
+isDelaySlotOpr o =
+  isNatural o && isDelaySlotInstr (targetInst (oInstructions o))
 
 operandInfo to i =
   adjustDefLatency to i $ correctUses i $ SpecsGen.operandInfo i

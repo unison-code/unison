@@ -196,6 +196,58 @@ instruction-set:
           affected-by:
           itinerary:          NoItinerary
 
+        - id:                 B_NOP
+          parent:             B
+          size:               8
+
+        - id:                 BC1F_NOP
+          parent:             BC1F
+          size:               8
+
+        - id:                 BC1T_NOP
+          parent:             BC1T
+          size:               8
+
+        - id:                 BEQ_NOP
+          parent:             BEQ
+          size:               8
+
+        - id:                 BGEZ_NOP
+          parent:             BGEZ
+          size:               8
+
+        - id:                 BGTZ_NOP
+          parent:             BGTZ
+          size:               8
+
+        - id:                 BLEZ_NOP
+          parent:             BLEZ
+          size:               8
+
+        - id:                 BLTZ_NOP
+          parent:             BLTZ
+          size:               8
+
+        - id:                 BNE_NOP
+          parent:             BNE
+          size:               8
+
+        - id:                 JALRPseudo_NOP
+          parent:             JALRPseudo
+          size:               8
+
+        - id:                 PseudoIndirectBranch_NOP
+          parent:             PseudoIndirectBranch
+          size:               8
+
+        - id:                 PseudoReturn_NOP
+          parent:             PseudoReturn
+          size:               8
+
+        - id:                 RetRA_NOP
+          parent:             RetRA
+          size:               8
+
         - id:                 register_class_decl_dummy
           type:               linear
           operands:

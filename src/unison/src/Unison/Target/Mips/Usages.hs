@@ -101,6 +101,7 @@ size i
 size i =
   case SpecsGen.size i of
    4 -> 1
+   8 -> 2
    s -> error ("size of instruction " ++ show i ++ " is " ++ show s)
 
 issue i
