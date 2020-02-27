@@ -348,6 +348,12 @@ expandPseudo to mi @ MachineSingle {msOpcode = MachineTargetOpc LoadGPDisp}
       mi2 = mi {msOpcode = mkMachineTargetOpc ADDiu, msOperands = [v0, v0, gpd]}
   in [[mi1],[mi2]]
 
+expandPseudo _ mi @ MachineSingle {msOpcode = MachineTargetOpc PseudoCVT_S_W,
+                                   msOperands = [fi, ri]} =
+  let mi1 = mi {msOpcode = mkMachineTargetOpc MTC1, msOperands = [fi, ri]}
+      mi2 = mi {msOpcode = mkMachineTargetOpc CVT_S_W, msOperands = [fi, fi]}
+  in [[mi1, mi2]]
+
 expandPseudo _ mi @ MachineSingle {msOpcode = MachineTargetOpc i}
   | isDelaySlotNOPInstr i =
   let mi1 = mi {msOpcode = mkMachineTargetOpc (delaySlotInstr i)}
