@@ -80,7 +80,7 @@ unison-test-target: Mips
 unison-test-goal:
 - speed
 unison-test-expected-cost:
-- 27
+- 31
 unison-test-function: null
 unison-test-expected-proven: true
 unison-test-strictly-better: null
