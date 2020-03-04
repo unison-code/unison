@@ -35,6 +35,8 @@ itineraryUsage i _
   | isDelaySlotInstr i = [mkUsage LongDuration 1 1]
 itineraryUsage LoadGPDisp IIPseudo =
   [mkUsage ALU 1 2, Usage LongDuration 1 1 1]
+itineraryUsage PseudoCVT_S_W II_CVT =
+  [mkUsage ALU 1 2, Usage LongDuration 1 1 1]
 itineraryUsage RetRA IIPseudo =
   itineraryUsage PseudoReturn (SpecsGen.itinerary PseudoReturn)
 itineraryUsage NOP IIPseudo = [mkUsage ALU 1 1]
@@ -95,6 +97,7 @@ itineraryUsage i it =
   error ("unmatched: itineraryUsage " ++ show i ++ " " ++ show it)
 
 size CLOBBER_RA = 0
+size PseudoCVT_S_W = size MTC1 + size CVT_S_W
 size LoadGPDisp = size LUi + size ADDiu
 size i
   | isSourceInstr i || isDematInstr i = 0

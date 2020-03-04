@@ -335,12 +335,13 @@ liftToTOpc f = mkMachineTargetOpc . f . mopcTarget
 
 -- | Target dependent post-processing functions
 
-postProcess to = [if keepNops to then id else cleanNops, expandPseudos to,
-                  unbundleSingletons, normalizeDelaySlots to]
+postProcess to = [expandPseudosEarly to, if keepNops to then id else cleanNops,
+                  expandPseudos, unbundleSingletons, normalizeDelaySlots to]
 
-expandPseudos to = mapToMachineBlock (expandBlockPseudos (expandPseudo to))
+expandPseudosEarly to = mapToMachineBlock (expandBlockPseudos
+                                           (expandPseudoEarly to))
 
-expandPseudo to mi @ MachineSingle {msOpcode = MachineTargetOpc LoadGPDisp}
+expandPseudoEarly to mi @ MachineSingle {msOpcode = MachineTargetOpc LoadGPDisp}
   | not (unitLatency to) =
   let v0  = mkMachineReg V0
       gpd = mkMachineExternal "_gp_disp"
@@ -348,22 +349,25 @@ expandPseudo to mi @ MachineSingle {msOpcode = MachineTargetOpc LoadGPDisp}
       mi2 = mi {msOpcode = mkMachineTargetOpc ADDiu, msOperands = [v0, v0, gpd]}
   in [[mi1],[mi2]]
 
-expandPseudo _ mi @ MachineSingle {msOpcode = MachineTargetOpc PseudoCVT_S_W,
+expandPseudoEarly _ mi @ MachineSingle {msOpcode = MachineTargetOpc PseudoCVT_S_W,
                                    msOperands = [fi, ri]} =
   let mi1 = mi {msOpcode = mkMachineTargetOpc MTC1, msOperands = [fi, ri]}
       mi2 = mi {msOpcode = mkMachineTargetOpc CVT_S_W, msOperands = [fi, fi]}
   in [[mi1],[mi2]]
+expandPseudoEarly _ mi = [[mi]]
 
-expandPseudo _ mi @ MachineSingle {msOpcode = MachineTargetOpc i}
+expandPseudos = mapToMachineBlock (expandBlockPseudos expandPseudo)
+
+expandPseudo mi @ MachineSingle {msOpcode = MachineTargetOpc i}
   | isDelaySlotNOPInstr i =
   let mi1 = mi {msOpcode = mkMachineTargetOpc (delaySlotInstr i)}
       mi2 = mkMachineSingle (mkMachineTargetOpc NOP) [] []
   in [[mi1, mi2]]
 
-expandPseudo _ mi @ MachineSingle {msOpcode   = MachineTargetOpc i,
+expandPseudo mi @ MachineSingle {msOpcode   = MachineTargetOpc i,
                                  msOperands = mos} =
   [[expandSimple mi (i, mos)]]
-expandPseudo _ mi = [[mi]]
+expandPseudo mi = [[mi]]
 
 expandSimple mi (RetRA, _) =
   mi {msOpcode = MachineTargetOpc PseudoReturn,
