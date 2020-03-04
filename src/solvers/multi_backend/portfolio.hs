@@ -23,6 +23,7 @@ import Data.Aeson.Encode.Pretty
 import Data.Int
 import Data.Ord
 import Data.List
+import Data.Maybe
 import qualified Data.Text.Lazy.Builder as DTB
 import Data.Scientific
 import qualified Data.ByteString.Lazy.Char8 as BSL
@@ -196,6 +197,12 @@ strictHGetContents h =
 
 timeoutFactor = 1000000
 
+checkExecutableExists exe =
+  do result <- findExecutable exe
+     let msg = "could not find executable '" ++ exe ++ "'"
+     when (isNothing result) (ioError (userError msg))
+     return ()
+
 main =
     do Portfolio{..} <- cmdArgsRun portfolioArgs
        let baseOutFile    = outFile ++ ".base"
@@ -209,6 +216,9 @@ main =
                             then error ("exceeded maximum timeout")
                             else s * timeoutFactor
                  Nothing -> -1
+       mapM_ checkExecutableExists
+         ["gecode-solver", "minizinc-solver", "mzn-crippled-chuffed",
+          "mzn-chuffed", "fzn-chuffed", "outfilter.pl"]
        start <- getCurrentTime
        result <- timeout (fromInteger to)
                  (race
