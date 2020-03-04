@@ -101,6 +101,11 @@ public:
 
   LocalModel* copy(void);
 
+  // Changed to Merit because c_activity is IntAction
+  double action(int i) const;
+
+  static double actionmerit(const Space& home, BoolVar, int i);
+
   // Constraints
 
   void post_decision_variable_domain_definitions(void);
