@@ -272,7 +272,7 @@ maybeBase baseOutFile (best, bestOut) =
 baseOut = toJSONString $ M.fromList baseSolution
 baseSolution =
   [("solver", toJSON ("no-solver" :: String)),
-   ("cost", toJSON (-1 :: Integer)),
+   ("cost", toJSON ([-1] :: [Integer])),
    ("has_solution", toJSON False),
    ("proven" :: String, toJSON False)]
 
