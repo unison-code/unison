@@ -1,11 +1,11 @@
 {-|
 Copyright   :  Copyright (c) 2016, RISE SICS AB
 License     :  BSD3 (see the LICENSE file)
-Maintainer  :  roberto.castaneda@ri.se
+Maintainer  :  rcas@acm.org
 -}
 {-
 Main authors:
-  Roberto Castaneda Lozano <roberto.castaneda@ri.se>
+  Roberto Castaneda Lozano <rcas@acm.org>
 
 Contributing authors:
   Daniel Lundén <daniel.lunden@sics.se>
@@ -61,7 +61,7 @@ specsgen = cmdArgsMode $ SpecsGen
              rematFile = Nothing,
              preProcessFile = Nothing
            }
-    &= summary "Generates partial Haskell files (.hs) with target information from the given YAML description (.yaml)\nRoberto Castaneda Lozano roberto.castaneda@ri.se"
+    &= summary "Generates partial Haskell files (.hs) with target information from the given YAML description (.yaml)\nRoberto Castaneda Lozano rcas@acm.org"
 
 runSpecsGen tPreMod tExtension =
     do sg @ SpecsGen{..} <- cmdArgsRun specsgen

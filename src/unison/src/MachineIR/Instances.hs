@@ -1,7 +1,7 @@
 {-|
 Copyright   :  Copyright (c) 2016, RISE SICS AB
 License     :  BSD3 (see the LICENSE file)
-Maintainer  :  roberto.castaneda@ri.se
+Maintainer  :  rcas@acm.org
 
 Instance declarations for the MIR representation (see
 <http://llvm.org/docs/MIRLangRef.html>).
@@ -9,7 +9,7 @@ Instance declarations for the MIR representation (see
 -}
 {-
 Main authors:
-  Roberto Castaneda Lozano <roberto.castaneda@ri.se>
+  Roberto Castaneda Lozano <rcas@acm.org>
 
 This file is part of Unison, see http://unison-code.github.io
 -}

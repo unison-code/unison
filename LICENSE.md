@@ -37,11 +37,11 @@ Unison includes code from the following projects:
   [MIT](https://github.com/open-source-parsers/jsoncpp/blob/master/LICENSE).
 
 - Erik Ekstrom's [master's
-  thesis](https://www.sics.se/%7ercas/teaching/ErikEkstrom_2015.pdf) (in parts
+  thesis](https://robcasloz.github.io/teaching/ErikEkstrom_2015.pdf) (in parts
   of the presolver). The code is licensed under BSD3 but the copyright is held
   by Erik Ekstrom.
 
 - Mikael Almgren's [master's
-  thesis](https://www.sics.se/%7ercas/teaching/MikaelAlmgren_2015.pdf) (in parts
-  of the presolver). The code is licensed under BSD3 but the copyright is held
-  by Mikael Almgren.
+  thesis](https://robcasloz.github.io/teaching/MikaelAlmgren_2015.pdf)
+  (in parts of the presolver). The code is licensed under BSD3 but the
+  copyright is held by Mikael Almgren.

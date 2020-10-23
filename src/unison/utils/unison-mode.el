@@ -1,7 +1,7 @@
 ;;; unison-mode.el --- Major mode for Unison (based on LLVM's).
 
-;; Roberto Castaneda Lozano <roberto.castaneda@ri.se>
-;; http://www.sics.se/people/rcas
+;; Roberto Castaneda Lozano <rcas@acm.org>
+;; https://robcasloz.github.io/
 
 (defvar unison-bound-face 'unison-bound-face)
 (defface  unison-bound-face

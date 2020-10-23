@@ -1,5 +1,5 @@
 {-|
-Maintainer  :  roberto.castaneda@ri.se
+Maintainer  :  rcas@acm.org
 
 Graph algorithms extracted from third-party components.
 

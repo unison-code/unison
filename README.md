@@ -82,7 +82,7 @@ make doc
 
 ## Contact
 
-[Roberto Castañeda Lozano](https://robcasloz.github.io/) [<rcas@sics.se>]
+[Roberto Castañeda Lozano](https://robcasloz.github.io/) [<rcas@acm.org>]
 
 ## License
 

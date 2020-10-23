@@ -1,14 +1,14 @@
 {-|
 Copyright   :  Copyright (c) 2016, RISE SICS AB
 License     :  BSD3 (see the LICENSE file)
-Maintainer  :  roberto.castaneda@ri.se
+Maintainer  :  rcas@acm.org
 
 Support to parse Unison functions.
 
 -}
 {-
 Main authors:
-  Roberto Castaneda Lozano <roberto.castaneda@ri.se>
+  Roberto Castaneda Lozano <rcas@acm.org>
 
 Contributing authors:
   Daniel Lundén <daniel.lunden@sics.se>
