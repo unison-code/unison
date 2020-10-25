@@ -1,5 +1,11 @@
+unison/.stack-work
+unison/build
+unison-specsgen/.stack-work
+unison-specsgen/build
+.stack-work
 *.prof
 *.obj
 *.dmp
 *.hi
 *.o
+*.qmake.stash

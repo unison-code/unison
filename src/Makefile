@@ -30,7 +30,7 @@
 #  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 #  POSSIBILITY OF SUCH DAMAGE.
 #
-CABALBIN := cabal
+STACKBIN := stack
 
 PREFIX := /usr/local
 BINDIR := $(PREFIX)/bin
@@ -55,34 +55,26 @@ build-solver: $(SOLVERBIN)
 
 build-presolver: $(PRESOLVERBIN)
 
-build-unison: prepare-unison
-	cd $(UNISONDIR); $(CABALBIN) build --ghc-options="$(UNISON_GHC_CONFIG)"
+build-unison:
+	$(STACKBIN) build unison \
+	--ghc-options="$(UNISON_GHC_CONFIG)" \
+	--copy-bins --local-bin-path $(UNISONDIR)/build
 
-prepare-unison:
-	$(MAKE) install-deps-unison
-	$(MAKE) configure-unison
-
-install-deps-unison:
-	cd $(UNISONDIR); $(CABALBIN) install --only-dependencies --enable-tests
-
-configure-unison:
-	cd $(UNISONDIR); $(CABALBIN) configure --enable-tests
-
-doc-unison: prepare-unison
-	cd $(UNISONDIR); $(CABALBIN) haddock
+doc-unison:
+	$(STACKBIN) haddock unison
+	$(STACKBIN) haddock --open unison
 
 test:
-	cd $(UNISONDIR); \
-	$(CABALBIN) test --show-details=$(UNISON_SHOW_DETAILS) \
-	--test-option=--directory=$(CURDIR)/$(UNISONDIR)/test/fast \
-	--test-option=--presolver=$(CURDIR)/$(PRESOLVERBIN) \
-	--test-option=--solver=$(CURDIR)/$(SOLVERBIN) \
-	--test-option=--showprogress
+	$(STACKBIN) test unison \
+	--test-arguments="--directory=$(CURDIR)/$(UNISONDIR)/test/fast \
+	--presolver=$(CURDIR)/$(PRESOLVERBIN) \
+	--solver=$(CURDIR)/$(SOLVERBIN) \
+	--showprogress"
 
 install: install-unison install-solver install-presolver
 
 install-unison:
-	cp $(UNISONDIR)/dist/build/uni/uni $(BINDIR)
+	cp $(UNISONDIR)/build/uni $(BINDIR)
 
 install-solver:
 	cp $(SOLVERBIN) $(BINDIR)
@@ -94,8 +86,8 @@ include $(PRESOLVERDIR)/presolver.mk
 include $(SOLVERDIR)/solver.mk
 
 clean:
-	cd $(UNISONDIR); $(CABALBIN) clean
-	cd $(UNISONSPECSGENDIR); $(CABALBIN) clean
+	$(STACKBIN) clean unison
+	$(STACKBIN) clean unison-specsgen
 	$(MAKE) veryclean-solver veryclean-presolver
 
 doc: doc-unison doc-specsgen
@@ -124,24 +116,17 @@ SGARMAUXYAML   = $(SGARMROOTDIR)/input/arm-manual.yaml
 SGARMREMATYAML = $(SGARMROOTDIR)/input/arm-remat.yaml
 
 
-build-specsgen: prepare-specsgen
-	cd $(UNISONSPECSGENDIR); $(CABALBIN) build
+build-specsgen:
+	$(STACKBIN) build unison-specsgen \
+	--ghc-options="$(UNISON_GHC_CONFIG)" \
+	--copy-bins --local-bin-path $(UNISONSPECSGENDIR)/build
 
-prepare-specsgen:
-	$(MAKE) install-deps-specsgen
-	$(MAKE) configure-specsgen
-
-install-deps-specsgen:
-	cd $(UNISONSPECSGENDIR); $(CABALBIN) install --only-dependencies
-
-configure-specsgen:
-	cd $(UNISONSPECSGENDIR); $(CABALBIN) configure
-
-doc-specsgen: prepare-specsgen
-	cd $(UNISONSPECSGENDIR); $(CABALBIN) haddock
+doc-specsgen:
+	$(STACKBIN) haddock unison-specsgen
+	$(STACKBIN) haddock --open unison-specsgen
 
 install-specsgen:
-	cp $(UNISONSPECSGENDIR)/dist/build/specsgen/specsgen $(BINDIR)
+	cp $(UNISONSPECSGENDIR)/build/specsgen $(BINDIR)
 
 run-specsgen: run-specsgen-hexagon run-specsgen-mips run-specsgen-arm
 

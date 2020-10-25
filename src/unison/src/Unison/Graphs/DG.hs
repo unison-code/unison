@@ -194,12 +194,7 @@ inDistances dg =
         cg  = emap (const (-1)) dg
     in map (inDistance cg inn) (nodes dg)
 
-inDistance cg inn n = (n, length $ justSp inn n cg)
-
-justSp s d g =
-    case sp s d g of
-      Just p  -> p
-      Nothing -> error ("justSp: did not find any path")
+inDistance cg inn n = (n, length $ sp inn n cg)
 
 toNodeId = fromIntegral . oId
 
