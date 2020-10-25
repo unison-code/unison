@@ -3,7 +3,7 @@
 %    Mats Carlsson <mats.carlsson@ri.se>
 %
 %  Contributing authors:
-%    Roberto Castaneda Lozano <roberto.castaneda@ri.se>
+%    Roberto Castaneda Lozano <rcas@acm.org>
 %
 %  This file is part of Unison, see http://unison-code.github.io
 %

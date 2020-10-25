@@ -3,7 +3,7 @@
  *    Erik Ekstrom <eeks@sics.se>
  *    Mats Carlsson <mats.carlsson@ri.se>
  *    Noric Couderc <noric@sics.se>
- *    Roberto Castaneda Lozano <roberto.castaneda@ri.se>
+ *    Roberto Castaneda Lozano <rcas@acm.org>
  *
  *  This file is part of Unison, see http://unison-code.github.io
  *

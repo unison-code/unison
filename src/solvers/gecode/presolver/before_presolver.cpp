@@ -1,7 +1,7 @@
 /*
  *  Main authors:
  *    Erik Ekstrom <eeks@sics.se>
- *    Roberto Castaneda Lozano <roberto.castaneda@ri.se>
+ *    Roberto Castaneda Lozano <rcas@acm.org>
  *    Mats Carlsson <mats.carlsson@ri.se>
  *
  *  This file is part of Unison, see http://unison-code.github.io

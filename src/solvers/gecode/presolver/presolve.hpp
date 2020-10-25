@@ -1,6 +1,6 @@
 /*
  *  Main authors:
- *    Roberto Castaneda Lozano <roberto.castaneda@ri.se>
+ *    Roberto Castaneda Lozano <rcas@acm.org>
  *    Noric Couderc <noric@sics.se>
  *    Erik Ekstrom <eeks@sics.se>
  *    Mats Carlsson <mats.carlsson@ri.se>
