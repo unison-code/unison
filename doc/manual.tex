@@ -183,7 +183,7 @@ For further license detail on these components, please check their websites.
 Unison is designed, developed, and maintained by
 
 \begin{itemize}
-\item Roberto Castañeda Lozano (\href{mailto:roberto.castaneda@ri.se}{roberto.castaneda@ri.se})
+\item Roberto Castañeda Lozano (\href{mailto:rcas@acm.org}{rcas@acm.org})
 \item Mats Carlsson (\href{mailto:mats.carlsson@ri.se}{mats.carlsson@ri.se})
 \item Gabriel Hjort Blindell (\href{mailto:ghb@kth.se}{ghb@kth.se})
 \item Christian Schulte (\href{mailto:cschulte@kth.se}{cschulte@kth.se})
@@ -231,7 +231,7 @@ git clone https://github.com/unison-code/unison.git
 Unison has the following direct dependencies:
 %
 \begin{itemize}
-\item \href{http://hackage.haskell.org/platform/}{Haskell platform}
+\item \href{http://www.haskellstack.org/}{Stack}
 \item \href{https://www.qt.io/}{Qt (version 4.x)}
 \item \href{http://www.graphviz.org/}{Graphviz library}
 \item \href{http://www.gecode.org/}{Gecode (version 6.0.0)}
@@ -240,7 +240,13 @@ Unison has the following direct dependencies:
 To get the first three dependencies in Debian-based distributions, just run:
 %
 \begin{command}
-apt-get install haskell-platform libqt4-dev libgraphviz-dev
+apt-get install haskell-stack libqt4-dev libgraphviz-dev
+\end{command}
+%
+Upgrade Slack after installing it:
+%
+\begin{command}
+stack upgrade
 \end{command}
 
 The source of Gecode can be fetched with:
