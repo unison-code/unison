@@ -38,6 +38,8 @@
 #include <deque>
 
 #include <QtGui>
+#include <QMainWindow>
+#include <QAction>
 
 #include <gecode/gist.hh>
 #include <graphviz/gvc.h>

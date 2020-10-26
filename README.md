@@ -8,13 +8,13 @@ combinatorial optimization.
 
 Unison has the following dependencies:
 [Stack](http://www.haskellstack.org/),
-[Qt](https://www.qt.io/) (version 4.x, optional see [#33](https://github.com/unison-code/unison/issues/33)),
-[Graphviz library](http://www.graphviz.org/), and
+[Qt](https://www.qt.io/) (version 5.x, optional see [#33](https://github.com/unison-code/unison/issues/33)),
+[Graphviz library](http://www.graphviz.org/) (also optional), and
 [Gecode](http://www.gecode.org/) (version 6.0.0).
 To get the first three dependencies in Debian-based distributions, just run:
 
 ```
-apt-get install haskell-stack libqt4-dev libgraphviz-dev
+apt-get install haskell-stack qtbase5-dev libgraphviz-dev
 ```
 
 Upgrade Slack after installing it:

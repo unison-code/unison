@@ -50,15 +50,8 @@
 
 #include <gecode/int.hh>
 
-#ifdef GRAPHICS
-#include <QScriptEngine>
-#include <QStringList>
-#include <QtScript/QScriptValueIterator>
-#include <QDebug>
-#else // Then we still need an alternative for parsing JSON
 #include "third-party/jsoncpp/json/value.h"
 #include "third-party/jsoncpp/json/reader.h"
-#endif
 
 #include "common/util.hpp"
 #include "common/definitions.hpp"
@@ -352,7 +345,7 @@ public:
   // [MC] max tolerable latency to the following issue
   vector<PresolverWCET> wcet;
 
-  Parameters(JSONVALUE root);
+  Parameters(Json::Value root);
 
   // emit parameters in JSON format
   string emit_json();
@@ -660,66 +653,47 @@ protected:
 
   Parameters() {};
 
-  JSONVALUE getRoot(JSONVALUE root, string p);
-  void get_element(JSONVALUE root, bool & b);
-  void get_element(JSONVALUE root, double & d);
-  void get_element(JSONVALUE root, int & i);
-  void get_element(JSONVALUE root, string & s);
-  void get_element(JSONVALUE root, UnisonConstraintExpr & e);
-  void get_element(JSONVALUE root, PresolverActiveTable & at);
-  void get_element(JSONVALUE root, PresolverCopyTmpTable & ctt);
-  // void get_element(JSONVALUE root, PresolverPrecedence & p);
-  void get_element(JSONVALUE root, PresolverBeforeJSON & b);
-  void get_element(JSONVALUE root, PresolverAcrossJSON & a);
-  void get_element(JSONVALUE root, PresolverAcrossItemJSON & ai);
-  void get_element(JSONVALUE root, PresolverSetAcross & sa);
-  void get_element(JSONVALUE root, PresolverDominates & d);
-  void get_element(JSONVALUE root, PresolverInstrCond & d);
-  void get_element(JSONVALUE root, PresolverWCET & d);
-  void get_element(JSONVALUE root, PresolverValuePrecedeChain & d);
+  Json::Value getRoot(Json::Value root, string p);
+  void get_element(Json::Value root, bool & b);
+  void get_element(Json::Value root, double & d);
+  void get_element(Json::Value root, int & i);
+  void get_element(Json::Value root, string & s);
+  void get_element(Json::Value root, UnisonConstraintExpr & e);
+  void get_element(Json::Value root, PresolverActiveTable & at);
+  void get_element(Json::Value root, PresolverCopyTmpTable & ctt);
+  // void get_element(Json::Value root, PresolverPrecedence & p);
+  void get_element(Json::Value root, PresolverBeforeJSON & b);
+  void get_element(Json::Value root, PresolverAcrossJSON & a);
+  void get_element(Json::Value root, PresolverAcrossItemJSON & ai);
+  void get_element(Json::Value root, PresolverSetAcross & sa);
+  void get_element(Json::Value root, PresolverDominates & d);
+  void get_element(Json::Value root, PresolverInstrCond & d);
+  void get_element(Json::Value root, PresolverWCET & d);
+  void get_element(Json::Value root, PresolverValuePrecedeChain & d);
 
   template<class T>
-  T get_scalar(JSONVALUE root) {
+  T get_scalar(Json::Value root) {
     T i;
     get_element(root, i);
     return i;
   }
 
   template<class T>
-  vector<T> get_vector(JSONVALUE root) {
+  vector<T> get_vector(Json::Value root) {
     vector<T> vi;
     get_element(root, vi);
     return vi;
   }
 
   template<class T>
-  vector<vector<T> > get_2d_vector(JSONVALUE root) {
+  vector<vector<T> > get_2d_vector(Json::Value root) {
     return get_vector<vector<T> >(root);
   }
 
   template<class T>
-  vector<vector<vector<T> > > get_3d_vector(JSONVALUE root) {
+  vector<vector<vector<T> > > get_3d_vector(Json::Value root) {
     return get_vector<vector<vector<T> > >(root);
   }
-
-
-#ifdef GRAPHICS
-
-  template<class T>
-  void get_element(QScriptValue root, vector<T> & vi) {
-    assert(root.isArray());
-    QScriptValueIterator iti(root);
-    while (iti.hasNext()) {
-      iti.next();
-      if (iti.name() != "length") {
-        T e;
-        get_element(iti.value(), e);
-        vi.push_back(e);
-      }
-    }
-  }
-
-#else
 
   template<class T>
   void get_element(Json::Value root, vector<T> & vi) {
@@ -732,8 +706,6 @@ protected:
       iti++;
     }
   }
-
-#endif
 
 };
 

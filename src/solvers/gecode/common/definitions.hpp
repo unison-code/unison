@@ -386,10 +386,8 @@ public:
 typedef pair<operation, unsigned int> InstructionAssignment;
 
 #ifdef GRAPHICS
-#define JSONVALUE QScriptValue
 #define GIST_OPTIONS Gist::Options
 #else
-#define JSONVALUE Json::Value
 #define GIST_OPTIONS GistOptionsStub
 #endif
 
@@ -408,7 +406,6 @@ private:
 public:
   Temporand();
   Temporand(int id, TemporandType t);
-  Temporand(const Temporand& t);
 
   bool operator==(const Temporand& t) const;
 

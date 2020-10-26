@@ -6,3 +6,4 @@ generated-static.mk
 presolver-generated.mk
 *.o
 moc_*.cpp
+moc_*.h

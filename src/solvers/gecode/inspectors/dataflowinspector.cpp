@@ -157,8 +157,8 @@ draw(const Model& m, DataFlowGraph& dfg, const QPointF& topLeft) {
     QGraphicsPathItem * e = new QGraphicsPathItem(edge.path);
     QGraphicsPathItem * a = new QGraphicsPathItem(edge.arrow);
 
-    e->translate(topLeft.x(), topLeft.y());
-    a->translate(topLeft.x(), topLeft.y());
+    e->setTransform(QTransform::fromTranslate(topLeft.x(), topLeft.y()), true);
+    a->setTransform(QTransform::fromTranslate(topLeft.x(), topLeft.y()), true);
 
     e->setPen(pen);
     a->setBrush(brush);

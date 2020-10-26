@@ -125,7 +125,6 @@ LIBS += -lgecodesearch -lgecodeminimodel -lgecodeset -lgecodefloat -lgecodeint \
 TARGET = gecode-presolver
 CONFIG -= qt
 CONFIG += warn_on
-QT += script
 
 CONFIG(graphics) {
 

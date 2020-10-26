@@ -57,8 +57,7 @@ Dot::Dot() :
     setGlobalNodeAttribute("width", "0.2");
     setGlobalNodeAttribute("height", "0.2");
     setGlobalNodeAttribute("fixedsize", "true");
-    QString w("%1");
-    w.arg(50/DPI);
+    QString w = QString("%1").arg(50/DPI);
     setGlobalNodeAttribute("width", w.replace('.', ","));
     setGlobalEdgeAttribute("dir", "forward");
 }

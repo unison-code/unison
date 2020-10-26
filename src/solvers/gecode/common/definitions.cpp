@@ -36,7 +36,6 @@
 
 Temporand::Temporand() {}
 Temporand::Temporand(int id, TemporandType t) : _id(id), _type(t) {}
-Temporand::Temporand(const Temporand& t) : _id(t.id()), _type(t.type()) {}
 
 bool Temporand::operator==(const Temporand& t) const {
   return ((_type == t.type()) && (_id == t.id()));
