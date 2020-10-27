@@ -969,6 +969,29 @@ directory within the Unison package.
 The \code{TargetDescription} data type can be found in the module
 \code{Unison/Target/API}.
 
+Unison includes a minimal, compilable target (\code{Minimal}) that can be used
+as a template to create new targets, see the module \code{Unison.Target.Minimal}
+in the Unison package.
+%
+A simple MIR version of our running example with Minimal instructions is
+included in \code{doc/code/factorial.mir}.
+%
+%
+To execute Unison on this function and obtain the optimal register allocation
+and instruction schedule for Minimal, run the following command from the top of
+the Git repository:
+%
+\begin{command}
+uni run doc/code/minimal.mir --goal=speed --target=Minimal
+\end{command}
+%
+By default, Minimal is defined as a single-issue processor, but an arbitrary
+issue width \code{N} can be specified using the following target option:
+%
+\begin{command}
+uni run doc/code/minimal.mir ... --targetoption=issue-width:N
+\end{command}
+
 The rest of this section explains the key abstractions used in the processor
 description and how different parts of it can be generated automatically.
 

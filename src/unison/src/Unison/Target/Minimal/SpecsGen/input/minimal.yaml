@@ -1,0 +1,164 @@
+---
+instruction-set:
+
+   - group: allInstructions
+     instructions:
+
+        - id:                 li
+          type:               linear
+          operands:
+           - dst:             [register, def, R32]
+           - src:             bound
+          uses:               [src]
+          defines:            [dst]
+          size:               1
+          affects:
+          affected-by:
+          itinerary:          IT
+
+        - id:                 sub
+          type:               linear
+          operands:
+           - dst:             [register, def, R32]
+           - src1:            [register, use, R32]
+           - src2:            [register, use, R32]
+          uses:               [src1, src2]
+          defines:            [dst]
+          size:               1
+          affects:
+          affected-by:
+          itinerary:          IT
+
+        - id:                 mul
+          type:               linear
+          operands:
+           - dst:             [register, def, R32]
+           - src1:            [register, use, R32]
+           - src2:            [register, use, R32]
+          uses:               [src1, src2]
+          defines:            [dst]
+          size:               1
+          affects:
+          affected-by:
+          itinerary:          IT
+
+        - id:                 sgt
+          type:               linear
+          operands:
+           - dst:             [register, def, R32]
+           - src1:            [register, use, R32]
+           - src2:            [register, use, R32]
+          uses:               [src1, src2]
+          defines:            [dst]
+          size:               1
+          affects:
+          affected-by:
+          itinerary:          IT
+
+        - id:                 nop
+          type:               linear
+          operands:
+          uses:               []
+          defines:            []
+          size:               1
+          affects:
+          affected-by:
+          itinerary:          IT
+
+        - id:                 bif
+          type:               branch
+          operands:
+           - src:             [register, use, R32]
+           - target:          label
+          uses:               [src, target]
+          defines:            []
+          size:               1
+          affects:
+          affected-by:
+          itinerary:          IT
+
+        - id:                 b
+          type:               branch
+          operands:
+           - target:          label
+          uses:               [target]
+          defines:            []
+          size:               1
+          affects:
+          affected-by:
+          itinerary:          IT
+
+        - id:                 br
+          type:               branch
+          operands:
+           - dst:             [register, use, R32]
+          uses:               [dst]
+          defines:            []
+          size:               1
+          affects:
+          affected-by:
+          itinerary:          IT
+
+        - id:                 st
+          type:               linear
+          operands:
+           - rt:              [register, use, R32]
+           - addr1:           [register, use, M32]
+           - addr2:           bound
+          uses:               [rt, addr1, addr2]
+          defines:            []
+          size:               1
+          affects:
+           - mem:             memory
+          affected-by:
+          itinerary:          IT
+
+        - id:                 ld
+          type:               linear
+          operands:
+           - rt:              [register, def, R32]
+           - addr1:           [register, use, M32]
+           - addr2:           bound
+          uses:               [addr1, addr2]
+          defines:            [rt]
+          size:               1
+          affects:
+          affected-by:
+           - mem:             memory
+          itinerary:          IT
+
+        - id:                 store
+          parent:             st
+          type:               copy
+          operands:
+           - rd:              [register, def, M32]
+           - rt:              [register, use, R32]
+          uses:               [rt]
+          defines:            [rd]
+          affects:
+          affected-by:
+           - R0:              register
+
+        - id:                 load
+          parent:             ld
+          type:               copy
+          operands:
+           - rd:              [register, def, R32]
+           - rt:              [register, use, M32]
+          uses:               [rt]
+          defines:            [rd]
+          affects:
+          affected-by:
+           - R0:              register
+
+        - id:                 move
+          type:               copy
+          operands:
+           - rd:              [register, def, R32]
+           - rt:              [register, use, R32]
+          uses:               [rt]
+          defines:            [rd]
+          size:               1
+          affects:
+          affected-by:
+          itinerary:          IT

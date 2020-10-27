@@ -1,0 +1,32 @@
+--- |
+ (corresponding IR)
+...
+---
+name:            minimal
+body:             |
+  bb.0.begin (freq 1):
+    liveins: %r0
+
+    %5 = COPY %r0
+    %6 = li 1
+    %9 = li 0
+    %7 = sgt %5, %9
+    bif %7, %bb.2.end
+
+  bb.1.loop (freq 20):
+
+    %0 = PHI %6, %bb.0.begin, %3, %bb.1.loop
+    %1 = PHI %5, %bb.0.begin, %2, %bb.1.loop
+    %2 = sub %1, %6
+    %3 = mul %1, %0
+    %8 = sgt %1, %6
+    bif %8, %bb.1.loop
+
+  bb.2.end (freq 1):
+    liveouts: %r2
+
+    %4 = PHI %6, %bb.0.begin, %3, %bb.1.loop
+    %r2 = COPY %4
+    br %r7
+
+...

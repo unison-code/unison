@@ -115,6 +115,8 @@ SGARMINPUTYAML = $(SGARMROOTDIR)/input/arm.yaml
 SGARMAUXYAML   = $(SGARMROOTDIR)/input/arm-manual.yaml
 SGARMREMATYAML = $(SGARMROOTDIR)/input/arm-remat.yaml
 
+SGMINIMALROOTDIR   = $(UNISONDIR)/src/Unison/Target/Minimal/SpecsGen
+SGMINIMALINPUTYAML = $(SGMINIMALROOTDIR)/input/minimal.yaml
 
 build-specsgen:
 	$(STACKBIN) build unison-specsgen \
@@ -128,7 +130,8 @@ doc-specsgen:
 install-specsgen:
 	cp $(UNISONSPECSGENDIR)/build/specsgen $(BINDIR)
 
-run-specsgen: run-specsgen-hexagon run-specsgen-mips run-specsgen-arm
+run-specsgen: run-specsgen-hexagon run-specsgen-mips run-specsgen-arm \
+	            run-specsgen-minimal
 
 run-specsgen-hexagon:
 	specsgen --targetname=Hexagon $(SGHEXAGONINPUTYAML) $(SGHEXAGONAUXYAML) \
@@ -150,7 +153,12 @@ run-specsgen-arm:
 	         --outputdir=$(SGARMROOTDIR) \
 	         --regclass p2:CCR --infiniteregclass M32 --infiniteregclass M32t \
 	         --infiniteregclass M64 --infiniteregclass M128 \
-		 --infiniteregclass M512 \
+	         --infiniteregclass M512 \
 	         --promoteeffect CPSR \
 	         --infiniteregclass RM32 --infiniteregclass RM64 \
 	         --rematfile=$(SGARMREMATYAML)
+
+run-specsgen-minimal:
+	specsgen --targetname=Minimal $(SGMINIMALINPUTYAML) $(SGMINIMALAUXYAML) \
+	         --outputdir=$(SGMINIMALROOTDIR) \
+	         --infiniteregclass M32

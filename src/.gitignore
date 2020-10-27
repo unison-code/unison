@@ -9,3 +9,4 @@ unison-specsgen/build
 *.hi
 *.o
 *.qmake.stash
+*~
