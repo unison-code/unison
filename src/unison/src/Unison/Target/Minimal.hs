@@ -22,7 +22,6 @@ import qualified Unison.Target.API as API
 import Unison.Target.RegisterArray
 
 import Unison.Target.Minimal.MinimalRegisterDecl
-import Unison.Target.Minimal.MinimalResourceDecl
 import Unison.Target.Minimal.SpecsGen.MinimalInstructionDecl
 import Unison.Target.Minimal.SpecsGen.MinimalRegisterClassDecl
 import qualified Unison.Target.Minimal.SpecsGen as SpecsGen
@@ -195,6 +194,13 @@ packedPairs _ _ = []
 
 -- | Gives pairs of operands whose registers are related extensionally
 relatedPairs _ = []
+
+data MinimalResource =
+  -- Size of each instruction
+  BundleWidth |
+  -- Simple resource to enforce single-issue
+  Issue
+  deriving (Eq, Ord, Show, Read)
 
 -- | Declares target architecture resources. An issue width of w can be
 -- specified with the option --targetoption=issue-width:w.

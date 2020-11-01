@@ -262,7 +262,6 @@ Library
                   Unison.Target.Mips.SpecsGen.Parent
 
                   Unison.Target.Minimal.MinimalRegisterDecl
-                  Unison.Target.Minimal.MinimalResourceDecl
                   Unison.Target.Minimal.SpecsGen
                   Unison.Target.Minimal.SpecsGen.MinimalInstructionDecl
                   Unison.Target.Minimal.SpecsGen.MinimalItineraryDecl
