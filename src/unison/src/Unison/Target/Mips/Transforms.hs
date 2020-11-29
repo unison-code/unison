@@ -15,6 +15,7 @@ module Unison.Target.Mips.Transforms
      normalizeCallEpilogue,
      extractReturnRegs,
      hideStackPointer,
+     coupleAcc64Operations,
      addAlternativeInstructions,
      clobberRAInCall,
      insertGPDisp,
@@ -27,6 +28,8 @@ import MachineIR
 import Unison.Target.Mips.Common
 import Unison.Target.Mips.MipsRegisterDecl
 import Unison.Target.Mips.SpecsGen.MipsInstructionDecl
+import Unison.Target.Mips.SpecsGen.OperandInfo
+import Unison.Target.Mips.SpecsGen.MipsRegisterClassDecl
 
 -- | Gives patterns as sequences of instructions and replacements where
 -- | registers are transformed into temporaries
@@ -331,6 +334,31 @@ hideStackPointer o @ SingleOperation {
 hideStackPointer o = o
 
 isStackPointer = isTargetReg SP
+
+
+{-
+    Moves MFHI and MFLO instructions next to their definers, to avoid
+    interfering live ranges in the acc64 register class. This is to prevent
+    'splitBlocks' from creating such interferences across block boundaries
+    (which would not be solvable by instruction scheduling).
+-}
+coupleAcc64Operations f @ Function {fCode = code} =
+  f {fCode = map coupleAcc64OprsInBlock code}
+
+coupleAcc64OprsInBlock b @ Block {bCode = code} =
+  foldl coupleAcc64UsersOf b (filter (isAcc64Instr snd) code)
+
+coupleAcc64UsersOf b d =
+  moveOperations (isMovableUserOf d) after (isIdOf d) b
+
+isMovableUserOf d u = isAcc64Instr fst u && isUser (oSingleDef d) u
+
+isAcc64Instr f SingleOperation {
+  oOpr = (Natural Linear {oIs = [TargetInstruction i]})} =
+  case f (operandInfo i) of
+    [TemporaryInfo {oiRegClass = RegisterClass ACC64}] -> True
+    _ -> False
+isAcc64Instr _ _ = False
 
 {-
     For each delay slot branch, add two alternative instructions: the original

@@ -131,7 +131,8 @@ copies (f, cst, _, _, _, _) False t [r] _d [_u]
 
 -- Extend temporaries defined in acc64 with mflo and mfhi only
 copies _ False _ [] d us
-    | isNatural d && targetInst (oInstructions d) `elem` [MULT, MULTu, DIV, MADD] =
+    | isNatural d && targetInst (oInstructions d) `elem`
+      [PseudoMULT, PseudoMADD, PseudoMTLOHI, MULT, MULTu, DIV, MADD] =
       ([], replicate (length us) [])
 copies _ False t [] d us
     | isLow d  = ([mkNullInstruction, TargetInstruction MFLO], map (accCopy t) us)
@@ -435,6 +436,7 @@ transforms ImportPreLift = [peephole rs2ts,
                             peephole extractReturnRegs,
                             (\f -> foldReservedRegisters f (target, [])),
                             mapToOperation hideStackPointer,
+                            coupleAcc64Operations,
                             mapToOperation addAlternativeInstructions]
 
 transforms ImportPostLift = [peephole clobberRAInCall]
