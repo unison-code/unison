@@ -59,7 +59,7 @@ itineraryUsage _ it
                II_JALR, II_JALRC, II_JALRS, II_JALS, II_JR, II_JRADDIUSP,
                II_JRC, II_ReturnPseudo, II_CEIL, II_CVT, II_ABS, II_FLOOR,
                II_NEG, II_ROUND, II_TRUNC, II_SDC1, II_SWC1, II_SDXC1, II_SWXC1,
-               II_SUXC1] =
+               II_SUXC1, II_SEB, II_SEH] =
       [mkUsage ALU 1 1]
   | it `elem` [II_LB, II_LBU, II_LH, II_LHU, II_LW, II_LWL, II_LWR, II_LD,
                II_LDL, II_LDR, II_RESTORE, II_C_CC_S, II_C_CC_D, II_LDC1,
