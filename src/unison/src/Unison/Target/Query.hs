@@ -178,7 +178,9 @@ mayCrossMemDep rwif d u code =
   any (\i -> mayLoad rwif i || mayStore rwif i) (oTargetIs d) &&
   any (mayStoreOpr rwif) (operationsInBetween (oId d) (oId u) code)
 
-mayStoreOpr rwif o = isNatural o && any (mayStore rwif) (oTargetIs o)
+mayStoreOpr rwif o =
+  isFun o ||
+  (isNatural o && any (mayStore rwif) (oTargetIs o))
 
 operationsInBetween p s code =
   let b = fromJust $ find (\b -> any (isId p) (bCode b)) code
