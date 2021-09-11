@@ -338,7 +338,8 @@ liftToTOpc f = mkMachineTargetOpc . f . mopcTarget
 -- | Target dependent post-processing functions
 
 postProcess to = [expandPseudosEarly to, if keepNops to then id else cleanNops,
-                  expandPseudos, unbundleSingletons, normalizeDelaySlots to]
+                  expandPseudos, unbundleSingletons, removeFrameIndex,
+                  normalizeDelaySlots to]
 
 expandPseudosEarly to = mapToMachineBlock (expandBlockPseudos
                                            (expandPseudoEarly to))
@@ -406,6 +407,22 @@ unbundleSingletonsInBlock mb @ MachineBlock {mbInstructions = mis} =
 
 unbundleSingleton MachineBundle {mbInstrs = [mi]} = mi
 unbundleSingleton mi = mi
+
+removeFrameIndex = mapToMachineInstruction removeFrameIndexInstr
+
+removeFrameIndexInstr mi @ MachineSingle {msOpcode = MachineTargetOpc i,
+                                          msOperands = mops}
+  | "_fi" `isSuffixOf`  (show i) =
+    let mops' = case mops of
+                  [r @ MachineReg {}, off @ MachineImm {},
+                   MachineImm {miValue = 0}] ->
+                    [r, mkMachineReg SP, off]
+                    -- FIXME: post-process other patterns similary.
+                  _ -> mops
+      in mi {msOpcode = mkMachineTargetOpc $ removeFi i, msOperands = mops'}
+  | otherwise = mi
+
+removeFi i = read $ dropSuffix "_fi" (show i)
 
 normalizeDelaySlots to = mapToMachineBlock (normalizeDelaySlotInBlock to)
 
