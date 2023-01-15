@@ -3,5 +3,5 @@
 # Unison repo
 MULTIBACKEND_DIR=$UNISON_DIR/src/solvers/multi_backend
 # Assume aeson-pretty-0.7.2 which prints integers without decimals
-ghc -O2 --make -threaded $MULTIBACKEND_DIR/portfolio.hs  -package aeson-pretty-0.7.2
+ghc -O2 --make -threaded $MULTIBACKEND_DIR/portfolio.hs
 $MULTIBACKEND_DIR/portfolio "$@" +RTS -N2
