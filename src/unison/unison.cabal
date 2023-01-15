@@ -277,17 +277,10 @@ Library
                   Unison.Target.Minimal.SpecsGen.AllInstructions
                   Unison.Target.Minimal.SpecsGen.Parent
 
-  if impl(ghc <= 7.4.2)
-    Build-Depends: transformers-compat == 0.5.*,
-                   cmdargs == 0.10.14,
-                   yaml == 0.8.27,
-                   parsec == 3.1.11
-  else
-    Build-Depends: cmdargs >= 0.10,
-                   yaml >= 0.8,
-                   parsec >= 3.1
-
-  Build-Depends: base >= 4.0,
+  Build-Depends: cmdargs >= 0.10,
+                 yaml >= 0.8,
+                 parsec >= 3.1,
+                 base >= 4.0,
                  fgl >= 5.5.0,
                  pretty >= 1.0,
                  graphviz >= 2999.17,
