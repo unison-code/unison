@@ -336,6 +336,7 @@ bool in_block(UnisonConstraintExpr & e, block b, const Parameters * input) {
   case SHARE_EXPR:
   case OPERAND_OVERLAP_EXPR:
   case ALLOCATED_EXPR:
+  case TIED_DEF_EXPR:
     return (input->pb[e.data[0]] == b);
   case TEMPORARY_OVERLAP_EXPR:
   case CALLER_SAVED_EXPR:

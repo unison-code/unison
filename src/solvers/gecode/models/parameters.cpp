@@ -1143,6 +1143,7 @@ void Parameters::get_element(Json::Value root, UnisonConstraintExpr & e) {
   case OPERAND_OVERLAP_EXPR:
   case TEMPORARY_OVERLAP_EXPR:
   case ALLOCATED_EXPR:
+  case TIED_DEF_EXPR:
     for (unsigned int i = 0; i < 2; i++) {
       iti++;
       e.data.push_back((*iti).asInt());
