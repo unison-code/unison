@@ -595,12 +595,12 @@ SolverResult shave_local_costs(GlobalModel * base) {
         Gecode::SpaceStatus ss = base->status();
         stats.fail++;
         if (ss == SS_FAILED) {
-          delete base;
           if (base->options->verbose()) {
             cerr << global()
                  << "failed due to cost shaving: f(b" << b << ") <= "
                  << cost << endl;
           }
+	  delete base;
           return SHAVING_FAILURE;
         }
         break;

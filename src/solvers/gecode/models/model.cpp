@@ -566,7 +566,7 @@ void Model::post_live_start_definition(block b) {
   // The live range of a temporary starts at the issue cycle of its definer:
 
   for (temporary t : input->tmp[b])
-    constraint(ls(t) == c(input->oper[input->definer[t]]));
+    constraint(ls(t) == c(input->def_opr[t]));
 
 }
 
