@@ -170,9 +170,10 @@ double GlobalModel::coalescing_chances(operand p, RangeListIter & A) const {
   // Compute common atoms between A and the home register space of q
   register_space rsq = input->home[q];
   Singleton Aq(input->range[rsq][0], input->range[rsq][1]);
-  Inter<RangeListIter, Singleton> Ahrs(A, Aq);
+  auto A_ = A;
+  Inter<RangeListIter, Singleton> Ahrs(A_, Aq);
   // Return percentage of A atoms in the home register space of q
-  double chances = (double)range_size(Ahrs) / (double)range_size(A);
+  double chances = (double)range_size(Ahrs) / (double)range_size(A_);
   return chances;
 }
 

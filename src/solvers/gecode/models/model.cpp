@@ -336,7 +336,8 @@ saturation_likelihood(block b, pair<int,int> C, RangeListIter & A) const {
       IntVarRanges tregs(r(t));
       Region r1;
       RangeListIter tAtoms = extend(r1, tregs, w);
-      Inter<RangeListIter, RangeListIter> At(A, tAtoms);
+      auto A_ = A;
+      Inter<RangeListIter, RangeListIter> At(A_, tAtoms);
       double t_in_A = (double)range_size(At) / (double)range_size(tAtoms);
       if (t_in_A > numeric_limits<double>::epsilon()) in_A[t] = t_in_A;
       totalw += w;
