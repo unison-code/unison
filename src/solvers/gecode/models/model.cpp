@@ -399,7 +399,7 @@ double Model::pressure_balance(operation o) const {
     for (IntVarValues ii(i(o)); ii(); ++ii) {
       register_class rc = input->rclass[o][ii.val()][pi];
       double pr = pressure(p, rc);
-      if (p > maxp) maxp = pr;
+      if (pr > maxp) maxp = pr;
     }
     if (input->use[p])
       in_pressure += maxp;
