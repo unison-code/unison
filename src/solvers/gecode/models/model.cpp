@@ -336,7 +336,8 @@ saturation_likelihood(block b, pair<int,int> C, RangeListIter & A) const {
       IntVarRanges tregs(r(t));
       Region r1;
       RangeListIter tAtoms = extend(r1, tregs, w);
-      Inter<RangeListIter, RangeListIter> At(A, tAtoms);
+      auto A_ = A;
+      Inter<RangeListIter, RangeListIter> At(A_, tAtoms);
       double t_in_A = (double)range_size(At) / (double)range_size(tAtoms);
       if (t_in_A > numeric_limits<double>::epsilon()) in_A[t] = t_in_A;
       totalw += w;
@@ -398,7 +399,7 @@ double Model::pressure_balance(operation o) const {
     for (IntVarValues ii(i(o)); ii(); ++ii) {
       register_class rc = input->rclass[o][ii.val()][pi];
       double pr = pressure(p, rc);
-      if (p > maxp) maxp = pr;
+      if (pr > maxp) maxp = pr;
     }
     if (input->use[p])
       in_pressure += maxp;
@@ -565,7 +566,7 @@ void Model::post_live_start_definition(block b) {
   // The live range of a temporary starts at the issue cycle of its definer:
 
   for (temporary t : input->tmp[b])
-    constraint(ls(t) == c(input->oper[input->definer[t]]));
+    constraint(ls(t) == c(input->def_opr[t]));
 
 }
 

@@ -99,7 +99,8 @@ register_space most_effective(const Space& s, SetVar pals, global_congruence g) 
     for (register_space rs : urss) {
 
       Singleton rsA(m.input->range[rs][0], m.input->range[rs][1]);
-      NaryInter A(region, tA, rsA);
+      auto tA_ = tA;
+      NaryInter A(region, tA_, rsA);
 
       // Compute cost for g and all allocatable atom sets
       //

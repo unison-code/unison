@@ -94,6 +94,8 @@ void diff_temps(Parameters& input) {
                 operand p  = op->second;
                 operand p1 = o1p1->second;
 
+		// Different operands of one instruction can use same tmp
+		if (input.type[o] != OUT && o == o1) continue;
                 // build (o,o')
                 pair<operation, operation> oo1 = make_pair(o, o1);
 
