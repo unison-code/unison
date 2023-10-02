@@ -99,8 +99,19 @@ solve_generic_portfolio(LocalModel * base, GIST_OPTIONS * lo, int iteration) {
     localOptions.threads = n;
   }
 
+  SEBs sebs;
+
+  for (unsigned int i = 0; i < strategies; ++i){
+    Search::Option o;
+    unsigned int threads = base->options->portfolio_threads() / strategies;
+    if (threads == 0) threads = 1;
+    o.threads = threads;
+    o.stop    = localStop;
+    sebs << bab<LocalModel>(o);
+  }
+
   // Local portfolio meta-engine
-  PBS<LocalModel, BAB> e(l, localOptions);
+  PBS<LocalModel, BAB> e(l, sebs, localOptions);
 
   // Solve the local problem for the given search strategy
   bool found_local_solution = false;
