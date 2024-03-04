@@ -86,12 +86,14 @@ parseSolution json =
                        Nothing -> error ("error parsing JSON input")
                        Just (Object s) -> s
         cycles       = sol HM.! "cycles"
+        fetches      = sol HM.! "fetches"
         instructions = sol HM.! "instructions"
         registers    = sol HM.! "registers"
         temporaries  = sol HM.! "temporaries"
         has_sol      = sol HM.! "has_solution"
     in if (solutionFromJson has_sol :: Bool) then
            Just (solutionFromJson cycles       :: [Integer],
+                 solutionFromJson fetches      :: [Integer],
                  solutionFromJson instructions :: [InstructionId],
                  solutionFromJson registers    :: [RegisterAtom],
                  solutionFromJson temporaries  :: [TemporaryId])
@@ -102,7 +104,7 @@ solutionFromJson object =
       Error e -> error ("error converting JSON input:\n" ++ show e)
       Success s -> s
 
-uniTransformations (cycles, instructions, registers, temporaries)
+uniTransformations (cycles, fetches, instructions, registers, temporaries)
                                (removeReds, keepNops, tight) =
     [(assignRegisters tight registers, "assignRegisters", True),
      (selectTemporaries temporaries, "selectTemporaries", True),
@@ -113,7 +115,7 @@ uniTransformations (cycles, instructions, registers, temporaries)
      (runTargetTransforms ExportPostOffs, "runTargetTransforms", True),
      (lowerFrameSize, "lowerFrameSize", True),
      (directFrame, "directFrame", True),
-     (bundleOperations cycles, "bundleOperations", True),
+     (bundleOperations cycles fetches, "bundleOperations", True),
      (removeRedundancies, "removeRedundancies", removeReds),
      (runTargetTransforms ExportPreLow, "runTargetTransforms", True),
      (lowerFrameIndices, "lowerFrameIndices", True),

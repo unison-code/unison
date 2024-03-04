@@ -67,6 +67,10 @@ class Model : public IntLexMinimizeSpace {
 
 public:
 
+  // Must be larger than maximum issue size due to pseudo-insns (kill, low, etc.)
+  // TODO: this should of course come from model.json
+  static const int W = 8;
+
   Parameters * input;
   ModelOptions * options;
   IntPropLevel ipl;
@@ -85,6 +89,7 @@ public:
 
   // c[o]: issue cycle of operation o relative to the beginning of its block
   IntVarArray v_c;
+  IntVarArray v_ff;
 
   // y[p]: temporary that is connected to operand p
   IntVarArray v_y;
@@ -102,12 +107,15 @@ public:
 
   // ls[t]: start of live range of temporary t
   IntVarArray v_ls;
+  IntVarArray v_ls_ff;
 
   // ld[t]: duration of live range of temporary t
   IntVarArray v_ld;
+  IntVarArray v_ld_ff;
 
   // le[t]: end of live range of temporary t
   IntVarArray v_le;
+  IntVarArray v_le_ff;
 
   // al[t][rs]: whether temporary t is allocated to register space rs
   // (some of the register atoms of t overlap with rs)
@@ -216,6 +224,8 @@ public:
 
   IntVar c(operation o) const { return v_c[instr(o)]; }
 
+  IntVar ff(operation o) const { return v_ff[instr(o)]; }
+
   IntVar y(operand p) const { return v_y[opr(p)]; }
 
   virtual BoolVar x(operand p) const = 0;
@@ -231,6 +241,12 @@ public:
   IntVar ld(temporary t) const { return v_ld[temp(t)]; }
 
   IntVar le(temporary t) const { return v_le[temp(t)]; }
+
+  IntVar ls_ff(temporary t) const { return v_ls_ff[temp(t)]; }
+
+  IntVar ld_ff(temporary t) const { return v_ld_ff[temp(t)]; }
+
+  IntVar le_ff(temporary t) const { return v_le_ff[temp(t)]; }
 
   BoolVar al(register_space rs, temporary t) const {
     return v_al[temp(t) * input->RS.size() + rs];
@@ -374,6 +390,7 @@ public:
   void post_prescheduling_constraints(block b);
   void post_bypassing_constraints(block b);
   void post_adhoc_constraints(block b);
+  void post_fetch_constraints(block b);
 
   void post_improved_model_constraints(block b);
   void post_null_register_constraints(block b);
