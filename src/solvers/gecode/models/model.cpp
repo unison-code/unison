@@ -454,6 +454,7 @@ Model::Model(Model& m) :
   v_r.update(*this, m.v_r);
   v_i.update(*this, m.v_i);
   v_c.update(*this, m.v_c);
+  v_ff.update(*this, m.v_ff);
   v_y.update(*this, m.v_y);
   v_x.update(*this, m.v_x);
   v_ry.update(*this, m.v_ry);
@@ -461,6 +462,9 @@ Model::Model(Model& m) :
   v_ls.update(*this, m.v_ls);
   v_ld.update(*this, m.v_ld);
   v_le.update(*this, m.v_le);
+  v_ls_ff.update(*this, m.v_ls_ff);
+  v_ld_ff.update(*this, m.v_ld_ff);
+  v_le_ff.update(*this, m.v_le_ff);
   v_al.update(*this, m.v_al);
   v_u.update(*this, m.v_u);
   v_us.update(*this, m.v_us);
@@ -497,19 +501,27 @@ void Model::post_issue_cycle_domains(block b) {
   for (operation o : input->ops[b]) {
     constraint(c(o) <= bmaxc);
     constraint(c(o) <= c(input->out[b]));
+    constraint(ff(o) <= W * bmaxc);
+    constraint(ff(o) <= ff(input->out[b]));
   }
 
   for (temporary t : input->tmp[b]) {
     constraint(ls(t) <= bmaxc);
-    constraint(le(t) <= (bmaxc + input->minlive[t]));
+    constraint(le(t) <= bmaxc + input->minlive[t]);
+
+    constraint(ls_ff(t) <= W * bmaxc);
+    constraint(le_ff(t) <= W * (bmaxc + input->minlive[t]));
   }
 
   // in-delimiters always start in cycle 0
   constraint(c(input->in[b]) == 0);
+  constraint(ff(input->in[b]) == 0);
 
   // the rest of operations start at least in cycle 1
-  for (operation o : input->ops[b])
+  for (operation o : input->ops[b]) {
     if (o != input->in[b]) constraint(c(o) >= 1);
+    if (o != input->in[b]) constraint(ff(o) >= W);
+  }
 
 }
 
@@ -564,8 +576,10 @@ void Model::post_live_start_definition(block b) {
 
   // The live range of a temporary starts at the issue cycle of its definer:
 
-  for (temporary t : input->tmp[b])
+  for (temporary t : input->tmp[b]) {
     constraint(ls(t) == c(input->oper[input->definer[t]]));
+    constraint(ls_ff(t) == ff(input->oper[input->definer[t]]));
+  }
 
 }
 
@@ -574,8 +588,10 @@ void Model::post_live_duration_definition(block b) {
   // The live range of a temporary t is as long as the distance between its live
   // end and its live start:
 
-  for (temporary t : input->tmp[b])
+  for (temporary t : input->tmp[b]) {
     constraint(ld(t) == (le(t) - ls(t)));
+    constraint(ld_ff(t) == (le_ff(t) - ls_ff(t)));
+  }
 
 }
 
@@ -590,6 +606,12 @@ void Model::post_live_end_definition(block b) {
       uc << var(ite(u(p, t), c(input->oper[p]), 0));
     uc << var(ls(t) + input->minlive[t]);
     constraint(le(t) == max(uc));
+
+    IntVarArgs uc_ff;
+    for (operand p : input->users[t])
+      uc_ff << var(ite(u(p, t), ff(input->oper[p]), 0));
+    uc_ff << var(ls_ff(t) + W * input->minlive[t]);
+    constraint(le_ff(t) == max(uc_ff));
   }
 
 }
@@ -727,6 +749,7 @@ void Model::post_basic_model_constraints(block b) {
   post_prescheduling_constraints(b);
   post_bypassing_constraints(b);
   post_adhoc_constraints(b);
+  post_fetch_constraints(b);
 
 }
 
@@ -813,15 +836,15 @@ void Model::post_disjoint_live_ranges_constraints(block b) {
 
   IntVarArgs bld, bw, bre,
     br  = temps_to_var_args(v_r, input->tmp[b]),
-    bls = temps_to_var_args(v_ls, input->tmp[b]),
-    ble = temps_to_var_args(v_le, input->tmp[b]);
+    bls = temps_to_var_args(v_ls_ff, input->tmp[b]),
+    ble = temps_to_var_args(v_le_ff, input->tmp[b]);
   BoolVarArgs bm;
 
   for (temporary t : input->tmp[b]) {
-    bld << ld(t);
+    bld << ld_ff(t);
     bw  << var(input->width[t]);
     bre << var(r(t) + input->width[t]);
-    bm  << var(l(t) && (ld(t) > 0));
+    bm  << var(l(t) && (ld_ff(t) > 0));
   }
 
   nooverlap(*this, br, bw, bre, bls, bld, ble, bm, ipl);
@@ -1136,6 +1159,51 @@ void Model::post_adhoc_constraints(block b) {
     }
   }
 
+}
+
+void Model::post_fetch_constraints(block b) {
+  for (operation o : input->ops[b]) {
+    constraint(a(o) >> (c(o) * W <= ff(o)));
+    constraint(a(o) >> (ff(o) < (c(o) + 1) * W));
+  }
+
+  BoolVarArgs acts;
+  IntVarArgs vals;
+  for(operation o : input->ops[b]) {
+    acts << a(o);
+    vals << ff(o);
+  }
+  Gecode::distinct(*this, acts, vals, IPL_DOM);
+
+  // Branch should be the last operation in bundle
+  for (operation o : input->ops[b]) {
+    if (input->type[o] == BRANCH) {
+      for (operation o2 : input->ops[b]) {
+        if (o2 == o)
+          continue;
+        if (input->type[o2] == OUT)
+          continue;
+        // Virtual operations have special constraints and
+        // may sometimes be scheduled after branches.
+        // They are not present in generated MIR so won't cause
+        // verification errors.
+        if (input->type[o2] == DEFINE || input->type[o2] == KILL)
+          continue;
+        constraint(ff(o2) < ff(o));
+      }
+      break;
+    }
+  }
+
+  // Call should be the last operation in bundle
+  for (operation o : input->ops[b]) {
+    if (input->type[o] == CALL) {
+      for (operation o2 : input->ops[b]) {
+        if (o2 != o)
+          constraint((c(o2) == c(o)) >> (ff(o2) < ff(o)));
+      }
+    }
+  }
 }
 
 void Model::post_improved_model_constraints(block b) {
@@ -2301,6 +2369,11 @@ void Model::print(ostream & pOs, block b) const {
 
   pOs << endl << endl;
 
+  for (operation o : os)
+    pOs << left << "ff" << setw(tColWidth) << ff(o) << "  ";
+
+  pOs << endl << endl;
+
   for (operand p : ps)
     pOs << left << "p" << setw(tColWidth) << p << " ";
 
@@ -2341,6 +2414,7 @@ void Model::compare(const Space& sp, std::ostream& pOs) const {
   pOs << "r  : " << compare<IntVar>("r", "t", temp_index, v_r, m.v_r) << endl;
   pOs << "i  : " << compare<IntVar>("i", "o", instr_index, v_i, m.v_i) << endl;
   pOs << "c  : " << compare<IntVar>("c", "o", instr_index, v_c, m.v_c) << endl;
+  pOs << "ff : " << compare<IntVar>("ff", "o", instr_index, v_ff, m.v_ff) << endl;
   pOs << "y  : " << compare<IntVar>("y", "p", opr_index, v_y, m.v_y) << endl;
 
   pOs << endl;

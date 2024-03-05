@@ -709,6 +709,8 @@ void GlobalModel::post_complete_branchers(unsigned int s) {
   branch(*this, v_c, INT_VAR_NONE(), INT_VAL_MIN(),
          &schedulable, &print_global_cycle_decision);
 
+  branch(*this, v_ff, INT_VAR_NONE(), INT_VAL_MIN());
+
   branch(*this, v_r, INT_VAR_NONE(), INT_VAL_RND(r),
          &global_assignable, &print_global_register_decision);
 
@@ -786,8 +788,10 @@ void GlobalModel::apply_solution(LocalModel * ls) {
     constraint(i(o) == ls->i(o));
 
   for (operation o : input->ops[b])
-    if (!ls->is_inactive(o))
+    if (!ls->is_inactive(o)) {
       constraint(c(o) == ls->c(o));
+      constraint(ff(o) == ls->ff(o));
+    }
 
   for (operand p : input->ope[b])
     constraint(y(p) == ls->y(p));

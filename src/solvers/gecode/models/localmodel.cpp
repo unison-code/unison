@@ -86,6 +86,7 @@ LocalModel::LocalModel(Parameters * p_input, ModelOptions * p_options,
   v_r   = int_var_array(T().size(), -1, input->RA.size() - 1);
   v_i   = int_var_array(O().size(), 0, input->I.size() - 1);
   v_c   = int_var_array(O().size(), 0, input->maxc[b]);
+  v_ff  = int_var_array(O().size(), 0, W * input->maxc[b]);
   if (!P().empty()) {
     v_y  = int_var_array(P().size(), 0, input->T.size() - 1);
   }
@@ -93,9 +94,13 @@ LocalModel::LocalModel(Parameters * p_input, ModelOptions * p_options,
   v_ry  = int_var_array(P().size(), -1, input->RA.size() - 1);
   v_a   = bool_var_array(O().size(), 0, 1);
   v_ls  = int_var_array(T().size(), 0, input->maxc[b]);
+  v_ls_ff = int_var_array(T().size(), 0, W * input->maxc[b]);
   v_ld  = int_var_array(T().size(), 0, input->maxc[b]);
+  v_ld_ff = int_var_array(T().size(), 0, W * input->maxc[b]);
   v_le  = int_var_array(T().size(), 0,
                         input->maxc[b] + maybe_max_of(0, input->minlive));
+  v_le_ff = int_var_array(T().size(), 0,
+                          W * (input->maxc[b] + maybe_max_of(0, input->minlive)));
   v_al  = bool_var_array(T().size() * input->RS.size(), 0, 1);
   v_u   = bool_var_array(input->bnu[b], 0, 1);
   v_us  = int_var_array(T().size(), 0, O().size());
@@ -291,6 +296,7 @@ void LocalModel::post_aggressive_branchers(void) {
   branch(*this, &LocalModel::post_before_scheduling_constraints_in_space);
 
   branch_on_pressure_scheduling(*this, v_c);
+  branch(*this, v_ff, INT_VAR_NONE(), INT_VAL_MIN());
 
   branch(*this, v_r, INT_VAR_SIZE_MIN(), INT_VAL_MIN(),
          &assignable, &print_register_decision);
@@ -314,6 +320,7 @@ void LocalModel::post_trivial_branchers(void) {
 
   branch(*this, v_c, INT_VAR_MIN_MIN(), INT_VAL_MIN(),
          &schedulable, &print_cycle_decision);
+  branch(*this, v_ff, INT_VAR_NONE(), INT_VAL_MIN());
 
   branch(*this, v_r, INT_VAR_SIZE_MIN(), INT_VAL_MIN(), &assignable,
          &print_register_decision);
@@ -340,6 +347,7 @@ void LocalModel::post_minimum_cost_branchers(void) {
 
   branch(*this, v_c, INT_VAR_MIN_MIN(), INT_VAL_MIN(),
          &schedulable, &print_cycle_decision);
+  branch(*this, v_ff, INT_VAR_NONE(), INT_VAL_MIN());
 
   branch(*this, v_r, INT_VAR_SIZE_MIN(), INT_VAL_MIN(), &assignable,
          &print_register_decision);
@@ -363,6 +371,7 @@ void LocalModel::post_fail_first_branchers(void) {
 
   branch(*this, v_c, INT_VAR_SIZE_MIN(), INT_VAL_MIN(),
          &schedulable, &print_cycle_decision);
+  branch(*this, v_ff, INT_VAR_NONE(), INT_VAL_MIN());
 
   branch(*this, v_r, INT_VAR_SIZE_MIN(), INT_VAL_MIN(), &assignable,
          &print_register_decision);
@@ -376,6 +385,7 @@ void LocalModel::post_conservative_branchers(void) {
   branch(*this, &LocalModel::post_before_scheduling_constraints_in_space);
 
   branch_on_pressure_scheduling(*this, v_c);
+  branch(*this, v_ff, INT_VAR_NONE(), INT_VAL_MIN());
 
   branch(*this, v_r, INT_VAR_SIZE_MIN(), INT_VAL_MIN(), &assignable,
          &print_register_decision);
@@ -451,6 +461,7 @@ void LocalModel::apply_solution(const GlobalModel * gs) {
   for (operation o : input->ops[b]) {
     copy_domain(*this, gs->i(o), i(o));
     copy_domain(*this, gs->c(o), c(o));
+    copy_domain(*this, gs->ff(o), ff(o));
     copy_domain(*this, gs->a(o), a(o));
   }
 
@@ -468,6 +479,9 @@ void LocalModel::apply_solution(const GlobalModel * gs) {
     copy_domain(*this, gs->ls(t), ls(t));
     copy_domain(*this, gs->ld(t), ld(t));
     copy_domain(*this, gs->le(t), le(t));
+    copy_domain(*this, gs->ls_ff(t), ls_ff(t));
+    copy_domain(*this, gs->ld_ff(t), ld_ff(t));
+    copy_domain(*this, gs->le_ff(t), le_ff(t));
   }
 
   for (unsigned int n = 0; n < input->N; n++) {

@@ -78,4 +78,5 @@ void SimpleModel::post_trivial_branchers(void) {
   branch(*this, v_r, INT_VAR_NONE(), INT_VAL_MIN());
   // TODO: do not assign cycles to inactive operations
   branch(*this, v_c, INT_VAR_NONE(), INT_VAL_MIN());
+  branch(*this, v_ff, INT_VAR_NONE(), INT_VAL_MIN());
 }

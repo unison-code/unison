@@ -84,6 +84,7 @@ CompleteModel::CompleteModel(Parameters * p_input, ModelOptions * p_options,
   v_r   = int_var_array(T().size(), -1, input->RA.size() - 1);
   v_i   = int_var_array(O().size(), 0, input->I.size() - 1);
   v_c   = int_var_array(O().size(), 0, max_of(input->maxc));
+  v_ff  = int_var_array(O().size(), 0, W * max_of(input->maxc));
   if (!P().empty()) {
     v_y = int_var_array(P().size(), 0, input->T.size() - 1);
   }
@@ -91,9 +92,13 @@ CompleteModel::CompleteModel(Parameters * p_input, ModelOptions * p_options,
   v_ry  = int_var_array(P().size(), -1, input->RA.size() - 1);
   v_a   = bool_var_array(O().size(), 0, 1);
   v_ls  = int_var_array(T().size(), 0, max_of(input->maxc));
+  v_ls_ff = int_var_array(T().size(), 0, W * max_of(input->maxc));
   v_ld  = int_var_array(T().size(), 0, max_of(input->maxc));
+  v_ld_ff = int_var_array(T().size(), 0, W * max_of(input->maxc));
   v_le  = int_var_array(T().size(), 0,
                         max_of(input->maxc) + maybe_max_of(0, input->minlive));
+  v_le_ff = int_var_array(T().size(), 0,
+                          W * (max_of(input->maxc) + maybe_max_of(0, input->minlive)));
   v_al  = bool_var_array(T().size() * input->RS.size(), 0, 1);
   v_u   = bool_var_array(input->nu, 0, 1);
   v_us  = int_var_array(T().size(), 0, O().size());
@@ -370,6 +375,10 @@ string CompleteModel::solution_to_json() const {
   for (operation o : input->O)
     cs.push_back(a(o).val() ? c(o).val() : -1);
 
+  vector<int> ffs;
+  for (operation o : input->O)
+    ffs.push_back(a(o).val() ? ff(o).val() : -1);
+
   vector<temporary> ys;
   for (operand p : input->P)
     ys.push_back(input->temps[p][y(p).val()]);
@@ -378,6 +387,7 @@ string CompleteModel::solution_to_json() const {
   pOs << "\"registers\":" << to_json(rs) << ",";
   pOs << "\"instructions\":" << to_json(is) << ",";
   pOs << "\"cycles\":" << to_json(cs) << ",";
+  pOs << "\"fetches\":" << to_json(ffs) << ",";
   pOs << "\"temporaries\":" << to_json(ys);
   pOs << "}";
 
