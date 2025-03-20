@@ -17,7 +17,7 @@ To get the first three dependencies in Debian-based distributions, just run:
 apt-get install haskell-stack qtbase5-dev libgraphviz-dev
 ```
 
-Upgrade Slack after installing it:
+Upgrade stack after installing it:
 
 ```
 stack upgrade
